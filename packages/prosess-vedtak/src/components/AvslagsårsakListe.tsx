@@ -1,11 +1,11 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { Kodeverk, Vilkar } from '@k9-sak-web/types';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort } from '@navikt/ds-react';
-import { VilkårMedPerioderDto, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[]) => {
+const finnUnikeAvslagskoder = (avslåttePerioder: Vilkarperiode[]) => {
   const funnedeAvslagskoder = new Set();
   const unikeAvslagskoder = avslåttePerioder.filter(el => {
     const erDuplikat = funnedeAvslagskoder.has(el.avslagKode);
@@ -15,43 +15,39 @@ const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[]) => {
   return unikeAvslagskoder;
 };
 
+const visAvslåtteVilkårsperioder = (
+  avslåttVilkår: Vilkar,
+  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => string,
+) => {
+  const avslåttePerioder = avslåttVilkår.perioder.filter(
+    periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT,
+  );
+  const avslåttePerioderMedUnikeAvslagskoder = finnUnikeAvslagskoder(avslåttePerioder);
+
+  return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
+    <BodyShort size="small" key={avslåttPeriode.avslagKode}>
+      {getKodeverknavn(avslåttVilkår.vilkarType)}:{' '}
+      {getKodeverknavn({ kode: avslåttPeriode.avslagKode, kodeverk: 'AVSLAGSARSAK' }, avslåttVilkår.vilkarType.kode)}
+    </BodyShort>
+  ));
+};
+
 interface AvslagsårsakListeProps {
-  vilkar: VilkårMedPerioderDto[];
+  vilkar: Vilkar[];
+  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => string;
 }
 
-const AvslagsårsakListe = ({ vilkar }: AvslagsårsakListeProps) => {
-  const { kodeverkNavnFraKode, kodeverkNavnFraUndertypeKode } = useKodeverkContext();
-
-  const visAvslåtteVilkårsperioder = (avslåttVilkår: VilkårMedPerioderDto) => {
-    const avslåttePerioder = avslåttVilkår.perioder.filter(
-      periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT,
-    );
-    const avslåttePerioderMedUnikeAvslagskoder = finnUnikeAvslagskoder(avslåttePerioder);
-
-    return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
-      <BodyShort size="small" key={avslåttPeriode.avslagKode}>
-        {[
-          kodeverkNavnFraKode(avslåttVilkår.vilkarType, KodeverkType.VILKAR_TYPE),
-          ': ',
-          kodeverkNavnFraUndertypeKode(
-            avslåttVilkår.vilkarType,
-            avslåttPeriode.avslagKode || '',
-            KodeverkType.AVSLAGSARSAK,
-          ),
-        ].join('')}
-      </BodyShort>
-    ));
-  };
-
+const AvslagsårsakListe = ({ vilkar, getKodeverknavn }: AvslagsårsakListeProps) => {
   const avslatteVilkar = vilkar.filter(
     v =>
-      Array.isArray(v.perioder) && v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT),
+      Array.isArray(v.perioder) &&
+      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
   );
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
 
-  return <>{avslatteVilkar.map(avslåttVilkår => visAvslåtteVilkårsperioder(avslåttVilkår))}</>;
+  return <>{avslatteVilkar.map(avslåttVilkår => visAvslåtteVilkårsperioder(avslåttVilkår, getKodeverknavn))}</>;
 };
 
 export default AvslagsårsakListe;

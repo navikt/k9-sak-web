@@ -1,5 +1,6 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse } from '@fpsak-frontend/utils';
@@ -14,25 +15,22 @@ import {
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
-import { BehandlingsresultatDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
-import { FormikValues, setNestedObjectValues, useField } from 'formik';
+import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import styles from './BrevPanel.module.css';
-import { CustomFormikProps } from './CustomFormikProps';
 import InformasjonsbehovAutomatiskVedtaksbrev, {
   InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';
 
-const kanResultatForhåndsvises = (behandlingResultat: BehandlingsresultatDto) => {
+const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
     return true;
   }
@@ -40,7 +38,7 @@ const kanResultatForhåndsvises = (behandlingResultat: BehandlingsresultatDto) =
   if (!type) {
     return true;
   }
-  return type !== 'INGEN_ENDRING';
+  return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
 export const manuellBrevPreview = ({
@@ -55,7 +53,7 @@ export const manuellBrevPreview = ({
 }: {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   previewCallback: (values, aapneINyttVindu) => void;
-  values: FormikValues;
+  values: any;
   redigertHtml: any;
   overstyrtMottaker: Brevmottaker;
   brødtekst: string;
@@ -108,7 +106,7 @@ const getManuellBrevCallback =
     brødtekst: string;
     overskrift: string;
     overstyrtMottaker?: Brevmottaker;
-    formProps: CustomFormikProps;
+    formProps: FormikProps<any>;
     previewCallback: (values, aapneINyttVindu) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
@@ -140,28 +138,28 @@ const getHentHtmlMalCallback =
   };
 
 interface BrevPanelProps {
-  aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  begrunnelse: string;
-  behandlingResultat: BehandlingsresultatDto;
-  brødtekst: string;
-  dokumentdata: DokumentDataType;
-  formikProps: CustomFormikProps;
-  getPreviewAutomatiskBrevCallback: (any) => (any) => (event: React.SyntheticEvent<Element, Event>) => void;
-  hentFritekstbrevHtmlCallback: (parameters: any) => any;
-  informasjonsbehovValues: any[];
-  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   intl: IntlShape;
-  lagreDokumentdata: (any) => void;
-  overskrift: string;
-  overstyrtMottaker?: Brevmottaker;
-  personopplysninger: PersonopplysningDto;
-  previewCallback: (values, aapneINyttVindu) => void;
   readOnly: boolean;
-  skalBrukeOverstyrendeFritekstBrev: boolean;
-  sprakkode: string;
+  sprakkode: Kodeverk;
+  personopplysninger: Personopplysninger;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  informasjonsbehovValues: any[];
+  skalBrukeOverstyrendeFritekstBrev: boolean;
+  begrunnelse: string;
+  previewCallback: (values, aapneINyttVindu) => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => any;
+  brødtekst: string;
+  overskrift: string;
+  behandlingResultat: Behandlingsresultat;
+  overstyrtMottaker?: Brevmottaker;
+  formikProps: FormikProps<any>;
   ytelseTypeKode: FagsakYtelsesType;
+  dokumentdata: DokumentDataType;
+  aktiverteInformasjonsbehov: any;
+  lagreDokumentdata: (any) => void;
+  getPreviewAutomatiskBrevCallback: (any) => (any) => (event: React.SyntheticEvent<Element, Event>) => void;
 }
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {

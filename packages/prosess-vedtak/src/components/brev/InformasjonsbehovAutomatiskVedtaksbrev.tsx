@@ -1,4 +1,5 @@
 import { CheckboxGroupFormik } from '@fpsak-frontend/form';
+import { Kodeverk } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';
@@ -14,7 +15,7 @@ export interface InformasjonsbehovVedtaksbrev {
 
 interface Props {
   intl: IntlShape;
-  sprakkode: string;
+  sprakkode: Kodeverk;
   readOnly: boolean;
   begrunnelse: string;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;

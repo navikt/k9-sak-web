@@ -1,12 +1,12 @@
-import { type JSX } from 'react';
+import React, { type JSX } from 'react';
 
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { useIntl } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, ErrorMessage } from '@navikt/ds-react';
 
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import styles from './vedtakForm.module.css';
 
 interface Props {
@@ -14,12 +14,12 @@ interface Props {
   readOnly: boolean;
   behandlingPaaVent: boolean;
   isSubmitting: boolean;
-  aksjonspunkter: AksjonspunktDto[];
+  aksjonspunkter: Aksjonspunkt[];
   handleSubmit: (e) => void;
   errorOnSubmit: string;
 }
 
-const kanSendesTilGodkjenning = (behandlingStatusKode: string) =>
+const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 const VedtakSubmit = ({

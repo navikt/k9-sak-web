@@ -1,6 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
@@ -18,39 +19,33 @@ import {
   kanHindreUtsending,
   kanKunVelge,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import { Checkbox, Label } from '@navikt/ds-react';
 import {
-  AksjonspunktDto,
-  AvslagsårsakPrPeriodeDto,
-  BehandlingsresultatDto,
-  BehandlingÅrsakDto,
-  DokumentMedUstrukturerteDataDto,
-  OverlappendeYtelseDto,
-  PersonopplysningDto,
-  TilbakekrevingValgDto,
-  VilkårMedPerioderDto,
-} from '@navikt/k9-sak-typescript-client';
+  Aksjonspunkt,
+  ArbeidsgiverOpplysningerPerId,
+  BehandlingStatusType,
+  Behandlingsresultat,
+  Kodeverk,
+  KodeverkMedNavn,
+  Personopplysninger,
+  Vilkar,
+} from '@k9-sak-web/types';
+import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
-import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
-import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
-import { VedtakVarsel } from '../types/VedtakVarsel';
 import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
 import LagreVedtakFormIContext, {
   filtrerVerdierSomSkalNullstilles,
   settMalerVedtakContext,
 } from './LagreVedtakFormIContext';
 import SakGårIkkeTilBeslutterModal from './SakGårIkkeTilBeslutterModal';
-import UstrukturerteDokumenter from './UstrukturerteDokumenter';
+import UstrukturerteDokumenter, { UstrukturerteDokumenterType } from './UstrukturerteDokumenter';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -69,33 +64,52 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
   );
 
 interface Props {
-  aksjonspunkter: AksjonspunktDto[];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPaaVent: boolean;
-  behandlingresultat: BehandlingsresultatDto;
-  behandlingStatus: string;
-  behandlingÅrsaker?: BehandlingÅrsakDto[];
-  bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
-  dokumentdata: DokumentDataType;
-  erRevurdering: boolean;
-  fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
-  hentFritekstbrevHtmlCallback: () => void;
-  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   intl: IntlShape;
-  lagreDokumentdata: LagreDokumentdataType;
-  medlemskapFom: string;
-  overlappendeYtelser: Array<OverlappendeYtelseDto>;
-  personopplysninger: PersonopplysningDto;
+  behandlingStatus: BehandlingStatusType;
+  aksjonspunkter: Aksjonspunkt[];
+  behandlingresultat: Behandlingsresultat;
+  behandlingPaaVent: boolean;
   previewCallback: (values, aapneINyttVindu) => void;
+  hentFritekstbrevHtmlCallback: () => void;
   readOnly: boolean;
-  simuleringResultat: VedtakSimuleringResultat;
-  sprakkode: string;
-  submitCallback: (object: any) => void;
-  tilbakekrevingvalg: TilbakekrevingValgDto;
-  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
-  vedtakVarsel: VedtakVarsel;
-  vilkar: VilkårMedPerioderDto[];
+  sprakkode: Kodeverk;
   ytelseTypeKode: FagsakYtelsesType;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  personopplysninger: Personopplysninger;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  tilbakekrevingvalg: {
+    videreBehandling: {
+      kode: string;
+    };
+  };
+  vilkar: Vilkar[];
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  dokumentdata: DokumentDataType;
+  fritekstdokumenter: UstrukturerteDokumenterType[];
+  vedtakVarsel: {
+    avslagsarsak: object;
+    avslagsarsakFritekst: string;
+    id: number;
+    overskrift: string;
+    fritekstbrev: string;
+    skjæringstidspunkt: {
+      dato: string;
+    };
+    redusertUtbetalingÅrsaker: string[];
+    vedtaksbrev: Kodeverk;
+    vedtaksdato: string;
+  };
+  submitCallback: (object: any) => void;
+  lagreDokumentdata: LagreDokumentdataType;
+  overlappendeYtelser: object[];
+  resultatstruktur: string;
+  simuleringResultat: object;
+  resultatstrukturOriginalBehandling: object;
+  bgPeriodeMedAvslagsårsak: object;
+  medlemskapFom: string;
+  erRevurdering: boolean;
+  behandlingArsaker: object[];
 }
 
 export const VedtakForm: React.FC<Props> = ({
@@ -110,6 +124,7 @@ export const VedtakForm: React.FC<Props> = ({
   hentFritekstbrevHtmlCallback,
   sprakkode,
   ytelseTypeKode,
+  alleKodeverk,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   tilbakekrevingvalg,
@@ -121,14 +136,15 @@ export const VedtakForm: React.FC<Props> = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
+  resultatstruktur,
   simuleringResultat,
+  resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
   medlemskapFom,
   erRevurdering,
-  behandlingÅrsaker,
+  behandlingArsaker,
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
-  const { kodeverkNavnFraKode } = useKodeverkContext();
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
@@ -164,7 +180,7 @@ export const VedtakForm: React.FC<Props> = ({
     return aksjonspunkter
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => ({
-        kode: aksjonspunkt.definisjon,
+        kode: aksjonspunkt.definisjon.kode,
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
         fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
           ? {
@@ -186,7 +202,7 @@ export const VedtakForm: React.FC<Props> = ({
         isVedtakSubmission,
         begrunnelserMedInformasjonsbehov: begrunnelser,
         redusertUtbetalingÅrsaker:
-          aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
+          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
             ? transformRedusertUtbetalingÅrsaker(values)
             : null,
         tilgjengeligeVedtaksbrev,
@@ -198,7 +214,7 @@ export const VedtakForm: React.FC<Props> = ({
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => {
         const tranformedValues = {
-          kode: aksjonspunkt.definisjon,
+          kode: aksjonspunkt.definisjon.kode,
           begrunnelse: values?.[fieldnames.BEGRUNNELSE],
           overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
           fritekstbrev: {
@@ -218,7 +234,7 @@ export const VedtakForm: React.FC<Props> = ({
           tilgjengeligeVedtaksbrev,
           redusertUtbetalingÅrsaker: undefined,
         };
-        if (aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+        if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
           tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
         }
         return tranformedValues;
@@ -495,10 +511,11 @@ export const VedtakForm: React.FC<Props> = ({
           )}
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
-              behandlingStatusKode={behandlingStatus}
-              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
+              behandlingStatusKode={behandlingStatus?.kode}
+              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
+              alleKodeverk={alleKodeverk}
               viseFlereSjekkbokserForBrev={
                 (kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) &&
                 kanHindreUtsending(tilgjengeligeVedtaksbrev)
@@ -513,25 +530,26 @@ export const VedtakForm: React.FC<Props> = ({
                     <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />
                   )}
 
-                  {(isInnvilget(behandlingresultat.type) || isDelvisInnvilget(behandlingresultat.type)) && (
+                  {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
                     <VedtakInnvilgetPanel
                       intl={intl}
                       behandlingsresultat={behandlingresultat}
                       ytelseTypeKode={ytelseTypeKode}
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
-                      kodeverkNavnFraKode={kodeverkNavnFraKode}
+                      alleKodeverk={alleKodeverk}
                     />
                   )}
 
-                  {isAvslag(behandlingresultat.type) && (
+                  {isAvslag(behandlingresultat.type.kode) && (
                     <VedtakAvslagPanel
+                      aksjonspunkter={aksjonspunkter}
                       behandlingsresultat={behandlingresultat}
                       ytelseTypeKode={ytelseTypeKode}
+                      alleKodeverk={alleKodeverk}
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
                       vilkar={vilkar}
-                      kodeverkNavnFraKode={kodeverkNavnFraKode}
                     />
                   )}
                 </>
@@ -539,10 +557,16 @@ export const VedtakForm: React.FC<Props> = ({
                 <RevurderingPaneler
                   ytelseTypeKode={ytelseTypeKode}
                   behandlingresultat={behandlingresultat}
+                  resultatstruktur={resultatstruktur}
                   tilbakekrevingvalg={tilbakekrevingvalg}
                   simuleringResultat={simuleringResultat}
+                  alleKodeverk={alleKodeverk}
+                  resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
                   bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+                  behandlingStatusKode={behandlingStatus?.kode}
                   vilkar={vilkar}
+                  aksjonspunkter={aksjonspunkter}
+                  sprakkode={sprakkode}
                   readOnly={readOnly}
                   vedtakVarsel={vedtakVarsel}
                   medlemskapFom={medlemskapFom}
@@ -550,6 +574,7 @@ export const VedtakForm: React.FC<Props> = ({
                   redusertUtbetalingArsak={redusertUtbetalingArsak}
                   formikValues={formikProps.values}
                   erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+                  behandlingArsaker={behandlingArsaker}
                 />
               )}
 
@@ -578,7 +603,7 @@ export const VedtakForm: React.FC<Props> = ({
               />
               {!erRevurdering ? (
                 <VedtakSubmit
-                  behandlingStatusKode={behandlingStatus}
+                  behandlingStatusKode={behandlingStatus?.kode}
                   readOnly={readOnly}
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
@@ -596,12 +621,11 @@ export const VedtakForm: React.FC<Props> = ({
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
                   readOnly={readOnly}
-                  behandlingStatusKode={behandlingStatus}
+                  behandlingStatusKode={behandlingStatus?.kode}
                   harRedusertUtbetaling={harRedusertUtbetaling}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
                   errorOnSubmit={errorOnSubmit}
-                  behandlingÅrsaker={behandlingÅrsaker}
                 />
               )}
               {visSakGårIkkeTilBeslutterModal && (

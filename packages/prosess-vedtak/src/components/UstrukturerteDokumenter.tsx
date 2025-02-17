@@ -1,8 +1,21 @@
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Heading, Link } from '@navikt/ds-react';
-import { DokumentMedUstrukturerteDataDto } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import styles from './ustrukturerteDokumenter.module.css';
+
+export interface Link {
+  href: string;
+  rel: string;
+  requestPayload: Record<string, unknown>;
+  type: string;
+}
+
+export interface UstrukturerteDokumenterType {
+  datert: string;
+  id: string;
+  links: Link[];
+  type: string;
+}
 
 const linkIcon = (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,7 +28,7 @@ const linkIcon = (
   </svg>
 );
 
-const getLinks = (dokumenter: DokumentMedUstrukturerteDataDto[]) =>
+const getLinks = (dokumenter: UstrukturerteDokumenterType[]) =>
   dokumenter?.map(dokument => {
     const navn = `${dokument.type} - ${moment(dokument.datert).format(DDMMYYYY_DATE_FORMAT)}`;
     const getLink = dokument.links.find(link => link.type === 'GET');
@@ -30,7 +43,7 @@ const getLinks = (dokumenter: DokumentMedUstrukturerteDataDto[]) =>
   });
 
 interface UstrukturerteDokumenterProps {
-  fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
+  fritekstdokumenter: UstrukturerteDokumenterType[];
 }
 
 const UstrukturerteDokumenter = ({ fritekstdokumenter }: UstrukturerteDokumenterProps) => (
