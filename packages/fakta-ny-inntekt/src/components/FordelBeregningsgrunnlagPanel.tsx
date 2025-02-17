@@ -3,11 +3,11 @@ import { VerticalSpacer } from '@navikt/ft-ui-komponenter';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/ArbeidsgiverOpplysninger.js';
 import type { BeregningAvklaringsbehov } from '../types/BeregningAvklaringsbehov.js';
 import type { Beregningsgrunnlag } from '../types/Beregningsgrunnlag.js';
-import type { TilkommetAktivitetFormValues } from '../types/FordelBeregningsgrunnlagPanelValues';
+import type { TilkommetAktivitetFormValues } from '../types/FordelBeregningsgrunnlagPanelValues.js';
 import { FaktaFordelBeregningAvklaringsbehovCode } from '../types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
-import { type VurderNyttInntektsforholdAP } from '../types/interface/VurderNyttInntektsforholdAP';
-import { type Vilkårperiode } from '../types/Vilkår';
-import { TilkommetAktivitet } from './tilkommetAktivitet/TilkommetAktivitet';
+import { type VurderNyttInntektsforholdAP } from '../types/interface/VurderNyttInntektsforholdAP.js';
+import { type Vilkårperiode } from '../types/Vilkår.js';
+import { TilkommetAktivitet } from './tilkommetAktivitet/TilkommetAktivitet.js';
 
 const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
 
