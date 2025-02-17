@@ -16,7 +16,7 @@ export const formatQueryString = (queryParams: { [key: string]: string | boolean
       .map(([key, value]) => [key, encodeURIComponent(value as string)]) // URL-encode value
       .map(([key, encodedValue]) => `${key}=${encodedValue}`)
       .join('&') // Join with delimiter '&'
-      .replace('%20', '+') // Replace URL-encoded spaces with plus
+      .replace(/%20/g, '+') // Replace URL-encoded spaces with plus
   }`;
 
 const paramSegmentPattern = /^:(\w+)(\(.+\))?(\?)?$/;
