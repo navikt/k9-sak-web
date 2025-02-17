@@ -1,13 +1,18 @@
-import React from 'react';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import findStatusForVedtak from '@fpsak-frontend/utils/src/findStatusForVedtak';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { Fagsak } from '@k9-sak-web/types';
 import { UtvidetRettBehandlingApiKeys } from '../../data/utvidetRettBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <VedtakProsessIndex {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <VedtakProsessIndex {...props} {...deepCopyProps} />;
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORESLA_VEDTAK,
@@ -39,13 +44,23 @@ class PanelDef extends ProsessStegPanelDef {
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
+  }: {
+    previewCallback;
+    hentFritekstbrevHtmlCallback;
+    rettigheter;
+    aksjonspunkter;
+    vilkar;
+    fagsak: Fagsak;
+    personopplysninger;
+    arbeidsgiverOpplysningerPerId;
+    lagreDokumentdata;
   }) => ({
     previewCallback,
     hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     vilkar,
     personopplysninger,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,

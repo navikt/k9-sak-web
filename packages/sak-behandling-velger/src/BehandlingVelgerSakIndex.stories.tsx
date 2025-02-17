@@ -251,10 +251,7 @@ const behandlinger = [
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelsesType.PSB,
-    kodeverk: 'FAGSAK_YTELSE',
-  },
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
   relasjonsRolleType: {
     kode: relasjonsRolleType.MOR,
     kodeverk: '',

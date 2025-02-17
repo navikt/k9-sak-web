@@ -1,6 +1,5 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse } from '@fpsak-frontend/utils';
@@ -15,22 +14,25 @@ import {
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
-import { FormikProps, setNestedObjectValues, useField } from 'formik';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import { BehandlingsresultatDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import styles from './BrevPanel.module.css';
+import { CustomFormikProps } from './CustomFormikProps';
 import InformasjonsbehovAutomatiskVedtaksbrev, {
   InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';
 
-const kanResultatForhåndsvises = behandlingResultat => {
+const kanResultatForhåndsvises = (behandlingResultat: BehandlingsresultatDto) => {
   if (!behandlingResultat) {
     return true;
   }
@@ -38,7 +40,7 @@ const kanResultatForhåndsvises = behandlingResultat => {
   if (!type) {
     return true;
   }
-  return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
+  return type !== 'INGEN_ENDRING';
 };
 
 export const manuellBrevPreview = ({
@@ -53,7 +55,7 @@ export const manuellBrevPreview = ({
 }: {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   previewCallback: (values, aapneINyttVindu) => void;
-  values: any;
+  values: FormikValues;
   redigertHtml: any;
   overstyrtMottaker: Brevmottaker;
   brødtekst: string;
@@ -106,7 +108,7 @@ const getManuellBrevCallback =
     brødtekst: string;
     overskrift: string;
     overstyrtMottaker?: Brevmottaker;
-    formProps: FormikProps<any>;
+    formProps: CustomFormikProps;
     previewCallback: (values, aapneINyttVindu) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
@@ -138,28 +140,28 @@ const getHentHtmlMalCallback =
   };
 
 interface BrevPanelProps {
-  intl: IntlShape;
-  readOnly: boolean;
-  sprakkode: Kodeverk;
-  personopplysninger: Personopplysninger;
+  aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  informasjonsbehovValues: any[];
-  skalBrukeOverstyrendeFritekstBrev: boolean;
   begrunnelse: string;
-  previewCallback: (values, aapneINyttVindu) => void;
-  hentFritekstbrevHtmlCallback: (parameters: any) => any;
+  behandlingResultat: BehandlingsresultatDto;
   brødtekst: string;
-  overskrift: string;
-  behandlingResultat: Behandlingsresultat;
-  overstyrtMottaker?: Brevmottaker;
-  formikProps: FormikProps<any>;
-  ytelseTypeKode: string;
   dokumentdata: DokumentDataType;
-  aktiverteInformasjonsbehov: any;
-  lagreDokumentdata: (any) => void;
+  formikProps: CustomFormikProps;
   getPreviewAutomatiskBrevCallback: (any) => (any) => (event: React.SyntheticEvent<Element, Event>) => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => any;
+  informasjonsbehovValues: any[];
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  intl: IntlShape;
+  lagreDokumentdata: (any) => void;
+  overskrift: string;
+  overstyrtMottaker?: Brevmottaker;
+  personopplysninger: PersonopplysningDto;
+  previewCallback: (values, aapneINyttVindu) => void;
+  readOnly: boolean;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
+  sprakkode: string;
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  ytelseTypeKode: FagsakYtelsesType;
 }
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
@@ -209,7 +211,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
   const kanInkludereKalender =
-    ytelseTypeKode === fagsakYtelseType.PLEIEPENGER || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+    ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN ||
+    ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];

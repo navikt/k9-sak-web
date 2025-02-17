@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { AksjonspunktDto, BehandlingDto, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
 import { formatDate, subDays, subWeeks } from 'date-fns';
@@ -73,12 +74,12 @@ const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequ
           // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
           begrunnelse: 'Dette er en grundig begrunnelse',
           periode: { fom: fom1.toISOString(), tom: tom1.toISOString() },
-          søkersUttaksgrad: '40',
+          søkersUttaksgrad: 40,
         },
         {
           begrunnelse: 'Dette er en grundig begrunnelse',
           periode: { fom: fom2.toISOString(), tom: tom2.toISOString() },
-          søkersUttaksgrad: '60',
+          søkersUttaksgrad: 60,
         },
       ],
     },
@@ -98,7 +99,7 @@ type Story = StoryObj<typeof meta>;
 
 const behandling: Omit<BehandlingDto, 'uuid' | 'status'> = {
   opprettet: subDays(new Date(), 5).toISOString(),
-  sakstype: 'PSB',
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   type: 'BT-002',
   versjon: 1,
   id: 123,
@@ -125,20 +126,20 @@ const avsluttetBehandling: BehandlingDto = {
 const aksjonspunkt: AksjonspunktDto = {
   aksjonspunktType: 'MANU',
   erAktivt: true,
-  besluttersBegrunnelse: null,
+  besluttersBegrunnelse: undefined,
   definisjon: '9292',
-  fristTid: null,
+  fristTid: undefined,
   toTrinnsBehandling: true,
-  toTrinnsBehandlingGodkjent: null,
-  vilkarType: null,
-  vurderPaNyttArsaker: null,
+  toTrinnsBehandlingGodkjent: undefined,
+  vilkarType: undefined,
+  vurderPaNyttArsaker: undefined,
   venteårsak: '-',
-  venteårsakVariant: null,
+  venteårsakVariant: undefined,
   opprettetAv: 'vtp',
 };
 
 const uløstAksjonspunkt: AksjonspunktDto = {
-  begrunnelse: null,
+  begrunnelse: undefined,
   kanLoses: true,
   status: 'OPPR',
   ...aksjonspunkt,
@@ -229,9 +230,9 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 
       await expect(knapp).toHaveTextContent('Rediger');
       await userEvent.click(knapp);
-      await expect(feltEn.getAttribute('readonly')).toEqual('');
-      await expect(feltTo.getAttribute('readonly')).toEqual('');
-      await expect(begrunnelseFelt.getAttribute('readonly')).toEqual('');
+      await expect(feltEn).not.toHaveAttribute('readonly');
+      await expect(feltTo).not.toHaveAttribute('readonly');
+      await expect(begrunnelseFelt).not.toHaveAttribute('readonly');
 
       await userEvent.click(await canvas.getByRole('button', { name: /Avbryt/i }));
       await expect(feltTo).toHaveAttribute('readonly');

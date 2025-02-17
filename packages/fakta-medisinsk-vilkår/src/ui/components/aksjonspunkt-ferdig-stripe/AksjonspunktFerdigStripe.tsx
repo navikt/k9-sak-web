@@ -1,7 +1,7 @@
 import { Alert, Button } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
-import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ContainerContext from '../../context/ContainerContext';
 
 import type { JSX } from 'react';
@@ -10,7 +10,7 @@ const AksjonspunktFerdigStripe = (): JSX.Element => {
   const { onFinished } = React.useContext(ContainerContext);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { fagsakYtelseType } = React.useContext(ContainerContext);
-  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   return (
     <Box marginBottom={Margin.medium}>

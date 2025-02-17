@@ -56,7 +56,7 @@ export class MalControllerClient {
   }
 
   async hentInnholdBrevmalType(
-    sakstype: string,
+    sakstype: FagsakYtelsesType,
     eksternReferanse: string,
     avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,

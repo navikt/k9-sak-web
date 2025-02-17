@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -8,13 +8,12 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
@@ -87,10 +86,9 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -126,10 +124,9 @@ export const visDelvisInnvilgetForOmsorgspenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+        ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -176,10 +173,9 @@ export const visAvslagForForeldrepenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -217,10 +213,9 @@ export const visÅpentAksjonspunktForSvangerskapspenger = args => {
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
+        ytelseType={fagsakYtelsesType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -279,10 +274,9 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = args => 
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
+        ytelseType={fagsakYtelsesType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -320,10 +314,9 @@ export const visÅpentAksjonspunktForEngangsstønad = args => {
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -364,10 +357,9 @@ export const visAtBehandlingErHenlagt = args => {
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -424,10 +416,9 @@ export const visInnvilgetForForeldrepengerRevurdering = args => {
             kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
           },
         }}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -466,10 +457,9 @@ export const visOpphørtForForeldrepengerRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -500,10 +490,9 @@ export const visInnvilgetForEngangsstønadRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -553,10 +542,9 @@ export const visAvslåttForEngangsstønadRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -594,10 +582,7 @@ export const visOverlappendeYtelser = args => {
 
   const overlappendeYtelser = [
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -611,10 +596,7 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -632,10 +614,7 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -653,10 +632,7 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -708,10 +684,9 @@ export const visOverlappendeYtelser = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[aksjonspunkt5040]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         overlappendeYtelser={overlappendeYtelser}
         {...args}
       />
@@ -738,10 +713,9 @@ export const brevMedFritekstfelt = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
+        ytelseType={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         informasjonsbehovVedtaksbrev={{
           informasjonsbehov: [
             {

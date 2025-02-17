@@ -258,6 +258,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.OVERSTYRING,
     punktNavn: '',
   },
+  FAKTA_OM_NYOPPSTARTET: {
+    kode: 'FAKTA_OM_NYOPPSTARTET',
+    faktaNavn: faktaPanelCodes.NYOPPSTARTET,
+    punktNavn: prosessStegCodes.DEFAULT,
+  },
 };
 
 export default skjermlenkeCodes;

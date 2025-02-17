@@ -1,15 +1,19 @@
-import React from 'react';
-
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { Fagsak } from '@k9-sak-web/types';
 
-import findStatusForVedtak from '../vedtakStatusUtlederPleiepengerSluttfase';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
+import findStatusForVedtak from '../vedtakStatusUtlederPleiepengerSluttfase';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <VedtakProsessIndex {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <VedtakProsessIndex {...props} {...deepCopyProps} />;
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORESLA_VEDTAK,
@@ -51,6 +55,17 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
     fagsak,
+  }: {
+    fagsak: Fagsak;
+    previewCallback;
+    hentFritekstbrevHtmlCallback;
+    rettigheter;
+    aksjonspunkter;
+    vilkar;
+    simuleringResultat;
+    beregningsgrunnlag;
+    arbeidsgiverOpplysningerPerId;
+    lagreDokumentdata;
   }) => ({
     previewCallback,
     hentFritekstbrevHtmlCallback,
@@ -58,7 +73,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,

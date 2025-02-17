@@ -1,3 +1,3 @@
-import { type UttakDto, utfall2 as GeneratedUtfall } from '../generated';
-export type UttakUtfallType = UttakDto['utfall'];
-export const uttakUtfallType: Readonly<Record<UttakUtfallType, UttakUtfallType>> = GeneratedUtfall;
+import { type UttakDtoUtfall as typeUnion, UttakDtoUtfall as enumObj } from '../generated';
+export type UttakUtfallType = typeUnion;
+export const uttakUtfallType = enumObj;

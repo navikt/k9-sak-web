@@ -1,6 +1,6 @@
-import moment from 'moment';
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router';
+//import * as Sentry from '@sentry/browser';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
@@ -12,12 +12,43 @@ import { createLocationForSkjermlenke, pathToBehandling } from '../../app/paths'
 import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
+import { HistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
+import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkeboble.js';
+import dayjs from 'dayjs';
+import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
+//import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+//import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
+import { HelpText, HStack, Switch } from '@navikt/ds-react';
 
+/*
 type HistorikkMedTilbakekrevingIndikator = Historikkinnslag & {
   erTilbakekreving?: boolean;
   erKlage?: boolean;
 };
+ */
 
+type SakHistorikkInnslagV1 = Historikkinnslag & {
+  erKlage?: never;
+  erTilbakekreving?: never;
+  erSak: boolean;
+};
+
+type KlageHistorikkInnslagV1 = Historikkinnslag & {
+  erKlage: boolean;
+  erTilbakekreving?: never;
+  erSak?: never;
+};
+
+type TilbakeHistorikkInnslagV2 = HistorikkinnslagV2 & {
+  erKlage?: never;
+  erTilbakekreving: boolean;
+  erSak?: never;
+};
+
+type UlikeHistorikkinnslagTyper = SakHistorikkInnslagV1 | KlageHistorikkInnslagV1 | TilbakeHistorikkInnslagV2;
+
+/*
 const sortAndTagTilbakekrevingOgKlage = (
   historikkK9sak: Historikkinnslag[] = [],
   historikkTilbake: Historikkinnslag[] = [],
@@ -34,13 +65,27 @@ const sortAndTagTilbakekrevingOgKlage = (
   return historikkK9sak
     .concat(historikkFraTilbakekrevingMedMarkor)
     .concat(historikkFraKlageMedMarkor)
-    .sort((a, b) => moment(b.opprettetTidspunkt).diff(moment(a.opprettetTidspunkt)));
+    .sort((a, b) => dayjs(b.opprettetTidspunkt).diff(dayjs(a.opprettetTidspunkt)));
+};
+ */
+
+const sortAndTagUlikeHistorikkinnslagTyper = (
+  historikkK9sak: Historikkinnslag[] = [],
+  historikkTilbake: HistorikkinnslagV2[] = [],
+  historikkKlage: Historikkinnslag[] = [],
+): UlikeHistorikkinnslagTyper[] => {
+  return [
+    ...historikkTilbake.map(v => ({ ...v, erTilbakekreving: true })),
+    ...historikkKlage.map(v => ({ ...v, erKlage: true })),
+    ...historikkK9sak.map(v => ({ ...v, erSak: true })),
+  ].toSorted((a, b) => dayjs(b.opprettetTidspunkt).diff(a.opprettetTidspunkt));
 };
 
 interface OwnProps {
   saksnummer: string;
-  behandlingId?: number;
+  behandlingId: number;
   behandlingVersjon?: number;
+  kjønn: Kjønn;
 }
 
 /**
@@ -48,8 +93,13 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
-const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
+const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
+  //const featureToggles = useContext(FeatureTogglesContext);
+  //const [visV2, setVisV2] = useState(featureToggles?.['HISTORIKK_V2_VIS'] === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
+  const visV2 = true; // Alltid true inntil omskriving av historikk frå klage og sak er i gang.
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  //const compareTimeoutIdRef = useRef(0);
 
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
@@ -63,9 +113,9 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(
-    (bId: number) => ({
+    (behandlingId: number) => ({
       ...location,
-      pathname: pathToBehandling(saksnummer, bId),
+      pathname: pathToBehandling(saksnummer, behandlingId),
     }),
     [location],
   );
@@ -74,7 +124,8 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   const skalBrukeKlageHistorikk = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const forrigeSaksnummer = usePrevious(saksnummer);
-  const erBehandlingEndret = forrigeSaksnummer && erBehandlingEndretFraUndefined;
+  const erBehandlingEndret: boolean =
+    forrigeSaksnummer !== undefined && forrigeSaksnummer.length > 0 && erBehandlingEndretFraUndefined;
 
   const { data: historikkK9Sak, state: historikkK9SakState } = restApiHooks.useRestApi<Historikkinnslag[]>(
     K9sakApiKeys.HISTORY_K9SAK,
@@ -85,8 +136,19 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
     },
   );
 
+  /*
   const { data: historikkTilbake, state: historikkTilbakeState } = restApiHooks.useRestApi<Historikkinnslag[]>(
     K9sakApiKeys.HISTORY_TILBAKE,
+    { saksnummer },
+    {
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest: !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
+    },
+  );
+   */
+
+  const { data: historikkTilbakeV2, state: historikkTilbakeStateV2 } = restApiHooks.useRestApi<HistorikkinnslagV2[]>(
+    K9sakApiKeys.HISTORY_TILBAKE_V2,
     { saksnummer },
     {
       updateTriggers: [behandlingId, behandlingVersjon],
@@ -103,41 +165,127 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
     },
   );
 
+  /*
   const historikkInnslag = useMemo(
     () => sortAndTagTilbakekrevingOgKlage(historikkK9Sak, historikkTilbake, historikkKlage),
     [historikkK9Sak, historikkTilbake, historikkKlage],
   );
+   */
+  const historikkInnslagV1V2 = useMemo(
+    () => sortAndTagUlikeHistorikkinnslagTyper(historikkK9Sak, historikkTilbakeV2, historikkKlage),
+    [historikkK9Sak, historikkTilbakeV2, historikkKlage],
+  );
 
-  if (
+  const getTilbakeKodeverknavn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
+
+  /*
+  const v1HistorikkElementer = historikkInnslag.map(innslag => {
+    let alleKodeverk = alleKodeverkK9Sak;
+    if (innslag.erTilbakekreving) {
+      alleKodeverk = alleKodeverkTilbake;
+    }
+    if (innslag.erKlage) {
+      alleKodeverk = alleKodeverkKlage;
+    }
+    return (
+      <HistorikkSakIndex
+        key={innslag.opprettetTidspunkt + innslag.type.kode}
+        historikkinnslag={innslag}
+        saksnummer={saksnummer}
+        alleKodeverk={alleKodeverk}
+        erTilbakekreving={!!innslag.erTilbakekreving}
+        getBehandlingLocation={getBehandlingLocation}
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
+      />
+    );
+  });
+   */
+  const v2HistorikkElementer = historikkInnslagV1V2.map((innslag, idx) => {
+    let alleKodeverk = alleKodeverkK9Sak;
+    if (innslag.erTilbakekreving) {
+      alleKodeverk = alleKodeverkTilbake;
+    }
+    if (innslag.erKlage) {
+      alleKodeverk = alleKodeverkKlage;
+    }
+    // tilbakekreving har her historikk innslag v2
+    if (innslag.erTilbakekreving) {
+      return (
+        <Snakkeboble
+          key={`${innslag.opprettetTidspunkt}-${innslag.aktør.ident}-${idx}`}
+          saksnummer={saksnummer}
+          historikkInnslag={innslag}
+          kjønn={kjønn}
+          createLocationForSkjermlenke={createLocationForSkjermlenke}
+          getKodeverknavn={getTilbakeKodeverknavn}
+          behandlingLocation={getBehandlingLocation(behandlingId)}
+        />
+      );
+    } else if (innslag.erSak || innslag.erKlage) {
+      return (
+        <HistorikkSakIndex
+          key={`${innslag.opprettetTidspunkt}-${innslag.aktoer.kode}-${idx}`}
+          historikkinnslag={innslag}
+          saksnummer={saksnummer}
+          alleKodeverk={alleKodeverk}
+          erTilbakekreving={!!innslag.erTilbakekreving}
+          getBehandlingLocation={getBehandlingLocation}
+          createLocationForSkjermlenke={createLocationForSkjermlenke}
+        />
+      );
+    } else {
+      throw new Error(`Ugylding innslag objekt på saksnummer ${saksnummer}`);
+    }
+  });
+
+  const isLoading =
     isRequestNotDone(historikkK9SakState) ||
-    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
-    (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState))
-  ) {
+    //(skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
+    (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState)) ||
+    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2));
+
+  // Samanlikning av v1 og v2 render resultat. Sjekker at alle ord rendra i v1 historikkinnslag også bli rendra i v2.
+  // (Uavhengig av rekkefølge på orda.) For å unngå fleire køyringer av sjekk pga re-rendering ved initiell lasting
+  // er køyring forsinka litt, med clearTimeout på forrige timeout id.
+  /*
+  useEffect(() => {
+    if (compareTimeoutIdRef.current > 0) {
+      window.clearTimeout(compareTimeoutIdRef.current);
+    }
+    if (!isLoading) {
+      compareTimeoutIdRef.current = window.setTimeout(async () => {
+        try {
+          await compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
+        } catch (err) {
+          setVisV2(false);
+          Sentry.captureException(err, { level: 'warning' });
+        }
+      }, 1_000);
+    }
+  }, [isLoading, historikkInnslag, historikkInnslagV1V2]); // Ønsker bevisst å berre køyre samanlikningssjekk ein gang.
+   */
+
+  if (isLoading) {
     return <LoadingPanel />;
   }
 
   return (
     <div className="grid gap-5">
-      {historikkInnslag.map(innslag => {
-        let alleKodeverk = alleKodeverkK9Sak;
-        if (innslag.erTilbakekreving) {
-          alleKodeverk = alleKodeverkTilbake;
-        }
-        if (innslag.erKlage) {
-          alleKodeverk = alleKodeverkKlage;
-        }
-        return (
-          <HistorikkSakIndex
-            key={innslag.opprettetTidspunkt + innslag.type.kode}
-            historikkinnslag={innslag}
-            saksnummer={saksnummer}
-            alleKodeverk={alleKodeverk}
-            erTilbakekreving={!!innslag.erTilbakekreving}
-            getBehandlingLocation={getBehandlingLocation}
-            createLocationForSkjermlenke={createLocationForSkjermlenke}
-          />
-        );
-      })}
+      <HStack align="center">
+        <Switch size="small" checked={visV2} disabled /*onChange={ev => setVisV2(ev.target.checked)} */>
+          Ny visning&nbsp;
+        </Switch>
+        <HelpText>
+          <p>Vi er i ferd med å gå over til nytt format/visning av historikk innslag.</p>
+          <p>I en overgangsperiode kan du med denne bryter bytte mellom ny og gammel visning.</p>
+          <p>
+            Akkurat nå er bytte av visning deaktivert. Historikk fra tilbakekrevinger viser på nytt format, andre er på
+            gammelt format.
+          </p>
+          <p>Andre historikkinnslag vil snart være tilgjengelig både på nytt og gammelt format i en testperiode.</p>
+        </HelpText>
+      </HStack>
+      {visV2 ? v2HistorikkElementer : v2HistorikkElementer}
     </div>
   );
 };
