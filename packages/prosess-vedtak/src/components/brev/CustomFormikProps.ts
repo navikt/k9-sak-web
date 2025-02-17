@@ -1,6 +1,6 @@
 import { FormikHelpers, FormikState, FormikValues } from 'formik';
 
-export type CustomFormikProps = {
+export type CustomFormikProps<> = {
   validateForm: FormikHelpers<FormikValues>['validateForm'];
   setTouched: FormikHelpers<FormikValues>['setTouched'];
   setFieldValue: FormikHelpers<FormikValues>['setFieldValue'];
