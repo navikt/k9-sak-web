@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  KodeverkMedNavn,
-  Behandling,
-  ArbeidsgiverOpplysningerPerId,
-  FagsakPerson,
-  Fagsak,
-  Dokument,
-  FeatureToggles,
-} from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Dokument,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
 
+import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
-import { restApiPleiepengerHooks, PleiepengerBehandlingApiKeys } from '../data/pleiepengerBehandlingApi';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
@@ -88,7 +88,7 @@ const PleiepengerFakta = ({
     featureToggles,
   );
 
-  faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
+  faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon, featureToggles);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
     faktaPaneler,
@@ -151,7 +151,12 @@ const PleiepengerFakta = ({
               alleKodeverk,
               featureToggles,
               submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+              ...valgtPanel.getKomponentData(
+                rettigheter,
+                dataTilUtledingAvPleiepengerPaneler,
+                hasFetchError,
+                featureToggles,
+              ),
               dokumenter,
               beregningErBehandlet,
               formData,

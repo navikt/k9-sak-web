@@ -4,13 +4,19 @@ import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-front
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import NyInntektFaktaIndex from '@k9-sak-web/fakta-ny-inntekt';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 
 class NyInntektPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.NY_INNTEKT;
 
   getTekstKode = () => 'NyInntekt.Title';
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD];
+  getAksjonspunktKoder = (featureToggles?: FeatureToggles) => {
+    if (featureToggles?.NY_INNTEKT_EGET_PANEL) {
+      return [aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD];
+    }
+    return [];
+  };
 
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));

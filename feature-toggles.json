@@ -106,5 +106,9 @@
   {
     "key": "VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK",
     "value": "${VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK}"
+  },
+  {
+    "key": "NY_INNTEKT_EGET_PANEL",
+    "value": "${NY_INNTEKT_EGET_PANEL}"
   }
 ]

@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
+  Dokument,
   Fagsak,
   FagsakPerson,
-  KodeverkMedNavn,
   FeatureToggles,
-  Dokument,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { useEffect, useState } from 'react';
 
 import { isBefore, parse } from 'date-fns';
-import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omsorgspengerBehandlingApi';
 import faktaPanelDefinisjoner, {
   faktaPanelDefinisjonerUtenOmsorgenFor,
 } from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
@@ -103,7 +103,7 @@ const OmsorgspengerFakta = ({
     featureToggles,
   );
 
-  faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
+  faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon, featureToggles);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
     faktaPaneler,

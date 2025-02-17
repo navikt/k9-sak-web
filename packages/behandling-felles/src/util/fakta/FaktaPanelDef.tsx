@@ -23,7 +23,8 @@ abstract class FaktaPanelDef {
   /**
    * Aksjonspunktkoder som er koblet til panelet.
    */
-  public getAksjonspunktKoder = (): string[] => [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public getAksjonspunktKoder = (featureToggles?: any): string[] => [];
 
   /**
    * Data som komponent er avhengig av må defineres her slik at det kan hentes fra server
@@ -55,7 +56,7 @@ abstract class FaktaPanelDef {
    * er også mulig å legge til egen sjekk i @see getOverstyrVisningAvKomponent
    */
   public skalVisePanel = (apCodes: string[], data: any, featureToggles?: any): boolean =>
-    this.getAksjonspunktKoder().some(a => apCodes.includes(a)) ||
+    this.getAksjonspunktKoder(featureToggles).some(a => apCodes.includes(a)) ||
     this.getOverstyrVisningAvKomponent(data, featureToggles);
 }
 
