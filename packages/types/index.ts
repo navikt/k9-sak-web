@@ -60,8 +60,6 @@ export * from './src/kodeverk';
 export * from './src/meldingTsType';
 export type { default as MerknadFraLos } from './src/merknadFraLos';
 export type { default as SimpleLink } from './src/microfrontends/SimpleLink';
-export { default as NotatGjelderType } from './src/notat-i-sak/NotatGjelderType';
-export type { default as NotatResponse } from './src/notat-i-sak/NotatResponse';
 export { UtfallEnum, VilkårEnum } from './src/omsorgspenger/Uttaksperiode';
 export type { Utfalltype, Uttaksperiode, Vilkår, VurderteVilkår } from './src/omsorgspenger/Uttaksperiode';
 export * from './src/opplaering/InstitusjonTypes';
