@@ -10,7 +10,6 @@ import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import type { Historikkinnslag } from '@k9-sak-web/types';
 import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setBaseRequestApiMocks.js';
 import { historikkSakV1 } from '../../../../storybook/stories/mocks/historikkSakV1.js';
-import { historikkTilbakeV1 } from '../../../../storybook/stories/mocks/historikkTilbakeV1.js';
 import { historikkTilbakeV2 } from '../../../../storybook/stories/mocks/historikkTilbakeV2.js';
 
 const historyK9KlageV1: Historikkinnslag[] = [
@@ -33,7 +32,6 @@ const meta = {
     requestApi.clearAllMockData();
     setBaseRequestApiMocks(requestApi);
     requestApi.mock(K9sakApiKeys.HISTORY_K9SAK, historikkSakV1);
-    requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, historikkTilbakeV1);
     requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE_V2, historikkTilbakeV2);
     requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, historyK9KlageV1);
   },
