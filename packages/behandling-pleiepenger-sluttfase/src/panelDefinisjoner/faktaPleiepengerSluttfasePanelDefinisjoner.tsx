@@ -1,13 +1,14 @@
 import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanelDef';
-import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
-import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
 import BeregningFaktaPanelDef from './faktaPaneler/BeregningFaktaPanelDef';
-import MedisinskVilkarFaktaPanelDef2 from './faktaPaneler/MedisinskVilkarFaktaPanelDef2';
-import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
 import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
-import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFaktaPanelDef';
+import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
+import MedisinskVilkarFaktaPanelDef2 from './faktaPaneler/MedisinskVilkarFaktaPanelDef2';
+import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
+import NyInntektPanelDef from './faktaPaneler/NyInntektPanelDef';
 import OmPleietrengendeFaktaPanelDef from './faktaPaneler/OmPleietrengendeFaktaPanelDef';
+import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
+import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFaktaPanelDef';
 import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
 import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
 
@@ -20,6 +21,7 @@ const faktaPanelDefinisjoner = [
   new InntektsmeldingFaktaPanelDef(),
   new OverstyrBeregningFaktaPanelDef(),
   new BeregningFaktaPanelDef(),
+  new NyInntektPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
   new UtenlandsoppholdFaktaPanelDef(),

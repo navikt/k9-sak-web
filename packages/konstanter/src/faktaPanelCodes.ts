@@ -7,6 +7,7 @@ const faktaPanelCodes = {
   INFOTRYGDMIGRERING: 'infotrygdmigrering',
   DEFAULT: 'default',
   FORDELING: 'fordeling',
+  NY_INNTEKT: 'ny-inntekt',
   FEILUTBETALING: 'feilutbetaling',
   FODSELSVILKARET: 'foedselsvilkaaret',
   INNTEKTSMELDING: 'inntektsmelding',
