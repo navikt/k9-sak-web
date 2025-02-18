@@ -1,5 +1,5 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingResultatType as klageBehandlingsresultat } from '@navikt/k9-klage-typescript-client';
+import { behandlingType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   AvslagsårsakPrPeriodeDto,
   AvslagsårsakPrPeriodeDtoAvslagsårsak,
