@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import FatterVedtakTotrinnskontrollModalSakIndex from './FatterVedtakTotrinnskontrollModalSakIndex';
 
 export default {
-  title: 'sak/sak-totrinnskontroll-fatter-vedtak-modal',
+  title: 'gui/sak/totrinnskontroll/fatter-vedtak-modal',
   component: FatterVedtakTotrinnskontrollModalSakIndex,
 };
 
