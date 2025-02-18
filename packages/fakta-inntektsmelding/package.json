@@ -18,7 +18,7 @@
     "@navikt/ds-css": "7.10.0",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "7.10.0",
-    "@navikt/ft-form-hooks": "^6.1.5",
+    "@navikt/ft-form-hooks": "^6.2.0",
     "@navikt/ft-plattform-komponenter": "^7.2.3",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
