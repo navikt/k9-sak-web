@@ -89,7 +89,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
   };
 
   React.useEffect(() => {
-    hentOverstyrte();
+    void hentOverstyrte();
   }, [versjon]);
 
   const value = React.useMemo(
