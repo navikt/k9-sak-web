@@ -159,7 +159,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
     requestPleiepengerSluttfaseApi.setRequestPendingHandler(setRequestPendingMessage);
     requestPleiepengerSluttfaseApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
