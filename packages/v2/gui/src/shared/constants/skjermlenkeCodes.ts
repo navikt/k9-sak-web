@@ -42,6 +42,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.MEDLEMSKAPSVILKARET,
     punktNavn: '',
   },
+  FAKTA_OM_NY_INNTEKT: {
+    kode: 'FAKTA_OM_NY_INNTEKT',
+    faktaNavn: faktaPanelCodes.NY_INNTEKT,
+    punktNavn: '',
+  },
   FAKTA_FOR_OMSORG: {
     kode: 'FAKTA_FOR_OMSORG',
     faktaNavn: faktaPanelCodes.OMSORG,
