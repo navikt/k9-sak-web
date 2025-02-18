@@ -1,10 +1,6 @@
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
-import {
-  BehandlingDtoStatus,
-  TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker,
-} from '@navikt/k9-sak-typescript-client';
-import { action } from '@storybook/addon-actions';
+import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
@@ -92,27 +88,6 @@ const data = [
   },
 ];
 
-const dataReadOnly = [
-  {
-    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
-    totrinnskontrollAksjonspunkter: [
-      {
-        aksjonspunktKode: '5082',
-        opptjeningAktiviteter: [],
-        beregningDtoer: [],
-        besluttersBegrunnelse: 'asdfa',
-        totrinnskontrollGodkjent: false,
-        vurderPaNyttArsaker: [
-          TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_REGEL,
-          TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_FAKTA,
-        ],
-        uttakPerioder: [],
-        arbeidsforholdDtos: [],
-      },
-    ],
-  },
-];
-
 const location = {
   key: '1',
   pathname: '',
@@ -131,11 +106,11 @@ const meta: Meta<typeof TotrinnskontrollSakIndex> = {
   title: 'gui/sak/totrinnskontroll',
   component: TotrinnskontrollSakIndex,
   decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD })],
-};
+} satisfies Meta<typeof TotrinnskontrollSakIndex>;
 
 export default meta;
 
-type Story = StoryObj<typeof TotrinnskontrollSakIndex>;
+type Story = StoryObj<typeof meta>;
 
 export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
   args: {
@@ -292,31 +267,3 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
   },
 };
-
-export const visTotrinnskontrollForSaksbehandler = () => (
-  <div
-    style={{
-      width: '600px',
-      margin: '50px',
-      padding: '20px',
-      backgroundColor: 'white',
-    }}
-  >
-    <TotrinnskontrollSakIndex
-      behandling={{
-        ...behandling,
-        status: BehandlingDtoStatus.UTREDES,
-      }}
-      totrinnskontrollSkjermlenkeContext={dataReadOnly}
-      location={location}
-      readOnly
-      onSubmit={action('button-click')}
-      behandlingKlageVurdering={{
-        klageVurderingResultatNFP: {
-          klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-        },
-      }}
-      createLocationForSkjermlenke={() => location}
-    />
-  </div>
-);
