@@ -12,7 +12,7 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "msw": "2.7.0",
-    "vite": "^6.0.11",
+    "vite": "^6.1.0",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "dependencies": {
@@ -23,7 +23,7 @@
     "@navikt/ds-react": "7.10.0",
     "@navikt/ft-plattform-komponenter": "^7.2.3",
     "@popperjs/core": "2.11.8",
-    "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-query": "^5.66.7",
     "axios": "1.7.9",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
