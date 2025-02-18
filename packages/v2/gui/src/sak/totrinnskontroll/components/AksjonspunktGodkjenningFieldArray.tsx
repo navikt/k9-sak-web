@@ -1,18 +1,18 @@
-import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
-import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import * as Sentry from '@sentry/browser';
-import { Location } from 'history';
+import { type Location } from 'history';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { NavLink } from 'react-router';
-import { Behandling } from '../types/Behandling';
-import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import { type Behandling } from '../types/Behandling';
+import { type TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
-import { FormState } from './FormState';
+import { type FormState } from './FormState';
 
 const MANUELL_VURDERING_AV_ANKE = '5093';
 
@@ -60,7 +60,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
     <>
       {fields.map((field, index) => {
         const { aksjonspunktKode, totrinnskontrollGodkjent, annet, feilFakta, feilLov, feilRegel } =
-          aksjonspunktGodkjenning[index];
+          aksjonspunktGodkjenning[index] || {};
         const context = totrinnskontrollSkjermlenkeContext.find(c =>
           c.totrinnskontrollAksjonspunkter.some(ta => ta.aksjonspunktKode === aksjonspunktKode),
         );
@@ -120,7 +120,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 ?.filter(text => !!text)
                 .map((formattedMessage, i) => (
                   <div
-                    key={aksjonspunktKode.concat('_'.concat(i.toString()))}
+                    key={aksjonspunktKode?.concat('_'.concat(i.toString()))}
                     className={styles.aksjonspunktTextContainer}
                   >
                     <BodyShort size="small">{formattedMessage}</BodyShort>

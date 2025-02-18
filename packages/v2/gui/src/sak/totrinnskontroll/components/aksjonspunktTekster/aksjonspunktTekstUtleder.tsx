@@ -1,19 +1,19 @@
-import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Label } from '@navikt/ds-react';
-import { KlagebehandlingDto, klageVurdering, klageVurderingOmgjoer } from '@navikt/k9-klage-typescript-client';
+import { type KlagebehandlingDto, klageVurdering, klageVurderingOmgjoer } from '@navikt/k9-klage-typescript-client';
 import {
   ArbeidsforholdOverstyringDtoHandling,
   BehandlingDtoStatus,
-  TotrinnsArbeidsforholdDto,
-  TotrinnsBeregningDto,
+  type TotrinnsArbeidsforholdDto,
+  type TotrinnsBeregningDto,
 } from '@navikt/k9-sak-typescript-client';
 import hash from 'object-hash';
-import React, { JSX, ReactNode } from 'react';
+import React, { type JSX, type ReactNode } from 'react';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes';
-import { Behandling } from '../../types/Behandling';
-import { TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
+import { type Behandling } from '../../types/Behandling';
+import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnsBeregningDto) =>
@@ -73,12 +73,18 @@ const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactN
   )) ?? [];
 
 const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
-  const aksjonspunktText = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
+  const aksjonspunktText =
+    totrinnskontrollaksjonspunktTextCodes[
+      aksjonspunkt.aksjonspunktKode as keyof typeof totrinnskontrollaksjonspunktTextCodes
+    ];
   return aksjonspunktText ? aksjonspunktText : null;
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTexts = bg.faktaOmBeregningTilfeller?.map(kode => vurderFaktaOmBeregningTotrinnText[kode]) ?? [];
+  const aksjonspunktTexts =
+    bg.faktaOmBeregningTilfeller?.map(
+      kode => vurderFaktaOmBeregningTotrinnText[kode as keyof typeof vurderFaktaOmBeregningTotrinnText],
+    ) ?? [];
   return (
     <React.Fragment key={hash(aksjonspunktTexts)}>
       <Label size="small" as="p">
@@ -96,10 +102,11 @@ const getFaktaOmBeregningTextFlereGrunnlag = (beregningDtoer: TotrinnsBeregningD
   return beregningDtoer.map(bg => (bg.faktaOmBeregningTilfeller ? lagBgTilfelleTekst(bg) : null));
 };
 
-const omgjoerTekstMap = {
+const omgjoerTekstMap: Record<klageVurderingOmgjoer, string> = {
   DELVIS_MEDHOLD_I_KLAGE: 'Delvis omgjøring, til gunst',
   GUNST_MEDHOLD_I_KLAGE: 'Omgjort til gunst',
   UGUNST_MEDHOLD_I_KLAGE: 'Omgjort til ugunst',
+  UDEFINERT: 'Udefinert',
 };
 
 const getTextForKlageHelper = (
@@ -129,7 +136,8 @@ const getTextForKlageHelper = (
         klageVurderingResultat.klageVurderingOmgjoer &&
         klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoer.UDEFINERT
       ) {
-        aksjonspunktText = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
+        aksjonspunktText =
+          omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer as keyof typeof klageVurderingOmgjoer];
         break;
       }
       aksjonspunktText = 'Vedtaket er omgjort';

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
+import { type OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
 const lagOpptjeningAktivitetArbeidMedNavn = (resultat: string): OpptjeningAktivitet => ({

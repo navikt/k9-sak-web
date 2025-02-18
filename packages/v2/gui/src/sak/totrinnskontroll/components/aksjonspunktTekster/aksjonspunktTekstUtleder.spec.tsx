@@ -11,7 +11,7 @@ import {
   TotrinnsArbeidsforholdDtoArbeidsforholdHandlingType,
 } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
-import { TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
+import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {

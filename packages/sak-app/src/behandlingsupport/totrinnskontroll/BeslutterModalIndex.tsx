@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 
-import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
+import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { behandlingType } from '@navikt/k9-klage-typescript-client';
 import { getPathToK9Los } from '../../app/paths';

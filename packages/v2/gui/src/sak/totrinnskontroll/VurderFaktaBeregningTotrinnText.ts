@@ -11,6 +11,8 @@ const vurderFaktaOmBeregningTotrinnText = {
     'Det er vurdert om søker har hatt lønnsendring i løpet av de siste tre månedene',
   [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.FASTSETT_MÅNEDSLØNN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING]:
     'Arbeidsinntekt er fastsatt',
+  [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.FASTSETT_BG_ARBEIDSTAKER_UTEN_INNTEKTSMELDING]:
+    'Det er fastsatt fordeling av beregningsgrunnlaget for arbeidstaker uten inntektsmelding',
   [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON]:
     'Inntekt er fastsatt for arbeidstaker/frilanser i samme organisajon.',
   [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.FASTSETT_BG_KUN_YTELSE]:

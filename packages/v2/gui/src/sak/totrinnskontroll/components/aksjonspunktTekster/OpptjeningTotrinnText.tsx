@@ -1,4 +1,4 @@
-import { OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
+import { type OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
 
 const mapAktivitetTextEndring = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
