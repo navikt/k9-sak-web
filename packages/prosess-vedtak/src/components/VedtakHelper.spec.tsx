@@ -1,5 +1,5 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingResultatType as klageBehandlingsresultat } from '@navikt/k9-klage-typescript-client';
+import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
 import {
   AvslagsårsakPrPeriodeDto,
   AvslagsårsakPrPeriodeDtoAvslagsårsak,
@@ -20,7 +20,6 @@ describe('VedtakHelper', () => {
     it('should return correct text for tilbakekreving with inntrekk', () => {
       const simuleringResultat = {
         simuleringResultat: { sumInntrekk: 1000 },
-        simuleringResultatUtenInntrekk: null,
       };
       const tilbakekrevingvalg = {
         videreBehandling: TilbakekrevingValgDtoVidereBehandling.OPPRETT_TILBAKEKREVING,
@@ -35,7 +34,6 @@ describe('VedtakHelper', () => {
     it('should return correct text for tilbakekreving without inntrekk', () => {
       const simuleringResultat = {
         simuleringResultat: { sumInntrekk: 0 },
-        simuleringResultatUtenInntrekk: null,
       };
       const tilbakekrevingvalg = {
         videreBehandling: TilbakekrevingValgDtoVidereBehandling.OPPRETT_TILBAKEKREVING,
