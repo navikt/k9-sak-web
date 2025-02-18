@@ -2,22 +2,22 @@ import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { KodeverkObject, KodeverkType, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import { type KodeverkObject, KodeverkType, type KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import {
   AksjonspunktDtoDefinisjon,
   AksjonspunktDtoVurderPaNyttArsaker,
   BehandlingAksjonspunktDtoBehandlingStatus,
 } from '@navikt/k9-sak-typescript-client';
-import { Location } from 'history';
+import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
-import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
-import { FormState } from './components/FormState';
+import { type AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
+import { type FormState } from './components/FormState';
 import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
-import { Behandling } from './types/Behandling';
-import { TotrinnskontrollSkjermlenkeContext } from './types/TotrinnskontrollSkjermlenkeContext';
+import { type Behandling } from './types/Behandling';
+import { type TotrinnskontrollSkjermlenkeContext } from './types/TotrinnskontrollSkjermlenkeContext';
 
 const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,

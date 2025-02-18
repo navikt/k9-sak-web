@@ -1,6 +1,6 @@
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
-import { Behandling } from './types/Behandling';
+import type { Behandling } from './types/Behandling';
 
 interface FatterVedtakTotrinnskontrollModalSakIndexProps {
   behandling: Behandling;

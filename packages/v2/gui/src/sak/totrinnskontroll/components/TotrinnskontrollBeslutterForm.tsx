@@ -1,19 +1,19 @@
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
-import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { ariaCheck } from '@navikt/ft-form-validators';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import type { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@navikt/k9-sak-typescript-client';
-import { Location } from 'history';
+import type { Location } from 'history';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { Behandling } from '../types/Behandling';
-import { TotrinnskontrollAksjonspunkt } from '../types/TotrinnskontrollAksjonspunkt';
-import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import type { Behandling } from '../types/Behandling';
+import type { TotrinnskontrollAksjonspunkt } from '../types/TotrinnskontrollAksjonspunkt';
+import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
-import { FormState } from './FormState';
+import type { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 
 const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>

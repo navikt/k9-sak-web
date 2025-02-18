@@ -1,4 +1,4 @@
-import { BehandlingDto } from '@navikt/k9-sak-typescript-client';
+import type { BehandlingDto } from '@navikt/k9-sak-typescript-client';
 
 export type Behandling = {
   behandlingsresultat: BehandlingDto['behandlingsresultat'];

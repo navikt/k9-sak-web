@@ -1,7 +1,7 @@
 import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
-import { Behandling } from '../types/Behandling';
-import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import type { Behandling } from '../types/Behandling';
+import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
 
 const location = {

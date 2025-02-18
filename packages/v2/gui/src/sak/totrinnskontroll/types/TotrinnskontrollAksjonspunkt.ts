@@ -1,5 +1,5 @@
-import { TotrinnskontrollAksjonspunkterDto } from '@navikt/k9-sak-typescript-client';
-import { OpptjeningAktivitet } from './OpptjeningAktivitet';
+import type { TotrinnskontrollAksjonspunkterDto } from '@navikt/k9-sak-typescript-client';
+import type { OpptjeningAktivitet } from './OpptjeningAktivitet';
 
 export type TotrinnskontrollAksjonspunkt = {
   aksjonspunktKode: string;

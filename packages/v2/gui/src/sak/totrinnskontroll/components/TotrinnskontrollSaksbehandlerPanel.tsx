@@ -1,13 +1,13 @@
-import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
-import { Location } from 'history';
+import type { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import type { Location } from 'history';
 import React from 'react';
 import { NavLink } from 'react-router';
-import { Behandling } from '../types/Behandling';
-import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import type { Behandling } from '../types/Behandling';
+import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 
@@ -61,7 +61,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
 
               return (
                 <div key={aksjonspunkt.aksjonspunktKode} className={styles.approvalItemContainer}>
-                  {aksjonspunktTexts?.map((formattedMessage: string, index: number) => (
+                  {aksjonspunktTexts?.map((formattedMessage: React.ReactNode, index: number) => (
                     <div
                       key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index.toString()))}
                       className={styles.aksjonspunktTextContainer}

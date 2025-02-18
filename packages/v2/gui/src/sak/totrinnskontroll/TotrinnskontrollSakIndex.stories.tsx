@@ -5,11 +5,11 @@ import {
   TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker,
 } from '@navikt/k9-sak-typescript-client';
 import { action } from '@storybook/addon-actions';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
-import { Behandling } from './types/Behandling';
-import { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
+import type { Behandling } from './types/Behandling';
+import type { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
 
 const data = [
   {
@@ -152,10 +152,20 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
     readOnly: false,
   },
   play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
-    await userEvent.click(canvas.getAllByLabelText('Vurder på nytt')[3]);
+    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
+    if (godkjentTexts[0]) {
+      await userEvent.click(godkjentTexts[0]);
+    }
+    if (godkjentTexts[1]) {
+      await userEvent.click(godkjentTexts[1]);
+    }
+    if (godkjentTexts[2]) {
+      await userEvent.click(godkjentTexts[2]);
+    }
+    const vurderPåNyttTexts = canvas.getAllByLabelText('Vurder på nytt');
+    if (vurderPåNyttTexts[3]) {
+      await userEvent.click(vurderPåNyttTexts[3]);
+    }
     await userEvent.click(canvas.getByLabelText('Feil fakta'));
     await userEvent.click(canvas.getByLabelText('Feil lovanvendelse'));
     await userEvent.click(canvas.getByLabelText('Feil regelforståelse'));
@@ -205,10 +215,19 @@ export const GodkjennerVedtak: Story = {
     ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
   play: async ({ canvas, args }) => {
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[3]);
+    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
+    if (godkjentTexts[0]) {
+      await userEvent.click(godkjentTexts[0]);
+    }
+    if (godkjentTexts[1]) {
+      await userEvent.click(godkjentTexts[1]);
+    }
+    if (godkjentTexts[2]) {
+      await userEvent.click(godkjentTexts[2]);
+    }
+    if (godkjentTexts[3]) {
+      await userEvent.click(godkjentTexts[3]);
+    }
     expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
     expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
@@ -254,10 +273,20 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
   play: async ({ canvas }) => {
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
-    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
-    await userEvent.click(canvas.getAllByLabelText('Vurder på nytt')[3]);
+    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
+    if (godkjentTexts[0]) {
+      await userEvent.click(godkjentTexts[0]);
+    }
+    if (godkjentTexts[1]) {
+      await userEvent.click(godkjentTexts[1]);
+    }
+    if (godkjentTexts[2]) {
+      await userEvent.click(godkjentTexts[2]);
+    }
+    const vurderPåNyttTexts = canvas.getAllByLabelText('Vurder på nytt');
+    if (vurderPåNyttTexts[3]) {
+      await userEvent.click(vurderPåNyttTexts[3]);
+    }
     await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
     expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
