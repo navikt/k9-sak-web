@@ -34,7 +34,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       />,
     );
 
-    expect(screen.getByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toBeInTheDocument();
+    expect(screen.getAllByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toHaveLength(2);
     expect(screen.getByText('Du kommer nå til forsiden.')).toBeInTheDocument();
 
     expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();

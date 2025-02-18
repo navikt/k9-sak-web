@@ -41,7 +41,7 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(BehandlingDtoStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
-    expect(screen.getByText('Adopsjonsvilkåret er overstyrt.')).toBeInTheDocument();
+    expect(screen.getByText('Vilkåret sykdom er overstyrt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6003', () => {

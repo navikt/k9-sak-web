@@ -2,6 +2,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 
 const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.OVERSTYRING_AV_OMSORGEN_FOR]: 'Vilkåret omsorgen for er overstyrt.',
+  [aksjonspunktCodes.OVERSTYRING_AV_MEDISINSKESVILKÅRET_UNDER_18]: 'Vilkåret sykdom er overstyrt.',
   [aksjonspunktCodes.AVKLAR_AKTIVITETER]: 'Det er vurdert hvilke aktiviteter som skal benyttes i beregningsgrunnlaget.',
   [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER]:
     'Det er overstyrt hvilke aktiviteter som skal benyttes i beregningsgrunnlaget.',
