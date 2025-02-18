@@ -55,8 +55,7 @@ export const FaktaBegrunnelseTextField = ({
   );
 };
 
-const getBegrunnelse = (avklaringsbehov: BeregningAvklaringsbehov): string =>
-  avklaringsbehov && avklaringsbehov.begrunnelse ? avklaringsbehov.begrunnelse : '';
+const getBegrunnelse = (avklaringsbehov: BeregningAvklaringsbehov): string => avklaringsbehov?.begrunnelse ?? '';
 
 FaktaBegrunnelseTextField.buildInitialValues = (
   avklaringsbehov: BeregningAvklaringsbehov,

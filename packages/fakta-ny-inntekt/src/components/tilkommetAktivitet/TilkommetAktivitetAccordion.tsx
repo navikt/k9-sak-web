@@ -67,7 +67,7 @@ export const TilkommetAktivitetAccordion = ({
     if (vurderInntektsforholdPerioder) {
       const perioder = slaaSammenPerioder(vurderInntektsforholdPerioder, beregningsgrunnlag.forlengelseperioder);
       setSammenslåttePerioder(perioder);
-      const åpnePanelerOppdatert = openPanels.map(d => d);
+      const åpnePanelerOppdatert = [...openPanels];
       const alleFomIFields = fields.map(field => field.fom);
       const nyeFomDatoer = alleFomIFields.filter(fom => !alleFomDatoer.includes(fom));
       // Nye perioder skal alltid åpne som standard
@@ -87,8 +87,7 @@ export const TilkommetAktivitetAccordion = ({
       const oppdatertePaneler = openPanels.filter(panel => panel !== fom);
       setOpenPanels(oppdatertePaneler);
     } else {
-      const nyListe = openPanels.map(p => p);
-      nyListe.push(fom);
+      const nyListe = [...openPanels, fom];
       setOpenPanels(nyListe);
     }
   };
@@ -165,8 +164,8 @@ export const TilkommetAktivitetAccordion = ({
           <SubmitButton
             isSubmittable={submittable}
             isReadOnly={readOnly}
-            isSubmitting={formMethods.formState.isSubmitting}
-            isDirty={formMethods.formState.isDirty}
+            isSubmitting={formMethods?.formState?.isSubmitting}
+            isDirty={formMethods?.formState?.isDirty}
           />
         </div>
       )}

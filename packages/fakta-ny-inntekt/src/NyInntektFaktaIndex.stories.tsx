@@ -1,4 +1,3 @@
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
@@ -9,9 +8,9 @@ import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from '
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplitt } from '../testdata/TilkommetAktivitetRevurderingLøstTidligere1MaiKryss';
 import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from '../testdata/TilkommetAktivitetTrePerioderHelgMellom';
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
-import { type VurderNyttInntektsforholdAP } from './types/interface/VurderNyttInntektsforholdAP';
 import { type Vilkår } from './types/Vilkår';
 
+import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
@@ -81,7 +80,7 @@ const meta = {
   title: 'gui/fakta/ny-inntekt',
   component: NyInntektFaktaIndex,
   args: {
-    submitCallback: action('button-click', { depth: 20 }) as (data: VurderNyttInntektsforholdAP) => Promise<void>,
+    submitCallback: asyncAction('Løs aksjonspunkt'),
     arbeidsgiverOpplysningerPerId: agOpplysninger,
     setFormData: () => undefined,
     submittable: true,
@@ -520,7 +519,7 @@ export const TilkommetAktivitetMedRevurdering: Story = {
   args: {
     readOnly: false,
     beregningsgrunnlagListe: bgTilkommetInntektsforholdMedRevurdering,
-    submitCallback: action('button-click', { depth: 20 }) as (data: any) => Promise<any>,
+    submitCallback: asyncAction('Løs aksjonspunkt'),
     beregningsgrunnlagVilkår: lagVilkår([
       {
         fom: '2022-11-08',
@@ -536,7 +535,7 @@ export const TilkommetAktivitetMedRevurdering1MaiKryss: Story = {
   args: {
     readOnly: false,
     beregningsgrunnlagListe: bgTilkommetInntektsforholdMedRevurdering1MaiSplitt,
-    submitCallback: action('button-click', { depth: 20 }) as (data: any) => Promise<any>,
+    submitCallback: asyncAction('Løs aksjonspunkt'),
     beregningsgrunnlagVilkår: lagVilkår([
       {
         fom: '2023-04-25',

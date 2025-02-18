@@ -59,7 +59,7 @@ export const PeriodesplittModal = ({
       utførPeriodesplitt(valgtSplittdato);
       lukkModal();
     }
-  }, [fields, valgtSplittdato]);
+  }, [fields, valgtSplittdato, valgtPeriode, lukkModal, utførPeriodesplitt]);
 
   const endreValgtPeriode = useCallback((event: any) => {
     const val = event.target.value;
@@ -119,7 +119,7 @@ export const PeriodesplittModal = ({
               </Button>
             </FlexColumn>
             <FlexColumn>
-              <Button size="small" variant="secondary" onClick={lukkModal} disabled={false} autoFocus type="button">
+              <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
                 Avbryt
               </Button>
             </FlexColumn>

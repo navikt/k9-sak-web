@@ -49,11 +49,11 @@ const finnBeregningsgrunnlag = (
   vilkårsperiodeFom: string,
   beregninsgrunnlagListe: Beregningsgrunnlag[],
 ): Beregningsgrunnlag => {
-  const matchetndeBG = beregninsgrunnlagListe.find(bg => bg.vilkårsperiodeFom === vilkårsperiodeFom);
-  if (!matchetndeBG) {
+  const matchendeBG = beregninsgrunnlagListe.find(bg => bg.vilkårsperiodeFom === vilkårsperiodeFom);
+  if (!matchendeBG) {
     throw Error(`Mangler beregningsgrunnlag for vilkårsperiodeFom ${vilkårsperiodeFom}`);
   }
-  return matchetndeBG;
+  return matchendeBG;
 };
 
 function finnPerioderTilVurdering(beregningsgrunnlag: Beregningsgrunnlag): VurderInntektsforholdPeriode[] {
