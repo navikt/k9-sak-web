@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -14,7 +14,6 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
@@ -90,7 +89,6 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => {
         ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -129,7 +127,6 @@ export const visDelvisInnvilgetForOmsorgspenger = args => {
         ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -179,7 +176,6 @@ export const visAvslagForForeldrepenger = args => {
         ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -220,7 +216,6 @@ export const visÅpentAksjonspunktForSvangerskapspenger = args => {
         ytelseType={fagsakYtelsesType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -282,7 +277,6 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = args => 
         ytelseType={fagsakYtelsesType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -323,7 +317,6 @@ export const visÅpentAksjonspunktForEngangsstønad = args => {
         ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -367,7 +360,6 @@ export const visAtBehandlingErHenlagt = args => {
         ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -427,7 +419,6 @@ export const visInnvilgetForForeldrepengerRevurdering = args => {
         ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -469,7 +460,6 @@ export const visOpphørtForForeldrepengerRevurdering = args => {
         ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -503,7 +493,6 @@ export const visInnvilgetForEngangsstønadRevurdering = args => {
         ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -556,7 +545,6 @@ export const visAvslåttForEngangsstønadRevurdering = args => {
         ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         {...args}
       />
     </VedtakFormContext.Provider>
@@ -699,7 +687,6 @@ export const visOverlappendeYtelser = args => {
         ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         overlappendeYtelser={overlappendeYtelser}
         {...args}
       />
@@ -729,7 +716,6 @@ export const brevMedFritekstfelt = args => {
         ytelseType={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
-        alleKodeverk={alleKodeverk}
         informasjonsbehovVedtaksbrev={{
           informasjonsbehov: [
             {
