@@ -88,7 +88,7 @@ const InnleggelsesperiodeFormModal = ({
                   hideLabel: true,
                   label: 'Til',
                 }}
-                afterOnChange={() => {
+                afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
                     ({ period }: AnyType) => new Period(period.fom, period.tom),
                   );
@@ -96,9 +96,10 @@ const InnleggelsesperiodeFormModal = ({
                     periode => periode.isValid() && periode.fomIsBeforeOrSameAsTom(),
                   );
                   if (erAllePerioderGyldige) {
-                    endringerPåvirkerAndreBehandlinger(initialiserteInnleggelsesperioder).then(
-                      ({ førerTilRevurdering }) => setShowWarningMessage(førerTilRevurdering),
+                    const { førerTilRevurdering } = await endringerPåvirkerAndreBehandlinger(
+                      initialiserteInnleggelsesperioder,
                     );
+                    setShowWarningMessage(førerTilRevurdering);
                   }
                 }}
                 defaultValues={defaultValues[FieldName.INNLEGGELSESPERIODER] || []}

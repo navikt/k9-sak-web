@@ -8,7 +8,7 @@ import VurderingsdetaljvisningForNyVurdering from '../vurderingsdetaljvisning-fo
 interface VurderingsdetaljerProps {
   valgtVurderingselement: Vurderingselement;
   vurderingsoversikt: Vurderingsoversikt;
-  onVurderingLagret: () => void;
+  onVurderingLagret: () => Promise<void>;
   onAvbryt: () => void;
   radForNyVurderingVises: boolean;
   nyVurderingFormVises: boolean;
@@ -28,9 +28,9 @@ const Vurderingsdetaljer = ({
     setEditMode(false);
   }, [valgtVurderingselement]);
 
-  const onVurderingLagretCallback = () => {
+  const onVurderingLagretCallback = async () => {
     setEditMode(false);
-    onVurderingLagret();
+    await onVurderingLagret();
   };
 
   let valgtVurderingContent = null;
