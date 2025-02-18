@@ -18,7 +18,7 @@ const tilbakekrevingMedInntrekk = (
   simuleringResultat: VedtakSimuleringResultat,
 ) =>
   tilbakekrevingKode === TilbakekrevingValgDtoVidereBehandling.OPPRETT_TILBAKEKREVING &&
-  (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
+  (simuleringResultat.simuleringResultat?.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = (props: {
   simuleringResultat: VedtakSimuleringResultat;
@@ -30,7 +30,9 @@ export const findTilbakekrevingText = (props: {
     if (tilbakekrevingMedInntrekk(tilbakekrevingvalg.videreBehandling, simuleringResultat)) {
       return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
     }
-    return kodeverkNavnFraKode(tilbakekrevingvalg.videreBehandling, KodeverkType.TILBAKEKR_VIDERE_BEH);
+    return tilbakekrevingvalg.videreBehandling != null
+      ? kodeverkNavnFraKode(tilbakekrevingvalg.videreBehandling, KodeverkType.TILBAKEKR_VIDERE_BEH)
+      : null;
   }
   return null;
 };
