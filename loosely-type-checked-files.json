@@ -400,7 +400,6 @@
   "packages/prosess-vedtak/src/components/VedtakForm.tsx",
   "packages/prosess-vedtak/src/components/VedtakFritekstPanel.tsx",
   "packages/prosess-vedtak/src/components/VedtakHelpTextPanel.tsx",
-  "packages/prosess-vedtak/src/components/VedtakHelper.spec.tsx",
   "packages/prosess-vedtak/src/components/VedtakHelper.tsx",
   "packages/prosess-vedtak/src/components/VedtakInnvilgetPanel.tsx",
   "packages/prosess-vedtak/src/components/VedtakOverlappendeYtelsePanel.tsx",

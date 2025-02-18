@@ -3,7 +3,7 @@ import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import { BehandlingsresultatDtoType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
+import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
 import {
   AvslagsårsakPrPeriodeDto,
   BeregningsgrunnlagPeriodeDto,
