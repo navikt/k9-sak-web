@@ -500,8 +500,6 @@
   "packages/sak-meny-sett-pa-vent/src/MenySettPaVentIndex.tsx",
   "packages/sak-meny-ta-av-vent/src/MenyTaAvVentIndex.tsx",
   "packages/sak-meny-verge/src/MenyVergeIndex.tsx",
-  "packages/sak-notat/src/NotatISakIndex.stories.tsx",
-  "packages/sak-notat/src/NotaterIndex.tsx",
   "packages/sak-sok/src/components/FagsakList.spec.tsx",
   "packages/sak-sok/src/components/FagsakList.tsx",
   "packages/sak-sok/src/components/SearchForm.spec.tsx",
