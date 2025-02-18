@@ -3,6 +3,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 
@@ -11,11 +12,16 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FordelBeregningsgrunnlag.Title';
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-    aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
-    aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD,
-  ];
+  getAksjonspunktKoder = (featureToggles?: FeatureToggles) => {
+    if (featureToggles?.NY_INNTEKT_EGET_PANEL) {
+      return [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG, aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN];
+    }
+    return [
+      aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
+      aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
+      aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD,
+    ];
+  };
 
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
