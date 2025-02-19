@@ -3,14 +3,14 @@ import { Box } from '@navikt/ds-react';
 import { Calender } from '@navikt/ds-icons';
 import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { LinkButton } from '@navikt/ft-plattform-komponenter';
+import { InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
 
-import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
-import { Vurderingsresultat } from '@k9-sak-web/types';
+import type { InstitusjonVurderingDtoMedPerioder } from '../../types/institusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm, { type SubmitValues } from './InstitusjonForm.js';
 
 interface OwnProps {
-  vurdering: InstitusjonVurderingMedPerioder;
+  vurdering: InstitusjonVurderingDtoMedPerioder;
   readOnly: boolean;
   løsAksjonspunkt: (payload: SubmitValues) => void;
 }
@@ -27,7 +27,7 @@ interface OwnProps {
  */
 const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
-  const visEndreLink = !readOnly && vurdering.resultat !== Vurderingsresultat.GODKJENT_AUTOMATISK;
+  const visEndreLink = !readOnly && vurdering.resultat !== InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK;
 
   return (
     <DetailView
@@ -53,7 +53,7 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
         />
       </Box>
 
-      {vurdering.resultat !== Vurderingsresultat.MÅ_VURDERES && !redigering ? (
+      {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (
         <InstitusjonFerdigVisning vurdering={vurdering} readOnly={readOnly} rediger={() => setRedigering(true)} />
       ) : (
         <InstitusjonForm

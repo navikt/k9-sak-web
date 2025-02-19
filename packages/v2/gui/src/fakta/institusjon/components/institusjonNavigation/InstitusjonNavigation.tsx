@@ -1,21 +1,22 @@
-import { Heading } from '@navikt/ds-react';
-import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import type { InstitusjonPerioderMedResultat } from '@k9-sak-web/types';
 import React, { useState, useMemo, useEffect } from 'react';
 
-import institusjonStatus from '../../constants/institusjonStatus.js';
+import { Heading } from '@navikt/ds-react';
+import { InteractiveList } from '@navikt/ft-plattform-komponenter';
+import { InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
+
+import type { InstitusjonPerioderDtoMedResultat } from '../../types/institusjonPerioderDtoMedResultat.js';
 import PeriodeRad from '../periodeRad/PeriodeRad.js';
 
 import styles from './InstitusjonNavigation.module.css';
 
 interface OwnProps {
-  perioder: InstitusjonPerioderMedResultat[];
-  setValgtPeriode: React.Dispatch<React.SetStateAction<InstitusjonPerioderMedResultat | null>>;
+  perioder: InstitusjonPerioderDtoMedResultat[];
+  setValgtPeriode: React.Dispatch<React.SetStateAction<InstitusjonPerioderDtoMedResultat | null>>;
 }
 
 const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   const perioderTilVurdering = useMemo(
-    () => perioder.filter(periode => periode.resultat === institusjonStatus.MÅ_VURDERES),
+    () => perioder.filter(periode => periode.resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES),
     [perioder],
   );
 
@@ -29,7 +30,7 @@ const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   }, []);
 
   const perioderSomErVurdert = useMemo(
-    () => perioder.filter(periode => periode.resultat !== institusjonStatus.MÅ_VURDERES),
+    () => perioder.filter(periode => periode.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES),
     [perioder],
   );
 

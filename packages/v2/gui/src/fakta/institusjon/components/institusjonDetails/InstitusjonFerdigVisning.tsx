@@ -1,10 +1,11 @@
 import { Box } from '@navikt/ds-react';
 import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
-import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
-import { Vurderingsresultat } from '@k9-sak-web/types';
+import { InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
+
+import type { InstitusjonVurderingDtoMedPerioder } from '../../types/institusjonVurderingDtoMedPerioder.js';
 
 interface OwnProps {
-  vurdering: InstitusjonVurderingMedPerioder;
+  vurdering: InstitusjonVurderingDtoMedPerioder;
   readOnly: boolean;
   rediger: () => void;
 }
@@ -23,9 +24,10 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
       <LabelledContent
         label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
         content={
-          [Vurderingsresultat.GODKJENT_AUTOMATISK, Vurderingsresultat.GODKJENT_MANUELT].includes(vurdering.resultat)
-            ? 'Ja'
-            : 'Nei'
+          ((vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK ||
+            vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) &&
+            'Ja') ||
+          'Nei'
         }
       />
     </Box>

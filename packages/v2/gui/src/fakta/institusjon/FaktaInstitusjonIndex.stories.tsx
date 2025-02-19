@@ -1,16 +1,17 @@
 import type { StoryFn } from '@storybook/react';
 
-import type { InstitusjonPeriode, InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
-import { Vurderingsresultat } from '@k9-sak-web/types';
 import { Period } from '@fpsak-frontend/utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
+import type { InstitusjonVurderingDtoMedPerioder } from './types/institusjonVurderingDtoMedPerioder';
+import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import { InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
 
 export default {
   title: 'gui/fakta/institusjon',
   component: FaktaInstitusjonIndex,
 };
 
-const mockPerioder: InstitusjonPeriode[] = [
+const mockPerioder: InstitusjonPeriodeDto[] = [
   {
     periode: {
       fom: '2023-01-01',
@@ -21,11 +22,11 @@ const mockPerioder: InstitusjonPeriode[] = [
   },
 ];
 
-const mockVurderinger: InstitusjonVurderingMedPerioder[] = [
+const mockVurderinger: InstitusjonVurderingDtoMedPerioder[] = [
   {
     journalpostId: { journalpostId: '123456789' },
     perioder: [new Period('2023-01-01', '2023-03-31')],
-    resultat: Vurderingsresultat.GODKJENT_MANUELT,
+    resultat: InstitusjonVurderingDtoResultat.GODKJENT_MANUELT,
     begrunnelse: 'Pasienten har behov for kontinuerlig oppfølging',
     institusjon: 'Oslo Universitetssykehus',
     vurdertAv: 'Saksbehandler',
@@ -60,11 +61,11 @@ IngenPerioder.args = {
 
 export const FormWithExistingVurdering = Template.bind({});
 FormWithExistingVurdering.args = {
-  perioder: [mockPerioder[0] as InstitusjonPeriode],
+  perioder: [mockPerioder[0] as InstitusjonPeriodeDto],
   vurderinger: [
     {
-      ...(mockVurderinger[0] as InstitusjonVurderingMedPerioder),
-      resultat: Vurderingsresultat.GODKJENT_MANUELT,
+      ...(mockVurderinger[0] as InstitusjonVurderingDtoMedPerioder),
+      resultat: InstitusjonVurderingDtoResultat.GODKJENT_MANUELT,
       begrunnelse: mockVurderinger[0]?.begrunnelse ?? 'Begrunnelse ikke tilgjengelig',
       journalpostId: mockVurderinger[0]?.journalpostId ?? { journalpostId: '123456789' },
     },
@@ -77,11 +78,11 @@ FormWithExistingVurdering.args = {
 
 export const FormWithNotApprovedVurdering = Template.bind({});
 FormWithNotApprovedVurdering.args = {
-  perioder: [mockPerioder[0] as InstitusjonPeriode],
+  perioder: [mockPerioder[0] as InstitusjonPeriodeDto],
   vurderinger: [
     {
-      ...(mockVurderinger[0] as InstitusjonVurderingMedPerioder),
-      resultat: Vurderingsresultat.IKKE_GODKJENT_MANUELT,
+      ...(mockVurderinger[0] as InstitusjonVurderingDtoMedPerioder),
+      resultat: InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT,
       begrunnelse: 'Institusjonen er ikke godkjent for denne type opplæring',
       journalpostId: mockVurderinger[0]?.journalpostId ?? { journalpostId: '123456789' },
     },

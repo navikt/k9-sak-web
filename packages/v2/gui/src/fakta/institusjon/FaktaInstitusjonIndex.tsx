@@ -2,27 +2,31 @@ import { useState, useMemo } from 'react';
 import { Heading } from '@navikt/ds-react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@fpsak-frontend/utils';
-import type { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
-import { Vurderingsresultat } from '@k9-sak-web/types';
+import {
+  InstitusjonVurderingDtoResultat,
+  type InstitusjonPeriodeDto,
+  type InstitusjonVurderingDto,
+} from '@navikt/k9-sak-typescript-client';
 
 import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
 import type { SubmitValues } from './components/institusjonDetails/InstitusjonForm.js';
+import type { InstitusjonPerioderDtoMedResultat } from './types/institusjonPerioderDtoMedResultat.js';
 
 interface OwnProps {
-  perioder: InstitusjonPeriode[];
-  vurderinger: InstitusjonVurdering[];
+  perioder: InstitusjonPeriodeDto[];
+  vurderinger: InstitusjonVurderingDto[];
   readOnly: boolean;
   løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
 const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
-  const [valgtPeriode, setValgtPeriode] = useState<InstitusjonPerioderMedResultat | null>(null);
+  const [valgtPeriode, setValgtPeriode] = useState<InstitusjonPerioderDtoMedResultat | null>(null);
 
   const vurderingMap = useMemo(() => new Map(vurderinger.map(v => [v.journalpostId.journalpostId, v])), [vurderinger]);
 
   const perioderMappet = useMemo(() => {
-    const grouped = new Map<string, InstitusjonPerioderMedResultat>();
+    const grouped = new Map<string, InstitusjonPerioderDtoMedResultat>();
 
     perioder.forEach(periode => {
       const { journalpostId } = periode;
@@ -42,7 +46,7 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt
           ...periode,
           periode: periodObj,
           perioder: [periodObj],
-          resultat: vurdering?.resultat ?? Vurderingsresultat.MÅ_VURDERES,
+          resultat: vurdering?.resultat ?? InstitusjonVurderingDtoResultat.MÅ_VURDERES,
         });
       }
     });
