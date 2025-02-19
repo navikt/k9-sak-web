@@ -277,7 +277,7 @@ const Messages = ({
         setFritekstForslag(innhold);
       }
     };
-    loadFritekstForslag();
+    void loadFritekstForslag();
   }, [valgtMalkode, fagsak, behandling]);
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
