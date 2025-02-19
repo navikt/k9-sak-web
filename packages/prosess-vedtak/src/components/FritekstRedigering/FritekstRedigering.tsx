@@ -61,7 +61,8 @@ const FritekstRedigering = ({
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     setForhaandsvisningKlart(false);
-  }, []);
+  }, [setForhaandsvisningKlart]);
+
   const redigerbarDokumentmal: VedtaksbrevMal | undefined = tilgjengeligeVedtaksbrev.maler?.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
@@ -134,22 +135,14 @@ const FritekstRedigering = ({
         }),
       );
     },
-    [
-      handleSubmit,
-      lagLagreHtmlDokumentdataRequest,
-      dokumentdata,
-      redigerbarDokumentmal,
-      originalHtml,
-      inkluderKalender,
-      overstyrtMottaker,
-    ],
+    [handleSubmit, dokumentdata, redigerbarDokumentmal, originalHtml, inkluderKalender, overstyrtMottaker],
   );
 
   useEffect(() => {
     if (!firstRender.current && overstyrtMottaker && !henterMal) {
       hentFritekstbrevMal();
     }
-  }, [firstRender, overstyrtMottaker]);
+  }, [firstRender, overstyrtMottaker, hentFritekstbrevMal, henterMal]);
 
   useEffect(() => {
     if (!firstRender.current && redigerbartInnholdKlart) {
@@ -158,7 +151,7 @@ const FritekstRedigering = ({
       hentFritekstbrevMal();
       firstRender.current = false;
     }
-  }, [firstRender, inkluderKalender]);
+  }, [firstRender, inkluderKalender, handleLagre, hentFritekstbrevMal, innholdTilRedigering, redigerbartInnholdKlart]);
 
   useEffect(() => {
     if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
