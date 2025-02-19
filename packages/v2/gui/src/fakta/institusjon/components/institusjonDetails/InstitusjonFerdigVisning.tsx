@@ -1,7 +1,7 @@
 import { Box } from '@navikt/ds-react';
 import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
-import type { InstitusjonVurderingMedPerioder } from '../../InstitusjonTypes';
-import Vurderingsresultat from '../../Vurderingsresultat';
+import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
+import { Vurderingsresultat } from '@k9-sak-web/types';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingMedPerioder;

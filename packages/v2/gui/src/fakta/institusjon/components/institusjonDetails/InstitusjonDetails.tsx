@@ -4,10 +4,10 @@ import { Calender } from '@navikt/ds-icons';
 import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { LinkButton } from '@navikt/ft-plattform-komponenter';
 
+import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
+import { Vurderingsresultat } from '@k9-sak-web/types';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning';
 import InstitusjonForm from './InstitusjonForm';
-import type { InstitusjonVurderingMedPerioder } from '../../InstitusjonTypes';
-import Vurderingsresultat from '../../Vurderingsresultat';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingMedPerioder;

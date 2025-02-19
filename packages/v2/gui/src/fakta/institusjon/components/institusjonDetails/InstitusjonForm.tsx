@@ -2,9 +2,16 @@ import { useForm } from 'react-hook-form';
 import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { Box, Button } from '@navikt/ds-react';
-import type { InstitusjonVurderingMedPerioder } from '../../InstitusjonTypes';
-import type { InstitusjonFormValues } from '../../types';
-import { InstitusjonFormFields } from '../../types';
+import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
+
+enum InstitusjonFormFields {
+  BEGRUNNELSE = 'begrunnelse',
+  GODKJENT_INSTITUSJON = 'godkjentInstitusjon',
+}
+interface InstitusjonFormValues {
+  [InstitusjonFormFields.BEGRUNNELSE]: string;
+  [InstitusjonFormFields.GODKJENT_INSTITUSJON]: boolean;
+}
 
 interface InstitusjonFormProps {
   vurdering: InstitusjonVurderingMedPerioder;

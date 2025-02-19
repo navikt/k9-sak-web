@@ -1,7 +1,7 @@
 import type { StoryFn } from '@storybook/react';
 import InstitusjonDetails from './InstitusjonDetails';
-import Vurderingsresultat from '../../Vurderingsresultat';
-import type { InstitusjonVurderingMedPerioder } from '../../InstitusjonTypes';
+import { Vurderingsresultat } from '@k9-sak-web/types';
+import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
 import { Period } from '@fpsak-frontend/utils';
 
 export default {
