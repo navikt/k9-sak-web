@@ -9,7 +9,7 @@ import styles from './InstitusjonNavigation.module.css';
 
 interface OwnProps {
   perioder: InstitusjonPerioderMedResultat[];
-  setValgtPeriode: React.Dispatch<React.SetStateAction<InstitusjonPerioderMedResultat>>;
+  setValgtPeriode: React.Dispatch<React.SetStateAction<InstitusjonPerioderMedResultat | null>>;
 }
 
 const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
