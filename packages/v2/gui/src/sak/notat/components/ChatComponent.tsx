@@ -1,4 +1,4 @@
-import { NavAnsatt, NotatResponse } from '@k9-sak-web/types';
+import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { Form, TextAreaField } from '@navikt/ft-form-hooks';
@@ -6,8 +6,8 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
+import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag';
+import type { FormState } from '../types/FormState';
 import styles from './chatComponent.module.css';
 
 export enum ChatPosition {
@@ -15,42 +15,31 @@ export enum ChatPosition {
   Right = 'right',
 }
 
-type Inputs = {
-  notatTekst: string;
-  visNotatIAlleSaker: boolean;
-};
+export interface EndreNotatPayload {
+  formState: FormState;
+  id: string;
+  saksnummer: string;
+  versjon: number;
+}
+
+export interface SkjulNotatPayload {
+  skjul: boolean;
+  id: string;
+  saksnummer: string;
+  versjon: number;
+}
 
 interface ChatComponentProps {
-  notat: NotatResponse;
-  postNotat: ({
-    data,
-    id,
-    saksnummer,
-    versjon,
-  }: {
-    data: Inputs;
-    id: number;
-    saksnummer: string;
-    versjon: number;
-  }) => void;
-  navAnsatt: NavAnsatt;
-  skjulNotat: ({
-    skjul,
-    id,
-    saksnummer,
-    versjon,
-  }: {
-    skjul: boolean;
-    id: number;
-    saksnummer: string;
-    versjon: number;
-  }) => void;
+  notat: NotatDto;
+  endreNotat: ({ formState, id, saksnummer, versjon }: EndreNotatPayload) => void;
+  navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
+  skjulNotat: ({ skjul, id, saksnummer, versjon }: SkjulNotatPayload) => void;
   fagsakId: string;
 }
 
 const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   notat,
-  postNotat,
+  endreNotat,
   navAnsatt,
   skjulNotat,
   fagsakId,
@@ -73,7 +62,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
 
-  const formMethods = useForm<Inputs>({
+  const formMethods = useForm<FormState>({
     defaultValues: {
       notatTekst,
     },
@@ -86,10 +75,13 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     reset({
       notatTekst,
     });
-  }, [reset, notatTekst]);
+    setReadOnly(true);
+  }, [reset, notatTekst, versjon]);
 
-  const submit = (data: Inputs) => {
-    postNotat({ data, id: notatId, saksnummer: fagsakId, versjon });
+  const submit = (data: FormState) => {
+    if (notatId) {
+      endreNotat({ formState: data, id: notatId, saksnummer: fagsakId, versjon });
+    }
   };
 
   const toggleReadOnly = () => {
@@ -97,13 +89,16 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   };
 
   const toggleSkjulNotat = () => {
-    skjulNotat({ skjul: !skjult, id: notatId, saksnummer: fagsakId, versjon });
+    if (notatId) {
+      skjulNotat({ skjul: !skjult, id: notatId, saksnummer: fagsakId, versjon });
+    }
   };
 
-  const navnPåOppretter = opprettetAv === navAnsatt.brukernavn ? 'Deg' : hentSaksbehandlerNavn(opprettetAv);
+  const navnPåOppretter =
+    opprettetAv === navAnsatt.brukernavn ? 'Deg' : opprettetAv ? hentSaksbehandlerNavn(opprettetAv) : 'Saksbehandler';
 
   const tidspunktStreng = () => {
-    const formatertOpprettetTidspunkt = format(new Date(opprettetTidspunkt), 'dd.MM.yy H:mm');
+    const formatertOpprettetTidspunkt = opprettetTidspunkt ? format(new Date(opprettetTidspunkt), 'dd.MM.yy H:mm') : '';
     const formatertEndretTidspunkt = endretTidspunkt ? format(new Date(endretTidspunkt), 'dd.MM.yy H:mm') : undefined;
     if (endretTidspunkt) {
       return `${formatertOpprettetTidspunkt} (Endret: ${formatertEndretTidspunkt})`;
@@ -112,7 +107,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   };
 
   return (
-    <Form<Inputs>
+    <Form<FormState>
       formMethods={formMethods}
       onSubmit={submit}
       className={position === ChatPosition.Right ? styles.chatRight : styles.chatLeft}
@@ -137,11 +132,11 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                 maxLength={2000}
               />
               <div className={styles.nyttNotatKnappContainer}>
-                <Button type="submit" size="small" variant="primary">
-                  <FormattedMessage id="NotatISakIndex.LagreEndringer" />
+                <Button size="small" variant="primary">
+                  Lagre endringer
                 </Button>
                 <Button onClick={toggleReadOnly} variant="secondary" size="small">
-                  <FormattedMessage id="NotatISakIndex.Avbryt" />
+                  Avbryt
                 </Button>
               </div>
             </>
@@ -149,10 +144,10 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
           <div className={styles.notatContainer}>
             <div className={styles.labelTagContainer}>
               <Label as="p" size="small">
-                <FormattedMessage id="NotatISakIndex.Gjelder" />
+                Gjelder:
               </Label>
               <Tag className={styles.navnTag} size="small" variant="neutral">
-                {gjelderType.navn}
+                {gjelderType}
               </Tag>
             </div>
             {readOnly && (
@@ -165,7 +160,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                     variant="tertiary"
                     icon={<PencilIcon aria-hidden />}
                   >
-                    <FormattedMessage id="NotatISakIndex.Rediger" />
+                    Rediger
                   </Button>
                 )}
                 <Button
@@ -176,11 +171,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                   icon={skjult ? <EyeSlashIcon aria-hidden /> : <EyeWithPupilIcon aria-hidden />}
                   type="button"
                 >
-                  {skjult ? (
-                    <FormattedMessage id="NotatISakIndex.VisNotat" />
-                  ) : (
-                    <FormattedMessage id="NotatISakIndex.SkjulNotat" />
-                  )}
+                  {skjult ? 'Vis notat' : 'Skjul notat'}
                 </Button>
               </div>
             )}
