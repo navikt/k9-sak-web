@@ -123,17 +123,19 @@ const FritekstRedigering = ({
   // useCallback for å unngå unødvendig re-initialisering av editorjs i FritekstEditor
   const handleLagre = useCallback(
     async html => {
-      handleSubmit(
-        html,
-        lagLagreHtmlDokumentdataRequest({
-          dokumentdata,
-          redigerbarDokumentmal,
-          redigertHtml: html,
-          originalHtml,
-          inkluderKalender,
-          overstyrtMottaker,
-        }),
-      );
+      if (redigerbarDokumentmal) {
+        handleSubmit(
+          html,
+          lagLagreHtmlDokumentdataRequest({
+            dokumentdata,
+            redigerbarDokumentmal,
+            redigertHtml: html,
+            originalHtml,
+            inkluderKalender,
+            overstyrtMottaker,
+          }),
+        );
+      }
     },
     [handleSubmit, dokumentdata, redigerbarDokumentmal, originalHtml, inkluderKalender, overstyrtMottaker],
   );
