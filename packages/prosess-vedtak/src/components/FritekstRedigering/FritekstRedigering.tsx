@@ -142,7 +142,7 @@ const FritekstRedigering = ({
     if (!firstRender.current && overstyrtMottaker && !henterMal) {
       hentFritekstbrevMal();
     }
-  }, [firstRender, overstyrtMottaker, hentFritekstbrevMal, henterMal]);
+  });
 
   useEffect(() => {
     if (!firstRender.current && redigerbartInnholdKlart) {
@@ -151,7 +151,7 @@ const FritekstRedigering = ({
       hentFritekstbrevMal();
       firstRender.current = false;
     }
-  }, [firstRender, inkluderKalender, handleLagre, hentFritekstbrevMal, innholdTilRedigering, redigerbartInnholdKlart]);
+  }, [firstRender, inkluderKalender]);
 
   useEffect(() => {
     if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
