@@ -1,7 +1,7 @@
 import { type JSX } from 'react';
 
-import { BodyShort, Label, Tag } from '@navikt/ds-react';
-import { EditedIcon, Table, TableColumn, TableRow } from '@navikt/ft-ui-komponenter';
+import { BodyShort, Table, Tag } from '@navikt/ds-react';
+import { EditedIcon } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyWithKr } from '@navikt/ft-utils';
 
 import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
@@ -28,17 +28,17 @@ export const TidligereVurderteAktiviteterPanel = ({
       const harBruttoInntekt = erDefinert(inntektsforhold.bruttoInntektPrÅr);
       const harInntektsmelding = erDefinert(inntektsforhold.inntektFraInntektsmeldingPrÅr);
       tableRows.push(
-        <TableRow key={getInntektsforholdIdentifikator(inntektsforhold)}>
-          <TableColumn>
+        <Table.Row key={getInntektsforholdIdentifikator(inntektsforhold)}>
+          <Table.DataCell>
             <BodyShort size="small">
               {getAktivitetNavnFraInnteksforhold(inntektsforhold, arbeidsgiverOpplysningerPerId)}
             </BodyShort>
-          </TableColumn>
-          <TableColumn>
+          </Table.DataCell>
+          <Table.DataCell>
             <BodyShort size="small">{inntektsforhold.skalRedusereUtbetaling ? 'Ja' : 'Nei'}</BodyShort>
-          </TableColumn>
+          </Table.DataCell>
           {(harBruttoInntekt || harInntektsmelding) && (
-            <TableColumn>
+            <Table.DataCell>
               <BodyShort size="small">
                 {harBruttoInntekt && (
                   <>
@@ -55,9 +55,9 @@ export const TidligereVurderteAktiviteterPanel = ({
                   </>
                 )}
               </BodyShort>
-            </TableColumn>
+            </Table.DataCell>
           )}
-        </TableRow>,
+        </Table.Row>,
       );
     });
     return tableRows;
@@ -68,16 +68,20 @@ export const TidligereVurderteAktiviteterPanel = ({
   );
 
   const headerTexts = ['Aktivitet', 'Reduserer inntektstap', harInntektsforholdMedÅrsinntekt ? 'Årsinntekt' : ' '];
-  const headerComponents = headerTexts.map(text => (
-    <Label size="small" key={text}>
-      {`${text} `}
-    </Label>
-  ));
 
   return (
     <div className={styles.aktivitetContainer}>
-      <Table headerColumnContent={headerComponents} noHover classNameTable={styles.aktivitetTable}>
-        {getInntektsforholdTableRows(vurderInntektsforholdPeriode)}
+      <Table size="small" className={styles.aktivitetTable}>
+        <Table.Header>
+          <Table.Row>
+            {headerTexts.map(text => (
+              <Table.HeaderCell scope="col" key={text}>
+                {text}
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>{getInntektsforholdTableRows(vurderInntektsforholdPeriode)}</Table.Body>
       </Table>
     </div>
   );

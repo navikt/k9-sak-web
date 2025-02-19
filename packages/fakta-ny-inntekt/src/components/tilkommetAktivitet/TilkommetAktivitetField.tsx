@@ -1,13 +1,13 @@
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { BodyShort, Label, Tag } from '@navikt/ds-react';
+import { BodyShort, Table, Tag } from '@navikt/ds-react';
 
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
-import { EditedIcon, PeriodLabel, Table, TableColumn, TableRow, VerticalSpacer } from '@navikt/ft-ui-komponenter';
+import { EditedIcon, PeriodLabel, VerticalSpacer } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyWithKr } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
@@ -70,11 +70,6 @@ export const TilkommetAktivitetField = ({
     harInntektsforholdMedÅrsinntekt ? 'Årsinntekt' : ' ',
     harInntektsforholdMedPeriode ? 'Inntektsperiode' : ' ',
   ];
-  const headerComponents = headerTexts.map(text => (
-    <Label size="small" key={text}>
-      {`${text} `}
-    </Label>
-  ));
 
   const getInntektsforholdTableRows = (inntektsforholdPeriode: VurderInntektsforholdPeriode): React.ReactElement[] => {
     const tableRows: React.ReactElement[] = [];
@@ -84,14 +79,14 @@ export const TilkommetAktivitetField = ({
       const harInntektsmelding = erDefinert(inntektsforhold.inntektFraInntektsmeldingPrÅr);
 
       tableRows.push(
-        <TableRow key={inntektsforhold.arbeidsgiverId || inntektsforhold.aktivitetStatus}>
-          <TableColumn>
+        <Table.Row key={inntektsforhold.arbeidsgiverId || inntektsforhold.aktivitetStatus}>
+          <Table.DataCell>
             <BodyShort size="small">
               {getAktivitetNavnFraInnteksforhold(inntektsforhold, arbeidsgiverOpplysningerPerId)}
             </BodyShort>
-          </TableColumn>
+          </Table.DataCell>
           {(harBruttoInntekt || harInntektsmelding || harInntektsforholdMedPeriode) && (
-            <TableColumn className={styles.inntektColumn}>
+            <Table.DataCell className={styles.inntektColumn}>
               <BodyShort size="small">
                 {harBruttoInntekt && !harInntektsmelding && (
                   <>
@@ -108,16 +103,16 @@ export const TilkommetAktivitetField = ({
                   </>
                 )}
               </BodyShort>
-            </TableColumn>
+            </Table.DataCell>
           )}
           {inntektsforhold.periode && (
-            <TableColumn>
+            <Table.DataCell>
               <BodyShort size="small">
                 <PeriodLabel dateStringFom={inntektsforhold.periode.fom} dateStringTom={inntektsforhold.periode.tom} />
               </BodyShort>
-            </TableColumn>
+            </Table.DataCell>
           )}
-        </TableRow>,
+        </Table.Row>,
       );
     });
     return tableRows;
@@ -125,8 +120,17 @@ export const TilkommetAktivitetField = ({
   return (
     <>
       <div className={styles.aktivitetContainer}>
-        <Table noHover headerColumnContent={headerComponents} classNameTable={styles.aktivitetTable}>
-          {getInntektsforholdTableRows(vurderInntektsforholdPeriode)}
+        <Table size="small" className={styles.aktivitetTable}>
+          <Table.Header>
+            <Table.Row>
+              {headerTexts.map(text => (
+                <Table.HeaderCell scope="col" key={text}>
+                  {text}
+                </Table.HeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{getInntektsforholdTableRows(vurderInntektsforholdPeriode)}</Table.Body>
         </Table>
       </div>
       <VerticalSpacer sixteenPx />
