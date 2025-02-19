@@ -7,7 +7,7 @@ import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { behandlingType } from '@navikt/k9-klage-typescript-client';
+import { BehandlingDtoType } from '@navikt/k9-klage-typescript-client';
 import { getPathToK9Los } from '../../app/paths';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 
@@ -38,7 +38,7 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
   }
 
   const v2Behandling = JSON.parse(JSON.stringify(behandling));
-  konverterKodeverkTilKode(v2Behandling, behandling.type.kode === behandlingType.BT_007);
+  konverterKodeverkTilKode(v2Behandling, behandling.type.kode === BehandlingDtoType.TILBAKEKREVING);
 
   return (
     <FatterVedtakTotrinnskontrollModalSakIndex

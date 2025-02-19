@@ -1,8 +1,6 @@
-import {
-  definisjon as KlageAksjonspunktDtoDefinisjon,
-  klageVurdering as klageVurderingCodes,
-  klageVurderingOmgjoer as klageVurderingOmgjoerCodes,
-} from '@navikt/k9-klage-typescript-client';
+import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
+import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
+import { AksjonspunktDtoDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@navikt/k9-klage-typescript-client';
 import {
   AksjonspunktDtoDefinisjon,
   BehandlingAksjonspunktDtoBehandlingStatus,
@@ -15,13 +13,13 @@ import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollA
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {
-  klageVurdering: klageVurderingCodes.MEDHOLD_I_KLAGE,
-  klageVurderingOmgjoer: klageVurderingOmgjoerCodes.GUNST_MEDHOLD_I_KLAGE,
+  klageVurdering: Klagevurdering.MEDHOLD_I_KLAGE,
+  klageVurderingOmgjoer: KlagevurderingOmgjør.GUNST_MEDHOLD_I_KLAGE,
 };
-const oppheveYtelsesVedtak = { klageVurdering: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK };
-const avvistKlage = { klageVurdering: klageVurderingCodes.AVVIS_KLAGE };
+const oppheveYtelsesVedtak = { klageVurdering: Klagevurdering.OPPHEVE_YTELSESVEDTAK };
+const avvistKlage = { klageVurdering: Klagevurdering.AVVIS_KLAGE };
 const behandlingStatusFVED = BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;
-const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
+const stadfesteKlage = { klageVurdering: Klagevurdering.STADFESTE_YTELSESVEDTAK };
 
 const arbeidsforholdHandlingTyper = [
   { kode: 'BRUK', navn: 'aaa', kodeverk: '' },
@@ -225,7 +223,7 @@ describe('aksjonspunktTekstUtleder', () => {
   // Klage medhold
   it('skal vise korrekt tekst for aksjonspunkt 5035 medhold', () => {
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5035,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -238,7 +236,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -256,7 +254,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: oppheveYtelsesVedtak,
     };
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5035,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -269,7 +267,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: oppheveYtelsesVedtak,
     };
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -283,7 +281,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: avvistKlage,
     };
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5035,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -296,7 +294,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: avvistKlage,
     };
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -310,7 +308,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: stadfesteKlage,
     };
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
@@ -323,7 +321,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: stadfesteKlage,
     };
     const aksjonspunkt = {
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
+      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;

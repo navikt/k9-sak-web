@@ -1,9 +1,9 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
 import {
   AvslagsårsakPrPeriodeDto,
   BeregningsgrunnlagPeriodeDto,
@@ -37,7 +37,7 @@ export const findTilbakekrevingText = (props: {
   return null;
 };
 
-export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
   if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -64,7 +64,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
   if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -91,7 +91,7 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
-export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
   if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }

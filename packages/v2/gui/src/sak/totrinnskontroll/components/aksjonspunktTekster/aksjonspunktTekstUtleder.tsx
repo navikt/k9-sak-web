@@ -1,7 +1,13 @@
+import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
+import {
+  KlagevurderingOmgjør,
+  type KlagevurderingOmgjørType,
+} from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Label } from '@navikt/ds-react';
-import { type KlagebehandlingDto, klageVurdering, klageVurderingOmgjoer } from '@navikt/k9-klage-typescript-client';
+
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated';
 import {
   ArbeidsforholdOverstyringDtoHandling,
   BehandlingDtoStatus,
@@ -102,7 +108,7 @@ const getFaktaOmBeregningTextFlereGrunnlag = (beregningDtoer: TotrinnsBeregningD
   return beregningDtoer.map(bg => (bg.faktaOmBeregningTilfeller ? lagBgTilfelleTekst(bg) : null));
 };
 
-const omgjoerTekstMap: Record<klageVurderingOmgjoer, string> = {
+const omgjoerTekstMap: Record<KlagevurderingOmgjørType, string> = {
   DELVIS_MEDHOLD_I_KLAGE: 'Delvis omgjøring, til gunst',
   GUNST_MEDHOLD_I_KLAGE: 'Omgjort til gunst',
   UGUNST_MEDHOLD_I_KLAGE: 'Omgjort til ugunst',
@@ -119,25 +125,25 @@ const getTextForKlageHelper = (
     return aksjonspunktText;
   }
   switch (klageVurderingResultat.klageVurdering) {
-    case klageVurdering.STADFESTE_YTELSESVEDTAK:
+    case Klagevurdering.STADFESTE_YTELSESVEDTAK:
       aksjonspunktText = 'Stadfest ytelsesvedtak';
       break;
-    case klageVurdering.OPPHEVE_YTELSESVEDTAK:
+    case Klagevurdering.OPPHEVE_YTELSESVEDTAK:
       aksjonspunktText = 'Opphev ytelsesvedtak';
       break;
-    case klageVurdering.AVVIS_KLAGE:
+    case Klagevurdering.AVVIS_KLAGE:
       aksjonspunktText = 'Klagen avvist fordi den ikke oppfyller formkravene';
       break;
-    case klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE:
+    case Klagevurdering.HJEMSENDE_UTEN_Å_OPPHEVE:
       aksjonspunktText = 'Hjemsend uten å oppheve';
       break;
-    case klageVurdering.MEDHOLD_I_KLAGE:
+    case Klagevurdering.MEDHOLD_I_KLAGE:
       if (
         klageVurderingResultat.klageVurderingOmgjoer &&
-        klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoer.UDEFINERT
+        klageVurderingResultat.klageVurderingOmgjoer !== KlagevurderingOmgjør.UDEFINERT
       ) {
         aksjonspunktText =
-          omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer as keyof typeof klageVurderingOmgjoer];
+          omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer as keyof typeof KlagevurderingOmgjør];
         break;
       }
       aksjonspunktText = 'Vedtaket er omgjort';
