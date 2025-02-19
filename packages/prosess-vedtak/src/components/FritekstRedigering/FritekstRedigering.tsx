@@ -62,7 +62,7 @@ const FritekstRedigering = ({
   useEffect(() => {
     setForhaandsvisningKlart(false);
   }, []);
-  const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
+  const redigerbarDokumentmal: VedtaksbrevMal | undefined = tilgjengeligeVedtaksbrev.maler?.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
   const firstRender = useRef<boolean>(true);
