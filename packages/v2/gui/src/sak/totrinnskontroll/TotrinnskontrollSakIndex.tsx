@@ -149,6 +149,7 @@ const TotrinnskontrollSakIndex = ({
   );
 };
 
+// TODO: Dette kan fjernes når overgang til kodeverk som strings er ferdig
 const TotrinnskontrollSakIndexPropsTransformer = (props: TotrinnskontrollSakIndexProps) => {
   const v2Props = JSON.parse(JSON.stringify(props));
   konverterKodeverkTilKode(v2Props, false);
