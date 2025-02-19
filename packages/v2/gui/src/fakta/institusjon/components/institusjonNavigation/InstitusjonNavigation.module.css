@@ -17,7 +17,3 @@
 .institusjon-oversikt .periodColumns > div {
   margin-right: 1rem;
 }
-
-.institusjon-oversikt .periodColumns > div:last-of-type {
-  margin-left: 7.75rem;
-}

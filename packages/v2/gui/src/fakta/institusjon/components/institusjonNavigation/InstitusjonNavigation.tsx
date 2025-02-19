@@ -57,7 +57,6 @@ const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
       <div className={styles['periodColumns']}>
         <div className={styles['marginLeft']}>Status</div>
         <div>Periode</div>
-        <div>Part</div>
       </div>
       {elements.length === 0 && <p className={styles['marginLeft']}>Ingen vurderinger å vise</p>}
       {elements.length > 0 && (
