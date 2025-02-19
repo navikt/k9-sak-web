@@ -3,7 +3,7 @@ import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import type { InstitusjonPerioderMedResultat } from '@k9-sak-web/types';
 import React, { useState, useMemo, useEffect } from 'react';
 
-import institusjonStatus from '../../konstanter';
+import institusjonStatus from '../../constants/institusjonStatus';
 import PeriodeRad from '../periodeRad/PeriodeRad';
 import styles from './InstitusjonNavigation.module.css';
 

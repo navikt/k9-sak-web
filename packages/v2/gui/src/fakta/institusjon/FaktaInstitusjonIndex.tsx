@@ -3,8 +3,8 @@ import { Heading } from '@navikt/ds-react';
 import type { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
 import { Vurderingsresultat } from '@k9-sak-web/types';
 import { Period } from '@fpsak-frontend/utils';
-import InstitusjonNavigation from './institusjonNavigation/InstitusjonNavigation';
-import InstitusjonDetails from './institusjonDetails/InstitusjonDetails';
+import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation';
+import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails';
 import { useState, useMemo } from 'react';
 
 interface OwnProps {
