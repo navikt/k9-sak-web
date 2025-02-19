@@ -13,7 +13,7 @@ export default class BehandlingUttakBackendClient {
   }
 
   async getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto> {
-    return this.#k9sak.behandlingUttak.hentEgneOverlappendeSaker(behandlingUuid);
+    return (await this.#k9sak.behandlingUttak.hentEgneOverlappendeSaker(behandlingUuid)) ?? null;
   }
 
   async bekreftAksjonspunkt(requestBody: BekreftData['requestBody']): Promise<BekreftResponse> {
