@@ -1,4 +1,4 @@
-import { behandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated';
+import { BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Sak,
@@ -104,7 +104,8 @@ export const getHenleggArsaker = (
   behandlingType: string,
   ytelseType: string,
 ): Årsaker[] => {
-  const typerForBehandlingType = henleggArsakerPerBehandlingType[behandlingType] ?? [];
+  const typerForBehandlingType =
+    henleggArsakerPerBehandlingType[behandlingType as keyof typeof henleggArsakerPerBehandlingType] ?? [];
   return typerForBehandlingType
     .filter(
       type =>

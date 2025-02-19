@@ -118,3 +118,5 @@ spec:
       value: "true"
     - name: VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK
       value: "true"
+    - name: NY_INNTEKT_EGET_PANEL
+      value: "false"

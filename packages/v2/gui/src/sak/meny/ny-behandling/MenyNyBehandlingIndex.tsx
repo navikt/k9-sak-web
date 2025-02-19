@@ -1,7 +1,4 @@
-import {
-  behandlingType as BehandlingTypeK9Klage,
-  type BehandlingType,
-} from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useCallback } from 'react';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
@@ -57,7 +54,7 @@ const MenyNyBehandlingIndexV2 = ({
 }: OwnProps) => {
   const submit = useCallback(
     (formValues: FormValues) => {
-      const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType as BehandlingType);
+      const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
       const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
       const params = {
