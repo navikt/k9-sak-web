@@ -9,8 +9,8 @@ import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
+import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
-import skjermlenkeCodes from '../constants/skjermlenkeCodes';
 import styles from './behandlingSelected.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 

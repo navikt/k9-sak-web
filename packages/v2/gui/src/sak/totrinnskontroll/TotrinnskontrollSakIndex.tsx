@@ -1,34 +1,23 @@
-import { Location } from 'history';
-import { useCallback, useMemo } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { type KodeverkObject, KodeverkType, type KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import {
-  BehandlingAppKontekst,
-  KlageVurdering,
-  KodeverkMedNavn,
-  TotrinnskontrollSkjermlenkeContext,
-} from '@k9-sak-web/types';
-
-import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
-import { FormState } from './components/FormState';
+  AksjonspunktDtoDefinisjon,
+  AksjonspunktDtoVurderPaNyttArsaker,
+  BehandlingAksjonspunktDtoBehandlingStatus,
+} from '@navikt/k9-sak-typescript-client';
+import { type Location } from 'history';
+import { useCallback, useMemo } from 'react';
+import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
+import { type AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
+import { type FormState } from './components/FormState';
 import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
+import { type Behandling } from './types/Behandling';
+import { type TotrinnskontrollSkjermlenkeContext } from './types/TotrinnskontrollSkjermlenkeContext';
 
 const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
@@ -38,28 +27,27 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
 ];
 
 const getArsaker = (apData: AksjonspunktGodkjenningData): string[] => {
-  const arsaker = [];
+  const arsaker: string[] = [];
   if (apData.feilFakta) {
-    arsaker.push(vurderPaNyttArsakType.FEIL_FAKTA);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_FAKTA);
   }
   if (apData.feilLov) {
-    arsaker.push(vurderPaNyttArsakType.FEIL_LOV);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_LOV);
   }
   if (apData.feilRegel) {
-    arsaker.push(vurderPaNyttArsakType.FEIL_REGEL);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_REGEL);
   }
   if (apData.annet) {
-    arsaker.push(vurderPaNyttArsakType.ANNET);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.ANNET);
   }
   return arsaker;
 };
 
-interface OwnProps {
-  behandling: BehandlingAppKontekst;
+interface TotrinnskontrollSakIndexProps {
+  behandling: Behandling;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   location: Location;
-  behandlingKlageVurdering?: KlageVurdering;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  behandlingKlageVurdering?: KlagebehandlingDto;
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
@@ -74,14 +62,13 @@ const TotrinnskontrollSakIndex = ({
   readOnly,
   onSubmit,
   behandlingKlageVurdering,
-  alleKodeverk,
   createLocationForSkjermlenke,
   toTrinnFormState,
   setToTrinnFormState,
-}: OwnProps) => {
+}: TotrinnskontrollSakIndexProps) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
   const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandling.type.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type.kode;
+    behandlingType.TILBAKEKREVING === behandling.type || behandlingType.REVURDERING_TILBAKEKREVING === behandling.type;
 
   const submitHandler = useCallback(
     (values: FormState) => {
@@ -93,7 +80,9 @@ const TotrinnskontrollSakIndex = ({
       }));
 
       const fatterVedtakAksjonspunktDto = {
-        '@type': erTilbakekreving ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK : aksjonspunktCodes.FATTER_VEDTAK,
+        '@type': erTilbakekreving
+          ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK
+          : AksjonspunktDtoDefinisjon.FATTER_VEDTAK,
         begrunnelse: null,
         aksjonspunktGodkjenningDtos,
       };
@@ -105,7 +94,7 @@ const TotrinnskontrollSakIndex = ({
         ),
       });
     },
-    [erTilbakekreving],
+    [erTilbakekreving, onSubmit],
   );
 
   const sorterteTotrinnskontrollSkjermlenkeContext = useMemo(
@@ -113,23 +102,23 @@ const TotrinnskontrollSakIndex = ({
       erTilbakekreving
         ? sorterteSkjermlenkeCodesForTilbakekreving
             .map(s => totrinnskontrollSkjermlenkeContext.find(el => el.skjermlenkeType === s.kode))
-            .filter(s => s)
+            .filter(s => s != undefined)
         : totrinnskontrollSkjermlenkeContext,
     [erTilbakekreving, totrinnskontrollSkjermlenkeContext],
   );
 
   const lagLenke = useCallback(
     (skjermlenkeCode: string): Location => createLocationForSkjermlenke(location, skjermlenkeCode),
-    [location],
+    [location, createLocationForSkjermlenke],
   );
 
-  const erStatusFatterVedtak = behandling.status.kode === BehandlingStatus.FATTER_VEDTAK;
-  const skjermlenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
-  const arbeidsforholdHandlingTyper = alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE];
-  const vurderArsaker = alleKodeverk[kodeverkTyper.VURDER_AARSAK];
+  const erStatusFatterVedtak = behandling.status === BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;
+  const skjermlenkeTyper = hentKodeverkForKode(KodeverkType.SKJERMLENKE_TYPE);
+  const arbeidsforholdHandlingTyper = hentKodeverkForKode(KodeverkType.ARBEIDSFORHOLD_HANDLING_TYPE);
+  const vurderArsaker = hentKodeverkForKode(KodeverkType.VURDER_AARSAK);
 
   return (
-    <RawIntlProvider value={intl}>
+    <>
       {erStatusFatterVedtak && (
         <TotrinnskontrollBeslutterForm
           behandling={behandling}
@@ -137,9 +126,8 @@ const TotrinnskontrollSakIndex = ({
           readOnly={readOnly}
           handleSubmit={submitHandler}
           behandlingKlageVurdering={behandlingKlageVurdering}
-          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjermlenkeTyper={skjermlenkeTyper}
-          erTilbakekreving={erTilbakekreving}
+          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkV2[]}
+          skjermlenkeTyper={skjermlenkeTyper as KodeverkV2[]}
           lagLenke={lagLenke}
           toTrinnFormState={toTrinnFormState}
           setToTrinnFormState={setToTrinnFormState}
@@ -151,14 +139,21 @@ const TotrinnskontrollSakIndex = ({
           behandlingKlageVurdering={behandlingKlageVurdering}
           behandlingStatus={behandling.status}
           erTilbakekreving={erTilbakekreving}
-          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjermlenkeTyper={skjermlenkeTyper}
+          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
+          skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
           lagLenke={lagLenke}
-          vurderArsaker={vurderArsaker}
+          vurderArsaker={vurderArsaker as KodeverkObject[]}
         />
       )}
-    </RawIntlProvider>
+    </>
   );
 };
 
-export default TotrinnskontrollSakIndex;
+// TODO: Dette kan fjernes når overgang til kodeverk som strings er ferdig
+const TotrinnskontrollSakIndexPropsTransformer = (props: TotrinnskontrollSakIndexProps) => {
+  const v2Props = JSON.parse(JSON.stringify(props));
+  konverterKodeverkTilKode(v2Props, false);
+  return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
+};
+
+export default TotrinnskontrollSakIndexPropsTransformer;

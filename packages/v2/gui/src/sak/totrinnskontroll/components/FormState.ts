@@ -1,4 +1,4 @@
-import { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
+import type { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 
 export type FormState = {
   aksjonspunktGodkjenning: AksjonspunktGodkjenningData[];
