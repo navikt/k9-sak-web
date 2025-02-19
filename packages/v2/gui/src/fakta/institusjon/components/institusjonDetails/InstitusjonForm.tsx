@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
+
+import { Box, Button } from '@navikt/ds-react';
 import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { Box, Button } from '@navikt/ds-react';
+
 import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
 
 enum InstitusjonFormFields {
@@ -13,6 +15,12 @@ interface InstitusjonFormValues {
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: boolean;
 }
 
+export interface SubmitValues {
+  godkjent: boolean;
+  begrunnelse: string;
+  journalpostId: string;
+}
+
 interface InstitusjonFormProps {
   vurdering: InstitusjonVurderingMedPerioder;
   readOnly: boolean;
@@ -21,7 +29,13 @@ interface InstitusjonFormProps {
   avbrytRedigering: () => void;
 }
 
-const InstitusjonForm = ({ readOnly, erRedigering, avbrytRedigering }: InstitusjonFormProps) => {
+const InstitusjonForm = ({
+  vurdering,
+  readOnly,
+  erRedigering,
+  avbrytRedigering,
+  løsAksjonspunkt,
+}: InstitusjonFormProps) => {
   const formMethods = useForm<InstitusjonFormValues>({
     defaultValues: {
       begrunnelse: '',
@@ -30,7 +44,11 @@ const InstitusjonForm = ({ readOnly, erRedigering, avbrytRedigering }: Institusj
   });
 
   const handleSubmit = (values: InstitusjonFormValues) => {
-    console.log(values);
+    løsAksjonspunkt({
+      godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON],
+      begrunnelse: values[InstitusjonFormFields.BEGRUNNELSE],
+      journalpostId: vurdering.journalpostId,
+    });
   };
 
   return (

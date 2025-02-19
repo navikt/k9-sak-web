@@ -1,17 +1,19 @@
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
+import { useState, useMemo } from 'react';
 import { Heading } from '@navikt/ds-react';
+import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
+import { Period } from '@fpsak-frontend/utils';
 import type { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
 import { Vurderingsresultat } from '@k9-sak-web/types';
-import { Period } from '@fpsak-frontend/utils';
-import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation';
-import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails';
-import { useState, useMemo } from 'react';
+
+import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
+import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
+import type { SubmitValues } from './components/institusjonDetails/InstitusjonForm.js';
 
 interface OwnProps {
   perioder: InstitusjonPeriode[];
   vurderinger: InstitusjonVurdering[];
   readOnly: boolean;
-  løsAksjonspunkt: (payload: any) => void;
+  løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
 const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {

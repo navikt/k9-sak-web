@@ -6,13 +6,13 @@ import { LinkButton } from '@navikt/ft-plattform-komponenter';
 
 import type { InstitusjonVurderingMedPerioder } from '@k9-sak-web/types';
 import { Vurderingsresultat } from '@k9-sak-web/types';
-import InstitusjonFerdigVisning from './InstitusjonFerdigVisning';
-import InstitusjonForm from './InstitusjonForm';
+import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
+import InstitusjonForm, { type SubmitValues } from './InstitusjonForm.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingMedPerioder;
   readOnly: boolean;
-  løsAksjonspunkt: (payload: any) => void;
+  løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
 /**
