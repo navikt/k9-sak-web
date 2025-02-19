@@ -78,6 +78,9 @@ const FritekstRedigering = ({
 
   const hentFritekstbrevMal = async () => {
     setHenterMal(true);
+    if (!redigerbarDokumentmal) {
+      return;
+    }
     const request: { dokumentMal: string; dokumentdata?: any[]; overstyrtMottaker?: Brevmottaker } = {
       dokumentMal: redigerbarDokumentmal.redigerbarMalType,
     };
@@ -91,14 +94,16 @@ const FritekstRedigering = ({
     }
 
     const responseHtml = await hentFritekstbrevHtmlCallback(request);
-    setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
+    if (redigerbarDokumentmal) {
+      setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
+    }
 
     setBrevStiler(utledStiler(responseHtml));
     const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
     setPrefiksInnhold(utledPrefiksInnhold(seksjonerSomKanRedigeres));
     setSuffiksInnhold(utledSuffiksInnhold(seksjonerSomKanRedigeres));
 
-    const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
+    const originalHtmlStreng = utledRedigerbartInnhold(responseHtml) || '';
     setOriginalHtml(originalHtmlStreng);
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
