@@ -6,7 +6,7 @@ import {
   InstitusjonVurderingDtoResultat,
   type InstitusjonPeriodeDto,
   type InstitusjonVurderingDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated';
 
 import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';

@@ -1,4 +1,4 @@
-import { type InstitusjonPeriodeDto, type InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
+import { type InstitusjonPeriodeDto, type InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@fpsak-frontend/utils';
 
 export interface InstitusjonPerioderDtoMedResultat extends InstitusjonPeriodeDto {

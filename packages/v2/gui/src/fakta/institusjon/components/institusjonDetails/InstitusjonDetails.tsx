@@ -3,7 +3,7 @@ import { Box } from '@navikt/ds-react';
 import { Calender } from '@navikt/ds-icons';
 import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { LinkButton } from '@navikt/ft-plattform-komponenter';
-import { InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
+import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/institusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
