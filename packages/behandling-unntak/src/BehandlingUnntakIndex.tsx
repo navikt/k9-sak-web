@@ -115,7 +115,7 @@ const BehandlingUnntakIndex = ({
     requestUnntakApi.setRequestPendingHandler(setRequestPendingMessage);
     requestUnntakApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

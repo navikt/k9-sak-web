@@ -41,7 +41,7 @@ const Brevmottakere = ({
   const [mottakere, setMottakere] = useState<KlagePart[]>();
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       const parter = await hentMottakere();
       setMottakere(parter);
     })();

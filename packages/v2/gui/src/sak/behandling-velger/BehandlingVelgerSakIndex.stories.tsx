@@ -84,8 +84,8 @@ export const Default: StoryObj<typeof meta> = {
   play: async ({ canvas, step }) => {
     await step('skal rendre komponent', async () => {
       await userEvent.click(canvas.getByText('Se alle behandlinger'));
-      expect(canvas.getByText('2. Viderebehandling')).toBeInTheDocument();
-      expect(canvas.getAllByText('20.12.2021')).toHaveLength(4);
+      await expect(canvas.getByText('2. Viderebehandling')).toBeInTheDocument();
+      await expect(canvas.getAllByText('20.12.2021')).toHaveLength(4);
     });
   },
 };
@@ -101,7 +101,7 @@ export const IngenBehandlinger: StoryObj<typeof meta> = {
   },
   play: async ({ canvas, step }) => {
     await step('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
-      expect(canvas.getByText('Ingen behandlinger er opprettet')).toBeInTheDocument();
+      await expect(canvas.getByText('Ingen behandlinger er opprettet')).toBeInTheDocument();
     });
   },
 };

@@ -55,9 +55,9 @@ export const Default: StoryObj<typeof VisittkortPanel> = {
     personopplysninger: personopplysningerSoker,
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText(personopplysningerSoker.navn)).toBeInTheDocument();
-    expect(canvas.getByText('987738 95')).toBeInTheDocument();
-    expect(canvas.getByText(fagsakPerson.navn)).toBeInTheDocument();
+    await expect(canvas.getByText(personopplysningerSoker.navn)).toBeInTheDocument();
+    await expect(canvas.getByText('987738 95')).toBeInTheDocument();
+    await expect(canvas.getByText(fagsakPerson.navn)).toBeInTheDocument();
   },
 };
 
@@ -67,8 +67,8 @@ export const ManglerPersonOpplysninger: StoryObj<typeof VisittkortPanel> = {
     personopplysninger: undefined,
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText(fagsakPerson.navn)).toBeInTheDocument();
-    expect(canvas.getByText('123456 7')).toBeInTheDocument();
+    await expect(canvas.getByText(fagsakPerson.navn)).toBeInTheDocument();
+    await expect(canvas.getByText('123456 7')).toBeInTheDocument();
   },
 };
 
@@ -79,8 +79,8 @@ export const HarTilbakekrevingVerge: StoryObj<typeof VisittkortPanel> = {
     harTilbakekrevingVerge: true,
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Personen har verge')).toBeInTheDocument();
-    expect(canvas.getByText('Verge')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personen har verge')).toBeInTheDocument();
+    await expect(canvas.getByText('Verge')).toBeInTheDocument();
   },
 };
 
@@ -93,7 +93,7 @@ export const HarDødsdato: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Personen er død')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personen er død')).toBeInTheDocument();
   },
 };
 
@@ -106,8 +106,8 @@ export const HarKode6: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
-    expect(canvas.getByText('Kode 6')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
+    await expect(canvas.getByText('Kode 6')).toBeInTheDocument();
   },
 };
 
@@ -120,8 +120,8 @@ export const HarKode7: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
-    expect(canvas.getByText('Kode 7')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
+    await expect(canvas.getByText('Kode 7')).toBeInTheDocument();
   },
 };
 
@@ -134,7 +134,7 @@ export const HarVerge: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Personen har verge')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personen har verge')).toBeInTheDocument();
   },
 };
 
@@ -147,7 +147,7 @@ export const SøkerUnder18: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Personen er under 18 år')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personen er under 18 år')).toBeInTheDocument();
   },
 };
 
@@ -164,12 +164,12 @@ export const HarMerInformasjonOmSøker: StoryObj<typeof VisittkortPanel> = {
     if (buttons[1]) {
       await userEvent.click(buttons[1]);
     }
-    expect(canvas.getByLabelText('Statsborgerskap')).toBeInTheDocument();
-    expect(canvas.getByLabelText('Personstatus')).toBeInTheDocument();
-    expect(canvas.getByLabelText('Sivilstand')).toBeInTheDocument();
-    expect(canvas.getByLabelText('Foretrukket språk')).toBeInTheDocument();
-    expect(canvas.getByText('Bostedsadresse')).toBeInTheDocument();
-    expect(canvas.getByText('Oslo, 1234 Oslo Norge')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Statsborgerskap')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Personstatus')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Sivilstand')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Foretrukket språk')).toBeInTheDocument();
+    await expect(canvas.getByText('Bostedsadresse')).toBeInTheDocument();
+    await expect(canvas.getByText('Oslo, 1234 Oslo Norge')).toBeInTheDocument();
   },
 };
 
@@ -183,7 +183,7 @@ export const HarRelatertFagsakEnSøker: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText('SJØLØVE ANINE')).toBeInTheDocument();
+    await expect(canvas.getByText('SJØLØVE ANINE')).toBeInTheDocument();
   },
 };
 
@@ -198,7 +198,7 @@ export const HarRelatertFagsakFlereSøkere: StoryObj<typeof VisittkortPanel> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Velg relatert søker')).toBeInTheDocument();
-    expect(canvas.getByText('Åpne sak')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Velg relatert søker')).toBeInTheDocument();
+    await expect(canvas.getByText('Åpne sak')).toBeInTheDocument();
   },
 };

@@ -147,17 +147,20 @@ const FritekstRedigering = ({
 
   useEffect(() => {
     if (!firstRender.current && overstyrtMottaker && !henterMal) {
-      hentFritekstbrevMal();
+      void hentFritekstbrevMal();
     }
   }, [firstRender, overstyrtMottaker]);
 
   useEffect(() => {
-    if (!firstRender.current && redigerbartInnholdKlart) {
-      handleLagre(innholdTilRedigering);
-    } else {
-      hentFritekstbrevMal();
-      firstRender.current = false;
-    }
+    const asyncEffect = async () => {
+      if (!firstRender.current && redigerbartInnholdKlart) {
+        await handleLagre(innholdTilRedigering);
+      } else {
+        await hentFritekstbrevMal();
+        firstRender.current = false;
+      }
+    };
+    void asyncEffect();
   }, [firstRender, inkluderKalender]);
 
   useEffect(() => {

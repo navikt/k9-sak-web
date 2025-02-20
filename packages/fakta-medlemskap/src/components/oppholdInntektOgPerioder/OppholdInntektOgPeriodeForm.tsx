@@ -66,13 +66,15 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { control, formState, trigger } = useFormContext<OppholdInntektOgPerioderFormState>();
   const oppholdInntektOgPeriodeFormValues = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
-  const handleSubmit = () => {
-    trigger('oppholdInntektOgPeriodeForm').then(isValid => {
+  const handleSubmit = async () => {
+    try {
+      const isValid = await trigger('oppholdInntektOgPeriodeForm');
       if (isValid) {
         setIsSubmitted(true);
       }
-    });
-    updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
+    } finally {
+      updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
+    }
   };
 
   const begrunnelse = useWatch({ control, name: 'oppholdInntektOgPeriodeForm.begrunnelse' });

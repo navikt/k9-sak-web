@@ -155,10 +155,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         },
       ],
     };
-    api.bekreftAksjonspunkt(requestBody).then(() => {
-      setLoading(false);
-      oppdaterBehandling();
-    });
+    await api.bekreftAksjonspunkt(requestBody);
+    setLoading(false);
+    oppdaterBehandling();
   };
 
   if (overlappendeIsError) {

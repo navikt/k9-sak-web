@@ -40,7 +40,7 @@ export const DashboardResolver = ({ intl }: WrappedComponentProps) => {
         addErrorMessage(intl.formatMessage({ id: 'DashboardResolver.FpLosErNede' }));
       }
     };
-    gotoLosOrSetErrorMsg();
+    void gotoLosOrSetErrorMsg();
   }, []);
 
   return !isDevelopment() && isLoading ? <LoadingPanel /> : <FagsakSearchIndex />;
