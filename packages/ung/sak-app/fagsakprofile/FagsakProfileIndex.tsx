@@ -13,7 +13,7 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { behandlingType } from '@navikt/k9-klage-typescript-client';
+import { BehandlingDtoType } from '@navikt/k9-klage-typescript-client';
 import { Location } from 'history';
 import { useCallback, useContext } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
@@ -119,7 +119,7 @@ export const FagsakProfileIndex = ({
             const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
             const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
             const erTilbakekreving = alleBehandlinger.some(
-              behandling => behandling.type.kode === behandlingType.BT_007,
+              behandling => behandling.type.kode === BehandlingDtoType.TILBAKEKREVING,
             );
             konverterKodeverkTilKode(behandlingerV2, erTilbakekreving);
             konverterKodeverkTilKode(fagsakV2, erTilbakekreving);

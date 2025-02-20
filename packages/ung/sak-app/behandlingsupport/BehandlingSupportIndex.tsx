@@ -1,10 +1,9 @@
-import { httpErrorHandler } from '@fpsak-frontend/utils';
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
+import { UngSakClientContext } from '@k9-sak-web/gui/app/UngSakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
-import { apiPaths } from '@k9-sak-web/rest-api';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -12,7 +11,6 @@ import {
   Fagsak,
   FeatureToggles,
   NavAnsatt,
-  NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import {
@@ -29,7 +27,6 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
@@ -160,12 +157,13 @@ const BehandlingSupportIndex = ({
   navAnsatt,
   featureToggles,
 }: OwnProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
   const k9SakClient = useContext(K9SakClientContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
+  const ungClient = useContext(UngSakClientContext);
+  const notatBackendClient = new NotatBackendClient(ungClient);
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
@@ -178,23 +176,10 @@ const BehandlingSupportIndex = ({
     prevResetValue.current = currentResetValue;
   }, [currentResetValue]);
 
-  const getNotater = (signal: AbortSignal) =>
-    axios
-      .get<NotatResponse[]>(apiPaths.notatISakUng, {
-        signal,
-        params: {
-          saksnummer: fagsak.saksnummer,
-        },
-      })
-      .then(({ data }) => data)
-      .catch(error => {
-        httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
-      });
-
-  const notaterQueryKey = ['notater', fagsak?.saksnummer, fagsak.sakstype];
+  const notaterQueryKey = ['notater', fagsak?.saksnummer];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
-    queryFn: ({ signal }) => getNotater(signal),
+    queryFn: () => notatBackendClient.getNotater(fagsak.saksnummer),
     enabled: !!fagsak,
     refetchOnWindowFocus: false,
   });
