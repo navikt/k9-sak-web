@@ -12,6 +12,7 @@ import InstitusjonNavigation from './components/institusjonNavigation/Institusjo
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
 import type { SubmitValues } from './components/institusjonDetails/InstitusjonForm.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/institusjonPerioderDtoMedResultat.js';
+import type { InstitusjonVurderingDtoMedPerioder } from './types/institusjonVurderingDtoMedPerioder.js';
 
 interface OwnProps {
   perioder: InstitusjonPeriodeDto[];
@@ -20,7 +21,7 @@ interface OwnProps {
   løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
-const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
+const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
   const [valgtPeriode, setValgtPeriode] = useState<InstitusjonPerioderDtoMedResultat | null>(null);
 
   const vurderingMap = useMemo(() => new Map(vurderinger.map(v => [v.journalpostId.journalpostId, v])), [vurderinger]);
@@ -54,7 +55,7 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt
     return Array.from(grouped.values());
   }, [perioder, vurderingMap]);
 
-  const valgtVurdering = (() => {
+  const valgtVurdering: InstitusjonVurderingDtoMedPerioder | undefined = (() => {
     const vurdering = valgtPeriode && vurderingMap.get(valgtPeriode.journalpostId.journalpostId);
     if (!vurdering) return undefined;
 
@@ -84,4 +85,4 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt
   );
 };
 
-export default InstitusjonOversikt;
+export default FaktaInstitusjonIndex;
