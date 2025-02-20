@@ -96,12 +96,11 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     dispatch({ type: ActionType.VELG_VURDERINGSELEMENT, valgtVurderingselement: nyValgtVurderingselement });
   };
 
-  const oppdaterVurderingsoversikt = () => {
+  const oppdaterVurderingsoversikt = async () => {
     dispatch({ type: ActionType.PENDING });
-    getVurderingsoversikt().then(vurderingsoversiktData => {
-      const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
-      visVurderingsoversikt(nyVurderingsoversikt);
-    });
+    const vurderingsoversiktData = await getVurderingsoversikt();
+    const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
+    visVurderingsoversikt(nyVurderingsoversikt);
   };
 
   const onAvbryt = () => {
@@ -110,24 +109,25 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     });
   };
 
-  const onVurderingLagret = () => {
+  const onVurderingLagret = async () => {
     dispatch({ type: ActionType.PENDING });
-    hentSykdomsstegStatus()
-      .then(status => {
-        if (status.kanLøseAksjonspunkt) {
-          navigerTilNesteSteg(toOmsorgspersonerSteg, true);
-          return;
-        }
+    try {
+      const status = await hentSykdomsstegStatus();
+      if (status.kanLøseAksjonspunkt) {
+        navigerTilNesteSteg(toOmsorgspersonerSteg, true);
+        return;
+      }
 
-        const nesteSteg = finnNesteStegForPleiepenger(status);
-        if (nesteSteg === tilsynOgPleieSteg || nesteSteg === null) {
-          oppdaterVurderingsoversikt();
-        } else {
-          const ikkeMarkerSteg = nesteSteg === toOmsorgspersonerSteg && !status.manglerVurderingAvToOmsorgspersoner;
-          navigerTilNesteSteg(nesteSteg, ikkeMarkerSteg);
-        }
-      })
-      .catch(handleError);
+      const nesteSteg = finnNesteStegForPleiepenger(status);
+      if (nesteSteg === tilsynOgPleieSteg || nesteSteg === null) {
+        await oppdaterVurderingsoversikt();
+      } else {
+        const ikkeMarkerSteg = nesteSteg === toOmsorgspersonerSteg && !status.manglerVurderingAvToOmsorgspersoner;
+        navigerTilNesteSteg(nesteSteg, ikkeMarkerSteg);
+      }
+    } catch {
+      handleError();
+    }
   };
 
   const setMargin = () => {

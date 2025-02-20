@@ -124,7 +124,7 @@ const BehandlingUtvidetRettIndex = ({
     requestUtvidetRettApi.setRequestPendingHandler(setRequestPendingMessage);
     requestUtvidetRettApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

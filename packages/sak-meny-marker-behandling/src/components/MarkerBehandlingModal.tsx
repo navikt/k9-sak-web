@@ -104,7 +104,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
           innerRef={formRef}
           initialValues={buildInitialValues()}
           validationSchema={MarkerBehandlingSchema}
-          onSubmit={(values, actions) => {
+          onSubmit={async (values, actions) => {
             actions.setSubmitting(false);
             if (formHasChanges()) {
               setShowIngenEndringerError(false);
@@ -122,13 +122,12 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
                 merknadKoder: getMerknadKode(),
               };
-              markerBehandling(transformedValues).then(() => {
-                if (erVeileder) {
-                  goToSearch();
-                } else {
-                  goToLos();
-                }
-              });
+              await markerBehandling(transformedValues);
+              if (erVeileder) {
+                goToSearch();
+              } else {
+                goToLos();
+              }
             } else {
               setShowIngenEndringerError(true);
             }

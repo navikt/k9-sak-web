@@ -105,11 +105,11 @@ export const VisOverstyringspanelForOpptjening: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('Vis tabs med valgbare perioder', async () => {
-      expect(canvas.getByText('Perioder')).toBeInTheDocument();
-      expect(canvas.getByRole('button', { name: '30.01.2020 - 29.02.2020' })).toBeInTheDocument();
+      await expect(canvas.getByText('Perioder')).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: '30.01.2020 - 29.02.2020' })).toBeInTheDocument();
     });
     await step('Ikke vis submit-knapp når en er i readonly-modus', async () => {
-      expect(canvas.queryByRole('button', { name: 'Bekreft overstyring' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft overstyring' })).not.toBeInTheDocument();
     });
   },
   render: (args: VilkarresultatMedOverstyringProsessIndexProps) => {
@@ -135,8 +135,8 @@ export const VisOverstyringspanelForMedlemskap: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('Vis overskrift og lovparagraf', async () => {
-      expect(canvas.getByRole('heading', { name: 'Medlemskap' })).toBeInTheDocument();
-      expect(canvas.getByText('lovreferanse')).toBeInTheDocument();
+      await expect(canvas.getByRole('heading', { name: 'Medlemskap' })).toBeInTheDocument();
+      await expect(canvas.getByText('lovreferanse')).toBeInTheDocument();
     });
   },
   render: (args: VilkarresultatMedOverstyringProsessIndexProps) => {
@@ -216,9 +216,9 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('Vis skjema ved overstyring', async () => {
-      expect(canvas.getByText('Manuell overstyring av automatisk vurdering')).toBeInTheDocument();
-      expect(canvas.getByTestId('overstyringform')).toBeInTheDocument();
-      expect(canvas.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
+      await expect(canvas.getByText('Manuell overstyring av automatisk vurdering')).toBeInTheDocument();
+      await expect(canvas.getByTestId('overstyringform')).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
     });
   },
   render: (args: VilkarresultatMedOverstyringProsessIndexProps) => {

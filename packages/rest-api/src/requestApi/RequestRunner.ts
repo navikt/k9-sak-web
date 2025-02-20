@@ -149,7 +149,7 @@ class RequestRunner {
           resolve(retryResponse);
           popupWindow = null;
         } catch (error2) {
-          new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error2);
+          void new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error2);
           reject(error2);
         }
       }, 500);
@@ -165,7 +165,7 @@ class RequestRunner {
       if (response && response.status === 401 && response.headers && response.headers.location) {
         return this.retryStart(response, params);
       }
-      new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
+      void new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
     }
   };

@@ -60,14 +60,14 @@ export const DefaultStory: Story = {
     fagsak: fagsak,
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText('Dette er et dokument')).toBeInTheDocument();
-    expect(canvas.getByText('Dette er et tredje dokument')).toBeInTheDocument();
-    expect(canvas.getByText('02.01.2017 - 10:54')).toBeInTheDocument();
+    await expect(canvas.getByText('Dette er et dokument')).toBeInTheDocument();
+    await expect(canvas.getByText('Dette er et tredje dokument')).toBeInTheDocument();
+    await expect(canvas.getByText('02.01.2017 - 10:54')).toBeInTheDocument();
     await userEvent.selectOptions(canvas.getByRole('combobox'), 'Denne behandlingen');
-    expect(canvas.getByText('Dette er et dokument')).toBeInTheDocument();
-    expect(canvas.queryByText('Dette er et tredje dokument')).not.toBeInTheDocument();
+    await expect(canvas.getByText('Dette er et dokument')).toBeInTheDocument();
+    await expect(canvas.queryByText('Dette er et tredje dokument')).not.toBeInTheDocument();
     await userEvent.selectOptions(canvas.getByRole('combobox'), 'Alle behandlinger');
-    expect(canvas.getByText('Dette er et tredje dokument')).toBeInTheDocument();
+    await expect(canvas.getByText('Dette er et tredje dokument')).toBeInTheDocument();
   },
   render: props => (
     <div
