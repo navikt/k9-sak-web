@@ -136,8 +136,8 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
               }}
               fromDate={new Date(vurdering.periode.fom)}
               toDate={new Date(vurdering.periode.tom)}
-              onRangeChange={(dateRange: { from?: Date; to?: Date }) => {
-                setFieldValue(
+              onRangeChange={async (dateRange: { from?: Date; to?: Date }) => {
+                await setFieldValue(
                   fieldname.PERIODE,
                   new Period(
                     dateRange?.from ? dayjs(dateRange?.from).format('YYYY-MM-DD') : '',

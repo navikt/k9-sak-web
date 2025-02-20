@@ -110,7 +110,7 @@ const BehandlingFrisinnIndex = ({
     requestFrisinnApi.setRequestPendingHandler(setRequestPendingMessage);
     requestFrisinnApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

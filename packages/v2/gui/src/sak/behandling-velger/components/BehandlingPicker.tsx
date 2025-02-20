@@ -154,15 +154,18 @@ const BehandlingPicker = ({
   const åpenBehandlingId = useMemo(finnÅpenBehandling, [behandlinger]);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-    if (!behandlingId) {
-      if (åpenBehandlingId) {
-        navigate(getBehandlingLocation(åpenBehandlingId));
+    const effect = async () => {
+      if (firstRender.current) {
+        firstRender.current = false;
+        return;
       }
-    }
+      if (!behandlingId) {
+        if (åpenBehandlingId) {
+          await navigate(getBehandlingLocation(åpenBehandlingId));
+        }
+      }
+    };
+    void effect();
   }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
   const getBehandlingerSomSkalVises = (

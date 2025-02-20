@@ -35,7 +35,7 @@ describe('9069 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    userEvent.click(screen.getByLabelText(/Nei, send purring med varsel om avslag/i));
+    await userEvent.click(screen.getByLabelText(/Nei, send purring med varsel om avslag/i));
 
     // ASSERT
     await waitFor(() => {

@@ -85,7 +85,7 @@ export const VisUtenAksjonspunkt: Story = {
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas }) => {
-    expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
   },
   render: props => <TilkjentYtelseProsessIndex {...props} />,
 };
@@ -106,17 +106,17 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas, step }) => {
-    step('Skal vise skjemaelementer for tilbaketrekk', async () => {
-      expect(canvas.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
-      expect(
+    await step('Skal vise skjemaelementer for tilbaketrekk', async () => {
+      await expect(canvas.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
+      await expect(
         canvas.getByText(
           'Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.',
         ),
       ).toBeInTheDocument();
-      expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-      expect(canvas.getByRole('radio', { name: 'Tilbakekrev fra søker' })).toBeInTheDocument();
-      expect(canvas.getByRole('radio', { name: 'Ikke tilbakekrev fra søker' })).toBeInTheDocument();
-      expect(canvas.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+      await expect(canvas.getByRole('radio', { name: 'Tilbakekrev fra søker' })).toBeInTheDocument();
+      await expect(canvas.getByRole('radio', { name: 'Ikke tilbakekrev fra søker' })).toBeInTheDocument();
+      await expect(canvas.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
     });
   },
   render: props => <TilkjentYtelseProsessIndex {...props} />,
@@ -138,12 +138,12 @@ export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'Legg til ny periode' })).toBeInTheDocument();
-    expect(canvas.queryByText('Ny periode')).not.toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Legg til ny periode' })).toBeInTheDocument();
+    await expect(canvas.queryByText('Ny periode')).not.toBeInTheDocument();
     await userEvent.click(canvas.getByRole('button', { name: 'Legg til ny periode' }));
-    expect(canvas.getByText('Ny periode')).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'Avbryt' })).toBeInTheDocument();
+    await expect(canvas.getByText('Ny periode')).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Avbryt' })).toBeInTheDocument();
   },
   render: props => (
     <KodeverkProvider
