@@ -13,12 +13,12 @@ export const Default: StoryObj<typeof DateLabel> = {
     dateString: '2017-10-10',
   },
   play: async ({ canvas, step }) => {
-    step('skal ha en FormattedDate-komponent', () => {
-      expect(canvas.queryByText('10.10.2017')).toBeInTheDocument();
+    await step('skal ha en FormattedDate-komponent', async () => {
+      await expect(canvas.queryByText('10.10.2017')).toBeInTheDocument();
     });
 
-    step('skal sjekke at dato blir formatert korrekt', () => {
-      expect(canvas.queryByText(format(new Date('10.10.2017'), 'dd.MM.yyyy'))).toBeInTheDocument();
+    await step('skal sjekke at dato blir formatert korrekt', async () => {
+      await expect(canvas.queryByText(format(new Date('10.10.2017'), 'dd.MM.yyyy'))).toBeInTheDocument();
     });
   },
 };

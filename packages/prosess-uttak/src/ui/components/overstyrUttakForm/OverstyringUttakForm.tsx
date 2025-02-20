@@ -92,7 +92,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
     };
 
     if (watchFraDato && watchTilDato) {
-      handleHentAktuelleAktiviteter(watchFraDato, watchTilDato);
+      void handleHentAktuelleAktiviteter(watchFraDato, watchTilDato);
       setDeaktiverLeggTil(false);
     }
   }, [watchFraDato, watchTilDato]);

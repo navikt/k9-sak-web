@@ -41,7 +41,7 @@ const MenySettPaVentIndex = ({
 }: OwnProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submit = useCallback(
-    formValues => {
+    async formValues => {
       setIsSubmitting(true);
       const values = {
         behandlingVersjon,
@@ -50,13 +50,12 @@ const MenySettPaVentIndex = ({
         ventearsak: formValues.ventearsak,
         ventearsakVariant: formValues.ventearsakVariant,
       };
-      settBehandlingPaVent(values)
-        .then(() => {
-          goToLos();
-        })
-        .finally(() => {
-          setIsSubmitting(false);
-        });
+      try {
+        await settBehandlingPaVent(values);
+        goToLos();
+      } finally {
+        setIsSubmitting(false);
+      }
     },
     [behandlingId, behandlingVersjon],
   );

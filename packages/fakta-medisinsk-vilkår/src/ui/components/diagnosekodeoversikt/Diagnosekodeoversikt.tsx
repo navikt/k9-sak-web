@@ -98,8 +98,8 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   const slettDiagnosekodeMutation = useMutation({
     mutationFn: (diagnosekode: string) => slettDiagnosekode(diagnosekode),
 
-    onSuccess: () => {
-      refetch().finally(() => {
+    onSuccess: async () => {
+      await refetch().finally(() => {
         onDiagnosekoderUpdated();
         focusAddButton();
       });
@@ -108,8 +108,8 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   const lagreDiagnosekodeMutation = useMutation({
     mutationFn: (nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder),
 
-    onSuccess: () => {
-      refetch().finally(() => {
+    onSuccess: async () => {
+      await refetch().finally(() => {
         onDiagnosekoderUpdated();
         setModalIsOpen(false);
         focusAddButton();

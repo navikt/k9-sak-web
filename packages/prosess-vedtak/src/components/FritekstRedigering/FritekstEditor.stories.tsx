@@ -56,14 +56,14 @@ export const AvansertMedPlayTest: StoryObj<typeof FritekstEditor> = {
   },
   play: async ({ canvas, args, canvasElement }) => {
     const prefixEl = canvas.getByText('Prefiks');
-    expect(prefixEl).toBeInTheDocument();
+    await expect(prefixEl).toBeInTheDocument();
     const suffixEl = canvas.getByText('Suffiks');
-    expect(suffixEl).toBeInTheDocument();
+    await expect(suffixEl).toBeInTheDocument();
     const contentBlock = canvasElement.querySelector('#rediger-brev');
     await expect(contentBlock).toBeInTheDocument();
 
     const submitBtn = canvas.getByRole('button', { name: 'Lagre og lukk' });
-    expect(submitBtn).toBeInTheDocument();
+    await expect(submitBtn).toBeInTheDocument();
     await userEvent.click(submitBtn, { delay: 100 });
     await waitFor(() => expect(args.handleSubmit).toHaveBeenCalledWith(`<p>${customizedContent}</p>`));
     const para = contentBlock.querySelector('.ce-paragraph.cdx-block');
