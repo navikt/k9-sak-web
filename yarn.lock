@@ -4464,7 +4464,7 @@ __metadata:
     dayjs: "npm:1.11.13"
     react: "npm:19.0.0"
     react-hook-form: "npm:7.54.2"
-    react-intl: "npm:7.1.5"
+    react-intl: "npm:7.1.6"
     uuid: "npm:11.0.5"
   languageName: unknown
   linkType: soft
