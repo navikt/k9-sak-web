@@ -532,7 +532,6 @@
   "packages/tidslinje/src/components/pleiepenger/Tidslinje.spec.tsx",
   "packages/tidslinje/src/components/pleiepenger/Tidslinje.tsx",
   "packages/ung/sak-app/app/AppConfigResolver.tsx",
-  "packages/ung/sak-app/app/components/DashboardResolver.spec.tsx",
   "packages/ung/sak-app/app/components/Dekorator.tsx",
   "packages/ung/sak-app/app/paths.ts",
   "packages/ung/sak-app/app/useTrackRouteParam.tsx",
