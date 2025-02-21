@@ -1,8 +1,7 @@
 import { isDayAfter, Period } from '@fpsak-frontend/utils';
 import { Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import uniq from 'lodash/uniq';
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
 import PartIkon from './PartIkon';
@@ -76,7 +75,7 @@ const EtablertTilsyn = ({
       .map(date => ({ ...v, periode: new Period(date, date) })),
   );
 
-  const uker = uniq(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()));
+  const uker = [...new Set(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()))];
   const tilsynPerUke = uker.map(uke => ({
     etablertTilsyn: etablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
     etablertTilsynSmurt: smurtEtablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
