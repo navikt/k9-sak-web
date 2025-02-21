@@ -87,7 +87,7 @@ const FritekstEditor = ({
 
   // Create new instance of editor (wrapper) when neccessary
   useEffect(() => {
-    editorRef.current = new EditorJSWrapper({ holder: 'rediger-brev', onChange });
+    if (!editorRef.current) editorRef.current = new EditorJSWrapper({ holder: 'rediger-brev', onChange });
   }, [onChange]);
 
   // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blir endra utanfrå.
