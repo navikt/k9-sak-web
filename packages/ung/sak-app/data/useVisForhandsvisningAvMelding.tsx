@@ -23,16 +23,17 @@ export const useVisForhandsvisningAvMelding = (behandling: BehandlingInfo, fagsa
 
   const { startRequest: forhandsvisMelding } = restApiHooks.useRestApiRunner(UngSakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
 
-  return (erHenleggelse: boolean, data: any): void => {
+  return async (erHenleggelse: boolean, data: any): Promise<void> => {
     if (erTilbakekreving && erHenleggelse) {
-      forhandsvisTilbakekrevingHenleggelse({ behandlingUuid: behandling.uuid, ...data }).then(response =>
-        forhandsvis(response),
-      );
+      const response = await forhandsvisTilbakekrevingHenleggelse({ behandlingUuid: behandling.uuid, ...data });
+      forhandsvis(response);
     } else if (erTilbakekreving) {
-      forhandsvisTilbakekreving({ behandlingUuid: behandling.uuid, ...data }).then(response => forhandsvis(response));
+      const response = await forhandsvisTilbakekreving({ behandlingUuid: behandling.uuid, ...data });
+      forhandsvis(response);
     } else {
       const req = { ...lagForhåndsvisRequest(behandling, fagsak, fagsak.person, data) };
-      forhandsvisMelding(req).then(response => forhandsvis(response));
+      const response = await forhandsvisMelding(req);
+      forhandsvis(response);
     }
   };
 };

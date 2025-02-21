@@ -49,7 +49,7 @@ const getOppdaterProsessStegOgFaktaPanelIUrl =
       newLocation = getFaktaLocation(newLocation)(null);
     }
 
-    navigate(newLocation);
+    void navigate(newLocation);
   };
 
 interface OwnProps {

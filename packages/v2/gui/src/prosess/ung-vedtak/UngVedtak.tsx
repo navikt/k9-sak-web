@@ -62,7 +62,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
 
   const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
   const handleSubmit = () => {
-    submitCallback(transformValues());
+    void submitCallback(transformValues());
   };
 
   return (
