@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -143,13 +143,28 @@ const FritekstEditor = ({
 
   return (
     <>
-      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} aria-label="Tilbakestill brev">
+      {visAdvarsel ? (
         <Modal.Header>
           <Heading as="h3" size="medium">
             <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
           </Heading>
         </Modal.Header>
-        <Modal.Body>
+      ) : (
+        <Modal.Header>
+          <Heading level="3" size="small">
+            <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+          </Heading>
+          <VerticalSpacer sixteenPx />
+          <Alert variant="info" size="small">
+            <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
+            <ÅpneSakINyttVinduKnapp />
+          </Alert>
+          <FritekstFeilmeldinger />
+        </Modal.Header>
+      )}
+
+      {visAdvarsel && (
+        <>
           <Alert variant="warning" inline>
             <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
           </Alert>
@@ -162,10 +177,10 @@ const FritekstEditor = ({
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
           </div>
-        </Modal.Body>
-      </Modal>
+        </>
+      )}
 
-      <div className={styles.papirWrapper}>
+      <div className={visAdvarsel ? styles.skjulEditor : ''}>
         <div className={styles.papir}>
           {redigerbartInnholdKlart && (
             <div className={styles.nullstillCss}>
@@ -181,7 +196,7 @@ const FritekstEditor = ({
           )}
         </div>
       </div>
-      <footer>
+      <footer className={visAdvarsel ? styles.skjulEditor : ''}>
         <VerticalSpacer thirtyTwoPx />
         {kanInkludereKalender && (
           <div>

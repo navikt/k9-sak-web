@@ -1,5 +1,4 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
@@ -9,12 +8,11 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Edit } from '@navikt/ds-icons';
-import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
-import FritekstFeilmeldinger from './FritekstFeilmeldinger';
 import styles from './RedigerFritekstbrev.module.css';
 import {
   lagLagreHtmlDokumentdataRequest,
@@ -134,15 +132,7 @@ const FritekstRedigering = ({
         }),
       );
     },
-    [
-      handleSubmit,
-      lagLagreHtmlDokumentdataRequest,
-      dokumentdata,
-      redigerbarDokumentmal,
-      originalHtml,
-      inkluderKalender,
-      overstyrtMottaker,
-    ],
+    [handleSubmit, dokumentdata, redigerbarDokumentmal, originalHtml, inkluderKalender, overstyrtMottaker],
   );
 
   useEffect(() => {
@@ -186,17 +176,6 @@ const FritekstRedigering = ({
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
-        <Modal.Header>
-          <Heading level="3" size="small">
-            <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
-          </Heading>
-          <VerticalSpacer sixteenPx />
-          <Alert variant="info" size="small">
-            <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
-            <ÅpneSakINyttVinduKnapp />
-          </Alert>
-          <FritekstFeilmeldinger />
-        </Modal.Header>
         <Modal.Body>
           <div className={styles.modalInnehold}>
             {visRedigering && (
