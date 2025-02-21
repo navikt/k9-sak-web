@@ -30,9 +30,9 @@ const FagsakSearchIndex = () => {
 
   const navigate = useNavigate();
   const { removeErrorMessages } = useRestApiErrorDispatcher();
-  const goToFagsak = (saksnummer: string) => {
+  const goToFagsak = async (saksnummer: string) => {
     removeErrorMessages();
-    navigate(pathToFagsak(saksnummer));
+    await navigate(pathToFagsak(saksnummer));
   };
 
   const {
@@ -51,7 +51,7 @@ const FagsakSearchIndex = () => {
 
   useEffect(() => {
     if (sokFerdig && fagsaker.length === 1) {
-      goToFagsak(fagsaker[0].saksnummer);
+      void goToFagsak(fagsaker[0].saksnummer);
     }
   }, [sokFerdig, fagsaker]);
 

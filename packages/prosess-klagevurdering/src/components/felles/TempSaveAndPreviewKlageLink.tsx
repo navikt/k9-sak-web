@@ -44,10 +44,10 @@ export const TempSaveAndPreviewKlageLink = ({
   previewCallback,
 }: Partial<OwnProps>) => {
   const tempSave = event => {
-    saveKlage(transformValues(formValues, aksjonspunktCode)).then(() =>
+    event.preventDefault();
+    void saveKlage(transformValues(formValues, aksjonspunktCode)).then(() =>
       previewCallback(getBrevData(formValues.fritekstTilBrev)),
     );
-    event.preventDefault();
   };
 
   return (

@@ -15,12 +15,11 @@ const NyArbeidsgiverModal = ({ showModal = false, closeEvent, cancelEvent }: Own
   const formMethods = useFormContext<TilkjentYtelseFormState>();
   const nyArbeidsgiverFormState = formMethods.watch('nyArbeidsgiverForm');
 
-  const handleSubmit = () => {
-    formMethods.trigger('nyArbeidsgiverForm').then(valid => {
-      if (valid && nyArbeidsgiverFormState) {
-        closeEvent(nyArbeidsgiverFormState);
-      }
-    });
+  const handleSubmit = async () => {
+    const valid = await formMethods.trigger('nyArbeidsgiverForm');
+    if (valid && nyArbeidsgiverFormState) {
+      closeEvent(nyArbeidsgiverFormState);
+    }
   };
 
   return (

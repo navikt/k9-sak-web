@@ -70,12 +70,11 @@ export const TilkjentYtelseNyPeriode = ({
 
   const feilmelding = validateForm(perioder, formState?.fom, formState?.tom);
 
-  const handleSubmit = () => {
-    formMethods.trigger(['nyPeriodeForm']).then(valid => {
-      if (valid && !feilmelding && formState) {
-        newPeriodeCallback(transformValues(formState));
-      }
-    });
+  const handleSubmit = async () => {
+    const valid = await formMethods.trigger(['nyPeriodeForm']);
+    if (valid && !feilmelding && formState) {
+      newPeriodeCallback(transformValues(formState));
+    }
   };
 
   return (

@@ -119,7 +119,7 @@ const BehandlingTilbakekrevingIndex = ({
     requestTilbakekrevingApi.setRequestPendingHandler(setRequestPendingMessage);
     requestTilbakekrevingApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

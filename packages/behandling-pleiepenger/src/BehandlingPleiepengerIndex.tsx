@@ -135,7 +135,7 @@ const BehandlingPleiepengerIndex = ({
   );
 
   const lagreOverstyringUttak = async (values: OverstyringUttakRequest): Promise<void> => {
-    lagreOverstyringUttakRequest({
+    await lagreOverstyringUttakRequest({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -160,7 +160,7 @@ const BehandlingPleiepengerIndex = ({
     requestPleiepengerApi.setRequestPendingHandler(setRequestPendingMessage);
     requestPleiepengerApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

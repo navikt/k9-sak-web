@@ -112,24 +112,23 @@ const getManuellBrevCallback =
     previewCallback: (values, aapneINyttVindu) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
-  (e, redigertHtml = undefined) => {
-    formProps.validateForm().then(errors => {
-      if (Object.keys(errors).length === 0) {
-        manuellBrevPreview({
-          tilgjengeligeVedtaksbrev,
-          previewCallback,
-          values: formProps.values,
-          redigertHtml,
-          overstyrtMottaker,
-          brødtekst,
-          overskrift,
-          aapneINyttVindu: true,
-        });
-      } else {
-        formProps.setTouched(setNestedObjectValues(formProps.values, true));
-      }
-      e.preventDefault();
-    });
+  async (e, redigertHtml = undefined) => {
+    e.preventDefault();
+    const errors = await formProps.validateForm();
+    if (Object.keys(errors).length === 0) {
+      manuellBrevPreview({
+        tilgjengeligeVedtaksbrev,
+        previewCallback,
+        values: formProps.values,
+        redigertHtml,
+        overstyrtMottaker,
+        brødtekst,
+        overskrift,
+        aapneINyttVindu: true,
+      });
+    } else {
+      await formProps.setTouched(setNestedObjectValues(formProps.values, true));
+    }
   };
 
 const getHentHtmlMalCallback =
