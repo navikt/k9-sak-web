@@ -95,21 +95,15 @@ const renderFunc = Component => {
     // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'test') {
       const { worker } = await import('../../mocks/browser');
-      worker.start({ onUnhandledRequest: 'bypass' });
+      void worker.start({ onUnhandledRequest: 'bypass' });
     }
   };
 
-  prepare().then(() => {
+  void prepare().then(() => {
     const root = createRoot(app);
     root.render(
       <Provider store={store}>
-        <BrowserRouter
-          basename="/ung/web"
-          future={{
-            v7_relativeSplatPath: true,
-            v7_startTransition: true,
-          }}
-        >
+        <BrowserRouter basename="/ung/web">
           <RestApiProvider>
             <RestApiErrorProvider>
               <Component />
