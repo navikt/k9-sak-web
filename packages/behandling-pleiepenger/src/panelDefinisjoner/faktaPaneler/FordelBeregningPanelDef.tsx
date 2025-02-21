@@ -34,7 +34,7 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
         kodeverkSamling={deepCopyProps.alleKodeverk}
-        submitCallback={data => props.submitCallback(transformBeregningValues([data]))}
+        submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
         formData={props.formData}
         setFormData={props.setFormData}
         skalHåndtereNyInntekt={!props.featureToggles?.NY_INNTEKT_EGET_PANEL}
