@@ -10,14 +10,17 @@ import { createContext } from 'react';
 // for versjoner under må vi legge /api til på baseUrl for at kalla skal fungere, sidan openapi spesifikasjon generert
 // til fil mangla /api på paths då.
 // Kan fjernast når vi veit vi er komt over på version >= 0.2 av klient.
-const baseUrl = Number(clientVersion.minor) > 1 ? '/ung/sak' : '/ung/sak/api';
+const hasApiPrefix: boolean = Number(clientVersion.major) > 0 || Number(clientVersion.minor) > 1;
+const baseUrl = hasApiPrefix ? '/ung/sak' : '/ung/sak/api';
 
 // Current client generator hardcode accept: application/json into every request, which causes requests for binary content
 // (pdf) to be denied by the server. To work around this until client generator works properly, we override the accept
 // header manually for the few requests that don't serve json.
 // TODO Remove when generated typescript client can set correct Accept header by itself.
 const acceptHeaderOverrideWorkaround = (options: ApiRequestOptions<Record<string, string>>): Record<string, string> =>
-  options.url === '/formidling/vedtaksbrev/forhaandsvis' ? { Accept: 'application/pdf' } : {};
+  options.url === (hasApiPrefix ? '/api' : '') + '/formidling/vedtaksbrev/forhaandsvis'
+    ? { Accept: 'application/pdf' }
+    : {};
 
 const headerResolver = async (options: ApiRequestOptions<Record<string, string>>): Promise<Record<string, string>> => {
   const { headerName, headerValue } = generateNavCallidHeader();
