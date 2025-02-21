@@ -52,15 +52,15 @@ const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   };
 
   return (
-    <div className={styles['institusjon-oversikt']}>
-      <Heading size="xsmall" className={styles['heading']}>
+    <div className={styles.institusjonOversikt}>
+      <Heading size="xsmall" className={styles.heading}>
         Alle perioder
       </Heading>
-      <div className={styles['periodColumns']}>
-        <div className={styles['marginLeft']}>Status</div>
+      <div className={styles.periodColumns}>
+        <div className={styles.marginLeft}>Status</div>
         <div>Periode</div>
       </div>
-      {elements.length === 0 && <p className={styles['marginLeft']}>Ingen vurderinger å vise</p>}
+      {elements.length === 0 && <p className={styles.marginLeft}>Ingen vurderinger å vise</p>}
       {elements.length > 0 && (
         <div>
           <InteractiveList

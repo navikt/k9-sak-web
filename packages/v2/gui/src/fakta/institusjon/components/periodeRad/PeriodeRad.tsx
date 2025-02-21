@@ -70,8 +70,8 @@ const PeriodeRad = ({ perioder, resultat }: OwnProps): JSX.Element => (
       <span className={styles['visuallyHidden']}>Type</span>
       {renderStatusIcon(resultat)}
     </div>
-    <div className={styles['vurderingsperiodeElement__texts']}>
-      <div className={styles['vurderingsperiodeElement__texts__period']}>
+    <div className={styles.vurderingsperiodeElementTexts}>
+      <div className={styles.vurderingsperiodeElementTextsPeriod}>
         {perioder.map(v => (
           <div key={v.prettifyPeriod()}>
             <span className={styles['visuallyHidden']}>Perioder</span>
