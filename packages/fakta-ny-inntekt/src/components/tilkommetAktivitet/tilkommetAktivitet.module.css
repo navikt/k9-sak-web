@@ -7,7 +7,8 @@
 }
 
 .aktivitetTable tr,
-.aktivitetTable td {
+.aktivitetTable td,
+.aktivitetTable th {
   /* stylelint-disable-next-line declaration-no-important */
   border: none !important;
 }

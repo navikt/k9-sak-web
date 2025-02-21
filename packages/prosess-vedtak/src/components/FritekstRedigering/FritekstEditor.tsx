@@ -101,7 +101,7 @@ const FritekstEditor = ({
     const editor = editorRef.current;
     if (editor !== null) {
       if (redigerbartInnholdKlart && !readOnly) {
-        lastEditor(editor);
+        void lastEditor(editor);
       }
     } else {
       throw new Error(`Unexpectedly no editor instance available`);

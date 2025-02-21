@@ -28,7 +28,7 @@ interface OwnProps {
   behandlingUuid?: string;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  lagNyBehandling: (behandlingTypeKode: string, data: any) => void;
+  lagNyBehandling: (behandlingTypeKode: string, data: any) => Promise<void>;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];
@@ -68,7 +68,7 @@ const MenyNyBehandlingIndex = ({
   gjeldendeVedtakBehandlendeEnhetId,
 }: OwnProps) => {
   const submit = useCallback(
-    (formValues: FormValues) => {
+    async (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
       const params = {
@@ -77,7 +77,7 @@ const MenyNyBehandlingIndex = ({
         ...formValues,
       };
 
-      lagNyBehandling(formValues.behandlingType, params);
+      await lagNyBehandling(formValues.behandlingType, params);
 
       lukkModal();
     },

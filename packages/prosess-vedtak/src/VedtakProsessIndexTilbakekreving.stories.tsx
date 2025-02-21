@@ -67,7 +67,7 @@ export const visSjekkTilbakekreving: StoryObj<typeof meta> = {
   play: async ({ args, canvas, step }) => {
     await step('Test å svare nei', async () => {
       const neiRadio = canvas.getByText('Nei, behandle denne behandlingen videre');
-      expect(neiRadio).toBeInTheDocument();
+      await expect(neiRadio).toBeInTheDocument();
       await userEvent.click(neiRadio);
       const bekreftBtn = canvas.getByText('Bekreft');
       await userEvent.click(bekreftBtn);

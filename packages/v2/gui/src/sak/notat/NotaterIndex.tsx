@@ -50,26 +50,26 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
 
   const opprettNotatMutation = useMutation({
     mutationFn: ({ data }: opprettNotatMutationVariables) => notatBackendClient.opprettNotat(data, fagsakId),
-    onSuccess: () => {
+    onSuccess: async () => {
       formMethods.reset();
-      refetchNotater();
+      await refetchNotater();
     },
   });
 
   const endreNotatMutation = useMutation({
     mutationFn: ({ data, id, fagsakIdFraRedigertNotat, versjon }: endreNotatMutationVariables) =>
       notatBackendClient.endreNotat(data, id, fagsakIdFraRedigertNotat, versjon),
-    onSuccess: () => {
+    onSuccess: async () => {
       formMethods.reset();
-      refetchNotater();
+      await refetchNotater();
     },
   });
 
   const skjulNotatMutation = useMutation({
     mutationFn: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) =>
       notatBackendClient.skjulNotat(id, saksnummer, skjul, versjon),
-    onSuccess: () => {
-      refetchNotater();
+    onSuccess: async () => {
+      await refetchNotater();
     },
   });
 

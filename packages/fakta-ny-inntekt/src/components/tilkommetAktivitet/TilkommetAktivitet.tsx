@@ -225,7 +225,7 @@ export const TilkommetAktivitet = ({
 
   useEffect(() => {
     if (isSubmitted && dirtyFields[FORM_NAME]?.[aktivtBeregningsgrunnlagIndeks]) {
-      trigger();
+      void trigger();
     }
   }, [aktivtBeregningsgrunnlagIndeks]);
 
@@ -243,9 +243,9 @@ export const TilkommetAktivitet = ({
       <div className={styles.tilkommetAktivitet}>
         <Form
           formMethods={formMethods}
-          onSubmit={values => {
+          onSubmit={async values => {
             if (Object.keys(errors).length === 0) {
-              submitCallback(transformValues(values, beregningsgrunnlagListe, vilkarperioder));
+              await submitCallback(transformValues(values, beregningsgrunnlagListe, vilkarperioder));
             }
           }}
           setDataOnUnmount={setFormData}

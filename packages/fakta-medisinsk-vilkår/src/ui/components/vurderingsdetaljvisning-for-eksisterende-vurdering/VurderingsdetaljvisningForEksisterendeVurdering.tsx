@@ -29,7 +29,7 @@ interface VurderingsdetaljvisningForEksisterendeProps {
   editMode: boolean;
   onEditClick: () => void;
   onAvbrytClick: () => void;
-  onVurderingLagret: () => void;
+  onVurderingLagret: () => Promise<void>;
 }
 
 const getFormComponent = (vurderingstype: Vurderingstype) => {

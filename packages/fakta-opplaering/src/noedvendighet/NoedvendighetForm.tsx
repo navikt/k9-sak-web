@@ -96,8 +96,8 @@ const NoedvendighetForm = ({
                     dokumenter={opplaeringDokumenter}
                     valgteDokumenter={field.value}
                     error={meta.touched && meta.error}
-                    onChange={value => {
-                      setFieldValue(field.name, value);
+                    onChange={async value => {
+                      await setFieldValue(field.name, value);
                     }}
                     onBlur={() => setFieldTouched(field.name, true)}
                   />
