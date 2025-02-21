@@ -391,7 +391,6 @@
   "packages/prosess-vedtak/src/components/AvslagsårsakListe.spec.tsx",
   "packages/prosess-vedtak/src/components/AvslagsårsakListe.tsx",
   "packages/prosess-vedtak/src/components/FritekstRedigering/FritekstEditor.stories.tsx",
-  "packages/prosess-vedtak/src/components/FritekstRedigering/FritekstRedigering.tsx",
   "packages/prosess-vedtak/src/components/FritekstRedigering/RedigeringUtils.ts",
   "packages/prosess-vedtak/src/components/LagreVedtakFormIContext.tsx",
   "packages/prosess-vedtak/src/components/UstrukturerteDokumenter.tsx",
