@@ -42,10 +42,27 @@ export default class EditorJSWrapper {
     });
   }
 
-  public async importer(html) {
-    await this.editor.isReady;
-    await this.editor.blocks.renderFromHTML(html);
-    return true;
+  private cleanHtmlForEditor(html: string): string {
+    // Rense HTML for å fjerne unødvendige tags og mellomrom
+    return html
+      .replace(/\s{2,}/g, ' ') // Erstatt alle mellomrom med enkelt mellomrom
+      .replace(/>\s+</g, '><') // Fjern mellomrom mellom tags
+      .replace(/<p>\s*<\/p>/g, '') // Fjerne tomme <p> tags
+      .replace(/<div>\s*<\/div>/g, '') // Fjerne tomme <div> tags
+      .replace(/<br\s*\/?>/g, '') // Fjern <br> tags
+      .trim();
+  }
+
+  public async importer(html: string) {
+    try {
+      await this.editor.isReady;
+      const cleanedHtml = this.cleanHtmlForEditor(html);
+      await this.editor.blocks.renderFromHTML(cleanedHtml);
+      return true;
+    } catch (error) {
+      console.error('Feil under importering av HTML:', error);
+      return false;
+    }
   }
 
   public async erKlar() {
