@@ -5,6 +5,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Meta } from '@storybook/react';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
+import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 
 export default {
   title: 'sak/sak-meny-ny-behandling',
@@ -72,7 +73,7 @@ export const visMenyForÅLageNyBehandling = () => (
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: 'BEHANDLING_TYPE',
     }}
-    lagNyBehandling={action('button-click')}
+    lagNyBehandling={asyncAction('button-click')}
     behandlingstyper={behandlingstyper}
     tilbakekrevingRevurderingArsaker={[]}
     revurderingArsaker={[
@@ -109,7 +110,7 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: 'BEHANDLING_TYPE',
     }}
-    lagNyBehandling={action('button-click')}
+    lagNyBehandling={asyncAction('button-click')}
     behandlingstyper={behandlingstyper}
     tilbakekrevingRevurderingArsaker={[
       {

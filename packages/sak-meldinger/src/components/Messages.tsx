@@ -219,7 +219,7 @@ export const MessagesImpl = ({
           formProps.change('tredjepartsmottakerInfo', tredjepartsmottakerInfoRes);
         }
       };
-      loadTredjepartsmottakerNavn();
+      void loadTredjepartsmottakerNavn();
     } else {
       formProps.change('tredjepartsmottakerInfo', {});
     }

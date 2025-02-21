@@ -108,7 +108,7 @@ describe('<AnkeProsess>', () => {
         setBehandling={vi.fn()}
       />,
     );
-    userEvent.click(screen.getByRole('button', { name: 'Merknader' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Merknader' }));
     await waitFor(() => {
       expect(oppdaterProsessStegOgFaktaPanelIUrl.mock.calls.length).toBeGreaterThan(0);
     });

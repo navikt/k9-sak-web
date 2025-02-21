@@ -1,13 +1,14 @@
 // @ts-check
 
 import eslint from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import configPrettier from 'eslint-config-prettier';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginVitest from 'eslint-plugin-vitest';
 import globals from "globals";
 import tseslint from 'typescript-eslint';
-import pluginQuery from '@tanstack/eslint-plugin-query'
 
 // Viss vi ønsker eslint-plugin-jest-dom  aktivert: import pluginJestDom from 'eslint-plugin-jest-dom';
 // ^- Rapporterer ein del feil, så virker ikkje å ha vore aktivert før.
@@ -27,10 +28,14 @@ const config = tseslint.config(
   pluginVitest.configs.recommended,
   // Viss vi ønsker jest-dom plugin aktivert: pluginJestDom.configs["flat/recommended"],
   {
+    plugins: {
+      'react-hooks': pluginReactHooks
+    },
     languageOptions: {
       globals: {
         ...globals.browser,
       },
+      parserOptions: { "project": "./tsconfig.json" },
     },
     linterOptions: {
       // Vurder å enable denne seinare
@@ -38,6 +43,7 @@ const config = tseslint.config(
     },
     rules: {
       '@typescript-eslint/no-explicit-any': OFF,
+      "@typescript-eslint/no-floating-promises": ["error"],
       '@typescript-eslint/no-unused-vars': [
         "error",
         {
@@ -46,7 +52,15 @@ const config = tseslint.config(
       ],
       'jsx-a11y/no-autofocus': OFF, // Skrudd av ved migrering til jsx-a11y recommended config. Vurder å fikse seinare.
       'jsx-a11y/anchor-is-valid': OFF,
+      'react-hooks/rules-of-hooks': 'warn',
+      'react-hooks/exhaustive-deps': 'warn',
     },
+  },
+  {
+    files: ["**/*.stories.tsx"],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+    }
   },
   {
     files: ["**/*.cjs"],

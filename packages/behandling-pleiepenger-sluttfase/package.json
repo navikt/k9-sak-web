@@ -29,11 +29,11 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "^8.2.2",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^9.1.6",
-    "@navikt/ft-prosess-beregningsgrunnlag": "^8.1.6",
+    "@navikt/ft-fakta-beregning": "^8.3.2",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^9.2.2",
+    "@navikt/ft-prosess-beregningsgrunnlag": "^8.2.2",
     "axios": "1.7.9",
     "react": "19.0.0",
-    "react-intl": "7.1.5"
+    "react-intl": "7.1.6"
   }
 }

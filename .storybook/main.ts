@@ -14,7 +14,7 @@ const config: StorybookConfig = {
         csfPluginOptions: null,
       },
     },
-    '@storybook/addon-a11y',
+    // '@storybook/addon-a11y',
   ],
   staticDirs: ['../public'],
 

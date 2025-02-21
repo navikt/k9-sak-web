@@ -40,13 +40,14 @@ const formatVedtakData = (values: any) => {
   };
 };
 
-const fetchPreview = (fetchPreviewVedtaksbrev: (data: any) => Promise<any>, uuid: string, formVerdier: any) => e => {
-  fetchPreviewVedtaksbrev({
-    uuid,
-    ...formatVedtakData(formVerdier),
-  });
-  e.preventDefault();
-};
+const fetchPreview =
+  (fetchPreviewVedtaksbrev: (data: any) => Promise<any>, uuid: string, formVerdier: any) => async e => {
+    e.preventDefault();
+    await fetchPreviewVedtaksbrev({
+      uuid,
+      ...formatVedtakData(formVerdier),
+    });
+  };
 
 interface OwnProps {
   readOnly: boolean;

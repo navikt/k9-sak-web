@@ -144,7 +144,7 @@ const BehandlingOpplaeringspengerIndex = ({
     requestOpplaeringspengerApi.setRequestPendingHandler(setRequestPendingMessage);
     requestOpplaeringspengerApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

@@ -124,17 +124,17 @@ const StruktureringAvDokumentasjon = ({
     };
   }, []);
 
-  const sjekkStatus = () => {
+  const sjekkStatus = async () => {
     dispatch({ type: ActionType.PENDING });
-    hentSykdomsstegStatus()
-      .then(() => {
-        getDokumentoversikt().then(({ dokumenter }: DokumentoversiktResponse) => {
-          const nyDokumentoversikt = new Dokumentoversikt(dokumenter);
-          visDokumentoversikt(nyDokumentoversikt);
-          åpneDokumentSomMåBehandles(nyDokumentoversikt);
-        });
-      })
-      .catch(handleError);
+    try {
+      await hentSykdomsstegStatus();
+      const { dokumenter } = await getDokumentoversikt();
+      const nyDokumentoversikt = new Dokumentoversikt(dokumenter);
+      visDokumentoversikt(nyDokumentoversikt);
+      åpneDokumentSomMåBehandles(nyDokumentoversikt);
+    } catch {
+      handleError();
+    }
   };
 
   return (
