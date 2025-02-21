@@ -65,7 +65,7 @@ const renderStatusIcon = (resultat: string) => {
 };
 
 const PeriodeRad = ({ perioder, resultat }: OwnProps): JSX.Element => (
-  <div className={styles['vurderingsperiodeElement']}>
+  <div className={styles.vurderingsperiodeElement}>
     <div>
       <span className={styles['visuallyHidden']}>Type</span>
       {renderStatusIcon(resultat)}

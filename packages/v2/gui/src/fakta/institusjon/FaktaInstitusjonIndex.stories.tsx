@@ -1,15 +1,19 @@
-import type { StoryFn } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, waitFor, userEvent } from '@storybook/test';
 import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/institusjonVurderingDtoMedPerioder';
 import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
-export default {
+const meta: Meta<typeof FaktaInstitusjonIndex> = {
   title: 'gui/fakta/institusjon',
   component: FaktaInstitusjonIndex,
 };
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
 
 const mockPerioder: InstitusjonPeriodeDto[] = [
   {
@@ -34,61 +38,90 @@ const mockVurderinger: InstitusjonVurderingDtoMedPerioder[] = [
   },
 ];
 
-const Template: StoryFn<typeof FaktaInstitusjonIndex> = args => <FaktaInstitusjonIndex {...args} />;
+export const Default: Story = {
+  args: {
+    perioder: mockPerioder,
+    vurderinger: mockVurderinger,
+    readOnly: false,
+    løsAksjonspunkt: fn(),
+  },
+  play: async ({ canvas, args, step }) => {
+    await step('Sjekk existing vurdering', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /01.01.2023 - 31.03.2023/i }));
 
-export const Default = Template.bind({});
-Default.args = {
-  perioder: mockPerioder,
-  vurderinger: mockVurderinger,
-  readOnly: false,
-  løsAksjonspunkt: payload => {
-    console.log('Løs aksjonspunkt:', payload);
+      await waitFor(() => expect(canvas.getByTestId('Periode')).toHaveTextContent('01.01.2023 - 31.03.2023'));
+      await waitFor(() => expect(canvas.getByText('Oslo Universitetssykehus')).toBeInTheDocument());
+      await waitFor(() =>
+        expect(canvas.getByText('Pasienten har behov for kontinuerlig oppfølging')).toBeInTheDocument(),
+      );
+    });
+
+    await step('Endre vurdering', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Endre vurdering' }));
+
+      await userEvent.type(canvas.getByTestId('begrunnelse'), 'Test vurdering');
+      await userEvent.click(canvas.getByText('Ja'));
+      await userEvent.click(canvas.getByText('Bekreft og fortsett'));
+
+      await waitFor(() => expect(args.løsAksjonspunkt).toHaveBeenCalledTimes(1));
+      await expect(args.løsAksjonspunkt).toHaveBeenCalledWith({
+        begrunnelse: 'Test vurdering',
+        godkjent: true,
+        journalpostId: {
+          journalpostId: '123456789',
+        },
+      });
+    });
   },
 };
 
-export const ReadOnly = Template.bind({});
-ReadOnly.args = {
-  ...Default.args,
-  readOnly: true,
-};
-
-export const IngenPerioder = Template.bind({});
-IngenPerioder.args = {
-  ...Default.args,
-  perioder: [],
-  vurderinger: [],
-};
-
-export const FormWithExistingVurdering = Template.bind({});
-FormWithExistingVurdering.args = {
-  perioder: [mockPerioder[0] as InstitusjonPeriodeDto],
-  vurderinger: [
-    {
-      ...(mockVurderinger[0] as InstitusjonVurderingDtoMedPerioder),
-      resultat: InstitusjonVurderingDtoResultat.GODKJENT_MANUELT,
-      begrunnelse: mockVurderinger[0]?.begrunnelse ?? 'Begrunnelse ikke tilgjengelig',
-      journalpostId: mockVurderinger[0]?.journalpostId ?? { journalpostId: '123456789' },
-    },
-  ],
-  readOnly: false,
-  løsAksjonspunkt: payload => {
-    console.log('Løs aksjonspunkt:', payload);
+export const ReadOnly: Story = {
+  args: {
+    ...Default.args,
+    readOnly: true,
+  },
+  play: async ({ canvas, step }) => {
+    await step('Sjekk detaljer har ikke endre vurdering knapp', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /01.01.2023 - 31.03.2023/i }));
+      await waitFor(() => expect(canvas.queryByRole('button', { name: 'Endre vurdering' })).toBeNull());
+    });
   },
 };
 
-export const FormWithNotApprovedVurdering = Template.bind({});
-FormWithNotApprovedVurdering.args = {
-  perioder: [mockPerioder[0] as InstitusjonPeriodeDto],
-  vurderinger: [
-    {
-      ...(mockVurderinger[0] as InstitusjonVurderingDtoMedPerioder),
-      resultat: InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT,
-      begrunnelse: 'Institusjonen er ikke godkjent for denne type opplæring',
-      journalpostId: mockVurderinger[0]?.journalpostId ?? { journalpostId: '123456789' },
-    },
-  ],
-  readOnly: false,
-  løsAksjonspunkt: payload => {
-    console.log('Løs aksjonspunkt:', payload);
+export const DetailsWithNotApprovedVurdering: Story = {
+  args: {
+    perioder: [mockPerioder[0]!],
+    vurderinger: [
+      {
+        ...mockVurderinger[0]!,
+        resultat: InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT,
+        begrunnelse: 'Institusjonen er ikke godkjent for denne type opplæring',
+      } as InstitusjonVurderingDtoMedPerioder,
+    ],
+    readOnly: false,
+    løsAksjonspunkt: fn(),
+  },
+  play: async ({ canvas, step }) => {
+    await step('Sjekk vurdering ikke godkjent', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /01.01.2023 - 31.03.2023/i }));
+      await waitFor(() => {
+        void expect(canvas.getByText('Nei')).toBeInTheDocument();
+        void expect(canvas.getByText('Institusjonen er ikke godkjent for denne type opplæring')).toBeInTheDocument();
+      });
+    });
+  },
+};
+
+export const IngenPerioder: Story = {
+  args: {
+    perioder: [],
+    vurderinger: [],
+    readOnly: false,
+    løsAksjonspunkt: fn(),
+  },
+  play: async ({ canvas, step }) => {
+    await step('Sjekk ingen perioder', async () => {
+      await waitFor(() => void expect(canvas.getByText('Ingen vurderinger å vise')).toBeInTheDocument());
+    });
   },
 };

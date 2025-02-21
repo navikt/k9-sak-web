@@ -15,16 +15,6 @@ interface OwnProps {
   løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
-/**
- * Komponent for visning av institusjonsdetaljer.
- * Kan vises i to moduser:
- * 1. Redigeringsform (når resultatet er MÅ_VURDERES eller redigering er aktivert)
- * 2. Visning av ferdig vurdering (med mulighet for å aktivere redigering)
- *
- * @param vurdering - Vurderingsdata for institusjonen
- * @param readOnly - Angir om komponenten skal være skrivebeskyttet
- * @param løsAksjonspunkt - Funksjon for å lagre endringer
- */
 const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
   const visEndreLink = !readOnly && vurdering.resultat !== InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK;
@@ -41,7 +31,7 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
       }
     >
       {vurdering.perioder.map(periode => (
-        <div key={periode.prettifyPeriod()}>
+        <div key={periode.prettifyPeriod()} data-testid="Periode">
           <Calender /> <span>{periode.prettifyPeriod()}</span>
         </div>
       ))}

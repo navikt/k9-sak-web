@@ -18,14 +18,16 @@ interface InstitusjonFormValues {
 export interface SubmitValues {
   godkjent: boolean;
   begrunnelse: string;
-  journalpostId: string;
+  journalpostId: {
+    journalpostId: string;
+  };
 }
 
 interface InstitusjonFormProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
   readOnly: boolean;
   erRedigering: boolean;
-  løsAksjonspunkt: (payload: any) => void;
+  løsAksjonspunkt: (payload: SubmitValues) => void;
   avbrytRedigering: () => void;
 }
 
@@ -59,6 +61,7 @@ const InstitusjonForm = ({
           label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
           validate={[required, minLength(3), maxLength(10000)]}
           readOnly={readOnly}
+          data-testid="begrunnelse"
         />
       </Box>
 
@@ -73,16 +76,19 @@ const InstitusjonForm = ({
           ]}
           validate={[required]}
           isReadOnly={readOnly}
+          data-testid="godkjent-institusjon"
         />
       </Box>
 
-      <Box className="mt-8">
+      <Box className="flex mt-8">
         <Button size="small">Bekreft og fortsett</Button>
 
         {erRedigering && (
-          <Button size="small" variant="secondary" type="button" className="ml-4" onClick={avbrytRedigering}>
-            Avbryt redigering
-          </Button>
+          <div className="ml-4">
+            <Button size="small" variant="secondary" type="button" onClick={avbrytRedigering}>
+              Avbryt redigering
+            </Button>
+          </div>
         )}
       </Box>
     </Form>

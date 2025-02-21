@@ -23,11 +23,13 @@ const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   const [activeIndex, setActiveIndex] = useState(perioderTilVurdering.length ? 0 : -1);
 
   useEffect(() => {
-    if (activeIndex > -1) {
-      const periode = perioderTilVurdering[activeIndex];
-      if (periode) setValgtPeriode(periode);
+    const firstPeriode = perioderTilVurdering[0];
+    if (firstPeriode) {
+      setValgtPeriode(firstPeriode);
+    } else {
+      setValgtPeriode(null);
     }
-  }, []);
+  }, [perioderTilVurdering, setValgtPeriode]);
 
   const perioderSomErVurdert = useMemo(
     () => perioder.filter(periode => periode.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES),
