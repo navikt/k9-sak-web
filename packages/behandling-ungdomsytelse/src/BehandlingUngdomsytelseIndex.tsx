@@ -116,7 +116,7 @@ const BehandlingUngdomsytelseIndex = ({
     requestUngdomsytelseApi.setRequestPendingHandler(setRequestPendingMessage);
     requestUngdomsytelseApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
