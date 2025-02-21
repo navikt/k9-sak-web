@@ -6,7 +6,6 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
-import { BeregningsgrunnlagDto } from '@navikt/k9-sak-typescript-client';
 
 class FordelBeregningPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FORDELING;
@@ -28,25 +27,17 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-    const relevantAksjonspunktKoder = [
-      aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-      aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
-    ];
-    const beregningsgrunnlag = props.featureToggles?.NY_INNTEKT_EGET_PANEL
-      ? deepCopyProps.beregningsgrunnlag.filter((bg: BeregningsgrunnlagDto) =>
-          bg.avklaringsbehov.some(ab => relevantAksjonspunktKoder.includes(ab.definisjon)),
-        )
-      : deepCopyProps.beregningsgrunnlag;
     return (
       <FordelBeregningsgrunnlagFaktaIndex
         {...props}
         beregningsgrunnlagVilkår={bgVilkaret}
-        beregningsgrunnlagListe={beregningsgrunnlag}
+        beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
         kodeverkSamling={deepCopyProps.alleKodeverk}
-        submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
+        submitCallback={data => props.submitCallback(transformBeregningValues([data]))}
         formData={props.formData}
         setFormData={props.setFormData}
+        skalHåndtereNyInntekt={!props.featureToggles?.NY_INNTEKT_EGET_PANEL}
       />
     );
   };
