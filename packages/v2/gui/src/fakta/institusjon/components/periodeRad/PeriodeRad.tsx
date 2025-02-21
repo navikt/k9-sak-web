@@ -1,5 +1,5 @@
 import { type JSX } from 'react';
-import { Vurderingsresultat } from '@k9-sak-web/types';
+import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
@@ -18,7 +18,7 @@ interface OwnProps {
 }
 
 const renderStatusIcon = (resultat: string) => {
-  if (resultat === Vurderingsresultat.MÅ_VURDERES) {
+  if (resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES) {
     return (
       <ContentWithTooltip tooltipText="Perioden må vurderes">
         <WarningIcon />
@@ -26,7 +26,7 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === Vurderingsresultat.GODKJENT_AUTOMATISK) {
+  if (resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
         <IndicatorWithOverlay
@@ -37,7 +37,7 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === Vurderingsresultat.IKKE_GODKJENT_AUTOMATISK) {
+  if (resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
         <IndicatorWithOverlay
@@ -47,14 +47,14 @@ const renderStatusIcon = (resultat: string) => {
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.GODKJENT_MANUELT) {
+  if (resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
         <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.IKKE_GODKJENT_MANUELT) {
+  if (resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
         <RedCrossIconFilled />
