@@ -54,15 +54,10 @@ export default class EditorJSWrapper {
   }
 
   public async importer(html: string) {
-    try {
-      await this.editor.isReady;
-      const cleanedHtml = this.cleanHtmlForEditor(html);
-      await this.editor.blocks.renderFromHTML(cleanedHtml);
-      return true;
-    } catch (error) {
-      console.error('Feil under importering av HTML:', error);
-      return false;
-    }
+    await this.editor.isReady;
+    const cleanedHtml = this.cleanHtmlForEditor(html);
+    await this.editor.blocks.renderFromHTML(cleanedHtml);
+    return true;
   }
 
   public async erKlar() {
