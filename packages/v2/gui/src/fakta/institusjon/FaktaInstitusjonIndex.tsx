@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Heading } from '@navikt/ds-react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@navikt/ft-utils';
 import {
   InstitusjonVurderingDtoResultat,
   type InstitusjonPeriodeDto,

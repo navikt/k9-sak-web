@@ -1,6 +1,6 @@
 import type { StoryFn } from '@storybook/react';
 
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/institusjonVurderingDtoMedPerioder';
 import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
