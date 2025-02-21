@@ -55,8 +55,8 @@ export default class EditorJSWrapper {
 
   public async importer(html: string) {
     await this.editor.isReady;
-    const cleanedHtml = this.cleanHtmlForEditor(html);
-    await this.editor.blocks.renderFromHTML(cleanedHtml);
+    const cleanHtml = this.cleanHtmlForEditor(html);
+    await this.editor.blocks.renderFromHTML(cleanHtml);
     return true;
   }
 
