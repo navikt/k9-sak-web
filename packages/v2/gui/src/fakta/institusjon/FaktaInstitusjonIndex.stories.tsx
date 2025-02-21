@@ -4,7 +4,7 @@ import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/institusjonVurderingDtoMedPerioder';
 import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
-import { InstitusjonVurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
+import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 export default {
   title: 'gui/fakta/institusjon',
