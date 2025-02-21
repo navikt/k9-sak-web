@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
-    "@hookform/resolvers": "^3.10.0",
+    "@hookform/resolvers": "^4.1.0",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
     "@navikt/ft-form-hooks": "^6.2.2",

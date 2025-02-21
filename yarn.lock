@@ -3496,12 +3496,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^3.10.0":
-  version: 3.10.0
-  resolution: "@hookform/resolvers@npm:3.10.0"
+"@hookform/resolvers@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@hookform/resolvers@npm:4.1.0"
+  dependencies:
+    caniuse-lite: "npm:^1.0.30001698"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: 10/92d3601b2cedb4f52e9e086cc4bd6a20b493f59ecfb1af8b8e465057f0445aa83cf5a6d482a831cdf5d1321a73269173633222eefde0adb515d3820c1525b0cb
+  checksum: 10/9769dadd038f817a119aa810ff3f951f492686e814b99246dc6ada7a89daad22490381c79ff4406484870d98d5a0bd8400a6e4f22082509db1974adbf62e0a6d
   languageName: node
   linkType: hard
 
@@ -4500,7 +4502,7 @@ __metadata:
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
     "@hookform/error-message": "npm:^2.0.1"
-    "@hookform/resolvers": "npm:^3.10.0"
+    "@hookform/resolvers": "npm:^4.1.0"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "npm:1.0.0"
     "@navikt/ft-form-hooks": "npm:^6.2.2"
@@ -4648,7 +4650,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-uttak@workspace:packages/prosess-uttak"
   dependencies:
-    "@hookform/resolvers": "npm:^3.10.0"
+    "@hookform/resolvers": "npm:^4.1.0"
     "@navikt/ds-css": "npm:7.13.0"
     "@navikt/ds-react": "npm:7.13.0"
     "@navikt/ft-form-hooks": "npm:^6.2.2"
@@ -8650,6 +8652,13 @@ __metadata:
   version: 1.0.30001685
   resolution: "caniuse-lite@npm:1.0.30001685"
   checksum: 10/33ea5c4df6ba120c977907d909bca9c9c7eccd527055d5d806947c6e5e56a2b6a47893258487ead32a6d197fad02e348adf6ed0fda24501014ecaa57dcd83e29
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001698":
+  version: 1.0.30001700
+  resolution: "caniuse-lite@npm:1.0.30001700"
+  checksum: 10/9203ed502fd1b74c47f315a001e1d91abe2abecb951f8e15dd1556cfc23a29fa7a7b2cc654380604bb6f58bcfa0c65b78055b9d99a7489c13baa0d4158a6e25e
   languageName: node
   linkType: hard
 
