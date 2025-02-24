@@ -4778,7 +4778,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^7.2.5"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.2.2"
     "@navikt/ft-ui-komponenter": "npm:^3.1.6"
-    "@sentry/browser": "npm:8.53.0"
+    "@sentry/browser": "npm:9.1.0"
     "@sentry/react": "npm:^9.1.0"
     "@tanstack/react-query": "npm:^5.66.9"
     axios: "npm:1.7.9"
@@ -5733,15 +5733,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:8.53.0":
-  version: 8.53.0
-  resolution: "@sentry-internal/browser-utils@npm:8.53.0"
-  dependencies:
-    "@sentry/core": "npm:8.53.0"
-  checksum: 10/b1121b576207216d981c65e85028a2ace06409b416e1ab2e34de745af055e5a37334ae900ca88a3f0f6b62cbf06468deac3129cd0ce573ddae4f84d234aed849
-  languageName: node
-  linkType: hard
-
 "@sentry-internal/browser-utils@npm:9.1.0":
   version: 9.1.0
   resolution: "@sentry-internal/browser-utils@npm:9.1.0"
@@ -5751,31 +5742,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:8.53.0":
-  version: 8.53.0
-  resolution: "@sentry-internal/feedback@npm:8.53.0"
-  dependencies:
-    "@sentry/core": "npm:8.53.0"
-  checksum: 10/657b123e5a97d58b676539b947754664dd9ca031476aef1b790a52bb06869041883636c6502ca0a1e5d604ab45af7c19bc98a02faef6c3fe73fec0df97d597cf
-  languageName: node
-  linkType: hard
-
 "@sentry-internal/feedback@npm:9.1.0":
   version: 9.1.0
   resolution: "@sentry-internal/feedback@npm:9.1.0"
   dependencies:
     "@sentry/core": "npm:9.1.0"
   checksum: 10/0d068eb1987618ba84cc2007d7a1ea4a661e3f5fcb24c23293e61b1f6d0c4d69deaa9f3afe9d2c895c76652540c7599d2a4ad197ee0627fd328a2a0cbf1fa9a4
-  languageName: node
-  linkType: hard
-
-"@sentry-internal/replay-canvas@npm:8.53.0":
-  version: 8.53.0
-  resolution: "@sentry-internal/replay-canvas@npm:8.53.0"
-  dependencies:
-    "@sentry-internal/replay": "npm:8.53.0"
-    "@sentry/core": "npm:8.53.0"
-  checksum: 10/9c207470f066e61207878c447d560fd41197b8773056a5ccb03c78874d20ccf7d0d23c8e9028deceb89372d2bdc334d818303524e8e7bbf05bc3e41178e9a11a
   languageName: node
   linkType: hard
 
@@ -5789,16 +5761,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:8.53.0":
-  version: 8.53.0
-  resolution: "@sentry-internal/replay@npm:8.53.0"
-  dependencies:
-    "@sentry-internal/browser-utils": "npm:8.53.0"
-    "@sentry/core": "npm:8.53.0"
-  checksum: 10/003528bd210e214b084aed4657beea7c9bc68823c8cff6cf3f977ae41045f39feb4c9d26703797393f2c1c289ec0d88996286662f7fb519055b3b433706200bb
-  languageName: node
-  linkType: hard
-
 "@sentry-internal/replay@npm:9.1.0":
   version: 9.1.0
   resolution: "@sentry-internal/replay@npm:9.1.0"
@@ -5806,19 +5768,6 @@ __metadata:
     "@sentry-internal/browser-utils": "npm:9.1.0"
     "@sentry/core": "npm:9.1.0"
   checksum: 10/c6a59eb184e5101ea1e442be0d24d544bf92a1cf7dce806d150af632756a97d3e27641f401b0703956f6b94704ca704a2028dbfb072565e39430352abf0a398f
-  languageName: node
-  linkType: hard
-
-"@sentry/browser@npm:8.53.0":
-  version: 8.53.0
-  resolution: "@sentry/browser@npm:8.53.0"
-  dependencies:
-    "@sentry-internal/browser-utils": "npm:8.53.0"
-    "@sentry-internal/feedback": "npm:8.53.0"
-    "@sentry-internal/replay": "npm:8.53.0"
-    "@sentry-internal/replay-canvas": "npm:8.53.0"
-    "@sentry/core": "npm:8.53.0"
-  checksum: 10/8bd28a399a0189f4a93f22dc74bd403aece7555530b86c81b570503e7da92287eb203b041bd5c49b44a2c1f6556e43db12b78d83804594d182bee74e3ca8c638
   languageName: node
   linkType: hard
 
@@ -5918,13 +5867,6 @@ __metadata:
   bin:
     sentry-cli: bin/sentry-cli
   checksum: 10/310483c5d3b29cbc5c40eb0a8f20c1200b58acf16134dde1791080b0bef65ea89981345c83c49745bf13005d75d7059f5b118b0f36cd9f356b16a7bc26a0cfae
-  languageName: node
-  linkType: hard
-
-"@sentry/core@npm:8.53.0":
-  version: 8.53.0
-  resolution: "@sentry/core@npm:8.53.0"
-  checksum: 10/3131db2e7c0b6cf0ca7ee8ccb269267d53b3c62834a31bd211757c9366dc57d3f527d8a1c4616dd26d0d47cc9a94c5a9f664113e079f4fecceb8f5eb4428fe56
   languageName: node
   linkType: hard
 
@@ -13696,7 +13638,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^7.2.5"
     "@playwright/test": "npm:^1.50.1"
     "@popperjs/core": "npm:2.11.8"
-    "@sentry/browser": "npm:8.53.0"
+    "@sentry/browser": "npm:9.1.0"
     "@sentry/cli": "npm:2.42.1"
     "@sentry/react": "npm:^9.1.0"
     "@storybook/addon-a11y": "npm:8.5.8"

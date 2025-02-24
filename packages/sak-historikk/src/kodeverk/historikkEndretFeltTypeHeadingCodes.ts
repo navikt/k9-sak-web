@@ -15,7 +15,7 @@ const historikkEndretFeltTypeHeadingCodes = {
   UTTAK_FASTSATT_FOR_PERIODE: {
     kode: 'UTTAK_FASTSATT_FOR_PERIODE',
     feltId: 'HistorikkEndretFeltHeading.uttakFastsattForPeriode',
-  }
+  },
 };
 
 export default historikkEndretFeltTypeHeadingCodes;
