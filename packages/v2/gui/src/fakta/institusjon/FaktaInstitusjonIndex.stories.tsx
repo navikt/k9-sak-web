@@ -6,10 +6,10 @@ import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurd
 import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
-const meta: Meta<typeof FaktaInstitusjonIndex> = {
+const meta = {
   title: 'gui/fakta/institusjon',
   component: FaktaInstitusjonIndex,
-};
+} satisfies Meta<typeof FaktaInstitusjonIndex>;
 
 export default meta;
 
