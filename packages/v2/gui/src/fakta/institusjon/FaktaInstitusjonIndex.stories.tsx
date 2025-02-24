@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, waitFor, userEvent } from '@storybook/test';
+import { expect, fn, userEvent } from '@storybook/test';
 import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder';
@@ -49,11 +49,9 @@ export const Default: Story = {
     await step('Sjekk existing vurdering', async () => {
       await userEvent.click(canvas.getByRole('button', { name: /01.01.2023 - 31.03.2023/i }));
 
-      await waitFor(() => expect(canvas.getByTestId('Periode')).toHaveTextContent('01.01.2023 - 31.03.2023'));
-      await waitFor(() => expect(canvas.getByText('Oslo Universitetssykehus')).toBeInTheDocument());
-      await waitFor(() =>
-        expect(canvas.getByText('Pasienten har behov for kontinuerlig oppfølging')).toBeInTheDocument(),
-      );
+      await expect(canvas.getByTestId('Periode')).toHaveTextContent('01.01.2023 - 31.03.2023');
+      await expect(canvas.getByText('Oslo Universitetssykehus')).toBeInTheDocument();
+      await expect(canvas.getByText('Pasienten har behov for kontinuerlig oppfølging')).toBeInTheDocument();
     });
 
     await step('Endre vurdering', async () => {
@@ -63,7 +61,7 @@ export const Default: Story = {
       await userEvent.click(canvas.getByText('Ja'));
       await userEvent.click(canvas.getByText('Bekreft og fortsett'));
 
-      await waitFor(() => expect(args.løsAksjonspunkt).toHaveBeenCalledTimes(1));
+      await expect(args.løsAksjonspunkt).toHaveBeenCalledTimes(1);
       await expect(args.løsAksjonspunkt).toHaveBeenCalledWith({
         begrunnelse: 'Test vurdering',
         godkjent: true,
@@ -83,7 +81,7 @@ export const ReadOnly: Story = {
   play: async ({ canvas, step }) => {
     await step('Sjekk detaljer har ikke endre vurdering knapp', async () => {
       await userEvent.click(canvas.getByRole('button', { name: /01.01.2023 - 31.03.2023/i }));
-      await waitFor(() => expect(canvas.queryByRole('button', { name: 'Endre vurdering' })).toBeNull());
+      await expect(canvas.queryByRole('button', { name: 'Endre vurdering' })).toBeNull();
     });
   },
 };
@@ -104,10 +102,8 @@ export const DetailsWithNotApprovedVurdering: Story = {
   play: async ({ canvas, step }) => {
     await step('Sjekk vurdering ikke godkjent', async () => {
       await userEvent.click(canvas.getByRole('button', { name: /01.01.2023 - 31.03.2023/i }));
-      await waitFor(() => {
-        void expect(canvas.getByText('Nei')).toBeInTheDocument();
-        void expect(canvas.getByText('Institusjonen er ikke godkjent for denne type opplæring')).toBeInTheDocument();
-      });
+      await expect(canvas.getByText('Nei')).toBeInTheDocument();
+      await expect(canvas.getByText('Institusjonen er ikke godkjent for denne type opplæring')).toBeInTheDocument();
     });
   },
 };
@@ -121,7 +117,7 @@ export const IngenPerioder: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('Sjekk ingen perioder', async () => {
-      await waitFor(() => void expect(canvas.getByText('Ingen vurderinger å vise')).toBeInTheDocument());
+      await expect(canvas.getByText('Ingen vurderinger å vise')).toBeInTheDocument();
     });
   },
 };
