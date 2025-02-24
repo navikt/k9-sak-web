@@ -3217,7 +3217,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -3449,7 +3449,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -4303,7 +4303,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
-    uuid: "npm:11.0.5"
+    uuid: "npm:11.1.0"
   languageName: unknown
   linkType: soft
 
@@ -4340,7 +4340,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
-    msw: "npm:2.7.0"
+    msw: "npm:2.7.1"
     react: "npm:19.0.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.0.0"
@@ -4372,12 +4372,12 @@ __metadata:
     "@navikt/ds-react": "npm:7.13.0"
     "@navikt/ft-plattform-komponenter": "npm:^7.2.5"
     "@popperjs/core": "npm:2.11.8"
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     axios: "npm:1.7.9"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
     dayjs: "npm:1.11.13"
-    msw: "npm:2.7.0"
+    msw: "npm:2.7.1"
     react: "npm:19.0.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.0.0"
@@ -4405,7 +4405,7 @@ __metadata:
     react: "npm:19.0.0"
     react-hook-form: "npm:7.54.2"
     react-intl: "npm:7.1.6"
-    uuid: "npm:11.0.5"
+    uuid: "npm:11.1.0"
   languageName: unknown
   linkType: soft
 
@@ -4418,7 +4418,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
-    msw: "npm:2.7.0"
+    msw: "npm:2.7.1"
     react: "npm:19.0.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.0.0"
@@ -4441,7 +4441,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
-    msw: "npm:2.7.0"
+    msw: "npm:2.7.1"
     object-hash: "npm:3.0.0"
     react: "npm:19.0.0"
     react-collapse: "npm:5.1.1"
@@ -4468,7 +4468,7 @@ __metadata:
     formik: "npm:2.4.6"
     react-intl: "npm:7.1.6"
     react-outside-click-handler: "npm:1.3.0"
-    uuid: "npm:11.0.5"
+    uuid: "npm:11.1.0"
     yup: "npm:1.6.1"
   languageName: unknown
   linkType: soft
@@ -4506,7 +4506,7 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:^6.2.2"
     "@navikt/ft-form-validators": "npm:^3.1.5"
     "@navikt/ft-utils": "npm:^3.1.5"
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.7.9"
     object-hash: "npm:^3.0.0"
@@ -4778,7 +4778,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": "npm:^3.1.6"
     "@sentry/browser": "npm:8.53.0"
     "@sentry/react": "npm:^9.1.0"
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     axios: "npm:1.7.9"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -4805,7 +4805,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -6418,9 +6418,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test-runner@npm:^0.21.2":
-  version: 0.21.2
-  resolution: "@storybook/test-runner@npm:0.21.2"
+"@storybook/test-runner@npm:^0.21.3":
+  version: 0.21.3
+  resolution: "@storybook/test-runner@npm:0.21.3"
   dependencies:
     "@babel/core": "npm:^7.22.5"
     "@babel/generator": "npm:^7.22.5"
@@ -6445,7 +6445,7 @@ __metadata:
     storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
   bin:
     test-storybook: dist/test-storybook.js
-  checksum: 10/39bfd129fbfa9a43a2aad38968b5c5e6820ce9ce721e897227258bb3e8c6f6f7945252cdffdd7a5a2267a78bcd142ebc7d0c6b6719cbed08cd8704631bb2d43a
+  checksum: 10/897b91be682578dfcb6af4a98f2d28e895d61edab858a61cd9dc83ea7bebc637c7df843c3e1c077b018e5e6383111af1ae1f3168a06f4437fd9131e4603e3c1a
   languageName: node
   linkType: hard
 
@@ -6766,14 +6766,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.66.7":
-  version: 5.66.7
-  resolution: "@tanstack/react-query@npm:5.66.7"
+"@tanstack/react-query@npm:^5.66.9":
+  version: 5.66.9
+  resolution: "@tanstack/react-query@npm:5.66.9"
   dependencies:
     "@tanstack/query-core": "npm:5.66.4"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/3d66a09f56f7722f3a7273e2217bcf078515779bedc09f6fdd0aba5eb6c810e74e39a2edcbb4d0bf538d84e395cb74f5fdfd085c48d50afe675cbbe5bef07e21
+  checksum: 10/c30b7074d55f4143979550a54fe5fdcf140460bbfadebb9754ca447fa2eee45c6732e1ad30a786fcdbec86dbf90e9372c5715b70e99b987953331b0b03beeec6
   languageName: node
   linkType: hard
 
@@ -13699,7 +13699,7 @@ __metadata:
     "@storybook/react": "npm:8.5.8"
     "@storybook/react-vite": "npm:8.5.8"
     "@storybook/test": "npm:8.5.8"
-    "@storybook/test-runner": "npm:^0.21.2"
+    "@storybook/test-runner": "npm:^0.21.3"
     "@storybook/theming": "npm:8.5.8"
     "@testing-library/dom": "npm:10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
@@ -13731,10 +13731,10 @@ __metadata:
     jsdom: "npm:26.0.0"
     lint-staged: "npm:15.4.3"
     loose-ts-check: "npm:^2.0.0"
-    msw: "npm:2.7.0"
+    msw: "npm:2.7.1"
     msw-storybook-addon: "npm:^2.0.4"
     node-cache: "npm:5.1.2"
-    postcss: "npm:^8.5.2"
+    postcss: "npm:^8.5.3"
     postcss-import: "npm:^16.1.0"
     prettier: "npm:3.5.1"
     react: "npm:19.0.0"
@@ -14494,9 +14494,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.7.0":
-  version: 2.7.0
-  resolution: "msw@npm:2.7.0"
+"msw@npm:2.7.1":
+  version: 2.7.1
+  resolution: "msw@npm:2.7.1"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.1"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
@@ -14523,7 +14523,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10/165ccf37d90da0d5271fdb8e01f89f48f7a60fb810038ff73d18c0e5e5ddfdb1266002d19cde61b9ae689ef37c39499b10d9d07e0d16662a31630ce9adce1d77
+  checksum: 10/642f0262854eff0336c89ebfb2ad24fd504ebd5c13adcd71345104fe075d4860e77773980577ec22244805f7f6bfdebd90fc369b2f80e4235396a28248263000
   languageName: node
   linkType: hard
 
@@ -15692,14 +15692,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.5.2":
-  version: 8.5.2
-  resolution: "postcss@npm:8.5.2"
+"postcss@npm:8.5.3":
+  version: 8.5.3
+  resolution: "postcss@npm:8.5.3"
   dependencies:
     nanoid: "npm:^3.3.8"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
-  checksum: 10/e08c2be3cf461cc63cf4c8e97bb3d5185e196ee0a9b75879cf130590f32bc38c7829c6c4e260158e214fb68a828a95bdac84c8f17fefba993d3ced686643c3e2
+  checksum: 10/6d7e21a772e8b05bf102636918654dac097bac013f0dc8346b72ac3604fc16829646f94ea862acccd8f82e910b00e2c11c1f0ea276543565d278c7ca35516a7c
   languageName: node
   linkType: hard
 
@@ -18575,6 +18575,15 @@ __metadata:
   bin:
     uuid: dist/esm/bin/uuid
   checksum: 10/0594ecdff3051e15d4a2c614b4c72e73af373bde0a5d156512353c01156975295d024ae8d7151846d7bd4d22ccd251b16ed51b4318fa71505fb20ad984102dc1
+  languageName: node
+  linkType: hard
+
+"uuid@npm:11.1.0":
+  version: 11.1.0
+  resolution: "uuid@npm:11.1.0"
+  bin:
+    uuid: dist/esm/bin/uuid
+  checksum: 10/d2da43b49b154d154574891ced66d0c83fc70caaad87e043400cf644423b067542d6f3eb641b7c819224a7cd3b4c2f21906acbedd6ec9c6a05887aa9115a9cf5
   languageName: node
   linkType: hard
 

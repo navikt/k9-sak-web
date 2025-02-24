@@ -512,6 +512,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'KOMPLETTHET',
     feltId: 'HistorikkEndretFelt.Kompletthet',
   },
+  UTTAK_FASTSATT_SØKERS_UTTAKSGRAD: {
+    kode: 'UTTAK_FASTSATT_SØKERS_UTTAKSGRAD',
+    feltId: 'HistorikkEndretFelt.uttakOverstyrtSokersUttaksgrad',
+  },
   VIRKNINGSDATO_UTTAK_NYE_REGLER: {
     kode: 'VIRKNINGSDATO_UTTAK_NYE_REGLER',
     feltId: 'HistorikkEndretFelt.VirkningsdatoNyeRegler',
