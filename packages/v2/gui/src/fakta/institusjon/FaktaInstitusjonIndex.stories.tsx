@@ -96,7 +96,7 @@ export const DetailsWithNotApprovedVurdering: Story = {
         ...mockVurderinger[0]!,
         resultat: InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT,
         begrunnelse: 'Institusjonen er ikke godkjent for denne type opplæring',
-      } as InstitusjonVurderingDtoMedPerioder,
+      },
     ],
     readOnly: false,
     løsAksjonspunkt: fn(),
