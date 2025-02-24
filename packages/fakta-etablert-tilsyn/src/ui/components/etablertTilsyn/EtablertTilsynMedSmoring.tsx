@@ -21,16 +21,16 @@ interface EtablertTilsynMappet {
   delAvUke?: number;
 }
 
-const erHelg = (dag: Date) => [6, 0].includes(dayjs(dag).day());
+const erHelg = (dag: string) => [6, 0].includes(dayjs(dag).day());
 
-const ukeVisning = (uke, delAvUke) => {
+const ukeVisning = (uke: number, delAvUke?: number) => {
   if (delAvUke) {
     return `Uke ${uke} - ${String.fromCharCode(64 + delAvUke)}`;
   }
   return `Uke ${uke}`;
 };
 
-const periodeVisning = (usmurtePerioder, smurtePerioder) => {
+const periodeVisning = (usmurtePerioder: EtablertTilsynType[], smurtePerioder: EtablertTilsynType[]) => {
   if (smurtePerioder.length) {
     return new Period(
       smurtePerioder[0].periode.fom,

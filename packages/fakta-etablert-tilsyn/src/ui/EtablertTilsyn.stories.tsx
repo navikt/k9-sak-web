@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import { handlers } from '../../mock/api-mock';
 import { mockUrlPrepend } from '../../mock/constants';
 import EtablertTilsynContainer from './EtablertTilsynContainer';
 
-const meta: Meta<typeof EtablertTilsynContainer> = {
+const meta = {
   title: 'fakta/fakta-etablert-tilsyn',
   component: EtablertTilsynContainer,
   args: {
@@ -16,9 +16,9 @@ const meta: Meta<typeof EtablertTilsynContainer> = {
         sykdom: `${mockUrlPrepend}/mock/sykdom`,
         sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
       },
-      httpErrorHandler: undefined,
-      lagreBeredskapvurdering: undefined,
-      lagreNattevåkvurdering: undefined,
+      httpErrorHandler: fn(),
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
       harAksjonspunktForBeredskap: true,
       harAksjonspunktForNattevåk: true,
     },
@@ -28,15 +28,18 @@ const meta: Meta<typeof EtablertTilsynContainer> = {
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
-};
+} satisfies Meta<typeof EtablertTilsynContainer>;
 
 export default meta;
-type Story = StoryObj<typeof EtablertTilsynContainer>;
+type Story = StoryObj<typeof meta>;
 
 export const EtablertTilsyn: Story = {
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvas, step }) => {
     await step('skal ha skjema for håndtering av beredskap', async () => {
       await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
       await waitFor(async () => {
@@ -72,11 +75,5 @@ export const EtablertTilsyn: Story = {
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
     });
-  },
-};
-
-EtablertTilsyn.parameters = {
-  msw: {
-    handlers,
   },
 };
