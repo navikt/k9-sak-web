@@ -81,7 +81,8 @@ const EtablertTilsyn = ({
     etablertTilsynSmurt: smurtEtablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
     uke,
   }));
-  const tilsynPerUkeOppdeltSmoering = [];
+  const tilsynPerUkeOppdeltSmoering: Array<EtablertTilsynMappet> = [];
+
   const tilsynPerUkeUtenOppdeltSmoering = tilsynPerUke
     .map(v => ({
       ...v,
@@ -116,8 +117,11 @@ const EtablertTilsyn = ({
       );
       return smurtePerioder.length ? null : v;
     })
-    .filter(Boolean);
-  const etablertTilsynMappet = [...tilsynPerUkeUtenOppdeltSmoering, ...tilsynPerUkeOppdeltSmoering].sort(
+    .filter(x => x !== null);
+  const etablertTilsynMappet: EtablertTilsynMappet[] = [
+    ...tilsynPerUkeUtenOppdeltSmoering,
+    ...tilsynPerUkeOppdeltSmoering,
+  ].sort(
     (a: EtablertTilsynMappet, b: EtablertTilsynMappet) =>
       new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
       new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
