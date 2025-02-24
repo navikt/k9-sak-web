@@ -68,9 +68,9 @@ const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly, løsAksjonspun
 
   return (
     <div style={{ fontSize: '16px' }}>
-      <Heading className="mb-7" size="small">
-        Institusjon
-      </Heading>
+      <div className="mb-7">
+        <Heading size="small">Institusjon</Heading>
+      </div>
 
       <NavigationWithDetailView
         navigationSection={() => <InstitusjonNavigation perioder={perioderMappet} setValgtPeriode={setValgtPeriode} />}
