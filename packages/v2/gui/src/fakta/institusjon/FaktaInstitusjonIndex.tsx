@@ -11,8 +11,8 @@ import {
 import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
 import type { SubmitValues } from './components/institusjonDetails/InstitusjonForm.js';
-import type { InstitusjonPerioderDtoMedResultat } from './types/IinstitusjonPerioderDtoMedResultat.js';
-import type { InstitusjonVurderingDtoMedPerioder } from './types/IinstitusjonVurderingDtoMedPerioder.js';
+import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
+import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 
 interface OwnProps {
   perioder: InstitusjonPeriodeDto[];
