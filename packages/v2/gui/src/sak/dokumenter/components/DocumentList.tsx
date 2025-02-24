@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
+import { isUngWeb } from '../../../utils/urlUtils';
 import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
@@ -16,7 +17,7 @@ import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
 
-const getBackendPath = () => (window.location.pathname.includes('/ung/web') ? 'ung' : 'k9');
+const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
