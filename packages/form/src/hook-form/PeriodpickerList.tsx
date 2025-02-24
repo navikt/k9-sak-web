@@ -2,7 +2,7 @@
 import { Period } from '@fpsak-frontend/utils';
 import { ErrorMessage } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { DatepickerLimitations } from '../DatepickerLimitations';
 import PureDatepicker from '../PureDatepicker';
@@ -31,7 +31,7 @@ interface PeriodpickerListProps {
   defaultValues?: Period[];
   fromDatepickerProps: DatepickerProps;
   toDatepickerProps: DatepickerProps;
-  renderContentAfterElement?: (index: number, numberOfItems: number, fieldArrayMethods) => JSX.Element;
+  renderContentAfterElement?: (index: number, numberOfItems: number, fieldArrayMethods) => JSX.Element | null;
   renderBeforeFieldArray?: (fieldArrayMethods) => JSX.Element;
   renderAfterFieldArray?: (fieldArrayMethods) => JSX.Element;
   afterOnChange?: () => Promise<void>;

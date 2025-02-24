@@ -1,9 +1,9 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import duration from 'dayjs/plugin/duration';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Period } from '@fpsak-frontend/utils';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 
@@ -26,7 +26,7 @@ export function getPeriodAsListOfDays(period: Period) {
   const fom = dayjs(period.fom).utc(true);
   const tom = dayjs(period.tom).utc(true);
 
-  const list = [];
+  const list: string[] = [];
   for (let currentDate = fom; isSameOrBefore(currentDate, tom); currentDate = currentDate.add(1, 'day')) {
     list.push(currentDate.format('YYYY-MM-DD'));
   }
@@ -47,7 +47,7 @@ export function getPeriodDifference(basePeriod: Period, periods: Period[]) {
 
   const listOfDaysToExclude = periods.map(period => getPeriodAsListOfDays(period)).flat();
 
-  const daysToInclude = [];
+  const daysToInclude: string[][] = [];
   let index = 0;
 
   baseListOfDays.forEach(currentDay => {

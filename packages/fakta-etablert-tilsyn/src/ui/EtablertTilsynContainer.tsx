@@ -1,6 +1,7 @@
 import { get, Period } from '@fpsak-frontend/utils';
 import { Alert, Tabs } from '@navikt/ds-react';
 import { ChildIcon, Infostripe, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { VurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import { useMemo } from 'react';
@@ -68,7 +69,7 @@ const transformEtablertTilsynResponse = (response: TilsynResponse) => {
 const transformSykdomResponse = (response: SykdomResponse) => {
   const resterendeVurderingsperioder = response?.resterendeVurderingsperioder?.map(v => new Period(v.fom, v.tom));
   const sykdomsperioderSomIkkeErOppfylt = response.vurderingselementer
-    .filter(v => v.resultat !== 'OPPFYLT')
+    .filter(v => v.resultat !== VurderingDtoResultat.OPPFYLT)
     .map(v => new Period(v.periode.fom, v.periode.tom));
   return [...sykdomsperioderSomIkkeErOppfylt, ...resterendeVurderingsperioder];
 };
@@ -126,8 +127,12 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     const bedredskapVurderinger = beredskap?.vurderinger || [];
     const nattevåkVurderinger = nattevåk?.vurderinger || [];
     return [
-      ...bedredskapVurderinger.filter(v => v.resultat === 'OPPFYLT').map(v => new Period(v.periode.fom, v.periode.tom)),
-      ...nattevåkVurderinger.filter(v => v.resultat === 'OPPFYLT').map(v => new Period(v.periode.fom, v.periode.tom)),
+      ...bedredskapVurderinger
+        .filter(v => v.resultat === VurderingDtoResultat.OPPFYLT)
+        .map(v => new Period(v.periode.fom, v.periode.tom)),
+      ...nattevåkVurderinger
+        .filter(v => v.resultat === VurderingDtoResultat.OPPFYLT)
+        .map(v => new Period(v.periode.fom, v.periode.tom)),
       ...innleggelsesperioder,
     ];
   }, [beredskap?.vurderinger, innleggelsesperioder, nattevåk?.vurderinger]);

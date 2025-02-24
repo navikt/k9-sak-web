@@ -156,7 +156,6 @@ const EtablertTilsyn = ({
                   <EtablertTilsynRowContent
                     etablertTilsyn={tilsyn.etablertTilsyn}
                     etablertTilsynSmurt={tilsyn.etablertTilsynSmurt}
-                    dagerSomOverstyrerTilsyn={dagerSomOverstyrerTilsyn}
                     tilsynProsent={tilsynIPeriodeProsent}
                     visIkon
                   />

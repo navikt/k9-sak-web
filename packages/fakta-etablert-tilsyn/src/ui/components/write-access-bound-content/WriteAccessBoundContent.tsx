@@ -9,8 +9,8 @@ interface WriteAccessBoundContentProps {
 const WriteAccessBoundContent = ({
   contentRenderer,
   otherRequirementsAreMet,
-}: WriteAccessBoundContentProps): JSX.Element => {
-  const { readOnly } = React.useContext(ContainerContext);
+}: WriteAccessBoundContentProps): JSX.Element | null => {
+  const { readOnly } = React.useContext(ContainerContext) || {};
   if (readOnly === false && (otherRequirementsAreMet === true || otherRequirementsAreMet === undefined)) {
     return contentRenderer();
   }
