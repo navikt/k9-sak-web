@@ -162,98 +162,112 @@ const FritekstEditor = ({
           <FritekstFeilmeldinger />
         </Modal.Header>
       )}
+      <Modal.Body>
+        <div className={styles.modalInnehold}>
+          {visAdvarsel && (
+            <>
+              <Alert variant="warning" inline>
+                <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
+              </Alert>
 
-      {visAdvarsel && (
-        <>
-          <Alert variant="warning" inline>
-            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
-          </Alert>
-
-          <div className={styles.knapperHoyere}>
-            <Button size="small" type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
-              <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
-            </Button>
-            <Button size="small" type="button" variant="primary" onClick={handleTilbakestill}>
-              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
-            </Button>
-          </div>
-        </>
-      )}
-
-      <div className={visAdvarsel ? styles.skjulEditor : ''}>
-        <div className={styles.papir}>
-          {redigerbartInnholdKlart && (
-            <div className={styles.nullstillCss}>
-              <div className="brev-wrapper">
-                <style>{` ${brevStiler} `}</style>
-                <div className={styles.ikkeRedigerbartInnhold} dangerouslySetInnerHTML={{ __html: prefiksInnhold }} />
-                <div id="content">
-                  <div id="rediger-brev" className={styles.redigerbartInnhold} style={{ width: '100%' }} />
-                </div>
-                <div className={styles.ikkeRedigerbartInnhold} dangerouslySetInnerHTML={{ __html: suffiksInnhold }} />
+              <div className={styles.knapperHoyere}>
+                <Button size="small" type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
+                  <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
+                </Button>
+                <Button size="small" type="button" variant="primary" onClick={handleTilbakestill}>
+                  <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+                </Button>
               </div>
-            </div>
+            </>
           )}
-        </div>
-      </div>
-      <footer className={visAdvarsel ? styles.skjulEditor : ''}>
-        <VerticalSpacer thirtyTwoPx />
-        {kanInkludereKalender && (
-          <div>
-            <InkluderKalenderCheckbox
-              intl={intl}
-              setFieldValue={setFieldValue}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              disabled={readOnly}
-            />
-            <VerticalSpacer sixteenPx />
+
+          <div className={visAdvarsel ? styles.skjulEditor : ''}>
+            <div className={styles.papir}>
+              {redigerbartInnholdKlart && (
+                <div className={styles.nullstillCss}>
+                  <div className="brev-wrapper">
+                    <style>{` ${brevStiler} `}</style>
+                    <div
+                      className={styles.ikkeRedigerbartInnhold}
+                      dangerouslySetInnerHTML={{ __html: prefiksInnhold }}
+                    />
+                    <div id="content">
+                      <div id="rediger-brev" className={styles.redigerbartInnhold} style={{ width: '100%' }} />
+                    </div>
+                    <div
+                      className={styles.ikkeRedigerbartInnhold}
+                      dangerouslySetInnerHTML={{ __html: suffiksInnhold }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-        <div>
-          <div className={styles.knapper}>
-            {visValideringsFeil && (
-              <>
-                <Alert variant="error">
-                  {intl.formatMessage({
-                    id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
-                  })}{' '}
-                </Alert>
+          <footer className={visAdvarsel ? styles.skjulEditor : ''}>
+            <VerticalSpacer thirtyTwoPx />
+            {kanInkludereKalender && (
+              <div>
+                <InkluderKalenderCheckbox
+                  intl={intl}
+                  setFieldValue={setFieldValue}
+                  skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+                  disabled={readOnly}
+                />
                 <VerticalSpacer sixteenPx />
-              </>
+              </div>
             )}
-            <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl} loading={!redigerbartInnholdKlart}>
-              <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-            </PreviewLink>
-          </div>
-          <FritekstFeilmeldinger />
+            <div>
+              <div className={styles.knapper}>
+                {visValideringsFeil && (
+                  <>
+                    <Alert variant="error">
+                      {intl.formatMessage({
+                        id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
+                      })}{' '}
+                    </Alert>
+                    <VerticalSpacer sixteenPx />
+                  </>
+                )}
+                <PreviewLink
+                  previewCallback={onForhåndsvis}
+                  size="small"
+                  intl={intl}
+                  loading={!redigerbartInnholdKlart}
+                >
+                  <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+                </PreviewLink>
+              </div>
+              <FritekstFeilmeldinger />
+            </div>
+            <VerticalSpacer thirtyTwoPx />
+            <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+              <div>
+                <Button
+                  type="button"
+                  variant="primary"
+                  onClick={handleLagreOgLukk}
+                  disabled={!redigerbartInnholdKlart || readOnly}
+                  size="small"
+                >
+                  <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
+                </Button>
+              </div>
+              <div className={styles.hoyere}>
+                <Button
+                  variant="tertiary"
+                  icon={<Cancel aria-hidden />}
+                  type="button"
+                  onClick={() => setVisAdvarsel(true)}
+                  disabled={readOnly}
+                  size="small"
+                >
+                  <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+                </Button>
+              </div>
+            </HGrid>
+          </footer>
         </div>
-        <VerticalSpacer thirtyTwoPx />
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
-          <div>
-            <Button
-              type="button"
-              variant="primary"
-              onClick={handleLagreOgLukk}
-              disabled={!redigerbartInnholdKlart || readOnly}
-              size="small"
-            >
-              <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
-            </Button>
-          </div>
-          <div className={styles.hoyere}>
-            <Button
-              variant="tertiary"
-              icon={<Cancel aria-hidden />}
-              type="button"
-              onClick={() => setVisAdvarsel(true)}
-              disabled={readOnly}
-              size="small"
-            >
-              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
-            </Button>
-          </div>
-        </HGrid>
-      </footer>
+      </Modal.Body>
     </>
   );
 };

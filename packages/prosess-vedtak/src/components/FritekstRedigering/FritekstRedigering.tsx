@@ -176,27 +176,23 @@ const FritekstRedigering = ({
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
-        <Modal.Body>
-          <div className={styles.modalInnehold}>
-            {visRedigering && (
-              <FritekstEditor
-                handleSubmit={handleLagre}
-                lukkEditor={lukkEditor}
-                handleForhåndsvis={handleForhåndsvis}
-                setFieldValue={setFieldValue}
-                kanInkludereKalender={kanInkludereKalender}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-                readOnly={readOnly}
-                redigerbartInnholdKlart={redigerbartInnholdKlart}
-                redigerbartInnhold={redigerbartInnhold}
-                originalHtml={originalHtml}
-                brevStiler={brevStiler}
-                prefiksInnhold={prefiksInnhold}
-                suffiksInnhold={suffiksInnhold}
-              />
-            )}
-          </div>
-        </Modal.Body>
+        {visRedigering && (
+          <FritekstEditor
+            handleSubmit={handleLagre}
+            lukkEditor={lukkEditor}
+            handleForhåndsvis={handleForhåndsvis}
+            setFieldValue={setFieldValue}
+            kanInkludereKalender={kanInkludereKalender}
+            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+            readOnly={readOnly}
+            redigerbartInnholdKlart={redigerbartInnholdKlart}
+            redigerbartInnhold={redigerbartInnhold}
+            originalHtml={originalHtml}
+            brevStiler={brevStiler}
+            prefiksInnhold={prefiksInnhold}
+            suffiksInnhold={suffiksInnhold}
+          />
+        )}
       </Modal>
     </>
   );
