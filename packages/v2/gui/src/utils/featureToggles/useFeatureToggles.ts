@@ -1,6 +1,7 @@
 import { type FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { isUngWeb } from '../urlUtils';
 
 type FeatureToggle = {
   key: string;
@@ -14,7 +15,7 @@ const transformData = (data: FeatureToggle[]): FeatureToggles =>
   }, {});
 
 export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefined } => {
-  const backendUrl = window.location.pathname.includes('/ung/web') ? 'ung' : 'k9';
+  const backendUrl = isUngWeb() ? 'ung' : 'k9';
   const { data: featureToggles } = useQuery({
     queryKey: ['featureToggles', backendUrl],
     queryFn: ({ signal }) =>
