@@ -77,13 +77,13 @@ const velgHistorikkMal = (histType: Kodeverk) => {
     case historikkinnslagType.OVST_UTTAK_NY:
     case historikkinnslagType.OVST_UTTAK_OPPDATERT:
     case historikkinnslagType.OVST_UTTAK_FJERNET:
+    case historikkinnslagType.FASTSATT_UTTAKSGRAD:
       return HistorikkMalType5;
     case historikkinnslagType.NY_INFO_FRA_TPS:
     case historikkinnslagType.NY_GRUNNLAG_MOTTATT:
       return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
     case historikkinnslagType.FJERNET_OVERSTYRING:
-    case historikkinnslagType.FASTSATT_UTTAKSGRAD:
       return HistorikkMalType7;
     case historikkinnslagType.OPPTJENING:
       return HistorikkMalType8;
