@@ -4,7 +4,7 @@ import { Box, Button } from '@navikt/ds-react';
 import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import type { InstitusjonVurderingDtoMedPerioder } from '../../types/institusjonVurderingDtoMedPerioder.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../../types/IinstitusjonVurderingDtoMedPerioder.js';
 
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',

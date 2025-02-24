@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, waitFor, userEvent } from '@storybook/test';
 import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
-import type { InstitusjonVurderingDtoMedPerioder } from './types/institusjonVurderingDtoMedPerioder';
+import type { InstitusjonVurderingDtoMedPerioder } from './types/IinstitusjonVurderingDtoMedPerioder';
 import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 

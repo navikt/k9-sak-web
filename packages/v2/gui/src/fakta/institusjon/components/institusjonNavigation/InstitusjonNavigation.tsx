@@ -4,7 +4,7 @@ import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
-import type { InstitusjonPerioderDtoMedResultat } from '../../types/institusjonPerioderDtoMedResultat.js';
+import type { InstitusjonPerioderDtoMedResultat } from '../../types/IinstitusjonPerioderDtoMedResultat.js';
 import PeriodeRad from '../periodeRad/PeriodeRad.js';
 
 import styles from './InstitusjonNavigation.module.css';
