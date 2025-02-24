@@ -13,7 +13,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
-import styles from './RedigerFritekstbrev.module.css';
 import {
   lagLagreHtmlDokumentdataRequest,
   seksjonSomKanRedigeres,
