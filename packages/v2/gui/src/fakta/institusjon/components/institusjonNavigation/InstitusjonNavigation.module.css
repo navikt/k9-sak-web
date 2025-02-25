@@ -1,0 +1,19 @@
+.institusjonOversikt {
+  width: 25rem;
+}
+
+.institusjonOversikt .heading {
+  margin: 1.3125rem 0 1.5rem 0.9375rem;
+}
+
+.institusjonOversikt .marginLeft {
+  margin-left: 0.9375rem;
+}
+
+.institusjonOversikt .periodColumns {
+  display: flex;
+}
+
+.institusjonOversikt .periodColumns > div {
+  margin-right: 1rem;
+}
