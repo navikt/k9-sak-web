@@ -4,14 +4,23 @@ import { fn, expect, userEvent, waitFor } from '@storybook/test';
 import { createIntl, IntlShape, RawIntlProvider } from 'react-intl';
 import FritekstEditor from './FritekstEditor.js';
 import messages from '../../../i18n/nb_NO.json';
+import { Button, Modal } from '@navikt/ds-react';
 
 const withRawIntlProvider =
   (intl: IntlShape): Decorator =>
-  Story => (
-    <RawIntlProvider value={intl}>
-      <Story />
-    </RawIntlProvider>
-  );
+  Story => {
+    const [visRedigering, setVisRedigering] = React.useState(true);
+    return (
+      <RawIntlProvider value={intl}>
+        <Button onClick={() => setVisRedigering(true)} size="small">
+          Rediger brev
+        </Button>
+        <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
+          <Story />
+        </Modal>
+      </RawIntlProvider>
+    );
+  };
 
 const intl = createIntl({
   locale: 'nb-NO',
@@ -56,14 +65,14 @@ export const AvansertMedPlayTest: StoryObj<typeof FritekstEditor> = {
   },
   play: async ({ canvas, args, canvasElement }) => {
     const prefixEl = canvas.getByText('Prefiks');
-    expect(prefixEl).toBeInTheDocument();
+    await expect(prefixEl).toBeInTheDocument();
     const suffixEl = canvas.getByText('Suffiks');
-    expect(suffixEl).toBeInTheDocument();
+    await expect(suffixEl).toBeInTheDocument();
     const contentBlock = canvasElement.querySelector('#rediger-brev');
     await expect(contentBlock).toBeInTheDocument();
 
     const submitBtn = canvas.getByRole('button', { name: 'Lagre og lukk' });
-    expect(submitBtn).toBeInTheDocument();
+    await expect(submitBtn).toBeInTheDocument();
     await userEvent.click(submitBtn, { delay: 100 });
     await waitFor(() => expect(args.handleSubmit).toHaveBeenCalledWith(`<p>${customizedContent}</p>`));
     const para = contentBlock.querySelector('.ce-paragraph.cdx-block');

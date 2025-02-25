@@ -40,9 +40,9 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-inntekt`}
               type="text"
               placeholder={intl.formatMessage({ id: 'OverstyrInputForm.InntektPrAar' })}
-              onChange={e => {
+              onChange={async e => {
                 const tallverdi: number = parseInt(e.target.value.replace(/\D+/g, ''), 10);
-                setFieldValue(field.name, tallverdi);
+                await setFieldValue(field.name, tallverdi);
               }}
               maxLength={10}
               value={parseCurrencyInput(field.value)}
@@ -62,13 +62,13 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-refusjon`}
               type="text"
               placeholder={intl.formatMessage({ id: 'OverstyrInputForm.RefusjonPrAar' })}
-              onChange={e => {
+              onChange={async e => {
                 const tallverdi: number = parseInt(e.target.value.replace(/\D+/g, ''), 10);
-                setFieldValue(field.name, tallverdi);
+                await setFieldValue(field.name, tallverdi);
                 if (tallverdi <= 0 || !tallverdi) {
                   const targetFieldName = `perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`;
-                  setFieldValue(targetFieldName, '');
-                  setFieldTouched(targetFieldName, true);
+                  await setFieldValue(targetFieldName, '');
+                  await setFieldTouched(targetFieldName, true);
                 }
               }}
               maxLength={10}
@@ -88,9 +88,9 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               hideLabel
               error={meta.touched && meta.error ? meta.error : ''}
               value={field.value}
-              onChange={value => {
-                setFieldTouched(field.name, true);
-                setFieldValue(field.name, value);
+              onChange={async value => {
+                await setFieldTouched(field.name, true);
+                await setFieldValue(field.name, value);
               }}
               disabled={readOnly}
             />
@@ -107,9 +107,9 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                 hideLabel
                 error={meta.touched && meta.error ? meta.error : ''}
                 value={field.value}
-                onChange={value => {
-                  setFieldTouched(field.name, true);
-                  setFieldValue(field.name, value);
+                onChange={async value => {
+                  await setFieldTouched(field.name, true);
+                  await setFieldValue(field.name, value);
                 }}
                 disabled={(Number(tallverdi) || 0) <= 0 || !Number(tallverdi) || readOnly || !skalKunneEndreRefusjon}
               />

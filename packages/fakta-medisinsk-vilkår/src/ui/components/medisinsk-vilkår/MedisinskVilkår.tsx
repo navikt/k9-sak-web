@@ -159,7 +159,7 @@ const MedisinskVilkår = (): JSX.Element => {
     });
 
   React.useEffect(() => {
-    hentSykdomsstegStatus()
+    void hentSykdomsstegStatus()
       .then(hentNyeDokumenterSomIkkeErVurdertHvisNødvendig)
       .then(([sykdomsstegStatusResponse, nyeDokumenterSomIkkeErVurdertResponse]) => {
         const step = finnNesteStegFn(sykdomsstegStatusResponse, true);
@@ -198,7 +198,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const afterEndringerUtifraNyeDokumenterRegistrert = () => {
     dispatch({ type: ActionType.ENDRINGER_UTIFRA_NYE_DOKUMENTER_REGISTRERT });
-    hentSykdomsstegStatus().then(
+    void hentSykdomsstegStatus().then(
       ({
         kanLøseAksjonspunkt,
         manglerVurderingAvKontinuerligTilsynOgPleie,

@@ -62,7 +62,7 @@ const PureDiagnosekodeSelector = ({
         setInputValue(diagnosekode[0].value);
       }
     };
-    getInitialDiagnosekode();
+    void getInitialDiagnosekode();
   }, [initialDiagnosekodeValue]);
 
   const onInputValueChange = async v => {
@@ -85,8 +85,8 @@ const PureDiagnosekodeSelector = ({
           id={name}
           suggestions={suggestions}
           value={inputValue}
-          onChange={e => {
-            onInputValueChange(e);
+          onChange={async e => {
+            await onInputValueChange(e);
             setInputValue(e);
           }}
           onSelect={e => {

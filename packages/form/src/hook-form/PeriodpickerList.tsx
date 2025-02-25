@@ -34,7 +34,7 @@ interface PeriodpickerListProps {
   renderContentAfterElement?: (index: number, numberOfItems: number, fieldArrayMethods) => JSX.Element;
   renderBeforeFieldArray?: (fieldArrayMethods) => JSX.Element;
   renderAfterFieldArray?: (fieldArrayMethods) => JSX.Element;
-  afterOnChange?: () => void;
+  afterOnChange?: () => Promise<void>;
   disabled?: boolean;
 }
 const PeriodpickerList = ({
@@ -85,7 +85,7 @@ const PeriodpickerList = ({
                           value={value?.fom || ''}
                           onChange={fomValue => {
                             onChange(new Period(fomValue, value?.tom || ''));
-                            if (afterOnChange) afterOnChange();
+                            if (afterOnChange) void afterOnChange();
                           }}
                           inputId={`${name}[${index}].fom`}
                           disabled={disabled}
@@ -99,7 +99,7 @@ const PeriodpickerList = ({
                             value={value?.tom || ''}
                             onChange={tomValue => {
                               onChange(new Period(value?.fom || '', tomValue));
-                              if (afterOnChange) afterOnChange();
+                              if (afterOnChange) void afterOnChange();
                             }}
                             inputId={`${name}[${index}].tom`}
                             disabled={disabled}

@@ -159,8 +159,8 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                     dokumenter={opplaeringDokumenter}
                     valgteDokumenter={field.value}
                     error={meta.touched && meta.error}
-                    onChange={value => {
-                      setFieldValue(field.name, value);
+                    onChange={async value => {
+                      await setFieldValue(field.name, value);
                     }}
                     onBlur={() => setFieldTouched(field.name, true)}
                   />
@@ -183,11 +183,11 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                   { value: RadioOptions.DELVIS, label: 'Ja, i deler av perioden' },
                   { value: RadioOptions.NEI, label: 'Nei' },
                 ]}
-                onChange={v => {
+                onChange={async v => {
                   if (v === RadioOptions.JA || RadioOptions.NEI) {
-                    setFieldValue(fieldname.PERIODER, initialValues[fieldname.PERIODER]);
+                    await setFieldValue(fieldname.PERIODER, initialValues[fieldname.PERIODER]);
                   }
-                  setFieldValue(fieldname.GODKJENT_OPPLAERING, v);
+                  await setFieldValue(fieldname.GODKJENT_OPPLAERING, v);
                 }}
                 validate={[required]}
                 name={fieldname.GODKJENT_OPPLAERING}

@@ -185,8 +185,8 @@ export const OppholdInntektOgPerioderForm = ({
 
   const hasOpenAksjonspunkter = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
 
-  const handleSubmit = (formState: OppholdInntektOgPerioderFormState) => {
-    submitCallback(transformValues(formState, aksjonspunkter));
+  const handleSubmit = async (formState: OppholdInntektOgPerioderFormState) => {
+    await submitCallback(transformValues(formState, aksjonspunkter));
   };
 
   const perioder = useWatch({ control: formMethods.control, name: 'perioder' });

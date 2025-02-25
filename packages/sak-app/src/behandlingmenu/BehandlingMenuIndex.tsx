@@ -118,13 +118,16 @@ export const BehandlingMenuIndex = ({
 
   const ref = useRef<number>(undefined);
   useEffect(() => {
-    // Når antallet har endret seg er det laget en ny behandling og denne må da velges
-    if (ref.current > 0) {
-      const pathname = pathToBehandling(fagsak.saksnummer, findNewBehandlingId(alleBehandlinger));
-      navigate(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
-    }
+    const asyncEffect = async () => {
+      // Når antallet har endret seg er det laget en ny behandling og denne må da velges
+      if (ref.current > 0) {
+        const pathname = pathToBehandling(fagsak.saksnummer, findNewBehandlingId(alleBehandlinger));
+        await navigate(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
+      }
 
-    ref.current = alleBehandlinger.length;
+      ref.current = alleBehandlinger.length;
+    };
+    void asyncEffect();
   }, [alleBehandlinger.length]);
 
   const { startRequest: sjekkTilbakeKanOpprettes, data: kanBehandlingOpprettes = false } =
@@ -183,7 +186,7 @@ export const BehandlingMenuIndex = ({
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
 
-  const lagNyBehandling = useCallback((bTypeKode: string, params: any) => {
+  const lagNyBehandling = useCallback(async (bTypeKode: string, params: any) => {
     let lagNy = lagNyBehandlingK9Sak;
     if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
       lagNy = lagNyBehandlingTilbake;
@@ -197,7 +200,8 @@ export const BehandlingMenuIndex = ({
     if (bTypeKode === BehandlingType.UNNTAK) {
       lagNy = lagNyBehandlingUnntak;
     }
-    lagNy(params).then(() => oppfriskBehandlinger());
+    await lagNy(params);
+    oppfriskBehandlinger();
   }, []);
 
   const uuidForSistLukkede = useMemo(

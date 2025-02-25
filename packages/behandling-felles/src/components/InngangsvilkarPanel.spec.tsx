@@ -142,7 +142,7 @@ describe('<InngangsvilkarPanel>', () => {
 
     expect(screen.getByText('Avventer avklaring av fakta om')).toBeInTheDocument();
     expect(screen.getByText('FAKTA_APENT')).toBeInTheDocument();
-    userEvent.click(screen.getByText('FAKTA_APENT'));
+    await userEvent.click(screen.getByText('FAKTA_APENT'));
     await waitFor(() => {
       expect(oppdaterProsessStegOgFaktaPanelIUrl.mock.calls.length).toBeGreaterThan(0);
     });

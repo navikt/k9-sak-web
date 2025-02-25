@@ -62,7 +62,7 @@ const MenyHenleggIndex = ({
   const [erHenlagt, setHenlagt] = useState(false);
 
   const submit = useCallback(
-    formValues => {
+    async formValues => {
       const henleggBehandlingDto = {
         behandlingVersjon,
         behandlingId,
@@ -71,9 +71,8 @@ const MenyHenleggIndex = ({
         fritekst: formValues.fritekst,
         valgtMottaker: safeJSONParse(formValues.valgtMottaker),
       };
-      henleggBehandling(henleggBehandlingDto).then(() => {
-        setHenlagt(true);
-      });
+      await henleggBehandling(henleggBehandlingDto);
+      setHenlagt(true);
     },
     [behandlingId, behandlingVersjon],
   );
