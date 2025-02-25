@@ -1,10 +1,6 @@
 interface MerknadFraLos {
-  id: number;
-  merknadKoder: string[];
-  oppgaveKoder: string[];
-  fritekst: string;
-  opprettet: string;
-  sistEndret: string;
+  merknadKoder?: Array<'HASTESAK' | null> | null;
+  fritekst?: string;
 }
 
 export default MerknadFraLos;
