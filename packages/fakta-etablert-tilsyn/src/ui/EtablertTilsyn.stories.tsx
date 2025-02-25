@@ -39,7 +39,7 @@ export const EtablertTilsyn: Story = {
       handlers,
     },
   },
-  play: async ({ canvas, step }) => {
+  play: async ({ canvas, step, args }) => {
     await step('skal ha skjema for håndtering av beredskap', async () => {
       await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
       await waitFor(async () => {
@@ -56,6 +56,23 @@ export const EtablertTilsyn: Story = {
       await userEvent.click(canvas.getByText('Ja, i deler av perioden'));
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
+      await userEvent.click(canvas.getByText('Bekreft og fortsett'));
+      await waitFor(() =>
+        expect(args.data.lagreBeredskapvurdering).toHaveBeenCalledWith({
+          vurderinger: [
+            {
+              begrunnelse: 'test',
+              kilde: '',
+              periode: {
+                '_constructor-name_': 'Period',
+                fom: '2021-07-11',
+                tom: '2021-07-12',
+              },
+              resultat: 'OPPFYLT',
+            },
+          ],
+        }),
+      );
     });
 
     await step('skal ha skjema for håndtering av nattevåk', async () => {
@@ -74,6 +91,23 @@ export const EtablertTilsyn: Story = {
       await userEvent.click(canvas.getByText('Ja, i deler av perioden'));
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
+      await userEvent.click(canvas.getByText('Bekreft og fortsett'));
+      await waitFor(() =>
+        expect(args.data.lagreNattevåkvurdering).toHaveBeenCalledWith({
+          vurderinger: [
+            {
+              begrunnelse: 'test',
+              kilde: '',
+              periode: {
+                '_constructor-name_': 'Period',
+                fom: '2021-07-11',
+                tom: '2021-07-12',
+              },
+              resultat: 'OPPFYLT',
+            },
+          ],
+        }),
+      );
     });
   },
 };
