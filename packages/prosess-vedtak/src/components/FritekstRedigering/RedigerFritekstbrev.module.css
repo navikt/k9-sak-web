@@ -67,3 +67,7 @@
 .alertMeldinger p:last-child {
   margin-bottom: 0;
 }
+
+.skjulEditor {
+  display: none;
+}
