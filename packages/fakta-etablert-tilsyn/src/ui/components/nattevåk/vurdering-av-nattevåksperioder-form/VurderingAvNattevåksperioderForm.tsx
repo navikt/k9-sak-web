@@ -5,6 +5,7 @@ import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-platt
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
+import Kilde from '../../../../types/Kilde';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import { finnResterendePerioder } from '../../../../util/periodUtils';
@@ -25,6 +26,13 @@ enum RadioOptions {
   NEI = 'nei',
 }
 
+interface PeriodeUtenNattevåk {
+  periode: Period;
+  resultat: Vurderingsresultat;
+  begrunnelse: string;
+  kilde: Kilde;
+}
+
 interface VurderingAvNattevåksperioderFormProps {
   nattevåksperiode: Vurderingsperiode;
   onCancelClick: () => void;
@@ -42,7 +50,7 @@ const VurderingAvNattevåksperioderForm = ({
   onCancelClick,
   beskrivelser,
 }: VurderingAvNattevåksperioderFormProps): JSX.Element => {
-  const { lagreNattevåkvurdering, readOnly } = React.useContext(ContainerContext);
+  const { lagreNattevåkvurdering, readOnly } = React.useContext(ContainerContext) || {};
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForNattevåk = () => {
     if (nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT) {
@@ -72,7 +80,7 @@ const VurderingAvNattevåksperioderForm = ({
     const { kilde } = nattevåksperiode;
 
     let perioderMedEllerUtenNattevåk;
-    let perioderUtenNattevåk = [];
+    let perioderUtenNattevåk: PeriodeUtenNattevåk[] = [];
     if (harBehovForNattevåk === RadioOptions.JA_DELER) {
       perioderMedEllerUtenNattevåk = perioder
         .map((periode: any) => (periode.period ? periode.period : periode))
@@ -103,7 +111,7 @@ const VurderingAvNattevåksperioderForm = ({
     }
 
     const kombinertePerioder = perioderMedEllerUtenNattevåk.concat(perioderUtenNattevåk);
-    lagreNattevåkvurdering({ vurderinger: kombinertePerioder });
+    lagreNattevåkvurdering?.({ vurderinger: kombinertePerioder });
   };
 
   const valgtePerioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
@@ -153,13 +161,13 @@ const VurderingAvNattevåksperioderForm = ({
                 defaultValues={[new Period(nattevåksperiode.periode.fom, nattevåksperiode.periode.tom)]}
                 disabled={readOnly}
                 renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                  numberOfItems > 1 && (
+                  numberOfItems > 1 ? (
                     <DeleteButton
                       onClick={() => {
                         fieldArrayMethods.remove(index);
                       }}
                     />
-                  )
+                  ) : null
                 }
                 renderAfterFieldArray={fieldArrayMethods => (
                   <Box marginTop={Margin.large}>
