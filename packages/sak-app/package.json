@@ -39,7 +39,7 @@
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/sak-meny-marker-behandling": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ds-react": "7.13.0",
+    "@navikt/ds-react": "7.14.2",
     "@navikt/ft-fakta-beregning": "^8.3.2",
     "@navikt/ft-form-hooks": "^6.2.2",
     "@navikt/ft-plattform-komponenter": "^7.2.5",
