@@ -10,7 +10,7 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "msw": "2.7.1",
+    "msw": "2.7.2",
     "vite": "^6.1.1",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
