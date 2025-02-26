@@ -294,7 +294,6 @@
   "packages/form/src/TextAreaFormik.tsx",
   "packages/form/src/TextFieldFormik.tsx",
   "packages/form/src/behandlingForm.tsx",
-  "packages/form/src/hook-form/Datepicker.tsx",
   "packages/form/src/hook-form/FaktaBegrunnelseTextFieldRHF.tsx",
   "packages/form/src/hook-form/PeriodpickerList.tsx",
   "packages/modal-sett-pa-vent/src/SettPaVentModalIndex.tsx",
