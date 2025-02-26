@@ -23,7 +23,7 @@ export const MenySettPaVentIndexV2 = ({
   erTilbakekreving,
 }: OwnProps) => {
   const submit = useCallback(
-    (formValues: FormState) => {
+    async (formValues: FormState) => {
       const values = {
         behandlingVersjon,
         behandlingId,
@@ -31,7 +31,8 @@ export const MenySettPaVentIndexV2 = ({
         ventearsak: formValues.ventearsak,
         ventearsakVariant: formValues.ventearsakVariant,
       };
-      settBehandlingPaVent(values).then(() => goToLos());
+      await settBehandlingPaVent(values);
+      goToLos();
     },
     [behandlingId, behandlingVersjon],
   );

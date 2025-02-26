@@ -45,13 +45,13 @@ export const HenleggFørstegangssøknadPleiepenger: StoryObj<typeof MenyHenleggI
       ]),
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByRole('dialog', { name: 'Behandlingen henlegges' })).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'Henlegg behandling' })).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'Henlegg behandling' })).not.toBeDisabled();
-    expect(canvas.queryByRole('link', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
-    expect(canvas.getByRole('combobox', { name: 'Velg årsak til henleggelse' })).toBeInTheDocument();
-    expect(canvas.getByRole('option', { name: 'Søknaden er trukket' })).toBeInTheDocument();
-    expect(canvas.getByRole('option', { name: 'Behandlingen er feilaktig opprettet' })).toBeInTheDocument();
+    await expect(canvas.getByRole('dialog', { name: 'Behandlingen henlegges' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Henlegg behandling' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Henlegg behandling' })).not.toBeDisabled();
+    await expect(canvas.queryByRole('link', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
+    await expect(canvas.getByRole('combobox', { name: 'Velg årsak til henleggelse' })).toBeInTheDocument();
+    await expect(canvas.getByRole('option', { name: 'Søknaden er trukket' })).toBeInTheDocument();
+    await expect(canvas.getByRole('option', { name: 'Behandlingen er feilaktig opprettet' })).toBeInTheDocument();
   },
 };
 
@@ -73,12 +73,12 @@ export const HenleggKlagebehandling: StoryObj<typeof MenyHenleggIndexV2> = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
-    expect(canvas.queryByRole('combobox', { name: 'Velg mottaker av henleggelsesbrev' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('combobox', { name: 'Velg mottaker av henleggelsesbrev' })).not.toBeInTheDocument();
     await userEvent.selectOptions(canvas.getByRole('combobox'), 'HENLAGT_KLAGE_TRUKKET');
-    expect(canvas.getByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
-    expect(canvas.getByRole('combobox', { name: 'Velg mottaker av henleggelsesbrev' })).toBeInTheDocument();
-    expect(canvas.getByRole('option', { name: 'Ola Nordmann (123)' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    await expect(canvas.getByRole('combobox', { name: 'Velg mottaker av henleggelsesbrev' })).toBeInTheDocument();
+    await expect(canvas.getByRole('option', { name: 'Ola Nordmann (123)' })).toBeInTheDocument();
   },
 };
 
@@ -94,8 +94,8 @@ export const HenleggRevurderingTilbakekreving: StoryObj<typeof MenyHenleggIndexV
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.queryByRole('textbox', { name: 'Fritekst til brev' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('textbox', { name: 'Fritekst til brev' })).not.toBeInTheDocument();
     await userEvent.selectOptions(canvas.getByRole('combobox'), 'HENLAGT_FEILOPPRETTET_MED_BREV');
-    expect(canvas.getByRole('textbox', { name: 'Fritekst til brev' })).toBeInTheDocument();
+    await expect(canvas.getByRole('textbox', { name: 'Fritekst til brev' })).toBeInTheDocument();
   },
 };

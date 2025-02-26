@@ -14,7 +14,7 @@ export const VisMenyForÅLeggeTilVerge: StoryObj<typeof MenyVergeIndexV2> = {
     lukkModal: action('button-click'),
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText('Opprett verge/fullmektig?')).toBeInTheDocument();
+    await expect(canvas.getByText('Opprett verge/fullmektig?')).toBeInTheDocument();
   },
 };
 
@@ -24,6 +24,6 @@ export const VisMenyForÅFjerneVerge: StoryObj<typeof MenyVergeIndexV2> = {
     lukkModal: action('button-click'),
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText('Fjern verge/fullmektig?')).toBeInTheDocument();
+    await expect(canvas.getByText('Fjern verge/fullmektig?')).toBeInTheDocument();
   },
 };

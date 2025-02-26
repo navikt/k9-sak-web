@@ -15,7 +15,7 @@ export const Default: StoryObj<typeof OkAvbrytModal> = {
     cancel: action('button-click'),
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByRole('dialog', { name: 'Bekreft eller avbryt' })).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+    await expect(canvas.getByRole('dialog', { name: 'Bekreft eller avbryt' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'OK' })).toBeInTheDocument();
   },
 };

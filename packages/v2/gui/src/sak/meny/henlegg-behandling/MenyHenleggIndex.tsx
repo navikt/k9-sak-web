@@ -48,7 +48,7 @@ const MenyHenleggIndexV2 = ({
   });
 
   const submit = useCallback(
-    (formValues: HenleggBehandlingFormvalues) => {
+    async (formValues: HenleggBehandlingFormvalues) => {
       const valgtMottakerObjekt = brevmottakere?.find(
         mottaker => mottaker.identifikasjon.id === formValues.valgtMottaker,
       );
@@ -60,9 +60,8 @@ const MenyHenleggIndexV2 = ({
         fritekst: formValues.fritekst || null,
         valgtMottaker: valgtMottakerObjekt ?? null,
       };
-      henleggBehandling(henleggBehandlingDto).then(() => {
-        setHenlagt(true);
-      });
+      await henleggBehandling(henleggBehandlingDto);
+      setHenlagt(true);
     },
     [behandlingId, behandlingVersjon, brevmottakere, henleggBehandling],
   );

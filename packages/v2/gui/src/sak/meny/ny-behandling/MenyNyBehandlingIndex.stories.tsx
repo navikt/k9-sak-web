@@ -92,16 +92,16 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
   },
   play: async ({ canvas, step }) => {
     await step('skal rendre komponent korrekt', async () => {
-      expect(canvas.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
-      expect(canvas.getByRole('button', { name: 'Opprett behandling' })).toBeInTheDocument();
-      expect(canvas.getAllByRole('combobox').length).toBe(1);
+      await expect(canvas.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Opprett behandling' })).toBeInTheDocument();
+      await expect(canvas.getAllByRole('combobox').length).toBe(1);
     });
     await step('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
         'BT-002',
       );
-      expect(
+      await expect(
         canvas.getByRole('checkbox', { name: 'Behandlingen opprettes som et resultat av klagebehandling' }),
       ).toBeInTheDocument();
     });
@@ -114,13 +114,13 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
         canvas.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
         'inngangsvilkår',
       );
-      expect(canvas.getAllByRole('combobox').length).toBe(3);
-      expect(canvas.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
-      expect(canvas.getByRole('option', { name: 'Fra inngangsvilkår (full revurdering)' })).toBeInTheDocument();
-      expect(
+      await expect(canvas.getAllByRole('combobox').length).toBe(3);
+      await expect(canvas.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
+      await expect(canvas.getByRole('option', { name: 'Fra inngangsvilkår (full revurdering)' })).toBeInTheDocument();
+      await expect(
         canvas.getByRole('option', { name: 'Fra uttak, refusjon og fordeling-steget (delvis revurdering)' }),
       ).toBeInTheDocument();
-      expect(canvas.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
+      await expect(canvas.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
     });
     await step('skal rendre fra- og til-dato når revurdering fra uttakssteg er valgt', async () => {
       await userEvent.selectOptions(
@@ -131,8 +131,8 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
         canvas.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
         'RE-ENDRET-FORDELING',
       );
-      expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toBeInTheDocument();
-      expect(canvas.getByRole('textbox', { name: 'Til og med' })).toBeInTheDocument();
+      await expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toBeInTheDocument();
+      await expect(canvas.getByRole('textbox', { name: 'Til og med' })).toBeInTheDocument();
     });
   },
 };

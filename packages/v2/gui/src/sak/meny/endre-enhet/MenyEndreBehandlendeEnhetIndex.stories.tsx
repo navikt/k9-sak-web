@@ -30,10 +30,10 @@ export const VisMenyForÅEndreBehandlendeEnhet: StoryObj<typeof MenyEndreBehandl
     lukkModal: action('button-click'),
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByRole('dialog', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'OK' })).toBeInTheDocument();
-    expect(canvas.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
-    expect(canvas.getByRole('combobox', { name: 'Ny enhet' })).toBeInTheDocument();
-    expect(canvas.getByRole('option', { name: '1000 NAV Viken' })).toBeInTheDocument();
+    await expect(canvas.getByRole('dialog', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+    await expect(canvas.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
+    await expect(canvas.getByRole('combobox', { name: 'Ny enhet' })).toBeInTheDocument();
+    await expect(canvas.getByRole('option', { name: '1000 NAV Viken' })).toBeInTheDocument();
   },
 };

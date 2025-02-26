@@ -57,7 +57,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   const featureToggles = useContext(FeatureTogglesContext);
   const formState = useFormState({ control: formMethods.control });
 
-  const handleSubmit = (values: FormValues) => {
+  const handleSubmit = async (values: FormValues) => {
     const getMerknadKode = () => {
       if (values.markerSomHastesak) {
         return [Merknadkode.HASTESAK];
@@ -72,13 +72,12 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
       fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
       merknadKoder: getMerknadKode(),
     };
-    markerBehandling(transformedValues).then(() => {
-      if (erVeileder) {
-        goToSearch();
-      } else {
-        goToLos();
-      }
-    });
+    await markerBehandling(transformedValues);
+    if (erVeileder) {
+      goToSearch();
+    } else {
+      goToLos();
+    }
   };
 
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
