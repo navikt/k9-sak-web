@@ -5009,7 +5009,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": "npm:^3.1.6"
     "@sentry/browser": "npm:8.53.0"
     "@sentry/react": "npm:^9.1.0"
-    "@tanstack/react-query": "npm:^5.66.7"
+    "@tanstack/react-query": "npm:^5.66.9"
     axios: "npm:1.7.9"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -6944,17 +6944,6 @@ __metadata:
   version: 5.66.4
   resolution: "@tanstack/query-core@npm:5.66.4"
   checksum: 10/2e646aa72f74981616c153a7f7fe335acc3697f4501a6279bbee12b434de94fe6d686cee5bc9a48107bd54fa5e7c62f630cf996b601680031447c716e8cfdc1f
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:^5.66.7":
-  version: 5.66.7
-  resolution: "@tanstack/react-query@npm:5.66.7"
-  dependencies:
-    "@tanstack/query-core": "npm:5.66.4"
-  peerDependencies:
-    react: ^18 || ^19
-  checksum: 10/3d66a09f56f7722f3a7273e2217bcf078515779bedc09f6fdd0aba5eb6c810e74e39a2edcbb4d0bf538d84e395cb74f5fdfd085c48d50afe675cbbe5bef07e21
   languageName: node
   linkType: hard
 
