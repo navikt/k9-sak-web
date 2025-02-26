@@ -103,6 +103,10 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK,
   },
   {
+    key: 'NY_INNTEKT_EGET_PANEL',
+    value: process.env.VITE_NY_INNTEKT_EGET_PANEL,
+  },
+  {
     key: 'BRUK_V2_FAKTA_INSTITUSJON',
     value: process.env.VITE_BRUK_V2_FAKTA_INSTITUSJON,
   },
