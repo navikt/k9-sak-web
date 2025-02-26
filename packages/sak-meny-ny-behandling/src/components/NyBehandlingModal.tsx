@@ -172,7 +172,7 @@ export const NyBehandlingModal = ({
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
                 <DatepickerField
                   name="fom"
-                  disabledDays={{ before: null, after: sisteDagISøknadsperiode ?? new Date() }}
+                  disabledDays={{ before: undefined, after: sisteDagISøknadsperiode ?? new Date() }}
                   label="Fra og med"
                   validate={[required]}
                 />
