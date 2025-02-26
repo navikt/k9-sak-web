@@ -64,7 +64,6 @@ export const EtablertTilsyn: Story = {
               begrunnelse: 'test',
               kilde: '',
               periode: {
-                '_constructor-name_': 'Period',
                 fom: '2021-07-11',
                 tom: '2021-07-12',
               },
@@ -99,7 +98,6 @@ export const EtablertTilsyn: Story = {
               begrunnelse: 'test',
               kilde: '',
               periode: {
-                '_constructor-name_': 'Period',
                 fom: '2021-07-11',
                 tom: '2021-07-12',
               },

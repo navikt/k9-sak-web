@@ -1,5 +1,6 @@
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Periode } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
 import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
@@ -28,7 +29,7 @@ enum RadioOptions {
 }
 
 interface PeriodeUtenBeredskap {
-  periode: Period;
+  periode: Periode;
   resultat: Vurderingsresultat;
   begrunnelse: string;
   kilde: Kilde;
@@ -88,7 +89,7 @@ const VurderingAvBeredskapsperioderForm = ({
       perioderMedEllerUtenBeredskap = perioder
         .map((periode: any) => (periode.period ? periode.period : periode))
         .map(periode => ({
-          periode,
+          periode: { fom: periode.fom, tom: periode.tom },
           resultat: Vurderingsresultat.OPPFYLT,
           begrunnelse,
           kilde,
@@ -96,7 +97,7 @@ const VurderingAvBeredskapsperioderForm = ({
 
       const resterendePerioder = finnResterendePerioder(perioder, beredskapsperiode.periode);
       perioderUtenBeredskap = resterendePerioder.map(periode => ({
-        periode,
+        periode: { fom: periode.fom, tom: periode.tom },
         resultat: Vurderingsresultat.IKKE_OPPFYLT,
         begrunnelse,
         kilde,
@@ -104,7 +105,7 @@ const VurderingAvBeredskapsperioderForm = ({
     } else {
       perioderMedEllerUtenBeredskap = [
         {
-          periode: beredskapsperiode.periode,
+          periode: { fom: beredskapsperiode.periode.fom, tom: beredskapsperiode.periode.tom },
           resultat:
             harBehovForBeredskap === RadioOptions.JA ? Vurderingsresultat.OPPFYLT : Vurderingsresultat.IKKE_OPPFYLT,
           begrunnelse,

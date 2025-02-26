@@ -1,5 +1,6 @@
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Periode } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
 import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
@@ -27,7 +28,7 @@ enum RadioOptions {
 }
 
 interface PeriodeUtenNattevåk {
-  periode: Period;
+  periode: Periode;
   resultat: Vurderingsresultat;
   begrunnelse: string;
   kilde: Kilde;
@@ -85,7 +86,7 @@ const VurderingAvNattevåksperioderForm = ({
       perioderMedEllerUtenNattevåk = perioder
         .map((periode: any) => (periode.period ? periode.period : periode))
         .map(periode => ({
-          periode,
+          periode: { fom: periode.fom, tom: periode.tom },
           resultat: Vurderingsresultat.OPPFYLT,
           begrunnelse,
           kilde,
@@ -93,7 +94,7 @@ const VurderingAvNattevåksperioderForm = ({
 
       const resterendePerioder = finnResterendePerioder(perioder, nattevåksperiode.periode);
       perioderUtenNattevåk = resterendePerioder.map(periode => ({
-        periode,
+        periode: { fom: periode.fom, tom: periode.tom },
         resultat: Vurderingsresultat.IKKE_OPPFYLT,
         begrunnelse,
         kilde,
@@ -101,7 +102,7 @@ const VurderingAvNattevåksperioderForm = ({
     } else {
       perioderMedEllerUtenNattevåk = [
         {
-          periode: nattevåksperiode.periode,
+          periode: { fom: nattevåksperiode.periode.fom, tom: nattevåksperiode.periode.tom },
           resultat:
             harBehovForNattevåk === RadioOptions.JA ? Vurderingsresultat.OPPFYLT : Vurderingsresultat.IKKE_OPPFYLT,
           begrunnelse,
