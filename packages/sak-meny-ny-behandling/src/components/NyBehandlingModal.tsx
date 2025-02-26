@@ -2,10 +2,10 @@ import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/for
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { required } from '@fpsak-frontend/utils';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ReactElement, useEffect } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -61,6 +61,7 @@ interface PureOwnProps {
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
+  sisteDagISøknadsperiode: Date | null;
 }
 
 interface MappedOwnProps {
@@ -96,6 +97,7 @@ export const NyBehandlingModal = ({
   steg,
   fom,
   erTilbakekreving,
+  sisteDagISøknadsperiode,
 }: Partial<PureOwnProps> & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   useEffect(() => {
     if (erTilbakekrevingAktivert) {
@@ -170,13 +172,13 @@ export const NyBehandlingModal = ({
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
                 <DatepickerField
                   name="fom"
-                  disabledDays={{ before: null, after: new Date() }}
+                  disabledDays={{ before: null, after: sisteDagISøknadsperiode ?? new Date() }}
                   label="Fra og med"
                   validate={[required]}
                 />
                 <DatepickerField
                   name="tom"
-                  disabledDays={{ before: new Date(fom), after: new Date() }}
+                  disabledDays={{ before: new Date(fom), after: sisteDagISøknadsperiode ?? new Date() }}
                   label="Til og med"
                   validate={[required]}
                 />
