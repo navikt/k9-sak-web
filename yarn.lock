@@ -5018,7 +5018,7 @@ __metadata:
     react-dom: "npm:19.0.0"
     react-intl: "npm:7.1.6"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.1.4"
+    react-router: "npm:7.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -16337,24 +16337,6 @@ __metadata:
   version: 0.14.2
   resolution: "react-refresh@npm:0.14.2"
   checksum: 10/512abf97271ab8623486061be04b608c39d932e3709f9af1720b41573415fa4993d0009fa5138b6705b60a98f4102f744d4e26c952b14f41a0e455521c6be4cc
-  languageName: node
-  linkType: hard
-
-"react-router@npm:7.1.4":
-  version: 7.1.4
-  resolution: "react-router@npm:7.1.4"
-  dependencies:
-    "@types/cookie": "npm:^0.6.0"
-    cookie: "npm:^1.0.1"
-    set-cookie-parser: "npm:^2.6.0"
-    turbo-stream: "npm:2.4.0"
-  peerDependencies:
-    react: ">=18"
-    react-dom: ">=18"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-  checksum: 10/e1d2bb629d7957d5e60c718d3ca33458c2498089134a66a84cac1b49898aa2ca35a6d3e28ab7d7d1c6864ab50f56ddef15cbcd13c360ff9fbe727ae5fc82bfda
   languageName: node
   linkType: hard
 
