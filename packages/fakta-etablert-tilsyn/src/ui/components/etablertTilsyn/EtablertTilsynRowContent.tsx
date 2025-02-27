@@ -1,12 +1,10 @@
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
-import { Period } from '@fpsak-frontend/utils';
 import dayjs from 'dayjs';
-import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
+import Kilde from '../../../types/Kilde';
+import EtablertTilsynDag from './EtablertTilsynDag';
 import PartIkon from './PartIkon';
 import styles from './etablertTilsynRowContent.module.css';
-import EtablertTilsynDag from './EtablertTilsynDag';
-import Kilde from '../../../types/Kilde';
 
 interface TilsynMappet {
   date: string;
@@ -15,18 +13,11 @@ interface TilsynMappet {
 interface OwnProps {
   etablertTilsyn: EtablertTilsynType[];
   etablertTilsynSmurt: EtablertTilsynType[];
-  dagerSomOverstyrerTilsyn: Period[];
   tilsynProsent: number;
   visIkon: boolean;
 }
 
-const EtablertTilsynRowContent = ({
-  etablertTilsyn,
-  etablertTilsynSmurt,
-  dagerSomOverstyrerTilsyn,
-  tilsynProsent,
-  visIkon,
-}: OwnProps) => {
+const EtablertTilsynRowContent = ({ etablertTilsyn, etablertTilsynSmurt, tilsynProsent, visIkon }: OwnProps) => {
   const etablertTilsynDager = etablertTilsyn.flatMap(v =>
     v.periode.asListOfDays().map(date => ({ date, tidPerDag: v.tidPerDag, kilde: v.kilde })),
   );
@@ -47,20 +38,9 @@ const EtablertTilsynRowContent = ({
   const torsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 4);
   const fredagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 5);
 
-  const dagOverstyres = (tilsyn: TilsynMappet) => dagerSomOverstyrerTilsyn.some(dag => dag.fom === tilsyn?.date);
-
   const timerSmurt = etablertTilsynSmurtDager.find(v => v.tidPerDag)?.tidPerDag;
 
-  const skalDisables = (tilsynSmurt: TilsynMappet) => {
-    if (tilsynSmurt) {
-      return false;
-    }
-
-    if (dagOverstyres(tilsynSmurt)) {
-      return true;
-    }
-    return true;
-  };
+  const skalDisables = (tilsynSmurt?: TilsynMappet) => !tilsynSmurt;
   return (
     <>
       <div className={styles.etablertTilsyn__innrapportert_timer__container}>
