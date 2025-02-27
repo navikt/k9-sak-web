@@ -90,10 +90,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_BRUK_V2_BEHANDLING_VELGER,
   },
   {
-    key: 'BRUK_V2_SAK_SOK',
-    value: process.env.VITE_BRUK_V2_SAK_SOK,
-  },
-  {
     key: 'HISTORIKK_V2_VIS',
     value: process.env.VITE_HISTORIKK_V2_VIS,
   },

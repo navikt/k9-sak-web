@@ -96,10 +96,6 @@
     "value": "${BRUK_V2_BEHANDLING_VELGER}"
   },
   {
-    "key": "BRUK_V2_SAK_SOK",
-    "value": "${BRUK_V2_SAK_SOK}"
-  },
-  {
     "key": "HISTORIKK_V2_VIS",
     "value": "${HISTORIKK_V2_VIS}"
   },
