@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingDtoBehandlingResultatType, VilkårDtoVilkarStatus } from '@navikt/k9-sak-typescript-client';
+import { BehandlingDtoBehandlingResultatType, VilkårPeriodeDtoVilkarStatus } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -19,7 +19,7 @@ describe('<VedtakAvslagPanel>', () => {
       lovReferanse: '§ 22-13, 2. ledd',
       perioder: [
         {
-          vilkarStatus: VilkårDtoVilkarStatus.IKKE_OPPFYLT,
+          vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT,
           periode: { fom: '', tom: '' },
         },
       ],
