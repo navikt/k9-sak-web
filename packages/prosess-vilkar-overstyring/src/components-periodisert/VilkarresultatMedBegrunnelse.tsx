@@ -9,6 +9,7 @@ import { FunctionComponent } from 'react';
 import { VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { CustomVilkarText } from './VilkarresultatMedOverstyringFormPeriodisert';
+import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -17,6 +18,7 @@ interface VilkarresultatMedBegrunnelseProps {
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
   avslagsarsaker: KodeverkMedNavn[];
+  relevanteInnvilgetUtfall?: InnvilgetUtfallType[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
@@ -31,6 +33,7 @@ interface StaticFunctions {
   transformValues: (values: VilkarresultatMedBegrunnelseState) => { begrunnelse: string };
   buildInitialValues: (
     avslagKode: string,
+    innvilgelseMerknadKode?: string,
     aksjonspunkter: Aksjonspunkt[],
     status: string,
     periode: Vilkarperiode,
@@ -48,6 +51,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   periodeVilkarStatus,
   readOnly,
   avslagsarsaker,
+  relevanteInnvilgetUtfall,
   erMedlemskapsPanel,
   visPeriodisering,
   skalViseBegrunnelse = true,
@@ -70,6 +74,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
       )}
       <VilkarResultPickerPeriodisertRHF
         avslagsarsaker={avslagsarsaker}
+        relevanteInnvilgetUtfall={relevanteInnvilgetUtfall}
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
@@ -116,11 +121,12 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
 
 VilkarresultatMedBegrunnelse.buildInitialValues = (
   avslagKode: string,
+  innvilgelseMerknadKode?: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
 ) => ({
-  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
+  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, innvilgelseMerknadKode, aksjonspunkter, status, periode),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 

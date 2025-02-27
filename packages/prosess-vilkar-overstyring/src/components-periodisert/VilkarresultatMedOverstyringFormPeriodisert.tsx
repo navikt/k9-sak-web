@@ -13,8 +13,7 @@ import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
-import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import moment from 'moment';
@@ -24,6 +23,8 @@ import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
+import { CustomVilkarText } from '../components/VilkarresultatMedOverstyringForm';
+import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
 
 export interface CustomVilkarText {
   id: string;
@@ -61,8 +62,10 @@ interface VilkarresultatMedOverstyringFormProps {
   submitCallback: (props: SubmitCallback[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagKode?: string;
+  innvilgelseMerknadKode?: string;
   periode?: Vilkarperiode;
   opprettetAv?: string;
+  relevanteInnvilgetUtfall?: InnvilgetUtfallType[];
 }
 
 /**
@@ -76,6 +79,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
 > = ({
   aksjonspunkter,
   avslagKode,
+  innvilgelseMerknadKode,
   avslagsarsaker,
   behandlingType,
   erMedlemskapsPanel,
@@ -88,12 +92,19 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   submitCallback,
   toggleOverstyring,
   visPeriodisering,
+  relevanteInnvilgetUtfall,
 }) => {
   const buildInitialValues = (): VilkarresultatMedOverstyringFormState => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
-      ...VilkarresultatMedBegrunnelse.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
+      ...VilkarresultatMedBegrunnelse.buildInitialValues(
+        avslagKode,
+        innvilgelseMerknadKode,
+        aksjonspunkter,
+        status,
+        periode,
+      ),
     };
   };
   const onSubmit = (values: VilkarresultatMedOverstyringFormState) =>
@@ -152,6 +163,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
             erMedlemskapsPanel={erMedlemskapsPanel}
             visPeriodisering={visPeriodisering}
             avslagsarsaker={avslagsarsaker}
+            relevanteInnvilgetUtfall={relevanteInnvilgetUtfall}
             periodeFom={periodeFom}
             periodeTom={periodeTom}
             valgtPeriodeFom={valgtPeriodeFom}

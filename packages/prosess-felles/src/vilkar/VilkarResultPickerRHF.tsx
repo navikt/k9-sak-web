@@ -5,16 +5,18 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
 import { FunctionComponent, ReactNode } from 'react';
 import styles from './vilkarResultPicker.module.css';
+import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
 
 export type VilkarResultPickerFormState = {
   erVilkarOk: boolean;
   avslagCode?: string;
   avslagDato?: string;
+  innvilgelseMerknadCode?: string;
 };
 
 type TransformedValues = {
@@ -31,6 +33,7 @@ interface OwnProps {
   readOnly: boolean;
   erMedlemskapsPanel?: boolean;
   fieldNamePrefix?: string;
+  relevanteInnvilgetUtfall: InnvilgetUtfallType[];
 }
 
 interface StaticFunctions {
@@ -39,6 +42,7 @@ interface StaticFunctions {
     avslagKode: string,
     aksjonspunkter: Aksjonspunkt[],
     status: string,
+    innvilgelseMerknadKode?: string,
   ) => VilkarResultPickerFormState;
 }
 
@@ -55,7 +59,19 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   readOnly,
   erMedlemskapsPanel = false,
   fieldNamePrefix,
+  relevanteInnvilgetUtfall,
 }) => {
+  const opptjeningInnvilgetArsaker = [
+    {
+      kode: '7847A',
+      navn: '§ 8-47 bokstav A',
+    },
+    {
+      kode: '7847B',
+      navn: '§ 8-47 bokstav B',
+    },
+  ];
+
   return (
     <div className={styles.container}>
       <VerticalSpacer sixteenPx />
@@ -91,6 +107,25 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
           ]}
         />
       )}
+      {erVilkarOk !== undefined &&
+        erVilkarOk &&
+        relevanteInnvilgetUtfall &&
+        relevanteInnvilgetUtfall.length > 0 && (
+          <>
+            <VerticalSpacer sixteenPx />
+            <SelectField
+              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
+              label="Vilkårsmerknad"
+              selectValues={relevanteInnvilgetUtfall.map(iu => (
+                <option key={iu.innvilgetType.kode} value={iu.innvilgetType.kode}>
+                  {iu.navn}
+                </option>
+              ))}
+              readOnly={readOnly}
+              validate={[required]}
+            />
+          </>
+        )}
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>
           <VerticalSpacer sixteenPx />
@@ -127,18 +162,20 @@ VilkarResultPickerRHF.buildInitialValues = (
   avslagKode: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
+  innvilgelseMerknadKode?: string
 ): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,
     avslagCode: erVilkarOk === false && avslagKode ? avslagKode : undefined,
+    innvilgelseMerknadKode: erVilkarOk == true && innvilgelseMerknadKode ? innvilgelseMerknadKode : undefined,
   };
 };
 
 VilkarResultPickerRHF.transformValues = (values: VilkarResultPickerFormState) =>
   values.erVilkarOk
-    ? { erVilkarOk: values.erVilkarOk }
+    ? { erVilkarOk: values.erVilkarOk, innvilgelseMerknadKode: values.innvilgelseMerknadCode}
     : {
         erVilkarOk: values.erVilkarOk,
         avslagskode: values.avslagCode,

@@ -1,9 +1,8 @@
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { Vilkarperiode } from '@k9-sak-web/types';
+import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { FunctionComponent } from 'react';
-import { VilkarBegrunnelseFormState } from './FormState';
+import { type FunctionComponent } from 'react';
+import { type VilkarBegrunnelseFormState } from './FormState.ts';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -14,7 +13,7 @@ interface OwnProps {
 
 interface StaticFunctions {
   transformValues: (values: VilkarBegrunnelseFormState) => VilkarBegrunnelseFormState;
-  buildInitialValues: (periode: Vilkarperiode) => VilkarBegrunnelseFormState;
+  buildInitialValues: (periode: VilkårPeriodeDto) => VilkarBegrunnelseFormState;
 }
 
 /**
@@ -33,8 +32,8 @@ const VilkarBegrunnelse: FunctionComponent<OwnProps> & StaticFunctions = ({ isRe
   />
 );
 
-VilkarBegrunnelse.buildInitialValues = (periode: Vilkarperiode) => ({
-  begrunnelse: decodeHtmlEntity(periode && periode.begrunnelse ? periode.begrunnelse : ''),
+VilkarBegrunnelse.buildInitialValues = (periode: VilkårPeriodeDto) => ({
+  begrunnelse: periode && periode.begrunnelse ? periode.begrunnelse : '',
 });
 
 VilkarBegrunnelse.transformValues = (values: VilkarBegrunnelseFormState) => ({

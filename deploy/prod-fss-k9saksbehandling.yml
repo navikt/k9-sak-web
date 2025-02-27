@@ -86,8 +86,6 @@ spec:
       value: 'false'
     - name: OMS_PUNSJSTRIPE
       value: 'true'
-    - name: OMSORGEN_FOR_PERIODISERT
-      value: 'true'
     - name: OVERSTYR_BEREGNING
       value: 'false'
     - name: BRUK_V2_MELDINGER
