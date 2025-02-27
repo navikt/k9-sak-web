@@ -1,6 +1,6 @@
 import {
-  type VilkårDtoVilkarType as generatedVilkarTypeEnumUnion,
-  VilkårDtoVilkarType as enumObj,
+  type VilkårMedPerioderDtoVilkarType as generatedVilkarTypeEnumUnion,
+  VilkårMedPerioderDtoVilkarType as enumObj,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 export type VilkårType = generatedVilkarTypeEnumUnion;
