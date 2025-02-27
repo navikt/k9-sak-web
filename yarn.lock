@@ -3408,7 +3408,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.13.0"
     "@navikt/fnrvalidator": "npm:2.1.5"
     "@navikt/ft-plattform-komponenter": "npm:^7.2.5"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     classnames: "npm:2.5.1"
     date-fns: "npm:4.1.0"
     date-fns-tz: "npm:3.2.0"
@@ -4098,7 +4098,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^8.3.2"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.2"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.2.2"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -4135,7 +4135,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^8.3.2"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.2"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.2.2"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -4177,7 +4177,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^8.3.2"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.2"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.2.2"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -4366,7 +4366,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^7.2.5"
     "@popperjs/core": "npm:2.11.8"
     "@tanstack/react-query": "npm:^5.66.9"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
     dayjs: "npm:1.11.13"
@@ -4501,7 +4501,7 @@ __metadata:
     "@navikt/ft-utils": "npm:^3.1.5"
     "@tanstack/react-query": "npm:^5.66.9"
     "@types/object-hash": "npm:^3.0.6"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     object-hash: "npm:^3.0.0"
     react: "npm:19.0.0"
     react-hook-form: "npm:7.54.2"
@@ -4706,7 +4706,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     node-cache: "npm:5.1.2"
   languageName: unknown
   linkType: soft
@@ -4772,7 +4772,7 @@ __metadata:
     "@sentry/browser": "npm:9.2.0"
     "@sentry/react": "npm:^9.2.0"
     "@tanstack/react-query": "npm:^5.66.9"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -7992,14 +7992,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.9":
-  version: 1.7.9
-  resolution: "axios@npm:1.7.9"
+"axios@npm:1.8.1":
+  version: 1.8.1
+  resolution: "axios@npm:1.8.1"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/b7a5f660ea53ba9c2a745bf5ad77ad8bf4f1338e13ccc3f9f09f810267d6c638c03dac88b55dae8dc98b79c57d2d6835be651d58d2af97c174f43d289a9fd007
+  checksum: 10/5a09a2b39e724e018bc94d0424bb1a6042e71864039fbcc8c8d9dd50f3acd9d01f81b895994c9b46bc82c026afa3dfd1ec343a27bfe4723b70841f3b3dd6edfa
   languageName: node
   linkType: hard
 
@@ -10437,14 +10437,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:10.0.1":
-  version: 10.0.1
-  resolution: "eslint-config-prettier@npm:10.0.1"
+"eslint-config-prettier@npm:10.0.2":
+  version: 10.0.2
+  resolution: "eslint-config-prettier@npm:10.0.2"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: build/bin/cli.js
-  checksum: 10/ba6875df0fc4fd3c7c6e2ec9c2e6a224462f7afc662f4cf849775c598a3571c1be136a9b683b12971653b3dcf3f31472aaede3076524b46ec9a77582630158e5
+  checksum: 10/6d4bbdd5d1810457c63035eef1a085e00bfce34873a5cf461fc696eb635c6aa408184aab6ff6c7e979bb0992485f6dc75e0c993f7193b0d4ceec25f32505c531
   languageName: node
   linkType: hard
 
@@ -13577,13 +13577,13 @@ __metadata:
     "@types/redux-form": "npm:8.3.11"
     "@vitejs/plugin-react": "npm:^4.3.4"
     autoprefixer: "npm:^10.4.20"
-    axios: "npm:1.7.9"
+    axios: "npm:1.8.1"
     axios-mock-adapter: "npm:2.1.0"
     cross-env: "npm:7.0.3"
     date-fns: "npm:4.1.0"
     date-fns-tz: "npm:3.2.0"
     eslint: "npm:9.21.0"
-    eslint-config-prettier: "npm:10.0.1"
+    eslint-config-prettier: "npm:10.0.2"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-react: "npm:7.37.4"
     eslint-plugin-react-hooks: "npm:^5.1.0"
