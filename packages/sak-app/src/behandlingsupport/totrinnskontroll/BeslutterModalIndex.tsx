@@ -1,13 +1,15 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
+import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { BehandlingDtoType } from '@navikt/k9-klage-typescript-client';
 import { getPathToK9Los } from '../../app/paths';
+import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 
 interface OwnProps {
   behandling: BehandlingAppKontekst;
@@ -35,9 +37,12 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
     return <LoadingPanel />;
   }
 
+  const v2Behandling = JSON.parse(JSON.stringify(behandling));
+  konverterKodeverkTilKode(v2Behandling, behandling.type.kode === BehandlingDtoType.TILBAKEKREVING);
+
   return (
     <FatterVedtakTotrinnskontrollModalSakIndex
-      behandling={behandling}
+      behandling={v2Behandling}
       closeEvent={goToSearchPage}
       allAksjonspunktApproved={allAksjonspunktApproved}
       fagsakYtelseType={fagsakYtelseType}

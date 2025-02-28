@@ -1,4 +1,4 @@
-import { OpptjeningAktiviteter } from '@k9-sak-web/types';
+import { type OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
 
 const mapAktivitetTextEndring = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
@@ -49,7 +49,7 @@ const mapAktivitetTextGodkjenning = (aktivitetType: string, arbeidsgiverNavn?: s
 };
 
 interface OwnProps {
-  aktivitet: OpptjeningAktiviteter;
+  aktivitet: OpptjeningAktivitet;
 }
 
 /*
@@ -62,7 +62,7 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
     return (
       <>
         {mapAktivitetTextEndring(
-          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : '',
           aktivitet.arbeidsgiverNavn,
           aktivitet.orgnr,
         )}
@@ -73,7 +73,7 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
     return (
       <>
         {mapAktivitetTextGodkjenning(
-          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : '',
           aktivitet.arbeidsgiverNavn,
           aktivitet.orgnr,
         )}
@@ -83,7 +83,7 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
   return (
     <>
       {mapAktivitetTextUnderkjenning(
-        aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+        aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : '',
         aktivitet.arbeidsgiverNavn,
         aktivitet.orgnr,
       )}
