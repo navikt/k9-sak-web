@@ -23,7 +23,7 @@ export interface SubmitValues {
   };
 }
 
-interface InstitusjonFormProps {
+interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
   readOnly: boolean;
   erRedigering: boolean;
@@ -31,13 +31,7 @@ interface InstitusjonFormProps {
   avbrytRedigering: () => void;
 }
 
-const InstitusjonForm = ({
-  vurdering,
-  readOnly,
-  erRedigering,
-  avbrytRedigering,
-  løsAksjonspunkt,
-}: InstitusjonFormProps) => {
+const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering, løsAksjonspunkt }: OwnProps) => {
   const formMethods = useForm<InstitusjonFormValues>({
     defaultValues: {
       begrunnelse: '',

@@ -6,8 +6,6 @@ import type { InstitusjonVurderingDtoMedPerioder } from '../../types/Institusjon
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
-  readOnly: boolean;
-  rediger: () => void;
 }
 
 const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
@@ -20,6 +18,7 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
       />
       <AssessedBy ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
     </Box>
+
     <Box className="mt-8">
       <LabelledContent
         label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"

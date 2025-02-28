@@ -1,4 +1,3 @@
-import { type JSX } from 'react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import {
   ContentWithTooltip,
@@ -64,12 +63,13 @@ const renderStatusIcon = (resultat: string) => {
   return null;
 };
 
-const PeriodeRad = ({ perioder, resultat }: OwnProps): JSX.Element => (
+const PeriodeRad = ({ perioder, resultat }: OwnProps) => (
   <div className={styles.vurderingsperiodeElement}>
     <div>
       <span className={styles['visuallyHidden']}>Type</span>
       {renderStatusIcon(resultat)}
     </div>
+
     <div className={styles.vurderingsperiodeElementTexts}>
       <div className={styles.vurderingsperiodeElementTextsPeriod}>
         {perioder.map(v => (

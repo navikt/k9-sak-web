@@ -44,7 +44,7 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
       </Box>
 
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (
-        <InstitusjonFerdigVisning vurdering={vurdering} readOnly={readOnly} rediger={() => setRedigering(true)} />
+        <InstitusjonFerdigVisning vurdering={vurdering} />
       ) : (
         <InstitusjonForm
           vurdering={vurdering}
