@@ -110,5 +110,9 @@
   {
     "key": "NY_INNTEKT_EGET_PANEL",
     "value": "${NY_INNTEKT_EGET_PANEL}"
+  },
+  {
+    "key": "BRUK_V2_FAKTA_INSTITUSJON",
+    "value": "${BRUK_V2_FAKTA_INSTITUSJON}"
   }
 ]

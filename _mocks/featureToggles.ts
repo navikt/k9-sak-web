@@ -1,4 +1,5 @@
 // This must be a "factory" function so that the values are not resoved too early in dev server startup, before vite
+
 // has resolved the env variables.
 export const featureTogglesFactory = () => [
   {
@@ -104,5 +105,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'NY_INNTEKT_EGET_PANEL',
     value: process.env.VITE_NY_INNTEKT_EGET_PANEL,
+  },
+  {
+    key: 'BRUK_V2_FAKTA_INSTITUSJON',
+    value: process.env.VITE_BRUK_V2_FAKTA_INSTITUSJON,
   },
 ];
