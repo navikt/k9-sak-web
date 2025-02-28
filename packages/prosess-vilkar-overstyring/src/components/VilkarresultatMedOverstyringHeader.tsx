@@ -9,7 +9,7 @@ import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -66,6 +66,7 @@ const VilkarresultatMedOverstyringHeader = ({
   aksjonspunkter,
   periode,
 }: Partial<VilkarresultatMedOverstyringHeaderProps>) => {
+  const intl = useIntl();
   const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
   const status = periode?.vilkarStatus?.kode;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
@@ -73,6 +74,8 @@ const VilkarresultatMedOverstyringHeader = ({
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
+  const panelTittelKodeExists = panelTittelKode && !!intl.messages[panelTittelKode];
+
   return (
     <>
       <FlexContainer>
@@ -87,7 +90,7 @@ const VilkarresultatMedOverstyringHeader = ({
             </>
           )}
           <Heading size="small" level="2">
-            <FormattedMessage id={panelTittelKode} />
+            {panelTittelKodeExists ? <FormattedMessage id={panelTittelKode} /> : panelTittelKode}
           </Heading>
           {lovReferanse && (
             <Detail className={styles.vilkar}>
