@@ -1,6 +1,6 @@
+import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { Loader } from '@navikt/ds-react';
 import { Box, LinkButton, Margin, PageError, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
-import { httpUtils, Period } from '@fpsak-frontend/utils';
 import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import LinkRel from '../../../constants/LinkRel';
@@ -20,7 +20,7 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, pleietrengendePart } = React.useContext(ContainerContext);
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
@@ -155,6 +155,7 @@ const Innleggelsesperiodeoversikt = ({
           setModalIsOpen={setModalIsOpen}
           onSubmit={lagreInnleggelsesperioder}
           isLoading={isLoading}
+          pleietrengendePart={pleietrengendePart}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,

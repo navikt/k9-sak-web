@@ -16,19 +16,19 @@
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
-    "@hookform/resolvers": "^3.10.0",
+    "@hookform/resolvers": "^4.1.2",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
     "@navikt/ft-form-hooks": "^6.2.2",
     "@navikt/ft-form-validators": "^3.1.5",
     "@navikt/ft-utils": "^3.1.5",
-    "@tanstack/react-query": "^5.66.7",
+    "@tanstack/react-query": "^5.66.9",
     "@types/object-hash": "^3.0.6",
     "axios": "1.7.9",
     "object-hash": "^3.0.0",
     "react": "19.0.0",
     "react-hook-form": "7.54.2",
-    "react-router": "7.1.4",
+    "react-router": "7.2.0",
     "yup": "^1.6.1"
   }
 }

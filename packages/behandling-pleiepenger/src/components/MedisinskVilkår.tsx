@@ -11,6 +11,7 @@ export default ({
   readOnly,
   fagsakYtelseType,
   behandlingType,
+  pleietrengendePart,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -49,6 +50,7 @@ export default ({
         visFortsettknapp,
         fagsakYtelseType,
         behandlingType,
+        pleietrengendePart,
       }}
     />
   );
