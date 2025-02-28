@@ -47,10 +47,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_OMS_PUNSJSTRIPE,
   },
   {
-    key: 'OMSORGEN_FOR_PERIODISERT',
-    value: process.env.VITE_OMSORGEN_FOR_PERIODISERT,
-  },
-  {
     key: 'OVERSTYR_BEREGNING',
     value: process.env.VITE_OVERSTYR_BEREGNING,
   },

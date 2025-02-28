@@ -10,7 +10,7 @@ import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from
 import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import styles from './vilkarresultatMedOverstyringForm.module.css';
+import styles from '../components-periodisert/vilkarresultatMedOverstyringFormPeriodisert.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);

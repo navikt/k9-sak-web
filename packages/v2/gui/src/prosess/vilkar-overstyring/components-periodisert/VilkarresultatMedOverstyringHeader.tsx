@@ -5,7 +5,7 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Button, Detail, Heading, HStack, Label, VStack } from '@navikt/ds-react';
 import { type SetStateAction } from 'react';
-import styles from './vilkarresultatMedOverstyringForm.module.css';
+import styles from '../components-periodisert/vilkarresultatMedOverstyringFormPeriodisert.module.css';
 
 const opptjeningMidlertidigInaktivKoder = {
   TYPE_A: '7847A',

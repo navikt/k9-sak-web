@@ -2377,6 +2377,11 @@ export const kodeverkK9Sak = {
       navn: 'oppfylt jf § 8-47 bokstav B',
     },
     {
+      kode: 'OPPFYLT_9_2',
+      kodeverk: 'HISTORIKK_ENDRET_FELT_VERDI_TYPE',
+      navn: 'oppfylt jf § 9-2',
+    },
+    {
       kode: 'OPPFYLT_8_47_A',
       kodeverk: 'HISTORIKK_ENDRET_FELT_VERDI_TYPE',
       navn: 'oppfylt jf § 8-47 bokstav A',
