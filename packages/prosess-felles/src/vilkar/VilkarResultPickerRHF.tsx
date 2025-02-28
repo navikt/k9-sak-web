@@ -5,7 +5,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
 import { FunctionComponent, ReactNode } from 'react';
@@ -162,7 +162,7 @@ VilkarResultPickerRHF.buildInitialValues = (
   avslagKode: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
-  innvilgelseMerknadKode?: string
+  innvilgelseMerknadKode?: string,
 ): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
@@ -175,7 +175,7 @@ VilkarResultPickerRHF.buildInitialValues = (
 
 VilkarResultPickerRHF.transformValues = (values: VilkarResultPickerFormState) =>
   values.erVilkarOk
-    ? { erVilkarOk: values.erVilkarOk, innvilgelseMerknadKode: values.innvilgelseMerknadCode}
+    ? { erVilkarOk: values.erVilkarOk, innvilgelseMerknadKode: values.innvilgelseMerknadCode }
     : {
         erVilkarOk: values.erVilkarOk,
         avslagskode: values.avslagCode,
