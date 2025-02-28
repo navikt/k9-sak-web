@@ -59,6 +59,7 @@ interface NyBehandlingModalProps {
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
+  sisteDagISøknadsperiode?: Date | null;
 }
 
 /**
@@ -85,6 +86,7 @@ export const NyBehandlingModal = ({
   revurderingArsaker,
   tilbakekrevingRevurderingArsaker,
   behandlingType,
+  sisteDagISøknadsperiode,
 }: NyBehandlingModalProps) => {
   useEffect(() => {
     if (erTilbakekrevingAktivert) {
@@ -199,13 +201,13 @@ export const NyBehandlingModal = ({
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
                 <Datepicker
                   name="fom"
-                  disabledDays={[{ before: undefined, after: new Date() }]}
+                  disabledDays={[{ before: undefined, after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Fra og med"
                   validate={[required]}
                 />
                 <Datepicker
                   name="tom"
-                  disabledDays={[{ before: new Date(fom), after: new Date() }]}
+                  disabledDays={[{ before: new Date(fom), after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Til og med"
                   validate={[required]}
                 />

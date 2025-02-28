@@ -1,7 +1,12 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { useCallback, useContext } from 'react';
+import { K9SakClientContext } from '../../../app/K9SakClientContext';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
+import VilkårBackendClient from './VilkårBackendClient';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
   BehandlingTypeK9Klage.TILBAKEKREVING,
@@ -52,6 +57,21 @@ const MenyNyBehandlingIndexV2 = ({
   aktorId,
   gjeldendeVedtakBehandlendeEnhetId,
 }: OwnProps) => {
+  const k9SakClient = useContext(K9SakClientContext);
+  const vilkårBackendClient = new VilkårBackendClient(k9SakClient);
+  const { data: vilkår } = useQuery({
+    queryKey: ['vilkar', behandlingUuid],
+    queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : undefined),
+    enabled: !!behandlingUuid,
+  });
+
+  const sisteDagISøknadsperiode = vilkår
+    ?.find(v => v.vilkarType === VilkårMedPerioderDtoVilkarType.SØKNADSFRIST)
+    ?.perioder?.reduce<Date | null>((senesteDatoFunnet, current) => {
+      const tomDato = dayjs(current.periode.tom);
+      return !senesteDatoFunnet || tomDato.isAfter(senesteDatoFunnet) ? tomDato.toDate() : senesteDatoFunnet;
+    }, null);
+
   const submit = useCallback(
     (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
@@ -89,6 +109,7 @@ const MenyNyBehandlingIndexV2 = ({
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
       aktorId={aktorId}
       gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
+      sisteDagISøknadsperiode={sisteDagISøknadsperiode}
     />
   );
 };
