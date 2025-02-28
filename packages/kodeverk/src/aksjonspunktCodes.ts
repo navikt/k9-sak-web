@@ -101,50 +101,8 @@ const aksjonspunktCodes = {
   VURDER_OVERLAPPENDE_SØSKENSAK_KODE: '9292',
 };
 
-const klageAksjonspunkter = [
-  aksjonspunktCodes.BEHANDLE_KLAGE_NK,
-  aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
-  aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
-  aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
-];
-
-const uttakAksjonspunkter = [
-  aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER,
-  aksjonspunktCodes.TILKNYTTET_STORTINGET,
-  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD,
-  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-  aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
-  aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
-];
-
-const beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt = [
-  aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-];
-
-const beregningAksjonspunkter = [
-  aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
-  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-  aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-];
-
-const aksjonspunktIsOfType =
-  (validAksjonspunktCodes: string[]) =>
-  (aksjonspunktCode: string): boolean =>
-    validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
-
-export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
-export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(
-  beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,
-);
-export const isUttakAksjonspunkt = aksjonspunktIsOfType(uttakAksjonspunkter);
-export const isBeregningAksjonspunkt = aksjonspunktIsOfType(beregningAksjonspunkter);
 
 export default aksjonspunktCodes;

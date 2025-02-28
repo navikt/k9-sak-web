@@ -106,5 +106,9 @@
   {
     "key": "BRUK_V2_FAKTA_INSTITUSJON",
     "value": "${BRUK_V2_FAKTA_INSTITUSJON}"
+  },
+  {
+    "key": "BRUK_V2_VILKAR_OVERSTYRING",
+    "value": "${BRUK_V2_VILKAR_OVERSTYRING}"
   }
 ]

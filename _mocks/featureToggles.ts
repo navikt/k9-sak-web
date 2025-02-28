@@ -102,4 +102,8 @@ export const featureTogglesFactory = () => [
     key: 'BRUK_V2_FAKTA_INSTITUSJON',
     value: process.env.VITE_BRUK_V2_FAKTA_INSTITUSJON,
   },
+  {
+    key: 'BRUK_V2_VILKAR_OVERSTYRING',
+    value: process.env.VITE_BRUK_V2_VILKAR_OVERSTYRING,
+  },
 ];
