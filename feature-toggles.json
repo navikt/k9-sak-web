@@ -76,10 +76,6 @@
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
   },
   {
-    "key": "BRUK_V2_SAK_DOKUMENTER",
-    "value": "${BRUK_V2_SAK_DOKUMENTER}"
-  },
-  {
     "key": "OPPTJENING_READ_ONLY_PERIODER",
     "value": "${OPPTJENING_READ_ONLY_PERIODER}"
   },
@@ -106,5 +102,9 @@
   {
     "key": "NY_INNTEKT_EGET_PANEL",
     "value": "${NY_INNTEKT_EGET_PANEL}"
+  },
+  {
+    "key": "BRUK_V2_FAKTA_INSTITUSJON",
+    "value": "${BRUK_V2_FAKTA_INSTITUSJON}"
   }
 ]

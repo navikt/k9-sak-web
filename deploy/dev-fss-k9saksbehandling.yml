@@ -103,8 +103,6 @@ spec:
       value: "true"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"
-    - name: BRUK_V2_SAK_DOKUMENTER
-      value: "true"
     - name: OPPTJENING_READ_ONLY_PERIODER
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
@@ -118,4 +116,6 @@ spec:
     - name: VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK
       value: "true"
     - name: NY_INNTEKT_EGET_PANEL
+      value: "true"
+    - name: BRUK_V2_FAKTA_INSTITUSJON
       value: "true"

@@ -3199,21 +3199,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/sak-dokumenter@npm:1.0.0, @fpsak-frontend/sak-dokumenter@workspace:packages/sak-dokumenter":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-dokumenter@workspace:packages/sak-dokumenter"
-  dependencies:
-    "@fpsak-frontend/assets": "npm:1.0.0"
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:^5.66.9"
-    react: "npm:19.0.0"
-    react-intl: "npm:7.1.6"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/sak-fagsak-profil@npm:1.0.0, @fpsak-frontend/sak-fagsak-profil@workspace:packages/sak-fagsak-profil":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/sak-fagsak-profil@workspace:packages/sak-fagsak-profil"
@@ -4713,7 +4698,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/sak-dokumenter": "npm:1.0.0"
     "@fpsak-frontend/sak-fagsak-profil": "npm:1.0.0"
     "@fpsak-frontend/sak-historikk": "npm:1.0.0"
     "@fpsak-frontend/sak-meny": "npm:1.0.0"
