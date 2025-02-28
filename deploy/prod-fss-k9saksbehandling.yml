@@ -116,3 +116,5 @@ spec:
       value: "false"
     - name: BRUK_V2_FAKTA_INSTITUSJON
       value: "false"
+    - name: BRUK_V2_VILKAR_OVERSTYRING
+      value: "false"
