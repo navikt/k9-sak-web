@@ -237,10 +237,10 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
 
 VilkarResultPickerPeriodisertRHF.buildInitialValues = (
   avslagKode: string,
-  innvilgelseMerknadKode?: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
+  innvilgelseMerknadKode?: string,
 ): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   let erVilkarOk;
