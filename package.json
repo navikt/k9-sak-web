@@ -125,8 +125,7 @@
   "resolutions": {
     "postcss": "8.5.3",
     "parse-url": "8.1.0",
-    "@types/react": "19.0.3",
-    "@navikt/k9-sak-typescript-client": "portal:/Users/Espen.Velsvik/git/k9-sak/web/target/ts-client"
+    "@types/react": "19.0.3"
   },
   "msw": {
     "workerDirectory": "public"

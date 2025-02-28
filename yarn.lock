@@ -5240,11 +5240,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@portal:/Users/Espen.Velsvik/git/k9-sak/web/target/ts-client::locator=k9-sak-web%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@navikt/k9-sak-typescript-client@portal:/Users/Espen.Velsvik/git/k9-sak/web/target/ts-client::locator=k9-sak-web%40workspace%3A."
+"@navikt/k9-sak-typescript-client@npm:2.0.20250226152706":
+  version: 2.0.20250226152706
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250226152706::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250226152706%2F6c4674074ccf4db732b8a0cf503f0f4495429123"
+  checksum: 10/7024abc7883d1991e5fbd2f0d5b27c695e98fb57b1042a4044e80cb8269a68878fc6a7d8bb402fc2d0785a0564e05d3d40d4051479756970b55309bf2e3def86
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
