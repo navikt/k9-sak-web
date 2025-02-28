@@ -1,7 +1,7 @@
-import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { Box } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-import { type FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { type VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
@@ -21,6 +21,7 @@ interface VilkarresultatMedBegrunnelseProps {
   valgtPeriodeTom: string;
   opprettetAv?: string;
   vilkarType: string;
+  relevanteInnvilgetMerknader: InnvilgetMerknad[];
 }
 
 interface StaticFunctions {
@@ -29,7 +30,8 @@ interface StaticFunctions {
     aksjonspunkter: AksjonspunktDto[],
     status: string,
     periode: VilkårPeriodeDto,
-    avslagKode?: string,
+    avslagKode1: string | undefined,
+    innvilgelseMerknadKode?: string,
   ) => VilkarresultatMedBegrunnelseState;
 }
 
@@ -54,6 +56,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   valgtPeriodeTom,
   opprettetAv,
   vilkarType,
+  relevanteInnvilgetMerknader,
 }: VilkarresultatMedBegrunnelseProps) => {
   return (
     <>
@@ -82,6 +85,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
         valgtPeriodeTom={valgtPeriodeTom}
         periodeVilkarStatus={periodeVilkarStatus}
         vilkarType={vilkarType}
+        relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
       />
     </>
   );
@@ -92,8 +96,15 @@ VilkarresultatMedBegrunnelse.buildInitialValues = (
   status: string,
   periode: VilkårPeriodeDto,
   avslagKode?: string,
+  innvilgelseMerknadKode?: string,
 ) => ({
-  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(aksjonspunkter, status, periode, avslagKode),
+  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(
+    aksjonspunkter,
+    status,
+    periode,
+    avslagKode,
+    innvilgelseMerknadKode,
+  ),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 

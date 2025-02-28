@@ -12,6 +12,7 @@ import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType.ts';
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
@@ -136,8 +137,10 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           erMedlemskapsPanel={erMedlemskapsPanel}
           visPeriodisering={visPeriodisering}
           avslagKode={activePeriode?.avslagKode ?? ''}
+          innvilgelseMerknadKode={activePeriode.vilkarStatus === vilkarUtfallType.OPPFYLT ? activePeriode?.merknad : undefined}
           periode={activePeriode}
           vilkarType={activeVilkår.vilkarType}
+          relevanteInnvilgetMerknader={activeVilkår.relevanteInnvilgetMerknader}
         />
       </div>
     </div>

@@ -192,7 +192,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 <VerticalSpacer sixteenPx />
                 <SelectField
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
-                  label="Vilkårsmerknad"
+                  label="Hjemmel for innvilgelse"
                   selectValues={relevanteInnvilgetMerknader.map(iu => (
                     <option key={iu.merknad.kode} value={iu.merknad.kode}>
                       {iu.navn}
