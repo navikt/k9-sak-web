@@ -61,17 +61,6 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   fieldNamePrefix,
   relevanteInnvilgetMerknader,
 }) => {
-  const opptjeningInnvilgetArsaker = [
-    {
-      kode: '7847A',
-      navn: '§ 8-47 bokstav A',
-    },
-    {
-      kode: '7847B',
-      navn: '§ 8-47 bokstav B',
-    },
-  ];
-
   return (
     <div className={styles.container}>
       <VerticalSpacer sixteenPx />
