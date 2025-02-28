@@ -33,10 +33,10 @@ interface StaticFunctions {
   transformValues: (values: VilkarresultatMedBegrunnelseState) => { begrunnelse: string };
   buildInitialValues: (
     avslagKode: string,
-    innvilgelseMerknadKode?: string,
     aksjonspunkter: Aksjonspunkt[],
     status: string,
     periode: Vilkarperiode,
+    innvilgelseMerknadKode?: string,
   ) => VilkarresultatMedBegrunnelseState;
 }
 
@@ -121,12 +121,12 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
 
 VilkarresultatMedBegrunnelse.buildInitialValues = (
   avslagKode: string,
-  innvilgelseMerknadKode?: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
+  innvilgelseMerknadKode?: string,
 ) => ({
-  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, innvilgelseMerknadKode, aksjonspunkter, status, periode),
+  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, aksjonspunkter, status, periode, innvilgelseMerknadKode),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 

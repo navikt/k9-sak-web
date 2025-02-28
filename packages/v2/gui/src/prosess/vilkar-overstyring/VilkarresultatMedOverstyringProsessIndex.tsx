@@ -10,7 +10,7 @@ import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
-import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader.tsx';
+import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {

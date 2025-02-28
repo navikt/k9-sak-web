@@ -52,10 +52,10 @@ interface StaticFunctions {
   transformValues: (values: VilkarResultPickerFormState, periodeFom?: string, periodeTom?: string) => TransformedValues;
   buildInitialValues: (
     avslagKode: string,
-    innvilgelseMerknadKode?: string,
     aksjonspunkter: Aksjonspunkt[],
     status: string,
     periode: Vilkarperiode,
+    innvilgelseMerknadKode?: string,
   ) => VilkarResultPickerFormState;
 }
 

@@ -23,20 +23,12 @@ import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
-import { CustomVilkarText } from '../components/VilkarresultatMedOverstyringForm';
 import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
 
 export interface CustomVilkarText {
   id: string;
   values?: any;
 }
-
-export const vilkarUtfallPeriodisert = {
-  OPPFYLT: 'OPPFYLT',
-  IKKE_OPPFYLT: 'IKKE_OPPFYLT',
-  DELVIS_OPPFYLT: 'DELVIS_OPPFYLT',
-  DELVIS_IKKE_OPPFYLT: 'DELVIS_IKKE_OPPFYLT',
-};
 
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
@@ -100,10 +92,10 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(
         avslagKode,
-        innvilgelseMerknadKode,
         aksjonspunkter,
         status,
         periode,
+        innvilgelseMerknadKode,
       ),
     };
   };

@@ -2,7 +2,7 @@ import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
-import { type VilkarBegrunnelseFormState } from './FormState.ts';
+import { type VilkarBegrunnelseFormState } from './FormState';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

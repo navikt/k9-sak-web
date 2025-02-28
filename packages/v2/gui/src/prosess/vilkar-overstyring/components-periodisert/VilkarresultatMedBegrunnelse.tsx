@@ -2,7 +2,7 @@ import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9s
 import { Box } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type FunctionComponent } from 'react';
-import VilkarBegrunnelse from './VilkarBegrunnelse.tsx';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { type VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
 
