@@ -113,7 +113,7 @@ const BehandlingKlageIndex = ({
     requestKlageApi.setRequestPendingHandler(setRequestPendingMessage);
     requestKlageApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();

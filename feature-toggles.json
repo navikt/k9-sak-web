@@ -76,10 +76,6 @@
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
   },
   {
-    "key": "BRUK_V2_SAK_DOKUMENTER",
-    "value": "${BRUK_V2_SAK_DOKUMENTER}"
-  },
-  {
     "key": "OPPTJENING_READ_ONLY_PERIODER",
     "value": "${OPPTJENING_READ_ONLY_PERIODER}"
   },
@@ -96,10 +92,6 @@
     "value": "${BRUK_V2_BEHANDLING_VELGER}"
   },
   {
-    "key": "BRUK_V2_SAK_SOK",
-    "value": "${BRUK_V2_SAK_SOK}"
-  },
-  {
     "key": "HISTORIKK_V2_VIS",
     "value": "${HISTORIKK_V2_VIS}"
   },
@@ -110,5 +102,13 @@
   {
     "key": "NY_INNTEKT_EGET_PANEL",
     "value": "${NY_INNTEKT_EGET_PANEL}"
+  },
+  {
+    "key": "BRUK_V2_FAKTA_INSTITUSJON",
+    "value": "${BRUK_V2_FAKTA_INSTITUSJON}"
+  },
+  {
+    "key": "BRUK_V2_VILKAR_OVERSTYRING",
+    "value": "${BRUK_V2_VILKAR_OVERSTYRING}"
   }
 ]

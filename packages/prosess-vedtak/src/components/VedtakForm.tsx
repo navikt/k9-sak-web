@@ -438,9 +438,9 @@ export const VedtakForm: React.FC<Props> = ({
       validationSchema={vedtakformPartialValidation}
       validateOnMount={false}
       validateOnChange={false}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         if ((harOverlappendeYtelser && harVurdertOverlappendeYtelse) || !harOverlappendeYtelser) {
-          submit(values, actions);
+          await submit(values, actions);
         } else {
           actions.setSubmitting(false);
         }

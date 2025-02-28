@@ -222,10 +222,10 @@ const BehandlingSupportIndex = ({
     : defaultSupportPanel;
 
   const changeRouteCallback = useCallback(
-    index => {
+    async index => {
       const supportPanel = synligeSupportPaneler[index];
       const getSupportPanelLocation = getSupportPanelLocationCreator(location);
-      navigate(getSupportPanelLocation(supportPanel));
+      await navigate(getSupportPanelLocation(supportPanel));
     },
     [location, synligeSupportPaneler],
   );
@@ -256,8 +256,8 @@ const BehandlingSupportIndex = ({
                   })}
                 </Tooltip>
               }
-              onClick={() => {
-                changeRouteCallback(index);
+              onClick={async () => {
+                await changeRouteCallback(index);
               }}
               className={styles.tabButton}
             />

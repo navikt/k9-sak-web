@@ -24,8 +24,8 @@ interface DatepickerFieldProps {
     | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
   )[];
   disabledDays?: {
-    before: Date;
-    after: Date;
+    before: Date | undefined;
+    after: Date | undefined;
   };
   dataId?: string;
   hideLabel?: boolean;

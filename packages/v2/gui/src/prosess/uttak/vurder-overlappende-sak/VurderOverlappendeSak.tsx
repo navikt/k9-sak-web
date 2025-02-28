@@ -155,10 +155,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         },
       ],
     };
-    api.bekreftAksjonspunkt(requestBody).then(() => {
-      setLoading(false);
-      oppdaterBehandling();
-    });
+    await api.bekreftAksjonspunkt(requestBody);
+    setLoading(false);
+    oppdaterBehandling();
   };
 
   if (overlappendeIsError) {
@@ -210,18 +209,20 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                           <List.Item>
                             <BodyShort as="span">
                               {formatPeriod(fom || '', tom || '')} (
-                              {saksnummer.map((sakNr, index) => (
-                                <>
-                                  {index > 0 && ', '}
-                                  <a
-                                    key={`${fom}-${tom}-${sakNr}-link`}
-                                    href={`/k9/web/fagsak/${sakNr}`}
-                                    target="_blank"
-                                  >
-                                    {sakNr}
-                                  </a>
-                                </>
-                              ))}
+                              {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
+                              {saksnummer.length > 0 &&
+                                saksnummer.map((sakNr, index) => (
+                                  <>
+                                    {index > 0 && ', '}
+                                    <a
+                                      key={`${fom}-${tom}-${sakNr}-link`}
+                                      href={`/k9/web/fagsak/${sakNr}`}
+                                      target="_blank"
+                                    >
+                                      {sakNr}
+                                    </a>
+                                  </>
+                                ))}
                               )
                             </BodyShort>
                           </List.Item>

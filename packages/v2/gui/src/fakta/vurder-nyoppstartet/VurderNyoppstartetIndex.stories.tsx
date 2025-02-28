@@ -28,14 +28,14 @@ export const Default: Story = {
     },
   },
   play: async ({ canvas, args, step }) => {
-    step('Skal sende inn nyoppstartet dato', async () => {
+    await step('Skal sende inn nyoppstartet dato', async () => {
       await waitFor(() => expect(canvas.getByText('Ja')).toBeInTheDocument());
       await userEvent.click(canvas.getByLabelText('Ja'));
       await userEvent.type(canvas.getByLabelText('Dato for nyoppstartet'), '2023-01-01');
       await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
       await userEvent.click(canvas.getByText('Bekreft'));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
-      expect(args.submitCallback).toHaveBeenCalledWith([
+      await expect(args.submitCallback).toHaveBeenCalledWith([
         {
           begrunnelse: 'Dette er en begrunnelse',
           kode: '9016',

@@ -168,7 +168,7 @@ const BehandlingPicker = ({
     }
     if (!behandlingId) {
       if (åpenBehandlingId) {
-        navigate(getBehandlingLocation(åpenBehandlingId));
+        void navigate(getBehandlingLocation(åpenBehandlingId));
       }
     }
   }, [behandlingId, åpenBehandlingId, firstRender.current]);

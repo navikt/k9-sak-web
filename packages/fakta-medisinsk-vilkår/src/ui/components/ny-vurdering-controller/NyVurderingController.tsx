@@ -108,22 +108,20 @@ const NyVurderingController = ({
       ...otherFields,
     }));
 
-  const beOmBekreftelseFørLagringHvisNødvendig = (nyVurderingsversjon: Vurderingsversjon) => {
+  const beOmBekreftelseFørLagringHvisNødvendig = async (nyVurderingsversjon: Vurderingsversjon) => {
     dispatch({ type: ActionType.SJEKK_FOR_EKSISTERENDE_VURDERINGER_PÅBEGYNT });
-    sjekkForEksisterendeVurderinger(nyVurderingsversjon).then(
-      perioderMedEndringerResponse => {
-        const perioderMedEndringer = initializePerioderMedEndringer(perioderMedEndringerResponse);
-        const harOverlappendePerioder = perioderMedEndringer?.length > 0;
-        if (harOverlappendePerioder) {
-          advarOmEksisterendeVurderinger(nyVurderingsversjon, perioderMedEndringer);
-        } else {
-          lagreVurdering(nyVurderingsversjon);
-        }
-      },
-      () => {
-        dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
-      },
-    );
+    try {
+      const perioderMedEndringerResponse = await sjekkForEksisterendeVurderinger(nyVurderingsversjon);
+      const perioderMedEndringer = initializePerioderMedEndringer(perioderMedEndringerResponse);
+      const harOverlappendePerioder = perioderMedEndringer?.length > 0;
+      if (harOverlappendePerioder) {
+        advarOmEksisterendeVurderinger(nyVurderingsversjon, perioderMedEndringer);
+      } else {
+        await lagreVurdering(nyVurderingsversjon);
+      }
+    } catch {
+      dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+    }
   };
 
   function hentDataTilVurdering(): Promise<Dokument[]> {
@@ -168,10 +166,9 @@ const NyVurderingController = ({
       <OverlappendePeriodeModal
         perioderMedEndring={perioderMedEndring || []}
         onCancel={() => dispatch({ type: ActionType.LAGRING_AV_VURDERING_AVBRUTT })}
-        onConfirm={() => {
-          lagreVurdering(vurderingsversjonTilLagringFraModal).then(() => {
-            dispatch({ type: ActionType.VURDERING_LAGRET, perioderMedEndring });
-          });
+        onConfirm={async () => {
+          await lagreVurdering(vurderingsversjonTilLagringFraModal ?? {});
+          dispatch({ type: ActionType.VURDERING_LAGRET, perioderMedEndring });
         }}
         isOpen={overlappendePeriodeModalOpen}
         isSubmitting={lagringAvVurderingPågår}

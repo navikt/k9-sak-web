@@ -95,13 +95,13 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
     await step('skal vise overskrift og lovparagraf', async () => {
       await userEvent.click(canvas.getByText('26.02.2020 - 27.02.2020'));
       await userEvent.click(canvas.getByRole('button', { name: 'Overstyring av søknadsfristvilkåret' }));
-      expect(
+      await expect(
         canvas.getAllByText(
           (_, element) => element?.textContent === 'SØKNAD innsendt 01.06.2020 (journalpostId: 23456)',
         )[0],
       ).toBeInTheDocument();
-      expect(canvas.getAllByText('Vilkåret er oppfylt for hele perioden').length).toBe(2);
-      expect(canvas.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
+      await expect(canvas.getAllByText('Vilkåret er oppfylt for hele perioden').length).toBe(2);
+      await expect(canvas.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
     });
   },
   render: props => {
@@ -147,10 +147,10 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
   },
 
   play: async ({ canvas, step, args }) => {
-    await step('skal vise overskrift og lovparagraf', () => {
-      expect(canvas.getByRole('heading', { name: 'Søknadsfrist' })).toBeInTheDocument();
-      expect(canvas.getByText('§')).toBeInTheDocument();
-      expect(canvas.getByText('22-13')).toBeInTheDocument();
+    await step('skal vise overskrift og lovparagraf', async () => {
+      await expect(canvas.getByRole('heading', { name: 'Søknadsfrist' })).toBeInTheDocument();
+      await expect(canvas.getByText('§')).toBeInTheDocument();
+      await expect(canvas.getByText('22-13')).toBeInTheDocument();
     });
 
     await step('skal formatere data ved innsending ved oppfylt vilkår', async () => {
@@ -163,7 +163,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
       await waitFor(() => expect(canvas.getByText('Bekreft og gå videre')).toBeEnabled());
       await userEvent.click(canvas.getByText('Bekreft og gå videre'));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
-      expect(args.submitCallback).toHaveBeenNthCalledWith(1, [
+      await expect(args.submitCallback).toHaveBeenNthCalledWith(1, [
         {
           avklarteKrav: [
             {
@@ -192,7 +192,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
       await waitFor(() => expect(canvas.getByText('Bekreft og gå videre')).toBeEnabled());
       await userEvent.click(canvas.getByText('Bekreft og gå videre'));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(2));
-      expect(args.submitCallback).toHaveBeenNthCalledWith(2, [
+      await expect(args.submitCallback).toHaveBeenNthCalledWith(2, [
         {
           avklarteKrav: [
             {
@@ -220,7 +220,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
       await waitFor(() => expect(canvas.getByText('Bekreft og gå videre')).toBeEnabled());
       await userEvent.click(canvas.getByText('Bekreft og gå videre'));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(3));
-      expect(args.submitCallback).toHaveBeenNthCalledWith(3, [
+      await expect(args.submitCallback).toHaveBeenNthCalledWith(3, [
         {
           avklarteKrav: [
             {

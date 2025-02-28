@@ -1,5 +1,4 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
@@ -9,13 +8,11 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Edit } from '@navikt/ds-icons';
-import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
-import FritekstFeilmeldinger from './FritekstFeilmeldinger';
-import styles from './RedigerFritekstbrev.module.css';
 import {
   lagLagreHtmlDokumentdataRequest,
   seksjonSomKanRedigeres,
@@ -134,30 +131,25 @@ const FritekstRedigering = ({
         }),
       );
     },
-    [
-      handleSubmit,
-      lagLagreHtmlDokumentdataRequest,
-      dokumentdata,
-      redigerbarDokumentmal,
-      originalHtml,
-      inkluderKalender,
-      overstyrtMottaker,
-    ],
+    [handleSubmit, dokumentdata, redigerbarDokumentmal, originalHtml, inkluderKalender, overstyrtMottaker],
   );
 
   useEffect(() => {
     if (!firstRender.current && overstyrtMottaker && !henterMal) {
-      hentFritekstbrevMal();
+      void hentFritekstbrevMal();
     }
   }, [firstRender, overstyrtMottaker]);
 
   useEffect(() => {
-    if (!firstRender.current && redigerbartInnholdKlart) {
-      handleLagre(innholdTilRedigering);
-    } else {
-      hentFritekstbrevMal();
-      firstRender.current = false;
-    }
+    const asyncEffect = async () => {
+      if (!firstRender.current && redigerbartInnholdKlart) {
+        await handleLagre(innholdTilRedigering);
+      } else {
+        await hentFritekstbrevMal();
+        firstRender.current = false;
+      }
+    };
+    void asyncEffect();
   }, [firstRender, inkluderKalender]);
 
   useEffect(() => {
@@ -183,38 +175,23 @@ const FritekstRedigering = ({
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
-        <Modal.Header>
-          <Heading level="3" size="small">
-            <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
-          </Heading>
-          <VerticalSpacer sixteenPx />
-          <Alert variant="info" size="small">
-            <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
-            <ÅpneSakINyttVinduKnapp />
-          </Alert>
-          <FritekstFeilmeldinger />
-        </Modal.Header>
-        <Modal.Body>
-          <div className={styles.modalInnehold}>
-            {visRedigering && (
-              <FritekstEditor
-                handleSubmit={handleLagre}
-                lukkEditor={lukkEditor}
-                handleForhåndsvis={handleForhåndsvis}
-                setFieldValue={setFieldValue}
-                kanInkludereKalender={kanInkludereKalender}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-                readOnly={readOnly}
-                redigerbartInnholdKlart={redigerbartInnholdKlart}
-                redigerbartInnhold={redigerbartInnhold}
-                originalHtml={originalHtml}
-                brevStiler={brevStiler}
-                prefiksInnhold={prefiksInnhold}
-                suffiksInnhold={suffiksInnhold}
-              />
-            )}
-          </div>
-        </Modal.Body>
+        {visRedigering && (
+          <FritekstEditor
+            handleSubmit={handleLagre}
+            lukkEditor={lukkEditor}
+            handleForhåndsvis={handleForhåndsvis}
+            setFieldValue={setFieldValue}
+            kanInkludereKalender={kanInkludereKalender}
+            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+            readOnly={readOnly}
+            redigerbartInnholdKlart={redigerbartInnholdKlart}
+            redigerbartInnhold={redigerbartInnhold}
+            originalHtml={originalHtml}
+            brevStiler={brevStiler}
+            prefiksInnhold={prefiksInnhold}
+            suffiksInnhold={suffiksInnhold}
+          />
+        )}
       </Modal>
     </>
   );

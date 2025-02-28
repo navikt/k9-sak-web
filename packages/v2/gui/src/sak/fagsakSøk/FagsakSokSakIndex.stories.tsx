@@ -56,10 +56,10 @@ export const Default: Story = {
     searchStarted: false,
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
-    expect(canvas.getByRole('button', { name: 'Søk' })).toBeInTheDocument();
-    expect(canvas.getByText('Pleiepenger sykt barn')).toBeInTheDocument();
-    expect(canvas.getByText('Omsorgspenger')).toBeInTheDocument();
+    await expect(canvas.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Søk' })).toBeInTheDocument();
+    await expect(canvas.getByText('Pleiepenger sykt barn')).toBeInTheDocument();
+    await expect(canvas.getByText('Omsorgspenger')).toBeInTheDocument();
   },
 };
 
@@ -72,7 +72,7 @@ export const SøkUtenTreff: Story = {
     searchStarted: true,
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText('Søket ga ingen treff')).toBeInTheDocument();
+    await expect(canvas.getByText('Søket ga ingen treff')).toBeInTheDocument();
   },
 };
 
@@ -88,6 +88,6 @@ export const SøkDerEnIkkeHarAdgang: Story = {
     },
   },
   play: async ({ canvas }) => {
-    expect(canvas.getByText('Har ikke adgang')).toBeInTheDocument();
+    await expect(canvas.getByText('Har ikke adgang')).toBeInTheDocument();
   },
 };

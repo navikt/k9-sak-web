@@ -77,7 +77,7 @@ const lagVilkår = (perioder: any[]): Vilkår => ({
 });
 
 const meta = {
-  title: 'gui/fakta/ny-inntekt',
+  title: 'fakta/fakta-ny-inntekt',
   component: NyInntektFaktaIndex,
   args: {
     submitCallback: asyncAction('Løs aksjonspunkt'),
@@ -360,18 +360,18 @@ export const TilkommetAktivitet: Story = {
   },
   play: async ({ args, canvas, step }) => {
     await step('skal kunne løse aksjonspunkt for tilkommet aktivitet', async () => {
-      expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
-      expect(
+      await expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
+      await expect(
         await canvas.findByText(
           'Har søker inntekt fra Arbeidsgiveren (999999997)...123 som reduserer søkers inntektstap?',
         ),
       ).toBeInTheDocument();
-      expect(canvas.getByText('Årsinntekt')).toBeInTheDocument();
+      await expect(canvas.getByText('Årsinntekt')).toBeInTheDocument();
       await userEvent.click(canvas.getByLabelText('Ja'));
       await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'En saklig begrunnelse');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
-      expect(args.submitCallback).toHaveBeenCalledWith({
+      await expect(args.submitCallback).toHaveBeenCalledWith({
         begrunnelse: 'En saklig begrunnelse',
         grunnlag: [
           {
@@ -419,25 +419,25 @@ export const TilkommetAktivitetMedForlengelse: Story = {
   },
   play: async ({ args, canvas, step }) => {
     await step('skal kunne løse aksjonspunkt for tilkommet aktivitet med forlengelse', async () => {
-      expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
+      await expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
 
-      expect(await canvas.findByText('09.11.2022 - 15.11.2022')).toBeInTheDocument();
+      await expect(await canvas.findByText('09.11.2022 - 15.11.2022')).toBeInTheDocument();
       await userEvent.click(canvas.getByText('09.11.2022 - 15.11.2022'));
 
-      expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
-      expect(canvas.getAllByText('450 000 kr')).toHaveLength(2);
+      await expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
+      await expect(canvas.getAllByText('450 000 kr')).toHaveLength(2);
 
-      expect(canvas.getByText('Reduserer inntektstap')).toBeInTheDocument();
+      await expect(canvas.getByText('Reduserer inntektstap')).toBeInTheDocument();
 
-      expect(canvas.getAllByText('Arbeidsgiveren (999999997)...123')).toHaveLength(2);
-      expect(canvas.getAllByText('Nei')).toHaveLength(3);
+      await expect(canvas.getAllByText('Arbeidsgiveren (999999997)...123')).toHaveLength(2);
+      await expect(canvas.getAllByText('Nei')).toHaveLength(3);
 
-      expect(canvas.getAllByText('Nav Troms og Finnmark (974652293)...456')).toHaveLength(2);
-      expect(canvas.getAllByText('Ja')).toHaveLength(3);
+      await expect(canvas.getAllByText('Nav Troms og Finnmark (974652293)...456')).toHaveLength(2);
+      await expect(canvas.getAllByText('Ja')).toHaveLength(3);
 
-      expect(canvas.getByText('300 000 kr')).toBeInTheDocument();
-      expect(canvas.getByText('16.11.2022 - 20.11.2022')).toBeInTheDocument();
-      expect(
+      await expect(canvas.getByText('300 000 kr')).toBeInTheDocument();
+      await expect(canvas.getByText('16.11.2022 - 20.11.2022')).toBeInTheDocument();
+      await expect(
         canvas.getByText('Har søker inntekt fra Arbeidsgiveren (999999997)...123 som reduserer søkers inntektstap?'),
       ).toBeInTheDocument();
       const neiLabels = canvas.getAllByLabelText('Nei');
@@ -445,7 +445,7 @@ export const TilkommetAktivitetMedForlengelse: Story = {
         await userEvent.click(neiLabels[0]);
       }
 
-      expect(
+      await expect(
         canvas.getByText(
           'Har søker inntekt fra Nav Troms og Finnmark (974652293)...456 som reduserer søkers inntektstap?',
         ),
@@ -455,13 +455,13 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       if (jaLabels[1]) {
         await userEvent.click(jaLabels[1]);
       }
-      expect(canvas.getByLabelText('Fastsett årsinntekt')).toBeInTheDocument();
+      await expect(canvas.getByLabelText('Fastsett årsinntekt')).toBeInTheDocument();
 
       await userEvent.type(canvas.getByLabelText('Fastsett årsinntekt'), '1349');
       await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'En saklig begrunnelse');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
-      expect(args.submitCallback).toHaveBeenCalledWith({
+      await expect(args.submitCallback).toHaveBeenCalledWith({
         begrunnelse: 'En saklig begrunnelse',
         grunnlag: [
           {

@@ -77,8 +77,8 @@ export const Tilbaketrekkpanel = ({
     defaultValues: buildInitialValues(vurderTilbaketrekkAP, beregningsresultat),
   });
 
-  const handleSubmit = (values: TilbaketrekkpanelFormState) => {
-    submitCallback(transformValues(values));
+  const handleSubmit = async (values: TilbaketrekkpanelFormState) => {
+    await submitCallback(transformValues(values));
   };
   return (
     <div>

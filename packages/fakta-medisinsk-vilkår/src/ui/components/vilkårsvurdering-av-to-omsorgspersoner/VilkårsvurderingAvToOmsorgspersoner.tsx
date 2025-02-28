@@ -99,29 +99,27 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
     dispatch({ type: ActionType.VELG_VURDERINGSELEMENT, valgtVurderingselement: nyvalgtVurderingselement });
   };
 
-  const oppdaterVurderingsoversikt = () => {
+  const oppdaterVurderingsoversikt = async () => {
     dispatch({ type: ActionType.PENDING });
-    getVurderingsoversikt().then(vurderingsoversiktData => {
-      const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
-      visVurderingsoversikt(nyVurderingsoversikt);
-    });
+    const vurderingsoversiktData = await getVurderingsoversikt();
+    const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
+    visVurderingsoversikt(nyVurderingsoversikt);
   };
 
-  const onVurderingLagret = () => {
+  const onVurderingLagret = async () => {
     dispatch({ type: ActionType.PENDING });
-    hentSykdomsstegStatus().then(status => {
-      if (status.kanLøseAksjonspunkt) {
-        onFinished();
-        return;
-      }
+    const status = await hentSykdomsstegStatus();
+    if (status.kanLøseAksjonspunkt) {
+      onFinished();
+      return;
+    }
 
-      const nesteSteg = finnNesteStegForPleiepenger(status);
-      if (nesteSteg === toOmsorgspersonerSteg || nesteSteg === null) {
-        oppdaterVurderingsoversikt();
-      } else if (nesteSteg !== null) {
-        navigerTilNesteSteg(nesteSteg);
-      }
-    });
+    const nesteSteg = finnNesteStegForPleiepenger(status);
+    if (nesteSteg === toOmsorgspersonerSteg || nesteSteg === null) {
+      await oppdaterVurderingsoversikt();
+    } else if (nesteSteg !== null) {
+      navigerTilNesteSteg(nesteSteg);
+    }
   };
 
   const setMargin = () => {
