@@ -128,7 +128,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overrideReadOnly={overrideReadOnly}
             toggleOverstyring={toggleOverstyring}
             avslagsarsaker={avslagsarsaker}
-            relevanteInnvilgetUtfall={activeVilkår.relevanteInnvilgetUtfall}
+            relevanteInnvilgetMerknader={activeVilkår.relevanteInnvilgetMerknader}
             innvilgelseMerknadKode={
               activePeriode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !!activePeriode.merknad
                 ? activePeriode.merknad.kode

@@ -23,7 +23,7 @@ import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
-import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 export interface CustomVilkarText {
   id: string;
@@ -57,7 +57,7 @@ interface VilkarresultatMedOverstyringFormProps {
   innvilgelseMerknadKode?: string;
   periode?: Vilkarperiode;
   opprettetAv?: string;
-  relevanteInnvilgetUtfall?: InnvilgetUtfallType[];
+  relevanteInnvilgetMerknader?: InnvilgetMerknad[];
 }
 
 /**
@@ -84,7 +84,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   submitCallback,
   toggleOverstyring,
   visPeriodisering,
-  relevanteInnvilgetUtfall,
+  relevanteInnvilgetMerknader,
 }) => {
   const buildInitialValues = (): VilkarresultatMedOverstyringFormState => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
@@ -155,7 +155,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
             erMedlemskapsPanel={erMedlemskapsPanel}
             visPeriodisering={visPeriodisering}
             avslagsarsaker={avslagsarsaker}
-            relevanteInnvilgetUtfall={relevanteInnvilgetUtfall}
+            relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
             periodeFom={periodeFom}
             periodeTom={periodeTom}
             valgtPeriodeFom={valgtPeriodeFom}

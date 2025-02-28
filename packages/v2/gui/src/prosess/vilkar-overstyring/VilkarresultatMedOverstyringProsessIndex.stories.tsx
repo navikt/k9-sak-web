@@ -20,7 +20,7 @@ const vilkarOpptjening = [
   {
     vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
     overstyrbar: true,
-    relevanteInnvilgetUtfall: [{ innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B'}, { innvilgetType: merknad.VM_7847_A, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 A'}],
+    relevanteInnvilgetMerknader: [{ innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B'}, { innvilgetType: merknad.VM_7847_A, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 A'}],
     perioder: [
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
@@ -46,7 +46,7 @@ const vilkarMedlemskap = [
   {
     vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
     overstyrbar: true,
-    relevanteInnvilgetUtfall: [],
+    relevanteInnvilgetMerknader: [],
     perioder: [
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
@@ -198,7 +198,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
       {
         vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         overstyrbar: true,
-        relevanteInnvilgetUtfall: [{ innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B'}, { innvilgetType: merknad.VM_7847_A, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 A'}],
+        relevanteInnvilgetMerknader: [{ innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B'}, { innvilgetType: merknad.VM_7847_A, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 A'}],
         perioder: [
           {
             vilkarStatus: vilkårStatus.IKKE_VURDERT,

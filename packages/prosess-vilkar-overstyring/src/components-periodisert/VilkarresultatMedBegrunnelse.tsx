@@ -9,7 +9,7 @@ import { FunctionComponent } from 'react';
 import { VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { CustomVilkarText } from './VilkarresultatMedOverstyringFormPeriodisert';
-import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -18,7 +18,7 @@ interface VilkarresultatMedBegrunnelseProps {
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
   avslagsarsaker: KodeverkMedNavn[];
-  relevanteInnvilgetUtfall?: InnvilgetUtfallType[];
+  relevanteInnvilgetMerknader?: InnvilgetMerknad[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
@@ -51,7 +51,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   periodeVilkarStatus,
   readOnly,
   avslagsarsaker,
-  relevanteInnvilgetUtfall,
+  relevanteInnvilgetMerknader,
   erMedlemskapsPanel,
   visPeriodisering,
   skalViseBegrunnelse = true,
@@ -74,7 +74,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
       )}
       <VilkarResultPickerPeriodisertRHF
         avslagsarsaker={avslagsarsaker}
-        relevanteInnvilgetUtfall={relevanteInnvilgetUtfall}
+        relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}

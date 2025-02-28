@@ -10,7 +10,7 @@ import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
 import { FunctionComponent, ReactNode } from 'react';
 import styles from './vilkarResultPicker.module.css';
-import { InnvilgetUtfallType } from '@k9-sak-web/types/src/vilkarTsType';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 export type VilkarResultPickerFormState = {
   erVilkarOk: boolean;
@@ -33,7 +33,7 @@ interface OwnProps {
   readOnly: boolean;
   erMedlemskapsPanel?: boolean;
   fieldNamePrefix?: string;
-  relevanteInnvilgetUtfall: InnvilgetUtfallType[];
+  relevanteInnvilgetMerknader: InnvilgetMerknad[];
 }
 
 interface StaticFunctions {
@@ -59,7 +59,7 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   readOnly,
   erMedlemskapsPanel = false,
   fieldNamePrefix,
-  relevanteInnvilgetUtfall,
+  relevanteInnvilgetMerknader,
 }) => {
   const opptjeningInnvilgetArsaker = [
     {
@@ -109,15 +109,15 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
       )}
       {erVilkarOk !== undefined &&
         erVilkarOk &&
-        relevanteInnvilgetUtfall &&
-        relevanteInnvilgetUtfall.length > 0 && (
+        relevanteInnvilgetMerknader &&
+        relevanteInnvilgetMerknader.length > 0 && (
           <>
             <VerticalSpacer sixteenPx />
             <SelectField
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
               label="Vilkårsmerknad"
-              selectValues={relevanteInnvilgetUtfall.map(iu => (
-                <option key={iu.innvilgetType.kode} value={iu.innvilgetType.kode}>
+              selectValues={relevanteInnvilgetMerknader.map(iu => (
+                <option key={iu.merknad.kode} value={iu.merknad.kode}>
                   {iu.navn}
                 </option>
               ))}
