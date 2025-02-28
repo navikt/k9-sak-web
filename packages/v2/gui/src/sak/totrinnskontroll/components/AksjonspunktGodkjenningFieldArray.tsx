@@ -1,6 +1,4 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -12,11 +10,13 @@ import { NavLink } from 'react-router';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
 import { type Behandling } from '../types/Behandling';
+import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import { type FormState } from './FormState';
 
@@ -94,9 +94,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
         );
 
         const isNyInntektEgetPanel =
-          featureToggles?.NY_INNTEKT_EGET_PANEL &&
+          featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
           skjermlenkeTypeKodeverk?.navn === 'Fordeling' &&
-          aksjonspunktKode === aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD;
+          aksjonspunktKode === aksjonspunktCodes.VURDER_NYTT_INNTEKTSFORHOLD;
 
         const hentSkjermlenkeTypeKodeverkNavn = () => {
           try {
@@ -126,7 +126,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
           if (isNyInntektEgetPanel) {
             return lagLenke(skjermlenkeCodes.FAKTA_OM_NY_INNTEKT.kode);
           }
-          return lagLenke(context.skjermlenkeType);
+          return context ? lagLenke(context.skjermlenkeType) : '';
         };
 
         return (
