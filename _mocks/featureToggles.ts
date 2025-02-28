@@ -71,10 +71,6 @@ export const featureTogglesFactory = () => [
     value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
   },
   {
-    key: 'BRUK_V2_SAK_DOKUMENTER',
-    value: process.env.VITE_BRUK_V2_SAK_DOKUMENTER,
-  },
-  {
     key: 'OPPTJENING_READ_ONLY_PERIODER',
     value: process.env.VITE_OPPTJENING_READ_ONLY_PERIODER,
   },
