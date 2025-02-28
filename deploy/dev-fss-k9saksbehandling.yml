@@ -121,3 +121,5 @@ spec:
       value: "true"
     - name: NY_INNTEKT_EGET_PANEL
       value: "true"
+    - name: BRUK_V2_FAKTA_INSTITUSJON
+      value: "true"
