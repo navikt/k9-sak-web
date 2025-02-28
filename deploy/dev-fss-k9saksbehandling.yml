@@ -111,8 +111,6 @@ spec:
       value: "true"
     - name: BRUK_V2_BEHANDLING_VELGER
       value: "true"
-    - name: BRUK_V2_SAK_SOK
-      value: "true"
     - name: HISTORIKK_V2_VIS
       value: "true"
     - name: VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK

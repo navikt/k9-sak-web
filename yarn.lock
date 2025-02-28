@@ -3336,23 +3336,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/sak-sok@npm:1.0.0, @fpsak-frontend/sak-sok@workspace:packages/sak-sok":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-sok@workspace:packages/sak-sok"
-  dependencies:
-    "@fpsak-frontend/form": "npm:1.0.0"
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@k9-sak-web/types": "npm:1.0.0"
-    react: "npm:19.0.0"
-    react-intl: "npm:7.1.6"
-    react-redux: "npm:9.2.0"
-    redux-form: "npm:8.3.10"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/sak-totrinnskontroll@npm:1.0.0, @fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll"
@@ -4724,7 +4707,6 @@ __metadata:
     "@fpsak-frontend/sak-meny-sett-pa-vent": "npm:1.0.0"
     "@fpsak-frontend/sak-meny-ta-av-vent": "npm:1.0.0"
     "@fpsak-frontend/sak-meny-verge": "npm:1.0.0"
-    "@fpsak-frontend/sak-sok": "npm:1.0.0"
     "@fpsak-frontend/sak-totrinnskontroll": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
