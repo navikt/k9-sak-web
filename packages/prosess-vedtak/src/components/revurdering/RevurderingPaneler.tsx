@@ -51,7 +51,7 @@ const RevurderingPaneler = ({
   erSendtInnUtenArsaker,
 }: OwnProps): JSX.Element => {
   const intl = useIntl();
-  const { kodeverkNavnFraKode } = useKodeverkContext();
+  const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
   return (
     <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
@@ -64,6 +64,7 @@ const RevurderingPaneler = ({
             simuleringResultat={simuleringResultat}
             bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
             kodeverkNavnFraKode={kodeverkNavnFraKode}
+            behandlingType={behandlingType}
           />
         )}
         {isAvslag(behandlingresultat.type) && (
@@ -73,6 +74,7 @@ const RevurderingPaneler = ({
             simuleringResultat={simuleringResultat}
             ytelseTypeKode={ytelseTypeKode}
             kodeverkNavnFraKode={kodeverkNavnFraKode}
+            behandlingType={behandlingType}
           />
         )}
         {isOpphor(behandlingresultat.type) && (
