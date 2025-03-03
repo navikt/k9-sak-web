@@ -18,7 +18,7 @@
     "@navikt/ft-ui-komponenter": "^3.1.6",
     "@navikt/ft-utils": "^3.1.5",
     "classnames": "2.5.1",
-    "core-js": "3.40.0",
+    "core-js": "3.41.0",
     "dayjs": "1.11.13",
     "react": "19.0.0",
     "react-hook-form": "7.54.2",
