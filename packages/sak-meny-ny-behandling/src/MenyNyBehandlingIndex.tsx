@@ -26,6 +26,11 @@ const intl = createIntl(
 
 export const getMenytekst = (): string => 'Opprett ny behandling';
 
+interface LagNyBehandlingPayload extends FormValues {
+  saksnummer: string;
+  behandlingId?: number;
+}
+
 interface OwnProps {
   ytelseType: FagsakYtelsesType;
   saksnummer: string;
@@ -33,7 +38,7 @@ interface OwnProps {
   behandlingUuid?: string;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  lagNyBehandling: (behandlingTypeKode: string, data: any) => Promise<void>;
+  lagNyBehandling: (behandlingTypeKode: string, data: LagNyBehandlingPayload) => Promise<void>;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];

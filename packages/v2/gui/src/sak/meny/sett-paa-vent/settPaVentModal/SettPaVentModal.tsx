@@ -81,7 +81,7 @@ const inkluderVentearsak = (ventearsak: KodeverkObject, valgtVentearsak?: string
   automatiskeVentearsakerForTilbakekreving.includes(ventearsak.kode) ? ventearsak.kode === valgtVentearsak : true;
 
 interface PureOwnProps {
-  submitCallback: (formData: any) => void;
+  submitCallback: (formData: FormState) => void;
   cancelEvent: () => void;
   showModal: boolean;
   erTilbakekreving: boolean;

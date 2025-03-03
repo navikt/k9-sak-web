@@ -3,12 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
 import OkAvbrytModal from './OkAvbrytModal';
 
-export default {
+const meta = {
   title: 'gui/shared/OkAvbrytModal',
   component: OkAvbrytModal,
 } satisfies Meta<typeof OkAvbrytModal>;
 
-export const Default: StoryObj<typeof OkAvbrytModal> = {
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: {
     showModal: true,
     submit: action('button-click'),
