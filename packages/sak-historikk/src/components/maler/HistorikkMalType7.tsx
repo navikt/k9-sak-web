@@ -39,7 +39,18 @@ const formatChangedField = (
       />
     );
   }
-  return false;
+  return (
+    <FormattedMessage
+      id="Historikk.Template.7.FieldSetTo"
+      values={{
+        sub1,
+        sub2,
+        fromValue,
+        toValue,
+        b: chunks => <b>{chunks}</b>,
+      }}
+    />
+  );
 };
 
 const HistorikkMalType7 = ({

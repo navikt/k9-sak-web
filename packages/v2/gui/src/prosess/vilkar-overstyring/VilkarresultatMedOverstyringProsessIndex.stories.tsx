@@ -20,6 +20,7 @@ const vilkarOpptjening = [
   {
     vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
     overstyrbar: true,
+    relevanteInnvilgetMerknader: [{ innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B'}, { innvilgetType: merknad.VM_7847_A, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 A'}],
     perioder: [
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
@@ -45,6 +46,7 @@ const vilkarMedlemskap = [
   {
     vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
     overstyrbar: true,
+    relevanteInnvilgetMerknader: [],
     perioder: [
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
@@ -196,6 +198,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
       {
         vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         overstyrbar: true,
+        relevanteInnvilgetMerknader: [{ merknad: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B'}, { merknad: merknad.VM_7847_A, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 A'}],
         perioder: [
           {
             vilkarStatus: vilkårStatus.IKKE_VURDERT,
@@ -211,7 +214,6 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
     ],
     erMedlemskapsPanel: false,
     erOverstyrt: true,
-    featureToggles: { OMSORGEN_FOR_PERIODISERT: true },
     visAllePerioder: false,
   },
   play: async ({ canvas, step }) => {

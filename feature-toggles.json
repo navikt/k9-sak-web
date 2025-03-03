@@ -52,10 +52,6 @@
     "value": "${OMS_PUNSJSTRIPE}"
   },
   {
-    "key": "OMSORGEN_FOR_PERIODISERT",
-    "value": "${OMSORGEN_FOR_PERIODISERT}"
-  },
-  {
     "key": "OVERSTYR_BEREGNING",
     "value": "${OVERSTYR_BEREGNING}"
   },
