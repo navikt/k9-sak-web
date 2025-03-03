@@ -1,3 +1,5 @@
+import { KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+
 const behandlingType = {
   FORSTEGANGSSOKNAD: 'BT-002',
   KLAGE: 'BT-003',
@@ -9,7 +11,11 @@ const behandlingType = {
   TILBAKEKREVING_REVURDERING: 'BT-009',
 };
 
-export const erTilbakekrevingType = type =>
-  behandlingType.TILBAKEKREVING === type?.kode || behandlingType.TILBAKEKREVING_REVURDERING === type?.kode;
+export const erTilbakekrevingType = (type: KodeverkV2) => {
+  if (typeof type === 'string') {
+    return behandlingType.TILBAKEKREVING === type || behandlingType.TILBAKEKREVING_REVURDERING === type;
+  }
+  return behandlingType.TILBAKEKREVING === type?.kode || behandlingType.TILBAKEKREVING_REVURDERING === type?.kode;
+};
 
 export default behandlingType;
