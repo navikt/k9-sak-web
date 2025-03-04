@@ -10,9 +10,9 @@
     "dev": "vite serve"
   },
   "dependencies": {
-    "@navikt/aksel-icons": "7.13.0",
-    "@navikt/ds-css": "7.13.0",
-    "@navikt/ds-react": "7.13.0",
+    "@navikt/aksel-icons": "7.16.0",
+    "@navikt/ds-css": "7.16.0",
+    "@navikt/ds-react": "7.16.0",
     "@navikt/ft-form-hooks": "^6.2.2",
     "@navikt/ft-form-validators": "^3.1.5",
     "@navikt/ft-ui-komponenter": "^3.1.6",
