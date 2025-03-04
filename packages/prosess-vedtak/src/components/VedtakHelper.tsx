@@ -1,9 +1,10 @@
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
 import {
   AvslagsårsakPrPeriodeDto,
   BeregningsgrunnlagPeriodeDto,
@@ -24,9 +25,10 @@ export const findTilbakekrevingText = (props: {
   simuleringResultat: VedtakSimuleringResultat;
   tilbakekrevingvalg?: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
+  behandlingType: string | undefined;
 }) => {
-  const { simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode } = props;
-  if (tilbakekrevingvalg !== null && tilbakekrevingvalg !== undefined) {
+  const { simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode, behandlingType } = props;
+  if (tilbakekrevingvalg !== null && tilbakekrevingvalg !== undefined && erTilbakekrevingType(behandlingType)) {
     if (tilbakekrevingMedInntrekk(tilbakekrevingvalg.videreBehandling, simuleringResultat)) {
       return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
     }
