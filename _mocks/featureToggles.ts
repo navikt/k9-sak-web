@@ -75,6 +75,10 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
   },
   {
+    key: 'SAK_MENY_V2',
+    value: process.env.VITE_SAK_MENY_V2,
+  },
+  {
     key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
     value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },

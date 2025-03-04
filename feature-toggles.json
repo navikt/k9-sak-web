@@ -80,6 +80,10 @@
     "value": "${BRUK_INNTEKTSGRADERING_I_UTTAK}"
   },
   {
+    "key": "SAK_MENY_V2",
+    "value": "${SAK_MENY_V2}"
+  },
+  {
     "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
     "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   },
