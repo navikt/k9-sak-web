@@ -2,10 +2,10 @@ import { useFormContext } from 'react-hook-form';
 
 import { Alert, Label, ReadMore } from '@navikt/ds-react';
 
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { InputField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
-import { VerticalSpacer } from '@navikt/ft-ui-komponenter';
 import { parseCurrencyInput } from '@navikt/ft-utils';
 
 import type {

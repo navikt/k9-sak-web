@@ -3,11 +3,11 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { BodyShort, Table, Tag } from '@navikt/ds-react';
 
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-
-import { EditedIcon, PeriodLabel, VerticalSpacer } from '@navikt/ft-ui-komponenter';
+import { EditedIcon, PeriodLabel } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyWithKr } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
