@@ -177,12 +177,11 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
               <SelectField
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgetMerknadCode`}
                 label="Hjemmel for innvilgelse"
-                selectValues={relevanteInnvilgetMerknader
-                  .map(innvilgetMerknad => (
-                    <option key={innvilgetMerknad.merknad} value={innvilgetMerknad.merknad}>
-                      {innvilgetMerknad.navn}
-                    </option>
-                  ))}
+                selectValues={relevanteInnvilgetMerknader.map(innvilgetMerknad => (
+                  <option key={innvilgetMerknad.merknad} value={innvilgetMerknad.merknad}>
+                    {innvilgetMerknad.navn}
+                  </option>
+                ))}
                 readOnly={readOnly}
                 validate={[required]}
               />

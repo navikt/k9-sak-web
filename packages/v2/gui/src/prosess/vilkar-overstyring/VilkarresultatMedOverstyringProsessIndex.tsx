@@ -136,7 +136,9 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           erMedlemskapsPanel={erMedlemskapsPanel}
           visPeriodisering={visPeriodisering}
           avslagKode={activePeriode?.avslagKode ?? ''}
-          innvilgelseMerknadKode={activePeriode.vilkarStatus === vilkårStatus.OPPFYLT ? activePeriode?.merknad : undefined}
+          innvilgelseMerknadKode={
+            activePeriode.vilkarStatus === vilkårStatus.OPPFYLT ? activePeriode?.merknad : undefined
+          }
           periode={activePeriode}
           vilkarType={activeVilkår.vilkarType}
           relevanteInnvilgetMerknader={activeVilkår.relevanteInnvilgetMerknader}

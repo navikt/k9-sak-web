@@ -255,7 +255,8 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
     erVilkarOk,
     periodeVilkarStatus: !isOpenAksjonspunkt && status === vilkarUtfallType.OPPFYLT,
     avslagCode: erVilkarOk === vilkarUtfallType.IKKE_OPPFYLT && avslagKode ? avslagKode : undefined,
-    innvilgelseMerknadCode: erVilkarOk === vilkarUtfallType.OPPFYLT && innvilgelseMerknadKode ? innvilgelseMerknadKode : undefined,
+    innvilgelseMerknadCode:
+      erVilkarOk === vilkarUtfallType.OPPFYLT && innvilgelseMerknadKode ? innvilgelseMerknadKode : undefined,
     valgtPeriodeFom: periode.periode.fom,
     valgtPeriodeTom: periode.periode.tom,
   };
@@ -308,7 +309,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
         erVilkarOk: null,
         avslagskode: null,
         periode: null,
-        innvilgelseMerknadKode: null
+        innvilgelseMerknadKode: null,
       };
   }
 };

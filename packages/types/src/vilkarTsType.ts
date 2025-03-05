@@ -2,8 +2,8 @@ import Kodeverk from './kodeverkTsType';
 import Vilkarperiode from './vilkarperiode';
 
 export type InnvilgetMerknad = Readonly<{
-  merknad: Kodeverk,
-  navn: string
+  merknad: Kodeverk;
+  navn: string;
 }>;
 
 export type Vilkar = Readonly<{
@@ -11,7 +11,7 @@ export type Vilkar = Readonly<{
   vilkarType: Kodeverk;
   perioder: Vilkarperiode[];
   overstyrbar: boolean;
-  relevanteInnvilgetMerknader: InnvilgetMerknad[]
+  relevanteInnvilgetMerknader: InnvilgetMerknad[];
 }>;
 
 export default Vilkar;

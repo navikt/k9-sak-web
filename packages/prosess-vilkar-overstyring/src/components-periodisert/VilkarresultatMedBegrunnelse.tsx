@@ -126,7 +126,13 @@ VilkarresultatMedBegrunnelse.buildInitialValues = (
   periode: Vilkarperiode,
   innvilgelseMerknadKode?: string,
 ) => ({
-  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, aksjonspunkter, status, periode, innvilgelseMerknadKode),
+  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(
+    avslagKode,
+    aksjonspunkter,
+    status,
+    periode,
+    innvilgelseMerknadKode,
+  ),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 

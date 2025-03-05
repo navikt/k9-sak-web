@@ -210,18 +210,19 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                             <BodyShort as="span">
                               {formatPeriod(fom || '', tom || '')} (
                               {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
-                              {saksnummer.length > 0 && saksnummer.map((sakNr, index) => (
-                                <>
-                                  {index > 0 && ', '}
-                                  <a
-                                    key={`${fom}-${tom}-${sakNr}-link`}
-                                    href={`/k9/web/fagsak/${sakNr}`}
-                                    target="_blank"
-                                  >
-                                    {sakNr}
-                                  </a>
-                                </>
-                              ))}
+                              {saksnummer.length > 0 &&
+                                saksnummer.map((sakNr, index) => (
+                                  <>
+                                    {index > 0 && ', '}
+                                    <a
+                                      key={`${fom}-${tom}-${sakNr}-link`}
+                                      href={`/k9/web/fagsak/${sakNr}`}
+                                      target="_blank"
+                                    >
+                                      {sakNr}
+                                    </a>
+                                  </>
+                                ))}
                               )
                             </BodyShort>
                           </List.Item>
