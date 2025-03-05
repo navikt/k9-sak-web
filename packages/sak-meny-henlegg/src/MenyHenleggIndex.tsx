@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
-import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import HenleggBehandlingModal from './components/HenleggBehandlingModal';
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
+import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -62,7 +62,7 @@ const MenyHenleggIndex = ({
   const [erHenlagt, setHenlagt] = useState(false);
 
   const submit = useCallback(
-    formValues => {
+    async formValues => {
       const henleggBehandlingDto = {
         behandlingVersjon,
         behandlingId,
@@ -71,9 +71,8 @@ const MenyHenleggIndex = ({
         fritekst: formValues.fritekst,
         valgtMottaker: safeJSONParse(formValues.valgtMottaker),
       };
-      henleggBehandling(henleggBehandlingDto).then(() => {
-        setHenlagt(true);
-      });
+      await henleggBehandling(henleggBehandlingDto);
+      setHenlagt(true);
     },
     [behandlingId, behandlingVersjon],
   );

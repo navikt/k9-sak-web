@@ -1,10 +1,8 @@
-import React from 'react';
-
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling } from '@k9-sak-web/types';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { Behandling, Fagsak, Personopplysninger } from '@k9-sak-web/types';
 
 import MedisinskVilkår from '../../components/MedisinskVilkår';
 
@@ -19,9 +17,18 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getKomponent = props => <MedisinskVilkår {...props} />;
 
-  getData = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => ({
+  getData = ({
+    fagsak,
+    behandling,
+    personopplysninger,
+  }: {
+    fagsak: Fagsak;
+    behandling: Behandling;
+    personopplysninger: Personopplysninger;
+  }) => ({
     fagsakYtelseType: fagsak.sakstype,
     behandlingType: behandling.type.kode,
+    pleietrengendePart: personopplysninger?.pleietrengendePart,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {

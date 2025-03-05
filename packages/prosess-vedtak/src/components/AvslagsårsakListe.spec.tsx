@@ -1,12 +1,18 @@
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
-import React from 'react';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import {
+  BehandlingAksjonspunktDtoBehandlingType,
+  VilkårPeriodeDtoVilkarStatus,
+} from '@navikt/k9-sak-typescript-client';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
 describe('<AvslagårsakListe>', () => {
-  it('skal rendre avslagspanel og textArea når en har ikke oppfylt søknadsfristvilkår', () => {
+  it('skal rendre liste med avslagsårsaker', () => {
     const vilkar = [
       {
-        vilkarType: { kode: 'FP_VK_23', kodeverk: 'VILKAR_TYPE' },
+        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         lovReferanse: '§ 9-2 jamfør 8-2',
         overstyrbar: true,
         perioder: [
@@ -16,7 +22,7 @@ describe('<AvslagårsakListe>', () => {
               antattGodkjentArbeid: 'P0D',
               antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
             },
-            vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-16', tom: '2020-03-19' },
             begrunnelse: null,
           },
@@ -26,21 +32,21 @@ describe('<AvslagårsakListe>', () => {
               antattGodkjentArbeid: 'P0D',
               antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
             },
-            vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-23', tom: '2020-03-26' },
             begrunnelse: null,
           },
         ],
       },
       {
-        vilkarType: { kode: 'FP_VK_2', kodeverk: 'VILKAR_TYPE' },
+        vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET, // VILKAR_TYPE
         lovReferanse: '§ 2',
         overstyrbar: true,
         perioder: [
           {
             avslagKode: '1020',
             merknadParametere: {},
-            vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-16', tom: '2020-03-26' },
             begrunnelse: null,
           },
@@ -48,7 +54,17 @@ describe('<AvslagårsakListe>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={vi.fn()} />);
-    expect(screen.getAllByText(':')).toHaveLength(2);
+    renderWithIntlAndReduxForm(
+      <KodeverkProvider
+        behandlingType={BehandlingAksjonspunktDtoBehandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <AvslagsårsakListe vilkar={vilkar} />
+      </KodeverkProvider>,
+    );
+    expect(screen.getByText('Opptjeningsvilkåret: Ikke tilstrekkelig opptjening')).toBeInTheDocument();
+    expect(screen.getByText('Medlemskapsvilkåret: Søker er ikke medlem')).toBeInTheDocument();
   });
 });

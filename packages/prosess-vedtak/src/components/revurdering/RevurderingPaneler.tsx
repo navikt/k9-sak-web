@@ -1,80 +1,47 @@
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
 
-import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { HGrid } from '@navikt/ds-react';
+import {
+  AvslagsårsakPrPeriodeDto,
+  TilbakekrevingValgDto,
+  VilkårMedPerioderDto,
+} from '@navikt/k9-sak-typescript-client';
+import { FormikState } from 'formik';
+import { BeregningResultat } from '../../types/BeregningResultat';
+import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
+import { VedtakVarsel } from '../../types/VedtakVarsel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 
-const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
-  if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
-    return '';
-  }
-  const aarsakTekstList = [];
-  const endringFraBrukerAarsak = revurderingAarsaker.find(
-    aarsak => aarsak.kode === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
-  );
-  const alleAndreAarsakerNavn = revurderingAarsaker
-    .filter(aarsak => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
-    .map(aarsak => getKodeverknavn(aarsak));
-  // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
-  if (endringFraBrukerAarsak) {
-    aarsakTekstList.push(getKodeverknavn(endringFraBrukerAarsak));
-  }
-  aarsakTekstList.push(...alleAndreAarsakerNavn);
-  return aarsakTekstList.join(', ');
-};
 interface OwnProps {
   ytelseTypeKode: FagsakYtelsesType;
-  behandlingresultat: {
-    type: {
-      kode: string;
-    };
-  };
-  resultatstruktur: string;
-  tilbakekrevingvalg: {
-    videreBehandling: {
-      kode: string;
-    };
-  };
-  simuleringResultat: any;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  resultatstrukturOriginalBehandling: any;
-  bgPeriodeMedAvslagsårsak: any;
-  behandlingStatusKode: string;
-  vilkar: Vilkar[];
-  aksjonspunkter: Aksjonspunkt[];
-  sprakkode: Kodeverk;
+  behandlingresultat: BeregningResultat;
+  tilbakekrevingvalg: TilbakekrevingValgDto;
+  simuleringResultat: VedtakSimuleringResultat;
+  bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
+  vilkar: VilkårMedPerioderDto[];
   readOnly: boolean;
-  vedtakVarsel: any;
+  vedtakVarsel: VedtakVarsel;
   medlemskapFom: string;
   harRedusertUtbetaling: boolean;
   redusertUtbetalingArsak: string[];
-  formikValues: any;
+  formikValues: FormikState<any>['values'];
   erSendtInnUtenArsaker: boolean;
-  behandlingArsaker: any;
 }
 
 const RevurderingPaneler = ({
   ytelseTypeKode,
   behandlingresultat,
-  resultatstruktur,
   tilbakekrevingvalg,
   simuleringResultat,
-  alleKodeverk,
-  resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
-  behandlingStatusKode,
   vilkar,
-  aksjonspunkter,
-  sprakkode,
   readOnly,
   vedtakVarsel,
   medlemskapFom,
@@ -82,55 +49,37 @@ const RevurderingPaneler = ({
   redusertUtbetalingArsak,
   formikValues,
   erSendtInnUtenArsaker,
-  behandlingArsaker,
 }: OwnProps): JSX.Element => {
   const intl = useIntl();
+  const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
-  const behandlingArsakstyper =
-    behandlingArsaker && behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
-  const revurderingsAarsakString = createAarsakString(
-    behandlingArsakstyper,
-    getKodeverknavnFn(alleKodeverk, kodeverkTyper),
-  );
   return (
     <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
       <div>
-        {isInnvilget(behandlingresultat.type.kode) && (
+        {isInnvilget(behandlingresultat.type) && (
           <VedtakInnvilgetRevurderingPanel
             ytelseTypeKode={ytelseTypeKode}
-            revurderingsAarsakString={revurderingsAarsakString}
             behandlingsresultat={behandlingresultat}
-            beregningResultat={resultatstruktur}
             tilbakekrevingvalg={tilbakekrevingvalg}
             simuleringResultat={simuleringResultat}
-            alleKodeverk={alleKodeverk}
-            originaltBeregningResultat={resultatstrukturOriginalBehandling}
             bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+            kodeverkNavnFraKode={kodeverkNavnFraKode}
+            behandlingType={behandlingType}
           />
         )}
-        {isAvslag(behandlingresultat.type.kode) && (
+        {isAvslag(behandlingresultat.type) && (
           <VedtakAvslagRevurderingPanel
-            behandlingStatusKode={behandlingStatusKode}
-            beregningResultat={resultatstruktur}
             vilkar={vilkar}
-            aksjonspunkter={aksjonspunkter}
-            behandlingsresultat={behandlingresultat}
-            sprakkode={sprakkode}
-            readOnly={readOnly}
-            originaltBeregningResultat={resultatstrukturOriginalBehandling}
             tilbakekrevingvalg={tilbakekrevingvalg}
             simuleringResultat={simuleringResultat}
-            alleKodeverk={alleKodeverk}
-            vedtakVarsel={vedtakVarsel}
             ytelseTypeKode={ytelseTypeKode}
+            kodeverkNavnFraKode={kodeverkNavnFraKode}
+            behandlingType={behandlingType}
           />
         )}
-        {isOpphor(behandlingresultat.type.kode) && (
+        {isOpphor(behandlingresultat.type) && (
           <VedtakOpphorRevurderingPanel
-            revurderingsAarsakString={revurderingsAarsakString}
             ytelseTypeKode={ytelseTypeKode}
-            behandlingsresultat={behandlingresultat}
-            resultatstruktur={resultatstruktur}
             medlemskapFom={medlemskapFom}
             vedtakVarsel={vedtakVarsel}
           />

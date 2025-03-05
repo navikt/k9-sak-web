@@ -1,0 +1,66 @@
+.tilkommetAktivitet {
+  max-width: 46rem;
+}
+
+.aktivitetContainer {
+  margin: 0.125rem 0 0;
+}
+
+.aktivitetTable tr,
+.aktivitetTable td,
+.aktivitetTable th {
+  /* stylelint-disable-next-line declaration-no-important */
+  border: none !important;
+}
+
+.separator {
+  border: 1px solid #b0b0b0;
+  border-top: none;
+}
+
+.aksjonspunktContainer {
+  border: 2px solid #ff9100;
+  border-radius: 3px;
+  padding: 1.75rem;
+}
+
+.aksjonspunktContainerLukketAP {
+  border: 2px solid #b0b0b0;
+  border-radius: 3px;
+  padding: 1.75rem;
+}
+
+.bruttoInntektContainer {
+  display: flex;
+}
+
+.bruttoInntektInput {
+  max-width: 137px;
+}
+
+.bruttoInntektCurrency {
+  align-self: flex-end;
+  margin-bottom: 4px;
+  margin-left: 10px;
+}
+
+.edited {
+  margin-left: 8px;
+}
+
+.inntektsmeldingTag:global(.navds-tag) {
+  margin-left: 8px;
+}
+
+.inntektColumn {
+  align-items: center;
+  display: flex;
+}
+
+.tittelRad {
+  justify-content: space-between;
+}
+
+.modalKnapp > button {
+  padding-top: 0;
+}

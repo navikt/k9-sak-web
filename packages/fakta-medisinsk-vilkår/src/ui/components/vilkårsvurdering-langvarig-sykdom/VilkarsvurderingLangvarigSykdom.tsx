@@ -99,12 +99,11 @@ const VilkårsvurderingLangvarigSykdom = ({
     dispatch({ type: ActionType.VELG_VURDERINGSELEMENT, valgtVurderingselement: nyValgtVurderingselement });
   };
 
-  const oppdaterVurderingsoversikt = () => {
+  const oppdaterVurderingsoversikt = async () => {
     dispatch({ type: ActionType.PENDING });
-    getVurderingsoversikt().then(vurderingsoversiktData => {
-      const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
-      visVurderingsoversikt(nyVurderingsoversikt);
-    });
+    const vurderingsoversiktData = await getVurderingsoversikt();
+    const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
+    visVurderingsoversikt(nyVurderingsoversikt);
   };
 
   const onAvbryt = () => {
@@ -113,18 +112,19 @@ const VilkårsvurderingLangvarigSykdom = ({
     });
   };
 
-  const onVurderingLagret = () => {
+  const onVurderingLagret = async () => {
     dispatch({ type: ActionType.PENDING });
-    hentSykdomsstegStatus()
-      .then(status => {
-        const nesteSteg = finnNesteStegForOpplæringspenger(status);
-        if (nesteSteg === langvarigSykdomSteg || nesteSteg === null) {
-          oppdaterVurderingsoversikt();
-        } else if (nesteSteg !== null) {
-          navigerTilNesteSteg(nesteSteg);
-        }
-      })
-      .catch(handleError);
+    try {
+      const status = await hentSykdomsstegStatus();
+      const nesteSteg = finnNesteStegForOpplæringspenger(status);
+      if (nesteSteg === langvarigSykdomSteg || nesteSteg === null) {
+        await oppdaterVurderingsoversikt();
+      } else if (nesteSteg !== null) {
+        navigerTilNesteSteg(nesteSteg);
+      }
+    } catch {
+      handleError();
+    }
   };
 
   const setMargin = () => {

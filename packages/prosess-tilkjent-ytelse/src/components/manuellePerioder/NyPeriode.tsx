@@ -22,9 +22,9 @@ interface Periode {
 }
 
 export const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
-  index !== 0
-  && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom))
-  && initializeDate(nestePeriode.tom).isSameOrAfter(initializeDate(forrigePeriode.fom))
+  index !== 0 &&
+  initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom)) &&
+  initializeDate(nestePeriode.tom).isSameOrAfter(initializeDate(forrigePeriode.fom));
 
 const validateForm = (perioder: BeriketBeregningsresultatPeriode[], nyPeriodeFom: string, nyPeriodeTom: string) => {
   let feilmelding = '';
@@ -70,12 +70,11 @@ export const TilkjentYtelseNyPeriode = ({
 
   const feilmelding = validateForm(perioder, formState.fom, formState.fom);
 
-  const handleSubmit = () => {
-    formMethods.trigger(['nyPeriodeForm']).then(valid => {
-      if (valid && !feilmelding) {
-        newPeriodeCallback(transformValues(formState));
-      }
-    });
+  const handleSubmit = async () => {
+    const valid = await formMethods.trigger(['nyPeriodeForm']);
+    if (valid && !feilmelding) {
+      newPeriodeCallback(transformValues(formState));
+    }
   };
 
   return (

@@ -1,7 +1,9 @@
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Personopplysninger } from '@k9-sak-web/types';
 import { Alert, Button, Label, Modal } from '@navikt/ds-react';
 import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
+import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
@@ -24,6 +26,7 @@ interface InnleggelsesperiodeFormModal {
   onSubmit: (formState) => void;
   isLoading: boolean;
   endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
+  pleietrengendePart: Personopplysninger['pleietrengendePart'];
 }
 
 const InnleggelsesperiodeFormModal = ({
@@ -32,6 +35,7 @@ const InnleggelsesperiodeFormModal = ({
   onSubmit,
   isLoading,
   endringerPåvirkerAndreBehandlinger,
+  pleietrengendePart,
 }: InnleggelsesperiodeFormModal): JSX.Element => {
   const formMethods = useForm({
     defaultValues: {
@@ -88,7 +92,7 @@ const InnleggelsesperiodeFormModal = ({
                   hideLabel: true,
                   label: 'Til',
                 }}
-                afterOnChange={() => {
+                afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
                     ({ period }: AnyType) => new Period(period.fom, period.tom),
                   );
@@ -96,9 +100,10 @@ const InnleggelsesperiodeFormModal = ({
                     periode => periode.isValid() && periode.fomIsBeforeOrSameAsTom(),
                   );
                   if (erAllePerioderGyldige) {
-                    endringerPåvirkerAndreBehandlinger(initialiserteInnleggelsesperioder).then(
-                      ({ førerTilRevurdering }) => setShowWarningMessage(førerTilRevurdering),
+                    const { førerTilRevurdering } = await endringerPåvirkerAndreBehandlinger(
+                      initialiserteInnleggelsesperioder,
                     );
+                    setShowWarningMessage(førerTilRevurdering);
                   }
                 }}
                 defaultValues={defaultValues[FieldName.INNLEGGELSESPERIODER] || []}
@@ -130,6 +135,16 @@ const InnleggelsesperiodeFormModal = ({
 
                     if (period.fomIsBeforeOrSameAsTom() === false) {
                       return 'Fra-dato må være tidligere eller samme som til-dato';
+                    }
+                    return null;
+                  },
+                  fomIsBeforeFødselsdato: (periodValue: Period) => {
+                    const { fom } = periodValue;
+                    if (fom) {
+                      const fødselsdato = pleietrengendePart?.fodselsdato;
+                      if (fødselsdato && dayjs(fom).isBefore(fødselsdato)) {
+                        return 'Fra-dato kan ikke være før fødselsdato';
+                      }
                     }
                     return null;
                   },

@@ -89,7 +89,7 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
       perioder: [forstePeriode, andrePeriode],
     };
 
-    callBeregnBelop(params).then(response => {
+    void callBeregnBelop(params).then(response => {
       const { perioder } = response;
       const harPeriodeMedBelop0 = perioder.some(p => p.belop === 0);
       if (harPeriodeMedBelop0) {

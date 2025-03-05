@@ -1,4 +1,4 @@
-import { behandlingType as k9KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated';
+import { behandlingType as k9KlageBehandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { BehandlingDtoStatus, BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -23,10 +23,10 @@ const getBehandlingNavn = (behandlingTypeKode: string, kodeverkNavnFraKode: Kode
     case BehandlingDtoType.FØRSTEGANGSSØKNAD:
       return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE);
 
-    case k9KlageBehandlingType.BT_003:
+    case k9KlageBehandlingType.KLAGE:
       return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
 
-    case k9KlageBehandlingType.BT_007:
+    case k9KlageBehandlingType.TILBAKEKREVING:
       return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
 
     default:
@@ -154,15 +154,18 @@ const BehandlingPicker = ({
   const åpenBehandlingId = useMemo(finnÅpenBehandling, [behandlinger]);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-    if (!behandlingId) {
-      if (åpenBehandlingId) {
-        navigate(getBehandlingLocation(åpenBehandlingId));
+    const effect = async () => {
+      if (firstRender.current) {
+        firstRender.current = false;
+        return;
       }
-    }
+      if (!behandlingId) {
+        if (åpenBehandlingId) {
+          await navigate(getBehandlingLocation(åpenBehandlingId));
+        }
+      }
+    };
+    void effect();
   }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
   const getBehandlingerSomSkalVises = (

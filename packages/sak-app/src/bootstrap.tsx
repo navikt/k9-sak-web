@@ -74,7 +74,7 @@ init({
 
 const store = configureStore();
 
-const renderFunc = Component => {
+const renderFunc = async Component => {
   /**
    * Redirecte til riktig basename om man kommer hit uten
    * Vil kunne forekomme lokalt og i tester
@@ -92,24 +92,23 @@ const renderFunc = Component => {
     // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'test') {
       const { worker } = await import('../../mocks/browser');
-      worker.start({ onUnhandledRequest: 'bypass' });
+      await worker.start({ onUnhandledRequest: 'bypass' });
     }
   };
 
-  prepare().then(() => {
-    const root = createRoot(app);
-    root.render(
-      <Provider store={store}>
-        <BrowserRouter basename="/k9/web">
-          <RestApiProvider>
-            <RestApiErrorProvider>
-              <Component />
-            </RestApiErrorProvider>
-          </RestApiProvider>
-        </BrowserRouter>
-      </Provider>,
-    );
-  });
+  await prepare();
+  const root = createRoot(app);
+  root.render(
+    <Provider store={store}>
+      <BrowserRouter basename="/k9/web">
+        <RestApiProvider>
+          <RestApiErrorProvider>
+            <Component />
+          </RestApiErrorProvider>
+        </RestApiProvider>
+      </BrowserRouter>
+    </Provider>,
+  );
 };
 
-renderFunc(AppIndex);
+void renderFunc(AppIndex);

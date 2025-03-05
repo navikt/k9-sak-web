@@ -97,7 +97,7 @@ const BehandlingAnkeIndex = ({
     requestAnkeApi.setRequestPendingHandler(setRequestPendingMessage);
     requestAnkeApi.setAddErrorMessageHandler(addErrorMessage);
 
-    hentBehandling({ behandlingId }, false);
+    void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
