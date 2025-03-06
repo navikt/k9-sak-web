@@ -110,5 +110,9 @@
   {
     "key": "BRUK_V2_VILKAR_OVERSTYRING",
     "value": "${BRUK_V2_VILKAR_OVERSTYRING}"
+  },
+  {
+    "key": "BRUK_V2_VILKAR_OPPTJENING",
+    "value": "${BRUK_V2_VILKAR_OPPTJENING}"
   }
 ]

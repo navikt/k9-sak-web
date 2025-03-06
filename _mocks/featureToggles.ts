@@ -106,4 +106,8 @@ export const featureTogglesFactory = () => [
     key: 'BRUK_V2_VILKAR_OVERSTYRING',
     value: process.env.VITE_BRUK_V2_VILKAR_OVERSTYRING,
   },
+  {
+    key: 'BRUK_V2_VILKAR_OPPTJENING',
+    value: process.env.VITE_BRUK_V2_VILKAR_OPPTJENING,
+  },
 ];
