@@ -86,12 +86,12 @@ export const TilkommetInntektsforholdField = ({
 
   const getRadioGroupLabel = (): string => {
     if (field.aktivitetStatus === AktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE) {
-      return 'Har søker inntekt fra den nye næringsaktiviteten som reduserer søkers inntektstap?';
+      return 'Har søker inntekt fra den nye næringsaktiviteten som kan medføre gradering mot inntekt?';
     }
     if (field.aktivitetStatus === AktivitetStatus.FRILANSER) {
-      return 'Har søker inntekt fra den nye frilanseraktiviteten som reduserer søkers inntektstap?';
+      return 'Har søker inntekt fra den nye frilanseraktiviteten som kan medføre gradering mot inntekt?';
     }
-    return `Har søker inntekt fra ${getAktivitetNavnFraField(field, arbeidsgiverOpplysningerPerId)} som reduserer søkers inntektstap?`;
+    return `Har søker inntekt fra ${getAktivitetNavnFraField(field, arbeidsgiverOpplysningerPerId)} som kan medføre gradering mot inntekt?`;
   };
 
   return (
@@ -111,11 +111,10 @@ export const TilkommetInntektsforholdField = ({
         <>
           <VerticalSpacer sixteenPx />
           <Alert size="small" variant="info">
-            Utgangspunktet er at all tilkommet aktivitet med inntekt skal føre til reduksjon i utbetaling. Det kan
-            likevel være feil eller mangler i opplysningene fra AA-registeret. F. eks. internt bytte av org. nummer pga.
-            endret lønns- og personalsystem eller manglende registrert sluttdato i gammel stilling ved overgang til ny
-            stilling. Gjør derfor en konkret vurdering av hvorfor tilkommet aktivitet og inntekt ikke skal føre til
-            reduksjon.
+            Utgangspunktet er at alle nye inntektskilder som kommer etter skjæringstidspunktet skal kunne medføre
+            gradering mot inntekt. Du skal derfor vanligvis velge "ja", som betyr at K9 vurderer om pleiepengene skal
+            graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9 bruke denne aktiviteten for å vurdere søkers
+            inntektstap.
           </Alert>
         </>
       )}

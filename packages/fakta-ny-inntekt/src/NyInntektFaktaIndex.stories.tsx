@@ -363,7 +363,7 @@ export const TilkommetAktivitet: Story = {
       await expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
       await expect(
         await canvas.findByText(
-          'Har søker inntekt fra Arbeidsgiveren (999999997)...123 som reduserer søkers inntektstap?',
+          'Har søker inntekt fra Arbeidsgiveren (999999997)...123 som kan medføre gradering mot inntekt?',
         ),
       ).toBeInTheDocument();
       await expect(canvas.getByText('Årsinntekt')).toBeInTheDocument();
@@ -438,7 +438,9 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       await expect(canvas.getByText('300 000 kr')).toBeInTheDocument();
       await expect(canvas.getByText('16.11.2022 - 20.11.2022')).toBeInTheDocument();
       await expect(
-        canvas.getByText('Har søker inntekt fra Arbeidsgiveren (999999997)...123 som reduserer søkers inntektstap?'),
+        canvas.getByText(
+          'Har søker inntekt fra Arbeidsgiveren (999999997)...123 som kan medføre gradering mot inntekt?',
+        ),
       ).toBeInTheDocument();
       const neiLabels = canvas.getAllByLabelText('Nei');
       if (neiLabels[0]) {
@@ -447,7 +449,7 @@ export const TilkommetAktivitetMedForlengelse: Story = {
 
       await expect(
         canvas.getByText(
-          'Har søker inntekt fra Nav Troms og Finnmark (974652293)...456 som reduserer søkers inntektstap?',
+          'Har søker inntekt fra Nav Troms og Finnmark (974652293)...456 som kan medføre gradering mot inntekt?',
         ),
       ).toBeInTheDocument();
 
