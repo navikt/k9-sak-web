@@ -4470,6 +4470,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.66.11"
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.8.1"
+    lodash: "npm:4.17.21"
     object-hash: "npm:^3.0.0"
     react: "npm:19.0.0"
     react-hook-form: "npm:7.54.2"
@@ -6900,6 +6901,13 @@ __metadata:
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10/1a3c3e06236e4c4aab89499c428d585527ce50c24fe8259e8b3926d3df4cfbbbcf306cfc73ddfb66cbafc973116efd15967020b0f738f63e09e64c7d260519e7
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4.17.16":
+  version: 4.17.16
+  resolution: "@types/lodash@npm:4.17.16"
+  checksum: 10/9a8bb7471a7521bd65d528e1bd14f79819a3eeb6f8a35a8a44649a7d773775c0813e93fd93bd32ccf350bb076c0bf02c6d47877c4625f526f6dd4d283c746aec
   languageName: node
   linkType: hard
 
@@ -13543,6 +13551,7 @@ __metadata:
     "@testing-library/react": "npm:16.2.0"
     "@testing-library/user-event": "npm:14.6.1"
     "@types/history": "npm:5.0.0"
+    "@types/lodash": "npm:^4.17.16"
     "@types/object-hash": "npm:^3.0.6"
     "@types/prop-types": "npm:15.7.14"
     "@types/react": "npm:19.0.8"

@@ -85,6 +85,7 @@
     "@testing-library/react": "16.2.0",
     "@testing-library/user-event": "14.6.1",
     "@types/history": "5.0.0",
+    "@types/lodash": "^4.17.16",
     "@types/object-hash": "^3.0.6",
     "@types/prop-types": "15.7.14",
     "@types/react": "19.0.8",
