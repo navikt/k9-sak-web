@@ -1,11 +1,8 @@
-import type { OpptjeningDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, HStack } from '@navikt/ds-react';
 import { RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import dayjs from 'dayjs';
 import { useContext } from 'react';
 import type { VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import type { VilkårFieldType } from '../types/VilkårFieldType';
@@ -138,42 +135,6 @@ export const VilkarField = ({
       </Box>
     </>
   );
-};
-
-export const buildInitialValuesVilkarField = (
-  vilkårPerioder: VilkårPeriodeDto[],
-  opptjening: OpptjeningDto[],
-  featureToggles: FeatureToggles,
-): VilkårFieldFormValues => {
-  const utledKode = (periode: VilkårPeriodeDto) => {
-    if (
-      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_A ||
-      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_B
-    ) {
-      return periode.merknad as '7847A' | '7847B';
-    }
-    return periode.vilkarStatus as 'OPPFYLT' | 'IKKE_OPPFYLT';
-  };
-
-  return {
-    vilkarFields: Array.isArray(vilkårPerioder)
-      ? vilkårPerioder.map(periode => {
-          const skjæringstidspunkt = periode.periode.fom;
-          const opptjeningForPeriode = opptjening?.find(
-            o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
-          );
-
-          return {
-            begrunnelse: periode.begrunnelse ?? '',
-            vurderesIBehandlingen: !!periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']
-              ? !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt
-              : true,
-            kode: utledKode(periode),
-          };
-        })
-      : [],
-  };
 };
 
 export default VilkarField;

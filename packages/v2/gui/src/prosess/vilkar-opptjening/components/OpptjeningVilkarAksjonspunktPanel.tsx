@@ -13,18 +13,51 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { useContext } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';
 import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import OpptjeningPanel from './OpptjeningPanel';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
-import VilkarField, {
-  buildInitialValuesVilkarField,
-  erVilkarOk,
-  opptjeningMidlertidigInaktivKoder,
-} from './VilkarField';
+import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder } from './VilkarField';
 
 dayjs.extend(isBetween);
+
+export const buildInitialValues = (
+  vilkårPerioder: VilkårPeriodeDto[],
+  opptjening: OpptjeningDto[],
+  featureToggles: FeatureToggles,
+): VilkårFieldFormValues => {
+  const utledKode = (periode: VilkårPeriodeDto) => {
+    if (
+      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_A ||
+      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_B
+    ) {
+      return periode.merknad as '7847A' | '7847B';
+    }
+    return periode.vilkarStatus as 'OPPFYLT' | 'IKKE_OPPFYLT';
+  };
+
+  return {
+    vilkarFields: Array.isArray(vilkårPerioder)
+      ? vilkårPerioder.map(periode => {
+          const skjæringstidspunkt = periode.periode.fom;
+          const opptjeningForPeriode = opptjening?.find(
+            o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
+          );
+
+          return {
+            begrunnelse: periode.begrunnelse ?? '',
+            vurderesIBehandlingen: !!periode.vurderesIBehandlingen,
+            vurderesIAksjonspunkt: featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']
+              ? !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt
+              : true,
+            kode: utledKode(periode),
+          };
+        })
+      : [],
+  };
+};
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
   aksjonspunkter: Aksjonspunkt[];
@@ -61,12 +94,9 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
   submitCallback,
 }: OpptjeningVilkarAksjonspunktPanelImplProps) => {
   const featureToggles = useContext(FeatureTogglesContext);
-  const buildInitialValues = (): VilkårFieldFormValues => ({
-    ...buildInitialValuesVilkarField(vilkårPerioder, opptjeninger, featureToggles),
-  });
 
   const formMethods = useForm({
-    defaultValues: buildInitialValues(),
+    defaultValues: buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
   });
 
   const vilkarFields = useWatch({ control: formMethods.control, name: 'vilkarFields' });
@@ -127,7 +157,6 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
       <OpptjeningPanel
         title="Opptjening"
         isAksjonspunktOpen={isApOpen && !!vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
-        // handleSubmit={formProps.handleSubmit}
         isDirty={formMethods.formState.isDirty}
         readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
         readOnly={readOnly || !vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
@@ -206,7 +235,7 @@ const transformValues = (
         tom: opptjening.fastsattOpptjening?.opptjeningTom,
       }))
     : [],
-  ...{ kode: (Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0]?.definisjon : '') || '' },
+  kode: aksjonspunkter?.[0]?.definisjon ?? '',
 });
 
 export default OpptjeningVilkarAksjonspunktPanel;
