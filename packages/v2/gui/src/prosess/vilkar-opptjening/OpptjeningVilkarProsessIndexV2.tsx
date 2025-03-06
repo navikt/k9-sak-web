@@ -36,7 +36,7 @@ interface OpptjeningVilkarProsessIndexProps {
   visAllePerioder: boolean;
 }
 
-const OpptjeningVilkarProsessIndex = ({
+const OpptjeningVilkarProsessIndexV2 = ({
   fagsak,
   behandling,
   opptjening,
@@ -109,4 +109,4 @@ const OpptjeningVilkarProsessIndex = ({
   );
 };
 
-export default OpptjeningVilkarProsessIndex;
+export default OpptjeningVilkarProsessIndexV2;

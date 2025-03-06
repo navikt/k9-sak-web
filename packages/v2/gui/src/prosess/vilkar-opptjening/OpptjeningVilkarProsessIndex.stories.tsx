@@ -9,7 +9,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from '@storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
-import OpptjeningVilkarProsessIndex from './OpptjeningVilkarProsessIndex';
+import OpptjeningVilkarProsessIndexV2 from './OpptjeningVilkarProsessIndexV2';
 
 const opptjening = {
   fastsattOpptjening: {
@@ -127,8 +127,8 @@ const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 
 const meta = {
   title: 'gui/prosess/vilkar-opptjening',
-  component: OpptjeningVilkarProsessIndex,
-} satisfies Meta<typeof OpptjeningVilkarProsessIndex>;
+  component: OpptjeningVilkarProsessIndexV2,
+} satisfies Meta<typeof OpptjeningVilkarProsessIndexV2>;
 
 export default meta;
 
@@ -341,62 +341,3 @@ export const VisPanelForNårEnIkkeHarAksjonspunkt: Story = {
     visAllePerioder: false,
   },
 };
-// = args => (
-//   <OpptjeningVilkarProsessIndex
-//     fagsak={{
-//       ...fagsak,
-//       sakstype: fagsakYtelsesType.OMSORGSPENGER, // FAGSAK_YTELSE
-//     }}
-//     behandling={{
-//       id: 1,
-//       versjon: 1,
-//       behandlingsresultat: {},
-//     }}
-//     opptjening={opptjening}
-//     vilkar={[
-//       {
-//         vilkarType: {
-//           kode: 'FP_VK_23',
-//           kodeverk: 'VILKAR_TYPE',
-//         },
-//         lovReferanse: '§ 9-2 jamfør 8-2',
-//         overstyrbar: true,
-//         perioder: [
-//           {
-//             avslagKode: null,
-//             merknadParametere: {
-//               antattGodkjentArbeid: 'P10D',
-//               antattOpptjeningAktivitetTidslinje:
-//                 'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
-//             },
-//             vilkarStatus: {
-//               kode: 'OPPFYLT',
-//               kodeverk: 'VILKAR_UTFALL_TYPE',
-//             },
-//             periode: {
-//               fom: '2020-04-27',
-//               tom: '2020-04-27',
-//             },
-//             begrunnelse: null,
-//             vurderesIBehandlingen: true,
-//             merknad: {
-//               kode: '-',
-//               kodeverk: 'VILKAR_UTFALL_MERKNAD',
-//             },
-//           },
-//         ],
-//       },
-//     ]}
-//     aksjonspunkter={[]}
-//     status={vilkarUtfallType.OPPFYLT}
-//     lovReferanse="§§Dette er en lovreferanse"
-//     submitCallback={action('button-click')}
-//     {...args}
-//   />
-// ));
-
-// visPanelForNårEnIkkeHarAksjonspunkt.args = {
-//   isReadOnly: true,
-//   isAksjonspunktOpen: false,
-//   readOnlySubmitButton: false,
-// };
