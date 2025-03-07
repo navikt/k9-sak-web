@@ -275,7 +275,7 @@ export const BehandlingMenuIndex = ({
               behandlingVersjon={behandlingVersjon}
               forhandsvisHenleggBehandling={previewHenleggBehandling}
               henleggBehandling={shelveBehandling}
-              ytelseType={fagsak.sakstype.kode}
+              ytelseType={fagsak.sakstype}
               behandlingType={behandling?.type.kode}
               behandlingResultatTyper={menyKodeverk
                 .getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)
@@ -327,7 +327,7 @@ export const BehandlingMenuIndex = ({
                 BehandlingType.REVURDERING,
                 kodeverkTyper.BEHANDLING_AARSAK,
               )}
-              ytelseType={fagsak.sakstype.kode}
+              ytelseType={fagsak.sakstype}
               lagNyBehandling={lagNyBehandling}
               sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
               sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
