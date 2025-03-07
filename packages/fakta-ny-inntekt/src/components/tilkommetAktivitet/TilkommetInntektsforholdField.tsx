@@ -6,7 +6,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { InputField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
-import { parseCurrencyInput } from '@navikt/ft-utils';
+import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 
 import type {
   TilkommetAktivitetFormValues,
@@ -27,6 +27,11 @@ type Props = {
   inntektsforholdFieldIndex: number;
   field: TilkommetInntektsforholdFieldValues;
 };
+
+export const inntektStørreEnn0 = (inntekt: number) =>
+  removeSpacesFromNumber(inntekt) > 0
+    ? null
+    : 'Du kan ikke registrere 0,- i inntekt, da dette ikke vil medføre gradering mot inntekt. Hvis arbeidsforholdet ikke medfører inntekter enda, men kanskje vil det senere, velger du nei. Informer også bruker om at de må melde fra hvis de begynner å jobbe for denne arbeidsgiveren.';
 
 export const getInntektsforholdIdentifikator = (inntektsforhold: Inntektsforhold | undefined): string => {
   if (!inntektsforhold) {
@@ -130,9 +135,9 @@ export const TilkommetInntektsforholdField = ({
               label="Fastsett årsinntekt"
               hideLabel
               readOnly={readOnly}
-              className={styles.bruttoInntektInput}
               parse={parseCurrencyInput}
-              validate={[required, maxValueFormatted(178956970)]}
+              validate={[required, maxValueFormatted(178956970), inntektStørreEnn0]}
+              htmlSize={9}
             />
             <span className={styles.bruttoInntektCurrency}>kr</span>
           </div>
