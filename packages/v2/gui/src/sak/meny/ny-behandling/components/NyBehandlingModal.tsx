@@ -10,6 +10,7 @@ import { required } from '@navikt/ft-form-validators';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './nyBehandlingModal.module.css';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObject[]) => {
   const navn = bt.kode === BehandlingTypeK9Klage.REVURDERING ? 'Revurderingsbehandling' : bt.navn;
@@ -33,13 +34,13 @@ export type FormValues = {
 };
 
 interface NyBehandlingModalProps {
-  ytelseType: string;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   cancelEvent: () => void;
   submitCallback: (
     data: {
       eksternUuid?: string;
-      fagsakYtelseType: string;
+      fagsakYtelseType: FagsakYtelsesType;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -89,6 +90,9 @@ export const NyBehandlingModal = ({
   sisteDagISøknadsperiode,
 }: NyBehandlingModalProps) => {
   useEffect(() => {
+    const erTilbakekreving =
+      behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
+      behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
     if (erTilbakekrevingAktivert) {
       if (uuidForSistLukkede !== undefined) {
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid: uuidForSistLukkede });
@@ -97,7 +101,15 @@ export const NyBehandlingModal = ({
         sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
       }
     }
-  }, []);
+  }, [
+    behandlingUuid,
+    behandlingType,
+    erTilbakekrevingAktivert,
+    saksnummer,
+    sjekkOmTilbakekrevingKanOpprettes,
+    sjekkOmTilbakekrevingRevurderingKanOpprettes,
+    uuidForSistLukkede,
+  ]);
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
@@ -126,9 +138,6 @@ export const NyBehandlingModal = ({
   const visÅrsak =
     (erRevurdering && steg === 'inngangsvilkår') ||
     (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0);
-  const erTilbakekreving =
-    behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
-    behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
   const handleSubmit = (formValues: FormValues) => {
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE

@@ -7,6 +7,7 @@ import { useCallback, useContext } from 'react';
 import { K9SakClientContext } from '../../../app/K9SakClientContext';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
 import VilkårBackendClient from './VilkårBackendClient';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
   BehandlingTypeK9Klage.TILBAKEKREVING,
@@ -14,7 +15,7 @@ const TILBAKEKREVING_BEHANDLINGSTYPER = [
 ];
 
 interface OwnProps {
-  ytelseType: string;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;
