@@ -15,6 +15,7 @@ export class FakeBehandlingUttakBackendApi implements BehandlingUttakBackendApiT
   }
 
   async bekreftAksjonspunkt(requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest) {
+    console.log('Bekreft aksjonspunkt', requestBody);
     this.#bekreftAksjonspunkt = requestBody;
   }
 
