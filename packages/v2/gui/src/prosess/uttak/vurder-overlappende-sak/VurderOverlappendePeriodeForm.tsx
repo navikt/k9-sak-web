@@ -21,7 +21,6 @@ import { useOverlappendeSakUtils } from './utils/useOverlappendeSakUtils';
 import styles from './VurderOverlappendeSak.module.css';
 
 interface Props {
-  // field: any;
   index: number;
   originaleOverlappendePerioder: { fom: string; tom: string }[];
   readOnly: boolean;
