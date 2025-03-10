@@ -67,7 +67,7 @@ export const useOverlappendeSakUtils = (
         }
       }
     });
-    console.log('replace', newFields);
+
     replace(newFields);
   };
 
@@ -104,7 +104,7 @@ export const useOverlappendeSakUtils = (
         }
       }
     });
-    console.log('replace', newFields);
+
     replace(newFields);
   };
 

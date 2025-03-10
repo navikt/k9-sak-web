@@ -96,7 +96,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
             .transform(v => (Number.isNaN(v) ? undefined : v))
 
             .when('valg', (valg, schema) => {
-              console.log('validatint', valg);
               return valg.includes(PeriodeMedOverlappValg.JUSTERT_GRAD)
                 ? schema.required('Søkers uttaksgrad må fylles ut').min(0, 'Minimum 0%').max(100, 'Maks 100%')
                 : schema.notRequired();
@@ -128,7 +127,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         begrunnelse: aksjonspunkt?.begrunnelse || '',
         perioder:
           data?.perioderMedOverlapp.map(periode => {
-            console.log('perioden', periode.valg);
             return {
               valg: periode.valg,
               periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
@@ -148,7 +146,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
-    console.log('doing a submit');
     setLoading(true);
     const requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
       behandlingId: `${id}`,
@@ -279,13 +276,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     )}
                     {!readOnly && (
                       <HStack gap="4">
-                        <Button
-                          onClick={() => console.log('click')}
-                          type="submit"
-                          size="small"
-                          disabled={readOnly}
-                          loading={loading}
-                        >
+                        <Button type="submit" size="small" disabled={readOnly} loading={loading}>
                           Bekreft og fortsett
                         </Button>
                         {rediger && (

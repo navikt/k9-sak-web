@@ -63,7 +63,6 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
   useEffect(() => {
     if (watchValg === PeriodeMedOverlappValg.JUSTERT_GRAD) setSkalViseSkjema(true);
     else setSkalViseSkjema(false);
-    console.log('watchValg', watchValg);
   }, [watchValg]);
 
   return (
