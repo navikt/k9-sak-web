@@ -1,7 +1,7 @@
 .vilkarStatusOverskrift {
   align-items: center;
   display: flex;
-  flex-direction: row nowrap;
+  flex-flow: row nowrap;
   justify-content: flex-start;
 }
 

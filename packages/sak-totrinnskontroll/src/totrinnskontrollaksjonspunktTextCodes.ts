@@ -21,6 +21,8 @@ const totrinnskontrollaksjonspunktTextCodes = {
 
   [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR]: 'Søknadsfristvilkåret er overstyrt.',
   [aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE]: 'Uttaksplanen har blitt overstyrt',
+  [aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE]:
+    'Uttaksgrad har blitt vurdert på grunn av overlapp med brukers egne saker',
 
   [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: 'Det er vurdert om søker har gyldig medlemskap i perioden.',
   [aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD]: 'Det er vurdert om søker har lovlig opphold.',

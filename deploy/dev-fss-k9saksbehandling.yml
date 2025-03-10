@@ -89,8 +89,6 @@ spec:
       value: "true"
     - name: OMS_PUNSJSTRIPE
       value: "true"
-    - name: OMSORGEN_FOR_PERIODISERT
-      value: "true"
     - name: OVERSTYR_BEREGNING
       value: "true"
     - name: "BRUK_V2_MELDINGER"
@@ -107,6 +105,8 @@ spec:
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
       value: "true"
+    - name: SAK_MENY_V2
+      value: "true"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: "true"
     - name: BRUK_V2_BEHANDLING_VELGER
@@ -118,4 +118,6 @@ spec:
     - name: NY_INNTEKT_EGET_PANEL
       value: "true"
     - name: BRUK_V2_FAKTA_INSTITUSJON
+      value: "true"
+    - name: BRUK_V2_VILKAR_OVERSTYRING
       value: "true"

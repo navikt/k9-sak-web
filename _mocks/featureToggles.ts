@@ -47,10 +47,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_OMS_PUNSJSTRIPE,
   },
   {
-    key: 'OMSORGEN_FOR_PERIODISERT',
-    value: process.env.VITE_OMSORGEN_FOR_PERIODISERT,
-  },
-  {
     key: 'OVERSTYR_BEREGNING',
     value: process.env.VITE_OVERSTYR_BEREGNING,
   },
@@ -79,6 +75,10 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
   },
   {
+    key: 'SAK_MENY_V2',
+    value: process.env.VITE_SAK_MENY_V2,
+  },
+  {
     key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
     value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
@@ -101,5 +101,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'BRUK_V2_FAKTA_INSTITUSJON',
     value: process.env.VITE_BRUK_V2_FAKTA_INSTITUSJON,
+  },
+  {
+    key: 'BRUK_V2_VILKAR_OVERSTYRING',
+    value: process.env.VITE_BRUK_V2_VILKAR_OVERSTYRING,
   },
 ];

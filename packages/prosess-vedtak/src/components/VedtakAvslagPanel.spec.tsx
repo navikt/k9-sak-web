@@ -17,6 +17,7 @@ describe('<VedtakAvslagPanel>', () => {
     {
       vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
       lovReferanse: '§ 22-13, 2. ledd',
+      relevanteInnvilgetMerknader: [],
       perioder: [
         {
           vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT,
