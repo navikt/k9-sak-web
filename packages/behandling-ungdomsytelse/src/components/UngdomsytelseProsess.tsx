@@ -140,7 +140,6 @@ const UngdomsytelseProsess = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
-  apentFaktaPanelInfo,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
@@ -196,7 +195,6 @@ const UngdomsytelseProsess = ({
     data.vilkar,
     hasFetchError,
     valgtProsessSteg,
-    apentFaktaPanelInfo,
   );
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
@@ -252,7 +250,6 @@ const UngdomsytelseProsess = ({
           useMultipleRestApi={restApiUngdomsytelseHooks.useMultipleRestApi}
           featureToggles={featureToggles}
           erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-          apentFaktaPanelInfo={apentFaktaPanelInfo}
         />
       </ProsessStegContainer>
     </>

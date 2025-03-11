@@ -1,10 +1,5 @@
 import { Alert, Heading, Table } from '@navikt/ds-react';
-
-type Barn = {
-  navn: string;
-  fødselsdato: string;
-  dødsdato?: string;
-};
+import type { Barn } from './types/Barn';
 
 interface Props {
   barn: Barn[];

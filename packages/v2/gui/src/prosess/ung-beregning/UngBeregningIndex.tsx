@@ -3,9 +3,11 @@ import { useContext } from 'react';
 import { UngSakClientContext } from '../../app/UngSakClientContext';
 import UngBeregning from './UngBeregning';
 import UngBeregningBackendClient from './UngBeregningBackendClient';
+import type { Barn } from './types/Barn';
 
 interface Props {
   behandling: BehandlingDto;
+  barn: Barn[];
 }
 
 const UngBeregningIndex = ({ behandling }: Props) => {
