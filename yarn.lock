@@ -13533,6 +13533,7 @@ __metadata:
     "@types/redux-form": "npm:8.3.11"
     "@vitejs/plugin-react": "npm:^4.3.4"
     autoprefixer: "npm:^10.4.20"
+    axios: "npm:1.8.2"
     axios-mock-adapter: "npm:2.1.0"
     cross-env: "npm:7.0.3"
     date-fns: "npm:4.1.0"
