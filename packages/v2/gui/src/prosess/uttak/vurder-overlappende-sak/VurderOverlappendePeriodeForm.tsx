@@ -14,6 +14,7 @@ import {
   HelpText,
   Modal,
   DatePicker,
+  VStack,
 } from '@navikt/ds-react';
 import { PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated';
 import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
@@ -68,9 +69,10 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
   return (
     <div>
       <HStack gap={'space-8'} align="center">
-        <Label>
+        <Label size="small">
           Vurder uttak for perioden{' '}
           <BodyShort
+            size="small"
             as="span"
             weight="semibold"
             className={erEndretAutomatisk ? styles['uttaksPeriodeEndret'] : ''}
@@ -102,24 +104,24 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
           </HelpText>
         )}
       </HStack>
-      <RadioGroup
-        size="small"
-        legend={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
-        hideLegend={true}
-        onChange={value => {
-          setValue(`perioder.${index}.valg`, value);
-        }}
-        error={errors?.perioder?.[index]?.valg?.message}
-        value={watchValg}
-        readOnly={readOnly}
-      >
-        <Radio value={PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN}>Ingen uttak i perioden</Radio>
-        <Radio value={PeriodeMedOverlappValg.INGEN_JUSTERING}>Vanlig uttak i perioden</Radio>
-        <Radio value={PeriodeMedOverlappValg.JUSTERT_GRAD}>Tilpass uttaksgrad</Radio>
-      </RadioGroup>
+      <VStack gap={'space-16'}>
+        <RadioGroup
+          size="small"
+          legend={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
+          hideLegend={true}
+          onChange={value => {
+            setValue(`perioder.${index}.valg`, value);
+          }}
+          error={errors?.perioder?.[index]?.valg?.message}
+          value={watchValg}
+          readOnly={readOnly}
+        >
+          <Radio value={PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN}>Ingen uttak i perioden</Radio>
+          <Radio value={PeriodeMedOverlappValg.INGEN_JUSTERING}>Vanlig uttak i perioden</Radio>
+          <Radio value={PeriodeMedOverlappValg.JUSTERT_GRAD}>Tilpass uttaksgrad</Radio>
+        </RadioGroup>
 
-      {skalViseSkjema && (
-        <HStack gap={'space-16'}>
+        {skalViseSkjema && (
           <div>
             <TextField
               label={`Sett uttaksgrad for perioden (i prosent)`}
@@ -131,8 +133,8 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
               error={errors.perioder?.[index]?.søkersUttaksgrad?.message}
             />
           </div>
-        </HStack>
-      )}
+        )}
+      </VStack>
 
       {kanSplittes && (
         <div>
