@@ -1,21 +1,26 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
+import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
+import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { ArrowBox } from '@navikt/ft-ui-komponenter';
+import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import * as Sentry from '@sentry/browser';
-import { Location } from 'history';
+import { type Location } from 'history';
 import { NavLink } from 'react-router';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
-import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
+import { type Behandling } from '../types/Behandling';
+import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
-import { FormState } from './FormState';
+import { type FormState } from './FormState';
+
+const MANUELL_VURDERING_AV_ANKE = '5093';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
@@ -35,11 +40,10 @@ interface OwnProps {
   readOnly: boolean;
   showBegrunnelse?: boolean;
   klageKA?: boolean;
-  klagebehandlingVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  erTilbakekreving: boolean;
-  skjermlenkeTyper: KodeverkMedNavn[];
+  klagebehandlingVurdering?: KlagebehandlingDto;
+  behandlingStatus: Behandling['status'];
+  arbeidsforholdHandlingTyper: KodeverkObject[];
+  skjermlenkeTyper: KodeverkObject[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -51,7 +55,6 @@ export const AksjonspunktGodkjenningFieldArray = ({
   klagebehandlingVurdering,
   behandlingStatus,
   arbeidsforholdHandlingTyper,
-  erTilbakekreving,
   skjermlenkeTyper,
   lagLenke,
 }: OwnProps) => {
@@ -64,51 +67,51 @@ export const AksjonspunktGodkjenningFieldArray = ({
     <>
       {fields.map((field, index) => {
         const { aksjonspunktKode, totrinnskontrollGodkjent, annet, feilFakta, feilLov, feilRegel } =
-          aksjonspunktGodkjenning[index];
+          aksjonspunktGodkjenning[index] || {};
         const context = totrinnskontrollSkjermlenkeContext.find(c =>
           c.totrinnskontrollAksjonspunkter.some(ta => ta.aksjonspunktKode === aksjonspunktKode),
         );
-        const totrinnskontrollAksjonspunkt = context.totrinnskontrollAksjonspunkter.find(
+        const totrinnskontrollAksjonspunkt = context?.totrinnskontrollAksjonspunkter.find(
           c => c.aksjonspunktKode === aksjonspunktKode,
         );
 
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
-        const erAnke =
-          aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE && totrinnskontrollGodkjent === true;
+        const erAnke = aksjonspunktKode === MANUELL_VURDERING_AV_ANKE && totrinnskontrollGodkjent === true;
         const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
         const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
 
-        const aksjonspunktText = getAksjonspunkttekst(
-          klagebehandlingVurdering,
-          behandlingStatus,
-          arbeidsforholdHandlingTyper,
-          erTilbakekreving,
-          totrinnskontrollAksjonspunkt,
-        );
+        const aksjonspunktText =
+          totrinnskontrollAksjonspunkt &&
+          getAksjonspunkttekst(
+            behandlingStatus,
+            arbeidsforholdHandlingTyper,
+            totrinnskontrollAksjonspunkt,
+            klagebehandlingVurdering,
+          );
 
         const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
-          skjermlenkeType => skjermlenkeType.kode === context.skjermlenkeType,
+          skjermlenkeType => skjermlenkeType.kode === context?.skjermlenkeType,
         );
 
         const isNyInntektEgetPanel =
-          featureToggles?.NY_INNTEKT_EGET_PANEL &&
+          featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
           skjermlenkeTypeKodeverk?.navn === 'Fordeling' &&
-          aksjonspunktKode === aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD;
+          aksjonspunktKode === aksjonspunktCodes.VURDER_NYTT_INNTEKTSFORHOLD;
 
         const hentSkjermlenkeTypeKodeverkNavn = () => {
           try {
-            if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
+            if (skjermlenkeTypeKodeverk?.navn === 'Vedtak') {
               return 'Brev';
             }
 
             if (isNyInntektEgetPanel) {
               return 'Ny inntekt';
             }
-            return skjermlenkeTypeKodeverk.navn;
+            return skjermlenkeTypeKodeverk?.navn;
           } catch {
             Sentry.captureEvent({
               message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
-              extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
+              extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context?.skjermlenkeType },
             });
             return '';
           }
@@ -123,20 +126,20 @@ export const AksjonspunktGodkjenningFieldArray = ({
           if (isNyInntektEgetPanel) {
             return lagLenke(skjermlenkeCodes.FAKTA_OM_NY_INNTEKT.kode);
           }
-          return lagLenke(context.skjermlenkeType);
+          return context ? lagLenke(context.skjermlenkeType) : '';
         };
 
         return (
-          <div className={index > 0 && 'mt-2'} key={field.id}>
+          <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
             <NavLink to={lenke()} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
               {hentSkjermlenkeTypeKodeverkNavn()}
             </NavLink>
             <div className={styles.approvalItemContainer}>
               {aksjonspunktText
-                .filter(text => !!text)
+                ?.filter(text => !!text)
                 .map((formattedMessage, i) => (
                   <div
-                    key={aksjonspunktKode.concat('_'.concat(i.toString()))}
+                    key={aksjonspunktKode?.concat('_'.concat(i.toString()))}
                     className={styles.aksjonspunktTextContainer}
                   >
                     <BodyShort size="small">{formattedMessage}</BodyShort>
@@ -162,48 +165,42 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 {visArsaker && (
                   <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                     {!visKunBegrunnelse && (
-                      <FlexContainer wrap>
-                        <FlexRow>
-                          <FlexColumn>
-                            <Detail className="blokk-xs">Årsak</Detail>
-                          </FlexColumn>
-                        </FlexRow>
-                        <FlexRow>
-                          <Fieldset legend="" hideLegend>
-                            <div className="grid grid-cols-2 gap-20">
-                              <div>
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.feilFakta`}
-                                  label="Feil fakta"
-                                  readOnly={readOnly}
-                                />
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.feilRegel`}
-                                  label="Feil regelforståelse"
-                                  readOnly={readOnly}
-                                />
-                              </div>
-                              <div>
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.feilLov`}
-                                  label="Feil lovanvendelse"
-                                  readOnly={readOnly}
-                                />
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.annet`}
-                                  label="Annet"
-                                  readOnly={readOnly}
-                                />
-                              </div>
+                      <VStack gap="2">
+                        <Detail className="blokk-xs">Årsak</Detail>
+                        <Fieldset legend="" hideLegend>
+                          <HStack gap="20">
+                            <div>
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.feilFakta`}
+                                label="Feil fakta"
+                                readOnly={readOnly}
+                              />
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.feilRegel`}
+                                label="Feil regelforståelse"
+                                readOnly={readOnly}
+                              />
                             </div>
-                            {checkboxRequiredError && (
-                              <div className="navds-error-message navds-label navds-label--small">
-                                {checkboxRequiredError}
-                              </div>
-                            )}
-                          </Fieldset>
-                        </FlexRow>
-                      </FlexContainer>
+                            <div>
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.feilLov`}
+                                label="Feil lovanvendelse"
+                                readOnly={readOnly}
+                              />
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.annet`}
+                                label="Annet"
+                                readOnly={readOnly}
+                              />
+                            </div>
+                          </HStack>
+                          {checkboxRequiredError && (
+                            <div className="navds-error-message navds-label navds-label--small">
+                              {checkboxRequiredError}
+                            </div>
+                          )}
+                        </Fieldset>
+                      </VStack>
                     )}
                     <div className="mt-4">
                       <TextAreaField
