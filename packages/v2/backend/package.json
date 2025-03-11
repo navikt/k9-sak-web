@@ -13,11 +13,12 @@
     "./k9sak/errorhandling/*": "./src/k9sak/errorhandling/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/generated": "./src/k9klage/generated/index.js",
-    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*"
+    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*",
+    "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "2.0.20250218125133",
-    "@navikt/k9-sak-typescript-client": "2.0.20250226152706"
+    "@navikt/k9-sak-typescript-client": "2.0.20250228131622"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.66.1"

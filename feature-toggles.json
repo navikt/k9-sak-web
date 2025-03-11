@@ -52,10 +52,6 @@
     "value": "${OMS_PUNSJSTRIPE}"
   },
   {
-    "key": "OMSORGEN_FOR_PERIODISERT",
-    "value": "${OMSORGEN_FOR_PERIODISERT}"
-  },
-  {
     "key": "OVERSTYR_BEREGNING",
     "value": "${OVERSTYR_BEREGNING}"
   },
@@ -82,6 +78,10 @@
   {
     "key": "BRUK_INNTEKTSGRADERING_I_UTTAK",
     "value": "${BRUK_INNTEKTSGRADERING_I_UTTAK}"
+  },
+  {
+    "key": "SAK_MENY_V2",
+    "value": "${SAK_MENY_V2}"
   },
   {
     "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",

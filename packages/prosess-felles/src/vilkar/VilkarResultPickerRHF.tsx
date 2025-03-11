@@ -10,11 +10,13 @@ import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
 import { FunctionComponent, ReactNode } from 'react';
 import styles from './vilkarResultPicker.module.css';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 export type VilkarResultPickerFormState = {
   erVilkarOk: boolean;
   avslagCode?: string;
   avslagDato?: string;
+  innvilgelseMerknadCode?: string;
 };
 
 type TransformedValues = {
@@ -31,6 +33,7 @@ interface OwnProps {
   readOnly: boolean;
   erMedlemskapsPanel?: boolean;
   fieldNamePrefix?: string;
+  relevanteInnvilgetMerknader: InnvilgetMerknad[];
 }
 
 interface StaticFunctions {
@@ -39,6 +42,7 @@ interface StaticFunctions {
     avslagKode: string,
     aksjonspunkter: Aksjonspunkt[],
     status: string,
+    innvilgelseMerknadKode?: string,
   ) => VilkarResultPickerFormState;
 }
 
@@ -55,6 +59,7 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   readOnly,
   erMedlemskapsPanel = false,
   fieldNamePrefix,
+  relevanteInnvilgetMerknader,
 }) => {
   return (
     <div className={styles.container}>
@@ -91,6 +96,25 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
           ]}
         />
       )}
+      {erVilkarOk !== undefined &&
+        erVilkarOk &&
+        relevanteInnvilgetMerknader &&
+        relevanteInnvilgetMerknader.length > 0 && (
+          <>
+            <VerticalSpacer sixteenPx />
+            <SelectField
+              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
+              label="Vilkårsmerknad"
+              selectValues={relevanteInnvilgetMerknader.map(iu => (
+                <option key={iu.merknad.kode} value={iu.merknad.kode}>
+                  {iu.navn}
+                </option>
+              ))}
+              readOnly={readOnly}
+              validate={[required]}
+            />
+          </>
+        )}
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>
           <VerticalSpacer sixteenPx />
@@ -127,18 +151,20 @@ VilkarResultPickerRHF.buildInitialValues = (
   avslagKode: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
+  innvilgelseMerknadKode?: string,
 ): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,
     avslagCode: erVilkarOk === false && avslagKode ? avslagKode : undefined,
+    innvilgelseMerknadKode: erVilkarOk == true && innvilgelseMerknadKode ? innvilgelseMerknadKode : undefined,
   };
 };
 
 VilkarResultPickerRHF.transformValues = (values: VilkarResultPickerFormState) =>
   values.erVilkarOk
-    ? { erVilkarOk: values.erVilkarOk }
+    ? { erVilkarOk: values.erVilkarOk, innvilgelseMerknadKode: values.innvilgelseMerknadCode }
     : {
         erVilkarOk: values.erVilkarOk,
         avslagskode: values.avslagCode,

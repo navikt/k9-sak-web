@@ -30,6 +30,8 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.VURDER_TILBAKETREKK]: 'Det er vurdert om det skal utføres tilbakekreving fra søker.',
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKÅRET]: 'Opptjeningsvilkåret har blitt manuelt vurdert.',
   [aksjonspunktCodes.FORESLÅ_VEDTAK]: 'Det er laget et fritekstbrev',
+  [aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAKER]:
+    'Uttaksgrad har blitt vurdert på grunn av overlapp med brukers egne saker',
 };
 
 export default totrinnskontrollaksjonspunktTextCodes;

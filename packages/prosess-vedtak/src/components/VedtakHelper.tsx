@@ -1,4 +1,7 @@
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
+import {
+  BehandlingDtoType as KlageBehandlingDtoType,
+  BehandlingDtoBehandlingResultatType as klageBehandlingsresultat,
+} from '@k9-sak-web/backend/k9klage/generated';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -13,6 +16,16 @@ import {
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
+const erTilbakekrevingType = (type: string | undefined | { kode: string }) => {
+  if (typeof type === 'string') {
+    return KlageBehandlingDtoType.TILBAKEKREVING === type || KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type;
+  }
+  return (
+    KlageBehandlingDtoType.TILBAKEKREVING === type?.kode ||
+    KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type?.kode
+  );
+};
+
 const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
   simuleringResultat: VedtakSimuleringResultat,
@@ -24,9 +37,10 @@ export const findTilbakekrevingText = (props: {
   simuleringResultat: VedtakSimuleringResultat;
   tilbakekrevingvalg?: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
+  behandlingType: string | undefined;
 }) => {
-  const { simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode } = props;
-  if (tilbakekrevingvalg !== null && tilbakekrevingvalg !== undefined) {
+  const { simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode, behandlingType } = props;
+  if (tilbakekrevingvalg !== null && tilbakekrevingvalg !== undefined && erTilbakekrevingType(behandlingType)) {
     if (tilbakekrevingMedInntrekk(tilbakekrevingvalg.videreBehandling, simuleringResultat)) {
       return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
     }
