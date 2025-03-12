@@ -2,18 +2,18 @@ import BeregningsgrunnlagProsessStegPanelDef from './prosessStegPaneler/Beregnin
 import FortsattMedlemskapProsessStegPanelDef from './prosessStegPaneler/FortsattMedlemskapProsessStegPanelDef';
 import InngangsvilkarFortsProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarFortsProsessStegPanelDef';
 import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
-import MedisinskVilkarProsessStegPanelDef from './prosessStegPaneler/MedisinskVilkarProsessStegPanelDef';
 import OpplaeringProsessStegPanelDef from './prosessStegPaneler/OpplaeringProsessStegPanelDef';
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
 import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtelseProsessStegPanelDef';
 import UttakProsessStegPanelDef from './prosessStegPaneler/UttakProsessStegPanelDef';
 import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
+import LangvarigSykVilkarProsessStegPanelDef from "./prosessStegPaneler/LangvarigSykVilkarProsessStegPanelDef";
 
 const prosessStegPanelDefinisjoner = [
   new VarselProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
-  new MedisinskVilkarProsessStegPanelDef(),
+  new LangvarigSykVilkarProsessStegPanelDef(),
   new OpplaeringProsessStegPanelDef(),
   new InngangsvilkarFortsProsessStegPanelDef(),
   new FortsattMedlemskapProsessStegPanelDef(),

@@ -28,6 +28,7 @@ const prosessStegCodes = {
   ANKE_MERKNADER: 'ankemerknader',
   ANKE_RESULTAT: 'ankeresultat',
   MEDISINSK_VILKAR: 'medisinsk_vilkar',
+  LAGVARIG_SYK_VILKAR: 'lagvarig_syk_vilkar',
   PUNKT_FOR_MEDISINSK: 'medisinskvilkaar-v2',
   OPPTJENING: 'opptjening',
   ALDER: 'alder',
