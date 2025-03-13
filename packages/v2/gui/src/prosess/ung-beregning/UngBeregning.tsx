@@ -1,32 +1,19 @@
-import type { UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Alert, Heading, Loader, Table } from '@navikt/ds-react';
+import { type UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
+import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import { ArbeidOgInntekt } from './ArbeidOgInntekt';
+import { DagsatsOgUtbetaling } from './DagsatsOgUtbetaling';
+import UngBarnFakta from './UngBarnFakta';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
-
-const formatCurrencyWithKr = (value: number) => {
-  const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
-  return `${formattedValue} kr`;
-};
-
-const formatCurrencyNoKr = (value: number) => {
-  if (value === null || value === undefined) {
-    return undefined;
-  }
-  // Fjerner mellomrom i tilfelle vi får inn tall med det
-  const newVal = value.toString().replace(/\s/g, '');
-  if (Number.isNaN(newVal)) {
-    return undefined;
-  }
-  return Number(Math.round(+newVal)).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
-};
+import type { Barn } from './types/Barn';
 
 interface Props {
   behandling: { uuid: string };
   api: UngBeregningBackendApiType;
+  barn: Barn[];
 }
 
-const UngBeregning = ({ api, behandling }: Props) => {
+const UngBeregning = ({ api, behandling, barn }: Props) => {
   const {
     data: satser,
     isLoading: satserIsLoading,
@@ -46,49 +33,27 @@ const UngBeregning = ({ api, behandling }: Props) => {
   }
 
   return (
-    <div className="max-w-[868px]">
-      {satserSuccess && (
-        <div>
-          <Heading size="small" level="2">
-            Satser
-          </Heading>
-          <Table>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Sats</Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Grunnbeløp
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Dagsats
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Antall barn
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Dagsats barnetillegg
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {satser.map(({ fom, tom, satsType, dagsats, grunnbeløp, antallBarn, dagsatsBarnetillegg }) => (
-                <Table.Row key={`${fom}_${tom}`}>
-                  <Table.DataCell>{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
-                  <Table.DataCell>{satsType}</Table.DataCell>
-                  <Table.DataCell align="right">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
-                  <Table.DataCell align="right">{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
-                  <Table.DataCell align="right">{antallBarn}</Table.DataCell>
-                  <Table.DataCell align="right">
-                    {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : ''}
-                  </Table.DataCell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
-      )}
-    </div>
+    <Box paddingInline="4 8" paddingBlock="2">
+      <div className="min-h-svh">
+        <Heading size="medium" level="1" spacing>
+          Sats og beregning
+        </Heading>
+        <Tabs defaultValue="arbeid">
+          <Tabs.List>
+            <Tabs.Tab value="arbeid" label="Arbeid og inntekt" />
+            <Tabs.Tab value="barn" label="Registrerte barn" />
+            <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />
+          </Tabs.List>
+          <Tabs.Panel value="arbeid">
+            <ArbeidOgInntekt />
+          </Tabs.Panel>
+          <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
+          <Tabs.Panel value="barn">
+            <UngBarnFakta barn={barn} />
+          </Tabs.Panel>
+        </Tabs>
+      </div>
+    </Box>
   );
 };
 

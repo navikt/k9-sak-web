@@ -4,6 +4,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import UngBeregningIndex from '@k9-sak-web/gui/prosess/ung-beregning/UngBeregningIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Vilkar } from '@k9-sak-web/types';
+import { PersonopplysningDto } from '@navikt/ung-sak-typescript-client';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UngBeregningIndex {...props} />;
@@ -16,6 +17,14 @@ class PanelDef extends ProsessStegPanelDef {
       ? vilkarUtfallType.OPPFYLT
       : vilkarUtfallType.IKKE_VURDERT;
   };
+  getData = ({ personopplysninger }: { personopplysninger: PersonopplysningDto }) => ({
+    barn:
+      personopplysninger?.barn?.map(barn => ({
+        navn: barn.navn,
+        fødselsdato: barn.fodselsdato ? new Intl.DateTimeFormat('nb-NO').format(new Date(barn.fodselsdato)) : '',
+        dødsdato: barn.dodsdato ? new Intl.DateTimeFormat('nb-NO').format(new Date(barn.dodsdato)) : '',
+      })) || [],
+  });
 }
 
 class BeregningProsessStegPanelDef extends ProsessStegDef {
