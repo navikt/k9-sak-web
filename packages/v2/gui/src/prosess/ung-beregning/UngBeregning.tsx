@@ -13,6 +13,9 @@ interface Props {
   barn: Barn[];
 }
 
+const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
+  data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
+
 const UngBeregning = ({ api, behandling, barn }: Props) => {
   const {
     data: satser,
@@ -22,6 +25,7 @@ const UngBeregning = ({ api, behandling, barn }: Props) => {
   } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatser(behandling.uuid),
+    select: sortSatser,
   });
 
   if (satserIsLoading) {
