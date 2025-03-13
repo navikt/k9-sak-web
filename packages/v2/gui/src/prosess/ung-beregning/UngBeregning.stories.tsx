@@ -11,4 +11,4 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const DefaultStory: Story = { args: { behandling: { uuid: '123' }, api } };
+export const DefaultStory: Story = { args: { behandling: { uuid: '123' }, api, barn: [] } };
