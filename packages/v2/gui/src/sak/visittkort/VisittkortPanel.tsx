@@ -51,6 +51,7 @@ const VisittkortPanel = ({
           name={fagsakPerson.navn}
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
+          showPersonAge
         />
       </div>
     );
@@ -62,6 +63,7 @@ const VisittkortPanel = ({
           name={fagsakPerson.navn}
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
+          showPersonAge
           renderLabelContent={() => (
             <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
           )}
@@ -109,6 +111,7 @@ const VisittkortPanel = ({
           gender={utledKjonn(søker.navBrukerKjonn)}
           renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} sprakkode={sprakkode} />}
           renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
+          showPersonAge
         />
 
         {annenPart?.aktoerId && (

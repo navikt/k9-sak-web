@@ -64,27 +64,13 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
                   Periode
                 </Table.HeaderCell>
                 <Table.HeaderCell scope="col">Sats</Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Grunnbeløp
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Dagsats
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Antall barn
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Barnetillegg
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Rapportert inntekt
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Dager
-                </Table.HeaderCell>
-                <Table.HeaderCell scope="col" align="right">
-                  Utbetaling
-                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">Grunnbeløp</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Dagsats</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Antall barn</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Barnetillegg</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Rapportert inntekt</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Dager</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Utbetaling</Table.HeaderCell>
                 <Table.HeaderCell scope="col">Status</Table.HeaderCell>
                 <Table.HeaderCell />
               </Table.Row>
@@ -101,16 +87,16 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
                   >
                     <Table.DataCell className="pl-4">{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
                     <Table.DataCell>{formatSats(satsType)}</Table.DataCell>
-                    <Table.DataCell align="right">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
-                    <Table.DataCell align="right">{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
-                    <Table.DataCell align="right">{antallBarn}</Table.DataCell>
-                    <Table.DataCell align="right">
+                    <Table.DataCell>{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
+                    <Table.DataCell>{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
+                    <Table.DataCell>{antallBarn}</Table.DataCell>
+                    <Table.DataCell>
                       {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : ''}
                     </Table.DataCell>
-                    <Table.DataCell />
-                    <Table.DataCell />
-                    <Table.DataCell />
-                    <Table.DataCell />
+                    <Table.DataCell /> {/* Rapportert inntekt */}
+                    <Table.DataCell /> {/* Dager */}
+                    <Table.DataCell /> {/* Utbetaling */}
+                    <Table.DataCell /> {/* Status */}
                   </Table.ExpandableRow>
                 );
               })}
