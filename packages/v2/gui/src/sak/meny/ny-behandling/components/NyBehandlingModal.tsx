@@ -1,6 +1,7 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -10,7 +11,6 @@ import { required } from '@navikt/ft-form-validators';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './nyBehandlingModal.module.css';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObject[]) => {
   const navn = bt.kode === BehandlingTypeK9Klage.REVURDERING ? 'Revurderingsbehandling' : bt.navn;
@@ -27,7 +27,7 @@ export type BehandlingOppretting = Readonly<{
 export type FormValues = {
   behandlingType: string;
   nyBehandlingEtterKlage?: string;
-  BehandlingÅrsakDtoBehandlingArsakType?: string;
+  behandlingArsakType?: string;
   steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
   fom: string;
   tom: string;
@@ -115,7 +115,7 @@ export const NyBehandlingModal = ({
     defaultValues: {
       behandlingType: '',
       nyBehandlingEtterKlage: '',
-      BehandlingÅrsakDtoBehandlingArsakType: '',
+      behandlingArsakType: '',
       steg: undefined,
       fom: '',
       tom: '',
@@ -196,7 +196,7 @@ export const NyBehandlingModal = ({
             )}
             {visÅrsak && (
               <SelectField
-                name="BehandlingÅrsakDtoBehandlingArsakType"
+                name="behandlingArsakType"
                 label="Hva er årsaken til den nye behandlingen?"
                 validate={[required]}
                 selectValues={BehandlingÅrsakDtoBehandlingArsakTyper.map(b => (
