@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",
-    "@sentry/cli": "2.42.2",
+    "@sentry/cli": "2.42.3",
     "@storybook/addon-a11y": "8.6.4",
     "@storybook/addon-actions": "8.6.4",
     "@storybook/addon-docs": "8.6.4",
