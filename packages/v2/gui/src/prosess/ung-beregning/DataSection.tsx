@@ -93,7 +93,7 @@ export const DataSection = () => {
         </HStack>
         <HStack gap="2">
           <BodyShort>Dager utbetalt</BodyShort>
-          <HelpText title="Hvor kommer dette fra?">Informasjonen er hentet fra X sin statistikk fra 2021</HelpText>
+          <HelpText title="Forklaringstekst">Forklaring om dager utbetalt her</HelpText>
         </HStack>
         <div>
           <HStack justify="space-between">
