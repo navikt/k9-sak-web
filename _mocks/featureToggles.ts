@@ -1,4 +1,5 @@
 // This must be a "factory" function so that the values are not resoved too early in dev server startup, before vite
+
 // has resolved the env variables.
 export const featureTogglesFactory = () => [
   {
@@ -46,10 +47,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_OMS_PUNSJSTRIPE,
   },
   {
-    key: 'OMSORGEN_FOR_PERIODISERT',
-    value: process.env.VITE_OMSORGEN_FOR_PERIODISERT,
-  },
-  {
     key: 'OVERSTYR_BEREGNING',
     value: process.env.VITE_OVERSTYR_BEREGNING,
   },
@@ -70,10 +67,6 @@ export const featureTogglesFactory = () => [
     value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
   },
   {
-    key: 'BRUK_V2_SAK_DOKUMENTER',
-    value: process.env.VITE_BRUK_V2_SAK_DOKUMENTER,
-  },
-  {
     key: 'OPPTJENING_READ_ONLY_PERIODER',
     value: process.env.VITE_OPPTJENING_READ_ONLY_PERIODER,
   },
@@ -82,16 +75,16 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
   },
   {
+    key: 'SAK_MENY_V2',
+    value: process.env.VITE_SAK_MENY_V2,
+  },
+  {
     key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
     value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
   {
     key: 'BRUK_V2_BEHANDLING_VELGER',
     value: process.env.VITE_BRUK_V2_BEHANDLING_VELGER,
-  },
-  {
-    key: 'BRUK_V2_SAK_SOK',
-    value: process.env.VITE_BRUK_V2_SAK_SOK,
   },
   {
     key: 'HISTORIKK_V2_VIS',
@@ -104,5 +97,13 @@ export const featureTogglesFactory = () => [
   {
     key: 'NY_INNTEKT_EGET_PANEL',
     value: process.env.VITE_NY_INNTEKT_EGET_PANEL,
+  },
+  {
+    key: 'BRUK_V2_FAKTA_INSTITUSJON',
+    value: process.env.VITE_BRUK_V2_FAKTA_INSTITUSJON,
+  },
+  {
+    key: 'BRUK_V2_VILKAR_OVERSTYRING',
+    value: process.env.VITE_BRUK_V2_VILKAR_OVERSTYRING,
   },
 ];

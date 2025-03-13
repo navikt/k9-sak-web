@@ -1,35 +1,28 @@
 import React, { useEffect, useState, type FC } from 'react';
+
 import * as yup from 'yup';
 import { useQuery } from '@tanstack/react-query';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Alert,
-  BodyShort,
-  Box,
-  Button,
-  Heading,
-  HStack,
-  List,
-  Loader,
-  Textarea,
-  TextField,
-  VStack,
-} from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, Heading, HStack, List, Loader, Textarea, VStack } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type {
-  AksjonspunktDto,
-  BehandlingDto,
-  BekreftData,
-  EgneOverlappendeSakerDto,
+import {
+  PeriodeMedOverlappValg,
+  type AksjonspunktDto,
+  type BehandlingDto,
+  type BekreftData,
+  type EgneOverlappendeSakerDto,
 } from '@k9-sak-web/backend/k9sak/generated';
+import type { ObjectSchema } from 'yup';
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
 import { erAksjonspunktReadOnly, kanAksjonspunktRedigeres } from '../../../utils/aksjonspunkt';
-
 import styles from './VurderOverlappendeSak.module.css';
-import type { ObjectSchema } from 'yup';
+import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
+import { format } from 'date-fns';
+
+export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
 interface Props {
   behandling: Pick<BehandlingDto, 'uuid' | 'id' | 'versjon' | 'status'>;
@@ -42,8 +35,10 @@ export interface VurderOverlappendeSakFormData {
   begrunnelse: string;
   perioder: {
     periode: { fom: string; tom: string };
-    søkersUttaksgrad: number;
+    søkersUttaksgrad?: number;
     saksnummer: string[];
+    valg: PeriodeMedOverlappValg;
+    endretAutomatisk?: boolean;
   }[];
 }
 
@@ -52,9 +47,10 @@ export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['req
     '@type': string;
     kode: string | null | undefined;
     perioder: Array<{
+      valg: PeriodeMedOverlappValg;
       begrunnelse: string;
       periode: { fom: string; tom: string };
-      søkersUttaksgrad: number;
+      søkersUttaksgrad?: number;
     }>;
   }>;
 };
@@ -65,18 +61,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   const [readOnly, setReadOnly] = useState<boolean>(erAksjonspunktReadOnly(aksjonspunkt));
   const [rediger, setRediger] = useState<boolean>(false);
   const sakAvsluttet = status === 'AVSLU';
-
-  const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined) => {
-    return {
-      begrunnelse: aksjonspunkt?.begrunnelse || '',
-      perioder:
-        data?.perioderMedOverlapp.map(periode => ({
-          periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
-          søkersUttaksgrad: periode.fastsattUttaksgrad ?? undefined,
-          saksnummer: periode.saksnummer.map(saksNr => saksNr || ''),
-        })) || [],
-    };
-  };
+  const [originaleOverlappendePerioder, setOriginaleOverlappendePerioder] = useState<{ fom: string; tom: string }[]>(
+    [],
+  );
 
   const {
     data: egneOverlappendeSaker,
@@ -98,6 +85,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
       .array(
         yup.object({
           periode: yup.object({ fom: yup.string().required(), tom: yup.string().required() }),
+          valg: yup.mixed<PeriodeMedOverlappValgType>().required('Valg må fylles ut'),
           søkersUttaksgrad: yup
             .number()
             // Handter tal tasta inn med , som desimalteikn:
@@ -106,9 +94,12 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
             )
             // Vi vil ha undefined istadenfor NaN
             .transform(v => (Number.isNaN(v) ? undefined : v))
-            .required('Søkers uttaksgrad må fylles ut')
-            .min(0, 'Minimum 0%')
-            .max(100, 'Maks 100%'),
+
+            .when('valg', (valg, schema) => {
+              return valg.includes(PeriodeMedOverlappValg.JUSTERT_GRAD)
+                ? schema.required('Søkers uttaksgrad må fylles ut').min(0, 'Minimum 0%').max(100, 'Maks 100%')
+                : schema.notRequired();
+            }),
           saksnummer: yup.array(yup.string().required()).required(),
         }),
       )
@@ -128,14 +119,31 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     register,
     formState: { errors },
   } = formMethods;
-  const { fields } = useFieldArray({ control, name: 'perioder' });
+  const { fields, replace } = useFieldArray({ control, name: 'perioder' });
 
   useEffect(() => {
+    const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined) => {
+      return {
+        begrunnelse: aksjonspunkt?.begrunnelse || '',
+        perioder:
+          data?.perioderMedOverlapp.map(periode => {
+            return {
+              valg: periode.valg,
+              periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
+              søkersUttaksgrad: periode.fastsattUttaksgrad ?? undefined,
+              saksnummer: periode.saksnummer.map(saksNr => saksNr || ''),
+              endretAutomatisk: false,
+            };
+          }) || [],
+      };
+    };
+
     if (overlappendeSuccess && egneOverlappendeSaker) {
       const newValues = buildInitialValues(egneOverlappendeSaker);
+      setOriginaleOverlappendePerioder(egneOverlappendeSaker.perioderMedOverlapp.map(periode => periode.periode));
       reset(newValues);
     }
-  }, [overlappendeSuccess, egneOverlappendeSaker, reset]);
+  }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
     setLoading(true);
@@ -148,8 +156,12 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
           kode: aksjonspunkt.definisjon,
           begrunnelse: data.begrunnelse,
           perioder: data.perioder.map(periode => ({
+            valg: periode.valg,
             begrunnelse: data.begrunnelse,
-            periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
+            periode: {
+              fom: format(new Date(periode.periode.fom), 'yyyy-MM-dd') || '',
+              tom: format(new Date(periode.periode.tom), 'yyyy-MM-dd') || '',
+            },
             søkersUttaksgrad: periode.søkersUttaksgrad,
           })),
         },
@@ -209,18 +221,16 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                           <List.Item>
                             <BodyShort as="span">
                               {formatPeriod(fom || '', tom || '')} (
-                              {saksnummer.map((sakNr, index) => (
-                                <>
-                                  {index > 0 && ', '}
-                                  <a
-                                    key={`${fom}-${tom}-${sakNr}-link`}
-                                    href={`/k9/web/fagsak/${sakNr}`}
-                                    target="_blank"
-                                  >
-                                    {sakNr}
-                                  </a>
-                                </>
-                              ))}
+                              {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
+                              {saksnummer.length > 0 &&
+                                saksnummer.map((sakNr, index) => (
+                                  <React.Fragment key={`${fom}-${tom}-${sakNr}-link`}>
+                                    {index > 0 && ', '}
+                                    <a href={`/k9/web/fagsak/${sakNr}`} target="_blank">
+                                      {sakNr}
+                                    </a>
+                                  </React.Fragment>
+                                ))}
                               )
                             </BodyShort>
                           </List.Item>
@@ -229,34 +239,27 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     );
                   })}
                 </Alert>
+
                 {fields.map((field, index) => {
-                  const {
-                    periode: { fom, tom },
-                    saksnummer,
-                  } = field;
                   return (
-                    <div key={`${fom}-${tom}-${saksnummer}`}>
-                      <TextField
-                        label={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
-                        inputMode="numeric"
-                        size="small"
-                        className={styles['uttaksgradField']}
-                        readOnly={readOnly}
-                        {...register(`perioder.${index}.søkersUttaksgrad`)}
-                        error={errors.perioder?.[index]?.søkersUttaksgrad?.message}
-                      />
-                    </div>
+                    <VurderOverlappendePeriodeForm
+                      key={field.id}
+                      index={index}
+                      originaleOverlappendePerioder={originaleOverlappendePerioder}
+                      readOnly={readOnly}
+                      fields={fields}
+                      replace={replace}
+                    />
                   );
                 })}
+
                 <Textarea
                   label="Begrunnelse"
                   readOnly={readOnly}
                   {...register('begrunnelse')}
                   error={errors.begrunnelse?.message}
                 />
-
                 {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
-
                 {!sakAvsluttet && (
                   <>
                     {!readOnly && (
@@ -273,7 +276,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     )}
                     {!readOnly && (
                       <HStack gap="4">
-                        <Button size="small" disabled={readOnly} loading={loading}>
+                        <Button type="submit" size="small" disabled={readOnly} loading={loading}>
                           Bekreft og fortsett
                         </Button>
                         {rediger && (

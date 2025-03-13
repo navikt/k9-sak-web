@@ -12,7 +12,9 @@ interface OwnProps {
   onChange: (dato: string | ChangeEvent) => void;
   value?: string;
   initialMonth?: Date;
-  disabledDays?: { before: Date; after: Date } | { before: Date; after: Date }[];
+  disabledDays?:
+    | { before: Date | undefined; after: Date | undefined }
+    | Array<{ before: Date | undefined; after: Date | undefined }>;
   error?: ReactNode;
   hideLabel?: boolean;
   inputId?: string;

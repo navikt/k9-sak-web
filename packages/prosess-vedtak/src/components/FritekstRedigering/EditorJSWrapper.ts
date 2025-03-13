@@ -42,9 +42,10 @@ export default class EditorJSWrapper {
     });
   }
 
-  public async importer(html) {
+  public async importer(html: string) {
     await this.editor.isReady;
-    await this.editor.blocks.renderFromHTML(html);
+    const sanitizedHtml = html.replace(/\s*(<[^>]+>)\s*/g, '$1'); // Fjerne mellomrom rundt html-tags
+    await this.editor.blocks.renderFromHTML(sanitizedHtml);
     return true;
   }
 

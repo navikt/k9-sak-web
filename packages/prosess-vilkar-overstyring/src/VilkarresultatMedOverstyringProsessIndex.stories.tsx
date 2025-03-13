@@ -25,6 +25,7 @@ const vilkarOpptjening = [
   {
     vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
     overstyrbar: true,
+    relevanteInnvilgetMerknader: [],
     perioder: [
       {
         vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
