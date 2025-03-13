@@ -24,7 +24,7 @@ const formatCurrencyNoKr = (value: number) => {
 };
 
 const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
-  let icon = undefined;
+  let icon: React.ReactElement | undefined = undefined;
   if (satstype === UngdomsytelseSatsPeriodeDtoSatsType.LAV) {
     icon = (
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
