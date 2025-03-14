@@ -2725,7 +2725,7 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@navikt/ft-form-hooks": "npm:^6.2.4"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     i18n-iso-countries: "npm:7.14.0"
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
@@ -2823,7 +2823,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     classnames: "npm:2.5.1"
     formik: "npm:2.4.6"
     moment: "npm:2.30.1"
@@ -3164,7 +3164,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
     lodash: "npm:4.17.21"
@@ -3192,7 +3192,7 @@ __metadata:
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     classnames: "npm:2.5.1"
     moment: "npm:2.30.1"
     react: "npm:19.0.0"
@@ -3335,7 +3335,7 @@ __metadata:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -3380,7 +3380,7 @@ __metadata:
     "@navikt/aksel-icons": "npm:7.17.2"
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/fnrvalidator": "npm:2.1.5"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     axios: "npm:1.8.3"
     classnames: "npm:2.5.1"
     date-fns: "npm:4.1.0"
@@ -3946,7 +3946,7 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     classnames: "npm:2.5.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
@@ -4280,7 +4280,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.17.2"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.17.2"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
@@ -4302,7 +4302,7 @@ __metadata:
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/ft-form-hooks": "npm:^6.2.4"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
@@ -4322,7 +4322,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "npm:*"
     "@k9-sak-web/types": "npm:*"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     formik: "npm:2.4.6"
   languageName: unknown
   linkType: soft
@@ -4336,7 +4336,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.17.2"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.17.2"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@popperjs/core": "npm:2.11.8"
     "@tanstack/react-query": "npm:^5.67.3"
     axios: "npm:1.8.3"
@@ -4380,7 +4380,7 @@ __metadata:
   resolution: "@k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet"
   dependencies:
     "@navikt/ds-react": "npm:7.17.2"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
@@ -4403,7 +4403,7 @@ __metadata:
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/fnrvalidator": "npm:2.1.5"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
@@ -4428,7 +4428,7 @@ __metadata:
     "@k9-sak-web/types": "npm:*"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.17.2"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
     formik: "npm:2.4.6"
@@ -4620,7 +4620,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/ft-form-hooks": "npm:^6.2.4"
     "@navikt/ft-form-validators": "npm:^3.1.7"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.13"
@@ -4658,7 +4658,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     classnames: "npm:2.5.1"
     lodash: "npm:4.17.21"
     react: "npm:19.0.0"
@@ -4738,7 +4738,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/ft-fakta-beregning": "npm:^8.4.0"
     "@navikt/ft-form-hooks": "npm:^6.2.4"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.2.4"
     "@navikt/ft-ui-komponenter": "npm:^3.1.8"
     "@sentry/browser": "npm:9.5.0"
@@ -5108,9 +5108,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:^7.2.7":
-  version: 7.2.7
-  resolution: "@navikt/ft-plattform-komponenter@npm:7.2.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F7.2.7%2F03a32bd08dc51f06edadbc1dd488fc9d90ecc030"
+"@navikt/ft-plattform-komponenter@npm:^7.2.8":
+  version: 7.2.8
+  resolution: "@navikt/ft-plattform-komponenter@npm:7.2.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F7.2.8%2F81737085510a2ab83f8b55e0931e3a3b18ffdfa0"
   dependencies:
     "@navikt/aksel-icons": "npm:7.17.0"
     "@navikt/ds-css": "npm:7.17.0"
@@ -5127,7 +5127,7 @@ __metadata:
     prop-types: 15.8.1
     react: 19.0.0
     react-dom: 19.0.0
-  checksum: 10/6141bd490ed625cd23aadc79e72933ae3e3f7e38a94ac382191a9a9bb243e2905f4ff87b49df6bc3eb4aa37fb34d8c00eecac17dd63de819a997250fe96173ba
+  checksum: 10/32731c28f334e65ec1ed824e6581e4441192c8b4dcb0c0285156f9aad4e8deb470bc25ce997be95968d037d0b9c32e3d7c116544a51f957c7ddaf60a3054bee6
   languageName: node
   linkType: hard
 
@@ -13565,7 +13565,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/ds-tailwind": "npm:^7.17.0"
     "@navikt/familie-endringslogg": "npm:14.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
     "@playwright/test": "npm:^1.51.0"
     "@popperjs/core": "npm:2.11.8"
     "@sentry/browser": "npm:9.5.0"

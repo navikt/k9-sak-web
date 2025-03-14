@@ -40,7 +40,7 @@
     "@navikt/ds-react": "7.17.2",
     "@navikt/ft-fakta-beregning": "^8.4.0",
     "@navikt/ft-form-hooks": "^6.2.4",
-    "@navikt/ft-plattform-komponenter": "^7.2.7",
+    "@navikt/ft-plattform-komponenter": "^7.2.8",
     "@navikt/ft-prosess-beregningsgrunnlag": "^8.2.4",
     "@navikt/ft-ui-komponenter": "^3.1.8",
     "@sentry/browser": "9.5.0",
