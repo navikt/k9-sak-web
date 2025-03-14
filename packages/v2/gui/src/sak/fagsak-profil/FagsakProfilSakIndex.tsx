@@ -1,18 +1,13 @@
-import React, { ReactNode } from 'react';
+import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { type ReactNode } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-
 import FagsakProfile from './components/FagsakProfile';
-import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
   },
   cache,
 );
@@ -20,10 +15,9 @@ const intl = createIntl(
 interface OwnProps {
   saksnummer: string;
   fagsakYtelseType: FagsakYtelsesType;
-  fagsakStatus: KodeverkMedNavn;
+  fagsakStatus: string;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
-  dekningsgrad?: number;
 }
 
 const FagsakProfilSakIndex = ({
@@ -32,7 +26,6 @@ const FagsakProfilSakIndex = ({
   fagsakStatus,
   renderBehandlingMeny,
   renderBehandlingVelger,
-  dekningsgrad,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <FagsakProfile
@@ -41,7 +34,6 @@ const FagsakProfilSakIndex = ({
       fagsakStatus={fagsakStatus}
       renderBehandlingMeny={renderBehandlingMeny}
       renderBehandlingVelger={renderBehandlingVelger}
-      dekningsgrad={dekningsgrad}
     />
   </RawIntlProvider>
 );
