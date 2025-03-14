@@ -91,12 +91,12 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
                     <Table.DataCell>{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
                     <Table.DataCell>{antallBarn}</Table.DataCell>
                     <Table.DataCell>
-                      {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : ''}
+                      {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
                     </Table.DataCell>
-                    <Table.DataCell /> {/* Rapportert inntekt */}
-                    <Table.DataCell /> {/* Dager */}
-                    <Table.DataCell /> {/* Utbetaling */}
-                    <Table.DataCell /> {/* Status */}
+                    <Table.DataCell />
+                    <Table.DataCell />
+                    <Table.DataCell />
+                    <Table.DataCell />
                   </Table.ExpandableRow>
                 );
               })}
