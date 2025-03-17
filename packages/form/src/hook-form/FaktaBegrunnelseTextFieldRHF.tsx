@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';

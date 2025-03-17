@@ -1,6 +1,6 @@
-import { FagsakPerson, Kodeverk } from '@k9-sak-web/types';
-import { Periode } from './Periode';
-import { Soknad } from './Soknad';
+import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { Periode } from './Periode';
+import type { Soknad } from './Soknad';
 
 interface FixedMedlemskapPerioder {
   fom: string;
@@ -18,8 +18,8 @@ export interface Foreldre {
 export type StatusForBorgerFaktaPanelFormState = {
   erEosBorger: boolean;
   isBorgerAksjonspunktClosed: boolean;
-  oppholdsrettVurdering: boolean;
-  lovligOppholdVurdering: boolean;
+  oppholdsrettVurdering?: boolean;
+  lovligOppholdVurdering?: boolean;
   apKode: string;
 };
 
@@ -42,12 +42,12 @@ export type PerioderMedMedlemskapFaktaPanelFormState = {
   fixedMedlemskapPerioder?: FixedMedlemskapPerioder[];
   hasPeriodeAksjonspunkt?: boolean;
   isPeriodAksjonspunktClosed?: boolean;
-  medlemskapManuellVurderingType: Kodeverk;
+  medlemskapManuellVurderingType: string;
 };
 
 export type OppholdInntektOgPerioderFormState = {
   soknad: Soknad;
-  person: FagsakPerson;
+  person: PersonDto;
   gjeldendeFom: string;
   perioder: Periode[];
   oppholdInntektOgPeriodeForm: OppholdInntektOgPeriodeFormState;
