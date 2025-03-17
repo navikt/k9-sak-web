@@ -192,12 +192,26 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
       {!readOnly && (
         <Alert variant={'warning'}>
           <Heading spacing size="xsmall" level="3">
-            Vurder overlappende perioder med annen sak
+            Søker har overlappende perioder med en annen sak
           </Heading>
-          <BodyShort>
-            Søker har overlappende perioder i uttak med annen sak. Fordel uttaksgrad i begge saker, så den totale
-            uttaksgraden ikke overstiger 100 %.
-          </BodyShort>
+          <List size="small" className={`asdf ${styles['vurderOverlappendeSakAPListe']}`}>
+            <List.Item>Reserver den tilhørende saken</List.Item>
+            <List.Item>
+              Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
+              <List size="small" className={`asdf ${styles['noOverlappendeMargin']}`}>
+                <List.Item>Opplysninger fra bruker, vet vi hva han eller hun vil?</List.Item>
+                <List.Item>
+                  Skal det være tilgjengelig uttak til andre på ett av barna? Det vil ofte lønne seg å innvilge på den
+                </List.Item>
+                <List.Item>nyeste saken, mtp beregning og feriepenger.</List.Item>
+              </List>
+            </List.Item>
+            <List.Item>Er du usikker, må du kontakte bruker for avklaring.</List.Item>
+            <List.Item>
+              Når du har vurdert uttak i denne saken, går du inn i den andre saken og vurderer uttaket for samme
+              periode.
+            </List.Item>
+          </List>
         </Alert>
       )}
 
@@ -258,6 +272,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                   readOnly={readOnly}
                   {...register('begrunnelse')}
                   error={errors.begrunnelse?.message}
+                  // onChange={e => setValue('begrunnelse', e.target.value)}
                 />
                 {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
                 {!sakAvsluttet && (

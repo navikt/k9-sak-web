@@ -47,3 +47,11 @@
 .uttaksPeriodeEndret {
   color: var(--a-orange-600);
 }
+
+.vurderOverlappendeSakAPListe :where(ul, li) {
+  margin-block: 0;
+}
+
+.noOverlappendeMargin ul {
+  margin-block: 0 !important;
+}
