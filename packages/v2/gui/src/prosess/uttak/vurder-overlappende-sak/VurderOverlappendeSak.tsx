@@ -194,7 +194,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
           <Heading spacing size="xsmall" level="3">
             Søker har overlappende perioder med en annen sak
           </Heading>
-          <List size="small" className={`asdf ${styles['vurderOverlappendeSakAPListe']}`}>
+          <List size="small" className={styles['vurderOverlappendeSakApListe']}>
             <List.Item>Reserver den tilhørende saken</List.Item>
             <List.Item>
               Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
