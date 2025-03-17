@@ -1,0 +1,11 @@
+{
+  "name": "@k9-sak-web/fakta-sykdom-og-opplæring",
+  "version": "1.0.0",
+  "module": "src/SykdomOgOpplæringIndex.tsx",
+  "main": "src/SykdomOgOpplæringIndex.tsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "19.0.0"
+  }
+}

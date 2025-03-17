@@ -1,4 +1,3 @@
-import React from 'react';
 import { InstitusjonPeriode, InstitusjonVurdering } from '@k9-sak-web/types';
 import InstitusjonOversikt from './InstitusjonOversikt';
 

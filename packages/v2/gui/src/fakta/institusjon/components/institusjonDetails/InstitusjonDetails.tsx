@@ -7,17 +7,19 @@ import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/gener
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
-import InstitusjonForm, { type SubmitValues } from './InstitusjonForm.js';
+import InstitusjonForm from './InstitusjonForm.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
   readOnly: boolean;
-  løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
-const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps) => {
+const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
-  const visEndreLink = !readOnly && vurdering.resultat !== InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK;
+  const erManueltVurdert =
+    vurdering.resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT ||
+    vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT;
+  const visEndreLink = !readOnly && erManueltVurdert;
 
   return (
     <DetailView
@@ -49,7 +51,6 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
         <InstitusjonForm
           vurdering={vurdering}
           readOnly={readOnly}
-          løsAksjonspunkt={løsAksjonspunkt}
           avbrytRedigering={() => setRedigering(false)}
           erRedigering={redigering}
         />

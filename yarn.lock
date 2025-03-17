@@ -4451,6 +4451,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/fakta-sykdom-og-opplæring@workspace:packages/fakta-sykdom-og-opplæring":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-sykdom-og-opplæring@workspace:packages/fakta-sykdom-og-opplæring"
+  dependencies:
+    react: "npm:19.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/fakta-utenlandsopphold@npm:1.0.0, @k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold"

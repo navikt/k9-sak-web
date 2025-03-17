@@ -10,18 +10,16 @@ import {
 
 import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
-import type { SubmitValues } from './components/institusjonDetails/InstitusjonForm.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 
-interface OwnProps {
+export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
   vurderinger: InstitusjonVurderingDto[];
   readOnly: boolean;
-  løsAksjonspunkt: (payload: SubmitValues) => void;
 }
 
-const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
+const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly }: FaktaInstitusjonProps) => {
   const [valgtPeriode, setValgtPeriode] = useState<InstitusjonPerioderDtoMedResultat | null>(null);
 
   const vurderingMap = useMemo(() => new Map(vurderinger.map(v => [v.journalpostId.journalpostId, v])), [vurderinger]);
@@ -76,9 +74,7 @@ const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly, løsAksjonspun
         navigationSection={() => <InstitusjonNavigation perioder={perioderMappet} setValgtPeriode={setValgtPeriode} />}
         showDetailSection
         detailSection={() =>
-          valgtVurdering ? (
-            <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} løsAksjonspunkt={løsAksjonspunkt} />
-          ) : null
+          valgtVurdering ? <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} /> : null
         }
       />
     </div>

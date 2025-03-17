@@ -5,6 +5,8 @@ import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
+import { SykdomOgOpplæringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/SykdomOgOpplæringPanelDef';
+import { useContext } from 'react';
 
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',
@@ -15,7 +17,7 @@ interface InstitusjonFormValues {
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: boolean;
 }
 
-export interface SubmitValues {
+export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
   begrunnelse: string;
   journalpostId: {
@@ -27,11 +29,11 @@ interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
   readOnly: boolean;
   erRedigering: boolean;
-  løsAksjonspunkt: (payload: SubmitValues) => void;
   avbrytRedigering: () => void;
 }
 
-const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering, løsAksjonspunkt }: OwnProps) => {
+const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }: OwnProps) => {
+  const { løsAksjonspunkt9300 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<InstitusjonFormValues>({
     defaultValues: {
       begrunnelse: '',
@@ -40,7 +42,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering, 
   });
 
   const handleSubmit = (values: InstitusjonFormValues) => {
-    løsAksjonspunkt({
+    løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON],
       begrunnelse: values[InstitusjonFormFields.BEGRUNNELSE],
       journalpostId: vurdering.journalpostId,

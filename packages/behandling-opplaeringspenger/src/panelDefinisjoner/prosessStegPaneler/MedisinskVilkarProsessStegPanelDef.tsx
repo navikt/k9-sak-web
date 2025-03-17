@@ -22,9 +22,15 @@ class PanelDef extends ProsessStegPanelDef {
     return <SykdomProsessIndex {...props} perioder={perioder} />;
   };
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.MEDISINSK_VILKAAR,
+    aksjonspunktCodes.VURDER_INSTITUSJON,
+    aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING,
+    aksjonspunktCodes.VURDER_NØDVENDIGHET,
+    aksjonspunktCodes.VURDER_REISETID,
+  ];
 
-  getVilkarKoder = () => [vilkarType.LANGVARIG_SYKDOM];
+  getVilkarKoder = () => [vilkarType.LANGVARIG_SYKDOM, vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 
@@ -34,7 +40,7 @@ class PanelDef extends ProsessStegPanelDef {
 class MedisinskVilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.MEDISINSK_VILKAR;
 
-  getTekstKode = () => 'Behandlingspunkt.MedisinskVilkar';
+  getTekstKode = () => 'Behandlingspunkt.SykdomOgOpplaering';
 
   getPanelDefinisjoner = () => [new PanelDef()];
 }
