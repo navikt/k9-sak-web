@@ -14,8 +14,6 @@ import {
   Modal,
   DatePicker,
   VStack,
-  ReadMore,
-  List,
 } from '@navikt/ds-react';
 import { PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated';
 import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
@@ -74,7 +72,7 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
           legend={
             <HStack as={'span'} align={'center'} gap={'space-8'}>
               <BodyShort size="small" as="span" weight="semibold">
-                Vurder uttak for perioden{' '}
+                Vurder uttak i denne saken for perioden{' '}
                 <BodyShort
                   size="small"
                   as="span"
@@ -132,27 +130,6 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
             />
           </div>
         )}
-
-        <ReadMore header="Hva betyr de ulike valgene?" size="small">
-          Her tar du valg for hvordan uttaket skal være i denne saken.
-          <List size="small">
-            <List.Item>
-              Ingen uttak i perioden: Dette valget medfører at du nuller ut uttaket i den overlappende perioden. Velg
-              dette hvis du ønsker at bruker skal få alt uttak/utbetaling i den andre saken.
-            </List.Item>
-            <List.Item>
-              Vanlig uttak i perioden: Ved å velge dette, bestemmer du at denne saken skal graderes som vanlig ut fra
-              informasjon om arbeidstid, inntekt, tilsyn osv. Du velger altså å la den gå sin gang, uten å bli påvirket
-              av den overlappende saken.
-            </List.Item>
-            <List.Item>
-              Tilpass uttaksgrad: Her kan du manuelt bestemme hvor mange prosent pleiepenger bruker skal få i saken.
-              Dette valget brukes unntaksvis, da det vil medføre at man må overstyre hver gang det kommer en endring.
-              Man må også være mer obs på hvilken uttaksgrad den andre saken har, spesielt hvis ikke den også settes
-              manuelt.
-            </List.Item>
-          </List>
-        </ReadMore>
       </VStack>
 
       {kanSplittes && (
