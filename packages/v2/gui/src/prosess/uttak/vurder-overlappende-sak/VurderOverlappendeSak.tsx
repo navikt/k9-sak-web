@@ -4,7 +4,19 @@ import * as yup from 'yup';
 import { useQuery } from '@tanstack/react-query';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, BodyShort, Box, Button, Heading, HStack, List, Loader, Textarea, VStack } from '@navikt/ds-react';
+import {
+  Alert,
+  BodyShort,
+  Box,
+  Button,
+  Heading,
+  HStack,
+  List,
+  Loader,
+  ReadMore,
+  Textarea,
+  VStack,
+} from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -253,6 +265,27 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     );
                   })}
                 </Alert>
+
+                <ReadMore header="Hva betyr de ulike valgene?" size="small">
+                  Her tar du valg for hvordan uttaket skal være i denne saken.
+                  <List size="small">
+                    <List.Item>
+                      Ingen uttak i perioden: Dette valget medfører at du nuller ut uttaket i den overlappende perioden.
+                      Velg dette hvis du ønsker at bruker skal få alt uttak/utbetaling i den andre saken.
+                    </List.Item>
+                    <List.Item>
+                      Vanlig uttak i perioden: Ved å velge dette, bestemmer du at denne saken skal graderes som vanlig
+                      ut fra informasjon om arbeidstid, inntekt, tilsyn osv. Du velger altså å la den gå sin gang, uten
+                      å bli påvirket av den overlappende saken.
+                    </List.Item>
+                    <List.Item>
+                      Tilpass uttaksgrad: Her kan du manuelt bestemme hvor mange prosent pleiepenger bruker skal få i
+                      saken. Dette valget brukes unntaksvis, da det vil medføre at man må overstyre hver gang det kommer
+                      en endring. Man må også være mer obs på hvilken uttaksgrad den andre saken har, spesielt hvis ikke
+                      den også settes manuelt.
+                    </List.Item>
+                  </List>
+                </ReadMore>
 
                 {fields.map((field, index) => {
                   return (
