@@ -272,7 +272,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                   readOnly={readOnly}
                   {...register('begrunnelse')}
                   error={errors.begrunnelse?.message}
-                  // onChange={e => setValue('begrunnelse', e.target.value)}
                 />
                 {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
                 {!sakAvsluttet && (
