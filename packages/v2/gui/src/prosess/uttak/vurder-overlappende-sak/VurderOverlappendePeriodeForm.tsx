@@ -72,7 +72,7 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
           legend={
             <HStack as={'span'} align={'center'} gap={'space-8'}>
               <BodyShort size="small" as="span" weight="semibold">
-                Vurder uttak for perioden{' '}
+                Vurder uttak i denne saken for perioden{' '}
                 <BodyShort
                   size="small"
                   as="span"
