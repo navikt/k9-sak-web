@@ -4475,7 +4475,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.67.3"
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.8.3"
-    date-fns: "npm:4.1.0"
+    dayjs: "npm:^1.11.13"
     object-hash: "npm:^3.0.0"
     react: "npm:19.0.0"
     react-hook-form: "npm:7.54.2"
@@ -9424,7 +9424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.13":
+"dayjs@npm:1.11.13, dayjs@npm:^1.11.13":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: 10/7374d63ab179b8d909a95e74790def25c8986e329ae989840bacb8b1888be116d20e1c4eee75a69ea0dfbae13172efc50ef85619d304ee7ca3c01d5878b704f5
