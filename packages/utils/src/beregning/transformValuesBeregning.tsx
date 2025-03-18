@@ -15,7 +15,7 @@ const transformBeregningValues = (aksjonspunktData, omitBegrunnelse?: boolean) =
     const nyData = { ...data };
     nyData.kode = mapTilAksjonspunktkode(data.kode);
     if (omitBegrunnelse) {
-      nyData.begrunnelse = '';
+      nyData.begrunnelse = 'Se i Kalkulus for begrunnelser.';
     }
     return nyData;
   });
