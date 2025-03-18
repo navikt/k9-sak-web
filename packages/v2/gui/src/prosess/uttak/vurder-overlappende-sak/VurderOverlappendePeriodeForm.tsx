@@ -1,7 +1,6 @@
 import { useEffect, useState, type FC } from 'react';
 import { useFormContext, type FieldArrayWithId, type UseFieldArrayReplace } from 'react-hook-form';
 import dayjs from 'dayjs';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { ScissorsIcon, TrashIcon } from '@navikt/aksel-icons';
 import {
   Button,
@@ -14,8 +13,6 @@ import {
   Modal,
   DatePicker,
   VStack,
-  ReadMore,
-  List,
 } from '@navikt/ds-react';
 import { PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated';
 import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
@@ -24,19 +21,12 @@ import styles from './VurderOverlappendeSak.module.css';
 
 interface Props {
   index: number;
-  originaleOverlappendePerioder: { fom: string; tom: string }[];
   readOnly: boolean;
   fields: FieldArrayWithId<VurderOverlappendeSakFormData, 'perioder', 'id'>[];
   replace: UseFieldArrayReplace<VurderOverlappendeSakFormData, 'perioder'>;
 }
 
-const VurderOverlappendePeriodeForm: FC<Props> = ({
-  index,
-  originaleOverlappendePerioder,
-  readOnly,
-  fields,
-  replace,
-}) => {
+const VurderOverlappendePeriodeForm: FC<Props> = ({ index, readOnly, fields, replace }) => {
   const {
     watch,
     formState: { errors },
@@ -44,17 +34,17 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
     setValue,
     getValues,
   } = useFormContext<VurderOverlappendeSakFormData>();
-  const fom = getValues(`perioder.${index}.periode.fom`);
-  const tom = getValues(`perioder.${index}.periode.tom`);
+  const fom = dayjs(getValues(`perioder.${index}.periode.fom`));
+  const tom = dayjs(getValues(`perioder.${index}.periode.tom`));
   const { splittPeriode, slettPeriode } = useOverlappendeSakUtils(fields, replace);
   const [visDatoVelger, setVisDatovelger] = useState<boolean>(false);
   const [skalViseSkjema, setSkalViseSkjema] = useState<boolean>(false);
 
-  const harSplittedePerioder = !originaleOverlappendePerioder.some(originalPeriode => {
-    return dayjs(originalPeriode.fom).isSame(fom) && dayjs(originalPeriode.tom).isSame(tom);
-  });
-  const kanSlettes = harSplittedePerioder && !readOnly;
-  const kanSplittes = !dayjs(fom).isSame(tom) && !readOnly;
+  const harTilstøtendePeriode =
+    (index < fields.length - 1 && tom.isSame(dayjs(fields[index + 1]?.periode.fom).subtract(1, 'day'))) ||
+    (index > 0 && fom.isSame(dayjs(fields[index - 1]?.periode.tom).add(1, 'day')));
+  const kanSlettes = harTilstøtendePeriode && !readOnly;
+  const kanSplittes = !fom.isSame(tom) && !readOnly;
   const watchValg = watch(`perioder.${index}.valg`);
   const erEndretAutomatisk = getValues(`perioder.${index}.endretAutomatisk`);
   const [velgDato, setVelgDato] = useState<number>(0);
@@ -80,7 +70,9 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
                   as="span"
                   weight="semibold"
                   className={erEndretAutomatisk ? styles['uttaksPeriodeEndret'] : ''}
-                >{`${formatPeriod(fom || '', tom || '')}`}</BodyShort>
+                >
+                  {fom.format('DD.MM.YYYY') || ''} - {tom.format('DD.MM.YYYY') || ''}
+                </BodyShort>
               </BodyShort>
               {kanSplittes && (
                 <Button
@@ -149,9 +141,9 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
             <Modal.Body>
               <DatePicker.Standalone
                 dropdownCaption
-                defaultMonth={new Date(fom)}
+                defaultMonth={fom.toDate()}
                 mode="range"
-                disabled={[{ before: new Date(fom) }, { after: new Date(tom) }]}
+                disabled={[{ before: fom.toDate() }, { after: tom.toDate() }]}
                 onSelect={(val: undefined | { from: Date | undefined; to?: Date | undefined }) => {
                   if (velgDato === 0) setVelgDato(1);
                   if (velgDato === 1) {

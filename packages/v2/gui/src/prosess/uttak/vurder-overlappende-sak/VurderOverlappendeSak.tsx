@@ -73,9 +73,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   const [readOnly, setReadOnly] = useState<boolean>(erAksjonspunktReadOnly(aksjonspunkt));
   const [rediger, setRediger] = useState<boolean>(false);
   const sakAvsluttet = status === 'AVSLU';
-  const [originaleOverlappendePerioder, setOriginaleOverlappendePerioder] = useState<{ fom: string; tom: string }[]>(
-    [],
-  );
 
   const {
     data: egneOverlappendeSaker,
@@ -152,7 +149,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
     if (overlappendeSuccess && egneOverlappendeSaker) {
       const newValues = buildInitialValues(egneOverlappendeSaker);
-      setOriginaleOverlappendePerioder(egneOverlappendeSaker.perioderMedOverlapp.map(periode => periode.periode));
       reset(newValues);
     }
   }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
@@ -292,7 +288,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     <VurderOverlappendePeriodeForm
                       key={field.id}
                       index={index}
-                      originaleOverlappendePerioder={originaleOverlappendePerioder}
                       readOnly={readOnly}
                       fields={fields}
                       replace={replace}
