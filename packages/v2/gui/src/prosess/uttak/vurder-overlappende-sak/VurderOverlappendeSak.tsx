@@ -106,7 +106,10 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
             .when('valg', (valg, schema) => {
               return valg.includes(PeriodeMedOverlappValg.JUSTERT_GRAD)
-                ? schema.required('Søkers uttaksgrad må fylles ut').min(0, 'Minimum 0%').max(100, 'Maks 100%')
+                ? schema
+                    .required('Søkers uttaksgrad må fylles ut')
+                    .min(1, 'Minimum 1%, bruk "Ingen uttak i perioden" for å sette uttaksgrad til 0.')
+                    .max(100, 'Maks 100%')
                 : schema.notRequired();
             }),
           saksnummer: yup.array(yup.string().required()).required(),
