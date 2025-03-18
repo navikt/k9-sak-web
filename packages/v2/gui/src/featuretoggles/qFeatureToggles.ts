@@ -32,4 +32,5 @@ export const qFeatureToggles = {
   BRUK_V2_VILKAR_OVERSTYRING: true,
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
   OPPLAERINGSPENGER: false,
+  FJERN_BEGRUNNELSE_PROSESS_BEREGNING: true,
 } satisfies FeatureToggles;

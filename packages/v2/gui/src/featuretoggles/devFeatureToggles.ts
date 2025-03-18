@@ -31,4 +31,5 @@ export const devFeatureToggles = {
   OMS_PUNSJSTRIPE: false,
   OVERSTYR_BEREGNING: false,
   UTVIDET_VARSELFELT: false,
+  FJERN_BEGRUNNELSE_PROSESS_BEREGNING: true,
 } satisfies FeatureToggles;

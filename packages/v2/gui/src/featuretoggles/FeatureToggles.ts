@@ -27,4 +27,5 @@ export interface FeatureToggles {
   NY_INNTEKT_EGET_PANEL: boolean;
   BRUK_V2_FAKTA_INSTITUSJON: boolean;
   BRUK_V2_VILKAR_OVERSTYRING: boolean;
+  FJERN_BEGRUNNELSE_PROSESS_BEREGNING: boolean;
 }
