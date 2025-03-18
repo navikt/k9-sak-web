@@ -8,7 +8,8 @@ import { userEvent, within, expect, fn } from '@storybook/test';
 import { HStack } from '@navikt/ds-react';
 import { stdDato, visnDato } from '../../../utils/formatters';
 import dayjs from 'dayjs';
-import '../../../../../config/dayjsConfig';
+
+dayjs.locale('nb');
 
 const fom1 = dayjs().subtract(4, 'week');
 const tom1 = dayjs().subtract(3, 'week');
