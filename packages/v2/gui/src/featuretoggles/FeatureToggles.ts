@@ -1,4 +1,4 @@
-export interface XFeatureToggles {
+export interface FeatureToggles {
   BRUK_V2_MELDINGER: boolean;
   KLAGE_KABAL: boolean;
   VARSELTEKST: boolean;

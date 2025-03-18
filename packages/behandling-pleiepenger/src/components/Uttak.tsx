@@ -10,7 +10,7 @@ import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-ove
 import { OverstyringUttakRequest } from '../types';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { VStack } from '@navikt/ds-react';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 interface UttakProps {
   uuid: string;

@@ -18,7 +18,7 @@ import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
 import styles from './vedtakForm.module.css';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { fieldnames } from '../konstanter';
 import { CustomFormikProps } from './brev/CustomFormikProps';
 

@@ -436,7 +436,6 @@
   "packages/rest-api/src/requestApi/requestRunner.spec.ts",
   "packages/sak-aktor/src/AktorSakIndex.stories.tsx",
   "packages/sak-aktor/src/components/AktoerGrid.tsx",
-  "packages/sak-app/src/app/AppConfigResolver.tsx",
   "packages/sak-app/src/app/ErrorBoundary.tsx",
   "packages/sak-app/src/app/components/Dekorator.tsx",
   "packages/sak-app/src/app/feilhandtering/ErrorFormatter.ts",

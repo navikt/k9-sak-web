@@ -17,7 +17,7 @@ import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkebob
 import dayjs from 'dayjs';
 import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
-//import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+//import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 //import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
 import { HelpText, HStack, Switch } from '@navikt/ds-react';
 
