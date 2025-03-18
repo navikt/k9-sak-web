@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+/* import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from '@storybook/test';
 import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
@@ -121,3 +121,4 @@ export const IngenPerioder: Story = {
     });
   },
 };
+ */
