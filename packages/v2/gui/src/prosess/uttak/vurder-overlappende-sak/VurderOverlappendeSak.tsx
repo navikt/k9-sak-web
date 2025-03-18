@@ -170,7 +170,8 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
               fom: format(new Date(periode.periode.fom), 'yyyy-MM-dd') || '',
               tom: format(new Date(periode.periode.tom), 'yyyy-MM-dd') || '',
             },
-            søkersUttaksgrad: periode.søkersUttaksgrad,
+            søkersUttaksgrad:
+              periode.valg === PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN ? 0 : periode.søkersUttaksgrad,
           })),
         },
       ],
