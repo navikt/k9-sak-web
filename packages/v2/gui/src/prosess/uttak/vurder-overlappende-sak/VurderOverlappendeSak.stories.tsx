@@ -1,27 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { AksjonspunktDto, BehandlingDto, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-// import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
-import VurderOverlappendeSak from './VurderOverlappendeSak';
-import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
-import {
-  // formatDate,
-  subDays,
-  subWeeks,
-} from 'date-fns';
-import {
-  // userEvent,
-  // within,
-  // expect,
-  // fireEvent,
-  fn,
-} from '@storybook/test';
-import { HStack } from '@navikt/ds-react';
+import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 
-const fom1 = subWeeks(new Date(), 4);
-const tom1 = subWeeks(new Date(), 3);
-const fom2 = subWeeks(new Date(), 2);
-const tom2 = subWeeks(new Date(), 1);
+import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
+import { userEvent, within, expect, fn } from '@storybook/test';
+import { HStack } from '@navikt/ds-react';
+import { stdDato, visnDato } from '../../../utils/formatters';
+import dayjs from 'dayjs';
+import '../../../../../config/dayjsConfig';
+
+const fom1 = dayjs().subtract(4, 'week');
+const tom1 = dayjs().subtract(3, 'week');
+const fom2 = dayjs().subtract(2, 'week');
+const tom2 = dayjs().subtract(1, 'week');
+const splittFom = fom1.add(2, 'day');
+const splittTom = splittFom.add(2, 'day');
 
 const førstePeriodeMedOverlapp = {
   periode: { fom: fom1.toISOString(), tom: tom1.toISOString() },
@@ -59,45 +53,107 @@ const egneOverlappendeSakerDtoer = [
       {
         fastsattUttaksgrad: 60.0,
         saksbehandler: 'Sara Sak',
-        vurdertTidspunkt: subDays(new Date(), 2).toISOString(),
+        vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+        valg: 'JUSTERT_GRAD',
         ...førstePeriodeMedOverlapp,
       },
       {
         fastsattUttaksgrad: 70.0,
         saksbehandler: 'Sara Sak',
-        vurdertTidspunkt: subDays(new Date(), 2).toISOString(),
+        valg: 'JUSTERT_GRAD',
+        vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+        ...andrePeriodeMedOverlapp,
+      },
+    ],
+  },
+  {
+    // array index 2 matcher med sak med uuid 2 i testdataene
+    perioderMedOverlapp: [
+      {
+        fastsattUttaksgrad: 50.0,
+        saksbehandler: 'Sara Sak',
+        vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+        valg: 'JUSTERT_GRAD',
+        ...førstePeriodeMedOverlapp,
+      },
+      {
+        fastsattUttaksgrad: 30.0,
+        saksbehandler: 'Sara Sak',
+        valg: 'JUSTERT_GRAD',
+        vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
         ...andrePeriodeMedOverlapp,
       },
     ],
   },
 ];
 
-// const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
-//   behandlingId: '123',
-//   behandlingVersjon: 1,
-//   bekreftedeAksjonspunktDtoer: [
-//     {
-//       '@type': '9292',
-//       kode: '9292',
-//       begrunnelse: 'Dette er en grundig begrunnelse',
-//       perioder: [
-//         {
-//           // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
-//           begrunnelse: 'Dette er en grundig begrunnelse',
-//           periode: { fom: fom1.toISOString(), tom: tom1.toISOString() },
-//           valg: 'JUSTERT_GRAD',
-//           søkersUttaksgrad: 40,
-//         },
-//         {
-//           begrunnelse: 'Dette er en grundig begrunnelse',
-//           periode: { fom: fom2.toISOString(), tom: tom2.toISOString() },
-//           valg: 'JUSTERT_GRAD',
-//           søkersUttaksgrad: 60,
-//         },
-//       ],
-//     },
-//   ],
-// };
+const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
+  behandlingId: '123',
+  behandlingVersjon: 1,
+  bekreftedeAksjonspunktDtoer: [
+    {
+      '@type': '9292',
+      kode: '9292',
+      begrunnelse: 'Dette er en grundig begrunnelse',
+      perioder: [
+        {
+          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+          begrunnelse: 'Dette er en grundig begrunnelse',
+          periode: { fom: stdDato(fom1), tom: stdDato(tom1) },
+          valg: 'JUSTERT_GRAD',
+          søkersUttaksgrad: 40,
+        },
+        {
+          begrunnelse: 'Dette er en grundig begrunnelse',
+          periode: { fom: stdDato(fom2), tom: stdDato(tom2) },
+          valg: 'JUSTERT_GRAD',
+          søkersUttaksgrad: 60,
+        },
+      ],
+    },
+  ],
+};
+
+const bekreftAksjonspunktMedSplittRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
+  behandlingId: '123',
+  behandlingVersjon: 1,
+  bekreftedeAksjonspunktDtoer: [
+    {
+      '@type': '9292',
+      kode: '9292',
+      begrunnelse: 'Dette er en grundig begrunnelse',
+      perioder: [
+        {
+          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+          begrunnelse: 'Dette er en grundig begrunnelse',
+          periode: { fom: stdDato(fom1), tom: stdDato(splittFom.subtract(1, 'day')) },
+          valg: 'JUSTERT_GRAD',
+          søkersUttaksgrad: 40,
+        },
+        {
+          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+          begrunnelse: 'Dette er en grundig begrunnelse',
+          periode: { fom: stdDato(splittFom), tom: stdDato(splittTom) },
+          valg: 'JUSTERT_GRAD',
+          søkersUttaksgrad: 40,
+        },
+        {
+          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+          begrunnelse: 'Dette er en grundig begrunnelse',
+          periode: { fom: stdDato(splittTom.add(1, 'day')), tom: stdDato(tom1) },
+          valg: 'JUSTERT_GRAD',
+          søkersUttaksgrad: 40,
+        },
+        {
+          begrunnelse: 'Dette er en grundig begrunnelse',
+          periode: { fom: stdDato(fom2), tom: stdDato(tom2) },
+          valg: 'INGEN_JUSTERING',
+          søkersUttaksgrad: undefined,
+        },
+      ],
+    },
+  ],
+};
 
 const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer as EgneOverlappendeSakerDto[]);
 const meta = {
@@ -111,7 +167,7 @@ const meta = {
 type Story = StoryObj<typeof meta>;
 
 const behandling: Omit<BehandlingDto, 'uuid' | 'status'> = {
-  opprettet: subDays(new Date(), 5).toISOString(),
+  opprettet: dayjs().subtract(5, 'day').toISOString(),
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   type: 'BT-002',
   versjon: 1,
@@ -133,6 +189,12 @@ const løstBehandling: BehandlingDto = {
 const avsluttetBehandling: BehandlingDto = {
   uuid: '1', // match med array index for egneOverlappendeSaker endepunktet for å returnere riktig overlappende saker
   status: 'AVSLU',
+  ...behandling,
+};
+
+const redigerBehandling: BehandlingDto = {
+  uuid: '2', // match med array index for egneOverlappendeSaker endepunktet for å returnere riktig overlappende saker
+  status: 'UTRED',
   ...behandling,
 };
 
@@ -174,42 +236,210 @@ const løstAksjonspunktFerdigstilt: AksjonspunktDto = {
 
 const oppdaterBehandling = fn();
 
-// const feltEnLabel = `Sett uttaksgrad i prosent for perioden ${formatDate(fom1, 'dd.MM.yyyy')} - ${formatDate(tom1, 'dd.MM.yyyy')}`;
-// const feltToLabel = `Sett uttaksgrad i prosent for perioden ${formatDate(fom2, 'dd.MM.yyyy')} - ${formatDate(tom2, 'dd.MM.yyyy')}`;
+const vurderLabel = 'Vurder uttak i denne saken for perioden';
+
+const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${visnDato(fom1)} - ${visnDato(tom1)} Splitt periode`;
+const gruppeToNavn = `Vurder uttak i denne saken for perioden ${visnDato(fom2)} - ${visnDato(tom2)} Splitt periode`;
 
 export const Aksjonspunkt: Story = {
   args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
-  // play: async ({ args, canvasElement, step }) => {
-  //   const canvas = within(canvasElement);
+  play: async ({ canvasElement, step }) => {
+    const canvas = await within(canvasElement);
 
-  //   await step('skal ha skjema for å sette uttaksgrad for overlappende saker', async () => {
-  //     await expect(canvas.getByText('Uttaksgrad for overlappende perioder'));
-  //     await expect(await canvas.findByLabelText(feltEnLabel));
-  //     await expect(await canvas.findByLabelText(feltToLabel));
-  //   });
+    await step('skal ha infoboks med detaljer om overlappende perioder og lenker til saker med overlapp', async () => {
+      await expect(await canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }));
+      await expect(await canvas.findByText('Perioder som overlapper med sak:'));
+      await expect(await canvas.findByRole('link', { name: 'ABCDE' }));
+      await expect(await canvas.findByRole('link', { name: 'FGHIJ' }));
+    });
 
-  //   await step('skal kunne løse aksjonspunkt for overlappende saker', async () => {
-  //     /**
-  //      * .type() ser ikke ut til å oppdatere value på elementene riktig, bruker fireEvent isteden
-  //      * await userEvent.type(canvas.getByLabelText(feltEnLabel), '40');
-  //      *  */
-  //     await fireEvent.change(await canvas.getByLabelText(feltEnLabel), {
-  //       target: { value: bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.søkersUttaksgrad },
-  //     });
-  //     await fireEvent.change(await canvas.getByLabelText(feltToLabel), {
-  //       target: { value: bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[1]?.søkersUttaksgrad },
-  //     });
-  //     await fireEvent.change(await canvas.getByLabelText('Begrunnelse'), {
-  //       target: {
-  //         value: 'Dette er en grundig begrunnelse',
-  //       },
-  //     });
+    const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
+    const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
 
-  //     await userEvent.click(await canvas.getByRole('button'));
-  //     await expect(args.oppdaterBehandling).toHaveBeenCalled();
-  //     await expect(api.sisteBekreftAksjonspunktResultat).toEqual(bekreftAksjonspunktRequest);
-  //   });
-  // },
+    await step('skal ha skjema for å sette uttaksgrad for første overlappende sak', async () => {
+      await expect(await gruppeEn.findByText(vurderLabel));
+      await expect(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
+      await expect(await gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' }));
+      await expect(await gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+    });
+
+    await step('skal ha skjema for å sette uttaksgrad for andre overlappende sak', async () => {
+      await expect(await gruppeTo.findByText(vurderLabel));
+      await expect(await gruppeTo.findByRole('button', { name: 'Splitt periode' }));
+      await expect(await gruppeTo.findByRole('radio', { name: 'Ingen uttak i perioden' }));
+      await expect(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+      await expect(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await expect(await canvas.findByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    });
+  },
+  render: props => (
+    <HStack>
+      <VurderOverlappendeSak {...props} />
+    </HStack>
+  ),
+};
+
+export const LøsAksjonspunkt: Story = {
+  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
+  play: async ({ args, canvasElement, step }) => {
+    const user = userEvent.setup();
+    const canvas = await within(canvasElement);
+
+    await step('skal ha infoboks med detaljer om overlappende perioder og lenker til saker med overlapp', async () => {
+      await expect(await canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }));
+      await expect(await canvas.findByText('Perioder som overlapper med sak:'));
+      await expect(await canvas.findByRole('link', { name: 'ABCDE' }));
+      await expect(await canvas.findByRole('link', { name: 'FGHIJ' }));
+    });
+
+    const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
+    const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+
+    await step('skal ha skjema for å sette uttaksgrad for første overlappende sak', async () => {
+      await expect(await gruppeEn.findByText(vurderLabel));
+      await expect(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
+      await expect(await gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' }));
+      await expect(await gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+    });
+
+    await step('skal ha skjema for å sette uttaksgrad for andre overlappende sak', async () => {
+      await expect(await gruppeTo.findByText(vurderLabel));
+      await expect(await gruppeTo.findByRole('button', { name: 'Splitt periode' }));
+      await expect(await gruppeTo.findByRole('radio', { name: 'Ingen uttak i perioden' }));
+      await expect(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+      await expect(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+    });
+
+    await step('skal kunne løse aksjonspunkt for overlappende saker', async () => {
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.type(
+        await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }),
+        `${bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.søkersUttaksgrad}`,
+      );
+
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
+      await expect(felt2).toBeDefined();
+      if (felt2)
+        await user.type(
+          felt2,
+          `${bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[1]?.søkersUttaksgrad}`,
+        );
+
+      await user.type(
+        await canvas.findByLabelText('Begrunnelse'),
+        bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.begrunnelse || '',
+      );
+
+      await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
+      await expect(args.oppdaterBehandling).toHaveBeenCalled();
+      await expect(api.sisteBekreftAksjonspunktResultat).toEqual(bekreftAksjonspunktRequest);
+    });
+  },
+  render: props => (
+    <HStack>
+      <VurderOverlappendeSak {...props} />
+    </HStack>
+  ),
+};
+
+export const LøsAksjonspunktMedSplitt: Story = {
+  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
+  play: async ({ args, canvasElement, step }) => {
+    const user = userEvent.setup();
+    const canvas = await within(canvasElement);
+
+    await step('skal kunne plitte perioder som overlapper', async () => {
+      await step('skal kunne trykke på splitt periode-knapp', async () => {
+        await expect(await canvas.findByRole('link', { name: 'ABCDE' }));
+        await expect(await canvas.findByRole('link', { name: 'FGHIJ' }));
+        const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
+
+        await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+
+        await user.type(
+          await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }),
+          `${bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.søkersUttaksgrad}`,
+        );
+        await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+        await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
+        await expect(await canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` }));
+      });
+
+      await step('dagene før og etter perioden som skal splittes skal være disabled', async () => {
+        const dagenFør = fom1.subtract(3, 'week');
+        const dagenEtter = tom1.add(1, 'day');
+
+        if (fom1.isSame(dagenFør, 'month')) {
+          await expect(await canvas.findByRole('button', { name: `${dagenFør.format('dddd D')}` })).toBeDisabled();
+        } else {
+          await user.click(await canvas.findByRole('button', { name: 'Gå til forrige måned' }));
+          await expect(await canvas.findByRole('button', { name: `${dagenFør.format('dddd D')}` })).toBeDisabled();
+          await user.click(await canvas.findByRole('button', { name: 'Gå til neste måned' }));
+        }
+
+        if (tom1.isSame(dagenEtter, 'month')) {
+          await expect(await canvas.findByRole('button', { name: `${dagenEtter.format('dddd D')}` })).toBeDisabled();
+        } else {
+          await user.click(await canvas.findByRole('button', { name: 'Gå til neste måned' }));
+          await expect(await canvas.findByRole('button', { name: `${dagenEtter.format('dddd D')}` })).toBeDisabled();
+          await user.click(await canvas.findByRole('button', { name: 'Gå til forrige måned' }));
+        }
+      });
+
+      await step('skjemaet skal oppdatere seg når man velger en periode', async () => {
+        await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
+        await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+
+        await expect(
+          await canvas.findByRole('group', {
+            name: `Vurder uttak i denne saken for perioden ${visnDato(fom1)} - ${visnDato(splittFom.subtract(1, 'day'))} Splitt periode Slett periode Hvor kommer dette fra?`,
+          }),
+        );
+
+        await expect(
+          await canvas.findByRole('group', {
+            name: `Vurder uttak i denne saken for perioden ${visnDato(splittFom)} - ${visnDato(splittTom)} Splitt periode Slett periode Hvor kommer dette fra?`,
+          }),
+        );
+
+        await expect(
+          await canvas.findByRole('group', {
+            name: `Vurder uttak i denne saken for perioden ${visnDato(splittTom.add(1, 'day'))} - ${visnDato(tom1)} Splitt periode Slett periode Hvor kommer dette fra?`,
+          }),
+        );
+
+        await expect(
+          await canvas.findByRole('group', {
+            name: `Vurder uttak i denne saken for perioden ${visnDato(fom2)} - ${visnDato(tom2)} Splitt periode`,
+          }),
+        );
+      });
+
+      await step('Skal kunne sende inn skjemaet', async () => {
+        const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+        await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+        await user.type(
+          await canvas.findByLabelText('Begrunnelse'),
+          bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.begrunnelse || '',
+        );
+        await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
+
+        await expect(args.oppdaterBehandling).toHaveBeenCalled();
+        await expect(api.sisteBekreftAksjonspunktResultat).toEqual(bekreftAksjonspunktMedSplittRequest);
+      });
+    });
+  },
+  render: props => (
+    <HStack>
+      <VurderOverlappendeSak {...props} />
+    </HStack>
+  ),
+};
+
+export const LøstAksjonspunkt: Story = {
+  args: { behandling: løstBehandling, aksjonspunkt: løstAksjonspunkt, api, oppdaterBehandling: fn() },
+
   render: props => (
     <HStack>
       <VurderOverlappendeSak {...props} />
@@ -218,40 +448,49 @@ export const Aksjonspunkt: Story = {
 };
 
 export const LøstAksjonspunktKanRedigeres: Story = {
-  args: { behandling: løstBehandling, aksjonspunkt: løstAksjonspunkt, api, oppdaterBehandling: fn() },
-  // play: async ({ canvasElement, step }) => {
-  //   const canvas = within(canvasElement);
+  args: { behandling: redigerBehandling, aksjonspunkt: løstAksjonspunkt, api, oppdaterBehandling: fn() },
+  play: async ({ canvasElement, step }) => {
+    const user = userEvent.setup();
+    const canvas = within(canvasElement);
 
-  //   await step('skal vise lesevisning av skjema for uttaksgrad for overlappende saker', async () => {
-  //     const feltEn = await canvas.findByLabelText(feltEnLabel);
-  //     const feltTo = await canvas.findByLabelText(feltToLabel);
-  //     const begrunnelseFelt = await canvas.getByLabelText('Begrunnelse');
-  //     const knapp = await canvas.getByRole('button');
+    await step('skal vise lesevisning av skjema for uttaksgrad for overlappende saker', async () => {
+      await expect(await canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }));
 
-  //     await expect(canvas.getByText('Uttaksgrad for overlappende perioder'));
+      (await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' })).forEach(async radio => {
+        await expect(radio).toBeChecked();
+        await (await canvas.findAllByRole('radio', { name: 'Ingen uttak i perioden' })).forEach(r => user.click(r));
+        await expect(radio).toBeChecked();
+      });
 
-  //     await expect(feltEn);
-  //     await expect(await canvas.findByLabelText(feltEnLabel)).toHaveValue('60');
-  //     await expect(await canvas.findByLabelText(feltEnLabel)).toHaveAttribute('readonly');
+      await expect(
+        await canvas.findByDisplayValue(
+          egneOverlappendeSakerDtoer[redigerBehandling.uuid as unknown as number]?.perioderMedOverlapp[0]
+            ?.fastsattUttaksgrad || '',
+        ),
+      ).toHaveAttribute('readonly');
 
-  //     await expect(feltTo);
-  //     await expect(feltTo).toHaveValue('70');
-  //     await expect(feltTo).toHaveAttribute('readonly');
+      await expect(
+        await canvas.findByDisplayValue(
+          egneOverlappendeSakerDtoer[redigerBehandling.uuid as unknown as number]?.perioderMedOverlapp[1]
+            ?.fastsattUttaksgrad || '',
+        ),
+      ).toHaveAttribute('readonly');
 
-  //     await expect(begrunnelseFelt).toHaveValue('Dette er en grundig begrunnelse');
-  //     await expect(begrunnelseFelt).toHaveAttribute('readonly');
+      await expect(await canvas.findByRole('textbox', { name: 'Begrunnelse' })).toHaveAttribute('readonly');
+    });
 
-  //     await expect(knapp).toHaveTextContent('Rediger');
-  //     await userEvent.click(knapp);
-  //     await expect(feltEn).not.toHaveAttribute('readonly');
-  //     await expect(feltTo).not.toHaveAttribute('readonly');
-  //     await expect(begrunnelseFelt).not.toHaveAttribute('readonly');
+    await step('skal kunne redigere skjema for uttaksgrad for overlappende saker', async () => {
+      await user.click(await canvas.findByRole('button', { name: 'Rediger' }));
 
-  //     await userEvent.click(await canvas.getByRole('button', { name: /Avbryt/i }));
-  //     await expect(feltTo).toHaveAttribute('readonly');
-  //     await expect(feltTo).toHaveAttribute('readonly');
-  //   });
-  // },
+      const gruppeEn = within(
+        canvas.getByRole('group', {
+          name: new RegExp(`Vurder uttak i denne saken for perioden ${visnDato(fom1)} - ${visnDato(tom1)}`, 'i'),
+        }),
+      );
+
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+    });
+  },
   render: props => (
     <HStack>
       <VurderOverlappendeSak {...props} />
@@ -261,28 +500,36 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 
 export const LøstAksjonspunktAvsluttetSak: Story = {
   args: { behandling: avsluttetBehandling, aksjonspunkt: løstAksjonspunktFerdigstilt, api, oppdaterBehandling: fn() },
-  // play: async ({ canvasElement, step }) => {
-  //   const canvas = within(canvasElement);
+  play: async ({ canvasElement, step }) => {
+    const user = userEvent.setup();
+    const canvas = within(canvasElement);
 
-  //   await step('skal vise leseversjon av skjema i avsluttet sak', async () => {
-  //     const feltEn = await canvas.findByLabelText(feltEnLabel);
-  //     const feltTo = await canvas.findByLabelText(feltToLabel);
-  //     const begrunnelseFelt = await canvas.getByLabelText('Begrunnelse');
+    await step('skal vise leseversjon av skjema i avsluttet sak', async () => {
+      await expect(await canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }));
 
-  //     await expect(canvas.getByText('Uttaksgrad for overlappende perioder'));
+      (await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' })).forEach(async radio => {
+        await expect(radio).toBeChecked();
+        await (await canvas.findAllByRole('radio', { name: 'Ingen uttak i perioden' })).forEach(r => user.click(r));
+        await expect(radio).toBeChecked();
+      });
+      await expect(
+        await canvas.findByDisplayValue(
+          egneOverlappendeSakerDtoer[avsluttetBehandling.uuid as unknown as number]?.perioderMedOverlapp[0]
+            ?.fastsattUttaksgrad || '',
+        ),
+      ).toHaveAttribute('readonly');
 
-  //     await expect(feltEn);
-  //     await expect(feltEn).toHaveValue('60');
-  //     await expect(feltEn).toHaveAttribute('readonly');
+      await expect(
+        await canvas.findByDisplayValue(
+          egneOverlappendeSakerDtoer[avsluttetBehandling.uuid as unknown as number]?.perioderMedOverlapp[1]
+            ?.fastsattUttaksgrad || '',
+        ),
+      ).toHaveAttribute('readonly');
 
-  //     await expect(feltTo);
-  //     await expect(feltTo).toHaveValue('70');
-  //     await expect(feltTo).toHaveAttribute('readonly');
-
-  //     await expect(begrunnelseFelt).toHaveValue('Dette er en grundig begrunnelse');
-  //     await expect(begrunnelseFelt).toHaveAttribute('readonly');
-  //   });
-  // },
+      await expect(await canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
+      await expect(await canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
   render: props => (
     <HStack>
       <VurderOverlappendeSak {...props} />

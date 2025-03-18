@@ -14,8 +14,6 @@ import {
   Modal,
   DatePicker,
   VStack,
-  ReadMore,
-  List,
 } from '@navikt/ds-react';
 import { PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated';
 import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
