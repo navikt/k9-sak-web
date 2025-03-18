@@ -13,7 +13,7 @@ export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefine
       axios.get(`/${backendUrl}/feature-toggle/toggles.json`, { signal }).then(({ data }) => data),
   });
 
-  const featureTogglesEnv = data['FEATURE_TOGGLES_ENV'];
+  const featureTogglesEnv = data != null ? data['FEATURE_TOGGLES_ENV'] : undefined;
   if (featureTogglesEnv === 'k9-sak-dev') {
     return { featureToggles: devFeatureToggles };
   } else if (featureTogglesEnv === 'k9-sak-q') {
