@@ -11,12 +11,13 @@ interface Props {
   behandling: { uuid: string };
   api: UngBeregningBackendApiType;
   barn: Barn[];
+  inntekt?: unknown[];
 }
 
 const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
   data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
 
-const UngBeregning = ({ api, behandling, barn }: Props) => {
+const UngBeregning = ({ api, behandling, barn, inntekt }: Props) => {
   const {
     data: satser,
     isLoading: satserIsLoading,
@@ -36,17 +37,20 @@ const UngBeregning = ({ api, behandling, barn }: Props) => {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
+  const harBarn = barn.length > 0;
+  const harInntekt = inntekt && inntekt.length > 0;
+
   return (
     <Box paddingInline="4 8" paddingBlock="2">
       <div className="min-h-svh">
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        <Tabs defaultValue="arbeid">
+        <Tabs defaultValue="dagsats">
           <Tabs.List>
-            <Tabs.Tab value="arbeid" label="Arbeid og inntekt" />
-            <Tabs.Tab value="barn" label="Registrerte barn" />
-            <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />
+            {harInntekt && <Tabs.Tab value="arbeid" label="Arbeid og inntekt" />}
+            {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
+            {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
           </Tabs.List>
           <Tabs.Panel value="arbeid">
             <ArbeidOgInntekt />
