@@ -64,7 +64,7 @@ const HistorikkMalFelles7og8 = ({
             {dokumentLinks &&
               dokumentLinks.map(dokumentLenke => (
                 <HistorikkDokumentLenke
-                  key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                  key={`${dokumentLenke.tag}@${dokumentLenke.dokumentId}-${dokumentLenke.journalpostId}`}
                   dokumentLenke={dokumentLenke}
                   saksnummer={saksnummer}
                 />
