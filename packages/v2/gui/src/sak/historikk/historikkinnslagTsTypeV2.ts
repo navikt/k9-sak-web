@@ -20,7 +20,6 @@ export type HistorikkInnslagDokumentLink = Readonly<{
   dokumentId?: string;
   journalpostId?: string;
   tag: string;
-  url?: string;
   utgått: boolean;
 }>;
 
