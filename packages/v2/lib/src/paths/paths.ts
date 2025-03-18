@@ -21,3 +21,8 @@ const getBackendUrl = () => (window.location.pathname.includes('/ung/web') ? 'un
 export const goToSearch = () => {
   window.location.assign(`/${getBackendUrl()}/web`);
 };
+
+export const isProd = () => {
+  const { host } = window.location;
+  return host === 'k9.intern.nav.no';
+};

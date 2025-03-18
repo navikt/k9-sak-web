@@ -1,4 +1,5 @@
 import beregningAvklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import mapTilAksjonspunktkode from './mapAksjonspunktkoderBeregning';
 
 const transformBeregningValues = aksjonspunktData =>
@@ -14,7 +15,9 @@ const transformBeregningValues = aksjonspunktData =>
     }
     const nyData = { ...data };
     nyData.kode = mapTilAksjonspunktkode(data.kode);
-    nyData.begrunnelse = '';
+    if (!isProd()) {
+      nyData.begrunnelse = '';
+    }
     return nyData;
   });
 
