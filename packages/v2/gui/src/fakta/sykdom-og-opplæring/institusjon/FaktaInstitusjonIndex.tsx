@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import { Heading } from '@navikt/ds-react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/ft-utils';
@@ -12,6 +12,8 @@ import InstitusjonNavigation from './components/institusjonNavigation/Institusjo
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
+import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
+import { SykdomOgOpplæringContext } from '../SykdomOgOpplæringIndex.js';
 
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
@@ -19,9 +21,11 @@ export interface FaktaInstitusjonProps {
   readOnly: boolean;
 }
 
-const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly }: FaktaInstitusjonProps) => {
+const FaktaInstitusjonIndex = () => {
+  const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
+  const { data: institusjonData, isLoading } = useInstitusjonInfo(behandlingUuid);
+  const { perioder = [], vurderinger = [] } = institusjonData ?? {};
   const [valgtPeriode, setValgtPeriode] = useState<InstitusjonPerioderDtoMedResultat | null>(null);
-
   const vurderingMap = useMemo(() => new Map(vurderinger.map(v => [v.journalpostId.journalpostId, v])), [vurderinger]);
 
   const perioderMappet = useMemo(() => {
@@ -64,9 +68,13 @@ const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly }: FaktaInstitu
     };
   })();
 
+  if (isLoading) {
+    return <div>Laster institusjon...</div>;
+  }
+
   return (
     <div style={{ fontSize: '16px' }}>
-      <div className="mb-7">
+      <div className="my-7">
         <Heading size="small">Institusjon</Heading>
       </div>
 

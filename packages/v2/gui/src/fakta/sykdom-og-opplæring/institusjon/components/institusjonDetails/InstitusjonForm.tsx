@@ -5,8 +5,8 @@ import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
-import { SykdomOgOpplæringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/SykdomOgOpplæringPanelDef';
 import { useContext } from 'react';
+import { SykdomOgOpplæringContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringIndex.js';
 
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',
@@ -34,6 +34,7 @@ interface OwnProps {
 
 const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }: OwnProps) => {
   const { løsAksjonspunkt9300 } = useContext(SykdomOgOpplæringContext);
+
   const formMethods = useForm<InstitusjonFormValues>({
     defaultValues: {
       begrunnelse: '',

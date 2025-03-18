@@ -4056,7 +4056,6 @@ __metadata:
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-etablert-tilsyn": "npm:1.0.0"
     "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
-    "@k9-sak-web/fakta-institusjon": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
@@ -4316,17 +4315,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-institusjon@npm:1.0.0, @k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
-    formik: "npm:2.4.6"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-medisinsk-vilkar@npm:1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
@@ -4448,14 +4436,6 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-sykdom-og-opplæring@workspace:packages/fakta-sykdom-og-opplæring":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-sykdom-og-opplæring@workspace:packages/fakta-sykdom-og-opplæring"
-  dependencies:
-    react: "npm:19.0.0"
   languageName: unknown
   linkType: soft
 
