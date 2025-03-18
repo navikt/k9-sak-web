@@ -14,6 +14,7 @@ const transformBeregningValues = aksjonspunktData =>
     }
     const nyData = { ...data };
     nyData.kode = mapTilAksjonspunktkode(data.kode);
+    nyData.begrunnelse = '';
     return nyData;
   });
 
