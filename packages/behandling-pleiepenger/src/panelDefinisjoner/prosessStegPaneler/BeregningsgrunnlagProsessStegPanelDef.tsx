@@ -9,6 +9,7 @@ import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
   getKomponent = props => {
+    const { featureToggles } = props;
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
@@ -18,7 +19,9 @@ class PanelDef extends ProsessStegPanelDef {
         beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={data => props.submitCallback(transformBeregningValues(data))}
+        submitCallback={data =>
+          props.submitCallback(transformBeregningValues(data, featureToggles['FJERN_BEGRUNNELSE_PROSESS_BEREGNING']))
+        }
         formData={props.formData}
         kodeverkSamling={deepCopyProps.alleKodeverk}
         setFormData={props.setFormData}

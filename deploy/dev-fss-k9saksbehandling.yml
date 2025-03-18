@@ -121,3 +121,5 @@ spec:
       value: "true"
     - name: BRUK_V2_VILKAR_OVERSTYRING
       value: "true"
+    - name: FJERN_BEGRUNNELSE_PROSESS_BEREGNING
+      value: "true"
