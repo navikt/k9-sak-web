@@ -490,7 +490,6 @@ export const historikkSakV1: Historikkinnslag[] = [
         dokumentId: '454322583',
         journalpostId: '453920792',
         tag: 'Vedlegg',
-        url: 'https://192.168.67.212:8080/k9/sak/api/dokument/hent-dokument?journalpostId=453920792&dokumentId=454322583',
         utgått: false,
       },
     ],
