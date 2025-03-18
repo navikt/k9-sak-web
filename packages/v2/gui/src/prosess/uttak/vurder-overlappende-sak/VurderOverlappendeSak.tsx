@@ -73,9 +73,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   const [readOnly, setReadOnly] = useState<boolean>(erAksjonspunktReadOnly(aksjonspunkt));
   const [rediger, setRediger] = useState<boolean>(false);
   const sakAvsluttet = status === 'AVSLU';
-  const [originaleOverlappendePerioder, setOriginaleOverlappendePerioder] = useState<{ fom: string; tom: string }[]>(
-    [],
-  );
 
   const {
     data: egneOverlappendeSaker,
@@ -109,7 +106,10 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
             .when('valg', (valg, schema) => {
               return valg.includes(PeriodeMedOverlappValg.JUSTERT_GRAD)
-                ? schema.required('Søkers uttaksgrad må fylles ut').min(0, 'Minimum 0%').max(100, 'Maks 100%')
+                ? schema
+                    .required('Søkers uttaksgrad må fylles ut')
+                    .min(1, 'Minimum 1%, bruk "Ingen uttak i perioden" for å sette uttaksgrad til 0.')
+                    .max(100, 'Maks 100%')
                 : schema.notRequired();
             }),
           saksnummer: yup.array(yup.string().required()).required(),
@@ -152,7 +152,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
     if (overlappendeSuccess && egneOverlappendeSaker) {
       const newValues = buildInitialValues(egneOverlappendeSaker);
-      setOriginaleOverlappendePerioder(egneOverlappendeSaker.perioderMedOverlapp.map(periode => periode.periode));
       reset(newValues);
     }
   }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
@@ -174,7 +173,8 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
               fom: format(new Date(periode.periode.fom), 'yyyy-MM-dd') || '',
               tom: format(new Date(periode.periode.tom), 'yyyy-MM-dd') || '',
             },
-            søkersUttaksgrad: periode.søkersUttaksgrad,
+            søkersUttaksgrad:
+              periode.valg === PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN ? 0 : periode.søkersUttaksgrad,
           })),
         },
       ],
@@ -292,7 +292,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     <VurderOverlappendePeriodeForm
                       key={field.id}
                       index={index}
-                      originaleOverlappendePerioder={originaleOverlappendePerioder}
                       readOnly={readOnly}
                       fields={fields}
                       replace={replace}
