@@ -67,7 +67,7 @@
     "vite-plugin-svgr": "4.3.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.0",
+    "@playwright/test": "^1.51.1",
     "@sentry/cli": "2.42.3",
     "@storybook/addon-a11y": "8.6.7",
     "@storybook/addon-actions": "8.6.7",
