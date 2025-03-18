@@ -1,20 +1,20 @@
 export interface FeatureToggles {
   BRUK_V2_MELDINGER: boolean;
   KLAGE_KABAL: boolean;
-  VARSELTEKST: boolean;
-  DOKUMENTDATA: boolean;
+  VARSELTEKST: boolean; // Brukt i jsx
+  DOKUMENTDATA: boolean; // Fjernast?
   UNNTAKSBEHANDLING: boolean;
-  TYPE_MEDISINSKE_OPPLYSNINGER_BREV: boolean;
+  TYPE_MEDISINSKE_OPPLYSNINGER_BREV: boolean; // Fjernast?
   LOS_MARKER_BEHANDLING: boolean;
   LOS_MARKER_BEHANDLING_SUBMIT: boolean;
   FRITEKST_REDIGERING: boolean;
-  FIX_SOKNADSFRIST_KALENDER_OG_READONLY: boolean;
-  OPPLAERINGSPENGER: boolean;
-  SKJUL_AVSLUTTET_ARBEIDSGIVER: boolean;
+  FIX_SOKNADSFRIST_KALENDER_OG_READONLY: boolean; // Fjernast?
+  OPPLAERINGSPENGER: boolean; // Fjernast?
+  SKJUL_AVSLUTTET_ARBEIDSGIVER: boolean; // Fjernast?
   OMS_PUNSJSTRIPE: boolean;
   OVERSTYR_BEREGNING: boolean;
   NYE_NOKKELTALL: boolean;
-  UTVIDET_VARSELFELT: boolean;
+  UTVIDET_VARSELFELT: boolean; // Brukt i jsx
   SKILL_UT_PRIVATPERSON: boolean;
   AUTOMATISK_VURDERT_MEDLEMSKAP: boolean;
   OPPTJENING_READ_ONLY_PERIODER: boolean;

@@ -31,7 +31,7 @@ class PanelDef extends ProsessStegPanelDef {
         )}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
         submitCallback={data =>
-          props.submitCallback(transformBeregningValues(data, featureToggles['FJERN_BEGRUNNELSE_PROSESS_BEREGNING']))
+          props.submitCallback(transformBeregningValues(data, featureToggles.FJERN_BEGRUNNELSE_PROSESS_BEREGNING))
         }
         formData={props.formData}
         setFormData={props.setFormData}

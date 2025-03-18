@@ -83,7 +83,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   begrunnelseFraBruker,
 }) => {
   const featureToggles = useContext(FeatureTogglesContext);
-  const visBegrunnelseFraBruker = featureToggles?.['VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK'] === true;
+  const visBegrunnelseFraBruker = featureToggles.VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK === true;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {

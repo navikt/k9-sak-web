@@ -94,7 +94,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
     name: 'nyPeriodeForm.andeler',
     keyName: 'fieldId',
   });
-  const skillUtPrivatperson = featureToggles?.['SKILL_UT_PRIVATPERSON'];
+  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   useEffect(() => {
     if (fields.length === 0) {

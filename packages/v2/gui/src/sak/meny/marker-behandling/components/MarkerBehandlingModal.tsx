@@ -104,7 +104,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               <CheckboxField
                 name="markerSomHastesak"
                 label="Behandlingen er hastesak"
-                disabled={!featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT']}
+                disabled={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
                 validate={[required]}
               />
             </VStack>
@@ -125,7 +125,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 label="Kommentar"
                 validate={[required, minLength3, maxLength100000, hasValidText]}
                 maxLength={100000}
-                readOnly={!featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT']}
+                readOnly={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
               />
             </div>
           )}
@@ -135,7 +135,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               variant="primary"
               size="small"
               disabled={
-                !featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT'] ||
+                !featureToggles.LOS_MARKER_BEHANDLING_SUBMIT ||
                 formState.isSubmitting ||
                 (!markerSomVanskelig && !markerSomHastesak)
               }

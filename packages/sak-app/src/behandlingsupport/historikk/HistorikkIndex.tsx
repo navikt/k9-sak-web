@@ -95,7 +95,7 @@ interface OwnProps {
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
   //const featureToggles = useContext(FeatureTogglesContext);
-  //const [visV2, setVisV2] = useState(featureToggles?.['HISTORIKK_V2_VIS'] === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
+  //const [visV2, setVisV2] = useState(featureToggles?.HISTORIKK_V2_VIS === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
   const visV2 = true; // Alltid true inntil omskriving av historikk frå klage og sak er i gang.
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
