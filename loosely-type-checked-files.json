@@ -386,7 +386,6 @@
   "packages/prosess-vedtak-tilbakekreving/src/components/brev/TilbakekrevingVedtakUtdypendeTekstPanel.tsx",
   "packages/prosess-vedtak/src/VedtakProsessIndex.stories.tsx",
   "packages/prosess-vedtak/src/VedtakProsessIndex.tsx",
-  "packages/prosess-vedtak/src/VedtakProsessIndexTilbakekreving.stories.tsx",
   "packages/prosess-vedtak/src/components/AvslagsårsakListe.spec.tsx",
   "packages/prosess-vedtak/src/components/AvslagsårsakListe.tsx",
   "packages/prosess-vedtak/src/components/FritekstRedigering/FritekstEditor.stories.tsx",
