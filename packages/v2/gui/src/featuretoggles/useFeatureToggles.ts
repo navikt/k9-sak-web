@@ -5,6 +5,18 @@ import { qFeatureToggles } from './qFeatureToggles.js';
 import { prodFeatureToggles } from './prodFeatureToggles.js';
 import type { FeatureToggles } from './FeatureToggles.js';
 
+// feature-toggles/toggles.json returnerer array av {key: string, value: string} objekter
+const getKeyValueFromArray = (data: any, dataKey: string): string | undefined => {
+  if (data instanceof Array) {
+    for (const { key, value } of data) {
+      if (key === dataKey) {
+        return value;
+      }
+    }
+  }
+  return undefined;
+};
+
 export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefined } => {
   const backendUrl = window.location.pathname.includes('/ung/web') ? 'ung' : 'k9';
   const { data } = useQuery({
@@ -13,7 +25,7 @@ export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefine
       axios.get(`/${backendUrl}/feature-toggle/toggles.json`, { signal }).then(({ data }) => data),
   });
 
-  const featureTogglesEnv = data != null ? data['FEATURE_TOGGLES_ENV'] : undefined;
+  const featureTogglesEnv = getKeyValueFromArray(data, 'FEATURE_TOGGLES_ENV');
   if (featureTogglesEnv === 'k9-sak-dev') {
     return { featureToggles: devFeatureToggles };
   } else if (featureTogglesEnv === 'k9-sak-q') {
