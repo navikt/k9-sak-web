@@ -1,8 +1,8 @@
-import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import { UngSakClientContext } from '@k9-sak-web/gui/app/UngSakClientContext.js';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
+import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
@@ -94,8 +94,7 @@ export const FagsakProfileIndex = ({
         <FagsakProfilSakIndex
           saksnummer={fagsak.saksnummer}
           fagsakYtelseType={fagsak.sakstype}
-          fagsakStatus={fagsakStatusMedNavn}
-          dekningsgrad={fagsak.dekningsgrad}
+          fagsakStatus={fagsakStatusMedNavn.kode}
           renderBehandlingMeny={() => {
             if (!fagsakRettigheter || !behandlendeEnheter) {
               return <LoadingPanel />;
