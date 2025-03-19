@@ -48,10 +48,6 @@
     "value": "${SKJUL_AVSLUTTET_ARBEIDSGIVER}"
   },
   {
-    "key": "OMS_PUNSJSTRIPE",
-    "value": "${OMS_PUNSJSTRIPE}"
-  },
-  {
     "key": "OVERSTYR_BEREGNING",
     "value": "${OVERSTYR_BEREGNING}"
   },

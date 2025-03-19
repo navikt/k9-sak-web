@@ -87,8 +87,6 @@ spec:
       value: "true"
     - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
       value: "true"
-    - name: OMS_PUNSJSTRIPE
-      value: "true"
     - name: OVERSTYR_BEREGNING
       value: "true"
     - name: "BRUK_V2_MELDINGER"

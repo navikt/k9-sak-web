@@ -43,10 +43,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_SKJUL_AVSLUTTET_ARBEIDSGIVER,
   },
   {
-    key: 'OMS_PUNSJSTRIPE',
-    value: process.env.VITE_OMS_PUNSJSTRIPE,
-  },
-  {
     key: 'OVERSTYR_BEREGNING',
     value: process.env.VITE_OVERSTYR_BEREGNING,
   },
