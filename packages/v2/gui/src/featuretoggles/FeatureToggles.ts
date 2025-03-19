@@ -7,7 +7,6 @@ export interface FeatureToggles {
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: boolean; // Fjernast?
   LOS_MARKER_BEHANDLING: boolean;
   LOS_MARKER_BEHANDLING_SUBMIT: boolean;
-  FRITEKST_REDIGERING: boolean;
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: boolean; // Fjernast?
   OPPLAERINGSPENGER: boolean; // Fjernast?
   SKJUL_AVSLUTTET_ARBEIDSGIVER: boolean; // Fjernast?
