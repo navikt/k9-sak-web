@@ -206,7 +206,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
           <Heading spacing size="xsmall" level="3">
             Søker har overlappende perioder med en annen sak
           </Heading>
-          <List size="small" className={styles['vurderOverlappendeSakApListe']}>
+          <List size="small" className={styles['vurderOverlappendeSakApListe']} as="ol">
             <List.Item>Reserver den tilhørende saken</List.Item>
             <List.Item>
               Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
@@ -214,7 +214,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                 <List.Item>Opplysninger fra bruker, vet vi hva han eller hun vil?</List.Item>
                 <List.Item>
                   Skal det være tilgjengelig uttak til andre på ett av barna? Det vil ofte lønne seg å innvilge på den
-                  Nyeste saken, mtp beregning og feriepenger.
+                  nyeste saken, mtp beregning og feriepenger.
                 </List.Item>
               </List>
             </List.Item>
