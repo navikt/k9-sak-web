@@ -46,11 +46,19 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   }, []);
 
   const vurdertePerioderElements = vurdertePerioder.map(({ perioder, resultat }) => (
-    <PeriodeRad perioder={perioder} resultat={resultat} />
+    <PeriodeRad
+      perioder={perioder}
+      resultat={resultat}
+      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}`}
+    />
   ));
 
   const periodeTilVurderingElements = perioderTilVurdering.map(({ perioder, resultat }) => (
-    <PeriodeRad perioder={perioder} resultat={resultat} />
+    <PeriodeRad
+      perioder={perioder}
+      resultat={resultat}
+      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}`}
+    />
   ));
 
   const allePerioder = [...perioderTilVurdering, ...vurdertePerioder];
