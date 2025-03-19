@@ -105,7 +105,7 @@ spec:
     - name: SAK_MENY_V2
       value: "false"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
-      value: 'false'
+      value: 'true'
     - name: BRUK_V2_BEHANDLING_VELGER
       value: 'false'
     - name: HISTORIKK_V2_VIS
