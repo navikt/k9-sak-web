@@ -3,7 +3,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling } from '@k9-sak-web/types';
 import SykdomOgOpplæringIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringIndex.js';
-import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 
 class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.SYKDOM_OG_OPPLAERING;
@@ -12,7 +11,7 @@ class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR, aksjonspunktCodes.VURDER_INSTITUSJON];
 
-  getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.INSTITUSJON, OpplaeringspengerBehandlingApiKeys.SYKDOM];
+  getEndepunkter = () => [];
 
   getKomponent = ({ readOnly, submitCallback, behandling }) => {
     return (

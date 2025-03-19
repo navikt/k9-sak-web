@@ -54,13 +54,21 @@ const SykdomOgOpplæring = () => {
         <Tabs.Tab value="reisetid" label="Reisetid" />
       </Tabs.List>
       <Tabs.Panel value="institusjon">
-        <FaktaInstitusjonIndex />
+        <div className="mt-4">
+          <FaktaInstitusjonIndex />
+        </div>
       </Tabs.Panel>
       <Tabs.Panel value="sykdom">
-        <VurderSykdomUperiodisert />
+        <div className="mt-4">
+          <VurderSykdomUperiodisert />
+        </div>
       </Tabs.Panel>
-      <Tabs.Panel value="opplæring">opplæring</Tabs.Panel>
-      <Tabs.Panel value="reisetid">reisetid</Tabs.Panel>
+      <Tabs.Panel value="opplæring">
+        <div className="mt-4">opplæring</div>
+      </Tabs.Panel>
+      <Tabs.Panel value="reisetid">
+        <div className="mt-4">reisetid</div>
+      </Tabs.Panel>
     </Tabs>
   );
 };
