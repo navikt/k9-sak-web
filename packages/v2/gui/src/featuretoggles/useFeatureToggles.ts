@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { devFeatureToggles } from './devFeatureToggles.js';
-import { qFeatureToggles } from './qFeatureToggles.js';
-import { prodFeatureToggles } from './prodFeatureToggles.js';
 import type { FeatureToggles } from './FeatureToggles.js';
+import { prodFeatureToggles } from './prodFeatureToggles.js';
+import { qFeatureToggles } from './qFeatureToggles.js';
+import { devFeatureToggles as ungDevFeatureToggles } from './ung/devFeatureToggles.js';
+import { qFeatureToggles as ungQFeatureToggles } from './ung/qFeatureToggles.js';
 
 // feature-toggles/toggles.json returnerer array av {key: string, value: string} objekter
 const getKeyValueFromArray = (data: any, dataKey: string): string | undefined => {
@@ -36,6 +38,10 @@ export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefine
     return { featureToggles: qFeatureToggles };
   } else if (featureTogglesEnv === 'k9-sak-prod') {
     return { featureToggles: prodFeatureToggles };
+  } else if (featureTogglesEnv === 'ung-sak-dev') {
+    return { featureToggles: ungDevFeatureToggles };
+  } else if (featureTogglesEnv === 'ung-sak-q') {
+    return { featureToggles: ungQFeatureToggles };
   } else {
     // If feature toggles are not resolved, log it, and return prodFeatureToggles as default
     if (isError) {
