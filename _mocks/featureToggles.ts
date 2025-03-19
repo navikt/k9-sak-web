@@ -5,5 +5,5 @@ export const featureTogglesFactory = () => [
   {
     key: 'FEATURE_TOGGLES_ENV',
     value: process.env.VITE_FEATURE_TOGGLES_ENV,
-  }
+  },
 ];
