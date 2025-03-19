@@ -71,12 +71,10 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, pleiepengerInntektsgradering, featureToggles }) => {
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, pleiepengerInntektsgradering }) => {
     return {
       uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
-      inntektsgraderinger: featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK
-        ? pleiepengerInntektsgradering?.perioder
-        : undefined,
+      inntektsgraderinger: pleiepengerInntektsgradering?.perioder,
       perioderTilVurdering: uttak?.perioderTilVurdering,
       utsattePerioder: uttak?.utsattePerioder,
       virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,

@@ -466,7 +466,7 @@ export const UttakMedInntektsgradering: Story = {
       readOnly: false,
     },
   },
-  decorators: [withFeatureToggles({ BRUK_INNTEKTSGRADERING_I_UTTAK: true })],
+  decorators: [],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
