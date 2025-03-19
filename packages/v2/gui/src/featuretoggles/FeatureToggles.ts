@@ -1,7 +1,6 @@
 export interface FeatureToggles {
   BRUK_V2_MELDINGER: boolean;
   KLAGE_KABAL: boolean;
-  VARSELTEKST: boolean; // Brukt i jsx
   DOKUMENTDATA: boolean; // Fjernast?
   UNNTAKSBEHANDLING: boolean;
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: boolean; // Fjernast?
