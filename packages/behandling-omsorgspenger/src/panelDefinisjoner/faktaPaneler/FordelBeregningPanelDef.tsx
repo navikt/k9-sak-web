@@ -3,7 +3,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 

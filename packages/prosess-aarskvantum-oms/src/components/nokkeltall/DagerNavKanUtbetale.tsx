@@ -1,4 +1,4 @@
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Nokkeltall from './Nokkeltall';
