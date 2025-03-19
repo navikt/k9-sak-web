@@ -11,16 +11,12 @@ import {
   kanHaManueltFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { useContext } from 'react';
-
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
-
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
-import styles from './vedtakForm.module.css';
-
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { fieldnames } from '../konstanter';
 import { CustomFormikProps } from './brev/CustomFormikProps';
+
+import styles from './vedtakForm.module.css';
 
 const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
@@ -58,7 +54,6 @@ const FritekstBrevPanel = ({
   setForhaandsvisningKlart,
 }: OwnProps) => {
   const { formatMessage } = intl;
-  const featureToggles = useContext(FeatureTogglesContext);
   const kanRedigereFritekstbrev = kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
   // useCallback to avoid re-initializing FritekstRedigering editorjs on every re-render of this component
@@ -90,29 +85,26 @@ const FritekstBrevPanel = ({
           </Alert>
         </div>
       )}
-
-      {!featureToggles.FRITEKST_REDIGERING ||
-        (!kanRedigereFritekstbrev && (
-          <div className={readOnly ? '' : styles.brevFormContainer}>
-            <TextFieldFormik
-              name="overskrift"
-              label={formatMessage({ id: 'VedtakForm.Overskrift' })}
-              validate={[required, minLength3, maxLength200, hasValidText]}
-              maxLength={200}
-              readOnly={readOnly}
-            />
-            <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-              <TextAreaFormik
-                name="brødtekst"
-                label={formatMessage({ id: 'VedtakForm.Innhold' })}
-                validate={[required, minLength3, maxLength100000, hasValidText]}
-                maxLength={100000}
-                readOnly={readOnly}
-              />
-            </div>
-          </div>
-        ))}
-
+      (!kanRedigereFritekstbrev && (
+      <div className={readOnly ? '' : styles.brevFormContainer}>
+        <TextFieldFormik
+          name="overskrift"
+          label={formatMessage({ id: 'VedtakForm.Overskrift' })}
+          validate={[required, minLength3, maxLength200, hasValidText]}
+          maxLength={200}
+          readOnly={readOnly}
+        />
+        <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+          <TextAreaFormik
+            name="brødtekst"
+            label={formatMessage({ id: 'VedtakForm.Innhold' })}
+            validate={[required, minLength3, maxLength100000, hasValidText]}
+            maxLength={100000}
+            readOnly={readOnly}
+          />
+        </div>
+      </div>
+      ))
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
         <div className={readOnly ? 'readOnly' : styles.manueltBrevFormContainer}>
           <FritekstRedigering

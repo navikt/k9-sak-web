@@ -32,10 +32,6 @@
     "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
   },
   {
-    "key": "FRITEKST_REDIGERING",
-    "value": "${FRITEKST_REDIGERING}"
-  },
-  {
     "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
     "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
   },

@@ -35,10 +35,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_LOS_MARKER_BEHANDLING_SUBMIT,
   },
   {
-    key: 'FRITEKST_REDIGERING',
-    value: process.env.VITE_FRITEKST_REDIGERING,
-  },
-  {
     key: 'SKJUL_AVSLUTTET_ARBEIDSGIVER',
     value: process.env.VITE_SKJUL_AVSLUTTET_ARBEIDSGIVER,
   },

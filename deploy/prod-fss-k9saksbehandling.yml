@@ -78,8 +78,6 @@ spec:
       value: 'true'
     - name: LOS_MARKER_BEHANDLING_SUBMIT
       value: 'false'
-    - name: FRITEKST_REDIGERING
-      value: 'true'
     - name: INKLUDER_KALENDER_PILS
       value: 'false'
     - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
