@@ -2,7 +2,6 @@ import type { FeatureToggles } from './FeatureToggles.js';
 
 export const prodFeatureToggles = {
   KLAGE_KABAL: true,
-  VARSELTEKST: true,
   DOKUMENTDATA: false,
   UNNTAKSBEHANDLING: false,
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true,
