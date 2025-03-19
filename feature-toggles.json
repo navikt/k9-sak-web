@@ -110,9 +110,5 @@
   {
     "key": "BRUK_V2_VILKAR_OVERSTYRING",
     "value": "${BRUK_V2_VILKAR_OVERSTYRING}"
-  },
-  {
-    "key": "FJERN_BEGRUNNELSE_PROSESS_BEREGNING",
-    "value": "${FJERN_BEGRUNNELSE_PROSESS_BEREGNING}"
   }
 ]

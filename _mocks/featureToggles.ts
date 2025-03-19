@@ -106,8 +106,4 @@ export const featureTogglesFactory = () => [
     key: 'BRUK_V2_VILKAR_OVERSTYRING',
     value: process.env.VITE_BRUK_V2_VILKAR_OVERSTYRING,
   },
-  {
-    key: 'FJERN_BEGRUNNELSE_PROSESS_BEREGNING',
-    value: process.env.VITE_FJERN_BEGRUNNELSE_PROSESS_BEREGNING,
-  },
 ];
