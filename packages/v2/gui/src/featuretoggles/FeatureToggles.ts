@@ -11,7 +11,6 @@ export interface FeatureToggles {
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: boolean; // Fjernast?
   OPPLAERINGSPENGER: boolean; // Fjernast?
   SKJUL_AVSLUTTET_ARBEIDSGIVER: boolean; // Fjernast?
-  OMS_PUNSJSTRIPE: boolean;
   OVERSTYR_BEREGNING: boolean;
   NYE_NOKKELTALL: boolean;
   UTVIDET_VARSELFELT: boolean; // Brukt i jsx

@@ -10,7 +10,6 @@ export const prodFeatureToggles = {
   LOS_MARKER_BEHANDLING_SUBMIT: false,
   FRITEKST_REDIGERING: true,
   SKJUL_AVSLUTTET_ARBEIDSGIVER: false,
-  OMS_PUNSJSTRIPE: true,
   OVERSTYR_BEREGNING: false,
   BRUK_V2_MELDINGER: true,
   NYE_NOKKELTALL: false,
