@@ -43,8 +43,7 @@ export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefine
         `fetch of feature-toggle/toggles.json failed. Will continue with k9-sak-prod feature toggles. (${error.message})`,
         error,
       );
-    }
-    {
+    } else {
       console.error(
         `fetch of feature-toggle/toggles.json succeeded, but did not resolve FEATURE_TOGGLES_ENV. Will continue with k9-sak-prod feature toggles. Returned data was:`,
         data,
