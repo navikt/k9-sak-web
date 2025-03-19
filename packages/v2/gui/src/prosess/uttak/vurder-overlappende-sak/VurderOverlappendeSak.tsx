@@ -216,9 +216,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                   Skal det være tilgjengelig uttak til andre på ett av barna? Det vil ofte lønne seg å innvilge på den
                   nyeste saken, mtp beregning og feriepenger.
                 </List.Item>
+                <List.Item>Er du usikker, må du kontakte bruker for avklaring.</List.Item>
               </List>
             </List.Item>
-            <List.Item>Er du usikker, må du kontakte bruker for avklaring.</List.Item>
             <List.Item>
               Når du har vurdert uttak i denne saken, går du inn i den andre saken og vurderer uttaket for samme
               periode.
