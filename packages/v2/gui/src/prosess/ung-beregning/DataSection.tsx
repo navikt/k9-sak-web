@@ -7,9 +7,10 @@ import {
 } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, HelpText, HGrid, HStack, Label, ProgressBar, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
+import styles from './dataSection.module.css';
 
 const DataBox = ({ children, maxHeight }: { children: React.ReactNode; maxHeight?: string }) => (
-  <div className="rounded-lg bg-[#EEF6FC] px-4 pt-5 pb-4 mb-4" style={{ maxHeight }}>
+  <div className={styles.dataBox} style={{ maxHeight }}>
     <VStack gap="4">{children}</VStack>
   </div>
 );
@@ -41,7 +42,7 @@ const BeregningDetails = ({
         {barnetillegg * barnetilleggDager} kr
       </BodyShort>
     </HStack>
-    <div className="h-[1px] bg-[#C0D6E4]" />
+    <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
     <HStack justify="space-between">
       <BodyShort size="small">Rapportert inntekt</BodyShort>
       <BodyShort size="small" weight="semibold">
@@ -56,12 +57,12 @@ const BeregningDetails = ({
         {reduksjonBeløp} kr
       </BodyShort>
     </HStack>
-    <div className="h-[1px] bg-[#C0D6E4]" />
+    <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
     <HStack justify="space-between">
-      <BodyShort weight="semibold" size="small" className="text-[#156389]" as="p">
+      <BodyShort weight="semibold" size="small" className={styles.utbetalingText} as="p">
         Til utbetaling
       </BodyShort>
-      <BodyShort size="small" className="text-[#156389]" weight="semibold">
+      <BodyShort size="small" className={styles.utbetalingText} weight="semibold">
         {tilUtbetaling} kr
       </BodyShort>
     </HStack>
@@ -73,7 +74,7 @@ export const DataSection = () => {
   return (
     <HGrid gap="5" columns={3}>
       <DataBox maxHeight="190px">
-        <HStack gap="2" className="ml-0.5">
+        <HStack gap="2" marginInline="05 0">
           <InformationSquareIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Nøkkelinformasjon</Label>
         </HStack>
@@ -87,7 +88,7 @@ export const DataSection = () => {
         </HStack>
       </DataBox>
       <DataBox maxHeight="190px">
-        <HStack gap="2" className="ml-0.5">
+        <HStack gap="2" marginInline="05 0">
           <CalendarIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Dager i ungdomsprogram</Label>
         </HStack>
@@ -96,19 +97,19 @@ export const DataSection = () => {
           <HelpText title="Forklaringstekst">Forklaring om dager utbetalt her</HelpText>
         </HStack>
         <div>
-          <HStack justify="space-between">
-            <BodyShort className="mb-2" size="small" id="progress-bar-label-medium">
-              0 av 260
-            </BodyShort>
-            <BodyShort className="mb-2" size="small">
-              260 dager igjen
-            </BodyShort>
-          </HStack>
+          <Box marginBlock="0 2">
+            <HStack justify="space-between">
+              <BodyShort size="small" id="progress-bar-label-medium">
+                0 av 260
+              </BodyShort>
+              <BodyShort size="small">260 dager igjen</BodyShort>
+            </HStack>
+          </Box>
           <ProgressBar value={0} valueMax={260} size="medium" aria-labelledby="progress-bar-label-medium" />
         </div>
       </DataBox>
       <DataBox>
-        <HStack gap="2" className="ml-0.5">
+        <HStack gap="2" marginInline="05 0">
           <SackKronerIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Siste utbetaling</Label>
         </HStack>
@@ -117,7 +118,7 @@ export const DataSection = () => {
           {new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })} til kontonummer xxx
         </BodyShort>
         <Bleed marginInline="4" asChild>
-          <div className="h-[1px] bg-[#C0D6E4]" />
+          <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
         </Bleed>
         <Bleed marginInline="3" marginBlock="2 1" asChild>
           <Button
@@ -126,7 +127,7 @@ export const DataSection = () => {
             icon={isUtregningExpanded ? <ChevronUpIcon fontSize="1.5rem" /> : <ChevronDownIcon fontSize="1.5rem" />}
             iconPosition="right"
             onClick={() => setIsUtregningExpanded(!isUtregningExpanded)}
-            className="justify-between"
+            className={styles.expandButton}
           >
             {isUtregningExpanded ? 'Skjul utregning' : 'Vis utregning'}
           </Button>
@@ -134,7 +135,7 @@ export const DataSection = () => {
         {isUtregningExpanded && (
           <>
             <Bleed marginBlock="2 0" asChild>
-              <div className="h-[1px] bg-[#C0D6E4]" />
+              <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
             </Bleed>
             <Box>
               <BeregningDetails

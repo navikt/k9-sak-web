@@ -3,8 +3,9 @@ import {
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Heading, Table, Tooltip, VStack } from '@navikt/ds-react';
+import { Box, Heading, Table, Tooltip, VStack } from '@navikt/ds-react';
 import { DataSection } from './DataSection';
+import styles from './dagsatsOgUtbetaling.module.css';
 
 const formatCurrencyWithKr = (value: number) => {
   const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
@@ -39,7 +40,7 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
     );
   }
   return (
-    <div className="flex items-center gap-2">
+    <div className={styles.sats}>
       {satstype} {icon && <Tooltip content="Hjelpetekst om satser her">{icon}</Tooltip>}
     </div>
   );
@@ -50,17 +51,16 @@ interface DagsatsOgUtbetalingProps {
 }
 
 export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
-  <div className="mt-5">
+  <div className={styles.dagsatsSection}>
     <VStack gap="4">
       <DataSection />
-
       <div>
         <Heading size="xsmall">Beregning av dagsats</Heading>
-        <div className="rounded-lg border border-[#CFD3D8] flex border-solid mt-3 ">
+        <Box marginBlock="4 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
           <Table>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell scope="col" className="pl-4">
+                <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
                   Periode
                 </Table.HeaderCell>
                 <Table.HeaderCell scope="col">Sats</Table.HeaderCell>
@@ -83,9 +83,12 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
                     key={`${fom}_${tom}`}
                     content="Innhold"
                     togglePlacement="right"
-                    className={isLastRow ? '[&>td]:border-none' : ''}
+                    className={isLastRow ? styles.lastRow : ''}
+                    expandOnRowClick
                   >
-                    <Table.DataCell className="pl-4">{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
+                    <Table.DataCell className={styles.firstHeaderCell}>
+                      {fom && tom && formatPeriod(fom, tom)}
+                    </Table.DataCell>
                     <Table.DataCell>{formatSats(satsType)}</Table.DataCell>
                     <Table.DataCell>{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
                     <Table.DataCell>{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
@@ -102,7 +105,7 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
               })}
             </Table.Body>
           </Table>
-        </div>
+        </Box>
       </div>
     </VStack>
   </div>
