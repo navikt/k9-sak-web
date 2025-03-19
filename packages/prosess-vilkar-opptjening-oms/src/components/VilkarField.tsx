@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import dayjs from 'dayjs';
 import { useContext } from 'react';
 import styles from './VilkarFields.module.css';
@@ -119,7 +119,7 @@ export const VilkarField = ({
             dersom søker har 28 dager med opptjening blir dette aksjonspunktet automatisk løst.
             Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
             Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
-            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9. 
+            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9.
             */
             {
               value: 'OPPFYLT',

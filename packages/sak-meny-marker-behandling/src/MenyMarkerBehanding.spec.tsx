@@ -1,12 +1,13 @@
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MenyMarkerBehandling from './MenyMarkerBehandling';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/prodFeatureToggles.js';
 
 describe('<MenyMarkerBehandling', () => {
   it('skal vise inputfelt for tekst gitt at checkbox er valgt', async () => {
     render(
-      <FeatureTogglesContext.Provider value={{ LOS_MARKER_BEHANDLING_SUBMIT: true }}>
+      <FeatureTogglesContext.Provider value={{ ...prodFeatureToggles, LOS_MARKER_BEHANDLING_SUBMIT: true }}>
         <MenyMarkerBehandling
           behandlingUuid="123"
           markerBehandling={() => null}

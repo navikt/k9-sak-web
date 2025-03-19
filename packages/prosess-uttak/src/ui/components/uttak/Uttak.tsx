@@ -20,7 +20,7 @@ import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
