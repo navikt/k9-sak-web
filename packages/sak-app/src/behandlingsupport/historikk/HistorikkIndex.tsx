@@ -17,7 +17,7 @@ import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkebob
 import dayjs from 'dayjs';
 import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
-//import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+//import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 //import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
 import { HelpText, HStack, Switch } from '@navikt/ds-react';
 
@@ -95,7 +95,7 @@ interface OwnProps {
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
   //const featureToggles = useContext(FeatureTogglesContext);
-  //const [visV2, setVisV2] = useState(featureToggles?.['HISTORIKK_V2_VIS'] === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
+  //const [visV2, setVisV2] = useState(featureToggles?.HISTORIKK_V2_VIS === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
   const visV2 = true; // Alltid true inntil omskriving av historikk frå klage og sak er i gang.
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();

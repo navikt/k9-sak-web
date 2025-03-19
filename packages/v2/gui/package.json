@@ -6,6 +6,7 @@
   "version": "1.0.0",
   "exports": {
     "./app/*": "./src/app/*",
+    "./featuretoggles/*": "./src/featuretoggles/*",
     "./sak/*": "./src/sak/*",
     "./shared/*": "./src/shared/*",
     "./utils/*": "./src/utils/*",

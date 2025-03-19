@@ -1,7 +1,7 @@
 import { inntektskategorier, type Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { PlusCircleIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Fieldset, HGrid, HStack, VStack } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
@@ -94,7 +94,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
     name: 'nyPeriodeForm.andeler',
     keyName: 'fieldId',
   });
-  const skillUtPrivatperson = featureToggles?.['SKILL_UT_PRIVATPERSON'];
+  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   useEffect(() => {
     if (fields.length === 0) {

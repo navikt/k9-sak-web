@@ -1,10 +1,10 @@
 import type { Decorator } from '@storybook/react';
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { useContext } from 'react';
-import FeatureTogglesContext from '../../utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 const withFeatureToggles =
-  (featureToggles: FeatureToggles): Decorator =>
+  (featureToggles: Partial<FeatureToggles>): Decorator =>
   Story => {
     const existingFeatureToggles = useContext(FeatureTogglesContext);
     const merged: FeatureToggles = {
