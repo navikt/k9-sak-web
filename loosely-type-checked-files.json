@@ -371,7 +371,6 @@
   "packages/prosess-uttak/src/ui/components/overstyrUttakForm/OverstyringUttakForm.tsx",
   "packages/prosess-uttak/src/ui/components/overstyrUttakForm/components/BegrunnelseBoks.tsx",
   "packages/prosess-uttak/src/ui/components/utsattePerioderStripe/UtsattePerioderStripe.tsx",
-  "packages/prosess-uttak/src/ui/components/uttak-detaljer/GammelUttakDetaljer.tsx",
   "packages/prosess-uttak/src/ui/components/uttak-detaljer/GraderingMotArbeidstidDetaljer.tsx",
   "packages/prosess-uttak/src/ui/components/uttak-detaljer/NyUttakDetaljer.tsx",
   "packages/prosess-uttak/src/ui/components/uttak/Uttak.tsx",
