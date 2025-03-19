@@ -1,0 +1,7 @@
+.lastRow > td {
+  border-bottom: none;
+}
+
+.firstHeaderCell {
+  padding-left: var(--a-spacing-4);
+}
