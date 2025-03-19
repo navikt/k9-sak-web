@@ -19,12 +19,16 @@ const getKeyValueFromArray = (data: any, dataKey: string): string | undefined =>
 
 export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefined } => {
   const backendUrl = window.location.pathname.includes('/ung/web') ? 'ung' : 'k9';
-  const { data } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['featureToggles', backendUrl],
     queryFn: ({ signal }) =>
       axios.get(`/${backendUrl}/feature-toggle/toggles.json`, { signal }).then(({ data }) => data),
   });
 
+  // While fetch is pending, return undefined
+  if (isPending) {
+    return { featureToggles: undefined };
+  }
   const featureTogglesEnv = getKeyValueFromArray(data, 'FEATURE_TOGGLES_ENV');
   if (featureTogglesEnv === 'k9-sak-dev') {
     return { featureToggles: devFeatureToggles };
@@ -33,6 +37,19 @@ export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefine
   } else if (featureTogglesEnv === 'k9-sak-prod') {
     return { featureToggles: prodFeatureToggles };
   } else {
-    return { featureToggles: undefined };
+    // If feature toggles are not resolved, log it, and return prodFeatureToggles as default
+    if (isError) {
+      console.error(
+        `fetch of feature-toggle/toggles.json failed. Will continue with k9-sak-prod feature toggles. (${error.message})`,
+        error,
+      );
+    }
+    {
+      console.error(
+        `fetch of feature-toggle/toggles.json succeeded, but did not resolve FEATURE_TOGGLES_ENV. Will continue with k9-sak-prod feature toggles. Returned data was:`,
+        data,
+      );
+    }
+    return { featureToggles: prodFeatureToggles };
   }
 };
