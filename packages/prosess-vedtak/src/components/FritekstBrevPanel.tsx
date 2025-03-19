@@ -1,7 +1,6 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import React, { useCallback } from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
-
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -71,6 +70,7 @@ const FritekstBrevPanel = ({
       <Heading className={styles.brevHeading} size="small" level="2">
         <FormattedMessage id="VedtakForm.Brev" />
       </Heading>
+
       {!readOnly && harAutomatiskVedtaksbrev && (
         <div className={styles.brevAlertContainer} data-testid="harAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
@@ -78,6 +78,7 @@ const FritekstBrevPanel = ({
           </Alert>
         </div>
       )}
+
       {!readOnly && !harAutomatiskVedtaksbrev && (
         <div className={styles.brevAlertContainer} data-testid="harIkkeAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
@@ -85,6 +86,7 @@ const FritekstBrevPanel = ({
           </Alert>
         </div>
       )}
+
       {!kanRedigereFritekstbrev && (
         <div className={readOnly ? '' : styles.brevFormContainer}>
           <TextFieldFormik
@@ -105,6 +107,7 @@ const FritekstBrevPanel = ({
           </div>
         </div>
       )}
+
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
         <div className={readOnly ? 'readOnly' : styles.manueltBrevFormContainer}>
           <FritekstRedigering

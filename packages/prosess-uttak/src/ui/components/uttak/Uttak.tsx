@@ -21,7 +21,7 @@ import Endringsstatus from '../icons/Endringsstatus';
 import GammelUttakDetaljer from '../uttak-detaljer/GammelUttakDetaljer';
 import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
 
 import type { JSX } from 'react';

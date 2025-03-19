@@ -62,58 +62,7 @@ spec:
     - name: ENDRINGSLOGG_URL
       value: "https://familie-endringslogg.intern.dev.nav.no/"
 
-    # Feature-flag
-    - name: KLAGE_KABAL
-      value: "true"
-    - name: VARSELTEKST
-      value: "true"
-    - name: DOKUMENTDATA
-      value: "true"
-    - name: UNNTAKSBEHANDLING
-      value: "true"
-    - name: KLAGEBEHANDLING
-      value: "true"
-    - name: TILBAKE
-      value: "true"
-    - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
-      value: "true"
-    - name: LOS_MARKER_BEHANDLING
-      value: "true"
-    - name: LOS_MARKER_BEHANDLING_SUBMIT
-      value: "true"
-    - name: INKLUDER_KALENDER_PILS
-      value: "true"
-    - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
-      value: "true"
-    - name: OVERSTYR_BEREGNING
-      value: "true"
-    - name: "BRUK_V2_MELDINGER"
-      value: "true"
-    - name: NYE_NOKKELTALL
-      value: "true"
-    - name: UTVIDET_VARSELFELT
-      value: "true"
-    - name: SKILL_UT_PRIVATPERSON
-      value: "true"
-    - name: AUTOMATISK_VURDERT_MEDLEMSKAP
-      value: "true"
-    - name: OPPTJENING_READ_ONLY_PERIODER
-      value: "true"
-    - name: BRUK_INNTEKTSGRADERING_I_UTTAK
-      value: "true"
-    - name: SAK_MENY_V2
-      value: "true"
-    - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
-      value: "true"
-    - name: BRUK_V2_BEHANDLING_VELGER
-      value: "true"
-    - name: HISTORIKK_V2_VIS
-      value: "true"
-    - name: VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK
-      value: "true"
-    - name: NY_INNTEKT_EGET_PANEL
-      value: "true"
-    - name: BRUK_V2_FAKTA_INSTITUSJON
-      value: "true"
-    - name: BRUK_V2_VILKAR_OVERSTYRING
-      value: "true"
+    # Setter flagg som bestemmer hvilket sett med feature toggles som skal brukes i frontend.
+    # Faktiske feature toggles for ulike miljø er satt i ulike filer i packages/v2/gui/src/featuretoggles
+    - name: FEATURE_TOGGLES_ENV
+      value: "k9-sak-q"

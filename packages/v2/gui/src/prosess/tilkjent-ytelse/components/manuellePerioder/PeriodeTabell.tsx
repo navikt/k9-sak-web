@@ -1,4 +1,4 @@
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Button, HStack, VStack } from '@navikt/ds-react';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
