@@ -20,7 +20,6 @@ import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
@@ -35,7 +34,6 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const featureToggles = React.useContext(FeatureTogglesContext);
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 
