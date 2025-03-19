@@ -3400,7 +3400,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": "npm:^5.68.0"
+    "@tanstack/react-query": "npm:^5.69.0"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
   languageName: unknown
@@ -4325,7 +4325,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.17.2"
     "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
     "@popperjs/core": "npm:2.11.8"
-    "@tanstack/react-query": "npm:^5.68.0"
+    "@tanstack/react-query": "npm:^5.69.0"
     axios: "npm:1.8.3"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
@@ -4459,7 +4459,7 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:^6.2.4"
     "@navikt/ft-form-validators": "npm:^3.1.7"
     "@navikt/ft-utils": "npm:^3.1.7"
-    "@tanstack/react-query": "npm:^5.68.0"
+    "@tanstack/react-query": "npm:^5.69.0"
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.8.3"
     dayjs: "npm:^1.11.13"
@@ -4727,9 +4727,9 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.2.4"
     "@navikt/ft-ui-komponenter": "npm:^3.1.8"
-    "@sentry/browser": "npm:9.6.0"
-    "@sentry/react": "npm:^9.6.0"
-    "@tanstack/react-query": "npm:^5.68.0"
+    "@sentry/browser": "npm:9.6.1"
+    "@sentry/react": "npm:^9.6.1"
+    "@tanstack/react-query": "npm:^5.69.0"
     axios: "npm:1.8.3"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -4756,7 +4756,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:^5.68.0"
+    "@tanstack/react-query": "npm:^5.69.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -5335,14 +5335,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.51.0":
-  version: 1.51.0
-  resolution: "@playwright/test@npm:1.51.0"
+"@playwright/test@npm:^1.51.1":
+  version: 1.51.1
+  resolution: "@playwright/test@npm:1.51.1"
   dependencies:
-    playwright: "npm:1.51.0"
+    playwright: "npm:1.51.1"
   bin:
     playwright: cli.js
-  checksum: 10/48916bb0af52430f0140dc3f110934d141acbb6c00a94b1295648cec8398f5599459704fc98e40445db74d12ca55a20ebf68a1d891cef2b8dfd5ee0a8f21b267
+  checksum: 10/ffb0c964d54f593897f05a2587d8e1e4f5f0e8c28f5f6260c1182ff938eb375d96c57594dd2f223ec45452a6af40695fd22f222930610c32f345e28ccf53141d
   languageName: node
   linkType: hard
 
@@ -5698,54 +5698,54 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:9.6.0":
-  version: 9.6.0
-  resolution: "@sentry-internal/browser-utils@npm:9.6.0"
+"@sentry-internal/browser-utils@npm:9.6.1":
+  version: 9.6.1
+  resolution: "@sentry-internal/browser-utils@npm:9.6.1"
   dependencies:
-    "@sentry/core": "npm:9.6.0"
-  checksum: 10/f811947cbad519d387ff07a1f66b4685ff95119b9c28364dc1d5dcd7e6eebf675a7a391ec535bcc10de99ff22fcdad2753d888875cd7ebcffcb295e5effc7aba
+    "@sentry/core": "npm:9.6.1"
+  checksum: 10/257de5621c0813921e568d769f6f66a54b94aa9d123ba4c91e0181ed09dd5540c7f9ed6f417159ec3051498d6e801982711be47c1e3ebe15ed81646f111bd77b
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:9.6.0":
-  version: 9.6.0
-  resolution: "@sentry-internal/feedback@npm:9.6.0"
+"@sentry-internal/feedback@npm:9.6.1":
+  version: 9.6.1
+  resolution: "@sentry-internal/feedback@npm:9.6.1"
   dependencies:
-    "@sentry/core": "npm:9.6.0"
-  checksum: 10/9bee791243d4cd5473942fbe3c742dcad1b8efd1b6cf4c47a4c6af5a3ee09c9bc01be1295fc86b32373e4c0a76216ddef39e3232629c539a43a6397ac7c2af22
+    "@sentry/core": "npm:9.6.1"
+  checksum: 10/d19e4a302bdbbc368f86df005c7324db4cc2be8e50ade32974a440d205d03322a096b82199beea033291000bd5654214ec10d515541d23b657f7615e893db75a
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay-canvas@npm:9.6.0":
-  version: 9.6.0
-  resolution: "@sentry-internal/replay-canvas@npm:9.6.0"
+"@sentry-internal/replay-canvas@npm:9.6.1":
+  version: 9.6.1
+  resolution: "@sentry-internal/replay-canvas@npm:9.6.1"
   dependencies:
-    "@sentry-internal/replay": "npm:9.6.0"
-    "@sentry/core": "npm:9.6.0"
-  checksum: 10/9926b6d3153baa49f9bc1ab616bfeb833175fd2c83af3bb129c425e8fed82ff1df1eb97563b810e5f35d644f12d063bfa0e373effbd0ef2b345eb4eee75284b7
+    "@sentry-internal/replay": "npm:9.6.1"
+    "@sentry/core": "npm:9.6.1"
+  checksum: 10/a50f2d7f5a7dcc78075fdef7ce676f2dbb141cb08802571aabf7b9974883a8d79b706d205a331360447499524040cdd37fec5f61b541654d61b773c77a753b52
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:9.6.0":
-  version: 9.6.0
-  resolution: "@sentry-internal/replay@npm:9.6.0"
+"@sentry-internal/replay@npm:9.6.1":
+  version: 9.6.1
+  resolution: "@sentry-internal/replay@npm:9.6.1"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:9.6.0"
-    "@sentry/core": "npm:9.6.0"
-  checksum: 10/13b7facb2bb5535a896bd12d50b33e2888bb461c7530f6d0a58a2860e71ad0a8b3c1c3846d40c1faa4803ae5e6ac3cc8ca2b9dbff6396d942c81403b7d308826
+    "@sentry-internal/browser-utils": "npm:9.6.1"
+    "@sentry/core": "npm:9.6.1"
+  checksum: 10/b7216fe7cb4be51be2e9a8c16282528c408bb1062a1470f89179163bec591947fc0813db830c77be06d27cb4b01de7d719b6f37f3ba9c34612143182a2db4526
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:9.6.0":
-  version: 9.6.0
-  resolution: "@sentry/browser@npm:9.6.0"
+"@sentry/browser@npm:9.6.1":
+  version: 9.6.1
+  resolution: "@sentry/browser@npm:9.6.1"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:9.6.0"
-    "@sentry-internal/feedback": "npm:9.6.0"
-    "@sentry-internal/replay": "npm:9.6.0"
-    "@sentry-internal/replay-canvas": "npm:9.6.0"
-    "@sentry/core": "npm:9.6.0"
-  checksum: 10/8e29fca72568488f8e544b7bae0e4ca1bce8f61313d47841d1c356588d542dbf06e9fdda878840c85e790c689255ce2e4582a2fab310a50b21bf5821e82efd44
+    "@sentry-internal/browser-utils": "npm:9.6.1"
+    "@sentry-internal/feedback": "npm:9.6.1"
+    "@sentry-internal/replay": "npm:9.6.1"
+    "@sentry-internal/replay-canvas": "npm:9.6.1"
+    "@sentry/core": "npm:9.6.1"
+  checksum: 10/4f09a73a58f407db2376c1b78ab47a559710241eefe303d2484ede2f1f55dcb86fffdb948af64d06d755ec9213f282d03575fc409b0377709e7133f53a4a50f0
   languageName: node
   linkType: hard
 
@@ -5835,23 +5835,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:9.6.0":
-  version: 9.6.0
-  resolution: "@sentry/core@npm:9.6.0"
-  checksum: 10/db5d20b2d8dcc55bd66652eb3dd3ddb7df24fefd230390901533ab6a5b39814a58ea5ea34154ff504338f8a91718d4d6509e18bfe662b87fb231541cfaebda0a
+"@sentry/core@npm:9.6.1":
+  version: 9.6.1
+  resolution: "@sentry/core@npm:9.6.1"
+  checksum: 10/02659dcadd41a601c061ecd842a7e8ecb60982422ef207c9bb69a6ac811ffe6c3e1add07dc69183d61a0f61689fc89453d397e5c02886684644b30c4f1ebe94e
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:^9.6.0":
-  version: 9.6.0
-  resolution: "@sentry/react@npm:9.6.0"
+"@sentry/react@npm:^9.6.1":
+  version: 9.6.1
+  resolution: "@sentry/react@npm:9.6.1"
   dependencies:
-    "@sentry/browser": "npm:9.6.0"
-    "@sentry/core": "npm:9.6.0"
+    "@sentry/browser": "npm:9.6.1"
+    "@sentry/core": "npm:9.6.1"
     hoist-non-react-statics: "npm:^3.3.2"
   peerDependencies:
     react: ^16.14.0 || 17.x || 18.x || 19.x
-  checksum: 10/49b48016af0b0e83b1a485be2db1e26a3808d6c3fbdb2963f725e76b2a667f84cef2a1fb6abeb895b6c4be1e79f76f1bfaca2c12d8a52022524134f8a4f4c5bc
+  checksum: 10/cee9f9861d18fc9e54ea3a55c068964b7bead4c4ccaf277bda24ba81da1940b7dcb071570fa63b2c8683da7a3a92224bf29ac05b30ca8583eed0f37c5984cbde
   languageName: node
   linkType: hard
 
@@ -6665,21 +6665,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.68.0":
-  version: 5.68.0
-  resolution: "@tanstack/query-core@npm:5.68.0"
-  checksum: 10/bcb6332f59a829af86edea723510874fad75afd6c5145529467ba7b70105dd83b2e63f45fcfccccaf0a5a4032398748614327bf6d310f2c3acfb532df06fd646
+"@tanstack/query-core@npm:5.69.0":
+  version: 5.69.0
+  resolution: "@tanstack/query-core@npm:5.69.0"
+  checksum: 10/8586241e2b254d21cacf7ce595e1ee422b87c902dc70191341992cca875702073133fecee056fd6275779b2a5e748b33e03a6912f5dabd0d703f7778999ec02f
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.68.0":
-  version: 5.68.0
-  resolution: "@tanstack/react-query@npm:5.68.0"
+"@tanstack/react-query@npm:^5.69.0":
+  version: 5.69.0
+  resolution: "@tanstack/react-query@npm:5.69.0"
   dependencies:
-    "@tanstack/query-core": "npm:5.68.0"
+    "@tanstack/query-core": "npm:5.69.0"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/867e5aaf9edb662cbab74f2e659e7799ca9359065fcb5d2f87df961cbd510f4b351cd769d1f0837f69edc9188fbe7cc1de09f5dcb696f2e1fe98fe94b4b4ca04
+  checksum: 10/9b2820e9a5119d743cac62c6249362cf29789ffeffab0e2908bdb0781377b909037fbdd00fe53ac53f56421e8e8baf091d0feff1f84621aa302463cc92071ad7
   languageName: node
   linkType: hard
 
@@ -13553,11 +13553,11 @@ __metadata:
     "@navikt/ds-tailwind": "npm:^7.17.0"
     "@navikt/familie-endringslogg": "npm:14.0.0"
     "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
-    "@playwright/test": "npm:^1.51.0"
+    "@playwright/test": "npm:^1.51.1"
     "@popperjs/core": "npm:2.11.8"
-    "@sentry/browser": "npm:9.6.0"
+    "@sentry/browser": "npm:9.6.1"
     "@sentry/cli": "npm:2.42.3"
-    "@sentry/react": "npm:^9.6.0"
+    "@sentry/react": "npm:^9.6.1"
     "@storybook/addon-a11y": "npm:8.6.7"
     "@storybook/addon-actions": "npm:8.6.7"
     "@storybook/addon-docs": "npm:8.6.7"
@@ -15322,27 +15322,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.51.0":
-  version: 1.51.0
-  resolution: "playwright-core@npm:1.51.0"
+"playwright-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright-core@npm:1.51.1"
   bin:
     playwright-core: cli.js
-  checksum: 10/2e2bb4e9625a7a08d305078d383200d9f3457fc4c51d3fac9443b94a0b820233ebe0dc0434f77da96a8ce278bc9806463194066dec942d1ac0de001d4b325bfb
+  checksum: 10/954ce25782bbf0780c170caa56e7a0ab2e625dad42c628f9ee684974398b93885e58b88afb8b18dd2c96a7a82c6dde474d4fa7a4f6dff32111a562506c187cc3
   languageName: node
   linkType: hard
 
-"playwright@npm:1.51.0":
-  version: 1.51.0
-  resolution: "playwright@npm:1.51.0"
+"playwright@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright@npm:1.51.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.51.0"
+    playwright-core: "npm:1.51.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10/350f9e1cf8deff992f08d63aac88ed49aed1963d0b33a6f0a1354069734d028328acb3f156e25e57a78522bd3f42f687155ea3f39cb7fc4a83b15efce39b53f9
+  checksum: 10/cc7d3e204b9fd70a7208ef1d189981135a04de533eff4a6772a6c8be1604a1eaaa3bac9129eb5d814384d4f727fb8011832676a5105b1b260917c48c421f7f9b
   languageName: node
   linkType: hard
 
