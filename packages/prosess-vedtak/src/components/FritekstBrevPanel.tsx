@@ -85,26 +85,26 @@ const FritekstBrevPanel = ({
           </Alert>
         </div>
       )}
-      (!kanRedigereFritekstbrev && (
-      <div className={readOnly ? '' : styles.brevFormContainer}>
-        <TextFieldFormik
-          name="overskrift"
-          label={formatMessage({ id: 'VedtakForm.Overskrift' })}
-          validate={[required, minLength3, maxLength200, hasValidText]}
-          maxLength={200}
-          readOnly={readOnly}
-        />
-        <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-          <TextAreaFormik
-            name="brødtekst"
-            label={formatMessage({ id: 'VedtakForm.Innhold' })}
-            validate={[required, minLength3, maxLength100000, hasValidText]}
-            maxLength={100000}
+      {!kanRedigereFritekstbrev && (
+        <div className={readOnly ? '' : styles.brevFormContainer}>
+          <TextFieldFormik
+            name="overskrift"
+            label={formatMessage({ id: 'VedtakForm.Overskrift' })}
+            validate={[required, minLength3, maxLength200, hasValidText]}
+            maxLength={200}
             readOnly={readOnly}
           />
+          <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+            <TextAreaFormik
+              name="brødtekst"
+              label={formatMessage({ id: 'VedtakForm.Innhold' })}
+              validate={[required, minLength3, maxLength100000, hasValidText]}
+              maxLength={100000}
+              readOnly={readOnly}
+            />
+          </div>
         </div>
-      </div>
-      ))
+      )}
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
         <div className={readOnly ? 'readOnly' : styles.manueltBrevFormContainer}>
           <FritekstRedigering
