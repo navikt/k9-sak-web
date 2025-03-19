@@ -62,6 +62,7 @@ spec:
     - name: ENDRINGSLOGG_URL
       value: "https://familie-endringslogg.intern.dev.nav.no/"
 
-    # Feature-flag
+    # Setter flagg som bestemmer hvilket sett med feature toggles som skal brukes i frontend.
+    # Faktiske feature toggles for ulike miljø er satt i ulike filer i packages/v2/gui/src/featuretoggles
     - name: FEATURE_TOGGLES_ENV
       value: "k9-sak-q"
