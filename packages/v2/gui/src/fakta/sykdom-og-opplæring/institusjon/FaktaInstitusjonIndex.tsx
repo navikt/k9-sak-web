@@ -7,7 +7,7 @@ import {
   type InstitusjonVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 
-import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
+import InstitusjonDetails from './components/InstitusjonDetails.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';

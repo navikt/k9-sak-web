@@ -5,7 +5,7 @@ import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { LinkButton } from '@navikt/ft-plattform-komponenter';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
-import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 
