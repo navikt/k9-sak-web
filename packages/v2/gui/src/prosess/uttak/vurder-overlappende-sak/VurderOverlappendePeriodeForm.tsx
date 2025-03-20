@@ -1,10 +1,8 @@
 import { useEffect, useState, type FC } from 'react';
 import { useFormContext, type FieldArrayWithId, type UseFieldArrayReplace } from 'react-hook-form';
-import { isSameDay } from 'date-fns';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import dayjs from 'dayjs';
 import { ScissorsIcon, TrashIcon } from '@navikt/aksel-icons';
 import {
-  Label,
   Button,
   RadioGroup,
   Radio,
@@ -23,19 +21,12 @@ import styles from './VurderOverlappendeSak.module.css';
 
 interface Props {
   index: number;
-  originaleOverlappendePerioder: { fom: string; tom: string }[];
   readOnly: boolean;
   fields: FieldArrayWithId<VurderOverlappendeSakFormData, 'perioder', 'id'>[];
   replace: UseFieldArrayReplace<VurderOverlappendeSakFormData, 'perioder'>;
 }
 
-const VurderOverlappendePeriodeForm: FC<Props> = ({
-  index,
-  originaleOverlappendePerioder,
-  readOnly,
-  fields,
-  replace,
-}) => {
+const VurderOverlappendePeriodeForm: FC<Props> = ({ index, readOnly, fields, replace }) => {
   const {
     watch,
     formState: { errors },
@@ -43,21 +34,20 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
     setValue,
     getValues,
   } = useFormContext<VurderOverlappendeSakFormData>();
-  const fom = getValues(`perioder.${index}.periode.fom`);
-  const tom = getValues(`perioder.${index}.periode.tom`);
+  const fom = dayjs(getValues(`perioder.${index}.periode.fom`));
+  const tom = dayjs(getValues(`perioder.${index}.periode.tom`));
   const { splittPeriode, slettPeriode } = useOverlappendeSakUtils(fields, replace);
   const [visDatoVelger, setVisDatovelger] = useState<boolean>(false);
   const [skalViseSkjema, setSkalViseSkjema] = useState<boolean>(false);
 
-  const harSplittedePerioder = !originaleOverlappendePerioder.some(originalPeriode => {
-    return (
-      isSameDay(new Date(originalPeriode.fom), new Date(fom)) && isSameDay(new Date(originalPeriode.tom), new Date(tom))
-    );
-  });
-  const kanSlettes = harSplittedePerioder && !readOnly;
-  const kanSplittes = !isSameDay(new Date(fom), new Date(tom)) && !readOnly;
+  const harTilstøtendePeriode =
+    (index < fields.length - 1 && tom.isSame(dayjs(fields[index + 1]?.periode.fom).subtract(1, 'day'))) ||
+    (index > 0 && fom.isSame(dayjs(fields[index - 1]?.periode.tom).add(1, 'day')));
+  const kanSlettes = harTilstøtendePeriode && !readOnly;
+  const kanSplittes = !fom.isSame(tom) && !readOnly;
   const watchValg = watch(`perioder.${index}.valg`);
   const erEndretAutomatisk = getValues(`perioder.${index}.endretAutomatisk`);
+  const [velgDato, setVelgDato] = useState<number>(0);
 
   useEffect(() => {}, []);
 
@@ -68,47 +58,47 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
 
   return (
     <div>
-      <HStack gap={'space-8'} align="center">
-        <Label size="small">
-          Vurder uttak for perioden{' '}
-          <BodyShort
-            size="small"
-            as="span"
-            weight="semibold"
-            className={erEndretAutomatisk ? styles['uttaksPeriodeEndret'] : ''}
-          >{`${formatPeriod(fom || '', tom || '')}`}</BodyShort>
-        </Label>
-        {kanSplittes && (
-          <Button
-            onClick={() => setVisDatovelger(true)}
-            variant="tertiary"
-            size="small"
-            type="button"
-            icon={<ScissorsIcon title="Splitt periode" />}
-          />
-        )}
-
-        {kanSlettes && (
-          <Button
-            type="button"
-            onClick={() => slettPeriode(index)}
-            variant="tertiary"
-            size="small"
-            icon={<TrashIcon title="Slett periode" />}
-          />
-        )}
-
-        {erEndretAutomatisk && (
-          <HelpText title="Hvor kommer dette fra?">
-            Denne perioden ble justert automatisk for å fylle den overlappende perioden.
-          </HelpText>
-        )}
-      </HStack>
       <VStack gap={'space-16'}>
         <RadioGroup
           size="small"
-          legend={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
-          hideLegend={true}
+          legend={
+            <HStack as={'span'} align={'center'} gap={'space-8'}>
+              <BodyShort size="small" as="span" weight="semibold">
+                Vurder uttak i denne saken for perioden{' '}
+                <BodyShort
+                  size="small"
+                  as="span"
+                  weight="semibold"
+                  className={erEndretAutomatisk ? styles['uttaksPeriodeEndret'] : ''}
+                >
+                  {fom.format('DD.MM.YYYY') || ''} - {tom.format('DD.MM.YYYY') || ''}
+                </BodyShort>
+              </BodyShort>
+              {kanSplittes && (
+                <Button
+                  onClick={() => setVisDatovelger(true)}
+                  variant="tertiary"
+                  size="small"
+                  type="button"
+                  icon={<ScissorsIcon title="Splitt periode" />}
+                />
+              )}
+              {kanSlettes && (
+                <Button
+                  type="button"
+                  onClick={() => slettPeriode(index)}
+                  variant="tertiary"
+                  size="small"
+                  icon={<TrashIcon title="Slett periode" />}
+                />
+              )}
+              {erEndretAutomatisk && (
+                <HelpText title="Hvor kommer dette fra?">
+                  Denne perioden ble justert automatisk for å fylle den overlappende perioden.
+                </HelpText>
+              )}
+            </HStack>
+          }
           onChange={value => {
             setValue(`perioder.${index}.valg`, value);
           }}
@@ -140,19 +130,28 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({
         <div>
           <Modal
             title="Spesifiser periode"
-            onClose={() => setVisDatovelger(false)}
+            onClose={() => {
+              setVelgDato(0);
+              setVisDatovelger(false);
+            }}
             open={visDatoVelger}
             aria-label="Spesifiser periode"
           >
             <Modal.Header closeButton>Spesifiser periode</Modal.Header>
             <Modal.Body>
               <DatePicker.Standalone
+                dropdownCaption
+                defaultMonth={fom.toDate()}
                 mode="range"
-                disabled={[{ before: new Date(fom) }, { after: new Date(tom) }]}
+                disabled={[{ before: fom.toDate() }, { after: tom.toDate() }]}
                 onSelect={(val: undefined | { from: Date | undefined; to?: Date | undefined }) => {
-                  if (val?.from && val.to) {
-                    setVisDatovelger(false);
-                    splittPeriode(val.from, val.to, index);
+                  if (velgDato === 0) setVelgDato(1);
+                  if (velgDato === 1) {
+                    if (val?.from && val.to) {
+                      setVisDatovelger(false);
+                      splittPeriode(val.from, val.to, index);
+                      setVelgDato(0);
+                    }
                   }
                 }}
               />

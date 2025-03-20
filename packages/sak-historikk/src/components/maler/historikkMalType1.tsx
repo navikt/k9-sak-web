@@ -24,7 +24,7 @@ const HistorikkMalType1 = ({ historikkinnslag, getKodeverknavn, saksnummer }: Hi
       {dokumentLinks &&
         dokumentLinks.map(dokumentLenke => (
           <HistorikkDokumentLenke
-            key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+            key={`${dokumentLenke.tag}@${dokumentLenke.dokumentId}-${dokumentLenke.journalpostId}`}
             dokumentLenke={dokumentLenke}
             saksnummer={saksnummer}
           />
