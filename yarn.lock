@@ -4867,9 +4867,9 @@ __metadata:
     "@k9-sak-web/sak-meny-marker-behandling": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ds-react": "npm:7.17.2"
-    "@navikt/ft-form-hooks": "npm:^6.2.4"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.8"
-    "@navikt/ft-ui-komponenter": "npm:^3.1.8"
+    "@navikt/ft-form-hooks": "npm:^6.2.6"
+    "@navikt/ft-plattform-komponenter": "npm:^7.2.10"
+    "@navikt/ft-ui-komponenter": "npm:^3.2.0"
     "@sentry/browser": "npm:9.6.0"
     "@sentry/react": "npm:^9.6.0"
     "@tanstack/react-query": "npm:^5.68.0"
@@ -5119,40 +5119,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-hooks@npm:^6.2.4":
-  version: 6.2.4
-  resolution: "@navikt/ft-form-hooks@npm:6.2.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F6.2.4%2F8fc01e9bec79d4521f540c12ae5a9c2950d5dbda"
-  dependencies:
-    "@navikt/aksel-icons": "npm:7.17.0"
-    "@navikt/ds-css": "npm:7.17.0"
-    "@navikt/ds-react": "npm:7.17.0"
-    "@navikt/ft-form-validators": "npm:^3.1.7"
-    "@navikt/ft-ui-komponenter": "npm:^3.1.8"
-    "@navikt/ft-utils": "npm:^3.1.7"
-    classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.13"
-    lodash.throttle: "npm:4.1.1"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
-    react-hook-form: "npm:7.54.2"
-  peerDependencies:
-    "@navikt/aksel-icons": 7.x
-    "@navikt/ds-css": 7.x
-    "@navikt/ds-react": 7.x
-    "@navikt/ft-form-validators": 2.x
-    "@navikt/ft-types": 3.x
-    "@navikt/ft-ui-komponenter": 2.x
-    "@navikt/ft-utils": 2.x
-    classnames: 2.5.1
-    dayjs: 1.11.x
-    lodash.throttle: 4.1.1
-    react: 19.0.0
-    react-dom: 19.0.0
-    react-hook-form: 7.x
-  checksum: 10/dad64631da0c159040ba2cdb2ca89d53d463d7791960b66c5ad9ea1e38bdef286b6381bc8aea59977a89a1c47b31f99f136f95a3fe307ed2d3d1869ef3c69af6
-  languageName: node
-  linkType: hard
-
 "@navikt/ft-form-hooks@npm:^6.2.6":
   version: 6.2.6
   resolution: "@navikt/ft-form-hooks@npm:6.2.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F6.2.6%2Ff0b2df1df63609da5da9ca7dee8bccc18feb4b5f"
@@ -5184,19 +5150,6 @@ __metadata:
     react-dom: 19.0.0
     react-hook-form: 7.x
   checksum: 10/f04c4e5de841e0b611d9433976831935667e73f94b5d75cec60bdc6cd448e1bb37888c85e4d573a05754cb813aa4ce6036227fecbb97a28f275852dcf313eba7
-  languageName: node
-  linkType: hard
-
-"@navikt/ft-form-validators@npm:^3.1.7":
-  version: 3.1.7
-  resolution: "@navikt/ft-form-validators@npm:3.1.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F3.1.7%2Ff143e0e457aac4dd1b6531c66b247b4035647127"
-  dependencies:
-    "@navikt/ft-utils": "npm:^3.1.7"
-    dayjs: "npm:1.11.13"
-  peerDependencies:
-    "@navikt/ft-utils": 2.x
-    dayjs: 1.11.x
-  checksum: 10/fd7a868073c10e0e060a2f67eb9689d033babb648297591b07548235925087f233e1079c00be5797276fe5febe7fb866cb66430acfe2bad6bdb4b1371984cae9
   languageName: node
   linkType: hard
 
@@ -5240,29 +5193,6 @@ __metadata:
     react: 19.0.0
     react-dom: 19.0.0
   checksum: 10/e498cc10074df0644f711a5148f655602e7b02ea50ebea47f0fb26c9f5d1576811881bc1458b143ff0650dabd281f669c24dbf42af58b77770631fa7dcb5befb
-  languageName: node
-  linkType: hard
-
-"@navikt/ft-plattform-komponenter@npm:^7.2.8":
-  version: 7.2.8
-  resolution: "@navikt/ft-plattform-komponenter@npm:7.2.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F7.2.8%2F81737085510a2ab83f8b55e0931e3a3b18ffdfa0"
-  dependencies:
-    "@navikt/aksel-icons": "npm:7.17.0"
-    "@navikt/ds-css": "npm:7.17.0"
-    "@navikt/ds-react": "npm:7.17.0"
-    "@navikt/ft-utils": "npm:^3.1.7"
-    classnames: "npm:2.5.1"
-  peerDependencies:
-    "@navikt/aksel-icons": 7.x
-    "@navikt/ds-css": 7.x
-    "@navikt/ds-react": 7.x
-    "@popperjs/core": 2.11.8
-    classnames: 2.5.1
-    lodash.throttle: 4.1.1
-    prop-types: 15.8.1
-    react: 19.0.0
-    react-dom: 19.0.0
-  checksum: 10/32731c28f334e65ec1ed824e6581e4441192c8b4dcb0c0285156f9aad4e8deb470bc25ce997be95968d037d0b9c32e3d7c116544a51f957c7ddaf60a3054bee6
   languageName: node
   linkType: hard
 
@@ -5349,33 +5279,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-ui-komponenter@npm:^3.1.8":
-  version: 3.1.8
-  resolution: "@navikt/ft-ui-komponenter@npm:3.1.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F3.1.8%2Ff6b7b000d96d1c344f4090c36f20f7268fc28126"
-  dependencies:
-    "@navikt/aksel-icons": "npm:7.17.0"
-    "@navikt/ds-css": "npm:7.17.0"
-    "@navikt/ds-react": "npm:7.17.0"
-    "@navikt/ft-utils": "npm:^3.1.7"
-    classnames: "npm:2.5.1"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
-    react-intl: "npm:7.1.6"
-    react-modal: "npm:3.16.3"
-  peerDependencies:
-    "@navikt/aksel-icons": 7.x
-    "@navikt/ds-css": 7.x
-    "@navikt/ds-react": 7.x
-    "@navikt/ft-utils": 2.x
-    classnames: 2.5.1
-    react: 19.0.0
-    react-dom: 19.0.0
-    react-intl: 6.x
-    react-modal: 3.16.1
-  checksum: 10/5c3b713a64d3b99560d9605474ec4ec135333cc608772b9a55c303cdbdd8e14cdc9f71e6015eb53ec710fffb73b205313ad537ea207c69cb55ad3578fc43aefd
-  languageName: node
-  linkType: hard
-
 "@navikt/ft-ui-komponenter@npm:^3.2.0":
   version: 3.2.0
   resolution: "@navikt/ft-ui-komponenter@npm:3.2.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F3.2.0%2Fc8252eb77889377a74171d20dc978971aa2349b5"
@@ -5400,20 +5303,6 @@ __metadata:
     react-intl: 6.x
     react-modal: 3.16.1
   checksum: 10/0aae9f27c49b758e417f3996cb93ef314c171eed371931bb16f033e1cbadf2841facc1cc4099c2772e186d4ca8a8200503591a227a9768be41334a0a7a5a8a66
-  languageName: node
-  linkType: hard
-
-"@navikt/ft-utils@npm:^3.1.7":
-  version: 3.1.7
-  resolution: "@navikt/ft-utils@npm:3.1.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F3.1.7%2F6bbf28677471a241614dc17c7c44dc348dcd0421"
-  dependencies:
-    dayjs: "npm:1.11.13"
-    react-intl: "npm:7.1.6"
-  peerDependencies:
-    dayjs: 1.11.x
-    react: "*"
-    react-intl: 6.x
-  checksum: 10/971a1ca6aa7d8897e41c93a2760a327df7ef922e15050f83ad45701b265ea732d2713b019b21d0d84555b1b66151d5e4d86c965ce5dd233ee358a0c6e9876a08
   languageName: node
   linkType: hard
 
