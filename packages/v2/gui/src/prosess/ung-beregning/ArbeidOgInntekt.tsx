@@ -1,43 +1,39 @@
+import {
+  KontrollerInntektPeriodeDtoStatus,
+  KontrollerInntektPeriodeDtoValg,
+  type KontrollerInntektDto,
+  type RapportertInntektDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, PersonIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, Table, VStack } from '@navikt/ds-react';
 import { Form, InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
+import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
+import { formatCurrencyWithKr } from '../../utils/formatters';
 import styles from './arbeidOgInntekt.module.css';
 
-const dummyData = [
-  {
-    status: 'Ingen avvik',
-    arbeidsforhold: 'Bedrift AS',
-    periode: `${new Date().toLocaleDateString('no')} - ${new Date().toLocaleDateString('no')}`,
-    rapportertDeltager: '0 kr',
-    rapportertInntekt: '0 kr',
-  },
-  {
-    status: 'Avvik',
-    arbeidsforhold: 'Bedrift 2 AS',
-    periode: `${new Date().toLocaleDateString('no')} - ${new Date().toLocaleDateString('no')}`,
-    rapportertDeltager: '0 kr',
-    rapportertInntekt: '0 kr',
-  },
-];
+const formaterInntekt = (inntekt: RapportertInntektDto) => {
+  return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
+};
 
 type Formvalues = {
-  inntektArbeid: string;
-  inntektYtelse: string;
-  inntektRadio: 'deltager' | 'a-inntekt' | 'fastsett-belop' | '';
+  fastsattArbeidsinntekt: string;
+  fastsattYtelse: string;
+  inntektRadio: KontrollerInntektPeriodeDtoValg | '';
   begrunnelse: string;
 };
 
 interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => void;
+  inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'];
 }
 
-export const ArbeidOgInntekt = ({ submitCallback }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: ArbeidOgInntektProps) => {
   const formMethods = useForm<Formvalues>({
     defaultValues: {
-      inntektArbeid: '',
-      inntektYtelse: '',
+      fastsattArbeidsinntekt: '',
+      fastsattYtelse: '',
       inntektRadio: '',
       begrunnelse: '',
     },
@@ -45,19 +41,14 @@ export const ArbeidOgInntekt = ({ submitCallback }: ArbeidOgInntektProps) => {
   const inntektRadio = formMethods.watch('inntektRadio');
 
   const onSubmit = (values: Formvalues) => {
-    let payload;
-    if (values.inntektRadio === 'fastsett-belop') {
-      payload = {
-        inntektArbeid: values.inntektArbeid,
-        inntektYtelse: values.inntektYtelse,
-        begrunnelse: values.begrunnelse,
-      };
-    } else {
-      payload = {
-        inntektRadio: values.inntektRadio,
-        begrunnelse: values.begrunnelse,
-      };
-    }
+    const payload = {
+      inntektRadio: values.inntektRadio,
+      begrunnelse: values.begrunnelse,
+      ...(values.inntektRadio === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && {
+        fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
+        fastsattYtelse: values.fastsattYtelse,
+      }),
+    };
     submitCallback(payload);
   };
 
@@ -94,15 +85,21 @@ export const ArbeidOgInntekt = ({ submitCallback }: ArbeidOgInntektProps) => {
               label="Hvilken inntekt skal benyttes?"
               validate={[required]}
               radios={[
-                { value: 'deltager', label: 'Rapportert inntekt fra deltager' },
-                { value: 'a-inntekt', label: 'Rapportert inntekt fra A-inntekt' },
-                { value: 'fastsett-belop', label: 'Fastsett beløp' },
+                {
+                  value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
+                  label: 'Rapportert inntekt fra deltager',
+                },
+                {
+                  value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
+                  label: 'Rapportert inntekt fra A-inntekt',
+                },
+                { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
               ]}
             />
-            {inntektRadio === 'fastsett-belop' && (
+            {inntektRadio === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
               <VStack gap="4">
                 <InputField
-                  name="inntektArbeid"
+                  name="fastsattArbeidsinntekt"
                   label="Inntekt fra arbeid"
                   type="text"
                   validate={[required]}
@@ -110,7 +107,7 @@ export const ArbeidOgInntekt = ({ submitCallback }: ArbeidOgInntektProps) => {
                   size="small"
                 />
                 <InputField
-                  name="inntektYtelse"
+                  name="fastsattYtelse"
                   label="Inntekt fra ytelse"
                   type="text"
                   validate={[required]}
@@ -150,7 +147,6 @@ export const ArbeidOgInntekt = ({ submitCallback }: ArbeidOgInntektProps) => {
               <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
                 Status
               </Table.HeaderCell>
-              <Table.HeaderCell scope="col">Arbeidsforhold</Table.HeaderCell>
               <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
                 Rapportert av deltager
@@ -162,32 +158,40 @@ export const ArbeidOgInntekt = ({ submitCallback }: ArbeidOgInntektProps) => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {dummyData.map((data, index) => {
-              const isLastRow = index === dummyData.length - 1;
-              const hasAvvik = data.status === 'Avvik';
+            {inntektKontrollperioder?.map((inntekt, index) => {
+              const isLastRow = index === inntektKontrollperioder.length - 1;
+              const harAksjonspunkt = inntekt.erTilVurdering;
+              const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
               return (
                 <Table.ExpandableRow
-                  key={index}
-                  content={hasAvvik ? getAksjonspunkt() : null}
+                  key={`${inntekt.periode?.fom}_${inntekt.periode?.tom}`}
+                  content={harAksjonspunkt ? getAksjonspunkt() : null}
                   togglePlacement="right"
                   className={isLastRow ? styles.lastRow : ''}
                   expandOnRowClick
-                  expansionDisabled={!hasAvvik}
+                  expansionDisabled={!harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>
                     <HStack gap="2">
-                      {hasAvvik ? (
+                      {harAvvik ? (
                         <ExclamationmarkTriangleFillIcon fontSize="1.5rem" className={styles.exclamationmarkIcon} />
                       ) : (
                         <CheckmarkCircleFillIcon fontSize={24} className={styles.checkmarkIcon} />
                       )}
-                      {data.status}
+                      {inntekt.status}
                     </HStack>
                   </Table.DataCell>
-                  <Table.DataCell>{data.arbeidsforhold}</Table.DataCell>
-                  <Table.DataCell>{data.periode}</Table.DataCell>
-                  <Table.DataCell align="right">{data.rapportertDeltager}</Table.DataCell>
-                  <Table.DataCell align="right">{data.rapportertInntekt}</Table.DataCell>
+                  <Table.DataCell>
+                    {inntekt.periode && (
+                      <PeriodLabel dateStringFom={inntekt.periode?.fom} dateStringTom={inntekt.periode?.tom} />
+                    )}
+                  </Table.DataCell>
+                  <Table.DataCell align="right">
+                    {inntekt.rapporterteInntekter?.bruker && formaterInntekt(inntekt.rapporterteInntekter?.bruker)}
+                  </Table.DataCell>
+                  <Table.DataCell align="right">
+                    {inntekt.rapporterteInntekter?.register && formaterInntekt(inntekt.rapporterteInntekter?.register)}
+                  </Table.DataCell>
                 </Table.ExpandableRow>
               );
             })}

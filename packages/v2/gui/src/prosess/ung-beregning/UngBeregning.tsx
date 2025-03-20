@@ -11,14 +11,13 @@ interface Props {
   behandling: { uuid: string };
   api: UngBeregningBackendApiType;
   barn: Barn[];
-  inntekt?: unknown[];
   submitCallback: (data: unknown) => void;
 }
 
 const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
   data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
 
-const UngBeregning = ({ api, behandling, barn, inntekt, submitCallback }: Props) => {
+const UngBeregning = ({ api, behandling, barn, submitCallback }: Props) => {
   const {
     data: satser,
     isLoading: satserIsLoading,
@@ -30,7 +29,12 @@ const UngBeregning = ({ api, behandling, barn, inntekt, submitCallback }: Props)
     select: sortSatser,
   });
 
-  if (satserIsLoading) {
+  const { data: inntekt, isLoading: kontrollInntektIsLoading } = useQuery({
+    queryKey: ['kontrollInntekt', behandling.uuid],
+    queryFn: () => api.getKontrollerInntekt(behandling.uuid),
+  });
+
+  if (satserIsLoading || kontrollInntektIsLoading) {
     return <Loader size="large" />;
   }
 
@@ -39,7 +43,7 @@ const UngBeregning = ({ api, behandling, barn, inntekt, submitCallback }: Props)
   }
 
   const harBarn = barn.length > 0;
-  const harInntekt = inntekt && inntekt.length > 0;
+  const harInntekt = inntekt?.kontrollperioder && inntekt.kontrollperioder.length > 0;
 
   return (
     <Box paddingInline="4 8" paddingBlock="2">
@@ -56,7 +60,7 @@ const UngBeregning = ({ api, behandling, barn, inntekt, submitCallback }: Props)
             {/* <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" /> */}
           </Tabs.List>
           <Tabs.Panel value="arbeid">
-            <ArbeidOgInntekt submitCallback={submitCallback} />
+            <ArbeidOgInntekt submitCallback={submitCallback} inntektKontrollperioder={inntekt?.kontrollperioder} />
           </Tabs.Panel>
           <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
           <Tabs.Panel value="barn">
