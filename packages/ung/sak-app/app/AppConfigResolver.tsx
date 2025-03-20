@@ -3,8 +3,9 @@ import { ReactElement, useEffect } from 'react';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/featureToggles/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/qFeatureToggles.js';
+import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
@@ -49,7 +50,7 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     !!featureToggles;
 
   return (
-    <FeatureTogglesContext.Provider value={featureToggles}>
+    <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
       {harFeilet || erFerdig ? children : <LoadingPanel />}
     </FeatureTogglesContext.Provider>
   );

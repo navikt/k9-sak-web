@@ -7,10 +7,10 @@ import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
 import { HistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
 import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkeboble.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import { compareRenderedElementTexts } from '@k9-sak-web/sak-app/src/behandlingsupport/historikk/v1v2Sammenligningssjekk';

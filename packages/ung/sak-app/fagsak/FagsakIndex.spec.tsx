@@ -126,6 +126,7 @@ describe('<FagsakIndex>', () => {
 
   it('skal hente alle behandlinger fra ungsak, tilbake og klage', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK, kodeverk);
+    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, kodeverk);
     requestApi.mock(UngSakApiKeys.FETCH_FAGSAK, fagsak);
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.SAK_RETTIGHETER, {
