@@ -212,9 +212,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
               Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
               <List size="small" className={`asdf ${styles['noOverlappendeMargin']}`}>
                 <List.Item>Opplysninger fra bruker, vet vi hva han eller hun vil?</List.Item>
+                <List.Item>Skal det være tilgjengelig uttak til andre på ett av barna?</List.Item>
                 <List.Item>
-                  Skal det være tilgjengelig uttak til andre på ett av barna? Det vil ofte lønne seg å innvilge på den
-                  nyeste saken, mtp beregning og feriepenger.
+                  Det vil ofte lønne seg å innvilge på den nyeste saken, mtp beregning og feriepenger.
                 </List.Item>
                 <List.Item>Er du usikker, må du kontakte bruker for avklaring.</List.Item>
               </List>

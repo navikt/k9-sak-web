@@ -2,7 +2,6 @@ import type { FeatureToggles } from './FeatureToggles.js';
 
 export const prodFeatureToggles = {
   KLAGE_KABAL: true,
-  VARSELTEKST: true,
   DOKUMENTDATA: false,
   UNNTAKSBEHANDLING: false,
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true,
@@ -17,7 +16,7 @@ export const prodFeatureToggles = {
   AUTOMATISK_VURDERT_MEDLEMSKAP: true,
   OPPTJENING_READ_ONLY_PERIODER: true,
   SAK_MENY_V2: false,
-  AKSJONSPUNKT_OVERLAPPENDE_SAKER: false,
+  AKSJONSPUNKT_OVERLAPPENDE_SAKER: true,
   BRUK_V2_BEHANDLING_VELGER: false,
   HISTORIKK_V2_VIS: true,
   VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK: true,
