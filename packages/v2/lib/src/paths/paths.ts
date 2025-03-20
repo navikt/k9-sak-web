@@ -1,3 +1,5 @@
+const { DEV: IS_DEV } = import.meta.env;
+
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
   if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no') {
@@ -26,4 +28,4 @@ export const goToSearch = () => {
   window.location.assign(`/${getBackendUrl()}/web`);
 };
 
-export const isDev = () => window.location.hostname === 'localhost';
+export const isDev = () => IS_DEV;
