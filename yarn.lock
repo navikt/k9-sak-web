@@ -4043,7 +4043,6 @@ __metadata:
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-etablert-tilsyn": "npm:1.0.0"
     "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
-    "@k9-sak-web/fakta-institusjon": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
@@ -4300,17 +4299,6 @@ __metadata:
     react-hook-form: "npm:7.54.2"
     vite: "npm:^6.2.2"
     vite-plugin-node-polyfills: "npm:^0.23.0"
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-institusjon@npm:1.0.0, @k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.10"
-    formik: "npm:2.4.6"
   languageName: unknown
   linkType: soft
 

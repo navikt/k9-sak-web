@@ -1,4 +1,3 @@
-import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
@@ -10,14 +9,15 @@ import {
 import { Period } from '@navikt/ft-utils';
 
 import styles from './periodeRad.module.css';
-
+import type { ResultatType } from './VurderingsperiodeNavigasjon';
+import { Resultat } from './VurderingsperiodeNavigasjon';
 interface OwnProps {
   perioder: Period[];
-  resultat: string;
+  resultat?: ResultatType;
 }
 
-const renderStatusIcon = (resultat: string) => {
-  if (resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES) {
+const renderStatusIcon = (resultat?: ResultatType) => {
+  if (!resultat || resultat === Resultat.MÅ_VURDERES) {
     return (
       <ContentWithTooltip tooltipText="Perioden må vurderes">
         <WarningIcon />
@@ -25,7 +25,7 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK) {
+  if (resultat === Resultat.GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
         <IndicatorWithOverlay
@@ -36,7 +36,7 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_AUTOMATISK) {
+  if (resultat === Resultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
         <IndicatorWithOverlay
@@ -46,14 +46,14 @@ const renderStatusIcon = (resultat: string) => {
       </ContentWithTooltip>
     );
   }
-  if (resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
+  if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
         <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT) {
+  if (resultat === Resultat.IKKE_GODKJENT_MANUELT || resultat === Resultat.IKKE_OPPFYLT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
         <RedCrossIconFilled />
@@ -65,7 +65,7 @@ const renderStatusIcon = (resultat: string) => {
 
 const PeriodeRad = ({ perioder, resultat }: OwnProps) => (
   <div className={styles.vurderingsperiodeElement}>
-    <div>
+    <div className="min-w-[50px]">
       <span className={styles['visuallyHidden']}>Type</span>
       {renderStatusIcon(resultat)}
     </div>

@@ -35,6 +35,7 @@ const faktaPanelCodes = {
   INSTITUSJON: 'institusjon',
   OPPLAERING: 'opplaering',
   NYOPPSTARTET: 'nyoppstartet',
+  SYKDOM_OG_OPPLAERING: 'sykdom-og-opplaering',
 };
 
 export default faktaPanelCodes;
