@@ -6,7 +6,7 @@ import { ArbeidsgiverOpplysninger, Inntektsgradering } from '../../../types';
 import classNames from 'classnames/bind';
 import { Arbeidstype } from '../../../constants';
 
-import styles from './nyUttakDetaljer.module.css';
+import styles from './uttakDetaljer.module.css';
 
 const cx = classNames.bind(styles);
 

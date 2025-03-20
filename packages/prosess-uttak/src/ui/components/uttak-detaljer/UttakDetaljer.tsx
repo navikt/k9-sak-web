@@ -15,7 +15,7 @@ import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
 import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
 
-import styles from './nyUttakDetaljer.module.css';
+import styles from './uttakDetaljer.module.css';
 
 import type { JSX } from 'react';
 
