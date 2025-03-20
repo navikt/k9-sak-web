@@ -2,13 +2,11 @@ import type { FeatureToggles } from './FeatureToggles.js';
 
 export const qFeatureToggles = {
   KLAGE_KABAL: true,
-  VARSELTEKST: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true,
   LOS_MARKER_BEHANDLING: true,
   LOS_MARKER_BEHANDLING_SUBMIT: true,
-  FRITEKST_REDIGERING: true,
   SKJUL_AVSLUTTET_ARBEIDSGIVER: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_MELDINGER: true,

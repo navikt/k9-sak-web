@@ -3,13 +3,11 @@ import type { FeatureToggles } from './FeatureToggles.js';
 export const devFeatureToggles = {
   BRUK_V2_MELDINGER: true,
   KLAGE_KABAL: true,
-  VARSELTEKST: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true,
   LOS_MARKER_BEHANDLING: true,
   LOS_MARKER_BEHANDLING_SUBMIT: true,
-  FRITEKST_REDIGERING: true,
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: true,
   NYE_NOKKELTALL: true,
   SKILL_UT_PRIVATPERSON: true,

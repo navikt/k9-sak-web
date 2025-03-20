@@ -9,7 +9,6 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -108,7 +107,6 @@ export class AvregningPanelImpl extends Component {
       apCodes,
       readOnly,
       sprakkode,
-      featureVarseltekst,
       featureUtvidetVarselfelt,
       previewCallback,
       hasOpenTilbakekrevingsbehandling,
@@ -175,72 +173,64 @@ export class AvregningPanelImpl extends Component {
                       isVertical
                       readOnly={readOnly}
                       radios={[
-                        ...(featureVarseltekst
-                          ? [
-                              {
-                                value: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
-                                label: <FormattedMessage id="Avregning.gjennomfør" />,
-                                element: (
-                                  <div className={styles.varsel}>
-                                    <ArrowBox alignOffset={20}>
-                                      <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
-                                        <BodyShort size="small" className={styles.bold}>
-                                          <FormattedMessage id="Avregning.varseltekst" />
-                                        </BodyShort>
-                                        <div>
-                                          <Image
-                                            tabIndex="0"
-                                            src={questionNormalUrl}
-                                            srcHover={questionHoverUrl}
-                                            alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
-                                            tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
-                                          />
-                                        </div>
-                                      </HGrid>
-                                      <VerticalSpacer eightPx />
-                                      <TextAreaField
-                                        name="varseltekst"
-                                        label={{ id: 'Avregning.fritekst' }}
-                                        validate={[
-                                          required,
-                                          minLength3,
-                                          featureUtvidetVarselfelt ? maxLength12000 : maxLength1500,
-                                          hasValidText,
-                                        ]}
-                                        maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
-                                        readOnly={readOnly}
-                                        id="avregningFritekst"
-                                        badges={[
-                                          {
-                                            type: 'warning',
-                                            textId: getLanguageCodeFromSprakkode(sprakkode),
-                                            title: 'Malform.Beskrivelse',
-                                          },
-                                        ]}
-                                      />
-                                      <VerticalSpacer fourPx />
-                                      <a
-                                        href=""
-                                        onClick={e => {
-                                          this.previewMessage(e, previewCallback);
-                                        }}
-                                        className={styles.previewLink}
-                                      >
-                                        <FormattedMessage id="Messages.PreviewText" />
-                                      </a>
-                                    </ArrowBox>
+                        {
+                          value: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
+                          label: <FormattedMessage id="Avregning.gjennomfør" />,
+                          element: (
+                            <div className={styles.varsel}>
+                              <ArrowBox alignOffset={20}>
+                                <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+                                  <BodyShort size="small" className={styles.bold}>
+                                    <FormattedMessage id="Avregning.varseltekst" />
+                                  </BodyShort>
+                                  <div>
+                                    <Image
+                                      tabIndex="0"
+                                      src={questionNormalUrl}
+                                      srcHover={questionHoverUrl}
+                                      alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
+                                      tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
+                                    />
                                   </div>
-                                ),
-                              },
-                            ]
-                          : []),
+                                </HGrid>
+                                <VerticalSpacer eightPx />
+                                <TextAreaField
+                                  name="varseltekst"
+                                  label={{ id: 'Avregning.fritekst' }}
+                                  validate={[
+                                    required,
+                                    minLength3,
+                                    featureUtvidetVarselfelt ? maxLength12000 : maxLength1500,
+                                    hasValidText,
+                                  ]}
+                                  maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
+                                  readOnly={readOnly}
+                                  id="avregningFritekst"
+                                  badges={[
+                                    {
+                                      type: 'warning',
+                                      textId: getLanguageCodeFromSprakkode(sprakkode),
+                                      title: 'Malform.Beskrivelse',
+                                    },
+                                  ]}
+                                />
+                                <VerticalSpacer fourPx />
+                                <a
+                                  href=""
+                                  onClick={e => {
+                                    this.previewMessage(e, previewCallback);
+                                  }}
+                                  className={styles.previewLink}
+                                >
+                                  <FormattedMessage id="Messages.PreviewText" />
+                                </a>
+                              </ArrowBox>
+                            </div>
+                          ),
+                        },
                         {
                           value: `${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`,
-                          label: (
-                            <FormattedMessage
-                              id={featureVarseltekst ? 'Avregning.OpprettMenIkkeSendVarsel' : 'Avregning.Opprett'}
-                            />
-                          ),
+                          label: <FormattedMessage id={'Avregning.OpprettMenIkkeSendVarsel'} />,
                         },
                         {
                           value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
@@ -336,7 +326,6 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       fagsak,
       featureToggles,
     } = ownProps;
-    const erFrisinn = fagsak.sakstype === fagsakYtelsesType.FRISINN;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
@@ -344,7 +333,6 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       varseltekst: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
-      featureVarseltekst: erFrisinn || featureToggles?.VARSELTEKST,
       featureUtvidetVarselfelt: featureToggles?.UTVIDET_VARSELFELT,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
