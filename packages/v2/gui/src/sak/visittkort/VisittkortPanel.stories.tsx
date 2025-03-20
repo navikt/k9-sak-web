@@ -55,9 +55,9 @@ export const Default: StoryObj<typeof VisittkortPanel> = {
     personopplysninger: personopplysningerSoker,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText(personopplysningerSoker.navn, { exact: false })).toBeInTheDocument();
+    await expect(canvas.getByText(personopplysningerSoker.navn)).toBeInTheDocument();
     await expect(canvas.getByText('987738 95')).toBeInTheDocument();
-    await expect(canvas.getByText(`${fagsakPerson.navn} (80 år)`, { exact: false })).toBeInTheDocument();
+    await expect(canvas.getByText(fagsakPerson.navn)).toBeInTheDocument();
   },
 };
 
@@ -67,7 +67,7 @@ export const ManglerPersonOpplysninger: StoryObj<typeof VisittkortPanel> = {
     personopplysninger: undefined,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText(fagsakPerson.navn, { exact: false })).toBeInTheDocument();
+    await expect(canvas.getByText(fagsakPerson.navn)).toBeInTheDocument();
     await expect(canvas.getByText('123456 7')).toBeInTheDocument();
   },
 };
