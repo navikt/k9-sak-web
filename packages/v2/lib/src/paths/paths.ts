@@ -1,6 +1,6 @@
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no') {
     return 'https://k9-los-web.intern.dev.nav.no';
   }
   if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
