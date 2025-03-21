@@ -1,9 +1,18 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 describe('<MenyNyBehandlingIndex>', () => {
   it('skal vise modal og så lage ny behandling', async () => {
@@ -28,36 +37,38 @@ describe('<MenyNyBehandlingIndex>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <MenyNyBehandlingIndex
-        ytelseType={fagsakYtelsesType.FORELDREPENGER}
-        saksnummer="123"
-        behandlingId={3}
-        behandlingVersjon={1}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: 'BEHANDLING_TYPE',
-        }}
-        lagNyBehandling={lagNyBehandlingCallback}
-        behandlingOppretting={behandlingOppretting}
-        behandlingstyper={[
-          {
+      <QueryClientProvider client={queryClient}>
+        <MenyNyBehandlingIndex
+          ytelseType={fagsakYtelsesType.FORELDREPENGER}
+          saksnummer="123"
+          behandlingId={3}
+          behandlingVersjon={1}
+          behandlingType={{
             kode: behandlingType.FORSTEGANGSSOKNAD,
             kodeverk: 'BEHANDLING_TYPE',
-            navn: 'Førstegangssøknad',
-          },
-        ]}
-        tilbakekrevingRevurderingArsaker={[]}
-        revurderingArsaker={[]}
-        kanTilbakekrevingOpprettes={{
-          kanBehandlingOpprettes: false,
-          kanRevurderingOpprettes: false,
-        }}
-        uuidForSistLukkede="2323"
-        erTilbakekrevingAktivert
-        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
-        lukkModal={lukkModalCallback}
-      />,
+          }}
+          lagNyBehandling={lagNyBehandlingCallback}
+          behandlingOppretting={behandlingOppretting}
+          behandlingstyper={[
+            {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: 'BEHANDLING_TYPE',
+              navn: 'Førstegangssøknad',
+            },
+          ]}
+          tilbakekrevingRevurderingArsaker={[]}
+          revurderingArsaker={[]}
+          kanTilbakekrevingOpprettes={{
+            kanBehandlingOpprettes: false,
+            kanRevurderingOpprettes: false,
+          }}
+          uuidForSistLukkede="2323"
+          erTilbakekrevingAktivert
+          sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+          sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+          lukkModal={lukkModalCallback}
+        />
+      </QueryClientProvider>,
     );
     await act(async () => {
       await userEvent.selectOptions(screen.getByRole('combobox'), 'BT-002');

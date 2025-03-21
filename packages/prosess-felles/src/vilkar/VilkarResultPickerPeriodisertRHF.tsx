@@ -11,11 +11,13 @@ import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks'
 import { isAfter, isBefore, parse } from 'date-fns';
 import { FunctionComponent, ReactNode } from 'react';
 import styles from './vilkarResultPicker.module.css';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 export type VilkarResultPickerFormState = {
   erVilkarOk: string;
   periodeVilkarStatus: boolean;
   avslagCode?: string;
+  innvilgelseMerknadCode?: string;
   avslagDato?: string;
   valgtPeriodeFom?: string;
   valgtPeriodeTom?: string;
@@ -25,11 +27,13 @@ type TransformedValues = {
   erVilkarOk: boolean;
   periode: Periode | null | undefined;
   avslagskode?: string;
+  innvilgelseMerknadKode?: string;
   avslagDato?: string;
 };
 
 interface OwnProps {
   avslagsarsaker?: KodeverkMedNavn[];
+  relevanteInnvilgetMerknader?: InnvilgetMerknad[];
   erVilkarOk?: string;
   periodeVilkarStatus?: boolean;
   customVilkarIkkeOppfyltText: string | ReactNode;
@@ -51,6 +55,7 @@ interface StaticFunctions {
     aksjonspunkter: Aksjonspunkt[],
     status: string,
     periode: Vilkarperiode,
+    innvilgelseMerknadKode?: string,
   ) => VilkarResultPickerFormState;
 }
 
@@ -61,6 +66,7 @@ interface StaticFunctions {
  */
 const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   avslagsarsaker,
+  relevanteInnvilgetMerknader,
   erVilkarOk,
   periodeVilkarStatus,
   customVilkarIkkeOppfyltText,
@@ -179,6 +185,25 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </>
           )}
 
+          {erVilkarOk === vilkarUtfallPeriodisert.OPPFYLT &&
+            relevanteInnvilgetMerknader &&
+            relevanteInnvilgetMerknader.length > 0 && (
+              <>
+                <VerticalSpacer sixteenPx />
+                <SelectField
+                  name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
+                  label="Hjemmel for innvilgelse"
+                  selectValues={relevanteInnvilgetMerknader.map(iu => (
+                    <option key={iu.merknad.kode} value={iu.merknad.kode}>
+                      {iu.navn}
+                    </option>
+                  ))}
+                  readOnly={readOnly}
+                  validate={[required]}
+                />
+              </>
+            )}
+
           {erVilkarOk === vilkarUtfallPeriodisert.IKKE_OPPFYLT && avslagsarsaker && (
             <>
               <VerticalSpacer eightPx />
@@ -215,6 +240,7 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
+  innvilgelseMerknadKode?: string,
 ): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   let erVilkarOk;
@@ -229,6 +255,8 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
     erVilkarOk,
     periodeVilkarStatus: !isOpenAksjonspunkt && status === vilkarUtfallType.OPPFYLT,
     avslagCode: erVilkarOk === vilkarUtfallType.IKKE_OPPFYLT && avslagKode ? avslagKode : undefined,
+    innvilgelseMerknadCode:
+      erVilkarOk === vilkarUtfallType.OPPFYLT && innvilgelseMerknadKode ? innvilgelseMerknadKode : undefined,
     valgtPeriodeFom: periode.periode.fom,
     valgtPeriodeTom: periode.periode.tom,
   };
@@ -244,6 +272,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
       return {
         erVilkarOk: true,
         periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
+        innvilgelseMerknadKode: values.innvilgelseMerknadCode,
       };
 
     case vilkarUtfallPeriodisert.DELVIS_OPPFYLT:
@@ -253,6 +282,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
           fom: values.valgtPeriodeFom,
           tom: values.valgtPeriodeTom,
         },
+        innvilgelseMerknadKode: null,
       };
 
     case vilkarUtfallPeriodisert.IKKE_OPPFYLT:
@@ -261,6 +291,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
         avslagskode: values.avslagCode,
         avslagsDato: values.avslagDato,
         periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
+        innvilgelseMerknadKode: null,
       };
 
     case vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT:
@@ -271,12 +302,14 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
           fom: values.valgtPeriodeFom,
           tom: values.valgtPeriodeTom,
         },
+        innvilgelseMerknadKode: null,
       };
     default:
       return {
         erVilkarOk: null,
         avslagskode: null,
         periode: null,
+        innvilgelseMerknadKode: null,
       };
   }
 };

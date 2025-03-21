@@ -128,7 +128,7 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingÅrsaker,
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
-  const { kodeverkNavnFraKode } = useKodeverkContext();
+  const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
@@ -521,6 +521,7 @@ export const VedtakForm: React.FC<Props> = ({
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
                       kodeverkNavnFraKode={kodeverkNavnFraKode}
+                      behandlingType={behandlingType}
                     />
                   )}
 

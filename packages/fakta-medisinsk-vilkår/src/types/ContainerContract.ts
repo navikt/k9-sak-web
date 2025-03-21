@@ -1,4 +1,5 @@
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Personopplysninger } from '@k9-sak-web/types';
 import BehandlingType from '../constants/BehandlingType';
 
 interface ContainerContract {
@@ -22,6 +23,7 @@ interface ContainerContract {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fagsakYtelseType?: FagsakYtelsesType;
   behandlingType?: BehandlingType;
+  pleietrengendePart?: Personopplysninger['pleietrengendePart'];
 }
 
 export default ContainerContract;

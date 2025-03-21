@@ -47,7 +47,7 @@ function excludeMsw() {
 }
 
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir`) };
+  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir/k9`) };
   return defineConfig({
     server: {
       port: 9000,
@@ -106,7 +106,7 @@ export default ({ mode }) => {
     },
     test: {
       deps: {
-        inline: ['@navikt/k9-sak-typescript-client', '@navikt/k9-klage-typescript-client'], // Without this, tests using k9-*-typescript-client through backend project failed.
+        inline: ['@navikt/k9-sak-typescript-client', '@navikt/ung-sak-typescript-client', '@navikt/k9-klage-typescript-client'], // Without this, tests using *-*-typescript-client through backend project failed.
         interopDefault: true
       },
       environment: 'jsdom',

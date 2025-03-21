@@ -1,0 +1,60 @@
+name: Build and deploy ung-sak-web
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'CODEOWNERS'
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    name: Build and deploy Docker image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CLUSTER: dev-gcp
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v4
+
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
+        with:
+          npmAuthToken: ${{ secrets.READER_TOKEN }}
+
+      - name: Bygge dist
+        run: yarn build:ung
+
+      - name: Opprett release med Sentry
+        run: yarn sentry-release-ung
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: Build and push to docker registry
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
+        id: docker-push
+        with:
+          image_base_name: 'ung-sak-web'
+          without_navikt_prefix: true
+          #Konfigurerer for bygging av ung docker image:
+          build-args: |
+            featureToggles=ung.feature-toggles.json
+            proxyConfig=ung.proxy.nginx
+            appVariant=ung
+            port=9005
+          labels: |
+            org.opencontainers.image.title=ung-sak-web
+            org.opencontainers.image.description=Frontend for ung-sak
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          push-image: true
+      - name: Deploy to nais
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VAR: image=${{ steps.docker-push.outputs.image }}
