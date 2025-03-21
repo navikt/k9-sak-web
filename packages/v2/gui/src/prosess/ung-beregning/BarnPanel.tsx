@@ -1,4 +1,4 @@
-import { Box, Table } from '@navikt/ds-react';
+import { BodyShort, Box, Label, Table } from '@navikt/ds-react';
 import styles from './barn.module.css';
 import type { Barn } from './types/Barn';
 
@@ -14,10 +14,16 @@ export const BarnPanel = ({ barn }: Props) => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
-              Navn
+              <Label size="small">Navn</Label>
             </Table.HeaderCell>
-            <Table.HeaderCell scope="col">Fødselsdato</Table.HeaderCell>
-            {harBarnMedDødsdato && <Table.HeaderCell scope="col">Dødsdato</Table.HeaderCell>}
+            <Table.HeaderCell scope="col">
+              <Label size="small">Fødselsdato</Label>
+            </Table.HeaderCell>
+            {harBarnMedDødsdato && (
+              <Table.HeaderCell scope="col">
+                <Label size="small">Dødsdato</Label>
+              </Table.HeaderCell>
+            )}
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -25,9 +31,17 @@ export const BarnPanel = ({ barn }: Props) => {
             const isLastRow = index === barn.length - 1;
             return (
               <Table.Row key={navn} className={isLastRow ? styles.lastRow : ''}>
-                <Table.DataCell className={styles.firstHeaderCell}>{navn}</Table.DataCell>
-                <Table.DataCell>{fødselsdato}</Table.DataCell>
-                {harBarnMedDødsdato && <Table.DataCell>{dødsdato}</Table.DataCell>}
+                <Table.DataCell className={styles.firstHeaderCell}>
+                  <BodyShort size="small">{navn}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{fødselsdato}</BodyShort>
+                </Table.DataCell>
+                {harBarnMedDødsdato && (
+                  <Table.DataCell>
+                    <BodyShort size="small">{dødsdato}</BodyShort>
+                  </Table.DataCell>
+                )}
               </Table.Row>
             );
           })}
