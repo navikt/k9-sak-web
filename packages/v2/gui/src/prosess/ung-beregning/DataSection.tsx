@@ -92,8 +92,8 @@ export const DataSection = () => {
           <CalendarIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Dager i ungdomsprogram</Label>
         </HStack>
-        <HStack gap="2">
-          <BodyShort>Dager utbetalt</BodyShort>
+        <HStack gap="2" align="center">
+          <BodyShort size="small">Dager utbetalt</BodyShort>
           <HelpText title="Forklaringstekst">Forklaring om dager utbetalt her</HelpText>
         </HStack>
         <div>
@@ -113,7 +113,7 @@ export const DataSection = () => {
           <SackKronerIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Siste utbetaling</Label>
         </HStack>
-        <BodyShort>0 kr</BodyShort>
+        <BodyShort size="small">0 kr</BodyShort>
         <BodyShort size="small">
           {new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })} til kontonummer xxx
         </BodyShort>

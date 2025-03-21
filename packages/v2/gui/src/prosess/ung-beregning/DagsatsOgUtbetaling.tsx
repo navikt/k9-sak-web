@@ -3,7 +3,7 @@ import {
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Box, Heading, Table, Tooltip, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Heading, Label, Table, Tooltip, VStack } from '@navikt/ds-react';
 import { DataSection } from './DataSection';
 import styles from './dagsatsOgUtbetaling.module.css';
 
@@ -61,17 +61,35 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
-                  Periode
+                  <Label size="small">Periode</Label>
                 </Table.HeaderCell>
-                <Table.HeaderCell scope="col">Sats</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Grunnbeløp</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Dagsats</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Antall barn</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Barnetillegg</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Rapportert inntekt</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Dager</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Utbetaling</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Sats</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Grunnbeløp</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Dagsats</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Antall barn</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Barnetillegg</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Rapportert inntekt</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Dager</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Utbetaling</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Status</Label>
+                </Table.HeaderCell>
                 <Table.HeaderCell />
               </Table.Row>
             </Table.Header>
@@ -87,14 +105,24 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
                     expandOnRowClick
                   >
                     <Table.DataCell className={styles.firstHeaderCell}>
-                      {fom && tom && formatPeriod(fom, tom)}
+                      <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
                     </Table.DataCell>
-                    <Table.DataCell>{formatSats(satsType)}</Table.DataCell>
-                    <Table.DataCell>{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
-                    <Table.DataCell>{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
-                    <Table.DataCell>{antallBarn}</Table.DataCell>
                     <Table.DataCell>
-                      {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
+                      <BodyShort size="small">{formatSats(satsType)}</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">{dagsats && formatCurrencyNoKr(dagsats)} kr</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">{antallBarn}</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">
+                        {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
+                      </BodyShort>
                     </Table.DataCell>
                     <Table.DataCell />
                     <Table.DataCell />
