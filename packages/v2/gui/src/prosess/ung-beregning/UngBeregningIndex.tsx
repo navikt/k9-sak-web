@@ -8,12 +8,15 @@ import type { Barn } from './types/Barn';
 interface Props {
   behandling: BehandlingDto;
   barn: Barn[];
+  submitCallback: (data: unknown) => void;
 }
 
-const UngBeregningIndex = ({ barn, behandling }: Props) => {
+const UngBeregningIndex = ({ barn, behandling, submitCallback }: Props) => {
   const ungSakClient = useContext(UngSakClientContext);
   const ungBeregningBackendClient = new UngBeregningBackendClient(ungSakClient);
-  return <UngBeregning behandling={behandling} api={ungBeregningBackendClient} barn={barn} />;
+  return (
+    <UngBeregning behandling={behandling} api={ungBeregningBackendClient} barn={barn} submitCallback={submitCallback} />
+  );
 };
 
 export default UngBeregningIndex;
