@@ -1,10 +1,10 @@
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Aksjonspunkt, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import React from 'react';
-import { Medlemskap } from './oppholdInntektOgPerioder/Medlemskap';
-import { MerknaderFraBeslutter } from './oppholdInntektOgPerioder/MerknaderFraBeslutter';
+import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { Aksjonspunkt } from '../types/Aksjonspunkt';
+import type { Medlemskap } from '../types/Medlemskap';
+import type { MerknaderFraBeslutter } from '../types/MerknaderFraBeslutter';
+import type { Soknad } from '../types/Soknad';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
-import { Soknad } from './oppholdInntektOgPerioder/Soknad';
 
 interface MedlemskapInfoPanelProps {
   submittable: boolean;
@@ -14,10 +14,9 @@ interface MedlemskapInfoPanelProps {
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
   behandlingId: number;
   behandlingVersjon: number;
-  fagsakPerson: FagsakPerson;
-  behandlingType: Kodeverk;
-  soknad?: Soknad;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  fagsakPerson: PersonDto;
+  behandlingType: string;
+  soknad: Soknad;
   medlemskap: Medlemskap;
 }
 
@@ -36,7 +35,6 @@ const MedlemskapInfoPanel = ({
   behandlingVersjon,
   behandlingType: behandlingTypeProp,
   soknad,
-  alleKodeverk,
   medlemskap,
   fagsakPerson,
 }: MedlemskapInfoPanelProps) => (
@@ -49,10 +47,9 @@ const MedlemskapInfoPanel = ({
     alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    alleKodeverk={alleKodeverk}
     medlemskap={medlemskap}
     fagsakPerson={fagsakPerson}
-    isRevurdering={behandlingTypeProp.kode === behandlingType.REVURDERING && !!medlemskap.fom}
+    isRevurdering={behandlingTypeProp === behandlingType.REVURDERING && !!medlemskap.fom}
   />
 );
 
