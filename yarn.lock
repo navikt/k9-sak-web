@@ -2651,7 +2651,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/fakta-bosted-soker@npm:1.0.0, @fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
+"@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker"
   dependencies:
@@ -2710,31 +2710,6 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.6"
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-medlemskap@npm:1.0.0, @fpsak-frontend/fakta-medlemskap@workspace:packages/fakta-medlemskap":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-medlemskap@workspace:packages/fakta-medlemskap"
-  dependencies:
-    "@fpsak-frontend/fakta-bosted-soker": "npm:1.0.0"
-    "@fpsak-frontend/form": "npm:1.0.0"
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@navikt/ft-form-hooks": "npm:^6.2.4"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.7"
-    i18n-iso-countries: "npm:7.14.0"
-    moment: "npm:2.30.1"
-    prop-types: "npm:15.8.1"
-    react: "npm:19.0.0"
-    react-intl: "npm:7.1.6"
-    react-redux: "npm:9.2.0"
-    redux: "npm:5.0.1"
-    redux-form: "npm:8.3.10"
-    reselect: "npm:5.1.1"
   languageName: unknown
   linkType: soft
 
@@ -4006,7 +3981,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-inntekt-og-ytelser": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-verge": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4042,7 +4016,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-direkte-overgang": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4082,7 +4055,6 @@ __metadata:
   resolution: "@k9-sak-web/behandling-pleiepenger-sluttfase@workspace:packages/behandling-pleiepenger-sluttfase"
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4120,7 +4092,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-direkte-overgang": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4185,7 +4156,6 @@ __metadata:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-inntekt-og-ytelser": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-verge": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"

@@ -1,10 +1,10 @@
-import React from 'react';
-
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
+import MedlemskapFaktaIndex from '@k9-sak-web/gui/fakta/medlemskap/MedlemskapFaktaIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
@@ -22,7 +22,11 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.MEDLEMSKAP];
 
-  getKomponent = props => <MedlemskapFaktaIndex {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <MedlemskapFaktaIndex {...props} {...deepCopyProps} />;
+  };
 
   getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad;
 
