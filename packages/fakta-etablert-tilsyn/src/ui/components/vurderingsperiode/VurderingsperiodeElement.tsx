@@ -1,5 +1,4 @@
 import { Period } from '@fpsak-frontend/utils';
-import React, { type JSX } from 'react';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
@@ -7,18 +6,19 @@ import {
   OnePersonOutlineGray,
   RedCrossIconFilled,
 } from '@navikt/ft-plattform-komponenter';
+import React, { type JSX } from 'react';
 import Kilde from '../../../types/Kilde';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
   periode: Period;
-  resultat: Vurderingsresultat;
+  resultat: Vurderingsresultat | null;
   kilde: Kilde;
   renderAfterElement?: () => React.ReactNode;
 }
 
-const renderStatusIcon = (resultat: Vurderingsresultat) => {
+const renderStatusIcon = (resultat: Vurderingsresultat | null) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">

@@ -1,8 +1,7 @@
 import { isDayAfter, Period } from '@fpsak-frontend/utils';
 import { Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import uniq from 'lodash/uniq';
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
 import PartIkon from './PartIkon';
@@ -22,16 +21,16 @@ interface EtablertTilsynMappet {
   delAvUke?: number;
 }
 
-const erHelg = (dag: Date) => [6, 0].includes(dayjs(dag).day());
+const erHelg = (dag: string) => [6, 0].includes(dayjs(dag).day());
 
-const ukeVisning = (uke, delAvUke) => {
+const ukeVisning = (uke: number, delAvUke?: number) => {
   if (delAvUke) {
     return `Uke ${uke} - ${String.fromCharCode(64 + delAvUke)}`;
   }
   return `Uke ${uke}`;
 };
 
-const periodeVisning = (usmurtePerioder, smurtePerioder) => {
+const periodeVisning = (usmurtePerioder: EtablertTilsynType[], smurtePerioder: EtablertTilsynType[]) => {
   if (smurtePerioder.length) {
     return new Period(
       smurtePerioder[0].periode.fom,
@@ -76,13 +75,14 @@ const EtablertTilsyn = ({
       .map(date => ({ ...v, periode: new Period(date, date) })),
   );
 
-  const uker = uniq(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()));
+  const uker = [...new Set(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()))];
   const tilsynPerUke = uker.map(uke => ({
     etablertTilsyn: etablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
     etablertTilsynSmurt: smurtEtablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
     uke,
   }));
-  const tilsynPerUkeOppdeltSmoering = [];
+  const tilsynPerUkeOppdeltSmoering: Array<EtablertTilsynMappet> = [];
+
   const tilsynPerUkeUtenOppdeltSmoering = tilsynPerUke
     .map(v => ({
       ...v,
@@ -117,8 +117,11 @@ const EtablertTilsyn = ({
       );
       return smurtePerioder.length ? null : v;
     })
-    .filter(Boolean);
-  const etablertTilsynMappet = [...tilsynPerUkeUtenOppdeltSmoering, ...tilsynPerUkeOppdeltSmoering].sort(
+    .filter(x => x !== null);
+  const etablertTilsynMappet: EtablertTilsynMappet[] = [
+    ...tilsynPerUkeUtenOppdeltSmoering,
+    ...tilsynPerUkeOppdeltSmoering,
+  ].sort(
     (a: EtablertTilsynMappet, b: EtablertTilsynMappet) =>
       new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
       new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
@@ -153,7 +156,6 @@ const EtablertTilsyn = ({
                   <EtablertTilsynRowContent
                     etablertTilsyn={tilsyn.etablertTilsyn}
                     etablertTilsynSmurt={tilsyn.etablertTilsynSmurt}
-                    dagerSomOverstyrerTilsyn={dagerSomOverstyrerTilsyn}
                     tilsynProsent={tilsynIPeriodeProsent}
                     visIkon
                   />
