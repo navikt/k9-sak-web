@@ -5,7 +5,7 @@ import {
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, PersonIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyLong, Box, Button, Heading, HStack, Table, VStack } from '@navikt/ds-react';
+import { Bleed, BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Table, VStack } from '@navikt/ds-react';
 import { Form, InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,13 @@ import styles from './arbeidOgInntekt.module.css';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
+};
+
+const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
+  if (status === KontrollerInntektPeriodeDtoStatus.AVVIK) {
+    return 'Avvik';
+  }
+  return 'Ingen avvik';
 };
 
 type Formvalues = {
@@ -145,14 +152,16 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
-                Status
+                <Label size="small">Status</Label>
               </Table.HeaderCell>
-              <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
-              <Table.HeaderCell scope="col" align="right">
-                Rapportert av deltager
+              <Table.HeaderCell scope="col">
+                <Label size="small">Periode</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                Rapportert i A-inntekt
+                <Label size="small">Rapportert av deltager</Label>
+              </Table.HeaderCell>
+              <Table.HeaderCell scope="col" align="right">
+                <Label size="small">Rapportert i A-inntekt</Label>
               </Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
@@ -162,6 +171,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
               const isLastRow = index === inntektKontrollperioder.length - 1;
               const harAksjonspunkt = inntekt.erTilVurdering;
               const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
+
               return (
                 <Table.ExpandableRow
                   key={`${inntekt.periode?.fom}_${inntekt.periode?.tom}`}
@@ -172,25 +182,32 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
                   expansionDisabled={!harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>
-                    <HStack gap="2">
+                    <HStack gap="2" align="center">
                       {harAvvik ? (
                         <ExclamationmarkTriangleFillIcon fontSize="1.5rem" className={styles.exclamationmarkIcon} />
                       ) : (
                         <CheckmarkCircleFillIcon fontSize={24} className={styles.checkmarkIcon} />
                       )}
-                      {inntekt.status}
+                      <BodyShort size="small">{formaterStatus(inntekt.status)}</BodyShort>
                     </HStack>
                   </Table.DataCell>
                   <Table.DataCell>
                     {inntekt.periode && (
-                      <PeriodLabel dateStringFom={inntekt.periode?.fom} dateStringTom={inntekt.periode?.tom} />
+                      <BodyShort size="small">
+                        <PeriodLabel dateStringFom={inntekt.periode?.fom} dateStringTom={inntekt.periode?.tom} />
+                      </BodyShort>
                     )}
                   </Table.DataCell>
                   <Table.DataCell align="right">
-                    {inntekt.rapporterteInntekter?.bruker && formaterInntekt(inntekt.rapporterteInntekter?.bruker)}
+                    <BodyShort size="small">
+                      {inntekt.rapporterteInntekter?.bruker && formaterInntekt(inntekt.rapporterteInntekter?.bruker)}
+                    </BodyShort>
                   </Table.DataCell>
                   <Table.DataCell align="right">
-                    {inntekt.rapporterteInntekter?.register && formaterInntekt(inntekt.rapporterteInntekter?.register)}
+                    <BodyShort size="small">
+                      {inntekt.rapporterteInntekter?.register &&
+                        formaterInntekt(inntekt.rapporterteInntekter?.register)}
+                    </BodyShort>
                   </Table.DataCell>
                 </Table.ExpandableRow>
               );

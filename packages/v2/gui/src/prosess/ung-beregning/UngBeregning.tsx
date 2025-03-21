@@ -1,4 +1,4 @@
-import { type UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
+import { type KontrollerInntektDto, type UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { ArbeidOgInntekt } from './ArbeidOgInntekt';
@@ -17,6 +17,20 @@ interface Props {
 const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
   data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
 
+const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
+  const { kontrollperioder } = data;
+  return {
+    kontrollperioder: kontrollperioder
+      ?.toSorted((a, b) => {
+        if (!a.periode || !b.periode) {
+          return 0;
+        }
+        return new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime();
+      })
+      .toReversed(),
+  };
+};
+
 const UngBeregning = ({ api, behandling, barn, submitCallback }: Props) => {
   const {
     data: satser,
@@ -29,16 +43,21 @@ const UngBeregning = ({ api, behandling, barn, submitCallback }: Props) => {
     select: sortSatser,
   });
 
-  const { data: inntekt, isLoading: kontrollInntektIsLoading } = useQuery({
+  const {
+    data: inntekt,
+    isLoading: kontrollInntektIsLoading,
+    isError: kontrollInntektIsError,
+  } = useQuery({
     queryKey: ['kontrollInntekt', behandling.uuid],
     queryFn: () => api.getKontrollerInntekt(behandling.uuid),
+    select: sortInntekt,
   });
 
   if (satserIsLoading || kontrollInntektIsLoading) {
     return <Loader size="large" />;
   }
 
-  if (satserIsError) {
+  if (satserIsError || kontrollInntektIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
