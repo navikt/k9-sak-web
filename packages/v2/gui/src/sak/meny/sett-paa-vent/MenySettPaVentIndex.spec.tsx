@@ -59,7 +59,7 @@ describe('<MenySettPaVentIndex>', () => {
       behandlingId: 3,
       frist: format(testDato, 'yyyy-MM-dd'),
       ventearsak: AksjonspunktDtoVenteårsak.MEDISINSKE_OPPLYSNINGER,
-      ventearsakVariant: '',
+      ventearsakVariant: undefined,
     });
   });
 });
