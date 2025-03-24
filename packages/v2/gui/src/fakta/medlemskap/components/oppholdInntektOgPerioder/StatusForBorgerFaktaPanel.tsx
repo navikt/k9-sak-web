@@ -30,7 +30,11 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
     oppholdInntektOgPeriodeForm: { erEosBorger, isBorgerAksjonspunktClosed, apKode },
   } = getValues();
   return (
-    <FaktaGruppe titleCode="Status for søker" merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]} useIntl={false}>
+    <FaktaGruppe
+      titleCode="Status for søker"
+      merknaderFraBeslutter={apKode ? alleMerknaderFraBeslutter[apKode] : undefined}
+      useIntl={false}
+    >
       <RadioGroupPanel
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}

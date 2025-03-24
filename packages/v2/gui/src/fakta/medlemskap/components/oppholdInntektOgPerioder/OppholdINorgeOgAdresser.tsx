@@ -9,6 +9,7 @@ import PeriodLabel from '../../../../shared/periodLabel/PeriodLabel';
 import type { Foreldre } from '../../types/FormState';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Opphold } from '../../types/Opphold';
+import BostedSokerView from '../bostedSøker/components/BostedSokerView';
 import styles from './oppholdINorgeOgAdresser.module.css';
 
 countries.registerLocale(norwegianLocale);
@@ -76,9 +77,9 @@ const OppholdINorgeOgAdresser = ({
         <FaktaGruppe withoutBorder title="Bostedsadresse fra folkeregisteret">
           {foreldre.map(f => (
             <div key={f.personopplysning.navn}>
-              {f.isApplicant && <BostedSokerFaktaIndex personopplysninger={f.personopplysning} />}
+              {f.isApplicant && <BostedSokerView personopplysninger={f.personopplysning} />}
               {!f.isApplicant && (
-                <BostedSokerFaktaIndex sokerTypeText="Den andre forelderen" personopplysninger={f.personopplysning} />
+                <BostedSokerView sokerTypeText="Den andre forelderen" personopplysninger={f.personopplysning} />
               )}
             </div>
           ))}

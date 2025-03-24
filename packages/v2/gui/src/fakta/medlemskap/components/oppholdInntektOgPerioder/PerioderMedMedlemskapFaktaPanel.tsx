@@ -151,7 +151,7 @@ export const buildInitialValuesPerioderMedMedlemskapFaktaPanel = (
 
   return {
     fixedMedlemskapPerioder,
-    medlemskapManuellVurderingType: periode?.medlemskapManuellVurderingType,
+    medlemskapManuellVurderingType: periode?.medlemskapManuellVurderingType ?? '',
     fodselsdato: soknad && soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
     isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),

@@ -1,4 +1,4 @@
-import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { PersonDto, PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { Periode } from './Periode';
 import type { Soknad } from './Soknad';
 
@@ -7,25 +7,25 @@ interface FixedMedlemskapPerioder {
   tom: string;
   dekning: string;
   status: string;
-  beslutningsdato: string;
+  beslutningsdato: string | null;
 }
 
 export interface Foreldre {
   isApplicant: boolean;
-  personopplysning: any;
+  personopplysning: PersonopplysningDto;
 }
 
 export type StatusForBorgerFaktaPanelFormState = {
-  erEosBorger: boolean;
-  isBorgerAksjonspunktClosed: boolean;
+  erEosBorger?: boolean;
+  isBorgerAksjonspunktClosed?: boolean;
   oppholdsrettVurdering?: boolean;
   lovligOppholdVurdering?: boolean;
-  apKode: string;
+  apKode?: string;
 };
 
 export type OppholdINorgeOgAdresserFaktaPanelFormState = {
   foreldre: Foreldre[];
-  bosattVurdering: boolean;
+  bosattVurdering?: boolean;
   hasBosattAksjonspunkt: boolean;
   isBosattAksjonspunktClosed: boolean;
   opphold: { utlandsopphold?: any[] };

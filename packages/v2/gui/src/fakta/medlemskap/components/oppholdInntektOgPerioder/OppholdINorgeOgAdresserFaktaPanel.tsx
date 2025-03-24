@@ -40,7 +40,7 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
     />
   );
 };
-const createParent = (isApplicant: boolean, personopplysning?: Periode['personopplysninger']) => ({
+const createParent = (isApplicant: boolean, personopplysning: Periode['personopplysninger']) => ({
   isApplicant,
   personopplysning,
 });
@@ -60,7 +60,7 @@ export const buildInitialValuesOppholdINorgeOgAdresserFaktaPanel = (
   }
 
   const { personopplysninger } = periode || {};
-  const parents = [createParent(true, personopplysninger)];
+  const parents = personopplysninger ? [createParent(true, personopplysninger)] : [];
   if (personopplysninger?.annenPart) {
     parents.push(createParent(false, personopplysninger.annenPart));
   }

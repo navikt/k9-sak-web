@@ -1,13 +1,13 @@
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { guid } from '@fpsak-frontend/utils';
 import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Box, Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import { guid } from '@navikt/ft-utils';
 import React, { useContext, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import AksjonspunktHelpText from '../../../../shared/aksjonspunktHelpText/AksjonspunktHelpText';
+import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { Medlemskap } from '../../types/Medlemskap';
@@ -167,17 +167,22 @@ export const OppholdInntektOgPerioderForm = ({
       })),
     [medlemskap],
   );
-  const [valgtPeriode, setValgtPeriode] = useState(initialPerioder?.length > 0 ? initialPerioder[0] : undefined);
+  const [valgtPeriode, setValgtPeriode] = useState(initialPerioder[0]);
 
-  const getInitialValues = (oppdatertePerioder?: Periode[], nyValgtPeriode?: Periode) =>
-    buildInitialValues(
+  const getInitialValues = (oppdatertePerioder?: Periode[], nyValgtPeriode?: Periode) => {
+    const periode = nyValgtPeriode || valgtPeriode;
+    if (periode === undefined) {
+      return undefined;
+    }
+    return buildInitialValues(
       soknad,
       fagsakPerson,
       medlemskap,
       oppdatertePerioder || initialPerioder,
       aksjonspunkter,
-      nyValgtPeriode || valgtPeriode,
+      periode,
     );
+  };
 
   const formMethods = useForm<OppholdInntektOgPerioderFormState>({
     defaultValues: getInitialValues(),
@@ -194,7 +199,7 @@ export const OppholdInntektOgPerioderForm = ({
   const periodeResetCallback = () => {
     formMethods.reset({
       ...formMethods.getValues(),
-      oppholdInntektOgPeriodeForm: getInitialValues().oppholdInntektOgPeriodeForm,
+      oppholdInntektOgPeriodeForm: getInitialValues()?.oppholdInntektOgPeriodeForm,
     });
   };
 
@@ -207,7 +212,7 @@ export const OppholdInntektOgPerioderForm = ({
     formMethods.reset(
       {
         ...formMethods.getValues(),
-        oppholdInntektOgPeriodeForm: getInitialValues(perioder, nyValgtPeriode).oppholdInntektOgPeriodeForm,
+        oppholdInntektOgPeriodeForm: getInitialValues(perioder, nyValgtPeriode)?.oppholdInntektOgPeriodeForm,
       },
       { keepDirty: true },
     );

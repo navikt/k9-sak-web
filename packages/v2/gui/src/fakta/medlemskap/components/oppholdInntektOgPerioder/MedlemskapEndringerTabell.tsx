@@ -1,10 +1,9 @@
-import { DateLabel } from '@fpsak-frontend/shared-components';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { OppholdInntektOgPerioderFormState } from './FormState';
-import { Periode } from './Periode';
+import DateLabel from '../../../../shared/dateLabel/DateLabel';
+import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
+import type { Periode } from '../../types/Periode';
 
 const headerTextCodes = ['Gjeldende f.o.m', 'Opplysning'];
 

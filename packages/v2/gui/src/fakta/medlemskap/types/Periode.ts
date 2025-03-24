@@ -7,13 +7,13 @@ export interface Periode {
   aksjonspunkter: string[];
   begrunnelse: string;
   personopplysninger: PersonopplysningDto;
-  bosattVurdering: boolean;
+  bosattVurdering?: boolean;
   vurdertAv: string;
   vurdertTidspunkt: string;
   isBosattAksjonspunktClosed: boolean;
   isPeriodAksjonspunktClosed: boolean;
   medlemskapManuellVurderingType: string;
   oppholdsrettVurdering?: boolean;
-  erEosBorger?: boolean;
+  erEosBorger: boolean;
   lovligOppholdVurdering?: boolean;
 }
