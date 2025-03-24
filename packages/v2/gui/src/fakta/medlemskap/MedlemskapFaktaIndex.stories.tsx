@@ -2,10 +2,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { action } from '@storybook/addon-actions';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const behandling = {
   id: 1,
@@ -289,7 +289,7 @@ export const VisAksjonspunktForAvklaringOmBrukerErBosatt = args => (
     aksjonspunkter={[
       {
         definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+          kode: aksjonspunktCodes.AVKLAR_OM_ER_BOSATT,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -312,7 +312,7 @@ VisAksjonspunktForAvklaringOmBrukerErBosatt.args = {
   arbeidsforhold,
   fagsakPerson,
   alleMerknaderFraBeslutter: {
-    [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
   },
   isForeldrepengerFagsak: true,
   readOnly: false,
@@ -326,7 +326,7 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
     aksjonspunkter={[
       {
         definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+          kode: aksjonspunktCodes.AVKLAR_OM_ER_BOSATT,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -348,7 +348,7 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
       },
       {
         definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+          kode: aksjonspunktCodes.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -383,9 +383,9 @@ VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
   fagsakPerson,
   isForeldrepengerFagsak: true,
   alleMerknaderFraBeslutter: {
-    [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
     [aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP]: merknaderFraBeslutter,
-    [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE]: merknaderFraBeslutter,
     [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: merknaderFraBeslutter,
   },
   readOnly: false,
