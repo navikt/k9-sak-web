@@ -1,4 +1,7 @@
-import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  type LangvarigSykdomVurderingDto,
+  LangvarigSykdomVurderingDtoAvslagsårsak,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { DetailView } from '@navikt/ft-plattform-komponenter';
 import { Form, TextAreaField } from '@navikt/ft-form-hooks';
@@ -8,22 +11,43 @@ import { Alert, Button, Label, Radio, RadioGroup } from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
 import { useContext, useEffect } from 'react';
-import { useOpprettSykdomsvurdering } from '../SykdomOgOpplæringQueries';
+import { useOppdaterSykdomsvurdering, useOpprettSykdomsvurdering } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../SykdomOgOpplæringIndex';
-
+import { useQueryClient } from '@tanstack/react-query';
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> & {
-  godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | undefined;
+  godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
   vurderingsdato?: string;
+  uuid?: string;
+};
+
+const finnAvslagsårsak = (godkjent: string) => {
+  if (godkjent === 'mangler_dokumentasjon') {
+    return LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON;
+  }
+  if (godkjent === 'nei') {
+    return LangvarigSykdomVurderingDtoAvslagsårsak.IKKE_LANGVARIG_SYK;
+  }
+  return undefined;
 };
 
 const SykdomUperiodisertForm = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
-  const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering();
+  const queryClient = useQueryClient();
+  const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering({
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
+    },
+  });
+  const { mutate: oppdaterSykdomsvurdering } = useOppdaterSykdomsvurdering({
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
+    },
+  });
   const formMethods = useForm({
     defaultValues: {
       diagnosekoder: vurdering.diagnosekoder || [],
-      begrunnelse: vurdering.begrunnelse,
-      godkjent: vurdering.godkjent,
+      begrunnelse: vurdering.begrunnelse || '',
+      godkjent: vurdering.godkjent || '',
     },
   });
 
@@ -60,12 +84,22 @@ const SykdomUperiodisertForm = ({ vurdering }: { vurdering: UperiodisertSykdom }
           <Form
             formMethods={formMethods}
             onSubmit={data =>
-              opprettSykdomsvurdering({
-                behandlingUuid,
-                diagnoser: data.diagnosekoder,
-                begrunnelse: data.begrunnelse,
-                godkjent: data.godkjent === 'ja',
-              })
+              vurdering.uuid
+                ? oppdaterSykdomsvurdering({
+                    behandlingUuid,
+                    diagnoser: data.diagnosekoder,
+                    begrunnelse: data.begrunnelse,
+                    godkjent: data.godkjent === 'ja',
+                    uuid: vurdering.uuid,
+                    avslagsårsak: !data.godkjent ? finnAvslagsårsak(data.godkjent) : undefined,
+                  })
+                : opprettSykdomsvurdering({
+                    behandlingUuid,
+                    diagnoser: data.diagnosekoder,
+                    begrunnelse: data.begrunnelse,
+                    godkjent: data.godkjent === 'ja',
+                    avslagsårsak: !data.godkjent ? finnAvslagsårsak(data.godkjent) : undefined,
+                  })
             }
           >
             <div className="flex flex-col gap-6">
@@ -105,7 +139,9 @@ const SykdomUperiodisertForm = ({ vurdering }: { vurdering: UperiodisertSykdom }
                 disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
               />
               <div>
-                <Button variant="primary">Lagre ny sykdomsvurdering</Button>
+                <Button variant="primary" type="submit">
+                  {vurdering.uuid ? 'Oppdater sykdomsvurdering' : 'Lagre ny sykdomsvurdering'}
+                </Button>
               </div>
             </div>
           </Form>

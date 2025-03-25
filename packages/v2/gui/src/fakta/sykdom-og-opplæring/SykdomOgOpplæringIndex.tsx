@@ -1,11 +1,12 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { type InstitusjonAksjonspunktPayload } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/institusjon/components/InstitusjonForm.js';
+import { type LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import FaktaInstitusjonIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/institusjon/FaktaInstitusjonIndex.js';
 import VurderSykdomUperiodisert from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/sykdom/VurderSykdomUperiodisert.js';
 import { Tabs } from '@navikt/ds-react';
 import { createContext, useState } from 'react';
 
-type payloads = InstitusjonAksjonspunktPayload;
+type payloads = InstitusjonAksjonspunktPayload | { langvarigsykdomsvurderingUuid: string };
 type aksjonspunktPayload = { kode: string; begrunnelse: string } & payloads;
 type SykdomOgOpplæringProps = {
   readOnly: boolean;
@@ -16,12 +17,14 @@ type SykdomOgOpplæringProps = {
 type SykdomOgOpplæringContext = {
   readOnly: boolean;
   løsAksjonspunkt9300: (payload: InstitusjonAksjonspunktPayload) => void;
+  løsAksjonspunkt9301: (payload: { langvarigsykdomsvurderingUuid: string; begrunnelse: string }) => void;
   behandlingUuid: string;
 };
 
 export const SykdomOgOpplæringContext = createContext<SykdomOgOpplæringContext>({
   readOnly: true,
   løsAksjonspunkt9300: () => {},
+  løsAksjonspunkt9301: () => {},
   behandlingUuid: '',
 });
 
@@ -30,11 +33,22 @@ const SykdomOgOpplæringIndex = ({ readOnly, submitCallback, behandlingUuid }: S
     submitCallback([{ kode: aksjonspunktCodes.VURDER_INSTITUSJON, ...payload }]);
   };
 
+  const løsAksjonspunkt9301 = (payload: { langvarigsykdomsvurderingUuid: string; begrunnelse: string }) => {
+    submitCallback([
+      {
+        kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+        begrunnelse: payload.begrunnelse,
+        langvarigsykdomsvurderingUuid: payload.langvarigsykdomsvurderingUuid,
+      },
+    ]);
+  };
+
   return (
     <SykdomOgOpplæringContext.Provider
       value={{
         readOnly,
         løsAksjonspunkt9300,
+        løsAksjonspunkt9301,
         behandlingUuid,
       }}
     >

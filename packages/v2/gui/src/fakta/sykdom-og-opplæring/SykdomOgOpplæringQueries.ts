@@ -16,7 +16,7 @@ export const useSykdomBackendClient = () => {
   return new SykdomOgOpplæringBackendClient(k9SakClient);
 };
 
-export const useOpprettSykdomsvurdering = (onSuccess?: () => void) => {
+export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
   const backendClient = useSykdomBackendClient();
 
   return useMutation<
@@ -29,7 +29,7 @@ export const useOpprettSykdomsvurdering = (onSuccess?: () => void) => {
   });
 };
 
-export const useOppdaterSykdomsvurdering = (onSuccess?: () => void) => {
+export const useOppdaterSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
   const backendClient = useSykdomBackendClient();
 
   return useMutation<
@@ -43,7 +43,6 @@ export const useOppdaterSykdomsvurdering = (onSuccess?: () => void) => {
 };
 
 export const useDiagnosekoder = (behandlingUuid: string) => {
-  console.log('behandlingUuid', behandlingUuid);
   const backendClient = useSykdomBackendClient();
   return useQuery({
     queryKey: ['diagnosekoder', behandlingUuid],
