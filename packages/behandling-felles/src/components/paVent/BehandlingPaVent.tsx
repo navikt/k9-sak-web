@@ -63,7 +63,7 @@ const BehandlingPaVent = ({
     <SettPaVentModalIndex
       submitCallback={oppdaterPaVentData}
       cancelEvent={skjulModal}
-      frist={behandling.fristBehandlingPaaVent}
+      frist={behandling.fristBehandlingPåVent}
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}

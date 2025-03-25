@@ -13,7 +13,7 @@ export type BehandlingAppKontekst = Implements<
     uuid: string;
     status: Kodeverk;
     type: BehandlingTypeKodeverk;
-    fristBehandlingPaaVent?: string;
+    fristBehandlingPåVent?: string;
     venteArsakKode?: string;
     behandlingPåVent: boolean;
     behandlingHenlagt: boolean;
