@@ -15,7 +15,7 @@
     "@navikt/aksel-icons": "7.17.2",
     "@navikt/ds-react": "7.17.2",
     "@navikt/fnrvalidator": "2.1.5",
-    "@navikt/ft-plattform-komponenter": "^7.2.10",
+    "@navikt/ft-plattform-komponenter": "^7.2.11",
     "axios": "1.8.4",
     "classnames": "2.5.1",
     "date-fns": "4.1.0",
