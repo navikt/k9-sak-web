@@ -20,6 +20,7 @@ export const Resultat = {
 
 export interface Vurderingselement {
   perioder: Period[];
+  id?: string;
   resultat?: ResultatType;
 }
 
@@ -45,19 +46,19 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const vurdertePerioderElements = vurdertePerioder.map(({ perioder, resultat }) => (
+  const vurdertePerioderElements = vurdertePerioder.map(({ perioder, resultat, id }) => (
     <PeriodeRad
       perioder={perioder}
       resultat={resultat}
-      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}`}
+      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}-${id}`}
     />
   ));
 
-  const periodeTilVurderingElements = perioderTilVurdering.map(({ perioder, resultat }) => (
+  const periodeTilVurderingElements = perioderTilVurdering.map(({ perioder, resultat, id }) => (
     <PeriodeRad
       perioder={perioder}
       resultat={resultat}
-      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}`}
+      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}-${id}`}
     />
   ));
 
