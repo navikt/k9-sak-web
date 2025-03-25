@@ -105,7 +105,7 @@ const behandlinger = [
     },
     endret: '2021-12-20T09:23:01.248',
     endretAvBrukernavn: 'vtp',
-    erPaaVent: false,
+    erPåVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
@@ -227,7 +227,7 @@ const behandlinger = [
     },
     endret: '2021-12-20T09:22:36.118',
     endretAvBrukernavn: 'vtp',
-    erPaaVent: false,
+    erPåVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,

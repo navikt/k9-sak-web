@@ -474,7 +474,7 @@ VisPanelUtenPerioder.args = {
     },
     endret: '2024-08-28T13:38:46.309',
     endretAvBrukernavn: 'k9-sak',
-    erPaaVent: false,
+    erPåVent: false,
     fagsakId: 1346602,
     sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     førsteÅrsak: {
