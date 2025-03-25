@@ -122,7 +122,7 @@ export default ({ mode }) => {
       globals: true,
       setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
-      testTimeout: 30000,
+      testTimeout: 15000,
       onConsoleLog(log) {
         // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
         return !log.includes(
