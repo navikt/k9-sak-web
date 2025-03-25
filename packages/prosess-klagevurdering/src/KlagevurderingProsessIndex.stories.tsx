@@ -9,7 +9,7 @@ import KlagevurderingProsessIndex from './KlagevurderingProsessIndex';
 const behandling = {
   id: 1,
   versjon: 1,
-  sprakkode: {
+  språkkode: {
     kode: 'NO',
   },
 };

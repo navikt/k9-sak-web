@@ -48,7 +48,7 @@ interface VedtakPanelsProps {
   previewCallback: () => void;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
-  sprakkode: string;
+  språkkode: string;
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
@@ -69,7 +69,7 @@ const VedtakPanels = ({
   submitCallback,
   behandlingTypeKode,
   behandlingresultat,
-  sprakkode,
+  språkkode,
   behandlingStatus,
   behandlingPåVent,
   tilbakekrevingvalg,
@@ -148,7 +148,7 @@ const VedtakPanels = ({
         hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
         behandlingresultat={behandlingresultat}
         behandlingStatus={behandlingStatus}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
         behandlingPåVent={behandlingPåVent}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}

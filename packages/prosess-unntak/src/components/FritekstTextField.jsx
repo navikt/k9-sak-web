@@ -3,11 +3,11 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
+import { getLanguageCodeFromspråkkode, hasValidText, required } from '@fpsak-frontend/utils';
 
 import styles from './fritekstTextField.module.css';
 
-const FritekstTextField = ({ sprakkode, readOnly = true, intl }) => (
+const FritekstTextField = ({ språkkode, readOnly = true, intl }) => (
   <div className={styles.fritekstTextArea}>
     <TextAreaField
       name="begrunnelse"
@@ -18,7 +18,7 @@ const FritekstTextField = ({ sprakkode, readOnly = true, intl }) => (
       badges={[
         {
           type: 'warning',
-          textId: getLanguageCodeFromSprakkode(sprakkode),
+          textId: getLanguageCodeFromspråkkode(språkkode),
           title: 'Malform.Beskrivelse',
         },
       ]}
@@ -27,7 +27,7 @@ const FritekstTextField = ({ sprakkode, readOnly = true, intl }) => (
 );
 
 FritekstTextField.propTypes = {
-  sprakkode: PropTypes.shape().isRequired,
+  språkkode: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
 };

@@ -11,7 +11,7 @@ import messages from '../../../i18n/nb_NO.json';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
 
 describe('<BehandleKlageFormNfpImpl>', () => {
-  const sprakkode = {
+  const språkkode = {
     kode: 'NO',
     navn: 'Norsk',
   };
@@ -32,7 +32,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         saveKlage={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,
@@ -56,7 +56,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         saveKlage={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,
@@ -80,7 +80,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         saveKlage={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,

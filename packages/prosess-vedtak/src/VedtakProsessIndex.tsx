@@ -35,7 +35,7 @@ interface VedtakProsessIndexProps {
   behandling: {
     type: string;
     status: string;
-    sprakkode: string;
+    språkkode: string;
     behandlingsresultat?: BehandlingsresultatDto;
     behandlingPåVent: boolean;
     behandlingÅrsaker?: Array<BehandlingÅrsakDto>;
@@ -89,7 +89,7 @@ const VedtakProsessIndex = ({
     <VedtakPanels
       behandlingTypeKode={behandling.type}
       behandlingStatus={behandling.status}
-      sprakkode={behandling.sprakkode}
+      språkkode={behandling.språkkode}
       behandlingresultat={behandling.behandlingsresultat}
       behandlingPåVent={behandling.behandlingPåVent}
       behandlingÅrsaker={behandling.behandlingÅrsaker}

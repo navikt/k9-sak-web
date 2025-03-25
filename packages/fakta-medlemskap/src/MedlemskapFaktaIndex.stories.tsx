@@ -489,7 +489,7 @@ VisPanelUtenPerioder.args = {
     id: 1353953,
     links: [],
     opprettet: '2024-08-28T13:19:43',
-    sprakkode: {
+    språkkode: {
       kode: 'NB',
       kodeverk: 'SPRAAK_KODE',
     },

@@ -1,6 +1,6 @@
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, getLanguageFromspråkkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
 
 import { IntlShape } from 'react-intl';
 import styles from './vedtakFritekstPanel.module.css';
@@ -12,7 +12,7 @@ interface VedtakFritekstPanelProps {
   intl: IntlShape;
   begrunnelse?: string;
   begrunnelseFieldName?: string;
-  sprakkode: string;
+  språkkode: string;
   readOnly: boolean;
   label: string;
 }
@@ -20,7 +20,7 @@ interface VedtakFritekstPanelProps {
 const VedtakFritekstPanelImpl = ({
   begrunnelse = null,
   begrunnelseFieldName = 'begrunnelse',
-  sprakkode,
+  språkkode,
   readOnly,
   label,
   intl,
@@ -38,7 +38,7 @@ const VedtakFritekstPanelImpl = ({
           badges={[
             {
               type: 'warning',
-              text: getLanguageFromSprakkode(sprakkode),
+              text: getLanguageFromspråkkode(språkkode),
               title: intl.formatMessage({ id: 'Malform.Beskrivelse' }),
             },
           ]}

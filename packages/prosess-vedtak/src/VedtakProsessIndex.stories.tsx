@@ -27,7 +27,7 @@ const behandling = {
   status: {
     kode: behandlingStatus.BEHANDLING_UTREDES,
   },
-  sprakkode: {
+  språkkode: {
     kode: 'NO',
   },
   behandlingsresultat: {

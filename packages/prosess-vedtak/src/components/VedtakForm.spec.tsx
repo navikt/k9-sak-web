@@ -20,7 +20,7 @@ import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
-  const sprakkode = 'NO';
+  const språkkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
     begrunnelse: 'begrunnelse',
@@ -87,7 +87,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -142,7 +142,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -193,7 +193,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -243,7 +243,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -303,7 +303,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -361,7 +361,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -418,7 +418,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -475,7 +475,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -546,7 +546,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -587,7 +587,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -629,7 +629,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -680,7 +680,7 @@ describe('<VedtakForm>', () => {
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}

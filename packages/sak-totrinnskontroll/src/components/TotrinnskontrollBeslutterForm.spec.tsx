@@ -31,7 +31,7 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
     gjeldendeVedtak: false,
     links: [],
     toTrinnsBehandling: true,
-    sprakkode: { kode: 'NO', kodeverk: 'SPRAAK_KODE' },
+    språkkode: { kode: 'NO', kodeverk: 'SPRAAK_KODE' },
     behandlendeEnhetId: 'XX',
     behandlendeEnhetNavn: 'YYY',
     behandlingKoet: false,

@@ -17,7 +17,7 @@ const behandling = {
   versjon: 1,
   type: behandlingType.SOKNAD,
   status: behandlingStatus.BEHANDLING_UTREDES,
-  sprakkode: 'NO',
+  språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
     type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,

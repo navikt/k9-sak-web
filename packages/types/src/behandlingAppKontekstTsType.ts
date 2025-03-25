@@ -27,7 +27,7 @@ export type BehandlingAppKontekst = Implements<
     opprettet: string;
     avsluttet?: string;
     gjeldendeVedtak: boolean;
-    sprakkode: Språkkode;
+    språkkode: Språkkode;
     behandlendeEnhetId: string;
     stegTilstand?: {
       stegType: {

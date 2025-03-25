@@ -11,7 +11,7 @@ import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ariaCheck,
-  getLanguageCodeFromSprakkode,
+  getLanguageCodeFromspråkkode,
   hasValidText,
   maxLength,
   minLength,
@@ -70,7 +70,7 @@ interface PureOwnProps {
     fritekstbrev?: Fritekstbrev,
   ) => void;
   templates: Brevmaler | Template[];
-  sprakKode?: Kodeverk;
+  språkkode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;
@@ -113,7 +113,7 @@ export const MessagesTilbakekrevingImpl = ({
   causes = [],
   previewCallback,
   handleSubmit,
-  sprakKode,
+  språkkode,
   overstyrtMottaker,
   brevmalkode,
   fritekst,
@@ -124,7 +124,7 @@ export const MessagesTilbakekrevingImpl = ({
   fritekstbrev,
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
-  if (!sprakKode) {
+  if (!språkkode) {
     return null;
   }
 
@@ -144,7 +144,7 @@ export const MessagesTilbakekrevingImpl = ({
     );
   };
 
-  const languageCode = getLanguageCodeFromSprakkode(sprakKode);
+  const languageCode = getLanguageCodeFromspråkkode(språkkode);
 
   const recipients: Mottaker[] =
     templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
