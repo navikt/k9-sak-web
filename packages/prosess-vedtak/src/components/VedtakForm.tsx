@@ -71,7 +71,7 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPaaVent: boolean;
+  behandlingPåVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
   behandlingÅrsaker?: BehandlingÅrsakDto[];
@@ -104,7 +104,7 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingStatus,
   behandlingresultat,
   aksjonspunkter,
-  behandlingPaaVent,
+  behandlingPåVent,
   vedtakVarsel,
   previewCallback,
   hentFritekstbrevHtmlCallback,
@@ -581,7 +581,7 @@ export const VedtakForm: React.FC<Props> = ({
                 <VedtakSubmit
                   behandlingStatusKode={behandlingStatus}
                   readOnly={readOnly}
-                  behandlingPaaVent={behandlingPaaVent}
+                  behandlingPåVent={behandlingPåVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
                   errorOnSubmit={errorOnSubmit}

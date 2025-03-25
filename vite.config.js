@@ -4,8 +4,8 @@ import path from 'path';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
-import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
-import { featureTogglesFactory } from "./_mocks/featureToggles.js";
+import { createMockResponder, staticJsonResponse } from './_mocks/createMockResponder.js';
+import { featureTogglesFactory } from './_mocks/featureToggles.js';
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -24,7 +24,7 @@ const createProxy = (target, pathRewrite) => ({
       // går til dev server istadenfor proxied server. Dette for å unngå CORS feil når request går direkte til proxied server.
       if (proxyRes.headers.location?.startsWith(target)) {
         // eslint-disable-next-line no-param-reassign
-        proxyRes.headers.location = proxyRes.headers.location.replace(target, "")
+        proxyRes.headers.location = proxyRes.headers.location.replace(target, '');
       }
     });
   },
@@ -32,14 +32,14 @@ const createProxy = (target, pathRewrite) => ({
 
 function excludeMsw() {
   return {
-    name: "exclude-msw",
+    name: 'exclude-msw',
     resolveId(source) {
-      return source === "virtual-module" ? source : null;
+      return source === 'virtual-module' ? source : null;
     },
     renderStart(outputOptions, _inputOptions) {
       const outDir = outputOptions.dir;
       if (!outDir.includes('storybook')) {
-        const msWorker = path.resolve(outDir, "mockServiceWorker.js");
+        const msWorker = path.resolve(outDir, 'mockServiceWorker.js');
         fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
       }
     },
@@ -81,7 +81,10 @@ export default ({ mode }) => {
             '^/k9/endringslogg': '',
           },
         ),
-        '/k9/feature-toggle/toggles.json': createMockResponder('http://localhost:8080', staticJsonResponse(featureTogglesFactory())),
+        '/k9/feature-toggle/toggles.json': createMockResponder(
+          'http://localhost:8080',
+          staticJsonResponse(featureTogglesFactory()),
+        ),
       },
     },
     base: '/k9/web',
@@ -89,25 +92,26 @@ export default ({ mode }) => {
     plugins: [
       react({
         include: [/\.jsx$/, /\.tsx?$/],
-
       }),
       svgr(),
-      excludeMsw()
+      excludeMsw(),
     ],
     build: {
       // Relative to the root
       outDir: './dist/k9/web',
       sourcemap: true,
       rollupOptions: {
-        external: [
-          "mockServiceWorker.js"
-        ],
+        external: ['mockServiceWorker.js'],
       },
     },
     test: {
       deps: {
-        inline: ['@navikt/k9-sak-typescript-client', '@navikt/ung-sak-typescript-client', '@navikt/k9-klage-typescript-client'], // Without this, tests using *-*-typescript-client through backend project failed.
-        interopDefault: true
+        inline: [
+          '@navikt/k9-sak-typescript-client',
+          '@navikt/ung-sak-typescript-client',
+          '@navikt/k9-klage-typescript-client',
+        ], // Without this, tests using *-*-typescript-client through backend project failed.
+        interopDefault: true,
       },
       environment: 'jsdom',
       css: {
@@ -118,13 +122,13 @@ export default ({ mode }) => {
       globals: true,
       setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
-      testTimeout: 15000,
+      testTimeout: 30000,
       onConsoleLog(log) {
         // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
         return !log.includes(
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );
       },
-    }
+    },
   });
 };

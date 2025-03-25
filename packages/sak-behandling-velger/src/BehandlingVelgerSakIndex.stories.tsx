@@ -21,7 +21,7 @@ const behandlinger = [
       },
     ],
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
@@ -143,7 +143,7 @@ const behandlinger = [
       },
     ],
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,

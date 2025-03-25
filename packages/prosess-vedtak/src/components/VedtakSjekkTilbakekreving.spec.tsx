@@ -27,7 +27,7 @@ const behandling = {
     type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
   },
   behandlingHenlagt: false,
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   behandlingÅrsaker: [
     {
       behandlingArsakType: BehandlingÅrsakDtoBehandlingArsakType.ETTER_KLAGE,

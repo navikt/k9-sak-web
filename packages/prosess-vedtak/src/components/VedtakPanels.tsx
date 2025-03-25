@@ -31,7 +31,7 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 interface VedtakPanelsProps {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPaaVent: boolean;
+  behandlingPåVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
   behandlingTypeKode: string;
@@ -71,7 +71,7 @@ const VedtakPanels = ({
   behandlingresultat,
   sprakkode,
   behandlingStatus,
-  behandlingPaaVent,
+  behandlingPåVent,
   tilbakekrevingvalg,
   simuleringResultat,
   medlemskapFom,
@@ -149,7 +149,7 @@ const VedtakPanels = ({
         behandlingresultat={behandlingresultat}
         behandlingStatus={behandlingStatus}
         sprakkode={sprakkode}
-        behandlingPaaVent={behandlingPaaVent}
+        behandlingPåVent={behandlingPåVent}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
         aksjonspunkter={aksjonspunkter}

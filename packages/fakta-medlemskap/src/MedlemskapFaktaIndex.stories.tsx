@@ -13,7 +13,7 @@ const behandling = {
   type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
   },
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   status: behandlingStatus.OPPRETTET,
 };
 
@@ -444,7 +444,7 @@ VisPanelUtenPerioder.args = {
       },
     ],
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingsfristTid: '2024-10-09',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,

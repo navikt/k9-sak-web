@@ -13,7 +13,7 @@ const createBehandling = behandlingResultatType => ({
   versjon: 123,
   fagsakId: 1,
   aksjonspunkter: [],
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   sprakkode: 'NO',
   behandlingsresultat: {
     id: 1,
@@ -80,7 +80,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          behandlingPåVent={revurdering.behandlingPåVent}
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
@@ -140,7 +140,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
@@ -192,7 +192,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
@@ -243,7 +243,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
@@ -290,7 +290,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}

@@ -83,7 +83,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={[]}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -138,7 +138,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -189,7 +189,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -239,7 +239,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -299,7 +299,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -357,7 +357,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={BehandlingDtoStatus.AVSLUTTET}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -414,7 +414,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={BehandlingDtoStatus.IVERKSETTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -471,7 +471,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={BehandlingDtoStatus.FATTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -542,7 +542,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -583,7 +583,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
@@ -625,7 +625,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
@@ -676,7 +676,7 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}

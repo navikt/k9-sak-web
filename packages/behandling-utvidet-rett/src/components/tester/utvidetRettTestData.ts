@@ -44,7 +44,7 @@ const utvidetRettTestData = {
     versjon: 22,
     status: { kode: behandlingStatus.AVSLUTTET, kodeverk: 'tilTest' },
     type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     taskStatus: {
       readOnly: false,
     },

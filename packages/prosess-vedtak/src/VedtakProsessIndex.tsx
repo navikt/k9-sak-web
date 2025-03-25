@@ -37,7 +37,7 @@ interface VedtakProsessIndexProps {
     status: string;
     sprakkode: string;
     behandlingsresultat?: BehandlingsresultatDto;
-    behandlingPaaVent: boolean;
+    behandlingPåVent: boolean;
     behandlingÅrsaker?: Array<BehandlingÅrsakDto>;
   };
   beregningsgrunnlag: Beregningsgrunnlag[];
@@ -91,7 +91,7 @@ const VedtakProsessIndex = ({
       behandlingStatus={behandling.status}
       sprakkode={behandling.sprakkode}
       behandlingresultat={behandling.behandlingsresultat}
-      behandlingPaaVent={behandling.behandlingPaaVent}
+      behandlingPåVent={behandling.behandlingPåVent}
       behandlingÅrsaker={behandling.behandlingÅrsaker}
       beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkar}

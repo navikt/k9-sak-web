@@ -38,7 +38,7 @@ const behandling = {
       kode: behandlingResultatType.INNVILGET,
     },
   },
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   behandlingHenlagt: false,
   behandlingArsaker: [
     {

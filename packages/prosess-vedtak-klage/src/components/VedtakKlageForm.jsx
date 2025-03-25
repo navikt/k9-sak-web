@@ -41,7 +41,7 @@ export const VedtakKlageFormImpl = ({
   avvistArsaker,
   behandlingsResultatTekst,
   klageresultat,
-  behandlingPaaVent,
+  behandlingPåVent,
   alleKodeverk,
   åpneAksjonspunktKoder,
   ...formProps
@@ -103,7 +103,7 @@ export const VedtakKlageFormImpl = ({
             klageResultat={klageresultat}
             formProps={formProps}
             readOnly={readOnly}
-            behandlingPaaVent={behandlingPaaVent}
+            behandlingPåVent={behandlingPåVent}
           />
         )}
 
@@ -114,7 +114,7 @@ export const VedtakKlageFormImpl = ({
             previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
             formProps={formProps}
             readOnly={readOnly}
-            behandlingPaaVent={behandlingPaaVent}
+            behandlingPåVent={behandlingPåVent}
           />
         )}
 
@@ -125,7 +125,7 @@ export const VedtakKlageFormImpl = ({
             previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
             formProps={formProps}
             readOnly={readOnly}
-            behandlingPaaVent={behandlingPaaVent}
+            behandlingPåVent={behandlingPåVent}
           />
         )}
       </>

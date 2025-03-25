@@ -15,7 +15,7 @@ const behandling = {
       kode: behandlingResultatType.KLAGE_AVVIST,
     },
   },
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
 };
 
 const aksjonspunkter = [

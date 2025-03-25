@@ -22,7 +22,7 @@ const behandling = {
     vedtaksbrev: 'FRITEKST',
     type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
   },
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   behandlingHenlagt: false,
   behandlingArsaker: [
     {

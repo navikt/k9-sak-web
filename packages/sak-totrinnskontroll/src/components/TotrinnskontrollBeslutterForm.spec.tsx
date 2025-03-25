@@ -27,7 +27,7 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
       kodeverk: '',
     },
     behandlingHenlagt: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     gjeldendeVedtak: false,
     links: [],
     toTrinnsBehandling: true,
