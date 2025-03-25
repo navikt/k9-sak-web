@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import type { AksjonspunktDto, BehandlingDto, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 
-import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
-import { userEvent, within, expect, fn } from '@storybook/test';
 import { HStack } from '@navikt/ds-react';
-import { stdDato, visnDato } from '../../../utils/formatters';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import dayjs from 'dayjs';
+import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
+import { stdDato, visnDato } from '../../../utils/formatters';
 
 dayjs.locale('nb');
 
@@ -390,7 +390,13 @@ export const LøsAksjonspunktMedSplitt: Story = {
 
       await step('skjemaet skal oppdatere seg når man velger en periode', async () => {
         await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
-        await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+        const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
+        if (splittTomButton.className.includes('rdp-day_disabled')) {
+          await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+          await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+        } else {
+          await user.click(splittTomButton);
+        }
 
         await expect(
           await canvas.findByRole('group', {
