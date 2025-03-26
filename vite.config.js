@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
+import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
@@ -101,7 +102,10 @@ export default ({ mode }) => {
       outDir: './dist/k9/web',
       sourcemap: true,
       rollupOptions: {
-        external: ['mockServiceWorker.js'],
+        external: [
+          "mockServiceWorker.js"
+        ],
+        plugins: [sourcemaps({ exclude: /@sentry/ })],
       },
     },
     test: {
