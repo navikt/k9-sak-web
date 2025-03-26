@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { UNSAFE_Combobox, type ComboboxProps } from '@navikt/ds-react';
-import { ICD10, ICPC2 } from '@navikt/diagnosekoder';
-
-type DiagnosekodeType = 'ICD10' | 'ICPC2' | 'BEGGE';
+import { ICD10 } from '@navikt/diagnosekoder';
 
 interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'className' | 'disabled'> {
   label?: string;
   name: string;
   onChange: (value: string[]) => void;
   value: string[];
-  diagnosekodeType?: DiagnosekodeType;
 }
 
 const MIN_SEARCH_CHARS = 3;
@@ -21,42 +18,18 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   className,
   disabled,
   value = [],
-  diagnosekodeType = 'BEGGE',
   label = 'Diagnosekoder',
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState<{ key: string; label: string; value: string }[]>([]);
 
   const getFullOptions = useCallback(() => {
-    switch (diagnosekodeType) {
-      case 'ICD10':
-        return [...ICD10].map(v => ({
-          key: v.code,
-          label: `${v.code} - ${v.text}`,
-          value: v.code,
-        }));
-      case 'ICPC2':
-        return [...ICPC2].map(v => ({
-          key: v.code,
-          label: `${v.code} - ${v.text}`,
-          value: v.code,
-        }));
-      case 'BEGGE':
-      default:
-        return [
-          ...[...ICD10].map(v => ({
-            key: v.code,
-            label: `${v.code} - ${v.text}`,
-            value: v.code,
-          })),
-          ...[...ICPC2].map(v => ({
-            key: v.code,
-            label: `${v.code} - ${v.text}`,
-            value: v.code,
-          })),
-        ];
-    }
-  }, [diagnosekodeType]);
+    return ICD10.map(v => ({
+      key: v.code,
+      label: `${v.code} - ${v.text}`,
+      value: v.code,
+    }));
+  }, []);
 
   useEffect(() => {
     const filterResults = async () => {
