@@ -353,7 +353,7 @@
   "HistorikkEndretFeltVerdiType.Oppfylt": "oppfylt",
   "HistorikkEndretFeltVerdiType.Oppholdsrett": "Søker har oppholdsrett",
   "HistorikkEndretFeltVerdiType.PeriodeMedlem": "Periode med medlemskap",
-  "HistorikkEndretFeltVerdiType.PeriodeUnntak": "Perioder uten medlemskap",
+  "HistorikkEndretFeltVerdiType.PeriodeUnntak": "Periode med unntak fra medlemskap",
   "HistorikkEndretFeltVerdiType.PersonstatusABNR": "Aktivt BOSTNR",
   "HistorikkEndretFeltVerdiType.PersonstatusADNR": "Aktivt",
   "HistorikkEndretFeltVerdiType.PersonstatusBOSA": "Bosatt",
