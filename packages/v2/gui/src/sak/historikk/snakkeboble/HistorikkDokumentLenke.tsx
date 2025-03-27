@@ -1,6 +1,6 @@
 import { FileIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack } from '@navikt/ds-react';
-import type { HistorikkInnslagDokumentLink } from '../historikkinnslagTsTypeV2.js';
+import type { HistorikkInnslagDokumentLink } from '../tilbake/historikkinnslagTsTypeV2.js';
 import { DOCUMENT_SERVER_URL } from '../documentServerUrl.js';
 
 interface Props {

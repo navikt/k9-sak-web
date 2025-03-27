@@ -1,7 +1,7 @@
 import { type Location } from 'history';
 
 import { BodyLong, Chat, VStack } from '@navikt/ds-react';
-import type { HistorikkinnslagV2 } from '../historikkinnslagTsTypeV2.js';
+import type { HistorikkinnslagV2 } from '../tilbake/historikkinnslagTsTypeV2.js';
 
 import { HistorikkDokumentLenke } from './HistorikkDokumentLenke';
 import { formatDate, getStyle, parseBoldText, utledPlassering } from './snakkebobleUtils';

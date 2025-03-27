@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { HistorikkInnslagDokumentLink } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
+import { HistorikkInnslagDokumentLink } from '@k9-sak-web/gui/sak/historikk/tilbake/historikkinnslagTsTypeV2.js';
 
 import { FileIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
