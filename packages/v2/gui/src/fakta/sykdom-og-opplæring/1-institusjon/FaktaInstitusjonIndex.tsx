@@ -11,7 +11,7 @@ import InstitusjonDetails from './components/InstitusjonDetails.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
-import { SykdomOgOpplæringContext } from '../SykdomOgOpplæringIndex.js';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
 
 export interface FaktaInstitusjonProps {

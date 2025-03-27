@@ -10,18 +10,27 @@ import {
   InstitusjonVurderingDtoResultat as instEnumObject,
   SykdomVurderingOversiktElementResultat as sykdomEnumObject,
   OpplæringVurderingDtoResultat as opplæringEnumObject,
+  ReisetidPeriodeVurderingDtoResultat,
+  ReisetidPeriodeVurderingDtoResultat as reisetidEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat
   | SykdomVurderingOversiktElementResultat
-  | OpplæringVurderingDtoResultat;
-type ResultatKeys = keyof typeof instEnumObject | keyof typeof sykdomEnumObject | keyof typeof opplæringEnumObject;
+  | OpplæringVurderingDtoResultat
+  | ReisetidPeriodeVurderingDtoResultat;
+
+type ResultatKeys =
+  | keyof typeof instEnumObject
+  | keyof typeof sykdomEnumObject
+  | keyof typeof opplæringEnumObject
+  | keyof typeof reisetidEnumObject;
 
 export const Resultat = {
   ...instEnumObject,
   ...sykdomEnumObject,
   ...opplæringEnumObject,
+  ...reisetidEnumObject,
 } satisfies Record<ResultatKeys, ResultatType>;
 
 export interface Vurderingselement {

@@ -2,7 +2,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling } from '@k9-sak-web/types';
-import SykdomOgOpplæringIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringIndex.js';
+import FaktaSykdomOgOpplæringIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/FaktaSykdomOgOpplæringIndex.js';
 
 class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.SYKDOM_OG_OPPLAERING;
@@ -10,17 +10,17 @@ class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
   getTekstKode = () => 'FaktaSykdomOgOpplaering.Title';
 
   getAksjonspunktKoder = () => [
-    aksjonspunktCodes.MEDISINSK_VILKAAR,
     aksjonspunktCodes.VURDER_INSTITUSJON,
     aksjonspunktCodes.VURDER_LANGVARIG_SYK,
     aksjonspunktCodes.VURDER_OPPLÆRING,
+    aksjonspunktCodes.VURDER_REISETID,
   ];
 
   getEndepunkter = () => [];
 
   getKomponent = ({ readOnly, submitCallback, behandling, aksjonspunkter }) => {
     return (
-      <SykdomOgOpplæringIndex
+      <FaktaSykdomOgOpplæringIndex
         submitCallback={submitCallback}
         readOnly={readOnly}
         behandlingUuid={behandling.uuid}

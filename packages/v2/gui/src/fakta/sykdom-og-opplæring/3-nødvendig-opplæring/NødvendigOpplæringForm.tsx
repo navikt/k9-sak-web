@@ -21,7 +21,7 @@ import {
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
 import { useContext, useEffect } from 'react';
-import { SykdomOgOpplæringContext } from '../SykdomOgOpplæringIndex';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 
 const booleanToRadioValue = (value: boolean | undefined) => {

@@ -8,7 +8,7 @@ import {
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { type InstitusjonAksjonspunktPayload } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/institusjon/components/InstitusjonForm.js';
+import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
 
 export const useSykdomBackendClient = () => {
@@ -104,6 +104,15 @@ export const useSubmitSykdomVurdering = (onSuccess?: () => void) => {
   return useMutation<BekreftResponse, Error, SubmitSykdomVurderingVariables>({
     mutationFn: ({ payload, behandlingUuid }) => backendClient.submitSykdomVurdering(payload, behandlingUuid),
     onSuccess,
+  });
+};
+
+export const useVurdertReisetid = (behandlingUuid: string) => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['vurdertReisetid', behandlingUuid],
+    queryFn: () => backendClient.getVurdertReisetid(behandlingUuid),
   });
 };
 

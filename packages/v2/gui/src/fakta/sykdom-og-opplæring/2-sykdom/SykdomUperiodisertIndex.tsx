@@ -8,7 +8,7 @@ import { Period } from '@fpsak-frontend/utils';
 import { useContext, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak } from '../SykdomOgOpplæringQueries';
-import { SykdomOgOpplæringContext } from '../SykdomOgOpplæringIndex';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import SykdomUperiodisertForm from './SykdomUperiodisertForm';
 import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';

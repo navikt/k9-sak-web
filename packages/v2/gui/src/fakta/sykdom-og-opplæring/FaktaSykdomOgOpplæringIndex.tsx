@@ -1,13 +1,13 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { type InstitusjonAksjonspunktPayload } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/institusjon/components/InstitusjonForm.js';
-import FaktaInstitusjonIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/institusjon/FaktaInstitusjonIndex.js';
-import VurderSykdomUperiodisert from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/sykdom/VurderSykdomUperiodisert.js';
+import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
+import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
+import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
 import type { Aksjonspunkt } from '@k9-sak-web/types/src/aksjonspunktTsType';
 import { Tabs } from '@navikt/ds-react';
-import { createContext, useState } from 'react';
-import NødvendigOpplæring from './nødvendig-opplæring/NødvendigOpplæring';
-
+import { createContext, useContext, useState } from 'react';
+import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
+import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 const initActiveTab = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
     aksjonspunkter.some(
@@ -72,6 +72,7 @@ type SykdomOgOpplæringContext = {
     dokumentertOpplæring: boolean;
   }) => void;
   behandlingUuid: string;
+  aksjonspunkter: Aksjonspunkt[];
 };
 
 export const SykdomOgOpplæringContext = createContext<SykdomOgOpplæringContext>({
@@ -80,9 +81,10 @@ export const SykdomOgOpplæringContext = createContext<SykdomOgOpplæringContext
   løsAksjonspunkt9301: () => {},
   løsAksjonspunkt9302: () => {},
   behandlingUuid: '',
+  aksjonspunkter: [],
 });
 
-const SykdomOgOpplæringIndex = ({
+const FaktaSykdomOgOpplæringIndex = ({
   readOnly,
   submitCallback,
   behandlingUuid,
@@ -140,14 +142,16 @@ const SykdomOgOpplæringIndex = ({
         løsAksjonspunkt9301,
         løsAksjonspunkt9302,
         behandlingUuid,
+        aksjonspunkter,
       }}
     >
-      <SykdomOgOpplæring aksjonspunkter={aksjonspunkter} />
+      <SykdomOgOpplæring />
     </SykdomOgOpplæringContext.Provider>
   );
 };
 
-const SykdomOgOpplæring = ({ aksjonspunkter }: { aksjonspunkter: Aksjonspunkt[] }) => {
+const SykdomOgOpplæring = () => {
+  const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [activeTab, setActiveTab] = useState(initActiveTab(aksjonspunkter));
   return (
     <Tabs value={activeTab} onChange={setActiveTab}>
@@ -164,19 +168,21 @@ const SykdomOgOpplæring = ({ aksjonspunkter }: { aksjonspunkter: Aksjonspunkt[]
       </Tabs.Panel>
       <Tabs.Panel value="sykdom">
         <div className="mt-4">
-          <VurderSykdomUperiodisert />
+          <SykdomUperiodisertIndex />
         </div>
       </Tabs.Panel>
       <Tabs.Panel value="opplæring">
         <div className="mt-4">
-          <NødvendigOpplæring />
+          <NødvendigOpplæringIndex />
         </div>
       </Tabs.Panel>
       <Tabs.Panel value="reisetid">
-        <div className="mt-4">reisetid</div>
+        <div className="mt-4">
+          <ReisetidIndex />
+        </div>
       </Tabs.Panel>
     </Tabs>
   );
 };
 
-export default SykdomOgOpplæringIndex;
+export default FaktaSykdomOgOpplæringIndex;

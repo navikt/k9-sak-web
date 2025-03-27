@@ -2,7 +2,7 @@ import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import Vurderingsnavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { useVurdertOpplæring } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
-import { SykdomOgOpplæringContext } from '../SykdomOgOpplæringIndex';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';

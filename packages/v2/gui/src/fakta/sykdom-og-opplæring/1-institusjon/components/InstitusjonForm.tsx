@@ -6,7 +6,7 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import { useContext } from 'react';
-import { SykdomOgOpplæringContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringIndex.js';
+import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',
