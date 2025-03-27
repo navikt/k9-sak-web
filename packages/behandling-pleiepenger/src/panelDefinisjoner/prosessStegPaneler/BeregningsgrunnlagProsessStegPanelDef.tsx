@@ -5,6 +5,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
+import * as Sentry from '@sentry/browser';
 
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
@@ -12,6 +13,11 @@ class PanelDef extends ProsessStegPanelDef {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    const sentryCallback = (error: string) => {
+      Sentry.captureEvent({
+        message: error,
+      });
+    };
     return (
       <BeregningsgrunnlagProsessIndex
         {...props}
@@ -22,6 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
         formData={props.formData}
         kodeverkSamling={deepCopyProps.alleKodeverk}
         setFormData={props.setFormData}
+        sentryCallback={sentryCallback}
       />
     );
   };
