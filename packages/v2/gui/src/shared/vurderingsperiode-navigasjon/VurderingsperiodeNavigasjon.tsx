@@ -5,17 +5,23 @@ import PeriodeRad from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
 import {
   type InstitusjonVurderingDtoResultat,
+  OpplæringVurderingDtoResultat,
   type SykdomVurderingOversiktElementResultat,
   InstitusjonVurderingDtoResultat as instEnumObject,
   SykdomVurderingOversiktElementResultat as sykdomEnumObject,
+  OpplæringVurderingDtoResultat as opplæringEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
 
-export type ResultatType = InstitusjonVurderingDtoResultat | SykdomVurderingOversiktElementResultat;
-type ResultatKeys = keyof typeof instEnumObject | keyof typeof sykdomEnumObject;
+export type ResultatType =
+  | InstitusjonVurderingDtoResultat
+  | SykdomVurderingOversiktElementResultat
+  | OpplæringVurderingDtoResultat;
+type ResultatKeys = keyof typeof instEnumObject | keyof typeof sykdomEnumObject | keyof typeof opplæringEnumObject;
 
 export const Resultat = {
   ...instEnumObject,
   ...sykdomEnumObject,
+  ...opplæringEnumObject,
 } satisfies Record<ResultatKeys, ResultatType>;
 
 export interface Vurderingselement {

@@ -9,13 +9,23 @@ class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FaktaSykdomOgOpplaering.Title';
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR, aksjonspunktCodes.VURDER_INSTITUSJON];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.MEDISINSK_VILKAAR,
+    aksjonspunktCodes.VURDER_INSTITUSJON,
+    aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+    aksjonspunktCodes.VURDER_OPPLÆRING,
+  ];
 
   getEndepunkter = () => [];
 
-  getKomponent = ({ readOnly, submitCallback, behandling }) => {
+  getKomponent = ({ readOnly, submitCallback, behandling, aksjonspunkter }) => {
     return (
-      <SykdomOgOpplæringIndex submitCallback={submitCallback} readOnly={readOnly} behandlingUuid={behandling.uuid} />
+      <SykdomOgOpplæringIndex
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        behandlingUuid={behandling.uuid}
+        aksjonspunkter={aksjonspunkter}
+      />
     );
   };
 

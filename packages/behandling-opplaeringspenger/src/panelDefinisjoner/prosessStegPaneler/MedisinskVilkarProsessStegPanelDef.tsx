@@ -23,14 +23,17 @@ class PanelDef extends ProsessStegPanelDef {
   };
 
   getAksjonspunktKoder = () => [
-    aksjonspunktCodes.MEDISINSK_VILKAAR,
     aksjonspunktCodes.VURDER_INSTITUSJON,
-    aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING,
-    aksjonspunktCodes.VURDER_NØDVENDIGHET,
+    aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+    aksjonspunktCodes.VURDER_OPPLÆRING,
     aksjonspunktCodes.VURDER_REISETID,
   ];
 
-  getVilkarKoder = () => [vilkarType.LANGVARIG_SYKDOM, vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON];
+  getVilkarKoder = () => [
+    vilkarType.LANGVARIG_SYKDOM,
+    vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
+    vilkarType.NØDVENDIG_OPPLÆRING,
+  ];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 

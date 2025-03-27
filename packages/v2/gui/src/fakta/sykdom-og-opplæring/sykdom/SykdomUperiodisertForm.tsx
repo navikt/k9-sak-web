@@ -83,24 +83,24 @@ const SykdomUperiodisertForm = ({ vurdering }: { vurdering: UperiodisertSykdom }
         <div className="mt-6">
           <Form
             formMethods={formMethods}
-            onSubmit={data =>
-              vurdering.uuid
+            onSubmit={data => {
+              return vurdering.uuid
                 ? oppdaterSykdomsvurdering({
                     behandlingUuid,
                     diagnoser: data.diagnosekoder,
                     begrunnelse: data.begrunnelse,
                     godkjent: data.godkjent === 'ja',
                     uuid: vurdering.uuid,
-                    avslagsårsak: !data.godkjent ? finnAvslagsårsak(data.godkjent) : undefined,
+                    avslagsårsak: data.godkjent !== 'ja' ? finnAvslagsårsak(data.godkjent) : undefined,
                   })
                 : opprettSykdomsvurdering({
                     behandlingUuid,
                     diagnoser: data.diagnosekoder,
                     begrunnelse: data.begrunnelse,
                     godkjent: data.godkjent === 'ja',
-                    avslagsårsak: !data.godkjent ? finnAvslagsårsak(data.godkjent) : undefined,
-                  })
-            }
+                    avslagsårsak: data.godkjent !== 'ja' ? finnAvslagsårsak(data.godkjent) : undefined,
+                  });
+            }}
           >
             <div className="flex flex-col gap-6">
               <div>

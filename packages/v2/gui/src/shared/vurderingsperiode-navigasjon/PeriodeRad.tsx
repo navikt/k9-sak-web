@@ -46,14 +46,18 @@ const renderStatusIcon = (resultat?: ResultatType) => {
       </ContentWithTooltip>
     );
   }
-  if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT) {
+  if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT || resultat === Resultat.GODKJENT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
         <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === Resultat.IKKE_GODKJENT_MANUELT || resultat === Resultat.IKKE_OPPFYLT) {
+  if (
+    resultat === Resultat.IKKE_GODKJENT_MANUELT ||
+    resultat === Resultat.IKKE_OPPFYLT ||
+    resultat === Resultat.IKKE_GODKJENT
+  ) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
         <RedCrossIconFilled />

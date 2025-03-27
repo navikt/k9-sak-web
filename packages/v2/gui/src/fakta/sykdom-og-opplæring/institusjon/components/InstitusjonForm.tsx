@@ -14,7 +14,7 @@ enum InstitusjonFormFields {
 }
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
-  [InstitusjonFormFields.GODKJENT_INSTITUSJON]: boolean;
+  [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
 }
 
 export interface InstitusjonAksjonspunktPayload {
@@ -38,13 +38,13 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   const formMethods = useForm<InstitusjonFormValues>({
     defaultValues: {
       begrunnelse: '',
-      godkjentInstitusjon: false,
+      godkjentInstitusjon: '',
     },
   });
 
   const handleSubmit = (values: InstitusjonFormValues) => {
     løsAksjonspunkt9300({
-      godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON],
+      godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: values[InstitusjonFormFields.BEGRUNNELSE],
       journalpostId: vurdering.journalpostId,
     });
@@ -66,10 +66,9 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         <RadioGroupPanel
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
           label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
-          isTrueOrFalseSelection
           radios={[
-            { label: 'Ja', value: 'true' },
-            { label: 'Nei', value: 'false' },
+            { label: 'Ja', value: 'ja' },
+            { label: 'Nei', value: 'nei' },
           ]}
           validate={[required]}
           isReadOnly={readOnly}

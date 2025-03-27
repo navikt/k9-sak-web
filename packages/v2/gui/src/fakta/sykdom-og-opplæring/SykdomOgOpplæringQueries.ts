@@ -69,13 +69,13 @@ export const useInstitusjonInfo = (behandlingUuid: string) => {
     enabled: !!behandlingUuid,
   });
 };
-export const useSykdomInfo = (behandlingUuid: string) => {
+
+export const useVurdertOpplæring = (behandlingUuid: string) => {
   const backendClient = useSykdomBackendClient();
 
   return useQuery({
-    queryKey: ['sykdomInfo', behandlingUuid],
-    queryFn: () => backendClient.getSykdomInfo(behandlingUuid),
-    enabled: !!behandlingUuid,
+    queryKey: ['vurdertOpplæring', behandlingUuid],
+    queryFn: () => backendClient.getVurdertOpplæring(behandlingUuid),
   });
 };
 
@@ -103,20 +103,6 @@ export const useSubmitSykdomVurdering = (onSuccess?: () => void) => {
 
   return useMutation<BekreftResponse, Error, SubmitSykdomVurderingVariables>({
     mutationFn: ({ payload, behandlingUuid }) => backendClient.submitSykdomVurdering(payload, behandlingUuid),
-    onSuccess,
-  });
-};
-
-interface SubmitOpplæringVurderingVariables {
-  payload: any;
-  behandlingUuid: string;
-}
-
-export const useSubmitOpplæringVurdering = (onSuccess?: () => void) => {
-  const backendClient = useSykdomBackendClient();
-
-  return useMutation<BekreftResponse, Error, SubmitOpplæringVurderingVariables>({
-    mutationFn: ({ payload, behandlingUuid }) => backendClient.submitOpplæringVurdering(payload, behandlingUuid),
     onSuccess,
   });
 };
