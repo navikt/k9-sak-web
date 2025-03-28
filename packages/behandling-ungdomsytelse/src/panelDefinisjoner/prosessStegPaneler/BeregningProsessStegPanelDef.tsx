@@ -1,5 +1,6 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import UngBeregningIndex from '@k9-sak-web/gui/prosess/ung-beregning/UngBeregningIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -25,6 +26,8 @@ class PanelDef extends ProsessStegPanelDef {
         dødsdato: barn.dodsdato ? new Intl.DateTimeFormat('nb-NO').format(new Date(barn.dodsdato)) : '',
       })) || [],
   });
+
+  getAksjonspunktKoder = () => [aksjonspunktCodes.AUTO_SATT_PÅ_VENT_ETTERLYST_INNTEKTUTTALELSE];
 }
 
 class BeregningProsessStegPanelDef extends ProsessStegDef {

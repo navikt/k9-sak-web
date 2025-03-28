@@ -4,6 +4,7 @@ import {
   type KontrollerInntektDto,
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, PersonIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Table, VStack } from '@navikt/ds-react';
 import { Form, InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
@@ -56,7 +57,10 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
         fastsattYtelse: values.fastsattYtelse,
       }),
     };
-    submitCallback(payload);
+    submitCallback({
+      kode: aksjonspunktCodes.AUTO_SATT_PÅ_VENT_ETTERLYST_INNTEKTUTTALELSE,
+      kontrollerInntekt: payload,
+    });
   };
 
   const getAksjonspunkt = () => (
