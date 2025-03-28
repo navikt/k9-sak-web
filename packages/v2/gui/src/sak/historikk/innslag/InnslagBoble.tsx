@@ -1,5 +1,5 @@
 import { type HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9sak/generated';
-import { Chat, VStack } from '@navikt/ds-react';
+import { Chat, VStack, Button } from '@navikt/ds-react';
 import { Avatar } from '../snakkeboble/Avatar.jsx';
 import type { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { formatDate, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
@@ -7,6 +7,8 @@ import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
 import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
 import type { K9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
+import { useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 
 export interface InnslagBobleProps {
   readonly innslag: HistorikkinnslagDtoV2;
@@ -25,8 +27,10 @@ export const InnslagBoble = ({
   saksnummer,
   kodeverkoppslag,
 }: InnslagBobleProps) => {
+  const [expanded, setExpanded] = useState(false);
   const rolleNavn = kodeverkoppslag.k9sak.historikkAktører(innslag.aktør.type).navn;
   const position = utledPlassering(innslag.aktør.type);
+  const doCutOff = innslag.linjer.length > 2;
   return (
     <Chat
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
@@ -41,7 +45,7 @@ export const InnslagBoble = ({
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
 
         {innslag.linjer.map((linje, idx) => (
-          <div key={idx}>
+          <div key={idx} hidden={doCutOff && !expanded && idx > 0}>
             <InnslagLinje
               linje={linje}
               behandlingLocation={behandlingLocation}
@@ -61,6 +65,18 @@ export const InnslagBoble = ({
               />
             ))}
           </VStack>
+        ) : null}
+
+        {doCutOff ? (
+          <Button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            icon={expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            variant="tertiary-neutral"
+            size="xsmall"
+          >
+            {expanded ? 'Vis mindre' : 'Vis alt'}
+          </Button>
         ) : null}
       </Chat.Bubble>
     </Chat>
