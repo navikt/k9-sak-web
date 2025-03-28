@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 
 import { LabelledContent } from './LabelledContent';
 
@@ -13,6 +13,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Label',
-    content: 'Content',
+    children: 'Content',
   },
 };

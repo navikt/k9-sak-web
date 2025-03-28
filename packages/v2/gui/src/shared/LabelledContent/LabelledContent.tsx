@@ -5,14 +5,14 @@ import classNames from 'classnames';
 
 export interface LabelledContentProps {
   label: string | React.ReactNode;
-  content: React.ReactNode;
+  children: React.ReactNode;
   labelTag?: React.ElementType;
   indentContent?: boolean;
 }
 
-export const LabelledContent = ({ label, content, labelTag, indentContent }: LabelledContentProps) => {
+export const LabelledContent = ({ label, children, labelTag, indentContent }: LabelledContentProps) => {
   const cl = classNames('mt-2', {
-    'border-l-4 border-[#c9c9c9] py-[3px] pl-[13px]': indentContent,
+    'border-solid border-t-0 border-r-0 border-b-0 border-l-4 border-[#c9c9c9] py-[3px] pl-[13px]': indentContent,
   });
   return (
     <div>
@@ -20,7 +20,7 @@ export const LabelledContent = ({ label, content, labelTag, indentContent }: Lab
         {label}
       </Label>
       <div className={cl}>
-        <div>{content}</div>
+        <div>{children}</div>
       </div>
     </div>
   );

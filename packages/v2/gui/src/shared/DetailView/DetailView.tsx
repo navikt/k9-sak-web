@@ -10,9 +10,9 @@ export interface DetailViewProps {
   className?: string;
 }
 
-export const DetailView = ({ title, children, contentAfterTitleRenderer, className }: DetailViewProps) => {
+export const DetailViewV2 = ({ title, children, contentAfterTitleRenderer, className }: DetailViewProps) => {
   const cls = classnames(
-    'bg-[rgba(204,225,243,0.26)] border border-[#c6c2bf] rounded p-6',
+    'border border-solid border-[#c6c2bf] rounded p-6',
     className
       ? {
           [className]: !!className,
@@ -21,13 +21,11 @@ export const DetailView = ({ title, children, contentAfterTitleRenderer, classNa
   );
   return (
     <div className={cls}>
-      <div className="flex items-baseline">
+      <div className="flex items-baseline justify-between">
         <Heading size="small" level="2">
           {title}
         </Heading>
-        {contentAfterTitleRenderer && (
-          <div className="flex">{contentAfterTitleRenderer()}</div>
-        )}
+        {contentAfterTitleRenderer && contentAfterTitleRenderer()}
       </div>
       {children}
     </div>

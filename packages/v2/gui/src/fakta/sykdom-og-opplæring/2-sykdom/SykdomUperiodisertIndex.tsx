@@ -1,4 +1,3 @@
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import Vurderingsnavigasjon, {
   Resultat,
   type Vurderingselement,
@@ -6,15 +5,17 @@ import Vurderingsnavigasjon, {
 import { Alert, BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Period } from '@fpsak-frontend/utils';
 import { useContext, useState } from 'react';
-import { PlusIcon } from '@navikt/aksel-icons';
+import { PencilIcon, PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomUperiodisertForm from './SykdomUperiodisertForm';
 import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { SykdomUperiodisertFormContainer } from './SykdomUperiodisertFormContainer';
+import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 const utledResultat = (element: LangvarigSykdomVurderingDto) => {
   if (element.godkjent) {
     return Resultat.OPPFYLT;
@@ -67,33 +68,56 @@ const VurderSykdomUperiodisert = () => {
               vurdertePerioder={[]}
               onPeriodeClick={velgPeriode}
             />
-            <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
-              Legg til ny sykdomsvurdering
-            </Button>
           </>
         )}
-        showDetailSection={nyVurdering || !!valgtVurdering}
-        detailSection={() =>
-          nyVurdering ? (
-            <SykdomUperiodisertFormContainer
-              vurdering={{
-                diagnosekoder: [],
-                begrunnelse: '',
-                godkjent: '',
-              }}
-            />
-          ) : (
-            valgtVurdering && <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />
-          )
+        belowNavigationContent={
+          <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
+            Legg til ny sykdomsvurdering
+          </Button>
         }
+        detailSection={() => {
+          if (nyVurdering) {
+            return (
+              <SykdomUperiodisertFormContainer
+                vurdering={{
+                  diagnosekoder: [],
+                  begrunnelse: '',
+                  godkjent: '',
+                }}
+              />
+            );
+          }
+          if (valgtVurdering) {
+            return <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />;
+          }
+          return null;
+        }}
       />
     </>
   );
 };
 
 const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurderingDto[] }) => {
-  const { løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
-  const form = useForm();
+  const { løsAksjonspunkt9301, aksjonspunkter, readOnly } = useContext(SykdomOgOpplæringContext);
+  const aksjonspunkt9301 = aksjonspunkter.find(
+    aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+  );
+
+  const [redigerVurdering, setRedigerVurdering] = useState<boolean>(false);
+  const kanVurdere = (redigerVurdering || aksjonspunkt9301?.status.kode === aksjonspunktStatus.OPPRETTET) && !readOnly;
+  const aksjonspunktErLøst = aksjonspunkt9301?.status.kode === aksjonspunktStatus.UTFØRT;
+  const form = useForm<{ vurderingUuid: string }>();
+
+  const submit = (data: { vurderingUuid: string }) => {
+    const vurdering = vurderinger.find(vurdering => vurdering.uuid === data.vurderingUuid);
+    if (vurdering) {
+      løsAksjonspunkt9301({
+        langvarigsykdomsvurderingUuid: vurdering.uuid,
+        begrunnelse: vurdering.begrunnelse,
+      });
+    }
+  };
+
   if (vurderinger.length === 1 && vurderinger[0]) {
     const vurdering = vurderinger[0];
     return (
@@ -109,9 +133,11 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
               Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
               sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
             </BodyLong>
-            <Button variant="primary" type="submit" size="small">
-              Bekreft og fortsett
-            </Button>
+            {kanVurdere && (
+              <Button variant="primary" type="submit" size="small">
+                Bekreft og fortsett
+              </Button>
+            )}
           </Alert>
         </Form>
       </>
@@ -120,47 +146,61 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
   if (vurderinger.length > 1) {
     return (
       <Alert variant="warning">
-        Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
-        sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
-        <Form
-          formMethods={form}
-          onSubmit={() => {
-            const vurdering = vurderinger.find(vurdering => vurdering.uuid === form.getValues('vurdering'));
-            if (vurdering) {
-              løsAksjonspunkt9301({
-                langvarigsykdomsvurderingUuid: vurdering.uuid,
-                begrunnelse: vurdering.begrunnelse,
-              });
-            }
-          }}
-        >
-          <div className="flex flex-col gap-2">
-            <Controller
-              control={form.control}
-              name="vurdering"
-              rules={{ required: 'Vurdering er påkrevd' }}
-              render={({ field, fieldState }) => (
-                <RadioGroup
-                  className="mt-3"
-                  legend="Bekreft om tidligere sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering."
-                  error={fieldState.error?.message}
-                  {...field}
-                >
-                  {vurderinger.map(vurdering => (
-                    <Radio key={vurdering.uuid} value={vurdering.uuid}>
-                      {dayjs(vurdering.vurderingsdato).format('DD.MM.YYYY')}
-                    </Radio>
-                  ))}
-                </RadioGroup>
-              )}
-            />
-            <div>
-              <Button variant="primary" type="submit">
-                Bekreft og fortsett
-              </Button>
-            </div>
+        <div className="flex flex-col">
+          <div className="flex justify-between">
+            <BodyLong>
+              Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
+              sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
+            </BodyLong>
           </div>
-        </Form>
+          <Form formMethods={form} onSubmit={submit}>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <Controller
+                  control={form.control}
+                  name="vurderingUuid"
+                  rules={{ required: 'Vurdering er påkrevd' }}
+                  render={({ field, fieldState }) => (
+                    <RadioGroup
+                      className="mt-3"
+                      legend="Hvilken sykdomsvurdering skal brukes?"
+                      disabled={!kanVurdere}
+                      error={fieldState.error?.message}
+                      {...field}
+                    >
+                      {vurderinger.map(vurdering => (
+                        <Radio key={vurdering.uuid} value={vurdering.uuid}>
+                          {dayjs(vurdering.vurderingsdato).format('DD.MM.YYYY')}
+                        </Radio>
+                      ))}
+                    </RadioGroup>
+                  )}
+                />
+                {aksjonspunktErLøst && (
+                  <div>
+                    <Button
+                      className="mt-2"
+                      variant={"tertiary"}
+                      icon={<PencilIcon />}
+                      onClick={() => setRedigerVurdering(!redigerVurdering)}
+                      type="button"
+                      size="small"
+                    >
+                      Endre vurdering
+                    </Button>
+                  </div>
+                )}
+              </div>
+              {kanVurdere && (
+                <div>
+                  <Button variant="primary" onClick={() => form.handleSubmit(submit)}>
+                    Bekreft og fortsett
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Form>
+        </div>
       </Alert>
     );
   }

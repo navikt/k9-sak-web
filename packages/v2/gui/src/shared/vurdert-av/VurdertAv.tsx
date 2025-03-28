@@ -7,7 +7,7 @@ import { prettifyDateString } from '@navikt/ft-utils';
 
 import { SaksbehandlernavnContext } from '../SaksbehandlernavnContext/SaksbehandlernavnContext';
 
-export interface IAssessedByProps {
+export interface IVurdertAvProps {
   ident?: string;
   date?: string;
 }
@@ -15,7 +15,7 @@ export interface IAssessedByProps {
 /* For å få opp saksbehandlerens navn må sette saksbehandlernavn i SaksbehandlernavnContext.Provider
  */
 
-export const AssessedBy = ({ ident, date }: IAssessedByProps) => {
+export const VurdertAv = ({ ident, date }: IVurdertAvProps) => {
   const saksbehandlernavn = useContext(SaksbehandlernavnContext);
   if (!ident) {
     return null;

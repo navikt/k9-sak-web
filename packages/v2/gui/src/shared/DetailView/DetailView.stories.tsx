@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 
-import { DetailView } from './DetailView';
+import { DetailViewV2 } from './DetailView';
 
 const meta = {
-  component: DetailView,
-} satisfies Meta<typeof DetailView>;
+  component: DetailViewV2,
+} satisfies Meta<typeof DetailViewV2>;
 
 export default meta;
 

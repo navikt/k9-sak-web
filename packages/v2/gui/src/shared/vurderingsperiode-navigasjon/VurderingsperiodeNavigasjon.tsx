@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Box, Heading } from '@navikt/ds-react';
-import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import PeriodeRad from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
 import {
@@ -13,6 +12,7 @@ import {
   ReisetidPeriodeVurderingDtoResultat,
   ReisetidPeriodeVurderingDtoResultat as reisetidEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { InteractiveList } from '../InteractiveList/InteractiveList';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat

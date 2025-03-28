@@ -1,25 +1,25 @@
 import dayjs from 'dayjs';
 import SykdomUperiodisertForm, { type UperiodisertSykdom } from './SykdomUperiodisertForm';
-import { CalendarIcon } from '@navikt/aksel-icons';
-import { DetailView, EditIcon } from '@navikt/ft-plattform-komponenter';
+import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState } from 'react';
 import { Button } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
+import { DetailViewV2 } from '../../../shared/DetailView/DetailView';
 
 export const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const [redigering, setRedigering] = useState(false);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm = (redigering && vurdering.vurderingsdato) || !vurdering.vurderingsdato;
   return (
-    <DetailView
+    <DetailViewV2
       title="Vurdering av sykdom"
       contentAfterTitleRenderer={() => (
-        <div className="min-w-[475px] flex justify-end">
+        <div className="float-right">
           <Button
             size="small"
             className=""
             variant="tertiary"
-            icon={<EditIcon />}
+            icon={<PencilIcon />}
             onClick={() => setRedigering(!redigering)}
           >
             Rediger
@@ -39,8 +39,12 @@ export const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uper
       </div>
       <div className="border-none bg-border-default h-px mt-4" />
       <div className="mt-6">
-        {visForm ? <SykdomUperiodisertForm vurdering={vurdering} /> : <SykdomUperiodisertFerdigvisning />}
+        {visForm ? (
+          <SykdomUperiodisertForm vurdering={vurdering} />
+        ) : (
+          <SykdomUperiodisertFerdigvisning vurdering={vurdering} />
+        )}
       </div>
-    </DetailView>
+    </DetailViewV2>
   );
 };
