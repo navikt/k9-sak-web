@@ -27,7 +27,7 @@ class PanelDef extends ProsessStegPanelDef {
       })) || [],
   });
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.AUTO_SATT_PÅ_VENT_ETTERLYST_INNTEKTUTTALELSE];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.KONTROLLER_INNTEKT];
 }
 
 class BeregningProsessStegPanelDef extends ProsessStegDef {

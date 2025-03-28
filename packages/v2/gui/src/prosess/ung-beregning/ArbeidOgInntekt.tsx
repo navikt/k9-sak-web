@@ -58,7 +58,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
       }),
     };
     submitCallback({
-      kode: aksjonspunktCodes.AUTO_SATT_PÅ_VENT_ETTERLYST_INNTEKTUTTALELSE,
+      kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
       kontrollerInntekt: payload,
     });
   };
