@@ -1,0 +1,27 @@
+.interactive-list-element {
+  @apply relative border-b border-[#c6c2bf] first:border-t last:border-b-0;
+}
+
+.interactive-list-element--active {
+  @apply bg-[#cce4fd];
+}
+
+.interactive-list-element--active::before {
+  @apply absolute left-0 top-0 h-full w-[0.3125rem] bg-[#0067c5] rounded-r;
+}
+
+.interactive-list-element--inactive:hover {
+  @apply bg-[#f2f7fc];
+}
+
+.interactive-list-button {
+  @apply w-full text-left bg-transparent border-none cursor-pointer text-base outline-none py-[0.9375rem] pl-6 focus-visible:outline focus-visible:outline-[#0067c5] focus-visible:outline-auto focus-visible:outline-1;
+}
+
+.interactive-list-button-content {
+  @apply flex justify-between;
+}
+
+.interactive-list-chevron {
+  @apply ml-[1.125rem] mr-[1.875rem] self-center -rotate-90;
+} 
