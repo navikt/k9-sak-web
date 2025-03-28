@@ -3,7 +3,7 @@ import Vurderingsnavigasjon, {
   Resultat,
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
-import { Alert, Button, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Period } from '@fpsak-frontend/utils';
 import { useContext, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
@@ -14,6 +14,7 @@ import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/gene
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
+import { SykdomUperiodisertFormContainer } from './SykdomUperiodisertFormContainer';
 const utledResultat = (element: LangvarigSykdomVurderingDto) => {
   if (element.godkjent) {
     return Resultat.OPPFYLT;
@@ -55,7 +56,9 @@ const VurderSykdomUperiodisert = () => {
 
   return (
     <>
-      <BekreftAlert vurderinger={langvarigSykVurderingerFagsak} />
+      <div className="mb-5">
+        <BekreftAlert vurderinger={langvarigSykVurderingerFagsak} />
+      </div>
       <NavigationWithDetailView
         navigationSection={() => (
           <>
@@ -72,7 +75,7 @@ const VurderSykdomUperiodisert = () => {
         showDetailSection={nyVurdering || !!valgtVurdering}
         detailSection={() =>
           nyVurdering ? (
-            <SykdomUperiodisertForm
+            <SykdomUperiodisertFormContainer
               vurdering={{
                 diagnosekoder: [],
                 begrunnelse: '',
@@ -80,7 +83,7 @@ const VurderSykdomUperiodisert = () => {
               }}
             />
           ) : (
-            valgtVurdering && <SykdomUperiodisertForm vurdering={valgtVurdering} />
+            valgtVurdering && <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />
           )
         }
       />
@@ -102,12 +105,14 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
           }}
         >
           <Alert variant="warning">
-            Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
-            sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
+            <BodyLong className="mb-4">
+              Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
+              sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
+            </BodyLong>
+            <Button variant="primary" type="submit" size="small">
+              Bekreft og fortsett
+            </Button>
           </Alert>
-          <Button variant="primary" type="submit">
-            Bekreft og fortsett
-          </Button>
         </Form>
       </>
     );

@@ -93,24 +93,25 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
         Alle perioder
       </Heading>
 
-      <div className="flex gap w-[120px]">
-        <div className="mx-4 min-w-[50px]">Status</div>
-        <div>Periode</div>
-      </div>
-
-      {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px]">Ingen vurderinger å vise</div>}
+      {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
 
       {allePerioder.length > 0 && (
-        <div>
-          <InteractiveList
-            elements={elements.map((element, currentIndex) => ({
-              content: element,
-              active: activeIndex === currentIndex,
-              key: `${element.key}`,
-              onClick: () => handlePeriodeClick(currentIndex),
-            }))}
-          />
-        </div>
+        <>
+          <div className="flex gap w-[120px]">
+            <div className="mx-4 min-w-[50px]">Status</div>
+            <div>Periode</div>
+          </div>
+          <div>
+            <InteractiveList
+              elements={elements.map((element, currentIndex) => ({
+                content: element,
+                active: activeIndex === currentIndex,
+                key: `${element.key}`,
+                onClick: () => handlePeriodeClick(currentIndex),
+              }))}
+            />
+          </div>
+        </>
       )}
     </Box>
   );

@@ -135,7 +135,6 @@ const SykdomUperiodisertForm = ({ vurdering }: { vurdering: UperiodisertSykdom }
                 }}
                 value={formMethods.watch('diagnosekoder')}
                 size="medium"
-                className="max-w-[320px]"
                 disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
               />
               <div>
