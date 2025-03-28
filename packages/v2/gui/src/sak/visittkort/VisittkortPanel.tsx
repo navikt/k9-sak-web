@@ -26,7 +26,7 @@ const utledKjonn = (kjonn: string): Gender => {
 
 export interface VisittkortPanelProps {
   fagsakPerson: FagsakPerson;
-  sprakkode?: string;
+  språkkode?: string;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker?: RelatertSakDto;
@@ -38,7 +38,7 @@ export interface VisittkortPanelProps {
 const VisittkortPanel = ({
   fagsakPerson,
   personopplysninger,
-  sprakkode,
+  språkkode,
   harTilbakekrevingVerge,
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
@@ -110,7 +110,7 @@ const VisittkortPanel = ({
           name={søker.navn}
           fodselsnummer={søker.fnr}
           gender={utledKjonn(søker.navBrukerKjonn)}
-          renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} sprakkode={sprakkode} />}
+          renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />}
           renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
           showPersonAge={isUngWeb()}
         />
@@ -120,7 +120,7 @@ const VisittkortPanel = ({
             name={annenPart.navn}
             fodselsnummer={annenPart.fnr}
             gender={utledKjonn(annenPart.navBrukerKjonn)}
-            renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={annenPart} sprakkode={sprakkode} />}
+            renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={annenPart} språkkode={språkkode} />}
             isActive={false}
           />
         )}

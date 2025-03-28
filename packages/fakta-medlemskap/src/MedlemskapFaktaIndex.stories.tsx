@@ -13,7 +13,7 @@ const behandling = {
   type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
   },
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   status: behandlingStatus.OPPRETTET,
 };
 
@@ -444,7 +444,7 @@ VisPanelUtenPerioder.args = {
       },
     ],
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingsfristTid: '2024-10-09',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
@@ -474,7 +474,7 @@ VisPanelUtenPerioder.args = {
     },
     endret: '2024-08-28T13:38:46.309',
     endretAvBrukernavn: 'k9-sak',
-    erPaaVent: false,
+    erPåVent: false,
     fagsakId: 1346602,
     sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     førsteÅrsak: {
@@ -489,7 +489,7 @@ VisPanelUtenPerioder.args = {
     id: 1353953,
     links: [],
     opprettet: '2024-08-28T13:19:43',
-    sprakkode: {
+    språkkode: {
       kode: 'NB',
       kodeverk: 'SPRAAK_KODE',
     },

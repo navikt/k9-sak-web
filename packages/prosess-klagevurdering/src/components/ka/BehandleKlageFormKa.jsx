@@ -39,7 +39,7 @@ export const BehandleKlageFormKaImpl = ({
   valgtPartMedKlagerett,
   previewCallback,
   readOnlySubmitButton = true,
-  sprakkode,
+  språkkode,
   formValues = {},
   intl,
   alleKodeverk,
@@ -64,7 +64,7 @@ export const BehandleKlageFormKaImpl = ({
       />
       <div className={styles.confirmVilkarForm}>
         <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+        <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
         <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
           <div className="relative">

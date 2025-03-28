@@ -43,7 +43,7 @@ export const BehandleKlageFormNfpImpl = ({
   previewCallback,
   saveKlage,
   readOnlySubmitButton = true,
-  sprakkode,
+  språkkode,
   formValues = {},
   erPåklagdBehandlingTilbakekreving,
   intl,
@@ -76,7 +76,7 @@ export const BehandleKlageFormNfpImpl = ({
           textCode="BehandleKlageFormNfp.BegrunnelseForKlage"
         />
         <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+        <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
         <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
           <div>

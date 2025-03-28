@@ -40,7 +40,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     versjon: 2,
     status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
     type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     taskStatus: {
       readOnly: false,
     },

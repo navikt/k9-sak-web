@@ -40,7 +40,7 @@ const alleBehandlinger = [
     versjon: 2,
     uuid: '423223',
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     kanHenleggeBehandling: true,
     type: {
       kode: behandlingType.REVURDERING,

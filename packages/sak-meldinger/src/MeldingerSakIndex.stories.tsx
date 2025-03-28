@@ -105,7 +105,7 @@ export const SendMeldingPanel: Story = {
       id: 1,
       uuid: 'XUYPS4',
       type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-      sprakkode: bokmål,
+      språkkode: bokmål,
     },
     backendApi: defaultFakeBackend,
   },
@@ -131,7 +131,7 @@ export const SendMeldingPanelEngelsk: Story = {
     ...SendMeldingPanel.args,
     behandling: {
       ...SendMeldingPanel.args.behandling,
-      sprakkode: {
+      språkkode: {
         kode: 'EN',
         kodeverk: 'SPRAAK_KODE',
       },

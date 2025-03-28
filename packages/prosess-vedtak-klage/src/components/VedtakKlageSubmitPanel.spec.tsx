@@ -25,7 +25,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
         intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
-        behandlingPaaVent={false}
+        behandlingPåVent={false}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
       { messages },
@@ -41,7 +41,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
         intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
-        behandlingPaaVent={false}
+        behandlingPåVent={false}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
       { messages },
@@ -57,7 +57,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
         intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
-        behandlingPaaVent
+        behandlingPåVent
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
       { messages },

@@ -12,12 +12,12 @@ const erReadOnly = (
   rettigheter: Rettigheter,
   hasFetchError: boolean,
 ) => {
-  const { behandlingPaaVent } = behandling;
+  const { behandlingPåVent } = behandling;
   const isBehandlingReadOnly = hasFetchError || harBehandlingReadOnlyStatus(behandling);
   const hasNonActivOrNonOverstyrbar =
     aksjonspunkterForPunkt.some(ap => !ap.erAktivt) || vilkarlisteForPunkt.some(v => !v.overstyrbar);
 
-  return !rettigheter.writeAccess.isEnabled || behandlingPaaVent || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar;
+  return !rettigheter.writeAccess.isEnabled || behandlingPåVent || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar;
 };
 
 const readOnlyUtils = {
