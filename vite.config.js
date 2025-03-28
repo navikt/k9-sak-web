@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
+import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
@@ -47,7 +48,7 @@ function excludeMsw() {
 }
 
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir`) };
+  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir/k9`) };
   return defineConfig({
     server: {
       port: 9000,
@@ -92,7 +93,7 @@ export default ({ mode }) => {
 
       }),
       svgr(),
-      excludeMsw()
+      excludeMsw(),
     ],
     build: {
       // Relative to the root
@@ -102,11 +103,12 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
+        plugins: [sourcemaps({ exclude: /@sentry/ })],
       },
     },
     test: {
       deps: {
-        inline: ['@navikt/k9-sak-typescript-client', '@navikt/k9-klage-typescript-client'], // Without this, tests using k9-*-typescript-client through backend project failed.
+        inline: ['@navikt/k9-sak-typescript-client', '@navikt/ung-sak-typescript-client', '@navikt/k9-klage-typescript-client'], // Without this, tests using *-*-typescript-client through backend project failed.
         interopDefault: true
       },
       environment: 'jsdom',

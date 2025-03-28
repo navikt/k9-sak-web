@@ -1,10 +1,10 @@
 import HttpClientApi from '../HttpClientApiTsType';
-import NotificationMapper from './NotificationMapper';
-import Link from './LinkTsType';
+import RequestConfig, { RequestType } from '../RequestConfig';
 import AbstractRequestApi from './AbstractRequestApi';
+import Link from './LinkTsType';
+import NotificationMapper from './NotificationMapper';
 import RequestRunner from './RequestRunner';
 import ResponseCache from './ResponseCache';
-import RequestConfig, { RequestType } from '../RequestConfig';
 
 const DEFAULT_CATEGORY = 'DEFAULT_CATEGORY';
 
@@ -172,6 +172,11 @@ class RequestApi extends AbstractRequestApi {
 
   // Kun for test
   public getRequestMockData = () => {
+    throw new Error('Not Implemented');
+  };
+
+  // Kun for test
+  public clearMockData = () => {
     throw new Error('Not Implemented');
   };
 

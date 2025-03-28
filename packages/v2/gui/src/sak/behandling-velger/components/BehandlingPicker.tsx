@@ -261,14 +261,16 @@ const BehandlingPicker = ({
     const årsaker: string[] = [];
     if (søknadsperiode.data) {
       søknadsperiode.data.perioderMedÅrsak.toReversed().forEach(periode =>
-        periode.årsaker?.forEach(årsak => {
-          // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
-          try {
-            årsaker.push(kodeverkNavnFraKode(årsak, KodeverkType.ÅRSAK_TIL_VURDERING));
-          } catch {
-            årsaker.push(årsak);
-          }
-        }),
+        periode.årsaker
+          ?.filter(årsak => årsak !== null)
+          .forEach(årsak => {
+            // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
+            try {
+              årsaker.push(kodeverkNavnFraKode(årsak, KodeverkType.ÅRSAK_TIL_VURDERING));
+            } catch {
+              årsaker.push(årsak);
+            }
+          }),
       );
     }
     return årsaker;
