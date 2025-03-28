@@ -49,18 +49,26 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
   const inntektRadio = formMethods.watch('inntektRadio');
 
   const onSubmit = (values: Formvalues) => {
-    const payload = {
-      inntektRadio: values.inntektRadio,
-      begrunnelse: values.begrunnelse,
-      ...(values.inntektRadio === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && {
-        fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
-        fastsattYtelse: values.fastsattYtelse,
-      }),
-    };
-    submitCallback({
-      kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-      kontrollerInntekt: payload,
-    });
+    const periodeTilVurdering = inntektKontrollperioder?.find(periode => periode.erTilVurdering);
+    submitCallback([
+      {
+        kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
+        begrunnelse: values.begrunnelse,
+        perioder: [
+          {
+            periode: periodeTilVurdering?.periode,
+            inntekt:
+              values.inntektRadio === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
+                ? {
+                    fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
+                    fastsattYtelse: values.fastsattYtelse,
+                  }
+                : null,
+            valg: values.inntektRadio,
+          },
+        ],
+      },
+    ]);
   };
 
   const getAksjonspunkt = () => (
