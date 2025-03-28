@@ -15,6 +15,7 @@ export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekode
   godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
   vurderingsdato?: string;
   uuid?: string;
+  behandlingUuid?: string;
 };
 
 const finnAvslagsårsak = (godkjent: string) => {

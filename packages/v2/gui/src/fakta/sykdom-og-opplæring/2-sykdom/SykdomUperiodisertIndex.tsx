@@ -12,7 +12,7 @@ import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/gene
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
-import { SykdomUperiodisertFormContainer } from './SykdomUperiodisertFormContainer';
+import SykdomUperiodisertFormContainer from './SykdomUperiodisertFormContainer';
 import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
@@ -180,7 +180,7 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
                   <div>
                     <Button
                       className="mt-2"
-                      variant={"tertiary"}
+                      variant={'tertiary'}
                       icon={<PencilIcon />}
                       onClick={() => setRedigerVurdering(!redigerVurdering)}
                       type="button"

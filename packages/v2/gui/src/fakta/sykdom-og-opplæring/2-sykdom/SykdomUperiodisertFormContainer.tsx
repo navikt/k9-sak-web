@@ -1,30 +1,27 @@
 import dayjs from 'dayjs';
 import SykdomUperiodisertForm, { type UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailViewV2 } from '../../../shared/DetailView/DetailView';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
-export const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const [redigering, setRedigering] = useState(false);
+
+  useEffect(() => {
+    if (vurdering) {
+      setRedigering(false);
+    }
+  }, [vurdering]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm = (redigering && vurdering.vurderingsdato) || !vurdering.vurderingsdato;
   return (
     <DetailViewV2
       title="Vurdering av sykdom"
       contentAfterTitleRenderer={() => (
-        <div className="float-right">
-          <Button
-            size="small"
-            className=""
-            variant="tertiary"
-            icon={<PencilIcon />}
-            onClick={() => setRedigering(!redigering)}
-          >
-            Rediger
-          </Button>
-        </div>
+        <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
       )}
     >
       <div data-testid="Periode" className="flex items-center gap-2">
@@ -48,3 +45,29 @@ export const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uper
     </DetailViewV2>
   );
 };
+
+const RedigerKnapp = ({
+  redigering,
+  setRedigering,
+  vurdering,
+}: {
+  redigering: boolean;
+  setRedigering: (redigering: boolean) => void;
+  vurdering: UperiodisertSykdom;
+}) => {
+  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+
+  // Vi kan kun redigere vurderinger som er opprettet i samme behandling som vi er i
+  if (behandlingUuid !== vurdering.behandlingUuid) {
+    return null;
+  }
+  return (
+    <div className="float-right">
+      <Button size="small" variant="tertiary" icon={<PencilIcon />} onClick={() => setRedigering(!redigering)}>
+        Rediger
+      </Button>
+    </div>
+  );
+};
+
+export default SykdomUperiodisertFormContainer;
