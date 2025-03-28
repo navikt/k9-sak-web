@@ -9,6 +9,7 @@ import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, PersonIcon } 
 import { Bleed, BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Table, VStack } from '@navikt/ds-react';
 import { Form, InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { minLength, required } from '@navikt/ft-form-validators';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
 import { formatCurrencyWithKr } from '../../utils/formatters';
@@ -33,11 +34,12 @@ type Formvalues = {
 };
 
 interface ArbeidOgInntektProps {
-  submitCallback: (data: unknown) => void;
+  submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'];
 }
 
 export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: ArbeidOgInntektProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
     defaultValues: {
       fastsattArbeidsinntekt: '',
@@ -48,9 +50,10 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
   });
   const inntektRadio = formMethods.watch('inntektRadio');
 
-  const onSubmit = (values: Formvalues) => {
+  const onSubmit = async (values: Formvalues) => {
     const periodeTilVurdering = inntektKontrollperioder?.find(periode => periode.erTilVurdering);
-    submitCallback([
+    setIsSubmitting(true);
+    await submitCallback([
       {
         kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
         begrunnelse: values.begrunnelse,
@@ -69,6 +72,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
         ],
       },
     ]);
+    setIsSubmitting(false);
   };
 
   const getAksjonspunkt = () => (
@@ -145,10 +149,10 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
             />
           </Box>
           <HStack gap="2">
-            <Button size="small" variant="primary" type="submit">
+            <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
               Bekreft og fortsett
             </Button>
-            <Button size="small" variant="secondary">
+            <Button size="small" variant="secondary" loading={isSubmitting}>
               Avbryt
             </Button>
           </HStack>
@@ -192,6 +196,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
                   className={isLastRow ? styles.lastRow : ''}
                   expandOnRowClick
                   expansionDisabled={!harAksjonspunkt}
+                  defaultOpen={harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>
                     <HStack gap="2" align="center">

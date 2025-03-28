@@ -1,4 +1,9 @@
-import { type KontrollerInntektDto, type UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  type AksjonspunktDto,
+  type KontrollerInntektDto,
+  type UngdomsytelseSatsPeriodeDto,
+} from '@k9-sak-web/backend/ungsak/generated';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { ArbeidOgInntekt } from './ArbeidOgInntekt';
@@ -11,7 +16,8 @@ interface Props {
   behandling: { uuid: string };
   api: UngBeregningBackendApiType;
   barn: Barn[];
-  submitCallback: (data: unknown) => void;
+  submitCallback: (data: unknown) => Promise<any>;
+  aksjonspunkter: AksjonspunktDto[];
 }
 
 const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
@@ -31,7 +37,7 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   };
 };
 
-const UngBeregning = ({ api, behandling, barn, submitCallback }: Props) => {
+const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }: Props) => {
   const {
     data: satser,
     isLoading: satserIsLoading,
@@ -63,20 +69,26 @@ const UngBeregning = ({ api, behandling, barn, submitCallback }: Props) => {
 
   const harBarn = barn.length > 0;
   const harInntekt = inntekt?.kontrollperioder && inntekt.kontrollperioder.length > 0;
-
+  const harAksjonspunkt = aksjonspunkter?.filter(ap => ap.kanLoses).length > 0;
   return (
     <Box paddingInline="4 8" paddingBlock="2">
       <Box minHeight="100svh">
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        <Tabs defaultValue="dagsats">
+        <Tabs defaultValue={harAksjonspunkt ? 'arbeid' : 'dagsats'}>
           <Tabs.List>
-            {harInntekt && <Tabs.Tab value="arbeid" label="Arbeid og inntekt" />}
-            {/* <Tabs.Tab value="arbeid" label="Arbeid og inntekt" /> */}
+            {harInntekt && (
+              <Tabs.Tab
+                value="arbeid"
+                label="Arbeid og inntekt"
+                icon={
+                  harAksjonspunkt && <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                }
+              />
+            )}
             {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
             {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
-            {/* <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" /> */}
           </Tabs.List>
           <Tabs.Panel value="arbeid">
             <ArbeidOgInntekt submitCallback={submitCallback} inntektKontrollperioder={inntekt?.kontrollperioder} />
