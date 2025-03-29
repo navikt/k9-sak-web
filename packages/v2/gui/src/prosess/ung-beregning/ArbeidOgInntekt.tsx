@@ -73,10 +73,9 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
           ],
         },
       ]);
-    } catch (error) {
-      console.log('error', error);
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   const getAksjonspunkt = () => (
