@@ -13,16 +13,16 @@
     "@navikt/aksel-icons": "7.17.2",
     "@navikt/ds-css": "7.17.2",
     "@navikt/ds-react": "7.17.2",
-    "@navikt/ft-form-hooks": "^6.2.6",
-    "@navikt/ft-form-validators": "^3.1.8",
-    "@navikt/ft-ui-komponenter": "^3.2.0",
-    "@navikt/ft-utils": "^3.2.0",
+    "@navikt/ft-form-hooks": "^6.2.8",
+    "@navikt/ft-form-validators": "^3.1.10",
+    "@navikt/ft-ui-komponenter": "^3.2.2",
+    "@navikt/ft-utils": "^3.3.0",
     "classnames": "2.5.1",
     "core-js": "3.41.0",
     "dayjs": "1.11.13",
     "react": "19.0.0",
     "react-hook-form": "7.54.2",
-    "react-intl": "7.1.6",
+    "react-intl": "7.1.10",
     "uuid": "11.1.0"
   }
 }
