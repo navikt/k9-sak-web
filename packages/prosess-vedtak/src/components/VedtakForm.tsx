@@ -86,7 +86,7 @@ interface Props {
   medlemskapFom: string;
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: (values, aapneINyttVindu) => void;
+  previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
   sprakkode: string;
