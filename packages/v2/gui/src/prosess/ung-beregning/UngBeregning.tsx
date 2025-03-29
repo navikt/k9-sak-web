@@ -93,10 +93,10 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
           <Tabs.Panel value="arbeid">
             <ArbeidOgInntekt submitCallback={submitCallback} inntektKontrollperioder={inntekt?.kontrollperioder} />
           </Tabs.Panel>
-          <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
           <Tabs.Panel value="barn">
             <BarnPanel barn={barn} />
           </Tabs.Panel>
+          <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
         </Tabs>
       </Box>
     </Box>

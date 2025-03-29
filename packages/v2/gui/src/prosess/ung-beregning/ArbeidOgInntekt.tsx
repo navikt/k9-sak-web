@@ -8,7 +8,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, PersonIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Table, VStack } from '@navikt/ds-react';
 import { Form, InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
-import { minLength, required } from '@navikt/ft-form-validators';
+import { maxLength, maxValue, minLength, minValue, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
@@ -29,7 +29,7 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
 type Formvalues = {
   fastsattArbeidsinntekt: string;
   fastsattYtelse: string;
-  inntektRadio: KontrollerInntektPeriodeDtoValg | '';
+  valg: KontrollerInntektPeriodeDtoValg | '';
   begrunnelse: string;
 };
 
@@ -44,34 +44,38 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
     defaultValues: {
       fastsattArbeidsinntekt: '',
       fastsattYtelse: '',
-      inntektRadio: '',
+      valg: '',
       begrunnelse: '',
     },
   });
-  const inntektRadio = formMethods.watch('inntektRadio');
+  const valg = formMethods.watch('valg');
 
   const onSubmit = async (values: Formvalues) => {
     const periodeTilVurdering = inntektKontrollperioder?.find(periode => periode.erTilVurdering);
     setIsSubmitting(true);
-    await submitCallback([
-      {
-        kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-        begrunnelse: values.begrunnelse,
-        perioder: [
-          {
-            periode: periodeTilVurdering?.periode,
-            inntekt:
-              values.inntektRadio === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
-                ? {
-                    fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
-                    fastsattYtelse: values.fastsattYtelse,
-                  }
-                : null,
-            valg: values.inntektRadio,
-          },
-        ],
-      },
-    ]);
+    try {
+      await submitCallback([
+        {
+          kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
+          begrunnelse: values.begrunnelse,
+          perioder: [
+            {
+              periode: periodeTilVurdering?.periode,
+              inntekt:
+                values.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
+                  ? {
+                      fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
+                      fastsattYtelse: values.fastsattYtelse,
+                    }
+                  : null,
+              valg: values.valg,
+            },
+          ],
+        },
+      ]);
+    } catch (error) {
+      console.log('error', error);
+    }
     setIsSubmitting(false);
   };
 
@@ -104,7 +108,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
           <Box borderColor="border-default" borderWidth="0 0 1 0" />
           <VStack gap="2">
             <RadioGroupPanel
-              name="inntektRadio"
+              name="valg"
               label="Hvilken inntekt skal benyttes?"
               validate={[required]}
               radios={[
@@ -119,13 +123,13 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
                 { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
               ]}
             />
-            {inntektRadio === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
+            {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
               <VStack gap="4">
                 <InputField
                   name="fastsattArbeidsinntekt"
                   label="Inntekt fra arbeid"
                   type="text"
-                  validate={[required]}
+                  validate={[required, minValue(0), maxValue(1000000)]}
                   htmlSize={7}
                   size="small"
                 />
@@ -133,7 +137,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
                   name="fastsattYtelse"
                   label="Inntekt fra ytelse"
                   type="text"
-                  validate={[required]}
+                  validate={[required, minValue(0), maxValue(1000000)]}
                   htmlSize={7}
                   size="small"
                 />
@@ -144,7 +148,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
             <TextAreaField
               name="begrunnelse"
               label="Begrunnelse"
-              validate={[required, minLength(3)]}
+              validate={[required, minLength(3), maxLength(1500)]}
               maxLength={1500}
             />
           </Box>
