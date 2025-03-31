@@ -223,6 +223,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
               Når du har vurdert uttak i denne saken, går du inn i den andre saken og vurderer uttaket for samme
               periode.
             </List.Item>
+            <List.Item>
+              Vil endring i uttak medføre unødig tilbakekrevingssak, slik at endringene bør gjelde fremover i tid?
+            </List.Item>
           </List>
         </Alert>
       )}
