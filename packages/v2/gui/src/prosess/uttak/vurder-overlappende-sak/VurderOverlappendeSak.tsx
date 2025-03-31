@@ -29,7 +29,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { ObjectSchema } from 'yup';
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
-import { erAksjonspunktReadOnly, kanAksjonspunktRedigeres } from '../../../utils/aksjonspunkt';
+import { kanAksjonspunktRedigeres } from '../../../utils/aksjonspunkt';
 import styles from './VurderOverlappendeSak.module.css';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import { format } from 'date-fns';
@@ -39,6 +39,7 @@ export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 interface Props {
   behandling: Pick<BehandlingDto, 'uuid' | 'id' | 'versjon' | 'status'>;
   aksjonspunkt: AksjonspunktDto;
+  readOnly: boolean;
   api: BehandlingUttakBackendApiType;
   oppdaterBehandling: () => void;
 }
@@ -67,12 +68,12 @@ export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['req
   }>;
 };
 
-const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppdaterBehandling }) => {
+const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { uuid, id, versjon, status } = behandling;
-  const [readOnly, setReadOnly] = useState<boolean>(erAksjonspunktReadOnly(aksjonspunkt));
   const [rediger, setRediger] = useState<boolean>(false);
   const sakAvsluttet = status === 'AVSLU';
+  const kanRedigeres = kanAksjonspunktRedigeres(aksjonspunkt, status);
 
   const {
     data: egneOverlappendeSaker,
@@ -188,10 +189,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
-  const toggleRediger = () => {
-    setReadOnly(!readOnly);
-    setRediger(!rediger);
-  };
+  const toggleRediger = () => setRediger(!rediger);
 
   const saksbehandler =
     egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.saksbehandler)?.saksbehandler || undefined;
@@ -230,7 +228,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         </Alert>
       )}
 
-      <Box className={`${styles['apContainer']} ${readOnly ? styles['apReadOnly'] : styles['apActive']}`}>
+      <Box className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}>
         <Form formMethods={formMethods} onSubmit={submit}>
           <VStack gap="5">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
@@ -295,7 +293,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     <VurderOverlappendePeriodeForm
                       key={field.id}
                       index={index}
-                      readOnly={readOnly}
+                      readOnly={readOnly || !rediger}
                       fields={fields}
                       replace={replace}
                     />
@@ -304,35 +302,36 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
                 <Textarea
                   label="Begrunnelse"
-                  readOnly={readOnly}
+                  readOnly={readOnly || !rediger}
                   {...register('begrunnelse')}
                   error={errors.begrunnelse?.message}
                 />
                 {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
-                {!sakAvsluttet && (
+                {!sakAvsluttet && !readOnly && (
                   <>
-                    {!readOnly && (
-                      <Alert inline variant="info">
-                        Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
-                      </Alert>
+                    {rediger && (
+                      <>
+                        <Alert inline variant="info">
+                          Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
+                        </Alert>
+
+                        <HStack gap="4">
+                          <Button type="submit" size="small" disabled={readOnly} loading={loading}>
+                            Bekreft og fortsett
+                          </Button>
+                          {rediger && (
+                            <Button size="small" variant="secondary" onClick={toggleRediger}>
+                              Avbryt
+                            </Button>
+                          )}
+                        </HStack>
+                      </>
                     )}
-                    {readOnly && kanAksjonspunktRedigeres(aksjonspunkt, status) && (
+                    {kanRedigeres && !rediger && (
                       <HStack>
                         <Button size="small" variant="secondary" onClick={toggleRediger}>
                           Rediger
                         </Button>
-                      </HStack>
-                    )}
-                    {!readOnly && (
-                      <HStack gap="4">
-                        <Button type="submit" size="small" disabled={readOnly} loading={loading}>
-                          Bekreft og fortsett
-                        </Button>
-                        {rediger && (
-                          <Button size="small" variant="secondary" onClick={toggleRediger}>
-                            Avbryt
-                          </Button>
-                        )}
                       </HStack>
                     )}
                   </>
