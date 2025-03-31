@@ -3,8 +3,9 @@ import {
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Heading, Table, Tooltip, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Heading, Label, Table, Tooltip, VStack } from '@navikt/ds-react';
 import { DataSection } from './DataSection';
+import styles from './dagsatsOgUtbetaling.module.css';
 
 const formatCurrencyWithKr = (value: number) => {
   const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
@@ -39,7 +40,7 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
     );
   }
   return (
-    <div className="flex items-center gap-2">
+    <div className={styles.sats}>
       {satstype} {icon && <Tooltip content="Hjelpetekst om satser her">{icon}</Tooltip>}
     </div>
   );
@@ -50,28 +51,45 @@ interface DagsatsOgUtbetalingProps {
 }
 
 export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
-  <div className="mt-5">
+  <div className={styles.dagsatsSection}>
     <VStack gap="4">
       <DataSection />
-
       <div>
         <Heading size="xsmall">Beregning av dagsats</Heading>
-        <div className="rounded-lg border border-[#CFD3D8] flex border-solid mt-3 ">
+        <Box marginBlock="4 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
           <Table>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell scope="col" className="pl-4">
-                  Periode
+                <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
+                  <Label size="small">Periode</Label>
                 </Table.HeaderCell>
-                <Table.HeaderCell scope="col">Sats</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Grunnbeløp</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Dagsats</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Antall barn</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Barnetillegg</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Rapportert inntekt</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Dager</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Utbetaling</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Sats</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Grunnbeløp</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Dagsats</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Antall barn</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Barnetillegg</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Rapportert inntekt</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Dager</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Utbetaling</Label>
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col">
+                  <Label size="small">Status</Label>
+                </Table.HeaderCell>
                 <Table.HeaderCell />
               </Table.Row>
             </Table.Header>
@@ -83,15 +101,28 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
                     key={`${fom}_${tom}`}
                     content="Innhold"
                     togglePlacement="right"
-                    className={isLastRow ? '[&>td]:border-none' : ''}
+                    className={isLastRow ? styles.lastRow : ''}
+                    expandOnRowClick
                   >
-                    <Table.DataCell className="pl-4">{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
-                    <Table.DataCell>{formatSats(satsType)}</Table.DataCell>
-                    <Table.DataCell>{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
-                    <Table.DataCell>{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
-                    <Table.DataCell>{antallBarn}</Table.DataCell>
+                    <Table.DataCell className={styles.firstHeaderCell}>
+                      <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
+                    </Table.DataCell>
                     <Table.DataCell>
-                      {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
+                      <BodyShort size="small">{formatSats(satsType)}</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">{dagsats && formatCurrencyNoKr(dagsats)} kr</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">{antallBarn}</BodyShort>
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      <BodyShort size="small">
+                        {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
+                      </BodyShort>
                     </Table.DataCell>
                     <Table.DataCell />
                     <Table.DataCell />
@@ -102,7 +133,7 @@ export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
               })}
             </Table.Body>
           </Table>
-        </div>
+        </Box>
       </div>
     </VStack>
   </div>
