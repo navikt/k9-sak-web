@@ -11,6 +11,7 @@ import { useContext, useEffect } from 'react';
 import { useOppdaterSykdomsvurdering, useOpprettSykdomsvurdering } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useQueryClient } from '@tanstack/react-query';
+import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> & {
   godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
   vurderingsdato?: string;
@@ -28,17 +29,26 @@ const finnAvslagsårsak = (godkjent: string) => {
   return undefined;
 };
 
-const SykdomUperiodisertForm = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+const SykdomUperiodisertForm = ({
+  vurdering,
+  setRedigering,
+}: {
+  vurdering: UperiodisertSykdom;
+  setRedigering: (redigering: boolean) => void;
+}) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { setNyVurdering } = useContext(SykdomUperiodisertContext);
   const queryClient = useQueryClient();
   const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering({
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
+      setNyVurdering(false);
     },
   });
   const { mutate: oppdaterSykdomsvurdering } = useOppdaterSykdomsvurdering({
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
+      setRedigering(false);
     },
   });
   const formMethods = useForm({

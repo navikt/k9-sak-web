@@ -37,7 +37,7 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
       <div className="border-none bg-border-default h-px mt-4" />
       <div className="mt-6">
         {visForm ? (
-          <SykdomUperiodisertForm vurdering={vurdering} />
+          <SykdomUperiodisertForm vurdering={vurdering} setRedigering={setRedigering} />
         ) : (
           <SykdomUperiodisertFerdigvisning vurdering={vurdering} />
         )}

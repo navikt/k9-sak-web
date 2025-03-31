@@ -4,7 +4,7 @@ import Vurderingsnavigasjon, {
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { Alert, BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Period } from '@fpsak-frontend/utils';
-import { useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { PencilIcon, PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -26,6 +26,11 @@ const utledResultat = (element: LangvarigSykdomVurderingDto) => {
   return Resultat.IKKE_VURDERT;
 };
 
+export const SykdomUperiodisertContext = createContext<{
+  setNyVurdering: (nyVurdering: boolean) => void;
+}>({
+  setNyVurdering: () => {},
+});
 const VurderSykdomUperiodisert = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { data: langvarigSykVurderingerFagsak } = useLangvarigSykVurderingerFagsak(behandlingUuid);
@@ -60,39 +65,41 @@ const VurderSykdomUperiodisert = () => {
       <div className="mb-5">
         <BekreftAlert vurderinger={langvarigSykVurderingerFagsak} />
       </div>
-      <NavigationWithDetailView
-        navigationSection={() => (
-          <>
-            <Vurderingsnavigasjon
-              perioderTilVurdering={vurderingsliste || []}
-              vurdertePerioder={[]}
-              onPeriodeClick={velgPeriode}
-            />
-          </>
-        )}
-        belowNavigationContent={
-          <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
-            Legg til ny sykdomsvurdering
-          </Button>
-        }
-        detailSection={() => {
-          if (nyVurdering) {
-            return (
-              <SykdomUperiodisertFormContainer
-                vurdering={{
-                  diagnosekoder: [],
-                  begrunnelse: '',
-                  godkjent: '',
-                }}
+      <SykdomUperiodisertContext.Provider value={{ setNyVurdering }}>
+        <NavigationWithDetailView
+          navigationSection={() => (
+            <>
+              <Vurderingsnavigasjon
+                perioderTilVurdering={vurderingsliste || []}
+                vurdertePerioder={[]}
+                onPeriodeClick={velgPeriode}
               />
-            );
+            </>
+          )}
+          belowNavigationContent={
+            <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
+              Legg til ny sykdomsvurdering
+            </Button>
           }
-          if (valgtVurdering) {
-            return <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />;
-          }
-          return null;
-        }}
-      />
+          detailSection={() => {
+            if (nyVurdering) {
+              return (
+                <SykdomUperiodisertFormContainer
+                  vurdering={{
+                    diagnosekoder: [],
+                    begrunnelse: '',
+                    godkjent: '',
+                  }}
+                />
+              );
+            }
+            if (valgtVurdering) {
+              return <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />;
+            }
+            return null;
+          }}
+        />
+      </SykdomUperiodisertContext.Provider>
     </>
   );
 };
