@@ -11,7 +11,7 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
         label="Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge av § 9-14."
         indentContent
       >
-        <BodyLong>{vurdering.begrunnelse}</BodyLong>
+        <BodyLong className="whitespace-pre-wrap">{vurdering.begrunnelse}</BodyLong>
       </LabelledContent>
       <VurdertAv ident={'Trollmannen Gandalf🧙'} date="2025-03-28" />
       <LabelledContent label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?">

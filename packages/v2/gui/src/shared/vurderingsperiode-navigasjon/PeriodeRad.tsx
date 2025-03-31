@@ -79,7 +79,7 @@ const PeriodeRad = ({ perioder, resultat }: OwnProps) => (
         {perioder.map(v => (
           <div key={v.prettifyPeriod()}>
             <span className={styles['visuallyHidden']}>Perioder</span>
-            {v.prettifyPeriod()}
+            {v.asListOfDays().length > 1 ? v.prettifyPeriod() : v.prettifyPeriod().split(' - ')[0]}
           </div>
         ))}
       </div>

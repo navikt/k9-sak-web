@@ -25,8 +25,8 @@ export const VurdertAv = ({ ident, date }: IVurdertAvProps) => {
 
   return (
     <div className="flex items-center my-2.5">
-      <PersonPencilFillIcon className="mr-2" height="1em" width="1em" />
-      <BodyShort size="small">{`Vurdering av ${name}${formattedDate}`}</BodyShort>
+      <PersonPencilFillIcon className="mr-2" fontSize="24" />
+      <BodyShort>{`Vurdering av ${name}${formattedDate}`}</BodyShort>
     </div>
   );
 };

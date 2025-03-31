@@ -4,7 +4,7 @@ import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useContext, useEffect, useState } from 'react';
 import { Button } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
-import { DetailViewV2 } from '../../../shared/DetailView/DetailView';
+import { DetailViewV2 } from '../../../shared/detail-view/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
@@ -34,7 +34,7 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
           </>
         )}
       </div>
-      <div className="border-none bg-border-default h-px mt-4" />
+      <div className="border-none bg-border-subtle h-[2px] mt-4" />
       <div className="mt-6">
         {visForm ? (
           <SykdomUperiodisertForm vurdering={vurdering} setRedigering={setRedigering} />

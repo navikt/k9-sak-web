@@ -1,28 +1,16 @@
 import { DetailView } from '@navikt/ft-plattform-komponenter';
 import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useController, useForm, useFormContext } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import type { Period } from '@navikt/ft-utils';
-import {
-  BodyShort,
-  Button,
-  DatePicker,
-  HStack,
-  Label,
-  Link,
-  List,
-  Radio,
-  RadioGroup,
-  ReadMore,
-  Textarea,
-  useRangeDatepicker,
-} from '@navikt/ds-react';
+import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
+import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -46,7 +34,6 @@ const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderin
       nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
     },
   });
-
   return (
     <>
       <DetailView title="Nødvendig opplæring">
@@ -58,7 +45,7 @@ const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderin
             </>
           )}
         </div>
-        <div className="border-none bg-border-default h-px mt-4" />
+        <div className="border-none bg-border-subtle h-[2px] mt-4" />
         <div className="mt-6">
           <Form
             formMethods={formMethods}
@@ -136,6 +123,8 @@ const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderin
                 <PeriodePicker
                   minDate={new Date(vurdering.opplæring.fom)}
                   maxDate={new Date(vurdering.opplæring.tom)}
+                  fromFieldName="periode.fom"
+                  toFieldName="periode.tom"
                 />
               )}
               <div>
@@ -148,49 +137,6 @@ const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderin
         </div>
       </DetailView>
     </>
-  );
-};
-
-const PeriodePicker = ({ minDate, maxDate }: { minDate: Date; maxDate: Date }) => {
-  const formMethods = useFormContext();
-
-  const fomMethods = useController({
-    control: formMethods.control,
-    name: 'periode.fom',
-    defaultValue: new Date(minDate),
-  });
-  const tomMethods = useController({
-    control: formMethods.control,
-    name: 'periode.tom',
-    defaultValue: new Date(maxDate),
-  });
-  useEffect(() => {
-    return () => {
-      formMethods.unregister('periode');
-    };
-  }, []);
-
-  const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
-    fromDate: minDate,
-    toDate: maxDate,
-    defaultSelected: {
-      from: new Date(fomMethods.field.value),
-      to: new Date(tomMethods.field.value),
-    },
-    today: minDate,
-    onRangeChange: val => {
-      fomMethods.field.onChange(val?.from);
-      tomMethods.field.onChange(val?.to);
-    },
-  });
-
-  return (
-    <DatePicker {...datepickerProps}>
-      <HStack wrap gap="4" justify="center">
-        <DatePicker.Input {...fromInputProps} label="Fra" />
-        <DatePicker.Input {...toInputProps} label="Til" />
-      </HStack>
-    </DatePicker>
   );
 };
 

@@ -49,7 +49,18 @@ type payloads =
         nødvendigOpplæring: boolean;
         dokumentertOpplæring: boolean;
       }[];
+    }
+  | {
+      reisetid: {
+        periode: {
+          fom: string;
+          tom: string;
+        };
+        begrunnelse: string;
+        godkjent: boolean;
+      }[];
     };
+
 type aksjonspunktPayload = { kode: string; begrunnelse: string } & payloads;
 type SykdomOgOpplæringProps = {
   readOnly: boolean;
@@ -71,6 +82,14 @@ type SykdomOgOpplæringContext = {
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
   }) => void;
+  løsAksjonspunkt9303: (payload: {
+    periode: {
+      fom: string;
+      tom: string;
+    };
+    begrunnelse: string;
+    godkjent: boolean;
+  }) => void;
   behandlingUuid: string;
   aksjonspunkter: Aksjonspunkt[];
 };
@@ -80,6 +99,7 @@ export const SykdomOgOpplæringContext = createContext<SykdomOgOpplæringContext
   løsAksjonspunkt9300: () => {},
   løsAksjonspunkt9301: () => {},
   løsAksjonspunkt9302: () => {},
+  løsAksjonspunkt9303: () => {},
   behandlingUuid: '',
   aksjonspunkter: [],
 });
@@ -134,6 +154,29 @@ const FaktaSykdomOgOpplæringIndex = ({
     ]);
   };
 
+  const løsAksjonspunkt9303 = (payload: {
+    periode: {
+      fom: string;
+      tom: string;
+    };
+    begrunnelse: string;
+    godkjent: boolean;
+  }) => {
+    submitCallback([
+      {
+        begrunnelse: payload.begrunnelse,
+        kode: aksjonspunktCodes.VURDER_REISETID,
+        reisetid: [
+          {
+            begrunnelse: payload.begrunnelse,
+            godkjent: payload.godkjent,
+            periode: payload.periode,
+          },
+        ],
+      },
+    ]);
+  };
+
   return (
     <SykdomOgOpplæringContext.Provider
       value={{
@@ -141,6 +184,7 @@ const FaktaSykdomOgOpplæringIndex = ({
         løsAksjonspunkt9300,
         løsAksjonspunkt9301,
         løsAksjonspunkt9302,
+        løsAksjonspunkt9303,
         behandlingUuid,
         aksjonspunkter,
       }}

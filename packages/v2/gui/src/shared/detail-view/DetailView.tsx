@@ -31,3 +31,5 @@ export const DetailViewV2 = ({ title, children, contentAfterTitleRenderer, class
     </div>
   );
 };
+
+export default DetailViewV2;

@@ -16,7 +16,7 @@ export const LabelledContent = ({ label, children, labelTag, indentContent }: La
   });
   return (
     <div>
-      <Label size="small" className="font-bold" as={labelTag || 'p'}>
+      <Label className="font-bold" as={labelTag || 'p'}>
         {label}
       </Label>
       <div className={cl}>
