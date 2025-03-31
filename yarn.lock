@@ -571,13 +571,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helpers@npm:^7.24.6, @babel/helpers@npm:^7.25.0, @babel/helpers@npm:^7.26.0":
+"@babel/helpers@npm:^7.24.6":
   version: 7.27.0
   resolution: "@babel/helpers@npm:7.27.0"
   dependencies:
     "@babel/template": "npm:^7.27.0"
     "@babel/types": "npm:^7.27.0"
   checksum: 10/0dd40ba1e5ba4b72d1763bb381384585a56f21a61a19dc1b9a03381fe8e840207fdaa4da645d14dc028ad768087d41aad46347cc6573bd69d82f597f5a12dc6f
+  languageName: node
+  linkType: hard
+
+"@babel/helpers@npm:^7.25.0":
+  version: 7.25.6
+  resolution: "@babel/helpers@npm:7.25.6"
+  dependencies:
+    "@babel/template": "npm:^7.25.0"
+    "@babel/types": "npm:^7.25.6"
+  checksum: 10/43abc8d017b754619aa189d05e2bdb54aaf44f03ec0439e89b3e7c180d538adb01ce9014a1689f632a7e8b17655c72bfac0a92268476eec708b41d3ba0a65296
+  languageName: node
+  linkType: hard
+
+"@babel/helpers@npm:^7.26.0":
+  version: 7.26.0
+  resolution: "@babel/helpers@npm:7.26.0"
+  dependencies:
+    "@babel/template": "npm:^7.25.9"
+    "@babel/types": "npm:^7.26.0"
+  checksum: 10/fd4757f65d10b64cfdbf4b3adb7ea6ffff9497c53e0786452f495d1f7794da7e0898261b4db65e1c62bbb9a360d7d78a1085635c23dfc3af2ab6dcba06585f86
   languageName: node
   linkType: hard
 
@@ -3984,7 +4004,7 @@ __metadata:
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:2.0.20250218125133"
     "@navikt/k9-sak-typescript-client": "npm:2.0.20250320132234"
-    "@navikt/ung-sak-typescript-client": "npm:0.2.20250320091618"
+    "@navikt/ung-sak-typescript-client": "npm:0.2.20250328135442"
     "@tanstack/eslint-plugin-query": "npm:^5.68.0"
   languageName: unknown
   linkType: soft
@@ -5415,10 +5435,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:0.2.20250320091618":
-  version: 0.2.20250320091618
-  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250320091618::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250320091618%2F3ddd9866a18f38e7d06a071382fa7afe544c65ee"
-  checksum: 10/4c8292ead715e468d45df11c10b9845663a3e5ad5fd2871b350b25ee44d0a58fc674958f7719cba141276ed374ae3b67e5a975370d3cfdd9865fc773a00b2cc7
+"@navikt/ung-sak-typescript-client@npm:0.2.20250328135442":
+  version: 0.2.20250328135442
+  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250328135442::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250328135442%2F64a3f6a76726991f56369d6bc539df8ab2f5242c"
+  checksum: 10/d1d59643010e43fcdde8004000d490f73204cfab33ee13a1b9ef586eda0310de377acdedf5ad74c9c2f94a6e4106c873cb72a2d8029b9c033fa0a7a7eb298031
   languageName: node
   linkType: hard
 
