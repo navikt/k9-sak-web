@@ -64,7 +64,7 @@ const RedigerKnapp = ({
   return (
     <div className="float-right">
       <Button size="small" variant="tertiary" icon={<PencilIcon />} onClick={() => setRedigering(!redigering)}>
-        Rediger
+        {redigering ? 'Avbryt redigering uten å lagre' : 'Rediger vurdering'}
       </Button>
     </div>
   );

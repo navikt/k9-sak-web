@@ -1,6 +1,9 @@
-import type { ReisetidPeriodeVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  OpplæringVurderingDtoResultat,
+  ReisetidPeriodeVurderingDtoResultat,
+} from '@k9-sak-web/backend/k9sak/generated';
 
-export const resultatTilJaNei = (resultat: ReisetidPeriodeVurderingDtoResultat) => {
+export const resultatTilJaNei = (resultat: ReisetidPeriodeVurderingDtoResultat | OpplæringVurderingDtoResultat) => {
   if (resultat === 'GODKJENT') {
     return 'ja';
   }

@@ -12,7 +12,7 @@ export interface DetailViewProps {
 
 export const DetailViewV2 = ({ title, children, contentAfterTitleRenderer, className }: DetailViewProps) => {
   const cls = classnames(
-    'border border-solid border-[#c6c2bf] rounded p-6',
+    'border border-solid border-[#c6c2bf] rounded p-6 bg-[#cce1f342]',
     className
       ? {
           [className]: !!className,
@@ -21,7 +21,7 @@ export const DetailViewV2 = ({ title, children, contentAfterTitleRenderer, class
   );
   return (
     <div className={cls}>
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-center justify-between">
         <Heading size="small" level="2">
           {title}
         </Heading>

@@ -3,19 +3,20 @@ import ReisetidForm from './ReisetidForm';
 import { Period } from '@navikt/ft-utils';
 import ReisetidFerdigvisning from './ReisetidFerdigvisning';
 import DetailView from '../../../shared/detail-view/DetailView';
-import { BodyLong, Label } from '@navikt/ds-react';
-import { PersonFillIcon, CalendarIcon } from '@navikt/aksel-icons';
-
+import { BodyLong, Button, Label } from '@navikt/ds-react';
+import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
+import { useState } from 'react';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
-  if (vurdering.reisetid.resultat === 'MÅ_VURDERES') {
+  const [redigering, setRedigering] = useState(false);
+  if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
     return (
-      <Wrapper vurdering={vurdering}>
+      <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
         <ReisetidForm vurdering={vurdering} />
       </Wrapper>
     );
   }
   return (
-    <Wrapper vurdering={vurdering}>
+    <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
       <ReisetidFerdigvisning vurdering={vurdering} />
     </Wrapper>
   );
@@ -24,12 +25,28 @@ const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { 
 const Wrapper = ({
   children,
   vurdering,
+  setRedigering,
+  redigering,
 }: {
   children: React.ReactNode;
   vurdering: ReisetidVurderingDto & { perioder: Period[] };
+  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
+  redigering: boolean;
 }) => {
   return (
-    <DetailView title="Vurdering av reisetid">
+    <DetailView
+      title="Vurdering av reisetid"
+      contentAfterTitleRenderer={() => {
+        if (vurdering.reisetid.resultat === 'MÅ_VURDERES') {
+          return null;
+        }
+        return (
+          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigering?.(v => !v)}>
+            {redigering ? 'Avbryt redigering uten å lagre' : 'Rediger vurdering'}
+          </Button>
+        );
+      }}
+    >
       <div data-testid="Periode" className="flex gap-2">
         <Description vurdering={vurdering} />
       </div>

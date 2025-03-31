@@ -1,12 +1,11 @@
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import Vurderingsnavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { useVurdertOpplæring } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
-import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
-
+import NødvendigOpplæringContainer from './NødvendigOpplæringContainer';
+import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
 const NødvendigOpplæring = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { data: vurdertOpplæring } = useVurdertOpplæring(behandlingUuid);
@@ -27,8 +26,7 @@ const NødvendigOpplæring = () => {
             />
           </>
         )}
-        showDetailSection={true}
-        detailSection={() => (valgtVurdering ? <NødvendigOpplæringForm vurdering={valgtVurdering} /> : null)}
+        detailSection={() => (valgtVurdering ? <NødvendigOpplæringContainer vurdering={valgtVurdering} /> : null)}
       />
     </div>
   );
