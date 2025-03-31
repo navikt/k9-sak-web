@@ -8,7 +8,8 @@ import { Tabs } from '@navikt/ds-react';
 import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
-const initActiveTab = (aksjonspunkter: Aksjonspunkt[]) => {
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
+const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
     aksjonspunkter.some(
       ap =>
@@ -196,14 +197,23 @@ const FaktaSykdomOgOpplæringIndex = ({
 
 const SykdomOgOpplæring = () => {
   const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const [activeTab, setActiveTab] = useState(initActiveTab(aksjonspunkter));
+  const [activeTab, setActiveTab] = useState(finnTabMedAksjonspunkt(aksjonspunkter));
+  const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   return (
     <Tabs value={activeTab} onChange={setActiveTab}>
       <Tabs.List>
-        <Tabs.Tab value="institusjon" label="Institusjon" />
-        <Tabs.Tab value="sykdom" label="Sykdom" />
-        <Tabs.Tab value="opplæring" label="Nødvendig opplæring" />
-        <Tabs.Tab value="reisetid" label="Reisetid" />
+        <Tabs.Tab
+          value="institusjon"
+          label="Institusjon"
+          icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
+        />
+        <Tabs.Tab value="sykdom" label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />} />
+        <Tabs.Tab
+          value="opplæring"
+          label="Nødvendig opplæring"
+          icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
+        />
+        <Tabs.Tab value="reisetid" label="Reisetid" icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />} />
       </Tabs.List>
       <Tabs.Panel value="institusjon">
         <div className="mt-4">

@@ -1,6 +1,6 @@
 import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm, useFormContext } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import type { Period } from '@navikt/ft-utils';
 import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
@@ -15,7 +15,15 @@ const booleanToRadioValue = (value: boolean | undefined) => {
   return value ? 'ja' : 'nei';
 };
 
-const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
+const NødvendigOpplæringForm = ({
+  vurdering,
+  setRedigering,
+  redigering,
+}: {
+  vurdering: OpplæringVurderingDto & { perioder: Period[] };
+  setRedigering: (redigering: boolean) => void;
+  redigering: boolean;
+}) => {
   const { løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     dokumentertOpplæring: string;
@@ -120,11 +128,16 @@ const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderin
               toFieldName="periode.tom"
             />
           )}
-          {nødvendigOpplæring === 'nei' && <Avslagårsak vurdering={vurdering} />}
-          <div>
-            <Button variant="primary" type="submit">
+          {/* nødvendigOpplæring === 'nei' && <Avslagårsak vurdering={vurdering} /> */}
+          <div className="flex gap-4">
+            <Button variant="primary" type="submit" size="small">
               Bekreft og fortsett
             </Button>
+            {redigering && (
+              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+                Avbryt redigering
+              </Button>
+            )}
           </div>
         </div>
       </Form>
@@ -132,7 +145,7 @@ const NødvendigOpplæringForm = ({ vurdering }: { vurdering: OpplæringVurderin
   );
 };
 
-const Avslagårsak = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
+/* const Avslagårsak = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const formMethods = useFormContext();
 
   return (
@@ -150,6 +163,6 @@ const Avslagårsak = ({ vurdering }: { vurdering: OpplæringVurderingDto & { per
       )}
     />
   );
-};
+}; */
 
 export default NødvendigOpplæringForm;

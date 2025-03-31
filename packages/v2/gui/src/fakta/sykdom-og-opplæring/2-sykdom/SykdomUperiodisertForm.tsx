@@ -32,9 +32,11 @@ const finnAvslagsårsak = (godkjent: string) => {
 const SykdomUperiodisertForm = ({
   vurdering,
   setRedigering,
+  redigering,
 }: {
   vurdering: UperiodisertSykdom;
   setRedigering: (redigering: boolean) => void;
+  redigering: boolean;
 }) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { setNyVurdering } = useContext(SykdomUperiodisertContext);
@@ -133,10 +135,17 @@ const SykdomUperiodisertForm = ({
           size="medium"
           disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
         />
-        <div>
-          <Button variant="primary" type="submit">
+        <div className="flex gap-4">
+          <Button variant="primary" type="submit" size="small">
             {vurdering.uuid ? 'Oppdater sykdomsvurdering' : 'Lagre ny sykdomsvurdering'}
           </Button>
+          {redigering && (
+            <div>
+              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+                Avbryt redigering
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </Form>

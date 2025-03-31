@@ -8,21 +8,21 @@ import { useEffect, useState } from 'react';
 import { Button } from '@navikt/ds-react';
 
 const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
-  const [redigerer, setRedigerer] = useState(false);
+  const [redigering, setRedigering] = useState(false);
   useEffect(() => {
-    setRedigerer(false);
+    setRedigering(false);
   }, [vurdering]);
 
-  if (vurdering.resultat === 'MÅ_VURDERES' || redigerer) {
+  if (vurdering.resultat === 'MÅ_VURDERES' || redigering) {
     return (
-      <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
-        <NødvendigOpplæringForm vurdering={vurdering} />
+      <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
+        <NødvendigOpplæringForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
       </Wrapper>
     );
   }
 
   return (
-    <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
+    <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
       <NødvendigOpplæringFerdigvisning vurdering={vurdering} />
     </Wrapper>
   );
@@ -31,25 +31,25 @@ const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVur
 const Wrapper = ({
   children,
   vurdering,
-  setRedigerer,
-  redigerer,
+  setRedigering,
+  redigering,
 }: {
   children: React.ReactNode;
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
-  setRedigerer: React.Dispatch<React.SetStateAction<boolean>>;
-  redigerer: boolean;
+  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
+  redigering: boolean;
 }) => {
   const enkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
   return (
     <DetailView
       title="Vurdering av nødvendig opplæring"
       contentAfterTitleRenderer={() => {
-        if (vurdering.resultat === 'MÅ_VURDERES') {
+        if (vurdering.resultat === 'MÅ_VURDERES' || redigering) {
           return null;
         }
         return (
-          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigerer?.(v => !v)}>
-            {redigerer ? 'Avbryt redigering uten å lagre' : 'Rediger vurdering'}
+          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigering(v => !v)}>
+            Rediger vurdering
           </Button>
         );
       }}

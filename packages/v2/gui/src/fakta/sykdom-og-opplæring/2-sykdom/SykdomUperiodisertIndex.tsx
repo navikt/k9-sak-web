@@ -136,12 +136,12 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
           }}
         >
           <Alert variant="warning">
-            <BodyLong className="mb-4">
+            <BodyLong>
               Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
               sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
             </BodyLong>
             {kanVurdere && (
-              <Button variant="primary" type="submit" size="small">
+              <Button variant="primary" className="mt-4" type="submit" size="small">
                 Bekreft og fortsett
               </Button>
             )}

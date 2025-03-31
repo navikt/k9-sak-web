@@ -11,7 +11,7 @@ const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { 
   if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
     return (
       <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
-        <ReisetidForm vurdering={vurdering} />
+        <ReisetidForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
       </Wrapper>
     );
   }
@@ -37,12 +37,12 @@ const Wrapper = ({
     <DetailView
       title="Vurdering av reisetid"
       contentAfterTitleRenderer={() => {
-        if (vurdering.reisetid.resultat === 'MÅ_VURDERES') {
+        if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
           return null;
         }
         return (
-          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigering?.(v => !v)}>
-            {redigering ? 'Avbryt redigering uten å lagre' : 'Rediger vurdering'}
+          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigering(v => !v)}>
+            Rediger vurdering
           </Button>
         );
       }}

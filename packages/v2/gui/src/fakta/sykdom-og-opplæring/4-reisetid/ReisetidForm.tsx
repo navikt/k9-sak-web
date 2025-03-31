@@ -12,9 +12,11 @@ import OppgittReisetid from './OppgittReisetid';
 import { resultatTilJaNei } from './utils';
 interface ReisetidFormProps {
   vurdering: ReisetidVurderingDto & { perioder: Period[] };
+  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
+  redigering: boolean;
 }
 
-const ReisetidForm = ({ vurdering }: ReisetidFormProps) => {
+const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProps) => {
   const { løsAksjonspunkt9303, behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     begrunnelse: string;
@@ -77,10 +79,15 @@ const ReisetidForm = ({ vurdering }: ReisetidFormProps) => {
               toFieldName="periode.tom"
             />
           )}
-          <div>
-            <Button variant="primary" onClick={submit}>
+          <div className="flex gap-4">
+            <Button variant="primary" onClick={submit} size="small">
               Bekreft og fortsett
             </Button>
+            {redigering && (
+              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+                Avbryt redigering
+              </Button>
+            )}
           </div>
         </div>
       </Form>

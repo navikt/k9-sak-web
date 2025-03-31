@@ -37,7 +37,7 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
       <div className="border-none bg-border-subtle h-[2px] mt-4" />
       <div className="mt-6">
         {visForm ? (
-          <SykdomUperiodisertForm vurdering={vurdering} setRedigering={setRedigering} />
+          <SykdomUperiodisertForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
         ) : (
           <SykdomUperiodisertFerdigvisning vurdering={vurdering} />
         )}
@@ -63,9 +63,11 @@ const RedigerKnapp = ({
   }
   return (
     <div className="float-right">
-      <Button size="small" variant="tertiary" icon={<PencilIcon />} onClick={() => setRedigering(!redigering)}>
-        {redigering ? 'Avbryt redigering uten å lagre' : 'Rediger vurdering'}
-      </Button>
+      {!redigering && (
+        <Button size="small" variant="tertiary" icon={<PencilIcon />} onClick={() => setRedigering(!redigering)}>
+          Rediger vurdering
+        </Button>
+      )}
     </div>
   );
 };
