@@ -7,6 +7,7 @@ on:
       - 'CODEOWNERS'
     branches:
       - dev-next1
+      - sykdom-og-opplæring
 
 jobs:
   build-deploy:
