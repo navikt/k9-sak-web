@@ -62,7 +62,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/code-frame@npm:^7.25.9, @babel/code-frame@npm:^7.26.0, @babel/code-frame@npm:^7.26.2":
+"@babel/code-frame@npm:^7.25.9, @babel/code-frame@npm:^7.26.0":
   version: 7.26.2
   resolution: "@babel/code-frame@npm:7.26.2"
   dependencies:
@@ -572,12 +572,12 @@ __metadata:
   linkType: hard
 
 "@babel/helpers@npm:^7.24.6":
-  version: 7.27.0
-  resolution: "@babel/helpers@npm:7.27.0"
+  version: 7.24.6
+  resolution: "@babel/helpers@npm:7.24.6"
   dependencies:
-    "@babel/template": "npm:^7.27.0"
-    "@babel/types": "npm:^7.27.0"
-  checksum: 10/0dd40ba1e5ba4b72d1763bb381384585a56f21a61a19dc1b9a03381fe8e840207fdaa4da645d14dc028ad768087d41aad46347cc6573bd69d82f597f5a12dc6f
+    "@babel/template": "npm:^7.24.6"
+    "@babel/types": "npm:^7.24.6"
+  checksum: 10/9043f7140651e89246d0653c7198832e644865038dc18c117c492d450f237514764d1476faa1ba7466b83b348891f10f564b0c5615d86d6833fb275ead7fb259
   languageName: node
   linkType: hard
 
@@ -653,17 +653,6 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 10/8baee43752a3678ad9f9e360ec845065eeee806f1fdc8e0f348a8a0e13eef0959dabed4a197c978896c493ea205c804d0a1187cc52e4a1ba017c7935bab4983d
-  languageName: node
-  linkType: hard
-
-"@babel/parser@npm:^7.27.0":
-  version: 7.27.0
-  resolution: "@babel/parser@npm:7.27.0"
-  dependencies:
-    "@babel/types": "npm:^7.27.0"
-  bin:
-    parser: ./bin/babel-parser.js
-  checksum: 10/0fee9f05c6db753882ca9d10958301493443da9f6986d7020ebd7a696b35886240016899bc0b47d871aea2abcafd64632343719742e87432c8145e0ec2af2a03
   languageName: node
   linkType: hard
 
@@ -1823,17 +1812,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.27.0":
-  version: 7.27.0
-  resolution: "@babel/template@npm:7.27.0"
-  dependencies:
-    "@babel/code-frame": "npm:^7.26.2"
-    "@babel/parser": "npm:^7.27.0"
-    "@babel/types": "npm:^7.27.0"
-  checksum: 10/7159ca1daea287ad34676d45a7146675444d42c7664aca3e617abc9b1d9548c8f377f35a36bb34cf956e1d3610dcb7acfcfe890aebf81880d35f91a7bd273ee5
-  languageName: node
-  linkType: hard
-
 "@babel/traverse@npm:^7.18.9, @babel/traverse@npm:^7.24.7, @babel/traverse@npm:^7.24.8, @babel/traverse@npm:^7.25.0, @babel/traverse@npm:^7.25.1, @babel/traverse@npm:^7.25.2, @babel/traverse@npm:^7.25.3, @babel/traverse@npm:^7.25.4":
   version: 7.25.6
   resolution: "@babel/traverse@npm:7.25.6"
@@ -1911,16 +1889,6 @@ __metadata:
     "@babel/helper-string-parser": "npm:^7.25.9"
     "@babel/helper-validator-identifier": "npm:^7.25.9"
   checksum: 10/40780741ecec886ed9edae234b5eb4976968cc70d72b4e5a40d55f83ff2cc457de20f9b0f4fe9d858350e43dab0ea496e7ef62e2b2f08df699481a76df02cd6e
-  languageName: node
-  linkType: hard
-
-"@babel/types@npm:^7.27.0":
-  version: 7.27.0
-  resolution: "@babel/types@npm:7.27.0"
-  dependencies:
-    "@babel/helper-string-parser": "npm:^7.25.9"
-    "@babel/helper-validator-identifier": "npm:^7.25.9"
-  checksum: 10/2c322bce107c8a534dc4a23be60d570e6a4cc7ca2e44d4f0eee08c0b626104eb7e60ab8de03463bc5da1773a2f69f1e6edec1648d648d65461d6520a7f3b0770
   languageName: node
   linkType: hard
 
@@ -2761,7 +2729,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/fakta-bosted-soker@npm:1.0.0, @fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
+"@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker"
   dependencies:
@@ -2820,31 +2788,6 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.0.0"
     react-intl: "npm:7.1.10"
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-medlemskap@npm:1.0.0, @fpsak-frontend/fakta-medlemskap@workspace:packages/fakta-medlemskap":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-medlemskap@workspace:packages/fakta-medlemskap"
-  dependencies:
-    "@fpsak-frontend/fakta-bosted-soker": "npm:1.0.0"
-    "@fpsak-frontend/form": "npm:1.0.0"
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@navikt/ft-form-hooks": "npm:^6.2.8"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.12"
-    i18n-iso-countries: "npm:7.14.0"
-    moment: "npm:2.30.1"
-    prop-types: "npm:15.8.1"
-    react: "npm:19.0.0"
-    react-intl: "npm:7.1.10"
-    react-redux: "npm:9.2.0"
-    redux: "npm:5.0.1"
-    redux-form: "npm:8.3.10"
-    reselect: "npm:5.1.1"
   languageName: unknown
   linkType: soft
 
@@ -4104,7 +4047,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-inntekt-og-ytelser": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-verge": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4140,7 +4082,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-direkte-overgang": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4180,7 +4121,6 @@ __metadata:
   resolution: "@k9-sak-web/behandling-pleiepenger-sluttfase@workspace:packages/behandling-pleiepenger-sluttfase"
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4218,7 +4158,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-direkte-overgang": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4304,7 +4243,6 @@ __metadata:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/fakta-arbeidsforhold": "npm:1.0.0"
     "@fpsak-frontend/fakta-inntekt-og-ytelser": "npm:1.0.0"
-    "@fpsak-frontend/fakta-medlemskap": "npm:1.0.0"
     "@fpsak-frontend/fakta-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/fakta-verge": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"

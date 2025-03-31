@@ -1,4 +1,4 @@
-import { Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
 
 export interface Periode {
   id: string;
@@ -6,15 +6,14 @@ export interface Periode {
   årsaker: string[];
   aksjonspunkter: string[];
   begrunnelse: string;
-  personopplysninger: Personopplysninger;
-  bosattVurdering: boolean;
+  personopplysninger: PersonopplysningDto;
+  bosattVurdering?: boolean;
   vurdertAv: string;
   vurdertTidspunkt: string;
   isBosattAksjonspunktClosed: boolean;
   isPeriodAksjonspunktClosed: boolean;
-  dekningType: Kodeverk;
-  medlemskapManuellVurderingType: Kodeverk;
+  medlemskapManuellVurderingType: string;
   oppholdsrettVurdering?: boolean;
-  erEosBorger?: boolean;
+  erEosBorger: boolean;
   lovligOppholdVurdering?: boolean;
 }

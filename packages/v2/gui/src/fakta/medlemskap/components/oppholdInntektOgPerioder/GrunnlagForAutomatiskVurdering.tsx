@@ -1,31 +1,25 @@
-import { DateLabel } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table } from '@navikt/ds-react';
-import { PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import { type PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import { useState } from 'react';
+import DateLabel from '../../../../shared/dateLabel/DateLabel';
+import type { Soknad } from '../../types/Soknad';
 import OppholdINorgeOgAdresser from './OppholdINorgeOgAdresser';
-import { Soknad } from './Soknad';
 
-const createParent = (isApplicant: boolean, personopplysning?: PersonopplysningDto) => ({
+const createParent = (isApplicant: boolean, personopplysning: PersonopplysningDto) => ({
   isApplicant,
   personopplysning,
 });
 
 interface GrunnlagForAutomatiskVurderingProps {
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   soknad: Soknad;
   personopplysninger: {
     [key: string]: PersonopplysningDto;
   };
 }
 
-const GrunnlagForAutomatiskVurdering = ({
-  alleKodeverk,
-  soknad,
-  personopplysninger,
-}: GrunnlagForAutomatiskVurderingProps) => {
+const GrunnlagForAutomatiskVurdering = ({ soknad, personopplysninger }: GrunnlagForAutomatiskVurderingProps) => {
   const personopplysningerKeys = Object.keys(personopplysninger);
-  const [valgtPeriode, setValgtPeriode] = useState<string>(personopplysningerKeys[0]);
+  const [valgtPeriode, setValgtPeriode] = useState<string>(personopplysningerKeys[0] ?? '');
   let opphold = {};
 
   if (soknad && soknad.oppgittTilknytning) {
@@ -35,9 +29,10 @@ const GrunnlagForAutomatiskVurdering = ({
     };
   }
 
-  const foreldre = [createParent(true, personopplysninger[valgtPeriode])];
-  if (personopplysninger?.annenPart) {
-    foreldre.push(createParent(false, personopplysninger.annenPart));
+  const foreldre =
+    valgtPeriode && personopplysninger[valgtPeriode] ? [createParent(true, personopplysninger[valgtPeriode])] : [];
+  if (personopplysninger?.[valgtPeriode]?.annenPart) {
+    foreldre.push(createParent(false, personopplysninger?.[valgtPeriode]?.annenPart));
   }
 
   return (
@@ -66,7 +61,6 @@ const GrunnlagForAutomatiskVurdering = ({
         </Table.Body>
       </Table>
       <OppholdINorgeOgAdresser
-        alleKodeverk={alleKodeverk}
         foreldre={foreldre}
         hasBosattAksjonspunkt={false}
         isBosattAksjonspunktClosed={false}
