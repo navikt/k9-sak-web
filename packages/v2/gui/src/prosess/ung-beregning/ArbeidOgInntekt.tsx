@@ -16,6 +16,9 @@ import { formatCurrencyWithKr } from '../../utils/formatters';
 import styles from './arbeidOgInntekt.module.css';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
+  if (!inntekt || (!inntekt.arbeidsinntekt && !inntekt.ytelse)) {
+    return '';
+  }
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
 };
 
@@ -93,7 +96,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
             <PersonIcon title="Deltager" fontSize="1.5rem" className={styles.personIcon} />
             <VStack gap="2">
               <Heading size="xsmall" as="h3">
-                Beskrivelse fra deltaker for avvik i perioden 01.02.2025 - 28.02.2025
+                Beskrivelse fra deltaker for avvik i perioden xx.xx.xxxx - xx.xx.xxxx
               </Heading>
               <Box maxWidth="75ch">
                 <BodyLong size="small">
@@ -188,8 +191,8 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
           <Table.Body>
             {inntektKontrollperioder?.map((inntekt, index) => {
               const isLastRow = index === inntektKontrollperioder.length - 1;
-              const harAksjonspunkt = inntekt.erTilVurdering;
               const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
+              const harAksjonspunkt = inntekt.erTilVurdering && harAvvik;
 
               return (
                 <Table.ExpandableRow
