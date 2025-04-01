@@ -1,5 +1,4 @@
 import { useState, useMemo, useContext } from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/ft-utils';
 import {
   InstitusjonVurderingDtoResultat,
@@ -13,6 +12,7 @@ import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurd
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
+import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView.js';
 
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
@@ -89,7 +89,6 @@ const FaktaInstitusjonIndex = () => {
             onPeriodeClick={setValgtPeriode}
           />
         )}
-        showDetailSection
         detailSection={() =>
           valgtVurdering ? <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} /> : null
         }
