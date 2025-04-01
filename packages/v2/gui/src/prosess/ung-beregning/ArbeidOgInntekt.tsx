@@ -1,3 +1,4 @@
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9klage/generated';
 import {
   KontrollerInntektPeriodeDtoStatus,
   KontrollerInntektPeriodeDtoValg,
@@ -29,6 +30,29 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
   return 'Ingen avvik';
 };
 
+const buildInitialValues = (
+  inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'],
+  aksjonspunkt: AksjonspunktDto | undefined,
+) => {
+  const vurdertPeriode = inntektKontrollperioder?.find(
+    periode => periode.erTilVurdering && periode.status === KontrollerInntektPeriodeDtoStatus.AVVIK && periode.valg,
+  );
+  if (vurdertPeriode) {
+    return {
+      fastsattArbeidsinntekt: `${vurdertPeriode.fastsattArbeidsinntekt}`,
+      fastsattYtelse: `${vurdertPeriode.fastsattYtelse}`,
+      valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
+      begrunnelse: aksjonspunkt?.begrunnelse ?? '',
+    };
+  }
+  return {
+    fastsattArbeidsinntekt: '',
+    fastsattYtelse: '',
+    valg: '' as const,
+    begrunnelse: '',
+  };
+};
+
 type Formvalues = {
   fastsattArbeidsinntekt: string;
   fastsattYtelse: string;
@@ -39,17 +63,13 @@ type Formvalues = {
 interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'];
+  aksjonspunkt: AksjonspunktDto | undefined;
 }
 
-export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjonspunkt }: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
-    defaultValues: {
-      fastsattArbeidsinntekt: '',
-      fastsattYtelse: '',
-      valg: '',
-      begrunnelse: '',
-    },
+    defaultValues: buildInitialValues(inntektKontrollperioder, aksjonspunkt),
   });
   const valg = formMethods.watch('valg');
 
