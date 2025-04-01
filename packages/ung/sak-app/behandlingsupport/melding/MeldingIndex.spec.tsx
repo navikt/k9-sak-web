@@ -136,7 +136,7 @@ describe('<MeldingIndex>', () => {
       id: 1,
       uuid: '1212',
       type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-      sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+      språkkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
     },
   ];
 
@@ -162,7 +162,6 @@ describe('<MeldingIndex>', () => {
         <MemoryRouter>
           <MeldingIndex
             fagsak={fagsak as Fagsak}
-            // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
@@ -184,7 +183,6 @@ describe('<MeldingIndex>', () => {
         <MemoryRouter>
           <MeldingIndex
             fagsak={fagsak as Fagsak}
-            // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
@@ -212,7 +210,6 @@ describe('<MeldingIndex>', () => {
         <MemoryRouter>
           <MeldingIndex
             fagsak={fagsak as Fagsak}
-            // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
@@ -251,7 +248,6 @@ describe('<MeldingIndex>', () => {
         <MemoryRouter>
           <MeldingIndex
             fagsak={fagsak as Fagsak}
-            // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
