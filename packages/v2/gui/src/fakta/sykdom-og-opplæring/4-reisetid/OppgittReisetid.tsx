@@ -5,8 +5,10 @@ import { Period } from '@navikt/ft-utils';
 // TODO ikke glem readonly når feltet kan redigeres
 const OppgittReisetid = ({
   reisedagerOppgittISøknad,
+  size = 'medium',
 }: {
   reisedagerOppgittISøknad: ReisetidInfoFraSøker['reisetidPeriodeOppgittISøknad'];
+  size?: 'medium' | 'small';
 }) => {
   const reisedagerPeriod = reisedagerOppgittISøknad
     ? new Period(reisedagerOppgittISøknad.fom, reisedagerOppgittISøknad.tom)
@@ -15,9 +17,9 @@ const OppgittReisetid = ({
   if (!reisedagerPeriod) {
     return (
       <div>
-        <Label>Reisedager:</Label>
+        <Label size={size}>Reisedager:</Label>
         <div>
-          <BodyLong>Ingen reisedager oppgitt</BodyLong>
+          <BodyLong size={size}>Ingen reisedager oppgitt</BodyLong>
         </div>
       </div>
     );
@@ -29,9 +31,9 @@ const OppgittReisetid = ({
       : reisedagerPeriod.prettifyPeriod().split(' - ')[0];
   return (
     <div>
-      <Label>Reisedager:</Label>{' '}
+      <Label size={size}>Reisedager:</Label>{' '}
       <div className="flex gap-2">
-        <BodyLong>{reisedager}</BodyLong>
+        <BodyLong size={size}>{reisedager}</BodyLong>
         <Tag size="small" variant="info">
           Fra søknad
         </Tag>

@@ -101,7 +101,7 @@ const SykdomUperiodisertForm = ({
     >
       <div className="flex flex-col gap-6">
         <div>
-          <Label htmlFor="begrunnelse">
+          <Label htmlFor="begrunnelse" size="small">
             Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge
             av <Lovreferanse>§ 9-14</Lovreferanse>
           </Label>
@@ -109,6 +109,7 @@ const SykdomUperiodisertForm = ({
             {...formMethods.register('begrunnelse', {
               validate: value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
             })}
+            size="small"
             label=""
             id="begrunnelse"
             error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
@@ -122,6 +123,7 @@ const SykdomUperiodisertForm = ({
             <RadioGroup
               {...field}
               legend="Har barnet en langvarig funksjonshemming eller langvarig sykdom?"
+              size="small"
               error={formMethods.formState.errors.godkjent?.message as string | undefined}
             >
               <Radio value="ja">Ja</Radio>
@@ -131,7 +133,7 @@ const SykdomUperiodisertForm = ({
           )}
         />
         {formMethods.watch('godkjent') === 'mangler_dokumentasjon' && (
-          <Alert variant="info">
+          <Alert variant="info" size="small">
             Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
             <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
           </Alert>
@@ -139,7 +141,7 @@ const SykdomUperiodisertForm = ({
         <DiagnosekodeVelger
           label="Legg til diagnose(r)"
           name="diagnosekoder"
-          size="medium"
+          size="small"
           disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
         />
         <div className="flex gap-4">

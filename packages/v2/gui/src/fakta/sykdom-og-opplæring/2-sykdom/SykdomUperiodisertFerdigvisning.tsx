@@ -10,14 +10,17 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
       <LabelledContent
         label="Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge av § 9-14."
         indentContent
+        size="small"
       >
-        <BodyLong className="whitespace-pre-wrap">{vurdering.begrunnelse}</BodyLong>
+        <BodyLong size="small" className="whitespace-pre-wrap">
+          {vurdering.begrunnelse}
+        </BodyLong>
       </LabelledContent>
-      <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} />
-      <LabelledContent label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?">
-        <BodyShort>{vurdering.godkjent ? 'Ja' : 'Nei'}</BodyShort>
+      <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
+      <LabelledContent label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?" size="small">
+        <BodyShort size="small">{vurdering.godkjent ? 'Ja' : 'Nei'}</BodyShort>
       </LabelledContent>
-      <LabelledContent label="Diagnose(r)">
+      <LabelledContent label="Diagnose(r)" size="small">
         <Diagnoser diagnosekoder={vurdering.diagnosekoder} />
       </LabelledContent>
     </div>
@@ -33,7 +36,7 @@ const Diagnoser = ({ diagnosekoder = [] }: { diagnosekoder?: string[] }) => {
       {diagnosekoder.map(diagnose => {
         const diagnosekode = ICD10.find(d => d.code === diagnose);
         return (
-          <Tag key={diagnose} variant="info" className="border-none rounded-">
+          <Tag size="small" key={diagnose} variant="info" className="border-none rounded-">
             {diagnosekode?.code} - {diagnosekode?.text}
           </Tag>
         );

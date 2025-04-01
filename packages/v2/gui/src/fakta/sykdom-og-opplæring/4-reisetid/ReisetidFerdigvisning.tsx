@@ -11,18 +11,21 @@ const ReisetidFerdigvisning = ({ vurdering }: { vurdering: ReisetidVurderingDto 
   const innvilgesEllerAvslås = vurdering.reisetid.resultat === 'GODKJENT' ? 'innvilges' : 'avslås';
   return (
     <div className="flex flex-col gap-6">
-      <OppgittReisetid reisedagerOppgittISøknad={vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad} />
+      <OppgittReisetid
+        reisedagerOppgittISøknad={vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad}
+        size="small"
+      />
       <div>
-        <LabelledContent label="Vurdering" indentContent={true}>
+        <LabelledContent label="Vurdering" indentContent={true} size="small">
           <BodyLong className="whitespace-pre-wrap">{vurdering.reisetid.begrunnelse}</BodyLong>
         </LabelledContent>
-        <VurdertAv ident={vurdering.reisetid.vurdertAv} date={vurdering.reisetid.vurdertTidspunkt} />
+        <VurdertAv ident={vurdering.reisetid.vurdertAv} date={vurdering.reisetid.vurdertTidspunkt} size="small" />
       </div>
-      <LabelledContent label={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}>
+      <LabelledContent label={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'} size="small">
         <BodyLong className="capitalize">{resultatTilJaNei(vurdering.reisetid.resultat)}</BodyLong>
       </LabelledContent>
       {!vurderingGjelderEnkeltdag && (
-        <LabelledContent label={`I hvilken periode ${innvilgesEllerAvslås} reisetid?`}>
+        <LabelledContent label={`I hvilken periode ${innvilgesEllerAvslås} reisetid?`} size="small">
           <BodyLong>{vurdering.perioder[0]?.prettifyPeriod()}</BodyLong>
         </LabelledContent>
       )}

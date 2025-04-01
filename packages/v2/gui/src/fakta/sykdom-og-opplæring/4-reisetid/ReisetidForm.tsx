@@ -56,12 +56,13 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
     <>
       <Form formMethods={formMethods}>
         <div className="flex flex-col gap-6">
-          <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} />
+          <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} size="small" />
           <Textarea
             label="Vurdering"
             {...formMethods.register('begrunnelse', {
               validate: value => (value.length > 0 ? undefined : 'Vurdering er påkrevd'),
             })}
+            size="small"
             readOnly={readOnly}
             error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
           />
@@ -73,6 +74,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
                 legend={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}
                 {...field}
                 readOnly={readOnly}
+                size="small"
                 error={formMethods.formState.errors.godkjent?.message as string | undefined}
               >
                 <Radio value="ja">Ja</Radio>
@@ -84,6 +86,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
             <PeriodePicker
               minDate={new Date(vurdering.perioder[0]?.fom as string)}
               maxDate={new Date(vurdering.perioder[0]?.tom as string)}
+              size="small"
               fromField={{
                 name: 'periode.fom',
                 validate: value => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),

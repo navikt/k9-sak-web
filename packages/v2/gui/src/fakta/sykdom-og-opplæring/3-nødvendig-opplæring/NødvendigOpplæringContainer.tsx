@@ -5,7 +5,7 @@ import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import DetailView from '../../../shared/detail-view/DetailView';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useEffect, useState, useContext } from 'react';
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button } from '@navikt/ds-react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
@@ -57,8 +57,12 @@ const Wrapper = ({
       }}
     >
       <div data-testid="Periode" className="flex gap-2">
-        <CalendarIcon />{' '}
-        {enkeltdag ? vurdering.perioder[0]?.prettifyPeriod().split(' - ')[0] : vurdering.perioder[0]?.prettifyPeriod()}
+        <CalendarIcon fontSize="20" />
+        <BodyShort size="small">
+          {enkeltdag
+            ? vurdering.perioder[0]?.prettifyPeriod().split(' - ')[0]
+            : vurdering.perioder[0]?.prettifyPeriod()}
+        </BodyShort>
       </div>
       <div className="border-none bg-border-subtle h-[2px] mt-4" />
       <div className="mt-6">{children}</div>

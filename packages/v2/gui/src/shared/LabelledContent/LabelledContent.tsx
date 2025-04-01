@@ -8,15 +8,22 @@ export interface LabelledContentProps {
   children: React.ReactNode;
   labelTag?: React.ElementType;
   indentContent?: boolean;
+  size?: 'medium' | 'small';
 }
 
-export const LabelledContent = ({ label, children, labelTag, indentContent }: LabelledContentProps) => {
+export const LabelledContent = ({
+  label,
+  children,
+  labelTag,
+  indentContent,
+  size = 'medium',
+}: LabelledContentProps) => {
   const cl = classNames('mt-2', {
     'border-solid border-t-0 border-r-0 border-b-0 border-l-4 border-[#c9c9c9] py-[3px] pl-[13px]': indentContent,
   });
   return (
     <div>
-      <Label className="font-bold" as={labelTag || 'p'}>
+      <Label className="font-bold" as={labelTag || 'p'} size={size}>
         {label}
       </Label>
       <div className={cl}>

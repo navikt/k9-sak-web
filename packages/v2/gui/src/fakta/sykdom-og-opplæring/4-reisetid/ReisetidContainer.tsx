@@ -3,7 +3,7 @@ import ReisetidForm from './ReisetidForm';
 import { Period } from '@navikt/ft-utils';
 import ReisetidFerdigvisning from './ReisetidFerdigvisning';
 import DetailView from '../../../shared/detail-view/DetailView';
-import { BodyLong, Button, Label } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState, useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -62,7 +62,7 @@ const Description = ({ vurdering }: { vurdering: ReisetidVurderingDto & { period
   if (!vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad) {
     return (
       <div className="flex gap-2 mt-2.5">
-        <CalendarIcon fontSize="24" /> {vurdering.perioder[0]?.prettifyPeriod()}
+        <CalendarIcon fontSize="20" /> <BodyShort size="small">{vurdering.perioder[0]?.prettifyPeriod()}</BodyShort>
       </div>
     );
   }
@@ -74,14 +74,14 @@ const Description = ({ vurdering }: { vurdering: ReisetidVurderingDto & { period
       ? `Beskrivelse fra søker for reisetid i perioden ${oppgittReisedagerPeriod.prettifyPeriod()}`
       : `Beskrivelse fra søker for reisetid ${oppgittReisedagerPeriod.prettifyPeriod().split(' - ')[0]}`;
   return (
-    <div className="flex gap-2 mt-2.5">
-      <div>
-        <PersonFillIcon fontSize="24" />
+    <div className="flex gap-2 mt-1">
+      <div className="mt-[3px]">
+        <PersonFillIcon fontSize="20" />
       </div>
       <div>
-        <Label>{tekst}</Label>
+        <Label size="small">{tekst}</Label>
         <div>
-          <BodyLong>{vurdering.informasjonFraSøker?.beskrivelseFraSøker}</BodyLong>
+          <BodyLong size="small">{vurdering.informasjonFraSøker?.beskrivelseFraSøker}</BodyLong>
         </div>
       </div>
     </div>

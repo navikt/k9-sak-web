@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import SykdomUperiodisertForm, { type UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useContext, useEffect, useState } from 'react';
-import { Button } from '@navikt/ds-react';
+import { Button, BodyShort } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailViewV2 } from '../../../shared/detail-view/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -29,8 +29,8 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
         {vurdering.vurdertTidspunkt && (
           <>
             <div className="flex my-auto gap-2">
-              <CalendarIcon height={24} width={24} />{' '}
-              <span>{dayjs(vurdering.vurdertTidspunkt).format('DD.MM.YYYY')}</span>
+              <CalendarIcon fontSize="20" />
+              <BodyShort size="small">{dayjs(vurdering.vurdertTidspunkt).format('DD.MM.YYYY')}</BodyShort>
             </div>
           </>
         )}

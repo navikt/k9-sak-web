@@ -10,12 +10,13 @@ import { SaksbehandlernavnContext } from '../SaksbehandlernavnContext/Saksbehand
 export interface IVurdertAvProps {
   ident?: string;
   date?: string;
+  size?: 'medium' | 'small';
 }
 
 /* For å få opp saksbehandlerens navn må sette saksbehandlernavn i SaksbehandlernavnContext.Provider
  */
 
-export const VurdertAv = ({ ident, date }: IVurdertAvProps) => {
+export const VurdertAv = ({ ident, date, size = 'medium' }: IVurdertAvProps) => {
   const saksbehandlernavn = useContext(SaksbehandlernavnContext);
   if (!ident) {
     return null;
@@ -25,8 +26,8 @@ export const VurdertAv = ({ ident, date }: IVurdertAvProps) => {
 
   return (
     <div className="flex items-center my-2.5">
-      <PersonPencilFillIcon className="mr-2" fontSize="24" />
-      <BodyShort>{`Vurdering av ${name}${formattedDate}`}</BodyShort>
+      <PersonPencilFillIcon className="mr-2" fontSize={size === 'small' ? '20' : '24'} />
+      <BodyShort size={size}>{`Vurdering av ${name}${formattedDate}`}</BodyShort>
     </div>
   );
 };

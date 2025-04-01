@@ -11,6 +11,7 @@ interface PeriodePickerProps {
   fromLabel?: string;
   toLabel?: string;
   readOnly?: boolean;
+  size?: 'medium' | 'small';
 }
 
 interface Field {
@@ -37,6 +38,7 @@ const PeriodePicker = ({
   fromLabel = 'Fra',
   toLabel = 'Til',
   readOnly = false,
+  size = 'medium',
 }: PeriodePickerProps) => {
   const formMethods = useFormContext();
 
@@ -79,12 +81,14 @@ const PeriodePicker = ({
       <div className="flex gap-4 items-baseline">
         <DatePicker.Input
           {...fromInputProps}
+          size={size}
           label={fromLabel}
           readOnly={readOnly}
           error={fomMethods.fieldState.error?.message}
         />
         <DatePicker.Input
           {...toInputProps}
+          size={size}
           label={toLabel}
           readOnly={readOnly}
           error={tomMethods.fieldState.error?.message}

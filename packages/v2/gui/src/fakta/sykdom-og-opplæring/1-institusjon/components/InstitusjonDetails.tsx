@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Box, Button } from '@navikt/ds-react';
-import { Calender } from '@navikt/ds-icons';
+import { Box, Button, BodyShort } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 import DetailView from '../../../../shared/detail-view/DetailView.js';
-import { PencilIcon } from '@navikt/aksel-icons';
+import { PencilIcon, CalendarIcon } from '@navikt/aksel-icons';
 import { LabelledContent } from '../../../../shared/LabelledContent/LabelledContent.js';
 
 interface OwnProps {
@@ -41,12 +40,12 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
     >
       {vurdering.perioder.map(periode => (
         <div key={periode.prettifyPeriod()} data-testid="Periode">
-          <Calender /> <span>{periode.prettifyPeriod()}</span>
+          <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
         </div>
       ))}
 
       <Box className="mt-8">
-        <LabelledContent label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?">
+        <LabelledContent label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?" size="small">
           {vurdering.institusjon}
         </LabelledContent>
       </Box>

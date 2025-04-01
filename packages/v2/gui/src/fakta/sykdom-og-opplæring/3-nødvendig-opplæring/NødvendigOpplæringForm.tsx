@@ -72,6 +72,7 @@ const NødvendigOpplæringForm = ({
                 legend="Er nødvendig opplæring dokumentert med legeerklæring?"
                 {...field}
                 readOnly={readOnly}
+                size="small"
                 error={formMethods.formState.errors.dokumentertOpplæring?.message as string | undefined}
               >
                 <Radio value="ja">Ja</Radio>
@@ -80,7 +81,7 @@ const NødvendigOpplæringForm = ({
             )}
           />
           <div>
-            <Label htmlFor="begrunnelse">
+            <Label htmlFor="begrunnelse" size="small">
               Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet som følge av
               <Lovreferanse> § 9-14</Lovreferanse>
             </Label>
@@ -94,8 +95,8 @@ const NødvendigOpplæringForm = ({
               id="begrunnelse"
               error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
               description={
-                <ReadMore header="Hva skal vurderingen inneholde?">
-                  <BodyShort>
+                <ReadMore header="Hva skal vurderingen inneholde?" size="small">
+                  <BodyShort size="small">
                     Du skal ta utgangspunkt i{' '}
                     <Link href="https://lovdata.no/dokument/NL/lov/1997-02-28-19/KAPITTEL_4-5-3#%C2%A79-14">
                       lovteksten
@@ -126,6 +127,7 @@ const NødvendigOpplæringForm = ({
                 legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
                 {...field}
                 readOnly={readOnly}
+                size="small"
                 error={formMethods.formState.errors.nødvendigOpplæring?.message as string | undefined}
               >
                 <Radio value="ja">Ja</Radio>
@@ -137,6 +139,7 @@ const NødvendigOpplæringForm = ({
             <PeriodePicker
               minDate={new Date(vurdering.opplæring.fom)}
               maxDate={new Date(vurdering.opplæring.tom)}
+              size="small"
               fromField={{
                 name: 'periode.fom',
                 validate: value => {
