@@ -1,6 +1,6 @@
+import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import BeredskapType from '../../../../types/BeredskapType';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
@@ -12,14 +12,14 @@ interface BeredskapsperiodeoversiktProps {
 }
 
 const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktProps) => {
-  const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
+  const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode | null>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = beredskapData;
 
   const perioderTilVurdering = beredskapData.finnPerioderTilVurdering();
   const vurderteBeredskapsperioder = beredskapData.finnVurdertePerioder();
 
-  const velgPeriode = (periode: Vurderingsperiode) => {
+  const velgPeriode = (periode: Vurderingsperiode | null) => {
     setValgtPeriode(periode);
     setEditMode(false);
   };
@@ -43,15 +43,17 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
           />
         )}
         showDetailSection={!!valgtPeriode}
-        detailSection={() => (
-          <BeredskapsperiodeoversiktController
-            valgtPeriode={valgtPeriode}
-            editMode={editMode}
-            onEditClick={() => setEditMode(true)}
-            onCancelClick={() => velgPeriode(null)}
-            beskrivelser={beskrivelser}
-          />
-        )}
+        detailSection={() =>
+          valgtPeriode && (
+            <BeredskapsperiodeoversiktController
+              valgtPeriode={valgtPeriode}
+              editMode={editMode}
+              onEditClick={() => setEditMode(true)}
+              onCancelClick={() => velgPeriode(null)}
+              beskrivelser={beskrivelser}
+            />
+          )
+        }
       />
     </>
   );
