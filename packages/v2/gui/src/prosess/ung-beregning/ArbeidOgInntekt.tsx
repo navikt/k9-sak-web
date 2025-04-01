@@ -1,7 +1,7 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9klage/generated';
 import {
   KontrollerInntektPeriodeDtoStatus,
   KontrollerInntektPeriodeDtoValg,
+  type AksjonspunktDto,
   type KontrollerInntektDto,
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
