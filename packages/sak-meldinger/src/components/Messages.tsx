@@ -4,7 +4,7 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ariaCheck,
-  getLanguageCodeFromSprakkode,
+  getLanguageCodeFromspråkkode,
   hasValidText,
   maxLength,
   minLength,
@@ -69,7 +69,7 @@ interface PureOwnProps {
     fritekstbrev?: Fritekstbrev,
   ) => void;
   templates?: Brevmaler;
-  sprakKode?: Kodeverk;
+  språkkode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;
@@ -143,7 +143,7 @@ export const MessagesImpl = ({
   templates,
   previewCallback,
   handleSubmit,
-  sprakKode,
+  språkkode,
   overstyrtMottaker,
   tredjepartsmottakerOrgnr,
   tredjepartsmottakerInfo,
@@ -157,7 +157,7 @@ export const MessagesImpl = ({
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   const [visTredjepartsmottakerInput, setVisTredjepartsmottakerInput] = useState(false);
-  if (!sprakKode) {
+  if (!språkkode) {
     return null;
   }
   if (!templates) {
@@ -167,7 +167,7 @@ export const MessagesImpl = ({
   const { addErrorMessage } = useRestApiErrorDispatcher();
   requestMessagesApi.setAddErrorMessageHandler(addErrorMessage);
 
-  const languageCode = getLanguageCodeFromSprakkode(sprakKode);
+  const languageCode = getLanguageCodeFromspråkkode(språkkode);
 
   const valgtBrevmal = templates[brevmalkode];
 

@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Detail, HGrid, Heading, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -106,7 +106,7 @@ export class AvregningPanelImpl extends Component {
       isApOpen,
       apCodes,
       readOnly,
-      sprakkode,
+      språkkode,
       featureUtvidetVarselfelt,
       previewCallback,
       hasOpenTilbakekrevingsbehandling,
@@ -209,7 +209,7 @@ export class AvregningPanelImpl extends Component {
                                   badges={[
                                     {
                                       type: 'warning',
-                                      textId: getLanguageCodeFromSprakkode(sprakkode),
+                                      textId: getLanguageCodeFromspråkkode(språkkode),
                                       title: 'Malform.Beskrivelse',
                                     },
                                   ]}
@@ -318,7 +318,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
 
   return (state, ownProps) => {
     const {
-      sprakkode,
+      språkkode,
       behandlingId,
       behandlingVersjon,
       tilbakekrevingvalg,
@@ -336,7 +336,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       featureUtvidetVarselfelt: featureToggles?.UTVIDET_VARSELFELT,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
-      sprakkode,
+      språkkode,
       simuleringResultat,
       onSubmit,
     };
