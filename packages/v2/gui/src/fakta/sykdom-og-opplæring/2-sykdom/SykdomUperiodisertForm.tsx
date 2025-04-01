@@ -2,9 +2,9 @@ import {
   type LangvarigSykdomVurderingDto,
   LangvarigSykdomVurderingDtoAvslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
-import { Alert, Button, Label, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
 import { useContext, useEffect } from 'react';
@@ -12,6 +12,7 @@ import { useOppdaterSykdomsvurdering, useOpprettSykdomsvurdering } from '../Sykd
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useQueryClient } from '@tanstack/react-query';
 import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
+
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
   Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
     godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
@@ -104,13 +105,25 @@ const SykdomUperiodisertForm = ({
             Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge
             av <Lovreferanse>§ 9-14</Lovreferanse>
           </Label>
-          <TextAreaField label="" name="begrunnelse" id="begrunnelse" />
+          <Textarea
+            {...formMethods.register('begrunnelse', {
+              validate: value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
+            })}
+            label=""
+            id="begrunnelse"
+            error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
+          />
         </div>
         <Controller
           control={formMethods.control}
           name="godkjent"
+          rules={{ validate: value => (value.length > 0 ? undefined : 'Vurdering er påkrevd') }}
           render={({ field }) => (
-            <RadioGroup {...field} legend="Har barnet en langvarig funksjonshemming eller langvarig sykdom?">
+            <RadioGroup
+              {...field}
+              legend="Har barnet en langvarig funksjonshemming eller langvarig sykdom?"
+              error={formMethods.formState.errors.godkjent?.message as string | undefined}
+            >
               <Radio value="ja">Ja</Radio>
               <Radio value="nei">Nei</Radio>
               <Radio value="mangler_dokumentasjon">Mangler dokumentasjon</Radio>
@@ -126,10 +139,6 @@ const SykdomUperiodisertForm = ({
         <DiagnosekodeVelger
           label="Legg til diagnose(r)"
           name="diagnosekoder"
-          onChange={diagnosekoder => {
-            formMethods.setValue('diagnosekoder', diagnosekoder);
-          }}
-          value={formMethods.watch('diagnosekoder')}
           size="medium"
           disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
         />

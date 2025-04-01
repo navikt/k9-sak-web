@@ -66,8 +66,14 @@ const NødvendigOpplæringForm = ({
           <Controller
             control={formMethods.control}
             name="dokumentertOpplæring"
+            rules={{ validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }}
             render={({ field }) => (
-              <RadioGroup legend="Er nødvendig opplæring dokumentert med legeerklæring?" {...field} readOnly={readOnly}>
+              <RadioGroup
+                legend="Er nødvendig opplæring dokumentert med legeerklæring?"
+                {...field}
+                readOnly={readOnly}
+                error={formMethods.formState.errors.dokumentertOpplæring?.message as string | undefined}
+              >
                 <Radio value="ja">Ja</Radio>
                 <Radio value="nei">Nei</Radio>
               </RadioGroup>
@@ -79,11 +85,14 @@ const NødvendigOpplæringForm = ({
               <Lovreferanse> § 9-14</Lovreferanse>
             </Label>
             <Textarea
-              {...formMethods.register('begrunnelse')}
+              {...formMethods.register('begrunnelse', {
+                validate: value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
+              })}
               readOnly={readOnly}
               size="small"
               label=""
               id="begrunnelse"
+              error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
               description={
                 <ReadMore header="Hva skal vurderingen inneholde?">
                   <BodyShort>
@@ -111,11 +120,13 @@ const NødvendigOpplæringForm = ({
           <Controller
             control={formMethods.control}
             name="nødvendigOpplæring"
+            rules={{ validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }}
             render={({ field }) => (
               <RadioGroup
                 legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
                 {...field}
                 readOnly={readOnly}
+                error={formMethods.formState.errors.nødvendigOpplæring?.message as string | undefined}
               >
                 <Radio value="ja">Ja</Radio>
                 <Radio value="nei">Nei</Radio>
@@ -126,8 +137,16 @@ const NødvendigOpplæringForm = ({
             <PeriodePicker
               minDate={new Date(vurdering.opplæring.fom)}
               maxDate={new Date(vurdering.opplæring.tom)}
-              fromFieldName="periode.fom"
-              toFieldName="periode.tom"
+              fromField={{
+                name: 'periode.fom',
+                validate: value => {
+                  return value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd';
+                },
+              }}
+              toField={{
+                name: 'periode.tom',
+                validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
+              }}
               readOnly={readOnly}
             />
           )}

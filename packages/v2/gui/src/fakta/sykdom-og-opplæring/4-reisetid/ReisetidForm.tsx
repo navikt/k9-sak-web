@@ -57,15 +57,23 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
       <Form formMethods={formMethods}>
         <div className="flex flex-col gap-6">
           <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} />
-          <Textarea label="Vurdering" {...formMethods.register('begrunnelse')} readOnly={readOnly} />
+          <Textarea
+            label="Vurdering"
+            {...formMethods.register('begrunnelse', {
+              validate: value => (value.length > 0 ? undefined : 'Vurdering er påkrevd'),
+            })}
+            readOnly={readOnly}
+            error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
+          />
           <Controller
             name="godkjent"
-            rules={{ required: true }}
+            rules={{ validate: value => (value.length > 0 ? undefined : 'Vurdering er påkrevd') }}
             render={({ field }) => (
               <RadioGroup
                 legend={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}
                 {...field}
                 readOnly={readOnly}
+                error={formMethods.formState.errors.godkjent?.message as string | undefined}
               >
                 <Radio value="ja">Ja</Radio>
                 <Radio value="nei">Nei</Radio>
@@ -76,8 +84,14 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
             <PeriodePicker
               minDate={new Date(vurdering.perioder[0]?.fom as string)}
               maxDate={new Date(vurdering.perioder[0]?.tom as string)}
-              fromFieldName="periode.fom"
-              toFieldName="periode.tom"
+              fromField={{
+                name: 'periode.fom',
+                validate: value => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
+              }}
+              toField={{
+                name: 'periode.tom',
+                validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
+              }}
               readOnly={readOnly}
             />
           )}

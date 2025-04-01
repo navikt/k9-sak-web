@@ -1,4 +1,4 @@
-import { DatePicker, HStack } from '@navikt/ds-react';
+import { DatePicker } from '@navikt/ds-react';
 import { useRangeDatepicker } from '@navikt/ds-react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useEffect } from 'react';
@@ -6,11 +6,17 @@ import { useEffect } from 'react';
 interface PeriodePickerProps {
   minDate: Date;
   maxDate: Date;
-  fromFieldName: string;
-  toFieldName: string;
+  fromField: Field;
+  toField: Field;
   fromLabel?: string;
   toLabel?: string;
   readOnly?: boolean;
+}
+
+interface Field {
+  name: string;
+  validate?: (value: string) => string | undefined;
+  label?: string;
 }
 
 /**
@@ -26,8 +32,8 @@ interface PeriodePickerProps {
 const PeriodePicker = ({
   minDate,
   maxDate,
-  fromFieldName,
-  toFieldName,
+  fromField,
+  toField,
   fromLabel = 'Fra',
   toLabel = 'Til',
   readOnly = false,
@@ -36,21 +42,23 @@ const PeriodePicker = ({
 
   const fomMethods = useController({
     control: formMethods.control,
-    name: fromFieldName,
+    name: fromField.name,
     defaultValue: new Date(minDate),
+    rules: { validate: fromField.validate },
   });
   const tomMethods = useController({
     control: formMethods.control,
-    name: toFieldName,
+    name: toField.name,
     defaultValue: new Date(maxDate),
+    rules: { validate: toField.validate },
   });
 
   useEffect(() => {
     return () => {
-      formMethods.unregister(fromFieldName);
-      formMethods.unregister(toFieldName);
+      formMethods.unregister(fromField.name);
+      formMethods.unregister(toField.name);
     };
-  }, [fromFieldName, toFieldName]);
+  }, []);
 
   const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
     fromDate: minDate,
@@ -68,10 +76,20 @@ const PeriodePicker = ({
 
   return (
     <DatePicker {...datepickerProps}>
-      <HStack wrap gap="4" justify="center">
-        <DatePicker.Input {...fromInputProps} label={fromLabel} readOnly={readOnly} />
-        <DatePicker.Input {...toInputProps} label={toLabel} readOnly={readOnly} />
-      </HStack>
+      <div className="flex gap-4 items-baseline">
+        <DatePicker.Input
+          {...fromInputProps}
+          label={fromLabel}
+          readOnly={readOnly}
+          error={fomMethods.fieldState.error?.message}
+        />
+        <DatePicker.Input
+          {...toInputProps}
+          label={toLabel}
+          readOnly={readOnly}
+          error={tomMethods.fieldState.error?.message}
+        />
+      </div>
     </DatePicker>
   );
 };
