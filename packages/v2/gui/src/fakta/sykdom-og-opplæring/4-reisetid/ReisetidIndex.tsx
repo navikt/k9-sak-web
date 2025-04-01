@@ -1,4 +1,3 @@
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import Vurderingsnavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
@@ -6,6 +5,7 @@ import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
 import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import ReisetidContainer from './ReisetidContainer';
+import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
 
 const ReisetidIndex = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
@@ -30,7 +30,6 @@ const ReisetidIndex = () => {
             />
           </>
         )}
-        showDetailSection={true}
         detailSection={() => (valgtVurdering ? <ReisetidContainer vurdering={valgtVurdering} /> : null)}
       />
     </div>
