@@ -209,7 +209,7 @@ const BehandlingSupportIndex = ({
 
   const navigate = useNavigate();
 
-  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
+  const erPaVent = behandling ? behandling.behandlingPåVent : false;
   const erSendMeldingRelevant = fagsak && !erPaVent;
 
   const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
