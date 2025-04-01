@@ -13,19 +13,19 @@
 .interactiveListElement:last-of-type {
   border-bottom: 0;
 }
-.interactiveListElement__chevron {
+.interactiveListElementChevron {
   align-self: center;
   margin-left: 1.125rem;
   margin-right: 1.875rem;
   transform: rotate(-90deg);
 }
-.interactiveListElement--inactive:hover {
+.interactiveListElementInactive:hover {
   background: #f2f7fc;
 }
-.interactiveListElement--active {
+.interactiveListElementActive {
   background: #cce4fd;
 }
-.interactiveListElement--active:before {
+.interactiveListElementActive:before {
   background-color: #0067c5;
   border-bottom-right-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
@@ -37,12 +37,12 @@
   top: 0;
   width: 0.3125rem;
 }
-.interactiveListElement--active p {
+.interactiveListElementActive p {
   color: #262626;
   font-weight: bold;
   text-decoration: none;
 }
-.interactiveListElement__button {
+.interactiveListElementButton {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -52,10 +52,10 @@
   text-align: left;
   width: 100%;
 }
-.interactiveListElement__button:focus-visible {
+.interactiveListElementButton:focus-visible {
   outline: #0067c5 auto 1px;
 }
-.interactiveListElement__button__contentContainer {
+.interactiveListElementButtonContentContainer {
   display: flex;
   justify-content: space-between;
 }

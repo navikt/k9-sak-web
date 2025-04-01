@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import { ChevronDownIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 
-import styles from './interactiveList.module.css';
+import styles from './interactiveList.module.d.css';
 
 export interface InteractiveListElement {
   content: React.ReactNode;
@@ -18,20 +18,20 @@ interface InteractiveListProps {
 const InteractiveListElement = (props: InteractiveListElement) => {
   const { content, active, onClick } = props;
   const cls = classnames(styles['interactiveListElement'], {
-    [styles['interactiveListElement--active'] as string]: active,
-    [styles['interactiveListElement--inactive'] as string]: !active,
+    [styles['interactiveListElementActive']]: active,
+    [styles['interactiveListElementInactive']]: !active,
   });
 
   return (
     <li className={cls}>
-      <button className={styles['interactiveListElement__button']} type="button" onClick={onClick}>
-        <span className={styles['interactiveListElement__button__contentContainer']}>
+      <button className={styles['interactiveListElementButton']} type="button" onClick={onClick}>
+        <span className={styles['interactiveListElementButtonContentContainer']}>
           {content}
           <div className="mr-4">{active ? <ChevronRightIcon fontSize={24} /> : <ChevronDownIcon fontSize={24} />}</div>
         </span>
       </button>
     </li>
-  );  
+  );
 };
 
 export const InteractiveList = ({ elements }: InteractiveListProps) => (

@@ -1,11 +1,11 @@
 declare const styles: {
-  readonly interactiveList: string;
-  readonly interactiveListElement: string;
-  readonly 'interactiveListElement__chevron': string;
-  readonly 'interactiveListElement--inactive': string;
-  readonly 'interactiveListElement--active': string;
-  readonly 'interactiveListElement__button': string;
-  readonly 'interactiveListElement__button__contentContainer': string;
+  readonly "interactiveList": string;
+  readonly "interactiveListElement": string;
+  readonly "interactiveListElementActive": string;
+  readonly "interactiveListElementButton": string;
+  readonly "interactiveListElementButtonContentContainer": string;
+  readonly "interactiveListElementChevron": string;
+  readonly "interactiveListElementInactive": string;
 };
+export = styles;
 
-export default styles;
