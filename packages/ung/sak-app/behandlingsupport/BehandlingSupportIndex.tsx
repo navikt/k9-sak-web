@@ -209,7 +209,8 @@ const BehandlingSupportIndex = ({
 
   const navigate = useNavigate();
 
-  const erPaVent = behandling ? behandling.behandlingPåVent : false;
+  // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
+  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
   const erSendMeldingRelevant = fagsak && !erPaVent;
 
   const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
