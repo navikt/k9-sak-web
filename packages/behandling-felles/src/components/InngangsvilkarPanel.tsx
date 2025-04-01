@@ -11,7 +11,7 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Tabs } from '@navikt/ds-react';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
@@ -105,19 +105,21 @@ const InngangsvilkarPanel = ({
             <VerticalSpacer thirtyTwoPx />
           </>
         )}
-        <Tabs defaultValue="0">
-          <Tabs.List>
-            {tabs.map((tab, index) => (
-              <Tabs.Tab
-                key={tab.key}
-                value={`${index}`}
-                label={tab.label}
-                onClick={() => setVisAllePerioder(index === 1)}
-              />
-            ))}
-          </Tabs.List>
-        </Tabs>
-        <VerticalSpacer thirtyTwoPx />
+        {tabs.length > 1 && (
+          <Tabs defaultValue="0">
+            <Tabs.List>
+              {tabs.map((tab, index) => (
+                <Tabs.Tab
+                  key={tab.key}
+                  value={`${index}`}
+                  label={tab.label}
+                  onClick={() => setVisAllePerioder(index === 1)}
+                />
+              ))}
+            </Tabs.List>
+          </Tabs>
+        )}
+        {tabs.length > 1 ? <VerticalSpacer thirtyTwoPx /> : <VerticalSpacer sixteenPx />}
         <HGrid gap="4" columns={filteredPanels.length > 2 ? { xs: '6fr 6fr' } : { xs: '8fr 4fr' }}>
           <div>
             {filteredPanels

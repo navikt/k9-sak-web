@@ -1,8 +1,8 @@
-import type { Periode } from '@k9-sak-web/backend/k9sak/generated';
 import { CalendarIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Heading, HStack } from '@navikt/ds-react';
 import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
+import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingPickerItemContent.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
@@ -14,7 +14,7 @@ interface OwnProps {
   behandlingsresultatTypeNavn?: string;
   erAutomatiskRevurdering: boolean;
   behandlingTypeNavn: string;
-  søknadsperioder: Periode[];
+  søknadsperioder: K9UngPeriode[];
   erFerdigstilt: boolean;
   erUnntaksløype: boolean;
   index: number;

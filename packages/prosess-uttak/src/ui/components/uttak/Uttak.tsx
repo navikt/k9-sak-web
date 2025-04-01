@@ -18,10 +18,8 @@ import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
-import GammelUttakDetaljer from '../uttak-detaljer/GammelUttakDetaljer';
-import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
+import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
@@ -36,7 +34,6 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const featureToggles = React.useContext(FeatureTogglesContext);
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 
@@ -132,13 +129,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
               {harOppfyltAlleInngangsvilkår ? (
-                <>
-                  {featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK ? (
-                    <NyUttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
-                  ) : (
-                    <GammelUttakDetaljer uttak={uttak} />
-                  )}
-                </>
+                <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
               ) : (
                 <Vilkårsliste inngangsvilkår={inngangsvilkår} />
               )}

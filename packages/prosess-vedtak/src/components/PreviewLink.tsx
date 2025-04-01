@@ -3,14 +3,14 @@ import React, { ReactNode, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FileSearchIcon } from "@navikt/aksel-icons";
+import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import { validerRedigertHtml } from './FritekstRedigering/RedigeringUtils';
 
 import styles from './vedtakForm.module.css';
 
 interface PreviewLinkProps {
-  previewCallback: (event: React.SyntheticEvent) => void;
+  previewCallback: (event: React.SyntheticEvent) => Promise<any>;
   redigertHtml?: string | boolean;
   children: ReactNode;
   noIcon?: boolean;
@@ -29,17 +29,29 @@ const PreviewLink = ({
   loading,
 }: PreviewLinkProps) => {
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
+  const [isFetchingPreview, setIsFetchingPreview] = useState<boolean>(false);
+
+  const handlePreviewRequest = async (e: React.SyntheticEvent) => {
+    try {
+      await previewCallback(e);
+    } finally {
+      setIsFetchingPreview(false);
+    }
+  };
 
   const onPreview = async e => {
-    if (!redigertHtml) return previewCallback(e);
+    setIsFetchingPreview(true);
+    if (!redigertHtml) {
+      return handlePreviewRequest(e);
+    }
     const validert = await validerRedigertHtml.isValid(redigertHtml);
 
     if (validert) {
       setVisValideringsFeil(false);
-      return previewCallback(e);
+      return handlePreviewRequest(e);
     }
     setVisValideringsFeil(true);
-
+    setIsFetchingPreview(false);
     return true;
   };
 
@@ -59,10 +71,9 @@ const PreviewLink = ({
           variant="tertiary"
           size={size}
           onClick={onPreview}
-          onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
           className={classNames(styles.previewLink, styles['previewLink--noIcon'])}
           type="button"
-          loading={loading}
+          loading={loading || isFetchingPreview}
         >
           {children}
         </Button>
@@ -77,7 +88,7 @@ const PreviewLink = ({
           onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
           className={classNames(styles.previewLink)}
           type="button"
-          loading={loading}
+          loading={loading || isFetchingPreview}
         >
           {children}
         </Button>

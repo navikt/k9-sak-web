@@ -3,7 +3,6 @@ import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
 import UttakContainer from './UttakContainer';
 import { userEvent, within, expect } from '@storybook/test';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 
 const meta: Meta<typeof UttakContainer> = {
   title: 'prosess/prosess-uttak',
@@ -466,7 +465,7 @@ export const UttakMedInntektsgradering: Story = {
       readOnly: false,
     },
   },
-  decorators: [withFeatureToggles({ BRUK_INNTEKTSGRADERING_I_UTTAK: true })],
+  decorators: [],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 

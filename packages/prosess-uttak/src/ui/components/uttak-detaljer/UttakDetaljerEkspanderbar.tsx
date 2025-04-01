@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import styles from './nyUttakDetaljer.module.css';
 import { BodyShort, Box } from '@navikt/ds-react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+
+import styles from './uttakDetaljer.module.css';
 
 interface UttakEkspanderbarProps {
   title: string;

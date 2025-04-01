@@ -1,0 +1,14 @@
+.dataBox {
+  border-radius: 0.5rem;
+  background-color: #eef6fc;
+  padding: 1.25rem 1rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.utbetalingText {
+  color: #156389;
+}
+
+.expandButton {
+  justify-content: space-between;
+}
