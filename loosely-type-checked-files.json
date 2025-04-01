@@ -43,7 +43,6 @@
   "packages/behandling-omsorgspenger/src/components/OmsorgspengerProsess.tsx",
   "packages/behandling-opplaeringspenger/src/BehandlingOpplaeringspengerIndex.tsx",
   "packages/behandling-opplaeringspenger/src/components/OmsorgenFor.tsx",
-  "packages/behandling-opplaeringspenger/src/components/OpplaeringspengerFakta.spec.tsx",
   "packages/behandling-opplaeringspenger/src/components/OpplaeringspengerFakta.tsx",
   "packages/behandling-opplaeringspenger/src/components/OpplaeringspengerPaneler.tsx",
   "packages/behandling-opplaeringspenger/src/components/OpplaeringspengerProsess.tsx",
