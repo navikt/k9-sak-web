@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import { ChevronDownIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 
-import styles from './interactiveList.module.d.css';
+import styles from './interactiveList.module.css';
 
 export interface InteractiveListElement {
   content: React.ReactNode;
