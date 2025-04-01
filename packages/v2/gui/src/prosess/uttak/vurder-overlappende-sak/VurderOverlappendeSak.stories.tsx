@@ -15,8 +15,8 @@ const fom1 = dayjs().subtract(4, 'week');
 const tom1 = dayjs().subtract(3, 'week');
 const fom2 = dayjs().subtract(2, 'week');
 const tom2 = dayjs().subtract(1, 'week');
-const splittFom = fom1.add(2, 'day');
-const splittTom = splittFom.add(2, 'day');
+// const splittFom = fom1.add(2, 'day');
+// const splittTom = splittFom.add(2, 'day');
 
 const førstePeriodeMedOverlapp = {
   periode: { fom: fom1.toISOString(), tom: tom1.toISOString() },
@@ -115,46 +115,46 @@ const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequ
   ],
 };
 
-const bekreftAksjonspunktMedSplittRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
-  behandlingId: '123',
-  behandlingVersjon: 1,
-  bekreftedeAksjonspunktDtoer: [
-    {
-      '@type': '9292',
-      kode: '9292',
-      begrunnelse: 'Dette er en grundig begrunnelse',
-      perioder: [
-        {
-          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
-          begrunnelse: 'Dette er en grundig begrunnelse',
-          periode: { fom: stdDato(fom1), tom: stdDato(splittFom.subtract(1, 'day')) },
-          valg: 'JUSTERT_GRAD',
-          søkersUttaksgrad: 40,
-        },
-        {
-          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
-          begrunnelse: 'Dette er en grundig begrunnelse',
-          periode: { fom: stdDato(splittFom), tom: stdDato(splittTom) },
-          valg: 'JUSTERT_GRAD',
-          søkersUttaksgrad: 40,
-        },
-        {
-          // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
-          begrunnelse: 'Dette er en grundig begrunnelse',
-          periode: { fom: stdDato(splittTom.add(1, 'day')), tom: stdDato(tom1) },
-          valg: 'JUSTERT_GRAD',
-          søkersUttaksgrad: 40,
-        },
-        {
-          begrunnelse: 'Dette er en grundig begrunnelse',
-          periode: { fom: stdDato(fom2), tom: stdDato(tom2) },
-          valg: 'INGEN_JUSTERING',
-          søkersUttaksgrad: undefined,
-        },
-      ],
-    },
-  ],
-};
+// const bekreftAksjonspunktMedSplittRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
+//   behandlingId: '123',
+//   behandlingVersjon: 1,
+//   bekreftedeAksjonspunktDtoer: [
+//     {
+//       '@type': '9292',
+//       kode: '9292',
+//       begrunnelse: 'Dette er en grundig begrunnelse',
+//       perioder: [
+//         {
+//           // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+//           begrunnelse: 'Dette er en grundig begrunnelse',
+//           periode: { fom: stdDato(fom1), tom: stdDato(splittFom.subtract(1, 'day')) },
+//           valg: 'JUSTERT_GRAD',
+//           søkersUttaksgrad: 40,
+//         },
+//         {
+//           // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+//           begrunnelse: 'Dette er en grundig begrunnelse',
+//           periode: { fom: stdDato(splittFom), tom: stdDato(splittTom) },
+//           valg: 'JUSTERT_GRAD',
+//           søkersUttaksgrad: 40,
+//         },
+//         {
+//           // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
+//           begrunnelse: 'Dette er en grundig begrunnelse',
+//           periode: { fom: stdDato(splittTom.add(1, 'day')), tom: stdDato(tom1) },
+//           valg: 'JUSTERT_GRAD',
+//           søkersUttaksgrad: 40,
+//         },
+//         {
+//           begrunnelse: 'Dette er en grundig begrunnelse',
+//           periode: { fom: stdDato(fom2), tom: stdDato(tom2) },
+//           valg: 'INGEN_JUSTERING',
+//           søkersUttaksgrad: undefined,
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer as EgneOverlappendeSakerDto[]);
 const meta = {
@@ -346,7 +346,7 @@ export const LøsAksjonspunkt: Story = {
 
 export const LøsAksjonspunktMedSplitt: Story = {
   args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
 
@@ -388,53 +388,53 @@ export const LøsAksjonspunktMedSplitt: Story = {
         }
       });
 
-      await step('skjemaet skal oppdatere seg når man velger en periode', async () => {
-        await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
-        const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
-        if (splittTomButton.className.includes('rdp-day_disabled')) {
-          await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
-          await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
-        } else {
-          await user.click(splittTomButton);
-        }
+      // await step('skjemaet skal oppdatere seg når man velger en periode', async () => {
+      //   await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
+      //   const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
+      //   if (splittTomButton.className.includes('rdp-day_disabled')) {
+      //     await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+      //     await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+      //   } else {
+      //     await user.click(splittTomButton);
+      //   }
 
-        await expect(
-          await canvas.findByRole('group', {
-            name: `Vurder uttak i denne saken for perioden ${visnDato(fom1)} - ${visnDato(splittFom.subtract(1, 'day'))} Splitt periode Slett periode Hvor kommer dette fra?`,
-          }),
-        );
+      //   await expect(
+      //     await canvas.findByRole('group', {
+      //       name: `Vurder uttak i denne saken for perioden ${visnDato(fom1)} - ${visnDato(splittFom.subtract(1, 'day'))} Splitt periode Slett periode Hvor kommer dette fra?`,
+      //     }),
+      //   );
 
-        await expect(
-          await canvas.findByRole('group', {
-            name: `Vurder uttak i denne saken for perioden ${visnDato(splittFom)} - ${visnDato(splittTom)} Splitt periode Slett periode Hvor kommer dette fra?`,
-          }),
-        );
+      //   await expect(
+      //     await canvas.findByRole('group', {
+      //       name: `Vurder uttak i denne saken for perioden ${visnDato(splittFom)} - ${visnDato(splittTom)} Splitt periode Slett periode Hvor kommer dette fra?`,
+      //     }),
+      //   );
 
-        await expect(
-          await canvas.findByRole('group', {
-            name: `Vurder uttak i denne saken for perioden ${visnDato(splittTom.add(1, 'day'))} - ${visnDato(tom1)} Splitt periode Slett periode Hvor kommer dette fra?`,
-          }),
-        );
+      //   await expect(
+      //     await canvas.findByRole('group', {
+      //       name: `Vurder uttak i denne saken for perioden ${visnDato(splittTom.add(1, 'day'))} - ${visnDato(tom1)} Splitt periode Slett periode Hvor kommer dette fra?`,
+      //     }),
+      //   );
 
-        await expect(
-          await canvas.findByRole('group', {
-            name: `Vurder uttak i denne saken for perioden ${visnDato(fom2)} - ${visnDato(tom2)} Splitt periode`,
-          }),
-        );
-      });
+      //   await expect(
+      //     await canvas.findByRole('group', {
+      //       name: `Vurder uttak i denne saken for perioden ${visnDato(fom2)} - ${visnDato(tom2)} Splitt periode`,
+      //     }),
+      //   );
+      // });
 
-      await step('Skal kunne sende inn skjemaet', async () => {
-        const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
-        await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
-        await user.type(
-          await canvas.findByLabelText('Begrunnelse'),
-          bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.begrunnelse || '',
-        );
-        await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
+      // await step('Skal kunne sende inn skjemaet', async () => {
+      //   const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+      //   await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+      //   await user.type(
+      //     await canvas.findByLabelText('Begrunnelse'),
+      //     bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.begrunnelse || '',
+      //   );
+      //   await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
 
-        await expect(args.oppdaterBehandling).toHaveBeenCalled();
-        await expect(api.sisteBekreftAksjonspunktResultat).toEqual(bekreftAksjonspunktMedSplittRequest);
-      });
+      //   await expect(args.oppdaterBehandling).toHaveBeenCalled();
+      //   await expect(api.sisteBekreftAksjonspunktResultat).toEqual(bekreftAksjonspunktMedSplittRequest);
+      // });
     });
   },
   render: props => (

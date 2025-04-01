@@ -45,7 +45,7 @@ interface VedtakPanelsProps {
   medlemskapFom: string | undefined;
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: () => void;
+  previewCallback: () => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
   språkkode: string;

@@ -54,7 +54,7 @@ export const manuellBrevPreview = ({
   aapneINyttVindu,
 }: {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  previewCallback: (values, aapneINyttVindu) => void;
+  previewCallback: (values, aapneINyttVindu) => Promise<any>;
   values: FormikValues;
   redigertHtml: any;
   overstyrtMottaker: Brevmottaker;
@@ -109,14 +109,14 @@ const getManuellBrevCallback =
     overskrift: string;
     overstyrtMottaker?: Brevmottaker;
     formProps: CustomFormikProps;
-    previewCallback: (values, aapneINyttVindu) => void;
+    previewCallback: (values, aapneINyttVindu) => Promise<any>;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
   async (e, redigertHtml = undefined) => {
     e.preventDefault();
     const errors = await formProps.validateForm();
     if (Object.keys(errors).length === 0) {
-      manuellBrevPreview({
+      await manuellBrevPreview({
         tilgjengeligeVedtaksbrev,
         previewCallback,
         values: formProps.values,
@@ -155,7 +155,7 @@ interface BrevPanelProps {
   overskrift: string;
   overstyrtMottaker?: Brevmottaker;
   personopplysninger: PersonopplysningDto;
-  previewCallback: (values, aapneINyttVindu) => void;
+  previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   skalBrukeOverstyrendeFritekstBrev: boolean;
   språkkode: string;

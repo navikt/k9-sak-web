@@ -52,7 +52,7 @@ interface VedtakProsessIndexProps {
   };
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: () => void;
+  previewCallback: () => Promise<any>;
   simuleringResultat: VedtakSimuleringResultat;
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
