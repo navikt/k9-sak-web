@@ -13,7 +13,7 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
       >
         <BodyLong className="whitespace-pre-wrap">{vurdering.begrunnelse}</BodyLong>
       </LabelledContent>
-      <VurdertAv ident={'Trollmannen Gandalf🧙'} date="2025-03-28" />
+      <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} />
       <LabelledContent label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?">
         <BodyShort>{vurdering.godkjent ? 'Ja' : 'Nei'}</BodyShort>
       </LabelledContent>

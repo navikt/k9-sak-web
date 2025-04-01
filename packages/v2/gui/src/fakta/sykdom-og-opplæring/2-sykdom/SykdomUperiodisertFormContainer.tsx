@@ -8,6 +8,7 @@ import { DetailViewV2 } from '../../../shared/detail-view/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+  const { readOnly } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
 
   useEffect(() => {
@@ -16,20 +17,20 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
     }
   }, [vurdering]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
-  const visForm = (redigering && vurdering.vurderingsdato) || !vurdering.vurderingsdato;
+  const visForm = (redigering && vurdering.vurdertTidspunkt) || !vurdering.vurdertTidspunkt;
   return (
     <DetailViewV2
       title="Vurdering av sykdom"
-      contentAfterTitleRenderer={() => (
-        <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
-      )}
+      contentAfterTitleRenderer={() =>
+        !readOnly && <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
+      }
     >
       <div data-testid="Periode" className="flex items-center gap-2">
-        {vurdering.vurderingsdato && (
+        {vurdering.vurdertTidspunkt && (
           <>
             <div className="flex my-auto gap-2">
               <CalendarIcon height={24} width={24} />{' '}
-              <span>{dayjs(vurdering.vurderingsdato).format('DD.MM.YYYY')}</span>
+              <span>{dayjs(vurdering.vurdertTidspunkt).format('DD.MM.YYYY')}</span>
             </div>
           </>
         )}

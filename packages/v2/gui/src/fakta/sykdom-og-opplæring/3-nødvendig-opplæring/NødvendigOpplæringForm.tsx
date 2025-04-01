@@ -24,7 +24,7 @@ const NødvendigOpplæringForm = ({
   setRedigering: (redigering: boolean) => void;
   redigering: boolean;
 }) => {
-  const { løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
+  const { løsAksjonspunkt9302, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     dokumentertOpplæring: string;
     nødvendigOpplæring: string;
@@ -67,7 +67,7 @@ const NødvendigOpplæringForm = ({
             control={formMethods.control}
             name="dokumentertOpplæring"
             render={({ field }) => (
-              <RadioGroup legend="Er nødvendig opplæring dokumentert med legeerklæring?" {...field}>
+              <RadioGroup legend="Er nødvendig opplæring dokumentert med legeerklæring?" {...field} readOnly={readOnly}>
                 <Radio value="ja">Ja</Radio>
                 <Radio value="nei">Nei</Radio>
               </RadioGroup>
@@ -80,6 +80,7 @@ const NødvendigOpplæringForm = ({
             </Label>
             <Textarea
               {...formMethods.register('begrunnelse')}
+              readOnly={readOnly}
               size="small"
               label=""
               id="begrunnelse"
@@ -114,6 +115,7 @@ const NødvendigOpplæringForm = ({
               <RadioGroup
                 legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
                 {...field}
+                readOnly={readOnly}
               >
                 <Radio value="ja">Ja</Radio>
                 <Radio value="nei">Nei</Radio>
@@ -126,19 +128,22 @@ const NødvendigOpplæringForm = ({
               maxDate={new Date(vurdering.opplæring.tom)}
               fromFieldName="periode.fom"
               toFieldName="periode.tom"
+              readOnly={readOnly}
             />
           )}
           {/* nødvendigOpplæring === 'nei' && <Avslagårsak vurdering={vurdering} /> */}
-          <div className="flex gap-4">
-            <Button variant="primary" type="submit" size="small">
-              Bekreft og fortsett
-            </Button>
-            {redigering && (
-              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
-                Avbryt redigering
+          {!readOnly && (
+            <div className="flex gap-4">
+              <Button variant="primary" type="submit" size="small">
+                Bekreft og fortsett
               </Button>
-            )}
-          </div>
+              {redigering && (
+                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+                  Avbryt redigering
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </Form>
     </>

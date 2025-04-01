@@ -17,3 +17,4 @@
 [] Avslagsårsak i nødvendig opplæring
 [] Fikse prosesspanel
 [] Sortering av perioder, ikke vurderte øverst
+[] utfylle tidligere valgt vurdering i sykdomi bekreft alert

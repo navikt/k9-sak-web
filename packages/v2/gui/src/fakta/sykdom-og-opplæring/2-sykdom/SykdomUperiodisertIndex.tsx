@@ -32,7 +32,7 @@ export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: () => {},
 });
 const VurderSykdomUperiodisert = () => {
-  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
   const { data: langvarigSykVurderingerFagsak } = useLangvarigSykVurderingerFagsak(behandlingUuid);
   const mappedVurderinger = langvarigSykVurderingerFagsak?.map(element => ({
     ...element,
@@ -40,7 +40,7 @@ const VurderSykdomUperiodisert = () => {
   }));
   const vurderingsliste = langvarigSykVurderingerFagsak?.map(element => ({
     ...element,
-    perioder: element.vurderingsdato ? [new Period(element.vurderingsdato, element.vurderingsdato)] : [],
+    perioder: element.vurdertTidspunkt ? [new Period(element.vurdertTidspunkt, element.vurdertTidspunkt)] : [],
     id: element.uuid,
     resultat: utledResultat(element),
   }));
@@ -77,9 +77,11 @@ const VurderSykdomUperiodisert = () => {
             </>
           )}
           belowNavigationContent={
-            <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
-              Legg til ny sykdomsvurdering
-            </Button>
+            !readOnly && (
+              <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
+                Legg til ny sykdomsvurdering
+              </Button>
+            )
           }
           detailSection={() => {
             if (nyVurdering) {
@@ -177,13 +179,13 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
                     >
                       {vurderinger.map(vurdering => (
                         <Radio key={vurdering.uuid} value={vurdering.uuid}>
-                          {dayjs(vurdering.vurderingsdato).format('DD.MM.YYYY')}
+                          {dayjs(vurdering.vurdertTidspunkt).format('DD.MM.YYYY')}
                         </Radio>
                       ))}
                     </RadioGroup>
                   )}
                 />
-                {aksjonspunktErLøst && (
+                {aksjonspunktErLøst && !readOnly && (
                   <div>
                     <Button
                       className="mt-2"
@@ -193,7 +195,7 @@ const BekreftAlert = ({ vurderinger = [] }: { vurderinger?: LangvarigSykdomVurde
                       type="button"
                       size="small"
                     >
-                      Endre vurdering
+                      Rediger vurdering
                     </Button>
                   </div>
                 )}

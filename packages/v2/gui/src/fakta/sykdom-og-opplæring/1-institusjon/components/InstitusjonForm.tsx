@@ -76,17 +76,19 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         />
       </Box>
 
-      <Box className="flex mt-8">
-        <Button size="small">Bekreft og fortsett</Button>
+      {!readOnly && (
+        <Box className="flex mt-8">
+          <Button size="small">Bekreft og fortsett</Button>
 
-        {erRedigering && (
-          <div className="ml-4">
-            <Button size="small" variant="secondary" type="button" onClick={avbrytRedigering}>
-              Avbryt redigering
-            </Button>
-          </div>
-        )}
-      </Box>
+          {erRedigering && (
+            <div className="ml-4">
+              <Button size="small" variant="secondary" type="button" onClick={avbrytRedigering}>
+                Avbryt redigering
+              </Button>
+            </div>
+          )}
+        </Box>
+      )}
     </Form>
   );
 };

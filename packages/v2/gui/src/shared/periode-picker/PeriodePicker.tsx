@@ -10,6 +10,7 @@ interface PeriodePickerProps {
   toFieldName: string;
   fromLabel?: string;
   toLabel?: string;
+  readOnly?: boolean;
 }
 
 /**
@@ -20,6 +21,7 @@ interface PeriodePickerProps {
  * @param toFieldName - The form field name for the end date (default: 'periode.tom')
  * @param fromLabel - Label for the start date input (default: 'Fra')
  * @param toLabel - Label for the end date input (default: 'Til')
+ * @param readOnly - Whether the picker is read-only (default: false)
  */
 const PeriodePicker = ({
   minDate,
@@ -28,6 +30,7 @@ const PeriodePicker = ({
   toFieldName,
   fromLabel = 'Fra',
   toLabel = 'Til',
+  readOnly = false,
 }: PeriodePickerProps) => {
   const formMethods = useFormContext();
 
@@ -66,8 +69,8 @@ const PeriodePicker = ({
   return (
     <DatePicker {...datepickerProps}>
       <HStack wrap gap="4" justify="center">
-        <DatePicker.Input {...fromInputProps} label={fromLabel} />
-        <DatePicker.Input {...toInputProps} label={toLabel} />
+        <DatePicker.Input {...fromInputProps} label={fromLabel} readOnly={readOnly} />
+        <DatePicker.Input {...toInputProps} label={toLabel} readOnly={readOnly} />
       </HStack>
     </DatePicker>
   );

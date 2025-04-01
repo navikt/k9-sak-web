@@ -12,12 +12,10 @@ import { useOppdaterSykdomsvurdering, useOpprettSykdomsvurdering } from '../Sykd
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useQueryClient } from '@tanstack/react-query';
 import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
-export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> & {
-  godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
-  vurderingsdato?: string;
-  uuid?: string;
-  behandlingUuid?: string;
-};
+export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
+  Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
+    godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
+  };
 
 const finnAvslagsårsak = (godkjent: string) => {
   if (godkjent === 'mangler_dokumentasjon') {

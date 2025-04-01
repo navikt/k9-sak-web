@@ -2,6 +2,7 @@ import type { ReisetidInfoFraSøker } from '@k9-sak-web/backend/k9sak/generated'
 import { Label, BodyLong, Tag } from '@navikt/ds-react';
 import { Period } from '@navikt/ft-utils';
 
+// TODO ikke glem readonly når feltet kan redigeres
 const OppgittReisetid = ({
   reisedagerOppgittISøknad,
 }: {

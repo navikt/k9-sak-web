@@ -4,8 +4,9 @@ import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import DetailView from '../../../shared/detail-view/DetailView';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button } from '@navikt/ds-react';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const [redigering, setRedigering] = useState(false);
@@ -39,12 +40,13 @@ const Wrapper = ({
   setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
   redigering: boolean;
 }) => {
+  const { readOnly } = useContext(SykdomOgOpplæringContext);
   const enkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
   return (
     <DetailView
       title="Vurdering av nødvendig opplæring"
       contentAfterTitleRenderer={() => {
-        if (vurdering.resultat === 'MÅ_VURDERES' || redigering) {
+        if (vurdering.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
           return null;
         }
         return (

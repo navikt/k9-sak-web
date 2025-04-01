@@ -17,7 +17,7 @@ interface ReisetidFormProps {
 }
 
 const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProps) => {
-  const { løsAksjonspunkt9303, behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { løsAksjonspunkt9303, behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     begrunnelse: string;
     godkjent: string;
@@ -57,7 +57,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
       <Form formMethods={formMethods}>
         <div className="flex flex-col gap-6">
           <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} />
-          <Textarea label="Vurdering" {...formMethods.register('begrunnelse')} />
+          <Textarea label="Vurdering" {...formMethods.register('begrunnelse')} readOnly={readOnly} />
           <Controller
             name="godkjent"
             rules={{ required: true }}
@@ -65,6 +65,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
               <RadioGroup
                 legend={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}
                 {...field}
+                readOnly={readOnly}
               >
                 <Radio value="ja">Ja</Radio>
                 <Radio value="nei">Nei</Radio>
@@ -77,18 +78,21 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
               maxDate={new Date(vurdering.perioder[0]?.tom as string)}
               fromFieldName="periode.fom"
               toFieldName="periode.tom"
+              readOnly={readOnly}
             />
           )}
-          <div className="flex gap-4">
-            <Button variant="primary" onClick={submit} size="small">
-              Bekreft og fortsett
-            </Button>
-            {redigering && (
-              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
-                Avbryt redigering
+          {!readOnly && (
+            <div className="flex gap-4">
+              <Button variant="primary" onClick={submit} size="small">
+                Bekreft og fortsett
               </Button>
-            )}
-          </div>
+              {redigering && (
+                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+                  Avbryt redigering
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </Form>
     </>
