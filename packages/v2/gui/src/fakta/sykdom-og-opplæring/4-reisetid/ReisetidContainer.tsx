@@ -5,7 +5,8 @@ import ReisetidFerdigvisning from './ReisetidFerdigvisning';
 import DetailView from '../../../shared/detail-view/DetailView';
 import { BodyLong, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigering, setRedigering] = useState(false);
   if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
@@ -33,11 +34,12 @@ const Wrapper = ({
   setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
   redigering: boolean;
 }) => {
+  const { readOnly } = useContext(SykdomOgOpplæringContext);
   return (
     <DetailView
       title="Vurdering av reisetid"
       contentAfterTitleRenderer={() => {
-        if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
+        if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
           return null;
         }
         return (
