@@ -15,4 +15,4 @@
 [] Validering nødvendig opplæring
 [] Validering reisetid
 [] Avslagsårsak i nødvendig opplæring
-[ ] Fikse prosesspanel
+[] Fikse prosesspanel
