@@ -3,12 +3,12 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
-import type { Aksjonspunkt } from '@k9-sak-web/types/src/aksjonspunktTsType';
 import { Tabs } from '@navikt/ds-react';
 import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
+import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
     aksjonspunkter.some(

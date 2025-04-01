@@ -3,7 +3,6 @@ import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { Alert, BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
-import { Period } from '@fpsak-frontend/utils';
 import { createContext, useContext, useState } from 'react';
 import { PencilIcon, PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak } from '../SykdomOgOpplæringQueries';
@@ -16,6 +15,7 @@ import SykdomUperiodisertFormContainer from './SykdomUperiodisertFormContainer';
 import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { Period } from '@navikt/ft-utils';
 const utledResultat = (element: LangvarigSykdomVurderingDto) => {
   if (element.godkjent) {
     return Resultat.OPPFYLT;
