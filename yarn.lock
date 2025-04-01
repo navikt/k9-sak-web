@@ -4402,17 +4402,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.12"
-    formik: "npm:2.4.6"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-medisinsk-vilkar@npm:1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
