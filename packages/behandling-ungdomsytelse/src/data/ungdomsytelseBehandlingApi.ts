@@ -32,6 +32,7 @@ export enum UngdomsytelseBehandlingApiKeys {
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
   FRITEKSTDOKUMENTER = 'FRITEKSTDOKUMENTER',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
+  KONTROLLER_INNTEKT = 'KONTROLLER_INNTEKT',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -53,6 +54,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('informasjonsbehov-vedtaksbrev', UngdomsytelseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
   .withRel('pleiepenger-fritekstdokumenter', UngdomsytelseBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('overlappende-ytelser', UngdomsytelseBehandlingApiKeys.OVERLAPPENDE_YTELSER)
+  .withRel('kontroller-inntekt-perioder', UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT)
 
   // operasjoner
   .withRel('dokumentdata-lagre', UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_LAGRE)
