@@ -40,7 +40,7 @@ const alleBehandlinger = [
     versjon: 2,
     uuid: '423223',
     behandlingKoet: false,
-    behandlingPåVent: false,
+    behandlingPaaVent: false,
     kanHenleggeBehandling: true,
     type: {
       kode: behandlingType.REVURDERING,
@@ -107,6 +107,7 @@ describe('BehandlingMenuIndex', () => {
       <MemoryRouter>
         <BehandlingMenuIndex
           fagsak={fagsak as Fagsak}
+          // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
           alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
           behandlingId={1}
           behandlingVersjon={2}
