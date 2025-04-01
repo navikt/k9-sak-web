@@ -1,10 +1,10 @@
-/* import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent } from '@storybook/test';
-import { Period } from '@navikt/ft-utils';
+import type { Meta } from '@storybook/react';
+//import { expect, fn, userEvent } from '@storybook/test';
+//import { Period } from '@navikt/ft-utils';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
-import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder';
-import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
-import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+//import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder';
+//import type { InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+//import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 const meta = {
   title: 'gui/fakta/institusjon',
@@ -12,6 +12,8 @@ const meta = {
 } satisfies Meta<typeof FaktaInstitusjonIndex>;
 
 export default meta;
+
+/*
 
 type Story = StoryObj<typeof meta>;
 

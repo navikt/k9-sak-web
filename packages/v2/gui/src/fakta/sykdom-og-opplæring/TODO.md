@@ -16,3 +16,4 @@
 [] Validering reisetid
 [] Avslagsårsak i nødvendig opplæring
 [] Fikse prosesspanel
+[] Sortering av perioder, ikke vurderte øverst
