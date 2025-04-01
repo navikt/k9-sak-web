@@ -34,7 +34,17 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   ) {
     return 'reisetid';
   }
-  return 'institusjon';
+
+  if (
+    aksjonspunkter.some(
+      ap =>
+        ap.definisjon.kode === aksjonspunktCodes.VURDER_INSTITUSJON && ap.status.kode === aksjonspunktStatus.OPPRETTET,
+    )
+  ) {
+    return 'institusjon';
+  }
+
+  return '';
 };
 
 type payloads =
@@ -197,7 +207,7 @@ const FaktaSykdomOgOpplæringIndex = ({
 
 const SykdomOgOpplæring = () => {
   const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const [activeTab, setActiveTab] = useState(finnTabMedAksjonspunkt(aksjonspunkter));
+  const [activeTab, setActiveTab] = useState(finnTabMedAksjonspunkt(aksjonspunkter) || 'institusjon');
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   return (
     <Tabs value={activeTab} onChange={setActiveTab}>
