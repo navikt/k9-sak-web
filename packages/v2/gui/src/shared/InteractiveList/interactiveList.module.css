@@ -3,28 +3,35 @@
   margin: 0;
   padding: 0;
 }
+
 .interactiveListElement {
   border-bottom: 1px solid #c6c2bf;
   position: relative;
 }
+
 .interactiveListElement:first-of-type {
   border-top: 1px solid #c6c2bf;
 }
+
 .interactiveListElement:last-of-type {
   border-bottom: 0;
 }
+
 .interactiveListElementChevron {
   align-self: center;
   margin-left: 1.125rem;
   margin-right: 1.875rem;
   transform: rotate(-90deg);
 }
+
 .interactiveListElementInactive:hover {
   background: #f2f7fc;
 }
+
 .interactiveListElementActive {
   background: #cce4fd;
 }
+
 .interactiveListElementActive:before {
   background-color: #0067c5;
   border-bottom-right-radius: 0.25rem;
@@ -37,11 +44,13 @@
   top: 0;
   width: 0.3125rem;
 }
+
 .interactiveListElementActive p {
   color: #262626;
   font-weight: bold;
   text-decoration: none;
 }
+
 .interactiveListElementButton {
   background: transparent;
   border: none;
@@ -52,9 +61,11 @@
   text-align: left;
   width: 100%;
 }
+
 .interactiveListElementButton:focus-visible {
   outline: #0067c5 auto 1px;
 }
+
 .interactiveListElementButtonContentContainer {
   display: flex;
   justify-content: space-between;
