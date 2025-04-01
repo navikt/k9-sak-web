@@ -6,6 +6,7 @@ import { Period } from '@navikt/ft-utils';
 import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import NødvendigOpplæringContainer from './NødvendigOpplæringContainer';
 import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
+
 const NødvendigOpplæring = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { data: vurdertOpplæring } = useVurdertOpplæring(behandlingUuid);
@@ -19,7 +20,7 @@ const NødvendigOpplæring = () => {
       <NavigationWithDetailView
         navigationSection={() => (
           <>
-            <Vurderingsnavigasjon
+            <Vurderingsnavigasjon<OpplæringVurderingDto & { perioder: Period[] }>
               perioderTilVurdering={vurderingsliste || []}
               vurdertePerioder={[]}
               onPeriodeClick={setValgtVurdering}

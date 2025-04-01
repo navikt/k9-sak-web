@@ -8,6 +8,7 @@ import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 import DetailView from '../../../../shared/detail-view/DetailView.js';
 import { PencilIcon } from '@navikt/aksel-icons';
+import { LabelledContent } from '../../../../shared/LabelledContent/LabelledContent.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -45,10 +46,9 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
       ))}
 
       <Box className="mt-8">
-        <LabelledContent
-          label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
-          content={vurdering.institusjon}
-        />
+        <LabelledContent label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?">
+          {vurdering.institusjon}
+        </LabelledContent>
       </Box>
 
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (

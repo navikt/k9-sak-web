@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 
 import { DetailViewV2 } from '../detail-view/DetailView';
 import { NavigationWithDetailView } from './NavigationWithDetailView';
@@ -13,7 +13,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    showDetailSection: true,
     navigationSection: () => <p>Navigasjon</p>,
     detailSection: () => (
       <DetailViewV2 title="Tittel">

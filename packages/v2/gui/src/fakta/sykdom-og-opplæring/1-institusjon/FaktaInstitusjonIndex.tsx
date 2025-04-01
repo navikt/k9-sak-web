@@ -83,7 +83,7 @@ const FaktaInstitusjonIndex = () => {
     <div>
       <NavigationWithDetailView
         navigationSection={() => (
-          <VurderingsperiodeNavigasjon
+          <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>
             perioderTilVurdering={perioderTilVurdering}
             vurdertePerioder={vurdertePerioder}
             onPeriodeClick={setValgtPeriode}
