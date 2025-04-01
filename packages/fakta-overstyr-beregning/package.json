@@ -12,7 +12,7 @@
     "@navikt/ds-react": "7.17.2",
     "date-fns": "4.1.0",
     "formik": "2.4.6",
-    "react": "19.0.0",
+    "react": "19.1.0",
     "react-intl": "7.1.10",
     "yup": "1.6.1"
   }
