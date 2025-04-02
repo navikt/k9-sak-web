@@ -1,6 +1,6 @@
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
-import { Box } from '@navikt/ds-react';
-import { AssessedBy, DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { Box, Button } from '@navikt/ds-react';
+import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
@@ -26,9 +26,9 @@ const NattevåksperiodeVurderingsdetaljer = ({
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <LinkButton className={styles.endreLink} onClick={onEditClick}>
+            <Button variant="tertiary" size="xsmall" className={styles.endreLink} onClick={onEditClick}>
               Rediger vurdering
-            </LinkButton>
+            </Button>
           )}
         />
       )}

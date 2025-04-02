@@ -5,8 +5,8 @@ import {
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
-import { Box } from '@navikt/ds-react';
-import { AssessedBy, BasicList, DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { Box, Button } from '@navikt/ds-react';
+import { AssessedBy, BasicList, DetailView } from '@navikt/ft-plattform-komponenter';
 import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
@@ -27,9 +27,9 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >

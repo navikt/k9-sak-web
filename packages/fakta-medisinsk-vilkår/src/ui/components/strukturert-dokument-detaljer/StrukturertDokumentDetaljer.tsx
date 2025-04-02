@@ -1,7 +1,7 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Alert, Box, Link } from '@navikt/ds-react';
-import { DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button, Link } from '@navikt/ds-react';
+import { DetailView } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
@@ -93,9 +93,9 @@ const StrukturertDokumentDetaljer = ({
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <LinkButton className={styles.endreLink} onClick={onEditDokumentClick}>
+            <Button variant="tertiary" size="xsmall" className={styles.endreLink} onClick={onEditDokumentClick}>
               Endre dokument
-            </LinkButton>
+            </Button>
           )}
         />
       )}

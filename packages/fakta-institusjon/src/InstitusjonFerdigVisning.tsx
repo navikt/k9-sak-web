@@ -1,8 +1,8 @@
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
-import { Box } from '@navikt/ds-react';
-import { AssessedBy, DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { Box, Button } from '@navikt/ds-react';
+import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import styles from './institusjonFerdigVisning.module.css';
 
 interface OwnProps {
@@ -20,9 +20,9 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) =>
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         visEndreLink ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >

@@ -1,11 +1,11 @@
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
-import { AssessedBy, BasicList, DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy, BasicList, DetailView } from '@navikt/ft-plattform-komponenter';
 import { useContext } from 'react';
 
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
-import { Box } from '@navikt/ds-react';
+import { Box, Button } from '@navikt/ds-react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
 import styles from './noedvendighetFerdigVisning.module.css';
@@ -25,9 +25,9 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >

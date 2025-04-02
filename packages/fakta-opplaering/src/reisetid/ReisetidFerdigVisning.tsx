@@ -1,4 +1,4 @@
-import { AssessedBy, DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import { useContext } from 'react';
 import { useIntl } from 'react-intl';
@@ -8,7 +8,7 @@ import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Vurderingsresultat } from '@k9-sak-web/types';
-import { Box } from '@navikt/ds-react';
+import { Box, Button } from '@navikt/ds-react';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
 import FraSoeknad from './FraSoeknad';
 import { ReisetidVurdering } from './ReisetidTypes';
@@ -28,9 +28,9 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >

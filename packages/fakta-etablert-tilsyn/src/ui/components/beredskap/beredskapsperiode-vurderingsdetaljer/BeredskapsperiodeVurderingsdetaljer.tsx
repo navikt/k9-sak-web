@@ -1,5 +1,5 @@
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
-import { Box, Link } from '@navikt/ds-react';
+import { Box, Button } from '@navikt/ds-react';
 import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
@@ -27,9 +27,9 @@ const BeredskapsperiodeVurderingsdetaljer = ({
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <Link as="button" className={styles.endreLink} onClick={onEditClick}>
+            <Button variant="tertiary" size="xsmall" className={styles.endreLink} onClick={onEditClick}>
               Rediger vurdering
-            </Link>
+            </Button>
           )}
         />
       )}

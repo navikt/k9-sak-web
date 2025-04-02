@@ -1,7 +1,7 @@
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { Calender } from '@navikt/ds-icons';
-import { Box } from '@navikt/ds-react';
-import { DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { Box, Button } from '@navikt/ds-react';
+import { DetailView } from '@navikt/ft-plattform-komponenter';
 import { useState } from 'react';
 
 import { LabelledContent } from '../../../../shared/labelledContent/LabelledContent.js';
@@ -24,9 +24,9 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
       title="Vurdering av institusjon"
       contentAfterTitleRenderer={() =>
         visEndreLink && !redigering ? (
-          <LinkButton onClick={() => setRedigering(true)} className="ml-4">
+          <Button variant="tertiary" size="xsmall" onClick={() => setRedigering(true)} className="ml-2">
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >
