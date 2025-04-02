@@ -1,8 +1,10 @@
 import {
+  AksjonspunktDtoStatus,
   type AksjonspunktDto,
   type KontrollerInntektDto,
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
@@ -69,7 +71,8 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
 
   const harBarn = barn.length > 0;
   const harInntekt = inntekt?.kontrollperioder && inntekt.kontrollperioder.length > 0;
-  const aksjonspunkt = aksjonspunkter?.find(ap => ap.kanLoses);
+  const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
+  const harUløstAksjonspunkt = aksjonspunkt && aksjonspunkt.status === AksjonspunktDtoStatus.OPPRETTET;
   return (
     <Box paddingInline="4 8" paddingBlock="2">
       <Box minHeight="100svh">
@@ -83,7 +86,9 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
                 value="arbeid"
                 label="Arbeid og inntekt"
                 icon={
-                  aksjonspunkt && <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                  harUløstAksjonspunkt && (
+                    <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                  )
                 }
               />
             )}

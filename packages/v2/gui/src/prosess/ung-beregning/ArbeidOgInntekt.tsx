@@ -39,8 +39,8 @@ const buildInitialValues = (
   );
   if (vurdertPeriode) {
     return {
-      fastsattArbeidsinntekt: `${vurdertPeriode.fastsattArbeidsinntekt}`,
-      fastsattYtelse: `${vurdertPeriode.fastsattYtelse}`,
+      fastsattArbeidsinntekt: vurdertPeriode.fastsattArbeidsinntekt ? `${vurdertPeriode.fastsattArbeidsinntekt}` : '',
+      fastsattYtelse: vurdertPeriode.fastsattYtelse ? `${vurdertPeriode.fastsattYtelse}` : '',
       valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
       begrunnelse: aksjonspunkt?.begrunnelse ?? '',
     };
@@ -101,7 +101,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
     }
   };
 
-  const getAksjonspunkt = () => (
+  const getAksjonspunkt = (harBrukerrapportertInntekt: boolean) => (
     <Bleed marginBlock="4 0">
       <Box
         marginInline="2 0"
@@ -134,10 +134,14 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
               label="Hvilken inntekt skal benyttes?"
               validate={[required]}
               radios={[
-                {
-                  value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                  label: 'Rapportert inntekt fra deltager',
-                },
+                ...(harBrukerrapportertInntekt
+                  ? [
+                      {
+                        value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
+                        label: 'Rapportert inntekt fra deltager',
+                      },
+                    ]
+                  : []),
                 {
                   value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
                   label: 'Rapportert inntekt fra A-inntekt',
@@ -213,11 +217,12 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
               const isLastRow = index === inntektKontrollperioder.length - 1;
               const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
               const harAksjonspunkt = inntekt.erTilVurdering && harAvvik;
+              const harBrukerrapportertInntekt = inntekt.rapporterteInntekter?.bruker?.arbeidsinntekt !== undefined;
 
               return (
                 <Table.ExpandableRow
                   key={`${inntekt.periode?.fom}_${inntekt.periode?.tom}`}
-                  content={harAksjonspunkt ? getAksjonspunkt() : null}
+                  content={harAksjonspunkt ? getAksjonspunkt(harBrukerrapportertInntekt) : null}
                   togglePlacement="right"
                   className={isLastRow ? styles.lastRow : ''}
                   expandOnRowClick
