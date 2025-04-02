@@ -4,11 +4,16 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import UngBeregningIndex from '@k9-sak-web/gui/prosess/ung-beregning/UngBeregningIndex.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { KontrollerInntektDto, PersonopplysningDto } from '@navikt/ung-sak-typescript-client';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <UngBeregningIndex {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <UngBeregningIndex {...props} {...deepCopyProps} />;
+  };
   getOverstyrVisningAvKomponent = () => true;
 
   getData = ({ personopplysninger }: { personopplysninger: PersonopplysningDto }) => ({
