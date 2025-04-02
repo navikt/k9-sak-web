@@ -53,12 +53,13 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   const harPerioderSomSkalVurderes = perioderTilVurdering?.length > 0;
   const [activeIndex, setActiveIndex] = React.useState(harPerioderSomSkalVurderes ? 0 : -1);
 
+  // Denne skal bare kjøres når komponenten mountes for at man automatisk skal få opp en periode som skal vurderes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (harPerioderSomSkalVurderes && perioderTilVurdering[0]) {
       setActiveIndex(0);
       onPeriodeClick(perioderTilVurdering[0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const vurdertePerioderElements = vurdertePerioder.map(({ perioder, resultat, id }) => (

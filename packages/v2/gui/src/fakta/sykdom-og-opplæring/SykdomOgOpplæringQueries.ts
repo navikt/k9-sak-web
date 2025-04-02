@@ -8,7 +8,6 @@ import {
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
 
 export const useSykdomBackendClient = () => {
@@ -76,34 +75,6 @@ export const useVurdertOpplæring = (behandlingUuid: string) => {
   return useQuery({
     queryKey: ['vurdertOpplæring', behandlingUuid],
     queryFn: () => backendClient.getVurdertOpplæring(behandlingUuid),
-  });
-};
-
-interface SubmitInstitusjonVurderingVariables {
-  payload: InstitusjonAksjonspunktPayload;
-  behandlingUuid: string;
-}
-
-export const useSubmitInstitusjonVurdering = (onSuccess?: () => void) => {
-  const backendClient = useSykdomBackendClient();
-
-  return useMutation<BekreftResponse, Error, SubmitInstitusjonVurderingVariables>({
-    mutationFn: ({ payload, behandlingUuid }) => backendClient.submitInstitusjonVurdering(payload, behandlingUuid),
-    onSuccess,
-  });
-};
-
-interface SubmitSykdomVurderingVariables {
-  payload: any;
-  behandlingUuid: string;
-}
-
-export const useSubmitSykdomVurdering = (onSuccess?: () => void) => {
-  const backendClient = useSykdomBackendClient();
-
-  return useMutation<BekreftResponse, Error, SubmitSykdomVurderingVariables>({
-    mutationFn: ({ payload, behandlingUuid }) => backendClient.submitSykdomVurdering(payload, behandlingUuid),
-    onSuccess,
   });
 };
 

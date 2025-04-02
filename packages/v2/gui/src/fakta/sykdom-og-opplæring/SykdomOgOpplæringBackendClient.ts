@@ -1,5 +1,4 @@
 import { type K9SakClient, type OppdaterLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
-import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import { type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
 export default class SykdomOgOpplæringBackendClient {
   #k9sak: K9SakClient;
@@ -42,19 +41,5 @@ export default class SykdomOgOpplæringBackendClient {
   // Reisetid
   async getVurdertReisetid(behandlingUuid: string) {
     return this.#k9sak.opplæringspenger.hentVurdertReisetid(behandlingUuid);
-  }
-
-  async submitInstitusjonVurdering(payload: InstitusjonAksjonspunktPayload, behandlingUuid: string) {
-    return this.submitAksjonspunkt({
-      ...payload,
-      behandlingUuid,
-    });
-  }
-
-  async submitSykdomVurdering(payload: any, behandlingUuid: string) {
-    return this.submitAksjonspunkt({
-      ...payload,
-      behandlingUuid,
-    });
   }
 }
