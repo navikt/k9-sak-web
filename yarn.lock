@@ -3441,7 +3441,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": "npm:^5.71.1"
+    "@tanstack/react-query": "npm:^5.71.3"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.10"
   languageName: unknown
@@ -4388,7 +4388,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.18.0"
     "@navikt/ft-plattform-komponenter": "npm:^7.2.13"
     "@popperjs/core": "npm:2.11.8"
-    "@tanstack/react-query": "npm:^5.71.1"
+    "@tanstack/react-query": "npm:^5.71.3"
     axios: "npm:1.8.4"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
@@ -4522,7 +4522,7 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:^6.2.9"
     "@navikt/ft-form-validators": "npm:^3.1.11"
     "@navikt/ft-utils": "npm:^3.3.1"
-    "@tanstack/react-query": "npm:^5.71.1"
+    "@tanstack/react-query": "npm:^5.71.3"
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.8.4"
     dayjs: "npm:^1.11.13"
@@ -4792,7 +4792,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": "npm:^4.0.0"
     "@sentry/browser": "npm:9.10.1"
     "@sentry/react": "npm:^9.10.1"
-    "@tanstack/react-query": "npm:^5.71.1"
+    "@tanstack/react-query": "npm:^5.71.3"
     axios: "npm:1.8.4"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -4819,7 +4819,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:^5.71.1"
+    "@tanstack/react-query": "npm:^5.71.3"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -4904,7 +4904,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": "npm:^4.0.0"
     "@sentry/browser": "npm:9.10.1"
     "@sentry/react": "npm:^9.10.1"
-    "@tanstack/react-query": "npm:^5.71.1"
+    "@tanstack/react-query": "npm:^5.71.3"
     axios: "npm:1.8.4"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -6777,21 +6777,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.71.1":
-  version: 5.71.1
-  resolution: "@tanstack/query-core@npm:5.71.1"
-  checksum: 10/40027a59e6683b3473fd494d9900cf3ecc7acf91e0bdc0c8acb2704056105bd4954942f1a5b0e9e93ccb8330cd9216c950c047f82a2679c5b9d5ea8712486f5c
+"@tanstack/query-core@npm:5.71.3":
+  version: 5.71.3
+  resolution: "@tanstack/query-core@npm:5.71.3"
+  checksum: 10/a78672bb9ddf61840ee273e802f4fb59529605b226dd89a84317e0f18a9fb7723a5b04d69a48b0d52afe604f883d8a3d2ff625b075024e105a055f479b901770
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.71.1":
-  version: 5.71.1
-  resolution: "@tanstack/react-query@npm:5.71.1"
+"@tanstack/react-query@npm:^5.71.3":
+  version: 5.71.3
+  resolution: "@tanstack/react-query@npm:5.71.3"
   dependencies:
-    "@tanstack/query-core": "npm:5.71.1"
+    "@tanstack/query-core": "npm:5.71.3"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/0153c3f2b130a43a8ec53bc830cde38321ab139427fe2df82f8113b1cebc99b080df24e62504e41a7c366546e8404a8aba4cf5c659fd72bf04fead66c74e9153
+  checksum: 10/9799a595e96c55a365398ee55f16b7db9fd83ff55f69fd057f09072853b696f0ba2ec9becc9245e79afeb09c178e1ae9a835dea5a7d92a8bcc246c14932a4cc1
   languageName: node
   linkType: hard
 
