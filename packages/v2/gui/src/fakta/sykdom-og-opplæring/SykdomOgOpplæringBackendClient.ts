@@ -7,11 +7,6 @@ export default class SykdomOgOpplæringBackendClient {
     this.#k9sak = k9sakClient;
   }
 
-  // Sykdom
-  async hentDiagnosekoder(behandlingUuid: string) {
-    return this.#k9sak.sykdom.hentDiagnosekoder(behandlingUuid);
-  }
-
   async opprettSykdomsvurdering(payload: OpprettLangvarigSykdomsVurderingData['requestBody']) {
     return this.#k9sak.opplæringspenger.opprettLangvarigSykdomsVurdering(payload);
   }
@@ -27,10 +22,6 @@ export default class SykdomOgOpplæringBackendClient {
   // Institusjon
   async getInstitusjonInfo(behandlingUuid: string) {
     return this.#k9sak.opplæringspenger.hentVurdertInstitusjon(behandlingUuid);
-  }
-
-  async submitAksjonspunkt(payload: any) {
-    return this.#k9sak.aksjonspunkt.bekreft(payload);
   }
 
   // Nødvendig opplæring
