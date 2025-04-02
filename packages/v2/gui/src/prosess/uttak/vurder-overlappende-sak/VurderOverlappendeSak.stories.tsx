@@ -389,6 +389,10 @@ export const LøsAksjonspunktMedSplitt: Story = {
       });
 
       await step('skjemaet skal oppdatere seg når man velger en periode', async () => {
+        if (splittFom.isAfter(fom1, 'month')) {
+          await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+        }
+
         await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
         const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
         if (splittTomButton.className.includes('rdp-day_disabled')) {
