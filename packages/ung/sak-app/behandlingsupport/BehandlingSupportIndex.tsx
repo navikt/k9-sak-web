@@ -53,12 +53,11 @@ export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter
 
 export const hentValgbarePaneler = (
   synligePaneler: string[],
-  sendMeldingErRelevant: boolean,
   behandlingRettigheter?: BehandlingRettigheter,
 ): string[] =>
   synligePaneler.filter(supportPanel => {
     if (supportPanel === SupportTabs.MELDINGER) {
-      return behandlingRettigheter && sendMeldingErRelevant ? behandlingRettigheter.behandlingKanSendeMelding : false;
+      return behandlingRettigheter ? behandlingRettigheter.behandlingKanSendeMelding : false;
     }
     return true;
   });
@@ -209,14 +208,10 @@ const BehandlingSupportIndex = ({
 
   const navigate = useNavigate();
 
-  // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
-  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
-  const erSendMeldingRelevant = fagsak && !erPaVent;
-
   const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
   const valgbareSupportPaneler = useMemo(
-    () => hentValgbarePaneler(synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter),
-    [synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter],
+    () => hentValgbarePaneler(synligeSupportPaneler, behandlingRettigheter),
+    [synligeSupportPaneler, behandlingRettigheter],
   );
 
   const defaultSupportPanel = synligeSupportPaneler.find(() => true) || SupportTabs.HISTORIKK;
