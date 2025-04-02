@@ -17,15 +17,15 @@ interface InteractiveListProps {
 
 const InteractiveListElement = (props: InteractiveListElement) => {
   const { content, active, onClick } = props;
-  const cls = classnames(styles['interactiveListElement'], {
-    [styles['interactiveListElementActive']]: active,
-    [styles['interactiveListElementInactive']]: !active,
+  const cls = classnames(styles.interactiveListElement, {
+    [styles.interactiveListElementActive]: active,
+    [styles.interactiveListElementInactive]: !active,
   });
 
   return (
     <li className={cls}>
-      <button className={styles['interactiveListElementButton']} type="button" onClick={onClick}>
-        <span className={styles['interactiveListElementButtonContentContainer']}>
+      <button className={styles.interactiveListElementButton} type="button" onClick={onClick}>
+        <span className={styles.interactiveListElementButtonContentContainer}>
           {content}
           <div className="mr-4">{active ? <ChevronRightIcon fontSize={24} /> : <ChevronDownIcon fontSize={24} />}</div>
         </span>
@@ -35,7 +35,7 @@ const InteractiveListElement = (props: InteractiveListElement) => {
 };
 
 export const InteractiveList = ({ elements }: InteractiveListProps) => (
-  <ul className={styles['interactiveList']}>
+  <ul className={styles.interactiveList}>
     {elements.map((elementProps, index) => {
       const { key, ...rest } = elementProps;
       return <InteractiveListElement key={key ?? index} {...rest} />;
