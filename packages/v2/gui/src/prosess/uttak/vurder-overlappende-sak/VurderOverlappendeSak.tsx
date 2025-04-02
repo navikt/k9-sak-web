@@ -29,7 +29,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { ObjectSchema } from 'yup';
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
-import { kanAksjonspunktRedigeres } from '../../../utils/aksjonspunkt';
+import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
 import styles from './VurderOverlappendeSak.module.css';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import { format } from 'date-fns';
@@ -71,7 +71,7 @@ export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['req
 const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { uuid, id, versjon, status } = behandling;
-  const [rediger, setRediger] = useState<boolean>(false);
+  const [rediger, setRediger] = useState<boolean>(skalAksjonspunktUtredes(aksjonspunkt, status));
   const sakAvsluttet = status === 'AVSLU';
   const kanRedigeres = kanAksjonspunktRedigeres(aksjonspunkt, status);
 
