@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Box } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';

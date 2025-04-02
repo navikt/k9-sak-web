@@ -1,5 +1,6 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { Box, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { Box } from '@navikt/ds-react';
+import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import { postEndreVurdering, postEndreVurderingDryRun } from '../../../api/api';
 import Dokument from '../../../types/Dokument';

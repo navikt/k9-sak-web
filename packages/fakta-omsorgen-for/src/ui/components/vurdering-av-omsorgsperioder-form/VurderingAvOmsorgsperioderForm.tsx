@@ -5,9 +5,10 @@ import { useIntl } from 'react-intl';
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
 import { Alert, Box, Label } from '@navikt/ds-react';
-import { DetailView, Form, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { DetailView, Form } from '@navikt/ft-plattform-komponenter';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';

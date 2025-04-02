@@ -1,6 +1,6 @@
 import { PeopleFilled } from '@navikt/ds-icons';
-import { LabelledContent } from '@navikt/ft-plattform-komponenter';
 
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Box } from '@navikt/ds-react';
 import { ReisetidVurdering } from './ReisetidTypes';
 import styles from './beskrivelseFraSoeker.module.css';

@@ -1,6 +1,6 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Alert, Button } from '@navikt/ds-react';
-import { Box } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button } from '@navikt/ds-react';
+
 import * as React from 'react';
 import ContainerContext from '../../context/ContainerContext';
 

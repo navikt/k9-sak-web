@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Delete } from '@navikt/ds-icons';
-import { Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
+import { Box, Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
-import { Box } from '@navikt/ft-plattform-komponenter';
 import React, { useContext, useEffect } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import ContainerContext from '../../context/ContainerContext';

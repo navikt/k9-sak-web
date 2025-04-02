@@ -10,7 +10,7 @@ interface AddButtonProps {
 
 const AddButton = ({ className, label, onClick, id }: AddButtonProps) => (
   <button className={`${styles.addButton} ${className || ''}`} type="button" onClick={onClick} id={id || ''}>
-    <PlusCircleIcon fontSize="1.5rem" />
+    <PlusCircleIcon fontSize="1.25rem" />
     <span className={styles.addButton__text}>{label}</span>
   </button>
 );

@@ -1,6 +1,6 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
-import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { DetailView } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import { useContext, useEffect, type JSX } from 'react';
 import { useIntl } from 'react-intl';
@@ -13,6 +13,7 @@ import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Alert, Box, Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Field, FieldArray, Formik } from 'formik';

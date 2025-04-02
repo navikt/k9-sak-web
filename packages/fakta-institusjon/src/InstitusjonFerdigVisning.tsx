@@ -1,7 +1,8 @@
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import { Box } from '@navikt/ds-react';
-import { AssessedBy, DetailView, LabelledContent, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy, DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
 import styles from './institusjonFerdigVisning.module.css';
 
 interface OwnProps {

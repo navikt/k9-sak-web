@@ -1,7 +1,7 @@
 import { httpUtils } from '@fpsak-frontend/utils';
-import { Box, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
+import { TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
-import { Alert, Loader } from '@navikt/ds-react';
+import { Alert, Box, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';

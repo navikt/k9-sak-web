@@ -1,12 +1,8 @@
 import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
-import { MinusIcon, PlusIcon } from '@navikt/aksel-icons';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { MinusIcon, PlusCircleIcon } from '@navikt/aksel-icons';
 import { Box, Button } from '@navikt/ds-react';
-import {
-  ContentWithTooltip,
-  LabelledContent,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
-} from '@navikt/ft-plattform-komponenter';
+import { ContentWithTooltip, OnePersonIconGray, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import { useState, type JSX } from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
@@ -63,7 +59,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
           ))}
         {sortertePeriodebeskrivelser.length > 3 && (
           <Button
-            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusIcon />}
+            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusCircleIcon fontSize="1.25rem" />}
             onClick={() => setVisAlleBeskrivelser(!visAlleBeskrivelser)}
             size="small"
             type="button"

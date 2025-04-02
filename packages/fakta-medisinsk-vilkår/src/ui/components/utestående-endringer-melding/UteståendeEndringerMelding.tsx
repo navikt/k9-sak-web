@@ -1,5 +1,4 @@
-import { Alert, BodyShort, Button } from '@navikt/ds-react';
-import { Box } from '@navikt/ft-plattform-komponenter';
+import { Alert, BodyShort, Box, Button } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import ContainerContext from '../../context/ContainerContext';
 

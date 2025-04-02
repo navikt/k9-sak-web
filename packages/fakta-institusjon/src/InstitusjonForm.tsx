@@ -1,9 +1,10 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
-import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { DetailView } from '@navikt/ft-plattform-komponenter';
 
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { required } from '@fpsak-frontend/utils';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Box, Button } from '@navikt/ds-react';
 import { Formik } from 'formik';

@@ -1,5 +1,5 @@
-import { Heading, Label } from '@navikt/ds-react';
-import { Box, InteractiveList } from '@navikt/ft-plattform-komponenter';
+import { Box, Heading, Label } from '@navikt/ds-react';
+import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, type JSX } from 'react';
 import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';

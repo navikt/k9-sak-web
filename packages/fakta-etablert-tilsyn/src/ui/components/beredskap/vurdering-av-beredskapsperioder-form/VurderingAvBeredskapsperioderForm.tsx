@@ -1,7 +1,8 @@
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Alert, Box } from '@navikt/ds-react';
-import { DetailView, Form, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { DetailView, Form } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';

@@ -1,9 +1,10 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Box, Link } from '@navikt/ds-react';
-import { DetailView, LabelledContent, LinkButton } from '@navikt/ft-plattform-komponenter';
+import { DetailView, LinkButton } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';

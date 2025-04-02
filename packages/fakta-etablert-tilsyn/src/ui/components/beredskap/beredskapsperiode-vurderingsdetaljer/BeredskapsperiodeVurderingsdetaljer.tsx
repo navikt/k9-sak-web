@@ -1,5 +1,6 @@
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Box, Link } from '@navikt/ds-react';
-import { AssessedBy, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';

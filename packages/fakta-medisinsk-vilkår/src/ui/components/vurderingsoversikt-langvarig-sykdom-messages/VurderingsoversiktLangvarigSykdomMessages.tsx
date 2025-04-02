@@ -1,6 +1,5 @@
 import { getHumanReadablePeriodString } from '@fpsak-frontend/utils';
-import { Alert } from '@navikt/ds-react';
-import { Box } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';

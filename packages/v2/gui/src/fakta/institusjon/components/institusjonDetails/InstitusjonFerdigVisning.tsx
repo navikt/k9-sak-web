@@ -1,7 +1,8 @@
-import { Box } from '@navikt/ds-react';
-import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { Box } from '@navikt/ds-react';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
+import { LabelledContent } from '../../../../shared/labelledContent/LabelledContent.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
 
 interface OwnProps {

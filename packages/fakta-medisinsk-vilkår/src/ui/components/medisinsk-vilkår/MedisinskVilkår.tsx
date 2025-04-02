@@ -1,8 +1,8 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Alert, Tabs, VStack } from '@navikt/ds-react';
-import { Box, ChildIcon, Infostripe, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Tabs, VStack } from '@navikt/ds-react';
+import { ChildIcon, Infostripe, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import React, { useMemo, type JSX } from 'react';
