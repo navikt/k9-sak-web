@@ -1,4 +1,4 @@
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { Box, Margin, DetailView, LabelledContent, LinkButton } from '@navikt/ft-plattform-komponenter';
 import React, { useContext, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
@@ -7,6 +7,7 @@ import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -42,7 +43,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
+        <VurdertAv ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );
   };

@@ -1,10 +1,11 @@
 import React, { type JSX } from 'react';
-import { Box, Margin, BasicList, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { Box, Margin, BasicList, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import Vurdering from '../../../types/Vurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface VurderingsoppsummeringForToOmsorgspersonerProps {
   vurdering: Vurdering;
@@ -49,7 +50,7 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
-          <AssessedBy ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
+          <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
         </Box>
         <Box marginTop={Margin.xLarge}>
           <LabelledContent

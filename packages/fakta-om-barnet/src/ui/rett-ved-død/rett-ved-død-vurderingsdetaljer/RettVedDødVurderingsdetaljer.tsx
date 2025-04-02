@@ -1,4 +1,5 @@
-import { AssessedBy, GreenCheckIcon, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { GreenCheckIcon, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
 
@@ -25,7 +26,7 @@ const RettVedDødVurderingsdetaljer = ({ rettVedDød }: RettVedDødVurderingsdet
       </div>
       <div className="mt-6">
         <LabelledContent label="Vurdering" content={rettVedDød.vurdering} indentContent />
-        <AssessedBy ident={rettVedDød.vurdertAv} date={rettVedDød.vurdertTidspunkt} />
+        <VurdertAv ident={rettVedDød.vurdertAv} date={rettVedDød.vurdertTidspunkt} />
       </div>
     </>
   );
