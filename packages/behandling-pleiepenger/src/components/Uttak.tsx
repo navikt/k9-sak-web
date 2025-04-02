@@ -87,7 +87,11 @@ export default ({
 
       return (
         <VStack>
-          <VurderOverlappendeSakIndex behandling={deepCopyProps.behandling} aksjonspunkt={deepCopyProps.aksjonspunkt} />
+          <VurderOverlappendeSakIndex
+            behandling={deepCopyProps.behandling}
+            aksjonspunkt={deepCopyProps.aksjonspunkt}
+            readOnly={readOnly}
+          />
         </VStack>
       );
     }
