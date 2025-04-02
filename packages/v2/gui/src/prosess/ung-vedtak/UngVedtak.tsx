@@ -3,6 +3,7 @@ import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import styles from './ungVedtak.module.css';
@@ -38,6 +39,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { refetch, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
@@ -62,7 +64,10 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
 
   const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
   const handleSubmit = () => {
-    void submitCallback(transformValues());
+    setIsSubmitting(true);
+    void submitCallback(transformValues()).finally(() => {
+      setIsSubmitting(false);
+    });
   };
 
   return (
@@ -101,7 +106,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
             </div>
             {harAksjonspunkt && (
               <div>
-                <Button type="submit" variant="primary" size="small">
+                <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
                   Fatt vedtak
                 </Button>
               </div>

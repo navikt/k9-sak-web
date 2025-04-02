@@ -1,8 +1,10 @@
 import {
+  AksjonspunktDtoStatus,
   type AksjonspunktDto,
   type KontrollerInntektDto,
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
@@ -69,21 +71,24 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
 
   const harBarn = barn.length > 0;
   const harInntekt = inntekt?.kontrollperioder && inntekt.kontrollperioder.length > 0;
-  const harAksjonspunkt = aksjonspunkter?.filter(ap => ap.kanLoses).length > 0;
+  const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
+  const harUløstAksjonspunkt = aksjonspunkt && aksjonspunkt.status === AksjonspunktDtoStatus.OPPRETTET;
   return (
     <Box paddingInline="4 8" paddingBlock="2">
       <Box minHeight="100svh">
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        <Tabs defaultValue={harAksjonspunkt ? 'arbeid' : 'dagsats'}>
+        <Tabs defaultValue={aksjonspunkt ? 'arbeid' : 'dagsats'}>
           <Tabs.List>
             {harInntekt && (
               <Tabs.Tab
                 value="arbeid"
                 label="Arbeid og inntekt"
                 icon={
-                  harAksjonspunkt && <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                  harUløstAksjonspunkt && (
+                    <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                  )
                 }
               />
             )}
@@ -91,7 +96,11 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
             {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
           </Tabs.List>
           <Tabs.Panel value="arbeid">
-            <ArbeidOgInntekt submitCallback={submitCallback} inntektKontrollperioder={inntekt?.kontrollperioder} />
+            <ArbeidOgInntekt
+              submitCallback={submitCallback}
+              inntektKontrollperioder={inntekt?.kontrollperioder}
+              aksjonspunkt={aksjonspunkt}
+            />
           </Tabs.Panel>
           <Tabs.Panel value="barn">
             <BarnPanel barn={barn} />
