@@ -113,7 +113,6 @@ describe('<BehandlingSupportIndex>', () => {
   describe('hentValgbarePaneler', () => {
     it('skal vise alle support-panelene som valgbare', () => {
       const accessibleSupportPanels = ['TIL_BESLUTTER', 'FRA_BESLUTTER', 'HISTORIKK', 'MELDINGER', 'DOKUMENTER'];
-      const sendMessageIsRelevant = true;
 
       const behandlingRettigheter = {
         behandlingFraBeslutter: true,
@@ -127,29 +126,9 @@ describe('<BehandlingSupportIndex>', () => {
         vergeBehandlingsmeny: VergeBehandlingmenyValg.OPPRETT,
       };
 
-      const enabledPanels = hentValgbarePaneler(accessibleSupportPanels, sendMessageIsRelevant, behandlingRettigheter);
+      const enabledPanels = hentValgbarePaneler(accessibleSupportPanels, behandlingRettigheter);
 
       expect(enabledPanels).toEqual(['TIL_BESLUTTER', 'FRA_BESLUTTER', 'HISTORIKK', 'MELDINGER', 'DOKUMENTER']);
-    });
-
-    it('skal ikke vise meldingspanel som valgbart', () => {
-      const accessibleSupportPanels = ['TIL_BESLUTTER', 'FRA_BESLUTTER', 'HISTORIKK', 'MELDINGER', 'DOKUMENTER'];
-      const sendMessageIsRelevant = false;
-      const behandlingRettigheter = {
-        behandlingFraBeslutter: false,
-        behandlingKanSendeMelding: false,
-        behandlingTilGodkjenning: false,
-        behandlingKanBytteEnhet: true,
-        behandlingKanHenlegges: true,
-        behandlingKanGjenopptas: false,
-        behandlingKanOpnesForEndringer: true,
-        behandlingKanSettesPaVent: true,
-        vergeBehandlingsmeny: VergeBehandlingmenyValg.OPPRETT,
-      };
-
-      const enabledPanels = hentValgbarePaneler(accessibleSupportPanels, sendMessageIsRelevant, behandlingRettigheter);
-
-      expect(enabledPanels).toEqual(['TIL_BESLUTTER', 'FRA_BESLUTTER', 'HISTORIKK', 'DOKUMENTER']);
     });
   });
 });
