@@ -221,7 +221,7 @@ export const BehandlingMenuIndex = ({
     );
   }
 
-  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
+  const erPaVent = behandling ? behandling.behandlingPåVent : false;
   const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
 
   const vergeMenyvalg = behandlingRettigheter?.vergeBehandlingsmeny;

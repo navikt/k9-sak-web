@@ -146,7 +146,7 @@ const MeldingerSakIndex = ({
         <MessagesTilbakekreving
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={behandling.sprakkode}
+          språkkode={behandling.språkkode}
           previewCallback={previewCallback}
           behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}
@@ -159,7 +159,7 @@ const MeldingerSakIndex = ({
         <Messages
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={behandling.sprakkode}
+          språkkode={behandling.språkkode}
           previewCallback={previewCallback}
           behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}

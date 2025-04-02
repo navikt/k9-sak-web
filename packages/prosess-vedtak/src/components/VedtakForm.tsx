@@ -71,7 +71,7 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPaaVent: boolean;
+  behandlingPåVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
   behandlingÅrsaker?: BehandlingÅrsakDto[];
@@ -89,7 +89,7 @@ interface Props {
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
-  sprakkode: string;
+  språkkode: string;
   submitCallback: (object: any) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
@@ -104,11 +104,11 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingStatus,
   behandlingresultat,
   aksjonspunkter,
-  behandlingPaaVent,
+  behandlingPåVent,
   vedtakVarsel,
   previewCallback,
   hentFritekstbrevHtmlCallback,
-  sprakkode,
+  språkkode,
   ytelseTypeKode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -556,7 +556,7 @@ export const VedtakForm: React.FC<Props> = ({
 
               <BrevPanel
                 readOnly={readOnly}
-                sprakkode={sprakkode}
+                språkkode={språkkode}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -581,7 +581,7 @@ export const VedtakForm: React.FC<Props> = ({
                 <VedtakSubmit
                   behandlingStatusKode={behandlingStatus}
                   readOnly={readOnly}
-                  behandlingPaaVent={behandlingPaaVent}
+                  behandlingPåVent={behandlingPåVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
                   errorOnSubmit={errorOnSubmit}
