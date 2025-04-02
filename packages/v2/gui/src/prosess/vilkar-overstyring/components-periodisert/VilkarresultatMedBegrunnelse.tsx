@@ -1,10 +1,10 @@
 import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { Box } from '@navikt/ds-react';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { type FunctionComponent } from 'react';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { type VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -63,7 +63,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
       {skalViseBegrunnelse && (
         <Box marginBlock={'0 2'}>
           <VilkarBegrunnelse isReadOnly={readOnly} />
-          <AssessedBy ident={opprettetAv} />
+          <VurdertAv ident={opprettetAv} />
         </Box>
       )}
       <VilkarResultPickerPeriodisertRHF

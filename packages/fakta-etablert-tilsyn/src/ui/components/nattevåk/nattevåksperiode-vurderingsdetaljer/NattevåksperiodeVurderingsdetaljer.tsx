@@ -1,4 +1,4 @@
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { Box, Margin, DetailView, LabelledContent, LinkButton } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
@@ -6,6 +6,7 @@ import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
 import styles from './nattevåksperiodeVurderingsdetaljer.module.css';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface NattevåksperiodeVurderingsdetaljerProps {
   nattevåksperiode: Vurderingsperiode;
@@ -41,7 +42,7 @@ const NattevåksperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{nattevåksperiode.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy ident={opprettetAv} date={opprettetTidspunkt} />
+        <VurdertAv ident={opprettetAv} date={opprettetTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Heading, BodyShort } from '@navikt/ds-react';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 
 import { OverstyringUttak } from '../../../../types';
 import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
 
 import styles from './begrunnelseBoks.module.css';
 import { arbeidstypeTilVisning } from '../../../../constants/Arbeidstype';
+import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
 
 interface BegrunnelseBoksProps {
   begrunnelse: string;
@@ -27,7 +27,7 @@ const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyr
             Ny utbetalingsgrad per aktivitet
           </Heading>
           <div className={styles.utbetalingsgrader}>
-            {utbetalingsgrader.map((utbetalingsgrad) => {
+            {utbetalingsgrader.map(utbetalingsgrad => {
               const arbeidstype = arbeidstypeTilVisning[utbetalingsgrad.arbeidsforhold.type];
               const { arbeidsforhold: af } = utbetalingsgrad;
               return (
