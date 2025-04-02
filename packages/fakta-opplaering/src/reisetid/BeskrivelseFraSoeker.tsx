@@ -1,7 +1,7 @@
 import { PeopleFilled } from '@navikt/ds-icons';
-import { Box, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import { LabelledContent } from '@navikt/ft-plattform-komponenter';
 
+import { Box } from '@navikt/ds-react';
 import { ReisetidVurdering } from './ReisetidTypes';
 import styles from './beskrivelseFraSoeker.module.css';
 
@@ -14,7 +14,7 @@ const BeskrivelseFraSoeker = ({ vurdering }: OwnProps) => {
     return null;
   }
   return (
-    <Box marginTop={Margin.xLarge}>
+    <Box marginBlock="8 0">
       <div className={styles.container}>
         <div>
           <PeopleFilled style={{ fontSize: '24px' }} />

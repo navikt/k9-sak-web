@@ -1,8 +1,8 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
-import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
+import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
-import React, { useContext, useEffect, type JSX } from 'react';
+import { useContext, useEffect, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import { v4 } from 'uuid';
 import * as yup from 'yup';
@@ -14,7 +14,7 @@ import {
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import { Alert, Button, ErrorMessage, Label } from '@navikt/ds-react';
+import { Alert, Box, Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Field, FieldArray, Formik } from 'formik';
 import AddButton from '../components/add-button/AddButton';
 import DeleteButton from '../components/delete-button/DeleteButton';
@@ -149,7 +149,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
             <div>
               <Calender /> <span>{vurdering.opplæring.prettifyPeriod()}</span>
             </div>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Field name={fieldname.DOKUMENTER}>
                 {({
                   field, // { name, value, onChange, onBlur }
@@ -167,7 +167,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                 )}
               </Field>
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <TextAreaFormik
                 label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}
                 name={fieldname.BEGRUNNELSE}
@@ -175,7 +175,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                 readOnly={readOnly}
               />
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <RadioGroupFormik
                 legend={intl.formatMessage({ id: 'opplaering.gjennomfoertOpplaering.label' })}
                 options={[
@@ -195,7 +195,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
               />
             </Box>
             {values[fieldname.GODKJENT_OPPLAERING] === RadioOptions.DELVIS && (
-              <Box marginTop={Margin.xLarge}>
+              <Box marginBlock="8 0">
                 <Label size="small">{intl.formatMessage({ id: 'opplaering.perioder.label' })}</Label>
                 <FieldArray
                   name={fieldname.PERIODER}
@@ -259,7 +259,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
               values[fieldname.PERIODER].map(v => v.periode),
               vurdering.opplæring,
             ).length > 0 && (
-              <Box marginTop={Margin.xLarge}>
+              <Box marginBlock="8 0">
                 <Alert variant="info">
                   <LabelledContent
                     label={intl.formatMessage({ id: 'opplaering.resterendePerioder.label' })}
@@ -275,7 +275,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                 </Alert>
               </Box>
             )}
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Button
                 size="small"
                 type="submit"

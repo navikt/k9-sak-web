@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, type JSX } from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
 import hash from 'object-hash';
-import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
+import React, { useContext, useEffect, type JSX } from 'react';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
+import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
+import ContainerContext from '../../context/ContainerContext';
+import Fosterbarn from '../fosterbarn/Fosterbarn';
+import OmsorgsperiodeVurderingsdetaljer from '../omsorgsperiode-vurderingsdetaljer/OmsorgsperiodeVurderingsdetaljer';
 import OmsorgsperiodeoversiktMessages from '../omsorgsperiodeoversikt-messages/OmsorgsperiodeoversiktMessages';
 import Periodenavigasjon from '../periodenavigasjon/Periodenavigasjon';
-import OmsorgsperiodeVurderingsdetaljer from '../omsorgsperiode-vurderingsdetaljer/OmsorgsperiodeVurderingsdetaljer';
 import VurderingAvOmsorgsperioderForm from '../vurdering-av-omsorgsperioder-form/VurderingAvOmsorgsperioderForm';
-import Fosterbarn from '../fosterbarn/Fosterbarn';
-import ContainerContext from '../../context/ContainerContext';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface OmsorgsperiodeoversiktProps {
   omsorgsperiodeoversikt: OmsorgsperiodeoversiktType;

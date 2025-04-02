@@ -1,6 +1,6 @@
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import NattevåkType from '../../../../types/NattevåkType';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';

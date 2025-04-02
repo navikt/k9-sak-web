@@ -1,5 +1,5 @@
 import { httpUtils } from '@fpsak-frontend/utils';
-import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
+import { Box, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
 import { Alert, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
@@ -139,7 +139,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box marginTop={Margin.medium}>
+        <Box marginBlock="4 0">
           {diagnosekoder.length === 0 && (
             <Alert inline variant="warning">
               Ingen diagnosekode registrert.

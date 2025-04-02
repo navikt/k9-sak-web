@@ -1,7 +1,7 @@
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { getHumanReadablePeriodString } from '@fpsak-frontend/utils';
 import { Alert } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
+import { Box } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';
 
@@ -14,7 +14,7 @@ const VurderingsoversiktLangvarigSykdomMessages = ({
 }: VurderingsoversiktLangvarigSykdomMessagesProps): JSX.Element => {
   if (vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box marginBottom={Margin.large}>
+      <Box marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
       </Box>
     );
@@ -22,7 +22,7 @@ const VurderingsoversiktLangvarigSykdomMessages = ({
 
   if (vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
     return (
-      <Box marginBottom={Margin.large}>
+      <Box marginBlock="0 6">
         <Alert size="small" variant="warning">
           {`Vurder om pleietrengende har langvarig sykdom i søknadsperioden ${getHumanReadablePeriodString(
             vurderingsoversikt.resterendeVurderingsperioder,

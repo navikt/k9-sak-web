@@ -1,8 +1,8 @@
-import { Alert, Link } from '@navikt/ds-react';
-import { Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import React, { type JSX } from 'react';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Alert, Box, Link } from '@navikt/ds-react';
+import { DetailView, LabelledContent, LinkButton } from '@navikt/ft-plattform-komponenter';
+import React, { type JSX } from 'react';
 
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
@@ -100,33 +100,33 @@ const StrukturertDokumentDetaljer = ({
       )}
     >
       {harDuplikater && (
-        <Box marginTop={Margin.large}>
+        <Box marginBlock="6 0">
           <Alert size="small" variant="info">
             Det finnes ett eller flere duplikater av dette dokumentet.
           </Alert>
         </Box>
       )}
       {duplikatAvId && (
-        <Box marginTop={Margin.large}>
+        <Box marginBlock="6 0">
           <Alert size="small" variant="info">
             Dokumentet er et duplikat.
           </Alert>
         </Box>
       )}
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <DokumentKnapp href={dokumentinnholdLink.href} />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={renderDokumenttypeLabel(fagsakYtelseType)}
           content={renderDokumenttypeContent(type, fagsakYtelseType)}
         />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent label="Når er dokumentet datert?" content={prettifyDateString(datert)} />
       </Box>
       {harDuplikater && (
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent
             label="Duplikater av dette dokumentet:"
             content={<Duplikatliste dokumenter={getDokumentDuplikater()} onRemoveDuplikat={onRemoveDuplikat} />}
@@ -134,7 +134,7 @@ const StrukturertDokumentDetaljer = ({
         </Box>
       )}
       {duplikatAvId && (
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent label="Dokumentet er et duplikat av følgende dokument:" content={getOriginaltDokument()} />
         </Box>
       )}

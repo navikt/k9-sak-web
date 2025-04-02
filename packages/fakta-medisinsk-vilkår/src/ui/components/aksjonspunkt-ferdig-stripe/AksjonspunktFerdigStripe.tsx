@@ -1,7 +1,7 @@
-import { Alert, Button } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import * as React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Alert, Button } from '@navikt/ds-react';
+import { Box } from '@navikt/ft-plattform-komponenter';
+import * as React from 'react';
 import ContainerContext from '../../context/ContainerContext';
 
 import type { JSX } from 'react';
@@ -13,7 +13,7 @@ const AksjonspunktFerdigStripe = (): JSX.Element => {
   const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   return (
-    <Box marginBottom={Margin.medium}>
+    <Box marginBlock="0 4">
       <Alert size="small" variant="info">
         {erPleiepengerSluttfaseFagsak && <>Vilkåret er ferdig vurdert og du kan gå videre i behandlingen.</>}
         {!erPleiepengerSluttfaseFagsak && <>Sykdom er ferdig vurdert og du kan gå videre i behandlingen.</>}

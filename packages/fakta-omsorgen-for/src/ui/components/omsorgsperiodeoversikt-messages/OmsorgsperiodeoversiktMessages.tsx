@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { Box } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
 import { getStringMedPerioder } from '../../../util/periodUtils';
@@ -16,7 +16,7 @@ const OmsorgsperiodeoversiktMessages = ({
   if (omsorgsperiodeoversikt.harPerioderTilVurdering()) {
     const perioderTilVurdering = omsorgsperiodeoversikt.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box marginBottom={Margin.large}>
+      <Box marginBlock="0 6">
         <Alert size="small" variant="warning" className={styles.alertstripe}>
           <FormattedMessage id="vurdering.advarsel" values={{ perioder: getStringMedPerioder(perioderTilVurdering) }} />
         </Alert>

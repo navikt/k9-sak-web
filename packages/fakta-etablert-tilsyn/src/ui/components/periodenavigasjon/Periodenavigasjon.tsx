@@ -1,5 +1,5 @@
 import { Heading, Label } from '@navikt/ds-react';
-import { Box, InteractiveList, Margin } from '@navikt/ft-plattform-komponenter';
+import { Box, InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, type JSX } from 'react';
 import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';
@@ -44,7 +44,7 @@ const Periodenavigasjon = ({
 
   return (
     <div className={styles.vurderingsnavigasjon}>
-      <Box marginBottom={Margin.large}>
+      <Box marginBlock="0 6">
         <Heading size="small" level="2" className={styles.vurderingsnavigasjon__heading}>
           Alle perioder
         </Heading>

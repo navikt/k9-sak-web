@@ -1,11 +1,9 @@
 import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import { MinusIcon, PlusIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
+import { Box, Button } from '@navikt/ds-react';
 import {
-  Box,
   ContentWithTooltip,
   LabelledContent,
-  Margin,
   OnePersonIconGray,
   OnePersonOutlineGray,
 } from '@navikt/ft-plattform-komponenter';
@@ -55,7 +53,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
         {sortertePeriodebeskrivelser
           .filter((periodebeskrivelse, index) => (visAlleBeskrivelser ? true : index <= 2))
           .map(periodebeskrivelse => (
-            <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
+            <Box marginBlock="0 6" key={periodebeskrivelse.tekst}>
               <LabelledContent
                 label={getLabel(periodebeskrivelse)}
                 content={<span className="whitespace-pre-wrap">{periodebeskrivelse.tekst}</span>}
