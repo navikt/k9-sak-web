@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { UNSAFE_Combobox, type ComboboxProps } from '@navikt/ds-react';
-import { ICD10 } from '@navikt/diagnosekoder';
+import { DiagnosekodeSearcher, ICD10, type ICD10Diagnosekode } from '@navikt/diagnosekoder';
 import { useFormContext } from 'react-hook-form';
 interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'className' | 'disabled'> {
   label?: string;
@@ -9,6 +9,17 @@ interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'classNam
 
 const MIN_SEARCH_CHARS = 3;
 
+// TODO bruk initDiagnosekodeSearcher istadenfor
+const diagnosekodeSearcher = new DiagnosekodeSearcher(ICD10, 50);
+
+type ComboBoxOptions = Readonly<{ key: string; label: string; value: string }>;
+
+const diagnosekodeToComboBoxOption = (diagnosekode: ICD10Diagnosekode): ComboBoxOptions => ({
+  key: diagnosekode.code,
+  label: `${diagnosekode.code} - ${diagnosekode.text}`,
+  value: diagnosekode.code,
+});
+
 const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   name,
   size,
@@ -16,9 +27,9 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   disabled,
   label = 'Diagnosekoder',
 }) => {
-  const { register, watch, setValue, trigger, formState } = useFormContext();
+  const { register, watch, setValue, trigger, formState } = useFormContext<{ [name]: string[] }>();
   const [searchValue, setSearchValue] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState<{ key: string; label: string; value: string }[]>([]);
+  const [filteredOptions, setFilteredOptions] = useState<ComboBoxOptions[]>([]);
 
   register(name, {
     validate: value => (value.length > 0 ? undefined : 'Diagnosekode er påkrevd'),
@@ -31,38 +42,40 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
 
   const watchValue = watch(name);
 
-  const getFullOptions = useCallback(() => {
-    return ICD10.map(v => ({
-      key: v.code,
-      label: `${v.code} - ${v.text}`,
-      value: v.code,
-    }));
-  }, []);
-
   useEffect(() => {
-    const filterResults = async () => {
+    const search = async () => {
       if (searchValue.length >= MIN_SEARCH_CHARS) {
         const query = searchValue.toLowerCase();
-        const filtered = getFullOptions().filter(
-          opt => opt.label.toLowerCase().includes(query) || opt.value.toLowerCase().includes(query),
-        );
-        setFilteredOptions(filtered.slice(0, 150));
+        const { diagnosekoder } = diagnosekodeSearcher.search(query, 1);
+        setFilteredOptions(diagnosekoder.map(diagnosekodeToComboBoxOption));
       } else {
         setFilteredOptions([]);
       }
     };
-
-    void filterResults();
-  }, [searchValue, getFullOptions]);
+    void search();
+  }, [searchValue]);
 
   const handleOnChange = (newValue: string) => {
-    if (watchValue?.includes(newValue)) {
-      onChange(watchValue.filter((code: string) => code !== newValue));
+    const existsIdx = watchValue.findIndex(v => v.toUpperCase() === newValue.toUpperCase());
+    if (existsIdx >= 0) {
+      onChange(watchValue.toSpliced(existsIdx, 1));
     } else {
-      onChange(watchValue.concat(newValue));
+      onChange([...watchValue, newValue]);
     }
     setSearchValue('');
   };
+
+  const selectedOptions = useMemo(() => {
+    const upperCasedValues = watchValue.map(v => v.toUpperCase());
+    const found = diagnosekodeSearcher.diagnosekoderAndUppercased
+      .filter(dk => upperCasedValues.includes(dk.uppercased.code))
+      .map(v => diagnosekodeToComboBoxOption(v.diagnosekode));
+
+    const notFound = upperCasedValues
+      .filter(v => !found.some(f => f.value === v))
+      .map(v => ({ key: v, label: `${v} - Ukjent diagnosekode`, value: v }));
+    return [...found, ...notFound];
+  }, [watchValue]);
 
   return (
     <div>
@@ -76,7 +89,7 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
         onToggleSelected={handleOnChange}
         onChange={setSearchValue}
         value={searchValue}
-        selectedOptions={getFullOptions().filter(opt => watchValue.includes(opt.value))}
+        selectedOptions={selectedOptions}
         shouldAutocomplete
         disabled={disabled}
         error={formState.errors[name]?.message as string | undefined}
