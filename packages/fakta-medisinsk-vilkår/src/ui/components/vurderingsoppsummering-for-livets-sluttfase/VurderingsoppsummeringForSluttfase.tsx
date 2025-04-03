@@ -1,10 +1,12 @@
-import React, { type JSX } from 'react';
-import { Box, Margin, BasicList, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { Box } from '@navikt/ds-react';
+import { AssessedBy, BasicList } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
-import DokumentLink from '../dokument-link/DokumentLink';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
+import DokumentLink from '../dokument-link/DokumentLink';
 
 interface VurderingsoppsummeringForSluttfaseProps {
   vurdering: Vurdering;
@@ -27,13 +29,13 @@ const VurderingsoppsummeringForSluttfase = ({
       perioder={perioder}
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
-      <Box marginTop={Margin.large}>
+      <Box marginBlock="6 0">
         {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
-        <Box marginTop={Margin.medium}>
+        <Box marginBlock="4 0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om livets sluttfase?"
             content={
-              <Box marginTop={Margin.medium}>
+              <Box marginBlock="4 0">
                 <BasicList
                   elements={dokumenter
                     .filter(({ benyttet }) => benyttet)
@@ -45,13 +47,13 @@ const VurderingsoppsummeringForSluttfase = ({
             }
           />
         </Box>
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent
             label="Er/var den pleietrengende i livets sluttfase?"
             content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
           />
         </Box>
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent
             label="Skriv begrunnelsen for at den pleietrengende er/var i livets sluttfase etter § 9-13."
             content={<span className="whitespace-pre-wrap">{tekst}</span>}

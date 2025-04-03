@@ -1,14 +1,8 @@
 import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
-import { MinusIcon, PlusIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
-import {
-  Box,
-  ContentWithTooltip,
-  LabelledContent,
-  Margin,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
-} from '@navikt/ft-plattform-komponenter';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { MinusIcon, PlusCircleIcon } from '@navikt/aksel-icons';
+import { Box, Button } from '@navikt/ds-react';
+import { ContentWithTooltip, OnePersonIconGray, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import { useState, type JSX } from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
@@ -55,7 +49,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
         {sortertePeriodebeskrivelser
           .filter((periodebeskrivelse, index) => (visAlleBeskrivelser ? true : index <= 2))
           .map(periodebeskrivelse => (
-            <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
+            <Box marginBlock="0 6" key={periodebeskrivelse.tekst}>
               <LabelledContent
                 label={getLabel(periodebeskrivelse)}
                 content={<span className="whitespace-pre-wrap">{periodebeskrivelse.tekst}</span>}
@@ -65,7 +59,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
           ))}
         {sortertePeriodebeskrivelser.length > 3 && (
           <Button
-            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusIcon />}
+            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusCircleIcon />}
             onClick={() => setVisAlleBeskrivelser(!visAlleBeskrivelser)}
             size="small"
             type="button"

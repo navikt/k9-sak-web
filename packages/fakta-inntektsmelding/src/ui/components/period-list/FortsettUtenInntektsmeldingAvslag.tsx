@@ -1,6 +1,7 @@
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
-import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 import { Kode, Tilstand } from '../../../types/KompletthetData';

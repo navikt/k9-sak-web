@@ -1,6 +1,6 @@
-import { Alert } from '@navikt/ds-react';
-import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { Alert, Box } from '@navikt/ds-react';
+import { TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 
 interface SignertSeksjonProps {
   harGyldigSignatur: boolean;
@@ -9,7 +9,7 @@ interface SignertSeksjonProps {
 const SignertSeksjon = ({ harGyldigSignatur }: SignertSeksjonProps): JSX.Element => (
   <div>
     <TitleWithUnderline>Godkjent signatur</TitleWithUnderline>
-    <Box marginTop={Margin.medium}>
+    <Box marginBlock="4 0">
       {harGyldigSignatur && (
         <Alert inline variant="success">
           Det finnes dokumentasjon som er signert av sykehuslege eller lege fra spesialisthelsetjenesten.

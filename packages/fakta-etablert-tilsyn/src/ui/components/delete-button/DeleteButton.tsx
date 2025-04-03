@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { BucketIcon } from '@navikt/ft-plattform-komponenter';
+import { TrashIcon } from '@navikt/aksel-icons';
 import styles from './deleteButton.module.css';
 
 const DeleteButton = ({ onClick }) => (
-  <div className={styles.deleteButton__container}>
-    <button className={styles.deleteButton__button} type="button" onClick={onClick} aria-label="Fjern periode">
-      <BucketIcon />
+  <div className={styles.container}>
+    <button className={styles.button} type="button" onClick={onClick} aria-label="Fjern periode">
+      <TrashIcon fontSize="1.5rem" />
     </button>
   </div>
 );

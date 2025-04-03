@@ -1,5 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
-import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { Box } from '@navikt/ds-react';
+import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import Dokument from '../../../types/Dokument';
 import ContainerContext from '../../context/ContainerContext';
@@ -44,7 +45,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
 
   return (
     <PageContainer hasError={httpErrorHasOccured}>
-      <Box marginTop={Margin.large} marginBottom={Margin.large}>
+      <Box marginBlock="6 6">
         <NyeDokumenterSomKanPåvirkeEksisterendeVurderinger
           dokumenter={dokumenter}
           onEndringerRegistrertClick={onEndringerRegistrertClick}

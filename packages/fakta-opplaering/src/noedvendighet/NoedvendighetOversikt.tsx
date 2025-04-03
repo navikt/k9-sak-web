@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { Alert } from '@navikt/ds-react';
-import { NoedvendighetVurdering } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Period } from '@fpsak-frontend/utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import NoedvendighetNavigation from './NoedvendighetNavigation';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
+import { NoedvendighetVurdering } from '@k9-sak-web/types';
+import { Alert } from '@navikt/ds-react';
+import React, { useContext } from 'react';
 import NoedvendighetDetails from './NoedvendighetDetails';
+import NoedvendighetNavigation from './NoedvendighetNavigation';
 
 const reducer = (accumulator, currentValue) => {
   const perioderMedMatchendeJournalpostId = accumulator.find(

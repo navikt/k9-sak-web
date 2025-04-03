@@ -1,8 +1,8 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Label, Link } from '@navikt/ds-react';
-import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Label, Link } from '@navikt/ds-react';
+import { ContentWithTooltip, Form, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -179,7 +179,7 @@ const VurderingLangvarigSykdomForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginTop={Margin.large}>
+            <Box marginBlock="6 0">
               <Label size="small" aria-hidden="true">
                 Hvilke dokumenter er brukt i vurderingen av sykdom?
               </Label>
@@ -250,7 +250,7 @@ const VurderingLangvarigSykdomForm = ({
               )}
             </Box>
           )}
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly}
@@ -283,7 +283,7 @@ const VurderingLangvarigSykdomForm = ({
               validators={{ required }}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <RadioGroupPanelRHF
               question="Har den pleietrengende en langvarig sykdom?"
               name={FieldName.HAR_LANGVARIG_SYKDOM}
@@ -296,7 +296,7 @@ const VurderingLangvarigSykdomForm = ({
             />
           </Box>
 
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -345,7 +345,7 @@ const VurderingLangvarigSykdomForm = ({
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginTop={Margin.large}>
+                <Box marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
@@ -356,7 +356,7 @@ const VurderingLangvarigSykdomForm = ({
             />
           </Box>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.

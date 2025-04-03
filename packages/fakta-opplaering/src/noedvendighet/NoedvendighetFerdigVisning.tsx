@@ -1,17 +1,11 @@
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
-import {
-  AssessedBy,
-  BasicList,
-  Box,
-  DetailView,
-  LabelledContent,
-  LinkButton,
-  Margin,
-} from '@navikt/ft-plattform-komponenter';
-import React, { useContext } from 'react';
+import { AssessedBy, BasicList, DetailView } from '@navikt/ft-plattform-komponenter';
+import { useContext } from 'react';
 
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { Box, Button } from '@navikt/ds-react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
 import styles from './noedvendighetFerdigVisning.module.css';
@@ -31,9 +25,9 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >
@@ -42,11 +36,11 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           <Calender /> <span>{periode.prettifyPeriod()}</span>
         </div>
       ))}
-      <Box marginTop={Margin.medium}>
+      <Box marginBlock="4 0">
         <LabelledContent
           label="Hvilke dokumenter er brukt i vurderingen om gjennomført opplæring?"
           content={
-            <Box marginTop={Margin.medium}>
+            <Box marginBlock="4 0">
               <BasicList
                 elements={opplaeringDokumenter
                   .map(dokument => ({ ...dokument, benyttet: vurdering.tilknyttedeDokumenter.includes(dokument.id) }))
@@ -59,7 +53,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           }
         />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={intl.formatMessage({ id: 'noedvendighet.vurdering.label' })}
           content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
@@ -67,7 +61,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
         />
         <AssessedBy ident={vurdering.vurdertAv} date={vurdering?.vurdertTidspunkt} />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={intl.formatMessage({ id: 'noedvendighet.noedvendigOpplaering.label' })}
           content={[Vurderingsresultat.GODKJENT].includes(vurdering.resultat) ? 'Ja' : 'Nei'}

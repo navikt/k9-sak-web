@@ -1,12 +1,14 @@
-import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Vurderingsresultat } from '@k9-sak-web/types';
+import { Box, Button } from '@navikt/ds-react';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
 import FraSoeknad from './FraSoeknad';
 import { ReisetidVurdering } from './ReisetidTypes';
@@ -26,14 +28,14 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >
       <BeskrivelseFraSoeker vurdering={vurdering} />
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         {vurdering.til ? (
           <LabelledContent
             label={intl.formatMessage({ id: 'reisetid.foersteDag' })}
@@ -54,7 +56,7 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           />
         )}
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         {vurdering.til ? (
           <LabelledContent
             label={intl.formatMessage({ id: 'reisetid.avreisedato' })}
@@ -75,7 +77,7 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           />
         )}
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={
             [Vurderingsresultat.GODKJENT_AUTOMATISK, Vurderingsresultat.GODKJENT].includes(vurdering.resultat)
@@ -86,7 +88,7 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
         />
       </Box>
       {vurdering.begrunnelse && (
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent
             label={intl.formatMessage({ id: 'reisetid.begrunnelse' })}
             content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}

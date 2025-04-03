@@ -2,18 +2,12 @@ import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
-import {
-  AssessedBy,
-  BasicList,
-  Box,
-  DetailView,
-  LabelledContent,
-  LinkButton,
-  Margin,
-} from '@navikt/ft-plattform-komponenter';
-import React, { useContext } from 'react';
+import { Box, Button } from '@navikt/ds-react';
+import { AssessedBy, BasicList, DetailView } from '@navikt/ft-plattform-komponenter';
+import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
 import styles from './GjennomgaaOpplaeringFerdigVisning.module.css';
@@ -33,9 +27,9 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
-          <LinkButton onClick={rediger} className={styles.endreLink}>
+          <Button variant="tertiary" size="xsmall" onClick={rediger} className={styles.endreLink}>
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >
@@ -43,11 +37,11 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
         <Calender />
         <span>{vurdering.opplæring.prettifyPeriod()}</span>
       </div>
-      <Box marginTop={Margin.medium}>
+      <Box marginBlock="4 0">
         <LabelledContent
           label="Hvilke dokumenter er brukt i vurderingen om gjennomført opplæring??"
           content={
-            <Box marginTop={Margin.medium}>
+            <Box marginBlock="4 0">
               <BasicList
                 elements={opplaeringDokumenter
                   .map(dokument => ({ ...dokument, benyttet: vurdering?.tilknyttedeDokumenter?.includes(dokument.id) }))
@@ -60,7 +54,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
           }
         />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}
           content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
@@ -68,13 +62,13 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
         />
         <AssessedBy ident={vurdering.vurdertAv} date={vurdering?.vurdertTidspunkt} />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={intl.formatMessage({ id: 'opplaering.gjennomfoertOpplaering.label' })}
           content={[Vurderingsresultat.GODKJENT].includes(vurdering.resultat) ? 'Ja' : 'Nei'}
         />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label={intl.formatMessage({ id: 'opplaering.perioder.label' })}
           content={vurdering.opplæring.prettifyPeriod()}

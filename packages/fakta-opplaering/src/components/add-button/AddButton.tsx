@@ -1,5 +1,5 @@
-import { PlusIcon } from '@navikt/ft-plattform-komponenter';
-import React, { forwardRef, Ref, type JSX } from 'react';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { forwardRef, Ref, type JSX } from 'react';
 import styles from './addButton.module.css';
 
 interface AddButtonProps {
@@ -21,7 +21,7 @@ const AddButton = forwardRef(
       aria-label={ariaLabel}
       ref={ref}
     >
-      {!noIcon && <PlusIcon />}
+      {!noIcon && <PlusCircleIcon fontSize="1.25rem" />}
       <span className={styles.addButton__text}>{label}</span>
     </button>
   ),

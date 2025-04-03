@@ -1,7 +1,6 @@
-import { prettifyDateString } from '@fpsak-frontend/utils';
 import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import { Link } from '@navikt/ds-react';
+import { prettifyDateString } from '@fpsak-frontend/utils';
+import { Box, Link } from '@navikt/ds-react';
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
@@ -54,7 +53,7 @@ const DuplikatRadiobuttons = ({ dokument, strukturerteDokumenter }: DuplikatRadi
   }
 
   return (
-    <Box marginTop={Margin.xLarge}>
+    <Box marginBlock="8 0">
       <RadioGroupPanelRHF
         name={FieldName.DUPLIKAT_AV_ID}
         disabled={readOnly}

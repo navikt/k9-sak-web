@@ -1,7 +1,7 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { Button, Label } from '@navikt/ds-react';
-import { Box, DocumentIcon, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { Box, Button, Label } from '@navikt/ds-react';
+import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
@@ -58,11 +58,11 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderinger = ({
   isSubmitting,
 }: NyeDokumenterSomKanPåvirkeEksisterendeVurderingerProps): JSX.Element => (
   <div className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger}>
-    <Box marginTop={Margin.large}>
+    <Box marginBlock="6 0">
       <div className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__content}>
         <Label size="small">Vurder om nytt dokument fører til endringer i eksisterende vurderinger.</Label>
         <NyeDokumenterListe dokumenter={dokumenter} />
-        <Box marginTop={Margin.large}>
+        <Box marginBlock="6 0">
           <Button
             size="small"
             onClick={() => onEndringerRegistrertClick()}
