@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { UNSAFE_Combobox, type ComboboxProps } from '@navikt/ds-react';
-import { DiagnosekodeSearcher, ICD10, type ICD10Diagnosekode } from '@navikt/diagnosekoder';
+import { type ICD10Diagnosekode } from '@navikt/diagnosekoder';
 import { useFormContext } from 'react-hook-form';
+import { initDiagnosekodeSearcher } from './diagnosekodeSearcher.js';
+
 interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'className' | 'disabled'> {
   label?: string;
   name: string;
@@ -9,8 +11,7 @@ interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'classNam
 
 const MIN_SEARCH_CHARS = 3;
 
-// TODO bruk initDiagnosekodeSearcher istadenfor
-const diagnosekodeSearcher = new DiagnosekodeSearcher(ICD10, 50);
+const diagnosekodeSearcher = initDiagnosekodeSearcher(50);
 
 type ComboBoxOptions = Readonly<{ key: string; label: string; value: string }>;
 
