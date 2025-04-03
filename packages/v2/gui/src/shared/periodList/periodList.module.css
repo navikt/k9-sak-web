@@ -1,0 +1,40 @@
+.periodList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.periodList .element {
+  border-bottom: 1px solid #b0b0b0;
+  padding: 1.5rem 0 2.1875rem;
+}
+
+.periodList .element:first-of-type {
+  border-top: 1px solid #b0b0b0;
+}
+
+.periodList .element .content {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 0.15fr 0.15fr 0.62fr;
+}
+
+@media (width <= 500px) {
+  .periodList .element .content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.periodList .element .content .item :first-child {
+  margin-bottom: 0.4375rem;
+}
+
+@media (width <= 500px) {
+  .periodList .element .content .item {
+    margin-bottom: 0.4375rem;
+  }
+
+  .periodList .element .content .item :first-child {
+    margin-bottom: unset;
+  }
+}

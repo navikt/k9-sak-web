@@ -1,6 +1,6 @@
 import { get } from '@fpsak-frontend/utils';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Alert, Button } from '@navikt/ds-react';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import { useContext, useEffect, useMemo, useReducer, type JSX } from 'react';
 import { RettVedDød } from '../../../types/RettVedDød';
 import ContainerContext from '../../context/ContainerContext';

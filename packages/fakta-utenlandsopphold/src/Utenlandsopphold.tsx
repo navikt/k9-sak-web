@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-curly-brace-presence */
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { PeriodList } from '@k9-sak-web/gui/shared/periodList/PeriodList.js';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { Alert, Heading, ReadMore } from '@navikt/ds-react';
-import { PeriodList } from '@navikt/ft-plattform-komponenter';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import React from 'react';
 import styles from './utenlandsopphold.module.css';
 
 countries.registerLocale(norwegianLocale);
@@ -47,7 +46,7 @@ const Utenlandsopphold = ({
       if (periode.landkode.kode === 'XXK') {
         return { label: 'Land', value: 'Kosovo' };
       }
-      return { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
+      return { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') ?? 'Ukjent land' };
     };
 
     const hentEØSStatus = () => {

@@ -1,8 +1,9 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Label, Link } from '@navikt/ds-react';
-import { ContentWithTooltip, Form, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -169,7 +170,7 @@ const VurderingAvLivetsSluttfaseForm = ({
       <div id="modal" />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel="Bekreft"
           onSubmit={formMethods.handleSubmit(lagNySluttfaseVurdering)}
           onAvbryt={onAvbryt}
@@ -362,7 +363,7 @@ const VurderingAvLivetsSluttfaseForm = ({
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailViewVurdering>
   );

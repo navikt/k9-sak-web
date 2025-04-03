@@ -1,8 +1,8 @@
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Personopplysninger } from '@k9-sak-web/types';
 import { Alert, Box, Button, Label, Modal } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -79,7 +79,11 @@ const InnleggelsesperiodeFormModal = ({
       <Modal.Body>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...formMethods}>
-          <Form onSubmit={formMethods.handleSubmit(handleSubmit)} shouldShowSubmitButton={false} smallButtons>
+          <FormWithButtons
+            onSubmit={formMethods.handleSubmit(handleSubmit)}
+            shouldShowSubmitButton={false}
+            smallButtons
+          >
             <Box marginBlock="6 0">
               <PeriodpickerListRHF
                 name="innleggelsesperioder"
@@ -200,7 +204,7 @@ const InnleggelsesperiodeFormModal = ({
                 </Button>
               </div>
             </Box>
-          </Form>
+          </FormWithButtons>
         </FormProvider>
       </Modal.Body>
     </Modal>

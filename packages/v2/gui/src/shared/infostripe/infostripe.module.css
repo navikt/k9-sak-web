@@ -1,0 +1,17 @@
+.infostripe {
+  background: #eae2f3;
+  border: 1px solid #634689;
+  border-left: none;
+  border-right: none;
+  margin: -41px -40px 0 -32px;
+  padding: 0.5rem 1.4375rem;
+}
+
+.iconContainer {
+  margin-bottom: -0.4375rem;
+}
+
+.iconContainer svg {
+  height: 1.8125rem;
+  width: 1.8125rem;
+}

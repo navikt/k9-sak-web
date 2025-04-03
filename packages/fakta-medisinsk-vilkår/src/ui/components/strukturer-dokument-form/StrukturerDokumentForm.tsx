@@ -1,7 +1,8 @@
 import { DatepickerRHF, RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import { dateConstants } from '@fpsak-frontend/utils';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Box } from '@navikt/ds-react';
-import { DetailView, Form } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
@@ -46,7 +47,7 @@ const StrukturerDokumentForm = ({
     <DetailView title="Om dokumentet">
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel={buttonLabel}
           onSubmit={formMethods.handleSubmit(lagNyttStrukturertDokument)}
           submitButtonDisabled={isSubmitting}
@@ -95,7 +96,7 @@ const StrukturerDokumentForm = ({
             />
           </Box>
           <DuplikatRadiobuttons dokument={dokument} strukturerteDokumenter={strukturerteDokumenter} />
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailView>
   );

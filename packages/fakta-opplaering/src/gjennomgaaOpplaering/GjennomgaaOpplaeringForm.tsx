@@ -1,6 +1,6 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Calender } from '@navikt/ds-icons';
-import { DetailView } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import { useContext, useEffect, type JSX } from 'react';
 import { useIntl } from 'react-intl';

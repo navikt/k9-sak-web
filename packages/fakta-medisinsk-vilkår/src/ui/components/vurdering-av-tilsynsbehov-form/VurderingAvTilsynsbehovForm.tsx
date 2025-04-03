@@ -1,8 +1,9 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Button, Label, Link } from '@navikt/ds-react';
-import { ContentWithTooltip, Form, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -184,7 +185,7 @@ const VurderingAvTilsynsbehovForm = ({
       <div id="modal" />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel="Bekreft"
           onSubmit={formMethods.handleSubmit(lagNyTilsynsvurdering)}
           onAvbryt={onAvbryt}
@@ -382,7 +383,7 @@ const VurderingAvTilsynsbehovForm = ({
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailViewVurdering>
   );

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { DetailView } from './DetailView/DetailView';
+import { DetailView } from '../detailView/DetailView';
 import { NavigationWithDetailView } from './NavigationWithDetailView';
 
 const meta = {

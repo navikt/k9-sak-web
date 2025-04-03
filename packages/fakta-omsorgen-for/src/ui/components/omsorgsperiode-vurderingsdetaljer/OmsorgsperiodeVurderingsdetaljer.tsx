@@ -1,7 +1,8 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { useContext, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';

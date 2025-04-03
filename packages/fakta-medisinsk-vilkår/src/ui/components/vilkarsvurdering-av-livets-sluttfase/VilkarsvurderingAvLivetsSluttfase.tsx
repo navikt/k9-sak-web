@@ -1,5 +1,4 @@
 import { get, Period } from '@fpsak-frontend/utils';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import Step, { livetsSluttfaseSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -14,6 +13,7 @@ import vilkårsvurderingReducer from './reducer';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
 import BehandlingType from '../../../constants/BehandlingType';
 import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';

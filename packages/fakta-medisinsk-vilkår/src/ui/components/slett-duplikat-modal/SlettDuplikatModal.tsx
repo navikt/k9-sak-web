@@ -1,6 +1,5 @@
 import { post } from '@fpsak-frontend/utils';
-import { BodyShort, Box, Button, Modal } from '@navikt/ds-react';
-import { PageError } from '@navikt/ft-plattform-komponenter';
+import { Alert, BodyShort, Box, Button, Modal } from '@navikt/ds-react';
 import React, { useMemo, useState, type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument from '../../../types/Dokument';
@@ -60,7 +59,7 @@ const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: Sl
         </BodyShort>
         {removeDuplikatFeilet && (
           <Box marginBlock="4 0">
-            <PageError message="Noe gikk galt, vennligst prøv igjen senere" />
+            <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere.</Alert>
           </Box>
         )}
         <div className={styles.buttonContainer}>

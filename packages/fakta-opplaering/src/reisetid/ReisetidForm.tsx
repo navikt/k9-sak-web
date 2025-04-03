@@ -1,5 +1,4 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
-import { DetailView } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import { useContext, useEffect, type JSX } from 'react';
 import { useIntl } from 'react-intl';
@@ -8,6 +7,7 @@ import * as yup from 'yup';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
 import { Period, getPeriodDifference, required } from '@fpsak-frontend/utils';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Alert, Box, Button } from '@navikt/ds-react';

@@ -1,7 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
-import { TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
-import { Alert, Box, Loader } from '@navikt/ds-react';
+import { Alert, Box, Heading, HStack, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
@@ -119,23 +118,23 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
 
   return (
     <div>
-      <TitleWithUnderline
-        contentAfterTitleRenderer={() => (
-          <WriteAccessBoundContent
-            contentRenderer={() => (
-              <AddButton
-                id="leggTilDiagnosekodeKnapp"
-                label="Ny diagnosekode"
-                onClick={() => setModalIsOpen(true)}
-                ariaLabel="Legg til diagnosekode"
-                ref={addButtonRef}
-              />
-            )}
-          />
-        )}
-      >
-        Diagnosekoder
-      </TitleWithUnderline>
+      <HStack justify="space-between" align="end">
+        <Heading size="small" level="2">
+          Diagnosekoder
+        </Heading>
+        <WriteAccessBoundContent
+          contentRenderer={() => (
+            <AddButton
+              id="leggTilDiagnosekodeKnapp"
+              label="Ny diagnosekode"
+              onClick={() => setModalIsOpen(true)}
+              ariaLabel="Legg til diagnosekode"
+              ref={addButtonRef}
+            />
+          )}
+        />
+      </HStack>
+      <hr style={{ color: '#B7B1A9' }} />
       {isLoading ? (
         <Loader size="large" />
       ) : (
