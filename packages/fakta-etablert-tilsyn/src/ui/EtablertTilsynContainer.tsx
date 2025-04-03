@@ -1,6 +1,7 @@
 import { get, Period } from '@fpsak-frontend/utils';
+import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
 import { Alert, Tabs } from '@navikt/ds-react';
-import { ChildIcon, Infostripe, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { ChildIcon, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
 import ContainerContract from '../types/ContainerContract';
@@ -137,7 +138,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   return (
     <ContainerContext.Provider value={data}>
       <Infostripe
-        text="Etablert tilsyn og vurdering av beredskap og nattevåk gjelder barnet og er felles for alle parter."
+        content="Etablert tilsyn og vurdering av beredskap og nattevåk gjelder barnet og er felles for alle parter."
         iconRenderer={() => <ChildIcon />}
       />
       <div className={styles.mainComponent}>
