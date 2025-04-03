@@ -1,9 +1,10 @@
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
-import { AssessedBy, BasicList, DetailView } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import { useContext } from 'react';
 
+import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Box, Button } from '@navikt/ds-react';
 import { useIntl } from 'react-intl';
