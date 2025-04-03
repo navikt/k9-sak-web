@@ -16,13 +16,12 @@ import Diagnosekodeliste from '../diagnosekodeliste/Diagnosekodeliste';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 
-// Start initializing diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
+// initialize diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
 // This reuse is possible since we don't use the paging functionality in the instance anyways.
-const diagnosekodeSearcherPromise = initDiagnosekodeSearcher(8);
+const diagnosekodeSearcher = initDiagnosekodeSearcher(8);
 
 const fetchDiagnosekoderByQuery = async (queryString: string): Promise<Diagnosekode> => {
-  const searcher = await diagnosekodeSearcherPromise;
-  const searchResult = searcher.search(queryString, 1);
+  const searchResult = diagnosekodeSearcher.search(queryString, 1);
   // This function only returns the found diagnosecode if there is exactly one diagnosecode found.
   if (searchResult.diagnosekoder.length === 1 && !searchResult.hasMore) {
     return toLegacyDiagnosekode(searchResult.diagnosekoder[0]);
@@ -62,7 +61,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
     })),
     combine: results => {
       return {
-        diagnosekodeObjekter: results.map(r => r.data),
+        diagnosekodeObjekter: results.map(r => r.data).filter(d => d != null),
         diagnosekodeObjekterLaster: results.some(r => r.isPending),
       };
     },
@@ -155,7 +154,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
         isOpen={modalIsOpen}
         onSaveClick={lagreDiagnosekodeMutation.mutateAsync}
         onRequestClose={() => setModalIsOpen(false)}
-        searcherPromise={diagnosekodeSearcherPromise}
+        searcher={diagnosekodeSearcher}
       />
     </div>
   );
