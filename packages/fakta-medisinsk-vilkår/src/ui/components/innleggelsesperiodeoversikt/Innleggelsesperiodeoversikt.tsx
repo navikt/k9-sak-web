@@ -1,6 +1,6 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { Box, Button, Loader } from '@navikt/ds-react';
-import { PageError, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button, Loader } from '@navikt/ds-react';
+import { TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import LinkRel from '../../../constants/LinkRel';
@@ -105,7 +105,7 @@ const Innleggelsesperiodeoversikt = ({
   }, []);
 
   if (hentInnleggelsesperioderFeilet || lagreInnleggelsesperioderFeilet) {
-    return <PageError message="Noe gikk galt, vennligst prøv igjen senere" />;
+    return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
   return (
