@@ -1,9 +1,9 @@
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { Calender } from '@navikt/ds-icons';
 import { Box, Button } from '@navikt/ds-react';
-import { DetailView } from '@navikt/ft-plattform-komponenter';
 import { useState } from 'react';
 
+import { DetailView } from '../../../../shared/detailView/DetailView.js';
 import { LabelledContent } from '../../../../shared/labelledContent/LabelledContent.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';

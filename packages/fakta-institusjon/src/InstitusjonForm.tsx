@@ -1,6 +1,6 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Calender } from '@navikt/ds-icons';
-import { DetailView } from '@navikt/ft-plattform-komponenter';
 
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { required } from '@fpsak-frontend/utils';

@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Alert, Box, Label } from '@navikt/ds-react';
-import { DetailView } from '@navikt/ft-plattform-komponenter';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';

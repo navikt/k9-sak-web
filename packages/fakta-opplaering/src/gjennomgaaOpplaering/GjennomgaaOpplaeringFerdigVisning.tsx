@@ -3,11 +3,12 @@ import {
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import { Box, Button } from '@navikt/ds-react';
-import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
