@@ -59,7 +59,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
           ))}
         {sortertePeriodebeskrivelser.length > 3 && (
           <Button
-            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusCircleIcon fontSize="1.25rem" />}
+            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusCircleIcon />}
             onClick={() => setVisAlleBeskrivelser(!visAlleBeskrivelser)}
             size="small"
             type="button"

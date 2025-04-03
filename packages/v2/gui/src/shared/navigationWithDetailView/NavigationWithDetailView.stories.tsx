@@ -4,6 +4,7 @@ import { DetailView } from './DetailView/DetailView';
 import { NavigationWithDetailView } from './NavigationWithDetailView';
 
 const meta = {
+  title: 'gui/shared/navigationWithDetailView',
   component: NavigationWithDetailView,
 } satisfies Meta<typeof NavigationWithDetailView>;
 
