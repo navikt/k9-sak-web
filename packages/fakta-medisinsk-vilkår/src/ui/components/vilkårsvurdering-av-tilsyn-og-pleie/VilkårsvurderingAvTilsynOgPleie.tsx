@@ -1,7 +1,7 @@
 import { get, Period } from '@fpsak-frontend/utils';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import Step, { StepId, tilsynOgPleieSteg, toOmsorgspersonerSteg } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';

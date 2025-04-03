@@ -2,7 +2,7 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Tabs, VStack } from '@navikt/ds-react';
-import { ChildIcon, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { ChildIcon } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import React, { useMemo, type JSX } from 'react';
@@ -31,6 +31,7 @@ import VurderingContext from '../../context/VurderingContext';
 import AksjonspunktFerdigStripe from '../aksjonspunkt-ferdig-stripe/AksjonspunktFerdigStripe';
 // eslint-disable-next-line max-len
 import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController from '../nye-dokumenter-som-kan-påvirke-eksisterende-vurderinger/NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController';
 import StruktureringAvDokumentasjon from '../strukturering-av-dokumentasjon/StruktureringAvDokumentasjon';
 import UteståendeEndringerMelding from '../utestående-endringer-melding/UteståendeEndringerMelding';
