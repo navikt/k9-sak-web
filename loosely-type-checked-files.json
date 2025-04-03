@@ -217,7 +217,6 @@
   "packages/fakta-medisinsk-vilkår/src/ui/components/vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/write-access-bound-content/WriteAccessBoundContent.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/context/DiagnosekodeContext.ts",
-  "packages/fakta-medisinsk-vilkår/src/ui/form/pure/PureDiagnosekodeSelector.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/form/validators/__tests__/validators.spec.ts",
   "packages/fakta-medisinsk-vilkår/src/util/dokumentUtils.ts",
   "packages/fakta-medisinsk-vilkår/src/util/linkUtils.ts",

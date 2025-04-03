@@ -5,7 +5,7 @@ import Diagnosekode from '../../../types/Diagnosekode';
 import DeleteButton from '../../components/delete-button/DeleteButton';
 import styles from './diagnosekodeSelector.module.css';
 import { type ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
-import { toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
+import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
 
 import type { JSX } from 'react';
 
@@ -35,7 +35,7 @@ const PureDiagnosekodeSelector = ({
   selectedDiagnosekoder,
   searcher,
 }: DiagnosekodeSelectorProps): JSX.Element => {
-  const [suggestions, setSuggestions] = React.useState([]);
+  const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
   const [inputValue, setInputValue] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedDiagnosekoderFullName, setSelectedDiagnosekoderFullName] = React.useState<Suggestion[]>([]);
