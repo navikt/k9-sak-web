@@ -1,13 +1,14 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
-import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
+import { DetailView } from '@navikt/ft-plattform-komponenter';
 
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { required } from '@fpsak-frontend/utils';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
+import { Box, Button } from '@navikt/ds-react';
 import { Formik } from 'formik';
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',
@@ -76,13 +77,13 @@ const InstitusjonForm = ({
                 <Calender /> <span>{periode.prettifyPeriod()}</span>
               </div>
             ))}
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <LabelledContent
                 label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
                 content={vurdering.institusjon}
               />
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <TextAreaFormik
                 // eslint-disable-next-line max-len
                 label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
@@ -91,7 +92,7 @@ const InstitusjonForm = ({
                 readOnly={readOnly}
               />
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <RadioGroupFormik
                 legend="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
                 options={[
@@ -103,7 +104,7 @@ const InstitusjonForm = ({
                 disabled={readOnly}
               />
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Button
                 size="small"
                 type="submit"

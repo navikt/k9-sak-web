@@ -437,7 +437,7 @@ const Messages = ({
         onChange={setTredjepartsmottaker}
       />
       <FritekstInput
-        språk={behandling.sprakkode}
+        språk={behandling.språkkode}
         defaultValue={valgtFritekstInputValue}
         ref={fritekstInputRef}
         show={showFritekstInput}

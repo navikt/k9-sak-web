@@ -1,6 +1,7 @@
 import {
   KontrollerInntektPeriodeDtoStatus,
   KontrollerInntektPeriodeDtoValg,
+  type AksjonspunktDto,
   type KontrollerInntektDto,
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
@@ -16,6 +17,9 @@ import { formatCurrencyWithKr } from '../../utils/formatters';
 import styles from './arbeidOgInntekt.module.css';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
+  if (!inntekt || (!inntekt.arbeidsinntekt && !inntekt.ytelse)) {
+    return '';
+  }
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
 };
 
@@ -24,6 +28,29 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
     return 'Avvik';
   }
   return 'Ingen avvik';
+};
+
+const buildInitialValues = (
+  inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'],
+  aksjonspunkt: AksjonspunktDto | undefined,
+) => {
+  const vurdertPeriode = inntektKontrollperioder?.find(
+    periode => periode.erTilVurdering && periode.status === KontrollerInntektPeriodeDtoStatus.AVVIK && periode.valg,
+  );
+  if (vurdertPeriode) {
+    return {
+      fastsattArbeidsinntekt: vurdertPeriode.fastsattArbeidsinntekt ? `${vurdertPeriode.fastsattArbeidsinntekt}` : '',
+      fastsattYtelse: vurdertPeriode.fastsattYtelse ? `${vurdertPeriode.fastsattYtelse}` : '',
+      valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
+      begrunnelse: aksjonspunkt?.begrunnelse ?? '',
+    };
+  }
+  return {
+    fastsattArbeidsinntekt: '',
+    fastsattYtelse: '',
+    valg: '' as const,
+    begrunnelse: '',
+  };
 };
 
 type Formvalues = {
@@ -36,17 +63,13 @@ type Formvalues = {
 interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'];
+  aksjonspunkt: AksjonspunktDto | undefined;
 }
 
-export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjonspunkt }: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
-    defaultValues: {
-      fastsattArbeidsinntekt: '',
-      fastsattYtelse: '',
-      valg: '',
-      begrunnelse: '',
-    },
+    defaultValues: buildInitialValues(inntektKontrollperioder, aksjonspunkt),
   });
   const valg = formMethods.watch('valg');
 
@@ -78,7 +101,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
     }
   };
 
-  const getAksjonspunkt = () => (
+  const getAksjonspunkt = (harBrukerrapportertInntekt: boolean) => (
     <Bleed marginBlock="4 0">
       <Box
         marginInline="2 0"
@@ -93,7 +116,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
             <PersonIcon title="Deltager" fontSize="1.5rem" className={styles.personIcon} />
             <VStack gap="2">
               <Heading size="xsmall" as="h3">
-                Beskrivelse fra deltaker for avvik i perioden 01.02.2025 - 28.02.2025
+                Beskrivelse fra deltaker for avvik i perioden xx.xx.xxxx - xx.xx.xxxx
               </Heading>
               <Box maxWidth="75ch">
                 <BodyLong size="small">
@@ -111,10 +134,14 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
               label="Hvilken inntekt skal benyttes?"
               validate={[required]}
               radios={[
-                {
-                  value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                  label: 'Rapportert inntekt fra deltager',
-                },
+                ...(harBrukerrapportertInntekt
+                  ? [
+                      {
+                        value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
+                        label: 'Rapportert inntekt fra deltager',
+                      },
+                    ]
+                  : []),
                 {
                   value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
                   label: 'Rapportert inntekt fra A-inntekt',
@@ -188,13 +215,14 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder }: Arb
           <Table.Body>
             {inntektKontrollperioder?.map((inntekt, index) => {
               const isLastRow = index === inntektKontrollperioder.length - 1;
-              const harAksjonspunkt = inntekt.erTilVurdering;
               const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
+              const harAksjonspunkt = inntekt.erTilVurdering && harAvvik;
+              const harBrukerrapportertInntekt = inntekt.rapporterteInntekter?.bruker?.arbeidsinntekt !== undefined;
 
               return (
                 <Table.ExpandableRow
                   key={`${inntekt.periode?.fom}_${inntekt.periode?.tom}`}
-                  content={harAksjonspunkt ? getAksjonspunkt() : null}
+                  content={harAksjonspunkt ? getAksjonspunkt(harBrukerrapportertInntekt) : null}
                   togglePlacement="right"
                   className={isLastRow ? styles.lastRow : ''}
                   expandOnRowClick

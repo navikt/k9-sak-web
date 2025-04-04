@@ -1,9 +1,9 @@
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { GjennomgaaOpplaeringPeriode, GjennomgaaOpplaeringVurdering } from '@k9-sak-web/types';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 
 import { Period } from '@fpsak-frontend/utils';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
 import GjennomgaaOpplaeringDetails from './GjennomgaaOpplaeringDetails';
 import GjennomgaaOpplaeringNavigation from './GjennomgaaOpplaeringNavigation';
 

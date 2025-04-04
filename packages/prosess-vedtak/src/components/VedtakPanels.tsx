@@ -31,7 +31,7 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 interface VedtakPanelsProps {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPaaVent: boolean;
+  behandlingPåVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
   behandlingTypeKode: string;
@@ -48,7 +48,7 @@ interface VedtakPanelsProps {
   previewCallback: () => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
-  sprakkode: string;
+  språkkode: string;
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
@@ -69,9 +69,9 @@ const VedtakPanels = ({
   submitCallback,
   behandlingTypeKode,
   behandlingresultat,
-  sprakkode,
+  språkkode,
   behandlingStatus,
-  behandlingPaaVent,
+  behandlingPåVent,
   tilbakekrevingvalg,
   simuleringResultat,
   medlemskapFom,
@@ -148,8 +148,8 @@ const VedtakPanels = ({
         hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
         behandlingresultat={behandlingresultat}
         behandlingStatus={behandlingStatus}
-        sprakkode={sprakkode}
-        behandlingPaaVent={behandlingPaaVent}
+        språkkode={språkkode}
+        behandlingPåVent={behandlingPåVent}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
         aksjonspunkter={aksjonspunkter}

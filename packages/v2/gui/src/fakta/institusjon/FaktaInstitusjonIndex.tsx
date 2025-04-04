@@ -1,16 +1,16 @@
-import { useState, useMemo } from 'react';
-import { Heading } from '@navikt/ds-react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@navikt/ft-utils';
 import {
   InstitusjonVurderingDtoResultat,
   type InstitusjonPeriodeDto,
   type InstitusjonVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { Heading } from '@navikt/ds-react';
+import { Period } from '@navikt/ft-utils';
+import { useMemo, useState } from 'react';
 
-import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
+import { NavigationWithDetailView } from '../../shared/navigationWithDetailView/NavigationWithDetailView.js';
 import InstitusjonDetails from './components/institusjonDetails/InstitusjonDetails.js';
 import type { SubmitValues } from './components/institusjonDetails/InstitusjonForm.js';
+import InstitusjonNavigation from './components/institusjonNavigation/InstitusjonNavigation.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 

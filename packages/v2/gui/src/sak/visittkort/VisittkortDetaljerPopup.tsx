@@ -4,7 +4,7 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, HStack, Label, Tag, Tooltip, VStack } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import getAddresses, { type Adresser } from '../../utils/getAddresses';
-import { getLanguageFromSprakkode } from '../../utils/språkUtils';
+import { getLanguageFromspråkkode } from '../../utils/språkUtils';
 import type { Personopplysninger } from './types/Personopplysninger';
 import styles from './visittkortDetaljerPopup.module.css';
 
@@ -23,10 +23,10 @@ const findPersonStatus = (personopplysning: Personopplysninger): string => {
 
 interface OwnProps {
   personopplysninger: Personopplysninger;
-  sprakkode?: string;
+  språkkode?: string;
 }
 
-const VisittkortDetaljerPopup = ({ personopplysninger, sprakkode }: OwnProps) => {
+const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser ?? []), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);
@@ -66,7 +66,7 @@ const VisittkortDetaljerPopup = ({ personopplysninger, sprakkode }: OwnProps) =>
           )}
           <Tooltip content="Foretrukket språk" placement="bottom">
             <Tag variant="info" className={styles.etikett} size="small">
-              {getLanguageFromSprakkode(sprakkode)}
+              {getLanguageFromspråkkode(språkkode)}
             </Tag>
           </Tooltip>
         </HStack>

@@ -21,7 +21,7 @@ const behandlinger = [
       },
     ],
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
@@ -105,7 +105,7 @@ const behandlinger = [
     },
     endret: '2021-12-20T09:23:01.248',
     endretAvBrukernavn: 'vtp',
-    erPaaVent: false,
+    erPåVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
@@ -117,7 +117,7 @@ const behandlinger = [
     links: [],
     opprettet: '2021-12-20T09:22:38',
     originalVedtaksDato: '2021-12-20',
-    sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+    språkkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
     status: { kode: 'AVSLU', kodeverk: 'BEHANDLING_STATUS' },
     toTrinnsBehandling: false,
     type: { kode: 'BT-004', kodeverk: 'BEHANDLING_TYPE' },
@@ -143,7 +143,7 @@ const behandlinger = [
       },
     ],
     behandlingKoet: false,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
@@ -227,7 +227,7 @@ const behandlinger = [
     },
     endret: '2021-12-20T09:22:36.118',
     endretAvBrukernavn: 'vtp',
-    erPaaVent: false,
+    erPåVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
@@ -239,7 +239,7 @@ const behandlinger = [
     links: [],
     opprettet: '2021-12-20T09:21:41',
     originalVedtaksDato: '2021-12-20',
-    sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+    språkkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
     status: { kode: 'AVSLU', kodeverk: 'BEHANDLING_STATUS' },
     toTrinnsBehandling: true,
     type: { kode: 'BT-002', kodeverk: 'BEHANDLING_TYPE' },

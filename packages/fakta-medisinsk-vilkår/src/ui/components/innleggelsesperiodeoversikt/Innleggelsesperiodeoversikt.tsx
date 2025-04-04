@@ -1,6 +1,6 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { Loader } from '@navikt/ds-react';
-import { Box, LinkButton, Margin, PageError, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
+import { Box, Button, Loader } from '@navikt/ds-react';
+import { PageError, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import LinkRel from '../../../constants/LinkRel';
@@ -116,12 +116,14 @@ const Innleggelsesperiodeoversikt = ({
             <WriteAccessBoundContent
               otherRequirementsAreMet={innleggelsesperioder.length > 0}
               contentRenderer={() => (
-                <LinkButton
+                <Button
+                  variant="tertiary"
+                  size="xsmall"
                   className={styles.innleggelsesperiodeoversikt__redigerListeKnapp}
                   onClick={() => setModalIsOpen(true)}
                 >
                   Rediger liste
-                </LinkButton>
+                </Button>
               )}
             />
             <WriteAccessBoundContent
@@ -138,10 +140,10 @@ const Innleggelsesperiodeoversikt = ({
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box marginTop={Margin.large}>
+        <Box marginBlock="6 0">
           {innleggelsesperioder.length === 0 && <p>Ingen innleggelsesperioder registrert</p>}
           {innleggelsesperioder.length > 0 && (
-            <Box marginTop={Margin.small}>
+            <Box marginBlock="2 0">
               <Innleggelsesperiodeliste innleggelsesperioder={innleggelsesperioder} />
             </Box>
           )}
