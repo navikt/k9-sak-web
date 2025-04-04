@@ -95,17 +95,19 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
             {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
             {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
           </Tabs.List>
-          <Tabs.Panel value="arbeid">
-            <ArbeidOgInntekt
-              submitCallback={submitCallback}
-              inntektKontrollperioder={inntekt?.kontrollperioder}
-              aksjonspunkt={aksjonspunkt}
-            />
-          </Tabs.Panel>
-          <Tabs.Panel value="barn">
-            <BarnPanel barn={barn} />
-          </Tabs.Panel>
-          <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
+          <Box maxWidth="860px">
+            <Tabs.Panel value="arbeid">
+              <ArbeidOgInntekt
+                submitCallback={submitCallback}
+                inntektKontrollperioder={inntekt?.kontrollperioder}
+                aksjonspunkt={aksjonspunkt}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="barn">
+              <BarnPanel barn={barn} />
+            </Tabs.Panel>
+            <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
+          </Box>
         </Tabs>
       </Box>
     </Box>
