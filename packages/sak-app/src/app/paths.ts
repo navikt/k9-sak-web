@@ -112,7 +112,9 @@ export const redirectToLogin = () => {
 
 export const goToLos = () => {
   const path = getPathToK9Los();
-  window.location.assign(path);
+  if (path != null) {
+    window.location.assign(path);
+  }
 };
 
 export const goToSearch = () => {

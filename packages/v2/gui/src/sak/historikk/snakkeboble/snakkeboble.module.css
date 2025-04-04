@@ -46,6 +46,11 @@
   --ac-chat-avatar-bg: var(--a-lightblue-300);
 }
 
+.bubbleUdefinert {
+  --ac-chat-bubble-bg: var(--a-surface-warning-subtle);
+  --ac-chat-avatar-bg: var(--a-surface-warning);
+}
+
 .chatRight {
   margin-left: auto;
 }

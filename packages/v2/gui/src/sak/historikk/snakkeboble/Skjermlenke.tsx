@@ -3,8 +3,9 @@ import { type Location } from 'history';
 
 import type { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types/GetKodeverkNavnFraKodeFnType.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import type { HistorikkinnslagV2 } from '../historikkinnslagTsTypeV2.ts';
+import type { HistorikkinnslagV2 } from '../tilbake/historikkinnslagTsTypeV2.ts';
 import { Tittel } from './Tittel.js';
+import { scrollUp } from './snakkebobleUtils.jsx';
 
 interface Props {
   skjermlenke?: HistorikkinnslagV2['skjermlenke'];
@@ -12,12 +13,6 @@ interface Props {
   getKodeverknavn: KodeverkNavnFraKodeFnType;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => Location | undefined;
 }
-
-export const scrollUp = (): void => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-};
 
 export const Skjermlenke = ({
   skjermlenke,

@@ -11,6 +11,8 @@ import type { Historikkinnslag } from '@k9-sak-web/types';
 import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setBaseRequestApiMocks.js';
 import { historikkSakV1 } from '../../../../storybook/stories/mocks/historikkSakV1.js';
 import { historikkTilbakeV2 } from '../../../../storybook/stories/mocks/historikkTilbakeV2.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
+import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeHistorikkBackend.js';
 
 const historyK9KlageV1: Historikkinnslag[] = [
   {
@@ -27,7 +29,13 @@ const historyK9KlageV1: Historikkinnslag[] = [
 const meta = {
   title: 'sak/sak-app/behandlingsupport/historikk/HistorikkIndex',
   component: HistorikkIndex,
-  decorators: [withMaxWidth(600), withKodeverkContext(), withFeatureToggles({ HISTORIKK_V2_VIS: true })],
+  decorators: [
+    withMaxWidth(600),
+    withKodeverkContext(),
+    withFeatureToggles({ HISTORIKK_V2_VIS: true }),
+    withK9Kodeverkoppslag(),
+    withFakeHistorikkBackend(),
+  ],
   beforeEach: () => {
     requestApi.clearAllMockData();
     setBaseRequestApiMocks(requestApi);
@@ -48,7 +56,7 @@ export const HistorikkinnslagV1: Story = {
   },
   decorators: [withFeatureToggles({ HISTORIKK_V2_VIS: false })],
   play: async ({ canvas }) => {
-    const boble1El = canvas.getByText(/23.01.2025 - 14:47/).parentElement?.parentElement;
+    const boble1El = (await canvas.findByText(/23.01.2025 - 14:47/)).parentElement?.parentElement;
     await expect(boble1El).toHaveTextContent('Vedtak fattet');
     await expect(boble1El).toHaveTextContent('Beslutter');
 
@@ -81,7 +89,10 @@ export const HistorikkinnslagV1: Story = {
 
     const boble6El = canvas.getByTestId('snakkeboble-2025-01-16T06:44:26.799');
     await expect(boble6El).toHaveTextContent('Inntektsmelding bestilt fra arbeidsgiver');
-    await userEvent.click(within(boble6El).getByRole('button')); // Vis all tekst
+    const btn = within(boble6El).queryByRole('button');
+    if (btn != null) {
+      await userEvent.click(btn); // Vis all tekst
+    }
     await expect(boble6El).toHaveTextContent(
       'Oppgave til INTERESSANT INTUITIV KATT DIAMETER om å sende inntektsmelding for skjæringstidspunkt 2024-10-01',
     );
