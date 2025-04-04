@@ -6,15 +6,119 @@ import {
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
-import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, PersonIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Table, VStack } from '@navikt/ds-react';
+import { getPathToAinntekt } from '@k9-sak-web/lib/paths/paths.js';
+import {
+  CheckmarkCircleFillIcon,
+  ExclamationmarkTriangleFillIcon,
+  ExternalLinkIcon,
+  PersonFillIcon,
+} from '@navikt/aksel-icons';
+import {
+  Bleed,
+  BodyLong,
+  BodyShort,
+  Box,
+  Button,
+  Heading,
+  HGrid,
+  HStack,
+  Label,
+  Table,
+  VStack,
+} from '@navikt/ds-react';
 import { Form, InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValue, minLength, minValue, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
 import { formatCurrencyWithKr } from '../../utils/formatters';
 import styles from './arbeidOgInntekt.module.css';
+
+const Inntekt = ({
+  title,
+  details,
+  sumLabel,
+  sumValue,
+}: {
+  title: string;
+  details: { label: string; value: string }[];
+  sumLabel: string;
+  sumValue: string;
+}) => (
+  <VStack gap="3">
+    <Heading size="xsmall" level="3">
+      {title}
+    </Heading>
+    {details.map((detail, index) => (
+      <HStack justify="space-between" key={index}>
+        <BodyShort size="small">{detail.label}</BodyShort>
+        <BodyShort size="small" weight="semibold">
+          {detail.value}
+        </BodyShort>
+      </HStack>
+    ))}
+    <Box borderColor="border-default" borderWidth="0 0 1 0" />
+    <HStack justify="space-between" align="center">
+      <BodyShort size="small" className={styles.sumLabel} weight="semibold">
+        {sumLabel}
+      </BodyShort>
+      <div className={styles.sum}>
+        <BodyShort size="small">{sumValue}</BodyShort>
+      </div>
+    </HStack>
+  </VStack>
+);
+
+interface DetaljerOmInntektProps {
+  location: {
+    pathname: string;
+  };
+}
+
+const DetaljerOmInntekt = ({ location }: DetaljerOmInntektProps) => (
+  <VStack gap="8">
+    <Bleed marginBlock="0 2" asChild>
+      <HStack justify="space-between" align="baseline">
+        <Heading size="small" level="2">
+          Detaljer om rapportert inntekt
+        </Heading>
+        <Button
+          as="a"
+          variant="secondary"
+          size="small"
+          icon={<ExternalLinkIcon fontSize="1.5rem" />}
+          iconPosition="right"
+          href={getPathToAinntekt(location.pathname)}
+          target="_blank"
+        >
+          Åpne A-inntekt
+        </Button>
+      </HStack>
+    </Bleed>
+    <HGrid gap="9" columns={2}>
+      <Inntekt
+        title="Inntekt rapport av deltager"
+        details={[
+          { label: 'Samlet arbeidsinntekt', value: formatCurrencyWithKr(9999) },
+          { label: 'Ytelse', value: formatCurrencyWithKr(9999) },
+        ]}
+        sumLabel="Sum inntekt fra deltager"
+        sumValue={formatCurrencyWithKr(9999)}
+      />
+      <Inntekt
+        title="Inntekt rapportert i A-inntekt"
+        details={[
+          { label: 'Bedrift 1', value: formatCurrencyWithKr(9999) },
+          { label: 'Bedrift 2', value: formatCurrencyWithKr(9999) },
+          { label: 'Ytelse 123', value: formatCurrencyWithKr(9999) },
+        ]}
+        sumLabel="Sum inntekt fra A-inntekt"
+        sumValue={formatCurrencyWithKr(9999)}
+      />
+    </HGrid>
+  </VStack>
+);
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
   if (!inntekt || (!inntekt.arbeidsinntekt && !inntekt.ytelse)) {
@@ -67,6 +171,7 @@ interface ArbeidOgInntektProps {
 }
 
 export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjonspunkt }: ArbeidOgInntektProps) => {
+  const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
     defaultValues: buildInitialValues(inntektKontrollperioder, aksjonspunkt),
@@ -101,91 +206,97 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
     }
   };
 
-  const getAksjonspunkt = (harBrukerrapportertInntekt: boolean) => (
+  const Aksjonspunkt = ({ harBrukerrapportertInntekt }: { harBrukerrapportertInntekt: boolean }) => (
     <Bleed marginBlock="4 0">
       <Box
         marginInline="2 0"
         padding="6"
-        background="surface-subtle"
         borderColor="border-warning"
         borderWidth="0 0 0 4"
         borderRadius="0 medium medium 0"
+        style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
-        <VStack gap="6">
-          <HStack gap="2" wrap={false}>
-            <PersonIcon title="Deltager" fontSize="1.5rem" className={styles.personIcon} />
-            <VStack gap="2">
-              <Heading size="xsmall" as="h3">
-                Beskrivelse fra deltaker for avvik i perioden xx.xx.xxxx - xx.xx.xxxx
-              </Heading>
-              <Box maxWidth="75ch">
-                <BodyLong size="small">
-                  Jeg fikk forskuttert litt lønn av arbeidsgiver denne måneden fordi jeg har hatt økonomiske
-                  utfordringer, så jeg rapporterte bare det jeg egentlig skulle fått utbetalt. Det var ikke meningen å
-                  oppgi feil, bare å holde det riktig for denne måneden!
-                </BodyLong>
-              </Box>
-            </VStack>
-          </HStack>
-          <Box borderColor="border-default" borderWidth="0 0 1 0" />
-          <VStack gap="2">
-            <RadioGroupPanel
-              name="valg"
-              label="Hvilken inntekt skal benyttes?"
-              validate={[required]}
-              radios={[
-                ...(harBrukerrapportertInntekt
-                  ? [
-                      {
-                        value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                        label: 'Rapportert inntekt fra deltager',
-                      },
-                    ]
-                  : []),
-                {
-                  value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
-                  label: 'Rapportert inntekt fra A-inntekt',
-                },
-                { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
-              ]}
-            />
-            {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
-              <VStack gap="4">
-                <InputField
-                  name="fastsattArbeidsinntekt"
-                  label="Inntekt fra arbeid"
-                  type="text"
-                  validate={[required, minValue(0), maxValue(1000000)]}
-                  htmlSize={7}
-                  size="small"
-                />
-                <InputField
-                  name="fastsattYtelse"
-                  label="Inntekt fra ytelse"
-                  type="text"
-                  validate={[required, minValue(0), maxValue(1000000)]}
-                  htmlSize={7}
-                  size="small"
-                />
+        <VStack gap="8">
+          <DetaljerOmInntekt location={location} />
+          {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
+          <Box borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
+            <HStack gap="2" wrap={false}>
+              <PersonFillIcon title="Deltager" fontSize="1.5rem" className={styles.personIcon} />
+
+              <VStack gap="2">
+                <Heading size="xsmall" as="h3">
+                  Beskrivelse fra deltaker for avvik i perioden xx.xx.xxxx - xx.xx.xxxx
+                </Heading>
+                <Box maxWidth="75ch">
+                  <BodyLong size="small">
+                    Jeg fikk forskuttert litt lønn av arbeidsgiver denne måneden fordi jeg har hatt økonomiske
+                    utfordringer, så jeg rapporterte bare det jeg egentlig skulle fått utbetalt. Det var ikke meningen å
+                    oppgi feil, bare å holde det riktig for denne måneden!
+                  </BodyLong>
+                </Box>
               </VStack>
-            )}
-          </VStack>
-          <Box maxWidth="70ch">
-            <TextAreaField
-              name="begrunnelse"
-              label="Begrunnelse"
-              validate={[required, minLength(3), maxLength(1500)]}
-              maxLength={1500}
-            />
+            </HStack>
           </Box>
-          <HStack gap="2">
-            <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
-              Bekreft og fortsett
-            </Button>
-            <Button size="small" variant="secondary" loading={isSubmitting}>
-              Avbryt
-            </Button>
-          </HStack>
+          <VStack gap="6">
+            <Box maxWidth="70ch">
+              <TextAreaField
+                name="begrunnelse"
+                label="Vurder hvilken inntekt som skal gi reduksjon i perioden"
+                validate={[required, minLength(3), maxLength(1500)]}
+                maxLength={1500}
+              />
+            </Box>
+            <VStack gap="2">
+              <RadioGroupPanel
+                name="valg"
+                label="Hvilken inntekt skal benyttes?"
+                validate={[required]}
+                radios={[
+                  ...(harBrukerrapportertInntekt
+                    ? [
+                        {
+                          value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
+                          label: 'Rapportert inntekt fra deltager',
+                        },
+                      ]
+                    : []),
+                  {
+                    value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
+                    label: 'Rapportert inntekt fra A-inntekt',
+                  },
+                  { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
+                ]}
+              />
+              {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
+                <VStack gap="4">
+                  <InputField
+                    name="fastsattArbeidsinntekt"
+                    label="Inntekt fra arbeid"
+                    type="text"
+                    validate={[required, minValue(0), maxValue(1000000)]}
+                    htmlSize={7}
+                    size="small"
+                  />
+                  <InputField
+                    name="fastsattYtelse"
+                    label="Inntekt fra ytelse"
+                    type="text"
+                    validate={[required, minValue(0), maxValue(1000000)]}
+                    htmlSize={7}
+                    size="small"
+                  />
+                </VStack>
+              )}
+            </VStack>
+            <HStack gap="2">
+              <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
+                Bekreft og fortsett
+              </Button>
+              <Button size="small" variant="secondary" loading={isSubmitting}>
+                Avbryt
+              </Button>
+            </HStack>
+          </VStack>
         </VStack>
       </Box>
     </Bleed>
@@ -222,11 +333,20 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
               return (
                 <Table.ExpandableRow
                   key={`${inntekt.periode?.fom}_${inntekt.periode?.tom}`}
-                  content={harAksjonspunkt ? getAksjonspunkt(harBrukerrapportertInntekt) : null}
+                  content={
+                    harAksjonspunkt ? (
+                      <Aksjonspunkt harBrukerrapportertInntekt={harBrukerrapportertInntekt} />
+                    ) : (
+                      <Bleed marginBlock="4 0">
+                        <Box marginInline="2 0" padding="6" background="bg-default">
+                          <DetaljerOmInntekt location={location} />
+                        </Box>
+                      </Bleed>
+                    )
+                  }
                   togglePlacement="right"
                   className={isLastRow ? styles.lastRow : ''}
                   expandOnRowClick
-                  expansionDisabled={!harAksjonspunkt}
                   defaultOpen={harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>

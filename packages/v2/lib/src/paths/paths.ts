@@ -1,4 +1,5 @@
 const { DEV: IS_DEV } = import.meta.env;
+export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
@@ -22,10 +23,20 @@ export const goToLos = () => {
   }
 };
 
-const getBackendUrl = () => (window.location.pathname.includes('/ung/web') ? 'ung' : 'k9');
+export const getBackendUrl = () => (window.location.pathname.includes('/ung/web') ? 'ung' : 'k9');
 
 export const goToSearch = () => {
   window.location.assign(`/${getBackendUrl()}/web`);
 };
 
 export const isDev = () => IS_DEV;
+
+export const getPathToAinntekt = (pathname: string) => {
+  const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
+  const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
+  const ainntektPath = `/${getBackendUrl()}/sak/api/register/redirect-to/a-inntekt`;
+  if (!isFagsakFraUrlValid) {
+    return AINNTEKT_URL;
+  }
+  return `${ainntektPath}?saksnummer=${fagsakFraUrl}`;
+};
