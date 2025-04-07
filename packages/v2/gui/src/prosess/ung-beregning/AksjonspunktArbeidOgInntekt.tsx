@@ -10,11 +10,13 @@ import { DetaljerOmInntekt } from './DetaljerOmInntekt';
 interface AksjonspunktArbeidOgInntektProps {
   harBrukerrapportertInntekt: boolean;
   isSubmitting: boolean;
+  isReadOnly: boolean;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
   harBrukerrapportertInntekt,
   isSubmitting,
+  isReadOnly,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
   const valg = formMethods.watch('valg');
@@ -56,6 +58,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                 label="Vurder hvilken inntekt som skal gi reduksjon i perioden"
                 validate={[required, minLength(3), maxLength(1500)]}
                 maxLength={1500}
+                readOnly={isReadOnly}
               />
             </Box>
             <VStack gap="2">
@@ -63,6 +66,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                 name="valg"
                 label="Hvilken inntekt skal benyttes?"
                 validate={[required]}
+                isReadOnly={isReadOnly}
                 radios={[
                   ...(harBrukerrapportertInntekt
                     ? [
@@ -88,6 +92,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                     validate={[required, minValue(0), maxValue(1000000)]}
                     htmlSize={7}
                     size="small"
+                    readOnly={isReadOnly}
                   />
                   <InputField
                     name="fastsattYtelse"
@@ -96,18 +101,21 @@ export const AksjonspunktArbeidOgInntekt = ({
                     validate={[required, minValue(0), maxValue(1000000)]}
                     htmlSize={7}
                     size="small"
+                    readOnly={isReadOnly}
                   />
                 </VStack>
               )}
             </VStack>
-            <HStack gap="2">
-              <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
-                Bekreft og fortsett
-              </Button>
-              <Button size="small" variant="secondary" loading={isSubmitting}>
-                Avbryt
-              </Button>
-            </HStack>
+            {!isReadOnly && (
+              <HStack gap="2">
+                <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
+                  Bekreft og fortsett
+                </Button>
+                <Button size="small" variant="secondary" loading={isSubmitting}>
+                  Avbryt
+                </Button>
+              </HStack>
+            )}
           </VStack>
         </VStack>
       </Box>

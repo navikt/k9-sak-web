@@ -20,6 +20,7 @@ interface Props {
   barn: Barn[];
   submitCallback: (data: unknown) => Promise<any>;
   aksjonspunkter: AksjonspunktDto[];
+  isReadOnly: boolean;
 }
 
 const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
@@ -39,7 +40,7 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   };
 };
 
-const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }: Props) => {
+const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
   const {
     data: satser,
     isLoading: satserIsLoading,
@@ -101,6 +102,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
                 submitCallback={submitCallback}
                 inntektKontrollperioder={inntekt?.kontrollperioder}
                 aksjonspunkt={aksjonspunkt}
+                isReadOnly={isReadOnly}
               />
             </Tabs.Panel>
           </Box>

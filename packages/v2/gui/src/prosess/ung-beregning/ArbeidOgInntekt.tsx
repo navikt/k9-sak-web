@@ -65,9 +65,15 @@ interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'];
   aksjonspunkt: AksjonspunktDto | undefined;
+  isReadOnly: boolean;
 }
 
-export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjonspunkt }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({
+  submitCallback,
+  inntektKontrollperioder,
+  aksjonspunkt,
+  isReadOnly,
+}: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
     defaultValues: buildInitialValues(inntektKontrollperioder, aksjonspunkt),
@@ -137,6 +143,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
                       <AksjonspunktArbeidOgInntekt
                         harBrukerrapportertInntekt={harBrukerrapportertInntekt}
                         isSubmitting={isSubmitting}
+                        isReadOnly={isReadOnly}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
