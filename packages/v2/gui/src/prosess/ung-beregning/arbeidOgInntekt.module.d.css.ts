@@ -4,9 +4,6 @@ declare const styles: {
   readonly "firstDataCell": string;
   readonly "firstHeaderCell": string;
   readonly "lastRow": string;
-  readonly "personIcon": string;
-  readonly "sum": string;
-  readonly "sumLabel": string;
 };
 export = styles;
 
