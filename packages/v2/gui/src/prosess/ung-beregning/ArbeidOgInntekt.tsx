@@ -328,7 +328,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
               const isLastRow = index === inntektKontrollperioder.length - 1;
               const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
               const harAksjonspunkt = inntekt.erTilVurdering && harAvvik;
-              const harBrukerrapportertInntekt = inntekt.rapporterteInntekter?.bruker?.arbeidsinntekt !== undefined;
+              const harBrukerrapportertInntekt = inntekt.rapporterteInntekter?.bruker?.arbeidsinntekt != undefined;
 
               return (
                 <Table.ExpandableRow
