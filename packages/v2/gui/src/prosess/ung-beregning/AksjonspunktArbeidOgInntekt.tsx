@@ -2,7 +2,8 @@ import { KontrollerInntektPeriodeDtoValg } from '@k9-sak-web/backend/ungsak/gene
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
-import { maxLength, maxValue, minLength, minValue, required } from '@navikt/ft-form-validators';
+import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
+import { parseCurrencyInput } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
 import styles from './aksjonspunktArbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
@@ -86,22 +87,14 @@ export const AksjonspunktArbeidOgInntekt = ({
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
                 <VStack gap="4">
                   <InputField
-                    name="fastsattArbeidsinntekt"
-                    label="Inntekt fra arbeid"
+                    name="fastsattInntekt"
+                    label="Oppgi samlet arbeidsinntekt og ytelse"
                     type="text"
-                    validate={[required, minValue(0), maxValue(1000000)]}
+                    validate={[required, maxValueFormatted(1000000)]}
                     htmlSize={7}
                     size="small"
                     readOnly={isReadOnly}
-                  />
-                  <InputField
-                    name="fastsattYtelse"
-                    label="Inntekt fra ytelse"
-                    type="text"
-                    validate={[required, minValue(0), maxValue(1000000)]}
-                    htmlSize={7}
-                    size="small"
-                    readOnly={isReadOnly}
+                    parse={parseCurrencyInput}
                   />
                 </VStack>
               )}

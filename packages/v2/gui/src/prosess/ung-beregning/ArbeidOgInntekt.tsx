@@ -9,6 +9,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import { removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
@@ -19,7 +20,7 @@ import { DetaljerOmInntekt } from './DetaljerOmInntekt';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
   if (!inntekt || (!inntekt.arbeidsinntekt && !inntekt.ytelse)) {
-    return '';
+    return '-';
   }
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
 };
@@ -40,23 +41,20 @@ const buildInitialValues = (
   );
   if (vurdertPeriode) {
     return {
-      fastsattArbeidsinntekt: vurdertPeriode.fastsattArbeidsinntekt ? `${vurdertPeriode.fastsattArbeidsinntekt}` : '',
-      fastsattYtelse: vurdertPeriode.fastsattYtelse ? `${vurdertPeriode.fastsattYtelse}` : '',
+      fastsattInntekt: vurdertPeriode.fastsattInntekt ? `${vurdertPeriode.fastsattInntekt}` : '',
       valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
       begrunnelse: aksjonspunkt?.begrunnelse ?? '',
     };
   }
   return {
-    fastsattArbeidsinntekt: '',
-    fastsattYtelse: '',
+    fastsattInntekt: '',
     valg: '' as const,
     begrunnelse: '',
   };
 };
 
 type Formvalues = {
-  fastsattArbeidsinntekt: string;
-  fastsattYtelse: string;
+  fastsattInntekt: string;
   valg: KontrollerInntektPeriodeDtoValg | '';
   begrunnelse: string;
 };
@@ -93,8 +91,7 @@ export const ArbeidOgInntekt = ({
               inntekt:
                 values.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
                   ? {
-                      fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
-                      fastsattYtelse: values.fastsattYtelse,
+                      fastsattInntekt: removeSpacesFromNumber(values.fastsattInntekt),
                     }
                   : null,
               valg: values.valg,
