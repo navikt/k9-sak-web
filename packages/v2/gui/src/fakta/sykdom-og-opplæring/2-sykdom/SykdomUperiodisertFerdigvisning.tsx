@@ -11,18 +11,23 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
         label="Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge av § 9-14."
         indentContent
         size="small"
-      >
-        <BodyLong size="small" className="whitespace-pre-wrap">
-          {vurdering.begrunnelse}
-        </BodyLong>
-      </LabelledContent>
+        content={
+          <BodyLong size="small" className="whitespace-pre-wrap">
+            {vurdering.begrunnelse}
+          </BodyLong>
+        }
+      />
       <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
-      <LabelledContent label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?" size="small">
-        <BodyShort size="small">{vurdering.godkjent ? 'Ja' : 'Nei'}</BodyShort>
-      </LabelledContent>
-      <LabelledContent label="Diagnose(r)" size="small">
-        <Diagnoser diagnosekoder={vurdering.diagnosekoder} />
-      </LabelledContent>
+      <LabelledContent
+        label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?"
+        size="small"
+        content={<BodyShort size="small">{vurdering.godkjent ? 'Ja' : 'Nei'}</BodyShort>}
+      />
+      <LabelledContent
+        label="Diagnose(r)"
+        size="small"
+        content={<Diagnoser diagnosekoder={vurdering.diagnosekoder} />}
+      />
     </div>
   );
 };

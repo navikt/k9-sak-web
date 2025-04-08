@@ -45,9 +45,11 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
       ))}
 
       <Box className="mt-8">
-        <LabelledContent label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?" size="small">
-          {vurdering.institusjon}
-        </LabelledContent>
+        <LabelledContent
+          label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
+          size="small"
+          content={vurdering.institusjon}
+        />
       </Box>
 
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (

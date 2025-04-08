@@ -11,9 +11,11 @@ const NødvendigOpplæringFerdigvisning = ({
 }) => {
   return (
     <div className="flex flex-col gap-6">
-      <LabelledContent label="Er nødvendig opplæring dokumentert med legeerklæring?" size="small">
-        <BodyShort size="small">{vurdering.dokumentertOpplæring ? 'Ja' : 'Nei'}</BodyShort>
-      </LabelledContent>
+      <LabelledContent
+        label="Er nødvendig opplæring dokumentert med legeerklæring?"
+        size="small"
+        content={<BodyShort size="small">{vurdering.dokumentertOpplæring ? 'Ja' : 'Nei'}</BodyShort>}
+      />
       <div>
         <LabelledContent
           label={
@@ -24,19 +26,19 @@ const NødvendigOpplæringFerdigvisning = ({
           }
           indentContent
           size="small"
-        >
-          <BodyShort size="small" className="whitespace-pre-wrap">
-            {vurdering.begrunnelse}
-          </BodyShort>
-        </LabelledContent>
+          content={
+            <BodyShort size="small" className="whitespace-pre-wrap">
+              {vurdering.begrunnelse}
+            </BodyShort>
+          }
+        />
         <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
       </div>
       <LabelledContent
         label="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
         size="small"
-      >
-        <BodyShort size="small">{vurdering.nødvendigOpplæring ? 'Ja' : 'Nei'}</BodyShort>
-      </LabelledContent>
+        content={<BodyShort size="small">{vurdering.nødvendigOpplæring ? 'Ja' : 'Nei'}</BodyShort>}
+      />
     </div>
   );
 };

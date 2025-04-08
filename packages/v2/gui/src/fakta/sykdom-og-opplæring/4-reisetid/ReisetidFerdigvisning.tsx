@@ -16,18 +16,25 @@ const ReisetidFerdigvisning = ({ vurdering }: { vurdering: ReisetidVurderingDto 
         size="small"
       />
       <div>
-        <LabelledContent label="Vurdering" indentContent={true} size="small">
-          <BodyLong className="whitespace-pre-wrap">{vurdering.reisetid.begrunnelse}</BodyLong>
-        </LabelledContent>
+        <LabelledContent
+          label="Vurdering"
+          indentContent={true}
+          size="small"
+          content={<BodyLong className="whitespace-pre-wrap">{vurdering.reisetid.begrunnelse}</BodyLong>}
+        />
         <VurdertAv ident={vurdering.reisetid.vurdertAv} date={vurdering.reisetid.vurdertTidspunkt} size="small" />
       </div>
-      <LabelledContent label={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'} size="small">
-        <BodyLong className="capitalize">{resultatTilJaNei(vurdering.reisetid.resultat)}</BodyLong>
-      </LabelledContent>
+      <LabelledContent
+        label={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}
+        size="small"
+        content={<BodyLong className="capitalize">{resultatTilJaNei(vurdering.reisetid.resultat)}</BodyLong>}
+      />
       {!vurderingGjelderEnkeltdag && (
-        <LabelledContent label={`I hvilken periode ${innvilgesEllerAvslås} reisetid?`} size="small">
-          <BodyLong>{vurdering.perioder[0]?.prettifyPeriod()}</BodyLong>
-        </LabelledContent>
+        <LabelledContent
+          label={`I hvilken periode ${innvilgesEllerAvslås} reisetid?`}
+          size="small"
+          content={<BodyLong>{vurdering.perioder[0]?.prettifyPeriod()}</BodyLong>}
+        />
       )}
     </div>
   );
