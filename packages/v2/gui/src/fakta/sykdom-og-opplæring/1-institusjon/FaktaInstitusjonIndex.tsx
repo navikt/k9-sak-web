@@ -7,7 +7,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';
-import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView.js';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';

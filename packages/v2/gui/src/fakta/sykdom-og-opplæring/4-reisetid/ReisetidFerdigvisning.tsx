@@ -1,7 +1,7 @@
 import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import OppgittReisetid from './OppgittReisetid';
 import type { Period } from '@navikt/ft-utils';
-import { LabelledContent } from '../../../shared/LabelledContent/LabelledContent';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { BodyLong } from '@navikt/ds-react';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { resultatTilJaNei } from './utils';

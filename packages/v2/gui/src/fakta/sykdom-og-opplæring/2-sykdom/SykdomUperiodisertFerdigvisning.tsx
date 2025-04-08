@@ -1,5 +1,5 @@
 import { BodyLong, BodyShort, Tag } from '@navikt/ds-react';
-import { LabelledContent } from '../../../shared/LabelledContent/LabelledContent';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { ICD10 } from '@navikt/diagnosekoder';

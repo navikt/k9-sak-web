@@ -1,5 +1,5 @@
 import { Tag } from '@navikt/ds-react';
-import { LabelledContent } from '../../../../shared/LabelledContent/LabelledContent';
+import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent';
 
 const Institusjonsnavn = ({ institusjon }: { institusjon: string }) => {
   return (

@@ -1,7 +1,7 @@
 import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { BodyShort } from '@navikt/ds-react';
 import type { Period } from '@navikt/ft-utils';
-import { LabelledContent } from '../../../shared/LabelledContent/LabelledContent';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 const NødvendigOpplæringFerdigvisning = ({

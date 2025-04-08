@@ -7,7 +7,7 @@ import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 import DetailView from '../../../../shared/detail-view/DetailView.js';
 import { PencilIcon, CalendarIcon } from '@navikt/aksel-icons';
-import { LabelledContent } from '../../../../shared/LabelledContent/LabelledContent.js';
+import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;

@@ -1,6 +1,6 @@
 import { BodyShort, Box } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
-import { LabelledContent } from '../../../../shared/LabelledContent/LabelledContent.js';
+import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 
