@@ -7,7 +7,7 @@ import {
 } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/ft-utils';
 
-import { OverlayedIcons } from '../../../../shared/indicatorWithOverlay/IndicatorWithOverlay';
+import { OverlayedIcons } from '../indicatorWithOverlay/IndicatorWithOverlay';
 import styles from './periodeRad.module.css';
 import type { ResultatType } from './VurderingsperiodeNavigasjon';
 import { Resultat } from './VurderingsperiodeNavigasjon';
