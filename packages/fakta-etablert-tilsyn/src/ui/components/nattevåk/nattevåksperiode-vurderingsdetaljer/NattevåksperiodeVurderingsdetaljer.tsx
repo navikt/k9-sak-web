@@ -1,6 +1,7 @@
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';

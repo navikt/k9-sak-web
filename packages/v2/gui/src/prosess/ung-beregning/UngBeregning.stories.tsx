@@ -36,5 +36,6 @@ export const DefaultStory: Story = {
         opprettetAv: 'vtp',
       },
     ],
+    isReadOnly: false,
   },
 };

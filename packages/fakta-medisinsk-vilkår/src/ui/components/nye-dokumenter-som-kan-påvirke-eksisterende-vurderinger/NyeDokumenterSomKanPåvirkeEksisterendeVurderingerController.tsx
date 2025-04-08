@@ -1,6 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import Dokument from '../../../types/Dokument';
 import ContainerContext from '../../context/ContainerContext';

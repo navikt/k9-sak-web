@@ -1,10 +1,10 @@
 import { get } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import axios from 'axios';
 import React, { useMemo, type JSX } from 'react';
 
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
 import Dokument from '../../../types/Dokument';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
