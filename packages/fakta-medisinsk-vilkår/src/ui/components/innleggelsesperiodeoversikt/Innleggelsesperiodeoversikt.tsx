@@ -1,6 +1,5 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { Box, Button, Loader } from '@navikt/ds-react';
-import { PageError, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
 import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import LinkRel from '../../../constants/LinkRel';
@@ -105,38 +104,36 @@ const Innleggelsesperiodeoversikt = ({
   }, []);
 
   if (hentInnleggelsesperioderFeilet || lagreInnleggelsesperioderFeilet) {
-    return <PageError message="Noe gikk galt, vennligst prøv igjen senere" />;
+    return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
   return (
     <div className={styles.innleggelsesperiodeoversikt}>
-      <TitleWithUnderline
-        contentAfterTitleRenderer={() => (
-          <>
-            <WriteAccessBoundContent
-              otherRequirementsAreMet={innleggelsesperioder.length > 0}
-              contentRenderer={() => (
-                <Button
-                  variant="tertiary"
-                  size="xsmall"
-                  className={styles.innleggelsesperiodeoversikt__redigerListeKnapp}
-                  onClick={() => setModalIsOpen(true)}
-                >
-                  Rediger liste
-                </Button>
-              )}
-            />
-            <WriteAccessBoundContent
-              otherRequirementsAreMet={innleggelsesperioder.length === 0}
-              contentRenderer={() => (
-                <AddButton label="Legg til periode" onClick={() => setModalIsOpen(true)} id="leggTilPeriodeKnapp" />
-              )}
-            />
-          </>
-        )}
-      >
-        Innleggelsesperioder
-      </TitleWithUnderline>
+      <HStack justify="space-between" align="end">
+        <Heading size="small" level="2">
+          Innleggelsesperioder
+        </Heading>
+        <WriteAccessBoundContent
+          otherRequirementsAreMet={innleggelsesperioder.length > 0}
+          contentRenderer={() => (
+            <Button
+              variant="tertiary"
+              size="xsmall"
+              className={styles.innleggelsesperiodeoversikt__redigerListeKnapp}
+              onClick={() => setModalIsOpen(true)}
+            >
+              Rediger liste
+            </Button>
+          )}
+        />
+        <WriteAccessBoundContent
+          otherRequirementsAreMet={innleggelsesperioder.length === 0}
+          contentRenderer={() => (
+            <AddButton label="Legg til periode" onClick={() => setModalIsOpen(true)} id="leggTilPeriodeKnapp" />
+          )}
+        />
+      </HStack>
+      <hr style={{ color: '#B7B1A9' }} />
       {isLoading ? (
         <Loader size="large" />
       ) : (

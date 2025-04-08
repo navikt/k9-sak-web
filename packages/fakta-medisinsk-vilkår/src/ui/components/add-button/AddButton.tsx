@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import { forwardRef, Ref, type JSX } from 'react';
-import styles from './addButton.module.css';
 
 interface AddButtonProps {
   onClick: () => void;
@@ -13,17 +13,19 @@ interface AddButtonProps {
 
 const AddButton = forwardRef(
   ({ className, label, onClick, id, noIcon, ariaLabel }: AddButtonProps, ref?: Ref<HTMLButtonElement>): JSX.Element => (
-    <button
-      className={`${styles.addButton} ${className || ''}`}
+    <Button
+      className={className}
       type="button"
       onClick={onClick}
       id={id || ''}
       aria-label={ariaLabel}
       ref={ref}
+      icon={noIcon ? undefined : <PlusCircleIcon fontSize="1.25rem" />}
+      variant="tertiary"
+      size="xsmall"
     >
-      {!noIcon && <PlusCircleIcon fontSize="1.25rem" />}
-      <span className={styles.addButton__text}>{label}</span>
-    </button>
+      {label}
+    </Button>
   ),
 );
 
