@@ -1,5 +1,5 @@
 import { Period, get } from '@fpsak-frontend/utils';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import React, { ReactElement } from 'react';
 import ContainerContext from '../context/ContainerContext';
 import ContainerContract from '../types/ContainerContract';

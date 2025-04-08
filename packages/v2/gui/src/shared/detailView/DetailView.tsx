@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Heading } from '@navikt/ds-react';
-
 import styles from './detailView.module.css';
 
 export interface DetailViewProps {
