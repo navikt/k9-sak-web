@@ -1,5 +1,5 @@
 import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { MinusIcon, PlusCircleIcon } from '@navikt/aksel-icons';
 import { Box, Button } from '@navikt/ds-react';
 import { ContentWithTooltip, OnePersonIconGray, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';

@@ -4,7 +4,7 @@ import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Alert, Box, Button, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
