@@ -73,7 +73,7 @@ export const DataSection = () => {
   const [isUtregningExpanded, setIsUtregningExpanded] = useState(false);
   return (
     <HGrid gap="5" columns={3}>
-      <DataBox maxHeight="190px">
+      <DataBox maxHeight="185px">
         <HStack gap="2" marginInline="05 0">
           <InformationSquareIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Nøkkelinformasjon</Label>
@@ -87,7 +87,7 @@ export const DataSection = () => {
           </BodyShort>
         </HStack>
       </DataBox>
-      <DataBox maxHeight="190px">
+      <DataBox maxHeight="185px">
         <HStack gap="2" marginInline="05 0">
           <CalendarIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Dager i ungdomsprogram</Label>

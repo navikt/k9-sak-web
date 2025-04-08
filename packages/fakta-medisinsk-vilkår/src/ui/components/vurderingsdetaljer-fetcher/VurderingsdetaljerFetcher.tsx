@@ -1,6 +1,5 @@
-import { Loader } from '@navikt/ds-react';
-import { PageError } from '@navikt/ft-plattform-komponenter';
 import { httpUtils } from '@fpsak-frontend/utils';
+import { Alert, Loader } from '@navikt/ds-react';
 import React, { useMemo, type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import ContainerContext from '../../context/ContainerContext';
@@ -52,7 +51,7 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
     return <Loader size="large" />;
   }
   if (hentVurderingHarFeilet) {
-    return <PageError message="Noe gikk galt, vennligst prøv igjen senere" />;
+    return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere.</Alert>;
   }
 
   return contentRenderer(vurdering);

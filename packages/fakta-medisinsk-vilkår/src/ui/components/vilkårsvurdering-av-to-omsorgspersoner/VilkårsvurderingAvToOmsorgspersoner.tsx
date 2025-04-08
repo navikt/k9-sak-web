@@ -1,5 +1,7 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { NavigationWithDetailView, PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigationWithDetailView/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
 import React, { useMemo, type JSX } from 'react';
 import Step, { StepId, toOmsorgspersonerSteg } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -7,11 +9,11 @@ import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForPleiepenger } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
+import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
 import VurderingsoversiktMessages from '../vurderingsoversikt-messages/VurderingsoversiktMessages';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
-import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
 interface VilkårsvurderingAvToOmsorgspersonerProps {
   navigerTilNesteSteg: (steg: Step) => void;
@@ -124,9 +126,9 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
 
   const setMargin = () => {
     if (vurderingsoversikt.harPerioderSomSkalVurderes() || !harGyldigSignatur) {
-      return Margin.medium;
+      return '4 0';
     }
-    return null;
+    return undefined;
   };
 
   const skalViseValgfriePerioder = !readOnly && vurderingsoversikt?.resterendeValgfrieVurderingsperioder.length > 0;
@@ -140,7 +142,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
     <PageContainer hasError={vurderingsoversiktFeilet} isLoading={isLoading} key={StepId.ToOmsorgspersoner}>
       <VurderingsoversiktMessages vurderingsoversikt={vurderingsoversikt} harGyldigSignatur={harGyldigSignatur} />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box marginTop={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => {
               if (vurderingsoversikt.harPerioderÅVise()) {

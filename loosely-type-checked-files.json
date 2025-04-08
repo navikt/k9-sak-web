@@ -266,7 +266,6 @@
   "packages/fakta-soknadsperioder/src/SoknadsperioderComponent.tsx",
   "packages/fakta-utenlandsopphold/src/Utenlandsopphold.spec.tsx",
   "packages/fakta-utenlandsopphold/src/Utenlandsopphold.stories.tsx",
-  "packages/fakta-utenlandsopphold/src/Utenlandsopphold.tsx",
   "packages/fakta-verge/src/components/FaktaBegrunnelseTextField.tsx",
   "packages/fakta-verge/src/components/FaktaSubmitButton.tsx",
   "packages/fakta-verge/src/components/RegistrereVergeFaktaForm.spec.tsx",

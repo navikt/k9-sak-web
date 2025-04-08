@@ -1,5 +1,5 @@
-import { BodyShort, Label } from '@navikt/ds-react';
-import { Autocomplete, FieldError } from '@navikt/ft-plattform-komponenter';
+import { BodyShort, ErrorMessage, Label } from '@navikt/ds-react';
+import { Autocomplete } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
 import DeleteButton from '../../components/delete-button/DeleteButton';
@@ -102,7 +102,7 @@ const PureDiagnosekodeSelector = ({
           isLoading={isLoading}
         />
       </div>
-      {errorMessage && <FieldError message={errorMessage} />}
+      {errorMessage && <ErrorMessage size="small">{errorMessage}</ErrorMessage>}
       {selectedDiagnosekoder.length > 0 && (
         <ul className={styles.diagnosekodeContainer__diagnosekodeList}>
           {selectedDiagnosekoder.map(selectedDiagnosekode => {
