@@ -39,23 +39,23 @@ const buildInitialValues = (
   );
   if (vurdertPeriode) {
     return {
-      fastsattArbeidsinntekt: vurdertPeriode.fastsattArbeidsinntekt ? `${vurdertPeriode.fastsattArbeidsinntekt}` : '',
-      fastsattYtelse: vurdertPeriode.fastsattYtelse ? `${vurdertPeriode.fastsattYtelse}` : '',
+      // fastsattArbeidsinntekt: vurdertPeriode.fastsattArbeidsinntekt ? `${vurdertPeriode.fastsattArbeidsinntekt}` : '',
+      // fastsattYtelse: vurdertPeriode.fastsattYtelse ? `${vurdertPeriode.fastsattYtelse}` : '',
       valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
       begrunnelse: aksjonspunkt?.begrunnelse ?? '',
     };
   }
   return {
-    fastsattArbeidsinntekt: '',
-    fastsattYtelse: '',
+    // fastsattArbeidsinntekt: '',
+    // fastsattYtelse: '',
     valg: '' as const,
     begrunnelse: '',
   };
 };
 
 type Formvalues = {
-  fastsattArbeidsinntekt: string;
-  fastsattYtelse: string;
+  // fastsattArbeidsinntekt: string;
+  // fastsattYtelse: string;
   valg: KontrollerInntektPeriodeDtoValg | '';
   begrunnelse: string;
 };
@@ -87,8 +87,8 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
               inntekt:
                 values.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
                   ? {
-                      fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
-                      fastsattYtelse: values.fastsattYtelse,
+                      // fastsattArbeidsinntekt: values.fastsattArbeidsinntekt,
+                      // fastsattYtelse: values.fastsattYtelse,
                     }
                   : null,
               valg: values.valg,
@@ -159,14 +159,14 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, aksjo
                   htmlSize={7}
                   size="small"
                 />
-                <InputField
+                {/* <InputField
                   name="fastsattYtelse"
                   label="Inntekt fra ytelse"
                   type="text"
                   validate={[required, minValue(0), maxValue(1000000)]}
                   htmlSize={7}
                   size="small"
-                />
+                /> */}
               </VStack>
             )}
           </VStack>
