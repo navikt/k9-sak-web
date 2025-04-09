@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Box } from '@navikt/ds-react';
-import { Calender } from '@navikt/ds-icons';
-import { DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
-import { LinkButton } from '@navikt/ft-plattform-komponenter';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { Calender } from '@navikt/ds-icons';
+import { Box, Button } from '@navikt/ds-react';
+import { useState } from 'react';
 
+import { DetailView } from '../../../../shared/detailView/DetailView.js';
+import { LabelledContent } from '../../../../shared/labelledContent/LabelledContent.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm, { type SubmitValues } from './InstitusjonForm.js';
@@ -24,9 +24,9 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
       title="Vurdering av institusjon"
       contentAfterTitleRenderer={() =>
         visEndreLink && !redigering ? (
-          <LinkButton onClick={() => setRedigering(true)} className="ml-4">
+          <Button variant="tertiary" size="xsmall" onClick={() => setRedigering(true)} className="ml-2">
             Endre vurdering
-          </LinkButton>
+          </Button>
         ) : null
       }
     >

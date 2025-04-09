@@ -1,7 +1,9 @@
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
-import { Alert } from '@navikt/ds-react';
-import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { Alert, Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
@@ -112,7 +114,7 @@ const VurderingAvNattevåksperioderForm = ({
   return (
     <DetailView title="Vurdering av nattevåk">
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           onSubmit={formMethods.handleSubmit(handleSubmit)}
           buttonLabel="Bekreft og fortsett"
           onAvbryt={onCancelClick}
@@ -121,17 +123,17 @@ const VurderingAvNattevåksperioderForm = ({
           shouldShowSubmitButton={!readOnly}
           smallButtons
         >
-          <Box marginTop={Margin.large}>
+          <Box marginBlock="6 0">
             <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <TextAreaRHF
               label="Gjør en vurdering av om det er behov for nattevåk etter § 9-11, tredje ledd."
               name={FieldName.BEGRUNNELSE}
               disabled={readOnly}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <RadioGroupPanelRHF
               question="Er det behov for nattevåk?"
               radios={[
@@ -144,7 +146,7 @@ const VurderingAvNattevåksperioderForm = ({
             />
           </Box>
           {erDetBehovForNattevåk === RadioOptions.JA_DELER && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <PeriodpickerListRHF
                 name={FieldName.PERIODER}
                 legend="I hvilke perioder er det behov for nattevåk?"
@@ -162,7 +164,7 @@ const VurderingAvNattevåksperioderForm = ({
                   )
                 }
                 renderAfterFieldArray={fieldArrayMethods => (
-                  <Box marginTop={Margin.large}>
+                  <Box marginBlock="6 0">
                     <AddButton
                       label="Legg til periode"
                       onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
@@ -174,7 +176,7 @@ const VurderingAvNattevåksperioderForm = ({
             </Box>
           )}
           {perioderUtenBehovForNattevåk.length > 0 && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Alert size="small" variant="info">
                 <LabelledContent
                   label="Resterende perioder har søkeren ikke behov for nattevåk:"
@@ -187,7 +189,7 @@ const VurderingAvNattevåksperioderForm = ({
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailView>
   );

@@ -1,14 +1,14 @@
+import { Period } from '@fpsak-frontend/utils';
+import { OverlayedIcons } from '@k9-sak-web/gui/shared/indicatorWithOverlay/IndicatorWithOverlay.js';
 import { Vurderingsresultat } from '@k9-sak-web/types';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
-  IndicatorWithOverlay,
   InstitutionIcon,
   RedCrossIconFilled,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@fpsak-frontend/utils';
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import styles from './periodeRad.module.css';
 
 interface OwnProps {
@@ -28,7 +28,7 @@ const renderStatusIcon = (resultat: string) => {
   if (resultat === Vurderingsresultat.GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
-        <IndicatorWithOverlay
+        <OverlayedIcons
           indicatorRenderer={() => <GreenCheckIconFilled />}
           overlayRenderer={() => <InstitutionIcon />}
         />
@@ -39,10 +39,7 @@ const renderStatusIcon = (resultat: string) => {
   if (resultat === Vurderingsresultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
-        <IndicatorWithOverlay
-          indicatorRenderer={() => <RedCrossIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
-        />
+        <OverlayedIcons indicatorRenderer={() => <RedCrossIconFilled />} overlayRenderer={() => <InstitutionIcon />} />
       </ContentWithTooltip>
     );
   }

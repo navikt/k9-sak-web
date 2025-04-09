@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Period } from '@fpsak-frontend/utils';
-import { ErrorMessage } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { Box, ErrorMessage } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { DatepickerLimitations } from '../DatepickerLimitations';
 import PureDatepicker from '../PureDatepicker';
@@ -68,7 +67,7 @@ const PeriodpickerList = ({
           const errorMessage = errors[name] && errors[name][index]?.period.message;
           const hasDefaultValue = defaultValues && defaultValues[index];
           return (
-            <Box key={item.id} marginTop={Margin.medium}>
+            <Box key={item.id} marginBlock="4 0">
               <div className={styles.periodpickerList__flexContainer}>
                 <Controller
                   name={`${name}[${index}].period`}

@@ -22,11 +22,11 @@ const BehandlingPaVent = ({
   settPaVent,
   erTilbakekreving = false,
 }: BehandlingPaVentProps) => {
-  const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
+  const [skalViseModal, setVisModal] = useState(behandling.behandlingPåVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
 
   useEffect(() => {
-    setVisModal(behandling.behandlingPaaVent);
+    setVisModal(behandling.behandlingPåVent);
   }, [behandling.versjon]);
 
   const oppdaterPaVentData = useCallback(
@@ -63,8 +63,8 @@ const BehandlingPaVent = ({
     <SettPaVentModalIndex
       submitCallback={oppdaterPaVentData}
       cancelEvent={skjulModal}
-      frist={behandling.fristBehandlingPaaVent}
-      ventearsak={behandling.venteArsakKode}
+      frist={behandling.fristBehandlingPåVent}
+      ventearsak={behandling.venteÅrsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}

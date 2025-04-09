@@ -1,7 +1,7 @@
-import { Alert } from '@navikt/ds-react';
-import { LinkButton, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { get } from '@fpsak-frontend/utils';
-import React, { useContext, useEffect, useMemo, useReducer, type JSX } from 'react';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Alert, Button } from '@navikt/ds-react';
+import { useContext, useEffect, useMemo, useReducer, type JSX } from 'react';
 import { RettVedDød } from '../../../types/RettVedDød';
 import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
@@ -55,9 +55,14 @@ const RettVedDødController = (): JSX.Element => {
             {getHeading()}
             <WriteAccessBoundContent
               contentRenderer={() => (
-                <LinkButton className="ml-4" onClick={() => dispatch({ type: ActionType.ENABLE_EDIT })}>
+                <Button
+                  variant="tertiary"
+                  size="xsmall"
+                  className="ml-2"
+                  onClick={() => dispatch({ type: ActionType.ENABLE_EDIT })}
+                >
                   Rediger vurdering
-                </LinkButton>
+                </Button>
               )}
             />
           </div>

@@ -14,7 +14,7 @@ export interface InformasjonsbehovVedtaksbrev {
 
 interface Props {
   intl: IntlShape;
-  sprakkode: string;
+  språkkode: string;
   readOnly: boolean;
   begrunnelse: string;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
@@ -22,7 +22,7 @@ interface Props {
 
 const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
   intl,
-  sprakkode,
+  språkkode,
   readOnly,
   begrunnelse,
   informasjonsbehovVedtaksbrev,
@@ -71,7 +71,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
             key={behov.kode}
             intl={intl}
             readOnly={readOnly}
-            sprakkode={sprakkode}
+            språkkode={språkkode}
             label={behov.beskrivelse}
             begrunnelse={begrunnelse}
             begrunnelseFieldName={behov.kode}

@@ -1,6 +1,6 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Calender } from '@navikt/ds-icons';
-import { Box, DetailView, Margin } from '@navikt/ft-plattform-komponenter';
 
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { required } from '@fpsak-frontend/utils';
@@ -9,9 +9,9 @@ import {
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
+import { Box, Button } from '@navikt/ds-react';
 import { Field, Formik } from 'formik';
-import React, { useContext, useEffect, type JSX } from 'react';
+import { useContext, useEffect, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 
@@ -89,7 +89,7 @@ const NoedvendighetForm = ({
                 <Calender /> <span>{periode.prettifyPeriod()}</span>
               </div>
             ))}
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Field name={fieldname.DOKUMENTER}>
                 {({ field, meta }) => (
                   <DokumenterIVurderingen
@@ -104,7 +104,7 @@ const NoedvendighetForm = ({
                 )}
               </Field>
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <TextAreaFormik
                 // eslint-disable-next-line max-len
                 label={intl.formatMessage({ id: 'noedvendighet.vurdering.label' })}
@@ -113,7 +113,7 @@ const NoedvendighetForm = ({
                 readOnly={readOnly}
               />
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <RadioGroupFormik
                 legend={intl.formatMessage({ id: 'noedvendighet.noedvendigOpplaering.label' })}
                 options={[
@@ -125,7 +125,7 @@ const NoedvendighetForm = ({
                 disabled={readOnly}
               />
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Button
                 size="small"
                 type="submit"

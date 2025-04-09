@@ -1,5 +1,4 @@
-import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
-import { Box, InfoPanel, Margin } from '@navikt/ft-plattform-komponenter';
+import { BodyShort, Box, Button, Checkbox } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import styles from './fristForDokumentasjonUtløptPanel.module.css';
 
@@ -10,12 +9,12 @@ interface FristForDokumentasjonUtløptPanelProps {
 const FristForDokumentasjonUtløptPanel = ({ onProceedClick }: FristForDokumentasjonUtløptPanelProps): JSX.Element => {
   const [fristenErUtløpt, setFristenErUtløpt] = React.useState(false);
   return (
-    <InfoPanel type="warning">
+    <Box padding="4" borderColor="border-warning" borderWidth="2">
       <BodyShort size="small">
         Dersom du ikke får dokumentasjon innen fristen, kan du avslå vilkåret og gå videre til vedtaksbrev.
       </BodyShort>
       <div className={styles.fristForDokumentasjonUtløptPanel__formContainer}>
-        <Box marginTop={Margin.small}>
+        <Box marginBlock="2 0">
           <Checkbox
             name="fristenErUtløpt"
             checked={fristenErUtløpt === true}
@@ -34,7 +33,7 @@ const FristForDokumentasjonUtløptPanel = ({ onProceedClick }: FristForDokumenta
           </Button>
         )}
       </div>
-    </InfoPanel>
+    </Box>
   );
 };
 

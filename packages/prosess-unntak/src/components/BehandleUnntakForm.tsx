@@ -33,7 +33,7 @@ interface OwnProps {
   behandlingVersjon: number;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  sprakkode: Kodeverk;
+  språkkode: Kodeverk;
 }
 
 export const BehandleUnntakForm = ({
@@ -42,7 +42,7 @@ export const BehandleUnntakForm = ({
   readOnly,
   handleSubmit,
   readOnlySubmitButton,
-  sprakkode,
+  språkkode,
   // alleKodeverk,
   ...formProps
 }: OwnProps & InjectedFormProps) => (
@@ -65,7 +65,7 @@ export const BehandleUnntakForm = ({
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
 
-      <FritekstTextField sprakkode={sprakkode} readOnly={readOnly} />
+      <FritekstTextField språkkode={språkkode} readOnly={readOnly} />
 
       <VerticalSpacer twentyPx />
 

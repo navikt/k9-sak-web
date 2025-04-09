@@ -1,5 +1,8 @@
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { Box, Button } from '@navikt/ds-react';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
@@ -25,17 +28,17 @@ const BeredskapsperiodeVurderingsdetaljer = ({
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <LinkButton className={styles.endreLink} onClick={onEditClick}>
+            <Button variant="tertiary" size="xsmall" className={styles.endreLink} onClick={onEditClick}>
               Rediger vurdering
-            </LinkButton>
+            </Button>
           )}
         />
       )}
     >
-      <Box marginTop={Margin.large}>
+      <Box marginBlock="6 0">
         <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label="Vurdering av om det er behov for beredskap"
           content={<span className="whitespace-pre-wrap">{beredskapsperiode.begrunnelse}</span>}
@@ -43,13 +46,13 @@ const BeredskapsperiodeVurderingsdetaljer = ({
         />
         <AssessedBy ident={opprettetAv} date={opprettetTidspunkt} />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent
           label="Er det behov for beredskap?"
           content={beredskapsperiode.resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}
         />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent label="Perioder vurdert" content={beredskapsperiode.periode.prettifyPeriod()} />
       </Box>
     </DetailView>

@@ -1,5 +1,4 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
-import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
 import { useContext, useEffect, type JSX } from 'react';
 import { useIntl } from 'react-intl';
@@ -8,8 +7,10 @@ import * as yup from 'yup';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
 import { Period, getPeriodDifference, required } from '@fpsak-frontend/utils';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Box, Button } from '@navikt/ds-react';
 import { Formik } from 'formik';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
@@ -85,7 +86,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
         {({ handleSubmit, isSubmitting, values, setFieldValue }) => (
           <>
             <BeskrivelseFraSoeker vurdering={vurdering} />
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               {vurdering.til ? (
                 <LabelledContent
                   label={intl.formatMessage({ id: 'reisetid.foersteDag' })}
@@ -106,7 +107,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
                 />
               )}
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               {vurdering.til ? (
                 <LabelledContent
                   label={intl.formatMessage({ id: 'reisetid.avreisedato' })}
@@ -148,7 +149,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
               }}
               mode="range"
             />
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <TextAreaFormik
                 label={intl.formatMessage({ id: 'reisetid.begrunnelse' })}
                 name={fieldname.BEGRUNNELSE}
@@ -157,7 +158,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
               />
             </Box>
             {getPeriodDifference([vurdering.periode], [values[fieldname.PERIODE]]).length > 0 && (
-              <Box marginTop={Margin.xLarge}>
+              <Box marginBlock="8 0">
                 <Alert variant="info">
                   <LabelledContent
                     label={intl.formatMessage({ id: 'opplaering.resterendePerioder.label' })}
@@ -170,7 +171,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
                 </Alert>
               </Box>
             )}
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Button
                 size="small"
                 type="submit"

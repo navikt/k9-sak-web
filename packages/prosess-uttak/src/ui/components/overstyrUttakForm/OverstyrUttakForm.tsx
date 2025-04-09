@@ -1,5 +1,5 @@
+import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, Loader, Modal, Table } from '@navikt/ds-react';
-import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 import React, { useRef, useState } from 'react';
 import { erOverstyringInnenforPerioderTilVurdering } from '../../../util/dateUtils';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
@@ -160,7 +160,7 @@ const OverstyrUttakForm: React.FC<ownProps> = ({ overstyringAktiv }) => {
                   size="small"
                   disabled={loading}
                   onClick={() => setVisOverstyringSkjema(true)}
-                  icon={<PlusIcon />}
+                  icon={<PlusCircleIcon fontSize="1.25rem" />}
                   loading={loading}
                 >
                   Legg til ny overstyring

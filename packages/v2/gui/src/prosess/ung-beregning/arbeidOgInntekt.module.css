@@ -18,7 +18,3 @@
 .checkmarkIcon {
   color: var(--a-surface-success);
 }
-
-.personIcon {
-  flex-shrink: 0;
-}

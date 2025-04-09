@@ -50,7 +50,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klage
 
 export const VedtakKlageKaSubmitPanelImpl = ({
   intl,
-  behandlingPaaVent,
+  behandlingPåVent,
   previewVedtakCallback,
   begrunnelse,
   klageResultat,
@@ -68,7 +68,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
             size="small"
             className={styles.mainButton}
             onClick={formProps.handleSubmit}
-            disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
+            disabled={behandlingPåVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
             loading={formProps.submitting}
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
@@ -80,7 +80,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
             size="small"
             className={styles.mainButton}
             onClick={formProps.handleSubmit}
-            disabled={behandlingPaaVent || formProps.submitting || !klageResultat.godkjentAvMedunderskriver}
+            disabled={behandlingPåVent || formProps.submitting || !klageResultat.godkjentAvMedunderskriver}
             loading={formProps.submitting}
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.FerdigstillKlageKa' })}
@@ -102,7 +102,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
 VedtakKlageKaSubmitPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  behandlingPaaVent: PropTypes.bool.isRequired,
+  behandlingPåVent: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
   klageResultat: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,

@@ -12,6 +12,13 @@ export const kanAksjonspunktRedigeres = (
   return apStatus === aksjonspunktStatus.UTFØRT && erAktivt === true && behStatus === behandlingStatus.UTREDES;
 };
 
+export const skalAksjonspunktUtredes = (
+  { status: apStatus, erAktivt }: Pick<AksjonspunktDto, 'status' | 'erAktivt'>,
+  behStatus: BehandlingDtoStatus,
+): boolean => {
+  return apStatus === aksjonspunktStatus.OPPRETTET && erAktivt === true && behStatus === behandlingStatus.UTREDES;
+};
+
 export const erAksjonspunktReadOnly = ({ kanLoses, status }: Pick<AksjonspunktDto, 'kanLoses' | 'status'>): boolean => {
   return kanLoses === false && status === aksjonspunktStatus.UTFØRT;
 };

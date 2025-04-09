@@ -1,0 +1,19 @@
+.detailView {
+  background: rgb(204 225 243 / 26%);
+  border: 1px solid #c6c2bf;
+  border-radius: 0.25rem;
+  padding: 1rem 1.5rem;
+}
+
+.detailView__titleContainer {
+  align-items: baseline;
+  display: flex;
+}
+
+.detailView__nextToTitle {
+  display: flex;
+}
+
+.detailView__separator {
+  margin: 0 0.5rem;
+}

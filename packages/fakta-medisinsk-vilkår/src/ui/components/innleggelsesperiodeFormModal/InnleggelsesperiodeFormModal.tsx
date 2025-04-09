@@ -1,8 +1,8 @@
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Personopplysninger } from '@k9-sak-web/types';
-import { Alert, Button, Label, Modal } from '@navikt/ds-react';
-import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button, Label, Modal } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -79,8 +79,12 @@ const InnleggelsesperiodeFormModal = ({
       <Modal.Body>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...formMethods}>
-          <Form onSubmit={formMethods.handleSubmit(handleSubmit)} shouldShowSubmitButton={false} smallButtons>
-            <Box marginTop={Margin.large}>
+          <FormWithButtons
+            onSubmit={formMethods.handleSubmit(handleSubmit)}
+            shouldShowSubmitButton={false}
+            smallButtons
+          >
+            <Box marginBlock="6 0">
               <PeriodpickerListRHF
                 name="innleggelsesperioder"
                 legend="Innleggelsesperioder"
@@ -151,14 +155,14 @@ const InnleggelsesperiodeFormModal = ({
                 }}
                 renderBeforeFieldArray={fieldArrayMethods => (
                   <>
-                    <Box marginBottom={Margin.medium}>
+                    <Box marginBlock="0 4">
                       <AddButton
                         label="Legg til innleggelsesperiode"
                         onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                         id="leggTilInnleggelsesperiodeKnapp"
                       />
                     </Box>
-                    <Box marginTop={Margin.medium}>
+                    <Box marginBlock="4 0">
                       <div className={styles.innleggelsesperiodeFormModal__pickerLabels}>
                         <Label size="small" className={styles.innleggelsesperiodeFormModal__firstLabel} aria-hidden>
                           Fra
@@ -175,7 +179,7 @@ const InnleggelsesperiodeFormModal = ({
                 )}
               />
               {showWarningMessage && (
-                <Box marginTop={Margin.large}>
+                <Box marginBlock="6 0">
                   <Alert size="small" variant="warning">
                     Endringene du har gjort på innleggelsesperiodene vil føre til en ny revurdering av en annen
                     behandling. Påvirker alle søkere.
@@ -183,7 +187,7 @@ const InnleggelsesperiodeFormModal = ({
                 </Box>
               )}
             </Box>
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <div style={{ display: 'flex' }}>
                 <Button loading={isLoading} disabled={isLoading} size="small">
                   Bekreft
@@ -200,7 +204,7 @@ const InnleggelsesperiodeFormModal = ({
                 </Button>
               </div>
             </Box>
-          </Form>
+          </FormWithButtons>
         </FormProvider>
       </Modal.Body>
     </Modal>
