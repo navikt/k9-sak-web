@@ -9,7 +9,7 @@ interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'classNam
   name: string;
 }
 
-const MIN_SEARCH_CHARS = 3;
+const MIN_SEARCH_CHARS = 1;
 
 const diagnosekodeSearcher = initDiagnosekodeSearcher(50);
 
@@ -28,7 +28,7 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   disabled,
   label = 'Diagnosekoder',
 }) => {
-  const { register, watch, setValue, trigger, formState } = useFormContext<{ [name]: string[] }>();
+  const { register, watch, setValue, trigger, formState } = useFormContext<{ [key: string]: string[] }>();
   const [searchValue, setSearchValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState<ComboBoxOptions[]>([]);
 

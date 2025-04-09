@@ -3,6 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react';
 import { LabelledContent } from './LabelledContent';
 
 const meta = {
+  title: 'gui/shared/labelled-content/LabelledContent',
   component: LabelledContent,
 } satisfies Meta<typeof LabelledContent>;
 
