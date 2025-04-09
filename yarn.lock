@@ -62,7 +62,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/code-frame@npm:^7.25.9, @babel/code-frame@npm:^7.26.0, @babel/code-frame@npm:^7.26.2":
+"@babel/code-frame@npm:^7.25.9, @babel/code-frame@npm:^7.26.0":
   version: 7.26.2
   resolution: "@babel/code-frame@npm:7.26.2"
   dependencies:
@@ -572,12 +572,12 @@ __metadata:
   linkType: hard
 
 "@babel/helpers@npm:^7.24.6":
-  version: 7.27.0
-  resolution: "@babel/helpers@npm:7.27.0"
+  version: 7.24.6
+  resolution: "@babel/helpers@npm:7.24.6"
   dependencies:
-    "@babel/template": "npm:^7.27.0"
-    "@babel/types": "npm:^7.27.0"
-  checksum: 10/0dd40ba1e5ba4b72d1763bb381384585a56f21a61a19dc1b9a03381fe8e840207fdaa4da645d14dc028ad768087d41aad46347cc6573bd69d82f597f5a12dc6f
+    "@babel/template": "npm:^7.24.6"
+    "@babel/types": "npm:^7.24.6"
+  checksum: 10/9043f7140651e89246d0653c7198832e644865038dc18c117c492d450f237514764d1476faa1ba7466b83b348891f10f564b0c5615d86d6833fb275ead7fb259
   languageName: node
   linkType: hard
 
@@ -653,17 +653,6 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 10/8baee43752a3678ad9f9e360ec845065eeee806f1fdc8e0f348a8a0e13eef0959dabed4a197c978896c493ea205c804d0a1187cc52e4a1ba017c7935bab4983d
-  languageName: node
-  linkType: hard
-
-"@babel/parser@npm:^7.27.0":
-  version: 7.27.0
-  resolution: "@babel/parser@npm:7.27.0"
-  dependencies:
-    "@babel/types": "npm:^7.27.0"
-  bin:
-    parser: ./bin/babel-parser.js
-  checksum: 10/0fee9f05c6db753882ca9d10958301493443da9f6986d7020ebd7a696b35886240016899bc0b47d871aea2abcafd64632343719742e87432c8145e0ec2af2a03
   languageName: node
   linkType: hard
 
@@ -1823,17 +1812,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.27.0":
-  version: 7.27.0
-  resolution: "@babel/template@npm:7.27.0"
-  dependencies:
-    "@babel/code-frame": "npm:^7.26.2"
-    "@babel/parser": "npm:^7.27.0"
-    "@babel/types": "npm:^7.27.0"
-  checksum: 10/7159ca1daea287ad34676d45a7146675444d42c7664aca3e617abc9b1d9548c8f377f35a36bb34cf956e1d3610dcb7acfcfe890aebf81880d35f91a7bd273ee5
-  languageName: node
-  linkType: hard
-
 "@babel/traverse@npm:^7.18.9, @babel/traverse@npm:^7.24.7, @babel/traverse@npm:^7.24.8, @babel/traverse@npm:^7.25.0, @babel/traverse@npm:^7.25.1, @babel/traverse@npm:^7.25.2, @babel/traverse@npm:^7.25.3, @babel/traverse@npm:^7.25.4":
   version: 7.25.6
   resolution: "@babel/traverse@npm:7.25.6"
@@ -1911,16 +1889,6 @@ __metadata:
     "@babel/helper-string-parser": "npm:^7.25.9"
     "@babel/helper-validator-identifier": "npm:^7.25.9"
   checksum: 10/40780741ecec886ed9edae234b5eb4976968cc70d72b4e5a40d55f83ff2cc457de20f9b0f4fe9d858350e43dab0ea496e7ef62e2b2f08df699481a76df02cd6e
-  languageName: node
-  linkType: hard
-
-"@babel/types@npm:^7.27.0":
-  version: 7.27.0
-  resolution: "@babel/types@npm:7.27.0"
-  dependencies:
-    "@babel/helper-string-parser": "npm:^7.25.9"
-    "@babel/helper-validator-identifier": "npm:^7.25.9"
-  checksum: 10/2c322bce107c8a534dc4a23be60d570e6a4cc7ca2e44d4f0eee08c0b626104eb7e60ab8de03463bc5da1773a2f69f1e6edec1648d648d65461d6520a7f3b0770
   languageName: node
   linkType: hard
 
@@ -2857,7 +2825,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/form@npm:*, @fpsak-frontend/form@npm:1.0.0, @fpsak-frontend/form@workspace:packages/form":
+"@fpsak-frontend/form@npm:1.0.0, @fpsak-frontend/form@workspace:packages/form":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/form@workspace:packages/form"
   dependencies:
@@ -3447,7 +3415,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/utils@npm:*, @fpsak-frontend/utils@npm:1.0.0, @fpsak-frontend/utils@workspace:^, @fpsak-frontend/utils@workspace:packages/utils":
+"@fpsak-frontend/utils@npm:1.0.0, @fpsak-frontend/utils@workspace:^, @fpsak-frontend/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils@workspace:packages/utils"
   dependencies:
@@ -3934,7 +3902,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:2.0.20250218125133"
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250320132234"
+    "@navikt/k9-sak-typescript-client": "npm:2.0.20250401102942"
     "@navikt/ung-sak-typescript-client": "npm:0.2.20250407193643"
     "@tanstack/eslint-plugin-query": "npm:^5.71.5"
   languageName: unknown
@@ -4085,7 +4053,6 @@ __metadata:
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-etablert-tilsyn": "npm:1.0.0"
     "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
-    "@k9-sak-web/fakta-institusjon": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
@@ -4366,17 +4333,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-institusjon@npm:1.0.0, @k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.13"
-    formik: "npm:2.4.6"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-medisinsk-vilkar@npm:1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
@@ -4469,26 +4425,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@fpsak-frontend/utils": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:7.18.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.13"
-    classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.13"
-    formik: "npm:2.4.6"
-    react-intl: "npm:7.1.10"
-    react-outside-click-handler: "npm:1.3.0"
-    uuid: "npm:11.1.0"
-    yup: "npm:1.6.1"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder"
@@ -4519,6 +4455,7 @@ __metadata:
     "@hookform/resolvers": "npm:^4.1.3"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "npm:1.0.0"
+    "@navikt/diagnosekoder": "npm:^1.2025.0"
     "@navikt/ft-form-hooks": "npm:^6.2.9"
     "@navikt/ft-form-validators": "npm:^3.1.11"
     "@navikt/ft-utils": "npm:^3.3.1"
@@ -4865,7 +4802,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/types@npm:*, @k9-sak-web/types@npm:1.0.0, @k9-sak-web/types@workspace:^, @k9-sak-web/types@workspace:packages/types":
+"@k9-sak-web/types@npm:1.0.0, @k9-sak-web/types@workspace:^, @k9-sak-web/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
   languageName: unknown
@@ -5327,10 +5264,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250320132234":
-  version: 2.0.20250320132234
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250320132234::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250320132234%2Fcc6dc22ff25bf5a655208a1349bf11ae76416251"
-  checksum: 10/c290f5dca8673b07d4eb249f4ba7890b255b28fdfb207b9261e6e3535a78fc7901a5cbeeaf97108c1bfcb730ea4c8a49c879b1b6ad318ece7bbeaebb95f7572d
+"@navikt/k9-sak-typescript-client@npm:2.0.20250401102942":
+  version: 2.0.20250401102942
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250401102942::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250401102942%2F211379be913810a376a1b1b51fba7c5497ccb204"
+  checksum: 10/cbb55b0f83744e4c8c9f6beebf7841bcadf1cab2b7a7408495b9ef743ee9afd8cdc4319b4f7d731a2c9cdce026e85543347d5033c2b2755d442b3e8457d6b243
   languageName: node
   linkType: hard
 

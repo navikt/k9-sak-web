@@ -1,5 +1,5 @@
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Box, Button } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
