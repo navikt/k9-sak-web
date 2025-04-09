@@ -4,7 +4,7 @@ import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useContext, useEffect, useState } from 'react';
 import { Button, BodyShort } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
-import { DetailView } from '../../../shared/detail-view/DetailView';
+import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
