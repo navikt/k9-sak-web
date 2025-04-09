@@ -138,7 +138,7 @@ const periodeMed5020: Periode = {
     region: PersonopplysningDtoRegion.NORDEN,
     annenPart: undefined,
   },
-  aksjonspunkter: ['5023'],
+  aksjonspunkter: ['5020'],
   årsaker: ['SKJÆRINGSTIDSPUNKT'],
   oppholdsrettVurdering: undefined,
   erEosBorger: false,

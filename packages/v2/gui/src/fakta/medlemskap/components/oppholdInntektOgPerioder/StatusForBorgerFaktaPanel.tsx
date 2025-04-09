@@ -47,6 +47,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
             label: 'Utenlandsk borger utenfor EØS',
           },
         ]}
+        isHorizontal
       />
 
       {erEosBorger && (
@@ -78,7 +79,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         </ArrowBox>
       )}
       {erEosBorger === false && (
-        <ArrowBox alignOffset={130}>
+        <ArrowBox alignOffset={117}>
           <Detail>Lovlig opphold</Detail>
           <Box marginBlock="1 0">
             <RadioGroupPanel
