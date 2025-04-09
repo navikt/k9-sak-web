@@ -1,12 +1,18 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Periode } from './Periode';
-import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
+import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
+import type { Periode } from '../../types/Periode';
+import StatusForBorgerFaktaPanel, { buildInitialValuesStatusForBorgerFaktaPanel } from './StatusForBorgerFaktaPanel';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
-  const Wrapper = props => {
+  const Wrapper = (props: {
+    apKode: string;
+    erEosBorger: boolean;
+    isBorgerAksjonspunktClosed: boolean;
+    children: React.ReactNode;
+  }) => {
     const formMethods = useForm({
       defaultValues: {
         oppholdInntektOgPeriodeForm: {
@@ -22,7 +28,10 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   it('skal vise radioknapper for vurdering av oppholdsrett', () => {
     render(
       <Wrapper apKode={aksjonspunktCodes.AVKLAR_OPPHOLDSRETT} erEosBorger isBorgerAksjonspunktClosed={false}>
-        <StatusForBorgerFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
+        <StatusForBorgerFaktaPanel
+          readOnly={false}
+          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
+        />
       </Wrapper>,
     );
 
@@ -36,7 +45,10 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   it('skal vise radioknapper for vurdering av lovlig opphold', () => {
     render(
       <Wrapper apKode={aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD} erEosBorger={false} isBorgerAksjonspunktClosed={false}>
-        <StatusForBorgerFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
+        <StatusForBorgerFaktaPanel
+          readOnly={false}
+          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
+        />
       </Wrapper>,
     );
 
@@ -54,31 +66,24 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       vurderingsdato: '',
       årsaker: [],
       begrunnelse: '',
-      personopplysninger: undefined,
+      personopplysninger: { fnr: '', aktoerId: '' },
       bosattVurdering: false,
       vurdertAv: '',
       vurdertTidspunkt: '',
       isBosattAksjonspunktClosed: false,
       isPeriodAksjonspunktClosed: false,
-      dekningType: undefined,
-      medlemskapManuellVurderingType: undefined,
+      medlemskapManuellVurderingType: '',
       oppholdsrettVurdering: undefined,
+      erEosBorger: true,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-          kodeverk: '',
-        },
-        status: {
-          kode: 'UTFO',
-          kodeverk: '',
-        },
-        kanLoses: false,
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: 'UTFO',
         erAktivt: false,
       },
     ];
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
+    const initialValues = buildInitialValuesStatusForBorgerFaktaPanel(periode, aksjonspunkter);
 
     expect(initialValues).toStrictEqual({
       apKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -98,22 +103,21 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       vurderingsdato: '',
       årsaker: [],
       begrunnelse: '',
-      personopplysninger: undefined,
+      personopplysninger: { fnr: '', aktoerId: '' },
       bosattVurdering: false,
       vurdertAv: '',
       vurdertTidspunkt: '',
       isBosattAksjonspunktClosed: false,
       isPeriodAksjonspunktClosed: false,
-      dekningType: undefined,
-      medlemskapManuellVurderingType: undefined,
+      medlemskapManuellVurderingType: '',
     };
 
-    const aksjonspunkter = [];
+    const aksjonspunkter: Aksjonspunkt[] = [];
 
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
+    const initialValues = buildInitialValuesStatusForBorgerFaktaPanel(periode, aksjonspunkter);
 
     expect(initialValues).toStrictEqual({
-      apKode: undefined,
+      apKode: '',
       erEosBorger: true,
       oppholdsrettVurdering: true,
       lovligOppholdVurdering: undefined,
@@ -128,32 +132,25 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       vurderingsdato: '',
       årsaker: [],
       begrunnelse: '',
-      personopplysninger: undefined,
+      personopplysninger: { fnr: '', aktoerId: '' },
       bosattVurdering: false,
       vurdertAv: '',
       vurdertTidspunkt: '',
       isBosattAksjonspunktClosed: false,
       isPeriodAksjonspunktClosed: false,
-      dekningType: undefined,
-      medlemskapManuellVurderingType: undefined,
+      erEosBorger: true,
+      medlemskapManuellVurderingType: '',
       oppholdsrettVurdering: false,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-          kodeverk: '',
-        },
-        status: {
-          kode: 'UTFO',
-          kodeverk: '',
-        },
-        kanLoses: false,
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: 'UTFO',
         erAktivt: false,
       },
     ];
 
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
+    const initialValues = buildInitialValuesStatusForBorgerFaktaPanel(periode, aksjonspunkter);
 
     expect(initialValues).toStrictEqual({
       apKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -173,22 +170,22 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       vurderingsdato: '',
       årsaker: [],
       begrunnelse: '',
-      personopplysninger: undefined,
+      personopplysninger: { fnr: '', aktoerId: '' },
       bosattVurdering: false,
       vurdertAv: '',
       vurdertTidspunkt: '',
       isBosattAksjonspunktClosed: false,
       isPeriodAksjonspunktClosed: false,
-      dekningType: undefined,
-      medlemskapManuellVurderingType: undefined,
+
+      medlemskapManuellVurderingType: '',
       oppholdsrettVurdering: undefined,
     };
-    const aksjonspunkter = [];
+    const aksjonspunkter: Aksjonspunkt[] = [];
 
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
+    const initialValues = buildInitialValuesStatusForBorgerFaktaPanel(periode, aksjonspunkter);
 
     expect(initialValues).toStrictEqual({
-      apKode: undefined,
+      apKode: '',
       erEosBorger: false,
       oppholdsrettVurdering: undefined,
       lovligOppholdVurdering: false,
