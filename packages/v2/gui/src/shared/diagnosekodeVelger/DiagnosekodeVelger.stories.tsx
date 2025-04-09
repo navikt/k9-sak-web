@@ -19,19 +19,19 @@ interface FormValues {
 }
 const emptyFormProps = { defaultValues: { diagnosekoder: [] } };
 
-const formProviderIdStandard = 'diagnosekodevelgerStandard';
+const formProviderId = 'diagnosekodevelger';
 
 export const Standard: Story = {
   args: {
     name: 'diagnosekoder',
   },
-  decorators: withFormProvider<FormValues>(formProviderIdStandard, emptyFormProps),
+  decorators: withFormProvider<FormValues>(formProviderId, emptyFormProps),
   play: async ({ loaded }) => {
     // Hent ut react-hook-form context state satt til loaded av withFormProvider. Er ikkje typesikker, så må deklarere korrekt type sjølv.
     const {
       formState: { isValid, errors, isSubmitted },
       getValues,
-    }: UseFormReturn<FormValues> = loaded[formProviderIdStandard];
+    }: UseFormReturn<FormValues> = loaded[formProviderId];
     await expect(isValid).toBeFalsy();
     await expect(isSubmitted).toBeFalsy();
     await expect(errors).toEqual({});
@@ -39,20 +39,16 @@ export const Standard: Story = {
   },
 };
 
-const formProviderIdMedUtfylteDiagnosekoder = 'diagnosekodevelgerMedUtfylteDiagnosekoder';
-
 export const MedUtfylteDiagnosekoder: Story = {
   args: { ...Standard.args },
-  decorators: withFormProvider(formProviderIdMedUtfylteDiagnosekoder, {
-    defaultValues: { diagnosekoder: ['A001', 'b002'] },
-  }),
+  decorators: withFormProvider(formProviderId, { defaultValues: { diagnosekoder: ['A001', 'b002'] } }),
   play: async ({ loaded, canvas, step }) => {
-    const submitBtn = canvas.getByTestId(`${formProviderIdMedUtfylteDiagnosekoder}-Submit`);
+    const submitBtn = canvas.getByTestId(`${formProviderId}-Submit`);
     await step('Initiell state er ok', async () => {
       const {
         formState: { isValid, errors, isSubmitted },
         getValues,
-      }: UseFormReturn<FormValues> = loaded[formProviderIdMedUtfylteDiagnosekoder];
+      }: UseFormReturn<FormValues> = loaded[formProviderId];
       await expect(isValid).toBeTruthy();
       await expect(errors).toEqual({});
       await expect(isSubmitted).toBeFalsy();
@@ -63,7 +59,7 @@ export const MedUtfylteDiagnosekoder: Story = {
       const {
         formState: { isValid, errors, isSubmitted },
         getValues,
-      }: UseFormReturn<FormValues> = loaded[formProviderIdMedUtfylteDiagnosekoder];
+      }: UseFormReturn<FormValues> = loaded[formProviderId];
       await expect(isValid).toBeTruthy();
       await expect(errors).toEqual({});
       await expect(isSubmitted).toBeTruthy();
@@ -80,7 +76,7 @@ export const MedUtfylteDiagnosekoder: Story = {
       const {
         formState: { isValid, errors, submitCount, isSubmitSuccessful },
         getValues,
-      }: UseFormReturn<FormValues> = loaded[formProviderIdMedUtfylteDiagnosekoder];
+      }: UseFormReturn<FormValues> = loaded[formProviderId];
       await expect(isValid).toBeTruthy();
       await expect(errors).toEqual({});
       await expect(submitCount).toBe(2);
@@ -90,18 +86,16 @@ export const MedUtfylteDiagnosekoder: Story = {
   },
 };
 
-const formProviderIdValideringsfeil = 'diagnosekodevelgerValideringsfeil';
-
 export const Valideringsfeil: Story = {
   args: { ...Standard.args },
-  decorators: withFormProvider(formProviderIdValideringsfeil, emptyFormProps),
+  decorators: withFormProvider(formProviderId, emptyFormProps),
   play: async ({ loaded, canvas }) => {
-    const submitBtn = canvas.getByTestId(`${formProviderIdValideringsfeil}-Submit`);
+    const submitBtn = canvas.getByTestId(`${formProviderId}-Submit`);
     await userEvent.click(submitBtn);
     const {
       formState: { isValid, errors, isSubmitted, isSubmitSuccessful },
       getValues,
-    }: UseFormReturn<FormValues> = loaded[formProviderIdValideringsfeil];
+    }: UseFormReturn<FormValues> = loaded[formProviderId];
     await expect(isValid).toBe(false);
     await expect(errors.diagnosekoder?.message).toEqual('Diagnosekode er påkrevd');
     await expect(isSubmitted).toBe(true);
@@ -111,15 +105,11 @@ export const Valideringsfeil: Story = {
   },
 };
 
-const formProviderIdIkkjeEksisterendeDiagnosekode = 'diagnosekodevelgerIkkjeEksisterendeDiagnosekode';
-
 export const IkkjeEksisterendeDiagnosekode: Story = {
   args: { ...Standard.args },
-  decorators: withFormProvider(formProviderIdIkkjeEksisterendeDiagnosekode, {
-    defaultValues: { diagnosekoder: ['Å911'] },
-  }),
+  decorators: withFormProvider(formProviderId, { defaultValues: { diagnosekoder: ['Å911'] } }),
   play: async ({ loaded, canvas }) => {
-    const { getValues }: UseFormReturn<FormValues> = loaded[formProviderIdIkkjeEksisterendeDiagnosekode];
+    const { getValues }: UseFormReturn<FormValues> = loaded[formProviderId];
     await expect(getValues()).toEqual({ diagnosekoder: ['Å911'] });
     const å911Chip = canvas.getByLabelText('Å911 - Ukjent', { exact: false });
     await expect(å911Chip).toBeInTheDocument();
