@@ -1,10 +1,11 @@
-import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { Detail } from '@navikt/ds-react';
+import { Box, Detail } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
+import ArrowBox from '../../../../shared/arrowBox/ArrowBox';
+import FaktaGruppe from '../../../../shared/FaktaGruppe';
 import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
@@ -30,11 +31,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
     oppholdInntektOgPeriodeForm: { erEosBorger, isBorgerAksjonspunktClosed, apKode },
   } = getValues();
   return (
-    <FaktaGruppe
-      titleCode="Status for søker"
-      merknaderFraBeslutter={apKode ? alleMerknaderFraBeslutter[apKode] : undefined}
-      useIntl={false}
-    >
+    <FaktaGruppe merknaderFraBeslutter={apKode ? alleMerknaderFraBeslutter[apKode] : undefined}>
       <RadioGroupPanel
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
@@ -55,55 +52,57 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
       {erEosBorger && (
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
-          <VerticalSpacer fourPx />
-          <RadioGroupPanel
-            name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
-            validate={[required]}
-            isReadOnly={readOnly}
-            isEdited={isBorgerAksjonspunktClosed}
-            isTrueOrFalseSelection
-            radios={[
-              {
-                value: 'true',
-                label: 'Søker har oppholdsrett',
-              },
-              {
-                value: 'false',
-                label: (
-                  <>
-                    Søker har <b>ikke</b> oppholdsrett
-                  </>
-                ),
-              },
-            ]}
-          />
+          <Box marginBlock="1 0">
+            <RadioGroupPanel
+              name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
+              validate={[required]}
+              isReadOnly={readOnly}
+              isEdited={isBorgerAksjonspunktClosed}
+              isTrueOrFalseSelection
+              radios={[
+                {
+                  value: 'true',
+                  label: 'Søker har oppholdsrett',
+                },
+                {
+                  value: 'false',
+                  label: (
+                    <>
+                      Søker har <b>ikke</b> oppholdsrett
+                    </>
+                  ),
+                },
+              ]}
+            />
+          </Box>
         </ArrowBox>
       )}
       {erEosBorger === false && (
         <ArrowBox alignOffset={130}>
           <Detail>Lovlig opphold</Detail>
-          <VerticalSpacer fourPx />
-          <RadioGroupPanel
-            name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
-            validate={[required]}
-            isReadOnly={readOnly}
-            isEdited={isBorgerAksjonspunktClosed}
-            isTrueOrFalseSelection
-            radios={[
-              {
-                value: 'true',
-                label: 'Søker har lovlig opphold',
-              },
-              {
-                value: 'false',
-                label: (
-                  <>
-                    Søker har <b>ikke</b> lovlig opphold
-                  </>
-                ),
-              },
-            ]}
-          />
+          <Box marginBlock="1 0">
+            <RadioGroupPanel
+              name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
+              validate={[required]}
+              isReadOnly={readOnly}
+              isEdited={isBorgerAksjonspunktClosed}
+              isTrueOrFalseSelection
+              radios={[
+                {
+                  value: 'true',
+                  label: 'Søker har lovlig opphold',
+                },
+                {
+                  value: 'false',
+                  label: (
+                    <>
+                      Søker har <b>ikke</b> lovlig opphold
+                    </>
+                  ),
+                },
+              ]}
+            />
+          </Box>
         </ArrowBox>
       )}
     </FaktaGruppe>
