@@ -1,17 +1,27 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { Aksjonspunkt } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
+import {
+  AksjonspunktDtoDefinisjon,
+  BehandlingAksjonspunktDtoBehandlingType,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { MedlemskapPeriode } from './Medlemskap';
-import { Periode } from './Periode';
-import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
-import { Soknad } from './Soknad';
+import { KodeverkProvider } from '../../../../kodeverk';
+import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
+import type { PerioderMedMedlemskapFaktaPanelFormState } from '../../types/FormState';
+import type { MedlemskapPeriode } from '../../types/Medlemskap';
+import type { Periode } from '../../types/Periode';
+import type { Soknad } from '../../types/Soknad';
+import PerioderMedMedlemskapFaktaPanel, {
+  buildInitialValuesPerioderMedMedlemskapFaktaPanel,
+} from './PerioderMedMedlemskapFaktaPanel';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
-  const Wrapper = props => {
+  const Wrapper = (props: {
+    children: React.ReactNode;
+    perioder?: PerioderMedMedlemskapFaktaPanelFormState['fixedMedlemskapPerioder'];
+  }) => {
     const formMethods = useForm({
       defaultValues: {
         oppholdInntektOgPeriodeForm: {
@@ -21,24 +31,20 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     });
 
-    return <FormProvider {...formMethods}>{props.children}</FormProvider>;
+    return (
+      <KodeverkProvider
+        behandlingType={BehandlingAksjonspunktDtoBehandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <FormProvider {...formMethods}>{props.children}</FormProvider>
+      </KodeverkProvider>
+    );
   };
 
-  const manuelleVurderingstyper = [
-    {
-      kode: 'test1',
-      kodeverk: '',
-      navn: 'navn1',
-    },
-    {
-      kode: 'test2',
-      kodeverk: '',
-      navn: 'navn2',
-    },
-  ];
-
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
-    const perioder = [
+    const perioder: PerioderMedMedlemskapFaktaPanelFormState['fixedMedlemskapPerioder'] = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
@@ -48,24 +54,21 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
+          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
         />
       </Wrapper>,
     );
 
-    expect(screen.getByText('testdekning')).toBeInTheDocument();
-    expect(screen.getByText('testStatus')).toBeInTheDocument();
-    expect(screen.getByText('15.01.2016-15.10.2016')).toBeInTheDocument();
-    expect(screen.getAllByRole('radio', { name: /navn/i }).length).toBe(2);
+    expect(screen.getByText('15.01.2016 - 15.10.2016')).toBeInTheDocument();
+    expect(screen.getAllByRole('radio').length).toBe(3);
   });
 
   it('skal vise fødselsdato når en har dette', () => {
-    const perioder = [
+    const perioder: PerioderMedMedlemskapFaktaPanelFormState['fixedMedlemskapPerioder'] = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
@@ -75,13 +78,12 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
           fodselsdato="2016-10-16"
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
+          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
         />
       </Wrapper>,
     );
@@ -90,7 +92,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   });
 
   it('skal vise tabell med medlemskapsperioder', () => {
-    const perioder = [
+    const perioder: PerioderMedMedlemskapFaktaPanelFormState['fixedMedlemskapPerioder'] = [
       {
         fom: '2017-08-01',
         tom: '2017-08-31',
@@ -100,12 +102,11 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
+          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
         />
       </Wrapper>,
     );
@@ -114,14 +115,11 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   });
 
   it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
-    const perioder = [];
-
-    renderWithIntl(
-      <Wrapper perioder={perioder}>
+    render(
+      <Wrapper>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
+          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
         />
       </Wrapper>,
     );
@@ -131,48 +129,36 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
   it('skal sette opp initielle verdier og sorterte perioder etter periodestart', () => {
     const periode: Periode = {
-      aksjonspunkter: [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE],
-      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
+      aksjonspunkter: [aksjonspunktCodes.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE],
+      medlemskapManuellVurderingType: 'manuellType',
       id: '',
       vurderingsdato: '',
       årsaker: [],
       begrunnelse: '',
-      personopplysninger: undefined,
+      personopplysninger: { fnr: '', aktoerId: '' },
       bosattVurdering: false,
       vurdertAv: '',
       vurdertTidspunkt: '',
       isBosattAksjonspunktClosed: false,
       isPeriodAksjonspunktClosed: false,
-      dekningType: undefined,
+      erEosBorger: false,
     };
     const medlemskapPerioder: MedlemskapPeriode[] = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE',
-          kodeverk: '',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS',
-          kodeverk: '',
-        },
+        dekningType: 'DEK_TYPE',
+        medlemskapType: 'M_STATUS',
         beslutningsdato: '2016-10-16',
-        kildeType: undefined,
+        kildeType: '',
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE2',
-          kodeverk: '',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS2',
-          kodeverk: '',
-        },
+        dekningType: 'DEK_TYPE2',
+        medlemskapType: 'M_STATUS2',
         beslutningsdato: '2017-10-16',
-        kildeType: undefined,
+        kildeType: '',
       },
     ];
 
@@ -188,38 +174,16 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-          kodeverk: '',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-          kodeverk: '',
-        },
-        kanLoses: false,
+        definisjon: aksjonspunktCodes.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
+        status: aksjonspunktStatus.OPPRETTET,
         erAktivt: false,
       },
     ];
-    const getKodeverknavn = kodeverk => {
-      if (kodeverk.kode === 'DEK_TYPE') {
-        return 'testdekning';
-      }
-      if (kodeverk.kode === 'DEK_TYPE2') {
-        return 'testdekning2017';
-      }
-      if (kodeverk.kode === 'M_STATUS') {
-        return 'testStatus';
-      }
-      if (kodeverk.kode === 'M_STATUS2') {
-        return 'testStatus2017';
-      }
-      return '';
-    };
-    const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(
+
+    const initialValues = buildInitialValuesPerioderMedMedlemskapFaktaPanel(
       medlemskapPerioder,
       soknad,
       aksjonspunkter,
-      getKodeverknavn,
       periode,
     );
 
@@ -228,20 +192,20 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         {
           fom: '2016-01-15',
           tom: '2016-10-15',
-          dekning: 'testdekning',
-          status: 'testStatus',
+          dekning: 'DEK_TYPE',
+          status: 'M_STATUS',
           beslutningsdato: '2016-10-16',
         },
         {
           fom: '2017-01-15',
           tom: '2017-10-15',
-          dekning: 'testdekning2017',
-          status: 'testStatus2017',
+          dekning: 'DEK_TYPE2',
+          status: 'M_STATUS2',
           beslutningsdato: '2017-10-16',
         },
       ],
       isPeriodAksjonspunktClosed: false,
-      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
+      medlemskapManuellVurderingType: 'manuellType',
       fodselsdato: '2017-10-15',
       hasPeriodeAksjonspunkt: true,
     });
