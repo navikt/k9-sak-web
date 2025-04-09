@@ -3,6 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react';
 import { DetailView } from './DetailView';
 
 const meta = {
+  title: 'gui/shared/detail-view/DetailView',
   component: DetailView,
 } satisfies Meta<typeof DetailView>;
 
