@@ -16,7 +16,7 @@ import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { MedlemskapPeriode } from '../../types/Medlemskap';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Periode } from '../../types/Periode';
-import type { Soknad } from '../../types/Soknad';
+import type { Søknad } from '../../types/Søknad';
 
 const headerTextCodes = ['Periode', 'Dekning', 'Status', 'Beslutningsdato'];
 
@@ -129,7 +129,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
 
 export const buildInitialValuesPerioderMedMedlemskapFaktaPanel = (
   medlemskapPerioder: MedlemskapPeriode[],
-  soknad: Soknad,
+  soknad: Søknad,
   aksjonspunkter: Aksjonspunkt[],
   periode?: Periode,
 ) => {

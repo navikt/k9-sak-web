@@ -2,39 +2,31 @@ import {
   AksjonspunktDtoDefinisjon,
   AksjonspunktDtoStatus,
   AvklartPersonstatusOrginalPersonstatus,
-  BehandlingAksjonspunktDtoBehandlingStatus,
-  BehandlingDtoStatus,
   BehandlingDtoType,
-  BehandlingsresultatDtoType,
-  BehandlingStegTilstandDtoStegStatus,
-  BehandlingStegTilstandDtoStegType,
-  BehandlingÅrsakDtoBehandlingArsakType,
-  KravDokumentStatusType,
   MedlemskapPerioderDtoDekningType,
   MedlemskapPerioderDtoKildeType,
   PersonadresseDtoAdresseType,
-  PersonopplysningDtoNavBrukerKjonn,
   PersonopplysningDtoRegion,
   PersonopplysningDtoSivilstand,
-  VilkårResultatDtoUtfall,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { action } from '@storybook/addon-actions';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { Meta, StoryObj } from '@storybook/react';
+import { asyncAction } from '../../storybook/asyncAction';
+import withKodeverkContext from '../../storybook/decorators/withKodeverkContext';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
+import type { Behandling } from './types/Behandling';
+import type { Medlemskap } from './types/Medlemskap';
+import type { Periode } from './types/Periode';
+import type { Søknad } from './types/Søknad';
 
-const behandling = {
+const behandling: Behandling = {
   id: 1,
   versjon: 1,
   type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
-  behandlingPåVent: false,
-  status: BehandlingDtoStatus.OPPRETTET,
 };
 
-const soknad = {
-  oppgittFordeling: {
-    startDatoForPermisjon: '2019-01-01',
-  },
+const soknad: Søknad = {
   oppgittTilknytning: {
     utlandsopphold: [
       {
@@ -44,58 +36,26 @@ const soknad = {
       },
     ],
   },
+  fodselsdatoer: [],
 };
 
-const arbeidsforhold = [
-  {
-    arbeidsgiverReferanse: '12345678',
-    // kilde: {
-    //   kode: '-',
-    // },
-  },
-];
-const medlemskap = {
-  inntekt: [
-    {
-      navn: 'MYGG ROBUST',
-      utbetaler: '973861778',
-      fom: '2018-09-01',
-      tom: '2018-09-30',
-      ytelse: false,
-      belop: 35000,
-    },
-    {
-      navn: 'MYGG ROBUST',
-      utbetaler: '973861778',
-      fom: '2019-02-01',
-      tom: '2019-02-28',
-      ytelse: false,
-      belop: 35000,
-    },
-  ],
+const medlemskap: Medlemskap = {
   medlemskapPerioder: [
     {
       fom: '2019-01-01',
       tom: '2021-10-13',
-      // medlemskapType: {
-      //   kode: 'AVKLARES',
-      //   kodeverk: 'MEDLEMSKAP_TYPE',
-      // },
+      medlemskapType: 'AVKLARES',
       dekningType: MedlemskapPerioderDtoDekningType.OPPHOR,
       kildeType: MedlemskapPerioderDtoKildeType.FS22,
       beslutningsdato: null,
     },
   ],
+  fom: '2019-01-01',
+  personopplysninger: {},
   perioder: [
     {
       vurderingsdato: '2019-11-07',
       personopplysninger: {
-        fnr: null,
-        aktoerId: '1615078487209',
-        diskresjonskode: null,
-        nummer: null,
-        navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.KVINNE,
-        statsborgerskap: 'NOR',
         avklartPersonstatus: {
           orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
           overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
@@ -103,46 +63,38 @@ const medlemskap = {
         personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
         sivilstand: PersonopplysningDtoSivilstand.UGIFT,
         navn: 'Mygg Robust',
-        dodsdato: null,
-        fodselsdato: '1966-08-02',
         adresser: [
           {
             adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
             mottakerNavn: 'Mygg Robust',
             adresselinje1: 'Skogvegen 3',
-            adresselinje2: null,
-            adresselinje3: null,
+            adresselinje2: undefined,
+            adresselinje3: undefined,
             postNummer: '4353',
             poststed: 'Klepp Stasjon',
             land: 'NOR',
           },
         ],
         region: PersonopplysningDtoRegion.NORDEN,
-        annenPart: null,
-        ektefelle: null,
-        barn: [],
-        barnSoktFor: [],
-        barnFraTpsRelatertTilSoknad: [],
-        harVerge: false,
+        annenPart: undefined,
       },
       aksjonspunkter: ['5021'],
       årsaker: ['SKJÆRINGSTIDSPUNKT'],
-      oppholdsrettVurdering: null,
-      erEosBorger: null,
-      lovligOppholdVurdering: null,
-      bosattVurdering: null,
-      medlemskapManuellVurderingType: null,
-      begrunnelse: null,
+      oppholdsrettVurdering: undefined,
+      erEosBorger: false,
+      lovligOppholdVurdering: undefined,
+      bosattVurdering: undefined,
+      medlemskapManuellVurderingType: '',
+      begrunnelse: '',
+      id: '',
+      isBosattAksjonspunktClosed: false,
+      isPeriodAksjonspunktClosed: false,
+      vurdertAv: '',
+      vurdertTidspunkt: '',
     },
     {
       vurderingsdato: '2018-11-07',
       personopplysninger: {
-        fnr: null,
-        aktoerId: '1615078487209',
-        diskresjonskode: null,
-        nummer: null,
-        navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.KVINNE,
-        statsborgerskap: 'NOR',
         avklartPersonstatus: {
           orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
           overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
@@ -150,38 +102,31 @@ const medlemskap = {
         personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
         sivilstand: PersonopplysningDtoSivilstand.UGIFT,
         navn: 'Mygg Robust',
-        dodsdato: null,
-        fodselsdato: '1966-08-02',
         adresser: [],
         region: PersonopplysningDtoRegion.NORDEN,
-        annenPart: null,
-        ektefelle: null,
-        barn: [],
-        barnSoktFor: [],
-        barnFraTpsRelatertTilSoknad: [],
-        harVerge: false,
+        annenPart: undefined,
       },
       aksjonspunkter: ['5021'],
       årsaker: ['SKJÆRINGSTIDSPUNKT'],
-      oppholdsrettVurdering: null,
-      erEosBorger: null,
-      lovligOppholdVurdering: null,
-      bosattVurdering: null,
-      medlemskapManuellVurderingType: null,
-      begrunnelse: null,
+      oppholdsrettVurdering: undefined,
+      erEosBorger: false,
+      lovligOppholdVurdering: undefined,
+      bosattVurdering: undefined,
+      medlemskapManuellVurderingType: '',
+      begrunnelse: '',
+      id: '',
+      isBosattAksjonspunktClosed: false,
+      isPeriodAksjonspunktClosed: false,
+      vurdertAv: '',
+      vurdertTidspunkt: '',
     },
   ],
 };
 
-const periodeMed5020 = {
+const periodeMed5020: Periode = {
+  id: '',
   vurderingsdato: '2018-11-07',
   personopplysninger: {
-    fnr: null,
-    aktoerId: '1615078487209',
-    diskresjonskode: null,
-    nummer: null,
-    navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.KVINNE,
-    statsborgerskap: 'NOR',
     avklartPersonstatus: {
       orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
       overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
@@ -189,25 +134,22 @@ const periodeMed5020 = {
     personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
     sivilstand: PersonopplysningDtoSivilstand.UGIFT,
     navn: 'Mygg Robust',
-    dodsdato: null,
-    fodselsdato: '1966-08-02',
     adresser: [],
     region: PersonopplysningDtoRegion.NORDEN,
-    annenPart: null,
-    ektefelle: null,
-    barn: [],
-    barnSoktFor: [],
-    barnFraTpsRelatertTilSoknad: [],
-    harVerge: false,
+    annenPart: undefined,
   },
   aksjonspunkter: ['5020'],
   årsaker: ['SKJÆRINGSTIDSPUNKT'],
-  oppholdsrettVurdering: null,
-  erEosBorger: null,
-  lovligOppholdVurdering: null,
-  bosattVurdering: null,
-  medlemskapManuellVurderingType: null,
-  begrunnelse: null,
+  oppholdsrettVurdering: undefined,
+  erEosBorger: false,
+  lovligOppholdVurdering: undefined,
+  bosattVurdering: undefined,
+  medlemskapManuellVurderingType: '',
+  begrunnelse: '',
+  isBosattAksjonspunktClosed: false,
+  isPeriodAksjonspunktClosed: false,
+  vurdertAv: '',
+  vurdertTidspunkt: '',
 };
 
 const medlemskapAp5020 = { ...medlemskap, perioder: [periodeMed5020] };
@@ -218,499 +160,169 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-export default {
-  title: 'fakta/fakta-medlemskap',
+const meta = {
+  title: 'gui/fakta/medlemskap',
   component: MedlemskapFaktaIndex,
-};
+  args: {
+    submitCallback: asyncAction('Løser aksjonspunkt'),
+  },
+  decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD })],
+} satisfies Meta<typeof MedlemskapFaktaIndex>;
 
-export const VisAksjonspunktForAvklaringOmBrukerErBosatt = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const VisAksjonspunktForAvklaringOmBrukerErBosatt: Story = {
+  args: {
+    aksjonspunkter: [
       {
         definisjon: AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT,
         status: AksjonspunktDtoStatus.OPPRETTET,
-        begrunnelse: undefined,
-        kanLoses: true,
         erAktivt: true,
       },
-    ]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
-);
-
-VisAksjonspunktForAvklaringOmBrukerErBosatt.args = {
-  behandling,
-  medlemskap: medlemskapAp5020,
-  soknad,
-  arbeidsforhold,
-  fagsakPerson,
-  alleMerknaderFraBeslutter: {
-    [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
+    ],
+    behandling,
+    medlemskap: medlemskapAp5020,
+    soknad,
+    fagsakPerson,
+    alleMerknaderFraBeslutter: {
+      [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
+    },
+    readOnly: false,
+    submittable: true,
   },
-  isForeldrepengerFagsak: true,
-  readOnly: false,
-  readOnlyBehandling: false,
-  harApneAksjonspunkter: true,
-  submittable: true,
 };
 
-export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[
+export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter: Story = {
+  args: {
+    aksjonspunkter: [
       {
         definisjon: AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT,
-        status: AksjonspunktDtoStatus.OPPRETTET,
-        begrunnelse: undefined,
-        kanLoses: true,
+        status: aksjonspunktStatus.OPPRETTET,
         erAktivt: true,
       },
       {
         definisjon: AksjonspunktDtoDefinisjon.AVKLAR_FORTSATT_MEDLEMSKAP,
         status: AksjonspunktDtoStatus.OPPRETTET,
-        begrunnelse: undefined,
-        kanLoses: true,
         erAktivt: true,
       },
       {
         definisjon: AksjonspunktDtoDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
         status: AksjonspunktDtoStatus.OPPRETTET,
-        begrunnelse: undefined,
-        kanLoses: true,
         erAktivt: true,
       },
       {
         definisjon: AksjonspunktDtoDefinisjon.AVKLAR_OPPHOLDSRETT,
         status: AksjonspunktDtoStatus.OPPRETTET,
-        begrunnelse: undefined,
-        kanLoses: true,
         erAktivt: true,
       },
-    ]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={args?.submitCallback || action('button-click')}
-    {...args}
-  />
-);
-
-VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
-  behandling,
-  medlemskap,
-  soknad,
-  arbeidsforhold,
-  fagsakPerson,
-  isForeldrepengerFagsak: true,
-  alleMerknaderFraBeslutter: {
-    [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
-    [AksjonspunktDtoDefinisjon.AVKLAR_FORTSATT_MEDLEMSKAP]: merknaderFraBeslutter,
-    [AksjonspunktDtoDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE]: merknaderFraBeslutter,
-    [AksjonspunktDtoDefinisjon.AVKLAR_OPPHOLDSRETT]: merknaderFraBeslutter,
-  },
-  readOnly: false,
-  readOnlyBehandling: false,
-  harApneAksjonspunkter: true,
-  submittable: true,
-};
-
-export const VisPanelUtenAksjonspunkt = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
-);
-
-VisPanelUtenAksjonspunkt.args = {
-  behandling,
-  medlemskap,
-  soknad,
-  arbeidsforhold,
-  fagsakPerson,
-  alleMerknaderFraBeslutter: {
-    [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
-  },
-  isForeldrepengerFagsak: true,
-  readOnly: true,
-  readOnlyBehandling: false,
-  harApneAksjonspunkter: false,
-  submittable: false,
-};
-
-export const VisPanelUtenPerioder = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
-);
-
-VisPanelUtenPerioder.args = {
-  behandling: {
-    ansvarligSaksbehandler: 'Z994145',
-    behandlendeEnhetId: '4487',
-    behandlendeEnhetNavn: 'NAV AY sykdom i familien',
-    behandlingÅrsaker: [
-      {
-        erAutomatiskRevurdering: false,
-        behandlingArsakType: BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRING_FRA_ANNEN_OMSORGSPERSON,
-        manueltOpprettet: false,
-      },
     ],
-    behandlingKoet: false,
-    behandlingPåVent: false,
-    behandlingsfristTid: '2024-10-09',
-    behandlingsresultat: {
-      erRevurderingMedUendretUtfall: false,
-      type: BehandlingsresultatDtoType.INNVILGET,
-      vilkårResultat: {
-        MEDLEMSKAPSVILKÅRET: [
-          {
-            periode: {
-              fom: '2024-06-03',
-              tom: '2024-08-28',
-            },
-            avslagsårsak: null,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-      },
+    behandling,
+    medlemskap,
+    soknad,
+    fagsakPerson,
+    alleMerknaderFraBeslutter: {
+      [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
+      [AksjonspunktDtoDefinisjon.AVKLAR_FORTSATT_MEDLEMSKAP]: merknaderFraBeslutter,
+      [AksjonspunktDtoDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE]: merknaderFraBeslutter,
+      [AksjonspunktDtoDefinisjon.AVKLAR_OPPHOLDSRETT]: merknaderFraBeslutter,
     },
-    behandlingResultatType: BehandlingsresultatDtoType.INNVILGET,
-    endret: '2024-08-28T13:38:46.309',
-    endretAvBrukernavn: 'k9-sak',
-    erPåVent: false,
-    fagsakId: 1346602,
-    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
-    førsteÅrsak: {
-      erAutomatiskRevurdering: false,
-      behandlingArsakType: BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRING_FRA_ANNEN_OMSORGSPERSON,
-    },
-    gjeldendeVedtak: false,
-    id: 1353953,
-    links: [],
-    opprettet: '2024-08-28T13:19:43',
-    språkkode: 'NB',
-    status: BehandlingAksjonspunktDtoBehandlingStatus.UTREDES,
-    stegTilstand: {
-      stegType: BehandlingStegTilstandDtoStegType.FORESLÅ_VEDTAK,
-      stegStatus: BehandlingStegTilstandDtoStegStatus.UTGANG,
-      tidsstempel: '2024-08-28T13:38:46.309+02:00',
-    },
-    toTrinnsBehandling: true,
-    type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
-    uuid: 'd0e8071b-f54d-48b4-9a64-b7eaaa7aefcf',
-    behandlingHenlagt: false,
-    versjon: 234,
+    readOnly: false,
+    submittable: true,
   },
-  medlemskap: {
-    medlemskapPerioder: [],
-    perioder: [],
-    personopplysninger: {
-      '2024-06-03': {
-        aktoerId: '2471000012451',
-        diskresjonskode: null,
-        fnr: null,
-        adresser: [
-          {
-            adresselinje1: 'Skippergata 81',
-            adresselinje2: null,
-            adresselinje3: null,
-            adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
-            land: 'NOR',
-            mottakerNavn: 'Familie Ordknapp',
-            postNummer: '4614',
-            poststed: null,
-          },
-        ],
-        pleietrengendePart: {
-          aktoerId: '2067342699855',
-          diskresjonskode: null,
-          fnr: null,
+};
+
+export const VisPanelUtenAksjonspunkt: Story = {
+  args: {
+    aksjonspunkter: [],
+    behandling,
+    medlemskap,
+    soknad,
+    fagsakPerson,
+    alleMerknaderFraBeslutter: {
+      [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: merknaderFraBeslutter,
+    },
+    readOnly: true,
+    submittable: false,
+  },
+};
+
+export const VisPanelUtenPerioder: Story = {
+  args: {
+    aksjonspunkter: [],
+    behandling: {
+      id: 1353953,
+      type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
+      versjon: 234,
+    },
+    medlemskap: {
+      fom: '',
+      medlemskapPerioder: [],
+      perioder: [],
+      personopplysninger: {
+        '2024-06-03': {
           adresser: [
             {
               adresselinje1: 'Skippergata 81',
-              adresselinje2: null,
-              adresselinje3: null,
+              adresselinje2: undefined,
+              adresselinje3: undefined,
               adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
               land: 'NOR',
-              mottakerNavn: 'Pusekatt Ökänd',
+              mottakerNavn: 'Familie Ordknapp',
               postNummer: '4614',
-              poststed: null,
+              poststed: undefined,
             },
           ],
           avklartPersonstatus: {
             orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
             overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
           },
-          dodsdato: null,
-          ektefelle: null,
-          fodselsdato: '2017-10-31',
-          harVerge: false,
-          navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.MANN,
-          navn: 'Pusekatt Ökänd',
-          nummer: null,
+          navn: 'Familie Ordknapp',
           personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
           region: PersonopplysningDtoRegion.NORDEN,
           sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-          statsborgerskap: 'NOR',
         },
-        avklartPersonstatus: {
-          orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-          overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-        },
-        barn: [
-          {
-            aktoerId: '2067342699855',
-            diskresjonskode: null,
-            fnr: null,
-            adresser: [
-              {
-                adresselinje1: 'Skippergata 81',
-                adresselinje2: null,
-                adresselinje3: null,
-                adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
-                land: 'NOR',
-                mottakerNavn: 'Pusekatt Ökänd',
-                postNummer: '4614',
-                poststed: null,
-              },
-            ],
-            avklartPersonstatus: {
-              orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-              overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            },
-            dodsdato: null,
-            ektefelle: null,
-            fodselsdato: '2017-10-31',
-            harVerge: false,
-            navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.MANN,
-            navn: 'Pusekatt Ökänd',
-            nummer: null,
-            personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            region: PersonopplysningDtoRegion.NORDEN,
-            sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-            statsborgerskap: 'NOR',
-          },
-        ],
-        barnSoktFor: [
-          {
-            aktoerId: '2067342699855',
-            diskresjonskode: null,
-            fnr: null,
-            adresser: [
-              {
-                adresselinje1: 'Skippergata 81',
-                adresselinje2: null,
-                adresselinje3: null,
-                adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
-                land: 'NOR',
-                mottakerNavn: 'Pusekatt Ökänd',
-                postNummer: '4614',
-                poststed: null,
-              },
-            ],
-            avklartPersonstatus: {
-              orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-              overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            },
-            dodsdato: null,
-            ektefelle: null,
-            fodselsdato: '2017-10-31',
-            harVerge: false,
-            navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.MANN,
-            navn: 'Pusekatt Ökänd',
-            nummer: null,
-            personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            region: PersonopplysningDtoRegion.NORDEN,
-            sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-            statsborgerskap: 'NOR',
-          },
-        ],
-        dodsdato: null,
-        ektefelle: null,
-        fodselsdato: '1994-03-24',
-        harVerge: false,
-        navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.KVINNE,
-        navn: 'Familie Ordknapp',
-        nummer: null,
-        personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-        region: PersonopplysningDtoRegion.NORDEN,
-        sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-        statsborgerskap: 'NOR',
-      },
-      '2024-08-10': {
-        aktoerId: '2471000012451',
-        diskresjonskode: null,
-        fnr: null,
-        adresser: [
-          {
-            adresselinje1: 'Fergegata 1',
-            adresselinje2: null,
-            adresselinje3: null,
-            adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
-            land: 'NOR',
-            mottakerNavn: 'Leverpostei Kjent',
-            postNummer: '4614',
-            poststed: null,
-          },
-        ],
-        pleietrengendePart: {
-          aktoerId: '2067342699855',
-          diskresjonskode: null,
-          fnr: null,
+        '2024-08-10': {
           adresser: [
             {
-              adresselinje1: 'Skippergata 81',
-              adresselinje2: null,
-              adresselinje3: null,
+              adresselinje1: 'Fergegata 1',
+              adresselinje2: undefined,
+              adresselinje3: undefined,
               adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
               land: 'NOR',
-              mottakerNavn: 'Pusekatt Ökänd',
+              mottakerNavn: 'Leverpostei Kjent',
               postNummer: '4614',
-              poststed: null,
+              poststed: undefined,
             },
           ],
           avklartPersonstatus: {
             orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
             overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
           },
-          dodsdato: null,
-          ektefelle: null,
-          fodselsdato: '2017-10-31',
-          harVerge: false,
-          navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.MANN,
           navn: 'Pusekatt Ökänd',
-          nummer: null,
           personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
           region: PersonopplysningDtoRegion.NORDEN,
           sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-          statsborgerskap: 'NOR',
         },
-        avklartPersonstatus: {
-          orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-          overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-        },
-        barn: [
-          {
-            aktoerId: '2067342699855',
-            diskresjonskode: null,
-            fnr: null,
-            adresser: [
-              {
-                adresselinje1: 'Skippergata 81',
-                adresselinje2: null,
-                adresselinje3: null,
-                adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
-                land: 'NOR',
-                mottakerNavn: 'Pusekatt Ökänd',
-                postNummer: '4614',
-                poststed: null,
-              },
-            ],
-            avklartPersonstatus: {
-              orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-              overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            },
-            dodsdato: null,
-            ektefelle: null,
-            fodselsdato: '2017-10-31',
-            harVerge: false,
-            navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.MANN,
-            navn: 'Pusekatt Ökänd',
-            nummer: null,
-            personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            region: PersonopplysningDtoRegion.NORDEN,
-            sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-            statsborgerskap: 'NOR',
-          },
-        ],
-        barnSoktFor: [
-          {
-            aktoerId: '2067342699855',
-            diskresjonskode: null,
-            fnr: null,
-            adresser: [
-              {
-                adresselinje1: 'Skippergata 81',
-                adresselinje2: null,
-                adresselinje3: null,
-                adresseType: PersonadresseDtoAdresseType.BOSTEDSADRESSE,
-                land: 'NOR',
-                mottakerNavn: 'Pusekatt Ökänd',
-                postNummer: '4614',
-                poststed: null,
-              },
-            ],
-            avklartPersonstatus: {
-              orginalPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-              overstyrtPersonstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            },
-            dodsdato: null,
-            ektefelle: null,
-            fodselsdato: '2017-10-31',
-            harVerge: false,
-            navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.MANN,
-            navn: 'Pusekatt Ökänd',
-            nummer: null,
-            personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-            region: PersonopplysningDtoRegion.NORDEN,
-            sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-            statsborgerskap: 'NOR',
-          },
-        ],
-        dodsdato: null,
-        ektefelle: null,
-        fodselsdato: '1994-03-24',
-        harVerge: false,
-        navBrukerKjonn: PersonopplysningDtoNavBrukerKjonn.KVINNE,
-        navn: 'Familie Ordknapp',
-        nummer: null,
-        personstatus: AvklartPersonstatusOrginalPersonstatus.BOSA,
-        region: PersonopplysningDtoRegion.NORDEN,
-        sivilstand: PersonopplysningDtoSivilstand.UGIFT,
-        statsborgerskap: 'NOR',
       },
     },
-  },
-  soknad: {
-    begrunnelseForSenInnsending: null,
-    manglendeVedlegg: [
-      {
-        arbeidsgiver: {
-          aktørId: null,
-          fødselsdato: null,
-          navn: 'SNILL TORPEDO',
-          organisasjonsNummer: '967170232',
-        },
-        brukerHarSagtAtIkkeKommer: false,
-        dokumentType: KravDokumentStatusType.INNTEKTSMELDING,
+    soknad: {
+      oppgittTilknytning: {
+        utlandsopphold: [
+          {
+            landNavn: 'SVERIGE',
+            fom: '2010-01-01',
+            tom: '2011-01-01',
+          },
+        ],
       },
-    ],
-    angittePersoner: [],
-    mottattDato: '2024-08-28',
-    oppgittStartdato: '2024-06-03',
-    oppgittTilknytning: {
-      utlandsopphold: [
-        {
-          landNavn: 'SVERIGE',
-          fom: '2010-01-01',
-          tom: '2011-01-01',
-        },
-      ],
+
+      fodselsdatoer: [],
     },
-    soknadsdato: '2024-06-03',
-    spraakkode: 'NB',
-    tilleggsopplysninger: null,
-    søknadsperiode: {
-      fom: '2024-06-03',
-      tom: '2024-08-28',
-    },
+    fagsakPerson,
+    alleMerknaderFraBeslutter: {},
+    readOnly: false,
+    submittable: true,
   },
-  fagsakPerson,
-  alleMerknaderFraBeslutter: {},
-  readOnly: false,
-  submittable: true,
 };

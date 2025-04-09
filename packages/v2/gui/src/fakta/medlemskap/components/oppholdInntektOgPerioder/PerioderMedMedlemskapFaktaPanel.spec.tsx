@@ -12,7 +12,7 @@ import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { PerioderMedMedlemskapFaktaPanelFormState } from '../../types/FormState';
 import type { MedlemskapPeriode } from '../../types/Medlemskap';
 import type { Periode } from '../../types/Periode';
-import type { Soknad } from '../../types/Soknad';
+import type { Søknad } from '../../types/Søknad';
 import PerioderMedMedlemskapFaktaPanel, {
   buildInitialValuesPerioderMedMedlemskapFaktaPanel,
 } from './PerioderMedMedlemskapFaktaPanel';
@@ -135,7 +135,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       vurderingsdato: '',
       årsaker: [],
       begrunnelse: '',
-      personopplysninger: { fnr: '', aktoerId: '' },
+      personopplysninger: {},
       bosattVurdering: false,
       vurdertAv: '',
       vurdertTidspunkt: '',
@@ -162,11 +162,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    const soknad: Soknad = {
+    const soknad: Søknad = {
       fodselsdatoer: ['2017-10-15'],
-      oppgittFordeling: {
-        startDatoForPermisjon: '',
-      },
       oppgittTilknytning: {
         utlandsopphold: [],
       },

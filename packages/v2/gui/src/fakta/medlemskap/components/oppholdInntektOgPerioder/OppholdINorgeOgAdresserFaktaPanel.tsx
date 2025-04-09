@@ -6,7 +6,7 @@ import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Periode } from '../../types/Periode';
-import type { Soknad } from '../../types/Soknad';
+import type { Søknad } from '../../types/Søknad';
 import OppholdINorgeOgAdresser from './OppholdINorgeOgAdresser';
 
 interface OppholdINorgeOgAdresserFaktaPanelProps {
@@ -46,7 +46,7 @@ const createParent = (isApplicant: boolean, personopplysning: Periode['personopp
 });
 
 export const buildInitialValuesOppholdINorgeOgAdresserFaktaPanel = (
-  soknad: Soknad,
+  soknad: Søknad,
   aksjonspunkter: Aksjonspunkt[],
   periode?: Periode,
 ) => {

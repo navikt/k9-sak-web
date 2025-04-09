@@ -1,18 +1,18 @@
-import Region from '@fpsak-frontend/kodeverk/src/region';
 import {
   PersonadresseDtoAdresseType,
   PersonopplysningDtoPersonstatus,
+  PersonopplysningDtoRegion,
   type PersonadresseDto,
-  type PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 import { useKodeverkContext } from '../../../../../kodeverk/hooks/useKodeverkContext';
 import getAddresses from '../../../../../utils/getAddresses';
+import type { Foreldre } from '../../../types/FormState';
 import styles from './bostedSokerView.module.css';
 
 interface OwnProps {
-  personopplysninger: PersonopplysningDto;
+  personopplysninger: Foreldre['personopplysning'];
   sokerTypeText?: string;
 }
 
@@ -31,7 +31,7 @@ const getUtlandsadresse = (adresser?: PersonadresseDto[]) => {
   return utlandsAdresse || '-';
 };
 
-const getPersonstatus = (personopplysning: PersonopplysningDto) =>
+const getPersonstatus = (personopplysning: Foreldre['personopplysning']) =>
   personopplysning.avklartPersonstatus && personopplysning.avklartPersonstatus.overstyrtPersonstatus
     ? personopplysning.avklartPersonstatus.overstyrtPersonstatus
     : personopplysning.personstatus;
@@ -76,7 +76,7 @@ export const BostedSokerView = ({ personopplysninger, sokerTypeText }: OwnProps)
               </Tag>
             </div>
           )}
-          {personopplysninger.region && personopplysninger.region !== Region.UDEFINERT && (
+          {personopplysninger.region && personopplysninger.region !== PersonopplysningDtoRegion.UDEFINERT && (
             <div className={styles.etikettMargin}>
               <Tag variant="warning" size="small" title="Region">
                 {kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION)}

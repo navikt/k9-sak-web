@@ -1,5 +1,5 @@
-import type { PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import type { Periode } from './Periode';
+import type { Personopplysninger } from './Personopplysninger';
 
 export interface MedlemskapPeriode {
   fom: string;
@@ -15,6 +15,6 @@ export interface Medlemskap {
   medlemskapPerioder: MedlemskapPeriode[];
   perioder: Periode[];
   personopplysninger: {
-    [key: string]: PersonopplysningDto;
+    [key: string]: Personopplysninger;
   };
 }

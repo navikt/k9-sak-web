@@ -1,6 +1,7 @@
-import type { PersonDto, PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { Periode } from './Periode';
-import type { Soknad } from './Soknad';
+import type { Personopplysninger } from './Personopplysninger';
+import type { Søknad } from './Søknad';
 
 interface FixedMedlemskapPerioder {
   fom: string;
@@ -12,7 +13,7 @@ interface FixedMedlemskapPerioder {
 
 export interface Foreldre {
   isApplicant: boolean;
-  personopplysning: PersonopplysningDto;
+  personopplysning: Personopplysninger;
 }
 
 export type StatusForBorgerFaktaPanelFormState = {
@@ -46,7 +47,7 @@ export type PerioderMedMedlemskapFaktaPanelFormState = {
 };
 
 export type OppholdInntektOgPerioderFormState = {
-  soknad: Soknad;
+  soknad: Søknad;
   person: PersonDto;
   gjeldendeFom: string;
   perioder: Periode[];

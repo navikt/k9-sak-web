@@ -1,20 +1,19 @@
 import { Table } from '@navikt/ds-react';
-import { type PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import { useState } from 'react';
 import DateLabel from '../../../../shared/dateLabel/DateLabel';
-import type { Soknad } from '../../types/Soknad';
+import type { Medlemskap } from '../../types/Medlemskap';
+import type { Personopplysninger } from '../../types/Personopplysninger';
+import type { Søknad } from '../../types/Søknad';
 import OppholdINorgeOgAdresser from './OppholdINorgeOgAdresser';
 
-const createParent = (isApplicant: boolean, personopplysning: PersonopplysningDto) => ({
+const createParent = (isApplicant: boolean, personopplysning: Personopplysninger) => ({
   isApplicant,
   personopplysning,
 });
 
 interface GrunnlagForAutomatiskVurderingProps {
-  soknad: Soknad;
-  personopplysninger: {
-    [key: string]: PersonopplysningDto;
-  };
+  soknad: Søknad;
+  personopplysninger: Medlemskap['personopplysninger'];
 }
 
 const GrunnlagForAutomatiskVurdering = ({ soknad, personopplysninger }: GrunnlagForAutomatiskVurderingProps) => {

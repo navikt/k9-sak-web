@@ -15,7 +15,7 @@ import type {
 import type { MedlemskapPeriode } from '../../types/Medlemskap';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Periode } from '../../types/Periode';
-import type { Soknad } from '../../types/Soknad';
+import type { Søknad } from '../../types/Søknad';
 import OppholdINorgeOgAdresserFaktaPanel, {
   buildInitialValuesOppholdINorgeOgAdresserFaktaPanel,
 } from './OppholdINorgeOgAdresserFaktaPanel';
@@ -128,7 +128,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
 
 export const buildInitialValuesOppholdInntektOgPeriodeForm = (
   alleAksjonspunkter: Aksjonspunkt[],
-  soknad: Soknad,
+  soknad: Søknad,
   medlemskapPerioder: MedlemskapPeriode[],
   gjeldendeFom: string,
   valgtPeriode: Periode,

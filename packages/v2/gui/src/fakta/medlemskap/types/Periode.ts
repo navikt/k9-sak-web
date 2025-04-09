@@ -1,19 +1,19 @@
-import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { Personopplysninger } from './Personopplysninger';
 
 export interface Periode {
-  id: string;
-  vurderingsdato: string;
-  årsaker: string[];
   aksjonspunkter: string[];
   begrunnelse: string;
-  personopplysninger: PersonopplysningDto;
   bosattVurdering?: boolean;
-  vurdertAv: string;
-  vurdertTidspunkt: string;
+  erEosBorger: boolean;
+  id: string;
   isBosattAksjonspunktClosed: boolean;
   isPeriodAksjonspunktClosed: boolean;
+  lovligOppholdVurdering?: boolean;
   medlemskapManuellVurderingType: string;
   oppholdsrettVurdering?: boolean;
-  erEosBorger: boolean;
-  lovligOppholdVurdering?: boolean;
+  personopplysninger: Personopplysninger;
+  vurderingsdato: string;
+  vurdertAv: string;
+  vurdertTidspunkt: string;
+  årsaker: string[];
 }

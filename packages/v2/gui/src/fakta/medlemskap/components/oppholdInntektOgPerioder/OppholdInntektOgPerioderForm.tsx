@@ -13,7 +13,7 @@ import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormStat
 import type { Medlemskap } from '../../types/Medlemskap';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Periode } from '../../types/Periode';
-import type { Soknad } from '../../types/Soknad';
+import type { Søknad } from '../../types/Søknad';
 import GrunnlagForAutomatiskVurdering from './GrunnlagForAutomatiskVurdering';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 import OppholdInntektOgPeriodeForm, {
@@ -32,7 +32,7 @@ const {
 } = aksjonspunktCodes;
 
 const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
-  const helpTexts = [];
+  const helpTexts: string[] = [];
   if (hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter)) {
     helpTexts.push('Vurder om søker fortsatt har gyldig medlemskap i perioden');
   }
@@ -114,7 +114,7 @@ export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjo
 };
 
 const buildInitialValues = (
-  soknad: Soknad,
+  soknad: Søknad,
   fagsakPerson: PersonDto,
   medlemskap: Medlemskap,
   perioder: Periode[],
@@ -143,7 +143,7 @@ interface OppholdInntektOgPerioderFormProps {
   behandlingId: number;
   behandlingVersjon: number;
   medlemskap: Medlemskap;
-  soknad: Soknad;
+  soknad: Søknad;
   fagsakPerson: PersonDto;
   submitCallback: (aksjonspunktData: any) => Promise<void>;
 }

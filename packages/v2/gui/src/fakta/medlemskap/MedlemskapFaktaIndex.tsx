@@ -5,12 +5,12 @@ import type { Aksjonspunkt } from './types/Aksjonspunkt';
 import type { Behandling } from './types/Behandling';
 import type { Medlemskap } from './types/Medlemskap';
 import type { MerknaderFraBeslutter } from './types/MerknaderFraBeslutter';
-import type { Soknad } from './types/Soknad';
+import type { Søknad } from './types/Søknad';
 
 export interface MedlemskapFaktaIndexProps {
   behandling: Behandling;
   medlemskap: Medlemskap;
-  soknad: Soknad;
+  soknad: Søknad;
   aksjonspunkter: Aksjonspunkt[];
   fagsakPerson: PersonDto;
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
