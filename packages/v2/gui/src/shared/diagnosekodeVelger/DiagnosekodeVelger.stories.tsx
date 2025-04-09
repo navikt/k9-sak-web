@@ -1,7 +1,7 @@
 import DiagnosekodeVelger from './DiagnosekodeVelger.jsx';
 import type { Meta, StoryObj } from '@storybook/react';
 import { withFormProvider } from '../../storybook/decorators/withFormProvider.js';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { UseFormReturn } from 'react-hook-form';
 
 const meta = {
@@ -45,14 +45,16 @@ export const MedUtfylteDiagnosekoder: Story = {
   play: async ({ loaded, canvas, step }) => {
     const submitBtn = canvas.getByTestId(`${formProviderId}-Submit`);
     await step('Initiell state er ok', async () => {
-      const {
-        formState: { isValid, errors, isSubmitted },
-        getValues,
-      }: UseFormReturn<FormValues> = loaded[formProviderId];
-      await expect(isValid).toBeTruthy();
-      await expect(errors).toEqual({});
-      await expect(isSubmitted).toBeFalsy();
-      await expect(getValues()).toEqual({ diagnosekoder: ['A001', 'b002'] });
+      await waitFor(async () => {
+        const {
+          formState: { isValid, errors, isSubmitted },
+          getValues,
+        }: UseFormReturn<FormValues> = loaded[formProviderId];
+        await expect(isValid).toBeTruthy();
+        await expect(errors).toEqual({});
+        await expect(isSubmitted).toBeFalsy();
+        await expect(getValues()).toEqual({ diagnosekoder: ['A001', 'b002'] });
+      });
     });
     await step('Submit fungerer', async () => {
       await userEvent.click(submitBtn);
