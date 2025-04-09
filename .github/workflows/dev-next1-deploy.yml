@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - sykdom-og-opplæring
+      - dev-next1
 
 jobs:
   build-deploy:
