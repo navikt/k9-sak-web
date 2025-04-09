@@ -1,8 +1,9 @@
-import { GreenCheckIcon, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
 
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import type { JSX } from 'react';
 
 interface RettVedDødVurderingsdetaljerProps {

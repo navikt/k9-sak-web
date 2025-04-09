@@ -1,27 +1,26 @@
 import { httpUtils } from '@fpsak-frontend/utils';
-import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
-import { Alert, Loader } from '@navikt/ds-react';
+import { Alert, Box, Heading, HStack, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
-import initDiagnosekodeSearcher, { toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
+import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import DiagnosekodeModal from '../diagnosekode-modal/DiagnosekodeModal';
 import Diagnosekodeliste from '../diagnosekodeliste/Diagnosekodeliste';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
+import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 
-// Start initializing diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
+// initialize diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
 // This reuse is possible since we don't use the paging functionality in the instance anyways.
-const diagnosekodeSearcherPromise = initDiagnosekodeSearcher(8);
+const diagnosekodeSearcher = initDiagnosekodeSearcher(8);
 
 const fetchDiagnosekoderByQuery = async (queryString: string): Promise<Diagnosekode> => {
-  const searcher = await diagnosekodeSearcherPromise;
-  const searchResult = searcher.search(queryString, 1);
+  const searchResult = diagnosekodeSearcher.search(queryString, 1);
   // This function only returns the found diagnosecode if there is exactly one diagnosecode found.
   if (searchResult.diagnosekoder.length === 1 && !searchResult.hasMore) {
     return toLegacyDiagnosekode(searchResult.diagnosekoder[0]);
@@ -61,7 +60,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
     })),
     combine: results => {
       return {
-        diagnosekodeObjekter: results.map(r => r.data),
+        diagnosekodeObjekter: results.map(r => r.data).filter(d => d != null),
         diagnosekodeObjekterLaster: results.some(r => r.isPending),
       };
     },
@@ -119,27 +118,27 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
 
   return (
     <div>
-      <TitleWithUnderline
-        contentAfterTitleRenderer={() => (
-          <WriteAccessBoundContent
-            contentRenderer={() => (
-              <AddButton
-                id="leggTilDiagnosekodeKnapp"
-                label="Ny diagnosekode"
-                onClick={() => setModalIsOpen(true)}
-                ariaLabel="Legg til diagnosekode"
-                ref={addButtonRef}
-              />
-            )}
-          />
-        )}
-      >
-        Diagnosekoder
-      </TitleWithUnderline>
+      <HStack justify="space-between" align="end">
+        <Heading size="small" level="2">
+          Diagnosekoder
+        </Heading>
+        <WriteAccessBoundContent
+          contentRenderer={() => (
+            <AddButton
+              id="leggTilDiagnosekodeKnapp"
+              label="Ny diagnosekode"
+              onClick={() => setModalIsOpen(true)}
+              ariaLabel="Legg til diagnosekode"
+              ref={addButtonRef}
+            />
+          )}
+        />
+      </HStack>
+      <hr style={{ color: '#B7B1A9' }} />
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box marginTop={Margin.medium}>
+        <Box marginBlock="4 0">
           {diagnosekoder.length === 0 && (
             <Alert inline variant="warning">
               Ingen diagnosekode registrert.
@@ -154,7 +153,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
         isOpen={modalIsOpen}
         onSaveClick={lagreDiagnosekodeMutation.mutateAsync}
         onRequestClose={() => setModalIsOpen(false)}
-        searcherPromise={diagnosekodeSearcherPromise}
+        searcher={diagnosekodeSearcher}
       />
     </div>
   );

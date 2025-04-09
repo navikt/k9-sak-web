@@ -12,7 +12,7 @@ import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import SykdomUperiodisertFormContainer from './SykdomUperiodisertFormContainer';
-import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { Period } from '@navikt/ft-utils';

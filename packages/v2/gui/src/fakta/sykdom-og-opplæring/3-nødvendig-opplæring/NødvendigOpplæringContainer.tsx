@@ -2,7 +2,7 @@ import NødvendigOpplæringFerdigvisning from './NødvendigOpplæringFerdigvisni
 import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
-import DetailView from '../../../shared/detail-view/DetailView';
+import DetailView from '../../../shared/detailView/DetailView';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useEffect, useState, useContext } from 'react';
 import { BodyShort, Button } from '@navikt/ds-react';

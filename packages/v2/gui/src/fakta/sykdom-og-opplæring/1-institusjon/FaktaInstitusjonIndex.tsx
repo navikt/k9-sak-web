@@ -7,12 +7,12 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
-import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView.js';
 
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];

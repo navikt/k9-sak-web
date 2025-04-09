@@ -1,7 +1,6 @@
 import { Period, prettifyPeriodList } from '@fpsak-frontend/utils';
-import { BodyShort, Button } from '@navikt/ds-react';
-import { InfoPanel } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { BodyShort, Box, Button } from '@navikt/ds-react';
+import { type JSX } from 'react';
 
 interface OverlappendeSøknadsperiodePanelProps {
   onProgressButtonClick: () => void;
@@ -12,7 +11,7 @@ const OverlappendeSøknadsperiodePanel = ({
   onProgressButtonClick,
   overlappendeVurderingsperioder,
 }: OverlappendeSøknadsperiodePanelProps): JSX.Element => (
-  <InfoPanel type="warning">
+  <Box padding="4" borderColor="border-warning" borderWidth="2">
     <BodyShort size="small">
       {`Søknadsperioden overlapper med en eller flere tidligere vurderte perioder
                 (${prettifyPeriodList(
@@ -23,7 +22,7 @@ const OverlappendeSøknadsperiodePanel = ({
     <Button size="small" onClick={onProgressButtonClick} style={{ marginTop: '1rem' }}>
       Utført, eventuelle nye vurderinger er registrert
     </Button>
-  </InfoPanel>
+  </Box>
 );
 
 export default OverlappendeSøknadsperiodePanel;

@@ -1,6 +1,5 @@
 import { post } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import { Box, Margin, PageError } from '@navikt/ft-plattform-komponenter';
+import { Alert, BodyShort, Box, Button, Modal } from '@navikt/ds-react';
 import React, { useMemo, useState, type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument from '../../../types/Dokument';
@@ -59,8 +58,8 @@ const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: Sl
           Når du fjerner et dokument som duplikat vil det bli lagt som et eget dokument i listen.
         </BodyShort>
         {removeDuplikatFeilet && (
-          <Box marginTop={Margin.medium}>
-            <PageError message="Noe gikk galt, vennligst prøv igjen senere" />
+          <Box marginBlock="4 0">
+            <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere.</Alert>
           </Box>
         )}
         <div className={styles.buttonContainer}>

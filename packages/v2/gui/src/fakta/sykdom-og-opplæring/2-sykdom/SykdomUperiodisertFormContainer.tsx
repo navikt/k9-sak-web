@@ -4,7 +4,7 @@ import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useContext, useEffect, useState } from 'react';
 import { Button, BodyShort } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
-import { DetailViewV2 } from '../../../shared/detail-view/DetailView';
+import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
@@ -19,7 +19,7 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm = (redigering && vurdering.vurdertTidspunkt) || !vurdering.vurdertTidspunkt;
   return (
-    <DetailViewV2
+    <DetailView
       title="Vurdering av sykdom"
       contentAfterTitleRenderer={() =>
         !readOnly && <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
@@ -43,7 +43,7 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
           <SykdomUperiodisertFerdigvisning vurdering={vurdering} />
         )}
       </div>
-    </DetailViewV2>
+    </DetailView>
   );
 };
 

@@ -5,7 +5,7 @@ import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
 import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import ReisetidContainer from './ReisetidContainer';
-import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 
 const ReisetidIndex = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);

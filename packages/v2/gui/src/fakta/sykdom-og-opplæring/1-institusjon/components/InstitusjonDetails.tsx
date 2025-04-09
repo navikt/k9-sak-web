@@ -5,9 +5,9 @@ import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/gener
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
-import DetailView from '../../../../shared/detail-view/DetailView.js';
+import DetailView from '../../../../shared/detailView/DetailView.js';
 import { PencilIcon, CalendarIcon } from '@navikt/aksel-icons';
-import { LabelledContent } from '../../../../shared/LabelledContent/LabelledContent.js';
+import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -45,9 +45,11 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
       ))}
 
       <Box className="mt-8">
-        <LabelledContent label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?" size="small">
-          {vurdering.institusjon}
-        </LabelledContent>
+        <LabelledContent
+          label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
+          size="small"
+          content={vurdering.institusjon}
+        />
       </Box>
 
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (

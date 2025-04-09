@@ -1,6 +1,5 @@
-import React, { type JSX } from 'react';
-import { Alert } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
 import Vurderingstype from '../../../types/Vurderingstype';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
@@ -18,7 +17,7 @@ const VurderingsoppsummeringForInnleggelsesperiode = ({
     vurderingstype === Vurderingstype.TO_OMSORGSPERSONER ? 'to omsorgspersoner' : 'tilsyn og pleie';
   return (
     <DetailViewVurdering title={`Vurdering av ${vurderingstekst}`} perioder={[vurdering.periode]}>
-      <Box marginTop={Margin.large}>
+      <Box marginBlock="6 0">
         <Alert size="small" variant="info">
           Innvilget som følge av innleggelse
         </Alert>

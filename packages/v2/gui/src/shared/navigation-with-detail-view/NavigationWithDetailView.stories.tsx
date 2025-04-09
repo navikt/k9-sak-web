@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react';
 
-import { DetailViewV2 } from '../detail-view/DetailView';
+import { DetailView } from '../detailView/DetailView';
 import { NavigationWithDetailView } from './NavigationWithDetailView';
 
 const meta = {
@@ -15,9 +15,9 @@ export const Default: Story = {
   args: {
     navigationSection: () => <p>Navigasjon</p>,
     detailSection: () => (
-      <DetailViewV2 title="Tittel">
+      <DetailView title="Tittel">
         <p>Detaljer</p>
-      </DetailViewV2>
+      </DetailView>
     ),
   },
 };

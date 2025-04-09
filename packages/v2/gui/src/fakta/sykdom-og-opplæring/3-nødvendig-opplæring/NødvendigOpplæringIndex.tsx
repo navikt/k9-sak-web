@@ -5,7 +5,7 @@ import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
 import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import NødvendigOpplæringContainer from './NødvendigOpplæringContainer';
-import { NavigationWithDetailView } from '../../../shared/NavigationWithDetailView/NavigationWithDetailView';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 
 const NødvendigOpplæring = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);

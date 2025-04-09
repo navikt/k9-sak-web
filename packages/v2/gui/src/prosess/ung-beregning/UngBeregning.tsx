@@ -20,6 +20,7 @@ interface Props {
   barn: Barn[];
   submitCallback: (data: unknown) => Promise<any>;
   aksjonspunkter: AksjonspunktDto[];
+  isReadOnly: boolean;
 }
 
 const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
@@ -39,7 +40,7 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   };
 };
 
-const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }: Props) => {
+const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
   const {
     data: satser,
     isLoading: satserIsLoading,
@@ -95,13 +96,16 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter }:
             {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
             {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
           </Tabs.List>
-          <Tabs.Panel value="arbeid">
-            <ArbeidOgInntekt
-              submitCallback={submitCallback}
-              inntektKontrollperioder={inntekt?.kontrollperioder}
-              aksjonspunkt={aksjonspunkt}
-            />
-          </Tabs.Panel>
+          <Box maxWidth="860px">
+            <Tabs.Panel value="arbeid">
+              <ArbeidOgInntekt
+                submitCallback={submitCallback}
+                inntektKontrollperioder={inntekt?.kontrollperioder}
+                aksjonspunkt={aksjonspunkt}
+                isReadOnly={isReadOnly}
+              />
+            </Tabs.Panel>
+          </Box>
           <Tabs.Panel value="barn">
             <BarnPanel barn={barn} />
           </Tabs.Panel>

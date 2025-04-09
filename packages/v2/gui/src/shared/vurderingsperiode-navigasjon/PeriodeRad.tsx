@@ -1,13 +1,13 @@
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
-  IndicatorWithOverlay,
   InstitutionIcon,
   RedCrossIconFilled,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/ft-utils';
 
+import { OverlayedIcons } from '../indicatorWithOverlay/IndicatorWithOverlay';
 import styles from './periodeRad.module.css';
 import type { ResultatType } from './VurderingsperiodeNavigasjon';
 import { Resultat } from './VurderingsperiodeNavigasjon';
@@ -28,7 +28,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   if (resultat === Resultat.GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
-        <IndicatorWithOverlay
+        <OverlayedIcons
           indicatorRenderer={() => <GreenCheckIconFilled />}
           overlayRenderer={() => <InstitutionIcon />}
         />
@@ -39,10 +39,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   if (resultat === Resultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
-        <IndicatorWithOverlay
-          indicatorRenderer={() => <RedCrossIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
-        />
+        <OverlayedIcons indicatorRenderer={() => <RedCrossIconFilled />} overlayRenderer={() => <InstitutionIcon />} />
       </ContentWithTooltip>
     );
   }

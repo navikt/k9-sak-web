@@ -2,7 +2,7 @@ import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import ReisetidForm from './ReisetidForm';
 import { Period } from '@navikt/ft-utils';
 import ReisetidFerdigvisning from './ReisetidFerdigvisning';
-import DetailView from '../../../shared/detail-view/DetailView';
+import DetailView from '../../../shared/detailView/DetailView';
 import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState, useContext } from 'react';
