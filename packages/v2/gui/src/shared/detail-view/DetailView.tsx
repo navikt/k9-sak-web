@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Heading } from '@navikt/ds-react';
-import classnames from 'classnames';
 
 export interface DetailViewProps {
   title: string;
@@ -10,8 +9,8 @@ export interface DetailViewProps {
   className?: string;
 }
 
-export const DetailViewV2 = ({ title, children, contentAfterTitleRenderer, className }: DetailViewProps) => {
-const cls = `border border-solid border-[#c6c2bf] rounded p-6 bg-[#cce1f342] ${className ?? ""}`
+export const DetailView = ({ title, children, contentAfterTitleRenderer, className }: DetailViewProps) => {
+  const cls = `border border-solid border-[#c6c2bf] rounded p-6 bg-[#cce1f342] ${className ?? ''}`;
   return (
     <div className={cls}>
       <div className="flex items-center justify-between">
@@ -25,4 +24,4 @@ const cls = `border border-solid border-[#c6c2bf] rounded p-6 bg-[#cce1f342] ${c
   );
 };
 
-export default DetailViewV2;
+export default DetailView;
