@@ -54,12 +54,15 @@ const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
 const createNewPerioder = (perioder: Periode[], id: string, values: Periode): Periode[] => {
   const updatedIndex = perioder.findIndex(p => p.id === id);
   const updatedPeriode = perioder.find(p => p.id === id);
-
+  if (updatedIndex === -1 || !updatedPeriode) {
+    throw new Error('Period not found');
+  }
   return [
     ...perioder.slice(0, updatedIndex),
     {
-      ...updatedPeriode,
-      ...values,
+      // Merge the existing period data with the new values to create an updated period
+      ...updatedPeriode, // Existing period data
+      ...values, // New values to update the period
     },
     ...perioder.slice(updatedIndex + 1),
   ];
