@@ -11,17 +11,21 @@ interface OwnProps {
 const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
   <>
     <Box className="mt-8">
-      <LabelledContent
-        label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
-        indentContent
-        size="small"
-        content={
-          <BodyShort size="small" className="whitespace-pre-wrap">
-            {vurdering.begrunnelse}
-          </BodyShort>
-        }
-      />
-      <VurdertAv ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
+      {vurdering.begrunnelse && (
+        <>
+          <LabelledContent
+            label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
+            indentContent
+            size="small"
+            content={
+              <BodyShort size="small" className="whitespace-pre-wrap">
+                {vurdering.begrunnelse}
+              </BodyShort>
+            }
+          />
+          <VurdertAv ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
+        </>
+      )}
     </Box>
 
     <Box className="mt-8">
