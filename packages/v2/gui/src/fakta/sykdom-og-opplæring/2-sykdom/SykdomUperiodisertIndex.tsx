@@ -7,7 +7,10 @@ import { createContext, useContext, useState } from 'react';
 import { PencilIcon, PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  LangvarigSykdomVurderingDtoAvslagsårsak,
+  type LangvarigSykdomVurderingDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
@@ -26,6 +29,16 @@ const utledResultat = (element: LangvarigSykdomVurderingDto) => {
   return Resultat.IKKE_VURDERT;
 };
 
+const utledGodkjent = (element: LangvarigSykdomVurderingDto) => {
+  if (element.godkjent) {
+    return 'ja';
+  }
+  if (element.avslagsårsak === LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON) {
+    return 'mangler_dokumentasjon';
+  }
+  return 'nei';
+};
+
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
 }>({
@@ -36,7 +49,7 @@ const VurderSykdomUperiodisert = () => {
   const { data: langvarigSykVurderingerFagsak } = useLangvarigSykVurderingerFagsak(behandlingUuid);
   const mappedVurderinger = langvarigSykVurderingerFagsak?.map(element => ({
     ...element,
-    godkjent: element.godkjent ? ('ja' as const) : ('nei' as const),
+    godkjent: utledGodkjent(element) as 'ja' | 'nei' | 'mangler_dokumentasjon',
   }));
   const vurderingsliste = langvarigSykVurderingerFagsak?.map(element => ({
     ...element,

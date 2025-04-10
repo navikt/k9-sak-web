@@ -142,7 +142,9 @@ const SykdomUperiodisertForm = ({
           label="Legg til diagnose(r)"
           name="diagnosekoder"
           size="small"
-          disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
+          disabled={
+            formMethods.watch('godkjent') === 'mangler_dokumentasjon' || formMethods.watch('godkjent') === 'nei'
+          }
         />
         <div className="flex gap-4">
           <Button variant="primary" type="submit" size="small">
