@@ -10,6 +10,7 @@ export const DEFAULT_PROSESS_STEG = 'default';
 type QueryParams = {
   punkt?: string;
   fakta?: string;
+  tab?: string;
   stotte?: string;
   risiko?: boolean;
 };
