@@ -92,6 +92,7 @@ const FaktaInstitusjonIndex = () => {
         detailSection={() =>
           valgtVurdering ? <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} /> : null
         }
+        showDetailSection
       />
     </div>
   );

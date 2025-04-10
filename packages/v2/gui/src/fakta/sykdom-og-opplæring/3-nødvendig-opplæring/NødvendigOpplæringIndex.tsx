@@ -27,6 +27,7 @@ const NødvendigOpplæring = () => {
             />
           </>
         )}
+        showDetailSection
         detailSection={() => (valgtVurdering ? <NødvendigOpplæringContainer vurdering={valgtVurdering} /> : null)}
       />
     </div>

@@ -76,6 +76,7 @@ const VurderSykdomUperiodisert = () => {
               />
             </>
           )}
+          showDetailSection
           belowNavigationContent={
             !readOnly && (
               <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
