@@ -14,6 +14,7 @@ import { Resultat } from './VurderingsperiodeNavigasjon';
 interface OwnProps {
   perioder: Period[];
   resultat?: ResultatType;
+  radContent?: React.ReactNode;
 }
 
 const renderStatusIcon = (resultat?: ResultatType) => {
@@ -64,7 +65,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   return null;
 };
 
-const PeriodeRad = ({ perioder, resultat }: OwnProps) => (
+const PeriodeRad = ({ perioder, resultat, radContent }: OwnProps) => (
   <div className={styles.vurderingsperiodeElement}>
     <div className="min-w-[50px]">
       <span className={styles['visuallyHidden']}>Type</span>
@@ -81,6 +82,7 @@ const PeriodeRad = ({ perioder, resultat }: OwnProps) => (
         ))}
       </div>
     </div>
+    {radContent}
   </div>
 );
 

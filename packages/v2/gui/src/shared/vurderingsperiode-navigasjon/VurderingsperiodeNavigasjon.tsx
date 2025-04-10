@@ -37,6 +37,7 @@ export interface Vurderingselement {
   perioder: Period[];
   id?: string;
   resultat?: ResultatType;
+  radContent?: React.ReactNode;
 }
 
 export interface VurderingslisteProps<T extends Vurderingselement = Vurderingselement> {
@@ -70,11 +71,12 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     />
   ));
 
-  const periodeTilVurderingElements = perioderTilVurdering.map(({ perioder, resultat, id }) => (
+  const periodeTilVurderingElements = perioderTilVurdering.map(({ perioder, resultat, id, radContent }) => (
     <PeriodeRad
       perioder={perioder}
       resultat={resultat}
       key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}-${id}`}
+      radContent={radContent}
     />
   ));
 

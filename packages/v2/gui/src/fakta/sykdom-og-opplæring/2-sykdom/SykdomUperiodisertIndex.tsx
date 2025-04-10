@@ -32,7 +32,7 @@ export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: () => {},
 });
 const VurderSykdomUperiodisert = () => {
-  const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
+  const { behandlingUuid, readOnly, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const { data: langvarigSykVurderingerFagsak } = useLangvarigSykVurderingerFagsak(behandlingUuid);
   const mappedVurderinger = langvarigSykVurderingerFagsak?.map(element => ({
     ...element,
@@ -43,6 +43,16 @@ const VurderSykdomUperiodisert = () => {
     perioder: element.vurdertTidspunkt ? [new Period(element.vurdertTidspunkt, element.vurdertTidspunkt)] : [],
     id: element.uuid,
     resultat: utledResultat(element),
+    radContent: (
+      <Button
+        size="small"
+        onClick={() =>
+          løsAksjonspunkt9301({ langvarigsykdomsvurderingUuid: element.uuid, begrunnelse: element.begrunnelse })
+        }
+      >
+        Benytt
+      </Button>
+    ),
   }));
 
   const [valgtPeriode, setValgtPeriode] = useState<Vurderingselement | null>(null);
@@ -68,13 +78,11 @@ const VurderSykdomUperiodisert = () => {
       <SykdomUperiodisertContext.Provider value={{ setNyVurdering }}>
         <NavigationWithDetailView
           navigationSection={() => (
-            <>
-              <Vurderingsnavigasjon
-                perioderTilVurdering={vurderingsliste || []}
-                vurdertePerioder={[]}
-                onPeriodeClick={velgPeriode}
-              />
-            </>
+            <Vurderingsnavigasjon
+              perioderTilVurdering={vurderingsliste || []}
+              vurdertePerioder={[]}
+              onPeriodeClick={velgPeriode}
+            />
           )}
           showDetailSection
           belowNavigationContent={
