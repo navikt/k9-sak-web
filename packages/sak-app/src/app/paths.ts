@@ -1,8 +1,8 @@
-import { Location, Search } from 'history';
+import {Location, Search} from 'history';
 
-import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import { IS_DEV } from '../constants';
+import {buildPath, formatQueryString, parseQueryString} from '@fpsak-frontend/utils';
+import {skjermlenkeCodes} from '@k9-sak-web/konstanter';
+import {IS_DEV} from '../constants';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';
@@ -93,7 +93,11 @@ export const getPathToK9Punsj = (): string | null => {
 
 export const createLocationForSkjermlenke = (behandlingLocation: Location, skjermlenkeCode: string): Location => {
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode] || { punktNavn: 'default', faktaNavn: 'default' };
-  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
+  return getLocationWithQueryParams(behandlingLocation, {
+    punkt: skjermlenke.punktNavn,
+    fakta: skjermlenke.faktaNavn,
+    tab: skjermlenke.tabNavn
+  });
 };
 
 // Kan gå inn på url som ser sånn ut "http://localhost:9000/k9/web/fagsak/", men

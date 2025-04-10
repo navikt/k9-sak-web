@@ -1,5 +1,6 @@
 import faktaPanelCodes from './faktaPanelCodes';
 import prosessStegCodes from './prosessStegCodes';
+import tabCodes from "./tabCodes";
 
 const skjermlenkeCodes = {
   BEREGNING: {
@@ -272,21 +273,25 @@ const skjermlenkeCodes = {
     kode: 'PUNKT_FOR_INSTITUSJON',
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
+    tabNavn: tabCodes.INSTITUSJON
   },
   PUNKT_FOR_LANGVARIG_SYK: {
     kode: 'PUNKT_FOR_LANGVARIG_SYK',
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
+    tabNavn: tabCodes.SYKDOM
   },
   PUNKT_FOR_NØDVENDIG_OPPLÆRING: {
     kode: 'PUNKT_FOR_NØDVENDIG_OPPLÆRING',
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
+    tabNavn: tabCodes.OPPLÆRING
   },
   PUNKT_FOR_REISEDAGER: {
     kode: 'PUNKT_FOR_REISEDAGER',
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
+    tabNavn: tabCodes.RESISETID
   },
 };
 
