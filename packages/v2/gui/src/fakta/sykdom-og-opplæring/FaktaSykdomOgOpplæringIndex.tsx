@@ -72,7 +72,7 @@ type payloads =
       }[];
     };
 
-type aksjonspunktPayload = { kode: string; begrunnelse: string } & payloads;
+type aksjonspunktPayload = { kode: string; begrunnelse: string | null } & payloads;
 type SykdomOgOpplæringProps = {
   readOnly: boolean;
   submitCallback: (payload: aksjonspunktPayload[]) => void;
@@ -210,42 +210,44 @@ const SykdomOgOpplæring = () => {
   const [activeTab, setActiveTab] = useState(finnTabMedAksjonspunkt(aksjonspunkter) || 'institusjon');
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   return (
-    <Tabs value={activeTab} onChange={setActiveTab}>
-      <Tabs.List>
-        <Tabs.Tab
-          value="institusjon"
-          label="Institusjon"
-          icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
-        />
-        <Tabs.Tab value="sykdom" label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />} />
-        <Tabs.Tab
-          value="opplæring"
-          label="Nødvendig opplæring"
-          icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
-        />
-        <Tabs.Tab value="reisetid" label="Reisetid" icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />} />
-      </Tabs.List>
-      <Tabs.Panel value="institusjon">
-        <div className="mt-4">
-          <FaktaInstitusjonIndex />
-        </div>
-      </Tabs.Panel>
-      <Tabs.Panel value="sykdom">
-        <div className="mt-4">
-          <SykdomUperiodisertIndex />
-        </div>
-      </Tabs.Panel>
-      <Tabs.Panel value="opplæring">
-        <div className="mt-4">
-          <NødvendigOpplæringIndex />
-        </div>
-      </Tabs.Panel>
-      <Tabs.Panel value="reisetid">
-        <div className="mt-4">
-          <ReisetidIndex />
-        </div>
-      </Tabs.Panel>
-    </Tabs>
+    <div className="max-w-screen-xl">
+      <Tabs value={activeTab} onChange={setActiveTab}>
+        <Tabs.List>
+          <Tabs.Tab
+            value="institusjon"
+            label="Institusjon"
+            icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
+          />
+          <Tabs.Tab value="sykdom" label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />} />
+          <Tabs.Tab
+            value="opplæring"
+            label="Nødvendig opplæring"
+            icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
+          />
+          <Tabs.Tab value="reisetid" label="Reisetid" icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />} />
+        </Tabs.List>
+        <Tabs.Panel value="institusjon">
+          <div className="mt-4">
+            <FaktaInstitusjonIndex />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="sykdom">
+          <div className="mt-4">
+            <SykdomUperiodisertIndex />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="opplæring">
+          <div className="mt-4">
+            <NødvendigOpplæringIndex />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="reisetid">
+          <div className="mt-4">
+            <ReisetidIndex />
+          </div>
+        </Tabs.Panel>
+      </Tabs>
+    </div>
   );
 };
 
