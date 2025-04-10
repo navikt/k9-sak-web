@@ -60,9 +60,9 @@ export const buildInitialValuesOppholdINorgeOgAdresserFaktaPanel = (
   }
 
   const { personopplysninger } = periode || {};
-  const parents = personopplysninger ? [createParent(true, personopplysninger)] : [];
+  const foreldre = personopplysninger ? [createParent(true, personopplysninger)] : [];
   if (personopplysninger?.annenPart) {
-    parents.push(createParent(false, personopplysninger.annenPart));
+    foreldre.push(createParent(false, personopplysninger.annenPart));
   }
 
   const filteredAp = aksjonspunkter.filter(
@@ -76,7 +76,7 @@ export const buildInitialValuesOppholdINorgeOgAdresserFaktaPanel = (
     opphold,
     hasBosattAksjonspunkt: filteredAp.length > 0,
     isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
-    foreldre: parents,
+    foreldre: foreldre,
     bosattVurdering:
       periode?.bosattVurdering || periode?.bosattVurdering === false ? periode.bosattVurdering : undefined,
   };
