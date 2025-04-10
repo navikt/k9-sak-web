@@ -1,25 +1,28 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Box, Button } from '@navikt/ds-react';
+import { Box, Button, Checkbox } from '@navikt/ds-react';
 import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
+import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',
   GODKJENT_INSTITUSJON = 'godkjentInstitusjon',
+  SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING = 'skalLeggeTilSkriftligVurdering',
 }
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
+  [InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING]: string;
 }
 
 export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
-  begrunnelse: string;
+  begrunnelse: string | null;
   journalpostId: {
     journalpostId: string;
   };
@@ -32,37 +35,75 @@ interface OwnProps {
   avbrytRedigering: () => void;
 }
 
+const utledGodkjentInstitusjon = (resultat: InstitusjonVurderingDtoResultat) => {
+  if (resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
+    return 'ja';
+  }
+  if (resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT) {
+    return 'nei';
+  }
+  return '';
+};
+
+const utledOmDetErSkriftligVurdering = (begrunnelse: string, resultat: InstitusjonVurderingDtoResultat) => {
+  if (begrunnelse && resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
+    return 'ja';
+  }
+  if (!begrunnelse || resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT) {
+    return 'nei';
+  }
+  return 'nei';
+};
+
 const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }: OwnProps) => {
   const { løsAksjonspunkt9300 } = useContext(SykdomOgOpplæringContext);
 
   const formMethods = useForm<InstitusjonFormValues>({
     defaultValues: {
-      begrunnelse: '',
-      godkjentInstitusjon: '',
+      [InstitusjonFormFields.BEGRUNNELSE]: vurdering.begrunnelse,
+      [InstitusjonFormFields.GODKJENT_INSTITUSJON]: utledGodkjentInstitusjon(vurdering.resultat),
+      [InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING]: utledOmDetErSkriftligVurdering(
+        vurdering.begrunnelse,
+        vurdering.resultat,
+      ),
     },
   });
 
+  const { watch } = formMethods;
+  const skalLeggeTilSkriftligVurdering = watch(InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING);
+  const resultat = watch(InstitusjonFormFields.GODKJENT_INSTITUSJON);
+  useEffect(() => {
+    if (resultat === 'nei' && skalLeggeTilSkriftligVurdering === 'ja') {
+      formMethods.unregister(InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING);
+    }
+  }, [skalLeggeTilSkriftligVurdering, resultat, formMethods]);
+
   const handleSubmit = (values: InstitusjonFormValues) => {
+    const skalSendeBegrunnelse =
+      values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'nei' ||
+      (values[InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING] === 'ja' &&
+        values[InstitusjonFormFields.GODKJENT_INSTITUSJON] !== 'ja');
     løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
-      begrunnelse: values[InstitusjonFormFields.BEGRUNNELSE],
+      begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
       journalpostId: vurdering.journalpostId,
     });
   };
 
+  const visSkriftligVurderingCheckbox = () => {
+    return watch(InstitusjonFormFields.GODKJENT_INSTITUSJON) === 'ja';
+  };
+
+  const visBegrunnelse = () => {
+    return (
+      watch(InstitusjonFormFields.GODKJENT_INSTITUSJON) === 'nei' ||
+      watch(InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING) === 'ja'
+    );
+  };
+
   return (
     <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box className="mt-8">
-        <TextAreaField
-          name={InstitusjonFormFields.BEGRUNNELSE}
-          label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
-          validate={[required, minLength(3), maxLength(10000)]}
-          readOnly={readOnly}
-          data-testid="begrunnelse"
-        />
-      </Box>
-
-      <Box className="mt-8">
+      <div className="flex flex-col gap-6 mt-6">
         <RadioGroupPanel
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
           label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
@@ -74,7 +115,34 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           isReadOnly={readOnly}
           data-testid="godkjent-institusjon"
         />
-      </Box>
+
+        {visSkriftligVurderingCheckbox() && (
+          <Controller
+            control={formMethods.control}
+            name={InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING}
+            render={({ field }) => (
+              <Checkbox
+                checked={field.value === 'ja'}
+                onChange={event => {
+                  field.onChange(event.target.checked ? 'ja' : 'nei');
+                }}
+              >
+                Legg til skriftlig vurdering
+              </Checkbox>
+            )}
+          />
+        )}
+
+        {visBegrunnelse() && (
+          <TextAreaField
+            name={InstitusjonFormFields.BEGRUNNELSE}
+            label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
+            validate={[required, minLength(3), maxLength(10000)]}
+            readOnly={readOnly}
+            data-testid="begrunnelse"
+          />
+        )}
+      </div>
 
       {!readOnly && (
         <Box className="flex mt-8">

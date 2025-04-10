@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "2.0.20250218125133",
-    "@navikt/k9-sak-typescript-client": "2.0.20250401102942",
+    "@navikt/k9-sak-typescript-client": "2.0.20250410111341",
     "@navikt/ung-sak-typescript-client": "0.2.20250407193643"
   },
   "devDependencies": {
