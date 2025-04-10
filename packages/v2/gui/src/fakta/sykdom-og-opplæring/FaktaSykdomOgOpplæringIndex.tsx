@@ -210,7 +210,7 @@ const SykdomOgOpplæring = () => {
   const [activeTab, setActiveTab] = useState(finnTabMedAksjonspunkt(aksjonspunkter) || 'institusjon');
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   return (
-    <div className="max-w-screen-xl">
+    <div className="max-w-[1300px]">
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
           <Tabs.Tab
