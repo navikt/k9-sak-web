@@ -2800,7 +2800,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/form@npm:*, @fpsak-frontend/form@npm:1.0.0, @fpsak-frontend/form@workspace:packages/form":
+"@fpsak-frontend/form@npm:1.0.0, @fpsak-frontend/form@workspace:packages/form":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/form@workspace:packages/form"
   dependencies:
@@ -3390,7 +3390,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/utils@npm:*, @fpsak-frontend/utils@npm:1.0.0, @fpsak-frontend/utils@workspace:^, @fpsak-frontend/utils@workspace:packages/utils":
+"@fpsak-frontend/utils@npm:1.0.0, @fpsak-frontend/utils@workspace:^, @fpsak-frontend/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils@workspace:packages/utils"
   dependencies:
@@ -3877,7 +3877,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:2.0.20250218125133"
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250320132234"
+    "@navikt/k9-sak-typescript-client": "npm:2.0.20250401102942"
     "@navikt/ung-sak-typescript-client": "npm:0.2.20250407193643"
     "@tanstack/eslint-plugin-query": "npm:^5.71.5"
   languageName: unknown
@@ -4026,7 +4026,6 @@ __metadata:
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-etablert-tilsyn": "npm:1.0.0"
     "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
-    "@k9-sak-web/fakta-institusjon": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
@@ -4304,17 +4303,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-institusjon@npm:1.0.0, @k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.13"
-    formik: "npm:2.4.6"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-medisinsk-vilkar@npm:1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
@@ -4407,26 +4395,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering"
-  dependencies:
-    "@fpsak-frontend/form": "npm:*"
-    "@fpsak-frontend/utils": "npm:*"
-    "@k9-sak-web/types": "npm:*"
-    "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:7.18.0"
-    "@navikt/ft-plattform-komponenter": "npm:^7.2.13"
-    classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.13"
-    formik: "npm:2.4.6"
-    react-intl: "npm:7.1.10"
-    react-outside-click-handler: "npm:1.3.0"
-    uuid: "npm:11.1.0"
-    yup: "npm:1.6.1"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder"
@@ -4457,6 +4425,7 @@ __metadata:
     "@hookform/resolvers": "npm:^4.1.3"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "npm:1.0.0"
+    "@navikt/diagnosekoder": "npm:^1.2025.0"
     "@navikt/ft-form-hooks": "npm:^6.2.9"
     "@navikt/ft-form-validators": "npm:^3.1.11"
     "@navikt/ft-utils": "npm:^3.3.1"
@@ -4803,7 +4772,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/types@npm:*, @k9-sak-web/types@npm:1.0.0, @k9-sak-web/types@workspace:^, @k9-sak-web/types@workspace:packages/types":
+"@k9-sak-web/types@npm:1.0.0, @k9-sak-web/types@workspace:^, @k9-sak-web/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
   languageName: unknown
@@ -5265,10 +5234,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250320132234":
-  version: 2.0.20250320132234
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250320132234::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250320132234%2Fcc6dc22ff25bf5a655208a1349bf11ae76416251"
-  checksum: 10/c290f5dca8673b07d4eb249f4ba7890b255b28fdfb207b9261e6e3535a78fc7901a5cbeeaf97108c1bfcb730ea4c8a49c879b1b6ad318ece7bbeaebb95f7572d
+"@navikt/k9-sak-typescript-client@npm:2.0.20250401102942":
+  version: 2.0.20250401102942
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250401102942::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250401102942%2F211379be913810a376a1b1b51fba7c5497ccb204"
+  checksum: 10/cbb55b0f83744e4c8c9f6beebf7841bcadf1cab2b7a7408495b9ef743ee9afd8cdc4319b4f7d731a2c9cdce026e85543347d5033c2b2755d442b3e8457d6b243
   languageName: node
   linkType: hard
 

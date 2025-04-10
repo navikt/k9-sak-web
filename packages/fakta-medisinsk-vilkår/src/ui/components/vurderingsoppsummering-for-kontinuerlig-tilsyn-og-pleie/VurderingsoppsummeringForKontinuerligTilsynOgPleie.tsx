@@ -1,5 +1,5 @@
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Box } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';

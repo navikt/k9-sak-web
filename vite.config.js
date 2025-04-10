@@ -106,6 +106,11 @@ export default ({ mode }) => {
           "mockServiceWorker.js"
         ],
         plugins: [sourcemaps({ exclude: /@sentry/ })],
+        output: {
+          manualChunks: {
+            diagnosekoder: ['@navikt/diagnosekoder']
+          }
+        }
       },
     },
     test: {

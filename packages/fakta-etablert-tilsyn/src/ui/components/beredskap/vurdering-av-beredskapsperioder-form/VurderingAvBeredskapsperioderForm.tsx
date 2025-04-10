@@ -2,7 +2,7 @@ import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-fro
 import { Period } from '@fpsak-frontend/utils';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Alert, Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';

@@ -3,7 +3,6 @@ import FortsattMedlemskapProsessStegPanelDef from './prosessStegPaneler/Fortsatt
 import InngangsvilkarFortsProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarFortsProsessStegPanelDef';
 import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import MedisinskVilkarProsessStegPanelDef from './prosessStegPaneler/MedisinskVilkarProsessStegPanelDef';
-import OpplaeringProsessStegPanelDef from './prosessStegPaneler/OpplaeringProsessStegPanelDef';
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
 import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtelseProsessStegPanelDef';
 import UttakProsessStegPanelDef from './prosessStegPaneler/UttakProsessStegPanelDef';
@@ -14,7 +13,6 @@ const prosessStegPanelDefinisjoner = [
   new VarselProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
   new MedisinskVilkarProsessStegPanelDef(),
-  new OpplaeringProsessStegPanelDef(),
   new InngangsvilkarFortsProsessStegPanelDef(),
   new FortsattMedlemskapProsessStegPanelDef(),
   new BeregningsgrunnlagProsessStegPanelDef(),

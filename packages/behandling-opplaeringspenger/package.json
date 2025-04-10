@@ -20,7 +20,6 @@
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/fakta-etablert-tilsyn": "1.0.0",
     "@k9-sak-web/fakta-inntektsmelding": "1.0.0",
-    "@k9-sak-web/fakta-institusjon": "1.0.0",
     "@k9-sak-web/fakta-medisinsk-vilkar": "1.0.0",
     "@k9-sak-web/fakta-om-barnet": "1.0.0",
     "@k9-sak-web/fakta-omsorgen-for": "1.0.0",
