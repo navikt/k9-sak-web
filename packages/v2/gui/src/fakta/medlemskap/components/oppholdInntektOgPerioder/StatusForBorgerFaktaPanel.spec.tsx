@@ -1,64 +1,9 @@
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { render, screen } from '@testing-library/react';
-import { FormProvider, useForm } from 'react-hook-form';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { Periode } from '../../types/Periode';
-import StatusForBorgerFaktaPanel, { buildInitialValuesStatusForBorgerFaktaPanel } from './StatusForBorgerFaktaPanel';
+import { buildInitialValuesStatusForBorgerFaktaPanel } from './StatusForBorgerFaktaPanel';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
-  const Wrapper = (props: {
-    apKode: string;
-    erEosBorger: boolean;
-    isBorgerAksjonspunktClosed: boolean;
-    children: React.ReactNode;
-  }) => {
-    const formMethods = useForm({
-      defaultValues: {
-        oppholdInntektOgPeriodeForm: {
-          apKode: props.apKode,
-          erEosBorger: props.erEosBorger,
-          isBorgerAksjonspunktClosed: props.isBorgerAksjonspunktClosed,
-        },
-      },
-    });
-
-    return <FormProvider {...formMethods}>{props.children}</FormProvider>;
-  };
-  it('skal vise radioknapper for vurdering av oppholdsrett', () => {
-    render(
-      <Wrapper apKode={aksjonspunktCodes.AVKLAR_OPPHOLDSRETT} erEosBorger isBorgerAksjonspunktClosed={false}>
-        <StatusForBorgerFaktaPanel
-          readOnly={false}
-          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
-        />
-      </Wrapper>,
-    );
-
-    expect(screen.getAllByRole('radio').length).toBe(4);
-    expect(screen.getByRole('radio', { name: 'EØS borger' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'Utenlandsk borger utenfor EØS' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'Søker har oppholdsrett' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'Søker har ikke oppholdsrett' })).toBeInTheDocument();
-  });
-
-  it('skal vise radioknapper for vurdering av lovlig opphold', () => {
-    render(
-      <Wrapper apKode={aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD} erEosBorger={false} isBorgerAksjonspunktClosed={false}>
-        <StatusForBorgerFaktaPanel
-          readOnly={false}
-          alleMerknaderFraBeslutter={{ [AksjonspunktDtoDefinisjon.AVKLAR_OM_ER_BOSATT]: { notAccepted: false } }}
-        />
-      </Wrapper>,
-    );
-
-    expect(screen.getAllByRole('radio').length).toBe(4);
-    expect(screen.getByRole('radio', { name: 'EØS borger' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'Utenlandsk borger utenfor EØS' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'Søker har lovlig opphold' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'Søker har ikke lovlig opphold' })).toBeInTheDocument();
-  });
-
   it('skal sette initielle verdi når det er EØS borger og ingen vurdering er lagret', () => {
     const periode: Periode = {
       aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],

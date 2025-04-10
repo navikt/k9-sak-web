@@ -1,6 +1,6 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Box, HStack, Table, VStack } from '@navikt/ds-react';
+import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
@@ -10,7 +10,6 @@ import DateLabel from '../../../../shared/dateLabel/DateLabel';
 import FaktaGruppe from '../../../../shared/FaktaGruppe';
 import PeriodLabel from '../../../../shared/periodLabel/PeriodLabel';
 import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
-import { formatDateStringToDDMMYYYY } from '../../../../utils/dateutils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { MedlemskapPeriode } from '../../types/Medlemskap';
@@ -37,7 +36,6 @@ export const getAksjonspunkter = (kodeverkVurderingTypes: KodeverkObject[]) => {
 
 interface PerioderMedMedlemskapFaktaPanelProps {
   readOnly: boolean;
-  fodselsdato?: string;
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
 }
 
@@ -48,7 +46,6 @@ interface PerioderMedMedlemskapFaktaPanelProps {
  */
 export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedlemskapFaktaPanelProps> = ({
   readOnly,
-  fodselsdato,
   alleMerknaderFraBeslutter,
 }) => {
   const { kodeverkNavnFraKode, hentKodeverkForKode } = useKodeverkContext();
@@ -118,9 +115,6 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
               isHorizontal
             />
           )}
-          <Box marginBlock="4 0">
-            <HStack justify="end">{fodselsdato && `Fødselsdato: ${formatDateStringToDDMMYYYY(fodselsdato)}`}</HStack>
-          </Box>
         </VStack>
       </VStack>
     </FaktaGruppe>
