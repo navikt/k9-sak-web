@@ -1,55 +1,38 @@
 import Vurderingsnavigasjon, {
-  Resultat,
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
-import { Alert, BodyLong, BodyShort, Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import { createContext, useContext, useState } from 'react';
-import { CheckmarkIcon, PlusIcon } from '@navikt/aksel-icons';
+import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import {
-  LangvarigSykdomVurderingDtoAvslagsårsak,
-  type LangvarigSykdomVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
 import SykdomUperiodisertFormContainer from './SykdomUperiodisertFormContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { Period } from '@navikt/ft-utils';
-import { RadStatus } from '../../../shared/vurderingsperiode-navigasjon/PeriodeRad';
-import styles from '../../../shared/vurderingsperiode-navigasjon/periodeRad.module.css';
-const utledResultat = (element: LangvarigSykdomVurderingDto) => {
-  if (element.godkjent) {
-    return Resultat.OPPFYLT;
-  }
-  if (element.godkjent === false) {
-    return Resultat.IKKE_OPPFYLT;
-  }
-  return Resultat.IKKE_VURDERT;
-};
-
-const utledGodkjent = (element: LangvarigSykdomVurderingDto) => {
-  if (element.godkjent) {
-    return 'ja';
-  }
-  if (element.avslagsårsak === LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON) {
-    return 'mangler_dokumentasjon';
-  }
-  return 'nei';
-};
+import NavigasjonsmenyRad from './NavigasjonsmenyRad';
+import { utledResultat } from './utils';
+import { utledGodkjent } from './utils';
+import type {
+  LangvarigSykdomVurderingDto,
+  ValgtLangvarigSykdomVurderingDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
 }>({
   setNyVurdering: () => {},
 });
-const VurderSykdomUperiodisert = () => {
+
+const SykdomUperiodisertIndex = () => {
   const { behandlingUuid, readOnly, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
-  const { data: langvarigSykVurderingerFagsak } = useLangvarigSykVurderingerFagsak(behandlingUuid);
-  const { data: vurdertLangvarigSykdom } = useVurdertLangvarigSykdom(behandlingUuid);
-  const mappedVurderinger = langvarigSykVurderingerFagsak?.map(element => ({
+  const { data: langvarigSykVurderinger } = useLangvarigSykVurderingerFagsak(behandlingUuid);
+  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
+  useVurdertLangvarigSykdom(behandlingUuid);
+  const mappedVurderinger = langvarigSykVurderinger?.map(element => ({
     ...element,
     godkjent: utledGodkjent(element) as 'ja' | 'nei' | 'mangler_dokumentasjon',
   }));
-  const vurderingsliste = langvarigSykVurderingerFagsak?.map(element => ({
+  const vurderingsliste = langvarigSykVurderinger?.map(element => ({
     ...element,
     perioder: element.vurdertTidspunkt ? [new Period(element.vurdertTidspunkt, element.vurdertTidspunkt)] : [],
     id: element.uuid,
@@ -74,6 +57,7 @@ const VurderSykdomUperiodisert = () => {
   return (
     <>
       <SykdomUperiodisertContext.Provider value={{ setNyVurdering }}>
+        <Warning vurderinger={langvarigSykVurderinger} vurderingBruktIAksjonspunkt={vurderingBruktIAksjonspunkt} />
         <NavigationWithDetailView
           navigationSection={() => (
             <Vurderingsnavigasjon
@@ -81,10 +65,10 @@ const VurderSykdomUperiodisert = () => {
               vurdertePerioder={[]}
               onPeriodeClick={velgPeriode}
               customPeriodeRad={(periode, onPeriodeClick) => (
-                <SykdomUperiodisertPeriodeRad
+                <NavigasjonsmenyRad
                   periode={periode}
                   active={periode.id === valgtPeriode?.id}
-                  valgt={periode.id === vurdertLangvarigSykdom?.vurderingUuid}
+                  valgt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
                   datoOnClick={() => onPeriodeClick(periode)}
                   benyttOnClick={() =>
                     løsAksjonspunkt9301({
@@ -127,63 +111,30 @@ const VurderSykdomUperiodisert = () => {
   );
 };
 
-const SykdomUperiodisertPeriodeRad = ({
-  periode,
-  active,
-  valgt,
-  datoOnClick,
-  benyttOnClick,
+const Warning = ({
+  vurderinger = [],
+  vurderingBruktIAksjonspunkt,
 }: {
-  periode: Vurderingselement;
-  active: boolean;
-  valgt: boolean;
-  benyttOnClick: () => void;
-  datoOnClick: () => void;
+  vurderinger: LangvarigSykdomVurderingDto[] | undefined;
+  vurderingBruktIAksjonspunkt: ValgtLangvarigSykdomVurderingDto | undefined;
 }) => {
-  return (
-    <div
-      className={`flex p-4 text-left w-full ${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
-    >
-      <div className="flex justify-between w-full">
-        <div className="flex items-center">
-          <RadStatus resultat={periode.resultat} />
+  const { readOnly, behandlingUuid } = useContext(SykdomOgOpplæringContext);
 
-          <div className="flex ml-3 items-center">
-            <Button
-              className={`${active ? 'text-text-default pointer-events-none' : 'text-blue-500 underline'}`}
-              onClick={datoOnClick}
-              size="small"
-              variant="tertiary"
-            >
-              {periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}
-            </Button>
-          </div>
-        </div>
-        {valgt ? (
-          <div className="flex gap-1 ml-[-4px]">
-            <CheckmarkIcon fontSize={24} className="text-green-500" />
-            <BodyShort className="mt-[2px]">Valgt</BodyShort>
-          </div>
-        ) : (
-          <div className="flex items-center">
-            <Button onClick={benyttOnClick} size="small">
-              Benytt
-            </Button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  const harVurderingFraTidligereBehandling = vurderinger.some(v => v.behandlingUuid !== behandlingUuid);
+  if (vurderingBruktIAksjonspunkt || readOnly) {
+    return null;
+  }
+
+  if (harVurderingFraTidligereBehandling) {
+    return (
+      <Alert variant="warning">
+        Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
+        sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
+      </Alert>
+    );
+  }
+
+  return <Alert variant="warning">Vurder om barnet har en funksjonshemning eller en langvarig sykdom.</Alert>;
 };
 
-const BekreftAlert = ({ vurderinger }: { vurderinger: LangvarigSykdomVurderingDto[] }) => {
-  return (
-    <Alert variant="info">
-      <BodyLong>
-        <strong>Bekreft</strong> at du har vurdert alle sykdomsvurderingene.
-      </BodyLong>
-    </Alert>
-  );
-};
-
-export default VurderSykdomUperiodisert;
+export default SykdomUperiodisertIndex;
