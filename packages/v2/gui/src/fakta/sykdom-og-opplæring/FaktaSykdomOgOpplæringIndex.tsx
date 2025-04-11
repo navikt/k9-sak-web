@@ -10,7 +10,7 @@ import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 import type {Aksjonspunkt} from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
 import { useSearchParams } from "react-router";
-import tabCodes from "./tabCodes.ts";
+import tabCodes from "./tabCodes";
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
