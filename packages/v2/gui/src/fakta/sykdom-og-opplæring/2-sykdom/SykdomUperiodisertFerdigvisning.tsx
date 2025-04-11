@@ -3,7 +3,7 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { ICD10 } from '@navikt/diagnosekoder';
-
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const sykdomGodkjentText = () => {
     if (vurdering.godkjent === 'ja') {
@@ -21,7 +21,12 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
     <div className="flex flex-col gap-4">
       <div>
         <LabelledContent
-          label="Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge av § 9-14."
+          label={
+            <div>
+              Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som
+              følge av <Lovreferanse>§ 9-14</Lovreferanse>.
+            </div>
+          }
           indentContent
           size="small"
           content={
@@ -30,8 +35,8 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
             </BodyLong>
           }
         />
+        <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
       </div>
-      <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
       <LabelledContent
         label="Har barnet en langvarig funksjonshemming eller langvarig sykdom?"
         size="small"
