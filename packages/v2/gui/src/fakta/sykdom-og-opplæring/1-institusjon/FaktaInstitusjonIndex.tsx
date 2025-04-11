@@ -13,7 +13,7 @@ import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurd
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
-
+import { CenteredLoader } from '../CenteredLoader.js';
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
   vurderinger: InstitusjonVurderingDto[];
@@ -76,7 +76,7 @@ const FaktaInstitusjonIndex = () => {
   );
 
   if (isLoading) {
-    return <div>Laster institusjon...</div>;
+    return <CenteredLoader />;
   }
 
   return (

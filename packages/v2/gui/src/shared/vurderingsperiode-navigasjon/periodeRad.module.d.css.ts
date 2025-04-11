@@ -1,10 +1,8 @@
 declare const styles: {
-  readonly "visuallyHidden": string;
-  readonly "vurderingsperiodeElement": string;
-  readonly "vurderingsperiodeElementTexts": string;
-  readonly "vurderingsperiodeElementTextsKildeIcon": string;
-  readonly "vurderingsperiodeElementTextsPeriod": string;
-  readonly "vurderingsperiodeElementTextsResultat": string;
+  readonly "interactiveList": string;
+  readonly "interactiveListElement": string;
+  readonly "interactiveListElementActive": string;
+  readonly "interactiveListElementInactive": string;
 };
 export = styles;
 

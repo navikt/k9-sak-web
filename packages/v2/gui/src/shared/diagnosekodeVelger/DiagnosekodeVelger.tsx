@@ -28,13 +28,19 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   disabled,
   label = 'Diagnosekoder',
 }) => {
-  const { register, watch, setValue, trigger, formState } = useFormContext<{ [key: string]: string[] }>();
+  const { register, watch, setValue, trigger, formState, unregister } = useFormContext<{ [key: string]: string[] }>();
   const [searchValue, setSearchValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState<ComboBoxOptions[]>([]);
 
   register(name, {
-    validate: value => (value.length > 0 ? undefined : 'Diagnosekode er påkrevd'),
+    validate: !disabled ? value => (value.length > 0 ? undefined : 'Diagnosekode er påkrevd') : undefined,
   });
+
+  useEffect(() => {
+    if (disabled) {
+      unregister(name);
+    }
+  }, [disabled, name, unregister]);
 
   const onChange = (value: string[]) => {
     setValue(name, value);
