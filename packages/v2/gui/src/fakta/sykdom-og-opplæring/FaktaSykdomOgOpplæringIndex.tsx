@@ -246,7 +246,7 @@ const SykdomOgOpplæring = () => {
           <NødvendigOpplæringIndex />
         </div>
       </Tabs.Panel>
-      <Tabs.Panel value={tabCodes.RESISETID}>
+      <Tabs.Panel value={tabCodes.REISETID}>
         <div className="mt-4">
           <ReisetidIndex />
         </div>
