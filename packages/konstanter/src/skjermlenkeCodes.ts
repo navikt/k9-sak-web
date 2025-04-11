@@ -1,6 +1,6 @@
 import faktaPanelCodes from './faktaPanelCodes';
 import prosessStegCodes from './prosessStegCodes';
-import tabCodes from "./tabCodes";
+import tabCodes from "@k9-sak-web/gui/fakta/sykdom-og-opplæring/tabCodes";
 
 const skjermlenkeCodes = {
   BEREGNING: {
@@ -291,7 +291,7 @@ const skjermlenkeCodes = {
     kode: 'PUNKT_FOR_REISEDAGER',
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
-    tabNavn: tabCodes.RESISETID
+    tabNavn: tabCodes.REISETID
   },
 };
 

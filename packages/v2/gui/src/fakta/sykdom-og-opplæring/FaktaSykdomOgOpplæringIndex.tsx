@@ -10,7 +10,7 @@ import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 import type {Aksjonspunkt} from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
 import { useSearchParams } from "react-router";
-import { tabCodes } from "@k9-sak-web/konstanter";
+import tabCodes from "./tabCodes.ts";
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
@@ -228,7 +228,7 @@ const SykdomOgOpplæring = () => {
           label="Nødvendig opplæring"
           icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
         />
-        <Tabs.Tab value={tabCodes.RESISETID} label="Reisetid"
+        <Tabs.Tab value={tabCodes.REISETID} label="Reisetid"
                   icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon/>}/>
       </Tabs.List>
       <Tabs.Panel value={tabCodes.INSTITUSJON}>
