@@ -30,6 +30,7 @@ const ReisetidIndex = () => {
             />
           </>
         )}
+        showDetailSection
         detailSection={() => (valgtVurdering ? <ReisetidContainer vurdering={valgtVurdering} /> : null)}
       />
     </div>
