@@ -1,18 +1,18 @@
+import { PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
+import { Bleed } from '@navikt/ds-react';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
+  InstitutionIcon,
   RedCrossIconFilled,
   TwoPersonsWithOneHighlightedIconGray,
-  InstitutionIcon,
 } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
-import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import ManuellVurdering from '../../../types/ManuellVurdering';
-import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';
-import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
 import Vurderingselement from '../../../types/Vurderingselement';
+import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
+import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';
 import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
@@ -81,15 +81,15 @@ const renderPersonIcon = ({ gjelderForAnnenPart, gjelderForSøker }: ManuellVurd
   }
   if (gjelderForAnnenPart) {
     return (
-      <ContentWithTooltip tooltipText="Annen part">
-        <OnePersonOutlineGray />
-      </ContentWithTooltip>
+      <Bleed marginBlock="2" marginInline="1">
+        <PersonIcon fontSize="2rem" title="Annen part" />
+      </Bleed>
     );
   }
   return (
-    <ContentWithTooltip tooltipText="Søker">
-      <OnePersonIconGray />
-    </ContentWithTooltip>
+    <Bleed marginBlock="2" marginInline="1">
+      <PersonFillIcon fontSize="2rem" title="Søker" />
+    </Bleed>
   );
 };
 

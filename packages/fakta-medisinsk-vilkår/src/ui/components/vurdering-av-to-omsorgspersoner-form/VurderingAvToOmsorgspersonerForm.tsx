@@ -1,8 +1,8 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import { Alert, Box, Link } from '@navikt/ds-react';
-import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { PersonIcon } from '@navikt/aksel-icons';
+import { Alert, Bleed, Box, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -143,9 +143,9 @@ const VurderingAvToOmsorgspersonerForm = ({
                       dokument={dokument}
                       etikett={
                         dokument.annenPartErKilde && (
-                          <ContentWithTooltip tooltipText="Dokument fra annen part" tooltipDirectionRight>
-                            <OnePersonOutlineGray />
-                          </ContentWithTooltip>
+                          <Bleed marginBlock="2" marginInline="1">
+                            <PersonIcon fontSize="2rem" title="Dokument fra annen part" />
+                          </Bleed>
                         )
                       }
                     />

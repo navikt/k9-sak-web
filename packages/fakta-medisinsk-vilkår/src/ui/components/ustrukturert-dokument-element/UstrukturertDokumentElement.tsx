@@ -1,11 +1,8 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import {
-  ContentWithTooltip,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
-  WarningIcon,
-} from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
+import { Bleed } from '@navikt/ds-react';
+import { ContentWithTooltip, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { type JSX } from 'react';
 import { Dokument, dokumentLabel } from '../../../types/Dokument';
 import styles from './ustrukturertDokumentElement.module.css';
 
@@ -19,15 +16,15 @@ const UstrukturertDokumentElement = ({
   const parterLabel = () => {
     if (annenPartErKilde) {
       return (
-        <ContentWithTooltip tooltipText="Annen part" inline>
-          <OnePersonOutlineGray />
-        </ContentWithTooltip>
+        <Bleed marginBlock="2" marginInline="1">
+          <PersonIcon fontSize="2rem" title="Annen part" />
+        </Bleed>
       );
     }
     return (
-      <ContentWithTooltip tooltipText="Søker" inline>
-        <OnePersonIconGray />
-      </ContentWithTooltip>
+      <Bleed marginBlock="2" marginInline="1">
+        <PersonFillIcon fontSize="2rem" title="Søker" />
+      </Bleed>
     );
   };
 

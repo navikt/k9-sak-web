@@ -1,8 +1,7 @@
 import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
-import { MinusIcon, PlusCircleIcon } from '@navikt/aksel-icons';
-import { Box, Button } from '@navikt/ds-react';
-import { ContentWithTooltip, OnePersonIconGray, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { MinusIcon, PersonFillIcon, PersonIcon, PlusCircleIcon } from '@navikt/aksel-icons';
+import { Bleed, Button, VStack } from '@navikt/ds-react';
 import { useState, type JSX } from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
@@ -18,13 +17,13 @@ const getLabel = (periodebeskrivelse: Beskrivelse) => {
   return (
     <div className={styles.beskrivelserForPerioden__label}>
       {periodebeskrivelse.kilde === Kilde.ANDRE ? (
-        <ContentWithTooltip tooltipText="Annen part">
-          <OnePersonOutlineGray />
-        </ContentWithTooltip>
+        <Bleed marginBlock="2" marginInline="1">
+          <PersonIcon fontSize="2rem" title="Annen part" />
+        </Bleed>
       ) : (
-        <ContentWithTooltip tooltipText="Søker">
-          <OnePersonIconGray />
-        </ContentWithTooltip>
+        <Bleed marginBlock="2" marginInline="1">
+          <PersonFillIcon fontSize="2rem" title="Søker" />
+        </Bleed>
       )}
       <p className={styles.beskrivelserForPerioden__labelText}>
         {`Beskrivelse fra ${kilde}
@@ -46,28 +45,31 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
     ];
     return (
       <>
-        {sortertePeriodebeskrivelser
-          .filter((periodebeskrivelse, index) => (visAlleBeskrivelser ? true : index <= 2))
-          .map(periodebeskrivelse => (
-            <Box marginBlock="0 6" key={periodebeskrivelse.tekst}>
+        <VStack gap="6">
+          {sortertePeriodebeskrivelser
+            .filter((periodebeskrivelse, index) => (visAlleBeskrivelser ? true : index <= 2))
+            .map(periodebeskrivelse => (
               <LabelledContent
                 label={getLabel(periodebeskrivelse)}
                 content={<span className="whitespace-pre-wrap">{periodebeskrivelse.tekst}</span>}
                 labelTag="div"
+                key={periodebeskrivelse.tekst}
               />
-            </Box>
-          ))}
-        {sortertePeriodebeskrivelser.length > 3 && (
-          <Button
-            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusCircleIcon />}
-            onClick={() => setVisAlleBeskrivelser(!visAlleBeskrivelser)}
-            size="small"
-            type="button"
-            variant="secondary"
-          >
-            {visAlleBeskrivelser ? 'Skjul tidligere beskrivelser' : 'Vis tidligere beskrivelser'}
-          </Button>
-        )}
+            ))}
+          {sortertePeriodebeskrivelser.length > 3 && (
+            <div>
+              <Button
+                icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusCircleIcon />}
+                onClick={() => setVisAlleBeskrivelser(!visAlleBeskrivelser)}
+                size="small"
+                type="button"
+                variant="secondary"
+              >
+                {visAlleBeskrivelser ? 'Skjul tidligere beskrivelser' : 'Vis tidligere beskrivelser'}
+              </Button>
+            </div>
+          )}
+        </VStack>
         <hr className={styles.beskrivelserForPerioden__separator} />
       </>
     );

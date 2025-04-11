@@ -1,10 +1,9 @@
-import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, HelpText, Table } from '@navikt/ds-react';
+import { PersonFillIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { Bleed, BodyShort, HelpText, Table } from '@navikt/ds-react';
 import {
   ChevronIconBlack,
   ContentWithTooltip,
   GreenCheckIconFilled,
-  OnePersonIconGray,
   RedCrossIconFilled,
   TwoPersonsWithOneHighlightedIconGray,
 } from '@navikt/ft-plattform-komponenter';
@@ -92,9 +91,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           {uttak.annenPart === AnnenPart.ALENE && (
-            <ContentWithTooltip tooltipText="Søker">
-              <OnePersonIconGray />
-            </ContentWithTooltip>
+            <Bleed marginBlock="2" marginInline="1">
+              <PersonFillIcon title="Søker" fontSize="2rem" />
+            </Bleed>
           )}
           {uttak.annenPart === AnnenPart.MED_ANDRE && (
             <ContentWithTooltip tooltipText="Søker/Annen part">
