@@ -18,7 +18,6 @@ import {
   VStack,
 } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   PeriodeMedOverlappValg,
@@ -33,7 +32,7 @@ import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../util
 import styles from './VurderOverlappendeSak.module.css';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import { format } from 'date-fns';
-
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
 interface Props {
@@ -306,7 +305,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                   {...register('begrunnelse')}
                   error={errors.begrunnelse?.message}
                 />
-                {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
+                {saksbehandler && <VurdertAv ident={saksbehandler} date={vurdertTidspunkt} />}
                 {!sakAvsluttet && !readOnly && (
                   <>
                     {rediger && (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-/* Brukes til å tilgjengeliggjøre saksbehandlernavn. Brukes direkte i AssessedBy.tsx 
+/* Brukes til å tilgjengeliggjøre saksbehandlernavn. Brukes direkte i VurdertAv.tsx 
   
 {
   'Z12345': 'Tommy Tilbakekreving',
