@@ -87,7 +87,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
             <div className="mx-4 min-w-[50px]">Status</div>
             <div>Periode</div>
           </div>
-          <ul className={styles['interactiveList']}>
+          <ul className={styles.interactiveList}>
             {allePerioder.map((element, currentIndex) => (
               <li key={element.id}>
                 {customPeriodeRad ? (

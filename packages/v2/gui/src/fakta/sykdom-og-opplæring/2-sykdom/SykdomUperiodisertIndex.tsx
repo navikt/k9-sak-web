@@ -16,6 +16,7 @@ import type {
   LangvarigSykdomVurderingDto,
   ValgtLangvarigSykdomVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { CenteredLoader } from '../CenteredLoader';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
@@ -25,8 +26,10 @@ export const SykdomUperiodisertContext = createContext<{
 
 const SykdomUperiodisertIndex = () => {
   const { behandlingUuid, readOnly, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
-  const { data: langvarigSykVurderinger } = useLangvarigSykVurderingerFagsak(behandlingUuid);
-  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
+  const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
+    useLangvarigSykVurderingerFagsak(behandlingUuid);
+  const { data: vurderingBruktIAksjonspunkt, isLoading: isLoadingVurderingBruktIAksjonspunkt } =
+    useVurdertLangvarigSykdom(behandlingUuid);
   useVurdertLangvarigSykdom(behandlingUuid);
   const mappedVurderinger = langvarigSykVurderinger?.map(element => ({
     ...element,
@@ -53,6 +56,10 @@ const SykdomUperiodisertIndex = () => {
   };
 
   const valgtVurdering = mappedVurderinger?.find(vurdering => vurdering.uuid === valgtPeriode?.id);
+
+  if (isLoadingLangvarigSykVurderinger || isLoadingVurderingBruktIAksjonspunkt) {
+    return <CenteredLoader />;
+  }
 
   return (
     <>
@@ -121,20 +128,24 @@ const Warning = ({
   const { readOnly, behandlingUuid } = useContext(SykdomOgOpplæringContext);
 
   const harVurderingFraTidligereBehandling = vurderinger.some(v => v.behandlingUuid !== behandlingUuid);
-  if (vurderingBruktIAksjonspunkt || readOnly) {
+  if (vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' || readOnly) {
     return null;
   }
 
   if (harVurderingFraTidligereBehandling) {
     return (
-      <Alert variant="warning">
+      <Alert className="my-5" variant="warning">
         Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
         sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
       </Alert>
     );
   }
 
-  return <Alert variant="warning">Vurder om barnet har en funksjonshemning eller en langvarig sykdom.</Alert>;
+  return (
+    <Alert className="my-5" variant="warning">
+      Vurder om barnet har en funksjonshemning eller en langvarig sykdom.
+    </Alert>
+  );
 };
 
 export default SykdomUperiodisertIndex;
