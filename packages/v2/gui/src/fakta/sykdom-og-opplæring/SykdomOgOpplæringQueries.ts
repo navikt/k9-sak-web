@@ -49,6 +49,16 @@ export const useLangvarigSykVurderingerFagsak = (behandlingUuid: string) => {
     enabled: !!behandlingUuid,
   });
 };
+
+export const useVurdertLangvarigSykdom = (behandlingUuid: string) => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['vurdertLangvarigSykdom', behandlingUuid],
+    queryFn: () => backendClient.hentVurdertLangvarigSykdom(behandlingUuid),
+  });
+};
+
 export const useInstitusjonInfo = (behandlingUuid: string) => {
   const backendClient = useSykdomBackendClient();
 

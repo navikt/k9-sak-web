@@ -132,12 +132,6 @@ const SykdomUperiodisertForm = ({
             </RadioGroup>
           )}
         />
-        {formMethods.watch('godkjent') === 'mangler_dokumentasjon' && (
-          <Alert variant="info" size="small">
-            Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
-            <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
-          </Alert>
-        )}
         <DiagnosekodeVelger
           label="Legg til diagnose(r)"
           name="diagnosekoder"
@@ -146,6 +140,12 @@ const SykdomUperiodisertForm = ({
             formMethods.watch('godkjent') === 'mangler_dokumentasjon' || formMethods.watch('godkjent') === 'nei'
           }
         />
+        {formMethods.watch('godkjent') === 'mangler_dokumentasjon' && (
+          <Alert variant="info" size="small">
+            Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
+            <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
+          </Alert>
+        )}
         <div className="flex gap-4">
           <Button variant="primary" type="submit" size="small">
             {vurdering.uuid ? 'Oppdater sykdomsvurdering' : 'Lagre ny sykdomsvurdering'}

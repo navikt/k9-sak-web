@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Heading } from '@navikt/ds-react';
-import PeriodeRad from './PeriodeRad';
+import { PeriodeRad } from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
 import {
   type InstitusjonVurderingDtoResultat,
@@ -12,7 +12,7 @@ import {
   ReisetidPeriodeVurderingDtoResultat,
   ReisetidPeriodeVurderingDtoResultat as reisetidEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { InteractiveList } from '../InteractiveList/InteractiveList';
+import styles from './periodeRad.module.css';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat
@@ -37,19 +37,20 @@ export interface Vurderingselement {
   perioder: Period[];
   id?: string;
   resultat?: ResultatType;
-  radContent?: React.ReactNode;
 }
 
 export interface VurderingslisteProps<T extends Vurderingselement = Vurderingselement> {
   perioderTilVurdering: T[];
   vurdertePerioder: T[];
   onPeriodeClick: (periode: T) => void;
+  customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
 }
 
 const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   perioderTilVurdering,
   vurdertePerioder,
   onPeriodeClick,
+  customPeriodeRad,
 }: VurderingslisteProps<T>) => {
   const harPerioderSomSkalVurderes = perioderTilVurdering?.length > 0;
   const [activeIndex, setActiveIndex] = React.useState(harPerioderSomSkalVurderes ? 0 : -1);
@@ -63,25 +64,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     }
   }, []);
 
-  const vurdertePerioderElements = vurdertePerioder.map(({ perioder, resultat, id }) => (
-    <PeriodeRad
-      perioder={perioder}
-      resultat={resultat}
-      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}-${id}`}
-    />
-  ));
-
-  const periodeTilVurderingElements = perioderTilVurdering.map(({ perioder, resultat, id, radContent }) => (
-    <PeriodeRad
-      perioder={perioder}
-      resultat={resultat}
-      key={`${perioder.map(p => p.prettifyPeriod()).join('-')}-${resultat}-${id}`}
-      radContent={radContent}
-    />
-  ));
-
   const allePerioder = [...perioderTilVurdering, ...vurdertePerioder];
-  const elements = [...periodeTilVurderingElements, ...vurdertePerioderElements];
 
   const handlePeriodeClick = (index: number) => {
     if (allePerioder[index]) {
@@ -104,16 +87,22 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
             <div className="mx-4 min-w-[50px]">Status</div>
             <div>Periode</div>
           </div>
-          <div>
-            <InteractiveList
-              elements={elements.map((element, currentIndex) => ({
-                content: element,
-                active: activeIndex === currentIndex,
-                key: `${element.key}`,
-                onClick: () => handlePeriodeClick(currentIndex),
-              }))}
-            />
-          </div>
+          <ul className={styles['interactiveList']}>
+            {allePerioder.map((element, currentIndex) => (
+              <li key={element.id}>
+                {customPeriodeRad ? (
+                  customPeriodeRad(element, () => handlePeriodeClick(currentIndex))
+                ) : (
+                  <PeriodeRad
+                    perioder={element.perioder}
+                    resultat={element.resultat}
+                    active={activeIndex === currentIndex}
+                    handleClick={() => handlePeriodeClick(currentIndex)}
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </Box>
