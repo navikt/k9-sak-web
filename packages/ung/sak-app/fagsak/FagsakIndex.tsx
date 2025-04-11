@@ -18,7 +18,6 @@ import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKode
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
-import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
@@ -28,6 +27,7 @@ import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 
 /**
  * FagsakIndex
@@ -157,7 +157,9 @@ const FagsakIndex = () => {
   return (
     <>
       <KodeverkProvider behandlingType={behandling ? behandling?.type?.kode : undefined} kodeverk={alleKodeverkUngSak}>
-        <SaksbehandlernavnContext.Provider value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere}>
+        <SaksbehandlernavnContext.Provider
+          value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
+        >
           <FagsakGrid
             behandlingContent={
               <Routes>
