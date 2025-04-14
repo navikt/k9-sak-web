@@ -1,16 +1,16 @@
-import {aksjonspunktCodes} from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import {aksjonspunktStatus} from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import {type InstitusjonAksjonspunktPayload} from './1-institusjon/components/InstitusjonForm.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
-import {Tabs} from '@navikt/ds-react';
-import {createContext, useContext, useState} from 'react';
+import { Tabs } from '@navikt/ds-react';
+import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import type {Aksjonspunkt} from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
-import { useSearchParams } from "react-router";
-import tabCodes from "./tabCodes";
+import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
+import { useSearchParams } from 'react-router';
+import tabCodes from './tabCodes';
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
@@ -210,8 +210,8 @@ const FaktaSykdomOgOpplæringIndex = ({
 
 const SykdomOgOpplæring = () => {
   const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const [searchParams] = useSearchParams()
-  const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON
+  const [searchParams] = useSearchParams();
+  const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
   const [activeTab, setActiveTab] = useState(initActiveTab);
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   return (
@@ -222,14 +222,17 @@ const SykdomOgOpplæring = () => {
           label="Institusjon"
           icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
         />
-        <Tabs.Tab value={tabCodes.SYKDOM} label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon/>}/>
+        <Tabs.Tab value={tabCodes.SYKDOM} label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />} />
         <Tabs.Tab
           value={tabCodes.OPPLÆRING}
           label="Nødvendig opplæring"
           icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
         />
-        <Tabs.Tab value={tabCodes.REISETID} label="Reisetid"
-                  icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon/>}/>
+        <Tabs.Tab
+          value={tabCodes.REISETID}
+          label="Reisetid"
+          icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
+        />
       </Tabs.List>
       <Tabs.Panel value={tabCodes.INSTITUSJON}>
         <div className="mt-4">
