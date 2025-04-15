@@ -12,7 +12,9 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, HGrid, Heading, Label } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
+import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
+import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -110,154 +112,166 @@ export class AvregningPanelImpl extends Component {
       featureUtvidetVarselfelt,
       previewCallback,
       hasOpenTilbakekrevingsbehandling,
+      aksjonspunkter,
+      harVurderFeilutbetalingAP,
+      harSjekkHøyEtterbetalingAP,
+      behandling,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
 
     return (
       <>
-        <Heading size="small" level="2">
-          <FormattedMessage id="Avregning.Title" />
-        </Heading>
-        <VerticalSpacer twentyPx />
-        {simuleringResultatOption && (
-          <div>
-            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-              {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
-            </AksjonspunktHelpText>
-            <VerticalSpacer twentyPx />
-            <AvregningSummary
-              fom={simuleringResultatOption.periode?.fom}
-              tom={simuleringResultatOption.periode?.tom}
-              feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
-              etterbetaling={simuleringResultatOption.sumEtterbetaling}
-              inntrekk={simuleringResultatOption.sumInntrekk}
-              ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
-            />
-            <AvregningTable
-              showDetails={showDetails}
-              toggleDetails={this.toggleDetails}
-              simuleringResultat={simuleringResultatOption}
-              ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
-            />
-            <VerticalSpacer twentyPx />
-            {hasOpenTilbakekrevingsbehandling && (
-              <Label size="small" as="p">
-                <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
-              </Label>
-            )}
-          </div>
-        )}
-        {!simuleringResultat && <FormattedMessage id="Avregning.ingenData" />}
-        {apCodes[0] && (
-          <div>
-            <form onSubmit={formProps.handleSubmit}>
-              <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
-                <TextAreaField
-                  name="begrunnelse"
-                  label={{ id: 'Avregning.vurdering' }}
-                  validate={[required, minLength3, maxLength1500, hasValidText]}
-                  maxLength={1500}
-                  readOnly={readOnly}
-                  id="avregningVurdering"
-                />
-                {apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING && (
+        <VStack gap="8">
+          <Heading size="small" level="2">
+            <FormattedMessage id="Avregning.Title" />
+          </Heading>
+          {harSjekkHøyEtterbetalingAP && <KontrollerEtterbetalingAlert />}
+          {simuleringResultatOption && (
+            <VStack gap="2">
+              <AksjonspunktHelpText isAksjonspunktOpen={harVurderFeilutbetalingAP}>
+                {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
+              </AksjonspunktHelpText>
+
+              <AvregningSummary
+                fom={simuleringResultatOption.periode?.fom}
+                tom={simuleringResultatOption.periode?.tom}
+                feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
+                etterbetaling={simuleringResultatOption.sumEtterbetaling}
+                inntrekk={simuleringResultatOption.sumInntrekk}
+                ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+              />
+
+              <AvregningTable
+                showDetails={showDetails}
+                toggleDetails={this.toggleDetails}
+                simuleringResultat={simuleringResultatOption}
+                ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+              />
+              {hasOpenTilbakekrevingsbehandling && (
+                <Label size="small" as="p">
+                  <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
+                </Label>
+              )}
+            </VStack>
+          )}
+
+          {!simuleringResultat && <FormattedMessage id="Avregning.ingenData" />}
+          {harVurderFeilutbetalingAP && (
+            <VStack gap="2">
+              <form onSubmit={formProps.handleSubmit}>
+                <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+                  <TextAreaField
+                    name="begrunnelse"
+                    label={{ id: 'Avregning.vurdering' }}
+                    validate={[required, minLength3, maxLength1500, hasValidText]}
+                    maxLength={1500}
+                    readOnly={readOnly}
+                    id="avregningVurdering"
+                  />
+                  {harVurderFeilutbetalingAP && (
+                    <div>
+                      <Detail>
+                        <FormattedMessage id="Avregning.videreBehandling" />
+                      </Detail>
+                      <VerticalSpacer eightPx />
+                      <RadioGroupField
+                        name="videreBehandling"
+                        validate={[required]}
+                        isVertical
+                        readOnly={readOnly}
+                        radios={[
+                          {
+                            value: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
+                            label: <FormattedMessage id="Avregning.gjennomfør" />,
+                            element: (
+                              <div className={styles.varsel}>
+                                <ArrowBox alignOffset={20}>
+                                  <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+                                    <BodyShort size="small" className={styles.bold}>
+                                      <FormattedMessage id="Avregning.varseltekst" />
+                                    </BodyShort>
+                                    <div>
+                                      <Image
+                                        tabIndex="0"
+                                        src={questionNormalUrl}
+                                        srcHover={questionHoverUrl}
+                                        alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
+                                        tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
+                                      />
+                                    </div>
+                                  </HGrid>
+                                  <VerticalSpacer eightPx />
+                                  <TextAreaField
+                                    name="varseltekst"
+                                    label={{ id: 'Avregning.fritekst' }}
+                                    validate={[
+                                      required,
+                                      minLength3,
+                                      featureUtvidetVarselfelt ? maxLength12000 : maxLength1500,
+                                      hasValidText,
+                                    ]}
+                                    maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
+                                    readOnly={readOnly}
+                                    id="avregningFritekst"
+                                    badges={[
+                                      {
+                                        type: 'warning',
+                                        textId: getLanguageCodeFromspråkkode(språkkode),
+                                        title: 'Malform.Beskrivelse',
+                                      },
+                                    ]}
+                                  />
+                                  <VerticalSpacer fourPx />
+                                  <a
+                                    href=""
+                                    onClick={e => {
+                                      this.previewMessage(e, previewCallback);
+                                    }}
+                                    className={styles.previewLink}
+                                  >
+                                    <FormattedMessage id="Messages.PreviewText" />
+                                  </a>
+                                </ArrowBox>
+                              </div>
+                            ),
+                          },
+                          {
+                            value: `${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`,
+                            label: <FormattedMessage id={'Avregning.OpprettMenIkkeSendVarsel'} />,
+                          },
+                          {
+                            value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
+                            label: <FormattedMessage id="Avregning.avvent" />,
+                          },
+                        ]}
+                      />
+                    </div>
+                  )}
+                </HGrid>
+                <HGrid className="mt-4" gap="1" columns={{ xs: '6fr 6fr' }}>
                   <div>
-                    <Detail>
-                      <FormattedMessage id="Avregning.videreBehandling" />
-                    </Detail>
-                    <VerticalSpacer eightPx />
-                    <RadioGroupField
-                      name="videreBehandling"
-                      validate={[required]}
-                      isVertical
-                      readOnly={readOnly}
-                      radios={[
-                        {
-                          value: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
-                          label: <FormattedMessage id="Avregning.gjennomfør" />,
-                          element: (
-                            <div className={styles.varsel}>
-                              <ArrowBox alignOffset={20}>
-                                <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
-                                  <BodyShort size="small" className={styles.bold}>
-                                    <FormattedMessage id="Avregning.varseltekst" />
-                                  </BodyShort>
-                                  <div>
-                                    <Image
-                                      tabIndex="0"
-                                      src={questionNormalUrl}
-                                      srcHover={questionHoverUrl}
-                                      alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
-                                      tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
-                                    />
-                                  </div>
-                                </HGrid>
-                                <VerticalSpacer eightPx />
-                                <TextAreaField
-                                  name="varseltekst"
-                                  label={{ id: 'Avregning.fritekst' }}
-                                  validate={[
-                                    required,
-                                    minLength3,
-                                    featureUtvidetVarselfelt ? maxLength12000 : maxLength1500,
-                                    hasValidText,
-                                  ]}
-                                  maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
-                                  readOnly={readOnly}
-                                  id="avregningFritekst"
-                                  badges={[
-                                    {
-                                      type: 'warning',
-                                      textId: getLanguageCodeFromspråkkode(språkkode),
-                                      title: 'Malform.Beskrivelse',
-                                    },
-                                  ]}
-                                />
-                                <VerticalSpacer fourPx />
-                                <a
-                                  href=""
-                                  onClick={e => {
-                                    this.previewMessage(e, previewCallback);
-                                  }}
-                                  className={styles.previewLink}
-                                >
-                                  <FormattedMessage id="Messages.PreviewText" />
-                                </a>
-                              </ArrowBox>
-                            </div>
-                          ),
-                        },
-                        {
-                          value: `${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`,
-                          label: <FormattedMessage id={'Avregning.OpprettMenIkkeSendVarsel'} />,
-                        },
-                        {
-                          value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
-                          label: <FormattedMessage id="Avregning.avvent" />,
-                        },
-                      ]}
-                    />
+                    <Button
+                      variant="primary"
+                      size="small"
+                      type="button"
+                      onClick={formProps.handleSubmit}
+                      disabled={formProps.invalid || formProps.pristine || formProps.submitting}
+                      loading={formProps.submitting}
+                    >
+                      <FormattedMessage id="SubmitButton.ConfirmInformation" />
+                    </Button>
                   </div>
-                )}
-              </HGrid>
-              <HGrid className="mt-4" gap="1" columns={{ xs: '6fr 6fr' }}>
-                <div>
-                  <Button
-                    variant="primary"
-                    size="small"
-                    type="button"
-                    onClick={formProps.handleSubmit}
-                    disabled={formProps.invalid || formProps.pristine || formProps.submitting}
-                    loading={formProps.submitting}
-                  >
-                    <FormattedMessage id="SubmitButton.ConfirmInformation" />
-                  </Button>
-                </div>
-              </HGrid>
-            </form>
-          </div>
-        )}
+                </HGrid>
+              </form>
+            </VStack>
+          )}
+          <KontrollerEtterbetalingIndex
+            aksjonspunkt={aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_HØY_ETTERBETALING)}
+            behandling={behandling}
+            readOnly={readOnly}
+          />
+        </VStack>
       </>
     );
   }
@@ -309,6 +323,7 @@ const buildInitialValues = createSelector(
         : tilbakekrevingvalg.videreBehandling.kode,
       varseltekst: tilbakekrevingvalg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
+      aksjonspunkter,
     };
   },
 );
@@ -317,22 +332,17 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
   const onSubmit = values => ownPropsStatic.submitCallback([transformValues(values, ownPropsStatic.apCodes[0])]);
 
   return (state, ownProps) => {
-    const {
-      språkkode,
-      behandlingId,
-      behandlingVersjon,
-      tilbakekrevingvalg,
-      simuleringResultat,
-      fagsak,
-      featureToggles,
-    } = ownProps;
+    const { språkkode, tilbakekrevingvalg, simuleringResultat, fagsak, featureToggles, behandling } = ownProps;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
-      varseltekst: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'varseltekst'),
+      harVurderFeilutbetalingAP: ownProps.apCodes.includes(aksjonspunktCodes.VURDER_FEILUTBETALING),
+      harSjekkHøyEtterbetalingAP: ownProps.apCodes.includes(aksjonspunktCodes.VURDER_FEILUTBETALING_HØY_UTBETALING),
+      behandling,
+      varseltekst: behandlingFormValueSelector(formName, behandling.id, behandling.versjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
-      behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
+      behandlingFormPrefix: getBehandlingFormPrefix(behandling.id, behandling.versjon),
       featureUtvidetVarselfelt: featureToggles?.UTVIDET_VARSELFELT,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
