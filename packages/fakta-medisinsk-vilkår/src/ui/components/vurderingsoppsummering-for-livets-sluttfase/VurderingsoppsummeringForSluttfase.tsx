@@ -1,12 +1,12 @@
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Box } from '@navikt/ds-react';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import DokumentLink from '../dokument-link/DokumentLink';
 
 interface VurderingsoppsummeringForSluttfaseProps {
@@ -60,7 +60,7 @@ const VurderingsoppsummeringForSluttfase = ({
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
-          <AssessedBy ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
+          <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
         </Box>
       </Box>
     </DetailViewVurdering>

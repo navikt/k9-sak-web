@@ -1,8 +1,7 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { useContext, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
@@ -10,6 +9,7 @@ import Relasjon from '../../../types/Relasjon';
 import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -45,7 +45,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
+        <VurdertAv ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );
   };

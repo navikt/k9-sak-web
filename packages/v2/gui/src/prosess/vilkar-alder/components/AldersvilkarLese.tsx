@@ -1,5 +1,5 @@
 import { Label } from '@navikt/ds-react';
-import { LabelledContent } from '../../../shared/labelledContent/LabelledContent';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import styleLesemodus from './AldersvilkarLese.module.css';
 
 type Props = {
