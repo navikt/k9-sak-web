@@ -15,6 +15,7 @@ import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, requ
 import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
+import { AksjonspunktDtoDefinisjon } from '@navikt/k9-sak-typescript-client';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -267,7 +268,9 @@ export class AvregningPanelImpl extends Component {
             </VStack>
           )}
           <KontrollerEtterbetalingIndex
-            aksjonspunkt={aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_HØY_ETTERBETALING)}
+            aksjonspunkt={aksjonspunkter.find(
+              ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+            )}
             behandling={behandling}
             readOnly={readOnly}
           />
