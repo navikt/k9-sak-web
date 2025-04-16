@@ -28,7 +28,8 @@ declare module 'yup' {
  * Eks:
  * import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
  *
- * yup.string().validFreetextChars(invalidTextRegex)
+ * yup.string().validFreetextChars(invalidTextRegex);
+ * yup.string().validFreetextChars(invalidTextRegex, 'Ugyldige tegn i teksten');
  */
 yup.addMethod(yup.string, 'validChars', function (validationRegex: RegExp, message?: string) {
   return this.test('invalid-characters', 'Teksten inneholder ugyldige tegn: ${invalidChars}', function (value) {
