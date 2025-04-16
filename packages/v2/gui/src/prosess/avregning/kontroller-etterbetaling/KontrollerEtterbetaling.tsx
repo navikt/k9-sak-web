@@ -55,22 +55,25 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   });
 
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
-    setLoading(true);
-    const requestBody: BekreftKontrollerEtterbetalingAksjonspunktRequest = {
-      behandlingId: `${behandling.id}`,
-      behandlingVersjon: behandling.versjon,
-      bekreftedeAksjonspunktDtoer: [
-        {
-          '@type': aksjonspunkt.definisjon || '',
-          kode: aksjonspunkt.definisjon,
-          begrunnelse: data.begrunnelse,
-        },
-      ],
-    };
+    try {
+      setLoading(true);
+      const requestBody: BekreftKontrollerEtterbetalingAksjonspunktRequest = {
+        behandlingId: `${behandling.id}`,
+        behandlingVersjon: behandling.versjon,
+        bekreftedeAksjonspunktDtoer: [
+          {
+            '@type': aksjonspunkt.definisjon || '',
+            kode: aksjonspunkt.definisjon,
+            begrunnelse: data.begrunnelse,
+          },
+        ],
+      };
 
-    await api.bekreftAksjonspunkt(requestBody);
-    setLoading(false);
-    oppdaterBehandling();
+      await api.bekreftAksjonspunkt(requestBody);
+      oppdaterBehandling();
+    } finally {
+      setLoading(false);
+    }
   };
 
   const {
