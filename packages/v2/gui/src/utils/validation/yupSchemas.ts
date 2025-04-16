@@ -10,7 +10,9 @@ import * as yup from 'yup';
  *
  * og benytte metoden slik:
  *
- * yup.string().validFreetextChars()
+ *  import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
+ *
+ *  yup.string().validChars(invalidTextRegex)
  *
  */
 
@@ -26,10 +28,10 @@ declare module 'yup' {
  * Returnerer så en feilmelding som inneholder de ugyldige tegnene
  *
  * Eks:
- * import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
+ *  import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
  *
- * yup.string().validFreetextChars(invalidTextRegex);
- * yup.string().validFreetextChars(invalidTextRegex, 'Ugyldige tegn i teksten');
+ *  yup.string().validChars(invalidTextRegex);
+ *  yup.string().validChars(invalidTextRegex, 'Ugyldige tegn i teksten');
  */
 yup.addMethod(yup.string, 'validChars', function (validationRegex: RegExp, message?: string) {
   return this.test('invalid-characters', 'Teksten inneholder ugyldige tegn: ${invalidChars}', function (value) {
@@ -45,7 +47,8 @@ yup.addMethod(yup.string, 'validChars', function (validationRegex: RegExp, messa
  * Legger til en metode for å validere om en streng er endret sammenlignet med en gitt streng
  * Returnerer en feilmelding hvis strengen ikke er endret
  *
- * Eks: yup.string().isChangedComparedTo(initialValues.begrunnelse)
+ * Eks:
+ *  yup.string().isChangedComparedTo(initialValues.begrunnelse)
  */
 yup.addMethod(yup.string, 'isChangedComparedTo', function (compareTo: string) {
   return this.test('is-changed', 'Innholdet er ikke endret fra tidligere.', function (value) {
