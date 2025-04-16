@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import { invalidTextRegex } from './regexes';
 
 /*
  * Utvider Yup med egne metoder for validering
@@ -11,13 +10,13 @@ import { invalidTextRegex } from './regexes';
  *
  * og benytte metoden slik:
  *
- * yup.string().invalidTextValidationSchema()
+ * yup.string().validFreetextChars()
  *
  */
 
 declare module 'yup' {
   interface StringSchema {
-    invalidTextValidationSchema(): this;
+    validFreetextChars(validationRegex: RegExp): this;
     isChangedComparedTo(compareTo: string): this;
   }
 }
@@ -26,11 +25,14 @@ declare module 'yup' {
  * Legger til en metode for å validere om tekst inneholder ugyldige tegn
  * Returnerer så en feilmelding som inneholder de ugyldige tegnene
  *
- * Eks: yup.string().invalidTextValidationSchema()
+ * Eks:
+ * import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
+ *
+ * yup.string().validFreetextChars(invalidTextRegex)
  */
-yup.addMethod(yup.string, 'invalidTextValidationSchema', function () {
+yup.addMethod(yup.string, 'validFreetextChars', function (validationRegex: RegExp) {
   return this.test('invalid-characters', 'Teksten inneholder ugyldige tegn: ${invalidChars}', function (value) {
-    const invalidChars = findInvalidCharacters(value || '').join(', ');
+    const invalidChars = findInvalidCharacters(value || '', validationRegex).join(', ');
     return (
       invalidChars.length === 0 || this.createError({ message: `Teksten inneholder ugyldige tegn: ${invalidChars}` })
     );
@@ -51,11 +53,12 @@ yup.addMethod(yup.string, 'isChangedComparedTo', function (compareTo: string) {
 });
 
 /**
- * Bruker invalidTextRegex for å finne ugyldige tegn i teksten, og returnerer de ugyl
+ * Bruker regex sendt inn for å finne ugyldige tegn i teksten, og returnerer de ugyldige tegnene
  * @param text Streng som skal valideres
+ * @param regex Regex som brukes til å finne ugyldige tegn
  * @returns Array med ugyldige tegn i teksten
  */
-export const findInvalidCharacters = (text: string): string[] => {
-  const matches = text.match(invalidTextRegex);
+export const findInvalidCharacters = (text: string, regex: RegExp): string[] => {
+  const matches = text.match(regex);
   return matches ? Array.from(new Set(matches)) : [];
 };
