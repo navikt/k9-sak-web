@@ -105,6 +105,9 @@ const getModalDescriptionTextCode = (
   if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
+  if(ytelseType === fagsakYtelsesType.OPPLAERINGSPENGER) {
+    return 'Opplæringspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+  }
   if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
