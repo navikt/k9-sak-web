@@ -42,7 +42,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   const kontrollerEtterbetalingFormSchema: yup.ObjectSchema<KontrollerEtterbetalingFormData> = yup.object({
     begrunnelse: yup
       .string()
-      .validFreetextChars(invalidTextRegex)
+      .validChars(invalidTextRegex)
       .min(3, 'Du må skrive minst tre tegn')
       .max(1500, 'Maks 1500 tegn tillatt.')
       .required('Begrunnelse må fylles ut')

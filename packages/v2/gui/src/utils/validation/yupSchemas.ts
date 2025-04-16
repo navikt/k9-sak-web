@@ -16,7 +16,7 @@ import * as yup from 'yup';
 
 declare module 'yup' {
   interface StringSchema {
-    validFreetextChars(validationRegex: RegExp, message?: string): this;
+    validChars(validationRegex: RegExp, message?: string): this;
     isChangedComparedTo(compareTo: string): this;
   }
 }
@@ -30,7 +30,7 @@ declare module 'yup' {
  *
  * yup.string().validFreetextChars(invalidTextRegex)
  */
-yup.addMethod(yup.string, 'validFreetextChars', function (validationRegex: RegExp, message?: string) {
+yup.addMethod(yup.string, 'validChars', function (validationRegex: RegExp, message?: string) {
   return this.test('invalid-characters', 'Teksten inneholder ugyldige tegn: ${invalidChars}', function (value) {
     const invalidChars = findInvalidCharacters(value || '', validationRegex).join(', ');
     return (
