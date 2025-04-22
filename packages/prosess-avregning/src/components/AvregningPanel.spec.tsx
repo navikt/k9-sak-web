@@ -171,6 +171,8 @@ describe('<AvregningPanelImpl>', () => {
   it('skal rendre form med RadioGroup med to valg når aksjonspunkt 5084 er aktivt', () => {
     const props = {
       ...mockProps,
+      harVurderFeilutbetalingAP: true,
+      harSjekkHøyEtterbetalingAP: false,
       apCodes: ['5084'],
     };
     renderWithIntlAndReduxForm(<AvregningPanelImpl {...props} />, { messages });
