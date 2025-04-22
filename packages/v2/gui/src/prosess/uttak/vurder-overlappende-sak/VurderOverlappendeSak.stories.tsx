@@ -379,7 +379,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
           await user.click(await canvas.findByRole('button', { name: 'Gå til neste måned' }));
         }
 
-        if (tom1.isSame(dagenEtter, 'month')) {
+        if (fom1.isSame(dagenEtter, 'month')) {
           await expect(await canvas.findByRole('button', { name: `${dagenEtter.format('dddd D')}` })).toBeDisabled();
         } else {
           await user.click(await canvas.findByRole('button', { name: 'Gå til neste måned' }));
