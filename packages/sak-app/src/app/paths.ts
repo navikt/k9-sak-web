@@ -1,8 +1,8 @@
-import {Location, Search} from 'history';
+import { Location, Search } from 'history';
 
-import {buildPath, formatQueryString, parseQueryString} from '@fpsak-frontend/utils';
-import {skjermlenkeCodes} from '@k9-sak-web/konstanter';
-import {IS_DEV} from '../constants';
+import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
+import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { IS_DEV } from '../constants';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';
@@ -97,7 +97,7 @@ export const createLocationForSkjermlenke = (behandlingLocation: Location, skjer
   return getLocationWithQueryParams(behandlingLocation, {
     punkt: skjermlenke.punktNavn,
     fakta: skjermlenke.faktaNavn,
-    tab: skjermlenke.tabNavn
+    tab: skjermlenke.tabNavn,
   });
 };
 
@@ -117,7 +117,9 @@ export const redirectToLogin = () => {
 
 export const goToLos = () => {
   const path = getPathToK9Los();
-  window.location.assign(path);
+  if (path != null) {
+    window.location.assign(path);
+  }
 };
 
 export const goToSearch = () => {
