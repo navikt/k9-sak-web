@@ -7,7 +7,6 @@ import {
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -34,7 +33,10 @@ import styles from './avregningPanel.module.css';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const maxLength12000 = maxLength(12000);
-const simuleringAksjonspunkter = [aksjonspunktCodes.VURDER_FEILUTBETALING];
+const simuleringAksjonspunkter = [
+  AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
+  AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+];
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
 
@@ -156,7 +158,6 @@ export class AvregningPanelImpl extends Component {
               )}
             </VStack>
           )}
-
           {!simuleringResultat && <FormattedMessage id="Avregning.ingenData" />}
           {harVurderFeilutbetalingAP && (
             <VStack gap="2">
@@ -342,8 +343,8 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
-      harVurderFeilutbetalingAP: ownProps.apCodes.includes(aksjonspunktCodes.VURDER_FEILUTBETALING),
-      harSjekkHøyEtterbetalingAP: ownProps.apCodes.includes(aksjonspunktCodes.VURDER_FEILUTBETALING_HØY_UTBETALING),
+      harVurderFeilutbetalingAP: ownProps.apCodes.includes(AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING),
+      harSjekkHøyEtterbetalingAP: ownProps.apCodes.includes(AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING),
       behandling,
       varseltekst: behandlingFormValueSelector(formName, behandling.id, behandling.versjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
