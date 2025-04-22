@@ -1,12 +1,7 @@
-import { BodyShort, Heading, Tag } from '@navikt/ds-react';
-import {
-  ContentWithTooltip,
-  EditedBySaksbehandlerIcon,
-  InfoIcon,
-  InteractiveList,
-  WarningIcon,
-} from '@navikt/ft-plattform-komponenter';
 import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
+import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
+import { BodyShort, Heading, Tag } from '@navikt/ds-react';
+import { ContentWithTooltip, EditedBySaksbehandlerIcon, InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, type JSX } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';
@@ -89,9 +84,11 @@ const Vurderingsnavigasjon = ({
     allElements.unshift(
       <Vurderingsperioder
         indicatorContentRenderer={() => (
-          <ContentWithTooltip tooltipText="Perioden må vurderes">
-            <WarningIcon />
-          </ContentWithTooltip>
+          <ExclamationmarkTriangleFillIcon
+            title="Perioden må vurderes"
+            fontSize="1.5rem"
+            style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+          />
         )}
         visParterLabel={visParterLabel}
         perioder={resterendeVurderingsperioder || []}
@@ -101,9 +98,11 @@ const Vurderingsnavigasjon = ({
     allElements.unshift(
       <Vurderingsperioder
         indicatorContentRenderer={() => (
-          <ContentWithTooltip tooltipText="Perioden kan vurderes">
-            <InfoIcon />
-          </ContentWithTooltip>
+          <InformationSquareFillIcon
+            title="Perioden kan vurderes"
+            fontSize="1.5rem"
+            style={{ color: 'var(--a-lightblue-700)' }}
+          />
         )}
         visParterLabel={visParterLabel}
         perioder={resterendeValgfrieVurderingsperioder || []}

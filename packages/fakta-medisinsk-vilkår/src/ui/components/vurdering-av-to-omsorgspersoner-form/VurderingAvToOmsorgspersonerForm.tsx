@@ -2,7 +2,7 @@ import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF 
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { PersonIcon } from '@navikt/aksel-icons';
-import { Alert, Bleed, Box, Link } from '@navikt/ds-react';
+import { Alert, Box, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -142,11 +142,7 @@ const VurderingAvToOmsorgspersonerForm = ({
                     <DokumentLink
                       dokument={dokument}
                       etikett={
-                        dokument.annenPartErKilde && (
-                          <Bleed marginBlock="2" marginInline="1">
-                            <PersonIcon fontSize="2rem" title="Dokument fra annen part" />
-                          </Bleed>
-                        )
+                        dokument.annenPartErKilde && <PersonIcon fontSize="1.5rem" title="Dokument fra annen part" />
                       }
                     />
                   ),

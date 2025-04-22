@@ -1,12 +1,12 @@
-import {
-  ContentWithTooltip,
-  GreenCheckIconFilled,
-  InstitutionIcon,
-  RedCrossIconFilled,
-  WarningIcon,
-} from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/ft-utils';
 
+import {
+  Buildings3Icon,
+  CheckmarkCircleFillIcon,
+  ExclamationmarkTriangleFillIcon,
+  XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
+import { Tooltip } from '@navikt/ds-react';
 import { OverlayedIcons } from '../indicatorWithOverlay/IndicatorWithOverlay';
 import styles from './periodeRad.module.css';
 import type { ResultatType } from './VurderingsperiodeNavigasjon';
@@ -19,35 +19,42 @@ interface OwnProps {
 const renderStatusIcon = (resultat?: ResultatType) => {
   if (!resultat || resultat === Resultat.MÅ_VURDERES) {
     return (
-      <ContentWithTooltip tooltipText="Perioden må vurderes">
-        <WarningIcon />
-      </ContentWithTooltip>
+      <ExclamationmarkTriangleFillIcon
+        title="Perioden må vurderes"
+        fontSize="1.5rem"
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+      />
     );
   }
 
   if (resultat === Resultat.GODKJENT_AUTOMATISK) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
+      <Tooltip content="Vilkåret er automatisk oppfylt">
         <OverlayedIcons
-          indicatorRenderer={() => <GreenCheckIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
+          indicatorRenderer={() => (
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+          )}
+          overlayRenderer={() => <Buildings3Icon fontSize={24} />}
         />
-      </ContentWithTooltip>
+      </Tooltip>
     );
   }
 
   if (resultat === Resultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
-        <OverlayedIcons indicatorRenderer={() => <RedCrossIconFilled />} overlayRenderer={() => <InstitutionIcon />} />
-      </ContentWithTooltip>
+      <Tooltip content="Vilkåret er automatisk ikke oppfylt">
+        <OverlayedIcons
+          indicatorRenderer={() => <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />}
+          overlayRenderer={() => <Buildings3Icon fontSize={24} />}
+        />
+      </Tooltip>
     );
   }
   if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT || resultat === Resultat.GODKJENT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
-        <GreenCheckIconFilled />
-      </ContentWithTooltip>
+      <Tooltip content="Vilkåret er oppfylt">
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+      </Tooltip>
     );
   }
   if (
@@ -56,9 +63,11 @@ const renderStatusIcon = (resultat?: ResultatType) => {
     resultat === Resultat.IKKE_GODKJENT
   ) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
-        <RedCrossIconFilled />
-      </ContentWithTooltip>
+      <XMarkOctagonFillIcon
+        title="Vilkåret er ikke oppfylt"
+        fontSize={24}
+        style={{ color: 'var(--a-surface-danger)' }}
+      />
     );
   }
   return null;

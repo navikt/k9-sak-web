@@ -36,10 +36,10 @@ const renderStatusIcon = (resultat: Vurderingsresultat) => {
 
 const renderKildeIcon = (kilde: Kilde) => {
   if (kilde === Kilde.ANDRE) {
-    return <PersonIcon title="Annen part" fontSize="1.875rem" />;
+    return <PersonIcon title="Annen part" fontSize="1.5rem" />;
   }
 
-  return <PersonFillIcon title="Søker" fontSize="1.875rem" />;
+  return <PersonFillIcon title="Søker" fontSize="1.5rem" />;
 };
 
 const VurderingsperiodeElement = ({

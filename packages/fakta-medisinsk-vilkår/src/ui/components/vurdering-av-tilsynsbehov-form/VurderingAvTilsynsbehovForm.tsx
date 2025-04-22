@@ -3,7 +3,7 @@ import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Bleed, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
+import { Alert, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
 import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -233,9 +233,7 @@ const VurderingAvTilsynsbehovForm = ({
                           <div className={styles.dokumentEtiketter}>
                             {dokument.annenPartErKilde && (
                               <Tooltip content="Dokument fra annen part" placement="right">
-                                <Bleed marginBlock="2" marginInline="1">
-                                  <PersonIcon fontSize="1.75rem" />
-                                </Bleed>
+                                <PersonIcon fontSize="1.5rem" />
                               </Tooltip>
                             )}
                             {dokument.bruktTilMinstEnVurdering && (

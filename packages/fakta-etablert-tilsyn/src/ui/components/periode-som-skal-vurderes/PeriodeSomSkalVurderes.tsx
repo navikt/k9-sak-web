@@ -23,8 +23,7 @@ const PeriodeSomSkalVurderes = ({ periode }: PeriodeSomSkalVurderesProps) => (
       </div>
       <div className={styles.periodeSomSkalVurderes__texts__kildeIcon}>
         <span className={styles.visuallyHidden}>Kilde</span>
-
-        <PersonFillIcon fontSize="1.875rem" title="Søker" />
+        <PersonFillIcon fontSize="1.5rem" title="Søker" />
       </div>
     </div>
   </div>

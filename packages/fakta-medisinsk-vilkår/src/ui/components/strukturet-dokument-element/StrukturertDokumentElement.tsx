@@ -1,7 +1,5 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
-import { Bleed } from '@navikt/ds-react';
-import { ContentWithTooltip, DuplicateDocumentsIcon, GreenCheckIconFilled } from '@navikt/ft-plattform-komponenter';
+import { CheckmarkCircleFillIcon, FilesFillIcon, PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
 import { type JSX } from 'react';
 import Dokument, { dokumentLabel } from '../../../types/Dokument';
 import styles from './strukturertDokumentElement.module.css';
@@ -24,25 +22,19 @@ const StrukturertDokumentElement = ({
 
   const parterLabel = () => {
     if (annenPartErKilde) {
-      return (
-        <Bleed marginBlock="2" marginInline="1">
-          <PersonIcon fontSize="2rem" title="Annen part" />
-        </Bleed>
-      );
+      return <PersonIcon fontSize="1.5rem" title="Annen part" />;
     }
-    return (
-      <Bleed marginBlock="2" marginInline="1">
-        <PersonFillIcon fontSize="2rem" title="Søker" />
-      </Bleed>
-    );
+    return <PersonFillIcon fontSize="1.5rem" title="Søker" />;
   };
 
   return (
     <div className={styles.strukturertDokumentElement}>
       <span className={styles.visuallyHidden}>Status</span>
-      <ContentWithTooltip tooltipText="Dokumentet er ferdig håndtert">
-        <GreenCheckIconFilled />
-      </ContentWithTooltip>
+      <CheckmarkCircleFillIcon
+        title="Dokumentet er ferdig håndtert"
+        fontSize={24}
+        style={{ color: 'var(--a-surface-success)' }}
+      />
       <div className={styles.strukturertDokumentElement__texts}>
         <p className={styles.strukturertDokumentElement__texts__type}>
           <span className={styles.visuallyHidden}>Type</span>
@@ -58,9 +50,7 @@ const StrukturertDokumentElement = ({
         </span>
         {harDuplikater && (
           <span className={styles.strukturertDokumentElement__texts__document}>
-            <ContentWithTooltip tooltipText="Det finnes ett eller flere duplikater av dette dokumentet">
-              <DuplicateDocumentsIcon />
-            </ContentWithTooltip>
+            <FilesFillIcon title="Det finnes ett eller flere duplikater av dette dokumentet" fontSize="1.5rem" />
           </span>
         )}
       </div>

@@ -3,7 +3,7 @@ import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Bleed, Box, Label, Link, Tooltip } from '@navikt/ds-react';
+import { Alert, Box, Label, Link, Tooltip } from '@navikt/ds-react';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -217,9 +217,7 @@ const VurderingLangvarigSykdomForm = ({
                         etikett={
                           <div className={styles.dokumentEtiketter}>
                             {dokument.annenPartErKilde && (
-                              <Bleed marginBlock="2" marginInline="1">
-                                <PersonIcon fontSize="2rem" title="Dokument fra annen part" />
-                              </Bleed>
+                              <PersonIcon fontSize="1.5rem" title="Dokument fra annen part" />
                             )}
                             {dokument.bruktTilMinstEnVurdering && (
                               <Tooltip content="Dokumentet er brukt i en annen vurdering">

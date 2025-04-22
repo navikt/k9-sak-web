@@ -1,6 +1,5 @@
 import { Period } from '@fpsak-frontend/utils';
 import { PersonFillIcon } from '@navikt/aksel-icons';
-import { Bleed } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import styles from './vurderingsperioder.module.css';
 
@@ -35,9 +34,7 @@ const Vurderingsperioder = ({
       {visParterLabel && (
         <div className={styles.vurderingsperioder__texts__parterIcon}>
           <span className={styles.visuallyHidden}>Parter</span>
-          <Bleed marginBlock="2" marginInline="1">
-            <PersonFillIcon fontSize="2rem" title="Søker" />
-          </Bleed>
+          <PersonFillIcon fontSize="1.5rem" title="Søker" />
         </div>
       )}
     </div>

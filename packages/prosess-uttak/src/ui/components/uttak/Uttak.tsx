@@ -1,10 +1,13 @@
-import { PersonFillIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, HelpText, Table } from '@navikt/ds-react';
+import {
+  CheckmarkCircleFillIcon,
+  PersonFillIcon,
+  PersonPencilFillIcon,
+  XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
+import { BodyShort, HelpText, Table } from '@navikt/ds-react';
 import {
   ChevronIconBlack,
   ContentWithTooltip,
-  GreenCheckIconFilled,
-  RedCrossIconFilled,
   TwoPersonsWithOneHighlightedIconGray,
 } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
@@ -78,23 +81,33 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           </BodyShort>
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.uttak__vilkarIconContainer}`}>
-          {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
+          {harOppfyltAlleInngangsvilkår ? (
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+          ) : (
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+          )}
         </Table.DataCell>
         {erFagytelsetypeLivetsSluttfase && (
-          <Table.DataCell>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</Table.DataCell>
+          <Table.DataCell>
+            {uttaksgrad === 0 ? (
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            ) : (
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            )}
+          </Table.DataCell>
         )}
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           <div className={styles.uttak__iconContainer}>
-            {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
+            {harPleiebehov ? (
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            ) : (
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            )}
           </div>
           {harPleiebehov && !erFagytelsetypeLivetsSluttfase ? `${pleiebehov}%` : null}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          {uttak.annenPart === AnnenPart.ALENE && (
-            <Bleed marginBlock="2" marginInline="1">
-              <PersonFillIcon title="Søker" fontSize="2rem" />
-            </Bleed>
-          )}
+          {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
           {uttak.annenPart === AnnenPart.MED_ANDRE && (
             <ContentWithTooltip tooltipText="Søker/Annen part">
               <TwoPersonsWithOneHighlightedIconGray />

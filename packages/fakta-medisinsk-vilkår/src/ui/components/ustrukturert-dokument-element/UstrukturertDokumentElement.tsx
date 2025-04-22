@@ -1,7 +1,6 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
-import { Bleed } from '@navikt/ds-react';
-import { ContentWithTooltip, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { ExclamationmarkTriangleFillIcon, PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
+import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
 import { Dokument, dokumentLabel } from '../../../types/Dokument';
 import styles from './ustrukturertDokumentElement.module.css';
@@ -15,24 +14,19 @@ const UstrukturertDokumentElement = ({
 }: UstrukturertDokumentElementProps): JSX.Element => {
   const parterLabel = () => {
     if (annenPartErKilde) {
-      return (
-        <Bleed marginBlock="2" marginInline="1">
-          <PersonIcon fontSize="2rem" title="Annen part" />
-        </Bleed>
-      );
+      return <PersonIcon fontSize="1.5rem" title="Annen part" />;
     }
-    return (
-      <Bleed marginBlock="2" marginInline="1">
-        <PersonFillIcon fontSize="2rem" title="Søker" />
-      </Bleed>
-    );
+    return <PersonFillIcon fontSize="1.5rem" title="Søker" />;
   };
 
   return (
     <div className={styles.ustrukturertDokumentElement}>
-      <ContentWithTooltip tooltipText="Dokumentet må håndteres">
-        <WarningIcon />
-      </ContentWithTooltip>
+      <ExclamationmarkTriangleFillIcon
+        title="Dokumentet må håndteres"
+        fontSize="1.5rem"
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+      />
+
       <div className={styles.ustrukturertDokumentElement__texts}>
         <p className={styles.ustrukturertDokumentElement__texts__type} id="ikkeKlassifisertText">
           <span className={styles.visuallyHidden}>Type</span>

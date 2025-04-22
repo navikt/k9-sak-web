@@ -1,7 +1,7 @@
 import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { MinusIcon, PersonFillIcon, PersonIcon, PlusCircleIcon } from '@navikt/aksel-icons';
-import { Bleed, Button, VStack } from '@navikt/ds-react';
+import { Button, VStack } from '@navikt/ds-react';
 import { useState, type JSX } from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
@@ -17,13 +17,9 @@ const getLabel = (periodebeskrivelse: Beskrivelse) => {
   return (
     <div className={styles.beskrivelserForPerioden__label}>
       {periodebeskrivelse.kilde === Kilde.ANDRE ? (
-        <Bleed marginBlock="2" marginInline="1">
-          <PersonIcon fontSize="2rem" title="Annen part" />
-        </Bleed>
+        <PersonIcon fontSize="1.5rem" title="Annen part" />
       ) : (
-        <Bleed marginBlock="2" marginInline="1">
-          <PersonFillIcon fontSize="2rem" title="Søker" />
-        </Bleed>
+        <PersonFillIcon fontSize="1.5rem" title="Søker" />
       )}
       <p className={styles.beskrivelserForPerioden__labelText}>
         {`Beskrivelse fra ${kilde}
