@@ -15,10 +15,10 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "^7.2.13",
+    "@navikt/ft-plattform-komponenter": "^9.0.2",
     "classnames": "2.5.1",
     "react": "19.1.0",
-    "react-intl": "7.1.10",
+    "react-intl": "7.1.11",
     "react-redux": "9.2.0",
     "redux-form": "8.3.10"
   }
