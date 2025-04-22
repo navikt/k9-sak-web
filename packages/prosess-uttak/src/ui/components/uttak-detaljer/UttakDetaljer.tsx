@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import * as React from 'react';
 
+import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, PersonFillIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
-import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
-import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
+import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import Utfall from '../../../constants/Utfall';
@@ -11,9 +11,9 @@ import Årsaker from '../../../constants/Årsaker';
 import { UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
-import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
 import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
+import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
 
 import styles from './uttakDetaljer.module.css';
 
@@ -84,9 +84,7 @@ const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsake
           <GreenCheckIcon size={19} />
         </div>
       )}
-      <ContentWithTooltip tooltipText="Søker">
-        <OnePersonIconBlue />
-      </ContentWithTooltip>
+      <PersonFillIcon title="Søker" fontSize="1.5rem" style={{ color: 'var(--a-blue-500)' }} />
       <p className={styles.uttakDetaljer__oppsummering__tekst}>{`Søker ber om maksimalt: ${søkerBerOmMaksimalt} %`}</p>
     </div>
   );

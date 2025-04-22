@@ -1,15 +1,12 @@
 import {
   CheckmarkCircleFillIcon,
   PersonFillIcon,
+  PersonGroupFillIcon,
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { BodyShort, HelpText, Table } from '@navikt/ds-react';
-import {
-  ChevronIconBlack,
-  ContentWithTooltip,
-  TwoPersonsWithOneHighlightedIconGray,
-} from '@navikt/ft-plattform-komponenter';
+import { BodyShort, HelpText, Table, Tooltip } from '@navikt/ds-react';
+import { ChevronIconBlack } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
@@ -109,9 +106,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
           {uttak.annenPart === AnnenPart.MED_ANDRE && (
-            <ContentWithTooltip tooltipText="Søker/Annen part">
-              <TwoPersonsWithOneHighlightedIconGray />
-            </ContentWithTooltip>
+            <Tooltip content="Søker/Annen part">
+              <PersonGroupFillIcon fontSize="1.5rem" />
+            </Tooltip>
           )}
         </Table.DataCell>
 

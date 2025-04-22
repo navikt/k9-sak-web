@@ -2,11 +2,11 @@ import {
   Buildings3Icon,
   CheckmarkCircleFillIcon,
   PersonFillIcon,
+  PersonGroupFillIcon,
   PersonIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 import { Tooltip } from '@navikt/ds-react';
-import { ContentWithTooltip, TwoPersonsWithOneHighlightedIconGray } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';
@@ -72,11 +72,9 @@ const renderStatusIndicator = (vurderingselement: Vurderingselement) => {
 const renderPersonIcon = ({ gjelderForAnnenPart, gjelderForSøker }: ManuellVurdering) => {
   if (gjelderForAnnenPart && gjelderForSøker) {
     return (
-      <ContentWithTooltip tooltipText="Søker og annen part">
-        <div className={styles['vurderingsperiodeElement__texts__parterIcon--wide']}>
-          <TwoPersonsWithOneHighlightedIconGray />
-        </div>
-      </ContentWithTooltip>
+      <Tooltip content="Søker og annen part">
+        <PersonGroupFillIcon fontSize="1.5rem" />
+      </Tooltip>
     );
   }
   if (gjelderForAnnenPart) {

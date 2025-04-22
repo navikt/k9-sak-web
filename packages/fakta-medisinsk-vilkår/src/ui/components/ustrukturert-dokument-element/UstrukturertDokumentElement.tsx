@@ -1,6 +1,6 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon, PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
-import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
+import { Tooltip } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import { Dokument, dokumentLabel } from '../../../types/Dokument';
 import styles from './ustrukturertDokumentElement.module.css';
@@ -34,9 +34,9 @@ const UstrukturertDokumentElement = ({
         </p>
         <span className={styles.ustrukturertDokumentElement__texts__date}>
           <span className={styles.visuallyHidden}>Datert</span>
-          <ContentWithTooltip inline tooltipText="Dato dokumentet ble mottatt">
-            {`${prettifyDateString(datert || mottattDato)}*`}
-          </ContentWithTooltip>
+          <Tooltip content="Dato dokumentet ble mottatt">
+            <div>{`${prettifyDateString(datert || mottattDato)}*`}</div>
+          </Tooltip>
         </span>
         <span className={styles.ustrukturertDokumentElement__texts__part}>
           <span className={styles.visuallyHidden}>Part</span>
