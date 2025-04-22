@@ -368,7 +368,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
       });
 
       await step('dagene før og etter perioden som skal splittes skal være disabled', async () => {
-        const dagenFør = fom1.subtract(3, 'week');
+        const dagenFør = fom1.subtract(1, 'day');
         const dagenEtter = tom1.add(1, 'day');
 
         if (fom1.isSame(dagenFør, 'month')) {
