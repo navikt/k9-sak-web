@@ -1,12 +1,13 @@
 import {
   CheckmarkCircleFillIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   PersonFillIcon,
   PersonGroupFillIcon,
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { BodyShort, HelpText, Table, Tooltip } from '@navikt/ds-react';
-import { ChevronIconBlack } from '@navikt/ft-plattform-komponenter';
+import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
 import classNames from 'classnames/bind';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
@@ -121,15 +122,14 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
             <div className={styles.uttak__behandlerIcon}>
               <Endringsstatus status={endringsstatus} />
             </div>
-            <button
+            <Button
+              size="xsmall"
+              variant="tertiary-neutral"
               onClick={velgPeriode}
-              type="button"
-              className={`${styles.uttak__expandButton} ${erValgt && styles['uttak__expandButton--expanded']}`}
               aria-label={erValgt ? 'Lukk' : 'Åpne'}
               aria-expanded={erValgt}
-            >
-              <ChevronIconBlack />
-            </button>
+              icon={erValgt ? <ChevronUpIcon fontSize={32} /> : <ChevronDownIcon fontSize={32} />}
+            />
           </div>
         </Table.DataCell>
       </Table.Row>

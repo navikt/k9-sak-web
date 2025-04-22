@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, PersonFillIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
-import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import Utfall from '../../../constants/Utfall';
@@ -81,7 +80,7 @@ const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsake
     <div className={containerCls}>
       {highlightSøkerBerOmMaksimalt && (
         <div className={styles.uttakDetaljer__oppsummering__checkIcon}>
-          <GreenCheckIcon size={19} />
+          <CheckmarkIcon />
         </div>
       )}
       <PersonFillIcon title="Søker" fontSize="1.5rem" style={{ color: 'var(--a-blue-500)' }} />

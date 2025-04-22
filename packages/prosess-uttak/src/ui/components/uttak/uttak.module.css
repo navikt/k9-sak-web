@@ -11,11 +11,6 @@
   float: right;
 }
 
-.uttak__expandButton svg {
-  width: 1.125rem;
-  height: 0.625rem;
-}
-
 .uttak__expandButton--expanded {
   transform: rotate(180deg);
 }
