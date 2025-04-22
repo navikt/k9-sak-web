@@ -141,6 +141,8 @@ export const ArbeidOgInntekt = ({
                         harBrukerrapportertInntekt={harBrukerrapportertInntekt}
                         isSubmitting={isSubmitting}
                         isReadOnly={isReadOnly}
+                        uttalelseFraBruker={inntekt.uttalelseFraBruker}
+                        periode={inntekt.periode}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
@@ -179,8 +181,8 @@ export const ArbeidOgInntekt = ({
                   </Table.DataCell>
                   <Table.DataCell align="right">
                     <BodyShort size="small">
-                      {inntekt.rapporterteInntekter?.register &&
-                        formaterInntekt(inntekt.rapporterteInntekter?.register)}
+                      {inntekt.rapporterteInntekter?.register?.oppsummertRegister &&
+                        formaterInntekt(inntekt.rapporterteInntekter.register.oppsummertRegister)}
                     </BodyShort>
                   </Table.DataCell>
                 </Table.ExpandableRow>
