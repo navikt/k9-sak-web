@@ -1,15 +1,15 @@
 import moment from 'moment';
-import {useCallback, useEffect, useState} from 'react';
-import {useLocation} from 'react-router';
+import { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 
-import {parseQueryString} from '@fpsak-frontend/utils';
+import { parseQueryString } from '@fpsak-frontend/utils';
 import ForbiddenPage from '@k9-sak-web/gui/sak/feilmeldinger/ForbiddenPage.js';
 import UnauthorizedPage from '@k9-sak-web/gui/sak/feilmeldinger/UnauthorizedPage.js';
-import {useRestApiError, useRestApiErrorDispatcher} from '@k9-sak-web/rest-api-hooks';
+import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
-import {NavAnsatt} from '@k9-sak-web/types';
+import { NavAnsatt } from '@k9-sak-web/types';
 
-import {K9sakApiKeys, restApiHooks} from '../data/k9sakApi';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import AppConfigResolver from './AppConfigResolver';
 import ErrorBoundary from './ErrorBoundary';
 import LanguageProvider from './LanguageProvider';
@@ -22,7 +22,7 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const EMPTY_ARRAY = [];
 
