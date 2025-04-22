@@ -203,6 +203,33 @@ visAksjonspunktVurderFeilutbetaling.args = {
   readOnlySubmitButton: false,
 };
 
+export const visAksjonspunktHøyEtterbetaling = args => (
+  <AvregningProsessIndex
+    behandling={behandling}
+    submitCallback={action('button-click')}
+    previewFptilbakeCallback={action('button-click')}
+    featureToggles={toggles}
+    {...args}
+  />
+);
+
+visAksjonspunktHøyEtterbetaling.args = {
+  fagsak,
+  aksjonspunkter: [
+    {
+      definisjon: {
+        kode: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+      },
+      begrunnelse: undefined,
+      erAktivt: true,
+      status: aksjonspunktStatus.OPPRETTET,
+    },
+  ],
+  simuleringResultat,
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+};
 export const visSimuleringspanelUtenAksjonspunkt = args => (
   <AvregningProsessIndex
     behandling={behandling}

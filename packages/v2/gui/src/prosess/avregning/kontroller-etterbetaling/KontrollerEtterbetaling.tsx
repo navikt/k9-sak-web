@@ -7,14 +7,14 @@ import '@k9-sak-web/gui/utils/validation/yupSchemas';
 import type { AksjonspunktDto, BehandlingDto, BekreftData } from '@k9-sak-web/backend/k9sak/generated';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
-import type BehandlingAvregningBackendClient from '../AvregningBackendClient';
+import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
   behandling: BehandlingDto;
   readOnly?: boolean;
-  api: BehandlingAvregningBackendClient;
+  api: BehandlingAvregningBackendApiType;
   oppdaterBehandling: () => void;
 }
 
