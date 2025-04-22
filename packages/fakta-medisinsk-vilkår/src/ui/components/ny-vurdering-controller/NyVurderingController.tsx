@@ -1,6 +1,6 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import { postNyVurdering, postNyVurderingDryRun } from '../../../api/api';
 import Dokument from '../../../types/Dokument';

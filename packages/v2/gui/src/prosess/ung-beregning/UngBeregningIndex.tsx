@@ -10,9 +10,10 @@ interface Props {
   barn: Barn[];
   submitCallback: (data: unknown) => Promise<any>;
   aksjonspunkter: AksjonspunktDto[];
+  isReadOnly: boolean;
 }
 
-const UngBeregningIndex = ({ barn, behandling, submitCallback, aksjonspunkter }: Props) => {
+const UngBeregningIndex = ({ barn, behandling, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
   const ungSakClient = useContext(UngSakClientContext);
   const ungBeregningBackendClient = new UngBeregningBackendClient(ungSakClient);
   return (
@@ -22,6 +23,7 @@ const UngBeregningIndex = ({ barn, behandling, submitCallback, aksjonspunkter }:
       barn={barn}
       submitCallback={submitCallback}
       aksjonspunkter={aksjonspunkter}
+      isReadOnly={isReadOnly}
     />
   );
 };

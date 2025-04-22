@@ -1,7 +1,7 @@
 import { get } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import { IntlProvider } from 'react-intl';
 import { ContainerContract } from '../types/ContainerContract';

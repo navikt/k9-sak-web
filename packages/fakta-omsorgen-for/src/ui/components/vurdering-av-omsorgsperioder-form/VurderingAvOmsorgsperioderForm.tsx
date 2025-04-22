@@ -4,11 +4,12 @@ import { useIntl } from 'react-intl';
 
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Alert, Box, Label } from '@navikt/ds-react';
-import { DetailView, Form } from '@navikt/ft-plattform-komponenter';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
@@ -128,7 +129,7 @@ const VurderingAvOmsorgsperioderForm = ({
               <LabelledContent label="Beskrivelse fra søker" content={omsorgsperiode.relasjonsbeskrivelse} />
             </Box>
           )}
-          <Form
+          <FormWithButtons
             onSubmit={formMethods.handleSubmit(handleSubmit)}
             buttonLabel="Bekreft og fortsett"
             onAvbryt={onAvbryt}
@@ -227,7 +228,7 @@ const VurderingAvOmsorgsperioderForm = ({
                 </Alert>
               </Box>
             )}
-          </Form>
+          </FormWithButtons>
         </FormProvider>
       </DetailView>
     </div>

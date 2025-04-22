@@ -1,7 +1,7 @@
 import { Period } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { DetailView, DetailViewProps } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Button } from '@navikt/ds-react';
-import { DetailView, DetailViewProps } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import BehandlingType from '../../../constants/BehandlingType';
 import ContainerContext from '../../context/ContainerContext';

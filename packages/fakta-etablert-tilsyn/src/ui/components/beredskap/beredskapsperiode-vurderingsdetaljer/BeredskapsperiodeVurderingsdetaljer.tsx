@@ -1,6 +1,6 @@
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelledContent/LabelledContent.js';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { AssessedBy, DetailView } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
@@ -8,6 +8,7 @@ import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
 import styles from './beredskapsperiodeVurderingsdetaljer.module.css';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface BeredskapsperiodeVurderingsdetaljerProps {
   beredskapsperiode: Vurderingsperiode;
@@ -43,7 +44,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{beredskapsperiode.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy ident={opprettetAv} date={opprettetTidspunkt} />
+        <VurdertAv ident={opprettetAv} date={opprettetTidspunkt} />
       </Box>
       <Box marginBlock="8 0">
         <LabelledContent
