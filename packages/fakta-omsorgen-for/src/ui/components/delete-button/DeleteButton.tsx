@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { BucketIcon } from '@navikt/ft-plattform-komponenter';
 import styles from './deleteButton.module.css';
 
+import { TrashIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
 
 interface DeleteButtonProps {
@@ -11,7 +10,7 @@ interface DeleteButtonProps {
 const DeleteButton = ({ onClick }: DeleteButtonProps): JSX.Element => (
   <div className={styles.deleteButton__container}>
     <button className={styles.deleteButton__button} type="button" onClick={onClick} aria-label="Fjern periode">
-      <BucketIcon />
+      <TrashIcon fontSize="1.5rem" />
     </button>
   </div>
 );

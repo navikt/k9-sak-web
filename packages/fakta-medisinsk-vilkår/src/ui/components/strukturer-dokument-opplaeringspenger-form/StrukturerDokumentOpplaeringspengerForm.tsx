@@ -1,6 +1,8 @@
 import { DatepickerRHF, RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import { dateConstants } from '@fpsak-frontend/utils';
-import { Box, DetailView, Form, Margin } from '@navikt/ft-plattform-komponenter';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
@@ -45,17 +47,17 @@ const StrukturerDokumentOpplaeringspengerForm = ({
     <DetailView title="Om dokumentet">
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel={buttonLabel}
           onSubmit={formMethods.handleSubmit(lagNyttStrukturertDokument)}
           submitButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
           smallButtons
         >
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <DokumentKnapp href={dokumentLink.href} />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <RadioGroupPanelRHF
               name={FieldName.INNEHOLDER_MEDISINSKE_OPPLYSNINGER}
               disabled={readOnly}
@@ -81,7 +83,7 @@ const StrukturerDokumentOpplaeringspengerForm = ({
               validators={{ required }}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <DatepickerRHF
               name={FieldName.DATERT}
               disabled={readOnly}
@@ -93,7 +95,7 @@ const StrukturerDokumentOpplaeringspengerForm = ({
             />
           </Box>
           <DuplikatRadiobuttons dokument={dokument} strukturerteDokumenter={strukturerteDokumenter} />
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailView>
   );

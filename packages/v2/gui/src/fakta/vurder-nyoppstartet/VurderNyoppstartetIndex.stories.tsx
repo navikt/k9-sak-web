@@ -3,10 +3,10 @@ import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import { http, HttpResponse } from 'msw';
 import { VurderNyoppstartetIndex } from './VurderNyoppstartetIndex';
 
-const meta: Meta<typeof VurderNyoppstartetIndex> = {
+const meta = {
   title: 'gui/fakta/vurder-nyoppstartet/VurderNyoppstartetIndex',
   component: VurderNyoppstartetIndex,
-};
+} satisfies Meta<typeof VurderNyoppstartetIndex>;
 
 export default meta;
 
@@ -17,6 +17,8 @@ export const Default: Story = {
     submitCallback: fn(),
     harApneAksjonspunkter: true,
     aksjonspunkter: [],
+    behandlingUUID: '1',
+    readOnly: false,
   },
   parameters: {
     msw: {

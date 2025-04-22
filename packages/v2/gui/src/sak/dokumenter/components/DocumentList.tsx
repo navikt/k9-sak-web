@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
+import { isUngWeb } from '../../../utils/urlUtils';
 import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
@@ -15,6 +16,8 @@ import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
+
+const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
@@ -54,7 +57,7 @@ const getDirectionText = (document: Document): string => {
 
 const getModiaPath = (fødselsnummer?: string) => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no') {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
@@ -89,7 +92,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
-      .get<Kompletthet>(`/k9/sak/api/behandling/kompletthet/beregning/vurderinger`, {
+      .get<Kompletthet>(`/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`, {
         signal,
         params: {
           behandlingUuid,
@@ -129,7 +132,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   }
 
   const makeDocumentURL = (document: Document) =>
-    `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
+    `/${getBackendPath()}/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
   const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Document) =>
     document.brevkode === inntektsmeldingBrevkode &&

@@ -1,5 +1,6 @@
-import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { useContext } from 'react';
+
+import { SaksbehandlernavnContext } from '../SaksbehandlernavnContext/SaksbehandlernavnContext';
 
 export const useSaksbehandlerOppslag = () => {
   const navnPaaSaksbehandlereIBehandlingen = useContext(SaksbehandlernavnContext);

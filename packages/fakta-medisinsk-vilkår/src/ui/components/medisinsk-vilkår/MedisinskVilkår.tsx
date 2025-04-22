@@ -1,19 +1,19 @@
 import { httpUtils } from '@fpsak-frontend/utils';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Alert, Tabs, VStack } from '@navikt/ds-react';
-import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Tabs, VStack } from '@navikt/ds-react';
+import { ChildIcon } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import React, { useMemo, type JSX } from 'react';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import Dokument from '../../../types/Dokument';
 import { NyeDokumenterResponse } from '../../../types/NyeDokumenterResponse';
 import Step, {
-  StepId,
   langvarigSykdomSteg,
   livetsSluttfaseSteg,
+  StepId,
   tilsynOgPleieSteg,
   toOmsorgspersonerSteg,
 } from '../../../types/Step';
@@ -30,6 +30,8 @@ import ContainerContext from '../../context/ContainerContext';
 import VurderingContext from '../../context/VurderingContext';
 import AksjonspunktFerdigStripe from '../aksjonspunkt-ferdig-stripe/AksjonspunktFerdigStripe';
 // eslint-disable-next-line max-len
+import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController from '../nye-dokumenter-som-kan-påvirke-eksisterende-vurderinger/NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController';
 import StruktureringAvDokumentasjon from '../strukturering-av-dokumentasjon/StruktureringAvDokumentasjon';
 import UteståendeEndringerMelding from '../utestående-endringer-melding/UteståendeEndringerMelding';
@@ -241,7 +243,7 @@ const MedisinskVilkår = (): JSX.Element => {
   return (
     <PageContainer isLoading={isLoading} hasError={hasError}>
       <Infostripe
-        element={
+        content={
           !erFagsakOLPEllerPLS(fagsakYtelseType) ? (
             <>
               <span>Sykdomsvurderingen gjelder barnet og er felles for alle parter.</span>
@@ -269,7 +271,7 @@ const MedisinskVilkår = (): JSX.Element => {
         </VStack>
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <Box marginBottom={Margin.medium}>
+            <Box marginBlock="0 4">
               <NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController
                 dokumenter={nyeDokumenterSomIkkeErVurdert}
                 afterEndringerRegistrert={afterEndringerUtifraNyeDokumenterRegistrert}

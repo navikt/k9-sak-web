@@ -1,5 +1,4 @@
 import { get, Period } from '@fpsak-frontend/utils';
-import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import Step, { langvarigSykdomSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -7,13 +6,16 @@ import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForOpplæringspenger } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
+import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
-import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
-import BehandlingType from '../../../constants/BehandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
+import BehandlingType from '../../../constants/BehandlingType';
 import VurderingsoversiktLangvarigSykdomMessages from '../vurderingsoversikt-langvarig-sykdom-messages/VurderingsoversiktLangvarigSykdomMessages';
 
 interface VilkårsvurderingLangvarigSykdomProps {
@@ -129,9 +131,9 @@ const VilkårsvurderingLangvarigSykdom = ({
 
   const setMargin = () => {
     if (vurderingsoversikt.harPerioderSomSkalVurderes() || !harGyldigSignatur) {
-      return Margin.medium;
+      return '4 0';
     }
-    return null;
+    return undefined;
   };
 
   const skalViseOpprettVurderingKnapp = () => {
@@ -152,7 +154,7 @@ const VilkårsvurderingLangvarigSykdom = ({
     <PageContainer isLoading={isLoading} hasError={vurderingsoversiktFeilet} key={StepId.LangvarigSykdom}>
       <VurderingsoversiktLangvarigSykdomMessages vurderingsoversikt={vurderingsoversikt} />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box marginTop={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon

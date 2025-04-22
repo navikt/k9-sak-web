@@ -71,7 +71,7 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPaaVent: boolean;
+  behandlingPåVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
   behandlingÅrsaker?: BehandlingÅrsakDto[];
@@ -86,10 +86,10 @@ interface Props {
   medlemskapFom: string;
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: (values, aapneINyttVindu) => void;
+  previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
-  sprakkode: string;
+  språkkode: string;
   submitCallback: (object: any) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
@@ -104,11 +104,11 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingStatus,
   behandlingresultat,
   aksjonspunkter,
-  behandlingPaaVent,
+  behandlingPåVent,
   vedtakVarsel,
   previewCallback,
   hentFritekstbrevHtmlCallback,
-  sprakkode,
+  språkkode,
   ytelseTypeKode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -128,7 +128,7 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingÅrsaker,
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
-  const { kodeverkNavnFraKode } = useKodeverkContext();
+  const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
@@ -521,6 +521,7 @@ export const VedtakForm: React.FC<Props> = ({
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
                       kodeverkNavnFraKode={kodeverkNavnFraKode}
+                      behandlingType={behandlingType}
                     />
                   )}
 
@@ -555,7 +556,7 @@ export const VedtakForm: React.FC<Props> = ({
 
               <BrevPanel
                 readOnly={readOnly}
-                sprakkode={sprakkode}
+                språkkode={språkkode}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -580,7 +581,7 @@ export const VedtakForm: React.FC<Props> = ({
                 <VedtakSubmit
                   behandlingStatusKode={behandlingStatus}
                   readOnly={readOnly}
-                  behandlingPaaVent={behandlingPaaVent}
+                  behandlingPåVent={behandlingPåVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
                   errorOnSubmit={errorOnSubmit}

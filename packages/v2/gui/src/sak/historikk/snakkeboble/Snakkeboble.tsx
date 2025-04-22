@@ -60,7 +60,7 @@ export const Snakkeboble = ({
           <VStack gap="1">
             {dokumenter.map(dokumentLenke => (
               <HistorikkDokumentLenke
-                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                key={`${dokumentLenke.dokumentId}-${dokumentLenke.journalpostId}`}
                 dokumentLenke={dokumentLenke}
                 saksnummer={saksnummer}
               />

@@ -28,18 +28,20 @@ const VedtakKlageProsessIndex = ({
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
-    {klageVurdering ? <VedtakKlageForm
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingsresultat={behandling.behandlingsresultat}
-      behandlingPaaVent={behandling.behandlingPaaVent}
-      klageVurdering={klageVurdering}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      previewVedtakCallback={previewVedtakCallback}
-      readOnly={isReadOnly}
-      alleKodeverk={alleKodeverk}
-    /> : null}
+    {klageVurdering ? (
+      <VedtakKlageForm
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingsresultat={behandling.behandlingsresultat}
+        behandlingPåVent={behandling.behandlingPåVent}
+        klageVurdering={klageVurdering}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        previewVedtakCallback={previewVedtakCallback}
+        readOnly={isReadOnly}
+        alleKodeverk={alleKodeverk}
+      />
+    ) : null}
   </RawIntlProvider>
 );
 

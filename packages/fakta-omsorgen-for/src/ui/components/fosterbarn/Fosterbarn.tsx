@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Delete } from '@navikt/ds-icons';
-import { Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
+import { Box, Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useContext, useEffect } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import ContainerContext from '../../context/ContainerContext';
@@ -31,15 +30,15 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
   }, [fosterbarnFormValues]);
 
   return (
-    <Box marginBottom={Margin.large}>
+    <Box marginBlock="0 6">
       <DSBox background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
-        <Box marginBottom={Margin.medium}>
+        <Box marginBlock="0 4">
           <Heading level="2" size="medium">
             Fosterbarn
           </Heading>
         </Box>
         {fields.length > 0 && (
-          <Box marginBottom={Margin.medium}>
+          <Box marginBlock="0 4">
             <Table>
               <Table.Header>
                 <Table.Row>

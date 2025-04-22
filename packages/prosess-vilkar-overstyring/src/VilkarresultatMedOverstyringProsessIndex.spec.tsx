@@ -55,6 +55,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
               },
             ],
             overstyrbar: true,
+            relevanteInnvilgetMerknader: [],
             vilkarType: {
               kode: 'test',
               kodeverk: 'test',

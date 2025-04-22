@@ -1,9 +1,12 @@
-import React, { type JSX } from 'react';
-import { Box, Margin, BasicList, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { Box } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
-import DokumentLink from '../dokument-link/DokumentLink';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import DokumentLink from '../dokument-link/DokumentLink';
 
 interface VurderingsoppsummeringLangvarigSykdom {
   vurdering: Vurdering;
@@ -20,12 +23,12 @@ const VurderingsoppsummeringLangvarigSykdom = ({
 
   return (
     <DetailViewVurdering title="Vurdering av langvarig sykdom" perioder={perioder} redigerVurdering={redigerVurdering}>
-      <Box marginTop={Margin.large}>
-        <Box marginTop={Margin.medium}>
+      <Box marginBlock="6 0">
+        <Box marginBlock="4 0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om sykdom?"
             content={
-              <Box marginTop={Margin.medium}>
+              <Box marginBlock="4 0">
                 <BasicList
                   elements={dokumenter
                     .filter(({ benyttet }) => benyttet)
@@ -37,16 +40,16 @@ const VurderingsoppsummeringLangvarigSykdom = ({
             }
           />
         </Box>
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent
             // eslint-disable-next-line max-len
             label="Gjør en vurdering av om den pleietrengende har en funksjonshemning eller en langvarig sykdom antatt å være i mer enn ett år som følge av § 9-14."
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
-          <AssessedBy ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
+          <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
         </Box>
-        <Box marginTop={Margin.xLarge}>
+        <Box marginBlock="8 0">
           <LabelledContent
             label="Har den pleietrengende en langvarig sykdom?"
             content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}

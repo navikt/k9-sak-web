@@ -1,6 +1,6 @@
-import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import { get } from '@fpsak-frontend/utils';
-import React, { useContext, useEffect, useMemo, useState, type JSX } from 'react';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { useContext, useEffect, useMemo, useState, type JSX } from 'react';
 import Pleietrengende from '../../types/Pleietrengende';
 import PleietrengendeResponse from '../../types/PleietrengendeResponse';
 import ContainerContext from '../context/ContainerContext';

@@ -1,4 +1,4 @@
-import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -13,6 +13,7 @@ export type VilkarResultPickerFormState = {
   erVilkarOk: string;
   periodeVilkarStatus: boolean;
   avslagCode?: string;
+  innvilgelseMerknadCode?: string;
   avslagDato?: string;
   valgtPeriodeFom: string;
   valgtPeriodeTom: string;
@@ -39,6 +40,7 @@ interface OwnProps {
   valgtPeriodeFom: string;
   valgtPeriodeTom: string;
   vilkarType: string;
+  relevanteInnvilgetMerknader: InnvilgetMerknad[];
 }
 
 interface StaticFunctions {
@@ -47,7 +49,8 @@ interface StaticFunctions {
     aksjonspunkter: AksjonspunktDto[],
     status: string,
     periode: VilkårPeriodeDto,
-    avslagKode?: string,
+    avslagKode1: string | undefined,
+    innvilgelseMerknadKode?: string,
   ) => VilkarResultPickerFormState;
 }
 
@@ -70,6 +73,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   valgtPeriodeFom,
   valgtPeriodeTom,
   vilkarType,
+  relevanteInnvilgetMerknader,
 }) => {
   const { hentKodeverkForKode } = useKodeverkContext();
   const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkMedUndertype;
@@ -168,6 +172,22 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </Box>
           )}
 
+          {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && relevanteInnvilgetMerknader && (
+            <Box marginBlock={'2 0'}>
+              <SelectField
+                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgetMerknadCode`}
+                label="Hjemmel for innvilgelse"
+                selectValues={relevanteInnvilgetMerknader.map(innvilgetMerknad => (
+                  <option key={innvilgetMerknad.merknad} value={innvilgetMerknad.merknad}>
+                    {innvilgetMerknad.navn}
+                  </option>
+                ))}
+                readOnly={readOnly}
+                validate={[required]}
+              />
+            </Box>
+          )}
+
           {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsårsakerForVilkar && (
             <Box marginBlock={'2 0'}>
               <SelectField
@@ -204,6 +224,7 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
   status: string,
   periode: VilkårPeriodeDto,
   avslagKode?: string,
+  innvilgelseMerknadKode?: string,
 ): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => ap.status && isAksjonspunktOpen(ap.status));
   let erVilkarOk = '';
@@ -218,6 +239,7 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
     erVilkarOk,
     periodeVilkarStatus: !isOpenAksjonspunkt && status === vilkårStatusPeriodisert.OPPFYLT,
     avslagCode: erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagKode ? avslagKode : undefined,
+    innvilgelseMerknadCode: innvilgelseMerknadKode,
     valgtPeriodeFom: periode.periode.fom ?? '',
     valgtPeriodeTom: periode.periode.tom ?? '',
   };
@@ -233,6 +255,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
       return {
         erVilkarOk: true,
         periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
+        innvilgelseMerknadCode: values.innvilgelseMerknadCode,
       };
 
     case vilkårStatusPeriodisert.DELVIS_OPPFYLT:
@@ -242,6 +265,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
           fom: values.valgtPeriodeFom,
           tom: values.valgtPeriodeTom,
         },
+        innvilgelseMerknadCode: values.innvilgelseMerknadCode,
       };
 
     case vilkårStatusPeriodisert.IKKE_OPPFYLT:

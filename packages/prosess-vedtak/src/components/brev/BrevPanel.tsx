@@ -54,7 +54,7 @@ export const manuellBrevPreview = ({
   aapneINyttVindu,
 }: {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  previewCallback: (values, aapneINyttVindu) => void;
+  previewCallback: (values, aapneINyttVindu) => Promise<any>;
   values: FormikValues;
   redigertHtml: any;
   overstyrtMottaker: Brevmottaker;
@@ -109,14 +109,14 @@ const getManuellBrevCallback =
     overskrift: string;
     overstyrtMottaker?: Brevmottaker;
     formProps: CustomFormikProps;
-    previewCallback: (values, aapneINyttVindu) => void;
+    previewCallback: (values, aapneINyttVindu) => Promise<any>;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
   async (e, redigertHtml = undefined) => {
     e.preventDefault();
     const errors = await formProps.validateForm();
     if (Object.keys(errors).length === 0) {
-      manuellBrevPreview({
+      await manuellBrevPreview({
         tilgjengeligeVedtaksbrev,
         previewCallback,
         values: formProps.values,
@@ -155,10 +155,10 @@ interface BrevPanelProps {
   overskrift: string;
   overstyrtMottaker?: Brevmottaker;
   personopplysninger: PersonopplysningDto;
-  previewCallback: (values, aapneINyttVindu) => void;
+  previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   skalBrukeOverstyrendeFritekstBrev: boolean;
-  sprakkode: string;
+  språkkode: string;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   ytelseTypeKode: FagsakYtelsesType;
 }
@@ -167,7 +167,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const {
     intl,
     readOnly,
-    sprakkode,
+    språkkode,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
     tilgjengeligeVedtaksbrev,
@@ -260,7 +260,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
         <InformasjonsbehovAutomatiskVedtaksbrev
           intl={intl}
           readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           begrunnelse={begrunnelse}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         />

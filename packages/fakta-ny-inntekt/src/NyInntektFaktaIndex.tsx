@@ -1,6 +1,6 @@
 import { Tabs } from '@navikt/ds-react';
 
-import { VerticalSpacer } from '@navikt/ft-ui-komponenter';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import { useState } from 'react';

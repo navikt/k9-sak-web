@@ -35,8 +35,6 @@ jobs:
         with:
           additional-tag: 'dev-next1'
           without_navikt_prefix: true
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
       - name: Deploy to nais
         uses: nais/deploy/actions/deploy@v2

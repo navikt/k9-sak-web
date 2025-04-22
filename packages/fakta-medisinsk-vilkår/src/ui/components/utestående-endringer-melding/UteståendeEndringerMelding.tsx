@@ -1,5 +1,4 @@
-import { Alert, BodyShort, Button } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { Alert, BodyShort, Box, Button } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import ContainerContext from '../../context/ContainerContext';
 
@@ -8,13 +7,13 @@ const UteståendeEndringerMelding = (): JSX.Element => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   return (
-    <Box marginBottom={Margin.medium}>
+    <Box marginBlock="0 4">
       <Alert size="small" variant="warning">
         <BodyShort size="small">
           OBS! Det er gjort endringer i sykdomssteget. For at endringene som er gjort skal bli tatt med i behandlingen,
           trykk på Fortsett.
         </BodyShort>
-        <Box marginTop={Margin.small}>
+        <Box marginBlock="2 0">
           <Button
             size="small"
             disabled={isSubmitting}

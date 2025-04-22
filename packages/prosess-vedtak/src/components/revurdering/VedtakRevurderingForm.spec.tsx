@@ -13,8 +13,8 @@ const createBehandling = behandlingResultatType => ({
   versjon: 123,
   fagsakId: 1,
   aksjonspunkter: [],
-  behandlingPaaVent: false,
-  sprakkode: 'NO',
+  behandlingPåVent: false,
+  språkkode: 'NO',
   behandlingsresultat: {
     id: 1,
     type: behandlingResultatType,
@@ -79,8 +79,8 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          språkkode={revurdering.språkkode}
+          behandlingPåVent={revurdering.behandlingPåVent}
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
@@ -139,8 +139,8 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          språkkode={revurdering.språkkode}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
@@ -191,8 +191,8 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          språkkode={revurdering.språkkode}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
@@ -242,8 +242,8 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          språkkode={revurdering.språkkode}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
@@ -289,8 +289,8 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          sprakkode={revurdering.sprakkode}
-          behandlingPaaVent={revurdering.behandlingPaaVent}
+          språkkode={revurdering.språkkode}
+          behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}

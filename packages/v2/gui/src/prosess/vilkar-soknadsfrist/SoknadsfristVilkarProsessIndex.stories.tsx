@@ -8,6 +8,7 @@ import { kravDokumentStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/KravD
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { asyncAction } from '../../storybook/asyncAction';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
@@ -70,10 +71,10 @@ const soknadsStatus = {
   ],
 };
 
-const meta: Meta<typeof SoknadsfristVilkarProsessIndex> = {
+const meta = {
   title: 'gui/prosess/vilkar-soknadsfrist',
   component: SoknadsfristVilkarProsessIndex,
-};
+} satisfies Meta<typeof SoknadsfristVilkarProsessIndex>;
 
 type Story = StoryObj<typeof meta>;
 
@@ -85,6 +86,15 @@ const defaultArgs = {
   },
   panelTittelKode: 'Søknadsfrist',
   kanEndrePåSøknadsopplysninger: true,
+  aksjonspunkter: [],
+  submitCallback: asyncAction('løser aksjonspunkt'),
+  toggleOverstyring: action('button-click'),
+  erOverstyrt: false,
+  vilkar: [],
+  soknadsfristStatus: {
+    dokumentStatus: [],
+  },
+  visAllePerioder: false,
 };
 
 export const visOverstyringspanelForSoknadsfrist: Story = {

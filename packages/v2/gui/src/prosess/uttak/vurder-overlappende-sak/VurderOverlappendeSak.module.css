@@ -33,3 +33,29 @@
 .uttaksgradField input {
   max-width: var(--a-spacing-12);
 }
+
+.uttaksgradPeriode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > div {
+    margin-left: var(--a-spacing-2);
+  }
+}
+
+.uttaksPeriodeEndret {
+  color: var(--a-orange-600);
+}
+
+.vurderOverlappendeSakAPListe :where(ul, li) {
+  margin-block: 0;
+}
+
+.noOverlappendeMargin ul {
+  margin-block: 0 !important;
+}
+
+.noOverlappendeMargin ul li {
+  margin-block: 0 !important;
+}

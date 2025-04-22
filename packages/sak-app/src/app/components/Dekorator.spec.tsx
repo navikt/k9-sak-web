@@ -13,13 +13,6 @@
 //   navn: 'Test',
 // };
 
-let contextStubHistory;
-afterEach(() => {
-  if (contextStubHistory) {
-    contextStubHistory.restore();
-  }
-});
-
 describe.skip('<Dekorator>', () => {
   // it('skal vise søkeskjermbildet, men ikke systemstatuser', () => {
   //   requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);

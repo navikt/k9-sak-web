@@ -5512,11 +5512,6 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
-      "kode": "ER_ANKER_IKKE_PART",
-      "navn": "Angir om anker ikke er part i saken.",
-      "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
-    },
-    {
       "kode": "BEHANDLENDE_ENHET",
       "navn": "Behandlende enhet",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
@@ -5772,8 +5767,8 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
-      "kode": "ER_ANKEN_IKKE_SIGNERT",
-      "navn": "er anken ikke signert.",
+      "kode": "ANKE_AVSLUTTET",
+      "navn": "anken er avsluttet.",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
@@ -5784,11 +5779,6 @@
     {
       "kode": "FRILANSVIRKSOMHET",
       "navn": "Frilansvirksomhet",
-      "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
-    },
-    {
-      "kode": "ER_ANKEFRIST_IKKE_OVERHOLDT",
-      "navn": "Er ankefrist ikke overholdt",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     }
   ],

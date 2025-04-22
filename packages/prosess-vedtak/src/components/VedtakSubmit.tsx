@@ -12,7 +12,7 @@ import styles from './vedtakForm.module.css';
 interface Props {
   behandlingStatusKode: string;
   readOnly: boolean;
-  behandlingPaaVent: boolean;
+  behandlingPåVent: boolean;
   isSubmitting: boolean;
   aksjonspunkter: AksjonspunktDto[];
   handleSubmit: (e) => void;
@@ -25,7 +25,7 @@ const kanSendesTilGodkjenning = (behandlingStatusKode: string) =>
 const VedtakSubmit = ({
   behandlingStatusKode,
   readOnly,
-  behandlingPaaVent,
+  behandlingPåVent,
   isSubmitting,
   aksjonspunkter,
   handleSubmit,
@@ -33,7 +33,7 @@ const VedtakSubmit = ({
 }: Props): JSX.Element => {
   const intl = useIntl();
 
-  const skalSubmitVæreDeaktivert = behandlingPaaVent || isSubmitting;
+  const skalSubmitVæreDeaktivert = behandlingPåVent || isSubmitting;
 
   const submitKnapp = (
     <Button

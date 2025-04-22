@@ -3,7 +3,7 @@ import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import { OverseEtablertTilsynÅrsak } from '../../../constants';
 import { BodyShort, HelpText, HStack } from '@navikt/ds-react';
 
-import styles from './nyUttakDetaljer.module.css';
+import styles from './uttakDetaljer.module.css';
 
 const getÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
   if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.BEREDSKAP) {

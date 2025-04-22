@@ -8,6 +8,7 @@ import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeD
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
 import { prettifyDateString } from '@navikt/ft-utils';
+import { isUngWeb } from '../../utils/urlUtils';
 import RelatertFagsak from './relatert-fagsak/RelatertFagsak';
 import TagContainer from './TagContainer';
 import type { FagsakPerson } from './types/FagsakPerson';
@@ -25,7 +26,7 @@ const utledKjonn = (kjonn: string): Gender => {
 
 export interface VisittkortPanelProps {
   fagsakPerson: FagsakPerson;
-  sprakkode?: string;
+  språkkode?: string;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker?: RelatertSakDto;
@@ -37,7 +38,7 @@ export interface VisittkortPanelProps {
 const VisittkortPanel = ({
   fagsakPerson,
   personopplysninger,
-  sprakkode,
+  språkkode,
   harTilbakekrevingVerge,
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
@@ -51,6 +52,7 @@ const VisittkortPanel = ({
           name={fagsakPerson.navn}
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
+          showPersonAge={isUngWeb()}
         />
       </div>
     );
@@ -62,6 +64,7 @@ const VisittkortPanel = ({
           name={fagsakPerson.navn}
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
+          showPersonAge={isUngWeb()}
           renderLabelContent={() => (
             <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
           )}
@@ -107,8 +110,9 @@ const VisittkortPanel = ({
           name={søker.navn}
           fodselsnummer={søker.fnr}
           gender={utledKjonn(søker.navBrukerKjonn)}
-          renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} sprakkode={sprakkode} />}
+          renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />}
           renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
+          showPersonAge={isUngWeb()}
         />
 
         {annenPart?.aktoerId && (
@@ -116,7 +120,7 @@ const VisittkortPanel = ({
             name={annenPart.navn}
             fodselsnummer={annenPart.fnr}
             gender={utledKjonn(annenPart.navBrukerKjonn)}
-            renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={annenPart} sprakkode={sprakkode} />}
+            renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={annenPart} språkkode={språkkode} />}
             isActive={false}
           />
         )}

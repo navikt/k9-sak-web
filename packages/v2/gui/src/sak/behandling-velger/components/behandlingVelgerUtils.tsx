@@ -1,11 +1,15 @@
-import { BehandlingDtoBehandlingResultatType, type Periode } from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import type { Behandling } from '../types/Behandling';
+import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 
-export const getFormattedSøknadserioder = (søknadsperioder: Periode[]) =>
-  søknadsperioder?.map((periode, index) => {
+const isValidPeriode = (periode: K9UngPeriode): periode is K9UngPeriode & { fom: string; tom: string } =>
+  periode.fom !== null && periode.tom !== null;
+
+export const getFormattedSøknadserioder = (søknadsperioder: K9UngPeriode[]) =>
+  søknadsperioder?.filter(isValidPeriode).map((periode, index) => {
     if (periode.fom === periode.tom) {
       return (
         <React.Fragment key={periode.fom}>

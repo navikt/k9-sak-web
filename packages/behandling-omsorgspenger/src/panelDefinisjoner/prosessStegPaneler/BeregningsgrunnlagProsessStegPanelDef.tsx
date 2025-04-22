@@ -18,7 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
         beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={data => props.submitCallback(transformBeregningValues(data))}
+        submitCallback={data => props.submitCallback(transformBeregningValues(data, true))}
         formData={props.formData}
         setFormData={props.setFormData}
         kodeverkSamling={deepCopyProps.alleKodeverk}

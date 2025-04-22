@@ -5,7 +5,7 @@ import { Arbeidstype, arbeidstypeTilVisning } from '../../../constants';
 import { Utbetalingsgrad } from '../../../types';
 import classNames from 'classnames/bind';
 
-import styles from './nyUttakDetaljer.module.css';
+import styles from './uttakDetaljer.module.css';
 
 const cx = classNames.bind(styles);
 

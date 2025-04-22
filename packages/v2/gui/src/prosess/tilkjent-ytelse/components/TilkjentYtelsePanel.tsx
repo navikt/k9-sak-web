@@ -3,7 +3,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Heading } from '@navikt/ds-react';
 import type { AksjonspunktDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';

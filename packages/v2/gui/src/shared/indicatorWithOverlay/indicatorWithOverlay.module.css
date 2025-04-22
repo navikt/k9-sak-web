@@ -1,0 +1,17 @@
+.indicatorWithOverlay {
+  display: flex;
+  position: relative;
+}
+
+.indicator {
+  left: -8px;
+  opacity: 0.5;
+  position: relative;
+  top: 2px;
+  z-index: 0;
+}
+
+.overlay {
+  opacity: 1;
+  z-index: 1;
+}

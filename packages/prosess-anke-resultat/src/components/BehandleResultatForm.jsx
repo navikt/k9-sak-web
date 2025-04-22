@@ -122,7 +122,7 @@ ResultatAvvise.propTypes = {
   ankevurderingresultat: PropTypes.shape(),
 };
 
-const hentSprakKode = ankeOmgjoerArsak => {
+const hentspråkkode = ankeOmgjoerArsak => {
   switch (ankeOmgjoerArsak) {
     case ankeVurderingOmgjoer.ANKE_TIL_UGUNST:
       return 'Ankebehandling.Resultat.Innstilling.Omgjores.TilUgunst';
@@ -140,7 +140,7 @@ const ResultatOmgjores = ({
 }) => (
   <>
     <Detail>
-      <FormattedMessage id={hentSprakKode(omgjoer)} />
+      <FormattedMessage id={hentspråkkode(omgjoer)} />
     </Detail>
     <VerticalSpacer sixteenPx />
     <Detail>

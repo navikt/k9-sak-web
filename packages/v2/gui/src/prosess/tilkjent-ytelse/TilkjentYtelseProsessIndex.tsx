@@ -1,4 +1,4 @@
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import type { AksjonspunktDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';

@@ -1,10 +1,10 @@
-import EventType from './eventType';
-import AsyncPollingStatus from './asyncPollingStatus';
 import HttpClientApi from '../HttpClientApiTsType';
-import { Response } from './ResponseTsType';
 import RequestAdditionalConfig from '../RequestAdditionalConfigTsType';
-import TimeoutError from './error/TimeoutError';
+import AsyncPollingStatus from './asyncPollingStatus';
 import RequestErrorEventHandler from './error/RequestErrorEventHandler';
+import TimeoutError from './error/TimeoutError';
+import EventType from './eventType';
+import { Response } from './ResponseTsType';
 
 const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
@@ -136,7 +136,8 @@ class RequestRunner {
       if (popupWindow === null) {
         const location = `${response.headers.location}`;
         const queryParamAddition = location.includes('?') ? '&' : '?';
-        const redirectLocation = `${location}${queryParamAddition}redirectTo=/k9/web/close`;
+        const redirectTo = location.includes('/ung/sak/') ? '/ung/web' : '/k9/web';
+        const redirectLocation = `${location}${queryParamAddition}redirectTo=${redirectTo}/close`;
         popupWindow = window.open(redirectLocation, undefined, 'height=600,width=800');
       }
       const timer = setInterval(async () => {

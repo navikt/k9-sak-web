@@ -13,9 +13,9 @@ export type BehandlingAppKontekst = Implements<
     uuid: string;
     status: Kodeverk;
     type: BehandlingTypeKodeverk;
-    fristBehandlingPaaVent?: string;
-    venteArsakKode?: string;
-    behandlingPaaVent: boolean;
+    fristBehandlingPåVent?: string;
+    venteÅrsakKode?: string;
+    behandlingPåVent: boolean;
     behandlingHenlagt: boolean;
     behandlingsresultat?: Behandlingsresultat;
     links: {
@@ -27,7 +27,7 @@ export type BehandlingAppKontekst = Implements<
     opprettet: string;
     avsluttet?: string;
     gjeldendeVedtak: boolean;
-    sprakkode: Språkkode;
+    språkkode: Språkkode;
     behandlendeEnhetId: string;
     stegTilstand?: {
       stegType: {

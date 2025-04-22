@@ -39,7 +39,7 @@ describe('<BrevPanel>', () => {
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode="NB"
+          språkkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={automatiskInnvilgelsebrevTilgjengelig}
           informasjonsbehovValues={[]}
@@ -73,7 +73,7 @@ describe('<BrevPanel>', () => {
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode="NB"
+          språkkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovValues={[]}
@@ -107,7 +107,7 @@ describe('<BrevPanel>', () => {
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode="NB"
+          språkkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={fritekstbrevTilgjenglig}
           informasjonsbehovValues={[]}
@@ -144,7 +144,7 @@ describe('<BrevPanel>', () => {
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode="NB"
+          språkkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovValues={[]}
@@ -179,7 +179,7 @@ describe('<BrevPanel>', () => {
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode="NB"
+          språkkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={{
             vedtaksbrevmaler: alleTilgjengeligeVedtaksbrev.vedtaksbrevmaler,

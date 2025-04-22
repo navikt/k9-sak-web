@@ -1,7 +1,8 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
-import { Alert, Link } from '@navikt/ds-react';
-import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { Alert, Box, Link } from '@navikt/ds-react';
+import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -121,7 +122,7 @@ const VurderingAvToOmsorgspersonerForm = ({
     <DetailViewVurdering title="Vurdering av to omsorgspersoner" perioder={defaultValues[FieldName.PERIODER]}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel="Bekreft"
           onSubmit={formMethods.handleSubmit(lagNyVurdering)}
           onAvbryt={onAvbryt}
@@ -131,7 +132,7 @@ const VurderingAvToOmsorgspersonerForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginTop={Margin.large}>
+            <Box marginBlock="6 0">
               <CheckboxGroupRHF
                 question="Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?"
                 name={FieldName.DOKUMENTER}
@@ -157,7 +158,7 @@ const VurderingAvToOmsorgspersonerForm = ({
               />
             </Box>
           )}
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <TextAreaRHF
               textareaClass={styles.begrunnelsesfelt}
               name={FieldName.VURDERING_AV_TO_OMSORGSPERSONER}
@@ -189,7 +190,7 @@ const VurderingAvToOmsorgspersonerForm = ({
               id="begrunnelsesfelt"
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <YesOrNoQuestionRHF
               question="Er det behov for to omsorgspersoner samtidig?"
               name={FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER}
@@ -197,7 +198,7 @@ const VurderingAvToOmsorgspersonerForm = ({
               disabled={readOnly}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -246,7 +247,7 @@ const VurderingAvToOmsorgspersonerForm = ({
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginTop={Margin.large}>
+                <Box marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
@@ -257,14 +258,14 @@ const VurderingAvToOmsorgspersonerForm = ({
             />
           </Box>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailViewVurdering>
   );

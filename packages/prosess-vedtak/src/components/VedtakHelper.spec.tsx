@@ -1,5 +1,6 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   AvslagsårsakPrPeriodeDto,
   AvslagsårsakPrPeriodeDtoAvslagsårsak,
@@ -27,7 +28,12 @@ describe('VedtakHelper', () => {
       };
       const kodeverkNavnFraKode = vi.fn().mockReturnValue('Tilbakekreving');
 
-      const result = findTilbakekrevingText({ simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode });
+      const result = findTilbakekrevingText({
+        simuleringResultat,
+        tilbakekrevingvalg,
+        kodeverkNavnFraKode,
+        behandlingType: behandlingType.TILBAKEKREVING,
+      });
       expect(result).toBe('VedtakForm.TilbakekrInfotrygdOgInntrekk');
     });
 
@@ -41,7 +47,12 @@ describe('VedtakHelper', () => {
       };
       const kodeverkNavnFraKode = vi.fn().mockReturnValue('Tilbakekreving');
 
-      const result = findTilbakekrevingText({ simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode });
+      const result = findTilbakekrevingText({
+        simuleringResultat,
+        tilbakekrevingvalg,
+        kodeverkNavnFraKode,
+        behandlingType: behandlingType.TILBAKEKREVING,
+      });
       expect(result).toBe('Tilbakekreving');
     });
   });

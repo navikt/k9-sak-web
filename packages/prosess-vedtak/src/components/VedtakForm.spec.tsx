@@ -20,7 +20,7 @@ import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
-  const sprakkode = 'NO';
+  const språkkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
     begrunnelse: 'begrunnelse',
@@ -83,11 +83,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={[]}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -138,11 +138,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -189,11 +189,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -239,11 +239,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -299,11 +299,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -357,11 +357,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={BehandlingDtoStatus.AVSLUTTET}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -414,11 +414,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={BehandlingDtoStatus.IVERKSETTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -471,11 +471,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={BehandlingDtoStatus.FATTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -542,11 +542,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -583,11 +583,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -625,11 +625,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
@@ -676,11 +676,11 @@ describe('<VedtakForm>', () => {
           behandlingStatus={behandlingStatusUtredes}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
+          behandlingPåVent={false}
           previewCallback={previewCallback}
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
-          sprakkode={sprakkode}
+          språkkode={språkkode}
           ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}

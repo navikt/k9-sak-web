@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
-import { Heading } from '@navikt/ds-react';
-import { Box, InteractiveList, Margin } from '@navikt/ft-plattform-komponenter';
+import { Box, Heading } from '@navikt/ds-react';
+import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, type JSX } from 'react';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import { usePrevious } from '../../../util/hooks';
@@ -53,7 +53,7 @@ const Periodenavigasjon = ({
 
   return (
     <div className={styles.vurderingsnavigasjon}>
-      <Box marginBottom={Margin.large}>
+      <Box marginBlock="0 6">
         <Heading size="small" level="2" className={styles.vurderingsnavigasjon__heading}>
           Alle perioder
         </Heading>

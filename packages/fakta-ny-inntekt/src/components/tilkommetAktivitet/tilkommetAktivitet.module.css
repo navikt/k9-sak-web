@@ -34,10 +34,6 @@
   display: flex;
 }
 
-.bruttoInntektInput {
-  max-width: 137px;
-}
-
 .bruttoInntektCurrency {
   align-self: flex-end;
   margin-bottom: 4px;

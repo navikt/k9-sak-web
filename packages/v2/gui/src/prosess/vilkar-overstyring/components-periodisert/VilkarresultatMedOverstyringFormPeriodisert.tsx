@@ -1,4 +1,4 @@
-import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
@@ -29,6 +29,8 @@ interface VilkarresultatMedOverstyringFormProps {
   avslagKode?: string;
   periode: VilkårPeriodeDto;
   vilkarType: string;
+  innvilgelseMerknadKode?: string;
+  relevanteInnvilgetMerknader: InnvilgetMerknad[];
 }
 
 /**
@@ -52,6 +54,8 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
   toggleOverstyring,
   visPeriodisering,
   vilkarType,
+  innvilgelseMerknadKode,
+  relevanteInnvilgetMerknader,
 }) => {
   const periodeFom = periode?.periode?.fom ?? '';
   const periodeTom = periode?.periode?.tom ?? '';
@@ -60,7 +64,13 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
-      ...VilkarresultatMedBegrunnelse.buildInitialValues(aksjonspunkter, status, periode, avslagKode),
+      ...VilkarresultatMedBegrunnelse.buildInitialValues(
+        aksjonspunkter,
+        status,
+        periode,
+        avslagKode,
+        innvilgelseMerknadKode,
+      ),
     };
   };
   const onSubmit = (values: VilkarresultatMedOverstyringFormState) =>
@@ -122,6 +132,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
               periodeVilkarStatus={periodeVilkarStatus}
               opprettetAv={opprettetAv}
               vilkarType={vilkarType}
+              relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
             />
           </Box>
           <Box marginBlock={'4 0'}>

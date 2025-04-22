@@ -1,4 +1,3 @@
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import {
@@ -9,21 +8,19 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 
-import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType.js';
+import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import V2Messages, {
   type BackendApi as V2MessagesBackendApi,
   MessagesProps as V2MessagesProps,
 } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
-import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
-import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
-import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType.js';
-import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi.js';
-import useVisForhandsvisningAvMelding from '@k9-sak-web/sak-app/src/data/useVisForhandsvisningAvMelding.js';
-import MessagesTilbakekreving from './components/MessagesTilbakekreving';
-import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
-import messages from '../i18n/nb_NO.json';
 import { StickyStateReducer } from '@k9-sak-web/gui/utils/StickyStateReducer.js';
+import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import messages from '../i18n/nb_NO.json';
+import Messages, { type FormValues, type BackendApi as MessagesBackendApi } from './components/Messages';
+import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 
 const cache = createIntlCache();
 
@@ -50,6 +47,8 @@ interface OwnProps {
   readonly fagsak: Fagsak;
   readonly behandling: BehandlingInfo;
   readonly backendApi: BackendApi;
+  submitMessage: (params?: any, keepData?: boolean) => Promise<unknown>;
+  fetchPreview: (erHenleggelse: boolean, data: any) => void;
 }
 
 // Held på state oppretta inni reducers i Messages og FritekstInput komponenter.
@@ -79,9 +78,9 @@ const MeldingerSakIndex = ({
   fagsak,
   behandling,
   backendApi,
+  submitMessage,
+  fetchPreview,
 }: OwnProps) => {
-  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
   const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
   // Vis ny komponent for meldingssending viss dette ikkje er tilbakekreving, og featureflag er satt
   if (!erTilbakekreving && featureToggles.BRUK_V2_MELDINGER) {
@@ -147,7 +146,7 @@ const MeldingerSakIndex = ({
         <MessagesTilbakekreving
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={behandling.sprakkode}
+          språkkode={behandling.språkkode}
           previewCallback={previewCallback}
           behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}
@@ -160,7 +159,7 @@ const MeldingerSakIndex = ({
         <Messages
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={behandling.sprakkode}
+          språkkode={behandling.språkkode}
           previewCallback={previewCallback}
           behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}

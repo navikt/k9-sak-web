@@ -1,7 +1,7 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { BucketIcon } from '@navikt/ft-plattform-komponenter';
+import { TrashIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
-import React, { useState, type JSX } from 'react';
+import { useState, type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
@@ -38,7 +38,7 @@ const Duplikatliste = ({ dokumenter, onRemoveDuplikat }: DuplikatlisteProps): JS
                       setSelectedDocument(dokument);
                     }}
                   >
-                    <BucketIcon />
+                    <TrashIcon fontSize="1.5rem" />
                     <p className={styles.dokumentliste__deleteButtonText}>Angre gjør til duplikat</p>
                   </button>
                 )}

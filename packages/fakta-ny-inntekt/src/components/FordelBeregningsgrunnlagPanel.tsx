@@ -1,4 +1,4 @@
-import { VerticalSpacer } from '@navikt/ft-ui-komponenter';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import type { ArbeidsgiverOpplysningerPerId } from '../types/ArbeidsgiverOpplysninger.js';
 import type { BeregningAvklaringsbehov } from '../types/BeregningAvklaringsbehov.js';

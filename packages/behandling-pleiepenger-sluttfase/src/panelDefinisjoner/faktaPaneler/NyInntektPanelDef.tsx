@@ -4,7 +4,7 @@ import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-front
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import NyInntektFaktaIndex from '@k9-sak-web/fakta-ny-inntekt';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 class NyInntektPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.NY_INNTEKT;

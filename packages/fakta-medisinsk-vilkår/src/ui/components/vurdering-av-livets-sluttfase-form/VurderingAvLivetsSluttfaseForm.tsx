@@ -1,8 +1,9 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Label, Link } from '@navikt/ds-react';
-import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Label, Link } from '@navikt/ds-react';
+import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -169,7 +170,7 @@ const VurderingAvLivetsSluttfaseForm = ({
       <div id="modal" />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel="Bekreft"
           onSubmit={formMethods.handleSubmit(lagNySluttfaseVurdering)}
           onAvbryt={onAvbryt}
@@ -179,7 +180,7 @@ const VurderingAvLivetsSluttfaseForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginTop={Margin.large}>
+            <Box marginBlock="6 0">
               <Label size="small" aria-hidden="true">
                 Hvilke dokumenter er brukt i vurderingen av livets sluttfase?
               </Label>
@@ -249,7 +250,7 @@ const VurderingAvLivetsSluttfaseForm = ({
               )}
             </Box>
           )}
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly}
@@ -282,7 +283,7 @@ const VurderingAvLivetsSluttfaseForm = ({
               validators={{ required }}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <RadioGroupPanelRHF
               question="Er den pleietrengende i livets sluttfase?"
               name={FieldName.ER_I_LIVETS_SLUTTFASE}
@@ -295,7 +296,7 @@ const VurderingAvLivetsSluttfaseForm = ({
             />
           </Box>
 
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -344,7 +345,7 @@ const VurderingAvLivetsSluttfaseForm = ({
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginTop={Margin.large}>
+                <Box marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
@@ -355,14 +356,14 @@ const VurderingAvLivetsSluttfaseForm = ({
             />
           </Box>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailViewVurdering>
   );

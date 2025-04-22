@@ -16,6 +16,11 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
     },
     {
+      "kode": "OPPFYLT_9_2",
+      "navn": "oppfylt jf § 9-2",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"
+    },
+    {
       "kode": "IKKE_OPPHOLDSRETT",
       "navn": "Søker har ikke oppholdsrett",
       "kodeverk": "HISTORIKK_ENDRET_FELT_VERDI_TYPE"

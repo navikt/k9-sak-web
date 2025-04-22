@@ -3,12 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, KodeverkMedNavn, Vilkarperiode } from '@k9-sak-web/types';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { FunctionComponent } from 'react';
 import { VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { CustomVilkarText } from './VilkarresultatMedOverstyringFormPeriodisert';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -17,6 +18,7 @@ interface VilkarresultatMedBegrunnelseProps {
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
   avslagsarsaker: KodeverkMedNavn[];
+  relevanteInnvilgetMerknader?: InnvilgetMerknad[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
@@ -34,6 +36,7 @@ interface StaticFunctions {
     aksjonspunkter: Aksjonspunkt[],
     status: string,
     periode: Vilkarperiode,
+    innvilgelseMerknadKode?: string,
   ) => VilkarresultatMedBegrunnelseState;
 }
 
@@ -48,6 +51,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   periodeVilkarStatus,
   readOnly,
   avslagsarsaker,
+  relevanteInnvilgetMerknader,
   erMedlemskapsPanel,
   visPeriodisering,
   skalViseBegrunnelse = true,
@@ -64,12 +68,13 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
       {skalViseBegrunnelse && (
         <>
           <VilkarBegrunnelse isReadOnly={readOnly} />
-          <AssessedBy ident={opprettetAv} />
+          <VurdertAv ident={opprettetAv} />
           <VerticalSpacer eightPx />
         </>
       )}
       <VilkarResultPickerPeriodisertRHF
         avslagsarsaker={avslagsarsaker}
+        relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
@@ -119,8 +124,15 @@ VilkarresultatMedBegrunnelse.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
+  innvilgelseMerknadKode?: string,
 ) => ({
-  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
+  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(
+    avslagKode,
+    aksjonspunkter,
+    status,
+    periode,
+    innvilgelseMerknadKode,
+  ),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 

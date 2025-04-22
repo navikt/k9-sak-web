@@ -1,6 +1,5 @@
 import { Period } from '@fpsak-frontend/utils';
-import { Button } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { Box, Button } from '@navikt/ds-react';
 import React, { useState, type JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
@@ -82,7 +81,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
       <h1 className={styles.kompletthet__mainHeading}>Inntektsmelding</h1>
       <h2 className={styles.kompletthet__subHeading}>Opplysninger til beregning</h2>
       <InntektsmeldingManglerInfo />
-      <Box marginTop={Margin.large}>
+      <Box marginBlock="6 0">
         <PeriodList
           tilstander={tilstanderBeriket}
           listHeadingRenderer={listHeadingRenderer}
@@ -94,7 +93,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
         />
       </Box>
       {kanSendeInn() && (
-        <Box marginTop={Margin.large}>
+        <Box marginBlock="6 0">
           <form
             onSubmit={handleSubmit((data: any) => {
               const perioder = tilstanderTilVurdering.map(tilstand => {

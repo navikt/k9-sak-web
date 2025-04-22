@@ -29,7 +29,7 @@ class PanelDef extends ProsessStegPanelDef {
           deepCopyProps.behandling,
         )}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={data => props.submitCallback(transformBeregningValues(data))}
+        submitCallback={data => props.submitCallback(transformBeregningValues(data, true))}
         formData={props.formData}
         setFormData={props.setFormData}
         readOnlySubmitButton={deepCopyProps.isReadOnly}

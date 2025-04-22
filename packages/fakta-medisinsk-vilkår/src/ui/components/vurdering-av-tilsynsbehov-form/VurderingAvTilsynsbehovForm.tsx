@@ -1,8 +1,9 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Button, Label, Link } from '@navikt/ds-react';
-import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button, Label, Link } from '@navikt/ds-react';
+import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -184,7 +185,7 @@ const VurderingAvTilsynsbehovForm = ({
       <div id="modal" />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           buttonLabel="Bekreft"
           onSubmit={formMethods.handleSubmit(lagNyTilsynsvurdering)}
           onAvbryt={onAvbryt}
@@ -194,7 +195,7 @@ const VurderingAvTilsynsbehovForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginTop={Margin.large}>
+            <Box marginBlock="6 0">
               <Label size="small" aria-hidden="true">
                 Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?
               </Label>
@@ -266,7 +267,7 @@ const VurderingAvTilsynsbehovForm = ({
               )}
             </Box>
           )}
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly}
@@ -307,7 +308,7 @@ const VurderingAvTilsynsbehovForm = ({
               validators={{ required }}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <YesOrNoQuestionRHF
               question="Er det behov for tilsyn og pleie?"
               name={FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
@@ -315,7 +316,7 @@ const VurderingAvTilsynsbehovForm = ({
               disabled={readOnly}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -364,7 +365,7 @@ const VurderingAvTilsynsbehovForm = ({
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginTop={Margin.large}>
+                <Box marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
@@ -375,14 +376,14 @@ const VurderingAvTilsynsbehovForm = ({
             />
           </Box>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailViewVurdering>
   );

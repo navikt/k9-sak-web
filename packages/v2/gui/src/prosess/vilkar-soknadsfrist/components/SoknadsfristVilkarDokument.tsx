@@ -11,7 +11,6 @@ import {
   minLength,
   required,
 } from '@navikt/ft-form-validators';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import type { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { useCallback, useMemo } from 'react';
 import RadioGroupPanel from '../../../shared/hook-form/RadioGroupPanel';
@@ -19,7 +18,7 @@ import type { KravDokument } from '../types/KravDokumentStatus';
 import { formatDate } from '../utils';
 import styles from './SoknadsfristVilkarDokument.module.css';
 import type { Dayjs } from 'dayjs';
-
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 interface SoknadsfristVilkarDokumentProps {
@@ -100,7 +99,7 @@ export const SoknadsfristVilkarDokument = ({
                 readOnly={readOnly}
                 placeholder="Begrunn vurderingen din"
               />
-              <AssessedBy ident={dokument?.avklarteOpplysninger?.opprettetAv} date={opprettetTidspunkt} />
+              <VurdertAv ident={dokument?.avklarteOpplysninger?.opprettetAv} date={opprettetTidspunkt} />
             </div>
           </div>
         </>

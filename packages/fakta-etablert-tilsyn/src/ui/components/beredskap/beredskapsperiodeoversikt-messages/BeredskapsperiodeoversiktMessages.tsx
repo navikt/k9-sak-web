@@ -1,6 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import { Alert, Box } from '@navikt/ds-react';
 import BeredskapType from '../../../../types/BeredskapType';
 import { getStringMedPerioder } from '../../../../util/periodUtils';
 
@@ -15,7 +13,7 @@ const BeredskapsperiodeoversiktMessages = ({ beredskapData }: Beredskapsperiodeo
   if (beredskapData.harPerioderTilVurdering()) {
     const perioderTilVurdering = beredskapData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box marginBottom={Margin.large}>
+      <Box marginBlock="0 6">
         <Alert size="small" variant="warning">
           {`Vurder behov for beredskap i ${getStringMedPerioder(perioderTilVurdering)}.`}
         </Alert>

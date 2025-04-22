@@ -1,5 +1,5 @@
-import RequestRunner from './RequestRunner';
 import AbstractRequestApi from './AbstractRequestApi';
+import RequestRunner from './RequestRunner';
 
 /**
  * RequestApi
@@ -58,6 +58,11 @@ class RequestApiMock extends AbstractRequestApi {
 
   public setMissingPath = (endpointName: string) => {
     this.missingPaths.push(endpointName);
+  };
+
+  public clearMockData = (endpointName: string) => {
+    delete this.mockdata[endpointName];
+    this.execData = [...this.execData.filter(d => d.endpointName !== endpointName)];
   };
 
   public clearAllMockData = () => {

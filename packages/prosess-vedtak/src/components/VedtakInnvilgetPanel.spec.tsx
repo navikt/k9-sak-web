@@ -2,6 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { screen } from '@testing-library/react';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingDtoBehandlingResultatType } from '@navikt/k9-sak-typescript-client';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -25,6 +26,7 @@ describe('<VedtakInnvilgetPanel>', () => {
           slåttAvInntrekk: undefined,
         }}
         kodeverkNavnFraKode={vi.fn()}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
       { messages },
     );

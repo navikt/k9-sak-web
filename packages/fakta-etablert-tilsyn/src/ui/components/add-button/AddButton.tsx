@@ -1,5 +1,4 @@
-import React from 'react';
-import { PlusIcon } from '@navikt/ft-plattform-komponenter';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
 import styles from './addButton.module.css';
 
 interface AddButtonProps {
@@ -11,7 +10,7 @@ interface AddButtonProps {
 
 const AddButton = ({ className, label, onClick, id }: AddButtonProps) => (
   <button className={`${styles.addButton} ${className || ''}`} type="button" onClick={onClick} id={id || ''}>
-    <PlusIcon />
+    <PlusCircleIcon fontSize="1.25rem" />
     <span className={styles.addButton__text}>{label}</span>
   </button>
 );

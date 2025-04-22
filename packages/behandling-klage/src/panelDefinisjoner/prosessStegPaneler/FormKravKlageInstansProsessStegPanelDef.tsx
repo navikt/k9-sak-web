@@ -14,7 +14,7 @@ class PanelDef extends ProsessStegPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA];
 
   getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
-    featureToggles?.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
+    featureToggles.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
 
   getData = ({
     alleBehandlinger,

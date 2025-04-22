@@ -1,12 +1,12 @@
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 
-import { Accordion, Alert, BodyLong, Heading } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { Accordion, Alert, BodyLong, Box, Heading } from '@navikt/ds-react';
+
 import styles from './kompletthetsoversikt.module.css';
 
 const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
-    <Box marginBottom={Margin.large}>
+    <Box marginBlock="0 6">
       <Alert variant="warning" size="small" className={styles.alert}>
         <Heading spacing size="xsmall" level="3">
           Vurder om du kan fortsette behandlingen uten inntektsmelding.
@@ -17,7 +17,7 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
         </BodyLong>
       </Alert>
     </Box>
-    <Box marginBottom={Margin.large}>
+    <Box marginBlock="0 6">
       <Alert variant="info" size="small">
         <Accordion className={styles.alertAccordion}>
           <Accordion.Item>
@@ -40,7 +40,7 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
                   lavere risiko for at arbeidsgiver vil kreve refusjon.
                 </li>
               </ul>
-              <Box marginTop={Margin.large}>
+              <Box marginBlock="6 0">
                 Du bør ikke gå videre uten inntektsmelding hvis:
                 <ul className={styles.kompletthet__list}>
                   <li>

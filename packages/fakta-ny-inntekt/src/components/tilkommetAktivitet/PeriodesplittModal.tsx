@@ -1,10 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
 
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Button, Modal, Select } from '@navikt/ds-react';
-import dayjs from 'dayjs';
-
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@navikt/ft-ui-komponenter';
 import { calcDays, DDMMYYYY_DATE_FORMAT, TIDENES_ENDE } from '@navikt/ft-utils';
+import dayjs from 'dayjs';
 
 import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { type Periode, PeriodesplittDatoValg } from './PeriodesplittDatoValg';

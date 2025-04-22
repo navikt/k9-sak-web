@@ -11,8 +11,8 @@ export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerU
 export { default as getAddresses } from './src/getAddresses';
 export { default as guid } from './src/guid';
 export {
-  getLanguageCodeFromSprakkode,
-  getLanguageFromSprakkode,
+  getLanguageCodeFromspråkkode,
+  getLanguageFromspråkkode,
   replaceNorwegianCharacters,
 } from './src/languageUtils';
 export { diff, isEqual, omit } from './src/objectUtils';

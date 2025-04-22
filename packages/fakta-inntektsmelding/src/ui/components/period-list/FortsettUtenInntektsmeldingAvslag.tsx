@@ -1,10 +1,11 @@
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
-import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 import { Kode, Tilstand } from '../../../types/KompletthetData';
 import styles from './periodList.module.css';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 const FortsettUtenInntektsmeldingAvslag = ({
   tilstand,
@@ -33,7 +34,7 @@ const FortsettUtenInntektsmeldingAvslag = ({
           content={<span className="whitespace-pre-wrap">{tilstand.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy ident={tilstand.vurdertAv} date={tilstand.vurdertTidspunkt} />
+        <VurdertAv ident={tilstand.vurdertAv} date={tilstand.vurdertTidspunkt} />
       </>
     );
   }

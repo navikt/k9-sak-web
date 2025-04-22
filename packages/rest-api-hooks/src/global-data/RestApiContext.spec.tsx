@@ -43,6 +43,10 @@ class RequestApiTestMock extends AbstractRequestApi {
     throw new Error('Not Implemented');
   };
 
+  public clearMockData = () => {
+    throw new Error('Not Implemented');
+  };
+
   public clearAllMockData = () => {
     throw new Error('Not Implemented');
   };

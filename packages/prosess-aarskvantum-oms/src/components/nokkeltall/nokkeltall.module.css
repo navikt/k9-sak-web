@@ -62,7 +62,7 @@
 }
 
 .dagerSokerHarRettPa .overskrift {
-  border-color: #var(--a-lightblue-500);
+  border-color: var(--a-lightblue-500);
 }
 
 .dagerNavHarUtbetalt .overskrift {

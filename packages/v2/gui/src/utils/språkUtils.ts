@@ -1,9 +1,9 @@
-export const getLanguageFromSprakkode = (sprakkode?: string): string => {
-  if (!sprakkode) {
+export const getLanguageFromspråkkode = (språkkode?: string): string => {
+  if (!språkkode) {
     return 'Bokmål';
   }
 
-  switch (sprakkode) {
+  switch (språkkode) {
     case 'NN':
       return 'Nynorsk';
     case 'EN':

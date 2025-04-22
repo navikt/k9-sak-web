@@ -20,7 +20,7 @@ describe('<readOnlyUtils>', () => {
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: 'BEHANDLING_TYPE',
     },
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingHenlagt: false,
     links: [],
   };

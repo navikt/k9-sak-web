@@ -1,6 +1,6 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Form } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';

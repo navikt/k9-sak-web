@@ -3,12 +3,12 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { BodyShort, Table, Tag } from '@navikt/ds-react';
 
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-
-import { EditedIcon, PeriodLabel, VerticalSpacer } from '@navikt/ft-ui-komponenter';
+import { EditedIcon, PeriodLabel } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyWithKr } from '@navikt/ft-utils';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { SubmitButton } from '../felles/SubmitButton';
@@ -159,7 +159,7 @@ export const TilkommetAktivitetField = ({
               readOnly={readOnly}
               validate={[required]}
             />
-            <AssessedBy ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
+            <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
             <VerticalSpacer sixteenPx />
             <SubmitButton
               isSubmittable={submittable}

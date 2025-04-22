@@ -21,7 +21,7 @@ describe('<BehandlingPaVent>', () => {
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: 'BEHANDLING_TYPE',
     },
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingHenlagt: false,
     links: [],
   };
@@ -55,7 +55,7 @@ describe('<BehandlingPaVent>', () => {
         behandling={
           {
             ...behandling,
-            behandlingPaaVent: true,
+            behandlingPåVent: true,
           } as Behandling
         }
         aksjonspunkter={aksjonspunkter}
@@ -73,7 +73,7 @@ describe('<BehandlingPaVent>', () => {
         behandling={
           {
             ...behandling,
-            behandlingPaaVent: true,
+            behandlingPåVent: true,
           } as Behandling
         }
         aksjonspunkter={aksjonspunkter}
@@ -96,7 +96,7 @@ describe('<BehandlingPaVent>', () => {
         behandling={
           {
             ...behandling,
-            behandlingPaaVent: true,
+            behandlingPåVent: true,
           } as Behandling
         }
         aksjonspunkter={[

@@ -1,18 +1,19 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
 import React, { useMemo, type JSX } from 'react';
+import { postNyVurdering, postNyVurderingDryRun } from '../../../api/api';
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
-import { Vurderingsversjon } from '../../../types/Vurdering';
 import { PeriodeMedEndring, PerioderMedEndringResponse } from '../../../types/PeriodeMedEndring';
+import { Vurderingsversjon } from '../../../types/Vurdering';
+import scrollUp from '../../../util/viewUtils';
+import ContainerContext from '../../context/ContainerContext';
+import VurderingContext from '../../context/VurderingContext';
+import LagreVurderingFeiletMelding from '../lagre-vurdering-feilet-melding/LagreVurderingFeiletMelding';
 import OverlappendePeriodeModal from '../overlappende-periode-modal/OverlappendePeriodeModal';
 import ActionType from './actionTypes';
 import vurderingControllerReducer from './reducer';
-import { postNyVurdering, postNyVurderingDryRun } from '../../../api/api';
-import ContainerContext from '../../context/ContainerContext';
-import scrollUp from '../../../util/viewUtils';
-import VurderingContext from '../../context/VurderingContext';
-import LagreVurderingFeiletMelding from '../lagre-vurdering-feilet-melding/LagreVurderingFeiletMelding';
 
 interface NyVurderingControllerProps {
   opprettVurderingLink: Link;
@@ -158,7 +159,7 @@ const NyVurderingController = ({
   return (
     <PageContainer isLoading={hentDataTilVurderingPågår} hasError={hentDataTilVurderingHarFeilet} preventUnmount>
       {lagreVurderingHarFeilet && (
-        <Box marginBottom={Margin.medium}>
+        <Box marginBlock="0 4">
           <LagreVurderingFeiletMelding />
         </Box>
       )}

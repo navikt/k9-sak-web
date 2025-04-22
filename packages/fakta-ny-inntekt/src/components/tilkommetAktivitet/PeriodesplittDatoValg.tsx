@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { DatePicker, Label, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { FlexColumn, VerticalSpacer } from '@navikt/ft-ui-komponenter';
+import { FlexColumn, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import styles from './periodesplittModal.module.css';

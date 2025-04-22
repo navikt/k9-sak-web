@@ -10,7 +10,7 @@ const vedtakTilbakekrevingBehandlingPropType = PropTypes.shape({
   behandlingsresultat: PropTypes.shape({
     type: kodeverkObjektPropType.isRequired,
   }),
-  behandlingPaaVent: PropTypes.bool.isRequired,
+  behandlingPåVent: PropTypes.bool.isRequired,
 });
 
 export default vedtakTilbakekrevingBehandlingPropType;

@@ -33,6 +33,7 @@ interface VedtakAvslagRevurderingPanelProps {
   simuleringResultat: VedtakSimuleringResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
+  behandlingType: string | undefined;
 }
 
 interface OwnState {

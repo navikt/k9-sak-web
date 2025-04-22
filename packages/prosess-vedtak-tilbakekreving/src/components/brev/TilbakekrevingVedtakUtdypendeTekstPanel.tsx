@@ -7,7 +7,7 @@ import { useContext, useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.module.css';
 
 const minLength3 = minLength(3);
@@ -34,7 +34,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
   maximumLength,
 }: OwnProps & WrappedComponentProps) => {
   const featureToggles = useContext(FeatureTogglesContext);
-  const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELTEKST;
+  const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELFELT;
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
   const valideringsRegler = fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler;
   valideringsRegler.push(

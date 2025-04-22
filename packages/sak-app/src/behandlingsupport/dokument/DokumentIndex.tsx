@@ -1,8 +1,7 @@
-import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { DokumentDto, FagsakDto } from '@navikt/k9-sak-typescript-client';
 import { useMemo } from 'react';
@@ -36,14 +35,7 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DokumentIndex = ({
-  behandlingId,
-  behandlingVersjon,
-  fagsak,
-  saksnummer,
-  behandlingUuid,
-  featureToggles,
-}: OwnProps) => {
+export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsak, saksnummer, behandlingUuid }: OwnProps) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<DokumentDto[]>(
@@ -51,7 +43,7 @@ export const DokumentIndex = ({
     { saksnummer },
     {
       updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
+      suspendRequest: !!forrigeSaksnummer && erBehandlingEndretFraUndefined,
       keepData: true,
     },
   );
@@ -67,20 +59,8 @@ export const DokumentIndex = ({
     return <LoadingPanel />;
   }
 
-  if (featureToggles?.BRUK_V2_SAK_DOKUMENTER) {
-    return (
-      <DokumenterSakIndexV2
-        documents={sorterteDokumenter}
-        behandlingId={behandlingId}
-        fagsak={kodeverkKonvertertFagsak}
-        saksnummer={saksnummer}
-        behandlingUuid={behandlingUuid}
-      />
-    );
-  }
-
   return (
-    <DokumenterSakIndex
+    <DokumenterSakIndexV2
       documents={sorterteDokumenter}
       behandlingId={behandlingId}
       fagsak={kodeverkKonvertertFagsak}

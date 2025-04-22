@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Alert, Button, Box as DSBox, Heading } from '@navikt/ds-react';
+import { Alert, Box, Button, Box as DSBox, Heading } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
@@ -169,7 +168,7 @@ const FortsettUtenInntektsmeldingForm = ({
               validate={[v => (!v ? 'Du må fylle inn en verdi' : null)]}
             />
           )}
-          <Box marginTop={Margin.large}>
+          <Box marginBlock="6 0">
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
               {!harFlereTilstanderTilVurdering && !!beslutning && (
                 <Button variant="primary" size="small">

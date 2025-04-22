@@ -6,8 +6,8 @@ import dayjs from 'dayjs';
 
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-import { VerticalSpacer } from '@navikt/ft-ui-komponenter';
+
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import type {
@@ -25,6 +25,7 @@ import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOppl
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
 import styles from './tilkommetAktivitetAccordion.module.css';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 const formatDate = (date: string): string => (date ? dayjs(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
@@ -156,7 +157,7 @@ export const TilkommetAktivitetAccordion = ({
             readOnly={readOnly}
             validate={[required]}
           />
-          <AssessedBy
+          <VurdertAv
             ident={avklaringsbehovTilkommetAktivitet?.vurdertAv}
             date={avklaringsbehovTilkommetAktivitet?.vurdertTidspunkt}
           />

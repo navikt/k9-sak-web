@@ -14,7 +14,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './vilkarKronisSyktBarn.module.css';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
@@ -83,7 +83,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   begrunnelseFraBruker,
 }) => {
   const featureToggles = useContext(FeatureTogglesContext);
-  const visBegrunnelseFraBruker = featureToggles?.['VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK'] === true;
+  const visBegrunnelseFraBruker = featureToggles.VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK === true;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {

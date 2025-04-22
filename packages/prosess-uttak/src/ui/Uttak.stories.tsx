@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
 import UttakContainer from './UttakContainer';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { userEvent, within, expect } from '@storybook/test';
 
 const meta: Meta<typeof UttakContainer> = {
   title: 'prosess/prosess-uttak',
+  component: UttakContainer,
 };
 
 export default meta;
@@ -209,7 +209,6 @@ export const Uttak: Story = {
       readOnly: false,
     },
   },
-  render: props => <UttakContainer {...props} />,
 };
 
 export const UttakMedInntektsgradering: Story = {
@@ -466,11 +465,7 @@ export const UttakMedInntektsgradering: Story = {
       readOnly: false,
     },
   },
-  render: props => (
-    <FeatureTogglesContext.Provider value={{ BRUK_INNTEKTSGRADERING_I_UTTAK: true }}>
-      <UttakContainer {...props} />
-    </FeatureTogglesContext.Provider>
-  ),
+  decorators: [],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 

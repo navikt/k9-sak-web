@@ -63,6 +63,7 @@ interface VedtakInnvilgetRevurderingPanelProps {
   tilbakekrevingvalg: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
   behandlingsresultat: BeregningResultat;
+  behandlingType: string | undefined;
 }
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
