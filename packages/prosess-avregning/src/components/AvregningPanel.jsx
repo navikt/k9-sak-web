@@ -13,8 +13,8 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
-import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
-import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
+import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
+import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
 import { AksjonspunktDtoDefinisjon } from '@navikt/k9-sak-typescript-client';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -267,13 +267,15 @@ export class AvregningPanelImpl extends Component {
               </form>
             </VStack>
           )}
-          <KontrollerEtterbetalingIndex
-            aksjonspunkt={aksjonspunkter.find(
-              ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
-            )}
-            behandling={behandling}
-            readOnly={readOnly}
-          />
+          {harSjekkHøyEtterbetalingAP && (
+            <KontrollerEtterbetalingIndex
+              aksjonspunkt={aksjonspunkter.find(
+                ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+              )}
+              behandling={behandling}
+              readOnly={readOnly}
+            />
+          )}
         </VStack>
       </>
     );
