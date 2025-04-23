@@ -4,9 +4,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AvregningProsessIndex {...props} />;
