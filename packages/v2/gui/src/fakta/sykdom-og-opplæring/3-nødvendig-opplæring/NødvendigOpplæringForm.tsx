@@ -50,8 +50,6 @@ const NødvendigOpplæringForm = ({
     }
   }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
 
-  console.log(formMethods.formState.errors);
-
   const nødvendigOpplæring = formMethods.watch('nødvendigOpplæring');
   return (
     <>
@@ -67,7 +65,7 @@ const NødvendigOpplæringForm = ({
               fom: dayjs(periode?.fom).format('YYYY-MM-DD'),
               tom: dayjs(periode?.tom).format('YYYY-MM-DD'),
             },
-            begrunnelse: data.begrunnelse,
+            begrunnelse: data.begrunnelse ? data.begrunnelse : null,
             nødvendigOpplæring: data.nødvendigOpplæring === 'ja',
             dokumentertOpplæring: data.dokumentertOpplæring === 'ja',
           });

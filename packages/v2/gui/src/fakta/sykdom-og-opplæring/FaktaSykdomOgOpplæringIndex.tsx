@@ -59,7 +59,7 @@ type payloads =
           fom: string;
           tom: string;
         };
-        begrunnelse: string;
+        begrunnelse: string | null;
         nødvendigOpplæring: boolean;
         dokumentertOpplæring: boolean;
       }[];
@@ -92,7 +92,7 @@ type SykdomOgOpplæringContext = {
       fom: string;
       tom: string;
     };
-    begrunnelse?: string;
+    begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
   }) => void;
@@ -148,7 +148,7 @@ const FaktaSykdomOgOpplæringIndex = ({
       fom: string;
       tom: string;
     };
-    begrunnelse: string;
+    begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
   }) => {
