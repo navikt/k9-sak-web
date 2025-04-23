@@ -22,8 +22,10 @@ export class FakeUngBeregningBackendApi {
         {
           erTilVurdering: true,
           periode: { fom: '2025-02-01', tom: '2025-02-28' },
-          rapporterteInntekter: { bruker: {}, register: { arbeidsinntekt: 1500 } },
+          rapporterteInntekter: { bruker: {}, register: { oppsummertRegister: { arbeidsinntekt: 1500 } } },
           status: 'AVVIK',
+          uttalelseFraBruker:
+            'Jeg fikk forskuttert litt lønn av arbeidsgiver denne måneden fordi jeg har hatt økonomiske utfordringer, så jeg rapporterte bare det jeg egentlig skulle fått utbetalt. Det var ikke meningen å oppgi feil, bare å holde det riktig for denne måneden!',
         },
       ],
     };

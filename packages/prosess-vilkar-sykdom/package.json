@@ -13,6 +13,6 @@
     "classnames": "2.5.1",
     "lodash": "4.17.21",
     "react": "19.1.0",
-    "react-intl": "7.1.10"
+    "react-intl": "7.1.11"
   }
 }
