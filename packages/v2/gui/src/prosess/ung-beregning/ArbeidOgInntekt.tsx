@@ -36,21 +36,6 @@ const buildInitialValues = (
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>,
   aksjonspunkt: AksjonspunktDto | undefined,
 ): Formvalues => {
-  // const vurdertPeriode = inntektKontrollperioder?.find(
-  //   periode => periode.erTilVurdering && periode.status === KontrollerInntektPeriodeDtoStatus.AVVIK && periode.valg,
-  // );
-  // if (vurdertPeriode) {
-  //   return {
-  //     fastsattInntekt: vurdertPeriode.fastsattInntekt ? `${vurdertPeriode.fastsattInntekt}` : '',
-  //     valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
-  //     begrunnelse: aksjonspunkt?.begrunnelse ?? '',
-  //   };
-  // }
-  // return {
-  //   fastsattInntekt: '',
-  //   valg: '' as const,
-  //   begrunnelse: '',
-  // };
   return {
     perioder:
       inntektKontrollperioder
