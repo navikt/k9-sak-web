@@ -9,6 +9,9 @@ import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOppl�
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
+import { useSearchParams } from 'react-router';
+import tabCodes from './tabCodes';
+
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
     aksjonspunkter.some(
@@ -207,41 +210,51 @@ const FaktaSykdomOgOpplæringIndex = ({
 
 const SykdomOgOpplæring = () => {
   const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const [activeTab, setActiveTab] = useState(finnTabMedAksjonspunkt(aksjonspunkter) || 'institusjon');
+  const [searchParams] = useSearchParams();
+  const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
+  const [activeTab, setActiveTab] = useState(initActiveTab);
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   return (
     <div className="max-w-[1300px]">
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
           <Tabs.Tab
-            value="institusjon"
+            value={tabCodes.INSTITUSJON}
             label="Institusjon"
             icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
           />
-          <Tabs.Tab value="sykdom" label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />} />
           <Tabs.Tab
-            value="opplæring"
+            value={tabCodes.SYKDOM}
+            label="Sykdom"
+            icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />}
+          />
+          <Tabs.Tab
+            value={tabCodes.OPPLÆRING}
             label="Nødvendig opplæring"
             icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
           />
-          <Tabs.Tab value="reisetid" label="Reisetid" icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />} />
+          <Tabs.Tab
+            value={tabCodes.REISETID}
+            label="Reisetid"
+            icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
+          />
         </Tabs.List>
-        <Tabs.Panel value="institusjon">
+        <Tabs.Panel value={tabCodes.INSTITUSJON}>
           <div className="mt-4">
             <FaktaInstitusjonIndex />
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value="sykdom">
+        <Tabs.Panel value={tabCodes.SYKDOM}>
           <div className="mt-4">
             <SykdomUperiodisertIndex />
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value="opplæring">
+        <Tabs.Panel value={tabCodes.OPPLÆRING}>
           <div className="mt-4">
             <NødvendigOpplæringIndex />
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value="reisetid">
+        <Tabs.Panel value={tabCodes.REISETID}>
           <div className="mt-4">
             <ReisetidIndex />
           </div>

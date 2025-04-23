@@ -10,6 +10,7 @@ export const DEFAULT_PROSESS_STEG = 'default';
 type QueryParams = {
   punkt?: string;
   fakta?: string;
+  tab?: string;
   stotte?: string;
   risiko?: boolean;
 };
@@ -93,7 +94,11 @@ export const getPathToK9Punsj = (): string | null => {
 
 export const createLocationForSkjermlenke = (behandlingLocation: Location, skjermlenkeCode: string): Location => {
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode] || { punktNavn: 'default', faktaNavn: 'default' };
-  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
+  return getLocationWithQueryParams(behandlingLocation, {
+    punkt: skjermlenke.punktNavn,
+    fakta: skjermlenke.faktaNavn,
+    tab: skjermlenke.tabNavn,
+  });
 };
 
 // Kan gå inn på url som ser sånn ut "http://localhost:9000/k9/web/fagsak/", men
@@ -112,7 +117,9 @@ export const redirectToLogin = () => {
 
 export const goToLos = () => {
   const path = getPathToK9Los();
-  window.location.assign(path);
+  if (path != null) {
+    window.location.assign(path);
+  }
 };
 
 export const goToSearch = () => {
