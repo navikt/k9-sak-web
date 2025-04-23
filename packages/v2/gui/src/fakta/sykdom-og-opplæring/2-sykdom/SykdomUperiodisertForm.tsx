@@ -8,10 +8,15 @@ import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-re
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
 import { useContext, useEffect } from 'react';
-import { useOppdaterSykdomsvurdering, useOpprettSykdomsvurdering } from '../SykdomOgOpplæringQueries';
+import {
+  useOppdaterSykdomsvurdering,
+  useOpprettSykdomsvurdering,
+  useVurdertLangvarigSykdom,
+} from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useQueryClient } from '@tanstack/react-query';
 import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
+import { BehandlingContext } from '../../../BehandlingHentContext';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
   Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
@@ -39,7 +44,9 @@ const SykdomUperiodisertForm = ({
 }) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { setNyVurdering } = useContext(SykdomUperiodisertContext);
+  const { refetchBehandling } = useContext(BehandlingContext);
   const queryClient = useQueryClient();
+  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
   const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering({
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
@@ -47,8 +54,11 @@ const SykdomUperiodisertForm = ({
     },
   });
   const { mutate: oppdaterSykdomsvurdering } = useOppdaterSykdomsvurdering({
-    onSuccess: async () => {
+    onSuccess: async data => {
       await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
+      if (vurderingBruktIAksjonspunkt?.vurderingUuid === data.uuid) {
+        await refetchBehandling();
+      }
       setRedigering(false);
     },
   });

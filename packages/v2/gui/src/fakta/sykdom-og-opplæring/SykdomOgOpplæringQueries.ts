@@ -27,7 +27,11 @@ export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => vo
   });
 };
 
-export const useOppdaterSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
+export const useOppdaterSykdomsvurdering = ({
+  onSuccess,
+}: {
+  onSuccess?: (data: OppdaterLangvarigSykdomsVurderingResponse) => void;
+}) => {
   const backendClient = useSykdomBackendClient();
 
   return useMutation<

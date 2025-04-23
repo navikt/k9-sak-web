@@ -22,10 +22,10 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
       <div>
         <LabelledContent
           label={
-            <div>
+            <>
               Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som
               følge av <Lovreferanse>§ 9-14</Lovreferanse>.
-            </div>
+            </>
           }
           indentContent
           size="small"

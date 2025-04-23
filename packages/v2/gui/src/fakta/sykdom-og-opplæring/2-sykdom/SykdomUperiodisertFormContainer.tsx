@@ -8,14 +8,14 @@ import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
-  const { readOnly } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
 
   useEffect(() => {
-    if (vurdering) {
+    if (!vurdering.vurdertTidspunkt || vurdering.behandlingUuid !== behandlingUuid) {
       setRedigering(false);
     }
-  }, [vurdering]);
+  }, [vurdering, behandlingUuid]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm = (redigering && vurdering.vurdertTidspunkt) || !vurdering.vurdertTidspunkt;
   return (
