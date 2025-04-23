@@ -5,7 +5,7 @@ import type { Period } from '@navikt/ft-utils';
 import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
@@ -41,6 +41,17 @@ const NødvendigOpplæringForm = ({
     },
   });
 
+  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
+
+  useEffect(() => {
+    if (opplæringIkkeDokumentertMedLegeerklæring) {
+      formMethods.setValue('nødvendigOpplæring', '');
+      formMethods.setValue('begrunnelse', '');
+    }
+  }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
+
+  console.log(formMethods.formState.errors);
+
   const nødvendigOpplæring = formMethods.watch('nødvendigOpplæring');
   return (
     <>
@@ -66,7 +77,11 @@ const NødvendigOpplæringForm = ({
           <Controller
             control={formMethods.control}
             name="dokumentertOpplæring"
-            rules={{ validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }}
+            rules={
+              opplæringIkkeDokumentertMedLegeerklæring
+                ? undefined
+                : { validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }
+            }
             render={({ field }) => (
               <RadioGroup
                 legend="Er nødvendig opplæring dokumentert med legeerklæring?"
@@ -87,13 +102,16 @@ const NødvendigOpplæringForm = ({
             </Label>
             <Textarea
               {...formMethods.register('begrunnelse', {
-                validate: value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
+                validate: opplæringIkkeDokumentertMedLegeerklæring
+                  ? undefined
+                  : value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
               })}
               readOnly={readOnly}
               size="small"
               label=""
               id="begrunnelse"
               error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
+              disabled={opplæringIkkeDokumentertMedLegeerklæring}
               description={
                 <ReadMore header="Hva skal vurderingen inneholde?" size="small">
                   <BodyShort size="small">
@@ -121,7 +139,12 @@ const NødvendigOpplæringForm = ({
           <Controller
             control={formMethods.control}
             name="nødvendigOpplæring"
-            rules={{ validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }}
+            rules={
+              opplæringIkkeDokumentertMedLegeerklæring
+                ? undefined
+                : { validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }
+            }
+            disabled={opplæringIkkeDokumentertMedLegeerklæring}
             render={({ field }) => (
               <RadioGroup
                 legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"

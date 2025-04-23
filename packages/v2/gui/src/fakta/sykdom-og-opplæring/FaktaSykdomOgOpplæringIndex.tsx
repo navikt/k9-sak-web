@@ -92,7 +92,7 @@ type SykdomOgOpplæringContext = {
       fom: string;
       tom: string;
     };
-    begrunnelse: string;
+    begrunnelse?: string;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
   }) => void;

@@ -15,7 +15,7 @@ import {
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { BehandlingProvider } from '../../v2/gui/src/BehandlingHentContext';
+import { BehandlingProvider } from '../../v2/gui/src/BehandlingContext';
 import OmsorgspengerPaneler from './components/OmsorgspengerPaneler';
 import {
   OmsorgspengerBehandlingApiKeys,

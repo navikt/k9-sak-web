@@ -16,7 +16,7 @@ import {
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useQueryClient } from '@tanstack/react-query';
 import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
-import { BehandlingContext } from '../../../BehandlingHentContext';
+import { BehandlingContext } from '../../../BehandlingContext';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
   Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
