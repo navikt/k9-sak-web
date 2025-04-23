@@ -24,6 +24,11 @@ export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: () => {},
 });
 
+interface SykdomVurderingselement extends Vurderingselement {
+  uuid: string;
+  begrunnelse: string;
+}
+
 const SykdomUperiodisertIndex = () => {
   const { behandlingUuid, readOnly, løsAksjonspunkt9301, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
@@ -75,14 +80,14 @@ const SykdomUperiodisertIndex = () => {
               onPeriodeClick={velgPeriode}
               customPeriodeRad={(periode, onPeriodeClick) => (
                 <NavigasjonsmenyRad
-                  periode={periode}
+                  periode={periode as SykdomVurderingselement}
                   active={periode.id === valgtPeriode?.id}
                   valgt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
                   datoOnClick={() => onPeriodeClick(periode)}
                   benyttOnClick={() =>
                     løsAksjonspunkt9301({
-                      langvarigsykdomsvurderingUuid: periode.uuid,
-                      begrunnelse: periode.begrunnelse,
+                      langvarigsykdomsvurderingUuid: (periode as SykdomVurderingselement).uuid,
+                      begrunnelse: (periode as SykdomVurderingselement).begrunnelse,
                     })
                   }
                 />
