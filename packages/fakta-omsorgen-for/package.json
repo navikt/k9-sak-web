@@ -27,7 +27,7 @@
     "react": "19.1.0",
     "react-collapse": "5.1.1",
     "react-dom": "19.1.0",
-    "react-hook-form": "7.55.0",
+    "react-hook-form": "7.56.1",
     "react-intl": "7.1.11"
   },
   "msw": {
