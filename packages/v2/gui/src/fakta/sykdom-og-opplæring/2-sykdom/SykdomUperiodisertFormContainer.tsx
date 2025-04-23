@@ -8,8 +8,10 @@ import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
-  const { readOnly, behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
+
+  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   useEffect(() => {
     if (!vurdering.vurdertTidspunkt || vurdering.behandlingUuid !== behandlingUuid) {
@@ -17,12 +19,16 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
     }
   }, [vurdering, behandlingUuid]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
-  const visForm = (redigering && vurdering.vurdertTidspunkt) || !vurdering.vurdertTidspunkt;
+  const visForm =
+    !readOnly && ((redigering && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
   return (
     <DetailView
       title="Vurdering av sykdom"
       contentAfterTitleRenderer={() =>
-        !readOnly && <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
+        !readOnly &&
+        harAksjonspunkt9301 && (
+          <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
+        )
       }
     >
       <div data-testid="Periode" className="flex items-center gap-2">

@@ -25,7 +25,9 @@ export const SykdomUperiodisertContext = createContext<{
 });
 
 const SykdomUperiodisertIndex = () => {
-  const { behandlingUuid, readOnly, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
+  const { behandlingUuid, readOnly, løsAksjonspunkt9301, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+
   const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
     useLangvarigSykVurderingerFagsak(behandlingUuid);
   const { data: vurderingBruktIAksjonspunkt, isLoading: isLoadingVurderingBruktIAksjonspunkt } =
@@ -89,7 +91,8 @@ const SykdomUperiodisertIndex = () => {
           )}
           showDetailSection
           belowNavigationContent={
-            !readOnly && (
+            !readOnly &&
+            harAksjonspunkt9301 && (
               <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
                 Legg til ny sykdomsvurdering
               </Button>
@@ -125,10 +128,11 @@ const Warning = ({
   vurderinger: LangvarigSykdomVurderingDto[] | undefined;
   vurderingBruktIAksjonspunkt: ValgtLangvarigSykdomVurderingDto | undefined;
 }) => {
-  const { readOnly, behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   const harVurderingFraTidligereBehandling = vurderinger.some(v => v.behandlingUuid !== behandlingUuid);
-  if (vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' || readOnly) {
+  if (vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' || readOnly || !harAksjonspunkt9301) {
     return null;
   }
 
