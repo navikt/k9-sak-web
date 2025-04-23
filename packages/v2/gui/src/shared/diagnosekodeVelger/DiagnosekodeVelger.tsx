@@ -28,7 +28,7 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   disabled,
   label = 'Diagnosekoder',
 }) => {
-  const { register, watch, setValue, trigger, formState, unregister } = useFormContext<{ [key: string]: string[] }>();
+  const { register, watch, setValue, trigger, formState } = useFormContext<{ [key: string]: string[] }>();
   const [searchValue, setSearchValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState<ComboBoxOptions[]>([]);
 
@@ -38,9 +38,9 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
 
   useEffect(() => {
     if (disabled) {
-      unregister(name);
+      setValue(name, []);
     }
-  }, [disabled, name, unregister]);
+  }, [disabled, name, setValue]);
 
   const onChange = (value: string[]) => {
     setValue(name, value);

@@ -20,7 +20,7 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
         ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'sykdom';
+    return tabCodes.SYKDOM;
   }
   if (
     aksjonspunkter.some(
@@ -28,14 +28,14 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
         ap.definisjon.kode === aksjonspunktCodes.VURDER_OPPLÆRING && ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'opplæring';
+    return tabCodes.OPPLÆRING;
   }
   if (
     aksjonspunkter.some(
       ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_REISETID && ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'reisetid';
+    return tabCodes.REISETID;
   }
 
   if (
@@ -44,7 +44,7 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
         ap.definisjon.kode === aksjonspunktCodes.VURDER_INSTITUSJON && ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'institusjon';
+    return tabCodes.INSTITUSJON;
   }
 
   return '';
