@@ -78,6 +78,7 @@ const SykdomUperiodisertIndex = () => {
               perioderTilVurdering={vurderingsliste || []}
               vurdertePerioder={[]}
               onPeriodeClick={velgPeriode}
+              customPeriodeLabel="Vurdert"
               customPeriodeRad={(periode, onPeriodeClick) => (
                 <NavigasjonsmenyRad
                   periode={periode as SykdomVurderingselement}

@@ -25,7 +25,7 @@ export const NavigasjonsmenyRad = ({
         <div className="flex items-center">
           <RadStatus resultat={periode.resultat} />
 
-          <div className="flex ml-3 items-center">
+          <div className="flex ml-1 items-center">
             <Button
               className={`${active ? 'text-text-default pointer-events-none' : 'text-blue-500 underline'}`}
               onClick={datoOnClick}

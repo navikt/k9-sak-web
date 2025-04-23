@@ -44,6 +44,7 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   vurdertePerioder: T[];
   onPeriodeClick: (periode: T) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
+  customPeriodeLabel?: string;
 }
 
 const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
@@ -51,6 +52,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   vurdertePerioder,
   onPeriodeClick,
   customPeriodeRad,
+  customPeriodeLabel,
 }: VurderingslisteProps<T>) => {
   const harPerioderSomSkalVurderes = perioderTilVurdering?.length > 0;
   const [activeIndex, setActiveIndex] = React.useState(harPerioderSomSkalVurderes ? 0 : -1);
@@ -83,9 +85,9 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
 
       {allePerioder.length > 0 && (
         <>
-          <div className="flex gap w-[120px]">
+          <div className="flex w-[120px]">
             <div className="mx-4 min-w-[50px]">Status</div>
-            <div>Periode</div>
+            <div>{customPeriodeLabel || 'Periode'}</div>
           </div>
           <ul className={styles.interactiveList}>
             {allePerioder.map((element, currentIndex) => (
