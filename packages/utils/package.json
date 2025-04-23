@@ -12,6 +12,6 @@
     "@navikt/ft-types": "^3.0.0",
     "moment": "2.30.1",
     "react": "19.1.0",
-    "react-intl": "7.1.10"
+    "react-intl": "7.1.11"
   }
 }
