@@ -1,9 +1,9 @@
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, HStack } from '@navikt/ds-react';
 import { RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useContext } from 'react';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import type { VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import type { VilkårFieldType } from '../types/VilkårFieldType';
 

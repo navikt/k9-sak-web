@@ -5,15 +5,14 @@ import {
   type VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { HelpText, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useContext } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-
-import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '../../../featuretoggles/FeatureToggles';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';
 import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
