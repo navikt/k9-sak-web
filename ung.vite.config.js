@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
 import path from 'path';
+import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from 'vite-plugin-svgr';
@@ -106,6 +107,7 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
+        plugins: [sourcemaps({ exclude: /@sentry/ })],
       },
     },
   });
