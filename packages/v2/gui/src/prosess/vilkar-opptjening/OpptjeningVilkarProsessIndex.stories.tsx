@@ -4,11 +4,13 @@ import {
   FastsattOpptjeningAktivitetDtoKlasse,
   FastsattOpptjeningAktivitetDtoType,
   VilkårPeriodeDtoMerknad,
+  VilkårPeriodeDtoVilkarStatus,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from '@storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
+import withFeatureToggles from '../../storybook/decorators/withFeatureToggles';
 import OpptjeningVilkarProsessIndexV2 from './OpptjeningVilkarProsessIndexV2';
 
 const opptjening = {
@@ -128,6 +130,7 @@ const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 const meta = {
   title: 'gui/prosess/vilkar-opptjening',
   component: OpptjeningVilkarProsessIndexV2,
+  decorators: [withFeatureToggles({ OPPTJENING_READ_ONLY_PERIODER: false })],
 } satisfies Meta<typeof OpptjeningVilkarProsessIndexV2>;
 
 export default meta;
@@ -155,7 +158,7 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
               antattOpptjeningAktivitetTidslinje:
                 'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
             },
-            vilkarStatus: 'OPPFYLT',
+            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT,
             periode: {
               fom: '2020-04-27',
               tom: '2020-04-27',
