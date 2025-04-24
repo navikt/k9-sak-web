@@ -1,7 +1,6 @@
-import { Alert, Button } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { JSX } from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Alert, Box, Button } from '@navikt/ds-react';
+import React, { JSX } from 'react';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
 import ContainerContext from '../../context/ContainerContext';
 import FristForDokumentasjonUtløptPanel from '../frist-for-dokumentasjon-utløpt-panel/FristForDokumentasjonUtløptPanel';
@@ -36,7 +35,7 @@ const DokumentoversiktMessages = ({
   return (
     <>
       {harRegistrertDiagnosekode === false && (
-        <Box marginBottom={Margin.large}>
+        <Box marginBlock="0 6">
           <Alert size="small" variant="warning">
             Diagnosekode mangler. Du må legge til en diagnosekode for å vurdere tilsyn og pleie.
           </Alert>
@@ -44,7 +43,7 @@ const DokumentoversiktMessages = ({
       )}
       {visFristForDokumentasjonUtløptMelding && !readOnly && (
         <>
-          <Box marginBottom={Margin.large}>
+          <Box marginBlock="0 6">
             <Alert size="small" variant="warning">
               {erPleiepengerSluttfaseFagsak ? (
                 <>Dokumentasjon signert av lege eller helseinstitusjon mangler. </>
@@ -54,7 +53,7 @@ const DokumentoversiktMessages = ({
               Sett saken på vent mens du innhenter mer dokumentasjon.
             </Alert>
           </Box>
-          <Box marginBottom={Margin.large}>
+          <Box marginBlock="0 6">
             <FristForDokumentasjonUtløptPanel
               onProceedClick={() => onFinished({ ikkeVentPåGodkjentLegeerklæring: true })}
             />
@@ -62,7 +61,7 @@ const DokumentoversiktMessages = ({
         </>
       )}
       {visHåndterNyeDokumenterMelding && fagsakYtelseType !== fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && (
-        <Box marginBottom={Margin.large}>
+        <Box marginBlock="0 6">
           <Alert size="small" variant="warning">
             Dokumentasjon signert av sykehuslege/spesialisthelsetjenesten mangler. Håndter eventuelle nye dokumenter,
             eller sett saken på vent mens du innhenter mer dokumentasjon.
@@ -75,7 +74,7 @@ const DokumentoversiktMessages = ({
         </Alert>
       )}
       {kanNavigereVidere && !readOnly && (
-        <Box marginBottom={Margin.large}>
+        <Box marginBlock="0 6">
           <Alert
             size="small"
             data-testid="dokumentasjon-ferdig"

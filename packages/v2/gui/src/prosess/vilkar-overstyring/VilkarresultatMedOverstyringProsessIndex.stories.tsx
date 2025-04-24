@@ -94,7 +94,6 @@ const defaultArgs = {
   kanOverstyreAccess: {
     isEnabled: true,
   },
-  featureToggles: {},
   erOverstyrt: false,
   toggleOverstyring: action('button-click'),
   visAllePerioder: true,

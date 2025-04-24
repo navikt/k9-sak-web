@@ -20,7 +20,7 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyVergeIndexV2 from '@k9-sak-web/gui/sak/meny/verge/MenyVergeIndex.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyMarkerBehandling, {
   getMenytekst as getMenytekstMarkerBehandling,
 } from '@k9-sak-web/sak-meny-marker-behandling';
@@ -180,7 +180,7 @@ export const BehandlingMenuIndex = ({
 
   const featureToggles = useContext(FeatureTogglesContext);
 
-  if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
+  if (featureToggles.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
     BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.push(BehandlingType.UNNTAK);
   }
 
@@ -221,7 +221,7 @@ export const BehandlingMenuIndex = ({
     );
   }
 
-  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
+  const erPaVent = behandling ? behandling.behandlingPåVent : false;
   const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
 
   const vergeMenyvalg = behandlingRettigheter?.vergeBehandlingsmeny;
@@ -275,7 +275,7 @@ export const BehandlingMenuIndex = ({
               behandlingVersjon={behandlingVersjon}
               forhandsvisHenleggBehandling={previewHenleggBehandling}
               henleggBehandling={shelveBehandling}
-              ytelseType={fagsak.sakstype.kode}
+              ytelseType={fagsak.sakstype}
               behandlingType={behandling?.type.kode}
               behandlingResultatTyper={menyKodeverk
                 .getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)
@@ -327,7 +327,7 @@ export const BehandlingMenuIndex = ({
                 BehandlingType.REVURDERING,
                 kodeverkTyper.BEHANDLING_AARSAK,
               )}
-              ytelseType={fagsak.sakstype.kode}
+              ytelseType={fagsak.sakstype}
               lagNyBehandling={lagNyBehandling}
               sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
               sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}

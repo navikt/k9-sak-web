@@ -35,9 +35,9 @@ interface VedtakProsessIndexProps {
   behandling: {
     type: string;
     status: string;
-    sprakkode: string;
+    språkkode: string;
     behandlingsresultat?: BehandlingsresultatDto;
-    behandlingPaaVent: boolean;
+    behandlingPåVent: boolean;
     behandlingÅrsaker?: Array<BehandlingÅrsakDto>;
   };
   beregningsgrunnlag: Beregningsgrunnlag[];
@@ -52,7 +52,7 @@ interface VedtakProsessIndexProps {
   };
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: () => void;
+  previewCallback: () => Promise<any>;
   simuleringResultat: VedtakSimuleringResultat;
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
@@ -89,9 +89,9 @@ const VedtakProsessIndex = ({
     <VedtakPanels
       behandlingTypeKode={behandling.type}
       behandlingStatus={behandling.status}
-      sprakkode={behandling.sprakkode}
+      språkkode={behandling.språkkode}
       behandlingresultat={behandling.behandlingsresultat}
-      behandlingPaaVent={behandling.behandlingPaaVent}
+      behandlingPåVent={behandling.behandlingPåVent}
       behandlingÅrsaker={behandling.behandlingÅrsaker}
       beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkar}

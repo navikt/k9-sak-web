@@ -1,0 +1,50 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: ung-sak-web
+  namespace: k9saksbehandling
+  labels:
+    team: k9saksbehandling
+  annotations:
+    nais.io/run-as-user: '101' #nginx
+    nais.io/read-only-file-system: 'false' #nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: '32k'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '600'
+spec:
+  image: {{ image }}
+  port: 9005
+  liveness:
+    path: /isAlive
+    initialDelay: 10
+  readiness:
+    path: /isReady
+    initialDelay: 10
+  replicas:
+    disableAutoScaling: true
+    min: 2
+    max: 2
+  resources:
+    requests:
+      cpu: 200m
+      memory: 32Mi
+    limits:
+      memory: 64Mi
+  ingresses:
+    - 'https://ung.intern.dev.nav.no'
+  accessPolicy:
+    outbound:
+      rules:
+        - application: ung-sak
+  env:
+    - name: APP_NAME
+      value: ung-sak-web
+    - name: APP_URL
+      value: 'http://ung-sak'
+    - name: APP_PORT
+      value: '9005'
+
+    # Setter flagg som bestemmer hvilket sett med feature toggles som skal brukes i frontend.
+    # Faktiske feature toggles for ulike miljø er satt i ulike filer i packages/v2/gui/src/featuretoggles
+    - name: FEATURE_TOGGLES_ENV
+      value: 'ung-sak-q'

@@ -1,5 +1,6 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -14,7 +15,7 @@ const TILBAKEKREVING_BEHANDLINGSTYPER = [
 ];
 
 interface OwnProps {
-  ytelseType: string;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;
@@ -61,7 +62,7 @@ const MenyNyBehandlingIndexV2 = ({
   const vilkårBackendClient = new VilkårBackendClient(k9SakClient);
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
-    queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : undefined),
+    queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),
     enabled: !!behandlingUuid,
   });
 

@@ -10,12 +10,12 @@ export const replaceNorwegianCharacters = (str: string) => {
 };
 
 // TODO Fjern bruk av denne
-export const getLanguageCodeFromSprakkode = (sprakkode: Kodeverk) => {
-  if (!sprakkode) {
+export const getLanguageCodeFromspråkkode = (språkkode: Kodeverk) => {
+  if (!språkkode) {
     return 'Malform.Bokmal';
   }
 
-  switch (sprakkode.kode) {
+  switch (språkkode.kode) {
     case 'NN':
       return 'Malform.Nynorsk';
     case 'EN':
@@ -25,12 +25,12 @@ export const getLanguageCodeFromSprakkode = (sprakkode: Kodeverk) => {
   }
 };
 
-export const getLanguageFromSprakkode = (sprakkode?: string): string => {
-  if (!sprakkode) {
+export const getLanguageFromspråkkode = (språkkode?: string): string => {
+  if (!språkkode) {
     return intl.formatMessage({ id: 'Malform.Bokmal' });
   }
 
-  switch (sprakkode) {
+  switch (språkkode) {
     case 'NN':
       return intl.formatMessage({ id: 'Malform.Nynorsk' });
     case 'EN':
