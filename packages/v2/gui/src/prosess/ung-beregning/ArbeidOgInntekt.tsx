@@ -2,7 +2,7 @@ import {
   KontrollerInntektPeriodeDtoStatus,
   KontrollerInntektPeriodeDtoValg,
   type AksjonspunktDto,
-  type KontrollerInntektDto,
+  type KontrollerInntektPeriodeDto,
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
@@ -11,7 +11,7 @@ import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
 import { formatCurrencyWithKr } from '../../utils/formatters';
 import { AksjonspunktArbeidOgInntekt } from './AksjonspunktArbeidOgInntekt';
@@ -33,35 +33,36 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
 };
 
 const buildInitialValues = (
-  inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'],
+  inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>,
   aksjonspunkt: AksjonspunktDto | undefined,
-) => {
-  const vurdertPeriode = inntektKontrollperioder?.find(
-    periode => periode.erTilVurdering && periode.status === KontrollerInntektPeriodeDtoStatus.AVVIK && periode.valg,
-  );
-  if (vurdertPeriode) {
-    return {
-      fastsattInntekt: vurdertPeriode.fastsattInntekt ? `${vurdertPeriode.fastsattInntekt}` : '',
-      valg: (vurdertPeriode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
-      begrunnelse: aksjonspunkt?.begrunnelse ?? '',
-    };
-  }
+): Formvalues => {
   return {
-    fastsattInntekt: '',
-    valg: '' as const,
-    begrunnelse: '',
+    perioder:
+      inntektKontrollperioder
+        ?.filter(periode => periode.erTilVurdering)
+        .map(periode => {
+          return {
+            fastsattInntekt: periode.fastsattInntekt ? `${periode.fastsattInntekt}` : '',
+            valg: (periode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
+            begrunnelse: aksjonspunkt?.begrunnelse ?? '',
+            periode: periode.periode,
+          };
+        }) || [],
   };
 };
 
 type Formvalues = {
-  fastsattInntekt: string;
-  valg: KontrollerInntektPeriodeDtoValg | '';
-  begrunnelse: string;
+  perioder: {
+    fastsattInntekt: string;
+    valg: KontrollerInntektPeriodeDtoValg | '';
+    begrunnelse: string;
+    periode: KontrollerInntektPeriodeDto['periode'];
+  }[];
 };
 
 interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
-  inntektKontrollperioder: KontrollerInntektDto['kontrollperioder'];
+  inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   aksjonspunkt: AksjonspunktDto | undefined;
   isReadOnly: boolean;
 }
@@ -78,31 +79,31 @@ export const ArbeidOgInntekt = ({
   });
 
   const onSubmit = async (values: Formvalues) => {
-    const periodeTilVurdering = inntektKontrollperioder?.find(periode => periode.erTilVurdering);
     setIsSubmitting(true);
     try {
       await submitCallback([
         {
           kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-          begrunnelse: values.begrunnelse,
-          perioder: [
-            {
-              periode: periodeTilVurdering?.periode,
-              inntekt:
-                values.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
-                  ? {
-                      fastsattInntekt: removeSpacesFromNumber(values.fastsattInntekt),
-                    }
-                  : null,
-              valg: values.valg,
-            },
-          ],
+          begrunnelse: values.perioder[0]?.begrunnelse,
+          perioder: values.perioder.map(periode => ({
+            periode: periode.periode,
+            fastsattInnntekt:
+              periode.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
+                ? removeSpacesFromNumber(periode.fastsattInntekt)
+                : undefined,
+            valg: periode.valg,
+          })),
         },
       ]);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const { fields } = useFieldArray({
+    control: formMethods.control,
+    name: 'perioder',
+  });
 
   return (
     <Form<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
@@ -126,23 +127,28 @@ export const ArbeidOgInntekt = ({
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {inntektKontrollperioder?.map((inntekt, index) => {
-              const isLastRow = index === inntektKontrollperioder.length - 1;
-              const harAvvik = inntekt.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
-              const harAksjonspunkt = inntekt.erTilVurdering && harAvvik;
-              const harBrukerrapportertInntekt = inntekt.rapporterteInntekter?.bruker?.arbeidsinntekt != undefined;
+            {fields?.map((field, index) => {
+              const inntektKontrollPeriode = inntektKontrollperioder.find(
+                i => i.periode?.fom === field.periode?.fom && i.periode?.tom === field.periode?.tom,
+              );
+              const isLastRow = index === fields.length - 1;
+              const harAvvik = inntektKontrollPeriode?.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
+              const harAksjonspunkt = inntektKontrollPeriode?.erTilVurdering && harAvvik;
+              const harBrukerrapportertInntekt =
+                inntektKontrollPeriode?.rapporterteInntekter?.bruker?.arbeidsinntekt != undefined;
 
               return (
                 <Table.ExpandableRow
-                  key={`${inntekt.periode?.fom}_${inntekt.periode?.tom}`}
+                  key={field.id}
                   content={
                     harAksjonspunkt ? (
                       <AksjonspunktArbeidOgInntekt
                         harBrukerrapportertInntekt={harBrukerrapportertInntekt}
                         isSubmitting={isSubmitting}
                         isReadOnly={isReadOnly}
-                        uttalelseFraBruker={inntekt.uttalelseFraBruker}
-                        periode={inntekt.periode}
+                        uttalelseFraBruker={inntektKontrollPeriode.uttalelseFraBruker}
+                        periode={field.periode}
+                        fieldIndex={index}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
@@ -164,25 +170,29 @@ export const ArbeidOgInntekt = ({
                       ) : (
                         <CheckmarkCircleFillIcon fontSize={24} className={styles.checkmarkIcon} />
                       )}
-                      <BodyShort size="small">{formaterStatus(inntekt.status)}</BodyShort>
+                      <BodyShort size="small">{formaterStatus(inntektKontrollPeriode?.status)}</BodyShort>
                     </HStack>
                   </Table.DataCell>
                   <Table.DataCell>
-                    {inntekt.periode && (
+                    {inntektKontrollPeriode?.periode && (
                       <BodyShort size="small">
-                        <PeriodLabel dateStringFom={inntekt.periode?.fom} dateStringTom={inntekt.periode?.tom} />
+                        <PeriodLabel
+                          dateStringFom={inntektKontrollPeriode?.periode?.fom}
+                          dateStringTom={inntektKontrollPeriode?.periode?.tom}
+                        />
                       </BodyShort>
                     )}
                   </Table.DataCell>
                   <Table.DataCell align="right">
                     <BodyShort size="small">
-                      {inntekt.rapporterteInntekter?.bruker && formaterInntekt(inntekt.rapporterteInntekter?.bruker)}
+                      {inntektKontrollPeriode?.rapporterteInntekter?.bruker &&
+                        formaterInntekt(inntektKontrollPeriode.rapporterteInntekter?.bruker)}
                     </BodyShort>
                   </Table.DataCell>
                   <Table.DataCell align="right">
                     <BodyShort size="small">
-                      {inntekt.rapporterteInntekter?.register?.oppsummertRegister &&
-                        formaterInntekt(inntekt.rapporterteInntekter.register.oppsummertRegister)}
+                      {inntektKontrollPeriode?.rapporterteInntekter?.register?.oppsummertRegister &&
+                        formaterInntekt(inntektKontrollPeriode.rapporterteInntekter.register.oppsummertRegister)}
                     </BodyShort>
                   </Table.DataCell>
                 </Table.ExpandableRow>
