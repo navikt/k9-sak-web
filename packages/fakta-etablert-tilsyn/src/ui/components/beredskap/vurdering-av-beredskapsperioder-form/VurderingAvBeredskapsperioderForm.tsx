@@ -1,7 +1,9 @@
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
-import { Alert } from '@navikt/ds-react';
-import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { Alert, Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
@@ -118,7 +120,7 @@ const VurderingAvBeredskapsperioderForm = ({
   return (
     <DetailView title="Vurdering av beredskap">
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           onSubmit={formMethods.handleSubmit(handleSubmit)}
           buttonLabel="Bekreft og fortsett"
           onAvbryt={onCancelClick}
@@ -127,10 +129,10 @@ const VurderingAvBeredskapsperioderForm = ({
           shouldShowSubmitButton={!readOnly}
           smallButtons
         >
-          <Box marginTop={Margin.large}>
+          <Box marginBlock="6 0">
             <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <TextAreaRHF
               label="Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd."
               name={FieldName.BEGRUNNELSE}
@@ -138,7 +140,7 @@ const VurderingAvBeredskapsperioderForm = ({
               disabled={readOnly}
             />
           </Box>
-          <Box marginTop={Margin.xLarge}>
+          <Box marginBlock="8 0">
             <RadioGroupPanelRHF
               question="Er det behov for beredskap?"
               radios={[
@@ -152,7 +154,7 @@ const VurderingAvBeredskapsperioderForm = ({
             />
           </Box>
           {erDetBehovForBeredskap === RadioOptions.JA_DELER && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <PeriodpickerListRHF
                 name={FieldName.PERIODER}
                 legend="I hvilke perioder er det behov for beredskap?"
@@ -170,7 +172,7 @@ const VurderingAvBeredskapsperioderForm = ({
                   )
                 }
                 renderAfterFieldArray={fieldArrayMethods => (
-                  <Box marginTop={Margin.large}>
+                  <Box marginBlock="6 0">
                     <AddButton
                       label="Legg til periode"
                       onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
@@ -197,7 +199,7 @@ const VurderingAvBeredskapsperioderForm = ({
             </Box>
           )}
           {perioderUtenBehovForBeredskap.length > 0 && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <Alert size="small" variant="info">
                 <LabelledContent
                   label="Resterende perioder har søkeren ikke behov for beredskap:"
@@ -210,7 +212,7 @@ const VurderingAvBeredskapsperioderForm = ({
               </Alert>
             </Box>
           )}
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </DetailView>
   );

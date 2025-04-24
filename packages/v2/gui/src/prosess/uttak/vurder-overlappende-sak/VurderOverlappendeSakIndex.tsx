@@ -7,9 +7,10 @@ import VurderOverlappendeSak from './VurderOverlappendeSak';
 interface Props {
   behandling: BehandlingDto;
   aksjonspunkt: AksjonspunktDto;
+  readOnly: boolean;
 }
 
-const VurderOverlappendeSakIndex = ({ behandling, aksjonspunkt }: Props) => {
+const VurderOverlappendeSakIndex = ({ behandling, aksjonspunkt, readOnly }: Props) => {
   const k9SakClient = useContext(K9SakClientContext);
   const behandlingUttakBakcendClient = new BehandlingUttakBackendClient(k9SakClient);
 
@@ -27,6 +28,7 @@ const VurderOverlappendeSakIndex = ({ behandling, aksjonspunkt }: Props) => {
     <VurderOverlappendeSak
       behandling={behandling}
       aksjonspunkt={aksjonspunkt}
+      readOnly={readOnly}
       api={behandlingUttakBakcendClient}
       oppdaterBehandling={oppdaterBehandling}
     />

@@ -1,9 +1,11 @@
 import { get } from '@fpsak-frontend/utils';
-import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import axios from 'axios';
 import React, { useMemo, type JSX } from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
 import Dokument from '../../../types/Dokument';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
 import { DokumentoversiktResponse } from '../../../types/DokumentoversiktResponse';
@@ -159,7 +161,7 @@ const StruktureringAvDokumentasjon = ({
                   valgtDokument={valgtDokument}
                   expandedByDefault
                 />
-                <Box marginTop={Margin.large}>
+                <Box marginBlock="6 0">
                   <Dokumentnavigasjon
                     tittel="Andre dokumenter"
                     dokumenter={dokumentoversikt.strukturerteDokumenter}
@@ -183,7 +185,7 @@ const StruktureringAvDokumentasjon = ({
           />
 
           {skalViseInnleggelsesperioderOgDiagnosekoder && (
-            <Box marginTop={Margin.xxLarge}>
+            <Box marginBlock="16 0">
               <DokumentasjonFooter
                 firstSectionRenderer={() => <Innleggelsesperiodeoversikt onInnleggelsesperioderUpdated={sjekkStatus} />}
                 secondSectionRenderer={() => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} />}

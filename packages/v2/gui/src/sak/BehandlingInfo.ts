@@ -12,7 +12,7 @@ import type { BehandlingTypeKodeverk } from '@k9-sak-web/backend/combined/kodeve
 export type BehandlingInfo = Readonly<{
   id: number;
   uuid: string;
-  sprakkode: Språkkode;
+  språkkode: Språkkode;
 
   type: BehandlingTypeKodeverk;
 }>;

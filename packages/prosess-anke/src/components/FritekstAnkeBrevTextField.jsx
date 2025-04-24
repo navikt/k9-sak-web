@@ -3,11 +3,11 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
+import { getLanguageCodeFromspråkkode, hasValidText, required } from '@fpsak-frontend/utils';
 
 import styles from './fritekstAnkeBrevTextField.module.css';
 
-const FritekstAnkeBrevTextField = ({ sprakkode, readOnly = false, intl }) => (
+const FritekstAnkeBrevTextField = ({ språkkode, readOnly = false, intl }) => (
   <div className={styles.fritekstTilBrevTextArea}>
     <TextAreaField
       name="fritekstTilBrev"
@@ -18,7 +18,7 @@ const FritekstAnkeBrevTextField = ({ sprakkode, readOnly = false, intl }) => (
       badges={[
         {
           type: 'warning',
-          textId: getLanguageCodeFromSprakkode(sprakkode),
+          textId: getLanguageCodeFromspråkkode(språkkode),
           title: 'Malform.Beskrivelse',
         },
       ]}
@@ -27,7 +27,7 @@ const FritekstAnkeBrevTextField = ({ sprakkode, readOnly = false, intl }) => (
 );
 
 FritekstAnkeBrevTextField.propTypes = {
-  sprakkode: PropTypes.shape().isRequired,
+  språkkode: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
 };

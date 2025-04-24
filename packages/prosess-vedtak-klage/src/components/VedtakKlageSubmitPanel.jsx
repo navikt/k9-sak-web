@@ -24,7 +24,7 @@ const getPreviewCallback = (formProps, previewVedtakCallback) => e => {
   e.preventDefault();
 };
 
-export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPaaVent, previewVedtakCallback, formProps, readOnly }) => {
+export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVedtakCallback, formProps, readOnly }) => {
   const previewBrev = getPreviewCallback(formProps, previewVedtakCallback);
 
   return (
@@ -36,7 +36,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPaaVent, previewVed
             size="small"
             className={styles.mainButton}
             onClick={formProps.handleSubmit}
-            disabled={behandlingPaaVent || formProps.submitting}
+            disabled={behandlingPåVent || formProps.submitting}
             loading={formProps.submitting}
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenning' })}
@@ -59,7 +59,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPaaVent, previewVed
 VedtakKlageSubmitPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  behandlingPaaVent: PropTypes.bool.isRequired,
+  behandlingPåVent: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
 };

@@ -1,6 +1,7 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -26,20 +27,20 @@ export type BehandlingOppretting = Readonly<{
 export type FormValues = {
   behandlingType: string;
   nyBehandlingEtterKlage?: string;
-  BehandlingÅrsakDtoBehandlingArsakType?: string;
+  behandlingArsakType?: string;
   steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
   fom: string;
   tom: string;
 };
 
 interface NyBehandlingModalProps {
-  ytelseType: string;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   cancelEvent: () => void;
   submitCallback: (
     data: {
       eksternUuid?: string;
-      fagsakYtelseType: string;
+      fagsakYtelseType: FagsakYtelsesType;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -89,6 +90,9 @@ export const NyBehandlingModal = ({
   sisteDagISøknadsperiode,
 }: NyBehandlingModalProps) => {
   useEffect(() => {
+    const erTilbakekreving =
+      behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
+      behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
     if (erTilbakekrevingAktivert) {
       if (uuidForSistLukkede !== undefined) {
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid: uuidForSistLukkede });
@@ -97,13 +101,21 @@ export const NyBehandlingModal = ({
         sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
       }
     }
-  }, []);
+  }, [
+    behandlingUuid,
+    behandlingType,
+    erTilbakekrevingAktivert,
+    saksnummer,
+    sjekkOmTilbakekrevingKanOpprettes,
+    sjekkOmTilbakekrevingRevurderingKanOpprettes,
+    uuidForSistLukkede,
+  ]);
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
       behandlingType: '',
       nyBehandlingEtterKlage: '',
-      BehandlingÅrsakDtoBehandlingArsakType: '',
+      behandlingArsakType: '',
       steg: undefined,
       fom: '',
       tom: '',
@@ -126,9 +138,6 @@ export const NyBehandlingModal = ({
   const visÅrsak =
     (erRevurdering && steg === 'inngangsvilkår') ||
     (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0);
-  const erTilbakekreving =
-    behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
-    behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
   const handleSubmit = (formValues: FormValues) => {
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
@@ -187,7 +196,7 @@ export const NyBehandlingModal = ({
             )}
             {visÅrsak && (
               <SelectField
-                name="BehandlingÅrsakDtoBehandlingArsakType"
+                name="behandlingArsakType"
                 label="Hva er årsaken til den nye behandlingen?"
                 validate={[required]}
                 selectValues={BehandlingÅrsakDtoBehandlingArsakTyper.map(b => (

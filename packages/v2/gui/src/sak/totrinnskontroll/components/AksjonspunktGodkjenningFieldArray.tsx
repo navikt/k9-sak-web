@@ -1,3 +1,6 @@
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
@@ -6,18 +9,13 @@ import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import * as Sentry from '@sentry/browser';
 import { type Location } from 'history';
-import { NavLink } from 'react-router';
-
-import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
-
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
+import { NavLink } from 'react-router';
 import { type Behandling } from '../types/Behandling';
 import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
+import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
 
 const MANUELL_VURDERING_AV_ANKE = '5093';

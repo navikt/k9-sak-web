@@ -171,11 +171,13 @@ describe('<AvregningPanelImpl>', () => {
   it('skal rendre form med RadioGroup med to valg når aksjonspunkt 5084 er aktivt', () => {
     const props = {
       ...mockProps,
+      harVurderFeilutbetalingAP: true,
+      harSjekkHøyEtterbetalingAP: false,
       apCodes: ['5084'],
     };
     renderWithIntlAndReduxForm(<AvregningPanelImpl {...props} />, { messages });
 
-    expect(screen.getByRole('radio', { name: 'Opprett tilbakekreving' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Opprett tilbakekreving, ikke send varsel' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Avvent samordning, ingen tilbakekreving' })).toBeInTheDocument();
   });
 

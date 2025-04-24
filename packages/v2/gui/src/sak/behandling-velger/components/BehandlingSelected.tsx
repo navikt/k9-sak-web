@@ -1,8 +1,4 @@
-import {
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoType,
-  type Periode,
-} from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingDtoBehandlingResultatType, BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
@@ -11,6 +7,7 @@ import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
 import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
+import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
@@ -22,7 +19,7 @@ interface BehandlingSelectedProps {
   behandlingsresultatTypeNavn?: string;
   behandlingsårsaker: string[];
   behandlingTypeNavn: string;
-  søknadsperioder: Periode[];
+  søknadsperioder: K9UngPeriode[];
   behandlingTypeKode: string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;

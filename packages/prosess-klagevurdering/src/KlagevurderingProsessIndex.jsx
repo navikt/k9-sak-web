@@ -38,7 +38,7 @@ const KlagevurderingProsessIndex = ({
         <BehandleKlageFormKa
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
-          sprakkode={behandling.sprakkode}
+          språkkode={behandling.språkkode}
           klageVurdering={klageVurdering}
           saveKlage={saveKlage}
           submitCallback={submitCallback}
@@ -54,7 +54,7 @@ const KlagevurderingProsessIndex = ({
           fagsak={fagsak}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
-          sprakkode={behandling.sprakkode}
+          språkkode={behandling.språkkode}
           klageVurdering={klageVurdering}
           saveKlage={saveKlage}
           submitCallback={submitCallback}

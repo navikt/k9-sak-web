@@ -15,7 +15,7 @@ const behandling = {
       erAutomatiskRevurdering: true,
     },
   ],
-  sprakkode: {
+  språkkode: {
     kode: 'NN',
   },
   type: {

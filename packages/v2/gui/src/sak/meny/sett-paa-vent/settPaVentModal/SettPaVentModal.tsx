@@ -95,7 +95,7 @@ interface PureOwnProps {
 export interface FormState {
   ventearsak: string;
   frist: string;
-  ventearsakVariant: string;
+  ventearsakVariant: string | undefined;
 }
 
 interface UtvidetKodeverkObject extends KodeverkObject {
@@ -327,7 +327,7 @@ const buildInitialValues = (
 ): FormState => ({
   ventearsak: ventearsak ?? '',
   frist: frist ? frist : hasManualPaVent === false ? '' : initFrist(),
-  ventearsakVariant: ventearsakVariant ?? '',
+  ventearsakVariant: ventearsakVariant ?? undefined,
 });
 
 export default SettPaVentModal;

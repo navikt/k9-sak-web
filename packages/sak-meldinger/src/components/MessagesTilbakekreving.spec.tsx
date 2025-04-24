@@ -23,7 +23,7 @@ const mockProps = {
 };
 
 describe('<MessagesTilbakekreving>', () => {
-  const sprakkode = {
+  const språkkode = {
     kode: 'en',
     kodeverk: 'Engelsk',
   };
@@ -78,7 +78,7 @@ describe('<MessagesTilbakekreving>', () => {
       <MessagesTilbakekreving
         {...mockProps}
         templates={[templates[dokumentMalType.INNHENT_DOK], templates[dokumentMalType.VARSEL_OM_TILBAKEKREVING]]}
-        sprakKode={sprakkode}
+        språkkode={språkkode}
         brevmalkode="INNHEN"
         causes={causes}
         behandlingId={1}
@@ -98,7 +98,7 @@ describe('<MessagesTilbakekreving>', () => {
       <MessagesTilbakekreving
         {...mockProps}
         templates={templates}
-        sprakKode={sprakkode}
+        språkkode={språkkode}
         brevmalkode="INNHEN"
         causes={causes}
         behandlingId={1}
@@ -123,7 +123,7 @@ describe('<MessagesTilbakekreving>', () => {
       <MessagesTilbakekreving
         {...mockProps}
         templates={templates}
-        sprakKode={sprakkode}
+        språkkode={språkkode}
         brevmalkode="INNHEN"
         causes={causes}
         previewCallback={previewEventCallback}
@@ -148,7 +148,7 @@ describe('<MessagesTilbakekreving>', () => {
       <MessagesTilbakekreving
         {...mockProps}
         templates={templates}
-        sprakKode={sprakkode}
+        språkkode={språkkode}
         brevmalkode="REVURD"
         causes={causes}
         previewCallback={previewEventCallback}
