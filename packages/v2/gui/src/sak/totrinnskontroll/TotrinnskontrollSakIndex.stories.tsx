@@ -102,7 +102,7 @@ const behandling = {
   toTrinnsBehandling: true,
 } as Behandling;
 
-const meta: Meta<typeof TotrinnskontrollSakIndex> = {
+const meta = {
   title: 'gui/sak/totrinnskontroll',
   component: TotrinnskontrollSakIndex,
   decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD })],

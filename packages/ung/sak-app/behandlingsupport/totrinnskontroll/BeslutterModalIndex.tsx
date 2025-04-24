@@ -6,6 +6,8 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { BehandlingDtoType } from '@navikt/k9-klage-typescript-client';
 import { getPathToK9Los } from '../../app/paths';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 
@@ -35,9 +37,12 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
     return <LoadingPanel />;
   }
 
+  const v2Behandling = JSON.parse(JSON.stringify(behandling));
+  konverterKodeverkTilKode(v2Behandling, behandling.type.kode === BehandlingDtoType.TILBAKEKREVING);
+
   return (
     <FatterVedtakTotrinnskontrollModalSakIndex
-      behandling={behandling}
+      behandling={v2Behandling}
       closeEvent={goToSearchPage}
       allAksjonspunktApproved={allAksjonspunktApproved}
       fagsakYtelseType={fagsakYtelseType}
