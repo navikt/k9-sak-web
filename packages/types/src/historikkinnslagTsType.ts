@@ -1,5 +1,5 @@
 import Kodeverk from './kodeverkTsType';
-import type { HistorikkInnslagDokumentLink } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
+import type { HistorikkInnslagDokumentLink } from '@k9-sak-web/gui/sak/historikk/tilbake/historikkinnslagTsTypeV2.js';
 
 export type HistorikkinnslagEndretFelt = {
   endretFeltNavn: Kodeverk;

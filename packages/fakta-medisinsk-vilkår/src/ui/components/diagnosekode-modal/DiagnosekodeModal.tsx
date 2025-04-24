@@ -1,6 +1,6 @@
 import { Box, Button, Modal } from '@navikt/ds-react';
 import React, { useEffect, type JSX } from 'react';
-import type { DiagnosekodeSearcherPromise } from '../../../util/diagnosekodeSearcher';
+import type { ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import DiagnosekodeSelector from '../../form/pure/PureDiagnosekodeSelector';
 import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.module.css';
 
@@ -8,15 +8,10 @@ interface DiagnosekodeModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   onSaveClick: (diagnosekoder: string[]) => Promise<unknown>;
-  searcherPromise: DiagnosekodeSearcherPromise;
+  searcher: ICD10DiagnosekodeSearcher;
 }
 
-const DiagnosekodeModal = ({
-  isOpen,
-  onRequestClose,
-  onSaveClick,
-  searcherPromise,
-}: DiagnosekodeModalProps): JSX.Element => {
+const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: DiagnosekodeModalProps): JSX.Element => {
   const [selectedDiagnosekoder, setSelectedDiagnosekoder] = React.useState([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [renderDiagnosekodeSelektor, setRenderDiagnosekodeSelektor] = React.useState(false);
@@ -61,7 +56,7 @@ const DiagnosekodeModal = ({
                 label="Diagnosekode"
                 selectedDiagnosekoder={selectedDiagnosekoder}
                 hideLabel
-                searcherPromise={searcherPromise}
+                searcher={searcher}
               />
             )}
           </Box>

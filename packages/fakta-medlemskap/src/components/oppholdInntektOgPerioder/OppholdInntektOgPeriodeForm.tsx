@@ -6,7 +6,6 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Button } from '@navikt/ds-react';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
 import { FunctionComponent, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -21,6 +20,7 @@ import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 import { Soknad } from './Soknad';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 const { AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD } = aksjonspunktCodes;
 
@@ -109,7 +109,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
             name="oppholdInntektOgPeriodeForm.begrunnelse"
             label="Begrunn endringene"
           />
-          {!!begrunnelse && <AssessedBy ident={valgtPeriode?.vurdertAv} date={valgtPeriode?.vurdertTidspunkt} />}
+          {!!begrunnelse && <VurdertAv ident={valgtPeriode?.vurdertAv} date={valgtPeriode?.vurdertTidspunkt} />}
         </>
       )}
 

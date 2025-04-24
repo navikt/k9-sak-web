@@ -1,9 +1,11 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { BehandlingDtoStatus as behandlingStatus } from '@k9-sak-web/backend/k9sak/generated';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {
@@ -17,6 +19,7 @@ const behandling = {
   språkkode: {
     kode: 'NO',
   },
+  status: behandlingStatus.UTREDES,
 };
 
 const simuleringResultat = {
@@ -181,9 +184,17 @@ visAksjonspunktVurderFeilutbetaling.args = {
   aksjonspunkter: [
     {
       definisjon: {
-        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+        kode: AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
       },
       begrunnelse: undefined,
+    },
+    {
+      definisjon: {
+        kode: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+      },
+      begrunnelse: undefined,
+      erAktivt: true,
+      status: aksjonspunktStatus.OPPRETTET,
     },
   ],
   simuleringResultat,
@@ -192,6 +203,33 @@ visAksjonspunktVurderFeilutbetaling.args = {
   readOnlySubmitButton: false,
 };
 
+export const visAksjonspunktHøyEtterbetaling = args => (
+  <AvregningProsessIndex
+    behandling={behandling}
+    submitCallback={action('button-click')}
+    previewFptilbakeCallback={action('button-click')}
+    featureToggles={toggles}
+    {...args}
+  />
+);
+
+visAksjonspunktHøyEtterbetaling.args = {
+  fagsak,
+  aksjonspunkter: [
+    {
+      definisjon: {
+        kode: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+      },
+      begrunnelse: undefined,
+      erAktivt: true,
+      status: aksjonspunktStatus.OPPRETTET,
+    },
+  ],
+  simuleringResultat,
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+};
 export const visSimuleringspanelUtenAksjonspunkt = args => (
   <AvregningProsessIndex
     behandling={behandling}

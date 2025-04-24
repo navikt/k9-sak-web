@@ -4,24 +4,23 @@ import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import { MemoryRouter } from 'react-router';
 import React, { ReactNode, JSX } from 'react';
-import type { Historikkinnslag } from '@k9-sak-web/types';
-import historikkinnslagType from '@fpsak-frontend/sak-historikk/src/kodeverk/historikkinnslagType.js';
+import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
 
 class HistorikkV1V2Sammenligningsfeil extends Error {
-  public readonly historikkInnslagV1Type: string;
+  public readonly opprettetTidspunkt: string;
   public readonly wordsNotFound: string[];
 
-  constructor(message: string, historikkinnslagType: string, wordsNotFound: string[]) {
+  constructor(message: string, opprettetTidspunkt: string, wordsNotFound: string[]) {
     let msg = message;
-    if (historikkinnslagType.length > 0) {
-      msg = `${msg} Innslag type ${historikkinnslagType}.`;
+    if (opprettetTidspunkt.length > 0) {
+      msg = `${msg} Innslag opprettet "${opprettetTidspunkt}".`;
     }
     if (wordsNotFound.length > 0) {
       msg = `${msg} --- ${wordsNotFound.length} manglande ord.`;
     }
     super(msg);
     this.name = this.constructor.name;
-    this.historikkInnslagV1Type = historikkinnslagType;
+    this.opprettetTidspunkt = opprettetTidspunkt;
     this.wordsNotFound = wordsNotFound;
   }
 
@@ -95,7 +94,7 @@ const extractWords = (txt: string): string[] =>
   txt.split(/([\s\n\r-(),-]|\p{P})+/u).filter(v => v.length > 1 || Number.isFinite(parseFloat(v)));
 
 const checkRenderedElementTexts = async (
-  v1Innslag: Historikkinnslag,
+  v1Innslag: EtablerteUlikeHistorikkinnslagTyper,
   v1Element: JSX.Element,
   v2Element: JSX.Element,
 ) => {
@@ -105,38 +104,17 @@ const checkRenderedElementTexts = async (
     v1Word => !v2Words.some(v2Word => v1Word.toLowerCase() === v2Word.toLowerCase()),
   );
   if (v1WordsNotInV2.length > 0) {
-    const innslagType = v1Innslag.type.kode;
+    const behandlingId = 'behandlingId' in v1Innslag ? v1Innslag.behandlingId : v1Innslag.behandlingUuid;
     throw new HistorikkV1V2Sammenligningsfeil(
-      `behandling ${v1Innslag.behandlingUuid}: v1 rendra ord som ikkje er i v2. `,
-      innslagType,
+      `behandling ${behandlingId}: v1 rendra ord som ikkje er i v2. `,
+      v1Innslag.opprettetTidspunkt,
       v1WordsNotInV2,
     );
   }
 };
 
-// Når vi veit at v2 av historikk av ein viss type mangler nokre ord i v1, og ikkje vil at det skal rapporterast som feil
-// kan dei leggast inn her for å undertrykke feilrapportering
-const historikkInnslagMissingWordsExcemptions = new Map<string, string[]>();
-historikkInnslagMissingWordsExcemptions.set(historikkinnslagType.FAKTA_OM_FEILUTBETALING, [
-  'For',
-  'Hendelse',
-  'endret',
-  'fra',
-]);
-historikkInnslagMissingWordsExcemptions.set(historikkinnslagType.SAK_RETUR, ['Om']);
-
-const allMissingWordsAreExcempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
-  const wordsKnownMissing = historikkInnslagMissingWordsExcemptions.get(historikkInnslagV1Type);
-  if (wordsKnownMissing != null) {
-    return wordsMissing.every(wordMissing =>
-      wordsKnownMissing.some(wordKnownMissing => wordKnownMissing === wordMissing),
-    );
-  }
-  return wordsMissing.length === 0;
-};
-
 export const compareRenderedElementTexts = async (
-  v1Innslag: Historikkinnslag[],
+  v1Innslag: EtablerteUlikeHistorikkinnslagTyper[],
   v1Elementer: JSX.Element[],
   v2Elementer: JSX.Element[],
 ) => {
@@ -159,20 +137,13 @@ export const compareRenderedElementTexts = async (
       await checkRenderedElementTexts(v1Innslag[i], v1Elementer[i], v2Elementer[i]);
     } catch (err) {
       if (err instanceof HistorikkV1V2Sammenligningsfeil) {
-        if (allMissingWordsAreExcempted(err.historikkInnslagV1Type, err.wordsNotFound)) {
-          // Alle orda er unntatt feilrapportering, logger berre som debug
-          console.info(
-            `historikk innslag (${err.historikkInnslagV1Type}) v2 mangler ord fra v1, men disse er unntatt feilrapportering. (${err.wordsNotFound.join(', ')})`,
-          );
-        } else {
-          err.message = `historikk innslag nr ${i + 1}: ${err.message}`;
-          console.warn(
-            err,
-            err.wordsNotFound.map(v => v),
-          );
-          err.redactWordsNotFound(); // Ønsker ikkje å sende potensielt sensitiv info til sentry
-          throw err;
-        }
+        err.message = `historikk innslag nr ${i + 1}: ${err.message}`;
+        console.warn(
+          err,
+          err.wordsNotFound.map(v => v),
+        );
+        err.redactWordsNotFound(); // Ønsker ikkje å sende potensielt sensitiv info til sentry
+        throw err;
       } else {
         throw err;
       }

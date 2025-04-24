@@ -2,9 +2,10 @@ import { BodyShort, ErrorMessage, Label } from '@navikt/ds-react';
 import { Autocomplete } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
-import { type DiagnosekodeSearcherPromise, toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
 import DeleteButton from '../../components/delete-button/DeleteButton';
 import styles from './diagnosekodeSelector.module.css';
+import { type ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
+import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
 
 import type { JSX } from 'react';
 
@@ -21,7 +22,7 @@ interface DiagnosekodeSelectorProps {
   initialDiagnosekodeValue: string;
   hideLabel?: boolean;
   selectedDiagnosekoder: string[];
-  searcherPromise: DiagnosekodeSearcherPromise;
+  searcher: ICD10DiagnosekodeSearcher;
 }
 
 const PureDiagnosekodeSelector = ({
@@ -32,9 +33,9 @@ const PureDiagnosekodeSelector = ({
   initialDiagnosekodeValue,
   hideLabel,
   selectedDiagnosekoder,
-  searcherPromise,
+  searcher,
 }: DiagnosekodeSelectorProps): JSX.Element => {
-  const [suggestions, setSuggestions] = React.useState([]);
+  const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
   const [inputValue, setInputValue] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedDiagnosekoderFullName, setSelectedDiagnosekoderFullName] = React.useState<Suggestion[]>([]);
@@ -42,7 +43,6 @@ const PureDiagnosekodeSelector = ({
   const getUpdatedSuggestions = async (queryString: string) => {
     if (queryString.length >= 3) {
       setIsLoading(true);
-      const searcher = await searcherPromise;
       const diagnosekoder: Diagnosekode[] = (await searcher.search(queryString, 1)).diagnosekoder.map(
         toLegacyDiagnosekode,
       );
