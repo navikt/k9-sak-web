@@ -10,25 +10,25 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "msw": "2.7.3",
-    "vite": "^6.2.2",
+    "msw": "2.7.5",
+    "vite": "^6.3.2",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "dependencies": {
-    "@navikt/ds-css": "7.17.2",
+    "@navikt/ds-css": "7.18.0",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "7.17.2",
+    "@navikt/ds-react": "7.18.0",
     "@navikt/fnrvalidator": "2.1.5",
-    "@navikt/ft-plattform-komponenter": "^7.2.10",
+    "@navikt/ft-plattform-komponenter": "^7.2.13",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
     "object-hash": "3.0.0",
-    "react": "19.0.0",
+    "react": "19.1.0",
     "react-collapse": "5.1.1",
-    "react-dom": "19.0.0",
-    "react-hook-form": "7.54.2",
-    "react-intl": "7.1.6"
+    "react-dom": "19.1.0",
+    "react-hook-form": "7.55.0",
+    "react-intl": "7.1.11"
   },
   "msw": {
     "workerDirectory": "public"

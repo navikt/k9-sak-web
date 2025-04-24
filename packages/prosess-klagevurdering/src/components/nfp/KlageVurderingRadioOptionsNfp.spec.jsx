@@ -10,7 +10,7 @@ import messages from '../../../i18n/nb_NO.json';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
-  const sprakkode = {
+  const språkkode = {
     kode: 'NO',
     navn: 'Norsk',
   };
@@ -33,7 +33,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
       />,
       { messages },
     );
@@ -53,7 +53,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
       />,
       { messages },
     );
@@ -77,7 +77,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
       />,
       { messages },
     );
@@ -96,7 +96,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        sprakkode={sprakkode}
+        språkkode={språkkode}
       />,
       { messages },
     );

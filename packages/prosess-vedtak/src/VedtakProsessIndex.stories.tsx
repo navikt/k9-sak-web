@@ -27,7 +27,7 @@ const behandling = {
   status: {
     kode: behandlingStatus.BEHANDLING_UTREDES,
   },
-  sprakkode: {
+  språkkode: {
     kode: 'NO',
   },
   behandlingsresultat: {
@@ -38,7 +38,7 @@ const behandling = {
       kode: behandlingResultatType.INNVILGET,
     },
   },
-  behandlingPaaVent: false,
+  behandlingPåVent: false,
   behandlingHenlagt: false,
   behandlingArsaker: [
     {

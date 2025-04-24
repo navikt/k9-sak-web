@@ -1,12 +1,15 @@
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
-import React, { useContext, type JSX } from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { Box, Button } from '@navikt/ds-react';
+import { useContext, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -42,7 +45,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
+        <VurdertAv ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );
   };
@@ -70,9 +73,9 @@ const OmsorgsperiodeVurderingsdetaljer = ({
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <LinkButton className={styles.endreLink} onClick={onEditClick}>
+            <Button variant="tertiary" size="xsmall" className={styles.endreLink} onClick={onEditClick}>
               Rediger vurdering
-            </LinkButton>
+            </Button>
           )}
         />
       )}
@@ -80,22 +83,22 @@ const OmsorgsperiodeVurderingsdetaljer = ({
       {omsorgsperiode.erManueltVurdert() && (
         <>
           {omsorgsperiode.relasjon && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <LabelledContent label="Oppgitt relasjon i søknaden" content={omsorgsperiode.relasjon} />
             </Box>
           )}
           {skalViseRelasjonsbeskrivelse && (
-            <Box marginTop={Margin.xLarge}>
+            <Box marginBlock="8 0">
               <LabelledContent label="Beskrivelse fra søker" content={omsorgsperiode.relasjonsbeskrivelse} />
             </Box>
           )}
         </>
       )}
-      <Box marginTop={Margin.xLarge}>{begrunnelseRenderer()}</Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">{begrunnelseRenderer()}</Box>
+      <Box marginBlock="8 0">
         <LabelledContent label={harSøkerOmsorgenLabel} content={resultatRenderer()} />
       </Box>
-      <Box marginTop={Margin.xLarge}>
+      <Box marginBlock="8 0">
         <LabelledContent label="Perioder" content={omsorgsperiode.periode.prettifyPeriod()} />
       </Box>
     </DetailView>

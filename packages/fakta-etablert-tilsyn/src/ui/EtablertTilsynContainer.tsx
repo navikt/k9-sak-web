@@ -1,6 +1,8 @@
 import { get, Period } from '@fpsak-frontend/utils';
+import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Alert, Tabs } from '@navikt/ds-react';
-import { ChildIcon, Infostripe, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { ChildIcon, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import { VurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
@@ -149,7 +151,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   return (
     <ContainerContext.Provider value={data}>
       <Infostripe
-        text="Etablert tilsyn og vurdering av beredskap og nattevåk gjelder barnet og er felles for alle parter."
+        content="Etablert tilsyn og vurdering av beredskap og nattevåk gjelder barnet og er felles for alle parter."
         iconRenderer={() => <ChildIcon />}
       />
       <div className={styles.mainComponent}>

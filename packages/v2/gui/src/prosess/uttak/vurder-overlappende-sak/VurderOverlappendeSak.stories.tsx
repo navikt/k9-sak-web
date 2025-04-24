@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import type { AksjonspunktDto, BehandlingDto, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 
-import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
-import { userEvent, within, expect, fn } from '@storybook/test';
 import { HStack } from '@navikt/ds-react';
-import { stdDato, visnDato } from '../../../utils/formatters';
+import { expect, fireEvent, fn, userEvent, within } from '@storybook/test';
 import dayjs from 'dayjs';
+import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
+import { stdDato, visnDato } from '../../../utils/formatters';
 
 dayjs.locale('nb');
 
@@ -243,7 +243,7 @@ const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${visnDato(fom1)} 
 const gruppeToNavn = `Vurder uttak i denne saken for perioden ${visnDato(fom2)} - ${visnDato(tom2)} Splitt periode`;
 
 export const Aksjonspunkt: Story = {
-  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
+  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false, api, oppdaterBehandling },
   play: async ({ canvasElement, step }) => {
     const canvas = await within(canvasElement);
 
@@ -281,7 +281,7 @@ export const Aksjonspunkt: Story = {
 };
 
 export const LøsAksjonspunkt: Story = {
-  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
+  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false, api, oppdaterBehandling },
   play: async ({ args, canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
@@ -345,7 +345,7 @@ export const LøsAksjonspunkt: Story = {
 };
 
 export const LøsAksjonspunktMedSplitt: Story = {
-  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, api, oppdaterBehandling },
+  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false, api, oppdaterBehandling },
   play: async ({ args, canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
@@ -358,9 +358,14 @@ export const LøsAksjonspunktMedSplitt: Story = {
 
         await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
 
-        await user.type(
+        // Må bruke fireEvent istedenfor user.type, fordi user.type ikke trigger onChange skikkelig
+        await fireEvent.change(
           await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }),
-          `${bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.søkersUttaksgrad}`,
+          {
+            target: {
+              value: `${bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.søkersUttaksgrad}`,
+            },
+          },
         );
         await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
         await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
@@ -368,7 +373,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
       });
 
       await step('dagene før og etter perioden som skal splittes skal være disabled', async () => {
-        const dagenFør = fom1.subtract(3, 'week');
+        const dagenFør = fom1.subtract(1, 'day');
         const dagenEtter = tom1.add(1, 'day');
 
         if (fom1.isSame(dagenFør, 'month')) {
@@ -379,7 +384,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
           await user.click(await canvas.findByRole('button', { name: 'Gå til neste måned' }));
         }
 
-        if (tom1.isSame(dagenEtter, 'month')) {
+        if (fom1.isSame(dagenEtter, 'month')) {
           await expect(await canvas.findByRole('button', { name: `${dagenEtter.format('dddd D')}` })).toBeDisabled();
         } else {
           await user.click(await canvas.findByRole('button', { name: 'Gå til neste måned' }));
@@ -389,8 +394,18 @@ export const LøsAksjonspunktMedSplitt: Story = {
       });
 
       await step('skjemaet skal oppdatere seg når man velger en periode', async () => {
+        if (splittFom.isAfter(fom1, 'month')) {
+          await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+        }
+
         await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
-        await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+        const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
+        if (splittTomButton.className.includes('rdp-day_disabled')) {
+          await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+          await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+        } else {
+          await user.click(splittTomButton);
+        }
 
         await expect(
           await canvas.findByRole('group', {
@@ -420,10 +435,13 @@ export const LøsAksjonspunktMedSplitt: Story = {
       await step('Skal kunne sende inn skjemaet', async () => {
         const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
         await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
-        await user.type(
-          await canvas.findByLabelText('Begrunnelse'),
-          bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.begrunnelse || '',
-        );
+
+        // Må bruke fireEvent istedenfor user.type, fordi user.type ikke trigger onChange skikkelig
+        await fireEvent.change(await canvas.findByLabelText('Begrunnelse'), {
+          target: {
+            value: bekreftAksjonspunktRequest.bekreftedeAksjonspunktDtoer[0]?.perioder[0]?.begrunnelse || '',
+          },
+        });
         await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
 
         await expect(args.oppdaterBehandling).toHaveBeenCalled();
@@ -439,7 +457,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 };
 
 export const LøstAksjonspunkt: Story = {
-  args: { behandling: løstBehandling, aksjonspunkt: løstAksjonspunkt, api, oppdaterBehandling: fn() },
+  args: { behandling: løstBehandling, aksjonspunkt: løstAksjonspunkt, readOnly: false, api, oppdaterBehandling: fn() },
 
   render: props => (
     <HStack>
@@ -449,7 +467,13 @@ export const LøstAksjonspunkt: Story = {
 };
 
 export const LøstAksjonspunktKanRedigeres: Story = {
-  args: { behandling: redigerBehandling, aksjonspunkt: løstAksjonspunkt, api, oppdaterBehandling: fn() },
+  args: {
+    behandling: redigerBehandling,
+    aksjonspunkt: løstAksjonspunkt,
+    readOnly: false,
+    api,
+    oppdaterBehandling: fn(),
+  },
   play: async ({ canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = within(canvasElement);
@@ -500,7 +524,13 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 };
 
 export const LøstAksjonspunktAvsluttetSak: Story = {
-  args: { behandling: avsluttetBehandling, aksjonspunkt: løstAksjonspunktFerdigstilt, api, oppdaterBehandling: fn() },
+  args: {
+    behandling: avsluttetBehandling,
+    aksjonspunkt: løstAksjonspunktFerdigstilt,
+    readOnly: true,
+    api,
+    oppdaterBehandling: fn(),
+  },
   play: async ({ canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = within(canvasElement);

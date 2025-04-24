@@ -27,7 +27,6 @@ import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { DirekteOvergangDto } from '@navikt/k9-sak-typescript-client';
 import {
   behandlingerRoutePath,
@@ -47,6 +46,7 @@ import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -241,7 +241,9 @@ const FagsakIndex = () => {
         klageKodeverk={alleKodeverkKlage}
         tilbakeKodeverk={alleKodeverkTilbake}
       >
-        <SaksbehandlernavnContext.Provider value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere}>
+        <SaksbehandlernavnContext.Provider
+          value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
+        >
           <FagsakGrid
             behandlingContent={
               <Routes>
@@ -305,7 +307,7 @@ const FagsakIndex = () => {
                 <div style={{ overflow: 'hidden' }}>
                   <VisittkortPanel
                     personopplysninger={behandlingPersonopplysningerV2}
-                    sprakkode={behandling?.sprakkode.kode}
+                    språkkode={behandling?.språkkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                     relaterteFagsaker={relaterteFagsaker}

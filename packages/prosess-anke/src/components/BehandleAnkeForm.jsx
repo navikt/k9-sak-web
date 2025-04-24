@@ -145,7 +145,7 @@ const BehandleAnkeFormImpl = ({
   previewCallback,
   readOnlySubmitButton = false,
   aksjonspunktCode,
-  sprakkode,
+  språkkode,
   formValues = {},
   behandlinger,
   intl,
@@ -308,7 +308,7 @@ const BehandleAnkeFormImpl = ({
 
       <div className={styles.confirmVilkarForm}>
         <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+        <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
         <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
           <div>

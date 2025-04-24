@@ -243,7 +243,7 @@ yarn add @fpsak-frontend/form
   badges={[
     {
       type: 'warning',
-      textId: getLanguageCodeFromSprakkode(sprakkode),
+      textId: getLanguageCodeFromspråkkode(språkkode),
       title: 'Malform.Beskrivelse',
     },
   ]}

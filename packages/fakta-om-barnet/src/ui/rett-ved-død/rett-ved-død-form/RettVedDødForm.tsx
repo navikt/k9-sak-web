@@ -1,5 +1,5 @@
 import { RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { Form } from '@navikt/ft-plattform-komponenter';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import React, { useContext, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { RettVedDød } from '../../../types/RettVedDød';
@@ -45,7 +45,7 @@ const RettVedDødForm = ({ rettVedDød, onCancelClick }: RettVedDødFormProps): 
     <div className="mt-8">
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
-        <Form
+        <FormWithButtons
           onSubmit={formMethods.handleSubmit(handleSubmit)}
           buttonLabel="Bekreft og fortsett"
           cancelButtonDisabled={isSubmitting}
@@ -77,7 +77,7 @@ const RettVedDødForm = ({ rettVedDød, onCancelClick }: RettVedDødFormProps): 
           <div className="mt-3 max-w-xl">
             <TextAreaRHF label="Vurdering" name={FieldName.VURDERING} validators={{ required }} disabled={readOnly} />
           </div>
-        </Form>
+        </FormWithButtons>
       </FormProvider>
     </div>
   );

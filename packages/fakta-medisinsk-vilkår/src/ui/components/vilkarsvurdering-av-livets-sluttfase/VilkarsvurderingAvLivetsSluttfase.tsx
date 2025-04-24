@@ -1,5 +1,4 @@
 import { get, Period } from '@fpsak-frontend/utils';
-import { NavigationWithDetailView, PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, type JSX } from 'react';
 import Step, { livetsSluttfaseSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -7,14 +6,17 @@ import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForLivetsSluttfase } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
+import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
-import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
-import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
-import BehandlingType from '../../../constants/BehandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
+import BehandlingType from '../../../constants/BehandlingType';
+import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
 
 interface VilkårsvurderingAvLivetsSluttfaseProps {
   navigerTilNesteSteg: (steg: Step, ikkeMarkerSteg?: boolean) => void;
@@ -129,9 +131,9 @@ const VilkårsvurderingAvLivetsSluttfase = ({
 
   const setMargin = () => {
     if (vurderingsoversikt.harPerioderSomSkalVurderes() || !harGyldigSignatur) {
-      return Margin.medium;
+      return '4 0';
     }
-    return null;
+    return undefined;
   };
 
   const skalViseOpprettVurderingKnapp = () => {
@@ -158,7 +160,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
         harGyldigSignatur={harGyldigSignatur}
       />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box marginTop={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon
