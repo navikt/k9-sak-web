@@ -418,7 +418,6 @@
   "packages/sak-app/src/app/ErrorBoundary.tsx",
   "packages/sak-app/src/app/components/Dekorator.tsx",
   "packages/sak-app/src/app/feilhandtering/ErrorFormatter.ts",
-  "packages/sak-app/src/app/paths.ts",
   "packages/sak-app/src/app/useTrackRouteParam.tsx",
   "packages/sak-app/src/behandling/BehandlingEventHandler.ts",
   "packages/sak-app/src/behandling/BehandlingIndex.tsx",

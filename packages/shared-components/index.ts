@@ -15,7 +15,6 @@ export { default as FlexContainer } from './src/flexGrid/FlexContainer';
 export { default as FlexRow } from './src/flexGrid/FlexRow';
 export { default as FloatRight } from './src/FloatRight';
 export { default as usePrevious } from './src/hooks/componentHooks';
-export * from './src/hooks/useSaksbehandlerOppslag';
 export { default as Image } from './src/Image';
 export { default as LoadingPanel } from './src/LoadingPanel';
 export { default as NestedIntlProvider } from './src/NestedIntlProvider';

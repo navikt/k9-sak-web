@@ -81,7 +81,7 @@ const MenyNyBehandlingIndex = ({
   const vilkårBackendClient = new VilkårBackendClient(k9SakClient);
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
-    queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : undefined),
+    queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),
     enabled: !!behandlingUuid,
   });
 

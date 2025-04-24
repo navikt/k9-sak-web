@@ -2,9 +2,9 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import { Alert, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type FunctionComponent, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv';
 import { getCurrentISODate } from '../../../../utils/dateutils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type {
@@ -100,7 +100,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
               readOnly={readOnly}
               validate={[required, minLength3, maxLength1500, hasValidText]}
             />
-            <AssessedBy ident={valgtPeriode?.vurdertAv} date={valgtPeriode?.vurdertTidspunkt} />
+            <VurdertAv ident={valgtPeriode?.vurdertAv} date={valgtPeriode?.vurdertTidspunkt} />
           </>
         )}
 

@@ -32,6 +32,6 @@
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^9.2.11",
     "@navikt/ft-prosess-beregningsgrunnlag": "^8.3.0",
     "react": "19.1.0",
-    "react-intl": "7.1.10"
+    "react-intl": "7.1.11"
   }
 }

@@ -1,10 +1,14 @@
-import { KontrollerInntektPeriodeDtoValg } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  KontrollerInntektPeriodeDtoValg,
+  type KontrollerInntektPeriodeDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { InputField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
+import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
 import styles from './aksjonspunktArbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
 
@@ -12,15 +16,21 @@ interface AksjonspunktArbeidOgInntektProps {
   harBrukerrapportertInntekt: boolean;
   isSubmitting: boolean;
   isReadOnly: boolean;
+  uttalelseFraBruker: KontrollerInntektPeriodeDto['uttalelseFraBruker'];
+  periode: KontrollerInntektPeriodeDto['periode'];
+  fieldIndex: number;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
   harBrukerrapportertInntekt,
   isSubmitting,
   isReadOnly,
+  uttalelseFraBruker,
+  periode,
+  fieldIndex,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
-  const valg = formMethods.watch('valg');
+  const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
   return (
     <Bleed marginBlock="4 0">
       <Box
@@ -40,14 +50,13 @@ export const AksjonspunktArbeidOgInntekt = ({
 
               <VStack gap="2">
                 <Heading size="xsmall" as="h3">
-                  Beskrivelse fra deltaker for avvik i perioden xx.xx.xxxx - xx.xx.xxxx
+                  Beskrivelse fra deltaker for avvik i perioden{' '}
+                  {periode?.fom && periode.tom && (
+                    <PeriodLabel dateStringFom={periode?.fom} dateStringTom={periode?.tom} />
+                  )}
                 </Heading>
                 <Box maxWidth="75ch">
-                  <BodyLong size="small">
-                    Jeg fikk forskuttert litt lønn av arbeidsgiver denne måneden fordi jeg har hatt økonomiske
-                    utfordringer, så jeg rapporterte bare det jeg egentlig skulle fått utbetalt. Det var ikke meningen å
-                    oppgi feil, bare å holde det riktig for denne måneden!
-                  </BodyLong>
+                  <BodyLong size="small">{uttalelseFraBruker}</BodyLong>
                 </Box>
               </VStack>
             </HStack>
@@ -55,7 +64,7 @@ export const AksjonspunktArbeidOgInntekt = ({
           <VStack gap="6">
             <Box maxWidth="70ch">
               <TextAreaField
-                name="begrunnelse"
+                name={`perioder.${fieldIndex}.begrunnelse`}
                 label="Vurder hvilken inntekt som skal gi reduksjon i perioden"
                 validate={[required, minLength(3), maxLength(1500)]}
                 maxLength={1500}
@@ -64,7 +73,7 @@ export const AksjonspunktArbeidOgInntekt = ({
             </Box>
             <VStack gap="2">
               <RadioGroupPanel
-                name="valg"
+                name={`perioder.${fieldIndex}.valg`}
                 label="Hvilken inntekt skal benyttes?"
                 validate={[required]}
                 isReadOnly={isReadOnly}
@@ -87,7 +96,7 @@ export const AksjonspunktArbeidOgInntekt = ({
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
                 <VStack gap="4">
                   <InputField
-                    name="fastsattInntekt"
+                    name={`perioder.${fieldIndex}.fastsattInntekt`}
                     label="Oppgi samlet arbeidsinntekt og ytelse"
                     type="text"
                     validate={[required, maxValueFormatted(1000000)]}
