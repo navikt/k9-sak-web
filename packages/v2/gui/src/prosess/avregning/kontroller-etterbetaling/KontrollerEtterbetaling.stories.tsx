@@ -13,7 +13,6 @@ import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/Fake
 import KontrollerEtterbetaling, {
   type BekreftKontrollerEtterbetalingAksjonspunktRequest,
 } from './KontrollerEtterbetaling';
-import { logRoles } from '@testing-library/dom';
 
 const bekreftAksjonspunktRequest: BekreftKontrollerEtterbetalingAksjonspunktRequest = {
   behandlingId: '123',
@@ -79,7 +78,6 @@ export const LøsAksjonspunkt: Story = {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
 
-    logRoles(canvasElement);
     await step('Skal ha aksjonspunktboks for kontroller etterbetaling', async () => {
       await expect(await canvas.findByRole('button', { name: 'Dette bør undersøker rundt etterbetalingen' }));
       await expect(
