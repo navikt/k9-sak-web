@@ -7,7 +7,7 @@ export class FakeUngVedtakBackendApi {
     return fakePdf();
   }
 
-  async tilgjengeligeVedtaksbrev(): Promise<VedtaksbrevValgResponse> {
+  async vedtaksbrevValg(): Promise<VedtaksbrevValgResponse> {
     return { harBrev: true };
   }
 }
