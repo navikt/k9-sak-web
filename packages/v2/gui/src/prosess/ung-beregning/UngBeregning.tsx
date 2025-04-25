@@ -102,7 +102,6 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
                 <ArbeidOgInntekt
                   submitCallback={submitCallback}
                   inntektKontrollperioder={inntekt.kontrollperioder}
-                  aksjonspunkt={aksjonspunkt}
                   isReadOnly={isReadOnly}
                 />
               )}
