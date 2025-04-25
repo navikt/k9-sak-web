@@ -130,7 +130,8 @@
   "resolutions": {
     "postcss": "8.5.3",
     "parse-url": "8.1.0",
-    "@types/react": "19.0.3"
+    "@types/react": "19.0.3",
+    "@navikt/k9-klage-typescript-client": "portal:/Users/navjostein/devel/openapi-ts-clientmaker/out"
   },
   "msw": {
     "workerDirectory": "public"
