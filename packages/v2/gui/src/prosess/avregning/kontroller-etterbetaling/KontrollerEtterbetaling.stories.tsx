@@ -13,7 +13,6 @@ import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/Fake
 import KontrollerEtterbetaling, {
   type BekreftKontrollerEtterbetalingAksjonspunktRequest,
 } from './KontrollerEtterbetaling';
-import { logRoles } from '@testing-library/dom';
 
 const bekreftAksjonspunktRequest: BekreftKontrollerEtterbetalingAksjonspunktRequest = {
   behandlingId: '123',
