@@ -42,8 +42,8 @@ const buildInitialValues = (
         ?.filter(periode => periode.erTilVurdering)
         .map(periode => {
           return {
-            fastsattInntekt: periode.fastsattInntekt ? `${periode.fastsattInntekt}` : '',
-            valg: (periode.valg as KontrollerInntektPeriodeDtoValg) ?? '',
+            fastsattInntekt: periode.fastsattInntekt != null ? `${periode.fastsattInntekt}` : '',
+            valg: periode.valg ?? '',
             begrunnelse: aksjonspunkt?.begrunnelse ?? '',
             periode: periode.periode,
           };
