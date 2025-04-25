@@ -3110,7 +3110,7 @@ __metadata:
     history: "npm:5.3.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
   languageName: unknown
   linkType: soft
 
@@ -3181,7 +3181,7 @@ __metadata:
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -3240,7 +3240,7 @@ __metadata:
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
     reselect: "npm:5.1.1"
@@ -4351,7 +4351,7 @@ __metadata:
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.0"
     react-hook-form: "npm:7.55.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     yup: "npm:^1.6.1"
   languageName: unknown
   linkType: soft
@@ -4409,7 +4409,7 @@ __metadata:
     react-dom: "npm:19.1.0"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     redux-form: "npm:8.3.10"
   languageName: unknown
   linkType: soft
@@ -4624,7 +4624,7 @@ __metadata:
     react-dom: "npm:19.1.0"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
     redux-thunk: "npm:3.1.0"
@@ -4647,7 +4647,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
   languageName: unknown
   linkType: soft
 
@@ -4735,7 +4735,7 @@ __metadata:
     react-dom: "npm:19.1.0"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -13397,7 +13397,7 @@ __metadata:
     prettier: "npm:3.5.3"
     react: "npm:19.1.0"
     react-dom: "npm:19.1.0"
-    react-router: "npm:7.5.1"
+    react-router: "npm:7.5.2"
     rollup-plugin-sourcemaps2: "npm:^0.5.0"
     storybook: "npm:8.6.12"
     stylelint: "npm:16.18.0"
@@ -15819,9 +15819,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:7.5.1":
-  version: 7.5.1
-  resolution: "react-router@npm:7.5.1"
+"react-router@npm:7.5.2":
+  version: 7.5.2
+  resolution: "react-router@npm:7.5.2"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -15832,7 +15832,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10/c5c3bacbb93058f4cbf93557ea4d3376393e071aa59e2f7044060cc4073b2a253fcd29c7c0b89d6c373d56dc7e2494729871e5a72be66988b1c0bd726f7cfc0e
+  checksum: 10/7586ecb7fc17eaac70bf5fe838c94f9f3a2e18e6802a4eddf1ad10b0a51ca83c969f5b36b8e2be47fe46453fea7199f99f422d8554fd159a827c25c287ba5741
   languageName: node
   linkType: hard
 
