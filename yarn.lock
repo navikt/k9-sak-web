@@ -3341,6 +3341,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hey-api/client-fetch@npm:=0.10.0":
+  version: 0.10.0
+  resolution: "@hey-api/client-fetch@npm:0.10.0"
+  peerDependencies:
+    "@hey-api/openapi-ts": < 2
+  checksum: 10/f77dc512047f2fcbba4a1be079020c6c821391b34da426079e1e306ee2ee9f83e7f1130ad7a697a340f2e29bde1e0ce8af3b88a4f8631b849426bd7b2cc24fb9
+  languageName: node
+  linkType: hard
+
 "@hookform/error-message@npm:^2.0.1":
   version: 2.0.1
   resolution: "@hookform/error-message@npm:2.0.1"
@@ -5174,6 +5183,8 @@ __metadata:
 "@navikt/k9-klage-typescript-client@portal:/Users/navjostein/devel/openapi-ts-clientmaker/out::locator=k9-sak-web%40workspace%3A.":
   version: 0.0.0-use.local
   resolution: "@navikt/k9-klage-typescript-client@portal:/Users/navjostein/devel/openapi-ts-clientmaker/out::locator=k9-sak-web%40workspace%3A."
+  dependencies:
+    "@hey-api/client-fetch": "npm:=0.10.0"
   languageName: node
   linkType: soft
 

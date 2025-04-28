@@ -14,6 +14,7 @@ import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
 import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
 import { AxiosError } from 'axios';
+import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
@@ -47,7 +48,7 @@ init({
           String(exception.message),
           String(requestUrl.pathname),
         ];
-        event.extra.callId = exception.response.config.headers['Nav-Callid'];
+        event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
       } else if (exception instanceof ExtendedApiError) {
         event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
         event.extra.callId = exception.navCallid;
@@ -58,7 +59,9 @@ init({
       }
     } catch (e) {
       try {
-        event.exception.values.push(e);
+        if (event.exception?.values != null) {
+          event.exception.values.push(e);
+        }
         console.error('Sentry beforeSend failure. Will send the original event with extra error attached', e);
       } catch (e2) {
         console.error(
@@ -71,6 +74,8 @@ init({
     return event;
   },
 });
+
+configureK9KlageClient();
 
 const store = configureStore();
 
