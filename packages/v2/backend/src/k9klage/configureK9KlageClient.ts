@@ -1,14 +1,9 @@
 import { K9KlageApiError } from './errorhandling/K9KlageApiError.js';
 import { generateNavCallidHeader, getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
 import { jsonSerializerOption } from '../shared/jsonSerializerOption.js';
-import { clientVersion } from './generated/metadata.js';
 import { client } from '@navikt/k9-klage-typescript-client/client';
 
-// generert klientversjon over 1.0 har /api prefix satt på paths generert inn i klientkalla, som er det korrekte.
-// for versjoner under må vi legge /api til på baseUrl for at kalla skal fungere, sidan openapi spesifikasjon generert
-// til fil mangla /api på paths då.
-// Kan fjernast når vi veit vi er komt over på version >= 1.1 av klient.
-const baseUrl = Number(clientVersion.major) > 1 || Number(clientVersion.minor) > 0 ? '/k9/sak' : '/k9/sak/api';
+const baseUrl = '/k9/klage';
 
 const { xJsonSerializerOptionHeader, xJsonSerializerOptionValue } = jsonSerializerOption;
 
@@ -19,6 +14,20 @@ const { xJsonSerializerOptionHeader, xJsonSerializerOptionValue } = jsonSerializ
 export const configureK9KlageClient = () => {
   client.setConfig({
     baseUrl,
+    // querySerializer settast slik fordi nokre query parametre (feks SaksnummerDto) er definert som klasse med json serialisering satt til object.
+    // openapi spesifikasjon seier då at det skal sendast inn objekt som query parameter, og dette blir som standard serialisert til ?saksnummer[saksnummer]=verdi,
+    // som feiler på serveren. Ved å sette querySerializer slik blir url istaden ?saksnummer=verdi, som er det serveren forventar. Dette stemmer og med det
+    // swagger-ui gjere i disse tilfella.
+    querySerializer: {
+      object: {
+        explode: true,
+        style: 'form',
+      },
+      array: {
+        explode: true,
+        style: 'form',
+      },
+    },
   });
 
   // Add nav call id and json serializer option headers to all requests
