@@ -82,9 +82,6 @@ export const DataSection = () => {
           <BodyShort size="small">
             <b>Startdato:</b> xxx
           </BodyShort>
-          <BodyShort size="small">
-            <b>Sluttdato:</b> xxx
-          </BodyShort>
         </HStack>
       </DataBox>
       <DataBox maxHeight="185px">
@@ -100,9 +97,8 @@ export const DataSection = () => {
           <Box marginBlock="0 2">
             <HStack justify="space-between">
               <BodyShort size="small" id="progress-bar-label-medium">
-                0 av 260
+                0
               </BodyShort>
-              <BodyShort size="small">260 dager igjen</BodyShort>
             </HStack>
           </Box>
           <ProgressBar value={0} valueMax={260} size="medium" aria-labelledby="progress-bar-label-medium" />
