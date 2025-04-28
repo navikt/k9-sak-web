@@ -1,5 +1,6 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
 import { Heading } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { UngSakClientContext } from '../../app/UngSakClientContext';
 import { UngVedtak } from './UngVedtak';
@@ -24,19 +25,29 @@ export const UngVedtakIndex = ({
 }: UngVedtakIndexProps) => {
   const ungSakClient = useContext(UngSakClientContext);
   const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
+  const { data: vedtaksbrevValg, isLoading } = useQuery({
+    queryKey: ['vedtaksbrevValg', behandling.id],
+    queryFn: async () => {
+      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id);
+      return response;
+    },
+  });
   return (
     <>
       <Heading size="small" level="2">
         Vedtak
       </Heading>
-      <UngVedtak
-        aksjonspunkter={aksjonspunkter}
-        api={ungVedtakBackendClient}
-        behandling={behandling}
-        submitCallback={submitCallback}
-        vilkår={vilkar}
-        readOnly={isReadOnly}
-      />
+      {!isLoading && (
+        <UngVedtak
+          aksjonspunkter={aksjonspunkter}
+          api={ungVedtakBackendClient}
+          behandling={behandling}
+          submitCallback={submitCallback}
+          vilkår={vilkar}
+          readOnly={isReadOnly}
+          vedtaksbrevValg={vedtaksbrevValg}
+        />
+      )}
     </>
   );
 };

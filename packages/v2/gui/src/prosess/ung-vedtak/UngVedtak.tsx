@@ -1,11 +1,18 @@
-import { BehandlingDtoBehandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  BehandlingDtoBehandlingResultatType,
+  type AksjonspunktDto,
+  type VedtaksbrevValgDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import AvslagsårsakListe from './AvslagsårsakListe';
+import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
+import type { FormData } from './FormData';
 import styles from './ungVedtak.module.css';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -18,21 +25,29 @@ interface UngVedtakProps {
   submitCallback: (data: any) => Promise<any>;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
+  vedtaksbrevValg: VedtaksbrevValgDto | undefined;
 }
 
-const buildInitialValues = () => ({
+const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgDto | undefined): FormData => ({
   redigerAutomatiskBrev: false,
   hindreUtsendingAvBrev: false,
+  redigertHtml: vedtaksbrevValg?.redigertBrevHtml || '',
+  redigertMal: '',
+  originalHtml: '',
+  // inkluderKalenderVedOverstyring: false,
 });
 
-interface FormData {
-  redigerAutomatiskBrev: boolean;
-  hindreUtsendingAvBrev: boolean;
-}
-
-export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vilkår, readOnly }: UngVedtakProps) => {
+export const UngVedtak = ({
+  api,
+  behandling,
+  aksjonspunkter,
+  submitCallback,
+  vilkår,
+  readOnly,
+  vedtaksbrevValg,
+}: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
-    defaultValues: buildInitialValues(),
+    defaultValues: buildInitialValues(vedtaksbrevValg),
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
@@ -41,7 +56,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { refetch, isLoading: forhåndsvisningIsLoading } = useQuery({
+  const { refetch: refetchForhåndsvisVedtaksbrev, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
     queryFn: async () => {
       const response = await api.forhåndsvisVedtaksbrev(behandling.id);
@@ -54,11 +69,34 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     enabled: false,
   });
 
-  const { data: vedtaksbrevValg, isLoading: vedtaksbrevValgIsLoading } = useQuery({
-    queryKey: ['vedtaksbrevValg', behandling.id],
+  const { refetch: refetchHtml } = useQuery({
+    queryKey: ['hentFritekstbrevHtml', behandling.id],
     queryFn: async () => {
-      const response = await api.vedtaksbrevValg(behandling.id);
-      return response;
+      const response = await axios.post(
+        '/ung/sak/api/formidling/vedtaksbrev/forhaandsvis',
+        {
+          behandlingId: behandling.id,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'text/html',
+          },
+        },
+      );
+      return response.data;
+    },
+    enabled: false,
+  });
+
+  const { mutate: lagreVedtaksbrev } = useMutation({
+    mutationFn: async (redigertHtml: string) => {
+      const requestData = {
+        behandlingId: behandling.id,
+        redigertHtml: redigertHtml,
+        redigert: true,
+      };
+      return api.lagreVedtaksbrev(requestData);
     },
   });
 
@@ -92,14 +130,20 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               </div>
             )}
             <div>
+              <FritekstBrevpanel
+                readOnly={readOnly}
+                redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
+                hentFritekstbrevHtmlCallback={refetchHtml}
+                lagreVedtaksbrev={lagreVedtaksbrev}
+              />
               <Button
                 variant="tertiary"
-                onClick={() => refetch()}
+                onClick={() => refetchForhåndsvisVedtaksbrev()}
                 size="small"
                 icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                 loading={forhåndsvisningIsLoading}
                 type="button"
-                disabled={!vedtaksbrevValg?.harBrev || vedtaksbrevValgIsLoading}
+                disabled={!vedtaksbrevValg?.harBrev}
               >
                 Forhåndsvis brev
               </Button>
