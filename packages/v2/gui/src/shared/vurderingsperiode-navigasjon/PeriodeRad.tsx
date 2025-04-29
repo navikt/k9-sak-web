@@ -40,13 +40,6 @@ const renderStatusIcon = (resultat?: ResultatType) => {
     );
   }
 
-  if (resultat === Resultat.IKKE_GODKJENT_AUTOMATISK) {
-    return (
-      <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
-        <OverlayedIcons indicatorRenderer={() => <RedCrossIconFilled />} overlayRenderer={() => <InstitutionIcon />} />
-      </ContentWithTooltip>
-    );
-  }
   if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT || resultat === Resultat.GODKJENT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
