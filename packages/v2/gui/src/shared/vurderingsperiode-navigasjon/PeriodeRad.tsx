@@ -8,12 +8,16 @@ import {
 import { Period } from '@navikt/ft-utils';
 
 import { OverlayedIcons } from '../indicatorWithOverlay/IndicatorWithOverlay';
-import styles from './periodeRad.module.css';
 import type { ResultatType } from './VurderingsperiodeNavigasjon';
 import { Resultat } from './VurderingsperiodeNavigasjon';
+import { ChevronDownIcon } from '@navikt/aksel-icons';
+import { ChevronRightIcon } from '@navikt/aksel-icons';
+import styles from './periodeRad.module.css';
 interface OwnProps {
   perioder: Period[];
   resultat?: ResultatType;
+  active: boolean;
+  handleClick: () => void;
 }
 
 const renderStatusIcon = (resultat?: ResultatType) => {
@@ -57,24 +61,47 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   return null;
 };
 
-const PeriodeRad = ({ perioder, resultat }: OwnProps) => (
-  <div className={styles.vurderingsperiodeElement}>
-    <div className="min-w-[50px]">
-      <span className={styles['visuallyHidden']}>Type</span>
-      {renderStatusIcon(resultat)}
-    </div>
+export const RadStatus = ({ resultat }: { resultat?: ResultatType }) => {
+  return <div className="min-w-[50px]">{renderStatusIcon(resultat)}</div>;
+};
 
-    <div className={styles.vurderingsperiodeElementTexts}>
-      <div className={styles.vurderingsperiodeElementTextsPeriod}>
+export const RadDato = ({ perioder, active }: { perioder: Period[]; active: boolean }) => {
+  return (
+    <div className="flex ml-3 items-center">
+      <div className={`min-w-[10.125rem] ${active ? '' : 'text-blue-500 underline'}`}>
         {perioder.map(v => (
           <div key={v.prettifyPeriod()}>
-            <span className={styles['visuallyHidden']}>Perioder</span>
             {v.asListOfDays().length > 1 ? v.prettifyPeriod() : v.prettifyPeriod().split(' - ')[0]}
           </div>
         ))}
       </div>
     </div>
+  );
+};
+
+export const RadChevron = ({ active }: { active: boolean }) => {
+  return (
+    <div className="mr-4 float-right">
+      {active ? <ChevronRightIcon fontSize={24} /> : <ChevronDownIcon fontSize={24} />}
+    </div>
+  );
+};
+
+export const PeriodeRad = ({ perioder, resultat, active, handleClick }: OwnProps) => (
+  <div
+    className={`${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
+  >
+    <button
+      className="flex bg-transparent border-none cursor-pointer outline-none p-4 text-left w-full"
+      onClick={handleClick}
+    >
+      <div className="flex justify-between w-full">
+        <div className="flex items-center">
+          <RadStatus resultat={resultat} />
+          <RadDato perioder={perioder} active={active} />
+        </div>
+        <RadChevron active={active} />
+      </div>
+    </button>
   </div>
 );
-
-export default PeriodeRad;
