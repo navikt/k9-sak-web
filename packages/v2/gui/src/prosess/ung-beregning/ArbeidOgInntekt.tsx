@@ -1,7 +1,6 @@
 import {
   KontrollerInntektPeriodeDtoStatus,
   KontrollerInntektPeriodeDtoValg,
-  type AksjonspunktDto,
   type KontrollerInntektPeriodeDto,
   type RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
@@ -32,10 +31,7 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
   return 'Ingen avvik';
 };
 
-const buildInitialValues = (
-  inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>,
-  aksjonspunkt: AksjonspunktDto | undefined,
-): Formvalues => {
+const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>): Formvalues => {
   return {
     perioder:
       inntektKontrollperioder
@@ -44,7 +40,7 @@ const buildInitialValues = (
           return {
             fastsattInntekt: periode.fastsattInntekt != null ? `${periode.fastsattInntekt}` : '',
             valg: periode.valg ?? '',
-            begrunnelse: aksjonspunkt?.begrunnelse ?? '',
+            begrunnelse: periode.begrunnelse ?? '',
             periode: periode.periode,
           };
         }) || [],
@@ -63,19 +59,13 @@ type Formvalues = {
 interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
-  aksjonspunkt: AksjonspunktDto | undefined;
   isReadOnly: boolean;
 }
 
-export const ArbeidOgInntekt = ({
-  submitCallback,
-  inntektKontrollperioder,
-  aksjonspunkt,
-  isReadOnly,
-}: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isReadOnly }: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
-    defaultValues: buildInitialValues(inntektKontrollperioder, aksjonspunkt),
+    defaultValues: buildInitialValues(inntektKontrollperioder),
   });
 
   const onSubmit = async (values: Formvalues) => {
@@ -84,7 +74,7 @@ export const ArbeidOgInntekt = ({
       await submitCallback([
         {
           kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-          begrunnelse: values.perioder[0]?.begrunnelse,
+          begrunnelse: values.perioder.map(periode => periode.begrunnelse).join(', '),
           perioder: values.perioder.map(periode => ({
             periode: periode.periode,
             fastsattInnntekt:
@@ -92,6 +82,7 @@ export const ArbeidOgInntekt = ({
                 ? removeSpacesFromNumber(periode.fastsattInntekt)
                 : undefined,
             valg: periode.valg,
+            begrunnelse: periode.begrunnelse,
           })),
         },
       ]);
