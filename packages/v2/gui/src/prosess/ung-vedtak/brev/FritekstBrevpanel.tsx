@@ -10,35 +10,22 @@ import {
   utledRedigerbartInnhold,
   utledStiler,
   utledSuffiksInnhold,
-  type Brevmottaker,
-  type VedtaksbrevMal,
 } from './RedigeringUtils';
-
-const redigerbarDokumentmal: VedtaksbrevMal = {
-  // TODO: Trenger vi dette?
-  vedtaksbrev: 'MANUELL',
-  dokumentMalType: 'MANUELL',
-  redigerbarMalType: 'INNVILGELSE',
-};
 
 interface FriktekstBrevpanelProps {
   readOnly: boolean;
   redigertBrevHtml: string | undefined;
   hentFritekstbrevHtmlCallback: () => Promise<QueryObserverResult<any, Error>>;
-  overstyrtMottaker?: Brevmottaker;
   lagreVedtaksbrev: UseMutateFunction<unknown, Error, string, unknown>;
 }
 
 export const FritekstBrevpanel = ({
   readOnly,
-  // redigertBrevHtml,
   hentFritekstbrevHtmlCallback,
-  overstyrtMottaker,
   lagreVedtaksbrev,
 }: FriktekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
-  const [henterMal, setHenterMal] = useState<boolean>(false);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
   const [brevStiler, setBrevStiler] = useState<string>('');
   const [prefiksInnhold, setPrefiksInnhold] = useState<string>('');
@@ -48,10 +35,6 @@ export const FritekstBrevpanel = ({
   const formMethods = useFormContext<FormData>();
   const redigertBrevHtml = useWatch({ control: formMethods.control, name: 'redigertHtml' });
 
-  // const inkluderKalender = useWatch({
-  //   control: formMethods.control,
-  //   name: 'inkluderKalenderVedOverstyring',
-  // });
   const handleFritekstSubmit = useCallback(
     async (html: string) => {
       formMethods.setValue('redigertHtml', html);
@@ -63,10 +46,7 @@ export const FritekstBrevpanel = ({
   const lukkEditor = () => setVisRedigering(false);
 
   const hentFritekstbrevMal = useCallback(async () => {
-    setHenterMal(true);
-
     const { data: responseHtml } = await hentFritekstbrevHtmlCallback();
-    formMethods.setValue('redigertMal', redigerbarDokumentmal.redigerbarMalType);
 
     setBrevStiler(utledStiler(responseHtml));
     const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
@@ -79,11 +59,6 @@ export const FritekstBrevpanel = ({
       formMethods.setValue('originalHtml', originalHtmlStreng);
     }
 
-    // if (!dokumentdata?.REDIGERTBREV) {
-    //   const skalInkludereKalender = utledSkalInkludereKalender(responseHtml);
-    //   formMethods.setValue('inkluderKalenderVedOverstyring', skalInkludereKalender);
-    // }
-
     if (redigertBrevHtml) {
       setRedigerbartInnhold(redigertBrevHtml);
     } else {
@@ -93,8 +68,7 @@ export const FritekstBrevpanel = ({
 
     await setRedigerbartInnholdKlart(true);
     // setForhaandsvisningKlart(true);
-    setHenterMal(false);
-  }, [setRedigerbartInnholdKlart, setHenterMal, formMethods, hentFritekstbrevHtmlCallback, redigertBrevHtml]);
+  }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtmlCallback, redigertBrevHtml]);
 
   const handleLagre = useCallback(
     async (html: string) => {
@@ -104,10 +78,10 @@ export const FritekstBrevpanel = ({
   );
 
   useEffect(() => {
-    if (!firstRender.current && overstyrtMottaker && !henterMal) {
+    if (!firstRender.current) {
       void hentFritekstbrevMal();
     }
-  }, [firstRender, overstyrtMottaker]);
+  }, [firstRender, hentFritekstbrevMal]);
 
   useEffect(() => {
     const asyncEffect = async () => {

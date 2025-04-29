@@ -159,18 +159,18 @@ export const UngVedtak = ({
           <div className={styles.brevCheckboxContainer}>
             <Fieldset legend="Valg for brev" size="small">
               <div>
-                {vedtaksbrevValg?.kanOverstyreRediger && (
+                {vedtaksbrevValg?.enableRediger && (
                   <CheckboxField
                     name="redigerAutomatiskBrev"
                     label="Rediger automatisk brev"
-                    disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
+                    disabled={!vedtaksbrevValg.kanOverstyreRediger || hindreUtsendingAvBrev || readOnly}
                   />
                 )}
-                {vedtaksbrevValg?.kanOverstyreHindre && (
+                {vedtaksbrevValg?.enableHindre && (
                   <CheckboxField
                     name="hindreUtsendingAvBrev"
                     label="Hindre utsending av brev"
-                    disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
+                    disabled={!vedtaksbrevValg.kanOverstyreHindre || redigerAutomatiskBrev || readOnly}
                   />
                 )}
               </div>

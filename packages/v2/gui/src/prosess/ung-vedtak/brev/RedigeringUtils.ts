@@ -1,4 +1,3 @@
-import { safeJSONParse } from '@fpsak-frontend/utils';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import { generate as cssGenerate, parse as cssParse, walk as cssWalk } from 'css-tree';
 import * as Yup from 'yup';
@@ -100,26 +99,6 @@ export type LagreHtmlDokumentdataResponse = DokumentDataType & {
   VEDTAKSBREV_MAL: string;
   OVERSTYRT_MOTTAKER?: Mottaker;
 };
-
-export const lagLagreHtmlDokumentdataRequest = ({
-  // dokumentdata,
-  redigerbarDokumentmal,
-  redigertHtml,
-  originalHtml,
-  // inkluderKalender,
-  overstyrtMottaker,
-}: LagreHtmlDokumentdataRequest): LagreHtmlDokumentdataResponse => ({
-  // ...dokumentdata,
-  REDIGERTBREV: {
-    redigertHtml,
-    originalHtml,
-    redigertMal: redigerbarDokumentmal.redigerbarMalType,
-    // inkluderKalender,
-  },
-  VEDTAKSBREV_TYPE: redigerbarDokumentmal.vedtaksbrev,
-  VEDTAKSBREV_MAL: redigerbarDokumentmal.dokumentMalType,
-  ...(overstyrtMottaker ? { OVERSTYRT_MOTTAKER: safeJSONParse(overstyrtMottaker) } : {}),
-});
 
 export const validerManueltRedigertBrev = (html: string): boolean => {
   const innholdet = document.createElement('div');
