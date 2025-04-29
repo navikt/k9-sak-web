@@ -27,6 +27,14 @@ export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => vo
   });
 };
 
+export const useVilkår = (behandlingUuid: string) => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['vilkår', behandlingUuid],
+    queryFn: () => backendClient.getVilkår(behandlingUuid),
+  });
+};
 export const useOppdaterSykdomsvurdering = ({
   onSuccess,
 }: {
