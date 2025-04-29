@@ -37,7 +37,6 @@ const SykdomUperiodisertIndex = () => {
     useLangvarigSykVurderingerFagsak(behandlingUuid);
   const { data: vurderingBruktIAksjonspunkt, isLoading: isLoadingVurderingBruktIAksjonspunkt } =
     useVurdertLangvarigSykdom(behandlingUuid);
-  useVurdertLangvarigSykdom(behandlingUuid);
   const mappedVurderinger = langvarigSykVurderinger?.map(element => ({
     ...element,
     godkjent: utledGodkjent(element) as 'ja' | 'nei' | 'mangler_dokumentasjon',
