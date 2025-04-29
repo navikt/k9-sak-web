@@ -217,10 +217,12 @@ const SykdomOgOpplæring = () => {
   const { data: vilkår } = useVilkår(behandlingUuid);
   const [activeTab, setActiveTab] = useState(initActiveTab);
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
+  const harAksjonspunkt9300 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9300');
   const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
   const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
   const harAksjonspunkt9303 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9303');
-  const harAksjonspunkt9300 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9300');
+
+  // Trenger en ekstra sjekk på institusjon fordi vilkåret kan vurderes automatisk, og da får vi aldri aksjonspunkt
   const institusjonVilkår = vilkår?.find(
     v => v.vilkarType === VilkårMedPerioderDtoVilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
   );
