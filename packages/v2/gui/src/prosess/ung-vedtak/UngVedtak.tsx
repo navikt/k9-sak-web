@@ -89,11 +89,11 @@ export const UngVedtak = ({
   });
 
   const { mutate: lagreVedtaksbrev } = useMutation({
-    mutationFn: async (redigertHtml: string) => {
+    mutationFn: async ({ redigertHtml, redigert = true }: { redigertHtml: string; redigert?: boolean }) => {
       const requestData = {
         behandlingId: behandling.id,
         redigertHtml: redigertHtml,
-        redigert: true,
+        redigert: redigert,
       };
       return api.lagreVedtaksbrev(requestData);
     },
@@ -129,12 +129,15 @@ export const UngVedtak = ({
               </div>
             )}
             <div>
-              <FritekstBrevpanel
-                readOnly={readOnly}
-                redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
-                hentFritekstbrevHtmlCallback={refetchHtml}
-                lagreVedtaksbrev={lagreVedtaksbrev}
-              />
+              {redigerAutomatiskBrev && (
+                <FritekstBrevpanel
+                  readOnly={readOnly}
+                  redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
+                  hentFritekstbrevHtmlCallback={refetchHtml}
+                  lagreVedtaksbrev={lagreVedtaksbrev}
+                  handleForhåndsvis={() => refetchForhåndsvisVedtaksbrev()}
+                />
+              )}
               <Button
                 variant="tertiary"
                 onClick={() => refetchForhåndsvisVedtaksbrev()}

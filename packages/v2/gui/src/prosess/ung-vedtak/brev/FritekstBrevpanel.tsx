@@ -1,5 +1,4 @@
 import { Alert, Box, Button, Heading, Modal } from '@navikt/ds-react';
-import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type { QueryObserverResult, UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -17,13 +16,23 @@ interface FriktekstBrevpanelProps {
   readOnly: boolean;
   redigertBrevHtml: string | undefined;
   hentFritekstbrevHtmlCallback: () => Promise<QueryObserverResult<any, Error>>;
-  lagreVedtaksbrev: UseMutateFunction<unknown, Error, string, unknown>;
+  lagreVedtaksbrev: UseMutateFunction<
+    unknown,
+    Error,
+    {
+      redigertHtml: string;
+      redigert?: boolean;
+    },
+    unknown
+  >;
+  handleForhåndsvis: () => void;
 }
 
 export const FritekstBrevpanel = ({
   readOnly,
   hentFritekstbrevHtmlCallback,
   lagreVedtaksbrev,
+  handleForhåndsvis,
 }: FriktekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
@@ -37,12 +46,9 @@ export const FritekstBrevpanel = ({
   const redigertBrevHtml = useWatch({ control: formMethods.control, name: 'redigertHtml' });
 
   const handleFritekstSubmit = useCallback(
-    async (html: string) => {
-      const cleanHtml = decodeHtmlEntity(html);
-      if (cleanHtml) {
-        formMethods.setValue('redigertHtml', cleanHtml);
-        await lagreVedtaksbrev(cleanHtml);
-      }
+    async (html: string, nullstill?: boolean) => {
+      formMethods.setValue('redigertHtml', html);
+      await lagreVedtaksbrev({ redigertHtml: html, redigert: !nullstill });
     },
     [formMethods, lagreVedtaksbrev],
   );
@@ -75,8 +81,8 @@ export const FritekstBrevpanel = ({
   }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtmlCallback, redigertBrevHtml]);
 
   const handleLagre = useCallback(
-    async (html: string) => {
-      await handleFritekstSubmit(html);
+    async (html: string, nullstill?: boolean) => {
+      await handleFritekstSubmit(html, nullstill);
     },
     [handleFritekstSubmit],
   );
@@ -103,9 +109,13 @@ export const FritekstBrevpanel = ({
     if (redigertBrevHtml) setRedigerbartInnhold(redigertBrevHtml);
   }, [redigertBrevHtml]);
 
+  const handleModalClose = () => {
+    setVisRedigering(false);
+  };
+
   return (
     <Box marginBlock="0 4">
-      <Heading size="small" level="2">
+      <Heading size="small" level="3">
         Brev
       </Heading>
       {!readOnly && (
@@ -115,8 +125,8 @@ export const FritekstBrevpanel = ({
           </Alert>
         </Box>
       )}
-      <div>
-        <Heading size="small" level="3">
+      <Box padding="5" background="surface-subtle" borderRadius="medium">
+        <Heading size="small" level="4">
           Rediger brev til søker
         </Heading>
         <Box marginBlock="4 0">
@@ -132,12 +142,12 @@ export const FritekstBrevpanel = ({
             Rediger brev
           </Button>
         </Box>
-        <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
+        <Modal open={visRedigering} onClose={handleModalClose} width="53.75rem" aria-label="Rediger brev">
           {visRedigering && (
             <FritekstEditor
               handleSubmit={handleLagre}
               lukkEditor={lukkEditor}
-              //   handleForhåndsvis={handleForhåndsvis}
+              handleForhåndsvis={handleForhåndsvis}
               //   setFieldValue={setFieldValue}
               // kanInkludereKalender={kanInkludereKalender}
               //   skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
@@ -151,7 +161,7 @@ export const FritekstBrevpanel = ({
             />
           )}
         </Modal>
-      </div>
+      </Box>
     </Box>
   );
 };

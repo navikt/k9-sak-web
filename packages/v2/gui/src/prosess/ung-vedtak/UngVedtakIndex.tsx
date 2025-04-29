@@ -34,7 +34,7 @@ export const UngVedtakIndex = ({
   });
   return (
     <>
-      <Heading size="small" level="2">
+      <Heading size="medium" level="2">
         Vedtak
       </Heading>
       {!isLoading && (

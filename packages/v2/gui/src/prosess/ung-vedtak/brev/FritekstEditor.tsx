@@ -5,10 +5,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJSWrapper from './EditorJSWrapper';
 import FritekstFeilmeldinger from './FritekstFeilmeldinger';
 
+import { FileSearchIcon } from '@navikt/aksel-icons';
 import styles from './RedigerFritekstbrev.module.css';
+import { validerRedigertHtml } from './RedigeringUtils';
 
 interface ownProps {
-  handleSubmit: (value: string) => void;
+  handleSubmit: (value: string, nullstill?: boolean) => void;
   lukkEditor: () => void;
   // handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
   // setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
@@ -21,6 +23,7 @@ interface ownProps {
   prefiksInnhold: string;
   suffiksInnhold: string;
   brevStiler: string;
+  handleForhåndsvis: () => void;
 }
 
 const debounce = funksjon => {
@@ -38,7 +41,7 @@ const debounce = funksjon => {
 const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
-  // handleForhåndsvis,
+  handleForhåndsvis,
   // setFieldValue,
   // kanInkludereKalender,
   // skalBrukeOverstyrendeFritekstBrev,
@@ -51,23 +54,26 @@ const FritekstEditor = ({
   brevStiler,
 }: ownProps) => {
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
-  // const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
+  const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
   const editorRef = useRef<EditorJSWrapper | null>(null);
   const lastSubmitHtml = useRef(redigerbartInnhold);
   const initImportNotDone = useRef(true);
 
   // useCallback to avoid recreation of this on every re-render of component
-  const handleLagre = useCallback(async () => {
-    const editor = editorRef.current;
-    if (editor !== null) {
-      await editor.erKlar();
-      const html = await editor.lagre();
-      if (html !== lastSubmitHtml.current) {
-        handleSubmit(html);
-        lastSubmitHtml.current = html;
+  const handleLagre = useCallback(
+    async (nullstill?: boolean) => {
+      const editor = editorRef.current;
+      if (editor !== null) {
+        await editor.erKlar();
+        const html = await editor.lagre();
+        if (html !== lastSubmitHtml.current) {
+          handleSubmit(nullstill ? '' : html, nullstill);
+          lastSubmitHtml.current = nullstill ? '' : html;
+        }
       }
-    }
-  }, [handleSubmit]);
+    },
+    [handleSubmit],
+  );
 
   // useCallback to avoid recreation of this on every re-render of component
   const debouncedLagre = useCallback(debounce(handleLagre), [handleLagre]);
@@ -107,29 +113,29 @@ const FritekstEditor = ({
     lukkEditor();
   };
 
-  // const onForhåndsvis = async e => {
-  //   const editor = editorRef.current;
-  //   if (editor !== null) {
-  //     const html = await editor.lagre();
-  //     const validert = await validerRedigertHtml.isValid(html);
+  const onForhåndsvis = async () => {
+    const editor = editorRef.current;
+    if (editor !== null) {
+      const html = await editor.lagre();
+      const validert = await validerRedigertHtml.isValid(html);
 
-  //     if (validert) {
-  //       setVisValideringsFeil(false);
-  //       handleForhåndsvis(e, html);
-  //     } else {
-  //       setVisValideringsFeil(true);
-  //     }
-  //   } else {
-  //     throw new Error(`Fritekstredigering ikke initialisert. Kan ikke lage forhåndsvisning.`);
-  //   }
-  // };
+      if (validert) {
+        setVisValideringsFeil(false);
+        handleForhåndsvis();
+      } else {
+        setVisValideringsFeil(true);
+      }
+    } else {
+      throw new Error(`Fritekstredigering ikke initialisert. Kan ikke lage forhåndsvisning.`);
+    }
+  };
 
   const handleTilbakestill = async () => {
     const editor = editorRef.current;
     if (editor !== null) {
       await editor.importer(originalHtml);
       setVisAdvarsel(false);
-      await handleLagre();
+      await handleLagre(true);
     } else {
       console.warn('Fritekstredigering ikke initialisert. Kan ikke tilbakestille.');
     }
@@ -212,19 +218,21 @@ const FritekstEditor = ({
               )} */}
               <div>
                 <div className={styles.knapper}>
-                  {/* {visValideringsFeil && (
+                  {visValideringsFeil && (
                     <Box marginBlock="0 4">
                       <Alert variant="error">Brevet må redigeres før det kan forhåndsvises</Alert>
                     </Box>
-                  )} */}
-                  {/* <PreviewLink
-                    previewCallback={onForhåndsvis}
+                  )}
+                  <Button
+                    variant="tertiary"
                     size="small"
-                    intl={intl}
+                    icon={<FileSearchIcon />}
+                    onClick={onForhåndsvis}
+                    type="button"
                     loading={!redigerbartInnholdKlart}
                   >
-                    <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-                  </PreviewLink> */}
+                    Forhåndsvis brev
+                  </Button>
                 </div>
                 <FritekstFeilmeldinger />
               </div>
