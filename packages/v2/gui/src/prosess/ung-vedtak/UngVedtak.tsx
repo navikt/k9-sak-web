@@ -32,9 +32,7 @@ const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgDto | undefined): Fo
   redigerAutomatiskBrev: false,
   hindreUtsendingAvBrev: false,
   redigertHtml: vedtaksbrevValg?.redigertBrevHtml || '',
-  redigertMal: '',
   originalHtml: '',
-  // inkluderKalenderVedOverstyring: false,
 });
 
 export const UngVedtak = ({
@@ -76,6 +74,7 @@ export const UngVedtak = ({
         '/ung/sak/api/formidling/vedtaksbrev/forhaandsvis',
         {
           behandlingId: behandling.id,
+          redigert: true,
         },
         {
           headers: {

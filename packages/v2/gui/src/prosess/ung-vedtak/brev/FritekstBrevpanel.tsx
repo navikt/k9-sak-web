@@ -1,4 +1,5 @@
 import { Alert, Box, Button, Heading, Modal } from '@navikt/ds-react';
+import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type { QueryObserverResult, UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -37,8 +38,11 @@ export const FritekstBrevpanel = ({
 
   const handleFritekstSubmit = useCallback(
     async (html: string) => {
-      formMethods.setValue('redigertHtml', html);
-      await lagreVedtaksbrev(html);
+      const cleanHtml = decodeHtmlEntity(html);
+      if (cleanHtml) {
+        formMethods.setValue('redigertHtml', cleanHtml);
+        await lagreVedtaksbrev(cleanHtml);
+      }
     },
     [formMethods, lagreVedtaksbrev],
   );
@@ -77,11 +81,11 @@ export const FritekstBrevpanel = ({
     [handleFritekstSubmit],
   );
 
-  useEffect(() => {
-    if (!firstRender.current) {
-      void hentFritekstbrevMal();
-    }
-  }, [firstRender, hentFritekstbrevMal]);
+  // useEffect(() => {
+  //   if (!firstRender.current) {
+  //     void hentFritekstbrevMal();
+  //   }
+  // }, [firstRender, hentFritekstbrevMal]);
 
   useEffect(() => {
     const asyncEffect = async () => {
