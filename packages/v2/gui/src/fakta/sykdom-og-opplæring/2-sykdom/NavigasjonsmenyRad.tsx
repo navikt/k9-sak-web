@@ -19,7 +19,7 @@ export const NavigasjonsmenyRad = ({
 }) => {
   return (
     <div
-      className={`flex p-4 text-left w-full ${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
+      className={`${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
     >
       <div className="flex justify-between w-full">
         <div className="flex items-center">

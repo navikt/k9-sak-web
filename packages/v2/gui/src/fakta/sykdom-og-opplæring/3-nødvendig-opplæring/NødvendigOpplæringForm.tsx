@@ -95,7 +95,7 @@ const NødvendigOpplæringForm = ({
           />
           <div>
             <Label htmlFor="begrunnelse" size="small">
-              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet som følge av
+              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
               <Lovreferanse> § 9-14</Lovreferanse>
             </Label>
             <Textarea
