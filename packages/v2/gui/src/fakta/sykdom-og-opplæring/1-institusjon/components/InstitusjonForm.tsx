@@ -12,12 +12,12 @@ import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/gener
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',
   GODKJENT_INSTITUSJON = 'godkjentInstitusjon',
-  SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING = 'skalLeggeTilSkriftligVurdering',
+  SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING = 'skalLeggeTilValgfriSkriftligVurdering',
 }
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
-  [InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING]: string;
+  [InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING]: string;
 }
 
 export interface InstitusjonAksjonspunktPayload {
@@ -45,12 +45,9 @@ const utledGodkjentInstitusjon = (resultat: InstitusjonVurderingDtoResultat) => 
   return '';
 };
 
-const utledOmDetErSkriftligVurdering = (begrunnelse: string, resultat: InstitusjonVurderingDtoResultat) => {
+const utledOmDetErValgfriSkriftligVurdering = (begrunnelse: string, resultat: InstitusjonVurderingDtoResultat) => {
   if (begrunnelse && resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
     return 'ja';
-  }
-  if (!begrunnelse || resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT) {
-    return 'nei';
   }
   return 'nei';
 };
@@ -62,7 +59,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     defaultValues: {
       [InstitusjonFormFields.BEGRUNNELSE]: vurdering.begrunnelse,
       [InstitusjonFormFields.GODKJENT_INSTITUSJON]: utledGodkjentInstitusjon(vurdering.resultat),
-      [InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING]: utledOmDetErSkriftligVurdering(
+      [InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING]: utledOmDetErValgfriSkriftligVurdering(
         vurdering.begrunnelse,
         vurdering.resultat,
       ),
@@ -70,18 +67,18 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   });
 
   const { watch } = formMethods;
-  const skalLeggeTilSkriftligVurdering = watch(InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING);
+  const skalLeggeTilValgfriSkriftligVurdering = watch(InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING);
   const resultat = watch(InstitusjonFormFields.GODKJENT_INSTITUSJON);
   useEffect(() => {
-    if (resultat === 'nei' && skalLeggeTilSkriftligVurdering === 'ja') {
-      formMethods.unregister(InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING);
+    if (resultat === 'nei' && skalLeggeTilValgfriSkriftligVurdering === 'ja') {
+      formMethods.unregister(InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING);
     }
-  }, [skalLeggeTilSkriftligVurdering, resultat, formMethods]);
+  }, [skalLeggeTilValgfriSkriftligVurdering, resultat, formMethods]);
 
   const handleSubmit = (values: InstitusjonFormValues) => {
     const skalSendeBegrunnelse =
       values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'nei' ||
-      (values[InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING] === 'ja' &&
+      (values[InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING] === 'ja' &&
         values[InstitusjonFormFields.GODKJENT_INSTITUSJON] !== 'ja');
     løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
@@ -90,14 +87,14 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     });
   };
 
-  const visSkriftligVurderingCheckbox = () => {
+  const visValgfriSkriftligVurderingCheckbox = () => {
     return watch(InstitusjonFormFields.GODKJENT_INSTITUSJON) === 'ja';
   };
 
   const visBegrunnelse = () => {
     return (
       watch(InstitusjonFormFields.GODKJENT_INSTITUSJON) === 'nei' ||
-      watch(InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING) === 'ja'
+      watch(InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING) === 'ja'
     );
   };
 
@@ -116,10 +113,10 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           data-testid="godkjent-institusjon"
         />
 
-        {visSkriftligVurderingCheckbox() && (
+        {visValgfriSkriftligVurderingCheckbox() && (
           <Controller
             control={formMethods.control}
-            name={InstitusjonFormFields.SKAL_LEGGE_TIL_SKRIFTLIG_VURDERING}
+            name={InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING}
             render={({ field }) => (
               <Checkbox
                 checked={field.value === 'ja'}
