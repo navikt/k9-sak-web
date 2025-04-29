@@ -92,7 +92,7 @@ export const PeriodeRad = ({ perioder, resultat, active, handleClick }: OwnProps
     className={`${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
   >
     <button
-      className="flex bg-transparent border-none cursor-pointer outline-none p-4 text-left w-full"
+      className="flex bg-transparent border-none cursor-pointer outline-none text-left w-full"
       onClick={handleClick}
     >
       <div className="flex justify-between w-full">
