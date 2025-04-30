@@ -15,13 +15,13 @@ import {
 interface FriktekstBrevpanelProps {
   readOnly: boolean;
   redigertBrevHtml: string | undefined;
-  hentFritekstbrevHtmlCallback: () => Promise<QueryObserverResult<any, Error>>;
+  hentFritekstbrevHtml: () => Promise<QueryObserverResult<any, Error>>;
   lagreVedtaksbrev: UseMutateFunction<
     unknown,
     Error,
     {
       redigertHtml: string;
-      redigert?: boolean;
+      nullstill?: boolean;
     },
     unknown
   >;
@@ -30,7 +30,7 @@ interface FriktekstBrevpanelProps {
 
 export const FritekstBrevpanel = ({
   readOnly,
-  hentFritekstbrevHtmlCallback,
+  hentFritekstbrevHtml,
   lagreVedtaksbrev,
   handleForhåndsvis,
 }: FriktekstBrevpanelProps) => {
@@ -48,7 +48,7 @@ export const FritekstBrevpanel = ({
   const handleFritekstSubmit = useCallback(
     async (html: string, nullstill?: boolean) => {
       formMethods.setValue('redigertHtml', html);
-      await lagreVedtaksbrev({ redigertHtml: html, redigert: !nullstill });
+      lagreVedtaksbrev({ redigertHtml: html, nullstill });
     },
     [formMethods, lagreVedtaksbrev],
   );
@@ -56,7 +56,7 @@ export const FritekstBrevpanel = ({
   const lukkEditor = () => setVisRedigering(false);
 
   const hentFritekstbrevMal = useCallback(async () => {
-    const { data: responseHtml } = await hentFritekstbrevHtmlCallback();
+    const { data: responseHtml } = await hentFritekstbrevHtml();
 
     setBrevStiler(utledStiler(responseHtml));
     const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
@@ -76,9 +76,9 @@ export const FritekstBrevpanel = ({
       setRedigerbartInnhold(originalHtmlStreng ?? '');
     }
 
-    await setRedigerbartInnholdKlart(true);
+    setRedigerbartInnholdKlart(true);
     // setForhaandsvisningKlart(true);
-  }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtmlCallback, redigertBrevHtml]);
+  }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtml, redigertBrevHtml]);
 
   const handleLagre = useCallback(
     async (html: string, nullstill?: boolean) => {

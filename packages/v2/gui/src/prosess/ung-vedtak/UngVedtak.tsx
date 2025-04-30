@@ -6,8 +6,7 @@ import {
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { useMutation, useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import AvslagsårsakListe from './AvslagsårsakListe';
@@ -26,11 +25,12 @@ interface UngVedtakProps {
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValg: VedtaksbrevValgDto | undefined;
+  refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValgDto, Error>>;
 }
 
 const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgDto | undefined): FormData => ({
-  redigerAutomatiskBrev: false,
-  hindreUtsendingAvBrev: false,
+  redigerAutomatiskBrev: vedtaksbrevValg?.redigert || false,
+  hindreUtsendingAvBrev: vedtaksbrevValg?.hindret || false,
   redigertHtml: vedtaksbrevValg?.redigertBrevHtml || '',
   originalHtml: '',
 });
@@ -43,6 +43,7 @@ export const UngVedtak = ({
   vilkår,
   readOnly,
   vedtaksbrevValg,
+  refetchVedtaksbrevValg,
 }: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
     defaultValues: buildInitialValues(vedtaksbrevValg),
@@ -54,7 +55,7 @@ export const UngVedtak = ({
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { refetch: refetchForhåndsvisVedtaksbrev, isLoading: forhåndsvisningIsLoading } = useQuery({
+  const { refetch: forhåndsvisVedtaksbrev, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
     queryFn: async () => {
       const response = await api.forhåndsvisVedtaksbrev(behandling.id);
@@ -67,35 +68,31 @@ export const UngVedtak = ({
     enabled: false,
   });
 
-  const { refetch: refetchHtml } = useQuery({
+  const { refetch: hentFritekstbrevHtml } = useQuery({
     queryKey: ['hentFritekstbrevHtml', behandling.id],
     queryFn: async () => {
-      const response = await axios.post(
-        '/ung/sak/api/formidling/vedtaksbrev/forhaandsvis',
-        {
-          behandlingId: behandling.id,
-          redigert: true,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'text/html',
-          },
-        },
-      );
-      return response.data;
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, true);
+      return response;
     },
     enabled: false,
   });
 
+  const resetForm = async () => {
+    const resetValues = await refetchVedtaksbrevValg();
+    formMethods.reset(buildInitialValues({ ...resetValues.data, redigert: true }));
+  };
+
   const { mutate: lagreVedtaksbrev } = useMutation({
-    mutationFn: async ({ redigertHtml, redigert = true }: { redigertHtml: string; redigert?: boolean }) => {
+    mutationFn: async ({ redigertHtml, nullstill }: { redigertHtml: string; nullstill?: boolean }) => {
       const requestData = {
         behandlingId: behandling.id,
-        redigertHtml: redigertHtml,
-        redigert: redigert,
+        redigertHtml: redigertHtml || undefined,
+        redigert: nullstill ? false : true,
       };
-      return api.lagreVedtaksbrev(requestData);
+      await api.lagreVedtaksbrev(requestData);
+      if (nullstill) {
+        await resetForm();
+      }
     },
   });
 
@@ -133,14 +130,14 @@ export const UngVedtak = ({
                 <FritekstBrevpanel
                   readOnly={readOnly}
                   redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
-                  hentFritekstbrevHtmlCallback={refetchHtml}
+                  hentFritekstbrevHtml={hentFritekstbrevHtml}
                   lagreVedtaksbrev={lagreVedtaksbrev}
-                  handleForhåndsvis={() => refetchForhåndsvisVedtaksbrev()}
+                  handleForhåndsvis={() => forhåndsvisVedtaksbrev()}
                 />
               )}
               <Button
                 variant="tertiary"
-                onClick={() => refetchForhåndsvisVedtaksbrev()}
+                onClick={() => forhåndsvisVedtaksbrev()}
                 size="small"
                 icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                 loading={forhåndsvisningIsLoading}

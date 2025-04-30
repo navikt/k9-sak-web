@@ -25,7 +25,11 @@ export const UngVedtakIndex = ({
 }: UngVedtakIndexProps) => {
   const ungSakClient = useContext(UngSakClientContext);
   const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
-  const { data: vedtaksbrevValg, isLoading } = useQuery({
+  const {
+    data: vedtaksbrevValg,
+    isLoading,
+    refetch: refetchVedtaksbrevValg,
+  } = useQuery({
     queryKey: ['vedtaksbrevValg', behandling.id],
     queryFn: async () => {
       const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id);
@@ -46,6 +50,7 @@ export const UngVedtakIndex = ({
           vilkår={vilkar}
           readOnly={isReadOnly}
           vedtaksbrevValg={vedtaksbrevValg}
+          refetchVedtaksbrevValg={refetchVedtaksbrevValg}
         />
       )}
     </>

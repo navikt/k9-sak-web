@@ -13,8 +13,8 @@ export default class UngVedtakBackendClient {
     this.#ungsak = ungsakClient;
   }
 
-  async forhåndsvisVedtaksbrev(behandlingId: number): Promise<ForhåndsvisVedtaksbrevResponse> {
-    return this.#ungsak.formidling.forhåndsvisVedtaksbrev({ behandlingId });
+  async forhåndsvisVedtaksbrev(behandlingId: number, htmlVersjon?: boolean): Promise<ForhåndsvisVedtaksbrevResponse> {
+    return this.#ungsak.formidling.forhåndsvisVedtaksbrev({ behandlingId, htmlVersjon });
   }
 
   async lagreVedtaksbrev(data: VedtaksbrevValgRequestDto): Promise<LagreVedtaksbrevValgResponse> {
