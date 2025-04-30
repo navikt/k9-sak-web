@@ -23,7 +23,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const EMPTY_ARRAY = [];
-
+const queryClient = new QueryClient();
 /**
  * AppIndex
  *
@@ -34,7 +34,6 @@ const AppIndex = () => {
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
-  const queryClient = new QueryClient();
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
 
