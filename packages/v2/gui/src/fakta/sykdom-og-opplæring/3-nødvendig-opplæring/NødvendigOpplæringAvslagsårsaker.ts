@@ -1,0 +1,8 @@
+const Avslagsårsaker = {
+  UDEFINERT_KODE: '-',
+  MANGLENDE_DOKUMENTASJON_KODE: '1019',
+  IKKE_NØDVENDIG_OPPLÆRING_KODE: '1101',
+  KURS_INNEHOLDER_IKKE_OPPLÆRING_KODE: '1105',
+};
+
+export default Avslagsårsaker;
