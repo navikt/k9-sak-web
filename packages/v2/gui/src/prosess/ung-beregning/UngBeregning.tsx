@@ -98,12 +98,13 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
           </Tabs.List>
           <Box maxWidth="860px">
             <Tabs.Panel value="arbeid">
-              <ArbeidOgInntekt
-                submitCallback={submitCallback}
-                inntektKontrollperioder={inntekt?.kontrollperioder}
-                aksjonspunkt={aksjonspunkt}
-                isReadOnly={isReadOnly}
-              />
+              {inntekt?.kontrollperioder && (
+                <ArbeidOgInntekt
+                  submitCallback={submitCallback}
+                  inntektKontrollperioder={inntekt.kontrollperioder}
+                  isReadOnly={isReadOnly}
+                />
+              )}
             </Tabs.Panel>
           </Box>
           <Tabs.Panel value="barn">
