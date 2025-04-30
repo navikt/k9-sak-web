@@ -32,7 +32,7 @@
     "@navikt/ft-fakta-beregning": "^8.4.5",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^9.2.11",
     "@navikt/ft-prosess-beregningsgrunnlag": "^8.3.0",
-    "axios": "1.8.4",
+    "axios": "1.9.0",
     "react": "19.1.0",
     "react-intl": "7.1.11"
   }
