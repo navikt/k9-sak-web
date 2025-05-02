@@ -399,6 +399,11 @@ export const LøsAksjonspunktMedSplitt: Story = {
         }
 
         await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
+
+        if (splittTom.isAfter(splittFom, 'month')) {
+          await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+        }
+
         const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
         if (splittTomButton.className.includes('rdp-day_disabled')) {
           await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));

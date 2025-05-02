@@ -18,6 +18,7 @@ interface AksjonspunktArbeidOgInntektProps {
   isReadOnly: boolean;
   uttalelseFraBruker: KontrollerInntektPeriodeDto['uttalelseFraBruker'];
   periode: KontrollerInntektPeriodeDto['periode'];
+  fieldIndex: number;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
@@ -26,9 +27,10 @@ export const AksjonspunktArbeidOgInntekt = ({
   isReadOnly,
   uttalelseFraBruker,
   periode,
+  fieldIndex,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
-  const valg = formMethods.watch('valg');
+  const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
   return (
     <Bleed marginBlock="4 0">
       <Box
@@ -62,7 +64,7 @@ export const AksjonspunktArbeidOgInntekt = ({
           <VStack gap="6">
             <Box maxWidth="70ch">
               <TextAreaField
-                name="begrunnelse"
+                name={`perioder.${fieldIndex}.begrunnelse`}
                 label="Vurder hvilken inntekt som skal gi reduksjon i perioden"
                 validate={[required, minLength(3), maxLength(1500)]}
                 maxLength={1500}
@@ -71,7 +73,7 @@ export const AksjonspunktArbeidOgInntekt = ({
             </Box>
             <VStack gap="2">
               <RadioGroupPanel
-                name="valg"
+                name={`perioder.${fieldIndex}.valg`}
                 label="Hvilken inntekt skal benyttes?"
                 validate={[required]}
                 isReadOnly={isReadOnly}
@@ -94,7 +96,7 @@ export const AksjonspunktArbeidOgInntekt = ({
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
                 <VStack gap="4">
                   <InputField
-                    name="fastsattInntekt"
+                    name={`perioder.${fieldIndex}.fastsattInntekt`}
                     label="Oppgi samlet arbeidsinntekt og ytelse"
                     type="text"
                     validate={[required, maxValueFormatted(1000000)]}
