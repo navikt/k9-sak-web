@@ -2,11 +2,7 @@ import { VilkårPeriodeDtoVilkarStatus, type OpptjeningDto } from '@k9-sak-web/b
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import { createIntl } from '@navikt/ft-utils';
-import classNames from 'classnames/bind';
-import { isEqual } from 'lodash';
 import { useEffect, useState } from 'react';
-import { RawIntlProvider } from 'react-intl';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
 import OpptjeningVilkarAksjonspunktPanel from './components/OpptjeningVilkarAksjonspunktPanel';
 import styles from './opptjeningVilkarProsessIndex.module.css';
@@ -15,12 +11,6 @@ import type { Behandling } from './types/Behandling';
 import type { Fagsak } from './types/Fagsak';
 import type { SubmitCallback } from './types/SubmitCallback';
 import type { Vilkår } from './types/Vilkår';
-
-const cx = classNames.bind(styles);
-
-const intl = createIntl({
-  locale: 'nb-NO',
-});
 
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
@@ -65,11 +55,13 @@ const OpptjeningVilkarProsessIndexV2 = ({
     return null;
   }
   const getIndexBlantAllePerioder = () =>
-    activeVilkår?.perioder?.findIndex(({ periode }) => isEqual(periode, activePeriode?.periode)) ?? 0;
+    activeVilkår?.perioder?.findIndex(
+      ({ periode }) => periode.fom === activePeriode?.periode.fom && periode.tom === activePeriode?.periode.tom,
+    ) ?? 0;
 
   return (
-    <RawIntlProvider value={intl}>
-      <div className={cx('mainContainer--withSideMenu')}>
+    <>
+      <div className={styles.mainContainerWithSideMenu}>
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
@@ -105,7 +97,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
           />
         </div>
       </div>
-    </RawIntlProvider>
+    </>
   );
 };
 

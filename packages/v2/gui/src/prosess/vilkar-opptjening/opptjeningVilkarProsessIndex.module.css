@@ -6,7 +6,7 @@
   margin: 0 32px 0 0;
 }
 
-.mainContainer--withSideMenu {
+.mainContainerWithSideMenu {
   display: flex;
   margin-left: -8px;
 }

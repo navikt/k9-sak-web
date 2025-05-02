@@ -4323,7 +4323,6 @@ __metadata:
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.8.4"
     dayjs: "npm:^1.11.13"
-    lodash: "npm:4.17.21"
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.0"
     react-hook-form: "npm:7.55.0"

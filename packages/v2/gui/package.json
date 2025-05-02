@@ -28,7 +28,6 @@
     "@types/object-hash": "^3.0.6",
     "axios": "1.8.4",
     "dayjs": "^1.11.13",
-    "lodash": "4.17.21",
     "object-hash": "^3.0.0",
     "react": "19.1.0",
     "react-hook-form": "7.55.0",

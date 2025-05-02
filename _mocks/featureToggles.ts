@@ -6,8 +6,4 @@ export const featureTogglesFactory = () => [
     key: 'FEATURE_TOGGLES_ENV',
     value: process.env.VITE_FEATURE_TOGGLES_ENV,
   },
-  {
-    key: 'BRUK_V2_VILKAR_OPPTJENING',
-    value: process.env.VITE_BRUK_V2_VILKAR_OPPTJENING,
-  },
 ];
