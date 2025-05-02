@@ -54,10 +54,10 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     enabled: false,
   });
 
-  const { data: tilgjengeligeVedtaksbrev, isLoading: tilgjengeligeVedtaksbrevIsLoading } = useQuery({
-    queryKey: ['tilgjengeligeVedtaksbrev', behandling.id],
+  const { data: vedtaksbrevValg, isLoading: vedtaksbrevValgIsLoading } = useQuery({
+    queryKey: ['vedtaksbrevValg', behandling.id],
     queryFn: async () => {
-      const response = await api.tilgjengeligeVedtaksbrev(behandling.id);
+      const response = await api.vedtaksbrevValg(behandling.id);
       return response;
     },
   });
@@ -99,7 +99,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
                 icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                 loading={forhåndsvisningIsLoading}
                 type="button"
-                disabled={!tilgjengeligeVedtaksbrev?.harBrev || tilgjengeligeVedtaksbrevIsLoading}
+                disabled={!vedtaksbrevValg?.harBrev || vedtaksbrevValgIsLoading}
               >
                 Forhåndsvis brev
               </Button>
@@ -115,16 +115,20 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
           <div className={styles.brevCheckboxContainer}>
             <Fieldset legend="Valg for brev" size="small">
               <div>
-                <CheckboxField
-                  name="redigerAutomatiskBrev"
-                  label="Rediger automatisk brev"
-                  disabled={hindreUtsendingAvBrev || readOnly}
-                />
-                <CheckboxField
-                  name="hindreUtsendingAvBrev"
-                  label="Hindre utsending av brev"
-                  disabled={redigerAutomatiskBrev || readOnly}
-                />
+                {vedtaksbrevValg?.kanOverstyreRediger && (
+                  <CheckboxField
+                    name="redigerAutomatiskBrev"
+                    label="Rediger automatisk brev"
+                    disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
+                  />
+                )}
+                {vedtaksbrevValg?.kanOverstyreHindre && (
+                  <CheckboxField
+                    name="hindreUtsendingAvBrev"
+                    label="Hindre utsending av brev"
+                    disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
+                  />
+                )}
               </div>
             </Fieldset>
           </div>
