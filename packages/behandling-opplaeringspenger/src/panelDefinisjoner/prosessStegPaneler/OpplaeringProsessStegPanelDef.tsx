@@ -1,4 +1,4 @@
-import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import ReisetidPanelDef from './opplaeringPaneler/ReisetidPanelDef';
@@ -6,8 +6,9 @@ import LangvarigSykdomPanelDef from './opplaeringPaneler/LangvarigSykdomPanelDef
 import InstitusjonPanelDef from './opplaeringPaneler/InstitusjonPanelDef';
 import NødvendigOpplæringPanelDef from './opplaeringPaneler/NødvendigOpplæringPanelDef';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 
-class OpplaeringProsessStegPanelDef extends ProsessStegDef {
+class PanelDef extends ProsessStegPanelDef {
   getUrlKode = () => prosessStegCodes.OPPLAERING;
 
   getAksjonspunktKoder = () => [
@@ -17,13 +18,27 @@ class OpplaeringProsessStegPanelDef extends ProsessStegDef {
     aksjonspunktCodes.VURDER_REISETID,
   ];
 
-  getTekstKode = () => 'Behandlingspunkt.Opplaering';
+  getKomponent = () => {
+    return <div>test</div>;
+  };
+
+  getVilkarKoder = () => [
+    vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
+    vilkarType.LANGVARIG_SYKDOM,
+    vilkarType.NØDVENDIG_OPPLÆRING,
+  ];
+}
+
+class OpplaeringProsessStegPanelDef extends ProsessStegDef {
+  getUrlKode = () => prosessStegCodes.OPPLAERING;
+
+  getTekstKode = () => 'Behandlingspunkt.SykdomOgOpplaering';
 
   getPanelDefinisjoner = () => [
-    new InstitusjonPanelDef(),
-    new LangvarigSykdomPanelDef(),
-    new NødvendigOpplæringPanelDef(),
     new ReisetidPanelDef(),
+    new LangvarigSykdomPanelDef(),
+    new InstitusjonPanelDef(),
+    new NødvendigOpplæringPanelDef(),
   ];
 }
 
