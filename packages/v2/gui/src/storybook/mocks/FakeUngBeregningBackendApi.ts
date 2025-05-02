@@ -1,4 +1,8 @@
-import { type KontrollerInntektDto, type UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  type GetUngdomsprogramInformasjonResponse,
+  type KontrollerInntektDto,
+  type UngdomsytelseSatsPeriodeDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 
 export class FakeUngBeregningBackendApi {
   async getSatser(): Promise<UngdomsytelseSatsPeriodeDto[]> {
@@ -29,5 +33,9 @@ export class FakeUngBeregningBackendApi {
         },
       ],
     };
+  }
+
+  async getUngdomsprogramInformasjon(): Promise<GetUngdomsprogramInformasjonResponse> {
+    return { maksdatoForDeltakelse: '2025-12-30', opphørsdato: '2025-02-15', antallDagerBruktForTilkjentePerioder: 33 };
   }
 }
