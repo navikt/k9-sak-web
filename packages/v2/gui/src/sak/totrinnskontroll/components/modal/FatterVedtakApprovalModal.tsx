@@ -234,7 +234,9 @@ const FatterVedtakApprovalModal = ({
             <div className={styles.divider} />
           </div>
           <div>
-            <BodyShort size="small">{infoTextCode}</BodyShort>
+            <BodyShort size="small" data-testid="fatter-vedtak-text">
+              {infoTextCode}
+            </BodyShort>
             <BodyShort size="small">Du kommer nå til forsiden.</BodyShort>
           </div>
           <div>
