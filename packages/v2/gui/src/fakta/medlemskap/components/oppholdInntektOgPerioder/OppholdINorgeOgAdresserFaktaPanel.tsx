@@ -1,7 +1,7 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import type { FunctionComponent } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';

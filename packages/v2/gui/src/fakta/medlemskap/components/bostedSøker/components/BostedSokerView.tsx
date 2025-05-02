@@ -4,10 +4,10 @@ import {
   PersonopplysningDtoRegion,
   type PersonadresseDto,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import getAddresses from '@k9-sak-web/gui/utils/getAddresses.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
-import { useKodeverkContext } from '../../../../../kodeverk/hooks/useKodeverkContext';
-import getAddresses from '../../../../../utils/getAddresses';
 import type { Foreldre } from '../../../types/FormState';
 import styles from './bostedSokerView.module.css';
 
@@ -38,6 +38,7 @@ const getPersonstatus = (personopplysning: Foreldre['personopplysning']) =>
 
 export const BostedSokerView = ({ personopplysninger, sokerTypeText }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
+  const personstatus = getPersonstatus(personopplysninger);
   return (
     <div className={styles.defaultBostedSoker}>
       <HGrid gap="4" columns={{ xs: '8fr 4fr' }}>
@@ -53,19 +54,17 @@ export const BostedSokerView = ({ personopplysninger, sokerTypeText }: OwnProps)
           <BodyShort size="small">{getUtlandsadresse(personopplysninger.adresser)}</BodyShort>
         </div>
         <div>
-          {getPersonstatus(personopplysninger) && (
+          {personstatus && (
             <div className={styles.etikettMargin}>
               <Tag
                 variant="warning"
                 size="small"
-                className={
-                  getPersonstatus(personopplysninger) === PersonopplysningDtoPersonstatus.DØD ? styles.dodEtikett : ''
-                }
+                className={personstatus === PersonopplysningDtoPersonstatus.DØD ? styles.dodEtikett : ''}
                 title="Personstatus"
               >
-                {getPersonstatus(personopplysninger) === PersonopplysningDtoPersonstatus.UDEFINERT
+                {personstatus === PersonopplysningDtoPersonstatus.UDEFINERT
                   ? 'Ukjent'
-                  : kodeverkNavnFraKode(getPersonstatus(personopplysninger) ?? '', KodeverkType.PERSONSTATUS_TYPE)}
+                  : kodeverkNavnFraKode(personstatus ?? '', KodeverkType.PERSONSTATUS_TYPE)}
               </Tag>
             </div>
           )}

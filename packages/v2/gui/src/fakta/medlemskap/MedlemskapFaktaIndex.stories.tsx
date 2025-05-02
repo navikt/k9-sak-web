@@ -11,10 +11,10 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
+import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from '@storybook/test';
-import { asyncAction } from '../../storybook/asyncAction';
-import withKodeverkContext from '../../storybook/decorators/withKodeverkContext';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 import type { Behandling } from './types/Behandling';
 import type { Medlemskap } from './types/Medlemskap';

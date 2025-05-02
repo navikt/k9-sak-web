@@ -1,11 +1,11 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
+import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import FaktaGruppe from '../../../../shared/FaktaGruppe';
-import PeriodLabel from '../../../../shared/periodLabel/PeriodLabel';
 import type { Foreldre } from '../../types/FormState';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Opphold } from '../../types/Opphold';

@@ -1,7 +1,7 @@
+import DateLabel from '@k9-sak-web/gui/shared/dateLabel/DateLabel.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
-import DateLabel from '../../../../shared/dateLabel/DateLabel';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { Periode } from '../../types/Periode';
 

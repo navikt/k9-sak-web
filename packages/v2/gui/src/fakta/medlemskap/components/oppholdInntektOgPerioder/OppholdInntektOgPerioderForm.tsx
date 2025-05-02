@@ -1,13 +1,13 @@
 import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Box, Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
 import React, { useContext, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import AksjonspunktHelpText from '../../../../shared/aksjonspunktHelpText/AksjonspunktHelpText';
-import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { Medlemskap } from '../../types/Medlemskap';

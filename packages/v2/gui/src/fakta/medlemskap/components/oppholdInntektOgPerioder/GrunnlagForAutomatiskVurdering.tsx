@@ -1,6 +1,6 @@
+import DateLabel from '@k9-sak-web/gui/shared/dateLabel/DateLabel.js';
 import { Table } from '@navikt/ds-react';
 import { useState } from 'react';
-import DateLabel from '../../../../shared/dateLabel/DateLabel';
 import type { Medlemskap } from '../../types/Medlemskap';
 import type { Personopplysninger } from '../../types/Personopplysninger';
 import type { Søknad } from '../../types/Søknad';
@@ -29,7 +29,7 @@ const GrunnlagForAutomatiskVurdering = ({ soknad, personopplysninger }: Grunnlag
   }
 
   const foreldre =
-    valgtPeriode && personopplysninger[valgtPeriode] ? [createParent(true, personopplysninger[valgtPeriode])] : [];
+    valgtPeriode && personopplysninger?.[valgtPeriode] ? [createParent(true, personopplysninger[valgtPeriode])] : [];
   if (personopplysninger?.[valgtPeriode]?.annenPart) {
     foreldre.push(createParent(false, personopplysninger?.[valgtPeriode]?.annenPart));
   }

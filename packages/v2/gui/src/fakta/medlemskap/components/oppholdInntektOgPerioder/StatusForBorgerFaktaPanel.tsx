@@ -1,12 +1,12 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
+import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Box, Detail } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
-import ArrowBox from '../../../../shared/arrowBox/ArrowBox';
-import FaktaGruppe from '../../../../shared/FaktaGruppe';
-import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
