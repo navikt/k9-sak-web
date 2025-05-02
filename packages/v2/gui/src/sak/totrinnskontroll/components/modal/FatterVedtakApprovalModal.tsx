@@ -223,7 +223,7 @@ const FatterVedtakApprovalModal = ({
 
   return (
     <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
-      <Modal.Body>
+      <Modal.Body data-testid="fatter-vedtak-modal-body">
         <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <CheckmarkCircleFillIcon
