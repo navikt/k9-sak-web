@@ -78,8 +78,8 @@ interface DataSectionProps {
 export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => {
   const [isUtregningExpanded, setIsUtregningExpanded] = useState(false);
   const dagerIgjen =
-    ungdomsprogramInformasjon?.antallDagerBruktForTilkjentePerioder != null
-      ? 260 - ungdomsprogramInformasjon?.antallDagerBruktForTilkjentePerioder
+    ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt != null
+      ? 260 - ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt
       : null;
   return (
     <HGrid gap="5" columns={3}>
@@ -90,7 +90,8 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
         </HStack>
         <HStack gap="4">
           <BodyShort size="small">
-            <b>Startdato:</b> xxx
+            <b>Startdato:</b>{' '}
+            {ungdomsprogramInformasjon?.startdato ? formatDate(ungdomsprogramInformasjon?.startdato) : ''}
           </BodyShort>
           {ungdomsprogramInformasjon?.maksdatoForDeltakelse && (
             <BodyShort size="small">
@@ -112,13 +113,13 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
           <Box marginBlock="0 2">
             <HStack justify="space-between">
               <BodyShort size="small" id="progress-bar-label-medium">
-                {ungdomsprogramInformasjon?.antallDagerBruktForTilkjentePerioder ?? 0} av 260
+                {ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt ?? 0} av 260
               </BodyShort>
               {dagerIgjen != null && <BodyShort size="small">{dagerIgjen} dager igjen</BodyShort>}
             </HStack>
           </Box>
           <ProgressBar
-            value={ungdomsprogramInformasjon?.antallDagerBruktForTilkjentePerioder ?? 0}
+            value={ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt ?? 0}
             valueMax={260}
             size="medium"
             aria-labelledby="progress-bar-label-medium"
