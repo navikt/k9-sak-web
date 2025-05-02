@@ -36,6 +36,11 @@ export class FakeUngBeregningBackendApi {
   }
 
   async getUngdomsprogramInformasjon(): Promise<GetUngdomsprogramInformasjonResponse> {
-    return { maksdatoForDeltakelse: '2025-12-30', opphørsdato: '2025-02-15', antallDagerBruktForTilkjentePerioder: 33 };
+    return {
+      maksdatoForDeltakelse: '2025-12-30',
+      opphørsdato: '2025-02-15',
+      startdato: '2025-01-01',
+      antallDagerTidligereUtbetalt: 33,
+    };
   }
 }
