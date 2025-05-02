@@ -52,7 +52,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   customPeriodeRad,
   customPeriodeLabel,
 }: VurderingslisteProps<T>) => {
-  // sort by date, newest first
+  // nyeste først
   const sortedPerioder = perioder.sort((a, b) => {
     const periodeA = a.perioder[0]?.fom;
     const periodeB = b.perioder[0]?.fom;
