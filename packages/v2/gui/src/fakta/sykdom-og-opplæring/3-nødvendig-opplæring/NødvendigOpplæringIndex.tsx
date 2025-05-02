@@ -26,8 +26,7 @@ const NødvendigOpplæring = () => {
         navigationSection={() => (
           <>
             <Vurderingsnavigasjon<OpplæringVurderingDto & { perioder: Period[] }>
-              perioderTilVurdering={vurderingsliste || []}
-              vurdertePerioder={[]}
+              perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
             />
           </>
