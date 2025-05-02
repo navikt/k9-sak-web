@@ -64,7 +64,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
   const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
   const allePerioder = [...perioderSomSkalVurderes, ...perioderSomErVurdert];
-  const [activeIndex, setActiveIndex] = React.useState(perioderSomSkalVurderes ? 0 : -1);
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
   // Denne skal bare kjøres når komponenten mountes for at man automatisk skal få opp en periode som skal vurderes
   useEffect(() => {
