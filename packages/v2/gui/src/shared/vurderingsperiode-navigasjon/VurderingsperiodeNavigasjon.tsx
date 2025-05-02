@@ -52,11 +52,12 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   customPeriodeRad,
   customPeriodeLabel,
 }: VurderingslisteProps<T>) => {
+  // sort by date, newest first
   const sortedPerioder = perioder.sort((a, b) => {
-    const periodeA = a.perioder[0]?.prettifyPeriod().split(' - ')[0];
-    const periodeB = b.perioder[0]?.prettifyPeriod().split(' - ')[0];
+    const periodeA = a.perioder[0]?.fom;
+    const periodeB = b.perioder[0]?.fom;
     if (periodeA && periodeB) {
-      return periodeA.localeCompare(periodeB);
+      return new Date(periodeB).getTime() - new Date(periodeA).getTime();
     }
     return 0;
   });
