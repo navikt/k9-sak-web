@@ -3,7 +3,7 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
-import { Tabs } from '@navikt/ds-react';
+import { Alert, Tabs } from '@navikt/ds-react';
 import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
@@ -11,6 +11,8 @@ import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js
 import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
+import { useVilkår } from './SykdomOgOpplæringQueries.js';
+import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
@@ -20,7 +22,7 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
         ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'sykdom';
+    return tabCodes.SYKDOM;
   }
   if (
     aksjonspunkter.some(
@@ -28,14 +30,14 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
         ap.definisjon.kode === aksjonspunktCodes.VURDER_OPPLÆRING && ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'opplæring';
+    return tabCodes.OPPLÆRING;
   }
   if (
     aksjonspunkter.some(
       ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_REISETID && ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'reisetid';
+    return tabCodes.REISETID;
   }
 
   if (
@@ -44,7 +46,7 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
         ap.definisjon.kode === aksjonspunktCodes.VURDER_INSTITUSJON && ap.status.kode === aksjonspunktStatus.OPPRETTET,
     )
   ) {
-    return 'institusjon';
+    return tabCodes.INSTITUSJON;
   }
 
   return '';
@@ -59,7 +61,7 @@ type payloads =
           fom: string;
           tom: string;
         };
-        begrunnelse: string;
+        begrunnelse: string | null;
         nødvendigOpplæring: boolean;
         dokumentertOpplæring: boolean;
       }[];
@@ -75,7 +77,7 @@ type payloads =
       }[];
     };
 
-type aksjonspunktPayload = { kode: string; begrunnelse: string } & payloads;
+type aksjonspunktPayload = { kode: string; begrunnelse: string | null } & payloads;
 type SykdomOgOpplæringProps = {
   readOnly: boolean;
   submitCallback: (payload: aksjonspunktPayload[]) => void;
@@ -92,7 +94,7 @@ type SykdomOgOpplæringContext = {
       fom: string;
       tom: string;
     };
-    begrunnelse: string;
+    begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
   }) => void;
@@ -148,7 +150,7 @@ const FaktaSykdomOgOpplæringIndex = ({
       fom: string;
       tom: string;
     };
-    begrunnelse: string;
+    begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
   }) => {
@@ -209,52 +211,77 @@ const FaktaSykdomOgOpplæringIndex = ({
 };
 
 const SykdomOgOpplæring = () => {
-  const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const { aksjonspunkter, behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const [searchParams] = useSearchParams();
   const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
+  const { data: vilkår } = useVilkår(behandlingUuid);
   const [activeTab, setActiveTab] = useState(initActiveTab);
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
+  const harAksjonspunkt9300 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9300');
+  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+  const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
+  const harAksjonspunkt9303 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9303');
+
+  // Trenger en ekstra sjekk på institusjon fordi vilkåret kan vurderes automatisk, og da får vi aldri aksjonspunkt
+  const institusjonVilkår = vilkår?.find(
+    v => v.vilkarType === VilkårMedPerioderDtoVilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
+  );
+  const institusjonVilkårErVurdert = institusjonVilkår?.perioder?.some(
+    p =>
+      p.vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT ||
+      p.vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
+  );
   return (
-    <Tabs value={activeTab} onChange={setActiveTab}>
-      <Tabs.List>
-        <Tabs.Tab
-          value={tabCodes.INSTITUSJON}
-          label="Institusjon"
-          icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
-        />
-        <Tabs.Tab value={tabCodes.SYKDOM} label="Sykdom" icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />} />
-        <Tabs.Tab
-          value={tabCodes.OPPLÆRING}
-          label="Nødvendig opplæring"
-          icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
-        />
-        <Tabs.Tab
-          value={tabCodes.REISETID}
-          label="Reisetid"
-          icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
-        />
-      </Tabs.List>
-      <Tabs.Panel value={tabCodes.INSTITUSJON}>
-        <div className="mt-4">
-          <FaktaInstitusjonIndex />
-        </div>
-      </Tabs.Panel>
-      <Tabs.Panel value={tabCodes.SYKDOM}>
-        <div className="mt-4">
-          <SykdomUperiodisertIndex />
-        </div>
-      </Tabs.Panel>
-      <Tabs.Panel value={tabCodes.OPPLÆRING}>
-        <div className="mt-4">
-          <NødvendigOpplæringIndex />
-        </div>
-      </Tabs.Panel>
-      <Tabs.Panel value={tabCodes.REISETID}>
-        <div className="mt-4">
-          <ReisetidIndex />
-        </div>
-      </Tabs.Panel>
-    </Tabs>
+    <div className="max-w-[1300px]">
+      <Tabs value={activeTab} onChange={setActiveTab}>
+        <Tabs.List>
+          <Tabs.Tab
+            value={tabCodes.INSTITUSJON}
+            label="Institusjon"
+            icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
+          />
+          <Tabs.Tab
+            value={tabCodes.SYKDOM}
+            label="Sykdom"
+            icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />}
+          />
+          <Tabs.Tab
+            value={tabCodes.OPPLÆRING}
+            label="Nødvendig opplæring"
+            icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
+          />
+          <Tabs.Tab
+            value={tabCodes.REISETID}
+            label="Reisetid"
+            icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
+          />
+        </Tabs.List>
+        <Tabs.Panel value={tabCodes.INSTITUSJON}>
+          <div className="mt-4">
+            {harAksjonspunkt9300 || institusjonVilkårErVurdert ? (
+              <FaktaInstitusjonIndex />
+            ) : (
+              <Alert variant="info">Ikke vurdert</Alert>
+            )}
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value={tabCodes.SYKDOM}>
+          <div className="mt-4">
+            {harAksjonspunkt9301 ? <SykdomUperiodisertIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value={tabCodes.OPPLÆRING}>
+          <div className="mt-4">
+            {harAksjonspunkt9302 ? <NødvendigOpplæringIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value={tabCodes.REISETID}>
+          <div className="mt-4">
+            {harAksjonspunkt9303 ? <ReisetidIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+          </div>
+        </Tabs.Panel>
+      </Tabs>
+    </div>
   );
 };
 
