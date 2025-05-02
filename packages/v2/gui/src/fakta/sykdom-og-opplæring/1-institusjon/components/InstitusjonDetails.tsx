@@ -39,7 +39,7 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
       }
     >
       {vurdering.perioder.map(periode => (
-        <div key={periode.prettifyPeriod()} data-testid="Periode">
+        <div key={periode.prettifyPeriod()} data-testid="Periode" className="flex gap-2">
           <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
         </div>
       ))}

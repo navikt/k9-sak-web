@@ -9,5 +9,8 @@ export const teksterForSakstype = (sakstype: FagsakYtelsesType) => {
   if (sakstype === fagsakYtelsesType.OMSORGSPENGER) {
     return messages.omsorgspenger;
   }
+  if (sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return messages.opplaeringspenger;
+  }
   return messages.pleiepenger;
 };
