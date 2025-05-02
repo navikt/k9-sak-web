@@ -5,6 +5,7 @@ const aksjonspunktCodesTilbakekreving = {
   FATTER_VEDTAK: '5005',
   AVKLAR_FAKTA_FOR_FEILUTBETALING: '7003',
   AVKLAR_VERGE: '5030',
+  MANUELL_VURDERING_AV_ANKE: '5093',
 };
 
 export default aksjonspunktCodesTilbakekreving;

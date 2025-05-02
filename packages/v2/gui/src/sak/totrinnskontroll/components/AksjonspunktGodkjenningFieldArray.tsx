@@ -12,13 +12,12 @@ import { type Location } from 'history';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { NavLink } from 'react-router';
+import aksjonspunktCodesTilbakekreving from '../aksjonspunktCodesTilbakekreving';
 import { type Behandling } from '../types/Behandling';
 import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
-
-const MANUELL_VURDERING_AV_ANKE = '5093';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
@@ -74,7 +73,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
         );
 
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
-        const erAnke = aksjonspunktKode === MANUELL_VURDERING_AV_ANKE && totrinnskontrollGodkjent === true;
+        const erAnke =
+          aksjonspunktKode === aksjonspunktCodesTilbakekreving.MANUELL_VURDERING_AV_ANKE &&
+          totrinnskontrollGodkjent === true;
         const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
         const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
 
