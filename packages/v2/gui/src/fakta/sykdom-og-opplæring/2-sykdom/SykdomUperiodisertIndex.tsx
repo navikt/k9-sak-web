@@ -74,8 +74,7 @@ const SykdomUperiodisertIndex = () => {
         <NavigationWithDetailView
           navigationSection={() => (
             <Vurderingsnavigasjon
-              perioderTilVurdering={vurderingsliste || []}
-              vurdertePerioder={[]}
+              perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
               customPeriodeLabel="Vurdert"
               customPeriodeRad={(periode, onPeriodeClick) => (
