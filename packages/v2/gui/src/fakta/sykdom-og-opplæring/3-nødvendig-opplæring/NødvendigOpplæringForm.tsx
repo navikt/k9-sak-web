@@ -9,7 +9,13 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import Avslagsårsaker from './NødvendigOpplæringAvslagsårsaker.ts';
+import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
+
+enum Avslagsårsak {
+  MANGLENDE_DOKUMENTASJON = 'MANGLENDE_DOKUMENTASJON',
+  IKKE_NØDVENDIG_OPPLÆRING = 'IKKE_NØDVENDIG_OPPLÆRING',
+  KURS_INNEHOLDER_IKKE_OPPLÆRING = 'KURS_INNEHOLDER_IKKE_OPPLÆRING',
+}
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -40,9 +46,15 @@ const NødvendigOpplæringForm = ({
       dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
       begrunnelse: vurdering.begrunnelse,
       nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
-      avslagsårsak: Avslagsårsaker.UDEFINERT_KODE,
     },
   });
+  const K9Kodeverkoppslag = useK9Kodeverkoppslag();
+  const avslagsårsaker = Object.fromEntries(
+    Object.values(Avslagsårsak).map(avslagsårsak => [
+      avslagsårsak as Avslagsårsak,
+      K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak),
+    ]),
+  ) as Record<Avslagsårsak, { kode: string; navn: string }>;
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
@@ -50,9 +62,9 @@ const NødvendigOpplæringForm = ({
     if (opplæringIkkeDokumentertMedLegeerklæring) {
       formMethods.setValue('nødvendigOpplæring', '');
       formMethods.setValue('begrunnelse', '');
-      formMethods.setValue('avslagsårsak', Avslagsårsaker.MANGLENDE_DOKUMENTASJON_KODE);
+      formMethods.setValue('avslagsårsak', avslagsårsaker.MANGLENDE_DOKUMENTASJON.kode);
     } else {
-      formMethods.setValue('avslagsårsak', Avslagsårsaker.UDEFINERT_KODE);
+      formMethods.setValue('avslagsårsak', undefined);
     }
   }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
 
@@ -62,7 +74,6 @@ const NødvendigOpplæringForm = ({
       <Form
         formMethods={formMethods}
         onSubmit={data => {
-          console.log(data);
           const nødvendigOpplæring = data.nødvendigOpplæring === 'ja';
 
           const periode = nødvendigOpplæring ? data.periode : vurdering.opplæring;
@@ -191,8 +202,8 @@ const NødvendigOpplæringForm = ({
                   ? undefined
                   : {
                       validate: value => {
-                        return value === Avslagsårsaker.IKKE_NØDVENDIG_OPPLÆRING_KODE ||
-                          value === Avslagsårsaker.KURS_INNEHOLDER_IKKE_OPPLÆRING_KODE
+                        return value === avslagsårsaker.IKKE_NØDVENDIG_OPPLÆRING.kode ||
+                          value === avslagsårsaker.KURS_INNEHOLDER_IKKE_OPPLÆRING.kode
                           ? undefined
                           : 'Avslagsårsak er påkrevd';
                       },
@@ -206,11 +217,11 @@ const NødvendigOpplæringForm = ({
                   size="small"
                   error={formMethods.formState.errors.avslagsårsak?.message as string | undefined}
                 >
-                  <Radio value={Avslagsårsaker.IKKE_NØDVENDIG_OPPLÆRING_KODE}>
-                    Opplæringen er ikke nødvendig for ta seg av den pleietrengende
+                  <Radio value={avslagsårsaker.IKKE_NØDVENDIG_OPPLÆRING.kode}>
+                    {avslagsårsaker.IKKE_NØDVENDIG_OPPLÆRING.navn}
                   </Radio>
-                  <Radio value={Avslagsårsaker.KURS_INNEHOLDER_IKKE_OPPLÆRING_KODE}>
-                    Kurset inneholder ikke opplæring
+                  <Radio value={avslagsårsaker.KURS_INNEHOLDER_IKKE_OPPLÆRING.kode}>
+                    {avslagsårsaker.KURS_INNEHOLDER_IKKE_OPPLÆRING.navn}
                   </Radio>
                 </RadioGroup>
               )}

@@ -64,6 +64,7 @@ type payloads =
         begrunnelse: string | null;
         nødvendigOpplæring: boolean;
         dokumentertOpplæring: boolean;
+        avslagsårsak?: string;
       }[];
     }
   | {
@@ -154,7 +155,7 @@ const FaktaSykdomOgOpplæringIndex = ({
     begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
-    avslagsårsak: string;
+    avslagsårsak?: string;
   }) => {
     submitCallback([
       {
