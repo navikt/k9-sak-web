@@ -223,7 +223,7 @@ const FatterVedtakApprovalModal = ({
 
   return (
     <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
-      <Modal.Body data-testid="fatter-vedtak-modal-body">
+      <Modal.Body>
         <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <CheckmarkCircleFillIcon
@@ -234,7 +234,9 @@ const FatterVedtakApprovalModal = ({
             <div className={styles.divider} />
           </div>
           <div>
-            <BodyShort size="small">{infoTextCode}</BodyShort>
+            <BodyShort size="small" data-testid="fatter-vedtak-text">
+              {infoTextCode}
+            </BodyShort>
             <BodyShort size="small">Du kommer nå til forsiden.</BodyShort>
           </div>
           <div>
