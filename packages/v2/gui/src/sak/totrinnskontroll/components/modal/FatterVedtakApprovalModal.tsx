@@ -147,13 +147,13 @@ const utledInfoTextCode = (
 const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
   switch (ytelseType) {
     case fagsakYtelsesType.FRISINN:
-      return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
+      return 'Engangsstønad er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
-      return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
+      return 'Pleiepenger er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
-      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
+      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
     default:
-      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
+      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
 };
 
