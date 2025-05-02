@@ -10,6 +10,7 @@ import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
+import type { Kilde } from '../../../kodeverk/oppslag/GeneriskKodeverkoppslag.ts';
 
 enum Avslagsårsak {
   MANGLENDE_DOKUMENTASJON = 'MANGLENDE_DOKUMENTASJON',
@@ -52,9 +53,9 @@ const NødvendigOpplæringForm = ({
   const avslagsårsaker = Object.fromEntries(
     Object.values(Avslagsårsak).map(avslagsårsak => [
       avslagsårsak as Avslagsårsak,
-      K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak),
+      K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak as Kilde<'avslagårsakerPrVilkårTypeKode', 'avslagsårsaker'>),
     ]),
-  ) as Record<Avslagsårsak, { kode: string; navn: string }>;
+  );
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
