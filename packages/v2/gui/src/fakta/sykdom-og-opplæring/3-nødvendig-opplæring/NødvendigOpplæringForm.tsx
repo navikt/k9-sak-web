@@ -40,7 +40,7 @@ const NødvendigOpplæringForm = ({
     dokumentertOpplæring: string;
     nødvendigOpplæring: string;
     begrunnelse: string;
-    avslagsårsak: string;
+    avslagsårsak?: string;
     periode?: {
       fom: Date;
       tom: Date;
