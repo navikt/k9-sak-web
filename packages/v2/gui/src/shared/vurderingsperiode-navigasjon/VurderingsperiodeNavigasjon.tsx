@@ -40,33 +40,48 @@ export interface Vurderingselement {
 }
 
 export interface VurderingslisteProps<T extends Vurderingselement = Vurderingselement> {
-  perioderTilVurdering: T[];
-  vurdertePerioder: T[];
+  perioder: T[];
   onPeriodeClick: (periode: T) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
 }
 
 const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
-  perioderTilVurdering,
-  vurdertePerioder,
+  perioder,
   onPeriodeClick,
   customPeriodeRad,
   customPeriodeLabel,
 }: VurderingslisteProps<T>) => {
-  const harPerioderSomSkalVurderes = perioderTilVurdering?.length > 0;
-  const [activeIndex, setActiveIndex] = React.useState(harPerioderSomSkalVurderes ? 0 : -1);
+  const sortedPerioder = perioder.sort((a, b) => {
+    const periodeA = a.perioder[0]?.prettifyPeriod().split(' - ')[0];
+    const periodeB = b.perioder[0]?.prettifyPeriod().split(' - ')[0];
+    if (periodeA && periodeB) {
+      return periodeA.localeCompare(periodeB);
+    }
+    return 0;
+  });
+  const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
+  const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
+  const allePerioder = [...perioderSomSkalVurderes, ...perioderSomErVurdert];
+  const [activeIndex, setActiveIndex] = React.useState(perioderSomSkalVurderes ? 0 : -1);
 
   // Denne skal bare kjøres når komponenten mountes for at man automatisk skal få opp en periode som skal vurderes
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (harPerioderSomSkalVurderes && perioderTilVurdering[0]) {
-      setActiveIndex(0);
-      onPeriodeClick(perioderTilVurdering[0]);
+    if (perioderSomSkalVurderes.length > 0) {
+      const index = allePerioder.findIndex(periode => periode.resultat === Resultat.MÅ_VURDERES);
+      const periode = allePerioder[index];
+      if (periode) {
+        setActiveIndex(index);
+        onPeriodeClick(periode);
+        return;
+      }
     }
+    if (allePerioder[0]) {
+      setActiveIndex(0);
+      onPeriodeClick(allePerioder[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const allePerioder = [...perioderTilVurdering, ...vurdertePerioder];
 
   const handlePeriodeClick = (index: number) => {
     if (allePerioder[index]) {
