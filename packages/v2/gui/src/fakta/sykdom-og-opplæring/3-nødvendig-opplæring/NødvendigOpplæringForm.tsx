@@ -10,7 +10,10 @@ import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
-import type { Kilde } from '../../../kodeverk/oppslag/GeneriskKodeverkoppslag.ts';
+import {
+  KodeverdiSomObjektAvslagsårsak,
+  KodeverdiSomObjektAvslagsårsakKilde,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 enum Avslagsårsak {
   MANGLENDE_DOKUMENTASJON = 'MANGLENDE_DOKUMENTASJON',
@@ -53,7 +56,9 @@ const NødvendigOpplæringForm = ({
   const avslagsårsaker = Object.fromEntries(
     Object.values(Avslagsårsak).map(avslagsårsak => [
       avslagsårsak as Avslagsårsak,
-      K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak as Kilde<'avslagårsakerPrVilkårTypeKode', 'avslagsårsaker'>),
+      K9Kodeverkoppslag.k9sak.avslagsårsaker(
+        avslagsårsak as KodeverdiSomObjektAvslagsårsakKilde,
+      ) as KodeverdiSomObjektAvslagsårsak,
     ]),
   );
 
