@@ -147,13 +147,13 @@ const utledInfoTextCode = (
 const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
   switch (ytelseType) {
     case fagsakYtelsesType.FRISINN:
-      return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
+      return 'Engangsstønad er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
-      return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
+      return 'Pleiepenger er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
-      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
+      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
     default:
-      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
+      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
 };
 
@@ -223,7 +223,7 @@ const FatterVedtakApprovalModal = ({
 
   return (
     <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
-      <Modal.Body>
+      <Modal.Body data-testid="fatter-vedtak-modal-body">
         <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <CheckmarkCircleFillIcon
