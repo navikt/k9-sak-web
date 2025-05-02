@@ -10,7 +10,7 @@ import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
-import {
+import type {
   KodeverdiSomObjektAvslagsårsak,
   KodeverdiSomObjektAvslagsårsakKilde,
 } from '@k9-sak-web/backend/k9sak/generated';
@@ -60,7 +60,7 @@ const NødvendigOpplæringForm = ({
         avslagsårsak as KodeverdiSomObjektAvslagsårsakKilde,
       ) as KodeverdiSomObjektAvslagsårsak,
     ]),
-  );
+  ) as { [kilde in Avslagsårsak]: KodeverdiSomObjektAvslagsårsak };
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
