@@ -29,8 +29,7 @@ const ReisetidIndex = () => {
         navigationSection={() => (
           <>
             <Vurderingsnavigasjon<ReisetidVurderingDto & { perioder: Period[] }>
-              perioderTilVurdering={vurderingsliste || []}
-              vurdertePerioder={[]}
+              perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
             />
           </>
