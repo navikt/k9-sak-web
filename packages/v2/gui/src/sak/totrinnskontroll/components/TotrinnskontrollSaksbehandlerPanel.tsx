@@ -1,25 +1,24 @@
-import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
-import checkImg from '@fpsak-frontend/assets/images/check.svg';
-import { Image } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-import { Location } from 'history';
+import { decodeHtmlEntity } from '@navikt/ft-utils';
+import type { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import type { Location } from 'history';
 import React from 'react';
 import { NavLink } from 'react-router';
-
+import type { Behandling } from '../types/Behandling';
+import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
-
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
-  behandlingKlageVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
+  behandlingKlageVurdering?: KlagebehandlingDto;
+  behandlingStatus: Behandling['status'];
   erTilbakekreving: boolean;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjermlenkeTyper: KodeverkMedNavn[];
-  vurderArsaker: KodeverkMedNavn[];
+  arbeidsforholdHandlingTyper: KodeverkObject[];
+  skjermlenkeTyper: KodeverkObject[];
+  vurderArsaker: KodeverkObject[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -28,7 +27,6 @@ const TotrinnskontrollSaksbehandlerPanel = ({
   behandlingKlageVurdering,
   behandlingStatus,
   arbeidsforholdHandlingTyper,
-  erTilbakekreving,
   skjermlenkeTyper,
   vurderArsaker,
   lagLenke,
@@ -55,16 +53,15 @@ const TotrinnskontrollSaksbehandlerPanel = ({
             </NavLink>
             {aksjonspunkter.map(aksjonspunkt => {
               const aksjonspunktTexts = getAksjonspunkttekst(
-                behandlingKlageVurdering,
                 behandlingStatus,
                 arbeidsforholdHandlingTyper,
-                erTilbakekreving,
                 aksjonspunkt,
+                behandlingKlageVurdering,
               );
 
               return (
                 <div key={aksjonspunkt.aksjonspunktKode} className={styles.approvalItemContainer}>
-                  {aksjonspunktTexts.map((formattedMessage: string, index: number) => (
+                  {aksjonspunktTexts?.map((formattedMessage: React.ReactNode, index: number) => (
                     <div
                       key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index.toString()))}
                       className={styles.aksjonspunktTextContainer}
@@ -76,24 +73,26 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                     {aksjonspunkt.totrinnskontrollGodkjent ? (
                       <div>
                         <span>
-                          <Image src={checkImg} className={styles.image} />
+                          <CheckmarkIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
                         </span>
                         <span>Godkjent</span>
                       </div>
                     ) : (
                       <div className={styles.approvalItem}>
-                        {aksjonspunkt.vurderPaNyttArsaker.map(item => (
-                          <div key={`${item.kode}${aksjonspunkt.aksjonspunktKode}`}>
+                        {aksjonspunkt.vurderPaNyttArsaker?.map(item => (
+                          <div key={`${item}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
-                              <Image src={avslattImg} className={styles.image} />
+                              <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--a-surface-danger)' }} />
                             </span>
-                            <span>{vurderArsaker.find(arsak => item.kode === arsak.kode).navn}</span>
+                            <span>{vurderArsaker.find(arsak => item === arsak.kode)?.navn}</span>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
-                  <pre className={styles.approvalItem}>{decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse)}</pre>
+                  <pre className={styles.approvalItem}>
+                    {aksjonspunkt.besluttersBegrunnelse && decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse)}
+                  </pre>
                 </div>
               );
             })}
