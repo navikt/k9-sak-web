@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
 import {
-  KodeverdiSomObjektAvslagsårsak,
+  type KodeverdiSomObjektAvslagsårsak,
   KodeverdiSomObjektAvslagsårsakKilde,
 } from '@k9-sak-web/backend/k9sak/generated';
 
