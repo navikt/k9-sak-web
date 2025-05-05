@@ -137,14 +137,14 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                         harBrukerrapportertInntekt={harBrukerrapportertInntekt}
                         isSubmitting={isSubmitting}
                         isReadOnly={isReadOnly}
-                        uttalelseFraBruker={inntektKontrollPeriode.uttalelseFraBruker}
                         periode={field.periode}
                         fieldIndex={index}
+                        inntektKontrollPeriode={inntektKontrollPeriode}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
                         <Box marginInline="2 0" padding="6" background="bg-default">
-                          <DetaljerOmInntekt />
+                          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
                         </Box>
                       </Bleed>
                     )
