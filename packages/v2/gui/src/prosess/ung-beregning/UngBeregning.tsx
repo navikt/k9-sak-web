@@ -62,11 +62,20 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     select: sortInntekt,
   });
 
-  if (satserIsLoading || kontrollInntektIsLoading) {
+  const {
+    data: ungdomsprogramInformasjon,
+    isLoading: ungdomsprogramInformasjonIsLoading,
+    isError: ungdomsprogramInformasjonIsError,
+  } = useQuery({
+    queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
+    queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
+  });
+
+  if (satserIsLoading || kontrollInntektIsLoading || ungdomsprogramInformasjonIsLoading) {
     return <Loader size="large" />;
   }
 
-  if (satserIsError || kontrollInntektIsError) {
+  if (satserIsError || kontrollInntektIsError || ungdomsprogramInformasjonIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
@@ -110,7 +119,11 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
           <Tabs.Panel value="barn">
             <BarnPanel barn={barn} />
           </Tabs.Panel>
-          <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
+          <Tabs.Panel value="dagsats">
+            {satserSuccess && (
+              <DagsatsOgUtbetaling satser={satser} ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
+            )}
+          </Tabs.Panel>
         </Tabs>
       </Box>
     </Box>
