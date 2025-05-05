@@ -1,6 +1,5 @@
+import { CoApplicantFilled, People, PeopleFilled } from '@navikt/ds-icons';
 import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
-import { CoApplicantFilled, PeopleFilled, People } from '@navikt/ds-icons';
 import Kilde from '../../../types/Kilde';
 
 const PartIkon = ({ parter, fontSize = '24px' }: { parter: Kilde[]; fontSize?: string }) => {
