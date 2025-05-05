@@ -1,5 +1,6 @@
 import {
   UngdomsytelseSatsPeriodeDtoSatsType,
+  type UngdomsprogramInformasjonDto,
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -48,12 +49,13 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
 
 interface DagsatsOgUtbetalingProps {
   satser: UngdomsytelseSatsPeriodeDto[];
+  ungdomsprogramInformasjon: UngdomsprogramInformasjonDto | undefined;
 }
 
-export const DagsatsOgUtbetaling = ({ satser }: DagsatsOgUtbetalingProps) => (
+export const DagsatsOgUtbetaling = ({ satser, ungdomsprogramInformasjon }: DagsatsOgUtbetalingProps) => (
   <div className={styles.dagsatsSection}>
     <VStack gap="4">
-      <DataSection />
+      <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
       <div>
         <Heading size="xsmall">Beregning av dagsats</Heading>
         <Box marginBlock="4 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
