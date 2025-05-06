@@ -16,18 +16,18 @@ interface AksjonspunktArbeidOgInntektProps {
   harBrukerrapportertInntekt: boolean;
   isSubmitting: boolean;
   isReadOnly: boolean;
-  uttalelseFraBruker: KontrollerInntektPeriodeDto['uttalelseFraBruker'];
   periode: KontrollerInntektPeriodeDto['periode'];
   fieldIndex: number;
+  inntektKontrollPeriode: KontrollerInntektPeriodeDto;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
   harBrukerrapportertInntekt,
   isSubmitting,
   isReadOnly,
-  uttalelseFraBruker,
   periode,
   fieldIndex,
+  inntektKontrollPeriode,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
   const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
@@ -42,7 +42,7 @@ export const AksjonspunktArbeidOgInntekt = ({
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="8">
-          <DetaljerOmInntekt />
+          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
             <HStack gap="2" wrap={false}>
@@ -56,7 +56,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                   )}
                 </Heading>
                 <Box maxWidth="75ch">
-                  <BodyLong size="small">{uttalelseFraBruker}</BodyLong>
+                  <BodyLong size="small">{inntektKontrollPeriode?.uttalelseFraBruker}</BodyLong>
                 </Box>
               </VStack>
             </HStack>

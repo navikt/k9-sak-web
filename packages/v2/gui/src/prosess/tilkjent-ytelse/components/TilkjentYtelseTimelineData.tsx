@@ -18,6 +18,7 @@ interface OwnProps {
   callbackForward: (...args: any[]) => any;
   callbackBackward: (...args: any[]) => any;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  showAndelDetails?: boolean;
 }
 
 /**
@@ -41,6 +42,7 @@ const TilkjentYtelseTimeLineData = ({
   callbackForward,
   callbackBackward,
   arbeidsgiverOpplysningerPerId,
+  showAndelDetails = true,
 }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const andeler = selectedItemData?.andeler || [];
@@ -165,45 +167,47 @@ const TilkjentYtelseTimeLineData = ({
               </div>
             ))}
         </div>
-        <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
-          <Tabs.List>
-            {andeler.map((andel, index) => {
-              const label = createArbeidsgiverVisningsnavnForAndel(
-                andel,
-                kodeverkNavnFraKode,
-                arbeidsgiverOpplysningerPerId,
-              );
-              return <Tabs.Tab value={String(index)} key={label} label={label} />;
-            })}
-          </Tabs.List>
-          {andeler.map((andel, index) => (
-            <Tabs.Panel
-              key={createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
-              value={String(index)}
-            >
-              <div className="p-4">
-                <BodyShort size="small">
-                  {`Utbetalt refusjon: `}
-                  <span className="font-semibold inline-block">{andel?.refusjon} kr</span>
-                </BodyShort>
-                <BodyShort size="small">
-                  {`Utbetalt til søker: `}
-                  <span className="font-semibold inline-block">{andel?.tilSoker} kr</span>
-                </BodyShort>
-                <BodyShort size="small">
-                  {`Utbetalingsgrad: `}
-                  <span className="font-semibold inline-block">{andel?.utbetalingsgrad} %</span>
-                </BodyShort>
-                <BodyShort size="small">
-                  {`Aktivitetsstatus: `}
-                  <span className="font-semibold inline-block">
-                    {getAktivitet(andel?.aktivitetStatus, kodeverkNavnFraKode)}
-                  </span>
-                </BodyShort>
-              </div>
-            </Tabs.Panel>
-          ))}
-        </Tabs>
+        {showAndelDetails && (
+          <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
+            <Tabs.List>
+              {andeler.map((andel, index) => {
+                const label = createArbeidsgiverVisningsnavnForAndel(
+                  andel,
+                  kodeverkNavnFraKode,
+                  arbeidsgiverOpplysningerPerId,
+                );
+                return <Tabs.Tab value={String(index)} key={label} label={label} />;
+              })}
+            </Tabs.List>
+            {andeler.map((andel, index) => (
+              <Tabs.Panel
+                key={createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
+                value={String(index)}
+              >
+                <div className="p-4">
+                  <BodyShort size="small">
+                    {`Utbetalt refusjon: `}
+                    <span className="font-semibold inline-block">{andel?.refusjon} kr</span>
+                  </BodyShort>
+                  <BodyShort size="small">
+                    {`Utbetalt til søker: `}
+                    <span className="font-semibold inline-block">{andel?.tilSoker} kr</span>
+                  </BodyShort>
+                  <BodyShort size="small">
+                    {`Utbetalingsgrad: `}
+                    <span className="font-semibold inline-block">{andel?.utbetalingsgrad} %</span>
+                  </BodyShort>
+                  <BodyShort size="small">
+                    {`Aktivitetsstatus: `}
+                    <span className="font-semibold inline-block">
+                      {getAktivitet(andel?.aktivitetStatus, kodeverkNavnFraKode)}
+                    </span>
+                  </BodyShort>
+                </div>
+              </Tabs.Panel>
+            ))}
+          </Tabs>
+        )}
       </div>
     </HGrid>
   );
