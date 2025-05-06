@@ -1,15 +1,5 @@
-import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import { generate as cssGenerate, parse as cssParse, walk as cssWalk } from 'css-tree';
 import * as Yup from 'yup';
-import type { DokumentDataType } from './types/dokumentdata';
-
-export interface VedtaksbrevMal {
-  dokumentMalType: string;
-  redigerbarMalType: string;
-  vedtaksbrev: string;
-}
-
-export type Brevmottaker = Readonly<Mottaker>;
 
 export const utledStiler = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
@@ -72,32 +62,6 @@ export const utledRedigerbartInnhold = (html: string) => {
   // ikke støtter feks. <br> som ikke er self-closing (<br/>)
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   return heleBrevet?.querySelector('[data-editable]')?.innerHTML;
-};
-
-export const utledSkalInkludereKalender = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
-  return !!heleBrevet.querySelector('[data-attachement]');
-};
-
-export interface LagreHtmlDokumentdataRequest {
-  // dokumentdata: DokumentDataType;
-  redigerbarDokumentmal: VedtaksbrevMal;
-  redigertHtml: string;
-  originalHtml: string;
-  // inkluderKalender: boolean;
-  overstyrtMottaker?: Brevmottaker;
-}
-
-export type LagreHtmlDokumentdataResponse = DokumentDataType & {
-  REDIGERTBREV: {
-    redigertHtml: string;
-    originalHtml: string;
-    redigertMal: string;
-    // inkluderKalender: boolean;
-  };
-  VEDTAKSBREV_TYPE: string;
-  VEDTAKSBREV_MAL: string;
-  OVERSTYRT_MOTTAKER?: Mottaker;
 };
 
 export const validerManueltRedigertBrev = (html: string): boolean => {
