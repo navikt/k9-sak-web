@@ -1,11 +1,18 @@
-import { BehandlingDtoBehandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  BehandlingDtoBehandlingResultatType,
+  BehandlingDtoStatus,
+  type AksjonspunktDto,
+  type VedtaksbrevValgDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import AvslagsårsakListe from './AvslagsårsakListe';
+import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
+import type { FormData } from './FormData';
 import styles from './ungVedtak.module.css';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -18,30 +25,39 @@ interface UngVedtakProps {
   submitCallback: (data: any) => Promise<any>;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
+  vedtaksbrevValg: VedtaksbrevValgDto | undefined;
+  refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValgDto, Error>>;
 }
 
-const buildInitialValues = () => ({
-  redigerAutomatiskBrev: false,
-  hindreUtsendingAvBrev: false,
+const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgDto | undefined): FormData => ({
+  redigerAutomatiskBrev: vedtaksbrevValg?.redigert || false,
+  hindreUtsendingAvBrev: vedtaksbrevValg?.hindret || false,
+  redigertHtml: vedtaksbrevValg?.redigertBrevHtml || '',
+  originalHtml: '',
 });
 
-interface FormData {
-  redigerAutomatiskBrev: boolean;
-  hindreUtsendingAvBrev: boolean;
-}
-
-export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vilkår, readOnly }: UngVedtakProps) => {
+export const UngVedtak = ({
+  api,
+  behandling,
+  aksjonspunkter,
+  submitCallback,
+  vilkår,
+  readOnly,
+  vedtaksbrevValg,
+  refetchVedtaksbrevValg,
+}: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
-    defaultValues: buildInitialValues(),
+    defaultValues: buildInitialValues(vedtaksbrevValg),
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
+  const behandlingErAvsluttet = behandling.status === BehandlingDtoStatus.AVSLUTTET;
   const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { refetch, isLoading: forhåndsvisningIsLoading } = useQuery({
+  const { refetch: forhåndsvisVedtaksbrev, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
     queryFn: async () => {
       const response = await api.forhåndsvisVedtaksbrev(behandling.id);
@@ -54,11 +70,31 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     enabled: false,
   });
 
-  const { data: vedtaksbrevValg, isLoading: vedtaksbrevValgIsLoading } = useQuery({
-    queryKey: ['vedtaksbrevValg', behandling.id],
+  const { refetch: hentFritekstbrevHtml } = useQuery({
+    queryKey: ['hentFritekstbrevHtml', behandling.id],
     queryFn: async () => {
-      const response = await api.vedtaksbrevValg(behandling.id);
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, true);
       return response;
+    },
+    enabled: false,
+  });
+
+  const resetForm = async () => {
+    const resetValues = await refetchVedtaksbrevValg();
+    formMethods.reset(buildInitialValues({ ...resetValues.data, redigert: true }));
+  };
+
+  const { mutate: lagreVedtaksbrev } = useMutation({
+    mutationFn: async ({ redigertHtml, nullstill }: { redigertHtml: string; nullstill?: boolean }) => {
+      const requestData = {
+        behandlingId: behandling.id,
+        redigertHtml: redigertHtml || undefined,
+        redigert: nullstill ? false : true,
+      };
+      await api.lagreVedtaksbrev(requestData);
+      if (nullstill) {
+        await resetForm();
+      }
     },
   });
 
@@ -92,14 +128,23 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               </div>
             )}
             <div>
+              {redigerAutomatiskBrev && (
+                <FritekstBrevpanel
+                  readOnly={readOnly}
+                  redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
+                  hentFritekstbrevHtml={hentFritekstbrevHtml}
+                  lagreVedtaksbrev={lagreVedtaksbrev}
+                  handleForhåndsvis={() => forhåndsvisVedtaksbrev()}
+                />
+              )}
               <Button
                 variant="tertiary"
-                onClick={() => refetch()}
+                onClick={() => forhåndsvisVedtaksbrev()}
                 size="small"
                 icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                 loading={forhåndsvisningIsLoading}
                 type="button"
-                disabled={!vedtaksbrevValg?.harBrev || vedtaksbrevValgIsLoading}
+                disabled={!vedtaksbrevValg?.harBrev}
               >
                 Forhåndsvis brev
               </Button>
@@ -112,26 +157,28 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               </div>
             )}
           </VStack>
-          <div className={styles.brevCheckboxContainer}>
-            <Fieldset legend="Valg for brev" size="small">
-              <div>
-                {vedtaksbrevValg?.kanOverstyreRediger && (
-                  <CheckboxField
-                    name="redigerAutomatiskBrev"
-                    label="Rediger automatisk brev"
-                    disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
-                  />
-                )}
-                {vedtaksbrevValg?.kanOverstyreHindre && (
-                  <CheckboxField
-                    name="hindreUtsendingAvBrev"
-                    label="Hindre utsending av brev"
-                    disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
-                  />
-                )}
-              </div>
-            </Fieldset>
-          </div>
+          {!behandlingErAvsluttet && (
+            <div className={styles.brevCheckboxContainer}>
+              <Fieldset legend="Valg for brev" size="small">
+                <div>
+                  {vedtaksbrevValg?.enableRediger && (
+                    <CheckboxField
+                      name="redigerAutomatiskBrev"
+                      label="Rediger automatisk brev"
+                      disabled={!vedtaksbrevValg.kanOverstyreRediger || hindreUtsendingAvBrev || readOnly}
+                    />
+                  )}
+                  {vedtaksbrevValg?.enableHindre && (
+                    <CheckboxField
+                      name="hindreUtsendingAvBrev"
+                      label="Hindre utsending av brev"
+                      disabled={!vedtaksbrevValg.kanOverstyreHindre || redigerAutomatiskBrev || readOnly}
+                    />
+                  )}
+                </div>
+              </Fieldset>
+            </div>
+          )}
         </HStack>
       </Box>
     </Form>
