@@ -34,16 +34,14 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
 const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>): Formvalues => {
   return {
     perioder:
-      inntektKontrollperioder
-        ?.filter(periode => periode.erTilVurdering)
-        .map(periode => {
-          return {
-            fastsattInntekt: periode.fastsattInntekt != null ? `${periode.fastsattInntekt}` : '',
-            valg: periode.valg ?? '',
-            begrunnelse: periode.begrunnelse ?? '',
-            periode: periode.periode,
-          };
-        }) || [],
+      inntektKontrollperioder.map(periode => {
+        return {
+          fastsattInntekt: periode.fastsattInntekt != null ? `${periode.fastsattInntekt}` : '',
+          valg: periode.valg ?? '',
+          begrunnelse: periode.begrunnelse ?? '',
+          periode: periode.periode,
+        };
+      }) || [],
   };
 };
 
