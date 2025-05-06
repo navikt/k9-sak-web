@@ -1,9 +1,9 @@
-import { WarningIcon } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { type JSX } from 'react';
 import { Status } from '../../../types/KompletthetData';
-import ListItem from '../list-item/ListItem';
-import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.module.css';
 import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
+import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.module.css';
+import ListItem from '../list-item/ListItem';
 
 interface InntektsmeldingMottattItemProps {
   status: Status;
@@ -15,7 +15,10 @@ interface ManglerContentProps {
 
 const ManglerContent = ({ tekst }: ManglerContentProps) => (
   <div className={styles.mottattLabel}>
-    <WarningIcon />
+    <ExclamationmarkTriangleFillIcon
+      fontSize="1.5rem"
+      style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+    />
     <span className={styles.mottattLabel__text}>{tekst}</span>
   </div>
 );

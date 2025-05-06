@@ -1,9 +1,9 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Box, Button, Label, Link } from '@navikt/ds-react';
-import { ContentWithTooltip, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
+import { Alert, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -231,17 +231,14 @@ const VurderingAvTilsynsbehovForm = ({
                         etikett={
                           <div className={styles.dokumentEtiketter}>
                             {dokument.annenPartErKilde && (
-                              <ContentWithTooltip tooltipText="Dokument fra annen part" tooltipDirectionRight>
-                                <OnePersonOutlineGray />
-                              </ContentWithTooltip>
+                              <Tooltip content="Dokument fra annen part" placement="right">
+                                <PersonIcon fontSize="1.5rem" />
+                              </Tooltip>
                             )}
                             {dokument.bruktTilMinstEnVurdering && (
-                              <ContentWithTooltip
-                                tooltipText="Dokumentet er brukt i en annen vurdering"
-                                tooltipDirectionRight
-                              >
+                              <Tooltip content="Dokumentet er brukt i en annen vurdering" placement="right">
                                 <StjerneIkon />
-                              </ContentWithTooltip>
+                              </Tooltip>
                             )}
                           </div>
                         }
