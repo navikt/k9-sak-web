@@ -1,13 +1,13 @@
-import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, HelpText, Table } from '@navikt/ds-react';
 import {
-  ChevronIconBlack,
-  ContentWithTooltip,
-  GreenCheckIconFilled,
-  OnePersonIconGray,
-  RedCrossIconFilled,
-  TwoPersonsWithOneHighlightedIconGray,
-} from '@navikt/ft-plattform-komponenter';
+  CheckmarkCircleFillIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  PersonFillIcon,
+  PersonGroupFillIcon,
+  PersonPencilFillIcon,
+  XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
+import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
 import classNames from 'classnames/bind';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
@@ -79,27 +79,37 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           </BodyShort>
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.uttak__vilkarIconContainer}`}>
-          {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
+          {harOppfyltAlleInngangsvilkår ? (
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+          ) : (
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+          )}
         </Table.DataCell>
         {erFagytelsetypeLivetsSluttfase && (
-          <Table.DataCell>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</Table.DataCell>
+          <Table.DataCell>
+            {uttaksgrad === 0 ? (
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            ) : (
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            )}
+          </Table.DataCell>
         )}
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           <div className={styles.uttak__iconContainer}>
-            {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
+            {harPleiebehov ? (
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            ) : (
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            )}
           </div>
           {harPleiebehov && !erFagytelsetypeLivetsSluttfase ? `${pleiebehov}%` : null}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          {uttak.annenPart === AnnenPart.ALENE && (
-            <ContentWithTooltip tooltipText="Søker">
-              <OnePersonIconGray />
-            </ContentWithTooltip>
-          )}
+          {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
           {uttak.annenPart === AnnenPart.MED_ANDRE && (
-            <ContentWithTooltip tooltipText="Søker/Annen part">
-              <TwoPersonsWithOneHighlightedIconGray />
-            </ContentWithTooltip>
+            <Tooltip content="Søker/Annen part">
+              <PersonGroupFillIcon fontSize="1.5rem" />
+            </Tooltip>
           )}
         </Table.DataCell>
 
@@ -112,15 +122,14 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
             <div className={styles.uttak__behandlerIcon}>
               <Endringsstatus status={endringsstatus} />
             </div>
-            <button
+            <Button
+              size="xsmall"
+              variant="tertiary-neutral"
               onClick={velgPeriode}
-              type="button"
-              className={`${styles.uttak__expandButton} ${erValgt && styles['uttak__expandButton--expanded']}`}
               aria-label={erValgt ? 'Lukk' : 'Åpne'}
               aria-expanded={erValgt}
-            >
-              <ChevronIconBlack />
-            </button>
+              icon={erValgt ? <ChevronUpIcon fontSize={32} /> : <ChevronDownIcon fontSize={32} />}
+            />
           </div>
         </Table.DataCell>
       </Table.Row>
