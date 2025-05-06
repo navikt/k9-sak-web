@@ -49,12 +49,12 @@
   ],
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
-    "@navikt/aksel-icons": "7.18.0",
-    "@navikt/ds-css": "7.18.0",
-    "@navikt/ds-react": "7.18.0",
-    "@navikt/ds-tailwind": "^7.18.0",
+    "@navikt/aksel-icons": "7.20.0",
+    "@navikt/ds-css": "7.20.0",
+    "@navikt/ds-react": "7.20.0",
+    "@navikt/ds-tailwind": "^7.20.0",
     "@navikt/familie-endringslogg": "14.0.0",
-    "@navikt/ft-plattform-komponenter": "^7.2.13",
+    "@navikt/ft-plattform-komponenter": "^9.0.2",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "9.15.0",
     "@sentry/react": "^9.15.0",
@@ -67,7 +67,7 @@
     "postcss-import": "^16.1.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-router": "7.5.2",
+    "react-router": "7.5.3",
     "vite-plugin-svgr": "4.3.0"
   },
   "devDependencies": {
