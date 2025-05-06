@@ -1,0 +1,16 @@
+.dodEtikett {
+  background-color: #262626;
+  color: var(--a-white);
+}
+
+.defaultBostedSoker {
+  margin-bottom: 20px;
+}
+
+.etikettMargin {
+  margin-bottom: 5px;
+}
+
+.paddingBottom {
+  padding-bottom: 7px;
+}
