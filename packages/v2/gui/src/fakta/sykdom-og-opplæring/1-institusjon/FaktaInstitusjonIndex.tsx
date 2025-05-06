@@ -66,14 +66,6 @@ const FaktaInstitusjonIndex = () => {
       perioder: vurdering.perioder.map(p => new Period(p.fom ?? '', p.tom ?? '')),
     };
   })();
-  const perioderTilVurdering = useMemo(
-    () => perioderMappet.filter(periode => periode.resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES),
-    [perioderMappet],
-  );
-  const vurdertePerioder = useMemo(
-    () => perioderMappet.filter(periode => periode.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES),
-    [perioderMappet],
-  );
 
   if (isLoading) {
     return <CenteredLoader />;
@@ -84,8 +76,7 @@ const FaktaInstitusjonIndex = () => {
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>
-            perioderTilVurdering={perioderTilVurdering}
-            vurdertePerioder={vurdertePerioder}
+            perioder={perioderMappet}
             onPeriodeClick={setValgtPeriode}
           />
         )}

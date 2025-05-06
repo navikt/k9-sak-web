@@ -8,6 +8,7 @@
   color: #000;
   line-height: 1.375rem;
   text-align: center;
+  display: inline-flex;
 }
 
 .PillIcon--success {

@@ -17,6 +17,7 @@ import type {
   ValgtLangvarigSykdomVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { CenteredLoader } from '../CenteredLoader';
+import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
@@ -28,6 +29,12 @@ interface SykdomVurderingselement extends Vurderingselement {
   uuid: string;
   begrunnelse: string;
 }
+
+const defaultVurdering = {
+  diagnosekoder: [],
+  begrunnelse: '',
+  godkjent: '',
+} as UperiodisertSykdom;
 
 const SykdomUperiodisertIndex = () => {
   const { behandlingUuid, readOnly, løsAksjonspunkt9301, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
@@ -74,8 +81,7 @@ const SykdomUperiodisertIndex = () => {
         <NavigationWithDetailView
           navigationSection={() => (
             <Vurderingsnavigasjon
-              perioderTilVurdering={vurderingsliste || []}
-              vurdertePerioder={[]}
+              perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
               customPeriodeLabel="Vurdert"
               customPeriodeRad={(periode, onPeriodeClick) => (
@@ -105,15 +111,7 @@ const SykdomUperiodisertIndex = () => {
           }
           detailSection={() => {
             if (nyVurdering) {
-              return (
-                <SykdomUperiodisertFormContainer
-                  vurdering={{
-                    diagnosekoder: [],
-                    begrunnelse: '',
-                    godkjent: '',
-                  }}
-                />
-              );
+              return <SykdomUperiodisertFormContainer vurdering={defaultVurdering} />;
             }
             if (valgtVurdering) {
               return <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />;

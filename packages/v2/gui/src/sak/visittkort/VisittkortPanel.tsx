@@ -33,6 +33,7 @@ export interface VisittkortPanelProps {
   direkteOvergangFraInfotrygd?: DirekteOvergangDto;
   erPbSak?: boolean;
   erHastesak?: boolean;
+  hideVisittkortDetaljerPopup?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -44,6 +45,7 @@ const VisittkortPanel = ({
   direkteOvergangFraInfotrygd,
   erPbSak,
   erHastesak,
+  hideVisittkortDetaljerPopup,
 }: VisittkortPanelProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -110,7 +112,11 @@ const VisittkortPanel = ({
           name={søker.navn}
           fodselsnummer={søker.fnr}
           gender={utledKjonn(søker.navBrukerKjonn)}
-          renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />}
+          renderMenuContent={
+            hideVisittkortDetaljerPopup
+              ? undefined
+              : () => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />
+          }
           renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
           showPersonAge={isUngWeb()}
         />
