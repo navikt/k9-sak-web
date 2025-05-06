@@ -1,5 +1,6 @@
 import {
   BehandlingDtoBehandlingResultatType,
+  BehandlingDtoStatus,
   type AksjonspunktDto,
   type VedtaksbrevValgDto,
 } from '@k9-sak-web/backend/ungsak/generated';
@@ -50,6 +51,7 @@ export const UngVedtak = ({
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
+  const behandlingErAvsluttet = behandling.status === BehandlingDtoStatus.AVSLUTTET;
   const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
@@ -155,26 +157,28 @@ export const UngVedtak = ({
               </div>
             )}
           </VStack>
-          <div className={styles.brevCheckboxContainer}>
-            <Fieldset legend="Valg for brev" size="small">
-              <div>
-                {vedtaksbrevValg?.enableRediger && (
-                  <CheckboxField
-                    name="redigerAutomatiskBrev"
-                    label="Rediger automatisk brev"
-                    disabled={!vedtaksbrevValg.kanOverstyreRediger || hindreUtsendingAvBrev || readOnly}
-                  />
-                )}
-                {vedtaksbrevValg?.enableHindre && (
-                  <CheckboxField
-                    name="hindreUtsendingAvBrev"
-                    label="Hindre utsending av brev"
-                    disabled={!vedtaksbrevValg.kanOverstyreHindre || redigerAutomatiskBrev || readOnly}
-                  />
-                )}
-              </div>
-            </Fieldset>
-          </div>
+          {!behandlingErAvsluttet && (
+            <div className={styles.brevCheckboxContainer}>
+              <Fieldset legend="Valg for brev" size="small">
+                <div>
+                  {vedtaksbrevValg?.enableRediger && (
+                    <CheckboxField
+                      name="redigerAutomatiskBrev"
+                      label="Rediger automatisk brev"
+                      disabled={!vedtaksbrevValg.kanOverstyreRediger || hindreUtsendingAvBrev || readOnly}
+                    />
+                  )}
+                  {vedtaksbrevValg?.enableHindre && (
+                    <CheckboxField
+                      name="hindreUtsendingAvBrev"
+                      label="Hindre utsending av brev"
+                      disabled={!vedtaksbrevValg.kanOverstyreHindre || redigerAutomatiskBrev || readOnly}
+                    />
+                  )}
+                </div>
+              </Fieldset>
+            </div>
+          )}
         </HStack>
       </Box>
     </Form>
