@@ -260,7 +260,7 @@ const SykdomOgOpplæring = () => {
             icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
           />
         </Tabs.List>
-        <Tabs.Panel value={tabCodes.INSTITUSJON}>
+        <Tabs.Panel value={tabCodes.INSTITUSJON} lazy={false}>
           <div className="mt-4">
             {harAksjonspunkt9300 || institusjonVilkårErVurdert ? (
               <FaktaInstitusjonIndex />
@@ -269,17 +269,17 @@ const SykdomOgOpplæring = () => {
             )}
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value={tabCodes.SYKDOM}>
+        <Tabs.Panel value={tabCodes.SYKDOM} lazy={false}>
           <div className="mt-4">
             {harAksjonspunkt9301 ? <SykdomUperiodisertIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value={tabCodes.OPPLÆRING}>
+        <Tabs.Panel value={tabCodes.OPPLÆRING} lazy={false}>
           <div className="mt-4">
             {harAksjonspunkt9302 ? <NødvendigOpplæringIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value={tabCodes.REISETID}>
+        <Tabs.Panel value={tabCodes.REISETID} lazy={false}>
           <div className="mt-4">
             {harAksjonspunkt9303 ? <ReisetidIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
           </div>
