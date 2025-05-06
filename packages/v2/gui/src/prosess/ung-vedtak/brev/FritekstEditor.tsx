@@ -3,7 +3,6 @@ import { Cancel } from '@navikt/ds-icons';
 import { Alert, Box, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJSWrapper from './EditorJSWrapper';
-import FritekstFeilmeldinger from './FritekstFeilmeldinger';
 
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import styles from './RedigerFritekstbrev.module.css';
@@ -160,7 +159,7 @@ const FritekstEditor = ({
               se saken samtidig som du redigerer kan du åpne en kopi av saken i ny fane:
               {/* <ÅpneSakINyttVinduKnapp /> */}
             </Alert>
-            <FritekstFeilmeldinger />
+            {/* <FritekstFeilmeldinger /> */}
           </Box>
         </Modal.Header>
       )}
@@ -234,7 +233,7 @@ const FritekstEditor = ({
                     Forhåndsvis brev
                   </Button>
                 </div>
-                <FritekstFeilmeldinger />
+                {/* <FritekstFeilmeldinger /> */}
               </div>
               <Box marginBlock="8 0">
                 <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
