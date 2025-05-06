@@ -24,13 +24,13 @@
     "@navikt/ft-form-hooks": "^6.2.12",
     "@navikt/ft-form-validators": "^3.1.13",
     "@navikt/ft-utils": "^3.3.3",
-    "@tanstack/react-query": "^5.75.2",
+    "@tanstack/react-query": "^5.75.4",
     "@types/object-hash": "^3.0.6",
     "axios": "1.9.0",
     "dayjs": "^1.11.13",
     "object-hash": "^3.0.0",
     "react": "19.1.0",
-    "react-hook-form": "7.56.0",
+    "react-hook-form": "7.56.2",
     "react-router": "7.5.3",
     "yup": "^1.6.1"
   }
