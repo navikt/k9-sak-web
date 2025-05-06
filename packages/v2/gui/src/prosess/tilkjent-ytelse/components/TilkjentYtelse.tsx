@@ -83,6 +83,7 @@ interface OwnProps {
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   personopplysninger: PersonopplysningDto;
+  showAndelDetails?: boolean;
 }
 
 /**
@@ -96,6 +97,7 @@ export const TilkjentYtelse = ({
   items,
   kodeverkNavnFraKode,
   personopplysninger,
+  showAndelDetails,
 }: OwnProps) => {
   const [valgtPeriode, setValgtPeriode] = useState<PeriodeMedId | null>();
   const timelineData = items.map((periode, index) =>
@@ -202,6 +204,7 @@ export const TilkjentYtelse = ({
             callbackForward={nextPeriod}
             callbackBackward={prevPeriod}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            showAndelDetails={showAndelDetails}
           />
         )}
       </div>
