@@ -1,7 +1,7 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
-import { FormState } from '@fpsak-frontend/sak-totrinnskontroll/src/components/FormState';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
+import TotrinnskontrollSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
   BehandlingAppKontekst,
