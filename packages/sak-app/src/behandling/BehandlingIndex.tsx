@@ -4,9 +4,9 @@ import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,

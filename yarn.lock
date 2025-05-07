@@ -3233,6 +3233,31 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fpsak-frontend/sak-totrinnskontroll@npm:1.0.0, @fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll":
+  version: 0.0.0-use.local
+  resolution: "@fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll"
+  dependencies:
+    "@fpsak-frontend/assets": "npm:1.0.0"
+    "@fpsak-frontend/form": "npm:1.0.0"
+    "@fpsak-frontend/kodeverk": "npm:1.0.0"
+    "@fpsak-frontend/shared-components": "npm:1.0.0"
+    "@fpsak-frontend/utils": "npm:1.0.0"
+    "@fpsak-frontend/utils-test": "npm:1.0.0"
+    "@k9-sak-web/behandling-utvidet-rett": "npm:1.0.0"
+    "@k9-sak-web/konstanter": "npm:1.0.0"
+    "@k9-sak-web/types": "npm:1.0.0"
+    history: "npm:5.3.0"
+    object-hash: "npm:3.0.0"
+    react: "npm:19.1.0"
+    react-intl: "npm:7.1.11"
+    react-redux: "npm:9.2.0"
+    react-router: "npm:7.5.3"
+    redux: "npm:5.0.1"
+    redux-form: "npm:8.3.10"
+    reselect: "npm:5.1.1"
+  languageName: unknown
+  linkType: soft
+
 "@fpsak-frontend/shared-components@npm:1.0.0, @fpsak-frontend/shared-components@workspace:packages/shared-components":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/shared-components@workspace:packages/shared-components"
@@ -3774,7 +3799,7 @@ __metadata:
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:2.0.20250218125133"
     "@navikt/k9-sak-typescript-client": "npm:2.0.20250502135332"
-    "@navikt/ung-sak-typescript-client": "npm:0.2.20250502124020"
+    "@navikt/ung-sak-typescript-client": "npm:0.2.20250507111950"
     "@tanstack/eslint-plugin-query": "npm:^5.74.7"
   languageName: unknown
   linkType: soft
@@ -4570,6 +4595,7 @@ __metadata:
     "@fpsak-frontend/sak-meny-sett-pa-vent": "npm:1.0.0"
     "@fpsak-frontend/sak-meny-ta-av-vent": "npm:1.0.0"
     "@fpsak-frontend/sak-meny-verge": "npm:1.0.0"
+    "@fpsak-frontend/sak-totrinnskontroll": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
@@ -4691,6 +4717,7 @@ __metadata:
     "@fpsak-frontend/sak-meny-ny-behandling": "npm:1.0.0"
     "@fpsak-frontend/sak-meny-sett-pa-vent": "npm:1.0.0"
     "@fpsak-frontend/sak-meny-ta-av-vent": "npm:1.0.0"
+    "@fpsak-frontend/sak-totrinnskontroll": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
@@ -5158,10 +5185,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:0.2.20250502124020":
-  version: 0.2.20250502124020
-  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250502124020::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250502124020%2F91fa2e2df8c9a1f372126c70fbdbaede194cb9bc"
-  checksum: 10/70d666ebb5b7a00238615bf4723cd00907bf51ed12faef1e525f8c54b2deec6da0066322dde08130efa7b8383a8672f4410b75c5e5a905a645a70686ef2de274
+"@navikt/ung-sak-typescript-client@npm:0.2.20250507111950":
+  version: 0.2.20250507111950
+  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250507111950::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250507111950%2Fa8810c2673ff4625c3275f8612cc82c468b71a18"
+  checksum: 10/dcf6a9d49be6ce062b5bb36ee55e150149dd7a12836af774c90ada99b519a688a1413f8aa3766e435a40be4458cd7f585ff034682fb2c02a2d5388c546c0aeb2
   languageName: node
   linkType: hard
 

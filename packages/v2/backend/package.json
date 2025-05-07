@@ -24,7 +24,7 @@
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "2.0.20250218125133",
     "@navikt/k9-sak-typescript-client": "2.0.20250502135332",
-    "@navikt/ung-sak-typescript-client": "0.2.20250502124020"
+    "@navikt/ung-sak-typescript-client": "0.2.20250507111950"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.74.7"
