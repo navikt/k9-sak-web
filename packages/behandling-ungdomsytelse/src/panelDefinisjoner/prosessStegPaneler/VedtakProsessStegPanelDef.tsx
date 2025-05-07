@@ -41,8 +41,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
-    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
+  getOverstyrtStatus = ({ vilkar, aksjonspunkter, aksjonspunkterForSteg }) =>
+    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg);
 
   getData = ({
     previewCallback,

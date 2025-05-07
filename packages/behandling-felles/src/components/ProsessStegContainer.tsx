@@ -25,9 +25,9 @@ const ProsessStegContainer = ({
       formaterteProsessStegPaneler.map(panel => ({
         ...panel,
         label: intl.formatMessage({ id: panel.labelId }),
-        usePartialStatus: panel.type !== 'default' && panel.usePartialStatus,
+        usePartialStatus: panel.type !== 'default' && panel.type !== 'danger' && panel.usePartialStatus,
       })),
-    [formaterteProsessStegPaneler],
+    [formaterteProsessStegPaneler, intl],
   );
 
   // Byttet ut redux-form med formik uten å tenke på at staten forsvinner når man bytter panel
