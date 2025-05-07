@@ -1,18 +1,19 @@
-import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = vi.fn();
   it('skal rendre modal for fatter vedtak', () => {
-    render(
+    renderWithIntl(
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.KLAGE}
+        behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
+        behandlingTypeKode={BehandlingType.KLAGE}
         fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
         erKlageWithKA
       />,
@@ -23,30 +24,30 @@ describe('<FatterVedtakApprovalModal>', () => {
   });
 
   it('skal rendre modal for iverksetter vedtak', () => {
-    render(
+    renderWithIntl(
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
+        behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
+        behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         fagsakYtelseType={fagsakYtelsesType.ENGANGSTØNAD}
         erKlageWithKA
       />,
     );
 
-    expect(screen.getAllByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toHaveLength(1);
+    expect(screen.getByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toBeInTheDocument();
     expect(screen.getByText('Du kommer nå til forsiden.')).toBeInTheDocument();
 
     expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
   });
 
   it('skal rendre modal for iverksetter vedtak utvidet rett', () => {
-    render(
+    renderWithIntl(
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
+        behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
+        behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         fagsakYtelseType={fagsakYtelsesType.OMSORGSPENGER_KS}
         erKlageWithKA
       />,

@@ -1,11 +1,11 @@
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
-import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
-import type { Meta, StoryObj } from '@storybook/react';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
+import { action } from '@storybook/addon-actions';
+import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
-import type { Behandling } from './types/Behandling';
-import type { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
 
 const data = [
   {
@@ -15,8 +15,8 @@ const data = [
         aksjonspunktKode: '5082',
         opptjeningAktiviteter: [],
         beregningDtoer: [],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
         uttakPerioder: [],
         arbeidsforholdDtos: [],
@@ -36,8 +36,8 @@ const data = [
             skjæringstidspunkt: '2020-01-01',
           },
         ],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
         arbeidsforholdDtos: [],
       },
@@ -48,7 +48,7 @@ const data = [
           {
             fastsattVarigEndringNaering: true,
             fastsattVarigEndring: true,
-            faktaOmBeregningTilfeller: undefined,
+            faktaOmBeregningTilfeller: null,
             skjæringstidspunkt: '2020-01-01',
           },
           {
@@ -58,9 +58,10 @@ const data = [
             skjæringstidspunkt: '2020-02-01',
           },
         ],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
+        uttakPerioder: [],
         arbeidsforholdDtos: [],
       },
     ] as TotrinnskontrollAksjonspunkt[],
@@ -74,17 +75,47 @@ const data = [
         opptjeningAktiviteter: [],
         beregningDtoer: [
           {
-            fastsattVarigEndringNaering: undefined,
-            faktaOmBeregningTilfeller: ['VURDER_LØNNSENDRING', 'VURDER_MOTTAR_YTELSE'],
+            fastsattVarigEndringNaering: null,
+            faktaOmBeregningTilfeller: [
+              { kode: 'VURDER_LØNNSENDRING', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' },
+              { kode: 'VURDER_MOTTAR_YTELSE', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' },
+            ],
             skjæringstidspunkt: '2020-01-01',
           },
         ],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
         arbeidsforholdDtos: [],
       },
     ] as TotrinnskontrollAksjonspunkt[],
+  },
+];
+
+const dataReadOnly = [
+  {
+    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+    totrinnskontrollAksjonspunkter: [
+      {
+        aksjonspunktKode: '5082',
+        opptjeningAktiviteter: [],
+        beregningDtoer: [],
+        besluttersBegrunnelse: 'asdfa',
+        totrinnskontrollGodkjent: false,
+        vurderPaNyttArsaker: [
+          {
+            kode: 'FEIL_REGEL',
+            kodeverk: '',
+          },
+          {
+            kode: 'FEIL_FAKTA',
+            kodeverk: '',
+          },
+        ],
+        uttakPerioder: [],
+        arbeidsforholdDtos: [],
+      },
+    ],
   },
 ];
 
@@ -97,20 +128,28 @@ const location = {
 };
 
 const behandling = {
-  status: BehandlingDtoStatus.FATTER_VEDTAK,
-  type: behandlingType.FØRSTEGANGSSØKNAD,
+  id: 1,
+  versjon: 2,
+  status: {
+    kode: behandlingStatus.FATTER_VEDTAK,
+    kodeverk: '',
+  },
+  type: {
+    kode: behandlingType.FØRSTEGANGSSØKNAD,
+    kodeverk: 'BEHANDLING_TYPE',
+  },
+  behandlingÅrsaker: [],
   toTrinnsBehandling: true,
 } as Behandling;
 
-const meta = {
-  title: 'gui/sak/totrinnskontroll',
+const meta: Meta<typeof TotrinnskontrollSakIndex> = {
+  title: 'sak/sak-totrinnskontroll',
   component: TotrinnskontrollSakIndex,
-  decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD })],
-} satisfies Meta<typeof TotrinnskontrollSakIndex>;
+};
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TotrinnskontrollSakIndex>;
 
 export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
   args: {
@@ -122,25 +161,16 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
       klageVurderingResultatNFP: {
         klageVurdering: 'STADFESTE_YTELSESVEDTAK',
       },
-    },
+    } as KlageVurdering,
+    alleKodeverk: alleKodeverk as any,
     createLocationForSkjermlenke: () => location,
     readOnly: false,
   },
   play: async ({ args, canvas }) => {
-    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
-    if (godkjentTexts[0]) {
-      await userEvent.click(godkjentTexts[0]);
-    }
-    if (godkjentTexts[1]) {
-      await userEvent.click(godkjentTexts[1]);
-    }
-    if (godkjentTexts[2]) {
-      await userEvent.click(godkjentTexts[2]);
-    }
-    const vurderPåNyttTexts = canvas.getAllByLabelText('Vurder på nytt');
-    if (vurderPåNyttTexts[3]) {
-      await userEvent.click(vurderPåNyttTexts[3]);
-    }
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
+    await userEvent.click(canvas.getAllByLabelText('Vurder på nytt')[3]);
     await userEvent.click(canvas.getByLabelText('Feil fakta'));
     await userEvent.click(canvas.getByLabelText('Feil lovanvendelse'));
     await userEvent.click(canvas.getByLabelText('Feil regelforståelse'));
@@ -157,19 +187,19 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
           {
             aksjonspunktKode: '5082',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5038',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5039',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
           {
@@ -190,19 +220,10 @@ export const GodkjennerVedtak: Story = {
     ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
   play: async ({ canvas, args }) => {
-    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
-    if (godkjentTexts[0]) {
-      await userEvent.click(godkjentTexts[0]);
-    }
-    if (godkjentTexts[1]) {
-      await userEvent.click(godkjentTexts[1]);
-    }
-    if (godkjentTexts[2]) {
-      await userEvent.click(godkjentTexts[2]);
-    }
-    if (godkjentTexts[3]) {
-      await userEvent.click(godkjentTexts[3]);
-    }
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[3]);
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
@@ -215,25 +236,25 @@ export const GodkjennerVedtak: Story = {
           {
             aksjonspunktKode: '5082',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5038',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5039',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5058',
             godkjent: true,
-            begrunnelse: undefined,
+            begrunnelse: null,
             arsaker: [],
           },
         ],
@@ -248,22 +269,46 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
   play: async ({ canvas }) => {
-    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
-    if (godkjentTexts[0]) {
-      await userEvent.click(godkjentTexts[0]);
-    }
-    if (godkjentTexts[1]) {
-      await userEvent.click(godkjentTexts[1]);
-    }
-    if (godkjentTexts[2]) {
-      await userEvent.click(godkjentTexts[2]);
-    }
-    const vurderPåNyttTexts = canvas.getAllByLabelText('Vurder på nytt');
-    if (vurderPåNyttTexts[3]) {
-      await userEvent.click(vurderPåNyttTexts[3]);
-    }
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
+    await userEvent.click(canvas.getAllByLabelText('Vurder på nytt')[3]);
     await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
     await expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
   },
 };
+
+export const visTotrinnskontrollForSaksbehandler = () => (
+  <div
+    style={{
+      width: '600px',
+      margin: '50px',
+      padding: '20px',
+      backgroundColor: 'white',
+    }}
+  >
+    <TotrinnskontrollSakIndex
+      behandling={{
+        ...behandling,
+        status: {
+          kode: behandlingStatus.BEHANDLING_UTREDES,
+          kodeverk: '',
+        },
+      }}
+      totrinnskontrollSkjermlenkeContext={dataReadOnly}
+      location={location}
+      readOnly
+      onSubmit={action('button-click')}
+      behandlingKlageVurdering={
+        {
+          klageVurderingResultatNFP: {
+            klageVurdering: 'STADFESTE_YTELSESVEDTAK',
+          },
+        } as KlageVurdering
+      }
+      alleKodeverk={alleKodeverk as any}
+      createLocationForSkjermlenke={() => location}
+    />
+  </div>
+);
