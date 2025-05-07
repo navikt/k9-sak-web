@@ -11,6 +11,7 @@ import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
+import { CheckmarkCircleFillIcon, CheckmarkIcon, XMarkIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
@@ -103,6 +104,12 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           links={perioder.map((periode, index) => ({
             active: activeTab === index,
             label: `${periode.periode.fom && formatDate(periode.periode.fom)} - ${periode.periode.tom && formatDate(periode.periode.tom)}`,
+            icon:
+              periode.vilkarStatus === vilkårStatus.OPPFYLT ? (
+                <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />
+              ),
           }))}
           onClick={setActiveTab}
           heading="Perioder"
