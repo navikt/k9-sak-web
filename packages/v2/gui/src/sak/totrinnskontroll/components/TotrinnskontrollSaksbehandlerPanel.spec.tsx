@@ -1,6 +1,5 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
+import { BehandlingAksjonspunktDtoBehandlingStatus } from '@navikt/k9-sak-typescript-client';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import TotrinnskontrollSaksbehandlerPanel from './TotrinnskontrollSaksbehandlerPanel';
 
@@ -8,26 +7,32 @@ const getTotrinnsaksjonspunkterFødsel = () => [
   {
     aksjonspunktKode: '5027',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
   {
     aksjonspunktKode: '5001',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
   {
     aksjonspunktKode: '7002',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
 ];
 
@@ -35,18 +40,22 @@ const getTotrinnsaksjonspunkterOmsorg = () => [
   {
     aksjonspunktKode: '5008',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
   {
     aksjonspunktKode: '5011',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
 ];
 
@@ -54,18 +63,22 @@ const getTotrinnsaksjonspunkterForeldreansvar = () => [
   {
     aksjonspunktKode: '5014',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
   {
     aksjonspunktKode: '5013',
     beregningDto: null,
-    besluttersBegrunnelse: null,
+    besluttersBegrunnelse: undefined,
     opptjeningAktiviteter: [],
-    totrinnskontrollGodkjent: null,
+    totrinnskontrollGodkjent: undefined,
     vurderPaNyttArsaker: [],
+    arbeidsforholdDtos: [],
+    beregningDtoer: [],
   },
 ];
 
@@ -94,14 +107,11 @@ const location = {
 
 describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
   it('skal vise korrekt antall element og navn', () => {
-    renderWithIntl(
+    render(
       <MemoryRouter>
         <TotrinnskontrollSaksbehandlerPanel
           totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-          behandlingStatus={{
-            kode: behandlingStatus.BEHANDLING_UTREDES,
-            kodeverk: '',
-          }}
+          behandlingStatus={BehandlingAksjonspunktDtoBehandlingStatus.UTREDES}
           arbeidsforholdHandlingTyper={[]}
           erTilbakekreving={false}
           vurderArsaker={[]}
@@ -133,7 +143,7 @@ describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
     expect(
       screen.getAllByText(
         (_, element) =>
-          element.textContent === 'Løst aksjonspunkt: Kontroller endrede opplysninger og faglige vurderinger',
+          element?.textContent === 'Løst aksjonspunkt: Kontroller endrede opplysninger og faglige vurderinger',
       )[0],
     ).toBeInTheDocument();
   });
