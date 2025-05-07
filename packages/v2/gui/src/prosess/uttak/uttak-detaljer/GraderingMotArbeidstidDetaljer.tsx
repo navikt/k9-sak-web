@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 
 interface ownProps {
   alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
-  utbetalingsgrader: Utbetalingsgrader[]; // TODO: faktisk- og normalarbeidstid skal være en ISO 8601 streng
+  utbetalingsgrader: Utbetalingsgrader[];
   søkersTapteArbeidstid: UttaksperiodeInfo['søkersTapteArbeidstid'];
 }
 
