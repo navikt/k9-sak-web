@@ -10,23 +10,23 @@
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "vite": "^6.3.4",
+    "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
-    "@navikt/ds-css": "7.18.0",
-    "@navikt/ds-react": "7.18.0",
-    "@navikt/ft-form-hooks": "^6.2.9",
-    "@navikt/ft-form-validators": "^3.1.11",
-    "@navikt/ft-plattform-komponenter": "^7.2.13",
+    "@navikt/ds-css": "7.20.0",
+    "@navikt/ds-react": "7.20.0",
+    "@navikt/ft-form-hooks": "^6.2.12",
+    "@navikt/ft-form-validators": "^3.1.13",
+    "@navikt/ft-plattform-komponenter": "^9.0.2",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
     "react": "19.1.0",
     "react-collapse": "5.1.1",
     "react-dom": "19.1.0",
-    "react-hook-form": "7.55.0",
+    "react-hook-form": "7.56.0",
     "yup": "1.6.1"
   }
 }

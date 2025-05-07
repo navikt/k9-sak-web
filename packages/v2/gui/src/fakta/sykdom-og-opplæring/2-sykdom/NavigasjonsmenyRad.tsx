@@ -32,9 +32,7 @@ export const NavigasjonsmenyRad = ({
               size="small"
               variant="tertiary"
             >
-              <BodyShort>
-                {periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}
-              </BodyShort>
+              <BodyShort>{periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}</BodyShort>
             </Button>
           </div>
         </div>
