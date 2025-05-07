@@ -40,7 +40,7 @@ export const InnvilgetStory: Story = {
     },
     vilkår: [
       {
-        vilkarType: 'UNG_VK_XXX',
+        vilkarType: 'UNG_VK_2',
         perioder: [
           {
             avslagKode: undefined,
@@ -50,7 +50,7 @@ export const InnvilgetStory: Story = {
         ],
       },
       {
-        vilkarType: 'K9_VK_3',
+        vilkarType: 'UNG_VK_1',
         perioder: [
           {
             avslagKode: undefined,
@@ -67,7 +67,7 @@ export const AvslåttStory: Story = {
   args: {
     vilkår: [
       {
-        vilkarType: 'UNG_VK_XXX',
+        vilkarType: 'UNG_VK_2',
         perioder: [
           {
             avslagKode: undefined,
@@ -76,7 +76,7 @@ export const AvslåttStory: Story = {
         ],
       },
       {
-        vilkarType: 'K9_VK_3',
+        vilkarType: 'UNG_VK_1',
         perioder: [
           {
             avslagKode: '1090',

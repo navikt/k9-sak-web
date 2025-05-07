@@ -6,10 +6,10 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/generated';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
@@ -65,7 +65,7 @@ describe('<UngdomsytelseProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.ALDERSVILKARET, kodeverk: 'test' },
+      vilkarType: { kode: VilkårMedPerioderDtoVilkarType.ALDERSVILKÅR, kodeverk: 'test' },
       overstyrbar: true,
       perioder: [
         {
