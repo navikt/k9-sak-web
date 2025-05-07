@@ -4302,7 +4302,7 @@ __metadata:
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.1.0"
     react-hook-form: "npm:7.56.0"
-    tailwindcss: "npm:^4.1.5"
+    tailwindcss: "npm:^3.4.17"
     vite: "npm:^6.3.5"
     vite-plugin-node-polyfills: "npm:^0.23.0"
   languageName: unknown
@@ -17831,13 +17831,6 @@ __metadata:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
   checksum: 10/b0e00533ae3800223b5b71af9cb1dd9bfea5ef5ffa01300f1ced99de9511487aa41e03106173e4168c56c8f6600ee21c98c1d75a5def23cddf9b39b4ad71210d
-  languageName: node
-  linkType: hard
-
-"tailwindcss@npm:^4.1.5":
-  version: 4.1.5
-  resolution: "tailwindcss@npm:4.1.5"
-  checksum: 10/09b1ebbcbbbb5c532f919f19acd213d2868941d39f63fa2c2f4d2e25dc0a26555d8ee1d3c25958e3de84f89f1dec7b4368d96261554e44464c32c42f623ffdc5
   languageName: node
   linkType: hard
 
