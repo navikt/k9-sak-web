@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
-import ForbiddenPage from '@k9-sak-web/gui/sak/feilmeldinger/ForbiddenPage.js';
-import UnauthorizedPage from '@k9-sak-web/gui/sak/feilmeldinger/UnauthorizedPage.js';
+import ForbiddenPage from '@k9-sak-web/gui/app/feilmeldinger/ForbiddenPage.js';
+import UnauthorizedPage from '@k9-sak-web/gui/app/feilmeldinger/UnauthorizedPage.js';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import { NavAnsatt } from '@k9-sak-web/types';
@@ -15,7 +15,7 @@ import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';

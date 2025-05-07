@@ -1,6 +1,6 @@
-import React, { Component, ReactNode, ErrorInfo } from 'react';
+import { Component, type ReactNode, type ErrorInfo } from 'react';
 import { captureException, withScope } from '@sentry/browser';
-import ErrorPage from '@k9-sak-web/gui/sak/feilmeldinger/ErrorPage.js';
+import ErrorPage from './ErrorPage.js';
 
 interface OwnProps {
   errorMessageCallback: (error: any) => void;
@@ -28,17 +28,20 @@ export class ErrorBoundary extends Component<OwnProps, State> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo): void {
+  override componentDidCatch(error: Error, info: ErrorInfo): void {
     const { errorMessageCallback } = this.props;
 
     withScope(scope => {
-      Object.keys(info).forEach(key => {
-        scope.setExtra(key, info[key]);
-        const sentryId = captureException(error);
-        this.setState({
-          ...this.state,
-          sentryId,
-        });
+      if (info.componentStack != null) {
+        scope.setExtra('componentStack', info.componentStack);
+      }
+      if (info.digest != null) {
+        scope.setExtra('digest', info.digest);
+      }
+      const sentryId = captureException(error);
+      this.setState({
+        ...this.state,
+        sentryId,
       });
     });
 
@@ -46,7 +49,7 @@ export class ErrorBoundary extends Component<OwnProps, State> {
       [
         error.toString(),
         info.componentStack
-          .split('\n')
+          ?.split('\n')
           .map(line => line.trim())
           .find(line => !!line),
       ].join(' '),
@@ -56,7 +59,7 @@ export class ErrorBoundary extends Component<OwnProps, State> {
     console.error(error);
   }
 
-  render(): ReactNode {
+  override render(): ReactNode {
     const { children, doNotShowErrorPage } = this.props;
     const { hasError, sentryId } = this.state;
 
