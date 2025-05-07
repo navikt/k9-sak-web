@@ -1,25 +1,31 @@
-import { FC } from 'react';
-import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
-import { OverseEtablertTilsynÅrsak } from '../../../constants';
+import type { FC } from 'react';
+import {
+  GraderingMotTilsynOverseEtablertTilsynÅrsak,
+  type GraderingMotTilsynOverseEtablertTilsynÅrsak as GraderingMotTilsynOverseEtablertTilsynÅrsakType,
+  type GraderingMotTilsyn,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { BodyShort, HelpText, HStack } from '@navikt/ds-react';
 
 import styles from './uttakDetaljer.module.css';
 
-const getÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
-  if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.BEREDSKAP) {
+const getÅrsakstekst = (
+  overseEtablertTilsynÅrsak: GraderingMotTilsynOverseEtablertTilsynÅrsakType,
+  etablertTilsyn: number,
+) => {
+  if (overseEtablertTilsynÅrsak === GraderingMotTilsynOverseEtablertTilsynÅrsak.BEREDSKAP) {
     return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av beredskap.`;
   }
-  if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.NATTEVÅK) {
+  if (overseEtablertTilsynÅrsak === GraderingMotTilsynOverseEtablertTilsynÅrsak.NATTEVÅK) {
     return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av nattevåk.`;
   }
   return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av nattevåk og beredskap.`;
 };
 
-const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
+const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: GraderingMotTilsynOverseEtablertTilsynÅrsakType) => {
   const beredskapEllerNattevåkÅrsaker = [
-    OverseEtablertTilsynÅrsak.BEREDSKAP,
-    OverseEtablertTilsynÅrsak.NATTEVÅK,
-    OverseEtablertTilsynÅrsak.NATTEVÅK_OG_BEREDSKAP,
+    GraderingMotTilsynOverseEtablertTilsynÅrsak.BEREDSKAP,
+    GraderingMotTilsynOverseEtablertTilsynÅrsak.NATTEVÅK,
+    GraderingMotTilsynOverseEtablertTilsynÅrsak.NATTEVÅK_OG_BEREDSKAP,
   ];
   return beredskapEllerNattevåkÅrsaker.some(årsak => årsak === overseEtablertTilsynÅrsak);
 };
@@ -34,22 +40,23 @@ const GraderingMotTilsynDetaljer: FC<ownProps> = ({ graderingMotTilsyn, pleiebeh
 
   const utnullingPåGrunnAvBeredskapEllerNattevåk =
     overseEtablertTilsynÅrsak && harBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
-  const beredskapEllerNattevåkÅrsakTekst = utnullingPåGrunnAvBeredskapEllerNattevåk
-    ? getÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
-    : '';
+  const beredskapEllerNattevåkÅrsakTekst =
+    utnullingPåGrunnAvBeredskapEllerNattevåk && etablertTilsyn
+      ? getÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
+      : '';
 
   return (
     <>
-      <BodyShort as="div" className={`${styles.uttakDetaljer__detailItem} mt-2`} size="small">
+      <BodyShort as="div" className={`${styles['uttakDetaljer__detailItem']} mt-2`} size="small">
         Pleiebehov: {pleiebehov} %
       </BodyShort>
-      <BodyShort as="div" className={styles.uttakDetaljer__detailItem} size="small">
+      <BodyShort as="div" className={styles['uttakDetaljer__detailItem']} size="small">
         <HStack>
           {`- Etablert tilsyn: `}{' '}
           {!overseEtablertTilsynÅrsak ? (
             <>
               {etablertTilsyn} %
-              <HelpText className={styles.uttakDetaljer__data__questionMark} placement="right">
+              <HelpText className={styles['uttakDetaljer__data__questionMark']} placement="right">
                 {utnullingPåGrunnAvBeredskapEllerNattevåk
                   ? beredskapEllerNattevåkÅrsakTekst
                   : 'Etablert tilsyn under 10 % blir ikke medregnet.'}
@@ -60,10 +67,10 @@ const GraderingMotTilsynDetaljer: FC<ownProps> = ({ graderingMotTilsyn, pleiebeh
           )}
         </HStack>
       </BodyShort>
-      <BodyShort as="div" className={styles.uttakDetaljer__detailItem} size="small">
+      <BodyShort as="div" className={styles['uttakDetaljer__detailItem']} size="small">
         {`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}
       </BodyShort>
-      <BodyShort as="div" className={styles.uttakDetaljer__detailSum} size="small">
+      <BodyShort as="div" className={styles['uttakDetaljer__detailSum']} size="small">
         {`= ${tilgjengeligForSøker} % tilgjengelig til søker`}
       </BodyShort>
     </>

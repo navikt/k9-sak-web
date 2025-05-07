@@ -1,18 +1,23 @@
-import { FC } from 'react';
-import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
-import { beregnDagerTimer } from '../../../util/dateUtils';
-import { Arbeidstype, arbeidstypeTilVisning } from '../../../constants';
-import { Utbetalingsgrad } from '../../../types';
+import type { FC } from 'react';
 import classNames from 'classnames/bind';
+import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
+import {
+  UttakArbeidsforholdType,
+  type ArbeidsgiverOpplysningerDto,
+  type Utbetalingsgrader,
+  type UttaksperiodeInfo,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { beregnDagerTimer } from '@k9-sak-web/gui/utils/dateUtils.js';
 
 import styles from './uttakDetaljer.module.css';
+import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 
 const cx = classNames.bind(styles);
 
 interface ownProps {
-  alleArbeidsforhold;
-  utbetalingsgrader: Utbetalingsgrad[];
-  søkersTapteArbeidstid: number;
+  alleArbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
+  utbetalingsgrader: Utbetalingsgrader[]; // TODO: faktisk- og normalarbeidstid skal være en ISO 8601 streng
+  søkersTapteArbeidstid: UttaksperiodeInfo['søkersTapteArbeidstid'];
 }
 
 const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
@@ -32,19 +37,25 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
   return (
     <VStack>
-      <VStack gap="8" className={`${styles.uttakDetaljer__detailItem} mt-2`}>
+      <VStack gap="8" className={`${styles['uttakDetaljer__detailItem']} mt-2`}>
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
-            utbetalingsgradItem.arbeidsforhold.aktørId ||
-            utbetalingsgradItem.arbeidsforhold.orgnr ||
-            utbetalingsgradItem.arbeidsforhold.organisasjonsnummer;
-          const arbeidsforholdData = alleArbeidsforhold[arbeidsgiverIdentifikator];
+            utbetalingsgradItem?.arbeidsforhold?.aktørId || utbetalingsgradItem?.arbeidsforhold?.organisasjonsnummer;
+          const arbeidsforholdData = arbeidsgiverIdentifikator
+            ? alleArbeidsforhold[arbeidsgiverIdentifikator]
+            : undefined;
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
-          const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
-          const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
-          const fraværsprosent = beregnFravær(beregnetNormalArbeidstid, beregnetFaktiskArbeidstid);
+          const beregnetNormalArbeidstid = normalArbeidstid ? beregnDagerTimer(normalArbeidstid) : '-';
+          const beregnetFaktiskArbeidstid = faktiskArbeidstid ? beregnDagerTimer(faktiskArbeidstid) : '-';
+          const fraværsprosent =
+            beregnetNormalArbeidstid === '-' || beregnetFaktiskArbeidstid === '-'
+              ? '-'
+              : beregnFravær(beregnetNormalArbeidstid, beregnetFaktiskArbeidstid);
+
           const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
-          const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
+          const arbeidstype = arbeidsforhold?.type
+            ? arbeidstypeTilVisning[arbeidsforhold?.type as UttakArbeidsforholdType]
+            : undefined;
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 
           return (
@@ -57,7 +68,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   </Tag>
                 )}
               </BodyShort>
-              {arbeidsforhold.type !== Arbeidstype.FRILANSER && (
+              {arbeidsforhold?.type !== UttakArbeidsforholdType.FRILANSER && (
                 <BodyShort size="small" weight="semibold" className="leading-6">
                   {arbeidsforholdData?.navn || 'Mangler navn'} (
                   {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
@@ -78,7 +89,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   </span>
                   {faktiskOverstigerNormal && <span> {beregnetNormalArbeidstid}</span>} timer
                   {faktiskOverstigerNormal && (
-                    <HelpText className={styles.uttakDetaljer__data__questionMark} placement="right">
+                    <HelpText className={styles['uttakDetaljer__data__questionMark']} placement="right">
                       Overstigende timer tas ikke hensyn til, faktisk arbeidstid settes lik normal arbeidstid
                     </HelpText>
                   )}
@@ -92,11 +103,11 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
         })}
       </VStack>
       <Box>
-        <BodyShort size="small" className={styles.uttakDetaljer__detailSum}>
+        <BodyShort size="small" className={styles['uttakDetaljer__detailSum']}>
           = {søkersTapteArbeidstid}% tapt arbeidstid {harNyInntekt ? '*' : ''}
         </BodyShort>
         {harNyInntekt && (
-          <Detail className={styles.uttakDetaljer__detailtext}>
+          <Detail className={styles['uttakDetaljer__detailtext']}>
             * Tapt arbeidstid vurderes kun ut ifra aktiviteter på skjæringstidspunktet. Arbeidstid for nye aktiviteter
             blir ikke tatt med i utregningen av tapt arbeidstid.
           </Detail>
