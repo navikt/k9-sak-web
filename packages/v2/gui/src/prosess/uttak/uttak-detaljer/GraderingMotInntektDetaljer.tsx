@@ -4,7 +4,7 @@ import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import {
   InntektsforholdDtoType,
-  type ArbeidsgiverOpplysningerDto,
+  type ArbeidsgiverOversiktDto,
   type InntektgraderingPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
@@ -14,7 +14,7 @@ import styles from './uttakDetaljer.module.css';
 const cx = classNames.bind(styles);
 
 interface ownProps {
-  alleArbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
+  alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
   inntektsgradering: InntektgraderingPeriodeDto;
 }
 
@@ -32,7 +32,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
         {inntektsforhold.map(inntForhold => {
           const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;
           const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold[arbeidsgiverIdentifikator]
+            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
             : undefined;
           return (
             <Box
@@ -59,7 +59,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
         {inntektsforhold.map(inntForhold => {
           const { arbeidsgiverIdentifikator } = inntForhold;
           const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold[arbeidsgiverIdentifikator]
+            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
             : undefined;
           return (
             <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>

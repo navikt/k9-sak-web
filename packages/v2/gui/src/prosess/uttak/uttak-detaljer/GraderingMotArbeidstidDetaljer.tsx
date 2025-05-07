@@ -42,7 +42,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem?.arbeidsforhold?.aktørId || utbetalingsgradItem?.arbeidsforhold?.organisasjonsnummer;
           const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold[arbeidsgiverIdentifikator]
+            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
             : undefined;
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = normalArbeidstid ? beregnDagerTimer(normalArbeidstid) : '-';
