@@ -1,54 +1,55 @@
-import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
-import {
-  KlagevurderingOmgjør,
-  type KlagevurderingOmgjørType,
-} from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
-import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Label } from '@navikt/ds-react';
+import React, { ReactNode } from 'react';
 
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import {
-  ArbeidsforholdOverstyringDtoHandling,
-  BehandlingDtoStatus,
-  type TotrinnsArbeidsforholdDto,
-  type TotrinnsBeregningDto,
-} from '@navikt/k9-sak-typescript-client';
+  KlageVurdering,
+  Kodeverk,
+  KodeverkMedNavn,
+  TotrinnsBeregningDto,
+  TotrinnskontrollAksjonspunkt,
+  TotrinnskontrollArbeidsforhold,
+} from '@k9-sak-web/types';
+
 import hash from 'object-hash';
-import React, { type JSX, type ReactNode } from 'react';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes';
-import { type Behandling } from '../../types/Behandling';
-import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
-const buildVarigEndringBeregningText = (beregningDto: TotrinnsBeregningDto) =>
+const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number]) =>
   beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring
     ? `Det er fastsatt varig endret/nyoppstartet næring fom ${beregningDto.skjæringstidspunkt}.`
     : `Det er fastsatt at det ikke er varig endring i næring fom ${beregningDto.skjæringstidspunkt}.`;
 
-const buildVarigEndretArbeidssituasjonBeregningText = (beregningDto: TotrinnsBeregningDto) =>
+const buildVarigEndretArbeidssituasjonBeregningText = (
+  beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number],
+) =>
   beregningDto?.fastsattVarigEndring
     ? `Det er fastsatt varig endret arbeidssituasjon fom ${beregningDto.skjæringstidspunkt}.`
     : `Det er fastsatt at det ikke er varig endret arbeidssituasjon fom ${beregningDto.skjæringstidspunkt}.`;
 
 // Eksportert kun for test
 export const getFaktaOmArbeidsforholdMessages = (
-  arbeidforholdDto: TotrinnsArbeidsforholdDto,
-  arbeidsforholdHandlingTyper: KodeverkObject[],
+  arbeidforholdDto: TotrinnskontrollArbeidsforhold,
+  arbeidsforholdHandlingTyper: KodeverkMedNavn[],
 ) => {
-  const formattedMessages: JSX.Element[] = [];
+  const formattedMessages = [];
+  const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
     formattedMessages.push(<b>Søker er i permisjon.</b>);
     return formattedMessages;
   }
   if (arbeidforholdDto.brukPermisjon === false) {
     formattedMessages.push(<b> Søker er ikke i permisjon.</b>);
-    if (arbeidforholdDto.arbeidsforholdHandlingType === ArbeidsforholdOverstyringDtoHandling.BRUK) {
+    if (kode === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
     }
   }
-  const type = arbeidsforholdHandlingTyper.find(t => t.kode === arbeidforholdDto.arbeidsforholdHandlingType);
+  const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
   const melding = type !== undefined && type !== null ? type.navn : '';
   formattedMessages.push(<b> {melding}.</b>);
   return formattedMessages;
@@ -56,9 +57,9 @@ export const getFaktaOmArbeidsforholdMessages = (
 
 const buildArbeidsforholdText = (
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
-  arbeidsforholdHandlingTyper: KodeverkObject[],
+  arbeidsforholdHandlingTyper: KodeverkMedNavn[],
 ) =>
-  aksjonspunkt.arbeidsforholdDtos?.map(arbeidforholdDto => {
+  aksjonspunkt.arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
       <React.Fragment key={arbeidforholdDto.arbeidsforholdId}>
@@ -71,26 +72,20 @@ const buildArbeidsforholdText = (
         ))}
       </React.Fragment>
     );
-  }) ?? [];
+  });
 
 const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[] =>
-  aksjonspunkt.opptjeningAktiviteter?.map(aktivitet => (
+  aksjonspunkt.opptjeningAktiviteter.map(aktivitet => (
     <OpptjeningTotrinnText key={hash(aktivitet)} aktivitet={aktivitet} />
-  )) ?? [];
+  ));
 
 const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
-  const aksjonspunktText =
-    totrinnskontrollaksjonspunktTextCodes[
-      aksjonspunkt.aksjonspunktKode as keyof typeof totrinnskontrollaksjonspunktTextCodes
-    ];
+  const aksjonspunktText = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
   return aksjonspunktText ? aksjonspunktText : null;
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTexts =
-    bg.faktaOmBeregningTilfeller?.map(
-      kode => vurderFaktaOmBeregningTotrinnText[kode as keyof typeof vurderFaktaOmBeregningTotrinnText],
-    ) ?? [];
+  const aksjonspunktTexts = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
     <React.Fragment key={hash(aksjonspunktTexts)}>
       <Label size="small" as="p">
@@ -108,42 +103,35 @@ const getFaktaOmBeregningTextFlereGrunnlag = (beregningDtoer: TotrinnsBeregningD
   return beregningDtoer.map(bg => (bg.faktaOmBeregningTilfeller ? lagBgTilfelleTekst(bg) : null));
 };
 
-const omgjoerTekstMap: Record<KlagevurderingOmgjørType, string> = {
+const omgjoerTekstMap = {
   DELVIS_MEDHOLD_I_KLAGE: 'Delvis omgjøring, til gunst',
   GUNST_MEDHOLD_I_KLAGE: 'Omgjort til gunst',
   UGUNST_MEDHOLD_I_KLAGE: 'Omgjort til ugunst',
-  UDEFINERT: 'Udefinert',
 };
 
 const getTextForKlageHelper = (
-  klageVurderingResultat:
-    | KlagebehandlingDto['klageVurderingResultatNK']
-    | KlagebehandlingDto['klageVurderingResultatNFP'],
+  klageVurderingResultat: KlageVurdering['klageVurderingResultatNK'] | KlageVurdering['klageVurderingResultatNFP'],
 ) => {
   let aksjonspunktText = '';
-  if (!klageVurderingResultat) {
-    return aksjonspunktText;
-  }
   switch (klageVurderingResultat.klageVurdering) {
-    case Klagevurdering.STADFESTE_YTELSESVEDTAK:
+    case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
       aksjonspunktText = 'Stadfest ytelsesvedtak';
       break;
-    case Klagevurdering.OPPHEVE_YTELSESVEDTAK:
+    case klageVurderingCodes.OPPHEVE_YTELSESVEDTAK:
       aksjonspunktText = 'Opphev ytelsesvedtak';
       break;
-    case Klagevurdering.AVVIS_KLAGE:
+    case klageVurderingCodes.AVVIS_KLAGE:
       aksjonspunktText = 'Klagen avvist fordi den ikke oppfyller formkravene';
       break;
-    case Klagevurdering.HJEMSENDE_UTEN_Å_OPPHEVE:
+    case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
       aksjonspunktText = 'Hjemsend uten å oppheve';
       break;
-    case Klagevurdering.MEDHOLD_I_KLAGE:
+    case klageVurderingCodes.MEDHOLD_I_KLAGE:
       if (
         klageVurderingResultat.klageVurderingOmgjoer &&
-        klageVurderingResultat.klageVurderingOmgjoer !== KlagevurderingOmgjør.UDEFINERT
+        klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoerCodes.UDEFINERT
       ) {
-        aksjonspunktText =
-          omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer as keyof typeof KlagevurderingOmgjør];
+        aksjonspunktText = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
         break;
       }
       aksjonspunktText = 'Vedtaket er omgjort';
@@ -154,8 +142,8 @@ const getTextForKlageHelper = (
   return aksjonspunktText;
 };
 
-const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingDto, behandlingStaus: Behandling['status']) => {
-  if (behandlingStaus === BehandlingDtoStatus.FATTER_VEDTAK) {
+const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: Kodeverk) => {
+  if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
     }
@@ -167,39 +155,38 @@ const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingDto, behandlin
 };
 
 const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.BEHANDLE_KLAGE_NFP ||
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.BEHANDLE_KLAGE_NK ||
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
+  aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP ||
+  aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ||
+  aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
+  aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 const getAksjonspunkttekst = (
-  behandlingStatus: Behandling['status'],
-  arbeidsforholdHandlingTyper: KodeverkObject[],
+  klagebehandlingVurdering: KlageVurdering,
+  behandlingStatus: Kodeverk,
+  arbeidsforholdHandlingTyper: KodeverkMedNavn[],
+  erTilbakekreving: boolean,
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
-  klagebehandlingVurdering?: KlagebehandlingDto,
 ): ReactNode[] | null => {
-  if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
     return buildOpptjeningText(aksjonspunkt);
   }
-  if (aksjonspunkt.beregningDtoer) {
-    if (
-      aksjonspunkt.aksjonspunktKode ===
-      AksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
-    ) {
-      return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndringBeregningText(dto));
-    }
-    if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON) {
-      return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndretArbeidssituasjonBeregningText(dto));
-    }
-    if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
-      return getFaktaOmBeregningTextFlereGrunnlag(aksjonspunkt.beregningDtoer);
-    }
+  if (
+    aksjonspunkt.aksjonspunktKode ===
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+  ) {
+    return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndringBeregningText(dto));
+  }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON) {
+    return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndretArbeidssituasjonBeregningText(dto));
+  }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
+    return getFaktaOmBeregningTextFlereGrunnlag(aksjonspunkt.beregningDtoer);
   }
 
-  if (erKlageAksjonspunkt(aksjonspunkt) && klagebehandlingVurdering) {
+  if (erKlageAksjonspunkt(aksjonspunkt)) {
     return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
   }
-  if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
     return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
   }
 
