@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import {
   UttakArbeidsforholdType,
-  type ArbeidsgiverOpplysningerDto,
+  type ArbeidsgiverOversiktDto,
   type Utbetalingsgrader,
   type UttaksperiodeInfo,
 } from '@k9-sak-web/backend/k9sak/generated';
@@ -15,7 +15,7 @@ import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 const cx = classNames.bind(styles);
 
 interface ownProps {
-  alleArbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
+  alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
   utbetalingsgrader: Utbetalingsgrader[]; // TODO: faktisk- og normalarbeidstid skal være en ISO 8601 streng
   søkersTapteArbeidstid: UttaksperiodeInfo['søkersTapteArbeidstid'];
 }
