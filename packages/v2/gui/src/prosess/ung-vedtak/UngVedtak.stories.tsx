@@ -1,4 +1,4 @@
-import { BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
+import { BehandlingDtoStatus, BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { KodeverkProvider } from '../../kodeverk';
@@ -37,6 +37,7 @@ export const InnvilgetStory: Story = {
         type: 'INNVILGET',
       },
       id: 3000002,
+      status: BehandlingDtoStatus.AVSLUTTET,
     },
     vilkår: [
       {
@@ -90,6 +91,7 @@ export const AvslåttStory: Story = {
         type: 'AVSLÅTT',
       },
       id: 3000001,
+      status: BehandlingDtoStatus.AVSLUTTET,
     },
     readOnly: false,
   },
