@@ -5,10 +5,15 @@ import type { Period } from '@navikt/ft-utils';
 import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
+import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
+import {
+  type KodeverdiSomObjektAvslagsårsak,
+  KodeverdiSomObjektAvslagsårsakKilde,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -19,16 +24,19 @@ const NødvendigOpplæringForm = ({
   vurdering,
   setRedigering,
   redigering,
+  nullstillValgtVurdering,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
   setRedigering: (redigering: boolean) => void;
   redigering: boolean;
+  nullstillValgtVurdering: () => void;
 }) => {
   const { løsAksjonspunkt9302, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     dokumentertOpplæring: string;
     nødvendigOpplæring: string;
     begrunnelse: string;
+    avslagsårsak?: string;
     periode?: {
       fom: Date;
       tom: Date;
@@ -40,6 +48,25 @@ const NødvendigOpplæringForm = ({
       nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
     },
   });
+  const K9Kodeverkoppslag = useK9Kodeverkoppslag();
+
+  const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
+    K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
+
+  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
+
+  useEffect(() => {
+    if (opplæringIkkeDokumentertMedLegeerklæring) {
+      formMethods.setValue('nødvendigOpplæring', '');
+      formMethods.setValue('begrunnelse', '');
+      formMethods.setValue(
+        'avslagsårsak',
+        hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.MANGLENDE_DOKUMENTASJON).kode,
+      );
+    } else {
+      formMethods.setValue('avslagsårsak', undefined);
+    }
+  }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
 
   const nødvendigOpplæring = formMethods.watch('nødvendigOpplæring');
   return (
@@ -56,17 +83,23 @@ const NødvendigOpplæringForm = ({
               fom: dayjs(periode?.fom).format('YYYY-MM-DD'),
               tom: dayjs(periode?.tom).format('YYYY-MM-DD'),
             },
-            begrunnelse: data.begrunnelse,
+            begrunnelse: data.begrunnelse ? data.begrunnelse : null,
             nødvendigOpplæring: data.nødvendigOpplæring === 'ja',
             dokumentertOpplæring: data.dokumentertOpplæring === 'ja',
+            avslagsårsak: data.avslagsårsak,
           });
+          nullstillValgtVurdering();
         }}
       >
         <div className="flex flex-col gap-6">
           <Controller
             control={formMethods.control}
             name="dokumentertOpplæring"
-            rules={{ validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }}
+            rules={
+              opplæringIkkeDokumentertMedLegeerklæring
+                ? undefined
+                : { validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }
+            }
             render={({ field }) => (
               <RadioGroup
                 legend="Er nødvendig opplæring dokumentert med legeerklæring?"
@@ -82,18 +115,21 @@ const NødvendigOpplæringForm = ({
           />
           <div>
             <Label htmlFor="begrunnelse" size="small">
-              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet som følge av
+              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
               <Lovreferanse> § 9-14</Lovreferanse>
             </Label>
             <Textarea
               {...formMethods.register('begrunnelse', {
-                validate: value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
+                validate: opplæringIkkeDokumentertMedLegeerklæring
+                  ? undefined
+                  : value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
               })}
               readOnly={readOnly}
               size="small"
               label=""
               id="begrunnelse"
               error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
+              disabled={opplæringIkkeDokumentertMedLegeerklæring}
               description={
                 <ReadMore header="Hva skal vurderingen inneholde?" size="small">
                   <BodyShort size="small">
@@ -121,7 +157,12 @@ const NødvendigOpplæringForm = ({
           <Controller
             control={formMethods.control}
             name="nødvendigOpplæring"
-            rules={{ validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }}
+            rules={
+              opplæringIkkeDokumentertMedLegeerklæring
+                ? undefined
+                : { validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }
+            }
+            disabled={opplæringIkkeDokumentertMedLegeerklæring}
             render={({ field }) => (
               <RadioGroup
                 legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
@@ -153,7 +194,44 @@ const NødvendigOpplæringForm = ({
               readOnly={readOnly}
             />
           )}
-          {/* nødvendigOpplæring === 'nei' && <Avslagårsak vurdering={vurdering} /> */}
+          {nødvendigOpplæring === 'nei' && (
+            <Controller
+              control={formMethods.control}
+              name="avslagsårsak"
+              rules={
+                opplæringIkkeDokumentertMedLegeerklæring
+                  ? undefined
+                  : {
+                      validate: value => {
+                        return value ===
+                          hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).kode ||
+                          value ===
+                            hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).kode
+                          ? undefined
+                          : 'Avslagsårsak er påkrevd';
+                      },
+                    }
+              }
+              render={({ field }) => (
+                <RadioGroup
+                  {...field}
+                  legend="Avslagsårsak"
+                  readOnly={readOnly}
+                  size="small"
+                  error={formMethods.formState.errors.avslagsårsak?.message as string | undefined}
+                >
+                  <Radio value={hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).kode}>
+                    {hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).navn}
+                  </Radio>
+                  <Radio
+                    value={hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).kode}
+                  >
+                    {hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).navn}
+                  </Radio>
+                </RadioGroup>
+              )}
+            />
+          )}
           {!readOnly && (
             <div className="flex gap-4">
               <Button variant="primary" type="submit" size="small">
@@ -171,25 +249,5 @@ const NødvendigOpplæringForm = ({
     </>
   );
 };
-
-/* const Avslagårsak = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
-  const formMethods = useFormContext();
-
-  return (
-    <Controller
-      control={formMethods.control}
-      name="avslagårsak"
-      render={({ field }) => (
-        <RadioGroup legend="Avslagsårsak:" {...field}>
-          <Radio value="opplæringen-er-ikke-nødvendig">
-            Opplæringen er ikke nødvendig for å kunne ta seg av og behandle barnet
-          </Radio>
-          <Radio value="kurset-inneholder-ikke-opplæring">Kurset inneholder ikke opplæring</Radio>
-          <Radio value="annet">Annet</Radio>
-        </RadioGroup>
-      )}
-    />
-  );
-}; */
 
 export default NødvendigOpplæringForm;

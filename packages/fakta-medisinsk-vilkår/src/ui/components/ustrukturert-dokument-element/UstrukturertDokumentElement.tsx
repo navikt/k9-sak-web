@@ -1,11 +1,7 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import {
-  ContentWithTooltip,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
-  WarningIcon,
-} from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { ExclamationmarkTriangleFillIcon, PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
+import { Tooltip } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import { Dokument, dokumentLabel } from '../../../types/Dokument';
 import styles from './ustrukturertDokumentElement.module.css';
 
@@ -18,24 +14,19 @@ const UstrukturertDokumentElement = ({
 }: UstrukturertDokumentElementProps): JSX.Element => {
   const parterLabel = () => {
     if (annenPartErKilde) {
-      return (
-        <ContentWithTooltip tooltipText="Annen part" inline>
-          <OnePersonOutlineGray />
-        </ContentWithTooltip>
-      );
+      return <PersonIcon fontSize="1.5rem" title="Annen part" />;
     }
-    return (
-      <ContentWithTooltip tooltipText="Søker" inline>
-        <OnePersonIconGray />
-      </ContentWithTooltip>
-    );
+    return <PersonFillIcon fontSize="1.5rem" title="Søker" />;
   };
 
   return (
     <div className={styles.ustrukturertDokumentElement}>
-      <ContentWithTooltip tooltipText="Dokumentet må håndteres">
-        <WarningIcon />
-      </ContentWithTooltip>
+      <ExclamationmarkTriangleFillIcon
+        title="Dokumentet må håndteres"
+        fontSize="1.5rem"
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+      />
+
       <div className={styles.ustrukturertDokumentElement__texts}>
         <p className={styles.ustrukturertDokumentElement__texts__type} id="ikkeKlassifisertText">
           <span className={styles.visuallyHidden}>Type</span>
@@ -43,9 +34,9 @@ const UstrukturertDokumentElement = ({
         </p>
         <span className={styles.ustrukturertDokumentElement__texts__date}>
           <span className={styles.visuallyHidden}>Datert</span>
-          <ContentWithTooltip inline tooltipText="Dato dokumentet ble mottatt">
-            {`${prettifyDateString(datert || mottattDato)}*`}
-          </ContentWithTooltip>
+          <Tooltip content="Dato dokumentet ble mottatt">
+            <div>{`${prettifyDateString(datert || mottattDato)}*`}</div>
+          </Tooltip>
         </span>
         <span className={styles.ustrukturertDokumentElement__texts__part}>
           <span className={styles.visuallyHidden}>Part</span>

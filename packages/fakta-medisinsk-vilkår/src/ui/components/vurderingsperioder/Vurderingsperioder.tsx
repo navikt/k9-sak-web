@@ -1,5 +1,5 @@
-import { ContentWithTooltip, OnePersonIconGray } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@fpsak-frontend/utils';
+import { PersonFillIcon } from '@navikt/aksel-icons';
 import React, { type JSX } from 'react';
 import styles from './vurderingsperioder.module.css';
 
@@ -34,9 +34,7 @@ const Vurderingsperioder = ({
       {visParterLabel && (
         <div className={styles.vurderingsperioder__texts__parterIcon}>
           <span className={styles.visuallyHidden}>Parter</span>
-          <ContentWithTooltip tooltipText="Søker">
-            <OnePersonIconGray />
-          </ContentWithTooltip>
+          <PersonFillIcon fontSize="1.5rem" title="Søker" />
         </div>
       )}
     </div>

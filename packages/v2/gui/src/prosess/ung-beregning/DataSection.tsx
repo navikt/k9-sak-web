@@ -1,3 +1,5 @@
+import type { UngdomsprogramInformasjonDto } from '@k9-sak-web/backend/ungsak/generated';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   CalendarIcon,
   ChevronDownIcon,
@@ -69,8 +71,16 @@ const BeregningDetails = ({
   </VStack>
 );
 
-export const DataSection = () => {
+interface DataSectionProps {
+  ungdomsprogramInformasjon: UngdomsprogramInformasjonDto | undefined;
+}
+
+export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => {
   const [isUtregningExpanded, setIsUtregningExpanded] = useState(false);
+  const dagerIgjen =
+    ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt != null
+      ? 260 - ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt
+      : null;
   return (
     <HGrid gap="5" columns={3}>
       <DataBox maxHeight="185px">
@@ -80,8 +90,14 @@ export const DataSection = () => {
         </HStack>
         <HStack gap="4">
           <BodyShort size="small">
-            <b>Startdato:</b> xxx
+            <b>Startdato:</b>{' '}
+            {ungdomsprogramInformasjon?.startdato ? formatDate(ungdomsprogramInformasjon?.startdato) : ''}
           </BodyShort>
+          {ungdomsprogramInformasjon?.maksdatoForDeltakelse && (
+            <BodyShort size="small">
+              <b>Maksdato for deltakelse:</b> {formatDate(ungdomsprogramInformasjon?.maksdatoForDeltakelse)}
+            </BodyShort>
+          )}
         </HStack>
       </DataBox>
       <DataBox maxHeight="185px">
@@ -97,11 +113,17 @@ export const DataSection = () => {
           <Box marginBlock="0 2">
             <HStack justify="space-between">
               <BodyShort size="small" id="progress-bar-label-medium">
-                0
+                {ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt ?? 0} av 260
               </BodyShort>
+              {dagerIgjen != null && <BodyShort size="small">{dagerIgjen} dager igjen</BodyShort>}
             </HStack>
           </Box>
-          <ProgressBar value={0} valueMax={260} size="medium" aria-labelledby="progress-bar-label-medium" />
+          <ProgressBar
+            value={ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt ?? 0}
+            valueMax={260}
+            size="medium"
+            aria-labelledby="progress-bar-label-medium"
+          />
         </div>
       </DataBox>
       <DataBox>

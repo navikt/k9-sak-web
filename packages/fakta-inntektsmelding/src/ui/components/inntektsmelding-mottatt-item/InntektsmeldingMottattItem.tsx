@@ -1,5 +1,5 @@
+import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
-import { GreenCheckIconFilled } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 import { DokumentOpplysninger } from '../../../types/ContainerContract';
@@ -14,7 +14,7 @@ interface MottattContentProps {
 
 const MottattContent = ({ dokumentLink }: MottattContentProps) => (
   <div className={styles.mottattLabel}>
-    <GreenCheckIconFilled />
+    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
     <div>
       <span className={styles.mottattLabel__text}>Mottatt</span>
       <Link className={styles.mottattLabel__link} href={dokumentLink} target="_blank">
