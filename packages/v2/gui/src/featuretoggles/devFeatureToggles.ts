@@ -26,5 +26,4 @@ export const devFeatureToggles = {
   OVERSTYR_BEREGNING: false,
   UTVIDET_VARSELFELT: false,
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: true,
-  VIS_ALLE_UNHANDLED_REJECTIONS: true,
 } satisfies FeatureToggles;

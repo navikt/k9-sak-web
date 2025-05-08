@@ -24,5 +24,4 @@ export interface FeatureToggles {
   BRUK_V2_FAKTA_INSTITUSJON: boolean;
   BRUK_V2_VILKAR_OVERSTYRING: boolean;
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: boolean;
-  VIS_ALLE_UNHANDLED_REJECTIONS: boolean;
 }

@@ -26,5 +26,4 @@ export const prodFeatureToggles = {
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
   OPPLAERINGSPENGER: false,
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: false,
-  VIS_ALLE_UNHANDLED_REJECTIONS: false,
 } satisfies FeatureToggles;

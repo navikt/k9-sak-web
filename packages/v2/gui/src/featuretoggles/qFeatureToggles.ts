@@ -26,5 +26,4 @@ export const qFeatureToggles = {
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
   OPPLAERINGSPENGER: false,
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: true,
-  VIS_ALLE_UNHANDLED_REJECTIONS: true,
 } satisfies FeatureToggles;
