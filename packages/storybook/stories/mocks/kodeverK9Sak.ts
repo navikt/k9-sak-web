@@ -1802,7 +1802,7 @@ export const kodeverkK9Sak = {
     {
       kode: 'FAKTA_OM_BEREGNING',
       kodeverk: 'SKJERMLENKE_TYPE',
-      navn: 'Fakta om beregning',
+      navn: 'Beregning',
     },
     {
       kode: 'PUNKT_FOR_MAN_VILKÅRSVURDERING',

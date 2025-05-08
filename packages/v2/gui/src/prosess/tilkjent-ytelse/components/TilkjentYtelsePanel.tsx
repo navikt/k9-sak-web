@@ -1,9 +1,9 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Heading } from '@navikt/ds-react';
 import type { AksjonspunktDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
@@ -44,6 +44,7 @@ interface PureOwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
+  showAndelDetails?: boolean;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -55,6 +56,7 @@ const TilkjentYtelsePanelImpl = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   personopplysninger,
+  showAndelDetails,
 }: PureOwnProps) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -72,6 +74,7 @@ const TilkjentYtelsePanelImpl = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           kodeverkNavnFraKode={kodeverkNavnFraKode}
           personopplysninger={personopplysninger}
+          showAndelDetails={showAndelDetails}
         />
       )}
 

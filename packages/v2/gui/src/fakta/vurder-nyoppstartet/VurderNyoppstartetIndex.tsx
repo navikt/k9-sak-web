@@ -3,7 +3,7 @@ import { Loader } from '@navikt/ds-react';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import NetworkErrorPage from '../../sak/feilmeldinger/NetworkErrorPage.js';
+import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
 
 interface VurderNyoppstartetIndexProps {

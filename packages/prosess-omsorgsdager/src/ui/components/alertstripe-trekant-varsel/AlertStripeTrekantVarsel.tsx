@@ -1,6 +1,5 @@
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-import React from 'react';
-import WarningIcon from '../../icons/WarningIcon';
 import styles from './alertStripeTrekantVarsel.module.css';
 
 interface IconWithTextProps {
@@ -10,7 +9,10 @@ interface IconWithTextProps {
 const AlertStripeTrekantVarsel = ({ text }: IconWithTextProps) => (
   <div className={styles.alertstripe}>
     <div className={styles.alertstripe_ikon}>
-      <WarningIcon />
+      <ExclamationmarkTriangleFillIcon
+        fontSize="1.5rem"
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+      />
     </div>
     <BodyShort size="small" className={styles.alertstripe_tekst} as="div">
       {text}

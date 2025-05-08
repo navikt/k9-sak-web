@@ -1,14 +1,11 @@
-import * as React from 'react';
 import styles from './PillIcon.module.css';
-
-import type { JSX } from 'react';
 
 interface PillIconProps {
   text: string;
   type: 'success' | 'warning' | 'info';
 }
 
-const PillIcon = ({ text, type }: PillIconProps): JSX.Element => {
+const PillIcon = ({ text, type }: PillIconProps) => {
   const style = {
     success: styles['PillIcon--success'],
     warning: styles['PillIcon--warning'],
