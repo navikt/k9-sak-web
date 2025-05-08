@@ -47,16 +47,16 @@ const GraderingMotTilsynDetaljer: FC<ownProps> = ({ graderingMotTilsyn, pleiebeh
 
   return (
     <>
-      <BodyShort as="div" className={`${styles['uttakDetaljer__detailItem']} mt-2`} size="small">
+      <BodyShort as="div" className={`${styles.uttakDetaljerDetailItem} mt-2`} size="small">
         Pleiebehov: {pleiebehov} %
       </BodyShort>
-      <BodyShort as="div" className={styles['uttakDetaljer__detailItem']} size="small">
+      <BodyShort as="div" className={styles.uttakDetaljerDetailItem} size="small">
         <HStack>
           {`- Etablert tilsyn: `}{' '}
           {!overseEtablertTilsynÅrsak ? (
             <>
               {etablertTilsyn} %
-              <HelpText className={styles['uttakDetaljer__data__questionMark']} placement="right">
+              <HelpText className={styles.uttakDetaljerDataQuestionMark} placement="right">
                 {utnullingPåGrunnAvBeredskapEllerNattevåk
                   ? beredskapEllerNattevåkÅrsakTekst
                   : 'Etablert tilsyn under 10 % blir ikke medregnet.'}
@@ -67,10 +67,10 @@ const GraderingMotTilsynDetaljer: FC<ownProps> = ({ graderingMotTilsyn, pleiebeh
           )}
         </HStack>
       </BodyShort>
-      <BodyShort as="div" className={styles['uttakDetaljer__detailItem']} size="small">
+      <BodyShort as="div" className={styles.uttakDetaljerDetailItem} size="small">
         {`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}
       </BodyShort>
-      <BodyShort as="div" className={styles['uttakDetaljer__detailSum']} size="small">
+      <BodyShort as="div" className={styles.uttakDetaljerDetailSum} size="small">
         {`= ${tilgjengeligForSøker} % tilgjengelig til søker`}
       </BodyShort>
     </>

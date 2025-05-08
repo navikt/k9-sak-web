@@ -21,8 +21,8 @@ const UttakUtregning = ({ heading, children, highlight, headingPostContent }: Ut
   });
   return (
     <div className={uttakUtregningCls}>
-      <div className={styles['uttakUtregning__headingContainer']}>
-        <div className={styles['uttakUtregning__headingIcon']}>{highlight && <GreenCheckIcon size={19} />}</div>
+      <div className={styles.uttakUtregningHeadingContainer}>
+        <div className={styles.uttakUtregningHeadingIcon}>{highlight && <GreenCheckIcon size={19} />}</div>
         <Label size="small" as="p">
           {heading}
         </Label>

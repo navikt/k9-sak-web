@@ -37,7 +37,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
   return (
     <VStack>
-      <VStack gap="8" className={`${styles['uttakDetaljer__detailItem']} mt-2`}>
+      <VStack gap="8" className={`${styles.uttakDetaljerDetailItem} mt-2`}>
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem?.arbeidsforhold?.aktørId || utbetalingsgradItem?.arbeidsforhold?.organisasjonsnummer;
@@ -89,7 +89,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   </span>
                   {faktiskOverstigerNormal && <span> {beregnetNormalArbeidstid}</span>} timer
                   {faktiskOverstigerNormal && (
-                    <HelpText className={styles['uttakDetaljer__data__questionMark']} placement="right">
+                    <HelpText className={styles.uttakDetaljerDataQuestionMark} placement="right">
                       Overstigende timer tas ikke hensyn til, faktisk arbeidstid settes lik normal arbeidstid
                     </HelpText>
                   )}
@@ -103,11 +103,11 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
         })}
       </VStack>
       <Box>
-        <BodyShort size="small" className={styles['uttakDetaljer__detailSum']}>
+        <BodyShort size="small" className={styles.uttakDetaljerDetailSum}>
           = {søkersTapteArbeidstid}% tapt arbeidstid {harNyInntekt ? '*' : ''}
         </BodyShort>
         {harNyInntekt && (
-          <Detail className={styles['uttakDetaljer__detailtext']}>
+          <Detail className={styles.uttakDetaljerDetailtext}>
             * Tapt arbeidstid vurderes kun ut ifra aktiviteter på skjæringstidspunktet. Arbeidstid for nye aktiviteter
             blir ikke tatt med i utregningen av tapt arbeidstid.
           </Detail>

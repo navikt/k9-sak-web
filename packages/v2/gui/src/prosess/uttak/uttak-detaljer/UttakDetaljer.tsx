@@ -28,7 +28,7 @@ const cx = classNames.bind(styles);
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
   return funnedeÅrsaker.map(årsak => (
-    <Tag variant="error" key={årsak.årsak} className={styles['uttakDetaljer__etikett']}>
+    <Tag variant="error" key={årsak.årsak} className={styles.uttakDetaljer}>
       {årsak.tekst}
     </Tag>
   ));
@@ -37,7 +37,7 @@ const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
 const getTekstVedBarnetsDødsfall = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
   return funnedeÅrsaker.map(årsak => (
-    <div key={årsak.årsak} className={styles['uttakDetaljer__etikettBarnetsDødsfall']}>
+    <div key={årsak.årsak} className={styles.uttakDetaljer}>
       {årsak.tekst}
     </div>
   ));
@@ -67,7 +67,7 @@ const utenlandsoppholdInfo = (
   }
 
   return (
-    <Tag variant="success" className={styles['uttakDetaljer__etikett']}>
+    <Tag variant="success" className={styles.uttakDetaljer}>
       {utenlandsoppholdTekst(utenlandsopphold, kodeverkNavnFraKode)}
     </Tag>
   );
@@ -149,7 +149,7 @@ const UttakDetaljer = ({
             title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
-              <Box className={styles['uttakDetaljer__tag']}>
+              <Box className={styles.uttakDetaljerTag}>
                 <Tag size="medium" variant="alt3-moderate">
                   <CheckmarkIcon />
                   Gir lavest pleiepengegrad
@@ -160,7 +160,7 @@ const UttakDetaljer = ({
               <HandHeartIcon className="!ml-[-4px]" />
               <Heading size="xsmall"> Gradering mot tilsyn</Heading>
               {harBarnetsDødsfallÅrsak && (
-                <HelpText placement="right" wrapperClassName={styles['uttakDetaljer__data__questionMark']}>
+                <HelpText placement="right" wrapperClassName={styles.uttakDetaljerDataQuestionMark}>
                   Gradering mot tilsyn blir ikke medregnet på grunn av barnets dødsfall.
                 </HelpText>
               )}
@@ -178,7 +178,7 @@ const UttakDetaljer = ({
           title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
-            <Box className={styles['uttakDetaljer__tag']}>
+            <Box className={styles.uttakDetaljerTag}>
               <Tag size="medium" variant="alt3-moderate">
                 <CheckmarkIcon />
                 Gir lavest pleiepengegrad
@@ -206,7 +206,7 @@ const UttakDetaljer = ({
             title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (
-              <Box className={styles['uttakDetaljer__tag']}>
+              <Box className={styles.uttakDetaljerTag}>
                 <Tag size="medium" variant="alt3-moderate">
                   <CheckmarkIcon />
                   Gir lavest pleiepengegrad
