@@ -19,6 +19,7 @@ class PanelDef extends ProsessStegPanelDef {
   }) => (
     <Uttak
       uuid={behandling.uuid}
+      behandling={behandling}
       uttaksperioder={uttaksperioder}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -30,7 +31,11 @@ class PanelDef extends ProsessStegPanelDef {
     />
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
+    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+    aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
