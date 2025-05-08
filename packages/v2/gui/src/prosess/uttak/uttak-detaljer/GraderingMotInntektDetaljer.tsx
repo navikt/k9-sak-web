@@ -1,36 +1,43 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
+import classNames from 'classnames/bind';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
+import {
+  InntektsforholdDtoType,
+  type ArbeidsgiverOversiktDto,
+  type InntektgraderingPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
-import { ArbeidsgiverOpplysninger, Inntektsgradering } from '../../../types';
-import classNames from 'classnames/bind';
-import { Arbeidstype } from '../../../constants';
 
 import styles from './uttakDetaljer.module.css';
 
 const cx = classNames.bind(styles);
 
 interface ownProps {
-  alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
-  inntektsgradering: Inntektsgradering;
+  alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
+  inntektsgradering: InntektgraderingPeriodeDto;
 }
 
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntektsgradering }) => {
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
-  const beregningsgrunnlag = tilNOK.format(inntektsgradering.beregningsgrunnlag);
-  const løpendeInntekt = tilNOK.format(inntektsgradering.løpendeInntekt);
-  const bortfaltInntekt = tilNOK.format(inntektsgradering.bortfaltInntekt);
+  const beregningsgrunnlag = inntektsgradering.beregningsgrunnlag
+    ? tilNOK.format(inntektsgradering.beregningsgrunnlag)
+    : '-';
+  const løpendeInntekt = inntektsgradering.løpendeInntekt ? tilNOK.format(inntektsgradering.løpendeInntekt) : '-';
+  const bortfaltInntekt = inntektsgradering.bortfaltInntekt ? tilNOK.format(inntektsgradering.bortfaltInntekt) : '-';
 
   return (
-    <VStack className={`${styles.uttakDetaljer__detailItem} mt-2`}>
+    <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
         {inntektsforhold.map(inntForhold => {
           const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = alleArbeidsforhold[arbeidsgiverIdentifikator];
+          const arbeidsforholdData = arbeidsgiverIdentifikator
+            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
+            : undefined;
           return (
             <Box
               key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
-              className={styles.uttakDetaljer__beregningFirma}
+              className={styles.uttakDetaljerBeregningFirma}
             >
               <BodyShort size="small" weight="semibold" className="leading-6">
                 {arbeidsforholdData?.navn || 'Mangler navn'} (
@@ -41,7 +48,9 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                   </Tag>
                 )}
               </BodyShort>
-              <BodyShort size="small">Inntekt: {tilNOK.format(bruttoInntekt - løpendeInntekt)}</BodyShort>
+              <BodyShort size="small">
+                Inntekt: {bruttoInntekt && løpendeInntekt ? tilNOK.format(bruttoInntekt - løpendeInntekt) : '-'}
+              </BodyShort>
             </Box>
           );
         })}
@@ -49,12 +58,14 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
       <UttakDetaljerEkspanderbar title={`Utbetalt lønn: ${løpendeInntekt}`}>
         {inntektsforhold.map(inntForhold => {
           const { arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = alleArbeidsforhold[arbeidsgiverIdentifikator];
+          const arbeidsforholdData = arbeidsgiverIdentifikator
+            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
+            : undefined;
           return (
             <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
-              <Box className={`${styles.uttakDetaljer__beregningFirma}`}>
+              <Box className={styles.uttakDetaljerBeregningFirma}>
                 <BodyShort size="small" weight="semibold">
-                  {inntForhold.type !== Arbeidstype.FRILANSER
+                  {inntForhold.type !== InntektsforholdDtoType.FRILANSER
                     ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
                     : 'Frilanser'}{' '}
                   {inntForhold.erNytt && (
@@ -64,13 +75,13 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                   )}
                 </BodyShort>
                 <BodyShort className="leading-6" size="small">
-                  Inntekt: {tilNOK.format(inntForhold.bruttoInntekt)}
+                  Inntekt: {inntForhold.bruttoInntekt ? tilNOK.format(inntForhold.bruttoInntekt) : '-'}
                 </BodyShort>
                 <BodyShort className="leading-6" size="small">
                   Jobber: {inntForhold.arbeidstidprosent} %
                 </BodyShort>
                 <BodyShort className="leading-6" size="small">
-                  = {tilNOK.format(inntForhold.løpendeInntekt)} i utbetalt lønn
+                  = {inntForhold.løpendeInntekt ? tilNOK.format(inntForhold.løpendeInntekt) : '-'} i utbetalt lønn
                 </BodyShort>
               </Box>
             </React.Fragment>
@@ -78,23 +89,23 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
         })}
       </UttakDetaljerEkspanderbar>
       <UttakDetaljerEkspanderbar title={`Tapt inntekt: ${bortfaltInntekt}`}>
-        <Box className={styles.uttakDetaljer__taptInntektBeregning}>
+        <Box className={styles.uttakDetaljerTaptInntektBeregning}>
           <BodyShort as="div" size="small">
-            <span className={styles.uttakDetaljer__taptInntektAnnotasjon}></span>
+            <span className={styles.uttakDetaljerTaptInntektAnnotasjon}></span>
             {beregningsgrunnlag} (beregningsgrunnlag)
           </BodyShort>
-          <BodyShort as="div" size="small" className={styles.uttakDetaljer__beregningStrek}>
-            <span className={styles.uttakDetaljer__taptInntektAnnotasjon}>-</span>
+          <BodyShort as="div" size="small" className={styles.uttakDetaljerBeregningStrek}>
+            <span className={styles.uttakDetaljerTaptInntektAnnotasjon}>-</span>
             {løpendeInntekt} (utbetalt lønn)
           </BodyShort>
-          <BodyShort as="div" size="small" className={styles.uttakDetaljer__beregningSum}>
-            <span className={styles.uttakDetaljer__taptInntektAnnotasjon}>=</span>
+          <BodyShort as="div" size="small" className={styles.uttakDetaljerBeregningSum}>
+            <span className={styles.uttakDetaljerTaptInntektAnnotasjon}>=</span>
             {bortfaltInntekt} i tapt inntekt
           </BodyShort>
         </Box>
       </UttakDetaljerEkspanderbar>
 
-      <VStack className={styles.uttakDetaljer__nyGradering}>
+      <VStack className={styles.uttakDetaljerNyGradering}>
         <BodyShort as="div" size="small" weight="semibold" className="leading-6">
           Ny gradering
         </BodyShort>
