@@ -8,7 +8,7 @@ class NødvendigOpplæringPanelDef extends ProsessStegPanelDef {
 
   getId = () => 'NØDVENDIG_OPPLÆRING';
 
-  getTekstKode = () => 'Nødvendig opplæring';
+  getTekstKode = () => 'Opplæring og reisetid';
 
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
@@ -16,7 +16,7 @@ class NødvendigOpplæringPanelDef extends ProsessStegPanelDef {
     return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, usev2Panel: true });
   };
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPLÆRING];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPLÆRING, aksjonspunktCodes.VURDER_REISETID];
 
   getVilkarKoder = () => [vilkarType.NØDVENDIG_OPPLÆRING];
 
