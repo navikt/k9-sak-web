@@ -18,8 +18,8 @@ const UttakDetaljerEkspanderbar: React.FC<UttakEkspanderbarProps> = ({ title, ch
   };
 
   return (
-    <Box className={styles.uttakDetaljer__expandableDetailItem}>
-      <Box className={styles.uttakDetaljer__expandableDetailItem__header}>
+    <Box className={styles.uttakDetaljerExpandableDetailItem}>
+      <Box className={styles.uttakDetaljerExpandableDetailItemHeader}>
         <a href="#" onClick={toggleExpand}>
           <div>
             <BodyShort className="my-auto" size="small">
@@ -31,7 +31,7 @@ const UttakDetaljerEkspanderbar: React.FC<UttakEkspanderbarProps> = ({ title, ch
       </Box>
       <div
         className={`uttakDetaljer__expandableDetailItem__content ${
-          utvid ? '' : styles.uttakDetaljer__expandableDetailItem__contentCollapsed
+          utvid ? '' : styles.uttakDetaljerExpandableDetailItemContentCollapsed
         }`}
       >
         {children}
