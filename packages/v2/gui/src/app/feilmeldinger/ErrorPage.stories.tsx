@@ -3,7 +3,7 @@ import { expect } from '@storybook/test';
 import ErrorPage from './ErrorPage.js';
 
 const meta = {
-  title: 'gui/sak/feilmeldinger',
+  title: 'gui/app/feilmeldinger',
   component: ErrorPage,
 } satisfies Meta<typeof ErrorPage>;
 

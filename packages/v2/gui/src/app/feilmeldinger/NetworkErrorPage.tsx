@@ -1,5 +1,5 @@
-import { BigError, DefaultErrorMsg } from '@k9-sak-web/gui/sak/feilmeldinger/BigError.js';
-import { NavCallIdEncouragementMsg } from '../../app/alerts/NavCallIdEncouragementMsg.js';
+import { BigError, DefaultErrorMsg } from './BigError.js';
+import { NavCallIdEncouragementMsg } from '../alerts/NavCallIdEncouragementMsg.js';
 
 export interface NetworkErrorPageProps {
   readonly navCallId?: string;
