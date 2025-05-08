@@ -7,7 +7,7 @@ import {
   type Utbetalingsgrader,
   type UttaksperiodeInfo,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { beregnDagerTimer } from '@k9-sak-web/gui/utils/dateUtils.js';
+import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
 
 import styles from './uttakDetaljer.module.css';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
