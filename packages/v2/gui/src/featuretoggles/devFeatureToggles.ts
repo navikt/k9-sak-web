@@ -26,4 +26,5 @@ export const devFeatureToggles = {
   OVERSTYR_BEREGNING: false,
   UTVIDET_VARSELFELT: false,
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: true,
+  BRUK_V2_VILKAR_OPPTJENING: true,
 } satisfies FeatureToggles;
