@@ -64,6 +64,7 @@ type payloads =
         begrunnelse: string | null;
         nødvendigOpplæring: boolean;
         dokumentertOpplæring: boolean;
+        avslagsårsak?: string;
       }[];
     }
   | {
@@ -97,6 +98,7 @@ type SykdomOgOpplæringContext = {
     begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
+    avslagsårsak?: string;
   }) => void;
   løsAksjonspunkt9303: (payload: {
     periode: {
@@ -153,6 +155,7 @@ const FaktaSykdomOgOpplæringIndex = ({
     begrunnelse: string | null;
     nødvendigOpplæring: boolean;
     dokumentertOpplæring: boolean;
+    avslagsårsak?: string;
   }) => {
     submitCallback([
       {
@@ -164,6 +167,7 @@ const FaktaSykdomOgOpplæringIndex = ({
             begrunnelse: payload.begrunnelse,
             nødvendigOpplæring: payload.nødvendigOpplæring,
             dokumentertOpplæring: payload.dokumentertOpplæring,
+            avslagsårsak: payload.avslagsårsak,
           },
         ],
       },

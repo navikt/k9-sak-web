@@ -21,7 +21,7 @@ export const NavigasjonsmenyRad = ({
     <div
       className={`${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
     >
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full py-3.5 px-4">
         <div className="flex items-center">
           <RadStatus resultat={periode.resultat} />
 
@@ -32,7 +32,9 @@ export const NavigasjonsmenyRad = ({
               size="small"
               variant="tertiary"
             >
-              {periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}
+              <BodyShort>
+                {periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}
+              </BodyShort>
             </Button>
           </div>
         </div>
