@@ -116,14 +116,14 @@ const checkRenderedElementTexts = async (
 
 // Når vi veit at v2 av historikk av ein viss type mangler nokre ord i v1, og ikkje vil at det skal rapporterast som feil
 // kan dei leggast inn her for å undertrykke feilrapportering
-const historikkInnslagMissingWordsExcemptions = new Map<string, string[]>();
-historikkInnslagMissingWordsExcemptions.set('KLAGE_BEH_NFP', ['endret', 'fra']);
-historikkInnslagMissingWordsExcemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.FAKTA_ENDRET, [
+const historikkInnslagMissingWordsExemptions = new Map<string, string[]>();
+historikkInnslagMissingWordsExemptions.set('KLAGE_BEH_NFP', ['endret', 'fra']);
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.FAKTA_ENDRET, [
   'Aldersvilkåret',
 ]);
 
-const allMissingWordsAreExcempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
-  const wordsKnownMissing = historikkInnslagMissingWordsExcemptions.get(historikkInnslagV1Type);
+const allMissingWordsAreExempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
+  const wordsKnownMissing = historikkInnslagMissingWordsExemptions.get(historikkInnslagV1Type);
   if (wordsKnownMissing != null) {
     return wordsMissing.every(wordMissing =>
       wordsKnownMissing.some(wordKnownMissing => wordKnownMissing === wordMissing),
@@ -159,7 +159,7 @@ export const compareRenderedElementTexts = async (
         const feilaInnslagV1 = v1Innslag[i];
         if (
           (feilaInnslagV1.erKlage || feilaInnslagV1.erSak) &&
-          allMissingWordsAreExcempted(feilaInnslagV1.type.kode, err.wordsNotFound)
+          allMissingWordsAreExempted(feilaInnslagV1.type.kode, err.wordsNotFound)
         ) {
           console.info(
             `historikk innslag v2 med uuid ${feilaInnslagV1.uuid} mangler ${err.wordsNotFound.length} ord funne i v1, men disse er untatt fra feilrapportering. (${err.wordsNotFound.join(', ')})`,
