@@ -10,7 +10,10 @@ import { CenteredLoader } from '../CenteredLoader';
 
 const ReisetidIndex = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
-  const { data: vurdertReisetid, isLoading: isLoadingVurdertReisetid } = useVurdertReisetid(behandlingUuid);
+  const {
+    data: vurdertReisetid,
+    isLoading: isLoadingVurdertReisetid,
+  } = useVurdertReisetid(behandlingUuid);
   const [valgtVurdering, setValgtVurdering] = useState<(ReisetidVurderingDto & { perioder: Period[] }) | null>(null);
   const nullstillValgtVurdering = () => setValgtVurdering(null);
 

@@ -75,7 +75,6 @@ const NødvendigOpplæringForm = ({
         formMethods={formMethods}
         onSubmit={data => {
           const nødvendigOpplæring = data.nødvendigOpplæring === 'ja';
-
           const periode = nødvendigOpplæring ? data.periode : vurdering.opplæring;
 
           løsAksjonspunkt9302({
