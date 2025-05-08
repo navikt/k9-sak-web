@@ -1,7 +1,7 @@
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { InnloggetAnsattDto } from '@navikt/k9-sak-typescript-client';
 

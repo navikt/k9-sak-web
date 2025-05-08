@@ -107,7 +107,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </div>
           <ul className={styles.interactiveList}>
             {allePerioder.map((element, currentIndex) => (
-              <li key={element.id}>
+              <li key={element.id || element.perioder[0]?.fom}>
                 {customPeriodeRad ? (
                   customPeriodeRad(element, () => handlePeriodeClick(currentIndex))
                 ) : (

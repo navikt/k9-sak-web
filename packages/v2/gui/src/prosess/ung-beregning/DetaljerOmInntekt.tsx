@@ -1,3 +1,6 @@
+import type { KontrollerInntektPeriodeDto, RapportertInntektDto } from '@k9-sak-web/backend/ungsak/generated';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { getPathToAinntekt } from '@k9-sak-web/lib/paths/paths.js';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, VStack } from '@navikt/ds-react';
@@ -12,17 +15,17 @@ const Inntekt = ({
   sumValue,
 }: {
   title: string;
-  details: { label: string; value: string }[];
+  details?: { label?: string; value?: string }[];
   sumLabel: string;
-  sumValue: string;
+  sumValue?: string;
 }) => {
   return (
     <VStack gap="3">
       <Heading size="xsmall" level="3">
         {title}
       </Heading>
-      {details.map((detail, index) => (
-        <HStack justify="space-between" key={index}>
+      {details?.map(detail => (
+        <HStack justify="space-between" key={detail.label}>
           <BodyShort size="small">{detail.label}</BodyShort>
           <BodyShort size="small" weight="semibold">
             {detail.value}
@@ -34,17 +37,40 @@ const Inntekt = ({
         <BodyShort size="small" className={styles.sumLabel} weight="semibold">
           {sumLabel}
         </BodyShort>
-        <div className={styles.sum}>
-          <BodyShort size="small">{sumValue}</BodyShort>
-        </div>
+        {sumValue != undefined && (
+          <BodyShort className={styles.sum} size="small">
+            {sumValue}
+          </BodyShort>
+        )}
       </HStack>
     </VStack>
   );
 };
 
-export const DetaljerOmInntekt = () => {
-  const location = useLocation();
+const summerInntekt = (inntekt: RapportertInntektDto) => {
+  if (inntekt?.arbeidsinntekt === undefined && inntekt?.ytelse === undefined) {
+    return undefined;
+  }
+  const arbeidsinntekt = inntekt?.arbeidsinntekt ?? 0;
+  const ytelse = inntekt?.ytelse ?? 0;
+  return formatCurrencyWithKr(arbeidsinntekt + ytelse);
+};
 
+const formaterInntekt = (inntekt: number | undefined) => {
+  if (inntekt === undefined) {
+    return '-';
+  }
+  return formatCurrencyWithKr(inntekt);
+};
+
+interface DetaljerOmInntektProps {
+  inntektKontrollPeriode: KontrollerInntektPeriodeDto | undefined;
+}
+
+export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+  const location = useLocation();
+  const { rapporterteInntekter } = inntektKontrollPeriode || {};
   return (
     <VStack gap="8">
       <Bleed marginBlock="0 2" asChild>
@@ -69,21 +95,28 @@ export const DetaljerOmInntekt = () => {
         <Inntekt
           title="Inntekt rapport av deltager"
           details={[
-            { label: 'Samlet arbeidsinntekt', value: formatCurrencyWithKr(9999) },
-            { label: 'Ytelse', value: formatCurrencyWithKr(9999) },
+            {
+              label: 'Samlet arbeidsinntekt',
+              value: formaterInntekt(rapporterteInntekter?.bruker?.arbeidsinntekt),
+            },
+            {
+              label: 'Ytelse',
+              value: formaterInntekt(rapporterteInntekter?.bruker?.ytelse),
+            },
           ]}
           sumLabel="Sum inntekt fra deltager"
-          sumValue={formatCurrencyWithKr(9999)}
+          sumValue={summerInntekt(rapporterteInntekter?.bruker ?? {})}
         />
         <Inntekt
           title="Inntekt rapportert i A-inntekt"
-          details={[
-            { label: 'Bedrift 1', value: formatCurrencyWithKr(9999) },
-            { label: 'Bedrift 2', value: formatCurrencyWithKr(9999) },
-            { label: 'Ytelse 123', value: formatCurrencyWithKr(9999) },
-          ]}
+          details={rapporterteInntekter?.register?.inntekter?.map(inntekt => ({
+            label: inntekt.ytelseType
+              ? kodeverkNavnFraKode(inntekt.ytelseType, KodeverkType.FAGSAK_YTELSE)
+              : inntekt.arbeidsgiverIdentifikator,
+            value: formaterInntekt(inntekt.inntekt),
+          }))}
           sumLabel="Sum inntekt fra A-inntekt"
-          sumValue={formatCurrencyWithKr(9999)}
+          sumValue={summerInntekt(rapporterteInntekter?.register?.oppsummertRegister ?? {})}
         />
       </HGrid>
     </VStack>

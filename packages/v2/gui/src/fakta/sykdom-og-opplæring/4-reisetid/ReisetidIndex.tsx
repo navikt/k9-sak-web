@@ -12,6 +12,7 @@ const ReisetidIndex = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { data: vurdertReisetid, isLoading: isLoadingVurdertReisetid } = useVurdertReisetid(behandlingUuid);
   const [valgtVurdering, setValgtVurdering] = useState<(ReisetidVurderingDto & { perioder: Period[] }) | null>(null);
+  const nullstillValgtVurdering = () => setValgtVurdering(null);
 
   const vurderingsliste = vurdertReisetid?.vurderinger.map(vurdering => ({
     ...vurdering,
@@ -35,7 +36,11 @@ const ReisetidIndex = () => {
           </>
         )}
         showDetailSection
-        detailSection={() => (valgtVurdering ? <ReisetidContainer vurdering={valgtVurdering} /> : null)}
+        detailSection={() =>
+          valgtVurdering ? (
+            <ReisetidContainer vurdering={valgtVurdering} nullstillValgtVurdering={nullstillValgtVurdering} />
+          ) : null
+        }
       />
     </div>
   );
