@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
 
 const meta = {
-  title: 'gui/sak/feilmeldinger',
+  title: 'gui/app/feilmeldinger',
   component: ForbiddenPage,
 } satisfies Meta<typeof ForbiddenPage>;
 

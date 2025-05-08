@@ -3,7 +3,7 @@ import { expect } from '@storybook/test';
 import UnauthorizedPage from './UnauthorizedPage.js';
 
 const meta = {
-  title: 'gui/sak/feilmeldinger',
+  title: 'gui/app/feilmeldinger',
   component: UnauthorizedPage,
 } satisfies Meta<typeof UnauthorizedPage>;
 

@@ -1,4 +1,4 @@
-import { BigError, DefaultErrorMsg } from '@k9-sak-web/gui/sak/feilmeldinger/BigError.js';
+import { BigError, DefaultErrorMsg } from './BigError.js';
 import { CopyButton } from '@navikt/ds-react';
 
 export interface ErrorPageProps {

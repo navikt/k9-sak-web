@@ -12,7 +12,10 @@ class DefaultFormatter implements Formatter<ErrorData> {
 
   formatString = (errorData: string): ErrorMessage => ErrorMessage.withMessage(errorData);
 
-  format = (errorData: ErrorData) => {
+  format = (errorData: ErrorData | string) => {
+    if (typeof errorData === 'string') {
+      return ErrorMessage.withMessage(errorData);
+    }
     if (errorData.feilmelding) {
       return ErrorMessage.withMessage(errorData.feilmelding, errorData.type);
     }

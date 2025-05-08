@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, waitFor } from '@storybook/test';
 import { useEffect } from 'react';
 import ErrorBoundary from './ErrorBoundary.js';
 
 const meta = {
-  title: 'sak/sak-app',
+  title: 'gui/app/feilmeldinger',
   component: ErrorBoundary,
 } satisfies Meta<typeof ErrorBoundary>;
 

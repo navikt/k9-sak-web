@@ -9,6 +9,7 @@ export interface K9Kodeverkoppslag {
   // XXX Legg til for andre backends her. (k9-klage, k9-tilbake)
 }
 
+// Bruk context istadenfor denne hook. `useContext(K9KodeverkoppslagContext)`
 export const useK9Kodeverkoppslag = (): K9Kodeverkoppslag => {
   const k9sakClient = useContext(K9SakClientContext);
   const { data, isPending, isError, error } = useQuery({
@@ -23,7 +24,7 @@ export const useK9Kodeverkoppslag = (): K9Kodeverkoppslag => {
     };
   }
   if (isError) {
-    throw new Error(`Feil ved henting av kodeverk oppslag: ${error}`, error);
+    throw new Error(`Feil ved henting av kodeverk oppslag: ${error}`, { cause: error });
   }
   return {
     isPending,
