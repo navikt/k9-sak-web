@@ -26,7 +26,7 @@ import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { EtablerteUlikeHistorikkinnslagTyper, NyeUlikeHistorikkinnslagTyper } from './historikkTypes.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import ErrorBoundary from '../../app/ErrorBoundary';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
 
 const sortAndTagUlikeEtablerteHistorikkinnslagTyper = (
