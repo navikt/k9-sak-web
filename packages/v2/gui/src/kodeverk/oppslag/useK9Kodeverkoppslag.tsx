@@ -37,10 +37,10 @@ export const useK9Kodeverkoppslag = (): K9Kodeverkoppslag => {
     };
   }
   if (k9sakQuery.isError) {
-    throw new Error(`Feil ved henting av kodeverk oppslag: ${k9sakQuery.error}`, k9sakQuery.error);
+    throw new Error(`Feil ved henting av kodeverk oppslag: ${k9sakQuery.error}`, { cause: k9sakQuery.error });
   }
   if (k9klageQuery.isError) {
-    throw new Error(`Feil ved henting av kodeverk oppslag: ${k9klageQuery.error}`, k9klageQuery.error);
+    throw new Error(`Feil ved henting av kodeverk oppslag: ${k9klageQuery.error}`, { cause: k9klageQuery.error });
   }
   return {
     isPending,
