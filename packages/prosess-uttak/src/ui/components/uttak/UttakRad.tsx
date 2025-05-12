@@ -23,6 +23,7 @@ import UttakDetaljerV2Wrapper from '../uttak-detaljer/UttakDetaljerV2Wrapper';
 import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const cx = classNames.bind(styles);
 
@@ -33,14 +34,17 @@ interface UttakProps {
   withBorderTop?: boolean;
 }
 
-const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
+const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const containerContext = React.useContext(ContainerContext);
-  const erFagytelsetypeLivetsSluttfase = containerContext?.erFagytelsetypeLivetsSluttfase ?? false;
+  const erFagytelsetypeLivetsSluttfase = fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE === containerContext?.ytelsetype;
+  const erOpplæringspenger = fagsakYtelsesType.OPPLÆRINGSPENGER === containerContext?.ytelsetype;
+
   const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
+  const visPleiebehovProsent = !erOpplæringspenger && !erFagytelsetypeLivetsSluttfase;
   const erGradertMotInntekt = uttak.inntektsgradering !== undefined;
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
@@ -104,16 +108,18 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
               <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
             )}
           </div>
-          {harPleiebehov && !erFagytelsetypeLivetsSluttfase ? `${pleiebehov}%` : null}
+          {harPleiebehov && visPleiebehovProsent ? `${pleiebehov}%` : null}
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
-          {uttak.annenPart === AnnenPart.MED_ANDRE && (
-            <Tooltip content="Søker/Annen part">
-              <PersonGroupFillIcon fontSize="1.5rem" />
-            </Tooltip>
-          )}
-        </Table.DataCell>
+        {!erOpplæringspenger && (
+          <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
+            {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
+            {uttak.annenPart === AnnenPart.MED_ANDRE && (
+              <Tooltip content="Søker/Annen part">
+                <PersonGroupFillIcon fontSize="1.5rem" />
+              </Tooltip>
+            )}
+          </Table.DataCell>
+        )}
 
         <Table.DataCell className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
           <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
@@ -122,7 +128,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
           <div className={styles.uttak__lastColumn}>
             <div className={styles.uttak__behandlerIcon}>
-              <Endringsstatus status={endringsstatus || null} />
+              <Endringsstatus status={endringsstatus} />
             </div>
             <Button
               size="xsmall"
@@ -156,4 +162,4 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
     </>
   );
 };
-export default Uttak;
+export default UttakRad;

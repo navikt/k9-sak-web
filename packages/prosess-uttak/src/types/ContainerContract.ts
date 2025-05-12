@@ -5,6 +5,7 @@ import KodeverkMedNavn from './kodeverkMedNavnTsType';
 import Uttaksperioder from './Uttaksperioder';
 import { Inntektsgradering } from '.';
 import { ReactNode } from 'react';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface ContainerContract {
   httpErrorHandler?: (status: number, locationHeader?: string) => void;
@@ -20,6 +21,7 @@ interface ContainerContract {
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   aksjonspunktkoder: string[];
   erFagytelsetypeLivetsSluttfase: boolean;
+  ytelsetype: FagsakYtelsesType;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
   handleOverstyringAksjonspunkt?: (data: OverstyringUttakRequest) => Promise<void>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({

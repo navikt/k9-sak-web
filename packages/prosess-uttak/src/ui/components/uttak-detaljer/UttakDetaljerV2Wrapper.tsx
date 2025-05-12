@@ -38,7 +38,6 @@ const UttakDetaljerV2Wrapper = ({
         erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
         arbeidsforhold={deepCopyProps.arbeidsforhold as ArbeidsgiverOversiktDto['arbeidsgivere']}
       />
-      ;
     </>
   );
 };
