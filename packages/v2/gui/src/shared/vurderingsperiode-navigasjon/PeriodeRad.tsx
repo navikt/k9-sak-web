@@ -16,7 +16,7 @@ import { Resultat } from './VurderingsperiodeNavigasjon';
 interface OwnProps {
   perioder: Period[];
   resultat?: ResultatType;
-  active: boolean;
+  active?: boolean;
   handleClick: () => void;
 }
 
@@ -93,7 +93,7 @@ export const RadChevron = ({ active }: { active: boolean }) => {
   );
 };
 
-export const PeriodeRad = ({ perioder, resultat, active, handleClick }: OwnProps) => (
+export const PeriodeRad = ({ perioder, resultat, active = false, handleClick }: OwnProps) => (
   <div
     className={`${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
   >
