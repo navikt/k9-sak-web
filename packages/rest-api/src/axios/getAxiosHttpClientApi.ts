@@ -4,6 +4,8 @@ import axiosEtag from './axiosEtag';
 import initRestMethods from './initRestMethods';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { konverterKodeverkTilKodeSelektivt } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKodeSelektivt.js';
+import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerOption.js';
+import { xJsonSerializerOptions } from '../xJsonSerializerOptions';
 
 /**
  * getAxiosHttpClientApi
@@ -16,6 +18,10 @@ const getAxiosHttpClientApi = () => {
     const { headerName, headerValue } = generateNavCallidHeader();
     const config = { ...c };
     config.headers[headerName] = headerValue;
+    // Legg til X-Json-Serializer-Option header for å instruere server om å bruke legacy "kodeverk-objekt" ObjectMapper
+    // for alle requests som går gjennom denne klient. Kan vurdere å gjere denne meir konfigurerbar pr backend/request
+    // seinare viss det er behov.
+    config.headers[jsonSerializerOption.xJsonSerializerOptionHeader] = xJsonSerializerOptions.kodeverdiObjekt;
     return config;
   });
 
