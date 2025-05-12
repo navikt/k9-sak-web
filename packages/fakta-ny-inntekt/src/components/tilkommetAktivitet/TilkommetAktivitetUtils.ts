@@ -45,13 +45,44 @@ const oppdaterTomOgInntektsforholdForSistePeriode = (
   liste.push(endretPeriode);
 };
 
+const harSammeInntektsforhold = (
+  inntektsforholdListe: Inntektsforhold[],
+  forrigeInntektsforholdListe: Inntektsforhold[],
+): boolean => {
+  if (inntektsforholdListe.length !== forrigeInntektsforholdListe.length) {
+    return false;
+  }
+
+  const alleFinnesIForrige = inntektsforholdListe.every(inntektsforhold =>
+    forrigeInntektsforholdListe.some(
+      forrige =>
+        forrige.aktivitetStatus === inntektsforhold?.aktivitetStatus &&
+        forrige.arbeidsgiverId === inntektsforhold.arbeidsgiverId &&
+        forrige.arbeidsforholdId === inntektsforhold.arbeidsforholdId,
+    ),
+  );
+
+  const alleFinnesINye = forrigeInntektsforholdListe.every(forrige =>
+    inntektsforholdListe.some(
+      inntektsforhold =>
+        forrige.aktivitetStatus === inntektsforhold?.aktivitetStatus &&
+        forrige.arbeidsgiverId === inntektsforhold.arbeidsgiverId &&
+        forrige.arbeidsforholdId === inntektsforhold.arbeidsforholdId,
+    ),
+  );
+
+  return alleFinnesIForrige && alleFinnesINye;
+};
+
 const harIngenRelevantEndring = (
   inntektsforholdPeriode: VurderInntektsforholdPeriode,
   forrigeInntektsforholdPeriode?: VurderInntektsforholdPeriode,
 ) => {
   const inntektsforholdListe = inntektsforholdPeriode.inntektsforholdListe || [];
   const forrigeInntektsforholdListe = forrigeInntektsforholdPeriode?.inntektsforholdListe || [];
-
+  if (!harSammeInntektsforhold(inntektsforholdListe, forrigeInntektsforholdListe)) {
+    return false;
+  }
   for (let i = 0; i < inntektsforholdListe.length; i += 1) {
     const inntektsforholdIPeriode = inntektsforholdListe[i];
     const inntektsforholdFraForrige = forrigeInntektsforholdListe.find(
@@ -60,13 +91,11 @@ const harIngenRelevantEndring = (
         a.arbeidsgiverId === inntektsforholdIPeriode.arbeidsgiverId &&
         a.arbeidsforholdId === inntektsforholdIPeriode.arbeidsforholdId,
     );
-    if (inntektsforholdFraForrige === undefined) {
-      return true;
-    }
-    if (inntektsforholdFraForrige.bruttoInntektPrÅr !== inntektsforholdIPeriode?.bruttoInntektPrÅr) {
+
+    if (inntektsforholdFraForrige?.bruttoInntektPrÅr !== inntektsforholdIPeriode?.bruttoInntektPrÅr) {
       return false;
     }
-    if (inntektsforholdFraForrige.skalRedusereUtbetaling !== inntektsforholdIPeriode?.skalRedusereUtbetaling) {
+    if (inntektsforholdFraForrige?.skalRedusereUtbetaling !== inntektsforholdIPeriode?.skalRedusereUtbetaling) {
       return false;
     }
   }
