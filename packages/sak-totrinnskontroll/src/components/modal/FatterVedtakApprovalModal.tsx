@@ -49,6 +49,9 @@ const getInfoTextCode = (
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livets sluttfase er avslått';
     }
+    if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+      return 'Opplæringspenger er avslått.';
+    }
     return 'Omsorgspenger er avslått';
   }
   // HVIS OPPHØRT
@@ -65,6 +68,9 @@ const getInfoTextCode = (
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livet sluttfase er opphørt.';
     }
+    if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+      return 'Opplæringspenger er opphørt.';
+    }
     return 'Omsorgspenger er opphørt.';
   }
 
@@ -80,6 +86,9 @@ const getInfoTextCode = (
   }
   if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
+  }
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'Opplæringspenger er innvilget og vedtaket blir iverksatt.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
 };
@@ -110,6 +119,9 @@ const getModalDescriptionTextCode = (
   }
   if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+  }
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'Opplæringspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
 };
@@ -144,13 +156,13 @@ const utledInfoTextCode = (
 const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
   switch (ytelseType) {
     case fagsakYtelsesType.FRISINN:
-      return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
+      return 'Engangsstønad er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
-      return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
+      return 'Pleiepenger er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
-      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
+      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
     default:
-      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
+      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
 };
 
@@ -227,7 +239,9 @@ const FatterVedtakApprovalModal = ({
             <div className={styles.divider} />
           </div>
           <div>
-            <BodyShort size="small">{infoTextCode}</BodyShort>
+            <BodyShort size="small" data-testid="fatter-vedtak-text">
+              {infoTextCode}
+            </BodyShort>
             <BodyShort size="small">Du kommer nå til forsiden.</BodyShort>
           </div>
           <div>

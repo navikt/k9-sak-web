@@ -1,6 +1,6 @@
-import React, { type JSX } from 'react';
 import { Period } from '@fpsak-frontend/utils';
-import { ContentWithTooltip, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { type JSX } from 'react';
 import styles from './periodeSomSkalVurderes.module.css';
 
 interface PeriodeSomSkalVurderesProps {
@@ -12,9 +12,11 @@ const PeriodeSomSkalVurderes = ({ periode }: PeriodeSomSkalVurderesProps): JSX.E
   return (
     <div className={styles.periodeSomSkalVurderes} id="periodeSomSkalVurderes">
       <span className={styles.visuallyHidden}>Type</span>
-      <ContentWithTooltip tooltipText="Perioden må vurderes">
-        <WarningIcon />
-      </ContentWithTooltip>
+      <ExclamationmarkTriangleFillIcon
+        title="Perioden må vurderes"
+        fontSize="1.5rem"
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+      />
       <div className={styles.periodeSomSkalVurderes__texts}>
         <div>
           <p key={`${periode.fom}_${periode.tom}`} className={styles.periodeSomSkalVurderes__texts__period}>

@@ -505,25 +505,25 @@ const historikkEndretFeltTypeCodes = {
     feltId: 'HistorikkEndretFelt.VirkningsdatoNyeRegler',
   },
   INSTITUSJON_GODKJENT: {
-    kode: "INSTITUSJON_GODKJENT",
-    feltId: "HistorikkEndretFelt.Institusjon",
+    kode: 'INSTITUSJON_GODKJENT',
+    feltId: 'HistorikkEndretFelt.Institusjon',
   },
   ER_LANGVARIG_SYK: {
-    kode: "ER_LANGVARIG_SYK",
-    feltId: "HistorikkEndretFelt.LangvarigSyk",
+    kode: 'ER_LANGVARIG_SYK',
+    feltId: 'HistorikkEndretFelt.LangvarigSyk',
   },
   VURDERT_OPPLÆRING_DOKUMENTERT: {
-    kode: "VURDERT_OPPLÆRING_DOKUMENTERT",
-    feltId: "HistorikkEndretFelt.OpplæringDokumentert",
+    kode: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+    feltId: 'HistorikkEndretFelt.OpplæringDokumentert',
   },
   VURDERT_OPPLÆRING_NØDVENDIG: {
-    kode: "VURDERT_OPPLÆRING_NØDVENDIG",
-    feltId: "HistorikkEndretFelt.OpplæringNødvendig"
+    kode: 'VURDERT_OPPLÆRING_NØDVENDIG',
+    feltId: 'HistorikkEndretFelt.OpplæringNødvendig',
   },
   GODKJENT_REISETID: {
-    kode: "GODKJENT_REISETID",
-    feltId: "HistorikkEndretFelt.GODKJENT_REISETID",
-  }
+    kode: 'GODKJENT_REISETID',
+    feltId: 'HistorikkEndretFelt.GODKJENT_REISETID',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

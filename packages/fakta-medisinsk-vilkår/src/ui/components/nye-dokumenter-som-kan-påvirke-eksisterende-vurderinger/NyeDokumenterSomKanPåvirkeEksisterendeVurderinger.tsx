@@ -1,6 +1,6 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
+import { FileIcon } from '@navikt/aksel-icons';
 import { Box, Button, Label } from '@navikt/ds-react';
-import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
 import { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { Dokumenttype } from '../../../types/Dokument';
@@ -36,7 +36,7 @@ const NyeDokumenterListe = ({ dokumenter }: NyeDokumenterListeProps) => (
             className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__dokumentLink}
           >
             <span className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__ikonContainer}>
-              <DocumentIcon />
+              <FileIcon fontSize="1.5rem" />
             </span>
             {`${getDokumentLabel(dokument.type)} (datert ${prettifyDateString(dokument.datert)})`}
           </a>

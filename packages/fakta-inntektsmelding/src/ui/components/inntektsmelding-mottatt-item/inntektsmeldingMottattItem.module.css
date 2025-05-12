@@ -1,4 +1,5 @@
 .mottattLabel {
+  align-items: flex-start;
   display: flex;
 }
 
@@ -8,9 +9,4 @@
 
 .mottattLabel__link {
   margin-left: 1rem;
-}
-
-.mottattLabel svg {
-  width: 20px;
-  height: 20px;
 }

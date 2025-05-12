@@ -1,15 +1,16 @@
-import React, { type JSX } from 'react';
 import { Period } from '@fpsak-frontend/utils';
-import { CalendarIcon } from '@navikt/ft-plattform-komponenter';
+import { CalendarIcon } from '@navikt/aksel-icons';
+import { BodyShort, HStack } from '@navikt/ds-react';
+import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import styles from './periodList.module.css';
-import FortsettUtenInntektsmeldingForm from '../fortsett-uten-inntektsmelding-form/FortsettUtenInntektsmeldingForm';
-import { TilstandBeriket } from '../../../types/KompletthetData';
-import FortsettUtenInntektsmeldingInfo from './FortsettUtenInntektsmeldingInfo';
-import FortsettUtenInntektsmeldingAvslag from './FortsettUtenInntektsmeldingAvslag';
 import Aksjonspunkt from '../../../types/Aksjonspunkt';
 import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import { TilstandBeriket } from '../../../types/KompletthetData';
 import { sorterSkjæringstidspunkt } from '../../../util/utils';
+import FortsettUtenInntektsmeldingForm from '../fortsett-uten-inntektsmelding-form/FortsettUtenInntektsmeldingForm';
+import FortsettUtenInntektsmeldingAvslag from './FortsettUtenInntektsmeldingAvslag';
+import FortsettUtenInntektsmeldingInfo from './FortsettUtenInntektsmeldingInfo';
+import styles from './periodList.module.css';
 
 interface PeriodListProps {
   tilstander: TilstandBeriket[];
@@ -33,10 +34,11 @@ const PeriodList = ({
   <ul className={styles.periodList}>
     {tilstander.sort(sorterSkjæringstidspunkt).map(tilstand => (
       <li className={styles.periodList__element} key={tilstand.periode.prettifyPeriod()}>
-        <div className={styles.periodList__element__title}>
-          <CalendarIcon />
-          <span className={styles.periodList__element__title__period}>{tilstand.periode.prettifyPeriod()}</span>
-        </div>
+        <HStack marginBlock="0 4" align="center" gap="1">
+          <CalendarIcon fontSize="1.5rem" />
+          <BodyShort size="small">{tilstand.periode.prettifyPeriod()}</BodyShort>
+        </HStack>
+
         {listHeadingRenderer()}
         {listItemRenderer(tilstand.periode)}
         <FortsettUtenInntektsmeldingForm

@@ -8,10 +8,15 @@ import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-re
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
 import { useContext, useEffect } from 'react';
-import { useOppdaterSykdomsvurdering, useOpprettSykdomsvurdering } from '../SykdomOgOpplæringQueries';
+import {
+  useOppdaterSykdomsvurdering,
+  useOpprettSykdomsvurdering,
+  useVurdertLangvarigSykdom,
+} from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useQueryClient } from '@tanstack/react-query';
 import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
+import { BehandlingContext } from '../../../BehandlingContext';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
   Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
@@ -39,7 +44,9 @@ const SykdomUperiodisertForm = ({
 }) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { setNyVurdering } = useContext(SykdomUperiodisertContext);
+  const { refetchBehandling } = useContext(BehandlingContext);
   const queryClient = useQueryClient();
+  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
   const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering({
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
@@ -47,8 +54,11 @@ const SykdomUperiodisertForm = ({
     },
   });
   const { mutate: oppdaterSykdomsvurdering } = useOppdaterSykdomsvurdering({
-    onSuccess: async () => {
+    onSuccess: async data => {
       await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
+      if (vurderingBruktIAksjonspunkt?.vurderingUuid === data.uuid) {
+        await refetchBehandling();
+      }
       setRedigering(false);
     },
   });
@@ -132,18 +142,20 @@ const SykdomUperiodisertForm = ({
             </RadioGroup>
           )}
         />
+        <DiagnosekodeVelger
+          label="Legg til diagnose(r)"
+          name="diagnosekoder"
+          size="small"
+          disabled={
+            formMethods.watch('godkjent') === 'mangler_dokumentasjon' || formMethods.watch('godkjent') === 'nei'
+          }
+        />
         {formMethods.watch('godkjent') === 'mangler_dokumentasjon' && (
           <Alert variant="info" size="small">
             Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
             <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
           </Alert>
         )}
-        <DiagnosekodeVelger
-          label="Legg til diagnose(r)"
-          name="diagnosekoder"
-          size="small"
-          disabled={formMethods.watch('godkjent') === 'mangler_dokumentasjon'}
-        />
         <div className="flex gap-4">
           <Button variant="primary" type="submit" size="small">
             {vurdering.uuid ? 'Oppdater sykdomsvurdering' : 'Lagre ny sykdomsvurdering'}

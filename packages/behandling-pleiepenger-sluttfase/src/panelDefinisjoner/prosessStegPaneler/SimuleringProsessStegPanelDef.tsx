@@ -3,7 +3,7 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
@@ -11,7 +11,10 @@ import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSlu
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AvregningProsessIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FEILUTBETALING];
+  getAksjonspunktKoder = () => [
+    AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
+    AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+  ];
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.TILBAKEKREVINGVALG];
 

@@ -35,6 +35,7 @@ const AvregningProsessIndex = ({
   <RawIntlProvider value={intl}>
     <AvregningPanel
       fagsak={fagsak}
+      behandling={behandling}
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       språkkode={behandling.språkkode}

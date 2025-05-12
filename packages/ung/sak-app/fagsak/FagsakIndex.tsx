@@ -14,6 +14,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
@@ -27,7 +28,6 @@ import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
-import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 
 /**
  * FagsakIndex
@@ -227,6 +227,7 @@ const FagsakIndex = () => {
                     sprakkode={behandling?.sprakkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
+                    hideVisittkortDetaljerPopup={true}
                   />
                 </div>
               );

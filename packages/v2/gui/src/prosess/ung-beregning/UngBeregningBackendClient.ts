@@ -1,4 +1,5 @@
 import type {
+  GetUngdomsprogramInformasjonResponse,
   KontrollerInntektDto,
   UngSakClient,
   UngdomsytelseSatsPeriodeDto,
@@ -17,5 +18,9 @@ export default class UngBeregningBackendClient {
 
   async getKontrollerInntekt(behandlingUuid: string): Promise<KontrollerInntektDto> {
     return this.#ungsak.kontroll.hentKontrollerInntekt(behandlingUuid);
+  }
+
+  async getUngdomsprogramInformasjon(behandlingUuid: string): Promise<GetUngdomsprogramInformasjonResponse> {
+    return this.#ungsak.ung.getUngdomsprogramInformasjon(behandlingUuid);
   }
 }

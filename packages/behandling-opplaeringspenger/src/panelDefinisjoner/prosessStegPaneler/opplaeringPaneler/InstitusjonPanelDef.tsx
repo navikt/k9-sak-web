@@ -1,18 +1,24 @@
 import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class InstitusjonPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getId = () => 'INSTITUSJON';
 
-  getTekstKode = () => 'Opplaering.Institusjon';
+  getTekstKode = () => 'Institusjon';
 
-  getKomponent = props => this.overstyringDef.getKomponent(props);
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, usev2Panel: true });
+  };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
 
-  getVilkarKoder = () => [];
+  getVilkarKoder = () => [vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON];
 
   getData = ({
     overstyrteAksjonspunktKoder,

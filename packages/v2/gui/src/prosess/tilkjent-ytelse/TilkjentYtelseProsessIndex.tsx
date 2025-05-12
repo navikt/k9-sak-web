@@ -13,6 +13,7 @@ interface OwnProps {
   readOnlySubmitButton: boolean;
   featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
+  showAndelDetails?: boolean;
 }
 
 const TilkjentYtelseProsessIndex = ({
@@ -24,6 +25,7 @@ const TilkjentYtelseProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   personopplysninger,
+  showAndelDetails,
 }: OwnProps) => (
   <TilkjentYtelsePanel
     beregningsresultat={beregningsresultat}
@@ -34,6 +36,7 @@ const TilkjentYtelseProsessIndex = ({
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     featureToggles={featureToggles}
     personopplysninger={personopplysninger}
+    showAndelDetails={showAndelDetails}
   />
 );
 

@@ -18,6 +18,7 @@ import { required } from '../../form/validators/index';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 export enum FieldName {
   BEGRUNNELSE = 'begrunnelse',
@@ -137,7 +138,10 @@ const VurderingAvOmsorgsperioderForm = ({
             smallButtons
           >
             <Box marginBlock="8 0">
-              <Label htmlFor={FieldName.BEGRUNNELSE}>{intl.formatMessage({ id: 'vurdering.hjemmel' })}</Label>
+              <Label htmlFor={FieldName.BEGRUNNELSE}>
+                {intl.formatMessage({ id: 'vurdering.hjemmel' })}
+                <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
+              </Label>
               {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
               <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
             </Box>

@@ -1,6 +1,5 @@
 import type { Kodeverk } from '@k9-sak-web/backend/shared/Kodeverk.js';
 
-
 // aksjonspunkt med kodeverk
 export type Aksjonspunkt = Readonly<{
   definisjon: Kodeverk<string, string>;

@@ -57,7 +57,6 @@ const PeriodpickerList = ({
     name,
   });
   const { fields } = fieldArrayMethods;
-
   return (
     <div className={styles.periodpickerList}>
       {renderBeforeFieldArray && renderBeforeFieldArray(fieldArrayMethods)}
@@ -65,14 +64,17 @@ const PeriodpickerList = ({
         <legend>{legend}</legend>
         {fields.map((item, index) => {
           const errorMessage = errors[name] && errors[name][index]?.period.message;
-          const hasDefaultValue = defaultValues && defaultValues[index];
+          const defaultValue =
+            defaultValues && defaultValues[index]
+              ? new Period(defaultValues[index].fom, defaultValues[index].tom)
+              : new Period('', '');
           return (
             <Box key={item.id} marginBlock="4 0">
               <div className={styles.periodpickerList__flexContainer}>
                 <Controller
                   name={`${name}[${index}].period`}
                   rules={{ validate: { ...(validators || {}) } }}
-                  defaultValue={hasDefaultValue ? defaultValues[index] : new Period('', '')}
+                  defaultValue={defaultValue}
                   render={({ field }) => {
                     const { value, onChange } = field;
                     return (

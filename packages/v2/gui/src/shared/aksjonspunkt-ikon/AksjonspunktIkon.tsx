@@ -1,12 +1,23 @@
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 
-const AksjonspunktIkon = () => {
-  return (
-    <ExclamationmarkTriangleFillIcon
-      fontSize="1.5rem"
-      className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl mr-2"
-    />
-  );
+type OwnProps = {
+  size?: 'small' | 'medium' | 'large';
+};
+
+const AksjonspunktIkon = ({ size = 'medium' }: OwnProps) => {
+  const fontSize = (function () {
+    switch (size) {
+      case 'small':
+        return '18px';
+      case 'medium':
+        return '20px';
+      case 'large':
+        return '22px';
+      default:
+        return '18px';
+    }
+  })();
+  return <ExclamationmarkTriangleFillIcon style={{ color: 'var(--a-icon-warning)' }} fontSize={fontSize} />;
 };
 
 export default AksjonspunktIkon;

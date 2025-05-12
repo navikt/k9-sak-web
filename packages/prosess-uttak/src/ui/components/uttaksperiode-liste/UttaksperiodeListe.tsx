@@ -70,7 +70,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
   };
   return (
     <div className={styles.tableContainer}>
-      <Table>
+      <Table size="small">
         <Table.Header>
           <Table.Row>
             {headers.map((header, index) => (

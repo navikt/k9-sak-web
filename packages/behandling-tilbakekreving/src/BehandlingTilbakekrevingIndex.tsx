@@ -12,7 +12,7 @@ import {
   restApiTilbakekrevingHooks,
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
-import NetworkErrorPage from '@k9-sak-web/gui/sak/feilmeldinger/NetworkErrorPage.js';
+import NetworkErrorPage from '@k9-sak-web/gui/app/feilmeldinger/NetworkErrorPage.js';
 import { extractErrorInfo } from '../../rest-api-hooks/src/error/extractErrorInfo.js';
 
 const tilbakekrevingData = [

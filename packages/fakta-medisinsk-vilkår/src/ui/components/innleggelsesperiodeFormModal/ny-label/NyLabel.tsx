@@ -1,14 +1,13 @@
-import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
-import * as React from 'react';
 import styles from './nyLabel.module.css';
 
+import { Tooltip } from '@navikt/ds-react';
 import type { JSX } from 'react';
 
 const NyLabel = (): JSX.Element => (
   <div className={styles.nyLabel__container}>
-    <ContentWithTooltip tooltipText="Ny periode lagt til nå">
+    <Tooltip content="Ny periode lagt til nå">
       <div className={styles.nyLabel__icon}>Ny</div>
-    </ContentWithTooltip>
+    </Tooltip>
   </div>
 );
 

@@ -1,4 +1,8 @@
-import { BehandlingDtoBehandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  BehandlingDtoBehandlingResultatType,
+  BehandlingDtoStatus,
+  type AksjonspunktDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
@@ -40,6 +44,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const behandlingErAvsluttet = behandling.status === BehandlingDtoStatus.AVSLUTTET;
 
   const { refetch, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
@@ -54,10 +59,10 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     enabled: false,
   });
 
-  const { data: tilgjengeligeVedtaksbrev, isLoading: tilgjengeligeVedtaksbrevIsLoading } = useQuery({
-    queryKey: ['tilgjengeligeVedtaksbrev', behandling.id],
+  const { data: vedtaksbrevValg, isLoading: vedtaksbrevValgIsLoading } = useQuery({
+    queryKey: ['vedtaksbrevValg', behandling.id],
     queryFn: async () => {
-      const response = await api.tilgjengeligeVedtaksbrev(behandling.id);
+      const response = await api.vedtaksbrevValg(behandling.id);
       return response;
     },
   });
@@ -92,19 +97,21 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               </div>
             )}
             <div>
-              <Button
-                variant="tertiary"
-                onClick={() => refetch()}
-                size="small"
-                icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
-                loading={forhåndsvisningIsLoading}
-                type="button"
-                disabled={!tilgjengeligeVedtaksbrev?.harBrev || tilgjengeligeVedtaksbrevIsLoading}
-              >
-                Forhåndsvis brev
-              </Button>
+              {vedtaksbrevValg?.harBrev && (
+                <Button
+                  variant="tertiary"
+                  onClick={() => refetch()}
+                  size="small"
+                  icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
+                  loading={forhåndsvisningIsLoading}
+                  type="button"
+                  disabled={vedtaksbrevValgIsLoading}
+                >
+                  Forhåndsvis brev
+                </Button>
+              )}
             </div>
-            {harAksjonspunkt && (
+            {harAksjonspunkt && !readOnly && (
               <div>
                 <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
                   Fatt vedtak
@@ -112,22 +119,28 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               </div>
             )}
           </VStack>
-          <div className={styles.brevCheckboxContainer}>
-            <Fieldset legend="Valg for brev" size="small">
-              <div>
-                <CheckboxField
-                  name="redigerAutomatiskBrev"
-                  label="Rediger automatisk brev"
-                  disabled={hindreUtsendingAvBrev || readOnly}
-                />
-                <CheckboxField
-                  name="hindreUtsendingAvBrev"
-                  label="Hindre utsending av brev"
-                  disabled={redigerAutomatiskBrev || readOnly}
-                />
-              </div>
-            </Fieldset>
-          </div>
+          {!behandlingErAvsluttet && (
+            <div className={styles.brevCheckboxContainer}>
+              <Fieldset legend="Valg for brev" size="small">
+                <div>
+                  {vedtaksbrevValg?.kanOverstyreRediger && (
+                    <CheckboxField
+                      name="redigerAutomatiskBrev"
+                      label="Rediger automatisk brev"
+                      disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
+                    />
+                  )}
+                  {vedtaksbrevValg?.kanOverstyreHindre && (
+                    <CheckboxField
+                      name="hindreUtsendingAvBrev"
+                      label="Hindre utsending av brev"
+                      disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
+                    />
+                  )}
+                </div>
+              </Fieldset>
+            </div>
+          )}
         </HStack>
       </Box>
     </Form>

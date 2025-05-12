@@ -20,16 +20,18 @@ const NødvendigOpplæringFerdigvisning = ({
         <LabelledContent
           label={
             <>
-              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet som følge av
+              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
               <Lovreferanse> § 9-14</Lovreferanse>
             </>
           }
           indentContent
           size="small"
           content={
-            <BodyShort size="small" className="whitespace-pre-wrap">
-              {vurdering.begrunnelse}
-            </BodyShort>
+            vurdering.begrunnelse && (
+              <BodyShort size="small" className="whitespace-pre-wrap">
+                {vurdering.begrunnelse}
+              </BodyShort>
+            )
           }
         />
         <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />

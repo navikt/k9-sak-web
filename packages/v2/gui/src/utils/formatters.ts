@@ -1,4 +1,7 @@
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 export const tilNOK = Intl.NumberFormat('no-NO', { style: 'currency', currency: 'NOK', maximumFractionDigits: 0 });
 
@@ -10,3 +13,5 @@ export const formatCurrencyWithKr = (value: string | number) => {
   const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
   return `${formattedValue} kr`;
 };
+
+export const beregnDagerTimer = (dur: string): number => Math.round(dayjs.duration(dur).asHours() * 100) / 100;

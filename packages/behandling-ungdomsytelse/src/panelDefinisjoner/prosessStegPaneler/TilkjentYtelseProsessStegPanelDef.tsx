@@ -17,7 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} />;
+    return <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} showAndelDetails={false} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_TILBAKETREKK];

@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/ft-plattform-komponenter';
 import styles from './vilkårslisteItem.module.css';
 
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
 
 interface VilkårslisteItemProps {
@@ -15,12 +14,12 @@ const VilkårslisteItem = ({ vilkår, erOppfylt }: VilkårslisteItemProps): JSX.
     <div>
       {erOppfylt ? (
         <>
-          <GreenCheckIconFilled />
+          <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
           Oppfylt
         </>
       ) : (
         <>
-          <RedCrossIconFilled />
+          <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
           Ikke oppfylt
         </>
       )}

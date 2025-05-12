@@ -14,9 +14,9 @@ const erForlengelse = (beregningreferanserTilVurdering: BeregningReferanse[], pe
 
 const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurdering: BeregningReferanse[]): FTVilkarType =>
   ({
-    vilkarType: vilkar.vilkarType,
-    overstyrbar: vilkar.overstyrbar,
-    perioder: vilkar.perioder.map(p => ({
+    vilkarType: vilkar?.vilkarType,
+    overstyrbar: vilkar?.overstyrbar,
+    perioder: vilkar?.perioder.map(p => ({
       avslagKode: p.avslagKode,
       begrunnelse: p.begrunnelse,
       vurderesIBehandlingen: p.vurderesIBehandlingen,

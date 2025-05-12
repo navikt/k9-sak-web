@@ -1,8 +1,8 @@
 import { get, Period } from '@fpsak-frontend/utils';
 import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { ChildEyesFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Tabs } from '@navikt/ds-react';
-import { ChildIcon, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
 import ContainerContract from '../types/ContainerContract';
@@ -33,7 +33,12 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   return (
     <div className={cls}>
       {label}
-      {showWarningIcon && <WarningIcon />}
+      {showWarningIcon && (
+        <ExclamationmarkTriangleFillIcon
+          fontSize="1.5rem"
+          style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+        />
+      )}
     </div>
   );
 };
@@ -140,7 +145,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     <ContainerContext.Provider value={data}>
       <Infostripe
         content="Etablert tilsyn og vurdering av beredskap og nattevåk gjelder barnet og er felles for alle parter."
-        iconRenderer={() => <ChildIcon />}
+        iconRenderer={() => <ChildEyesFillIcon fontSize="1.5rem" />}
       />
       <div className={styles.mainComponent}>
         <Tabs defaultValue={getDefaultActiveTab(data)}>

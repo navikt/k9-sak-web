@@ -8,16 +8,29 @@ import { useEffect, useState, useContext } from 'react';
 import { BodyShort, Button } from '@navikt/ds-react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
-const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
+const NødvendigOpplæringContainer = ({
+  vurdering,
+  nullstillValgtVurdering,
+}: {
+  vurdering: OpplæringVurderingDto & { perioder: Period[] };
+  nullstillValgtVurdering: () => void;
+}) => {
+  const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
   const [redigering, setRedigering] = useState(false);
   useEffect(() => {
     setRedigering(false);
   }, [vurdering]);
 
-  if (vurdering.resultat === 'MÅ_VURDERES' || redigering) {
+  if (!readOnly && harAksjonspunkt9302 && (vurdering.resultat === 'MÅ_VURDERES' || redigering)) {
     return (
       <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
-        <NødvendigOpplæringForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
+        <NødvendigOpplæringForm
+          vurdering={vurdering}
+          setRedigering={setRedigering}
+          redigering={redigering}
+          nullstillValgtVurdering={nullstillValgtVurdering}
+        />
       </Wrapper>
     );
   }

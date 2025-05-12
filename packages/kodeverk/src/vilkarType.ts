@@ -16,7 +16,6 @@ const vilkarType = {
   LANGVARIG_SYKDOM: 'K9_VK_17',
   NØDVENDIG_OPPLÆRING: 'K9_VK_20',
   GODKJENT_OPPLÆRINGSINSTITUSJON: 'K9_VK_21',
-  UNGDOMSPROGRAMVILKARET: 'UNG_VK_XXX',
 };
 
 export default vilkarType;

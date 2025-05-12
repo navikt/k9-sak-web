@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import { Route, Routes } from 'react-router';
 
-import NotFoundPage from '@k9-sak-web/gui/sak/feilmeldinger/NotFoundPage.js';
+import NotFoundPage from '@k9-sak-web/gui/app/feilmeldinger/NotFoundPage.js';
 
 import FagsakIndex from '../../fagsak/FagsakIndex';
 import { fagsakRoutePath } from '../paths';

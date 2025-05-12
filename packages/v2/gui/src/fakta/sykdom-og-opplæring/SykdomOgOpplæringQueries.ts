@@ -27,7 +27,19 @@ export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => vo
   });
 };
 
-export const useOppdaterSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
+export const useVilkår = (behandlingUuid: string) => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['vilkår', behandlingUuid],
+    queryFn: () => backendClient.getVilkår(behandlingUuid),
+  });
+};
+export const useOppdaterSykdomsvurdering = ({
+  onSuccess,
+}: {
+  onSuccess?: (data: OppdaterLangvarigSykdomsVurderingResponse) => void;
+}) => {
   const backendClient = useSykdomBackendClient();
 
   return useMutation<
@@ -49,6 +61,16 @@ export const useLangvarigSykVurderingerFagsak = (behandlingUuid: string) => {
     enabled: !!behandlingUuid,
   });
 };
+
+export const useVurdertLangvarigSykdom = (behandlingUuid: string) => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['vurdertLangvarigSykdom', behandlingUuid],
+    queryFn: () => backendClient.hentVurdertLangvarigSykdom(behandlingUuid),
+  });
+};
+
 export const useInstitusjonInfo = (behandlingUuid: string) => {
   const backendClient = useSykdomBackendClient();
 

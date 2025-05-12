@@ -13,7 +13,7 @@ import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurd
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
-
+import { CenteredLoader } from '../CenteredLoader.js';
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
   vurderinger: InstitusjonVurderingDto[];
@@ -66,17 +66,9 @@ const FaktaInstitusjonIndex = () => {
       perioder: vurdering.perioder.map(p => new Period(p.fom ?? '', p.tom ?? '')),
     };
   })();
-  const perioderTilVurdering = useMemo(
-    () => perioderMappet.filter(periode => periode.resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES),
-    [perioderMappet],
-  );
-  const vurdertePerioder = useMemo(
-    () => perioderMappet.filter(periode => periode.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES),
-    [perioderMappet],
-  );
 
   if (isLoading) {
-    return <div>Laster institusjon...</div>;
+    return <CenteredLoader />;
   }
 
   return (
@@ -84,8 +76,7 @@ const FaktaInstitusjonIndex = () => {
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>
-            perioderTilVurdering={perioderTilVurdering}
-            vurdertePerioder={vurdertePerioder}
+            perioder={perioderMappet}
             onPeriodeClick={setValgtPeriode}
           />
         )}

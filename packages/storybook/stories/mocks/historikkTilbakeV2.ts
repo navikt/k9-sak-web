@@ -1,4 +1,4 @@
-import { HistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
+import { HistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/tilbake/historikkinnslagTsTypeV2.js';
 
 export const historikkTilbakeV2: HistorikkinnslagV2[] = [
   {
