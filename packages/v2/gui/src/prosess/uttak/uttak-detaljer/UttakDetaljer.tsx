@@ -1,4 +1,4 @@
-import { useContext, type JSX } from 'react';
+import { type JSX } from 'react';
 import classNames from 'classnames/bind';
 import {
   UttaksperiodeInfoUtfall,
@@ -20,10 +20,8 @@ import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
-import ContainerContext from '@k9-sak-web/prosess-uttak/src/ui/context/ContainerContext';
 import styles from './uttakDetaljer.module.css';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type ContainerContract from '@k9-sak-web/prosess-uttak/src/types/ContainerContract';
+import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const cx = classNames.bind(styles);
 
@@ -82,11 +80,11 @@ export interface UttakDetaljerProps {
   uttak: UttaksperiodeMedInntektsgradering;
   arbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
   manueltOverstyrt: boolean;
+  ytelsetype: FagsakYtelsesType;
 }
 
-const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
+const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-  const { ytelsetype } = useContext(ContainerContext) as ContainerContract;
 
   const {
     utbetalingsgrader,
