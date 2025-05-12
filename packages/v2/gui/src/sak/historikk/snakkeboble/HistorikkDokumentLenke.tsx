@@ -18,7 +18,7 @@ export const HistorikkDokumentLenke = ({
     return (
       <HStack align="center" gap="1">
         <FileIcon title={tag} width={24} height={24} />
-        <BodyShort size="small">{tag}</BodyShort>
+        <BodyShort size="small">{tag} (utgått)</BodyShort>
       </HStack>
     );
   }
