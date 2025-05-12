@@ -268,7 +268,7 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
   },
 };
 
-export const Test: Story = {
+export const Tilbakekreving: Story = {
   args: {
     behandling: {
       id: 13102,
