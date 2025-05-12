@@ -1,3 +1,4 @@
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
@@ -6,7 +7,6 @@ import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
-import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import * as Sentry from '@sentry/browser';
 import { type Location } from 'history';
 import { useContext } from 'react';

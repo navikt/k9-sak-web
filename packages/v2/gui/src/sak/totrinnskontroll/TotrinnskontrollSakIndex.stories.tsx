@@ -267,3 +267,172 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     await expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
   },
 };
+
+export const Test: Story = {
+  args: {
+    behandling: {
+      id: 13102,
+      uuid: '390567b5-b1ff-4765-85b7-c4b4d24c5086',
+      versjon: 19,
+      type: {
+        kode: 'BT-007',
+        navn: 'Tilbakekreving',
+        kodeverk: 'BEHANDLING_TYPE',
+      },
+      status: {
+        kode: 'FVED',
+        navn: 'Fatter vedtak',
+        kodeverk: 'BEHANDLING_STATUS',
+      },
+      fagsakId: 2011701,
+      opprettet: '2025-05-07T10:57:03.533',
+      avsluttet: null,
+      endret: '2025-05-08T08:46:31.048',
+      behandlendeEnhetId: '4487',
+      behandlendeEnhetNavn: 'Nav arbeid og ytelser - Sykdom i familien',
+      toTrinnsBehandling: true,
+      behandlingPåVent: false,
+      fristBehandlingPåVent: null,
+      venteÅrsakKode: null,
+      språkkode: {
+        kode: 'NB',
+        navn: null,
+        kodeverk: 'SPRAAK_KODE',
+      },
+      behandlingKøet: false,
+      ansvarligSaksbehandler: 'Z990404',
+      førsteÅrsak: null,
+      behandlingÅrsaker: [],
+      kanHenleggeBehandling: false,
+      harVerge: false,
+      behandlingsresultat: {
+        type: {
+          kode: 'IKKE_FASTSATT',
+          navn: 'Ikke fastsatt',
+          kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+        },
+      },
+      behandlingTillatteOperasjoner: {
+        uuid: '390567b5-b1ff-4765-85b7-c4b4d24c5086',
+        behandlingKanBytteEnhet: false,
+        behandlingKanHenlegges: false,
+        behandlingKanGjenopptas: false,
+        behandlingKanOpnesForEndringer: false,
+        behandlingKanSettesPaVent: false,
+        behandlingKanSendeMelding: false,
+        behandlingFraBeslutter: false,
+        behandlingTilGodkjenning: true,
+        vergeBehandlingsmeny: 'SKJUL',
+      },
+      totrinnskontrollÅrsaker: [
+        {
+          skjermlenkeType: 'TILBAKEKREVING',
+          totrinnskontrollAksjonspunkter: [
+            {
+              aksjonspunktKode: '5002',
+              besluttersBegrunnelse: null,
+              totrinnskontrollGodkjent: null,
+              vurderPaNyttArsaker: [],
+            },
+          ],
+        },
+        {
+          skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
+          totrinnskontrollAksjonspunkter: [
+            {
+              aksjonspunktKode: '7003',
+              besluttersBegrunnelse: null,
+              totrinnskontrollGodkjent: null,
+              vurderPaNyttArsaker: [],
+            },
+          ],
+        },
+        {
+          skjermlenkeType: 'VEDTAK',
+          totrinnskontrollAksjonspunkter: [
+            {
+              aksjonspunktKode: '5004',
+              besluttersBegrunnelse: null,
+              totrinnskontrollGodkjent: null,
+              vurderPaNyttArsaker: [],
+            },
+          ],
+        },
+        {
+          skjermlenkeType: 'FORELDELSE',
+          totrinnskontrollAksjonspunkter: [
+            {
+              aksjonspunktKode: '5003',
+              besluttersBegrunnelse: null,
+              totrinnskontrollGodkjent: null,
+              vurderPaNyttArsaker: [],
+            },
+          ],
+        },
+      ],
+      totrinnskontrollReadonly: false,
+      brevmaler: null,
+      links: [],
+      sprakkode: {
+        kode: 'NB',
+        navn: null,
+        kodeverk: 'SPRAAK_KODE',
+      },
+      fristBehandlingPaaVent: null,
+      behandlingKoet: false,
+      behandlingPaaVent: false,
+      venteArsakKode: null,
+    },
+    location,
+    onSubmit: fn(),
+    behandlingKlageVurdering: undefined,
+    createLocationForSkjermlenke: () => location,
+    readOnly: false,
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '7003',
+            besluttersBegrunnelse: null,
+            totrinnskontrollGodkjent: null,
+            vurderPaNyttArsaker: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'VEDTAK',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5004',
+            besluttersBegrunnelse: null,
+            totrinnskontrollGodkjent: null,
+            vurderPaNyttArsaker: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'TILBAKEKREVING',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5002',
+            besluttersBegrunnelse: null,
+            totrinnskontrollGodkjent: null,
+            vurderPaNyttArsaker: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'FORELDELSE',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5003',
+            besluttersBegrunnelse: null,
+            totrinnskontrollGodkjent: null,
+            vurderPaNyttArsaker: [],
+          },
+        ],
+      },
+    ],
+  },
+};
