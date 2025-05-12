@@ -2,13 +2,12 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../../data/opplaeringspengerBehandlingApi';
+import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
-  overstyringDef = new ProsessStegOverstyringPanelDef(this);
-
   getId = () => 'SOKNADSFRIST';
 
   getTekstKode = () => 'Søknadsfrist';
@@ -16,7 +15,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, usev2Panel: true });
+    return <SoknadsfristVilkarProsessIndex {...props} {...deepCopyProps} />;
   };
 
   getAksjonspunktKoder = () => [
