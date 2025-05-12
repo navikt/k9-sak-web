@@ -47,6 +47,9 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   customPeriodeLabel?: string;
 }
 
+/**
+ * Navigasjon for perioder som må vurderes og er vurdert
+ */
 const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   valgtPeriode,
   perioder,
@@ -70,12 +73,14 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     [perioderSomSkalVurderes, perioderSomErVurdert],
   );
 
+  // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
   useEffect(() => {
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
       onPeriodeClick(null);
     }
   }, [valgtPeriode, allePerioder, onPeriodeClick]);
 
+  // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
   useEffect(() => {
     const periodeSomMåVurderes = allePerioder.find(
       periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
