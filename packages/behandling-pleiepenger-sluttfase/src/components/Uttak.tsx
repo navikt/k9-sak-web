@@ -11,7 +11,6 @@ interface UttakProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: AlleKodeverk;
-  erFagytelsetypeLivetsSluttfase: boolean;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
   virkningsdatoUttakNyeRegler?: string;
   readOnly: boolean;
@@ -25,7 +24,6 @@ export default ({
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
   alleKodeverk,
-  erFagytelsetypeLivetsSluttfase,
   submitCallback,
   virkningsdatoUttakNyeRegler,
   readOnly,
@@ -50,7 +48,6 @@ export default ({
         aktivBehandlingUuid: uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
-        erFagytelsetypeLivetsSluttfase,
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,

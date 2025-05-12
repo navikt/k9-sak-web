@@ -11,7 +11,6 @@ import { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
 
 interface UttakDetaljerV2WrapperProps {
   uttak: UttaksperiodeMedInntektsgradering;
-  erFagytelsetypeLivetsSluttfase: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   manueltOverstyrt: boolean;
 }
@@ -19,7 +18,6 @@ interface UttakDetaljerV2WrapperProps {
 const UttakDetaljerV2Wrapper = ({
   uttak,
   manueltOverstyrt,
-  erFagytelsetypeLivetsSluttfase,
   arbeidsforhold,
 }: UttakDetaljerV2WrapperProps): JSX.Element => {
   const deepCopyProps = JSON.parse(
@@ -35,7 +33,6 @@ const UttakDetaljerV2Wrapper = ({
       <UttakDetaljer
         uttak={deepCopyProps.uttak as UttaksperiodeMedInntektsgraderingV2}
         manueltOverstyrt={manueltOverstyrt}
-        erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
         arbeidsforhold={deepCopyProps.arbeidsforhold as ArbeidsgiverOversiktDto['arbeidsgivere']}
       />
     </>

@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { useContext, type JSX } from 'react';
 import classNames from 'classnames/bind';
 import {
   UttaksperiodeInfoUtfall,
@@ -20,8 +20,10 @@ import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
-
+import ContainerContext from '@k9-sak-web/prosess-uttak/src/ui/context/ContainerContext';
 import styles from './uttakDetaljer.module.css';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type ContainerContract from '@k9-sak-web/prosess-uttak/src/types/ContainerContract';
 
 const cx = classNames.bind(styles);
 
@@ -79,18 +81,12 @@ const shouldHighlight = (aktuellÅrsak: UttaksperiodeInfoÅrsakerType, årsaker:
 export interface UttakDetaljerProps {
   uttak: UttaksperiodeMedInntektsgradering;
   arbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
-  erFagytelsetypeLivetsSluttfase: boolean;
-
   manueltOverstyrt: boolean;
 }
 
-const UttakDetaljer = ({
-  uttak,
-  arbeidsforhold,
-  erFagytelsetypeLivetsSluttfase,
-  manueltOverstyrt,
-}: UttakDetaljerProps): JSX.Element => {
+const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
+  const { ytelsetype } = useContext(ContainerContext) as ContainerContract;
 
   const {
     utbetalingsgrader,
@@ -122,6 +118,11 @@ const UttakDetaljer = ({
     årsaker &&
     shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
+  const skalViseGraderingMotTilsyn = ![
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
+  ].some(ytelse => ytelse === ytelsetype);
+
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
   const harBarnetsDødsfallÅrsak = årsaker?.some(årsak =>
     BarnetsDødsfallÅrsakerMedTekst.some(barnetsDødsfallÅrsak => årsak === barnetsDødsfallÅrsak.årsak),
@@ -139,7 +140,7 @@ const UttakDetaljer = ({
         </Alert>
       )}
       <HGrid gap="8" columns={3} align="start" className={styles['uttakDetaljer']}>
-        {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (
+        {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
             className={cx({
               uttakDetaljer__graderingDetaljer: true,

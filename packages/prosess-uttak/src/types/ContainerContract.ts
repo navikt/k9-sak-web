@@ -20,7 +20,6 @@ interface ContainerContract {
   aktivBehandlingUuid: string;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   aksjonspunktkoder: string[];
-  erFagytelsetypeLivetsSluttfase: boolean;
   ytelsetype: FagsakYtelsesType;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
   handleOverstyringAksjonspunkt?: (data: OverstyringUttakRequest) => Promise<void>;

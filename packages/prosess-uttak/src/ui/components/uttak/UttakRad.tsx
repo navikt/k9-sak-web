@@ -56,7 +56,6 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   });
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
-
   return (
     <>
       <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
@@ -149,7 +148,6 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
                 <UttakDetaljerV2Wrapper
                   uttak={uttak}
                   manueltOverstyrt={manueltOverstyrt}
-                  erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
                   arbeidsforhold={arbeidsforhold}
                 />
               ) : (

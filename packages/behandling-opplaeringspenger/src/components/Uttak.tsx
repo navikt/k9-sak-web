@@ -49,7 +49,6 @@ export default ({
         perioderTilVurdering,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
-        erFagytelsetypeLivetsSluttfase: false,
         ytelsetype: fagsakYtelsesType.OPPLÆRINGSPENGER,
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,

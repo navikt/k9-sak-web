@@ -114,7 +114,6 @@ export default ({
         aktivBehandlingUuid: uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
-        erFagytelsetypeLivetsSluttfase: false,
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,
