@@ -90,7 +90,6 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
       onPeriodeClick(allePerioder[index]);
     }
   };
-
   return (
     <Box className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
@@ -98,7 +97,6 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
       </Heading>
 
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
-
       {allePerioder.length > 0 && (
         <>
           <div className="flex w-[120px]">

@@ -75,6 +75,10 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
     return 'VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetOpplæringspenger';
+  }
+
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
@@ -102,6 +106,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.VilkarStatusInnvilgetOpplæringspenger';
+  }
+
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
@@ -127,6 +135,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytels
 
   if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
+  }
+
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.OpplæringspengerIkkeInnvilget';
   }
 
   return 'VedtakForm.PleiepengerIkkeInnvilget';

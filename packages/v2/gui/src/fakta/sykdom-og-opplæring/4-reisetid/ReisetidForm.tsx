@@ -7,7 +7,6 @@ import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import dayjs from 'dayjs';
-import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
 import OppgittReisetid from './OppgittReisetid';
 import { resultatTilJaNei } from './utils';
 interface ReisetidFormProps {
@@ -18,7 +17,7 @@ interface ReisetidFormProps {
 }
 
 const ReisetidForm = ({ vurdering, setRedigering, redigering, nullstillValgtVurdering }: ReisetidFormProps) => {
-  const { løsAksjonspunkt9303, behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
+  const { løsAksjonspunkt9303, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     begrunnelse: string;
     godkjent: string;
@@ -39,8 +38,6 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering, nullstillValgtVurd
   const oppgittReisedager = vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad;
   const vurderingGjelderEnkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
 
-  const { refetch: refetchReisetidVurderinger } = useVurdertReisetid(behandlingUuid);
-
   const submit = formMethods.handleSubmit(data => {
     løsAksjonspunkt9303({
       begrunnelse: data.begrunnelse,
@@ -50,7 +47,6 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering, nullstillValgtVurd
         tom: dayjs(data.periode.tom).format('YYYY-MM-DD'),
       },
     });
-    void refetchReisetidVurderinger();
     nullstillValgtVurdering();
   });
 
