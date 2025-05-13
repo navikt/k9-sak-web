@@ -14,6 +14,8 @@ import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
 import type {
   LangvarigSykdomVurderingDto,
+  LangvarigSykdomVurderingDtoAvslagsårsak,
+  SaksnummerDto,
   ValgtLangvarigSykdomVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { CenteredLoader } from '../CenteredLoader';
@@ -26,8 +28,15 @@ export const SykdomUperiodisertContext = createContext<{
 });
 
 interface SykdomVurderingselement extends Vurderingselement {
+  id: string;
   uuid: string;
   begrunnelse: string;
+  behandlingUuid: string;
+  godkjent: boolean;
+  saksnummer: SaksnummerDto;
+  vurdertAv: string;
+  vurdertTidspunkt: string;
+  avslagsårsak?: LangvarigSykdomVurderingDtoAvslagsårsak;
 }
 
 const defaultVurdering = {
@@ -55,10 +64,10 @@ const SykdomUperiodisertIndex = () => {
     resultat: utledResultat(element),
   }));
 
-  const [valgtPeriode, setValgtPeriode] = useState<Vurderingselement | null>(null);
+  const [valgtPeriode, setValgtPeriode] = useState<SykdomVurderingselement | null>(null);
   const [nyVurdering, setNyVurdering] = useState<boolean>(false);
 
-  const velgPeriode = (periode: Vurderingselement) => {
+  const velgPeriode = (periode: SykdomVurderingselement | null) => {
     setValgtPeriode(periode);
     setNyVurdering(false);
   };
@@ -80,20 +89,21 @@ const SykdomUperiodisertIndex = () => {
         <Warning vurderinger={langvarigSykVurderinger} vurderingBruktIAksjonspunkt={vurderingBruktIAksjonspunkt} />
         <NavigationWithDetailView
           navigationSection={() => (
-            <Vurderingsnavigasjon
+            <Vurderingsnavigasjon<SykdomVurderingselement>
+              valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
               customPeriodeLabel="Vurdert"
               customPeriodeRad={(periode, onPeriodeClick) => (
                 <NavigasjonsmenyRad
-                  periode={periode as SykdomVurderingselement}
+                  periode={periode}
                   active={periode.id === valgtPeriode?.id}
                   valgt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
                   datoOnClick={() => onPeriodeClick(periode)}
                   benyttOnClick={() =>
                     løsAksjonspunkt9301({
-                      langvarigsykdomsvurderingUuid: (periode as SykdomVurderingselement).uuid,
-                      begrunnelse: (periode as SykdomVurderingselement).begrunnelse,
+                      langvarigsykdomsvurderingUuid: periode.uuid,
+                      begrunnelse: periode.begrunnelse,
                     })
                   }
                 />
