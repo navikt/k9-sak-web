@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { Box } from '@navikt/ds-react';
+import { K9MaxTextWidth } from '../../tokens/tokens';
 
 interface OwnProps {
   children: ReactNode | ReactNode[];
@@ -17,7 +18,7 @@ interface OwnProps {
  * 43.5rem er hentet fra Aksel, i Alert komponenten som hardkodet maksbredde.
  */
 const MaxWidth = ({ className, children }: OwnProps) => (
-  <Box className={className} maxWidth={'43.5rem'}>
+  <Box className={className} maxWidth={K9MaxTextWidth}>
     {children}
   </Box>
 );
