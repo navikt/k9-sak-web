@@ -1,0 +1,6 @@
+/*  43.5rem er brukt som maksmredde ved å sette et flagg i Alert komponenten 
+    til Aksel. Bruker derfor den samme her */
+
+.kontrollerEtterbetalingAlert {
+  max-width: 43.5rem;
+}
