@@ -1,7 +1,7 @@
 import {
   BehandlingDtoType as KlageBehandlingDtoType,
   BehandlingDtoBehandlingResultatType as klageBehandlingsresultat,
-} from '@k9-sak-web/backend/k9klage/generated';
+} from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
