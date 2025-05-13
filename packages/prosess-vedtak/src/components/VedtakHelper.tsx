@@ -1,5 +1,5 @@
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
+import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -63,6 +63,10 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
     return 'VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetOpplæringspenger';
+  }
+
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
@@ -90,6 +94,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.VilkarStatusInnvilgetOpplæringspenger';
+  }
+
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
@@ -115,6 +123,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytels
 
   if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
+  }
+
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.OpplæringspengerIkkeInnvilget';
   }
 
   return 'VedtakForm.PleiepengerIkkeInnvilget';

@@ -24,12 +24,10 @@ const NødvendigOpplæringForm = ({
   vurdering,
   setRedigering,
   redigering,
-  nullstillValgtVurdering,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
   setRedigering: (redigering: boolean) => void;
   redigering: boolean;
-  nullstillValgtVurdering: () => void;
 }) => {
   const { løsAksjonspunkt9302, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
@@ -75,7 +73,6 @@ const NødvendigOpplæringForm = ({
         formMethods={formMethods}
         onSubmit={data => {
           const nødvendigOpplæring = data.nødvendigOpplæring === 'ja';
-
           const periode = nødvendigOpplæring ? data.periode : vurdering.opplæring;
 
           løsAksjonspunkt9302({
@@ -88,7 +85,6 @@ const NødvendigOpplæringForm = ({
             dokumentertOpplæring: data.dokumentertOpplæring === 'ja',
             avslagsårsak: data.avslagsårsak,
           });
-          nullstillValgtVurdering();
         }}
       >
         <div className="flex flex-col gap-6">
