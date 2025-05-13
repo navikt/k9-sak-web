@@ -3,6 +3,7 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { K9AksjonspunktBorderColor } from '@k9-sak-web/gui/tokens/tokens.js';
 import { OppholdInntektOgPerioderFormState } from './FormState';
 import { Periode } from './Periode';
 
@@ -39,7 +40,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
             selected={periode.id === selectedId}
             className={
               periode.begrunnelse === null && periode.aksjonspunkter.length > 0
-                ? 'border-solid border-0 border-l-[5px] border-[#fa3]'
+                ? `border-solid border-0 border-l-[5px] border-[${K9AksjonspunktBorderColor}]`
                 : ''
             }
           >
