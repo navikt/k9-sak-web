@@ -88,7 +88,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
     setRediger(!rediger);
   };
   return (
-    <AksjonspunktBox erAksjonspunktApent={rediger}>
+    <AksjonspunktBox erAksjonspunktApent={rediger} maxWidth={true}>
       <ReadMore header="Dette bør du undersøke rundt etterbetalingen">
         Saken stopper i simulering fordi arbeidsgiver har endret sitt refusjonskrav, eller har endret fra refusjon til
         direkte utbetaling i en periode som allerede har blitt utbetalt til bruker. I tillegg er etterbetalingen høy. Du
