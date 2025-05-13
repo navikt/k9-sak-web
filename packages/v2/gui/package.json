@@ -13,7 +13,8 @@
     "./kodeverk/*": "./src/kodeverk/*",
     "./storybook/*": "./src/storybook/*",
     "./prosess/*": "./src/prosess/*",
-    "./fakta/*": "./src/fakta/*"
+    "./fakta/*": "./src/fakta/*",
+    "./tokens/*": "./src/tokens/*"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
