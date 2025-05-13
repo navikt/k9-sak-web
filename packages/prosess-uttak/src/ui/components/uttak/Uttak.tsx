@@ -18,7 +18,7 @@ import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
-import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
+import UttakDetaljerV2Wrapper from '../uttak-detaljer/UttakDetaljerV2Wrapper';
 
 import styles from './uttak.module.css';
 
@@ -35,7 +35,9 @@ interface UttakProps {
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
-  const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
+  const containerContext = React.useContext(ContainerContext);
+  const erFagytelsetypeLivetsSluttfase = containerContext?.erFagytelsetypeLivetsSluttfase ?? false;
+  const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
@@ -120,7 +122,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
           <div className={styles.uttak__lastColumn}>
             <div className={styles.uttak__behandlerIcon}>
-              <Endringsstatus status={endringsstatus} />
+              <Endringsstatus status={endringsstatus || null} />
             </div>
             <Button
               size="xsmall"
@@ -138,7 +140,12 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
               {harOppfyltAlleInngangsvilkår ? (
-                <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
+                <UttakDetaljerV2Wrapper
+                  uttak={uttak}
+                  manueltOverstyrt={manueltOverstyrt}
+                  erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
+                  arbeidsforhold={arbeidsforhold}
+                />
               ) : (
                 <Vilkårsliste inngangsvilkår={inngangsvilkår} />
               )}

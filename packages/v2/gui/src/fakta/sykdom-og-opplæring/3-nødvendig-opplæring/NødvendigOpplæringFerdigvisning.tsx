@@ -27,9 +27,11 @@ const NødvendigOpplæringFerdigvisning = ({
           indentContent
           size="small"
           content={
-            <BodyShort size="small" className="whitespace-pre-wrap">
-              {vurdering.begrunnelse}
-            </BodyShort>
+            vurdering.begrunnelse && (
+              <BodyShort size="small" className="whitespace-pre-wrap">
+                {vurdering.begrunnelse}
+              </BodyShort>
+            )
           }
         />
         <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
