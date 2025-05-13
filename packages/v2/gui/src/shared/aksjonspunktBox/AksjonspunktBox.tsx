@@ -1,5 +1,6 @@
 import classnames from 'classnames/bind';
 import { type ReactNode } from 'react';
+import { Box } from '@navikt/ds-react';
 
 import styles from './aksjonspunktBox.module.css';
 
@@ -8,11 +9,24 @@ const classNames = classnames.bind(styles);
 interface OwnProps {
   children: ReactNode | ReactNode[];
   erAksjonspunktApent: boolean;
+  maxWidth?: boolean;
   className?: string;
 }
 
-const AksjonspunktBox = ({ erAksjonspunktApent, className, children }: OwnProps) => (
-  <div className={classNames(className, 'aksjonspunkt', { erAksjonspunktApent })}>{children}</div>
+/*
+ * Legger til et flagg for maxWidth, som setter maxWidth til 43.5rem.
+ * 43.5rem er hentet fra Aksel, i Alert komponenten som hardkodet maksbredde.
+ */
+const AksjonspunktBox = ({ erAksjonspunktApent, className, children, maxWidth = false }: OwnProps) => (
+  <Box
+    className={classNames('aksjonspunkt', className, { erAksjonspunktApent })}
+    borderWidth={erAksjonspunktApent ? '3' : undefined}
+    borderRadius={erAksjonspunktApent ? 'large' : undefined}
+    padding={erAksjonspunktApent ? '4' : undefined}
+    maxWidth={maxWidth ? '43.5rem' : undefined}
+  >
+    {children}
+  </Box>
 );
 
 export default AksjonspunktBox;
