@@ -205,7 +205,7 @@ export const DagsatsOgUtbetaling = ({ satser, ungdomsprogramInformasjon }: Dagsa
                                 {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
                               </BodyShort>
                             </Table.DataCell>
-                            <Table.DataCell />
+                            <Table.DataCell>-</Table.DataCell>
                             <Table.DataCell />
                             <Table.DataCell />
                             <Table.DataCell />
