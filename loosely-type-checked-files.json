@@ -430,7 +430,6 @@
   "packages/sak-app/src/behandlingsupport/melding/MeldingIndex.tsx",
   "packages/sak-app/src/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex.spec.tsx",
   "packages/sak-app/src/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex.tsx",
-  "packages/sak-app/src/bootstrap.tsx",
   "packages/sak-app/src/data/useKodeverk.tsx",
   "packages/sak-app/src/data/useVisForhandsvisningAvMelding.tsx",
   "packages/sak-app/src/fagsak/FagsakIndex.tsx",

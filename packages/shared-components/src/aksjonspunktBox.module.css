@@ -4,6 +4,6 @@
 
 .aksjonspunkt.erAksjonspunktApent {
   padding-top: 20px;
-  border: 3px solid #fa3;
+  border: 3px solid var(--k9-aksjonspunkt-border-color);
   border-radius: 4px;
 }

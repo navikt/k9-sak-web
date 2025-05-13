@@ -13,7 +13,7 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { BehandlingDtoType } from '@navikt/k9-klage-typescript-client';
+import { BehandlingDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { Location } from 'history';
 import { useCallback, useContext } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';

@@ -421,16 +421,16 @@ export const TilkommetAktivitetMedForlengelse: Story = {
     await step('skal kunne løse aksjonspunkt for tilkommet aktivitet med forlengelse', async () => {
       await expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
 
-      await expect(await canvas.findByText('09.11.2022 - 15.11.2022')).toBeInTheDocument();
-      await userEvent.click(canvas.getByText('09.11.2022 - 15.11.2022'));
+      await expect(await canvas.findByText('09.11.2022 - 13.11.2022')).toBeInTheDocument();
+      await userEvent.click(canvas.getByText('09.11.2022 - 13.11.2022'));
 
       await expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
-      await expect(canvas.getAllByText('450 000 kr')).toHaveLength(2);
+      await expect(canvas.getAllByText('450 000 kr')).toHaveLength(3);
 
-      await expect(canvas.getByText('Reduserer inntektstap')).toBeInTheDocument();
+      await expect(canvas.getAllByText('Reduserer inntektstap')).toHaveLength(2);
 
-      await expect(canvas.getAllByText('Arbeidsgiveren (999999997)...123')).toHaveLength(2);
-      await expect(canvas.getAllByText('Nei')).toHaveLength(3);
+      await expect(canvas.getAllByText('Arbeidsgiveren (999999997)...123')).toHaveLength(3);
+      await expect(canvas.getAllByText('Nei')).toHaveLength(4);
 
       await expect(canvas.getAllByText('Nav Troms og Finnmark (974652293)...456')).toHaveLength(2);
       await expect(canvas.getAllByText('Ja')).toHaveLength(3);
@@ -566,7 +566,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
   play: async ({ args, canvas, step }) => {
     await step('skal kunne løse aksjonspunkt for tilkommet i revurdering og legge til nye perioder', async () => {
       await expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
-      await expect(await canvas.findByText('10.04.2023 - 28.04.2023')).toBeInTheDocument();
+      await expect(await canvas.findByText('10.04.2023 - 21.04.2023')).toBeInTheDocument();
       await expect(canvas.getByText('Del opp periode')).toBeInTheDocument();
 
       await userEvent.click(canvas.getByText('Del opp periode'));
@@ -576,7 +576,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
       await expect(await canvas.queryByText('Opprett ny vurdering fra')).not.toBeInTheDocument();
       await userEvent.selectOptions(
         canvas.getByLabelText('Hvilken periode ønsker du å dele opp?'),
-        '10.04.2023 - 28.04.2023',
+        '10.04.2023 - 21.04.2023',
       );
       await expect(canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeDisabled();
       await expect(canvas.getByText('Opprett ny vurdering fra')).toBeInTheDocument();
@@ -586,38 +586,42 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
       await expect(await canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeEnabled();
       await expect(canvas.getByText('Nye perioder til vurdering:')).toBeInTheDocument();
       await expect(canvas.getByText('10.04.2023 - 17.04.2023')).toBeInTheDocument();
-      await expect(canvas.getByText('18.04.2023 - 28.04.2023')).toBeInTheDocument();
+      await expect(canvas.getByText('18.04.2023 - 21.04.2023')).toBeInTheDocument();
       const delOppPeriodeButtons = canvas.getAllByRole('button', { name: 'Del opp periode' });
       if (delOppPeriodeButtons[1]) {
         await userEvent.click(delOppPeriodeButtons[1]);
       }
       await expect(await canvas.findByText('10.04.2023 - 17.04.2023')).toBeInTheDocument();
-      await expect(canvas.getByText('18.04.2023 - 28.04.2023')).toBeInTheDocument();
+      await expect(canvas.getByText('18.04.2023 - 21.04.2023')).toBeInTheDocument();
 
       await expect(canvas.getAllByText('Ja')).toHaveLength(4);
       await expect(canvas.getAllByText('Nei')).toHaveLength(4);
 
       const neiLabels = canvas.getAllByLabelText('Nei');
       // 10.04.2023 - 17.04.2023
-      if (neiLabels[0] && neiLabels[1]) {
+      if (neiLabels[0]) {
         await userEvent.click(neiLabels[0]);
-        await userEvent.click(neiLabels[1]);
       }
 
       const jaLabels = canvas.getAllByLabelText('Ja');
-      // 18.04.2023 - 28.04.2023
-      if (jaLabels[2] && jaLabels[3]) {
+      // 18.04.2023 - 21.04.2023 og 24.04.2023 - 28.04.2023
+      if (jaLabels[1] && jaLabels[2] && jaLabels[3]) {
+        await userEvent.click(jaLabels[1]);
         await userEvent.click(jaLabels[2]);
         await userEvent.click(jaLabels[3]);
       }
-      await expect(canvas.getAllByLabelText('Fastsett årsinntekt')).toHaveLength(2);
-
       const fastsettAarsinntektElements = canvas.getAllByLabelText('Fastsett årsinntekt');
+      await expect(fastsettAarsinntektElements).toHaveLength(3);
+
       if (fastsettAarsinntektElements[0]) {
         await userEvent.type(fastsettAarsinntektElements[0], '200000');
       }
       if (fastsettAarsinntektElements[1]) {
-        await userEvent.type(fastsettAarsinntektElements[1], '350000');
+        await userEvent.type(fastsettAarsinntektElements[1], '200000');
+      }
+      if (fastsettAarsinntektElements[2]) {
+        await userEvent.clear(fastsettAarsinntektElements[2]);
+        await userEvent.type(fastsettAarsinntektElements[2], '350000');
       }
 
       // Begrunnelse og submit

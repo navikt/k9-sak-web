@@ -13,10 +13,9 @@ interface ReisetidFormProps {
   vurdering: ReisetidVurderingDto & { perioder: Period[] };
   setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
   redigering: boolean;
-  nullstillValgtVurdering: () => void;
 }
 
-const ReisetidForm = ({ vurdering, setRedigering, redigering, nullstillValgtVurdering }: ReisetidFormProps) => {
+const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProps) => {
   const { løsAksjonspunkt9303, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     begrunnelse: string;
@@ -47,7 +46,6 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering, nullstillValgtVurd
         tom: dayjs(data.periode.tom).format('YYYY-MM-DD'),
       },
     });
-    nullstillValgtVurdering();
   });
 
   return (

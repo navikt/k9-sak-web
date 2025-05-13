@@ -3,6 +3,7 @@
 @import url('tailwindcss/components');
 @import url('tailwindcss/utilities');
 @import url('dayPicker.css');
+@import url('@k9-sak-web/gui/tokens/tokens.css');
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
 html {

@@ -10,6 +10,7 @@ const classNames = classnames.bind(styles);
 interface OwnProps {
   children: ReactNode | ReactNode[];
   erAksjonspunktApent: boolean;
+  maxWidth?: boolean;
   className?: string;
 }
 
