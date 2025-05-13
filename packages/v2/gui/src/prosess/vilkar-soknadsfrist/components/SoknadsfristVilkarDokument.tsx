@@ -1,3 +1,4 @@
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
@@ -12,13 +13,12 @@ import {
   required,
 } from '@navikt/ft-form-validators';
 import type { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import type { Dayjs } from 'dayjs';
 import { useCallback, useMemo } from 'react';
 import RadioGroupPanel from '../../../shared/hook-form/RadioGroupPanel';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import { formatDate } from '../utils';
 import styles from './SoknadsfristVilkarDokument.module.css';
-import type { Dayjs } from 'dayjs';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 interface SoknadsfristVilkarDokumentProps {

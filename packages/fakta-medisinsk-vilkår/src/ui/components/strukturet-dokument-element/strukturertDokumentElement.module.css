@@ -34,12 +34,6 @@
   margin-bottom: -0.125rem;
 }
 
-.strukturertDokumentElement__texts__document svg {
-  width: 1.125rem;
-  height: 1.375rem;
-  stroke: none;
-}
-
 .strukturertDokumentElement .visuallyHidden {
   position: absolute;
   overflow: hidden;

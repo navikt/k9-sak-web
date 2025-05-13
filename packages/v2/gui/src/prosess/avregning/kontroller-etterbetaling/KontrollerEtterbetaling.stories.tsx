@@ -79,7 +79,7 @@ export const LøsAksjonspunkt: Story = {
     const canvas = await within(canvasElement);
 
     await step('Skal ha aksjonspunktboks for kontroller etterbetaling', async () => {
-      await expect(await canvas.findByRole('button', { name: 'Dette bør undersøker rundt etterbetalingen' }));
+      await expect(await canvas.findByRole('button', { name: 'Dette bør du undersøke rundt etterbetalingen' }));
       await expect(
         await canvas.findByRole('textbox', { name: 'Begrunn hvorfor du går videre med denne behandlingen.' }),
       );

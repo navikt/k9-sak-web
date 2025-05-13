@@ -1,4 +1,4 @@
-import { BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
+import { BehandlingDtoStatus, BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { KodeverkProvider } from '../../kodeverk';
@@ -37,10 +37,11 @@ export const InnvilgetStory: Story = {
         type: 'INNVILGET',
       },
       id: 3000002,
+      status: BehandlingDtoStatus.AVSLUTTET,
     },
     vilkår: [
       {
-        vilkarType: 'UNG_VK_XXX',
+        vilkarType: 'UNG_VK_2',
         perioder: [
           {
             avslagKode: undefined,
@@ -50,7 +51,7 @@ export const InnvilgetStory: Story = {
         ],
       },
       {
-        vilkarType: 'K9_VK_3',
+        vilkarType: 'UNG_VK_1',
         perioder: [
           {
             avslagKode: undefined,
@@ -67,7 +68,7 @@ export const AvslåttStory: Story = {
   args: {
     vilkår: [
       {
-        vilkarType: 'UNG_VK_XXX',
+        vilkarType: 'UNG_VK_2',
         perioder: [
           {
             avslagKode: undefined,
@@ -76,7 +77,7 @@ export const AvslåttStory: Story = {
         ],
       },
       {
-        vilkarType: 'K9_VK_3',
+        vilkarType: 'UNG_VK_1',
         perioder: [
           {
             avslagKode: '1090',
@@ -90,6 +91,7 @@ export const AvslåttStory: Story = {
         type: 'AVSLÅTT',
       },
       id: 3000001,
+      status: BehandlingDtoStatus.AVSLUTTET,
     },
     readOnly: false,
   },

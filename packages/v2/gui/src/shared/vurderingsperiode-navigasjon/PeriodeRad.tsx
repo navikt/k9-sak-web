@@ -1,50 +1,54 @@
-import {
-  ContentWithTooltip,
-  GreenCheckIconFilled,
-  InstitutionIcon,
-  RedCrossIconFilled,
-  WarningIcon,
-} from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/ft-utils';
 
+import {
+  Buildings3Icon,
+  CheckmarkCircleFillIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ExclamationmarkTriangleFillIcon,
+  XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
+import { Tooltip } from '@navikt/ds-react';
 import { OverlayedIcons } from '../indicatorWithOverlay/IndicatorWithOverlay';
+import styles from './periodeRad.module.css';
 import type { ResultatType } from './VurderingsperiodeNavigasjon';
 import { Resultat } from './VurderingsperiodeNavigasjon';
-import { ChevronDownIcon } from '@navikt/aksel-icons';
-import { ChevronRightIcon } from '@navikt/aksel-icons';
-import styles from './periodeRad.module.css';
 interface OwnProps {
   perioder: Period[];
   resultat?: ResultatType;
-  active: boolean;
+  active?: boolean;
   handleClick: () => void;
 }
 
 const renderStatusIcon = (resultat?: ResultatType) => {
   if (!resultat || resultat === Resultat.MÅ_VURDERES) {
     return (
-      <ContentWithTooltip tooltipText="Perioden må vurderes">
-        <WarningIcon />
-      </ContentWithTooltip>
+      <ExclamationmarkTriangleFillIcon
+        title="Perioden må vurderes"
+        fontSize="1.5rem"
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+      />
     );
   }
 
   if (resultat === Resultat.GODKJENT_AUTOMATISK) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
+      <Tooltip content="Vilkåret er automatisk oppfylt">
         <OverlayedIcons
-          indicatorRenderer={() => <GreenCheckIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
+          indicatorRenderer={() => (
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+          )}
+          overlayRenderer={() => <Buildings3Icon fontSize={24} />}
         />
-      </ContentWithTooltip>
+      </Tooltip>
     );
   }
 
   if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT || resultat === Resultat.GODKJENT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
-        <GreenCheckIconFilled />
-      </ContentWithTooltip>
+      <Tooltip content="Vilkåret er oppfylt">
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+      </Tooltip>
     );
   }
   if (
@@ -53,9 +57,11 @@ const renderStatusIcon = (resultat?: ResultatType) => {
     resultat === Resultat.IKKE_GODKJENT
   ) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
-        <RedCrossIconFilled />
-      </ContentWithTooltip>
+      <XMarkOctagonFillIcon
+        title="Vilkåret er ikke oppfylt"
+        fontSize={24}
+        style={{ color: 'var(--a-surface-danger)' }}
+      />
     );
   }
   return null;
@@ -87,12 +93,12 @@ export const RadChevron = ({ active }: { active: boolean }) => {
   );
 };
 
-export const PeriodeRad = ({ perioder, resultat, active, handleClick }: OwnProps) => (
+export const PeriodeRad = ({ perioder, resultat, active = false, handleClick }: OwnProps) => (
   <div
     className={`${styles.interactiveListElement} ${active ? styles.interactiveListElementActive : styles.interactiveListElementInactive}`}
   >
     <button
-      className="flex bg-transparent border-none cursor-pointer outline-none text-left w-full"
+      className="flex bg-transparent border-none cursor-pointer outline-none text-left w-full p-4"
       onClick={handleClick}
     >
       <div className="flex justify-between w-full">
