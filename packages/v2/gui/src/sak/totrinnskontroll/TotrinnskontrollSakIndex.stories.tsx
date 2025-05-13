@@ -1,4 +1,4 @@
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -271,118 +271,14 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
 export const Tilbakekreving: Story = {
   args: {
     behandling: {
-      id: 13102,
-      uuid: '390567b5-b1ff-4765-85b7-c4b4d24c5086',
-      versjon: 19,
-      type: {
-        kode: 'BT-007',
-        navn: 'Tilbakekreving',
-        kodeverk: 'BEHANDLING_TYPE',
-      },
-      status: {
-        kode: 'FVED',
-        navn: 'Fatter vedtak',
-        kodeverk: 'BEHANDLING_STATUS',
-      },
-      fagsakId: 2011701,
-      opprettet: '2025-05-07T10:57:03.533',
-      avsluttet: null,
-      endret: '2025-05-08T08:46:31.048',
-      behandlendeEnhetId: '4487',
-      behandlendeEnhetNavn: 'Nav arbeid og ytelser - Sykdom i familien',
+      type: 'BT-007',
+      status: 'FVED',
       toTrinnsBehandling: true,
-      behandlingPåVent: false,
-      fristBehandlingPåVent: null,
-      venteÅrsakKode: null,
-      språkkode: {
-        kode: 'NB',
-        navn: null,
-        kodeverk: 'SPRAAK_KODE',
-      },
-      behandlingKøet: false,
-      ansvarligSaksbehandler: 'Z990404',
-      førsteÅrsak: null,
-      behandlingÅrsaker: [],
-      kanHenleggeBehandling: false,
-      harVerge: false,
       behandlingsresultat: {
-        type: {
-          kode: 'IKKE_FASTSATT',
-          navn: 'Ikke fastsatt',
-          kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-        },
+        type: 'IKKE_FASTSATT',
       },
-      behandlingTillatteOperasjoner: {
-        uuid: '390567b5-b1ff-4765-85b7-c4b4d24c5086',
-        behandlingKanBytteEnhet: false,
-        behandlingKanHenlegges: false,
-        behandlingKanGjenopptas: false,
-        behandlingKanOpnesForEndringer: false,
-        behandlingKanSettesPaVent: false,
-        behandlingKanSendeMelding: false,
-        behandlingFraBeslutter: false,
-        behandlingTilGodkjenning: true,
-        vergeBehandlingsmeny: 'SKJUL',
-      },
-      totrinnskontrollÅrsaker: [
-        {
-          skjermlenkeType: 'TILBAKEKREVING',
-          totrinnskontrollAksjonspunkter: [
-            {
-              aksjonspunktKode: '5002',
-              besluttersBegrunnelse: null,
-              totrinnskontrollGodkjent: null,
-              vurderPaNyttArsaker: [],
-            },
-          ],
-        },
-        {
-          skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
-          totrinnskontrollAksjonspunkter: [
-            {
-              aksjonspunktKode: '7003',
-              besluttersBegrunnelse: null,
-              totrinnskontrollGodkjent: null,
-              vurderPaNyttArsaker: [],
-            },
-          ],
-        },
-        {
-          skjermlenkeType: 'VEDTAK',
-          totrinnskontrollAksjonspunkter: [
-            {
-              aksjonspunktKode: '5004',
-              besluttersBegrunnelse: null,
-              totrinnskontrollGodkjent: null,
-              vurderPaNyttArsaker: [],
-            },
-          ],
-        },
-        {
-          skjermlenkeType: 'FORELDELSE',
-          totrinnskontrollAksjonspunkter: [
-            {
-              aksjonspunktKode: '5003',
-              besluttersBegrunnelse: null,
-              totrinnskontrollGodkjent: null,
-              vurderPaNyttArsaker: [],
-            },
-          ],
-        },
-      ],
-      totrinnskontrollReadonly: false,
-      brevmaler: null,
-      links: [],
-      sprakkode: {
-        kode: 'NB',
-        navn: null,
-        kodeverk: 'SPRAAK_KODE',
-      },
-      fristBehandlingPaaVent: null,
-      behandlingKoet: false,
-      behandlingPaaVent: false,
-      venteArsakKode: null,
     },
+    behandlingType: behandlingType.TILBAKEKREVING,
     location,
     onSubmit: fn(),
     behandlingKlageVurdering: undefined,
@@ -394,9 +290,11 @@ export const Tilbakekreving: Story = {
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '7003',
-            besluttersBegrunnelse: null,
-            totrinnskontrollGodkjent: null,
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
           },
         ],
       },
@@ -405,9 +303,11 @@ export const Tilbakekreving: Story = {
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '5004',
-            besluttersBegrunnelse: null,
-            totrinnskontrollGodkjent: null,
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
           },
         ],
       },
@@ -416,9 +316,11 @@ export const Tilbakekreving: Story = {
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '5002',
-            besluttersBegrunnelse: null,
-            totrinnskontrollGodkjent: null,
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
           },
         ],
       },
@@ -427,9 +329,11 @@ export const Tilbakekreving: Story = {
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '5003',
-            besluttersBegrunnelse: null,
-            totrinnskontrollGodkjent: null,
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
           },
         ],
       },

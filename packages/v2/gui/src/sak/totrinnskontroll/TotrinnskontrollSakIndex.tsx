@@ -47,7 +47,7 @@ const getBehandlingTypeForKodeverk = (behandling: Behandling, erTilbakekreving: 
   if (erTilbakekreving) {
     return 'kodeverkTilbake';
   }
-  if (behandling.type.kode === BehandlingDtoType.KLAGE) {
+  if (behandling.type === BehandlingDtoType.KLAGE) {
     return 'kodeverkKlage';
   }
   return 'kodeverk';
@@ -169,9 +169,11 @@ const TotrinnskontrollSakIndex = ({
 };
 
 // TODO: Dette kan fjernes når overgang til kodeverk som strings er ferdig
-const TotrinnskontrollSakIndexPropsTransformer = (props: TotrinnskontrollSakIndexProps) => {
+const TotrinnskontrollSakIndexPropsTransformer = (
+  props: TotrinnskontrollSakIndexProps & { behandlingType?: BehandlingDtoType },
+) => {
   const v2Props = JSON.parse(JSON.stringify(props));
-  konverterKodeverkTilKode(v2Props, props.behandling.type.kode === BehandlingDtoType.TILBAKEKREVING);
+  konverterKodeverkTilKode(v2Props, props.behandlingType === BehandlingDtoType.TILBAKEKREVING);
   return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
 };
 
