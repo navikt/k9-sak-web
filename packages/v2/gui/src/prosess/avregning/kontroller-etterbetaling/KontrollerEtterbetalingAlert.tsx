@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
 import type { FC } from 'react';
-import MaxWidth from '../../../shared/maxWidth/maxWidth';
+import MaxWidth from '@k9-sak-web/gui/shared/maxWidth/maxWidth.js';
 
 const KontrollerEtterbetalingAlert: FC = () => {
   return (
