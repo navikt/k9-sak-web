@@ -76,6 +76,7 @@ const FaktaInstitusjonIndex = () => {
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>
+            valgtPeriode={valgtPeriode}
             perioder={perioderMappet}
             onPeriodeClick={setValgtPeriode}
           />
