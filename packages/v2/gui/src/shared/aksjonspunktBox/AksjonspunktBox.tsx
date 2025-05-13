@@ -1,7 +1,7 @@
 import classnames from 'classnames/bind';
 import { type ReactNode } from 'react';
 import { Box } from '@navikt/ds-react';
-import { K9MaxTextWidth } from '../../tokens/tokens';
+import { K9MaxTextWidth } from '@k9-sak-web/gui/tokens/tokens.js';
 
 import styles from './aksjonspunktBox.module.css';
 
