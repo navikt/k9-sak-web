@@ -5,7 +5,6 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase';
 import Uttak from '../../components/Uttak';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Fagsak } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
@@ -17,7 +16,6 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
     alleKodeverk,
-    erFagytelsetypeLivetsSluttfase,
     submitCallback,
     virkningsdatoUttakNyeRegler,
     isReadOnly,
@@ -31,7 +29,6 @@ class PanelDef extends ProsessStegPanelDef {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         aksjonspunkter={aksjonspunkter}
-        erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
         submitCallback={submitCallback}
         virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
         readOnly={isReadOnly}
@@ -67,7 +64,6 @@ class PanelDef extends ProsessStegPanelDef {
   getData = ({
     uttak,
     arbeidsgiverOpplysningerPerId,
-    fagsak,
     alleKodeverk,
   }: {
     uttak: any; // TODO: identifiser riktig type
@@ -80,7 +76,6 @@ class PanelDef extends ProsessStegPanelDef {
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
     alleKodeverk,
   });
 }
