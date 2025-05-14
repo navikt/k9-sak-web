@@ -85,6 +85,7 @@ const createColumns = (
 
   return perioderData.map((måned, månedIndex) => (
     <Table.DataCell
+      textSize="small"
       key={`columnIndex${månedIndex + 1}`}
       className={classNames({
         rodTekst: måned.beløp !== null && måned.beløp < 0,
@@ -177,7 +178,7 @@ const AvregningTable = ({
                   rangeOfMonths,
                   nesteMåned,
                 ).map(heading => (
-                  <Table.HeaderCell key={heading.key} scope="col">
+                  <Table.HeaderCell key={heading.key} scope="col" textSize="small">
                     {heading}
                   </Table.HeaderCell>
                 ))}
@@ -200,7 +201,7 @@ const AvregningTable = ({
                         const boldText = isFeilUtbetalt || ingenPerioderMedAvvik;
                         return (
                           <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
-                            <Table.DataCell className={boldText ? 'font-bold' : ''}>
+                            <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
                               <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
                             </Table.DataCell>
                             {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
@@ -218,7 +219,7 @@ const AvregningTable = ({
                     const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
                     return (
                       <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
-                        <Table.DataCell className={boldText ? 'font-bold' : ''}>
+                        <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
                           <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
                         </Table.DataCell>
                         {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
