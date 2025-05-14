@@ -121,6 +121,10 @@ historikkInnslagMissingWordsExemptions.set('KLAGE_BEH_NFP', ['endret', 'fra']);
 historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.FAKTA_ENDRET, [
   'Aldersvilkåret',
 ]);
+historikkInnslagMissingWordsExemptions.set(
+  KodeverdiSomObjektHistorikkinnslagTypeKilde.TILBAKEKREVING_VIDEREBEHANDLING,
+  ['satt'],
+);
 
 const allMissingWordsAreExempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
   const wordsKnownMissing = historikkInnslagMissingWordsExemptions.get(historikkInnslagV1Type);
