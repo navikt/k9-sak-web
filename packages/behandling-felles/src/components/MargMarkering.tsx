@@ -24,6 +24,10 @@ const MargMarkering = ({
   noBorder,
 }: OwnProps) => {
   const prosesspunktStyles = `${styles.prosesspunkt} ${noBorder ? styles.prosesspunktNoBorder : ''}`;
+  const harApnentAksjonspunktSomKanLoses = useMemo(
+    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
+    [aksjonspunkter],
+  );
   if (aksjonspunkter.length === 0) {
     return <div className={prosesspunktStyles}>{children}</div>;
   }
@@ -33,10 +37,6 @@ const MargMarkering = ({
     aksjonspunkter[0].toTrinnsBehandling &&
     aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
-  const harApnentAksjonspunktSomKanLoses = useMemo(
-    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
-    [aksjonspunkter],
-  );
   const visAksjonspunkt = visAksjonspunktMarkering && harApnentAksjonspunktSomKanLoses && !isReadOnly;
 
   return (
