@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import {
+  BehandlingDtoSakstype,
   BehandlingDtoStatus,
   BehandlingDtoType,
   BehandlingsresultatDtoType,
@@ -30,6 +31,7 @@ const behandlinger = [
     status: BehandlingDtoStatus.AVSLUTTET,
     type: BehandlingDtoType.REVURDERING,
     uuid: '1',
+    sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
   },
   {
     ansvarligSaksbehandler: 'saksbeh',
@@ -46,6 +48,7 @@ const behandlinger = [
     status: BehandlingDtoStatus.AVSLUTTET,
     type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
     uuid: '1',
+    sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
   },
 ];
 
