@@ -35,9 +35,9 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = 
               <BodyShort size="small" className={styles.resultName}>
                 <FormattedMessage id="Avregning.etterbetaling" />:
               </BodyShort>
-              <div>
+              <BodyShort size="small">
                 <span className={styles.number}>{formatCurrencyNoKr(etterbetaling)}</span>
-              </div>
+              </BodyShort>
             </HGrid>
             <HGrid
               gap="1"
@@ -49,9 +49,9 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = 
                   <FormattedMessage id="Avregning.tilbakekreving" />:
                 </BodyShort>
               </div>
-              <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
+              <BodyShort size="small" className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
                 {formatCurrencyNoKr(feilutbetaling)}
-              </span>
+              </BodyShort>
               {inntrekk !== null && (
                 <BodyShort size="small">
                   <FormattedMessage id="Avregning.inntrekk" />:
