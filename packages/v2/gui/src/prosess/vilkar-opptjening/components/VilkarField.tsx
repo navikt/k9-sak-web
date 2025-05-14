@@ -1,3 +1,4 @@
+import { VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, HStack } from '@navikt/ds-react';
 import { RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
@@ -11,8 +12,8 @@ const validateMinLength3 = minLength(3);
 const validateMaxLength1500 = maxLength(1500);
 
 export const opptjeningMidlertidigInaktivKoder = {
-  TYPE_A: '7847A',
-  TYPE_B: '7847B',
+  TYPE_A: VilkårPeriodeDtoMerknad.VM_7847_A,
+  TYPE_B: VilkårPeriodeDtoMerknad.VM_7847_B,
 };
 
 interface VilkarFieldsProps {
@@ -58,7 +59,10 @@ export const VilkarField = ({
   const erOppfyltText = 'Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.';
 
   const vilkarVurderingTekst = () => {
-    if (erVilkarOk(field?.kode) && Object.values(opptjeningMidlertidigInaktivKoder).includes(field?.kode)) {
+    if (
+      erVilkarOk(field?.kode) &&
+      Object.values(opptjeningMidlertidigInaktivKoder).some(kode => kode === field?.kode)
+    ) {
       return hent847Text(field?.kode);
     }
     if (erVilkarOk(field?.kode)) {

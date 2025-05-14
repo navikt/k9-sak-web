@@ -1,5 +1,6 @@
 import {
   AksjonspunktDtoDefinisjon,
+  VilkårPeriodeDtoMerknad,
   type AksjonspunktDto,
   type OpptjeningDto,
   type VilkårPeriodeDto,
@@ -29,10 +30,10 @@ export const buildInitialValues = (
 ): VilkårFieldFormValues => {
   const utledKode = (periode: VilkårPeriodeDto) => {
     if (
-      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_A ||
-      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_B
+      periode.merknad === VilkårPeriodeDtoMerknad.VM_7847_A ||
+      periode.merknad === VilkårPeriodeDtoMerknad.VM_7847_B
     ) {
-      return periode.merknad as '7847A' | '7847B';
+      return periode.merknad;
     }
     return periode.vilkarStatus as 'OPPFYLT' | 'IKKE_OPPFYLT';
   };
