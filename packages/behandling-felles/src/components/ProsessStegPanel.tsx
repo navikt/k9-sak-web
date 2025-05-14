@@ -143,6 +143,7 @@ const ProsessStegPanel = ({
               apentFaktaPanelInfo={apentFaktaPanelInfo}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               useMultipleRestApi={useMultipleRestApi}
+              featureToggles={featureToggles}
             />
           )}
         </MargMarkering>

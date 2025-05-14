@@ -6,6 +6,7 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { Dayjs } from 'dayjs';
 import { useEffect, useState, type SetStateAction } from 'react';
+import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
@@ -13,7 +14,7 @@ import type { SoknadsfristAksjonspunktType } from './types/SoknadsfristAksjonspu
 import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
 import type { SubmitData } from './types/submitCallback';
 import type { SøknadsfristTilstand } from './types/SøknadsfristTilstand';
-import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
+import { formatDate, utledInnsendtSoknadsfrist } from './utils';
 
 const lovReferanse = '§ 22-13';
 
