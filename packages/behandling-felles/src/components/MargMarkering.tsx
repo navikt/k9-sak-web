@@ -12,7 +12,7 @@ interface OwnProps {
   isReadOnly: boolean;
   visAksjonspunktMarkering?: boolean;
   children: any;
-  noBorder: boolean;
+  noBorder?: boolean;
 }
 
 const MargMarkering = ({
