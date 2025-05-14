@@ -41,9 +41,9 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
     );
   }
   return (
-    <div className={styles.sats}>
+    <span className={styles.sats}>
       {satstype} {icon && <Tooltip content="Hjelpetekst om satser her">{icon}</Tooltip>}
-    </div>
+    </span>
   );
 };
 
