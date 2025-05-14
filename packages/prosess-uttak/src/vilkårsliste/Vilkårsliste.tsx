@@ -15,20 +15,22 @@ interface VilkårslisteProps {
 const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) =>
   inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
 
-const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
-  <div className={styles.vilkårsliste}>
-    <Label size="small" as="p">
-      Vilkår
-    </Label>
-    <ul>
-      {vilkår.map(
-        v =>
-          inngangsvilkår[v.kode] && (
-            <VilkårslisteItem key={v.kode} vilkår={v.name} erOppfylt={erVilkårOppfylt(v.kode, inngangsvilkår)} />
-          ),
-      )}
-    </ul>
-  </div>
-);
+const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => {
+  return (
+    <div className={styles.vilkårsliste}>
+      <Label size="small" as="p">
+        Vilkår
+      </Label>
+      <ul>
+        {vilkår.map(
+          v =>
+            inngangsvilkår[v.kode] && (
+              <VilkårslisteItem key={v.kode} vilkår={v.name} erOppfylt={erVilkårOppfylt(v.kode, inngangsvilkår)} />
+            ),
+        )}
+      </ul>
+    </div>
+  );
+};
 
 export default Vilkårsliste;

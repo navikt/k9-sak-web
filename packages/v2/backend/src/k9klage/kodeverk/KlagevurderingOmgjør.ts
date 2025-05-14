@@ -1,0 +1,4 @@
+import { AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurderingOmgjoer } from '@navikt/k9-klage-typescript-client/types';
+
+export type KlagevurderingOmgjørType = AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurderingOmgjoer;
+export const KlagevurderingOmgjør = AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurderingOmgjoer;
