@@ -299,7 +299,6 @@
   "packages/prosess-aarskvantum-oms/src/components/saerlige-smittevernhensyn/KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend.ts",
   "packages/prosess-aarskvantum-oms/src/ÅrskvantumIndex.tsx",
   "packages/prosess-avregning/src/components/AvregningSummary.spec.tsx",
-  "packages/prosess-avregning/src/components/AvregningTable.tsx",
   "packages/prosess-felles/src/ProsessStegBegrunnelseTextField.tsx",
   "packages/prosess-felles/src/ProsessStegSubmitButton.spec.tsx",
   "packages/prosess-felles/src/ProsessStegSubmitButton.tsx",

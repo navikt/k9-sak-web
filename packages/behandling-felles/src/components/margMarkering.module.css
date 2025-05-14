@@ -16,7 +16,7 @@
 }
 
 .prosesspunkt.visAksjonspunkt {
-  border-left-color: #fa3;
+  border-left-color: var(--k9-aksjonspunkt-border-color);
 }
 
 .prosesspunkt.ikkeAkseptertAvBeslutter {
