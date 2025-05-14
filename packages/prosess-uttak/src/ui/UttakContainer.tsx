@@ -6,7 +6,7 @@ import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
 import Infostripe from './components/infostripe/Infostripe';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
-import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
+import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
 import VurderDato from './components/vurderDato/VurderDato';
 import ContainerContext from './context/ContainerContext';
@@ -28,6 +28,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
     erOverstyrer,
     readOnly,
     vurderOverlappendeSakComponent,
+    utsattePerioder,
   } = containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
@@ -62,7 +63,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
           <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
         </OverstyrUttakContextProvider>
 
-        <UtsattePerioderStripe />
+        <UtsattePerioderStripe utsattePerioder={utsattePerioder} />
         {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
         {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) ||
           harAksjonspunktVurderDatoMedStatusOpprettet ||
