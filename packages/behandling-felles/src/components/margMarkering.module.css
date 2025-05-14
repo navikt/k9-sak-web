@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.prosesspunktNoBorder {
+  box-shadow: none;
+}
+
 .prosesspunkt.visAksjonspunkt,
 .prosesspunkt.ikkeAkseptertAvBeslutter {
   border-left-width: 5px;

@@ -7,6 +7,7 @@ import { Behandling, Fagsak, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
+import { BehandlingDtoSakstype } from '@navikt/ung-sak-typescript-client';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
@@ -110,6 +111,7 @@ const ProsessStegPanel = ({
           aksjonspunkter={valgtProsessSteg.getAksjonspunkter()}
           isReadOnly={valgtProsessSteg.getErReadOnly()}
           visAksjonspunktMarkering={delPaneler.length === 1}
+          noBorder={fagsak?.sakstype === BehandlingDtoSakstype.UNGDOMSYTELSE}
         >
           {delPaneler.length === 1 && (
             <FadingPanel>
