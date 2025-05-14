@@ -224,7 +224,7 @@ const transformValues = (
   vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
     erVilkarOk: erVilkarOk(vilkarField.kode),
-    innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).includes(vilkarField.kode)
+    innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).some(kode => kode === vilkarField.kode)
       ? vilkarField.kode
       : undefined,
     periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
