@@ -4,7 +4,7 @@ import React, { type JSX } from 'react';
 import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
-import Infostripe from './components/infostripe/Infostripe';
+import AnnenSakStripe from '@k9-sak-web/gui/prosess/uttak/components/annenSakStripe/AnnenSakSripe.js';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
 import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
@@ -28,6 +28,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
     erOverstyrer,
     readOnly,
     vurderOverlappendeSakComponent,
+    erFagytelsetypeLivetsSluttfase,
     utsattePerioder,
   } = containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
@@ -53,7 +54,10 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
           </Heading>
           {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
         </HStack>
-        <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+        <AnnenSakStripe
+          harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt}
+          erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
+        />
 
         {vurderOverlappendeSakComponent && (
           <div className={styles.overlappendeSakContainer}>{vurderOverlappendeSakComponent}</div>

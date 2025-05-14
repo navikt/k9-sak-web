@@ -1,15 +1,16 @@
 import { Alert } from '@navikt/ds-react';
 import React from 'react';
-import ContainerContext from '../../context/ContainerContext';
-import styles from './infostripe.module.css';
+import styles from './annenSakStripe.module.css';
 
-interface InfostripeProps {
+interface AnneAnnenSakStripeProps {
   harVentAnnenPSBSakAksjonspunkt: boolean;
+  erFagytelsetypeLivetsSluttfase: boolean;
 }
 
-const Infostripe: React.FC<InfostripeProps> = ({ harVentAnnenPSBSakAksjonspunkt }) => {
-  const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
-
+const AnnenSakStripe: React.FC<AnneAnnenSakStripeProps> = ({
+  harVentAnnenPSBSakAksjonspunkt,
+  erFagytelsetypeLivetsSluttfase,
+}) => {
   if (!harVentAnnenPSBSakAksjonspunkt) {
     return null;
   }
@@ -18,7 +19,7 @@ const Infostripe: React.FC<InfostripeProps> = ({ harVentAnnenPSBSakAksjonspunkt 
     <div className={styles.infostripe}>
       <Alert size="small" variant="warning">
         Det er nødvendig med mer informasjon fra andre saker før dette steget kan fullføres.
-        <ol className={styles.infostripe__punktliste}>
+        <ol className={styles.infostripePunktliste}>
           <li>
             Åpne alle behandlinger tilknyttet {erFagytelsetypeLivetsSluttfase ? 'pleietrengende' : 'barnet'} og behandle
             de til uttakssteget.
@@ -33,4 +34,4 @@ const Infostripe: React.FC<InfostripeProps> = ({ harVentAnnenPSBSakAksjonspunkt 
   );
 };
 
-export default Infostripe;
+export default AnnenSakStripe;
