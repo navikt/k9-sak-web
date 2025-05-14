@@ -24,4 +24,5 @@ export interface FeatureToggles {
   BRUK_V2_FAKTA_INSTITUSJON: boolean;
   BRUK_V2_VILKAR_OVERSTYRING: boolean;
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: boolean;
+  BRUK_V2_VILKAR_OPPTJENING: boolean;
 }

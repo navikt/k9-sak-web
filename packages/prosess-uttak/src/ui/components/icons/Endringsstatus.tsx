@@ -1,35 +1,43 @@
-import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import { Tooltip } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import EndringsstatusType from '../../../types/Endringsstatus';
 import PillIcon from './PillIcon';
 
-const Endringsstatus = ({ status }: { status: EndringsstatusType }): JSX.Element | null => {
+const Endringsstatus = ({ status }: { status?: EndringsstatusType }): JSX.Element | null => {
   if (status === 'NY') {
     return (
-      <ContentWithTooltip tooltipText="Ny denne behandlingen">
-        <PillIcon text="Ny" type="success" />
-      </ContentWithTooltip>
+      <Tooltip content="Ny denne behandlingen">
+        <div>
+          <PillIcon text="Ny" type="success" />
+        </div>
+      </Tooltip>
     );
   }
   if (status === 'ENDRET') {
     return (
-      <ContentWithTooltip tooltipText="Endret denne behandlingen">
-        <PillIcon text="Endret" type="warning" />
-      </ContentWithTooltip>
+      <Tooltip content="Endret denne behandlingen">
+        <div>
+          <PillIcon text="Endret" type="warning" />
+        </div>
+      </Tooltip>
     );
   }
   if (status === 'UENDRET_RESULTAT') {
     return (
-      <ContentWithTooltip tooltipText="Endret denne behandlingen, men uten endring i resultat">
-        <PillIcon text="Endring med uendret resultat" type="warning" />
-      </ContentWithTooltip>
+      <Tooltip content="Endret denne behandlingen, men uten endring i resultat">
+        <div>
+          <PillIcon text="Endring med uendret resultat" type="warning" />
+        </div>
+      </Tooltip>
     );
   }
   if (status === 'UENDRET') {
     return (
-      <ContentWithTooltip tooltipText="Uendret denne behandlingen">
-        <PillIcon text="Uendret" type="info" />
-      </ContentWithTooltip>
+      <Tooltip content="Uendret denne behandlingen">
+        <div>
+          <PillIcon text="Uendret" type="info" />
+        </div>
+      </Tooltip>
     );
   }
 

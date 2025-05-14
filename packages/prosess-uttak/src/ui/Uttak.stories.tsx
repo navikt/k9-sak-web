@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
 import UttakContainer from './UttakContainer';
-import { userEvent, within, expect } from '@storybook/test';
 
 const meta: Meta<typeof UttakContainer> = {
   title: 'prosess/prosess-uttak',
@@ -203,7 +203,6 @@ export const Uttak: Story = {
         },
       ],
       utsattePerioder: [],
-      erFagytelsetypeLivetsSluttfase: false,
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: '',
       readOnly: false,
@@ -459,7 +458,6 @@ export const UttakMedInntektsgradering: Story = {
         },
       ],
       utsattePerioder: [],
-      erFagytelsetypeLivetsSluttfase: false,
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: null,
       readOnly: false,
@@ -472,8 +470,12 @@ export const UttakMedInntektsgradering: Story = {
     await step('skal vise gradering mot arbeidsinntekt når det gir lavest pleiepengegrad', async () => {
       const tabell = within(await canvas.getByRole('table'));
       const rader = await tabell.getAllByRole('row');
-      const førstePeriode = await tabell.getByRole('row', { name: '5-17 01.02.2023 - 28.04.2023 200% 20 % Ny' });
-      const andrePeriode = await tabell.getByRole('row', { name: '1-5 02.01.2023 - 31.01.2023 200% 100 % Ny' });
+      const førstePeriode = await canvas.getByRole('row', {
+        name: '5-17 01.02.2023 - 28.04.2023 200% Søker 20 % Ny denne behandlingen',
+      });
+      const andrePeriode = await canvas.getByRole('row', {
+        name: '5-17 01.02.2023 - 28.04.2023 200% Søker 20 % Ny denne behandlingen',
+      });
       const detaljer = rader[2];
       const inntekt = within(await tabell.getByTitle('Gradering mot inntekt'));
 

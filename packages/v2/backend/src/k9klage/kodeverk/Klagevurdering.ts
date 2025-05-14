@@ -1,7 +1,4 @@
-import {
-  AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurdering as generatedKlagevurdering,
-  type AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurdering as generatedKlagevurderingType,
-} from '../generated';
+import { AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurdering } from '@navikt/k9-klage-typescript-client/types';
 
-export type KlagevurderingType = generatedKlagevurderingType;
-export const Klagevurdering = generatedKlagevurdering;
+export type KlagevurderingType = AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurdering;
+export const Klagevurdering = AbacKlageVurderingResultatAksjonspunktMellomlagringDtoKlageVurdering;

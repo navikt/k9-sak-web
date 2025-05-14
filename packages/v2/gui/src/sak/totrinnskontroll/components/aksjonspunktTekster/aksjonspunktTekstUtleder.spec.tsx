@@ -1,6 +1,6 @@
+import { AksjonspunktDtoDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
-import { AksjonspunktDtoDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@navikt/k9-klage-typescript-client';
 import {
   AksjonspunktDtoDefinisjon,
   BehandlingAksjonspunktDtoBehandlingStatus,

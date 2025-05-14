@@ -25,7 +25,7 @@ export class K9SakApiError extends ExtendedApiError {
   }
 
   public get erBehandlingEndretFeil(): boolean {
-    return this.errorData?.type === 'MANGLER_TILGANG_FEIL';
+    return this.errorData?.type === 'BEHANDLING_ENDRET_FEIL';
   }
 
   public get erGenerellFeil(): boolean {

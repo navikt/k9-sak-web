@@ -1,4 +1,5 @@
 import { BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingDtoSakstype, BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
@@ -8,8 +9,11 @@ import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 const isValidPeriode = (periode: K9UngPeriode): periode is K9UngPeriode & { fom: string; tom: string } =>
   periode.fom !== null && periode.tom !== null;
 
-export const getFormattedSøknadserioder = (søknadsperioder: K9UngPeriode[]) =>
+export const getFormattedSøknadserioder = (søknadsperioder: K9UngPeriode[], visKunStartdato?: boolean) =>
   søknadsperioder?.filter(isValidPeriode).map((periode, index) => {
+    if (visKunStartdato) {
+      return <DateLabel dateString={periode.fom} key={periode.fom} />;
+    }
     if (periode.fom === periode.tom) {
       return (
         <React.Fragment key={periode.fom}>
@@ -79,3 +83,8 @@ export const sortBehandlinger = (behandlinger: Behandling[]): Behandling[] =>
     }
     return new Date(b2.opprettet).getTime() - new Date(b1.opprettet).getTime();
   });
+
+export const erUngdomsytelse = (sakstype: string) => sakstype === BehandlingDtoSakstype.UNGDOMSYTELSE;
+
+export const erFørstegangsbehandlingIUngdomsytelsen = (sakstype: string, behandlingType: string) =>
+  erUngdomsytelse(sakstype) && behandlingType === BehandlingDtoType.FØRSTEGANGSSØKNAD;

@@ -1,18 +1,18 @@
 import {
-  ContentWithTooltip,
-  GreenCheckIconFilled,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
-  RedCrossIconFilled,
-  TwoPersonsWithOneHighlightedIconGray,
-  InstitutionIcon,
-} from '@navikt/ft-plattform-komponenter';
+  Buildings3Icon,
+  CheckmarkCircleFillIcon,
+  PersonFillIcon,
+  PersonGroupFillIcon,
+  PersonIcon,
+  XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
+import { Tooltip } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
-import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import ManuellVurdering from '../../../types/ManuellVurdering';
-import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';
-import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
 import Vurderingselement from '../../../types/Vurderingselement';
+import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
+import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';
 import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
@@ -24,38 +24,38 @@ interface VurderingsperiodeElementProps {
 const renderInnleggelsesperiodeIcon = (resultat: Vurderingsresultat) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Innleggelsesperiode over oppfylt periode">
+      <Tooltip content="Innleggelsesperiode over oppfylt periode">
         <InnleggelsesperiodeIkonOverOppfylt />
-      </ContentWithTooltip>
+      </Tooltip>
     );
   }
   if (resultat === Vurderingsresultat.IKKE_OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Innleggelsesperiode over ikke oppfylt periode">
+      <Tooltip content="Innleggelsesperiode over ikke oppfylt periode">
         <InnleggelsesperiodeIkonOverIkkeOppfylt />
-      </ContentWithTooltip>
+      </Tooltip>
     );
   }
   return (
-    <ContentWithTooltip tooltipText="Innleggelsesperiode">
-      <InstitutionIcon />
-    </ContentWithTooltip>
+    <Tooltip content="Innleggelsesperiode">
+      <Buildings3Icon fontSize={24} />
+    </Tooltip>
   );
 };
 
 const renderResultatIcon = (resultat: Vurderingsresultat) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
-        <GreenCheckIconFilled />
-      </ContentWithTooltip>
+      <Tooltip content="Vilkåret er oppfylt">
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+      </Tooltip>
     );
   }
   if (resultat === Vurderingsresultat.IKKE_OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
-        <RedCrossIconFilled />
-      </ContentWithTooltip>
+      <Tooltip content="Vilkåret er ikke oppfylt">
+        <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+      </Tooltip>
     );
   }
   return null;
@@ -72,25 +72,15 @@ const renderStatusIndicator = (vurderingselement: Vurderingselement) => {
 const renderPersonIcon = ({ gjelderForAnnenPart, gjelderForSøker }: ManuellVurdering) => {
   if (gjelderForAnnenPart && gjelderForSøker) {
     return (
-      <ContentWithTooltip tooltipText="Søker og annen part">
-        <div className={styles['vurderingsperiodeElement__texts__parterIcon--wide']}>
-          <TwoPersonsWithOneHighlightedIconGray />
-        </div>
-      </ContentWithTooltip>
+      <Tooltip content="Søker og annen part">
+        <PersonGroupFillIcon fontSize="1.5rem" />
+      </Tooltip>
     );
   }
   if (gjelderForAnnenPart) {
-    return (
-      <ContentWithTooltip tooltipText="Annen part">
-        <OnePersonOutlineGray />
-      </ContentWithTooltip>
-    );
+    return <PersonIcon fontSize="1.5rem" title="Annen part" />;
   }
-  return (
-    <ContentWithTooltip tooltipText="Søker">
-      <OnePersonIconGray />
-    </ContentWithTooltip>
-  );
+  return <PersonFillIcon fontSize="1.5rem" title="Søker" />;
 };
 
 const VurderingsperiodeElement = ({

@@ -1,18 +1,20 @@
 import { Period } from '@fpsak-frontend/utils';
-import React from 'react';
-import { ContentWithTooltip, OnePersonIconGray, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { ExclamationmarkTriangleFillIcon, PersonFillIcon } from '@navikt/aksel-icons';
 import styles from './periodeSomSkalVurderes.module.css';
 
 interface PeriodeSomSkalVurderesProps {
   periode: Period;
 }
 
+// TODO: Må justere på ikoner her etter InteractiveList er flyttet fra ft-plattform-komponenter
 const PeriodeSomSkalVurderes = ({ periode }: PeriodeSomSkalVurderesProps) => (
   <div className={styles.periodeSomSkalVurderes} id="periodeSomSkalVurderes">
     <span className={styles.visuallyHidden}>Type</span>
-    <ContentWithTooltip tooltipText="Perioden må vurderes">
-      <WarningIcon />
-    </ContentWithTooltip>
+    <ExclamationmarkTriangleFillIcon
+      title="Perioden må vurderes"
+      fontSize="1.5rem"
+      style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+    />
     <div className={styles.periodeSomSkalVurderes__texts}>
       <div>
         <p key={`${periode.fom}_${periode.tom}`} className={styles.periodeSomSkalVurderes__texts__period}>
@@ -21,9 +23,7 @@ const PeriodeSomSkalVurderes = ({ periode }: PeriodeSomSkalVurderesProps) => (
       </div>
       <div className={styles.periodeSomSkalVurderes__texts__kildeIcon}>
         <span className={styles.visuallyHidden}>Kilde</span>
-        <ContentWithTooltip tooltipText="Søker">
-          <OnePersonIconGray />
-        </ContentWithTooltip>
+        <PersonFillIcon fontSize="1.5rem" title="Søker" />
       </div>
     </div>
   </div>

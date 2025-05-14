@@ -44,7 +44,7 @@ class PanelDef extends ProsessStegPanelDef {
 }
 
 class BeregningProsessStegPanelDef extends ProsessStegDef {
-  getUrlKode = () => prosessStegCodes.BEREGNING;
+  getUrlKode = () => prosessStegCodes.BEREGNINGSGRUNNLAG;
 
   getTekstKode = () => 'Behandlingspunkt.SatsOgBeregning';
 

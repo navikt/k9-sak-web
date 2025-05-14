@@ -1,4 +1,5 @@
 import DateLabel from '@k9-sak-web/gui/shared/dateLabel/DateLabel.js';
+import { K9AksjonspunktBorderColor } from '@k9-sak-web/gui/tokens/tokens.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
@@ -38,7 +39,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
             selected={periode.id === selectedId}
             className={
               periode.begrunnelse === null && periode.aksjonspunkter.length > 0
-                ? 'border-solid border-0 border-l-[5px] border-[#fa3]'
+                ? `border-solid border-0 border-l-[5px] border-[${K9AksjonspunktBorderColor}]`
                 : ''
             }
           >

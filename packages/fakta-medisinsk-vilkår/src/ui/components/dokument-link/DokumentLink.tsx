@@ -1,5 +1,5 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
+import { FileIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
@@ -18,7 +18,7 @@ const DokumentLink = ({ dokument, etikett, visDokumentIkon }: DokumentLinkProps)
   const dokumentLink = findLinkByRel(LinkRel.DOKUMENT_INNHOLD, links);
   return (
     <Link className={styles.dokumentLink} href={dokumentLink.href} target="_blank">
-      {visDokumentIkon && <DocumentIcon className={styles.dokumentLink__dokumentikon} />}
+      {visDokumentIkon && <FileIcon fontSize="1.5rem" />}
       {dokumentLabel[type]} {prettifyDateString(datert)}
       {etikett && <div className={styles.dokumentLink__etikett}>{etikett}</div>}
     </Link>
