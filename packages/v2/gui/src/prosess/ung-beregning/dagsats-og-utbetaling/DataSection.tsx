@@ -88,17 +88,22 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
           <InformationSquareIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Nøkkelinformasjon</Label>
         </HStack>
-        <HStack gap="4">
+        <VStack gap="4">
           <BodyShort size="small">
             <b>Startdato:</b>{' '}
             {ungdomsprogramInformasjon?.startdato ? formatDate(ungdomsprogramInformasjon?.startdato) : ''}
           </BodyShort>
           {ungdomsprogramInformasjon?.maksdatoForDeltakelse && (
             <BodyShort size="small">
-              <b>Maksdato for deltakelse:</b> {formatDate(ungdomsprogramInformasjon?.maksdatoForDeltakelse)}
+              <b>Maksdato:</b> {formatDate(ungdomsprogramInformasjon?.maksdatoForDeltakelse)}
             </BodyShort>
           )}
-        </HStack>
+          {ungdomsprogramInformasjon?.opphørsdato && (
+            <BodyShort size="small">
+              <b>Sluttdato:</b> {formatDate(ungdomsprogramInformasjon?.opphørsdato)}
+            </BodyShort>
+          )}
+        </VStack>
       </DataBox>
       <DataBox maxHeight="185px">
         <HStack gap="2" marginInline="05 0">
