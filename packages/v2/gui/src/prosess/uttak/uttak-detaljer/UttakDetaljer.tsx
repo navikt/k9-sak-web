@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import classNames from 'classnames/bind';
 import {
   UttaksperiodeInfoUtfall,
@@ -20,8 +20,8 @@ import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
-
 import styles from './uttakDetaljer.module.css';
+import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const cx = classNames.bind(styles);
 
@@ -79,17 +79,11 @@ const shouldHighlight = (aktuellÅrsak: UttaksperiodeInfoÅrsakerType, årsaker:
 export interface UttakDetaljerProps {
   uttak: UttaksperiodeMedInntektsgradering;
   arbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
-  erFagytelsetypeLivetsSluttfase: boolean;
-
   manueltOverstyrt: boolean;
+  ytelsetype: FagsakYtelsesType;
 }
 
-const UttakDetaljer = ({
-  uttak,
-  arbeidsforhold,
-  erFagytelsetypeLivetsSluttfase,
-  manueltOverstyrt,
-}: UttakDetaljerProps): JSX.Element => {
+const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
   const {
@@ -122,6 +116,11 @@ const UttakDetaljer = ({
     årsaker &&
     shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
+  const skalViseGraderingMotTilsyn = ![
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
+  ].some(ytelse => ytelse === ytelsetype);
+
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
   const harBarnetsDødsfallÅrsak = årsaker?.some(årsak =>
     BarnetsDødsfallÅrsakerMedTekst.some(barnetsDødsfallÅrsak => årsak === barnetsDødsfallÅrsak.årsak),
@@ -139,7 +138,7 @@ const UttakDetaljer = ({
         </Alert>
       )}
       <HGrid gap="8" columns={3} align="start" className={styles['uttakDetaljer']}>
-        {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (
+        {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
             className={cx({
               uttakDetaljer__graderingDetaljer: true,
