@@ -35,7 +35,7 @@ export const buildInitialValues = (
     ) {
       return periode.merknad;
     }
-    return periode.vilkarStatus as 'OPPFYLT' | 'IKKE_OPPFYLT';
+    return periode.vilkarStatus;
   };
 
   return {
