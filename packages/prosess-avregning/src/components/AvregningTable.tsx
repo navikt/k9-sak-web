@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -58,9 +59,9 @@ const getHeaderCodes = (
 const showCollapseButton = (mottakerResultatPerFag: ResultatPerFagområde[]) =>
   mottakerResultatPerFag.some(fag => fag.rader.length > 1);
 
-const rowToggable = (fagOmråde: ResultatPerFagområde, rowIsFeilUtbetalt: boolean) => {
+const rowToggable = (fagOmråde: ResultatPerFagområde, rowIsFeilUtbetalt: boolean): boolean => {
   const fagFeilUtbetalt = fagOmråde.rader.find(rad => rad.feltnavn === avregningCodes.DIFFERANSE);
-  return fagFeilUtbetalt && !rowIsFeilUtbetalt;
+  return !!fagFeilUtbetalt && !rowIsFeilUtbetalt;
 };
 
 const rowIsHidden = (isRowToggable: boolean, showDetails: boolean) => isRowToggable && !showDetails;
@@ -86,7 +87,7 @@ const createColumns = (
     <Table.DataCell
       key={`columnIndex${månedIndex + 1}`}
       className={classNames({
-        rodTekst: måned.beløp < 0,
+        rodTekst: måned.beløp !== null && måned.beløp < 0,
         lastColumn:
           'måned' in måned && måned.måned
             ? måned.måned === nextPeriodFormatted
@@ -94,7 +95,7 @@ const createColumns = (
         'font-bold': boldText,
       })}
     >
-      {formatCurrencyNoKr(måned.beløp)}
+      {formatCurrencyNoKr(måned.beløp ?? 0)}
     </Table.DataCell>
   ));
 };
@@ -127,9 +128,11 @@ const getPeriodeFom = (periodeFom: string, nesteUtbPeriodeFom: string) => period
 const getPeriod = (ingenPerioderMedAvvik: boolean, periodeFom: string, mottaker: SimuleringMottaker) =>
   getRangeOfMonths(
     avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
-      ? initializeDate(mottaker.nesteUtbPeriode.tom).subtract(1, 'months').format('YYYY-MM')
-      : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom),
-    mottaker.nesteUtbPeriode.tom,
+      ? initializeDate(mottaker.nesteUtbPeriode.tom ?? '')
+          .subtract(1, 'months')
+          .format('YYYY-MM')
+      : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom ?? ''),
+    mottaker.nesteUtbPeriode.tom ?? '',
   );
 
 interface ResultatPerFagområde {
@@ -155,8 +158,12 @@ const AvregningTable = ({
 }: AvregningTableProps) => (
   <>
     {simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
-      const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periode?.fom, mottaker);
-      const nesteMåned = mottaker.nesteUtbPeriode.tom;
+      const rangeOfMonths = getPeriod(
+        ingenPerioderMedAvvik,
+        simuleringResultat.periode?.fom ?? '', // Provide a fallback empty string
+        mottaker,
+      );
+      const nesteMåned: string = mottaker.nesteUtbPeriode.tom ?? '';
       const visDetaljer = showDetails.find(d => d.id === mottakerIndex);
       return (
         <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
@@ -177,7 +184,7 @@ const AvregningTable = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {[]
+              {([] as JSX.Element[])
                 .concat(
                   ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) =>
                     fagOmråde.rader
