@@ -85,8 +85,8 @@ const TotrinnskontrollSakIndex = ({
       const aksjonspunktGodkjenningDtos = values.aksjonspunktGodkjenning.map(apData => ({
         aksjonspunktKode: apData.aksjonspunktKode,
         godkjent: apData.totrinnskontrollGodkjent,
-        begrunnelse: apData.besluttersBegrunnelse,
-        arsaker: getArsaker(apData),
+        begrunnelse: apData.totrinnskontrollGodkjent === false ? apData.besluttersBegrunnelse : undefined,
+        arsaker: apData.totrinnskontrollGodkjent === false ? getArsaker(apData) : [],
       }));
 
       const fatterVedtakAksjonspunktDto = {
