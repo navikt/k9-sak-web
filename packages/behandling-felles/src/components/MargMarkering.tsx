@@ -1,5 +1,4 @@
-import classnames from 'classnames/bind';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -7,14 +6,13 @@ import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 
 import styles from './margMarkering.module.css';
 
-const classNames = classnames.bind(styles);
-
 interface OwnProps {
   behandlingStatus: Kodeverk;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
   visAksjonspunktMarkering?: boolean;
   children: any;
+  noBorder: boolean;
 }
 
 const MargMarkering = ({
@@ -23,9 +21,11 @@ const MargMarkering = ({
   isReadOnly,
   visAksjonspunktMarkering = true,
   children,
+  noBorder,
 }: OwnProps) => {
+  const prosesspunktStyles = `${styles.prosesspunkt} ${noBorder ? styles.prosesspunktNoBorder : ''}`;
   if (aksjonspunkter.length === 0) {
-    return <div className={styles.prosesspunkt}>{children}</div>;
+    return <div className={prosesspunktStyles}>{children}</div>;
   }
 
   const ikkeAkseptertAvBeslutter =
@@ -39,7 +39,13 @@ const MargMarkering = ({
   );
   const visAksjonspunkt = visAksjonspunktMarkering && harApnentAksjonspunktSomKanLoses && !isReadOnly;
 
-  return <div className={classNames('prosesspunkt', { ikkeAkseptertAvBeslutter, visAksjonspunkt })}>{children}</div>;
+  return (
+    <div
+      className={`${prosesspunktStyles}${ikkeAkseptertAvBeslutter ? ` ${styles.ikkeAkseptertAvBeslutter}` : ''}${visAksjonspunkt ? ` ${styles.visAksjonspunkt}` : ''}`}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default MargMarkering;

@@ -45,7 +45,9 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
             )}
           </HStack>
           {fomDatoAldersvilkår && tomDatoAldersvilkår && (
-            <BodyShort size="small">{`Vilkåret er oppfylt ${formatPeriod(fomDatoAldersvilkår, tomDatoAldersvilkår)} `}</BodyShort>
+            <BodyShort size="small">
+              {`Vilkåret er ${vilkårErOppfylt ? 'oppfylt' : 'avslått'} ${formatPeriod(fomDatoAldersvilkår, tomDatoAldersvilkår)} `}
+            </BodyShort>
           )}
         </VStack>
       </HStack>
