@@ -9,6 +9,7 @@ const buttonText = showDetails =>
 
 const CollapseButton = ({ toggleDetails, showDetails, mottakerIndex }) => (
   <Button
+    size="small"
     type="button"
     className="-ml-3 -mt-1"
     onClick={() => toggleDetails(mottakerIndex)}
