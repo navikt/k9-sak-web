@@ -13645,7 +13645,7 @@ __metadata:
     storybook: "npm:8.6.12"
     stylelint: "npm:16.19.1"
     stylelint-config-standard: "npm:^37.0.0"
-    stylelint-order: "npm:6.0.4"
+    stylelint-order: "npm:7.0.0"
     tailwindcss: "npm:^3.4.17"
     typed-css-modules: "npm:^0.9.1"
     typescript: "npm:5.8.3"
@@ -15646,12 +15646,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-sorting@npm:^8.0.2":
-  version: 8.0.2
-  resolution: "postcss-sorting@npm:8.0.2"
+"postcss-sorting@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "postcss-sorting@npm:9.1.0"
   peerDependencies:
     postcss: ^8.4.20
-  checksum: 10/2496713e31c3d07c6d650d6ca4734489c2440fbbdd5c109ae5192178e6637e255bdd77dd52a0171f773c00df49bb8e0a7077c67aa0ab3b3c93a1934372318dff
+  checksum: 10/3da06525f62880f9b62c4c2e9a4e5ce27ac776272c59235a2554c87da9ba9c693a167358a67b16918ec0473c5f5cb544be654c1165ddc0346996b2d02a541c5d
   languageName: node
   linkType: hard
 
@@ -17617,15 +17617,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-order@npm:6.0.4":
-  version: 6.0.4
-  resolution: "stylelint-order@npm:6.0.4"
+"stylelint-order@npm:7.0.0":
+  version: 7.0.0
+  resolution: "stylelint-order@npm:7.0.0"
   dependencies:
-    postcss: "npm:^8.4.32"
-    postcss-sorting: "npm:^8.0.2"
+    postcss: "npm:^8.5.3"
+    postcss-sorting: "npm:^9.1.0"
   peerDependencies:
-    stylelint: ^14.0.0 || ^15.0.0 || ^16.0.1
-  checksum: 10/a16a017bded454f78fb3ed02643e93525ee1e4a03c0303c364aa8ee908c4500238036e8df15403f9bb968136c70a32335b494a443df15bb6985bb8e1f431edcd
+    stylelint: ^16.18.0
+  checksum: 10/dade0dd297aa6c61c0fcf0805939c3f80fcd10eefd7519341c78c9481b3481f626d368577517806c27c829f02c84456776871f00292fa8a727035170dd05a7ae
   languageName: node
   linkType: hard
 
