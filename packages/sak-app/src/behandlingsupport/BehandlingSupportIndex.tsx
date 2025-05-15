@@ -37,6 +37,9 @@ import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import { HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendClient.js';
+import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -158,8 +161,10 @@ const BehandlingSupportIndex = ({
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
   const k9SakClient = useContext(K9SakClientContext);
+  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
+  const historikkBackendClient = new HistorikkBackendClient(k9SakClient, kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient(k9SakClient);
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
@@ -283,12 +288,14 @@ const BehandlingSupportIndex = ({
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
             {behandlingId !== undefined && (
-              <HistorikkIndex
-                saksnummer={fagsak.saksnummer}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
-              />
+              <HistorikkBackendApiContext value={historikkBackendClient}>
+                <HistorikkIndex
+                  saksnummer={fagsak.saksnummer}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                  kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
+                />
+              </HistorikkBackendApiContext>
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
