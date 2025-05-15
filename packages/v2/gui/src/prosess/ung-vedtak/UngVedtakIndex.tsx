@@ -1,5 +1,5 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
-import { Heading } from '@navikt/ds-react';
+import { Box, Heading } from '@navikt/ds-react';
 import { useContext } from 'react';
 import { UngSakClientContext } from '../../app/UngSakClientContext';
 import { UngVedtak } from './UngVedtak';
@@ -25,8 +25,8 @@ export const UngVedtakIndex = ({
   const ungSakClient = useContext(UngSakClientContext);
   const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
   return (
-    <>
-      <Heading size="small" level="2">
+    <Box paddingInline="4 8" paddingBlock="2">
+      <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
       <UngVedtak
@@ -37,6 +37,6 @@ export const UngVedtakIndex = ({
         vilkår={vilkar}
         readOnly={isReadOnly}
       />
-    </>
+    </Box>
   );
 };

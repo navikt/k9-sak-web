@@ -85,7 +85,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
                 Resultat
               </Label>
               <BodyShort size="small">
-                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er avslått'}
+                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er opphørt'}
               </BodyShort>
             </div>
             {behandlingErAvslått && (
