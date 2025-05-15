@@ -1,6 +1,7 @@
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandlingsresultat, Vilkar } from '@k9-sak-web/types';
 
 const hasOnlyClosedAps = (aksjonspunkter: Aksjonspunkt[], vedtakAksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter
@@ -11,7 +12,7 @@ const findStatusForVedtak = (
   vilkar: Vilkar[],
   aksjonspunkter: Aksjonspunkt[],
   vedtakAksjonspunkter: Aksjonspunkt[],
-  // behandlingsresultat: Behandlingsresultat,
+  behandlingsresultat: Behandlingsresultat,
 ) => {
   if (vilkar.length === 0) {
     return vilkarUtfallType.IKKE_VURDERT;
@@ -25,9 +26,9 @@ const findStatusForVedtak = (
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  // if (isAvslag(behandlingsresultat.type.kode)) {
-  //   return vilkarUtfallType.IKKE_OPPFYLT;
-  // }
+  if (isAvslag(behandlingsresultat.type.kode)) {
+    return vilkarUtfallType.IKKE_OPPFYLT;
+  }
   return vilkarUtfallType.OPPFYLT;
 };
 
