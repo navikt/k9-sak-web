@@ -51,7 +51,6 @@ export const UngVedtak = ({
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
-  const behandlingErAvsluttet = behandling.status === BehandlingDtoStatus.AVSLUTTET;
   const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
