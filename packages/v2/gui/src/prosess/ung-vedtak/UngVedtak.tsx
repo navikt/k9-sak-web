@@ -56,6 +56,7 @@ export const UngVedtak = ({
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const behandlingErAvsluttet = behandling.status === BehandlingDtoStatus.AVSLUTTET;
 
   const { refetch: forhåndsvisVedtaksbrev, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
@@ -116,7 +117,7 @@ export const UngVedtak = ({
                 Resultat
               </Label>
               <BodyShort size="small">
-                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er avslått'}
+                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er opphørt'}
               </BodyShort>
             </div>
             {behandlingErAvslått && (
@@ -137,19 +138,21 @@ export const UngVedtak = ({
                   handleForhåndsvis={() => forhåndsvisVedtaksbrev()}
                 />
               )}
-              <Button
-                variant="tertiary"
-                onClick={() => forhåndsvisVedtaksbrev()}
-                size="small"
-                icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
-                loading={forhåndsvisningIsLoading}
-                type="button"
-                disabled={!vedtaksbrevValg?.harBrev}
-              >
-                Forhåndsvis brev
-              </Button>
+              {vedtaksbrevValg?.harBrev && (
+                <Button
+                  variant="tertiary"
+                  onClick={() => forhåndsvisVedtaksbrev()}
+                  size="small"
+                  icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
+                  loading={forhåndsvisningIsLoading}
+                  type="button"
+                  disabled={!vedtaksbrevValg?.harBrev}
+                >
+                  Forhåndsvis brev
+                </Button>
+              )}
             </div>
-            {harAksjonspunkt && (
+            {harAksjonspunkt && !readOnly && (
               <div>
                 <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
                   Fatt vedtak

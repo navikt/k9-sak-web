@@ -72,7 +72,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
               virkningsdatoUttakNyeRegler && redigerVirkningsdato ? () => setRedigervirkningsdato(false) : undefined
             }
             initialValues={{
-              begrunnelse: aksjonspunktVurderDato?.begrunnelse,
+              begrunnelse: aksjonspunktVurderDato?.begrunnelse ?? '',
               virkningsdato: virkningsdatoUttakNyeRegler,
             }}
             readOnly={readOnly}
@@ -80,7 +80,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
         )}
         {!harVentAnnenPSBSakAksjonspunkt && (
           <UttaksperiodeListe
-            uttaksperioder={lagUttaksperiodeliste(uttaksperioder, inntektsgraderinger)}
+            uttaksperioder={lagUttaksperiodeliste(uttaksperioder, inntektsgraderinger ?? [])}
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
             redigerVirkningsdato={redigerVirkningsdato}
             readOnly={readOnly}

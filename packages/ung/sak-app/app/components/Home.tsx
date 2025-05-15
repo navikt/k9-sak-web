@@ -1,14 +1,14 @@
 import * as Sentry from '@sentry/react';
 import { Route, Routes } from 'react-router';
 
-import NotFoundPage from '@k9-sak-web/gui/sak/feilmeldinger/NotFoundPage.js';
+import NotFoundPage from '@k9-sak-web/gui/app/feilmeldinger/NotFoundPage.js';
 
 import FagsakIndex from '../../fagsak/FagsakIndex';
 import { fagsakRoutePath } from '../paths';
-import DashboardResolver from './DashboardResolver';
 
 import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
 import styles from './home.module.css';
+import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 
 interface OwnProps {
   headerHeight: number;
@@ -31,7 +31,7 @@ const Home = ({ headerHeight }: OwnProps) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
     <UnhandledRejectionCatcher />
     <SentryRoutes>
-      <Route path="/" element={<DashboardResolver />} />
+      <Route path="/" element={<FagsakSearchIndex />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
       <Route path="/close" element={<CloseWindow />} />
       <Route path="*" element={<NotFoundPage />} />

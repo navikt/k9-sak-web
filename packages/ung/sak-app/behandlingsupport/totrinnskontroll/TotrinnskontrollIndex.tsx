@@ -131,6 +131,7 @@ const TotrinnskontrollIndex = ({
     <>
       <TotrinnskontrollSakIndexPropsTransformer
         behandling={behandling}
+        behandlingType={behandling?.type?.kode}
         totrinnskontrollSkjermlenkeContext={totrinnArsaker || totrinnArsakerReadOnly}
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}

@@ -10,6 +10,7 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort, Table } from '@navikt/ds-react';
 import { Fragment, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
+import { K9AksjonspunktBorderColor } from '@k9-sak-web/gui/tokens/tokens.js';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -105,7 +106,9 @@ const PersonArbeidsforholdTable = ({
                 <Table.Row
                   onClick={() => setVisAksjonspunktInfo(true)}
                   selected={a.id === selectedId}
-                  className={harAksjonspunkt ? 'border-solid border-0 border-l-[5px] border-[#fa3]' : ''}
+                  className={
+                    harAksjonspunkt ? `border-solid border-0 border-l-[5px] border-[${K9AksjonspunktBorderColor}]` : ''
+                  }
                 >
                   <Table.DataCell>
                     <BodyShort size="small">{decodeHtmlEntity(arbeidsforholdId)}</BodyShort>

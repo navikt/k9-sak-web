@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Box, Heading } from '@navikt/ds-react';
 import { PeriodeRad } from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
@@ -36,17 +36,22 @@ export const Resultat = {
 export interface Vurderingselement {
   perioder: Period[];
   id?: string;
-  resultat?: ResultatType;
+  resultat: ResultatType;
 }
 
 export interface VurderingslisteProps<T extends Vurderingselement = Vurderingselement> {
+  valgtPeriode: ({ perioder: Period[] } & T) | null;
   perioder: T[];
-  onPeriodeClick: (periode: T) => void;
+  onPeriodeClick: (periode: T | null) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
 }
 
+/**
+ * Navigasjon for perioder som må vurderes og er vurdert
+ */
 const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
+  valgtPeriode,
   perioder,
   onPeriodeClick,
   customPeriodeRad,
@@ -63,30 +68,30 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   });
   const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
   const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
-  const allePerioder = [...perioderSomSkalVurderes, ...perioderSomErVurdert];
-  const [activeIndex, setActiveIndex] = React.useState(0);
+  const allePerioder = useMemo(
+    () => [...perioderSomSkalVurderes, ...perioderSomErVurdert],
+    [perioderSomSkalVurderes, perioderSomErVurdert],
+  );
 
-  // Denne skal bare kjøres når komponenten mountes for at man automatisk skal få opp en periode som skal vurderes
+  // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
   useEffect(() => {
-    if (perioderSomSkalVurderes.length > 0) {
-      const index = allePerioder.findIndex(periode => periode.resultat === Resultat.MÅ_VURDERES);
-      const periode = allePerioder[index];
-      if (periode) {
-        setActiveIndex(index);
-        onPeriodeClick(periode);
-        return;
-      }
+    if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
+      onPeriodeClick(null);
     }
-    if (allePerioder[0]) {
-      setActiveIndex(0);
-      onPeriodeClick(allePerioder[0]);
+  }, [valgtPeriode, allePerioder, onPeriodeClick]);
+
+  // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
+  useEffect(() => {
+    const periodeSomMåVurderes = allePerioder.find(
+      periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
+    );
+    if (!valgtPeriode && periodeSomMåVurderes) {
+      onPeriodeClick(periodeSomMåVurderes);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [valgtPeriode, allePerioder, onPeriodeClick]);
 
   const handlePeriodeClick = (index: number) => {
     if (allePerioder[index]) {
-      setActiveIndex(index);
       onPeriodeClick(allePerioder[index]);
     }
   };
@@ -98,7 +103,6 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
       </Heading>
 
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
-
       {allePerioder.length > 0 && (
         <>
           <div className="flex w-[120px]">
@@ -107,14 +111,14 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </div>
           <ul className={styles.interactiveList}>
             {allePerioder.map((element, currentIndex) => (
-              <li key={element.id}>
+              <li key={element.id || element.perioder[0]?.fom}>
                 {customPeriodeRad ? (
                   customPeriodeRad(element, () => handlePeriodeClick(currentIndex))
                 ) : (
                   <PeriodeRad
                     perioder={element.perioder}
                     resultat={element.resultat}
-                    active={activeIndex === currentIndex}
+                    active={valgtPeriode?.perioder.some(periode => periode.fom === element.perioder[0]?.fom)}
                     handleClick={() => handlePeriodeClick(currentIndex)}
                   />
                 )}

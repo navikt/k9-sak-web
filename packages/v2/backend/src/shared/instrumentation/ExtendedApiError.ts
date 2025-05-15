@@ -33,6 +33,18 @@ export class ExtendedApiError extends ApiError {
     return this.status === 400;
   }
 
+  public get isUnauthorized(): boolean {
+    return this.status === 401;
+  }
+
+  public get isForbidden(): boolean {
+    return this.status === 403;
+  }
+
+  public get isNotFound(): boolean {
+    return this.status === 404;
+  }
+
   public get bodyFeilmelding(): string | null {
     const { body } = this;
     if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
@@ -47,5 +59,22 @@ export class ExtendedApiError extends ApiError {
       feilmelding = ' - ' + feilmelding;
     }
     return `${super.name} (${this.url}): ${super.message} ${feilmelding}`;
+  }
+
+  /**
+   * Returner gitt ukjente error instans som ExtendedApiError viss den er det. Viss gitt error instans har cause satt,
+   * søk rekursivt etter ExtendedApiError i den. Returnerer null viss ingen ExtendedApiError instans finnes.
+   */
+  static findInError(error: unknown): ExtendedApiError | null {
+    if (error instanceof ExtendedApiError) {
+      return error;
+    }
+    if (error instanceof Error) {
+      const { cause } = error;
+      if (cause != null) {
+        return ExtendedApiError.findInError(cause);
+      }
+    }
+    return null;
   }
 }

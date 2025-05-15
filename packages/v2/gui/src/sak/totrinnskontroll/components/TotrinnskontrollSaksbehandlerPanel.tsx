@@ -1,8 +1,8 @@
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import type { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import type { Location } from 'history';
 import React from 'react';
 import { NavLink } from 'react-router';

@@ -1,5 +1,5 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
-import { Heading } from '@navikt/ds-react';
+import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { UngSakClientContext } from '../../app/UngSakClientContext';
@@ -37,8 +37,8 @@ export const UngVedtakIndex = ({
     },
   });
   return (
-    <>
-      <Heading size="medium" level="2">
+    <Box paddingInline="4 8" paddingBlock="2">
+      <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
       {!isLoading && (
@@ -53,6 +53,6 @@ export const UngVedtakIndex = ({
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
         />
       )}
-    </>
+    </Box>
   );
 };

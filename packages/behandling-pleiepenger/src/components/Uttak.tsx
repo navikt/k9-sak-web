@@ -11,6 +11,7 @@ import { OverstyringUttakRequest } from '../types';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { VStack } from '@navikt/ds-react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface UttakProps {
   uuid: string;
@@ -112,9 +113,9 @@ export default ({
         perioderTilVurdering,
         utsattePerioder,
         aktivBehandlingUuid: uuid,
+        ytelsetype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
-        erFagytelsetypeLivetsSluttfase: false,
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,

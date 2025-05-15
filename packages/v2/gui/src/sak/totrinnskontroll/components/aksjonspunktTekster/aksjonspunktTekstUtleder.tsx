@@ -7,7 +7,7 @@ import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Label } from '@navikt/ds-react';
 
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
   ArbeidsforholdOverstyringDtoHandling,
   BehandlingDtoStatus,

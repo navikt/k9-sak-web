@@ -13,7 +13,8 @@
     "./kodeverk/*": "./src/kodeverk/*",
     "./storybook/*": "./src/storybook/*",
     "./prosess/*": "./src/prosess/*",
-    "./fakta/*": "./src/fakta/*"
+    "./fakta/*": "./src/fakta/*",
+    "./tokens/*": "./src/tokens/*"
   },
   "dependencies": {
     "@editorjs/editorjs": "2.30.8",
@@ -21,24 +22,24 @@
     "@editorjs/list": "1.9.0",
     "@editorjs/paragraph": "2.11.7",
     "@hookform/error-message": "^2.0.1",
-    "@hookform/resolvers": "^4.1.3",
+    "@hookform/resolvers": "^5.0.1",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
     "@navikt/diagnosekoder": "^1.2025.0",
-    "@navikt/ft-form-hooks": "^6.2.12",
-    "@navikt/ft-form-validators": "^3.1.13",
-    "@navikt/ft-utils": "^3.3.3",
-    "@tanstack/react-query": "^5.74.4",
+    "@navikt/ft-form-hooks": "^6.3.2",
+    "@navikt/ft-form-validators": "^3.2.0",
+    "@navikt/ft-utils": "^3.4.0",
+    "@tanstack/react-query": "^5.76.1",
     "@types/css-tree": "^2.3.10",
     "@types/object-hash": "^3.0.6",
-    "axios": "1.8.4",
+    "axios": "1.9.0",
     "css-tree": "3.1.0",
     "dayjs": "^1.11.13",
     "editorjs-html": "3.4.3",
     "object-hash": "^3.0.0",
     "react": "19.1.0",
-    "react-hook-form": "7.56.0",
-    "react-router": "7.5.3",
+    "react-hook-form": "7.56.3",
+    "react-router": "7.6.0",
     "yup": "^1.6.1"
   }
 }

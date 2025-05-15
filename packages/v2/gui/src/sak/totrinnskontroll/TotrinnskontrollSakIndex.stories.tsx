@@ -1,4 +1,4 @@
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -265,5 +265,78 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
     await expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
+  },
+};
+
+export const Tilbakekreving: Story = {
+  args: {
+    behandling: {
+      type: 'BT-007',
+      status: 'FVED',
+      toTrinnsBehandling: true,
+      behandlingsresultat: {
+        type: 'IKKE_FASTSATT',
+      },
+    },
+    behandlingType: behandlingType.TILBAKEKREVING,
+    location,
+    onSubmit: fn(),
+    behandlingKlageVurdering: undefined,
+    createLocationForSkjermlenke: () => location,
+    readOnly: false,
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '7003',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'VEDTAK',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5004',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'TILBAKEKREVING',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5002',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'FORELDELSE',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5003',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+    ],
   },
 };

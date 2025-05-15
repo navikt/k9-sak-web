@@ -73,22 +73,11 @@ const renderListItems = ({
           to={getBehandlingLocation(behandling.id)}
         >
           <BehandlingPickerItemContent
+            behandling={behandling}
             behandlingTypeNavn={getBehandlingNavn(behandling.type, kodeverkNavnFraKode)}
-            behandlingsresultatTypeNavn={
-              behandling.behandlingsresultat
-                ? kodeverkNavnFraKode(behandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
-                : undefined
-            }
-            behandlingsresultatTypeKode={
-              behandling.behandlingsresultat ? behandling.behandlingsresultat.type : undefined
-            }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={søknadsperioderFraBehandling}
-            erFerdigstilt={!!behandling.avsluttet}
-            erUnntaksløype={behandling.type === BehandlingDtoType.UNNTAKSBEHANDLING}
             index={sorterteOgFiltrerteBehandlinger.length - index}
-            opprettet={behandling.opprettet}
-            avsluttet={behandling.avsluttet}
           />
         </NavLink>
       </li>
