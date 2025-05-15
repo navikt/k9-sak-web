@@ -10,6 +10,7 @@ interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
+  noBorder?: boolean;
 }
 
 export const VedtakFormContext = React.createContext(null);
@@ -19,6 +20,7 @@ const ProsessStegContainer = ({
   formaterteProsessStegPaneler,
   velgProsessStegPanelCallback,
   children,
+  noBorder,
 }: OwnProps & WrappedComponentProps) => {
   const steg = useMemo(
     () =>
@@ -36,7 +38,7 @@ const ProsessStegContainer = ({
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
   return (
-    <div className={styles.container}>
+    <div className={noBorder ? '' : styles.container}>
       <div className={styles.meny}>
         <ProcessMenu
           steps={steg}

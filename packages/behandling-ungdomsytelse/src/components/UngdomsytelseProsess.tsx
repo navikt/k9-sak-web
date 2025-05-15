@@ -237,6 +237,7 @@ const UngdomsytelseProsess = ({
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}
         velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+        noBorder
       >
         <ProsessStegPanel
           valgtProsessSteg={valgtPanel}

@@ -3,5 +3,5 @@
 }
 
 .panelMedGulmarkering {
-  border-left: 5px solid #fa3;
+  border-left: 5px solid var(--k9-aksjonspunkt-border-color);
 }
