@@ -5,11 +5,16 @@ import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
+import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
-import skjermlenkeCodes from '../constants/skjermlenkeCodes';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
-import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
+import {
+  erFørstegangsbehandlingIUngdomsytelsen,
+  getFormattedSøknadserioder,
+  getStatusIcon,
+  getStatusText,
+} from './behandlingVelgerUtils';
 
 const cx = classnames.bind(styles);
 interface BehandlingSelectedProps {
@@ -92,7 +97,12 @@ const BehandlingSelected = ({
           {søknadsperioder?.length > 0 && (
             <HStack gap="2" align={'center'}>
               <CalendarIcon title="Kalender" fontSize="1.5rem" />
-              <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
+              <BodyShort size="small">
+                {getFormattedSøknadserioder(
+                  søknadsperioder,
+                  erFørstegangsbehandlingIUngdomsytelsen(sakstypeKode, behandlingTypeKode),
+                )}
+              </BodyShort>
             </HStack>
           )}
           <HStack gap="2" align={'center'} className="mt-1">

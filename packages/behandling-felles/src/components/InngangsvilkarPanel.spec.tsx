@@ -8,7 +8,6 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Behandling } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
@@ -89,6 +88,8 @@ describe('<InngangsvilkarPanel>', () => {
       [],
     );
 
+    const featureToggles = { BRUK_V2_VILKAR_OPPTJENING: true };
+
     const prosessStegData = [utledetMedlemskapDelPanel];
 
     renderWithIntl(
@@ -99,6 +100,7 @@ describe('<InngangsvilkarPanel>', () => {
         submitCallback={vi.fn()}
         oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
+        featureToggles={featureToggles}
       />,
     );
 
@@ -124,6 +126,7 @@ describe('<InngangsvilkarPanel>', () => {
     );
 
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
+    const featureToggles = { BRUK_V2_VILKAR_OPPTJENING: true };
 
     renderWithIntl(
       <InngangsvilkarPanel
@@ -137,6 +140,7 @@ describe('<InngangsvilkarPanel>', () => {
           textCode: 'FAKTA_APENT',
         }}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
+        featureToggles={featureToggles}
       />,
     );
 

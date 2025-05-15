@@ -1,27 +1,30 @@
-import Vurderingsnavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
-import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
-import { useContext, useState } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import type { ReisetidPeriodeVurderingDtoResultat, ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@navikt/ft-utils';
-import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
-import ReisetidContainer from './ReisetidContainer';
+import { useContext, useState } from 'react';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
+import Vurderingsnavigasjon, {
+  type Vurderingselement,
+} from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { CenteredLoader } from '../CenteredLoader';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
+import ReisetidContainer from './ReisetidContainer';
+
+interface ReisetidVurderingselement extends Omit<Vurderingselement, 'resultat'>, ReisetidVurderingDto {
+  perioder: Period[];
+  resultat: ReisetidPeriodeVurderingDtoResultat;
+}
 
 const ReisetidIndex = () => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
-  const {
-    data: vurdertReisetid,
-    isLoading: isLoadingVurdertReisetid,
-  } = useVurdertReisetid(behandlingUuid);
-  const [valgtVurdering, setValgtVurdering] = useState<(ReisetidVurderingDto & { perioder: Period[] }) | null>(null);
-  const nullstillValgtVurdering = () => setValgtVurdering(null);
+  const { data: vurdertReisetid, isLoading: isLoadingVurdertReisetid } = useVurdertReisetid(behandlingUuid);
+  const [valgtVurdering, setValgtVurdering] = useState<ReisetidVurderingselement | null>(null);
 
   const vurderingsliste = vurdertReisetid?.vurderinger.map(vurdering => ({
     ...vurdering,
     resultat: vurdering.reisetid.resultat,
     perioder: [new Period(vurdering.reisetid.periode.fom, vurdering.reisetid.periode.tom)],
-  })) as (ReisetidVurderingDto & { perioder: Period[] })[];
+  }));
 
   if (isLoadingVurdertReisetid) {
     return <CenteredLoader />;
@@ -32,18 +35,15 @@ const ReisetidIndex = () => {
       <NavigationWithDetailView
         navigationSection={() => (
           <>
-            <Vurderingsnavigasjon<ReisetidVurderingDto & { perioder: Period[] }>
+            <Vurderingsnavigasjon<ReisetidVurderingselement>
+              valgtPeriode={valgtVurdering}
               perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
             />
           </>
         )}
         showDetailSection
-        detailSection={() =>
-          valgtVurdering ? (
-            <ReisetidContainer vurdering={valgtVurdering} nullstillValgtVurdering={nullstillValgtVurdering} />
-          ) : null
-        }
+        detailSection={() => (valgtVurdering ? <ReisetidContainer vurdering={valgtVurdering} /> : null)}
       />
     </div>
   );
