@@ -125,6 +125,13 @@ historikkInnslagMissingWordsExemptions.set(
   KodeverdiSomObjektHistorikkinnslagTypeKilde.TILBAKEKREVING_VIDEREBEHANDLING,
   ['satt'],
 );
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.SAK_RETUR, [
+  'Vurdering',
+  'eller',
+  'Fastsatt',
+  'er',
+  'Er',
+]);
 
 const allMissingWordsAreExempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
   const wordsKnownMissing = historikkInnslagMissingWordsExemptions.get(historikkInnslagV1Type);
