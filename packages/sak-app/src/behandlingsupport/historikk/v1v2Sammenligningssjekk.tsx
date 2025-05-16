@@ -121,15 +121,27 @@ historikkInnslagMissingWordsExemptions.set('KLAGE_BEH_NFP', ['endret', 'fra']);
 historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.FAKTA_ENDRET, [
   'Aldersvilkåret',
 ]);
+historikkInnslagMissingWordsExemptions.set(
+  KodeverdiSomObjektHistorikkinnslagTypeKilde.TILBAKEKREVING_VIDEREBEHANDLING,
+  ['satt'],
+);
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.SAK_RETUR, [
+  'Vurdering',
+  'eller',
+  'Fastsatt',
+]);
+
+// Nokre enkle samanbindingsord utelatast frå samanlikning for alle historikkinnslag typer
+const wordsAlwaysExempted = ['er', 'Er'];
 
 const allMissingWordsAreExempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
-  const wordsKnownMissing = historikkInnslagMissingWordsExemptions.get(historikkInnslagV1Type);
-  if (wordsKnownMissing != null) {
-    return wordsMissing.every(wordMissing =>
-      wordsKnownMissing.some(wordKnownMissing => wordKnownMissing === wordMissing),
-    );
-  }
-  return wordsMissing.length === 0;
+  const wordsKnownMissing = [
+    ...wordsAlwaysExempted,
+    ...(historikkInnslagMissingWordsExemptions.get(historikkInnslagV1Type) ?? []),
+  ];
+  return wordsMissing.every(wordMissing =>
+    wordsKnownMissing.some(wordKnownMissing => wordKnownMissing === wordMissing),
+  );
 };
 
 export const compareRenderedElementTexts = async (

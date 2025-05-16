@@ -525,4 +525,77 @@ export const historikkSakV1: Historikkinnslag[] = [
     },
     uuid: '92bfbbef-9c71-483c-885b-a5b393679b53',
   },
+  {
+    aktoer: {
+      kode: 'BESL',
+      kodeverk: 'HISTORIKK_AKTOER',
+    },
+    behandlingId: 1000301,
+    dokumentLinks: [],
+    historikkinnslagDeler: [
+      {
+        aarsak: undefined,
+        aarsakKodeverkType: undefined,
+        aksjonspunkter: [
+          {
+            aksjonspunktBegrunnelse: 'test',
+            aksjonspunktKode: '9001',
+            godkjent: true,
+          },
+        ],
+        begrunnelse: undefined,
+        begrunnelseKodeverkType: undefined,
+        begrunnelseFritekst: undefined,
+        endredeFelter: [],
+        gjeldendeFra: undefined,
+        hendelse: {
+          navn: {
+            kode: 'SAK_RETUR',
+            kodeverk: 'HISTORIKKINNSLAG_TYPE',
+          },
+          verdi: undefined,
+        },
+        opplysninger: [],
+        resultat: undefined,
+        skjermlenke: {
+          kode: 'FAKTA_OM_MEDISINSK',
+          kodeverk: 'SKJERMLENKE_TYPE',
+        },
+        soeknadsperiode: undefined,
+        tema: undefined,
+      },
+      {
+        aarsak: undefined,
+        aarsakKodeverkType: undefined,
+        aksjonspunkter: [
+          {
+            aksjonspunktBegrunnelse: 'Vedtaksbrev må vurderes igjen',
+            aksjonspunktKode: '5015',
+            godkjent: false,
+          },
+        ],
+        begrunnelse: undefined,
+        begrunnelseKodeverkType: undefined,
+        begrunnelseFritekst: undefined,
+        endredeFelter: [],
+        gjeldendeFra: undefined,
+        hendelse: undefined,
+        opplysninger: [],
+        resultat: undefined,
+        skjermlenke: {
+          kode: 'VEDTAK',
+          kodeverk: 'SKJERMLENKE_TYPE',
+        },
+        soeknadsperiode: undefined,
+        tema: undefined,
+      },
+    ],
+    opprettetAv: 'Z990422',
+    opprettetTidspunkt: '2024-12-02T07:46:22.373',
+    type: {
+      kode: 'SAK_RETUR',
+      kodeverk: 'HISTORIKKINNSLAG_TYPE',
+    },
+    uuid: '52ae8488-6376-4c50-949c-f03abc9676f8',
+  },
 ];

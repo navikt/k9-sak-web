@@ -28,6 +28,7 @@ import { EtablerteUlikeHistorikkinnslagTyper, NyeUlikeHistorikkinnslagTyper } fr
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
+import { isDev } from '@k9-sak-web/lib/paths/paths.js';
 
 const sortAndTagUlikeEtablerteHistorikkinnslagTyper = (
   historikkK9sak: Historikkinnslag[] = [],
@@ -263,6 +264,9 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
           } catch (err) {
             setVisV2(false);
             Sentry.captureException(err, { level: 'warning' });
+            if (isDev()) {
+              console.info('compareRenderedElementTexts kasta feil', err);
+            }
           } finally {
             compareDone.current = true;
           }
@@ -282,7 +286,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   return (
     <div className="grid gap-5">
       <HStack align="center">
-        <Switch size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
+        <Switch data-testid="NyVisningSwitch" size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
           Ny visning&nbsp;
         </Switch>
         <HelpText>
