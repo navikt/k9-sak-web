@@ -13,7 +13,7 @@
     "@navikt/aksel-icons": "7.21.1",
     "@navikt/ds-css": "7.21.1",
     "@navikt/ds-react": "7.21.1",
-    "@navikt/ft-form-hooks": "^6.3.2",
+    "@navikt/ft-form-hooks": "^6.3.3",
     "@navikt/ft-form-validators": "^3.2.0",
     "@navikt/ft-ui-komponenter": "^4.2.1",
     "@navikt/ft-utils": "^3.4.0",
