@@ -28,7 +28,7 @@ import { EtablerteUlikeHistorikkinnslagTyper, NyeUlikeHistorikkinnslagTyper } fr
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
-import { isDev } from '@k9-sak-web/lib/paths/paths';
+import { isDev } from '@k9-sak-web/lib/paths/paths.js';
 
 const sortAndTagUlikeEtablerteHistorikkinnslagTyper = (
   historikkK9sak: Historikkinnslag[] = [],
