@@ -46,7 +46,7 @@ export const AksjonspunktArbeidOgInntekt = ({
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
             <HStack gap="2" wrap={false}>
-              <PersonFillIcon title="Deltager" fontSize="1.5rem" className={styles.personIcon} />
+              <PersonFillIcon title="Deltaker" fontSize="1.5rem" className={styles.personIcon} />
 
               <VStack gap="2">
                 <Heading size="xsmall" as="h3">
@@ -82,13 +82,13 @@ export const AksjonspunktArbeidOgInntekt = ({
                     ? [
                         {
                           value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                          label: 'Rapportert inntekt fra deltager',
+                          label: 'Rapportert inntekt fra deltaker',
                         },
                       ]
                     : []),
                   {
                     value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
-                    label: 'Rapportert inntekt fra A-inntekt',
+                    label: 'Rapportert inntekt fra A-ordningen',
                   },
                   { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
                 ]}
