@@ -250,7 +250,7 @@ const fakeResponse: HentAlleInnslagV2Response = [
       },
       {
         type: 'TEKST',
-        tekst: '(Aksjonspunkt: Foreslå vedtak)',
+        tekst: '(Aksjonspunkt: Fritekstbrev)',
       },
       {
         type: 'TEKST',
