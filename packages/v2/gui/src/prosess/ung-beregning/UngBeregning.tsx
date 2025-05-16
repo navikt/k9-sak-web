@@ -94,7 +94,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
             {harInntekt && (
               <Tabs.Tab
                 value="arbeid"
-                label="Arbeid og inntekt"
+                label="Inntekt"
                 icon={
                   harUløstAksjonspunkt && (
                     <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
