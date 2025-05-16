@@ -217,6 +217,48 @@ const fakeResponse: HentAlleInnslagV2Response = [
     linjer: [],
     uuid: '92bfbbef-9c71-483c-885b-a5b393679b53',
   },
+  {
+    behandlingId: 1000301,
+    aktør: {
+      type: 'BESL',
+      ident: 'Z990422',
+    },
+    opprettetTidspunkt: '2024-12-02T07:46:22.373',
+    dokumenter: [],
+    tittel: 'Sak retur',
+    linjer: [
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'FAKTA_OM_MEDISINSK',
+        tekst: ': __Godkjent__',
+      },
+      {
+        type: 'TEKST',
+        tekst: '(Aksjonspunkt: Kontroller legeerklæring)',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Kommentar: test',
+      },
+      {
+        type: 'LINJESKIFT',
+      },
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'VEDTAK',
+        tekst: ': __Må vurderes på nytt__',
+      },
+      {
+        type: 'TEKST',
+        tekst: '(Aksjonspunkt: Foreslå vedtak)',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Kommentar: Vedtaksbrev må vurderes igjen',
+      },
+    ],
+    uuid: '52ae8488-6376-4c50-949c-f03abc9676f8',
+  },
 ];
 
 export class FakeHistorikkBackend implements HistorikkBackendApi {
