@@ -1,5 +1,4 @@
 export { default as AdvarselModal } from './src/AdvarselModal';
-export { default as AksjonspunktBox } from './src/AksjonspunktBox';
 export { default as AksjonspunktHelpText } from './src/AksjonspunktHelpText';
 export { default as AndreSakerPåSøkerStripe } from './src/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe';
 export { default as ÅpneSakINyttVinduKnapp } from './src/apneSakINyttVinduKnapp/ÅpneSakINyttVinduKnapp';
