@@ -12,6 +12,7 @@ import { historikkSakV1 } from '../../../../storybook/stories/mocks/historikkSak
 import { historikkTilbakeV2 } from '../../../../storybook/stories/mocks/historikkTilbakeV2.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeHistorikkBackend.js';
+import { delay } from '@k9-sak-web/gui/utils/delay.js';
 
 const historyK9KlageV1: Historikkinnslag[] = [
   {
@@ -271,6 +272,7 @@ export const HistorikkinnslagV2: Story = {
   args: HistorikkinnslagV1.args,
   play: async params => {
     await HistorikkinnslagV1.play?.(params);
+    await delay(1_400); // Vent til samanlikningssjekk har køyrt
     // Sjekk at ingenting har feila slik at visning har bytta til v1
     const nyVisningCheck = await params.canvas.findByTestId('NyVisningSwitch');
     await expect(nyVisningCheck).toBeChecked();

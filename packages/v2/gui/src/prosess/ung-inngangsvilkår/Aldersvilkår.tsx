@@ -32,7 +32,7 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
           />
         )}
         <VStack gap="2">
-          <HStack gap="4">
+          <HStack gap="4" align="baseline">
             <Heading size="small" level="2">
               Alder
             </Heading>

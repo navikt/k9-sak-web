@@ -31,6 +31,7 @@ import {
   NyeUlikeHistorikkinnslagTyper,
   SakHistorikkInnslagV2,
 } from '@k9-sak-web/gui/sak/historikk/historikkTypeBerikning.js';
+import { isDev } from '@k9-sak-web/lib/paths/paths.js';
 
 const sortAndTagUlikeEtablerteHistorikkinnslagTyper = (
   historikkK9sak: Historikkinnslag[] = [],
@@ -273,6 +274,9 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
           } catch (err) {
             setVisV2(false);
             Sentry.captureException(err, { level: 'warning' });
+            if (isDev()) {
+              console.info('compareRenderedElementTexts kasta feil', err);
+            }
           } finally {
             compareDone.current = true;
           }

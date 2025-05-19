@@ -41,7 +41,7 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
         <circle cx="5" cy="5" r="5" fill="#B65781" />
       </svg>
     );
-    tooltipTekst = 'Når deltager er over 25 år, ganger vi grunnbeløpet med 2,056.';
+    tooltipTekst = 'Når deltaker er over 25 år, ganger vi grunnbeløpet med 2,056.';
   }
   return (
     <span className={styles.sats}>
