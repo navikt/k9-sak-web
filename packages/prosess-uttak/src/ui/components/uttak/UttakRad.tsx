@@ -38,13 +38,12 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const containerContext = React.useContext(ContainerContext);
   const erFagytelsetypeLivetsSluttfase = fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE === containerContext?.ytelsetype;
-  const erOpplæringspenger = fagsakYtelsesType.OPPLÆRINGSPENGER === containerContext?.ytelsetype;
 
   const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
-  const visPleiebehovProsent = !erOpplæringspenger && !erFagytelsetypeLivetsSluttfase;
+  const visPleiebehovProsent = erFagytelsetypeLivetsSluttfase;
   const erGradertMotInntekt = uttak.inntektsgradering !== undefined;
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
@@ -109,14 +108,14 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           </div>
           {harPleiebehov && visPleiebehovProsent ? `${pleiebehov}%` : null}
         </Table.DataCell>
-          <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-            {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
-            {uttak.annenPart === AnnenPart.MED_ANDRE && (
-              <Tooltip content="Søker/Annen part">
-                <PersonGroupFillIcon fontSize="1.5rem" />
-              </Tooltip>
-            )}
-          </Table.DataCell>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
+          {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
+          {uttak.annenPart === AnnenPart.MED_ANDRE && (
+            <Tooltip content="Søker/Annen part">
+              <PersonGroupFillIcon fontSize="1.5rem" />
+            </Tooltip>
+          )}
+        </Table.DataCell>
 
         <Table.DataCell className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
           <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
