@@ -43,7 +43,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
-  const visPleiebehovProsent = erFagytelsetypeLivetsSluttfase;
+  const visPleiebehovProsent = !erFagytelsetypeLivetsSluttfase;
   const erGradertMotInntekt = uttak.inntektsgradering !== undefined;
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
