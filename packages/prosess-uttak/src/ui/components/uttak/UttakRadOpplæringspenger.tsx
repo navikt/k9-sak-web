@@ -38,8 +38,10 @@ interface UttakProps {
   withBorderTop?: boolean;
 }
 
-// Uttak bruker pleiepenger-barn-uttak i backend, som er skreddersydd for pleiepenger
-// Men brukes også for opplæringspenger
+// Uttak bruker pleiepenger-barn-uttak i backend, som er laget for pleiepenger
+// Men har også blitt "hacket til" for å brukes for opplæringspenger
+// Lager en egen komponent for å vise opplæringspenger så det ikke blir så forvirrende hvissom atte dersom atte i koden
+
 const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
   const { periode, uttaksgrad, inngangsvilkår: vilkår, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const containerContext = React.useContext(ContainerContext);
