@@ -12,7 +12,7 @@ export default class UngBeregningBackendClient {
     this.#ungsak = ungsakClient;
   }
 
-  async getSatser(behandlingUuid: string): Promise<GetSatsOgUtbetalingPerioderResponse> {
+  async getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<GetSatsOgUtbetalingPerioderResponse> {
     return this.#ungsak.ung.getSatsOgUtbetalingPerioder(behandlingUuid);
   }
 
