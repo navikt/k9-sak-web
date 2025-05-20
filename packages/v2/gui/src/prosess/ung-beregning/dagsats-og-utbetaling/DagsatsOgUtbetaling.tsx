@@ -1,13 +1,14 @@
 import {
-  UngdomsytelseSatsPeriodeDtoSatsType,
   UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, Tooltip, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
+import { BeregningsDetaljer } from './BeregningsDetaljer';
 import styles from './dagsatsOgUtbetaling.module.css';
+import { formatCurrencyNoKr, formatCurrencyWithKr, formatMonthYear, formatSats } from './dagsatsUtils';
 import { DataCellWithValue } from './DataCellWithValue';
 import { DataSection } from './DataSection';
 
@@ -17,62 +18,8 @@ const StatusTag = ({ status }: { status: UngdomsytelseUtbetaltMånedDtoStatus })
   </Tag>
 );
 
-const formatCurrencyWithKr = (value: number) => {
-  const roundedValue = Math.round(value);
-  const formattedValue = roundedValue.toLocaleString('nb-NO').replace(/,|\s/g, ' ');
-  return `${formattedValue} kr`;
-};
-
-const formatCurrencyNoKr = (value: number) => {
-  if (value === null || value === undefined) {
-    return undefined;
-  }
-  const newVal = value.toString().replace(/\s/g, '');
-  if (Number.isNaN(newVal)) {
-    return undefined;
-  }
-  return Math.round(+newVal).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
-};
-
-const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
-  let icon: React.ReactElement | undefined = undefined;
-  let tooltipTekst = '';
-  if (satstype === UngdomsytelseSatsPeriodeDtoSatsType.LAV) {
-    icon = (
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="5" fill="#417DA0" />
-      </svg>
-    );
-    tooltipTekst = 'Når deltaker er under 25 år, ganger vi grunnbeløpet med 1,33.';
-  } else if (satstype === UngdomsytelseSatsPeriodeDtoSatsType.HØY) {
-    icon = (
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="5" fill="#B65781" />
-      </svg>
-    );
-    tooltipTekst = 'Når deltaker er over 25 år, ganger vi grunnbeløpet med 2,056.';
-  }
-  return (
-    <span className={styles.sats}>
-      {satstype} {icon && <Tooltip content={tooltipTekst}>{icon}</Tooltip>}
-    </span>
-  );
-};
-
 const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
   data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
-
-const formatMonthYear = (dateStr: string): string => {
-  const date = new Date(`${dateStr}-01T00:00:00`);
-
-  // Format using Norwegian locale
-  const formatted = new Intl.DateTimeFormat('nb-NO', {
-    month: 'long',
-    year: 'numeric',
-  }).format(date);
-
-  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
-};
 
 interface DagsatsOgUtbetalingProps {
   api: UngBeregningBackendApiType;
@@ -105,7 +52,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
   if (satserIsError || ungdomsprogramInformasjonIsError || !satser) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
-  const grunnrettData = satser[0]?.satsperioder[0];
+  const grunnrettData = satser[satser.length - 1]?.satsperioder[0];
   return (
     <div className={styles.dagsatsSection}>
       <VStack gap="4">
@@ -113,7 +60,9 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
         <VStack gap="8">
           {grunnrettData && (
             <div>
-              <Heading size="xsmall">Grunnrett</Heading>
+              <Heading size="xsmall" level="2">
+                Grunnrett
+              </Heading>
               <Box
                 marginBlock="4 0"
                 borderRadius="large"
@@ -169,7 +118,9 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
             </div>
           )}
           <div>
-            <Heading size="xsmall">Beregning av dagsats og utbetaling</Heading>
+            <Heading level="2" size="xsmall">
+              Beregning av dagsats og utbetaling
+            </Heading>
             {satser.length === 0 && (
               <Box marginBlock="3 0" maxWidth="43.5rem">
                 <Alert variant="info" size="small">
@@ -217,14 +168,24 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                   </Table.Header>
                   <Table.Body>
                     {satser.map(
-                      ({ antallDager, måned, rapportertInntekt, satsperioder, status, utbetaling }, index) => {
+                      (
+                        { antallDager, måned, rapportertInntekt, satsperioder, status, utbetaling, reduksjon },
+                        index,
+                      ) => {
                         const harFlereSatsperioder = satsperioder.length > 1;
                         if (harFlereSatsperioder) {
                           return (
                             <>
                               <Table.ExpandableRow
                                 key={`${satsperioder[0]?.fom}-${satsperioder[0]?.tom}`}
-                                content="Innhold"
+                                content={
+                                  <BeregningsDetaljer
+                                    satsperioder={satsperioder}
+                                    utbetaling={utbetaling}
+                                    rapportertInntekt={rapportertInntekt}
+                                    reduksjon={reduksjon}
+                                  />
+                                }
                                 togglePlacement="right"
                                 expandOnRowClick
                               >
@@ -297,7 +258,14 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                         return (
                           <Table.ExpandableRow
                             key={`${fom}-${tom}`}
-                            content="Innhold"
+                            content={
+                              <BeregningsDetaljer
+                                satsperioder={satsperioder}
+                                utbetaling={utbetaling}
+                                rapportertInntekt={rapportertInntekt}
+                                reduksjon={reduksjon}
+                              />
+                            }
                             togglePlacement="right"
                             className={isLastRow ? styles.noBottomBorder : ''}
                             expandOnRowClick
