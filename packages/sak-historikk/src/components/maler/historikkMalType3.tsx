@@ -24,7 +24,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: 'Historikk.Bosatt',
   [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: 'Historikk.Rett',
   [aksjonspunktCodes.AVKLAR_PERSONSTATUS]: 'Historikk.CheckAvklarPersonstatus',
-  [aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR]: 'Historikk.fodselsvilkar',
+  [aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR]: 'Historikk.OverstyringOmsorgenFor',
   [aksjonspunktCodes.OVERSTYR_ADOPSJONSVILKAR]: 'Historikk.adopsjonsvilkar',
   [aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET]: 'Historikk.opptjeningsvilkår',
   [aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR]: 'Historikk.medlemskapsvilkar',
