@@ -151,6 +151,7 @@ const InngangsvilkarPanel = ({
                     alleKodeverk,
                     submitCallback,
                     visAllePerioder,
+                    featureToggles,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
