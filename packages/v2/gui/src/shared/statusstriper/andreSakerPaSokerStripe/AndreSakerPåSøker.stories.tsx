@@ -2,6 +2,7 @@ import type { MatchFagsakerResponse } from '@k9-sak-web/backend/k9sak/generated'
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
+import { delay } from '../../../utils/delay';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 
 const meta = {
@@ -41,6 +42,7 @@ export const EnAnnenSak: Story = {
     api: createMockApi([{ saksnummer: '22', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }]),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Andre saker knyttet til søker:')).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: '22' })).toBeInTheDocument();
   },
@@ -58,6 +60,7 @@ export const FlereAndreSaker: Story = {
     ]),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Andre saker knyttet til søker:')).toBeInTheDocument();
     await expect(canvas.getByText('23,')).toBeInTheDocument();
     await expect(canvas.getByText('34,')).toBeInTheDocument();
@@ -73,6 +76,7 @@ export const MedFeil: Story = {
     api: createMockApi([], true),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Får ikke hentet andre saker knyttet til søker')).toBeInTheDocument();
   },
 };
@@ -89,6 +93,7 @@ export const SaksnummerFiltrering: Story = {
     ]),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Andre saker knyttet til søker:')).toBeInTheDocument();
     await expect(canvas.getByText('1124,')).toBeInTheDocument();
     await expect(canvas.queryByText('24,')).not.toBeInTheDocument();

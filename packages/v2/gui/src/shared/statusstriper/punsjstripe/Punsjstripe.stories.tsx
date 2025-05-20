@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import { expect } from '@storybook/test';
+import { delay } from '../../../utils/delay';
 import Punsjstripe from './Punsjstripe';
 
 const meta = {
@@ -44,6 +45,7 @@ export const EnOppgaveTilSøker: Story = {
     }),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Det er 1 uløst oppgave tilknyttet søkeren i Punsj.')).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: 'Gå til oppgave' })).toBeInTheDocument();
   },
@@ -59,6 +61,7 @@ export const FlereOppgaverTilSøker: Story = {
     }),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Det er 3 uløste oppgaver tilknyttet søkeren i Punsj.')).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: '456789123' })).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: '456789124' })).toBeInTheDocument();
@@ -76,6 +79,7 @@ export const EnOppgaveTilBarn: Story = {
     }),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Det er 1 uløst oppgave tilknyttet barnet i Punsj.')).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: 'Gå til oppgave' })).toBeInTheDocument();
   },
@@ -91,6 +95,7 @@ export const OppgaverTilBådeSøkerOgBarn: Story = {
     }),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Det er 1 uløst oppgave tilknyttet barnet i Punsj.')).toBeInTheDocument();
     await expect(canvas.getByText('Det er 1 uløst oppgave tilknyttet søkeren i Punsj.')).toBeInTheDocument();
     await expect(canvas.getAllByRole('link', { name: 'Gå til oppgave' })).toHaveLength(2);
@@ -107,6 +112,7 @@ export const FlereOppgaverTilBådeSøkerOgBarn: Story = {
     }),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Det er 2 uløste oppgaver tilknyttet barnet i Punsj.')).toBeInTheDocument();
     await expect(canvas.getByText('Det er 2 uløste oppgaver tilknyttet søkeren i Punsj.')).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: '456789123' })).toBeInTheDocument();
@@ -123,6 +129,7 @@ export const MedFeil: Story = {
     api: createMockApi({}, true),
   },
   play: async ({ canvas }) => {
+    await delay(100);
     await expect(canvas.getByText('Får ikke kontakt med K9-Punsj')).toBeInTheDocument();
   },
 };
