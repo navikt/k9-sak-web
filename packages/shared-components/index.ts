@@ -1,7 +1,5 @@
 export { default as AdvarselModal } from './src/AdvarselModal';
-export { default as AksjonspunktBox } from './src/AksjonspunktBox';
 export { default as AksjonspunktHelpText } from './src/AksjonspunktHelpText';
-export { default as AndreSakerPåSøkerStripe } from './src/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe';
 export { default as ÅpneSakINyttVinduKnapp } from './src/apneSakINyttVinduKnapp/ÅpneSakINyttVinduKnapp';
 export { default as ArrowBox } from './src/ArrowBox';
 export { default as BorderBox } from './src/BorderBox';
@@ -21,7 +19,6 @@ export { default as NestedIntlProvider } from './src/NestedIntlProvider';
 export { default as OkAvbrytModal } from './src/OkAvbrytModal';
 export { default as PeriodLabel } from './src/PeriodLabel';
 export { default as Periodpicker } from './src/periodpicker/Periodpicker';
-export { default as Punsjstripe } from './src/punsjstripe/Punsjstripe';
 export { default as requireProps } from './src/requireProps';
 export { default as Tidslinje } from './src/tidslinje/Tidslinje';
 export { default as TidslinjeZoom } from './src/tidslinje/TidslinjeZoom';

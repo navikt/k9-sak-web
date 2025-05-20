@@ -1,10 +1,11 @@
 import {
   UngdomsytelseSatsPeriodeDtoSatsType,
-  type UngdomsprogramInformasjonDto,
   type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Alert, BodyShort, Box, Heading, Label, Table, Tooltip, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tooltip, VStack } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
+import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
 import styles from './dagsatsOgUtbetaling.module.css';
 import { DataSection } from './DataSection';
 
@@ -50,12 +51,40 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
   );
 };
 
+const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
+  data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
+
 interface DagsatsOgUtbetalingProps {
-  satser: UngdomsytelseSatsPeriodeDto[];
-  ungdomsprogramInformasjon: UngdomsprogramInformasjonDto | undefined;
+  api: UngBeregningBackendApiType;
+  behandling: { uuid: string };
 }
 
-export const DagsatsOgUtbetaling = ({ satser, ungdomsprogramInformasjon }: DagsatsOgUtbetalingProps) => {
+export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProps) => {
+  const {
+    data: ungdomsprogramInformasjon,
+    isLoading: ungdomsprogramInformasjonIsLoading,
+    isError: ungdomsprogramInformasjonIsError,
+  } = useQuery({
+    queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
+    queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
+  });
+
+  const {
+    data: satser,
+    isLoading: satserIsLoading,
+    isError: satserIsError,
+  } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
+    queryKey: ['satser', behandling.uuid],
+    queryFn: () => api.getSatser(behandling.uuid),
+    select: sortSatser,
+  });
+  const isLoading = satserIsLoading || ungdomsprogramInformasjonIsLoading;
+  if (isLoading) {
+    <Loader size="large" />;
+  }
+  if (satserIsError || ungdomsprogramInformasjonIsError || !satser) {
+    return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
+  }
   const grunnrettData = satser[0];
   return (
     <div className={styles.dagsatsSection}>
