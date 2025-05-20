@@ -2,13 +2,13 @@ import type { JournalpostIdDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import type { K9StatusBackendClientType } from '../K9StatusBackendClientType';
+import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import styles from './punsjstripe.module.css';
 
 interface PunsjstripeProps {
   saksnummer: string;
   pathToLos: string;
-  api: K9StatusBackendClientType;
+  api: K9StatusBackendApi;
 }
 
 const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos, api }) => {

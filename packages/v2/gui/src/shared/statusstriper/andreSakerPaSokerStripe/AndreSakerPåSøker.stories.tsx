@@ -1,6 +1,7 @@
 import type { MatchFagsakerResponse } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { type Meta, type StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 
 const meta = {
@@ -39,6 +40,10 @@ export const EnAnnenSak: Story = {
     fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([{ saksnummer: '22', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }]),
   },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Andre saker knyttet til søker:')).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: '22' })).toBeInTheDocument();
+  },
 };
 
 export const FlereAndreSaker: Story = {
@@ -52,6 +57,12 @@ export const FlereAndreSaker: Story = {
       { saksnummer: '45', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
     ]),
   },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Andre saker knyttet til søker:')).toBeInTheDocument();
+    await expect(canvas.getByText('23,')).toBeInTheDocument();
+    await expect(canvas.getByText('34,')).toBeInTheDocument();
+    await expect(canvas.getByText('45')).toBeInTheDocument();
+  },
 };
 
 export const MedFeil: Story = {
@@ -60,6 +71,9 @@ export const MedFeil: Story = {
     saksnummer: '1',
     fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([], true),
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Får ikke hentet andre saker knyttet til søker')).toBeInTheDocument();
   },
 };
 
@@ -73,5 +87,11 @@ export const SaksnummerFiltrering: Story = {
       { saksnummer: '24', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
       { saksnummer: '335', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
     ]),
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Andre saker knyttet til søker:')).toBeInTheDocument();
+    await expect(canvas.getByText('1124,')).toBeInTheDocument();
+    await expect(canvas.queryByText('24,')).not.toBeInTheDocument();
+    await expect(canvas.getByText('335')).toBeInTheDocument();
   },
 };
