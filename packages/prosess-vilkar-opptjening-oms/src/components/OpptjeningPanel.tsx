@@ -1,20 +1,14 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
-import {
-  AksjonspunktBox,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
 import { ReactNode } from 'react';
-import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
-import styles from './opptjeningPanel.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { useIntl } from 'react-intl';
+import styles from './opptjeningPanel.module.css';
 
 interface OwnProps {
   title: string;
