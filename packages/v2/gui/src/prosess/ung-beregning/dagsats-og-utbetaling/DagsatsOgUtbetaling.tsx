@@ -1,16 +1,18 @@
 import {
   UngdomsytelseSatsPeriodeDtoSatsType,
-  type UngdomsytelseSatsPeriodeDto,
+  UngdomsytelseUtbetaltMånedDtoStatus,
+  type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tooltip, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, Tooltip, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
 import styles from './dagsatsOgUtbetaling.module.css';
 import { DataSection } from './DataSection';
 
 const formatCurrencyWithKr = (value: number) => {
-  const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
+  const roundedValue = Math.round(value);
+  const formattedValue = roundedValue.toLocaleString('nb-NO').replace(/,|\s/g, ' ');
   return `${formattedValue} kr`;
 };
 
@@ -18,12 +20,11 @@ const formatCurrencyNoKr = (value: number) => {
   if (value === null || value === undefined) {
     return undefined;
   }
-  // Fjerner mellomrom i tilfelle vi får inn tall med det
   const newVal = value.toString().replace(/\s/g, '');
   if (Number.isNaN(newVal)) {
     return undefined;
   }
-  return Number(Math.round(+newVal)).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
+  return Math.round(+newVal).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
 };
 
 const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
@@ -51,8 +52,20 @@ const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
   );
 };
 
-const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
-  data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
+const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
+  data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
+
+const formatMonthYear = (dateStr: string): string => {
+  const date = new Date(`${dateStr}-01T00:00:00`);
+
+  // Format using Norwegian locale
+  const formatted = new Intl.DateTimeFormat('nb-NO', {
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+};
 
 interface DagsatsOgUtbetalingProps {
   api: UngBeregningBackendApiType;
@@ -73,7 +86,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
     data: satser,
     isLoading: satserIsLoading,
     isError: satserIsError,
-  } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
+  } = useQuery<GetSatsOgUtbetalingPerioderResponse>({
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatser(behandling.uuid),
     select: sortSatser,
@@ -85,7 +98,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
   if (satserIsError || ungdomsprogramInformasjonIsError || !satser) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
-  const grunnrettData = satser[0];
+  const grunnrettData = satser[0]?.satsperioder[0];
   return (
     <div className={styles.dagsatsSection}>
       <VStack gap="4">
@@ -125,9 +138,9 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    <Table.Row className={styles.lastRow}>
+                    <Table.Row className={styles.noBottomBorder}>
                       <Table.DataCell className={styles.firstHeaderCell}>
-                        <BodyShort size="small">{grunnrettData.fom && formatDate(grunnrettData.fom)}</BodyShort>
+                        <BodyShort size="small">{grunnrettData && formatDate(grunnrettData.fom)}</BodyShort>
                       </Table.DataCell>
                       <Table.DataCell>
                         <BodyShort size="small">{formatSats(grunnrettData.satsType)}</BodyShort>
@@ -191,10 +204,10 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                         <Label size="small">Barnetillegg</Label>
                       </Table.HeaderCell>
                       <Table.HeaderCell scope="col">
-                        <Label size="small">Rapportert inntekt</Label>
+                        <Label size="small">Dager</Label>
                       </Table.HeaderCell>
                       <Table.HeaderCell scope="col">
-                        <Label size="small">Dager</Label>
+                        <Label size="small">Rapportert inntekt</Label>
                       </Table.HeaderCell>
                       <Table.HeaderCell scope="col">
                         <Label size="small">Utbetaling</Label>
@@ -207,21 +220,118 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                   </Table.Header>
                   <Table.Body>
                     {satser.map(
-                      ({ fom, tom, satsType, dagsats, grunnbeløp, antallBarn, dagsatsBarnetillegg }, index) => {
+                      ({ antallDager, måned, rapportertInntekt, satsperioder, status, utbetaling }, index) => {
+                        const harFlereSatsperioder = satsperioder.length > 1;
+                        if (harFlereSatsperioder) {
+                          return (
+                            <>
+                              <Table.ExpandableRow
+                                key={`${satsperioder[0]?.fom}-${satsperioder[0]?.tom}`}
+                                content="Innhold"
+                                togglePlacement="right"
+                                expandOnRowClick
+                              >
+                                <Table.HeaderCell scope="row" className={styles.firstHeaderCell}>
+                                  <Label size="small">{formatMonthYear(måned)}</Label>
+                                </Table.HeaderCell>
+                                <Table.DataCell />
+                                <Table.DataCell />
+                                <Table.DataCell />
+                                <Table.DataCell />
+                                <Table.DataCell />
+                                <Table.DataCell>{antallDager}</Table.DataCell>
+                                <Table.DataCell>
+                                  <BodyShort size="small">
+                                    {(rapportertInntekt && formatCurrencyWithKr(rapportertInntekt)) ?? '-'}
+                                  </BodyShort>
+                                </Table.DataCell>
+                                <Table.DataCell>{utbetaling && formatCurrencyWithKr(utbetaling)}</Table.DataCell>
+                                <Table.DataCell>
+                                  {status === UngdomsytelseUtbetaltMånedDtoStatus.TIL_UTBETALING ? (
+                                    <Tag size="small" variant="info">
+                                      Til utbetaling
+                                    </Tag>
+                                  ) : (
+                                    <Tag size="small" variant="success">
+                                      Utbetalt
+                                    </Tag>
+                                  )}
+                                </Table.DataCell>
+                              </Table.ExpandableRow>
+                              {satsperioder
+                                .toReversed()
+                                .map(
+                                  ({
+                                    fom,
+                                    tom,
+                                    satsType,
+                                    grunnbeløp,
+                                    dagsats,
+                                    antallBarn,
+                                    dagsatsBarnetillegg,
+                                    antallDager: antallDagerIPeriode,
+                                  }) => {
+                                    return (
+                                      <Table.Row
+                                        key={`${fom}-${tom}`}
+                                        content="Innhold"
+                                        className={styles.noBottomBorder}
+                                      >
+                                        <Table.DataCell className={styles.firstHeaderCell}>
+                                          <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
+                                        </Table.DataCell>
+                                        <Table.DataCell>
+                                          <BodyShort size="small">{formatSats(satsType)}</BodyShort>
+                                        </Table.DataCell>
+                                        <Table.DataCell>
+                                          <BodyShort size="small">
+                                            {grunnbeløp && formatCurrencyWithKr(grunnbeløp)}
+                                          </BodyShort>
+                                        </Table.DataCell>
+                                        <Table.DataCell>
+                                          <BodyShort size="small">
+                                            {dagsats && formatCurrencyNoKr(dagsats)} kr
+                                          </BodyShort>
+                                        </Table.DataCell>
+                                        <Table.DataCell>
+                                          <BodyShort size="small">{antallBarn}</BodyShort>
+                                        </Table.DataCell>
+                                        <Table.DataCell>
+                                          <BodyShort size="small">
+                                            {dagsatsBarnetillegg
+                                              ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr`
+                                              : '-'}
+                                          </BodyShort>
+                                        </Table.DataCell>
+                                        <Table.DataCell>{antallDagerIPeriode}</Table.DataCell>
+                                        <Table.DataCell />
+                                        <Table.DataCell />
+                                        <Table.DataCell />
+                                        <Table.DataCell />
+                                      </Table.Row>
+                                    );
+                                  },
+                                )}
+                            </>
+                          );
+                        }
                         const isLastRow = index === satser.length - 1;
+                        const periode = satsperioder[0];
+                        const { fom, tom, satsType, grunnbeløp, dagsats, antallBarn, dagsatsBarnetillegg } =
+                          periode || {};
                         return (
                           <Table.ExpandableRow
-                            key={`${fom}_${tom}`}
+                            key={`${fom}-${tom}`}
                             content="Innhold"
                             togglePlacement="right"
-                            className={isLastRow ? styles.lastRow : ''}
+                            className={isLastRow ? styles.noBottomBorder : ''}
                             expandOnRowClick
                           >
-                            <Table.DataCell className={styles.firstHeaderCell}>
-                              <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
-                            </Table.DataCell>
+                            <Table.HeaderCell scope="row" className={styles.firstHeaderCell}>
+                              <Label size="small">{formatMonthYear(måned)}</Label>
+                            </Table.HeaderCell>
                             <Table.DataCell>
-                              <BodyShort size="small">{formatSats(satsType)}</BodyShort>
+                              <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
                             </Table.DataCell>
                             <Table.DataCell>
                               <BodyShort size="small">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</BodyShort>
@@ -234,13 +344,27 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                             </Table.DataCell>
                             <Table.DataCell>
                               <BodyShort size="small">
-                                {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : null}
+                                {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : '-'}
                               </BodyShort>
                             </Table.DataCell>
-                            <Table.DataCell>-</Table.DataCell>
-                            <Table.DataCell />
-                            <Table.DataCell />
-                            <Table.DataCell />
+                            <Table.DataCell>{antallDager}</Table.DataCell>
+                            <Table.DataCell>
+                              <BodyShort size="small">
+                                {rapportertInntekt && formatCurrencyWithKr(rapportertInntekt)}
+                              </BodyShort>
+                            </Table.DataCell>
+                            <Table.DataCell>{utbetaling && formatCurrencyWithKr(utbetaling)}</Table.DataCell>
+                            <Table.DataCell>
+                              {status === UngdomsytelseUtbetaltMånedDtoStatus.TIL_UTBETALING ? (
+                                <Tag size="small" variant="info">
+                                  Til utbetaling
+                                </Tag>
+                              ) : (
+                                <Tag size="small" variant="success">
+                                  Utbetalt
+                                </Tag>
+                              )}
+                            </Table.DataCell>
                           </Table.ExpandableRow>
                         );
                       },

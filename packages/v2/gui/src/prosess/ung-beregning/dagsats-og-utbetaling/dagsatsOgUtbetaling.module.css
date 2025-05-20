@@ -12,6 +12,6 @@
   padding-left: var(--a-spacing-4);
 }
 
-.lastRow > td {
+.noBottomBorder > td {
   border-bottom: none;
 }

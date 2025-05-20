@@ -1,8 +1,8 @@
 import type {
+  GetSatsOgUtbetalingPerioderResponse,
   GetUngdomsprogramInformasjonResponse,
   KontrollerInntektDto,
   UngSakClient,
-  UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 
 export default class UngBeregningBackendClient {
@@ -12,8 +12,8 @@ export default class UngBeregningBackendClient {
     this.#ungsak = ungsakClient;
   }
 
-  async getSatser(behandlingUuid: string): Promise<UngdomsytelseSatsPeriodeDto[]> {
-    return this.#ungsak.ung.getUngdomsytelseInnvilgetSats(behandlingUuid);
+  async getSatser(behandlingUuid: string): Promise<GetSatsOgUtbetalingPerioderResponse> {
+    return this.#ungsak.ung.getSatsOgUtbetalingPerioder(behandlingUuid);
   }
 
   async getKontrollerInntekt(behandlingUuid: string): Promise<KontrollerInntektDto> {
