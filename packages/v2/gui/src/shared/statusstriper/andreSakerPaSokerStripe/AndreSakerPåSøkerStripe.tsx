@@ -1,36 +1,25 @@
-import { httpErrorHandler } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
-import { Fagsak } from '@k9-sak-web/types';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React from 'react';
+import type { K9StatusBackendClientType } from '../K9StatusBackendClientType';
 import styles from './andreSakerPåSøkerStripe.module.css';
-
 interface Props {
   søkerIdent: string;
   saksnummer: string;
   fagsakYtelseType: FagsakYtelsesType;
+  api: K9StatusBackendClientType;
 }
 
-const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, fagsakYtelseType }) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-
+const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, fagsakYtelseType, api }) => {
   const {
     data: fagsaker,
     error,
     isSuccess,
-  } = useQuery<Fagsak[]>({
+  } = useQuery({
     queryKey: ['andreFagsaker', { fagsakYtelseType, søkerIdent }],
-    queryFn: async ({ signal }) =>
-      axios
-        .post(`/k9/sak/api/fagsak/match`, { ytelseType: fagsakYtelseType, bruker: søkerIdent }, { signal })
-        .then(({ data }) => data)
-        .catch(error => {
-          httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
-        }),
+    queryFn: () => api.getAndreSakerPåSøker(fagsakYtelseType, søkerIdent),
     initialData: [],
   });
 

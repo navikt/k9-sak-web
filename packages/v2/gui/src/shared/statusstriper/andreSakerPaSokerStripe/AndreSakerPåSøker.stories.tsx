@@ -1,0 +1,77 @@
+import type { MatchFagsakerResponse } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { type Meta, type StoryObj } from '@storybook/react';
+import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
+
+const meta = {
+  title: 'gui/shared/statusstriper/AndreSakerPåSøkerStripe',
+  component: AndreSakerPåSøkerStripe,
+} satisfies Meta<typeof AndreSakerPåSøkerStripe>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+const createMockApi = (responseData: MatchFagsakerResponse = [], shouldFail = false) => ({
+  getAndreSakerPåSøker: () => {
+    if (shouldFail) {
+      return Promise.reject(new Error('Feil ved henting av saker'));
+    }
+    return Promise.resolve(responseData);
+  },
+  getUferdigePunsjoppgaver: () => {
+    return Promise.resolve({ journalpostIder: [], journalpostIderBarn: [] });
+  },
+});
+
+export const IngenAndreSaker: Story = {
+  args: {
+    søkerIdent: '12345678910',
+    saksnummer: '1',
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    api: createMockApi([{ saksnummer: '1', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }]),
+  },
+};
+
+export const EnAnnenSak: Story = {
+  args: {
+    søkerIdent: '12345678910',
+    saksnummer: '12',
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    api: createMockApi([{ saksnummer: '22', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }]),
+  },
+};
+
+export const FlereAndreSaker: Story = {
+  args: {
+    søkerIdent: '12345678910',
+    saksnummer: '11',
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    api: createMockApi([
+      { saksnummer: '23', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+      { saksnummer: '34', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+      { saksnummer: '45', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+    ]),
+  },
+};
+
+export const MedFeil: Story = {
+  args: {
+    søkerIdent: '12345678910',
+    saksnummer: '1',
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    api: createMockApi([], true),
+  },
+};
+
+export const SaksnummerFiltrering: Story = {
+  args: {
+    søkerIdent: '12345678910',
+    saksnummer: '24', // Dette saksnummeret filtreres bort fra resultatet
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    api: createMockApi([
+      { saksnummer: '1124', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+      { saksnummer: '24', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+      { saksnummer: '335', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+    ]),
+  },
+};

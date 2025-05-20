@@ -1,33 +1,28 @@
+import type { JournalpostIdDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React from 'react';
+import type { K9StatusBackendClientType } from '../K9StatusBackendClientType';
 import styles from './punsjstripe.module.css';
-
-export interface PunsjResponse {
-  journalpostIder: JournalpostIder[];
-  journalpostIderBarn: JournalpostIder[];
-}
-
-export interface JournalpostIder {
-  journalpostId: string;
-}
 
 interface PunsjstripeProps {
   saksnummer: string;
   pathToLos: string;
+  api: K9StatusBackendClientType;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos }) => {
-  const { data: punsjoppgaver, error } = useQuery<PunsjResponse>({
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos, api }) => {
+  const { data: punsjoppgaver, error } = useQuery({
     queryKey: ['punsjoppgaver', saksnummer],
-    queryFn: async ({ signal }) => {
-      const response = await axios.get(`/k9/sak/api/punsj/journalpost/uferdig/v2?saksnummer=${saksnummer}`, { signal });
-      return response.data;
+    queryFn: async () => {
+      const data = await api.getUferdigePunsjoppgaver(saksnummer);
+      return data || {};
     },
   });
 
-  const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0 || punsjoppgaver?.journalpostIderBarn?.length > 0;
+  const harPunsjoppgaver =
+    (punsjoppgaver?.journalpostIder && punsjoppgaver?.journalpostIder?.length > 0) ||
+    (punsjoppgaver?.journalpostIderBarn && punsjoppgaver?.journalpostIderBarn?.length > 0);
 
   if (error) {
     return (
@@ -41,11 +36,11 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos }) => {
     return null;
   }
   const { journalpostIder, journalpostIderBarn } = punsjoppgaver;
-  const getUløsteOppgaverText = (journalposter, subjekt: string) => {
-    if (!journalposter.length) {
+  const getUløsteOppgaverText = (journalposter: JournalpostIdDto[] | undefined, subjekt: string) => {
+    if (!journalposter?.length) {
       return null;
     }
-    if (journalposter.length === 1) {
+    if (journalposter.length === 1 && journalposter[0]) {
       const { journalpostId } = journalposter[0];
       return (
         <>
