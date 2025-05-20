@@ -519,5 +519,6 @@
   "Historikk.VurderFaktaATFLSN": "Vurder fakta for beregning",
   "Historikk.Sykdom": "Sykdom",
   "Historikk.FaktaUttak.ForsteUttakDato": "Kontroller manglende uttaksperiode",
-  "Historikk.FaktaUttak.VurderAnnenForelder": "Vurdering om den andre forelderen har rett til pleiepenger"
+  "Historikk.FaktaUttak.VurderAnnenForelder": "Vurdering om den andre forelderen har rett til pleiepenger",
+  "Historikk.OverstyringOmsorgenFor": "Overstyring av Omsorgen for"
 }
