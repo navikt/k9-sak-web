@@ -8,7 +8,6 @@ export class FakeUngBeregningBackendApi {
   async getSatsOgUtbetalingPerioder(): Promise<GetSatsOgUtbetalingPerioderResponse> {
     return [
       {
-        // @ts-expect-error Typen til måned er definert feil i backend
         måned: '2025-01',
         satsperioder: [
           {
@@ -40,7 +39,6 @@ export class FakeUngBeregningBackendApi {
         status: 'UTBETALT',
       },
       {
-        // @ts-expect-error Typen til måned er definert feil i backend
         måned: '2025-02',
         satsperioder: [
           {
@@ -62,7 +60,6 @@ export class FakeUngBeregningBackendApi {
         status: 'TIL_UTBETALING',
       },
       {
-        // @ts-expect-error Typen til måned er definert feil i backend
         måned: '2025-03',
         satsperioder: [
           {
@@ -84,7 +81,6 @@ export class FakeUngBeregningBackendApi {
         status: 'TIL_UTBETALING',
       },
       {
-        // @ts-expect-error Typen til måned er definert feil i backend
         måned: '2025-04',
         satsperioder: [
           {
