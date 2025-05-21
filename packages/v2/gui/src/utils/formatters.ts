@@ -11,6 +11,9 @@ export const visnDato = (input: dayjs.Dayjs | string | Date) => dayjs(input).for
 
 export const formatCurrencyWithKr = (value: string | number) => {
   const roundedValue = Math.round(Number(value));
+  if (Number.isNaN(roundedValue)) {
+    return undefined;
+  }
   const formattedValue = roundedValue.toLocaleString('nb-NO').replace(/,|\s/g, ' ');
   return `${formattedValue} kr`;
 };

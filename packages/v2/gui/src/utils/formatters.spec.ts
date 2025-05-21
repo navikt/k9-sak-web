@@ -20,6 +20,10 @@ describe('formatCurrencyWithKr', () => {
   it('should format large numbers with spaces between thousands', () => {
     expect(formatCurrencyWithKr(1000000)).toBe('1 000 000 kr');
   });
+
+  it('should return undefined for NaN values', () => {
+    expect(formatCurrencyWithKr(NaN)).toBeUndefined();
+  });
 });
 
 describe('formatCurrencyWithoutKr', () => {
