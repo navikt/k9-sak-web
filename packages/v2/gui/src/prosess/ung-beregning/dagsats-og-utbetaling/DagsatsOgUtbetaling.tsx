@@ -141,7 +141,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
             {satser.length === 0 && (
               <Box marginBlock="3 0" maxWidth="43.5rem">
                 <Alert variant="info" size="small">
-                  Ingen utbetaling ennå
+                  Ingen utbetaling enda
                 </Alert>
               </Box>
             )}
