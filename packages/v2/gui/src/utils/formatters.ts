@@ -20,7 +20,7 @@ export const formatCurrencyNoKr = (value: number) => {
     return undefined;
   }
   const newVal = value.toString().replace(/\s/g, '');
-  if (Number.isNaN(newVal)) {
+  if (Number.isNaN(Number(newVal))) {
     return undefined;
   }
   return Math.round(+newVal).toLocaleString('nb-NO').replace(/,|\s/g, ' ');

@@ -16,6 +16,6 @@ export const DataCellWithValue = ({
   className,
 }: DataCellWithValueProps) => (
   <Table.DataCell className={className}>
-    <BodyShort size="small">{value ? `${formatter(value)}${suffix}` : emptyValue}</BodyShort>
+    <BodyShort size="small">{value != null ? `${formatter(value)}${suffix}` : emptyValue}</BodyShort>
   </Table.DataCell>
 );

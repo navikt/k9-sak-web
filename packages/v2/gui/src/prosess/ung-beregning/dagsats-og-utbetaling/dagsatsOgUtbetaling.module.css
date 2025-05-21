@@ -12,7 +12,8 @@
   padding-left: var(--a-spacing-4);
 }
 
-.noBottomBorder > td {
+.noBottomBorder > td,
+.noBottomBorder > th {
   border-bottom: none;
 }
 

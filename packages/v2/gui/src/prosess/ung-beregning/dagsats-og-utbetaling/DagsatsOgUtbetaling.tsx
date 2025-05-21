@@ -19,10 +19,8 @@ const StatusTag = ({ status }: { status: UngdomsytelseUtbetaltMånedDtoStatus })
   </Tag>
 );
 
-const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) => {
-  /* @ts-expect-error Typen til måned er definert feil i backend */
-  return data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
-};
+const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
+  data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
 
 interface DagsatsOgUtbetalingProps {
   api: UngBeregningBackendApiType;
@@ -194,7 +192,6 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                 expandOnRowClick
                               >
                                 <Table.HeaderCell scope="row" className={styles.firstHeaderCell}>
-                                  {/* @ts-expect-error Typen til måned er definert feil i backend */}
                                   <Label size="small">{formatMonthYear(måned)}</Label>
                                 </Table.HeaderCell>
                                 <Table.DataCell>{/* Sats */}</Table.DataCell>
@@ -219,39 +216,33 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                     antallBarn,
                                     dagsatsBarnetillegg,
                                     antallDager: antallDagerIPeriode,
-                                  }) => {
-                                    return (
-                                      <Table.Row
-                                        key={`${fom}-${tom}`}
-                                        content="Innhold"
-                                        className={styles.noBottomBorder}
-                                      >
-                                        <Table.DataCell className={styles.firstHeaderCell}>
-                                          <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
-                                        </Table.DataCell>
-                                        <Table.DataCell>
-                                          <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
-                                        </Table.DataCell>
-                                        <DataCellWithValue value={grunnbeløp} formatter={formatCurrencyWithKr} />
-                                        <DataCellWithValue
-                                          value={dagsats}
-                                          formatter={formatCurrencyNoKr}
-                                          suffix=" kr"
-                                        />
-                                        <DataCellWithValue value={antallBarn} />
-                                        <DataCellWithValue
-                                          value={dagsatsBarnetillegg}
-                                          formatter={formatCurrencyNoKr}
-                                          suffix=" kr"
-                                        />
-                                        <DataCellWithValue value={antallDagerIPeriode} />
-                                        <Table.DataCell>{/* Rapportert inntekt */}</Table.DataCell>
-                                        <Table.DataCell>{/* Utbetaling */}</Table.DataCell>
-                                        <Table.DataCell>{/* Status */}</Table.DataCell>
-                                        <Table.DataCell>{/* Toggle placeholder */}</Table.DataCell>
-                                      </Table.Row>
-                                    );
-                                  },
+                                  }) => (
+                                    <Table.Row
+                                      key={`${fom}-${tom}`}
+                                      content="Innhold"
+                                      className={styles.noBottomBorder}
+                                    >
+                                      <Table.DataCell className={styles.firstHeaderCell}>
+                                        <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
+                                      </Table.DataCell>
+                                      <Table.DataCell>
+                                        <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
+                                      </Table.DataCell>
+                                      <DataCellWithValue value={grunnbeløp} formatter={formatCurrencyWithKr} />
+                                      <DataCellWithValue value={dagsats} formatter={formatCurrencyNoKr} suffix=" kr" />
+                                      <DataCellWithValue value={antallBarn} />
+                                      <DataCellWithValue
+                                        value={dagsatsBarnetillegg === 0 ? null : dagsatsBarnetillegg}
+                                        formatter={formatCurrencyNoKr}
+                                        suffix=" kr"
+                                      />
+                                      <DataCellWithValue value={antallDagerIPeriode} />
+                                      <Table.DataCell>{/* Rapportert inntekt */}</Table.DataCell>
+                                      <Table.DataCell>{/* Utbetaling */}</Table.DataCell>
+                                      <Table.DataCell>{/* Status */}</Table.DataCell>
+                                      <Table.DataCell>{/* Toggle placeholder */}</Table.DataCell>
+                                    </Table.Row>
+                                  ),
                                 )}
                             </>
                           );
@@ -276,7 +267,6 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                             expandOnRowClick
                           >
                             <Table.HeaderCell scope="row" className={styles.firstHeaderCell}>
-                              {/* @ts-expect-error Typen til måned er definert feil i backend */}
                               <Label size="small">{formatMonthYear(måned)}</Label>
                             </Table.HeaderCell>
                             <Table.DataCell>
@@ -286,7 +276,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                             <DataCellWithValue value={dagsats} formatter={formatCurrencyNoKr} suffix=" kr" />
                             <DataCellWithValue value={antallBarn} />
                             <DataCellWithValue
-                              value={dagsatsBarnetillegg}
+                              value={dagsatsBarnetillegg === 0 ? null : dagsatsBarnetillegg}
                               formatter={formatCurrencyNoKr}
                               suffix=" kr"
                             />

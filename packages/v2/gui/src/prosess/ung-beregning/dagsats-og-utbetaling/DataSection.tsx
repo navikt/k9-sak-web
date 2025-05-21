@@ -8,7 +8,19 @@ import {
   InformationSquareIcon,
   SackKronerIcon,
 } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Box, Button, HelpText, HGrid, HStack, Label, ProgressBar, VStack } from '@navikt/ds-react';
+import {
+  Alert,
+  Bleed,
+  BodyShort,
+  Box,
+  Button,
+  HelpText,
+  HGrid,
+  HStack,
+  Label,
+  ProgressBar,
+  VStack,
+} from '@navikt/ds-react';
 import { useState } from 'react';
 import { BeregningsDetaljerUtregning } from './BeregningsDetaljerUtregning';
 import { formatMonthYear } from './dagsatsUtils';
@@ -83,16 +95,15 @@ export const DataSection = ({ ungdomsprogramInformasjon, sisteUtbetaling }: Data
         </div>
       </DataBox>
       <DataBox>
-        {sisteUtbetaling && (
+        <HStack gap="2" marginInline="05 0">
+          <SackKronerIcon color="#417DA0" fontSize="1.5rem" />
+          <Label as="p">Siste utbetaling</Label>
+        </HStack>
+        {sisteUtbetaling ? (
           <>
-            <HStack gap="2" marginInline="05 0">
-              <SackKronerIcon color="#417DA0" fontSize="1.5rem" />
-              <Label as="p">Siste utbetaling</Label>
-            </HStack>
             <BodyShort size="small">
               {sisteUtbetaling.utbetaling != undefined && formatCurrencyWithKr(sisteUtbetaling.utbetaling)}
             </BodyShort>
-            {/* @ts-expect-error Typen til måned er definert feil i backend */}
             <BodyShort size="small">{formatMonthYear(sisteUtbetaling.måned)} til kontonummer xxx</BodyShort>
             <Bleed marginInline="4" asChild>
               <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
@@ -125,6 +136,12 @@ export const DataSection = ({ ungdomsprogramInformasjon, sisteUtbetaling }: Data
               </>
             )}
           </>
+        ) : (
+          <Box marginBlock="3 0" maxWidth="43.5rem">
+            <Alert variant="info" size="small">
+              Ingen utbetaling ennå
+            </Alert>
+          </Box>
         )}
       </DataBox>
     </HGrid>
