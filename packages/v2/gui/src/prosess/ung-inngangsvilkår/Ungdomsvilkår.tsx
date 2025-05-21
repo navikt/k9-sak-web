@@ -38,7 +38,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
                   </Box>
                 )}
               </HStack>
-              {opphørsdato && <BodyShort size="small">{`Deltager meldt ut ${formatDate(opphørsdato)}`}</BodyShort>}
+              {opphørsdato && <BodyShort size="small">{`Deltaker meldt ut ${formatDate(opphørsdato)}`}</BodyShort>}
             </VStack>
           </HStack>
         )}
@@ -62,7 +62,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
                   </Box>
                 )}
               </HStack>
-              {oppstartsdato && <BodyShort size="small">{`Deltager meldt inn ${formatDate(oppstartsdato)}`}</BodyShort>}
+              {oppstartsdato && <BodyShort size="small">{`Deltaker meldt inn ${formatDate(oppstartsdato)}`}</BodyShort>}
             </VStack>
           </HStack>
         )}
