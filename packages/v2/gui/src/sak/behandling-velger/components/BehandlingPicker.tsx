@@ -19,19 +19,19 @@ import styles from './behandlingPicker.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (
-  behandlingTypeKode: string,
+  behandlingType: string,
   sakstype: BehandlingDtoSakstype,
   kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ) => {
-  switch (behandlingTypeKode) {
+  switch (behandlingType) {
     case BehandlingDtoType.FØRSTEGANGSSØKNAD:
-      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE);
+      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE);
 
     case k9KlageBehandlingType.KLAGE:
-      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
+      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
 
     case k9KlageBehandlingType.TILBAKEKREVING:
-      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
+      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
 
     default:
       if (sakstype === BehandlingDtoSakstype.UNGDOMSYTELSE) {
