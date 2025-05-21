@@ -1,4 +1,4 @@
-import { formatCurrencyNoKr, formatCurrencyWithKr } from './formatters';
+import { formatCurrencyWithKr, formatCurrencyWithoutKr } from './formatters';
 
 describe('formatCurrencyWithKr', () => {
   it('should format integers correctly', () => {
@@ -22,28 +22,28 @@ describe('formatCurrencyWithKr', () => {
   });
 });
 
-describe('formatCurrencyNoKr', () => {
+describe('formatCurrencyWithoutKr', () => {
   it('should format integers correctly', () => {
-    expect(formatCurrencyNoKr(1000)).toBe('1 000');
-    expect(formatCurrencyNoKr(0)).toBe('0');
+    expect(formatCurrencyWithoutKr(1000)).toBe('1 000');
+    expect(formatCurrencyWithoutKr(0)).toBe('0');
   });
 
   it('should round decimals to nearest integer', () => {
-    expect(formatCurrencyNoKr(1000.4)).toBe('1 000');
-    expect(formatCurrencyNoKr(1000.5)).toBe('1 001');
+    expect(formatCurrencyWithoutKr(1000.4)).toBe('1 000');
+    expect(formatCurrencyWithoutKr(1000.5)).toBe('1 001');
   });
 
   it('should handle edge cases', () => {
-    expect(formatCurrencyNoKr(null as unknown as number)).toBeUndefined();
-    expect(formatCurrencyNoKr(undefined as unknown as number)).toBeUndefined();
+    expect(formatCurrencyWithoutKr(null as unknown as number)).toBeUndefined();
+    expect(formatCurrencyWithoutKr(undefined as unknown as number)).toBeUndefined();
   });
 
   it('should handle pre-formatted values with spaces', () => {
     const valueWithSpaces = '1 234 567';
-    expect(formatCurrencyNoKr(Number(valueWithSpaces.replace(/\s/g, '')))).toBe('1 234 567');
+    expect(formatCurrencyWithoutKr(Number(valueWithSpaces.replace(/\s/g, '')))).toBe('1 234 567');
   });
 
   it('should return undefined for NaN values', () => {
-    expect(formatCurrencyNoKr(NaN)).toBeUndefined();
+    expect(formatCurrencyWithoutKr(NaN)).toBeUndefined();
   });
 });

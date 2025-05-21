@@ -2,7 +2,7 @@ import {
   UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
-import { formatCurrencyNoKr, formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
@@ -106,11 +106,15 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                         </BodyShort>
                       </Table.DataCell>
                       <DataCellWithValue value={grunnrettData.grunnbeløp} formatter={formatCurrencyWithKr} />
-                      <DataCellWithValue value={grunnrettData.dagsats} formatter={formatCurrencyNoKr} suffix=" kr" />
+                      <DataCellWithValue
+                        value={grunnrettData.dagsats}
+                        formatter={formatCurrencyWithoutKr}
+                        suffix=" kr"
+                      />
                       <DataCellWithValue value={grunnrettData.antallBarn} />
                       <DataCellWithValue
                         value={grunnrettData.dagsatsBarnetillegg}
-                        formatter={formatCurrencyNoKr}
+                        formatter={formatCurrencyWithoutKr}
                         suffix=" kr"
                       />
                     </Table.Row>
@@ -229,11 +233,15 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                         <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
                                       </Table.DataCell>
                                       <DataCellWithValue value={grunnbeløp} formatter={formatCurrencyWithKr} />
-                                      <DataCellWithValue value={dagsats} formatter={formatCurrencyNoKr} suffix=" kr" />
+                                      <DataCellWithValue
+                                        value={dagsats}
+                                        formatter={formatCurrencyWithoutKr}
+                                        suffix=" kr"
+                                      />
                                       <DataCellWithValue value={antallBarn} />
                                       <DataCellWithValue
                                         value={dagsatsBarnetillegg === 0 ? null : dagsatsBarnetillegg}
-                                        formatter={formatCurrencyNoKr}
+                                        formatter={formatCurrencyWithoutKr}
                                         suffix=" kr"
                                       />
                                       <DataCellWithValue value={antallDagerIPeriode} />
@@ -273,11 +281,11 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                               <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
                             </Table.DataCell>
                             <DataCellWithValue value={grunnbeløp} formatter={formatCurrencyWithKr} />
-                            <DataCellWithValue value={dagsats} formatter={formatCurrencyNoKr} suffix=" kr" />
+                            <DataCellWithValue value={dagsats} formatter={formatCurrencyWithoutKr} suffix=" kr" />
                             <DataCellWithValue value={antallBarn} />
                             <DataCellWithValue
                               value={dagsatsBarnetillegg === 0 ? null : dagsatsBarnetillegg}
-                              formatter={formatCurrencyNoKr}
+                              formatter={formatCurrencyWithoutKr}
                               suffix=" kr"
                             />
                             <DataCellWithValue value={antallDager} />
