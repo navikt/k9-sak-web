@@ -37,11 +37,12 @@ interface DataSectionProps {
   sisteUtbetaling: UngdomsytelseUtbetaltMånedDto | undefined;
 }
 
+const maksAntallDagerIUngdomsprogrammet = 260;
 export const DataSection = ({ ungdomsprogramInformasjon, sisteUtbetaling }: DataSectionProps) => {
   const [isUtregningExpanded, setIsUtregningExpanded] = useState(false);
   const dagerIgjen =
     ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt != null
-      ? 260 - ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt
+      ? maksAntallDagerIUngdomsprogrammet - ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt
       : null;
 
   return (
