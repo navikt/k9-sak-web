@@ -2,13 +2,14 @@ import {
   UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
+import { formatCurrencyNoKr, formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
 import { BeregningsDetaljer } from './BeregningsDetaljer';
 import styles from './dagsatsOgUtbetaling.module.css';
-import { formatCurrencyNoKr, formatCurrencyWithKr, formatMonthYear, formatSats } from './dagsatsUtils';
+import { formatMonthYear, formatSats } from './dagsatsUtils';
 import { DataCellWithValue } from './DataCellWithValue';
 import { DataSection } from './DataSection';
 
@@ -18,8 +19,10 @@ const StatusTag = ({ status }: { status: UngdomsytelseUtbetaltMånedDtoStatus })
   </Tag>
 );
 
-const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
-  data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
+const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) => {
+  /* @ts-expect-error Typen til måned er definert feil i backend */
+  return data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
+};
 
 interface DagsatsOgUtbetalingProps {
   api: UngBeregningBackendApiType;
@@ -53,10 +56,11 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
   const grunnrettData = satser[satser.length - 1]?.satsperioder[0];
+  const sisteUtbetaling = satser.find(sats => sats.status === UngdomsytelseUtbetaltMånedDtoStatus.UTBETALT);
   return (
     <div className={styles.dagsatsSection}>
       <VStack gap="4">
-        <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
+        <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} sisteUtbetaling={sisteUtbetaling} />
         <VStack gap="8">
           {grunnrettData && (
             <div>
@@ -190,6 +194,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                 expandOnRowClick
                               >
                                 <Table.HeaderCell scope="row" className={styles.firstHeaderCell}>
+                                  {/* @ts-expect-error Typen til måned er definert feil i backend */}
                                   <Label size="small">{formatMonthYear(måned)}</Label>
                                 </Table.HeaderCell>
                                 <Table.DataCell>{/* Sats */}</Table.DataCell>
@@ -271,6 +276,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                             expandOnRowClick
                           >
                             <Table.HeaderCell scope="row" className={styles.firstHeaderCell}>
+                              {/* @ts-expect-error Typen til måned er definert feil i backend */}
                               <Label size="small">{formatMonthYear(måned)}</Label>
                             </Table.HeaderCell>
                             <Table.DataCell>

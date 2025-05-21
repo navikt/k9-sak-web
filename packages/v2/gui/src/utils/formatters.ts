@@ -10,8 +10,20 @@ export const stdDato = (input: dayjs.Dayjs | string | Date) => dayjs(input).form
 export const visnDato = (input: dayjs.Dayjs | string | Date) => dayjs(input).format('DD.MM.YYYY');
 
 export const formatCurrencyWithKr = (value: string | number) => {
-  const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
+  const roundedValue = Math.round(Number(value));
+  const formattedValue = roundedValue.toLocaleString('nb-NO').replace(/,|\s/g, ' ');
   return `${formattedValue} kr`;
+};
+
+export const formatCurrencyNoKr = (value: number) => {
+  if (value === null || value === undefined) {
+    return undefined;
+  }
+  const newVal = value.toString().replace(/\s/g, '');
+  if (Number.isNaN(newVal)) {
+    return undefined;
+  }
+  return Math.round(+newVal).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
 };
 
 export const beregnDagerTimer = (dur: string): number => Math.round(dayjs.duration(dur).asHours() * 100) / 100;

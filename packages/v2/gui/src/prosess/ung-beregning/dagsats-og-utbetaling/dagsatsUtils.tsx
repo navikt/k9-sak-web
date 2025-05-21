@@ -2,23 +2,6 @@ import { UngdomsytelseSatsPeriodeDtoSatsType } from '@k9-sak-web/backend/ungsak/
 import { Tooltip } from '@navikt/ds-react';
 import styles from './dagsatsOgUtbetaling.module.css';
 
-export const formatCurrencyWithKr = (value: number) => {
-  const roundedValue = Math.round(value);
-  const formattedValue = roundedValue.toLocaleString('nb-NO').replace(/,|\s/g, ' ');
-  return `${formattedValue} kr`;
-};
-
-export const formatCurrencyNoKr = (value: number) => {
-  if (value === null || value === undefined) {
-    return undefined;
-  }
-  const newVal = value.toString().replace(/\s/g, '');
-  if (Number.isNaN(newVal)) {
-    return undefined;
-  }
-  return Math.round(+newVal).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
-};
-
 export const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
   let icon: React.ReactElement | undefined = undefined;
   let tooltipTekst = '';
