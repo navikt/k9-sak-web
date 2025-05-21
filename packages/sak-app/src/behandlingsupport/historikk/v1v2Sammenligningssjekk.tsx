@@ -137,6 +137,15 @@ historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTyp
   'eller',
   'Fastsatt',
 ]);
+// Historikkinnslag av type BEH_AVBRUTT_OVERLAPP har ingen mal i frontend(!)
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.BEH_AVBRUTT_OVERLAPP, [
+  'Kan',
+  'ikke',
+  'finne',
+  'mal',
+  'dette',
+  'historikkinnslaget',
+]);
 
 // Nokre enkle samanbindingsord utelatast frå samanlikning for alle historikkinnslag typer
 const wordsAlwaysExempted = ['er', 'Er'];
