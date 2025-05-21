@@ -74,6 +74,8 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
     vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
   );
 
+  const alleVilkårErOppfylt = harOppfyltAlleInngangsvilkår && harOppfyltAlleVilkårSykdomOgOpplæring;
+
   return (
     <>
       <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
@@ -142,7 +144,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
         <td colSpan={8}>
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
-              {harOppfyltAlleInngangsvilkår && harOppfyltAlleVilkårSykdomOgOpplæring ? (
+              {alleVilkårErOppfylt ? (
                 <UttakDetaljerV2Wrapper
                   uttak={uttak}
                   manueltOverstyrt={manueltOverstyrt}
