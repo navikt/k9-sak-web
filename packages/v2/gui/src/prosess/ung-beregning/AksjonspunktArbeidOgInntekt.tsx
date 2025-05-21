@@ -36,8 +36,8 @@ export const AksjonspunktArbeidOgInntekt = ({
       <Box
         marginInline="2 0"
         padding="6"
-        borderColor="border-warning"
-        borderWidth="0 0 0 4"
+        borderColor={isReadOnly ? undefined : 'border-warning'}
+        borderWidth={isReadOnly ? undefined : '0 0 0 4'}
         borderRadius="0 medium medium 0"
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
