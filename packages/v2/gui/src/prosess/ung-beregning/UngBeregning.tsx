@@ -2,7 +2,6 @@ import {
   AksjonspunktDtoStatus,
   type AksjonspunktDto,
   type KontrollerInntektDto,
-  type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
@@ -38,9 +37,9 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
 };
 
 const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
-  useQuery<UngdomsytelseSatsPeriodeDto[]>({
+  useQuery({
     queryKey: ['satser', behandling.uuid],
-    queryFn: () => api.getSatser(behandling.uuid),
+    queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
   });
 
   const {
