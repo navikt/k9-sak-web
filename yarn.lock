@@ -3794,8 +3794,8 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.0.20250512080735"
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250522095735"
-    "@navikt/ung-sak-typescript-client": "npm:0.2.20250521124912"
+    "@navikt/k9-sak-typescript-client": "npm:2.0.20250513120447"
+    "@navikt/ung-sak-typescript-client": "npm:0.2.20250522102547"
     "@tanstack/eslint-plugin-query": "npm:^5.74.7"
   languageName: unknown
   linkType: soft
@@ -5156,17 +5156,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250522095735":
-  version: 2.0.20250522095735
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250522095735::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250522095735%2F14e14965c5fe5e4365ec0520ccd2bab8c7c56e3f"
-  checksum: 10/c577392fc39426de7fdf419ff70870b5d97a5daf5ed787ff6683f4c620950ee66289221cb1ef2c7c0c96b52d62ea9123f9027c9d1c9df40382d3f2bffca6a92d
+"@navikt/k9-sak-typescript-client@npm:2.0.20250513120447":
+  version: 2.0.20250513120447
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250513120447::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250513120447%2F714809223066fbf33ad65adc57ee3f0974cf9699"
+  checksum: 10/cbbe119b1fd3bc32a9748e557354e59e477e14293c88a4eca09ea52f346682406a3338d1d5f853b277ac5f48fff787eb655b67bc2ae67aaaa824a365d3c8a9a7
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:0.2.20250521124912":
-  version: 0.2.20250521124912
-  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250521124912::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250521124912%2Fcbff1d3dd84798f7d79219be5355a5c7ce110b17"
-  checksum: 10/a9ba87643abc1fb50a74351168e11404c00d5b555da7f681c8b61cc7e62c22dec200449134927d13caa62357c97b8d13ae6286e6bd88cad8571a756b649c56af
+"@navikt/ung-sak-typescript-client@npm:0.2.20250522102547":
+  version: 0.2.20250522102547
+  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250522102547::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250522102547%2F062cd461b2db760cb216b889ed0f7282e5842929"
+  checksum: 10/6c2995de11005340b5a410c679d6cc47ea41038506c360c101d5cb0605a28d796e6583e66203d01bb54945b342da80c63adbd983f0f05fd04e7e778bb4bf74a3
   languageName: node
   linkType: hard
 
@@ -13408,7 +13408,7 @@ __metadata:
     husky: "npm:9.1.7"
     i18n-iso-countries: "npm:7.14.0"
     jsdom: "npm:26.1.0"
-    lint-staged: "npm:15.5.2"
+    lint-staged: "npm:16.0.0"
     loose-ts-check: "npm:^2.0.0"
     msw: "npm:2.8.4"
     msw-storybook-addon: "npm:^2.0.4"
@@ -13529,29 +13529,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:15.5.2":
-  version: 15.5.2
-  resolution: "lint-staged@npm:15.5.2"
+"lint-staged@npm:16.0.0":
+  version: 16.0.0
+  resolution: "lint-staged@npm:16.0.0"
   dependencies:
     chalk: "npm:^5.4.1"
     commander: "npm:^13.1.0"
     debug: "npm:^4.4.0"
-    execa: "npm:^8.0.1"
     lilconfig: "npm:^3.1.3"
-    listr2: "npm:^8.2.5"
+    listr2: "npm:^8.3.3"
     micromatch: "npm:^4.0.8"
+    nano-spawn: "npm:^1.0.0"
     pidtree: "npm:^0.6.0"
     string-argv: "npm:^0.3.2"
-    yaml: "npm:^2.7.0"
+    yaml: "npm:^2.7.1"
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 10/523c332d6cb6e34972a6530a7a2487307555e784df9466c82f2b8d17c8090a3db561a6362065ae6b63048c25fcb85c9e32057cd0bfb756bf7ab185bea1dbb89c
+  checksum: 10/7d29934d5426520fe0d5ad4d5a14b71521411744cbddad47c2021e9957c7874c7b6280e7db1b4ca9d638d08c1a88f568f033cbe4d02276282c4707f0b4aefb67
   languageName: node
   linkType: hard
 
-"listr2@npm:^8.2.5":
-  version: 8.2.5
-  resolution: "listr2@npm:8.2.5"
+"listr2@npm:^8.3.3":
+  version: 8.3.3
+  resolution: "listr2@npm:8.3.3"
   dependencies:
     cli-truncate: "npm:^4.0.0"
     colorette: "npm:^2.0.20"
@@ -13559,7 +13559,7 @@ __metadata:
     log-update: "npm:^6.1.0"
     rfdc: "npm:^1.4.1"
     wrap-ansi: "npm:^9.0.0"
-  checksum: 10/c76542f18306195e464fe10203ee679a7beafa9bf0dc679ebacb416387cca8f5307c1d8ba35483d26ba611dc2fac5a1529733dce28f2660556082fb7eebb79f9
+  checksum: 10/92f1bb60e9a0f4fed9bff89fbab49d80fc889d29cf47c0a612f5a62a036dead49d3f697d3a79e36984768529bd3bfacb3343859eafceba179a8e66c034d99300
   languageName: node
   linkType: hard
 
@@ -14212,6 +14212,13 @@ __metadata:
     object-assign: "npm:^4.0.1"
     thenify-all: "npm:^1.0.0"
   checksum: 10/8427de0ece99a07e9faed3c0c6778820d7543e3776f9a84d22cf0ec0a8eb65f6e9aee9c9d353ff9a105ff62d33a9463c6ca638974cc652ee8140cd1e35951c87
+  languageName: node
+  linkType: hard
+
+"nano-spawn@npm:^1.0.0":
+  version: 1.0.2
+  resolution: "nano-spawn@npm:1.0.2"
+  checksum: 10/6ce9e60846d2e37c0e3cd048472683c81dbcaadef9ebe73bfc8754ee7da2a574f724436d3dcdeda5d807aedc857cc8cbc278a9882529164b5ef4b170b95cfe0b
   languageName: node
   linkType: hard
 
@@ -18996,12 +19003,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "yaml@npm:2.7.0"
+"yaml@npm:^2.7.1":
+  version: 2.8.0
+  resolution: "yaml@npm:2.8.0"
   bin:
     yaml: bin.mjs
-  checksum: 10/c8c314c62fbd49244a6a51b06482f6d495b37ab10fa685fcafa1bbaae7841b7233ee7d12cab087bcca5a0b28adc92868b6e437322276430c28d00f1c1732eeec
+  checksum: 10/7d4bd9c10d0e467601f496193f2ac254140f8e36f96f5ff7f852b9ce37974168eb7354f4c36dc8837dde527a2043d004b6aff48818ec24a69ab2dd3c6b6c381c
   languageName: node
   linkType: hard
 
