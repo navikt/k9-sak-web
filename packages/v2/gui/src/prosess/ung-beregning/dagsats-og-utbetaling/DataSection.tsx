@@ -103,9 +103,10 @@ export const DataSection = ({ ungdomsprogramInformasjon, sisteUtbetaling }: Data
         {sisteUtbetaling ? (
           <>
             <BodyShort size="small">
-              {sisteUtbetaling.utbetaling != undefined && formatCurrencyWithKr(sisteUtbetaling.utbetaling)}
+              {sisteUtbetaling.utbetaling != undefined &&
+                `${formatCurrencyWithKr(sisteUtbetaling.utbetaling)} før skatt`}
             </BodyShort>
-            <BodyShort size="small">{formatMonthYear(sisteUtbetaling.måned)} til kontonummer xxx</BodyShort>
+            <BodyShort size="small">{formatMonthYear(sisteUtbetaling.måned)}</BodyShort>
             <Bleed marginInline="4" asChild>
               <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
             </Bleed>
