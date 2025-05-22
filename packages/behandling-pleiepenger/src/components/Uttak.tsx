@@ -113,7 +113,7 @@ export default ({
         perioderTilVurdering,
         utsattePerioder,
         aktivBehandlingUuid: uuid,
-        ytelsetype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+        ytelsetype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,

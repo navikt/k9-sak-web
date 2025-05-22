@@ -1,3 +1,5 @@
+import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
+
 const vilkår = [
   {
     name: 'Medlemskap',
@@ -43,6 +45,6 @@ const vilkår = [
     name: 'Institusjon',
     kode: 'K9_VK_21', // Godkjent opplæringsinstitusjon
   },
-];
+] as { name: string; kode: VilkårMedPerioderDtoVilkarType }[];
 
 export default vilkår;

@@ -2,7 +2,6 @@ import {
   AksjonspunktDtoStatus,
   type AksjonspunktDto,
   type KontrollerInntektDto,
-  type UngdomsytelseSatsPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
@@ -23,9 +22,6 @@ interface Props {
   isReadOnly: boolean;
 }
 
-const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
-  data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
-
 const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   const { kontrollperioder } = data;
   return {
@@ -41,15 +37,9 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
 };
 
 const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
-  const {
-    data: satser,
-    isLoading: satserIsLoading,
-    isSuccess: satserSuccess,
-    isError: satserIsError,
-  } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
+  useQuery({
     queryKey: ['satser', behandling.uuid],
-    queryFn: () => api.getSatser(behandling.uuid),
-    select: sortSatser,
+    queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
   });
 
   const {
@@ -62,20 +52,12 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     select: sortInntekt,
   });
 
-  const {
-    data: ungdomsprogramInformasjon,
-    isLoading: ungdomsprogramInformasjonIsLoading,
-    isError: ungdomsprogramInformasjonIsError,
-  } = useQuery({
+  useQuery({
     queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
   });
 
-  if (satserIsLoading || kontrollInntektIsLoading || ungdomsprogramInformasjonIsLoading) {
-    return <Loader size="large" />;
-  }
-
-  if (satserIsError || kontrollInntektIsError || ungdomsprogramInformasjonIsError) {
+  if (kontrollInntektIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
@@ -89,42 +71,44 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        <Tabs defaultValue={aksjonspunkt ? 'arbeid' : 'dagsats'}>
-          <Tabs.List>
-            {harInntekt && (
-              <Tabs.Tab
-                value="arbeid"
-                label="Inntekt"
-                icon={
-                  harUløstAksjonspunkt && (
-                    <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
-                  )
-                }
-              />
-            )}
-            {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
-            {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
-          </Tabs.List>
-          <Box maxWidth="860px">
-            <Tabs.Panel value="arbeid">
-              {inntekt?.kontrollperioder && (
-                <ArbeidOgInntekt
-                  submitCallback={submitCallback}
-                  inntektKontrollperioder={inntekt.kontrollperioder}
-                  isReadOnly={isReadOnly}
+        {kontrollInntektIsLoading ? (
+          <Loader size="large" />
+        ) : (
+          <Tabs defaultValue={aksjonspunkt ? 'inntekt' : 'dagsats'}>
+            <Tabs.List>
+              {harInntekt && (
+                <Tabs.Tab
+                  value="inntekt"
+                  label="Inntekt"
+                  icon={
+                    harUløstAksjonspunkt && (
+                      <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                    )
+                  }
                 />
               )}
+              {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
+              {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
+            </Tabs.List>
+            <Box maxWidth="860px">
+              <Tabs.Panel value="inntekt">
+                {inntekt?.kontrollperioder && (
+                  <ArbeidOgInntekt
+                    submitCallback={submitCallback}
+                    inntektKontrollperioder={inntekt.kontrollperioder}
+                    isReadOnly={isReadOnly}
+                  />
+                )}
+              </Tabs.Panel>
+            </Box>
+            <Tabs.Panel value="barn">
+              <BarnPanel barn={barn} />
             </Tabs.Panel>
-          </Box>
-          <Tabs.Panel value="barn">
-            <BarnPanel barn={barn} />
-          </Tabs.Panel>
-          <Tabs.Panel value="dagsats">
-            {satserSuccess && (
-              <DagsatsOgUtbetaling satser={satser} ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
-            )}
-          </Tabs.Panel>
-        </Tabs>
+            <Tabs.Panel value="dagsats">
+              <DagsatsOgUtbetaling api={api} behandling={behandling} />
+            </Tabs.Panel>
+          </Tabs>
+        )}
       </Box>
     </Box>
   );
