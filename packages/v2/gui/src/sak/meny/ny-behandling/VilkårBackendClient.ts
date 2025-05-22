@@ -1,13 +1,20 @@
-import { type GetVilkårV3Response, type K9SakClient } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  type GetVilkårV3Response as K9GetVilkårV3Response,
+  type K9SakClient,
+} from '@k9-sak-web/backend/k9sak/generated';
+import {
+  type GetVilkårV3Response as UngGetVilkårV3Response,
+  type UngSakClient,
+} from '@k9-sak-web/backend/ungsak/generated';
 
 export default class VilkårBackendClient {
-  #k9sak: K9SakClient;
+  #backendClient: K9SakClient | UngSakClient;
 
-  constructor(k9sakClient: K9SakClient) {
-    this.#k9sak = k9sakClient;
+  constructor(backendClient: K9SakClient | UngSakClient) {
+    this.#backendClient = backendClient;
   }
 
-  async getVilkår(behandlingUuid: string): Promise<GetVilkårV3Response> {
-    return this.#k9sak.vilkår.getVilkårV3(behandlingUuid);
+  async getVilkår(behandlingUuid: string): Promise<K9GetVilkårV3Response | UngGetVilkårV3Response> {
+    return this.#backendClient.vilkår.getVilkårV3(behandlingUuid);
   }
 }
