@@ -13,6 +13,32 @@ import { formatMonthYear, formatSats } from './dagsatsUtils';
 import { DataCellWithValue } from './DataCellWithValue';
 import { DataSection } from './DataSection';
 
+const satsTableHeaders = [
+  'Periode',
+  'Sats',
+  'Grunnbeløp',
+  'Dagsats',
+  'Antall barn',
+  'Barnetillegg',
+  'Dager',
+  'Rapportert inntekt',
+  'Utbetaling',
+  'Status',
+];
+
+const grunnrettTableHeaders = ['Startdato', 'Sats', 'Grunnbeløp', 'Dagsats', 'Antall barn', 'Barnetillegg'];
+
+interface ColumnHeaderProps {
+  label: string;
+  isFirst?: boolean;
+}
+
+export const TableColumnHeader = ({ label, isFirst = false }: ColumnHeaderProps) => (
+  <Table.HeaderCell scope="col" className={isFirst ? styles.firstHeaderCell : undefined}>
+    <Label size="small">{label}</Label>
+  </Table.HeaderCell>
+);
+
 const StatusTag = ({ status }: { status: UngdomsytelseUtbetaltMånedDtoStatus }) => (
   <Tag size="small" variant={status === UngdomsytelseUtbetaltMånedDtoStatus.TIL_UTBETALING ? 'info' : 'success'}>
     {status === UngdomsytelseUtbetaltMånedDtoStatus.TIL_UTBETALING ? 'Til utbetaling' : 'Utbetalt'}
@@ -75,24 +101,9 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                 <Table>
                   <Table.Header>
                     <Table.Row>
-                      <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
-                        <Label size="small">Startdato</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Sats</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Grunnbeløp</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Dagsats</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Antall barn</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Barnetillegg</Label>
-                      </Table.HeaderCell>
+                      {grunnrettTableHeaders.map((header, index) => (
+                        <TableColumnHeader key={header} label={header} isFirst={index === 0} />
+                      ))}
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
@@ -130,7 +141,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
             {satser.length === 0 && (
               <Box marginBlock="3 0" maxWidth="43.5rem">
                 <Alert variant="info" size="small">
-                  Ingen utbetaling ennå
+                  Ingen utbetaling enda
                 </Alert>
               </Box>
             )}
@@ -139,36 +150,9 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                 <Table>
                   <Table.Header>
                     <Table.Row>
-                      <Table.HeaderCell scope="col" className={styles.firstHeaderCell}>
-                        <Label size="small">Periode</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Sats</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Grunnbeløp</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Dagsats</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Antall barn</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Barnetillegg</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Dager</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Rapportert inntekt</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Utbetaling</Label>
-                      </Table.HeaderCell>
-                      <Table.HeaderCell scope="col">
-                        <Label size="small">Status</Label>
-                      </Table.HeaderCell>
+                      {satsTableHeaders.map((header, index) => (
+                        <TableColumnHeader key={header} label={header} isFirst={index === 0} />
+                      ))}
                       <Table.HeaderCell />
                     </Table.Row>
                   </Table.Header>
