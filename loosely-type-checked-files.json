@@ -472,7 +472,6 @@
   "packages/sak-meny-verge/src/MenyVergeIndex.tsx",
   "packages/shared-components/src/datepicker/Datepicker.tsx",
   "packages/shared-components/src/periodpicker/Periodpicker.tsx",
-  "packages/shared-components/src/punsjstripe/Punsjstripe.tsx",
   "packages/shared-components/src/tidslinje/Tidslinje.tsx",
   "packages/shared-components/src/tidslinje/TimelinePeriod.tsx",
   "packages/shared-components/src/tidslinje/useTidslinjerader.ts",
