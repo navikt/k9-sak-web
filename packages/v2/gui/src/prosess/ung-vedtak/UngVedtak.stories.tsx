@@ -1,6 +1,7 @@
 import { BehandlingDtoStatus, BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { KodeverkProvider } from '../../kodeverk';
 import { asyncAction } from '../../storybook/asyncAction';
 import { FakeUngVedtakBackendApi } from '../../storybook/mocks/FakeUngVedtakBackendApi';
@@ -13,6 +14,8 @@ const meta = {
     aksjonspunkter: [],
     api,
     submitCallback: asyncAction('button-click'),
+    vedtaksbrevValg: {},
+    refetchVedtaksbrevValg: fn(),
   },
   component: UngVedtak,
   render: props => (
