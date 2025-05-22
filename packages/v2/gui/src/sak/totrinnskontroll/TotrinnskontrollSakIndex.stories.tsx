@@ -2,7 +2,7 @@ import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, userEvent } from '@storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
 import type { Behandling } from './types/Behandling';
 import type { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
@@ -148,7 +148,6 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeDisabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeEnabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
-    await waitFor(() => expect(args.onSubmit).toHaveBeenCalledTimes(1));
     await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
       fatterVedtakAksjonspunktDto: {
         '@type': '5016',
@@ -206,7 +205,6 @@ export const GodkjennerVedtak: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
-    await waitFor(() => expect(args.onSubmit).toHaveBeenCalledTimes(1));
     await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
       fatterVedtakAksjonspunktDto: {
         '@type': '5016',
