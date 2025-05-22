@@ -21,7 +21,7 @@ export interface Uttaksperiodeelement {
   uttaksgradUtenReduksjonGrunnetInntektsgradering?: number;
   søkerBerOmMaksimalt?: number;
   årsaker: Årsaker[];
-  inngangsvilkår: Record<VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus>;
+  inngangsvilkår: Partial<Record<VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus>>;
   kildeBehandlingUUID: string;
   knekkpunktTyper: string[];
   manueltOverstyrt: boolean;
