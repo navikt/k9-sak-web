@@ -4,9 +4,9 @@ import Utfall from '../constants/Utfall';
 import Årsaker from '../constants/Årsaker';
 import Endringsstatus from './Endringsstatus';
 import GraderingMotTilsyn from './GraderingMotTilsyn';
-import Inngangsvilkår from './Inngangsvilkår';
 import Period from './Period';
 import Utbetalingsgrad from './Utbetalingsgrad';
+import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
 
 export enum Vurderingsresultat {
   OPPFYLT = 'OPPFYLT',
@@ -21,7 +21,7 @@ export interface Uttaksperiodeelement {
   uttaksgradUtenReduksjonGrunnetInntektsgradering?: number;
   søkerBerOmMaksimalt?: number;
   årsaker: Årsaker[];
-  inngangsvilkår: Inngangsvilkår;
+  inngangsvilkår: { [key in VilkårMedPerioderDtoVilkarType]?: VilkårPeriodeDtoVilkarStatus };
   kildeBehandlingUUID: string;
   knekkpunktTyper: string[];
   manueltOverstyrt: boolean;

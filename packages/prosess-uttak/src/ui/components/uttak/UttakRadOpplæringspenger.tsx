@@ -20,8 +20,7 @@ import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
-import Inngangsvilkår from '../../../types/Inngangsvilkår';
+import { VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
 
 const cx = classNames.bind(styles);
 
@@ -48,11 +47,11 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
 
   const sykdomOgOpplæringVilkår = Object.fromEntries(
     Object.entries(vilkår).filter(([key]) => opplæringspengerVilkår.includes(key)),
-  ) as Record<VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus>;
+  );
 
   const inngangsvilkår = Object.fromEntries(
     Object.entries(vilkår).filter(([key]) => !opplæringspengerVilkår.includes(key)),
-  ) as Inngangsvilkår;
+  );
 
   const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
 
@@ -151,7 +150,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
                   arbeidsforhold={arbeidsforhold}
                 />
               ) : (
-                <Vilkårsliste inngangsvilkår={vilkår} />
+                <Vilkårsliste vilkår={vilkår} />
               )}
             </div>
           </Collapse>
