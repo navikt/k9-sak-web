@@ -8,9 +8,10 @@ import styles from './vilkårsliste.module.css';
 import type { JSX } from 'react';
 import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
 
-type VilkårType = Record<VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus>;
+type VilkårType = { [key in VilkårMedPerioderDtoVilkarType]?: VilkårPeriodeDtoVilkarStatus };
 
-const erVilkårOppfylt = (vilkårkode: string, vilkår: VilkårType) => vilkår[vilkårkode] === Utfall.OPPFYLT;
+const erVilkårOppfylt = (vilkårkode: VilkårMedPerioderDtoVilkarType, vilkår: VilkårType) =>
+  vilkår[vilkårkode] === Utfall.OPPFYLT;
 
 const Vilkårsliste = ({ vilkår }: { vilkår: VilkårType }): JSX.Element => {
   return (
