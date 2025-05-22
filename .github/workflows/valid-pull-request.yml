@@ -1,4 +1,7 @@
 name: Valider pull request
+permissions:
+  contents: read
+  packages: read
 on: [pull_request]
 jobs:
   test:

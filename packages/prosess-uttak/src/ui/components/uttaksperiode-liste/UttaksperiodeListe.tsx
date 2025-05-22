@@ -5,6 +5,7 @@ import React, { type JSX } from 'react';
 import { Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
 import ContainerContext from '../../context/ContainerContext';
 import UttakRad from '../uttak/UttakRad';
+import UttakRadOpplæringspenger from '../uttak/UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -105,7 +106,15 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                   </td>
                 </Table.Row>
               )}
-              <UttakRad uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
+              {ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER ? (
+                <UttakRadOpplæringspenger
+                  uttak={uttak}
+                  erValgt={valgtPeriodeIndex === index}
+                  velgPeriode={() => velgPeriode(index)}
+                />
+              ) : (
+                <UttakRad uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
+              )}
             </React.Fragment>
           ))}
           {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
@@ -145,12 +154,19 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                   </td>
                 </Table.Row>
               )}
-              <UttakRad
-                uttak={uttak}
-                erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
-                velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
-                withBorderTop={index === 0 && !!virkningsdatoUttakNyeRegler}
-              />
+              {ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER ? (
+                <UttakRadOpplæringspenger
+                  uttak={uttak}
+                  erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
+                  velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
+                />
+              ) : (
+                <UttakRad
+                  uttak={uttak}
+                  erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
+                  velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
+                />
+              )}
             </React.Fragment>
           ))}
         </Table.Body>

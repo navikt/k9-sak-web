@@ -1,4 +1,5 @@
-import type { UngdomsprogramInformasjonDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { UngdomsprogramInformasjonDto, UngdomsytelseUtbetaltMånedDto } from '@k9-sak-web/backend/ungsak/generated';
+import { formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   CalendarIcon,
@@ -7,8 +8,22 @@ import {
   InformationSquareIcon,
   SackKronerIcon,
 } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Box, Button, HelpText, HGrid, HStack, Label, ProgressBar, VStack } from '@navikt/ds-react';
+import {
+  Alert,
+  Bleed,
+  BodyShort,
+  Box,
+  Button,
+  HelpText,
+  HGrid,
+  HStack,
+  Label,
+  ProgressBar,
+  VStack,
+} from '@navikt/ds-react';
 import { useState } from 'react';
+import { BeregningsDetaljerUtregning } from './BeregningsDetaljerUtregning';
+import { formatMonthYear } from './dagsatsUtils';
 import styles from './dataSection.module.css';
 
 const DataBox = ({ children, maxHeight }: { children: React.ReactNode; maxHeight?: string }) => (
@@ -17,70 +32,19 @@ const DataBox = ({ children, maxHeight }: { children: React.ReactNode; maxHeight
   </div>
 );
 
-const BeregningDetails = ({
-  beregnetYtelse = 0,
-  dager = 0,
-  barnetillegg = 0,
-  barnetilleggDager = 0,
-  rapportertInntekt = 0,
-  reduksjonProsent = 0,
-  reduksjonBeløp = 0,
-  tilUtbetaling = 0,
-}) => (
-  <VStack gap="4">
-    <HStack justify="space-between">
-      <BodyShort size="small">
-        Beregnet ytelse ({beregnetYtelse} kr x {dager} dager)
-      </BodyShort>
-      <BodyShort size="small" weight="semibold">
-        {beregnetYtelse * dager} kr
-      </BodyShort>
-    </HStack>
-    <HStack justify="space-between">
-      <BodyShort size="small">
-        Barnetillegg ({barnetillegg} kr x {barnetilleggDager} dager)
-      </BodyShort>
-      <BodyShort size="small" weight="semibold">
-        {barnetillegg * barnetilleggDager} kr
-      </BodyShort>
-    </HStack>
-    <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
-    <HStack justify="space-between">
-      <BodyShort size="small">Rapportert inntekt</BodyShort>
-      <BodyShort size="small" weight="semibold">
-        {rapportertInntekt} kr
-      </BodyShort>
-    </HStack>
-    <HStack justify="space-between">
-      <BodyShort size="small">
-        Reduksjon pga inntekt ({reduksjonBeløp} kr x {reduksjonProsent} %)
-      </BodyShort>
-      <BodyShort size="small" weight="semibold">
-        {reduksjonBeløp} kr
-      </BodyShort>
-    </HStack>
-    <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
-    <HStack justify="space-between">
-      <BodyShort weight="semibold" size="small" className={styles.utbetalingText} as="p">
-        Til utbetaling
-      </BodyShort>
-      <BodyShort size="small" className={styles.utbetalingText} weight="semibold">
-        {tilUtbetaling} kr
-      </BodyShort>
-    </HStack>
-  </VStack>
-);
-
 interface DataSectionProps {
   ungdomsprogramInformasjon: UngdomsprogramInformasjonDto | undefined;
+  sisteUtbetaling: UngdomsytelseUtbetaltMånedDto | undefined;
 }
 
-export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => {
+const maksAntallDagerIUngdomsprogrammet = 260;
+export const DataSection = ({ ungdomsprogramInformasjon, sisteUtbetaling }: DataSectionProps) => {
   const [isUtregningExpanded, setIsUtregningExpanded] = useState(false);
   const dagerIgjen =
     ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt != null
-      ? 260 - ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt
+      ? maksAntallDagerIUngdomsprogrammet - ungdomsprogramInformasjon?.antallDagerTidligereUtbetalt
       : null;
+
   return (
     <HGrid gap="5" columns={3}>
       <DataBox maxHeight="185px">
@@ -136,43 +100,49 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
           <SackKronerIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Siste utbetaling</Label>
         </HStack>
-        <BodyShort size="small">0 kr</BodyShort>
-        <BodyShort size="small">
-          {new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })} til kontonummer xxx
-        </BodyShort>
-        <Bleed marginInline="4" asChild>
-          <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
-        </Bleed>
-        <Bleed marginInline="3" marginBlock="2 1" asChild>
-          <Button
-            size="small"
-            variant="tertiary"
-            icon={isUtregningExpanded ? <ChevronUpIcon fontSize="1.5rem" /> : <ChevronDownIcon fontSize="1.5rem" />}
-            iconPosition="right"
-            onClick={() => setIsUtregningExpanded(!isUtregningExpanded)}
-            className={styles.expandButton}
-          >
-            {isUtregningExpanded ? 'Skjul utregning' : 'Vis utregning'}
-          </Button>
-        </Bleed>
-        {isUtregningExpanded && (
+        {sisteUtbetaling ? (
           <>
-            <Bleed marginBlock="2 0" asChild>
+            <BodyShort size="small">
+              {sisteUtbetaling.utbetaling != undefined && formatCurrencyWithKr(sisteUtbetaling.utbetaling)}
+            </BodyShort>
+            <BodyShort size="small">{formatMonthYear(sisteUtbetaling.måned)} til kontonummer xxx</BodyShort>
+            <Bleed marginInline="4" asChild>
               <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
             </Bleed>
-            <Box>
-              <BeregningDetails
-                beregnetYtelse={0}
-                dager={0}
-                barnetillegg={0}
-                barnetilleggDager={0}
-                rapportertInntekt={0}
-                reduksjonProsent={0}
-                reduksjonBeløp={0}
-                tilUtbetaling={0}
-              />
-            </Box>
+            <Bleed marginInline="3" marginBlock="2 1" asChild>
+              <Button
+                size="small"
+                variant="tertiary"
+                icon={isUtregningExpanded ? <ChevronUpIcon fontSize="1.5rem" /> : <ChevronDownIcon fontSize="1.5rem" />}
+                iconPosition="right"
+                onClick={() => setIsUtregningExpanded(!isUtregningExpanded)}
+                className={styles.expandButton}
+              >
+                {isUtregningExpanded ? 'Skjul utregning' : 'Vis utregning'}
+              </Button>
+            </Bleed>
+            {isUtregningExpanded && (
+              <>
+                <Bleed marginBlock="2 0" asChild>
+                  <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
+                </Bleed>
+                <Box>
+                  <BeregningsDetaljerUtregning
+                    utbetaling={sisteUtbetaling.utbetaling}
+                    rapportertInntekt={sisteUtbetaling.rapportertInntekt}
+                    reduksjon={sisteUtbetaling.reduksjon}
+                    satsperioder={sisteUtbetaling.satsperioder}
+                  />
+                </Box>
+              </>
+            )}
           </>
+        ) : (
+          <Box marginBlock="3 0" maxWidth="43.5rem">
+            <Alert variant="info" size="small">
+              Ingen utbetaling enda
+            </Alert>
+          </Box>
         )}
       </DataBox>
     </HGrid>

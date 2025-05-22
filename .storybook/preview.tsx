@@ -1,13 +1,12 @@
 import '@fpsak-frontend/assets/styles/global.css';
+import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { switchOnTestMode } from '@k9-sak-web/rest-api';
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
@@ -20,7 +19,13 @@ initialize({
   },
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const preview: Preview = {
   parameters: {

@@ -36,8 +36,8 @@ export const AksjonspunktArbeidOgInntekt = ({
       <Box
         marginInline="2 0"
         padding="6"
-        borderColor="border-warning"
-        borderWidth="0 0 0 4"
+        borderColor={isReadOnly ? undefined : 'border-warning'}
+        borderWidth={isReadOnly ? undefined : '0 0 0 4'}
         borderRadius="0 medium medium 0"
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
@@ -46,7 +46,7 @@ export const AksjonspunktArbeidOgInntekt = ({
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
             <HStack gap="2" wrap={false}>
-              <PersonFillIcon title="Deltager" fontSize="1.5rem" className={styles.personIcon} />
+              <PersonFillIcon title="Deltaker" fontSize="1.5rem" className={styles.personIcon} />
 
               <VStack gap="2">
                 <Heading size="xsmall" as="h3">
@@ -82,13 +82,13 @@ export const AksjonspunktArbeidOgInntekt = ({
                     ? [
                         {
                           value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                          label: 'Rapportert inntekt fra deltager',
+                          label: 'Rapportert inntekt fra deltaker',
                         },
                       ]
                     : []),
                   {
                     value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
-                    label: 'Rapportert inntekt fra A-inntekt',
+                    label: 'Rapportert inntekt fra A-ordningen',
                   },
                   { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
                 ]}
