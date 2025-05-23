@@ -2001,6 +2001,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codexteam/icons@npm:^0.3.2":
+  version: 0.3.3
+  resolution: "@codexteam/icons@npm:0.3.3"
+  checksum: 10/aed3a41811f4f043cf8a71b9eb35b17b0bacf0f8073b2bc3abd52b85388fb099163257be9d5519ea13f945b40a21ece825b772f875b1cbaafd4ef7058361b9a2
+  languageName: node
+  linkType: hard
+
 "@csstools/color-helpers@npm:^5.0.1":
   version: 5.0.1
   resolution: "@csstools/color-helpers@npm:5.0.1"
@@ -2104,12 +2111,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/list@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@editorjs/list@npm:1.9.0"
+"@editorjs/list@npm:2.0.8":
+  version: 2.0.8
+  resolution: "@editorjs/list@npm:2.0.8"
   dependencies:
-    "@codexteam/icons": "npm:^0.0.4"
-  checksum: 10/f446f81f688962c7408625882d9073cbc3f35d94aea0de500954cdb7b5383e5c5cd97580e321eda0daaed978b906eb716ec1a2702472b82a421671a4c90e7424
+    "@codexteam/icons": "npm:^0.3.2"
+  checksum: 10/751dac9d2b89b5bcd5154cd0c84e90a0df31d78f4553012b09afd901927cab658891d5e57a351a29cfdf72af9ab5778c820a0ed26ede21572149e45b22f22256
   languageName: node
   linkType: hard
 
@@ -3044,7 +3051,7 @@ __metadata:
   dependencies:
     "@editorjs/editorjs": "npm:2.30.8"
     "@editorjs/header": "npm:2.8.8"
-    "@editorjs/list": "npm:1.9.0"
+    "@editorjs/list": "npm:2.0.8"
     "@editorjs/paragraph": "npm:2.11.7"
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
@@ -4345,7 +4352,7 @@ __metadata:
   dependencies:
     "@editorjs/editorjs": "npm:2.30.8"
     "@editorjs/header": "npm:2.8.8"
-    "@editorjs/list": "npm:1.9.0"
+    "@editorjs/list": "npm:2.0.8"
     "@editorjs/paragraph": "npm:2.11.7"
     "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^5.0.1"

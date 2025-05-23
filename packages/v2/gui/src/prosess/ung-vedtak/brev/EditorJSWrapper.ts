@@ -1,4 +1,4 @@
-import EditorJS, { type API, type EditorConfig } from '@editorjs/editorjs';
+import EditorJS, { type API, type EditorConfig, type ToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Paragraph from '@editorjs/paragraph';
@@ -10,14 +10,14 @@ export default class EditorJSWrapper {
   constructor({ holder, onChange }: { holder: string; onChange: (api: API, event: CustomEvent<any>) => void }) {
     const tools: EditorConfig['tools'] = {
       paragraph: {
-        class: Paragraph,
+        class: Paragraph as unknown as ToolConstructable,
         inlineToolbar: true,
         config: {
           preservedBlank: true,
         },
       },
       header: {
-        class: Header,
+        class: Header as unknown as ToolConstructable,
         inlineToolbar: true,
         config: {
           levels: [2, 1],
@@ -26,7 +26,7 @@ export default class EditorJSWrapper {
         },
       },
       list: {
-        class: List,
+        class: List as unknown as ToolConstructable,
         inlineToolbar: true,
         config: {
           defaultStyle: 'unordered',
