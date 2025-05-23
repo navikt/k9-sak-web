@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import classNames from 'classnames/bind';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import {
   UttakArbeidsforholdType,
@@ -11,8 +10,6 @@ import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
 
 import styles from './uttakDetaljer.module.css';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
-
-const cx = classNames.bind(styles);
 
 interface ownProps {
   alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
@@ -77,10 +74,10 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
               <BodyShort size="small" className="leading-6">
                 Normal arbeidstid: {beregnetNormalArbeidstid} timer
               </BodyShort>
-              <BodyShort as="div" size="small" className={cx({ uttakDetaljerBeregningStrek: true, 'leading-6': true })}>
+              <BodyShort as="div" size="small" className={`${styles.uttakDetaljerBeregningStrek} leading-6`}>
                 <HStack gap="1" className="leading-6">
                   Faktisk arbeidstid:
-                  <span className={cx({ uttakDetaljerUtnullet: faktiskOverstigerNormal })}>
+                  <span className={faktiskOverstigerNormal ? styles.uttakDetaljerUtnullet : ''}>
                     {beregnetFaktiskArbeidstid}
                   </span>
                   {faktiskOverstigerNormal && <span> {beregnetNormalArbeidstid}</span>} timer
