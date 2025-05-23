@@ -141,9 +141,9 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
             className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightTilsyn,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightTilsyn,
+              uttakDetaljerGraderingDetaljer: true,
+              uttakDetaljerGraderingDetaljerHighlighted: shouldHighlightTilsyn,
+              uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightTilsyn,
             })}
             title="Gradering mot tilsyn"
           >
@@ -170,9 +170,9 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
 
         <Box
           className={cx({
-            uttakDetaljer__graderingDetaljer: true,
-            uttakDetaljer__graderingDetaljer__highlight: shouldHighlightArbeidstid,
-            uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightArbeidstid,
+            uttakDetaljerGraderingDetaljer: true,
+            uttakDetaljerGraderingDetaljerHighlighted: shouldHighlightArbeidstid,
+            uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightArbeidstid,
           })}
           title="Gradering mot arbeidstid"
         >
@@ -198,9 +198,9 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
         {inntektsgradering && (
           <Box
             className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightInntekt,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightInntekt,
+              uttakDetaljerGraderingDetaljer: true,
+              uttakDetaljerGraderingDetaljerHighlighted: shouldHighlightInntekt,
+              uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightInntekt,
             })}
             title="Gradering mot inntekt"
           >

@@ -77,14 +77,10 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
               <BodyShort size="small" className="leading-6">
                 Normal arbeidstid: {beregnetNormalArbeidstid} timer
               </BodyShort>
-              <BodyShort
-                as="div"
-                size="small"
-                className={cx({ uttakDetaljer__beregningStrek: true, 'leading-6': true })}
-              >
+              <BodyShort as="div" size="small" className={cx({ uttakDetaljerBeregningStrek: true, 'leading-6': true })}>
                 <HStack gap="1" className="leading-6">
                   Faktisk arbeidstid:
-                  <span className={cx({ uttakDetaljer__utnullet: faktiskOverstigerNormal })}>
+                  <span className={cx({ uttakDetaljerUtnullet: faktiskOverstigerNormal })}>
                     {beregnetFaktiskArbeidstid}
                   </span>
                   {faktiskOverstigerNormal && <span> {beregnetNormalArbeidstid}</span>} timer
