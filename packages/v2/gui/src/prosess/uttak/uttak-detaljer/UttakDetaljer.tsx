@@ -1,5 +1,4 @@
 import { type JSX } from 'react';
-import classNames from 'classnames/bind';
 import {
   UttaksperiodeInfoUtfall,
   type UttaksperiodeInfoUtfall as UttaksperiodeInfoUtfallType,
@@ -22,8 +21,6 @@ import {
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
 import styles from './uttakDetaljer.module.css';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-
-const cx = classNames.bind(styles);
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
@@ -140,11 +137,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
       <HGrid gap="8" columns={3} align="start" className={styles['uttakDetaljer']}>
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
-            className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightTilsyn,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightTilsyn,
-            })}
+            className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
@@ -169,11 +162,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
         )}
 
         <Box
-          className={cx({
-            uttakDetaljer__graderingDetaljer: true,
-            uttakDetaljer__graderingDetaljer__highlight: shouldHighlightArbeidstid,
-            uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightArbeidstid,
-          })}
+          className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightArbeidstid ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
           title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
@@ -197,11 +186,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
 
         {inntektsgradering && (
           <Box
-            className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightInntekt,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightInntekt,
-            })}
+            className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (
