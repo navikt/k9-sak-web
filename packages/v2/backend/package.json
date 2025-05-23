@@ -18,6 +18,7 @@
     "./ungsak/generated": "./src/ungsak/generated/index.js",
     "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
     "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*",
+    "./ungsak/client": "./src/ungsak/client.js",
     "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
   },
   "dependencies": {

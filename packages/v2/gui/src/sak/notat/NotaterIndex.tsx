@@ -1,12 +1,12 @@
 import { type InnloggetAnsattDto, type NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { useBackendClient } from '@k9-sak-web/gui/shared/hooks/useBackendClient.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import NotatBackendClient from './NotatBackendClient';
 import Notater, { type skjulNotatMutationVariables } from './Notater.js';
 import { type FormState } from './types/FormState';
+import { getSakClient } from '@k9-sak-web/backend/shared/getSakClient.js';
 
 interface NotaterIndexProps {
   fagsakId: string;
@@ -27,7 +27,7 @@ interface endreNotatMutationVariables {
 }
 
 const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende, sakstype }) => {
-  const backendClient = useBackendClient(sakstype);
+  const backendClient = getSakClient(sakstype);
   const notatBackendClient = new NotatBackendClient(backendClient);
 
   const notaterQueryKey = ['notater', fagsakId];

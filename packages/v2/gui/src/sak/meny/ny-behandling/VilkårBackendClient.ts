@@ -8,13 +8,13 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated';
 
 export default class VilkårBackendClient {
-  #backendClient: K9SakClient | UngSakClient;
+  #sakClient: K9SakClient | UngSakClient;
 
   constructor(backendClient: K9SakClient | UngSakClient) {
-    this.#backendClient = backendClient;
+    this.#sakClient = backendClient;
   }
 
   async getVilkår(behandlingUuid: string): Promise<K9GetVilkårV3Response | UngGetVilkårV3Response> {
-    return this.#backendClient.vilkår.getVilkårV3(behandlingUuid);
+    return this.#sakClient.vilkår.getVilkårV3(behandlingUuid);
   }
 }
