@@ -4,10 +4,10 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useCallback, useContext } from 'react';
-import { K9SakClientContext } from '../../../app/K9SakClientContext';
+import { useCallback } from 'react';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
 import VilkårBackendClient from './VilkårBackendClient';
+import { getSakClient } from '@k9-sak-web/backend/shared/getSakClient.js';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
   BehandlingTypeK9Klage.TILBAKEKREVING,
@@ -58,8 +58,8 @@ const MenyNyBehandlingIndexV2 = ({
   aktorId,
   gjeldendeVedtakBehandlendeEnhetId,
 }: OwnProps) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const vilkårBackendClient = new VilkårBackendClient(k9SakClient);
+  const sakClient = getSakClient(ytelseType);
+  const vilkårBackendClient = new VilkårBackendClient(sakClient);
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
     queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),

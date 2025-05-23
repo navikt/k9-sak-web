@@ -4,7 +4,6 @@ import { UngSakHttpRequest } from '@k9-sak-web/backend/ungsak/errorhandling/UngS
 import type { ApiRequestOptions } from '@k9-sak-web/backend/ungsak/generated';
 import { UngSakClient } from '@k9-sak-web/backend/ungsak/generated';
 import { clientVersion } from '@k9-sak-web/backend/ungsak/generated/metadata';
-import { createContext } from 'react';
 
 // generert klientversjon over 0.1 har /api prefix satt på paths generert inn i klientkalla, som er det korrekte.
 // for versjoner under må vi legge /api til på baseUrl for at kalla skal fungere, sidan openapi spesifikasjon generert
@@ -33,15 +32,17 @@ const headerResolver = async (options: ApiRequestOptions<Record<string, string>>
   };
 };
 
-/**
- * This shall be a top level context providing the K9SakClient instance that will be used for communicating with the backend server.
- */
-export const UngSakClientContext = createContext(
-  new UngSakClient(
-    {
-      BASE: baseUrl,
-      HEADERS: headerResolver,
-    },
-    UngSakHttpRequest,
-  ),
-);
+let ungsakClient: UngSakClient | null = null;
+
+export const getUngSakClient = () => {
+  if (ungsakClient == null) {
+    ungsakClient = new UngSakClient(
+      {
+        BASE: baseUrl,
+        HEADERS: headerResolver,
+      },
+      UngSakHttpRequest,
+    );
+  }
+  return ungsakClient;
+};
