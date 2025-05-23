@@ -1,5 +1,6 @@
-import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated';
+import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from './historikkTypeBerikning.js';
 
 export interface HistorikkBackendApi {
-  hentAlleInnslagK9sak(saksnummer: string): Promise<HentAlleInnslagV2Response>;
+  hentAlleInnslagK9sak(saksnummer: string): Promise<SakHistorikkInnslagV2[]>;
+  hentAlleInnslagK9klage(saksnummer: string): Promise<KlageHistorikkInnslagV2[]>;
 }

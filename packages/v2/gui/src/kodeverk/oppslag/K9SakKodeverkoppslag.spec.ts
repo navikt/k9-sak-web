@@ -56,5 +56,8 @@ describe('Kodeverkoppslag', () => {
   it('skal returnere objekt med korrekt navn property', () => {
     expect(oppslag.inntektskategorier('ARBEIDSAVKLARINGSPENGER').navn).toEqual('Arbeidsavklaringspenger');
     expect(oppslag.inntektskategorier('ARBEIDSAVKLARINGSPENGER', OrUndefined)?.navn).toEqual('Arbeidsavklaringspenger');
+
+    // Denne har ulikt navn i forhold til k9-klage
+    expect(oppslag.fagsakYtelseTyper('OMP_KS').navn).toEqual('Ekstra omsorgsdager kronisk syk');
   });
 });
