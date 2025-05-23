@@ -2,7 +2,6 @@ import { BehandlingDtoBehandlingResultatType, BehandlingDtoType } from '@k9-sak-
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
-import classnames from 'classnames/bind';
 import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
 import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
@@ -16,7 +15,6 @@ import {
   getStatusText,
 } from './behandlingVelgerUtils';
 
-const cx = classnames.bind(styles);
 interface BehandlingSelectedProps {
   opprettetDato: string;
   avsluttetDato?: string;
@@ -44,10 +42,9 @@ const BehandlingSelected = ({
 }: BehandlingSelectedProps) => {
   const location = useLocation();
   const erFerdigstilt = !!avsluttetDato;
-  const containerCls = cx('behandlingSelectedContainer', {
-    aapen:
-      !behandlingsresultatTypeKode || behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
-  });
+  const erÅpen =
+    !behandlingsresultatTypeKode || behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT;
+  const containerCls = `${styles.behandlingSelectedContainer} ${erÅpen ? styles.aapen : ''}`;
 
   const getÅrsakerForBehandling = () => {
     if (behandlingTypeKode === BehandlingDtoType.FØRSTEGANGSSØKNAD || !behandlingsårsaker.length) {
