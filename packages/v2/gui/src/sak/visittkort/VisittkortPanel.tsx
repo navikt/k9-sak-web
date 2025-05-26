@@ -34,6 +34,10 @@ export interface VisittkortPanelProps {
   erPbSak?: boolean;
   erHastesak?: boolean;
   hideVisittkortDetaljerPopup?: boolean;
+  ungdomsytelseDeltakerStatus?: {
+    deltakerErUtmeldt: boolean;
+    deltakerErIProgrammet: boolean;
+  };
 }
 
 const VisittkortPanel = ({
@@ -46,6 +50,7 @@ const VisittkortPanel = ({
   erPbSak,
   erHastesak,
   hideVisittkortDetaljerPopup,
+  ungdomsytelseDeltakerStatus,
 }: VisittkortPanelProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -108,19 +113,26 @@ const VisittkortPanel = ({
   return (
     <div className={styles.container}>
       <HStack gap="4">
-        <PersonCard
-          name={søker.navn}
-          fodselsnummer={søker.fnr}
-          gender={utledKjonn(søker.navBrukerKjonn)}
-          renderMenuContent={
-            hideVisittkortDetaljerPopup
-              ? undefined
-              : () => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />
-          }
-          renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
-          showPersonAge={isUngWeb()}
-        />
-
+        <HStack>
+          <PersonCard
+            name={søker.navn}
+            fodselsnummer={søker.fnr}
+            gender={utledKjonn(søker.navBrukerKjonn)}
+            renderMenuContent={
+              hideVisittkortDetaljerPopup
+                ? undefined
+                : () => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />
+            }
+            renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
+            showPersonAge={isUngWeb()}
+          />
+          <div>
+            {ungdomsytelseDeltakerStatus?.deltakerErIProgrammet && (
+              <TagContainer tagVariant="success">I programmet</TagContainer>
+            )}
+            {ungdomsytelseDeltakerStatus?.deltakerErUtmeldt && <TagContainer tagVariant="error">Utmeldt</TagContainer>}
+          </div>
+        </HStack>
         {annenPart?.aktoerId && (
           <PersonCard
             name={annenPart.navn}
@@ -147,10 +159,14 @@ const VisittkortPanel = ({
               </div>
             ))}
           </HStack>
-          {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
-          {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
-          {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
-          {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
+          <div>
+            <HStack gap="2">
+              {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
+              {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
+              {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
+              {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
+            </HStack>
+          </div>
         </div>
       </HStack>
     </div>

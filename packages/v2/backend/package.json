@@ -18,12 +18,13 @@
     "./ungsak/generated": "./src/ungsak/generated/index.js",
     "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
     "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*",
+    "./ungsak/client": "./src/ungsak/client.js",
     "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "3.0.20250512080735",
-    "@navikt/k9-sak-typescript-client": "2.0.20250513120447",
-    "@navikt/ung-sak-typescript-client": "0.2.20250509111606"
+    "@navikt/k9-sak-typescript-client": "2.0.20250522095735",
+    "@navikt/ung-sak-typescript-client": "0.2.20250522102547"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.74.7"

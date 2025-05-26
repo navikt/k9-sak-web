@@ -2982,7 +2982,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'AVBRUTT_BEH',
@@ -3198,7 +3198,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: 'OVST_UTTAK_FJERNE',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Manuell overstyring av uttak - fjernet overstyring for periode',
-      kilde: 'OVST_UTTAK_FJERNET',
+      kilde: 'OVST_UTTAK_FJERNE',
     },
     {
       kode: 'OVST_UTTAK_NY',
@@ -3210,7 +3210,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: 'OVST_UTTAK_OPPDATERE',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Manuell overstyring av uttak - oppdaterte overstyring for periode',
-      kilde: 'OVST_UTTAK_OPPDATERT',
+      kilde: 'OVST_UTTAK_OPPDATERE',
     },
     {
       kode: 'OVST_UTTAK_SPLITT',
@@ -3258,7 +3258,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: 'TILBAKEKR_VIDEREBEHANDLING',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Metode for å håndtere tilbakekreving av feilutbetailng er valgt.',
-      kilde: 'TILBAKEKREVING_VIDEREBEHANDLING',
+      kilde: 'TILBAKEKR_VIDEREBEHANDLING',
     },
     {
       kode: 'UENDRET_UTFALL',

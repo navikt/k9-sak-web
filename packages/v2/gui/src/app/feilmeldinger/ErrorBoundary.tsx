@@ -42,8 +42,8 @@ export class ErrorBoundary extends Component<OwnProps, State> {
 
   // Vi ønsker ikkje å rapportere alle feil til Sentry, feks viss har utgått sesjon.
   // Legg til fleire her ved behov.
-  protected shouldReportToSentry(): boolean {
-    const apiError = ExtendedApiError.findInError(this.state.error);
+  protected static shouldReportToSentry(error: Error | null): boolean {
+    const apiError = ExtendedApiError.findInError(error);
     if (apiError != null) {
       const doNotReport = apiError.isUnauthorized;
       return !doNotReport;
@@ -51,10 +51,11 @@ export class ErrorBoundary extends Component<OwnProps, State> {
     return true;
   }
 
-  override componentDidCatch(error: any, info: ErrorInfo): void {
+  override componentDidCatch(anyError: any, info: ErrorInfo): void {
     const { errorMessageCallback } = this.props;
+    const error = ErrorBoundary.ensureError(anyError);
     let sentryId: string | undefined = undefined;
-    if (this.shouldReportToSentry()) {
+    if (ErrorBoundary.shouldReportToSentry(error)) {
       withScope(scope => {
         if (info.componentStack != null) {
           scope.setExtra('componentStack', info.componentStack);
@@ -66,7 +67,7 @@ export class ErrorBoundary extends Component<OwnProps, State> {
       });
     }
     this.setState({
-      error: ErrorBoundary.ensureError(error),
+      error,
       sentryId,
     });
 

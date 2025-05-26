@@ -20,8 +20,7 @@ import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
-import Inngangsvilkår from '../../../types/Inngangsvilkår';
+import { VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
 
 const cx = classNames.bind(styles);
 
@@ -46,24 +45,13 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
   const { periode, uttaksgrad, inngangsvilkår: vilkår, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const containerContext = React.useContext(ContainerContext);
 
-  // vilkår for sykdom og opplæring
-  const sykdomOgOpplæringVilkår = Object.entries(vilkår)
-    .filter(([key]) => opplæringspengerVilkår.includes(key))
-    .reduce(
-      (acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-      },
-      {} as Record<VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus>,
-    );
+  const sykdomOgOpplæringVilkår = Object.fromEntries(
+    Object.entries(vilkår).filter(([key]) => opplæringspengerVilkår.includes(key)),
+  );
 
-  // Inngangsvilkår for opplæringspenger
-  const inngangsvilkår = Object.entries(vilkår)
-    .filter(([key]) => !opplæringspengerVilkår.includes(key))
-    .reduce((acc, [key, value]) => {
-      acc[key] = value;
-      return acc;
-    }, {} as Inngangsvilkår);
+  const inngangsvilkår = Object.fromEntries(
+    Object.entries(vilkår).filter(([key]) => !opplæringspengerVilkår.includes(key)),
+  );
 
   const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
 
@@ -81,9 +69,12 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
     vilkar => vilkar === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
   );
 
-  const harOppfyltAlleVilkårSykdomOgOpplæring = Object.values(sykdomOgOpplæringVilkår).every(
-    vilkar => vilkar === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
+  const harOppfyltAlleVilkårSykdomOgOpplæring = opplæringspengerVilkår.every(
+    vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
   );
+
+  const alleVilkårErOppfylt = harOppfyltAlleInngangsvilkår && harOppfyltAlleVilkårSykdomOgOpplæring;
+
   return (
     <>
       <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
@@ -152,14 +143,14 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
         <td colSpan={8}>
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
-              {harOppfyltAlleInngangsvilkår ? (
+              {alleVilkårErOppfylt ? (
                 <UttakDetaljerV2Wrapper
                   uttak={uttak}
                   manueltOverstyrt={manueltOverstyrt}
                   arbeidsforhold={arbeidsforhold}
                 />
               ) : (
-                <Vilkårsliste inngangsvilkår={inngangsvilkår} />
+                <Vilkårsliste vilkår={vilkår} />
               )}
             </div>
           </Collapse>

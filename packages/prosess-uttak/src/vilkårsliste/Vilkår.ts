@@ -1,3 +1,5 @@
+import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
+
 const vilkår = [
   {
     name: 'Medlemskap',
@@ -31,6 +33,18 @@ const vilkår = [
     name: 'Søkers alder',
     kode: 'K9_VK_3', // Aldersvilkåret
   },
-];
+  {
+    name: 'Langvarig sykdom',
+    kode: 'K9_VK_17', //  i opplæringspenger
+  },
+  {
+    name: 'Nødvendig opplæring',
+    kode: 'K9_VK_20', // Nødvendig opplæring for å ta vare på barnet
+  },
+  {
+    name: 'Institusjon',
+    kode: 'K9_VK_21', // Godkjent opplæringsinstitusjon
+  },
+] as { name: string; kode: VilkårMedPerioderDtoVilkarType }[];
 
 export default vilkår;

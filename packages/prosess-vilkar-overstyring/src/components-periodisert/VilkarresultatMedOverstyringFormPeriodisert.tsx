@@ -1,19 +1,14 @@
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import {
-  AksjonspunktBox,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import moment from 'moment';
@@ -23,7 +18,6 @@ import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
-import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 export interface CustomVilkarText {
   id: string;
@@ -141,7 +135,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   return (
     <Form formMethods={formMethods} onSubmit={onSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
-        <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
+        <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={!!erOverstyrt}>
           <Label data-testid="overstyringform" size="small" as="p">
             <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
           </Label>

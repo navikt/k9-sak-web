@@ -1,5 +1,4 @@
 import React, { type FC } from 'react';
-import classNames from 'classnames/bind';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import {
@@ -10,8 +9,6 @@ import {
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 
 import styles from './uttakDetaljer.module.css';
-
-const cx = classNames.bind(styles);
 
 interface ownProps {
   alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
@@ -112,16 +109,16 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
         <BodyShort as="div" size="small" className="leading-6">
           {løpendeInntekt} (utbetalt lønn) /
         </BodyShort>
-        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true, 'leading-6': true })}>
+        <BodyShort as="div" size="small" className={`${styles.uttakDetaljerBeregningStrek} leading-6`}>
           {beregningsgrunnlag} (beregningsgrunnlag)
         </BodyShort>
-        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningSum: true, 'leading-6': true })}>
+        <BodyShort as="div" size="small" className={`${styles.uttakDetaljerBeregningSum} leading-6`}>
           = {reduksjonsProsent} % reduksjon pga. utbetalt lønn
         </BodyShort>
       </VStack>
 
       <Box>
-        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__detailSum: true, 'leading-6': true })}>
+        <BodyShort as="div" size="small" className={`${styles.uttakDetaljerDetailSum} leading-6`}>
           = {graderingsProsent} % totalt inntektstap
         </BodyShort>
       </Box>

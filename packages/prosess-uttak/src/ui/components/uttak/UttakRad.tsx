@@ -35,7 +35,7 @@ interface UttakProps {
 }
 
 const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
+  const { periode, uttaksgrad, inngangsvilkår: vilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const containerContext = React.useContext(ContainerContext);
   const erFagytelsetypeLivetsSluttfase = fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE === containerContext?.ytelsetype;
 
@@ -148,7 +148,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
                   arbeidsforhold={arbeidsforhold}
                 />
               ) : (
-                <Vilkårsliste inngangsvilkår={inngangsvilkår} />
+                <Vilkårsliste vilkår={vilkår} />
               )}
             </div>
           </Collapse>

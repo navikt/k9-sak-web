@@ -11,6 +11,10 @@ import {
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  BehandlingsresultatDtoType,
+  BehandlingÅrsakDtoBehandlingArsakType,
+} from '@k9-sak-web/backend/ungsak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -111,6 +115,20 @@ const FagsakIndex = () => {
   }, [behandlingPersonopplysninger]);
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+
+  const ungdomsytelseDeltakerStatus = useMemo(() => {
+    const erUtmeldt = alleBehandlinger.some(b =>
+      b.behandlingÅrsaker.some(
+        a => a.behandlingArsakType.kode === BehandlingÅrsakDtoBehandlingArsakType.RE_HENDELSE_OPPHØR_UNGDOMSPROGRAM,
+      ),
+    );
+
+    const erIProgrammet =
+      !erUtmeldt &&
+      alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatDtoType.INNVILGET);
+
+    return { deltakerErUtmeldt: erUtmeldt, deltakerErIProgrammet: erIProgrammet };
+  }, [alleBehandlinger]);
 
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     UngSakApiKeys.ARBEIDSGIVERE,
@@ -228,6 +246,7 @@ const FagsakIndex = () => {
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
+                    ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
                   />
                 </div>
               );
