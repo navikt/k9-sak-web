@@ -1,6 +1,6 @@
 import { VilkårPeriodeDtoVilkarStatus, type OpptjeningDto } from '@k9-sak-web/backend/k9sak/generated';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState } from 'react';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
@@ -11,6 +11,7 @@ import type { Behandling } from './types/Behandling';
 import type { Fagsak } from './types/Fagsak';
 import type { SubmitCallback } from './types/SubmitCallback';
 import type { Vilkår } from './types/Vilkår';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
@@ -62,19 +63,23 @@ const OpptjeningVilkarProsessIndexV2 = ({
   return (
     <>
       <div className={styles.mainContainerWithSideMenu}>
-        <div>
+        <div className="flex-shrink-0">
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-              icon:
-                isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT ? (
-                  <ExclamationmarkTriangleFillIcon
-                    title="Aksjonspunkt"
-                    fontSize="1.5rem"
-                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl ml-2"
-                  />
-                ) : null,
+              icon: (function () {
+                if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
+                  return <AksjonspunktIkon size="small" />;
+                }
+                if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
+                  return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+                }
+                if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT) {
+                  return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+                }
+                return null;
+              })(),
             }))}
             onClick={setActiveTab}
             heading="Perioder"
