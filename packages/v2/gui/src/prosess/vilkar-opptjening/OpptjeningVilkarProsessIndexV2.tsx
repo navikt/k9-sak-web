@@ -69,7 +69,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon: (function () {
-                if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
+                if (isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
                   return <AksjonspunktIkon size="small" />;
                 }
                 if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
