@@ -9,6 +9,7 @@ import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.js
 import type { K9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
 
 export interface InnslagBobleProps {
   readonly innslag: HistorikkinnslagDtoV2;
@@ -28,6 +29,8 @@ export const InnslagBoble = ({
   kodeverkoppslag,
 }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
+  // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const rolleNavn = kodeverkoppslag.k9sak.historikkAktører(innslag.aktør.type).navn;
   const position = utledPlassering(innslag.aktør.type);
   const doCutOff = innslag.linjer.length > 2;
@@ -36,7 +39,7 @@ export const InnslagBoble = ({
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
       avatar={<Avatar aktørType={innslag.aktør.type} kjønn={kjønn} />}
       timestamp={`${formatDate(innslag.opprettetTidspunkt)}`}
-      name={`${rolleNavn} ${innslag.aktør.ident ?? ''}`}
+      name={`${rolleNavn} ${hentSaksbehandlerNavn(innslag.aktør.ident ?? '')}`}
       position={position}
       toptextPosition="left"
       className={getStyle(innslag.aktør.type, kjønn)}
