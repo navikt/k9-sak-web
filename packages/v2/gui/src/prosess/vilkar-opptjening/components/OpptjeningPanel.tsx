@@ -21,6 +21,8 @@ interface OwnProps {
   isPeriodisertFormComplete?: boolean;
   skjulAksjonspunktVisning?: boolean;
   aksjonspunktErLøst?: boolean;
+  redigerOpptjening: boolean;
+  setRedigerOpptjening: (redigerOpptjening: boolean) => void;
 }
 
 /*
@@ -37,6 +39,8 @@ const OpptjeningPanel = ({
   children,
   skjulAksjonspunktVisning,
   aksjonspunktErLøst,
+  redigerOpptjening,
+  setRedigerOpptjening,
 }: OwnProps) => {
   const formMethods = useFormContext<VilkårFieldFormValues>();
   return (
@@ -81,16 +85,25 @@ const OpptjeningPanel = ({
         </div>
       </VStack>
       {isAksjonspunktOpen && <div className="mt-2" />}
-      <AksjonspunktBox
-        className={styles.aksjonspunktMargin}
-        erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}
-      >
+      <AksjonspunktBox erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}>
         {children}
         {!readOnly && <div className="mt-4" />}
         {!skjulAksjonspunktVisning && !readOnly && (
-          <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} type="submit">
-            Bekreft og fortsett
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} type="submit">
+              Bekreft og fortsett
+            </Button>
+            {redigerOpptjening && (
+              <Button
+                variant="tertiary"
+                size="small"
+                type="button"
+                onClick={() => setRedigerOpptjening(!redigerOpptjening)}
+              >
+                Avbryt
+              </Button>
+            )}
+          </div>
         )}
       </AksjonspunktBox>
     </>

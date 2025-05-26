@@ -6,11 +6,11 @@ import {
   type VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { HelpText, Label } from '@navikt/ds-react';
+import { Button, HelpText, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { FeatureToggles } from '../../../featuretoggles/FeatureToggles';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
@@ -20,6 +20,7 @@ import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import OpptjeningPanel from './OpptjeningPanel';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
 import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder } from './VilkarField';
+import { PencilIcon } from '@navikt/aksel-icons';
 
 dayjs.extend(isBetween);
 
@@ -95,6 +96,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
 }: OpptjeningVilkarAksjonspunktPanelImplProps) => {
   const featureToggles = useContext(FeatureTogglesContext);
 
+  const [redigerOpptjening, setRedigerOpptjening] = useState(false);
   const formMethods = useForm({
     defaultValues: buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
   });
@@ -125,6 +127,14 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
     fagsakType === fagsakYtelsesType.OMSORGSPENGER_MA;
 
   const erPleiepenger = fagsakType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+  const skalKunneEndreOpptjening = !!(
+    (isApOpen || redigerOpptjening) &&
+    vilkarField?.vurderesIBehandlingen &&
+    vilkarField?.vurderesIAksjonspunkt
+  );
+  const aksjonspunktErLøst = aksjonspunkter.some(
+    ap => AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET === ap.definisjon && ap.status === 'UTFO',
+  );
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true
@@ -153,22 +163,22 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
       });
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
+    <Form formMethods={formMethods} onSubmit={handleSubmit} className="ml-8">
       <OpptjeningPanel
         title="Opptjening"
-        isAksjonspunktOpen={isApOpen && !!vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
+        isAksjonspunktOpen={skalKunneEndreOpptjening}
         isDirty={formMethods.formState.isDirty}
         readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
         readOnly={readOnly || !vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
         originalErVilkarOk={vilkårPerioder[periodeIndex]?.vilkarStatus === 'OPPFYLT'}
-        aksjonspunktErLøst={aksjonspunkter.some(
-          ap => AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET === ap.definisjon && ap.status === 'UTFO',
-        )}
+        aksjonspunktErLøst={aksjonspunktErLøst}
         lovReferanse={lovReferanse}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         isPeriodisertFormComplete={allePerioderHarVurdering()}
-        skjulAksjonspunktVisning={!vilkarField?.vurderesIAksjonspunkt}
+        skjulAksjonspunktVisning={!skalKunneEndreOpptjening}
+        redigerOpptjening={redigerOpptjening}
+        setRedigerOpptjening={setRedigerOpptjening}
       >
         <div className={styles.titelOgHjelpetekstFlexbox}>
           <Label size="small" as="p">
@@ -205,10 +215,26 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
           <VilkarField
             erOmsorgspenger={erOmsorgspenger}
             field={vilkarField}
-            readOnly={readOnly || !vilkarField?.vurderesIBehandlingen || !vilkarField?.vurderesIAksjonspunkt}
+            readOnly={readOnly || !skalKunneEndreOpptjening}
             fieldPrefix={`vilkarFields[${periodeIndex}]`}
             skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
           />
+        )}
+        {aksjonspunktErLøst && !redigerOpptjening && (
+          <div>
+            <div className="mt-2" />
+            <Button
+              variant="tertiary"
+              type="button"
+              size="xsmall"
+              icon={<PencilIcon />}
+              onClick={() => {
+                setRedigerOpptjening(!redigerOpptjening);
+              }}
+            >
+              Rediger vurdering
+            </Button>
+          </div>
         )}
       </OpptjeningPanel>
     </Form>

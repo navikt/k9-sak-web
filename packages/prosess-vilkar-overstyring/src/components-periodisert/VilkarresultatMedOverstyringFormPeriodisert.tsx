@@ -135,7 +135,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   return (
     <Form formMethods={formMethods} onSubmit={onSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
-        <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={!!erOverstyrt}>
+        <AksjonspunktBox erAksjonspunktApent={!!erOverstyrt}>
           <Label data-testid="overstyringform" size="small" as="p">
             <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
           </Label>

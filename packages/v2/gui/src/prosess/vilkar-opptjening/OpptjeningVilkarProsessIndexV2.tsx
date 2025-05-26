@@ -62,7 +62,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
   return (
     <>
       <div className={styles.mainContainerWithSideMenu}>
-        <div className={styles.sideMenuContainer}>
+        <div>
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
@@ -80,7 +80,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
             heading="Perioder"
           />
         </div>
-        <div className={styles.contentContainer}>
+        <div>
           <OpptjeningVilkarAksjonspunktPanel
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
