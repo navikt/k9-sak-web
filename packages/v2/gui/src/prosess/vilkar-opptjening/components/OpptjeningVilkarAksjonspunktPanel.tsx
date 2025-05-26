@@ -96,7 +96,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
 }: OpptjeningVilkarAksjonspunktPanelImplProps) => {
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const [redigerOpptjening, setRedigerOpptjening] = useState(false);
+  const [redigererOpptjening, setRedigererOpptjening] = useState(false);
   const formMethods = useForm({
     defaultValues: buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
   });
@@ -128,13 +128,15 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
 
   const erPleiepenger = fagsakType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
   const skalKunneEndreOpptjening = !!(
-    (isApOpen || redigerOpptjening) &&
+    (isApOpen || redigererOpptjening) &&
     vilkarField?.vurderesIBehandlingen &&
     vilkarField?.vurderesIAksjonspunkt
   );
   const aksjonspunktErLøst = aksjonspunkter.some(
     ap => AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET === ap.definisjon && ap.status === 'UTFO',
   );
+
+  const visRedigeringsknapp = !readOnly && aksjonspunktErLøst && !redigererOpptjening;
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true
@@ -177,8 +179,8 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
         behandlingVersjon={behandlingVersjon}
         isPeriodisertFormComplete={allePerioderHarVurdering()}
         skjulAksjonspunktVisning={!skalKunneEndreOpptjening}
-        redigerOpptjening={redigerOpptjening}
-        setRedigerOpptjening={setRedigerOpptjening}
+        redigererOpptjening={redigererOpptjening}
+        setRedigererOpptjening={setRedigererOpptjening}
       >
         <div className={styles.titelOgHjelpetekstFlexbox}>
           <Label size="small" as="p">
@@ -220,7 +222,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
             skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
           />
         )}
-        {aksjonspunktErLøst && !redigerOpptjening && (
+        {visRedigeringsknapp && (
           <div>
             <div className="mt-2" />
             <Button
@@ -229,7 +231,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
               size="xsmall"
               icon={<PencilIcon />}
               onClick={() => {
-                setRedigerOpptjening(!redigerOpptjening);
+                setRedigererOpptjening(!redigererOpptjening);
               }}
             >
               Rediger vurdering

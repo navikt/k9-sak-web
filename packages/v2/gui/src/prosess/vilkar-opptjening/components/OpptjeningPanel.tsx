@@ -21,8 +21,8 @@ interface OwnProps {
   isPeriodisertFormComplete?: boolean;
   skjulAksjonspunktVisning?: boolean;
   aksjonspunktErLøst?: boolean;
-  redigerOpptjening: boolean;
-  setRedigerOpptjening: (redigerOpptjening: boolean) => void;
+  redigererOpptjening: boolean;
+  setRedigererOpptjening: (redigererOpptjening: boolean) => void;
 }
 
 /*
@@ -39,8 +39,8 @@ const OpptjeningPanel = ({
   children,
   skjulAksjonspunktVisning,
   aksjonspunktErLøst,
-  redigerOpptjening,
-  setRedigerOpptjening,
+  redigererOpptjening,
+  setRedigererOpptjening,
 }: OwnProps) => {
   const formMethods = useFormContext<VilkårFieldFormValues>();
   return (
@@ -93,12 +93,12 @@ const OpptjeningPanel = ({
             <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} type="submit">
               Bekreft og fortsett
             </Button>
-            {redigerOpptjening && (
+            {redigererOpptjening && (
               <Button
                 variant="tertiary"
                 size="small"
                 type="button"
-                onClick={() => setRedigerOpptjening(!redigerOpptjening)}
+                onClick={() => setRedigererOpptjening(!redigererOpptjening)}
               >
                 Avbryt
               </Button>
