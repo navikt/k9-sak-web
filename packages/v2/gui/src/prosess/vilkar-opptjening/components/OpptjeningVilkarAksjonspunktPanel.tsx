@@ -125,6 +125,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
     fagsakType === fagsakYtelsesType.OMSORGSPENGER_MA;
 
   const erPleiepenger = fagsakType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+  const erOpplæringspenger = fagsakType === fagsakYtelsesType.OPPLÆRINGSPENGER;
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true
@@ -174,6 +175,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
           <Label size="small" as="p">
             {erOmsorgspenger && 'Opptjent rett til omsorgspenger'}
             {erPleiepenger && 'Opptjent rett til pleiepenger'}
+            {erOpplæringspenger && 'Opptjent rett til opplæringspenger'}
           </Label>
           <HelpText className="ml-2" placement="right-start">
             <b>Veiledning for vurdering av opptjent rett</b>
