@@ -173,7 +173,12 @@ const TotrinnskontrollSakIndexPropsTransformer = (
   props: TotrinnskontrollSakIndexProps & { behandlingType?: BehandlingDtoType },
 ) => {
   const v2Props = JSON.parse(JSON.stringify(props));
-  konverterKodeverkTilKode(v2Props, props.behandlingType === BehandlingDtoType.TILBAKEKREVING);
+  konverterKodeverkTilKode(
+    v2Props,
+    props.behandlingType === BehandlingDtoType.TILBAKEKREVING ||
+      props.behandlingType === BehandlingDtoType.REVURDERING_TILBAKEKREVING,
+  );
+
   return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
 };
 
