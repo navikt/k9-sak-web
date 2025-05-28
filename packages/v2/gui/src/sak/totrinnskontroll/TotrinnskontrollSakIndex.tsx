@@ -178,7 +178,6 @@ const TotrinnskontrollSakIndexPropsTransformer = (
     props.behandlingType === BehandlingDtoType.TILBAKEKREVING ||
       props.behandlingType === BehandlingDtoType.REVURDERING_TILBAKEKREVING,
   );
-
   return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
 };
 
