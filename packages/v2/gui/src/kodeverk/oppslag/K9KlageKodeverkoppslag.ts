@@ -178,4 +178,8 @@ export class FailingK9KlageKodeverkoppslag extends K9KlageKodeverkoppslag {
   constructor() {
     super({} as AlleKodeverdierSomObjektResponse);
   }
+
+  override finnObjektFraKilde(kodeverk: keyof EnumKodeverdierOppslag, kode: string): never {
+    throw new Error(`K9KlageKodeverkoppslag er ikke initialisert. Kan ikke slå opp ${kodeverk} med kode ${kode}.`);
+  }
 }

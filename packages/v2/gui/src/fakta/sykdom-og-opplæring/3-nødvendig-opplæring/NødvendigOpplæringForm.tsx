@@ -46,7 +46,7 @@ const NødvendigOpplæringForm = ({
       nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
     },
   });
-  const K9Kodeverkoppslag = useK9Kodeverkoppslag();
+  const K9Kodeverkoppslag = useK9Kodeverkoppslag(true);
 
   const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
     K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
