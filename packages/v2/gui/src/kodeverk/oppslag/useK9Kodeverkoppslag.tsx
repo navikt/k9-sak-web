@@ -13,7 +13,7 @@ export interface K9Kodeverkoppslag {
 }
 
 // Bruk context istadenfor denne hook. `useContext(K9KodeverkoppslagContext)`
-export const useK9Kodeverkoppslag = (): K9Kodeverkoppslag => {
+export const useK9Kodeverkoppslag = (hentKlageKodeverk: boolean): K9Kodeverkoppslag => {
   const k9sakClient = useContext(K9SakClientContext);
   const k9sakQuery = useQuery({
     queryKey: ['k9sak-kodeverkoppslag'],
@@ -25,9 +25,10 @@ export const useK9Kodeverkoppslag = (): K9Kodeverkoppslag => {
       const res = await kodeverk_alleKodeverdierSomObjekt();
       return res.data;
     },
+    enabled: hentKlageKodeverk,
   });
 
-  const isPending = k9sakQuery.isPending || k9klageQuery.isPending;
+  const isPending = k9sakQuery.isPending || (hentKlageKodeverk && k9klageQuery.isPending);
 
   if (isPending) {
     return {
@@ -45,6 +46,8 @@ export const useK9Kodeverkoppslag = (): K9Kodeverkoppslag => {
   return {
     isPending,
     k9sak: new K9SakKodeverkoppslag(k9sakQuery.data),
-    k9klage: new K9KlageKodeverkoppslag(k9klageQuery.data),
+    k9klage: k9klageQuery.isPending
+      ? new FailingK9KlageKodeverkoppslag()
+      : new K9KlageKodeverkoppslag(k9klageQuery.data),
   };
 };
