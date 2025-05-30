@@ -126,7 +126,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           heading="Perioder"
         />
       </div>
-      <div className={styles.contentContainer}>
+      <div>
         <VilkarresultatMedOverstyringHeader
           aksjonspunkter={aksjonspunkter}
           erOverstyrt={erOverstyrt}
