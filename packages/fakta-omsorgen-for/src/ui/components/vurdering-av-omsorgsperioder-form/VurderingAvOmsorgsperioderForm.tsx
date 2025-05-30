@@ -63,6 +63,7 @@ const VurderingAvOmsorgsperioderForm = ({
 }: VurderingAvOmsorgsperioderFormProps): JSX.Element => {
   const { onFinished, readOnly, sakstype } = React.useContext(ContainerContext);
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
+  const erOLP = sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER;
   const intl = useIntl();
   const formMethods = useForm({
     defaultValues: {
@@ -115,6 +116,12 @@ const VurderingAvOmsorgsperioderForm = ({
   const skalViseRelasjonsbeskrivelse =
     omsorgsperiode.relasjon?.toUpperCase() === Relasjon.ANNET.toUpperCase() && omsorgsperiode.relasjonsbeskrivelse;
 
+  const radios = [
+    { value: RadioOptions.HELE, label: 'Ja' },
+    { value: RadioOptions.DELER, label: 'Ja, i deler av perioden' },
+    { value: RadioOptions.NEI, label: 'Nei' },
+  ].filter(radio => (erOLP ? radio.value !== RadioOptions.DELER : true));
+
   return (
     <div className={styles.vurderingAvOmsorgsperioderForm}>
       <DetailView title={erOMP ? 'Vurdering' : 'Vurdering av omsorg'}>
@@ -148,11 +155,7 @@ const VurderingAvOmsorgsperioderForm = ({
             <Box marginBlock="8 0">
               <RadioGroupPanelRHF
                 question={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
-                radios={[
-                  { value: RadioOptions.HELE, label: 'Ja' },
-                  { value: RadioOptions.DELER, label: 'Ja, i deler av perioden' },
-                  { value: RadioOptions.NEI, label: 'Nei' },
-                ]}
+                radios={radios}
                 name={FieldName.HAR_SØKER_OMSORGEN_FOR_I_PERIODE}
                 validators={{ required }}
                 disabled={readOnly}
