@@ -1,5 +1,8 @@
 import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9klage/generated/types.js';
 
+// Data i denne konstant er ein direkte kopi av response body frå /k9/klage/api/kodeverk/alle/objekt, med X-Json-Serializer-Option: openapi-compat.
+// Brukast for å kunne gjere kodeverk oppslag i test/stories.
+// Oppdater med ny kopi frå nevnte endepunkt (feks via swagger) når kodeverk definisjoner blir endra i k9-klage kode.
 export const oppslagKodeverkSomObjektK9Klage = {
   fagsakStatuser: [
     {
@@ -6043,7 +6046,7 @@ export const oppslagKodeverkSomObjektK9Klage = {
       kode: '-',
       kodeverk: 'VEDTAK_RESULTAT_TYPE',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'AVSLAG',
@@ -6099,13 +6102,13 @@ export const oppslagKodeverkSomObjektK9Klage = {
       kode: '-',
       kodeverk: 'DOKUMENT_TYPE_ID',
       navn: '-',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'I500027',
       kodeverk: 'DOKUMENT_TYPE_ID',
       navn: 'I500027',
-      kilde: 'KLAGE_ETTERSENDELSE',
+      kilde: 'I500027',
     },
     {
       kode: 'INNTEKTSMELDING',
