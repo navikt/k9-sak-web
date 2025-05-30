@@ -9,11 +9,11 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
 import {
   type KodeverdiSomObjektAvslagsårsak,
   KodeverdiSomObjektAvslagsårsakKilde,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -46,10 +46,10 @@ const NødvendigOpplæringForm = ({
       nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
     },
   });
-  const K9Kodeverkoppslag = useK9Kodeverkoppslag(true);
+  const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
   const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
-    K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
+    k9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
