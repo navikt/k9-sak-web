@@ -8,18 +8,23 @@ import {
 } from '@navikt/k9-sak-typescript-client';
 import { Period } from '@navikt/ft-utils';
 import { action } from '@storybook/addon-actions';
-import { within, userEvent, expect } from '@storybook/test';
+import { within, userEvent, expect, fn } from '@storybook/test';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
-import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.ts';
-import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.ts';
+import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
+import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
+
+const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
+const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
+const løsAksjonspunkt9302 = fn(action('løsAksjonspunkt9302'));
+const løsAksjonspunkt9303 = fn(action('løsAksjonspunkt9303'));
 
 const withSykdomOgOpplæringContext = (): Decorator => Story => {
   const sykdomOgOpplæringContextState = {
     readOnly: false,
-    løsAksjonspunkt9300: action('løsAksjonspunkt9300'),
-    løsAksjonspunkt9301: action('løsAksjonspunkt9301'),
-    løsAksjonspunkt9302: action('løsAksjonspunkt9302'),
-    løsAksjonspunkt9303: action('løsAksjonspunkt9303'),
+    løsAksjonspunkt9300,
+    løsAksjonspunkt9301,
+    løsAksjonspunkt9302,
+    løsAksjonspunkt9303,
     behandlingUuid: '333-4444',
     aksjonspunkter: [],
   };
@@ -61,32 +66,36 @@ export const Avslagsårsaker: Story = {
     redigering: true,
   },
   play: async ({ canvas }) => {
-    const nødvendigOpplæringLegend = canvas.getByText('Er nødvendig opplæring dokumentert', { exact: false });
-    await expect(nødvendigOpplæringLegend.parentElement).toBeDefined();
-    if (nødvendigOpplæringLegend.parentElement != null) {
-      const jaKnapp = within(nødvendigOpplæringLegend.parentElement).getByLabelText('Ja');
-      await expect(jaKnapp).toBeInTheDocument();
-      await userEvent.click(jaKnapp);
-
-      const harSøkerHattOpplæringFieldset = canvas.getByText('Har søker hatt opplæring', {
-        exact: false,
-      }).parentElement;
-      await expect(harSøkerHattOpplæringFieldset).toBeDefined();
-      if (harSøkerHattOpplæringFieldset != null) {
-        const neiKnapp = within(harSøkerHattOpplæringFieldset).getByLabelText('Nei');
-        await userEvent.click(neiKnapp);
-
-        await expect(
-          canvas.getByText(
-            sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).navn,
-          ),
-        ).toBeVisible();
-        await expect(
-          canvas.getByText(
-            sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).navn,
-          ),
-        ).toBeVisible();
-      }
-    }
+    const erNødvendigOpplæringDokumentertGroup = canvas.getByRole('group', {
+      name: /Er nødvendig opplæring dokumentert/i,
+    });
+    const jaKnapp = within(erNødvendigOpplæringDokumentertGroup).getByLabelText('Ja');
+    await expect(jaKnapp).toBeInTheDocument();
+    await userEvent.click(jaKnapp);
+    const vurderingTextInput = canvas.getByLabelText('Vurder om opplæringen er nødvendig', { exact: false });
+    await expect(vurderingTextInput).toBeVisible();
+    await userEvent.type(vurderingTextInput, 'Testbegrunnelse');
+    const harSøkerHattOpplæringGroup = canvas.getByRole('group', { name: /Har søker hatt opplæring/ });
+    const neiKnapp = within(harSøkerHattOpplæringGroup).getByLabelText('Nei');
+    await userEvent.click(neiKnapp);
+    const opplæringIkkeNødvendigRadio = canvas.getByText(
+      sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).navn,
+    );
+    const kursInneholderIkkeOpplæringRadio = canvas.getByText(
+      sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).navn,
+    );
+    await expect(opplæringIkkeNødvendigRadio).toBeVisible();
+    await expect(kursInneholderIkkeOpplæringRadio).toBeVisible();
+    await userEvent.click(opplæringIkkeNødvendigRadio);
+    const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
+    await userEvent.click(bekreftKnapp);
+    const expectedSubmitData = {
+      periode: { fom: '2025-02-14', tom: '2025-02-23' },
+      begrunnelse: 'Testbegrunnelse',
+      nødvendigOpplæring: false,
+      dokumentertOpplæring: true,
+      avslagsårsak: '1101',
+    };
+    await expect(løsAksjonspunkt9302).toHaveBeenCalledWith(expectedSubmitData);
   },
 };
