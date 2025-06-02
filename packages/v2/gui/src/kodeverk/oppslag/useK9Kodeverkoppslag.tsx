@@ -18,7 +18,6 @@ export const useK9Kodeverkoppslag = (hentKlageKodeverk: boolean): K9Kodeverkopps
   const k9sakQuery = useQuery({
     queryKey: ['k9sak-kodeverkoppslag'],
     queryFn: () => k9sakClient.kodeverk.alleKodeverdierSomObjekt(),
-    refetchOnWindowFocus: false,
   });
   const k9klageQuery = useQuery({
     queryKey: ['k9klage-kodeverkoppslag'],
@@ -26,7 +25,6 @@ export const useK9Kodeverkoppslag = (hentKlageKodeverk: boolean): K9Kodeverkopps
       const res = await kodeverk_alleKodeverdierSomObjekt();
       return res.data;
     },
-    refetchOnWindowFocus: false,
     enabled: hentKlageKodeverk,
   });
 

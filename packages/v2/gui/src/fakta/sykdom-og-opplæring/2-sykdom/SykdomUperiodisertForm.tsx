@@ -45,7 +45,13 @@ const SykdomUperiodisertForm = ({
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { setNyVurdering } = useContext(SykdomUperiodisertContext);
   const { refetchBehandling } = useContext(BehandlingContext);
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
   const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering({
     onSuccess: async () => {
