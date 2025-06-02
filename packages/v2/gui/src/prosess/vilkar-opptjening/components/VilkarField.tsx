@@ -1,6 +1,6 @@
 import { VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, HStack } from '@navikt/ds-react';
+import { BodyShort, Box } from '@navikt/ds-react';
 import { RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useContext } from 'react';
@@ -72,9 +72,10 @@ export const VilkarField = ({
   };
 
   return (
-    <>
+    <div className="mt-4">
       <TextAreaField
         name={`${fieldPrefix}.begrunnelse`}
+        size="small"
         label={erOmsorgspenger ? 'Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B' : 'Vurdering'}
         validate={[required, validateMinLength3, validateMaxLength1500]}
         readOnly={readOnly}
@@ -83,14 +84,14 @@ export const VilkarField = ({
 
       <Box marginBlock="4">
         {readOnly && (
-          <HStack gap="4" align="center">
+          <div className="flex gap-4">
             {erVilkarOk(field?.kode) ? (
               <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
             ) : (
               <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
             )}
-            <BodyShort>{vilkarVurderingTekst()}</BodyShort>
-          </HStack>
+            <BodyShort size="small">{vilkarVurderingTekst()}</BodyShort>
+          </div>
         )}
         {!readOnly && (
           <RadioGroupPanel
@@ -137,7 +138,7 @@ export const VilkarField = ({
           />
         )}
       </Box>
-    </>
+    </div>
   );
 };
 

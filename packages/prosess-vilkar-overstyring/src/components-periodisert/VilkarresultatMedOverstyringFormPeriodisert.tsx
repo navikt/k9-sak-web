@@ -17,7 +17,6 @@ import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
-import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
 
 export interface CustomVilkarText {
   id: string;
@@ -135,7 +134,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   return (
     <Form formMethods={formMethods} onSubmit={onSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
-        <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={!!erOverstyrt}>
+        <AksjonspunktBox erAksjonspunktApent={!!erOverstyrt}>
           <Label data-testid="overstyringform" size="small" as="p">
             <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
           </Label>

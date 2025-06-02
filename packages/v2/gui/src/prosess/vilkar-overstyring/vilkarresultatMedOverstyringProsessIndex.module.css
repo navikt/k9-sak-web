@@ -1,9 +1,5 @@
-.contentContainer {
-  flex: 1;
-}
-
 .sideMenuContainer {
-  margin: 0 32px 0 0;
+  flex-shrink: 0;
 }
 
 .sideMenuContainer > div {
@@ -12,5 +8,6 @@
 
 .mainContainerWithSideMenu {
   display: flex;
+  gap: 32px;
   margin-left: -8px;
 }

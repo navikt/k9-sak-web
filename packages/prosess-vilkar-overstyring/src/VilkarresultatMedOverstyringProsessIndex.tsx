@@ -26,6 +26,19 @@ const intl = createIntl(
   cache,
 );
 
+const getIconForVilkarStatus = (vilkarStatusKode: string, harAktivtAksjonspunkt: boolean) => {
+  if (vilkarStatusKode === vilkarUtfallType.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+  }
+  if (vilkarStatusKode === vilkarUtfallType.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+  }
+  if (vilkarStatusKode === vilkarUtfallType.IKKE_VURDERT && harAktivtAksjonspunkt) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  return null;
+};
+
 interface VilkarresultatMedOverstyringProsessIndexProps {
   behandling: Behandling;
   medlemskap?: {
@@ -106,18 +119,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             links={perioder.map((periode, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.periode.fom)} - ${formatDate(periode.periode.tom)}`,
-              icon: (function () {
-                if (periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT) {
-                  return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
-                }
-                if (periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
-                  return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
-                }
-                if (periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT && harAktivtAksjonspunkt) {
-                  return <AksjonspunktIkon size="small" />;
-                }
-                return null;
-              })(),
+              icon: getIconForVilkarStatus(periode.vilkarStatus.kode, harAktivtAksjonspunkt),
             }))}
             onClick={setActiveTab}
             heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
