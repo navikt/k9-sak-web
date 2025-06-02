@@ -81,18 +81,12 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   }, [valgtPeriode, allePerioder, onPeriodeClick]);
 
   // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
-  // Hvis ikke vi har en periode som må vurderes, og det finnes en periode som er vurdert, så velger vi den første periode som er vurdert
   useEffect(() => {
     const periodeSomMåVurderes = allePerioder.find(
       periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
     );
-    const periodeSomErVurdert = allePerioder.find(periode => periode.resultat !== Resultat.MÅ_VURDERES);
-    if (!valgtPeriode) {
-      if (periodeSomMåVurderes) {
-        onPeriodeClick(periodeSomMåVurderes);
-      } else if (periodeSomErVurdert) {
-        onPeriodeClick(periodeSomErVurdert);
-      }
+    if (!valgtPeriode && periodeSomMåVurderes) {
+      onPeriodeClick(periodeSomMåVurderes);
     }
   }, [valgtPeriode, allePerioder, onPeriodeClick]);
 

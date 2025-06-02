@@ -2,7 +2,7 @@ import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { Alert, Button } from '@navikt/ds-react';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -53,19 +53,9 @@ const SykdomUperiodisertIndex = () => {
     useLangvarigSykVurderingerFagsak(behandlingUuid);
   const { data: vurderingBruktIAksjonspunkt, isLoading: isLoadingVurderingBruktIAksjonspunkt } =
     useVurdertLangvarigSykdom(behandlingUuid);
-
-  const [valgtPeriode, setValgtPeriode] = useState<SykdomVurderingselement | null>(null);
-  const [nyVurdering, setNyVurdering] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (langvarigSykVurderinger?.length === 0) {
-      setNyVurdering(true);
-    }
-  }, [langvarigSykVurderinger]);
-
   const mappedVurderinger = langvarigSykVurderinger?.map(element => ({
     ...element,
-    godkjent: utledGodkjent(element),
+    godkjent: utledGodkjent(element) as 'ja' | 'nei' | 'mangler_dokumentasjon',
   }));
   const vurderingsliste = langvarigSykVurderinger?.map(element => ({
     ...element,
@@ -73,6 +63,9 @@ const SykdomUperiodisertIndex = () => {
     id: element.uuid,
     resultat: utledResultat(element),
   }));
+
+  const [valgtPeriode, setValgtPeriode] = useState<SykdomVurderingselement | null>(null);
+  const [nyVurdering, setNyVurdering] = useState<boolean>(false);
 
   const velgPeriode = (periode: SykdomVurderingselement | null) => {
     setValgtPeriode(periode);
