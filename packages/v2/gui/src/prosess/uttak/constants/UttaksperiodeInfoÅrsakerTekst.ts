@@ -59,7 +59,7 @@ export const IkkeOppfylteÅrsakerMedTekst: UttaksperiodeInfoÅrsakerTekstType[] 
   },
   {
     årsak: UttaksperiodeInfoÅrsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
-    tekst: 'Årsak for avslag: Søker har mottatt ytelser i utlandet i 8 uker.',
+    tekst: 'Årsak for avslag: Søker har mottatt pleie- og/eller opplæringspenger i utlandet i 8 uker.',
   },
   {
     årsak: UttaksperiodeInfoÅrsaker.BARNETS_DØDSFALL,
