@@ -3793,8 +3793,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
-    "@navikt/k9-klage-typescript-client": "npm:3.0.20250512080735"
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250522095735"
+    "@navikt/k9-klage-typescript-client": "npm:3.0.20250530164140"
+    "@navikt/k9-sak-typescript-client": "npm:2.0.20250530164052"
     "@navikt/ung-sak-typescript-client": "npm:0.2.20250522102547"
     "@tanstack/eslint-plugin-query": "npm:^5.78.0"
   languageName: unknown
@@ -4981,8 +4981,8 @@ __metadata:
   linkType: hard
 
 "@navikt/ft-form-hooks@npm:^6.3.7":
-  version: 6.3.7
-  resolution: "@navikt/ft-form-hooks@npm:6.3.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F6.3.7%2F038bca5a4f3009931cb4c8a04d0144fb222ce32e"
+  version: 6.3.8
+  resolution: "@navikt/ft-form-hooks@npm:6.3.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F6.3.8%2F66f4e7c7c8e565df7778621e9ed6e176450df932"
   dependencies:
     "@navikt/aksel-icons": "npm:7.21.1"
     "@navikt/ds-css": "npm:7.21.1"
@@ -5010,7 +5010,7 @@ __metadata:
     react: 19.1.0
     react-dom: 19.1.0
     react-hook-form: 7.x
-  checksum: 10/27b9a977b296c0b14763195c3d2f7ca21a2ecac1c48079f6a3d0200d0b1e05491d2c3b2fd80518f0057d150487ef88514367f2beebebfce37bf508dd022c4ac3
+  checksum: 10/0b85880101125aae1a166a54f5df114b9ff9d4dd8ffdc59000de228d7b308ab70c14b4f1978910fc6313ece7c8d3048beea47f9635d79e9c2942de0d7654cf42
   languageName: node
   linkType: hard
 
@@ -5235,19 +5235,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-klage-typescript-client@npm:3.0.20250512080735":
-  version: 3.0.20250512080735
-  resolution: "@navikt/k9-klage-typescript-client@npm:3.0.20250512080735::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.0.20250512080735%2F20ea06a655a636a2095c919a0e8d68ae04a09e15"
+"@navikt/k9-klage-typescript-client@npm:3.0.20250530164140":
+  version: 3.0.20250530164140
+  resolution: "@navikt/k9-klage-typescript-client@npm:3.0.20250530164140::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.0.20250530164140%2F29ef2f2a9cd2310dde4445b083d85ad15b3fae6b"
   dependencies:
     "@hey-api/client-fetch": "npm:=0.10.0"
-  checksum: 10/1344b392164537b51a5577a8406d67180d42470a821da4235918aff2f51e85ab1303e0f9864742726af6cea3fbc263719a36d759972339429e4c1d5e9e6819df
+  checksum: 10/01f45605f6dccd37d744a490ae5860382604742701893c180f08c4771c96d5ebd0c83883fb48666690b639fac4443157cc6c8d63ea91a902ffef4344dd5003cf
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250522095735":
-  version: 2.0.20250522095735
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250522095735::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250522095735%2F14e14965c5fe5e4365ec0520ccd2bab8c7c56e3f"
-  checksum: 10/c577392fc39426de7fdf419ff70870b5d97a5daf5ed787ff6683f4c620950ee66289221cb1ef2c7c0c96b52d62ea9123f9027c9d1c9df40382d3f2bffca6a92d
+"@navikt/k9-sak-typescript-client@npm:2.0.20250530164052":
+  version: 2.0.20250530164052
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250530164052::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250530164052%2F87ee64c822d18da88ac23e8aabfbcd54a88066ea"
+  checksum: 10/0f42fa6d78ec3b51ea54b474c165738d2104be3a0140ee25e254eb6b5808771df92ab380ca3ef93236cd7be141bf5e48b9dbb5b5ad3e5d993c527d6fceac88ef
   languageName: node
   linkType: hard
 
@@ -7299,12 +7299,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/pretty-format@npm:3.1.4, @vitest/pretty-format@npm:^3.1.4":
+"@vitest/pretty-format@npm:3.1.4":
   version: 3.1.4
   resolution: "@vitest/pretty-format@npm:3.1.4"
   dependencies:
     tinyrainbow: "npm:^2.0.0"
   checksum: 10/d8c831410d2cc755d899f31a5f7298ad336f4cddc3115d7da5174595098144a3282eee89a54fb05c6592d408bf4a86e66fa5636c9304816a6557b833d0f98748
+  languageName: node
+  linkType: hard
+
+"@vitest/pretty-format@npm:^3.1.4":
+  version: 3.2.0
+  resolution: "@vitest/pretty-format@npm:3.2.0"
+  dependencies:
+    tinyrainbow: "npm:^2.0.0"
+  checksum: 10/174336cf787923c575a2f5d8b4c67bd52e0a83a139b53785db1bac5aa4c3dcee1d201dd8d43839cb20f47ede79198f210152e37a37fa4fd249c2681712017834
   languageName: node
   linkType: hard
 
@@ -11703,9 +11712,9 @@ __metadata:
   linkType: hard
 
 "hookified@npm:^1.8.2":
-  version: 1.9.0
-  resolution: "hookified@npm:1.9.0"
-  checksum: 10/860d30ebfb15a07f053971ab1518f5d14d8ea0a18165bee12d9686b4b16221570bd763faf6e6ea73dea02906de86e77ca0350cd8df6794c0d576eb97c12acd93
+  version: 1.9.1
+  resolution: "hookified@npm:1.9.1"
+  checksum: 10/48814815af4130d49ccf351b4b56c54847d2aba0b05de440f3a8a00a283bb4c2bc295f9a2614b249c56b034c132b773d9f83cabdd0d40dea028fd64a62f7375d
   languageName: node
   linkType: hard
 
@@ -11895,10 +11904,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^7.0.0, ignore@npm:^7.0.4":
+"ignore@npm:^7.0.0":
   version: 7.0.4
   resolution: "ignore@npm:7.0.4"
   checksum: 10/01ee59df2ffd14b0844efc17f5ab3642c848e45efdb7cc757928da5e076cb74313748f77f5ffe362a6407c5e7cc71f10fad5e8eb9d91c1a17c4e7ef2c1f8e40e
+  languageName: node
+  linkType: hard
+
+"ignore@npm:^7.0.4":
+  version: 7.0.5
+  resolution: "ignore@npm:7.0.5"
+  checksum: 10/f134b96a4de0af419196f52c529d5c6120c4456ff8a6b5a14ceaaa399f883e15d58d2ce651c9b69b9388491d4669dda47285d307e827de9304a53a1824801bc6
   languageName: node
   linkType: hard
 

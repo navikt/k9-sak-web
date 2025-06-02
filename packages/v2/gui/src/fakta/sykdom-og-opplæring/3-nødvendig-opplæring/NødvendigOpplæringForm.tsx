@@ -9,11 +9,8 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import {
-  type KodeverdiSomObjektAvslagsårsak,
-  KodeverdiSomObjektAvslagsårsakKilde,
-} from '@k9-sak-web/backend/k9sak/generated';
-import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
+import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -46,11 +43,7 @@ const NødvendigOpplæringForm = ({
       nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
     },
   });
-
-  const K9Kodeverkoppslag = useK9Kodeverkoppslag(false);
-
-  const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
-    K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
+  const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
@@ -58,10 +51,7 @@ const NødvendigOpplæringForm = ({
     if (opplæringIkkeDokumentertMedLegeerklæring) {
       formMethods.setValue('nødvendigOpplæring', '');
       formMethods.setValue('begrunnelse', '');
-      formMethods.setValue(
-        'avslagsårsak',
-        hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.MANGLENDE_DOKUMENTASJON).kode,
-      );
+      formMethods.setValue('avslagsårsak', KodeverdiSomObjektAvslagsårsakKilde.MANGLENDE_DOKUMENTASJON);
     } else {
       formMethods.setValue('avslagsårsak', undefined);
     }
@@ -200,10 +190,8 @@ const NødvendigOpplæringForm = ({
                   ? undefined
                   : {
                       validate: value => {
-                        return value ===
-                          hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).kode ||
-                          value ===
-                            hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).kode
+                        return value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING ||
+                          value === KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING
                           ? undefined
                           : 'Avslagsårsak er påkrevd';
                       },
@@ -217,13 +205,19 @@ const NødvendigOpplæringForm = ({
                   size="small"
                   error={formMethods.formState.errors.avslagsårsak?.message as string | undefined}
                 >
-                  <Radio value={hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).kode}>
-                    {hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).navn}
+                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING}>
+                    {
+                      k9Kodeverkoppslag.k9sak.avslagsårsaker(
+                        KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING,
+                      ).navn
+                    }
                   </Radio>
-                  <Radio
-                    value={hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).kode}
-                  >
-                    {hentAvslagsårsak(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).navn}
+                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING}>
+                    {
+                      k9Kodeverkoppslag.k9sak.avslagsårsaker(
+                        KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING,
+                      ).navn
+                    }
                   </Radio>
                 </RadioGroup>
               )}
