@@ -19,6 +19,19 @@ import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 
 const lovReferanse = '§ 22-13';
 
+const getIconForPeriode = (vilkarStatus: string, erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
+  if (erOverstyrt || harÅpentUløstAksjonspunkt) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  if (vilkarStatus === vilkårStatus.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+  }
+  if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+  }
+  return null;
+};
+
 interface SoknadsfristVilkarProsessIndexProps {
   aksjonspunkter: SoknadsfristAksjonspunktType[];
   submitCallback: (props: SubmitData[]) => void;
@@ -154,18 +167,7 @@ const SoknadsfristVilkarProsessIndex = ({
               periode.fom && periode.tom
                 ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`
                 : `Periode ${index + 1}`,
-            icon: (function () {
-              if (erOverstyrt || harÅpentUløstAksjonspunkt) {
-                return <AksjonspunktIkon size="small" />;
-              }
-              if (vilkarStatus === vilkårStatus.OPPFYLT) {
-                return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
-              }
-              if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
-                return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
-              }
-              return null;
-            })(),
+            icon: getIconForPeriode(vilkarStatus, erOverstyrt, harÅpentUløstAksjonspunkt),
           }))}
           onClick={setActiveTab}
           heading="Perioder"

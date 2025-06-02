@@ -27,6 +27,19 @@ interface OpptjeningVilkarProsessIndexProps {
   visAllePerioder: boolean;
 }
 
+const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus, isAksjonspunktOpen: boolean) => {
+  if (isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+  }
+  if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+  }
+  return null;
+};
+
 const OpptjeningVilkarProsessIndexV2 = ({
   fagsak,
   behandling,
@@ -68,18 +81,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-              icon: (function () {
-                if (isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
-                  return <AksjonspunktIkon size="small" />;
-                }
-                if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
-                  return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
-                }
-                if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT) {
-                  return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
-                }
-                return null;
-              })(),
+              icon: getIconForOpptjeningStatus(vilkarStatus, isAksjonspunktOpen),
             }))}
             onClick={setActiveTab}
             heading="Perioder"
