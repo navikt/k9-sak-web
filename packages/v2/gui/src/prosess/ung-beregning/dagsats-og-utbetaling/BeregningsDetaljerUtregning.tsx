@@ -1,6 +1,7 @@
 import type { UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
 import { formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, HStack, VStack } from '@navikt/ds-react';
+import React from 'react';
 import styles from './dagsatsOgUtbetaling.module.css';
 interface BeregningsDetaljerUtregningProps {
   rapportertInntekt?: number;
@@ -18,8 +19,8 @@ export const BeregningsDetaljerUtregning = ({
   <>
     <VStack gap="4">
       {satsperioder?.map(({ dagsats, antallDager, fom, tom, dagsatsBarnetillegg, antallBarn }) => (
-        <>
-          <HStack justify="space-between" key={`${fom}-${tom}`}>
+        <React.Fragment key={`${fom}-${tom}`}>
+          <HStack justify="space-between">
             <BodyShort size="small">
               Beregnet ytelse ({formatCurrencyWithKr(dagsats)} x {antallDager} dager)
             </BodyShort>
@@ -28,7 +29,7 @@ export const BeregningsDetaljerUtregning = ({
             </BodyShort>
           </HStack>
           {antallBarn != undefined && antallBarn > 0 && (
-            <HStack justify="space-between" key={`${fom}-${tom}`}>
+            <HStack justify="space-between">
               <BodyShort size="small">
                 Barnetillegg ({formatCurrencyWithKr(dagsatsBarnetillegg)} x {antallDager} dager)
               </BodyShort>
@@ -37,7 +38,7 @@ export const BeregningsDetaljerUtregning = ({
               </BodyShort>
             </HStack>
           )}
-        </>
+        </React.Fragment>
       ))}
 
       <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
