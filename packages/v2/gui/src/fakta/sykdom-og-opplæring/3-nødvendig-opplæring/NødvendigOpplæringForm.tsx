@@ -47,11 +47,10 @@ const NødvendigOpplæringForm = ({
     },
   });
 
-  const K9Kodeverkoppslag = useK9Kodeverkoppslag(false);
+  const K9Kodeverkoppslag = useK9Kodeverkoppslag(true);
 
-  const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak => {
-    return K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
-  };
+  const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
+    K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
