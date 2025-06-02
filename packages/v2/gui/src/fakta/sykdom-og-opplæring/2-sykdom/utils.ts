@@ -15,10 +15,10 @@ export const utledResultat = (element: LangvarigSykdomVurderingDto) => {
 
 export const utledGodkjent = (element: LangvarigSykdomVurderingDto) => {
   if (element.godkjent) {
-    return 'ja';
+    return 'ja' as const;
   }
   if (element.avslagsårsak === LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON) {
-    return 'mangler_dokumentasjon';
+    return 'mangler_dokumentasjon' as const;
   }
-  return 'nei';
+  return 'nei' as const;
 };
