@@ -47,7 +47,7 @@ const NødvendigOpplæringForm = ({
     },
   });
 
-  const K9Kodeverkoppslag = useK9Kodeverkoppslag(true);
+  const K9Kodeverkoppslag = useK9Kodeverkoppslag(false);
 
   const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
     K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
