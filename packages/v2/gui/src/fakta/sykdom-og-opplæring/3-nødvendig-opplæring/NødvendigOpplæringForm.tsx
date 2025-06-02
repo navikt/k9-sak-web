@@ -13,7 +13,7 @@ import {
   type KodeverdiSomObjektAvslagsårsak,
   KodeverdiSomObjektAvslagsårsakKilde,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
+import { useK9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -47,10 +47,11 @@ const NødvendigOpplæringForm = ({
     },
   });
 
-  const { k9sak } = useContext(K9KodeverkoppslagContext);
+  const K9Kodeverkoppslag = useK9Kodeverkoppslag(false);
 
-  const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak =>
-    k9sak.avslagsårsaker(avslagsårsak);
+  const hentAvslagsårsak = (avslagsårsak: KodeverdiSomObjektAvslagsårsakKilde): KodeverdiSomObjektAvslagsårsak => {
+    return K9Kodeverkoppslag.k9sak.avslagsårsaker(avslagsårsak);
+  };
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
 
