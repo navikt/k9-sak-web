@@ -1,7 +1,7 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/Kommunikasjonsretning.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
 
 const behandlingId = 1;

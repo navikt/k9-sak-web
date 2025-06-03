@@ -1,8 +1,8 @@
-import DiagnosekodeVelger from './DiagnosekodeVelger.jsx';
 import type { Meta, StoryObj } from '@storybook/react';
-import { withFormProvider } from '../../storybook/decorators/withFormProvider.js';
-import { expect, userEvent, waitFor } from '@storybook/test';
 import type { UseFormReturn } from 'react-hook-form';
+import { expect, userEvent, waitFor } from 'storybook/test';
+import { withFormProvider } from '../../storybook/decorators/withFormProvider.js';
+import DiagnosekodeVelger from './DiagnosekodeVelger.jsx';
 
 const meta = {
   title: 'gui/shared/diagnosekodeVelger/DiagnosekodeVelger.tsx',
