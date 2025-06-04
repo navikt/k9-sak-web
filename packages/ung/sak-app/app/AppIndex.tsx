@@ -23,7 +23,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const EMPTY_ARRAY = [];
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 /**
  * AppIndex
  *

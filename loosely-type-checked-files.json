@@ -445,7 +445,6 @@
   "packages/tidslinje/src/components/pleiepenger/Tidslinje.spec.tsx",
   "packages/tidslinje/src/components/pleiepenger/Tidslinje.tsx",
   "packages/ung/sak-app/app/components/Dekorator.tsx",
-  "packages/ung/sak-app/app/paths.ts",
   "packages/ung/sak-app/app/useTrackRouteParam.tsx",
   "packages/ung/sak-app/behandling/BehandlingEventHandler.ts",
   "packages/ung/sak-app/behandling/BehandlingIndex.tsx",

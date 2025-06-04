@@ -84,7 +84,7 @@ const Dekorator = ({
 
   const resolvedErrorMessages = useMemo(
     () => lagFeilmeldinger(intl, formaterteFeilmeldinger, queryStrings),
-    [formaterteFeilmeldinger, queryStrings],
+    [formaterteFeilmeldinger, queryStrings, intl],
   );
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
