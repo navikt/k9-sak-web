@@ -19,7 +19,7 @@ import {
 } from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
 
 function buildInitialFormStateForEdit(
-  { tekst, resultat, perioder, dokumenter }: Vurderingsversjon,
+  { tekst, resultat, perioder, dokumenter, manglerLegeerklæring }: Vurderingsversjon,
   vurderingstype: Vurderingstype,
 ):
   | VurderingAvTilsynsbehovFormState
@@ -33,6 +33,7 @@ function buildInitialFormStateForEdit(
       [KTPFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]: tekst,
       [KTPFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]: resultat === Vurderingsresultat.OPPFYLT,
       [KTPFieldName.PERIODER]: perioder,
+      [KTPFieldName.MANGLER_LEGEERKLÆRING]: manglerLegeerklæring ?? false,
       [KTPFieldName.DOKUMENTER]: dokumenterFraVurdering,
     };
   }
@@ -52,15 +53,13 @@ function buildInitialFormStateForEdit(
       [LivetsSluttfaseFieldName.PERIODER]: perioder,
     };
   }
-  if (vurderingstype === Vurderingstype.LANGVARIG_SYKDOM) {
-    return {
-      [LangvarigSykdomFieldName.VURDERING_LANGVARIG_SYKDOM]: tekst,
-      [LangvarigSykdomFieldName.HAR_LANGVARIG_SYKDOM]: resultat,
-      [LangvarigSykdomFieldName.DOKUMENTER]: dokumenterFraVurdering,
-      [LangvarigSykdomFieldName.PERIODER]: perioder,
-    };
-  }
-  return undefined;
+
+  return {
+    [LangvarigSykdomFieldName.VURDERING_LANGVARIG_SYKDOM]: tekst,
+    [LangvarigSykdomFieldName.HAR_LANGVARIG_SYKDOM]: resultat,
+    [LangvarigSykdomFieldName.DOKUMENTER]: dokumenterFraVurdering,
+    [LangvarigSykdomFieldName.PERIODER]: perioder,
+  };
 }
 
 export default buildInitialFormStateForEdit;

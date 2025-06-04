@@ -18,7 +18,7 @@ import vilkårsvurderingReducer from './reducer';
 interface VilkårsvurderingAvToOmsorgspersonerProps {
   navigerTilNesteSteg: (steg: Step) => void;
   hentSykdomsstegStatus: () => Promise<SykdomsstegStatusResponse>;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
+  sykdomsstegStatus: SykdomsstegStatusResponse | null;
 }
 
 const VilkårsvurderingAvToOmsorgspersoner = ({
@@ -47,7 +47,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
     skalViseRadForNyVurdering,
   } = state;
 
-  const { manglerGodkjentLegeerklæring } = sykdomsstegStatus;
+  const manglerGodkjentLegeerklæring = sykdomsstegStatus?.manglerGodkjentLegeerklæring;
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
@@ -125,13 +125,14 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   };
 
   const setMargin = () => {
-    if (vurderingsoversikt.harPerioderSomSkalVurderes() || !harGyldigSignatur) {
+    if ((vurderingsoversikt?.harPerioderSomSkalVurderes?.() ?? false) || !harGyldigSignatur) {
       return '4 0';
     }
     return undefined;
   };
 
-  const skalViseValgfriePerioder = !readOnly && vurderingsoversikt?.resterendeValgfrieVurderingsperioder.length > 0;
+  const skalViseValgfriePerioder =
+    !readOnly && (vurderingsoversikt?.resterendeValgfrieVurderingsperioder?.length ?? 0) > 0;
 
   const skalViseOpprettVurderingKnapp =
     !vurderingsoversikt?.harPerioderSomSkalVurderes() && !skalViseRadForNyVurdering && harGyldigSignatur;

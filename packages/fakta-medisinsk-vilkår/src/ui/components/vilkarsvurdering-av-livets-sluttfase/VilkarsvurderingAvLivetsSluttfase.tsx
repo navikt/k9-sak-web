@@ -21,7 +21,7 @@ import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase
 interface VilkårsvurderingAvLivetsSluttfaseProps {
   navigerTilNesteSteg: (steg: Step, ikkeMarkerSteg?: boolean) => void;
   hentSykdomsstegStatus: () => Promise<SykdomsstegStatusResponse>;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
+  sykdomsstegStatus: SykdomsstegStatusResponse | null;
 }
 
 const VilkårsvurderingAvLivetsSluttfase = ({
@@ -50,13 +50,15 @@ const VilkårsvurderingAvLivetsSluttfase = ({
     vurderingsoversiktFeilet,
   } = state;
 
-  const { manglerGodkjentLegeerklæring } = sykdomsstegStatus;
+  const manglerGodkjentLegeerklæring = sykdomsstegStatus?.manglerGodkjentLegeerklæring;
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
-    get<Vurderingsoversikt>(endpoints.vurderingsoversiktLivetsSluttfase, httpErrorHandler, {
-      signal: controller.signal,
-    });
+    endpoints.vurderingsoversiktLivetsSluttfase
+      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLivetsSluttfase, httpErrorHandler, {
+          signal: controller.signal,
+        })
+      : Promise.resolve(null);
 
   const visVurderingsoversikt = (nyVurderingsoversikt: Vurderingsoversikt) => {
     dispatch({ type: ActionType.VIS_VURDERINGSOVERSIKT, vurderingsoversikt: nyVurderingsoversikt });
@@ -104,8 +106,8 @@ const VilkårsvurderingAvLivetsSluttfase = ({
   const oppdaterVurderingsoversikt = async () => {
     dispatch({ type: ActionType.PENDING });
     const vurderingsoversiktData = await getVurderingsoversikt();
-    const nyVurderingsoversikt = new Vurderingsoversikt(vurderingsoversiktData);
-    visVurderingsoversikt(nyVurderingsoversikt);
+    const nyVurderingsoversikt = vurderingsoversiktData ? new Vurderingsoversikt(vurderingsoversiktData) : null;
+    if (nyVurderingsoversikt) visVurderingsoversikt(nyVurderingsoversikt);
   };
 
   const onAvbryt = () => {
@@ -130,7 +132,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
   };
 
   const setMargin = () => {
-    if (vurderingsoversikt.harPerioderSomSkalVurderes() || !harGyldigSignatur) {
+    if ((vurderingsoversikt && vurderingsoversikt.harPerioderSomSkalVurderes()) || !harGyldigSignatur) {
       return '4 0';
     }
     return undefined;

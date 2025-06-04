@@ -8,7 +8,7 @@ import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/
 import ManglerGyldigSignaturMelding from '../mangler-gyldig-signatur-melding/ManglerGyldigSignaturMelding';
 
 interface VurderingsoversiktMessagesProps {
-  vurderingsoversikt: Vurderingsoversikt;
+  vurderingsoversikt: Vurderingsoversikt | null;
   harGyldigSignatur: boolean;
 }
 
@@ -32,7 +32,7 @@ const VurderingsoversiktMessages = ({
     );
   }
 
-  if (vurderingsoversikt.harIngenPerioderÅVise()) {
+  if (vurderingsoversikt && vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
       <Box marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
@@ -40,7 +40,7 @@ const VurderingsoversiktMessages = ({
     );
   }
 
-  if (vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
+  if (vurderingsoversikt && vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
     const barnetsAttenårsdag = vurderingsoversikt.harPerioderDerPleietrengendeErOver18år
       ? addYearsToDate(vurderingsoversikt.pleietrengendesFødselsdato, 18)
       : null;
@@ -76,7 +76,7 @@ const VurderingsoversiktMessages = ({
             </Box>)
             */
   }
-  return null;
+  return <></>;
 };
 
 export default VurderingsoversiktMessages;

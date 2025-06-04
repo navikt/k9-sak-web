@@ -13,10 +13,10 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
   const { httpErrorHandler } = React.useContext(ContainerContext);
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [vurdering, setVurdering] = React.useState<Vurdering>(null);
+  const [vurdering, setVurdering] = React.useState<Vurdering | null>(null);
   const [hentVurderingHarFeilet, setHentVurderingHarFeilet] = React.useState<boolean>(false);
 
-  const controller = useMemo(() => new AbortController(), [url]);
+  const controller = useMemo(() => new AbortController(), []);
 
   function hentVurderingsdetaljer(): Promise<Vurdering> {
     return httpUtils.get(url, httpErrorHandler, { signal: controller.signal });
@@ -53,7 +53,9 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
   if (hentVurderingHarFeilet) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere.</Alert>;
   }
-
+  if (!vurdering) {
+    return <Alert variant="error">Kunne ikke hente vurderingsdetaljer.</Alert>;
+  }
   return contentRenderer(vurdering);
 };
 

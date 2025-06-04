@@ -61,36 +61,46 @@ const NyVurderingController = ({
   const controller = useMemo(() => new AbortController(), []);
 
   function lagreVurdering(nyVurderingsversjon: Partial<Vurderingsversjon>) {
-    dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
-    return postNyVurdering(
-      opprettVurderingLink.href,
-      opprettVurderingLink.requestPayload.behandlingUuid,
-      { ...nyVurderingsversjon, type: vurderingstype },
-      httpErrorHandler,
-      controller.signal,
-    ).then(
-      () => {
-        onVurderingLagret();
-        dispatch({ type: ActionType.VURDERING_LAGRET });
-        scrollUp();
-      },
-      () => {
-        dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
-        scrollUp();
-      },
-    );
+    if (vurderingstype && opprettVurderingLink?.requestPayload?.behandlingUuid) {
+      dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
+      return postNyVurdering(
+        opprettVurderingLink.href,
+        opprettVurderingLink.requestPayload.behandlingUuid,
+        { ...nyVurderingsversjon, type: vurderingstype },
+        httpErrorHandler,
+        controller.signal,
+      ).then(
+        () => {
+          onVurderingLagret();
+          dispatch({ type: ActionType.VURDERING_LAGRET });
+          scrollUp();
+        },
+        () => {
+          dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+          scrollUp();
+        },
+      );
+    } else {
+      dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+    }
   }
 
   const sjekkForEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,
-  ): Promise<PerioderMedEndringResponse> =>
-    postNyVurderingDryRun(
-      opprettVurderingLink.href,
-      opprettVurderingLink.requestPayload.behandlingUuid,
-      { ...nyVurderingsversjon, type: vurderingstype },
-      httpErrorHandler,
-      controller.signal,
-    );
+  ): Promise<PerioderMedEndringResponse> => {
+    if (vurderingstype && opprettVurderingLink?.requestPayload?.behandlingUuid) {
+      return postNyVurderingDryRun(
+        opprettVurderingLink.href,
+        opprettVurderingLink.requestPayload.behandlingUuid,
+        { ...nyVurderingsversjon, type: vurderingstype },
+        httpErrorHandler,
+        controller.signal,
+      );
+    } else {
+      dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+      return new Promise((_, reject) => reject(new Error('Ugyldig vurderingstype eller behandling UUID')));
+    }
+  };
 
   const advarOmEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,

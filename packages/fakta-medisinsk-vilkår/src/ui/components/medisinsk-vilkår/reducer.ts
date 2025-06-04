@@ -6,15 +6,15 @@ import Dokument from '../../../types/Dokument';
 interface State {
   isLoading: boolean;
   hasError: boolean;
-  activeStep: Step;
-  markedStep: Step;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
+  activeStep: Step | null;
+  markedStep: Step | null;
+  sykdomsstegStatus: SykdomsstegStatusResponse | null;
   nyeDokumenterSomIkkeErVurdert: Dokument[];
 }
 
 interface Action {
   type: ActionType;
-  step?: Step;
+  step: Step | null;
   sykdomsstegStatus?: SykdomsstegStatusResponse;
   nyeDokumenterSomIkkeErVurdert?: Dokument[];
 }
@@ -26,20 +26,20 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
         ...state,
         nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
         activeStep: action.step || dokumentSteg,
-        markedStep: action.step,
+        markedStep: action.step ?? null,
         isLoading: false,
       };
     }
     case ActionType.ACTIVATE_STEP: {
       return {
         ...state,
-        activeStep: action.step,
+        activeStep: action.step ?? null,
       };
     }
     case ActionType.ACTIVATE_STEP_AND_CLEAR_MARKING: {
       return {
         ...state,
-        activeStep: action.step,
+        activeStep: action.step ?? null,
         markedStep: null,
       };
     }
@@ -54,15 +54,15 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
     case ActionType.NAVIGATE_TO_STEP: {
       return {
         ...state,
-        activeStep: action.step,
-        markedStep: action.step,
+        activeStep: action.step ?? null,
+        markedStep: action.step ?? null,
       };
     }
     case ActionType.UPDATE_STATUS: {
       return {
         ...state,
-        sykdomsstegStatus: action.sykdomsstegStatus,
-        markedStep: action.step,
+        sykdomsstegStatus: action.sykdomsstegStatus ?? null,
+        markedStep: action.step ?? null,
       };
     }
     case ActionType.SHOW_ERROR: {
@@ -80,7 +80,7 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
     case ActionType.UPDATE_NYE_DOKUMENTER_SOM_IKKE_ER_VURDERT: {
       return {
         ...state,
-        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert,
+        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
       };
     }
     default:
