@@ -1,12 +1,13 @@
-import type { MerknadDto } from '@k9-sak-web/backend/k9sak/generated';
+import { MerknadEndretDtoMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
-import { Alert, BodyShort, Button, Heading, Label, Modal, VStack } from '@navikt/ds-react';
+import { Alert, Button, Heading, Modal, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import React, { useContext } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
-import Merknadkode from '../Merknadkode';
+import type { MarkerBehandlingBackendApiType } from '../MarkerBehandlingBackendApiType';
+import type { MerknaderFraLos } from '../MerknaderFraLos';
 import styles from './markerBehandlingModal.module.css';
 
 const minLength3 = minLength(3);
@@ -14,73 +15,80 @@ const maxLength100000 = maxLength(100000);
 
 interface PureOwnProps {
   brukHastekøMarkering?: boolean;
-  brukVanskeligKøMarkering?: boolean;
   lukkModal: () => void;
-  markerBehandling: (values: any) => Promise<any>;
   behandlingUuid: string;
-  merknaderFraLos: MerknadDto;
+  merknaderFraLos: MerknaderFraLos[];
   erVeileder?: boolean;
+  api: MarkerBehandlingBackendApiType;
 }
 
 interface FormValues {
   markerSomHastesak: boolean;
-  markerSomVanskelig: boolean;
+  markerSomUtenlands: boolean;
   begrunnelse: string;
 }
 
 const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   brukHastekøMarkering,
-  brukVanskeligKøMarkering,
   lukkModal,
-  markerBehandling,
   behandlingUuid,
   merknaderFraLos,
   erVeileder,
+  api,
 }) => {
   const buildInitialValues = (): FormValues => {
     if (merknaderFraLos) {
       return {
-        markerSomHastesak: !!merknaderFraLos.merknadKoder?.some(kode => kode === Merknadkode.HASTESAK),
-        markerSomVanskelig: !!merknaderFraLos.merknadKoder?.some(kode => kode === Merknadkode.VANSKELIG_SAK),
-        begrunnelse: merknaderFraLos.fritekst ?? '',
+        markerSomHastesak: !!merknaderFraLos.some(
+          merknad => merknad.merknadType.kode === MerknadEndretDtoMerknadKode.HASTESAK,
+        ),
+        markerSomUtenlands: !!merknaderFraLos.some(
+          merknad => merknad.merknadType.kode === MerknadEndretDtoMerknadKode.UTENLANDSTILSNITT,
+        ),
+        begrunnelse: merknaderFraLos.find(merknad => merknad.fritekst)?.fritekst ?? '',
       };
     }
     return {
       markerSomHastesak: false,
-      markerSomVanskelig: false,
+      markerSomUtenlands: false,
       begrunnelse: '',
     };
   };
 
   const formMethods = useForm<FormValues>({ defaultValues: buildInitialValues() });
-  const [markerSomVanskelig, markerSomHastesak] = formMethods.watch(['markerSomVanskelig', 'markerSomHastesak']);
+  const [markerSomUtenlands, markerSomHastesak] = formMethods.watch(['markerSomUtenlands', 'markerSomHastesak']);
   const featureToggles = useContext(FeatureTogglesContext);
   const formState = useFormState({ control: formMethods.control });
 
   const handleSubmit = async (values: FormValues) => {
-    const getMerknadKode = () => {
-      if (values.markerSomHastesak) {
-        return [Merknadkode.HASTESAK];
-      }
-      if (values.markerSomVanskelig) {
-        return [Merknadkode.VANSKELIG_SAK];
-      }
-      return [];
-    };
-    const transformedValues = {
-      behandlingUuid,
-      fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
-      merknadKoder: getMerknadKode(),
-    };
-    await markerBehandling(transformedValues);
-    if (erVeileder) {
-      goToSearch();
-    } else {
-      goToLos();
+    const queries = [];
+    if (values.markerSomHastesak) {
+      queries.push({
+        behandlingUuid,
+        fritekst: values.begrunnelse ?? '',
+        merknadKode: MerknadEndretDtoMerknadKode.HASTESAK,
+      });
+    }
+    if (values.markerSomUtenlands) {
+      queries.push({
+        behandlingUuid,
+        fritekst: values.begrunnelse ?? '',
+        merknadKode: MerknadEndretDtoMerknadKode.UTENLANDSTILSNITT,
+      });
+    }
+
+    if (queries.length > 0) {
+      await Promise.all(queries.map(query => api.markerBehandling(query))).then(() => {
+        if (erVeileder) {
+          goToSearch();
+        } else {
+          goToLos();
+        }
+      });
     }
   };
 
-  if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
+  if (!brukHastekøMarkering) {
     return null;
   }
 
@@ -93,9 +101,6 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
       </Modal.Header>
       <Modal.Body>
         <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
-          {brukVanskeligKøMarkering && (
-            <CheckboxField name="markerSomVanskelig" label="Behandlingen er vanskelig å løse" validate={[required]} />
-          )}
           {brukHastekøMarkering && (
             <VStack gap="4">
               <Alert variant="warning">
@@ -109,15 +114,8 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               />
             </VStack>
           )}
-          {markerSomVanskelig && (
-            <>
-              <Label size="small" as="p" className={styles.aksjonspunktHeading}>
-                Aksjonspunkt:
-              </Label>
-              <BodyShort size="small">Beregning</BodyShort>
-            </>
-          )}
-          {(markerSomVanskelig || markerSomHastesak) && (
+          <CheckboxField name="markerSomUtenlands" label="Behandlingen har utenlandstilsnitt" validate={[required]} />
+          {(markerSomUtenlands || markerSomHastesak) && (
             <div className={styles.textareaContainer}>
               <TextAreaField
                 className={styles.textArea}
@@ -137,7 +135,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               disabled={
                 !featureToggles.LOS_MARKER_BEHANDLING_SUBMIT ||
                 formState.isSubmitting ||
-                (!markerSomVanskelig && !markerSomHastesak)
+                (!markerSomUtenlands && !markerSomHastesak)
               }
             >
               {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
