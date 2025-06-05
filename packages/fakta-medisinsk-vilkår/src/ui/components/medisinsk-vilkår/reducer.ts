@@ -24,7 +24,7 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
     case ActionType.MARK_AND_ACTIVATE_STEP: {
       return {
         ...state,
-        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
+        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert ?? [],
         activeStep: action.step || dokumentSteg,
         markedStep: action.step ?? null,
         isLoading: false,
@@ -46,7 +46,7 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
     case ActionType.ACTIVATE_DEFAULT_STEP: {
       return {
         ...state,
-        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
+        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert ?? [],
         activeStep: dokumentSteg,
         isLoading: false,
       };
@@ -80,7 +80,7 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
     case ActionType.UPDATE_NYE_DOKUMENTER_SOM_IKKE_ER_VURDERT: {
       return {
         ...state,
-        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
+        nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert ?? [],
       };
     }
     default:
