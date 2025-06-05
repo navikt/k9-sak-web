@@ -100,7 +100,6 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
         if (editMode) {
           const endreLink = findLinkByRel(LinkRel.ENDRE_VURDERING, manuellVurdering.links);
           const vurderingsversjon = vurdering.versjoner[0];
-          console.log('initial values', buildInitialFormStateForEdit(vurderingsversjon, vurderingstype));
 
           const FormComponent = getFormComponent(vurderingstype);
           return (
