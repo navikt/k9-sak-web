@@ -138,7 +138,10 @@ const VurderingAvTilsynsbehovForm = ({
     return true;
   };
 
-  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER }) ?? [];
+  const perioderSomBlirVurdert: Period[] | undefined = useWatch({
+    control: formMethods.control,
+    name: FieldName.PERIODER,
+  });
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(p => p.asListOfDays());
     const dagerSomBlirVurdert = (perioderSomBlirVurdert || [])
@@ -155,13 +158,14 @@ const VurderingAvTilsynsbehovForm = ({
   const visLovparagrafForPleietrengendeOver18år = React.useMemo(
     () =>
       harPerioderDerPleietrengendeErOver18år &&
-      perioderSomBlirVurdert.some(periode => {
+      (perioderSomBlirVurdert?.some(periode => {
         if ((periode as AnyType).period) {
           return isSameOrBefore(barnetsAttenårsdag, (periode as AnyType).period.fom);
         }
         return isSameOrBefore(barnetsAttenårsdag, periode.fom);
-      }),
-    [perioderSomBlirVurdert],
+      }) ??
+        false),
+    [perioderSomBlirVurdert, harPerioderDerPleietrengendeErOver18år, barnetsAttenårsdag],
   );
 
   const hullISøknadsperiodene = React.useMemo(
