@@ -138,7 +138,6 @@ const VurderingAvTilsynsbehovForm = ({
     return true;
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER }) ?? [];
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(p => p.asListOfDays());
