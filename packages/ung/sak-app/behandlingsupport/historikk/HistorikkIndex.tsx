@@ -37,14 +37,14 @@ type TilbakeHistorikkInnslagV1 = Historikkinnslag & {
 type UlikeHistorikkinnslagTyper = UngSakHistorikkinnslagV2 | KlageHistorikkInnslagV1 | TilbakeHistorikkInnslagV1;
 
 const sortAndTagUlikeHistorikkinnslagTyper = (
-  historikkK9sak: HistorikkinnslagV2[] = [],
+  historikkUngsak: HistorikkinnslagV2[] = [],
   historikkTilbake: Historikkinnslag[] = [],
   historikkKlage: Historikkinnslag[] = [],
 ): UlikeHistorikkinnslagTyper[] => {
   return [
     ...historikkTilbake.map(v => ({ ...v, erTilbakekreving: true })),
     ...historikkKlage.map(v => ({ ...v, erKlage: true })),
-    ...historikkK9sak.map(v => ({ ...v, erSak: true })),
+    ...historikkUngsak.map(v => ({ ...v, erSak: true })),
   ].toSorted((a, b) => dayjs(b.opprettetTidspunkt).diff(a.opprettetTidspunkt));
 };
 
@@ -64,7 +64,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
 
-  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+  const alleKodeverkUngSak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     UngSakApiKeys.KODEVERK,
   );
   const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
@@ -90,7 +90,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   const erBehandlingEndret: boolean =
     forrigeSaksnummer !== undefined && forrigeSaksnummer.length > 0 && erBehandlingEndretFraUndefined;
 
-  const { data: historikkK9Sak, state: historikkK9SakState } = restApiHooks.useRestApi<HistorikkinnslagV2[]>(
+  const { data: historikkUngSak, state: historikkUngSakState } = restApiHooks.useRestApi<HistorikkinnslagV2[]>(
     UngSakApiKeys.HISTORY_UNGSAK,
     { saksnummer },
     {
@@ -118,14 +118,14 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   );
 
   const historikkInnslagV1V2 = useMemo(
-    () => sortAndTagUlikeHistorikkinnslagTyper(historikkK9Sak, historikkTilbake, historikkKlage),
-    [historikkK9Sak, historikkTilbake, historikkKlage],
+    () => sortAndTagUlikeHistorikkinnslagTyper(historikkUngSak, historikkTilbake, historikkKlage),
+    [historikkUngSak, historikkTilbake, historikkKlage],
   );
 
   const getTilbakeKodeverknavn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
 
   const v2HistorikkElementer = historikkInnslagV1V2.map((innslag, idx) => {
-    let alleKodeverk = alleKodeverkK9Sak;
+    let alleKodeverk = alleKodeverkUngSak;
     if (innslag.erTilbakekreving) {
       alleKodeverk = alleKodeverkTilbake;
     }
@@ -163,7 +163,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   });
 
   const isLoading =
-    isRequestNotDone(historikkK9SakState) ||
+    isRequestNotDone(historikkUngSakState) ||
     (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
     (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState));
 
