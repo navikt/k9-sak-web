@@ -7,13 +7,13 @@ import type { Vurderingselement } from '../../../shared/vurderingsperiode-naviga
 export const NavigasjonsmenyRad = ({
   periode,
   active,
-  valgt,
+  kanBenyttes,
   datoOnClick,
   benyttOnClick,
 }: {
   periode: Vurderingselement;
   active: boolean;
-  valgt: boolean;
+  kanBenyttes: boolean;
   benyttOnClick: () => void;
   datoOnClick: () => void;
 }) => {
@@ -36,16 +36,16 @@ export const NavigasjonsmenyRad = ({
             </Button>
           </div>
         </div>
-        {valgt ? (
-          <div className="flex gap-1 ml-[-4px]">
-            <CheckmarkIcon fontSize={24} className="text-green-500" />
-            <BodyShort className="mt-[2px]">Valgt</BodyShort>
-          </div>
-        ) : (
+        {kanBenyttes ? (
           <div className="flex items-center">
             <Button onClick={benyttOnClick} size="small">
               Benytt
             </Button>
+          </div>
+        ) : (
+          <div className="flex gap-1 ml-[-4px]">
+            <CheckmarkIcon fontSize={24} className="text-green-500" />
+            <BodyShort className="mt-[2px]">Valgt</BodyShort>
           </div>
         )}
       </div>
