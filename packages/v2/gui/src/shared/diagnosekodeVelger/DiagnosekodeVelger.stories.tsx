@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import type { UseFormReturn } from 'react-hook-form';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { withFormProvider } from '../../storybook/decorators/withFormProvider.js';
+import { delay } from '../../utils/delay.js';
 import DiagnosekodeVelger from './DiagnosekodeVelger.jsx';
 
 const meta = {
@@ -58,6 +59,7 @@ export const MedUtfylteDiagnosekoder: Story = {
     });
     await step('Submit fungerer', async () => {
       await userEvent.click(submitBtn);
+      await delay(50);
       const {
         formState: { isValid, errors, isSubmitted },
         getValues,
@@ -94,6 +96,7 @@ export const Valideringsfeil: Story = {
   play: async ({ loaded, canvas }) => {
     const submitBtn = canvas.getByTestId(`${formProviderId}-Submit`);
     await userEvent.click(submitBtn);
+    await delay(50);
     const {
       formState: { isValid, errors, isSubmitted, isSubmitSuccessful },
       getValues,
