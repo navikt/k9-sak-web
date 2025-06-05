@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Heading } from '@navikt/ds-react';
 import { PeriodeRad } from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
@@ -73,6 +73,8 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     [perioderSomSkalVurderes, perioderSomErVurdert],
   );
 
+  const [harAutomatiskValgtPeriode, setHarAutomatiskValgtPeriode] = useState(false);
+
   // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
   useEffect(() => {
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
@@ -87,14 +89,16 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
       periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
     );
     const periodeSomErVurdert = allePerioder.find(periode => periode.resultat !== Resultat.MÅ_VURDERES);
-    if (!valgtPeriode) {
+    if (!valgtPeriode && !harAutomatiskValgtPeriode) {
       if (periodeSomMåVurderes) {
         onPeriodeClick(periodeSomMåVurderes);
+        setHarAutomatiskValgtPeriode(true);
       } else if (periodeSomErVurdert) {
         onPeriodeClick(periodeSomErVurdert);
+        setHarAutomatiskValgtPeriode(true);
       }
     }
-  }, [valgtPeriode, allePerioder, onPeriodeClick]);
+  }, [valgtPeriode, allePerioder, onPeriodeClick, harAutomatiskValgtPeriode]);
 
   const handlePeriodeClick = (index: number) => {
     if (allePerioder[index]) {
