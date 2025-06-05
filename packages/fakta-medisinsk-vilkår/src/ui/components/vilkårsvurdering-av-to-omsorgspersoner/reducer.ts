@@ -6,8 +6,8 @@ import Vurderingselement from '../../../types/Vurderingselement';
 interface State {
   visVurderingDetails: boolean;
   isLoading: boolean;
-  vurderingsoversikt: Vurderingsoversikt;
-  valgtVurderingselement: Vurderingselement;
+  vurderingsoversikt: Vurderingsoversikt | null;
+  valgtVurderingselement: Vurderingselement | null;
   skalViseRadForNyVurdering: boolean;
   vurderingsoversiktFeilet: boolean;
 }
@@ -24,7 +24,7 @@ const vilkårsvurderingReducer = (state: State, action: Action): State => {
     case ActionType.VIS_VURDERINGSOVERSIKT: {
       return {
         ...state,
-        vurderingsoversikt: action.vurderingsoversikt,
+        vurderingsoversikt: action.vurderingsoversikt ?? null,
         isLoading: false,
         visVurderingDetails: false,
         skalViseRadForNyVurdering: false,
@@ -48,7 +48,7 @@ const vilkårsvurderingReducer = (state: State, action: Action): State => {
     case ActionType.VELG_VURDERINGSELEMENT:
       return {
         ...state,
-        valgtVurderingselement: action.valgtVurderingselement,
+        valgtVurderingselement: action.valgtVurderingselement ?? null,
         visVurderingDetails: true,
       };
     case ActionType.PENDING:

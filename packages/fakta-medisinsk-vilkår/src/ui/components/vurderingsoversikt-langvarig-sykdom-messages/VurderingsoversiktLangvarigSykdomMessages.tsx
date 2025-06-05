@@ -5,13 +5,13 @@ import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';
 
 interface VurderingsoversiktLangvarigSykdomMessagesProps {
-  vurderingsoversikt: Vurderingsoversikt;
+  vurderingsoversikt: Vurderingsoversikt | null;
 }
 
 const VurderingsoversiktLangvarigSykdomMessages = ({
   vurderingsoversikt,
 }: VurderingsoversiktLangvarigSykdomMessagesProps): JSX.Element => {
-  if (vurderingsoversikt.harIngenPerioderÅVise()) {
+  if (!vurderingsoversikt || vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
       <Box marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
@@ -30,7 +30,7 @@ const VurderingsoversiktLangvarigSykdomMessages = ({
       </Box>
     );
   }
-  return null;
+  return <></>;
 };
 
 export default VurderingsoversiktLangvarigSykdomMessages;

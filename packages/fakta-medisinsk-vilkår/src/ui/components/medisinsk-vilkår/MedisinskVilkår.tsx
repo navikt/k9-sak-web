@@ -67,7 +67,7 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   );
 };
 
-const sykdomTittel = (fagsakYtelseType: FagsakYtelsesType) => {
+const sykdomTittel = (fagsakYtelseType: FagsakYtelsesType | undefined) => {
   if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Sykdom og opplæring';
   }
@@ -82,7 +82,7 @@ const sykdomTittel = (fagsakYtelseType: FagsakYtelsesType) => {
 const MedisinskVilkår = (): JSX.Element => {
   const [state, dispatch] = React.useReducer(medisinskVilkårReducer, {
     isLoading: true,
-    hasError: null,
+    hasError: false,
     activeStep: null,
     markedStep: null,
     sykdomsstegStatus: null,
@@ -116,12 +116,13 @@ const MedisinskVilkår = (): JSX.Element => {
     queryKey: ['diagnosekodeResponse'],
     queryFn: hentDiagnosekoder,
     enabled: !erFagsakOLPEllerPLS(fagsakYtelseType),
-    placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: null },
+    placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: '' },
     staleTime: 10000,
   });
 
   const diagnosekoder = endpoints.diagnosekoder ? diagnosekoderData?.diagnosekoder : [];
-  const diagnosekoderTekst = diagnosekoder?.length > 0 ? `${diagnosekoder?.join(', ')}` : 'Kode mangler';
+  const diagnosekoderTekst =
+    Array.isArray(diagnosekoder) && diagnosekoder.length > 0 ? `${diagnosekoder.join(', ')}` : 'Kode mangler';
 
   const hentSykdomsstegStatus = async () => {
     try {
@@ -138,6 +139,7 @@ const MedisinskVilkår = (): JSX.Element => {
     } catch (error) {
       dispatch({
         type: ActionType.SHOW_ERROR,
+        step: null,
       });
       throw new Error(error);
     }
@@ -173,7 +175,7 @@ const MedisinskVilkår = (): JSX.Element => {
         } else {
           dispatch({
             type: ActionType.ACTIVATE_DEFAULT_STEP,
-            step: dokumentStegForSakstype,
+            step: dokumentStegForSakstype ?? null,
             nyeDokumenterSomIkkeErVurdert: nyeDokumenterSomIkkeErVurdertResponse,
           });
         }
@@ -185,12 +187,13 @@ const MedisinskVilkår = (): JSX.Element => {
   }, []);
 
   const navigerTilNesteSteg = () => {
+    if (!sykdomsstegStatus) return;
     const nesteSteg = finnNesteStegFn(sykdomsstegStatus);
     dispatch({ type: ActionType.NAVIGATE_TO_STEP, step: nesteSteg });
   };
 
   const navigerTilSteg = (nesteSteg: Step, ikkeMarkerSteg?: boolean) => {
-    if (sykdomsstegStatus.kanLøseAksjonspunkt || ikkeMarkerSteg) {
+    if (sykdomsstegStatus?.kanLøseAksjonspunkt || ikkeMarkerSteg) {
       dispatch({ type: ActionType.ACTIVATE_STEP_AND_CLEAR_MARKING, step: nesteSteg });
     } else {
       dispatch({ type: ActionType.NAVIGATE_TO_STEP, step: nesteSteg });
@@ -198,7 +201,10 @@ const MedisinskVilkår = (): JSX.Element => {
   };
 
   const afterEndringerUtifraNyeDokumenterRegistrert = () => {
-    dispatch({ type: ActionType.ENDRINGER_UTIFRA_NYE_DOKUMENTER_REGISTRERT });
+    dispatch({
+      type: ActionType.ENDRINGER_UTIFRA_NYE_DOKUMENTER_REGISTRERT,
+      step: null,
+    });
     void hentSykdomsstegStatus().then(
       ({
         kanLøseAksjonspunkt,
@@ -308,7 +314,7 @@ const MedisinskVilkår = (): JSX.Element => {
         <Tabs
           value={activeStep?.id}
           onChange={(clickedId: string) => {
-            dispatch({ type: ActionType.ACTIVATE_STEP, step: steps.find(step => step.id === clickedId) });
+            dispatch({ type: ActionType.ACTIVATE_STEP, step: steps.find(step => step.id === clickedId) ?? null });
           }}
         >
           <Tabs.List>
@@ -333,6 +339,7 @@ const MedisinskVilkår = (): JSX.Element => {
                       dispatch({
                         type: ActionType.UPDATE_NYE_DOKUMENTER_SOM_IKKE_ER_VURDERT,
                         nyeDokumenterSomIkkeErVurdert: dokumenter,
+                        step: null,
                       });
                       return [status, dokumenter];
                     })

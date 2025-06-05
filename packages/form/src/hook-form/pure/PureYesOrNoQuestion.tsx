@@ -31,7 +31,7 @@ const radios = [
 ];
 
 const PureYesOrNoQuestion = ({ question, value, onChange, name, errorMessage, disabled }: YesOrNoQuestionProps) => (
-  <RadioGroup legend={question} error={errorMessage} size="small">
+  <RadioGroup legend={question} error={errorMessage} size="small" disabled={disabled}>
     {radios.map(radio => (
       <Radio
         id={`${name}${radio.value}`}
