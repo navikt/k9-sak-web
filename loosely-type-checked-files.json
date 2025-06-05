@@ -487,7 +487,6 @@
   "packages/ung/sak-app/behandlingmenu/MenyKodeverk.ts",
   "packages/ung/sak-app/behandlingsupport/BehandlingSupportIndex.tsx",
   "packages/ung/sak-app/behandlingsupport/dokument/DokumentIndex.tsx",
-  "packages/ung/sak-app/behandlingsupport/historikk/HistorikkIndex.tsx",
   "packages/ung/sak-app/behandlingsupport/melding/MeldingIndex.tsx",
   "packages/ung/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex.spec.tsx",
   "packages/ung/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex.tsx",
