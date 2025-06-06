@@ -44,7 +44,7 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
       />
       {vurdering.diagnosekoder && vurdering.diagnosekoder.length > 0 && (
         <LabelledContent
-          label="Diagnose(r)"
+          label="Hvilke diagnoser har barnet?"
           size="small"
           content={<Diagnoser diagnosekoder={vurdering.diagnosekoder} />}
         />
@@ -62,7 +62,7 @@ const Diagnoser = ({ diagnosekoder = [] }: { diagnosekoder?: string[] }) => {
       {diagnosekoder.map(diagnose => {
         const diagnosekode = ICD10.find(d => d.code === diagnose);
         return (
-          <Tag size="small" key={diagnose} variant="info-filled" className="border-none rounded">
+          <Tag size="small" key={diagnose} variant="info-moderate" className="border-none rounded">
             {diagnosekode?.code} - {diagnosekode?.text}
           </Tag>
         );
