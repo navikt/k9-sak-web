@@ -62,7 +62,7 @@ const Diagnoser = ({ diagnosekoder = [] }: { diagnosekoder?: string[] }) => {
       {diagnosekoder.map(diagnose => {
         const diagnosekode = ICD10.find(d => d.code === diagnose);
         return (
-          <Tag size="small" key={diagnose} variant="info" className="border-none rounded">
+          <Tag size="small" key={diagnose} variant="info-filled" className="border-none rounded">
             {diagnosekode?.code} - {diagnosekode?.text}
           </Tag>
         );
