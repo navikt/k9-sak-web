@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
+import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.ts';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;
@@ -36,7 +37,10 @@ export const VurderNyoppstartetIndex = ({
     queryKey: ['nyoppstartet', behandlingUUID],
     queryFn: () =>
       axios
-        .get('/k9/sak/api/behandling/nyoppstartet', { params: { behandlingUuid: behandlingUUID } })
+        .get(
+          '/k9/sak/api/behandling/nyoppstartet',
+          addLegacySerializerOption({ params: { behandlingUuid: behandlingUUID } }),
+        )
         .then(({ data }) => data),
   });
 
