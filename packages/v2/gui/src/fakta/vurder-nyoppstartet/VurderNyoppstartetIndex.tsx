@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
-import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.ts';
+import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;
