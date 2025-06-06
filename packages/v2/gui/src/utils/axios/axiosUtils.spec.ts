@@ -1,4 +1,4 @@
-import { addLegacySerializerOption, legacySerializerOptionConfig } from './axiosHttpUtils';
+import { addLegacySerializerOption, legacySerializerOptionConfig } from './axiosUtils.js';
 
 describe('axiosHttpUtils addLegacySerializerOption', () => {
   it('should return set legacy config if nothing is passed in', () => {

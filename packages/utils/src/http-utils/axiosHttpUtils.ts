@@ -1,16 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorExternally, httpErrorShouldBeHandledExternally } from './responseHelpers';
-
-export const legacySerializerOptionConfig: AxiosRequestConfig = {
-  headers: { 'X-Json-Serializer-Option': 'kodeverdi-objekt' },
-};
-
-export const addLegacySerializerOption = (requestConfig?: AxiosRequestConfig): AxiosRequestConfig => {
-  if (requestConfig != null) {
-    return { ...requestConfig, headers: { ...requestConfig.headers, ...legacySerializerOptionConfig.headers } };
-  }
-  return legacySerializerOptionConfig;
-};
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 export async function get<T>(
   url: string,
