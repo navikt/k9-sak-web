@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorExternally, httpErrorShouldBeHandledExternally } from './responseHelpers';
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 export async function get<T>(
   url: string,
@@ -7,7 +8,7 @@ export async function get<T>(
   requestConfig?: AxiosRequestConfig,
 ): Promise<T> {
   try {
-    const response: AxiosResponse<T> = await axios.get(url, requestConfig);
+    const response: AxiosResponse<T> = await axios.get(url, addLegacySerializerOption(requestConfig));
     return response.data;
   } catch (error) {
     console.error(error);
@@ -25,7 +26,7 @@ export async function post<T>(
   requestConfig?: AxiosRequestConfig,
 ): Promise<any> {
   try {
-    const response: AxiosResponse = await axios.post(url, body, requestConfig);
+    const response: AxiosResponse = await axios.post(url, body, addLegacySerializerOption(requestConfig));
     return response.data;
   } catch (error) {
     console.error(error);
