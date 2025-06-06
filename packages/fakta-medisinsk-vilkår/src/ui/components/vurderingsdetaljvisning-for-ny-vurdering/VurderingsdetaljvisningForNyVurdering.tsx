@@ -67,17 +67,14 @@ function makeDefaultValues(
     };
   }
 
-  if (vurderingstype === Vurderingstype.LANGVARIG_SYKDOM) {
-    return {
-      [LangvarigSykdomFieldName.VURDERING_LANGVARIG_SYKDOM]: '',
-      [LangvarigSykdomFieldName.HAR_LANGVARIG_SYKDOM]: undefined,
-      [LangvarigSykdomFieldName.SPLITT_PERIODE_DATO]: finnMaksavgrensningerForPerioder(perioder).fom,
-      [LangvarigSykdomFieldName.DOKUMENTER]: [],
-      [LangvarigSykdomFieldName.PERIODER]: perioder,
-    };
-  }
-
-  return null;
+  // Fallback / Vurderingstype.LANGVARIG_SYKDOM)
+  return {
+    [LangvarigSykdomFieldName.VURDERING_LANGVARIG_SYKDOM]: '',
+    [LangvarigSykdomFieldName.HAR_LANGVARIG_SYKDOM]: undefined,
+    [LangvarigSykdomFieldName.SPLITT_PERIODE_DATO]: finnMaksavgrensningerForPerioder(perioder).fom,
+    [LangvarigSykdomFieldName.DOKUMENTER]: [],
+    [LangvarigSykdomFieldName.PERIODER]: perioder,
+  };
 }
 
 const VurderingsdetaljvisningForNyVurdering = ({
@@ -120,13 +117,13 @@ const VurderingsdetaljvisningForNyVurdering = ({
               perioderSomKanVurderes={vurderingsoversikt.perioderSomKanVurderes}
               dokumenter={dokumenter}
               onSubmit={onSubmit}
-              onAvbryt={radForNyVurderingVises ? () => onAvbryt() : undefined}
+              onAvbryt={radForNyVurderingVises ? onAvbryt : () => {}}
               isSubmitting={isSubmitting}
               harPerioderDerPleietrengendeErOver18år={vurderingsoversikt.harPerioderDerPleietrengendeErOver18år}
               barnetsAttenårsdag={
                 vurderingsoversikt.harPerioderDerPleietrengendeErOver18år
-                  ? addYearsToDate(vurderingsoversikt.pleietrengendesFødselsdato, 18)
-                  : undefined
+                  ? (addYearsToDate(vurderingsoversikt.pleietrengendesFødselsdato, 18) ?? '')
+                  : ''
               }
             />
           );
@@ -139,7 +136,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
               perioderSomKanVurderes={vurderingsoversikt.perioderSomKanVurderes}
               dokumenter={dokumenter}
               onSubmit={onSubmit}
-              onAvbryt={radForNyVurderingVises ? () => onAvbryt() : undefined}
+              onAvbryt={radForNyVurderingVises ? onAvbryt : () => {}}
               isSubmitting={isSubmitting}
             />
           );
@@ -152,7 +149,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
               perioderSomKanVurderes={vurderingsoversikt.perioderSomKanVurderes}
               dokumenter={dokumenter}
               onSubmit={onSubmit}
-              onAvbryt={radForNyVurderingVises ? () => onAvbryt() : undefined}
+              onAvbryt={radForNyVurderingVises ? onAvbryt : () => {}}
               isSubmitting={isSubmitting}
             />
           );
@@ -165,7 +162,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
               perioderSomKanVurderes={vurderingsoversikt.perioderSomKanVurderes}
               dokumenter={dokumenter}
               onSubmit={onSubmit}
-              onAvbryt={radForNyVurderingVises ? () => onAvbryt() : undefined}
+              onAvbryt={radForNyVurderingVises ? onAvbryt : () => {}}
               isSubmitting={isSubmitting}
             />
           );

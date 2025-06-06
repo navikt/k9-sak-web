@@ -44,7 +44,7 @@ const lagTilsynsbehovVurdering = (
     ? Vurderingsresultat.OPPFYLT
     : Vurderingsresultat.IKKE_OPPFYLT;
 
-  const perioder = formState[FieldName.PERIODER].map(
+  const perioder = (formState[FieldName.PERIODER] ?? []).map(
     periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE];
@@ -68,12 +68,12 @@ interface VurderingAvTilsynsbehovFormProps {
   defaultValues: VurderingAvTilsynsbehovFormState;
   onSubmit: (nyVurdering: Partial<Vurderingsversjon>) => void;
   resterendeVurderingsperioder?: Period[];
-  perioderSomKanVurderes?: Period[];
+  perioderSomKanVurderes: Period[];
   dokumenter: Dokument[];
   onAvbryt: () => void;
   isSubmitting: boolean;
   harPerioderDerPleietrengendeErOver18år?: boolean;
-  barnetsAttenårsdag?: string;
+  barnetsAttenårsdag: string;
 }
 
 const VurderingAvTilsynsbehovForm = ({
@@ -93,7 +93,7 @@ const VurderingAvTilsynsbehovForm = ({
     mode: 'onChange',
   });
   const [visAlleDokumenter, setVisAlleDokumenter] = useState(false);
-  const [dokumentFilter, setDokumentFilter] = useState([]);
+  const [dokumentFilter, setDokumentFilter] = useState<string[]>([]);
 
   const updateDokumentFilter = valgtFilter => {
     if (dokumentFilter.includes(valgtFilter)) {
@@ -138,7 +138,7 @@ const VurderingAvTilsynsbehovForm = ({
     return true;
   };
 
-  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
+  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER }) ?? [];
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(p => p.asListOfDays());
     const dagerSomBlirVurdert = (perioderSomBlirVurdert || [])
@@ -181,7 +181,7 @@ const VurderingAvTilsynsbehovForm = ({
   const sammenhengendeSøknadsperioder = slåSammenSammenhengendePerioder(perioderSomKanVurderes);
 
   return (
-    <DetailViewVurdering title="Vurdering av tilsyn og pleie" perioder={defaultValues[FieldName.PERIODER]}>
+    <DetailViewVurdering title="Vurdering av tilsyn og pleie" perioder={defaultValues[FieldName.PERIODER] || []}>
       <div id="modal" />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
@@ -205,7 +205,8 @@ const VurderingAvTilsynsbehovForm = ({
               {dokumentFilter.length > 0 && (
                 <div className={styles.filterKnappContainer}>
                   {dokumentFilter.map(filter => {
-                    const { label } = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
+                    const option = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
+                    const label = option ? option.label : filter;
                     return (
                       <button
                         onClick={() => updateDokumentFilter(filter)}
@@ -352,15 +353,17 @@ const VurderingAvTilsynsbehovForm = ({
                   invalidDateRanges: hullISøknadsperiodene,
                 },
               }}
-              renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                numberOfItems > 1 && (
-                  <DeleteButton
-                    onClick={() => {
-                      fieldArrayMethods.remove(index);
-                    }}
-                  />
-                )
-              }
+              renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) => {
+                if (numberOfItems > 1)
+                  return (
+                    <DeleteButton
+                      onClick={() => {
+                        fieldArrayMethods.remove(index);
+                      }}
+                    />
+                  );
+                return <></>;
+              }}
               renderAfterFieldArray={fieldArrayMethods => (
                 <Box marginBlock="6 0">
                   <AddButton

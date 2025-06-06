@@ -6,7 +6,7 @@ import ContainerContext from '../../context/ContainerContext';
 import FristForDokumentasjonUtløptPanel from '../frist-for-dokumentasjon-utløpt-panel/FristForDokumentasjonUtløptPanel';
 
 interface DokumentoversiktMessagesProps {
-  dokumentoversikt: Dokumentoversikt;
+  dokumentoversikt: Dokumentoversikt | null;
   harRegistrertDiagnosekode: boolean;
   kanNavigereVidere: boolean;
   navigerTilNesteSteg: () => void;
@@ -20,7 +20,7 @@ const DokumentoversiktMessages = ({
 }: DokumentoversiktMessagesProps): JSX.Element => {
   const { onFinished, readOnly, fagsakYtelseType } = React.useContext(ContainerContext);
   if (!dokumentoversikt) {
-    return null;
+    return <></>;
   }
   const { ustrukturerteDokumenter } = dokumentoversikt;
 

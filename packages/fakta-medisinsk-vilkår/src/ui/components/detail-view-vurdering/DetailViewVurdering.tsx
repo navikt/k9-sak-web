@@ -32,7 +32,7 @@ const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
         redigerVurdering && (
           <WriteAccessBoundContent
             contentRenderer={() =>
-              skalViseRedigerVurderingKnapp && (
+              skalViseRedigerVurderingKnapp ? (
                 <Button
                   variant="tertiary"
                   size="xsmall"
@@ -41,6 +41,8 @@ const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
                 >
                   Rediger vurdering
                 </Button>
+              ) : (
+                <></>
               )
             }
           />
