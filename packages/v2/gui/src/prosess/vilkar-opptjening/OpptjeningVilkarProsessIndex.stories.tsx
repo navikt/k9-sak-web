@@ -8,7 +8,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent } from '@storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles';
 import OpptjeningVilkarProsessIndexV2 from './OpptjeningVilkarProsessIndexV2';

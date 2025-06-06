@@ -14,7 +14,7 @@ import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 
 const agOpplysninger = {
   874652202: {

@@ -1,6 +1,6 @@
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect } from 'storybook/test';
 import MenyEndreBehandlendeEnhetIndexV2 from './MenyEndreBehandlendeEnhetIndex';
 
 const meta = {

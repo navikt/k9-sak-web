@@ -1,7 +1,6 @@
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { action } from 'storybook/actions';
 import { messages } from '../i18n';
 import OverstyrBeregningFaktaIndex from './OverstyrBeregningFaktaIndex';
 import { OverstyrInputBeregningDto } from './types/OverstyrInputBeregningDto';

@@ -5,8 +5,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';

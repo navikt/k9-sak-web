@@ -1,9 +1,9 @@
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { action } from '@storybook/addon-actions';
-import { asyncAction } from '../../../storybook/asyncAction';
-import MenySettPaVentIndexV2 from './MenySettPaVentIndex';
-import withKodeverkContext from '../../../storybook/decorators/withKodeverkContext.js';
 import type { Meta, StoryObj } from '@storybook/react';
+import { action } from 'storybook/actions';
+import { asyncAction } from '../../../storybook/asyncAction';
+import withKodeverkContext from '../../../storybook/decorators/withKodeverkContext.js';
+import MenySettPaVentIndexV2 from './MenySettPaVentIndex';
 
 const meta = {
   title: 'gui/sak/meny/sett-pa-vent',

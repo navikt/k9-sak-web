@@ -1,5 +1,4 @@
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import MenyMarkerBehandling from './MenyMarkerBehandling';
 
 export default {
