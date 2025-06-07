@@ -1,13 +1,15 @@
-import { MerknadEndretDtoMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
+// import { MerknadEndretDtoMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
+import { EndreMerknadRequestMerknadKode, type MerknadResponse } from '@k9-sak-web/backend/k9sak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
-import { Alert, Button, Heading, Modal, VStack } from '@navikt/ds-react';
-import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { TrashIcon } from '@navikt/aksel-icons';
+import { BodyShort, Button, Heading, HStack, Label, List, Loader, Modal, VStack } from '@navikt/ds-react';
+import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
-import { useForm, useFormState } from 'react-hook-form';
+import { useForm, useFormState, useWatch } from 'react-hook-form';
 import type { MarkerBehandlingBackendApiType } from '../MarkerBehandlingBackendApiType';
-import type { MerknaderFraLos } from '../MerknaderFraLos';
 import styles from './markerBehandlingModal.module.css';
 
 const minLength3 = minLength(3);
@@ -17,80 +19,92 @@ interface PureOwnProps {
   brukHastekøMarkering?: boolean;
   lukkModal: () => void;
   behandlingUuid: string;
-  merknaderFraLos: MerknaderFraLos[];
   erVeileder?: boolean;
   api: MarkerBehandlingBackendApiType;
 }
 
 interface FormValues {
-  markerSomHastesak: boolean;
-  markerSomUtenlands: boolean;
+  merknad: string;
   begrunnelse: string;
 }
 
-const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
-  brukHastekøMarkering,
-  lukkModal,
-  behandlingUuid,
-  merknaderFraLos,
-  erVeileder,
-  api,
-}) => {
+const getMerknader = (merknader: MerknadResponse): string[] => {
+  const ubrukteMerknader = [];
+
+  if (!merknader.hastesak.aktiv) {
+    ubrukteMerknader.push(EndreMerknadRequestMerknadKode.HASTESAK);
+  }
+  if (!merknader.utenlandstilsnitt.aktiv) {
+    ubrukteMerknader.push(EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT);
+  }
+  return ubrukteMerknader;
+};
+
+const getGjeldendeMerknader = (merknader: MerknadResponse) => {
+  const gjeldendeMerknader = [];
+  if (merknader.hastesak.aktiv) {
+    gjeldendeMerknader.push({
+      tittel: 'Hastesak',
+      begrunnelse: merknader.hastesak.fritekst,
+      merknadKode: EndreMerknadRequestMerknadKode.HASTESAK,
+    });
+  }
+  if (merknader.utenlandstilsnitt.aktiv) {
+    gjeldendeMerknader.push({
+      tittel: 'Utenlandstilsnitt',
+      begrunnelse: merknader.utenlandstilsnitt.fritekst,
+      merknadKode: EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT,
+    });
+  }
+  return gjeldendeMerknader;
+};
+
+const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUuid, erVeileder, api }) => {
+  const {
+    data: merknaderFraLos,
+    refetch: hentMerknader,
+    isFetching,
+  } = useQuery({
+    queryKey: ['merknader', behandlingUuid],
+    queryFn: () => api.getMerknader(behandlingUuid),
+  });
+  const tilgjengeligeMerknader = merknaderFraLos ? getMerknader(merknaderFraLos) : [];
   const buildInitialValues = (): FormValues => {
-    if (merknaderFraLos) {
-      return {
-        markerSomHastesak: !!merknaderFraLos.some(
-          merknad => merknad.merknadType.kode === MerknadEndretDtoMerknadKode.HASTESAK,
-        ),
-        markerSomUtenlands: !!merknaderFraLos.some(
-          merknad => merknad.merknadType.kode === MerknadEndretDtoMerknadKode.UTENLANDSTILSNITT,
-        ),
-        begrunnelse: merknaderFraLos.find(merknad => merknad.fritekst)?.fritekst ?? '',
-      };
-    }
     return {
-      markerSomHastesak: false,
-      markerSomUtenlands: false,
+      merknad: '',
       begrunnelse: '',
     };
   };
 
   const formMethods = useForm<FormValues>({ defaultValues: buildInitialValues() });
-  const [markerSomUtenlands, markerSomHastesak] = formMethods.watch(['markerSomUtenlands', 'markerSomHastesak']);
   const featureToggles = useContext(FeatureTogglesContext);
   const formState = useFormState({ control: formMethods.control });
+  const valgtMerknad = useWatch({ control: formMethods.control, name: 'merknad' });
 
   const handleSubmit = async (values: FormValues) => {
-    const queries = [];
-    if (values.markerSomHastesak) {
-      queries.push({
+    if (values.merknad) {
+      await api.markerBehandling({
         behandlingUuid,
         fritekst: values.begrunnelse ?? '',
-        merknadKode: MerknadEndretDtoMerknadKode.HASTESAK,
+        merknadKode: values.merknad as EndreMerknadRequestMerknadKode,
       });
-    }
-    if (values.markerSomUtenlands) {
-      queries.push({
-        behandlingUuid,
-        fritekst: values.begrunnelse ?? '',
-        merknadKode: MerknadEndretDtoMerknadKode.UTENLANDSTILSNITT,
-      });
-    }
-
-    if (queries.length > 0) {
-      await Promise.all(queries.map(query => api.markerBehandling(query))).then(() => {
-        if (erVeileder) {
-          goToSearch();
-        } else {
-          goToLos();
-        }
-      });
+      if (erVeileder) {
+        goToSearch();
+      } else {
+        goToLos();
+      }
     }
   };
 
-  if (!brukHastekøMarkering) {
-    return null;
-  }
+  const slettMerknad = async (merknadKode: EndreMerknadRequestMerknadKode) => {
+    await api.fjernMerknad({
+      behandlingUuid,
+      merknadKode,
+    });
+    await hentMerknader();
+  };
+
+  const gjeldendeMerknader = merknaderFraLos ? getGjeldendeMerknader(merknaderFraLos) : [];
 
   return (
     <Modal open onClose={lukkModal} aria-label="Modal for markering av behandling" portal width="38.375rem">
@@ -100,51 +114,74 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
         </Heading>
       </Modal.Header>
       <Modal.Body>
-        <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
-          {brukHastekøMarkering && (
-            <VStack gap="4">
-              <Alert variant="warning">
-                Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
-              </Alert>
-              <CheckboxField
-                name="markerSomHastesak"
-                label="Behandlingen er hastesak"
-                disabled={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
-                validate={[required]}
+        {isFetching ? (
+          <Loader size="medium" title="Henter merknader..." />
+        ) : (
+          <>
+            {gjeldendeMerknader.length > 0 && (
+              <>
+                <Heading size="xsmall" level="4" spacing>
+                  Gjeldende merknader
+                </Heading>
+                <List as="ul">
+                  {gjeldendeMerknader.map(merknad => (
+                    <List.Item key={merknad.tittel}>
+                      <HStack gap="12" align="center">
+                        <VStack gap="2">
+                          <Label size="small">{merknad.tittel}</Label>
+                          <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
+                        </VStack>
+                        <Button
+                          type="button"
+                          onClick={() => slettMerknad(merknad.merknadKode)}
+                          variant="tertiary"
+                          size="small"
+                          icon={<TrashIcon title="Slett periode" />}
+                        />
+                      </HStack>
+                    </List.Item>
+                  ))}
+                </List>
+              </>
+            )}
+            <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
+              <SelectField
+                name="merknad"
+                label="Velg merknad"
+                selectValues={tilgjengeligeMerknader.map(merknad => (
+                  <option key={merknad} value={merknad}>
+                    {merknad.charAt(0) + merknad.slice(1).toLowerCase()}
+                  </option>
+                ))}
               />
-            </VStack>
-          )}
-          <CheckboxField name="markerSomUtenlands" label="Behandlingen har utenlandstilsnitt" validate={[required]} />
-          {(markerSomUtenlands || markerSomHastesak) && (
-            <div className={styles.textareaContainer}>
-              <TextAreaField
-                className={styles.textArea}
-                name="begrunnelse"
-                label="Kommentar"
-                validate={[required, minLength3, maxLength100000, hasValidText]}
-                maxLength={100000}
-                readOnly={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
-              />
-            </div>
-          )}
+              {valgtMerknad && (
+                <div className={styles.textareaContainer}>
+                  <TextAreaField
+                    className={styles.textArea}
+                    name="begrunnelse"
+                    label="Kommentar"
+                    validate={[required, minLength3, maxLength100000, hasValidText]}
+                    maxLength={100000}
+                    readOnly={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
+                  />
+                </div>
+              )}
 
-          <div className={styles.buttonContainer}>
-            <Button
-              variant="primary"
-              size="small"
-              disabled={
-                !featureToggles.LOS_MARKER_BEHANDLING_SUBMIT ||
-                formState.isSubmitting ||
-                (!markerSomUtenlands && !markerSomHastesak)
-              }
-            >
-              {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
-            </Button>
-            <Button variant="secondary" size="small" onClick={lukkModal}>
-              Lukk
-            </Button>
-          </div>
-        </Form>
+              <div className={styles.buttonContainer}>
+                <Button
+                  variant="primary"
+                  size="small"
+                  disabled={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT || formState.isSubmitting}
+                >
+                  {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
+                </Button>
+                <Button variant="secondary" size="small" onClick={lukkModal}>
+                  Lukk
+                </Button>
+              </div>
+            </Form>
+          </>
+        )}
       </Modal.Body>
     </Modal>
   );
