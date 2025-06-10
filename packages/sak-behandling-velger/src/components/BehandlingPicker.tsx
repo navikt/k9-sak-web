@@ -17,6 +17,7 @@ import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 const getBehandlingNavn = (
   behandling: BehandlingAppKontekst,
@@ -106,7 +107,7 @@ const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
 
 const getBehandlingPerioderÅrsaker = (behandling: BehandlingAppKontekst): Promise<PerioderMedBehandlingsId> =>
   axios
-    .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href)
+    .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href, addLegacySerializerOption())
     .then(response => ({ data: response.data, id: behandling.id }))
     .then(({ data, id }) => ({
       id,
