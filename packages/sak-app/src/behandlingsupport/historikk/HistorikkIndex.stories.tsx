@@ -1,18 +1,18 @@
-import HistorikkIndex from './HistorikkIndex.js';
-import { Meta, StoryObj } from '@storybook/react';
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
-import { K9sakApiKeys, requestApi } from '../../data/k9sakApi.js';
-import { expect, userEvent, within } from '@storybook/test';
+import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeHistorikkBackend.js';
 import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
+import { delay } from '@k9-sak-web/gui/utils/delay.js';
 import type { Historikkinnslag } from '@k9-sak-web/types';
-import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setBaseRequestApiMocks.js';
+import { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from 'storybook/test';
 import { historikkSakV1 } from '../../../../storybook/stories/mocks/historikkSakV1.js';
 import { historikkTilbakeV2 } from '../../../../storybook/stories/mocks/historikkTilbakeV2.js';
-import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
-import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeHistorikkBackend.js';
-import { delay } from '@k9-sak-web/gui/utils/delay.js';
+import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setBaseRequestApiMocks.js';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi.js';
+import HistorikkIndex from './HistorikkIndex.js';
 
 const historyK9KlageV1: Historikkinnslag[] = [
   {

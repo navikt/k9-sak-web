@@ -1,17 +1,17 @@
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
-import NødvendigOpplæringForm from './NødvendigOpplæringForm.jsx';
-import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import { Period } from '@navikt/ft-utils';
 import {
   KodeverdiSomObjektAvslagsårsakKilde,
   OpplæringVurderingDtoAvslagsÅrsak,
   OpplæringVurderingDtoResultat,
 } from '@navikt/k9-sak-typescript-client';
-import { Period } from '@navikt/ft-utils';
-import { action } from '@storybook/addon-actions';
-import { within, userEvent, expect, fn } from '@storybook/test';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
-import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
+import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
+import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
+import NødvendigOpplæringForm from './NødvendigOpplæringForm.jsx';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));

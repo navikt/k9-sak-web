@@ -1,11 +1,11 @@
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import { Meta } from '@storybook/react';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
-import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 
 export default {
   title: 'sak/sak-meny-ny-behandling',

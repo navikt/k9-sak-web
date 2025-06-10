@@ -1,17 +1,17 @@
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
-import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
-import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
-import { action } from '@storybook/addon-actions';
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { fakePdf } from './fakePdf.js';
+import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
+import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
+import { action } from 'storybook/actions';
 import { delay } from '../../utils/delay.js';
+import { fakePdf } from './fakePdf.js';
 
 export class FakeMessagesBackendApi implements BackendApi {
   public static readonly dummyMalinnhold = [

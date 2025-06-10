@@ -1,11 +1,12 @@
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  AksjonspunktDtoDefinisjon,
+  BehandlingDtoStatus as behandlingStatus,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { BehandlingDtoStatus as behandlingStatus } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {
