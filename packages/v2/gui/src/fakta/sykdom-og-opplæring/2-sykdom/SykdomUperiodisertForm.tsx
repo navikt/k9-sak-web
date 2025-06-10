@@ -143,7 +143,8 @@ const SykdomUperiodisertForm = ({
           )}
         />
         <DiagnosekodeVelger
-          label="Legg til diagnose(r)"
+          label="Hvilke diagnoser har barnet?"
+          description="Her kan du legge inn én eller flere diagnoser."
           name="diagnosekoder"
           size="small"
           disabled={
