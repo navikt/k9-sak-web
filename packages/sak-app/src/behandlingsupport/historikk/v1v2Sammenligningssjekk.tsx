@@ -5,6 +5,7 @@ import { flushSync } from 'react-dom';
 import { MemoryRouter } from 'react-router';
 import React, { ReactNode, JSX } from 'react';
 import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
+import { KodeverdiSomObjektHistorikkinnslagTypeKilde } from '@k9-sak-web/backend/k9sak/generated';
 
 class HistorikkV1V2Sammenligningsfeil extends Error {
   public readonly opprettetTidspunkt: string;
@@ -113,6 +114,52 @@ const checkRenderedElementTexts = async (
   }
 };
 
+// Når vi veit at v2 av historikk av ein viss type mangler nokre ord i v1, og ikkje vil at det skal rapporterast som feil
+// kan dei leggast inn her for å undertrykke feilrapportering
+const historikkInnslagMissingWordsExemptions = new Map<string, string[]>();
+historikkInnslagMissingWordsExemptions.set('KLAGE_BEH_NFP', ['endret', 'fra']);
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.FAKTA_ENDRET, [
+  'Aldersvilkåret',
+  // v1 mangler støtte for EndretFeltVerdiTypeCode.UAVKLART, så er ein feil i v1 som ikkje er i v2:
+  'EndretFeltVerdiTypeCode',
+  'finnes',
+  'LEGG',
+  'DET',
+  'INN',
+  // ===
+]);
+historikkInnslagMissingWordsExemptions.set(
+  KodeverdiSomObjektHistorikkinnslagTypeKilde.TILBAKEKREVING_VIDEREBEHANDLING,
+  ['satt'],
+);
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.SAK_RETUR, [
+  'Vurdering',
+  'eller',
+  'Fastsatt',
+]);
+// Historikkinnslag av type BEH_AVBRUTT_OVERLAPP har ingen mal i frontend(!)
+historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.BEH_AVBRUTT_OVERLAPP, [
+  'Kan',
+  'ikke',
+  'finne',
+  'mal',
+  'dette',
+  'historikkinnslaget',
+]);
+
+// Nokre enkle samanbindingsord utelatast frå samanlikning for alle historikkinnslag typer
+const wordsAlwaysExempted = ['er', 'Er'];
+
+const allMissingWordsAreExempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
+  const wordsKnownMissing = [
+    ...wordsAlwaysExempted,
+    ...(historikkInnslagMissingWordsExemptions.get(historikkInnslagV1Type) ?? []),
+  ];
+  return wordsMissing.every(wordMissing =>
+    wordsKnownMissing.some(wordKnownMissing => wordKnownMissing === wordMissing),
+  );
+};
+
 export const compareRenderedElementTexts = async (
   v1Innslag: EtablerteUlikeHistorikkinnslagTyper[],
   v1Elementer: JSX.Element[],
@@ -137,13 +184,23 @@ export const compareRenderedElementTexts = async (
       await checkRenderedElementTexts(v1Innslag[i], v1Elementer[i], v2Elementer[i]);
     } catch (err) {
       if (err instanceof HistorikkV1V2Sammenligningsfeil) {
-        err.message = `historikk innslag nr ${i + 1}: ${err.message}`;
-        console.warn(
-          err,
-          err.wordsNotFound.map(v => v),
-        );
-        err.redactWordsNotFound(); // Ønsker ikkje å sende potensielt sensitiv info til sentry
-        throw err;
+        const feilaInnslagV1 = v1Innslag[i];
+        if (
+          (feilaInnslagV1.erKlage || feilaInnslagV1.erSak) &&
+          allMissingWordsAreExempted(feilaInnslagV1.type.kode, err.wordsNotFound)
+        ) {
+          console.info(
+            `historikk innslag v2 med uuid ${feilaInnslagV1.uuid} mangler ${err.wordsNotFound.length} ord funne i v1, men disse er untatt fra feilrapportering. (${err.wordsNotFound.join(', ')})`,
+          );
+        } else {
+          err.message = `historikk innslag nr ${i + 1}: ${err.message}`;
+          console.warn(
+            err,
+            err.wordsNotFound.map(v => v),
+          );
+          err.redactWordsNotFound(); // Ønsker ikkje å sende potensielt sensitiv info til sentry
+          throw err;
+        }
       } else {
         throw err;
       }

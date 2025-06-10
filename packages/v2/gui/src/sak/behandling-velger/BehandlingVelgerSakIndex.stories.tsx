@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import {
+  BehandlingDtoSakstype,
   BehandlingDtoStatus,
   BehandlingDtoType,
   BehandlingsresultatDtoType,
@@ -8,7 +9,7 @@ import {
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import withKodeverkContext from '../../storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '../../storybook/decorators/withMaxWidth.js';
 import { FakeBehandlingVelgerBackendApi } from '../../storybook/mocks/FakeBehandlingVelgerBackendApi.js';
@@ -30,6 +31,7 @@ const behandlinger = [
     status: BehandlingDtoStatus.AVSLUTTET,
     type: BehandlingDtoType.REVURDERING,
     uuid: '1',
+    sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
   },
   {
     ansvarligSaksbehandler: 'saksbeh',
@@ -46,6 +48,7 @@ const behandlinger = [
     status: BehandlingDtoStatus.AVSLUTTET,
     type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
     uuid: '1',
+    sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
   },
 ];
 

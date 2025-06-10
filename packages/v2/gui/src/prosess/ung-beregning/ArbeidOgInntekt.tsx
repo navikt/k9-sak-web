@@ -107,10 +107,10 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                 <Label size="small">Periode</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert av deltager</Label>
+                <Label size="small">Rapportert av deltaker</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert i A-inntekt</Label>
+                <Label size="small">Rapportert i A-ordningen</Label>
               </Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>

@@ -1,6 +1,8 @@
 import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated';
 
-// Kopi av respons frå alleKodeverdierSomObjekt i k9-sak (/api/kodeverk/alle/objekt), for testing
+// Data i denne konstant er ein direkte kopi av response body frå /k9/sak/api/kodeverk/alle/objekt, med X-Json-Serializer-Option: openapi-compat.
+// Brukast for å kunne gjere kodeverk oppslag i test/stories.
+// Oppdater med ny kopi frå nevnte endepunkt (feks via swagger) når kodeverk definisjoner blir endra i k9-sak kode.
 export const oppslagKodeverkSomObjektK9Sak = {
   relatertYtelseTilstander: [
     {
@@ -1056,6 +1058,13 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'Behandlingen er satt på vent på grunn av mangel i løsningen. Det jobbes med å løse dette.',
       kilde: 'GRADERING_FLERE_ARBEIDSFORHOLD',
       kanVelges: false,
+    },
+    {
+      kode: 'INFORMASJON_OM_OPPLÆRING',
+      kodeverk: 'VENT_AARSAK',
+      navn: 'Informasjon om kurs/opplæring',
+      kilde: 'INFORMASJON_OM_OPPLÆRING',
+      kanVelges: true,
     },
     {
       kode: 'INGEN_PERIODE_UTEN_YTELSE',
@@ -2243,6 +2252,18 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'OVERSTYR_INPUT_BEREGNING',
     },
     {
+      kode: 'PUNKT_FOR_INSTITUSJON',
+      kodeverk: 'SKJERMLENKE_TYPE',
+      navn: 'Institusjon',
+      kilde: 'PUNKT_FOR_INSTITUSJON',
+    },
+    {
+      kode: 'PUNKT_FOR_LANGVARIG_SYK',
+      kodeverk: 'SKJERMLENKE_TYPE',
+      navn: 'Langvarig syk',
+      kilde: 'PUNKT_FOR_LANGVARIG_SYK',
+    },
+    {
       kode: 'PUNKT_FOR_MAN_VILKÅRSVURDERING',
       kodeverk: 'SKJERMLENKE_TYPE',
       navn: 'Punkt for manuell vilkårsvurdering',
@@ -2267,6 +2288,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'PUNKT_FOR_MEDLEMSKAP_LØPENDE',
     },
     {
+      kode: 'PUNKT_FOR_NØDVENDIG_OPPLÆRING',
+      kodeverk: 'SKJERMLENKE_TYPE',
+      navn: 'Nødvendig opplæring',
+      kilde: 'PUNKT_FOR_NØDVENDIG_OPPLÆRING',
+    },
+    {
       kode: 'PUNKT_FOR_OMSORGEN_FOR',
       kodeverk: 'SKJERMLENKE_TYPE',
       navn: 'Omsorgen for',
@@ -2277,6 +2304,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kodeverk: 'SKJERMLENKE_TYPE',
       navn: 'Opptjening',
       kilde: 'PUNKT_FOR_OPPTJENING',
+    },
+    {
+      kode: 'PUNKT_FOR_REISEDAGER',
+      kodeverk: 'SKJERMLENKE_TYPE',
+      navn: 'Reisedager',
+      kilde: 'PUNKT_FOR_REISEDAGER',
     },
     {
       kode: 'PUNKT_FOR_UTVIDETRETT',
@@ -2501,6 +2534,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'ENDRING_TIDSBEGRENSET_ARBEIDSFORHOLD',
     },
     {
+      kode: 'ER_LANGVARIG_SYK',
+      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
+      navn: 'Langvarig syk',
+      kilde: 'ER_LANGVARIG_SYK',
+    },
+    {
       kode: 'ER_SOKER_BOSATT_I_NORGE',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
       navn: 'Er søker bosatt i Norge?',
@@ -2549,6 +2588,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'FRILANS_INNTEKT',
     },
     {
+      kode: 'GODKJENT_REISETID',
+      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
+      navn: 'Godkjent reisetid',
+      kilde: 'GODKJENT_REISETID',
+    },
+    {
       kode: 'GYLDIG_MEDLEM_FOLKETRYGDEN',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
       navn: 'Gyldig medlem i folketrygden',
@@ -2565,6 +2610,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
       navn: 'Inntekt fra arbeidsforhold',
       kilde: 'INNTEKT_FRA_ARBEIDSFORHOLD',
+    },
+    {
+      kode: 'INSTITUSJON_GODKJENT',
+      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
+      navn: 'Institusjon godkjent',
+      kilde: 'INSTITUSJON_GODKJENT',
     },
     {
       kode: 'KOMPLETTHET',
@@ -2751,6 +2802,18 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
       navn: 'Virkningsdato',
       kilde: 'VIRKNINGSDATO_UTTAK_NYE_REGLER',
+    },
+    {
+      kode: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
+      navn: 'Opplæring dokumentert',
+      kilde: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+    },
+    {
+      kode: 'VURDERT_OPPLÆRING_NØDVENDIG',
+      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
+      navn: 'Opplæring nødvendig',
+      kilde: 'VURDERT_OPPLÆRING_NØDVENDIG',
     },
     {
       kode: 'VURDER_ETTERLØNN_SLUTTPAKKE',
@@ -2982,7 +3045,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'AVBRUTT_BEH',
@@ -3198,7 +3261,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: 'OVST_UTTAK_FJERNE',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Manuell overstyring av uttak - fjernet overstyring for periode',
-      kilde: 'OVST_UTTAK_FJERNET',
+      kilde: 'OVST_UTTAK_FJERNE',
     },
     {
       kode: 'OVST_UTTAK_NY',
@@ -3210,7 +3273,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: 'OVST_UTTAK_OPPDATERE',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
       navn: 'Manuell overstyring av uttak - oppdaterte overstyring for periode',
-      kilde: 'OVST_UTTAK_OPPDATERT',
+      kilde: 'OVST_UTTAK_OPPDATERE',
     },
     {
       kode: 'OVST_UTTAK_SPLITT',
@@ -3257,8 +3320,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
     {
       kode: 'TILBAKEKR_VIDEREBEHANDLING',
       kodeverk: 'HISTORIKKINNSLAG_TYPE',
-      navn: 'Metode for å håndtere tilbakekreving av feilutbetailng er valgt.',
-      kilde: 'TILBAKEKREVING_VIDEREBEHANDLING',
+      navn: 'Metode for å håndtere tilbakekreving av feilutbetaling er valgt.',
+      kilde: 'TILBAKEKR_VIDEREBEHANDLING',
     },
     {
       kode: 'UENDRET_UTFALL',
@@ -3394,7 +3457,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'MEDLEMSKAP_DEKNING',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'FTL_2_6',
@@ -3474,13 +3537,13 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'MEDLEMSKAP_TYPE',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'AVKLARES',
       kodeverk: 'MEDLEMSKAP_TYPE',
       navn: 'Under avklaring',
-      kilde: 'UNDER_AVKLARING',
+      kilde: 'AVKLARES',
     },
     {
       kode: 'ENDELIG',
@@ -3500,235 +3563,241 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: '1007',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søkt for sent',
-      kilde: 'SØKT_FOR_SENT',
+      kilde: '1007',
     },
     {
       kode: '1019',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Manglende dokumentasjon',
-      kilde: 'MANGLENDE_DOKUMENTASJON',
+      kilde: '1019',
     },
     {
       kode: '1020',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker er ikke medlem',
-      kilde: 'SØKER_ER_IKKE_MEDLEM',
+      kilde: '1020',
     },
     {
       kode: '1021',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker er utvandret',
-      kilde: 'SØKER_ER_UTVANDRET',
+      kilde: '1021',
     },
     {
       kode: '1023',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker har ikke lovlig opphold',
-      kilde: 'SØKER_HAR_IKKE_LOVLIG_OPPHOLD',
+      kilde: '1023',
     },
     {
       kode: '1024',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker har ikke oppholdsrett',
-      kilde: 'SØKER_HAR_IKKE_OPPHOLDSRETT',
+      kilde: '1024',
     },
     {
       kode: '1025',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker er ikke bosatt',
-      kilde: 'SØKER_ER_IKKE_BOSATT',
+      kilde: '1025',
     },
     {
       kode: '1035',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke tilstrekkelig opptjening',
-      kilde: 'IKKE_TILSTREKKELIG_OPPTJENING',
+      kilde: '1035',
     },
     {
       kode: '1036',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke tilstrekkelig opptjening',
-      kilde: 'FYLLER_IKKE_ORDINÆRE_OPPTJENINGSREGLER',
+      kilde: '1036',
     },
     {
       kode: '1041',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'For lavt brutto beregningsgrunnlag',
-      kilde: 'FOR_LAVT_BEREGNINGSGRUNNLAG',
+      kilde: '1041',
     },
     {
       kode: '1042',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'For lavt brutto beregningsgrunnlag',
-      kilde: 'FOR_LAVT_BEREGNINGSGRUNNLAG_8_47',
+      kilde: '1042',
     },
     {
       kode: '1043',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Manglende inntektsgrunnlag for periode',
-      kilde: 'MANGLENDE_INNTEKTSGRUNNLAG',
+      kilde: '1043',
     },
     {
       kode: '1067',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke dokumentert sykdom, skade eller lyte.',
-      kilde: 'IKKE_DOKUMENTERT_SYKDOM_SKADE_ELLER_LYTE',
+      kilde: '1067',
     },
     {
       kode: '1068',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke mottatt dokumentasjon fra rett organ.',
-      kilde: 'DOKUMENTASJON_IKKE_FRA_RETT_ORGAN',
+      kilde: '1068',
     },
     {
       kode: '1069',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke behov for kontinuerlig pleie.',
-      kilde: 'IKKE_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE_PÅ_BAKGRUNN_AV_SYKDOM',
+      kilde: '1069',
     },
     {
       kode: '1071',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke dokumentert omsorgen for.',
-      kilde: 'IKKE_DOKUMENTERT_OMSORGEN_FOR',
+      kilde: '1071',
     },
     {
       kode: '1072',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke grunnlag for utvidet rett',
-      kilde: 'IKKE_UTVIDETRETT',
+      kilde: '1072',
     },
     {
       kode: '1073',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke kronisk syk eller funksjonshemmet',
-      kilde: 'IKKE_UTVIDETRETT_IKKE_KRONISK_SYK',
+      kilde: '1073',
     },
     {
       kode: '1074',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke økt risiko for fravær',
-      kilde: 'IKKE_UTVIDETRETT_IKKE_ØKT_RISIKO_FRAVÆR',
+      kilde: '1074',
     },
     {
       kode: '1075',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Varigheten er mindre enn seks måneder',
-      kilde: 'IKKE_MIDLERTIDIG_ALENE_VARIGHET_UNDER_SEKS_MÅN',
+      kilde: '1075',
     },
     {
       kode: '1076',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker oppfyller ikke kravene til midlertidig alene',
-      kilde: 'IKKE_MIDLERTIDIG_ALENE_REGNES_IKKE_SOM_Å_HA_ALENEOMSORG',
+      kilde: '1076',
     },
     {
       kode: '1077',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke grunnlag for aleneomsorg',
-      kilde: 'IKKE_GRUNNLAG_FOR_ALENEOMSORG',
+      kilde: '1077',
     },
     {
       kode: '1078',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Foreldre bor sammen',
-      kilde: 'IKKE_GRUNNLAG_FOR_ALENEOMSORG_FORELDRE_BOR_SAMMEN',
+      kilde: '1078',
     },
     {
       kode: '1079',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Avtale om delt bosted',
-      kilde: 'IKKE_GRUNNLAG_FOR_ALENEOMSORG_DELT_BOSTED',
+      kilde: '1079',
     },
     {
       kode: '1080',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Pleietrengende innlagt i stedet for hjemme',
-      kilde: 'PLEIETRENGENDE_INNLAGT_I_STEDET_FOR_HJEMME',
+      kilde: '1080',
     },
     {
       kode: '1081',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke i livets sluttfase',
-      kilde: 'IKKE_I_LIVETS_SLUTTFASE',
+      kilde: '1081',
     },
     {
       kode: '1090',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker er eldre enn høyeste tillate alder.',
-      kilde: 'SØKER_OVER_HØYESTE_ALDER',
+      kilde: '1090',
     },
     {
       kode: '1091',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker har avgått med døden.',
-      kilde: 'SØKER_HAR_AVGÅTT_MED_DØDEN',
+      kilde: '1091',
     },
     {
       kode: '1092',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Barnet er eldre enn tillatt alder.',
-      kilde: 'BARN_OVER_HØYESTE_ALDER',
+      kilde: '1092',
     },
     {
       kode: '1093',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søker oppfyller ikke midlertidig alene-vilkåret av andre grunner',
-      kilde: 'IKKE_MIDLERTIDIG_ALENE',
+      kilde: '1093',
     },
     {
       kode: '1099',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ingen beregningsregler tilgjengelig i løsningen',
-      kilde: 'INGEN_BEREGNINGSREGLER_TILGJENGELIG_I_LØSNINGEN',
+      kilde: '1099',
     },
     {
       kode: '1101',
       kodeverk: 'AVSLAGSARSAK',
-      navn: 'Opplæringen er ikke nødvendig for ta seg av den pleietrengende',
-      kilde: 'IKKE_NØDVENDIG_OPPLÆRING',
+      navn: 'Opplæringen er ikke nødvendig for å ta seg av den pleietrengende',
+      kilde: '1101',
     },
     {
       kode: '1102',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Institusjonen er ikke en godkjent institusjon',
-      kilde: 'IKKE_GODKJENT_INSTITUSJON',
+      kilde: '1102',
     },
     {
       kode: '1103',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke langvarig syk',
-      kilde: 'IKKE_LANGVARIG_SYK',
+      kilde: '1103',
     },
     {
       kode: '1104',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ikke på reise',
-      kilde: 'IKKE_PÅ_REISE',
+      kilde: '1104',
+    },
+    {
+      kode: '1105',
+      kodeverk: 'AVSLAGSARSAK',
+      navn: 'Kurset inneholder ikke opplæring',
+      kilde: '1105',
     },
     {
       kode: '8000',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Søkt frilans uten frilansinntekt',
-      kilde: 'SØKT_FRILANS_UTEN_FRILANS_INNTEKT',
+      kilde: '8000',
     },
     {
       kode: '8001',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Avkortet grunnet annen inntekt',
-      kilde: 'AVKORTET_GRUNNET_ANNEN_INNTEKT',
+      kilde: '8001',
     },
     {
       kode: '8002',
       kodeverk: 'AVSLAGSARSAK',
       navn: 'Ingen stønadsdager i søknadsperioden',
-      kilde: 'INGEN_STØNADSDAGER_I_SØKNADSPERIODEN',
+      kilde: '8002',
     },
   ],
   vilkårTyper: [
@@ -3914,7 +3983,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'VURDER_ARBEIDSFORHOLD_HISTORIKKINNSLAG',
       navn: 'UDEFINERT',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'LAGT_TIL_AV_SAKSBEHANDLER',
@@ -3934,19 +4003,19 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'TILBAKEKR_VIDERE_BEH',
       navn: 'Udefinert.',
-      kilde: 'UDEFINIERT',
+      kilde: '-',
     },
     {
       kode: 'TILBAKEKR_IGNORER',
       kodeverk: 'TILBAKEKR_VIDERE_BEH',
       navn: 'Feilutbetaling, avvent samordning',
-      kilde: 'IGNORER_TILBAKEKREVING',
+      kilde: 'TILBAKEKR_IGNORER',
     },
     {
       kode: 'TILBAKEKR_INNTREKK',
       kodeverk: 'TILBAKEKR_VIDERE_BEH',
       navn: 'Feilutbetaling hvor inntrekk dekker hele beløpet',
-      kilde: 'INNTREKK',
+      kilde: 'TILBAKEKR_INNTREKK',
     },
     {
       kode: 'TILBAKEKR_OPPDATER',
@@ -3958,7 +4027,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: 'TILBAKEKR_OPPRETT',
       kodeverk: 'TILBAKEKR_VIDERE_BEH',
       navn: 'Feilutbetaling med tilbakekreving',
-      kilde: 'OPPRETT_TILBAKEKREVING',
+      kilde: 'TILBAKEKR_OPPRETT',
     },
   ],
   vurderingsÅrsaker: [
@@ -4026,8 +4095,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: '-',
       kilde: {
         kode: '-',
-        navn: '-',
         kodeverk: 'LANDKODER',
+        navn: '-',
       },
     },
     {
@@ -4036,8 +4105,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: '???',
       kilde: {
         kode: '???',
-        navn: '???',
         kodeverk: 'LANDKODER',
+        navn: '???',
       },
     },
     {
@@ -4046,8 +4115,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ABW',
       kilde: {
         kode: 'ABW',
-        navn: 'ABW',
         kodeverk: 'LANDKODER',
+        navn: 'ABW',
       },
     },
     {
@@ -4056,8 +4125,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AFG',
       kilde: {
         kode: 'AFG',
-        navn: 'AFG',
         kodeverk: 'LANDKODER',
+        navn: 'AFG',
       },
     },
     {
@@ -4066,8 +4135,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AGO',
       kilde: {
         kode: 'AGO',
-        navn: 'AGO',
         kodeverk: 'LANDKODER',
+        navn: 'AGO',
       },
     },
     {
@@ -4076,8 +4145,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AIA',
       kilde: {
         kode: 'AIA',
-        navn: 'AIA',
         kodeverk: 'LANDKODER',
+        navn: 'AIA',
       },
     },
     {
@@ -4086,8 +4155,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ALA',
       kilde: {
         kode: 'ALA',
-        navn: 'ALA',
         kodeverk: 'LANDKODER',
+        navn: 'ALA',
       },
     },
     {
@@ -4096,8 +4165,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ALB',
       kilde: {
         kode: 'ALB',
-        navn: 'ALB',
         kodeverk: 'LANDKODER',
+        navn: 'ALB',
       },
     },
     {
@@ -4106,8 +4175,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AND',
       kilde: {
         kode: 'AND',
-        navn: 'AND',
         kodeverk: 'LANDKODER',
+        navn: 'AND',
       },
     },
     {
@@ -4116,8 +4185,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ANT',
       kilde: {
         kode: 'ANT',
-        navn: 'ANT',
         kodeverk: 'LANDKODER',
+        navn: 'ANT',
       },
     },
     {
@@ -4126,8 +4195,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ARE',
       kilde: {
         kode: 'ARE',
-        navn: 'ARE',
         kodeverk: 'LANDKODER',
+        navn: 'ARE',
       },
     },
     {
@@ -4136,8 +4205,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ARG',
       kilde: {
         kode: 'ARG',
-        navn: 'ARG',
         kodeverk: 'LANDKODER',
+        navn: 'ARG',
       },
     },
     {
@@ -4146,8 +4215,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ARM',
       kilde: {
         kode: 'ARM',
-        navn: 'ARM',
         kodeverk: 'LANDKODER',
+        navn: 'ARM',
       },
     },
     {
@@ -4156,8 +4225,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ASM',
       kilde: {
         kode: 'ASM',
-        navn: 'ASM',
         kodeverk: 'LANDKODER',
+        navn: 'ASM',
       },
     },
     {
@@ -4166,8 +4235,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ATA',
       kilde: {
         kode: 'ATA',
-        navn: 'ATA',
         kodeverk: 'LANDKODER',
+        navn: 'ATA',
       },
     },
     {
@@ -4176,8 +4245,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ATF',
       kilde: {
         kode: 'ATF',
-        navn: 'ATF',
         kodeverk: 'LANDKODER',
+        navn: 'ATF',
       },
     },
     {
@@ -4186,8 +4255,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ATG',
       kilde: {
         kode: 'ATG',
-        navn: 'ATG',
         kodeverk: 'LANDKODER',
+        navn: 'ATG',
       },
     },
     {
@@ -4196,8 +4265,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AUS',
       kilde: {
         kode: 'AUS',
-        navn: 'AUS',
         kodeverk: 'LANDKODER',
+        navn: 'AUS',
       },
     },
     {
@@ -4206,8 +4275,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AUT',
       kilde: {
         kode: 'AUT',
-        navn: 'AUT',
         kodeverk: 'LANDKODER',
+        navn: 'AUT',
       },
     },
     {
@@ -4216,8 +4285,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'AZE',
       kilde: {
         kode: 'AZE',
-        navn: 'AZE',
         kodeverk: 'LANDKODER',
+        navn: 'AZE',
       },
     },
     {
@@ -4226,8 +4295,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BDI',
       kilde: {
         kode: 'BDI',
-        navn: 'BDI',
         kodeverk: 'LANDKODER',
+        navn: 'BDI',
       },
     },
     {
@@ -4236,8 +4305,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BEL',
       kilde: {
         kode: 'BEL',
-        navn: 'BEL',
         kodeverk: 'LANDKODER',
+        navn: 'BEL',
       },
     },
     {
@@ -4246,8 +4315,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BEN',
       kilde: {
         kode: 'BEN',
-        navn: 'BEN',
         kodeverk: 'LANDKODER',
+        navn: 'BEN',
       },
     },
     {
@@ -4256,8 +4325,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BES',
       kilde: {
         kode: 'BES',
-        navn: 'BES',
         kodeverk: 'LANDKODER',
+        navn: 'BES',
       },
     },
     {
@@ -4266,8 +4335,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BFA',
       kilde: {
         kode: 'BFA',
-        navn: 'BFA',
         kodeverk: 'LANDKODER',
+        navn: 'BFA',
       },
     },
     {
@@ -4276,8 +4345,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BGD',
       kilde: {
         kode: 'BGD',
-        navn: 'BGD',
         kodeverk: 'LANDKODER',
+        navn: 'BGD',
       },
     },
     {
@@ -4286,8 +4355,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BGR',
       kilde: {
         kode: 'BGR',
-        navn: 'BGR',
         kodeverk: 'LANDKODER',
+        navn: 'BGR',
       },
     },
     {
@@ -4296,8 +4365,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BHR',
       kilde: {
         kode: 'BHR',
-        navn: 'BHR',
         kodeverk: 'LANDKODER',
+        navn: 'BHR',
       },
     },
     {
@@ -4306,8 +4375,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BHS',
       kilde: {
         kode: 'BHS',
-        navn: 'BHS',
         kodeverk: 'LANDKODER',
+        navn: 'BHS',
       },
     },
     {
@@ -4316,8 +4385,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BIH',
       kilde: {
         kode: 'BIH',
-        navn: 'BIH',
         kodeverk: 'LANDKODER',
+        navn: 'BIH',
       },
     },
     {
@@ -4326,8 +4395,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BLM',
       kilde: {
         kode: 'BLM',
-        navn: 'BLM',
         kodeverk: 'LANDKODER',
+        navn: 'BLM',
       },
     },
     {
@@ -4336,8 +4405,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BLR',
       kilde: {
         kode: 'BLR',
-        navn: 'BLR',
         kodeverk: 'LANDKODER',
+        navn: 'BLR',
       },
     },
     {
@@ -4346,8 +4415,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BLZ',
       kilde: {
         kode: 'BLZ',
-        navn: 'BLZ',
         kodeverk: 'LANDKODER',
+        navn: 'BLZ',
       },
     },
     {
@@ -4356,8 +4425,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BMU',
       kilde: {
         kode: 'BMU',
-        navn: 'BMU',
         kodeverk: 'LANDKODER',
+        navn: 'BMU',
       },
     },
     {
@@ -4366,8 +4435,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BOL',
       kilde: {
         kode: 'BOL',
-        navn: 'BOL',
         kodeverk: 'LANDKODER',
+        navn: 'BOL',
       },
     },
     {
@@ -4376,8 +4445,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BRA',
       kilde: {
         kode: 'BRA',
-        navn: 'BRA',
         kodeverk: 'LANDKODER',
+        navn: 'BRA',
       },
     },
     {
@@ -4386,8 +4455,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BRB',
       kilde: {
         kode: 'BRB',
-        navn: 'BRB',
         kodeverk: 'LANDKODER',
+        navn: 'BRB',
       },
     },
     {
@@ -4396,8 +4465,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BRN',
       kilde: {
         kode: 'BRN',
-        navn: 'BRN',
         kodeverk: 'LANDKODER',
+        navn: 'BRN',
       },
     },
     {
@@ -4406,8 +4475,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BTN',
       kilde: {
         kode: 'BTN',
-        navn: 'BTN',
         kodeverk: 'LANDKODER',
+        navn: 'BTN',
       },
     },
     {
@@ -4416,8 +4485,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BUR',
       kilde: {
         kode: 'BUR',
-        navn: 'BUR',
         kodeverk: 'LANDKODER',
+        navn: 'BUR',
       },
     },
     {
@@ -4426,8 +4495,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BVT',
       kilde: {
         kode: 'BVT',
-        navn: 'BVT',
         kodeverk: 'LANDKODER',
+        navn: 'BVT',
       },
     },
     {
@@ -4436,8 +4505,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BWA',
       kilde: {
         kode: 'BWA',
-        navn: 'BWA',
         kodeverk: 'LANDKODER',
+        navn: 'BWA',
       },
     },
     {
@@ -4446,8 +4515,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'BYS',
       kilde: {
         kode: 'BYS',
-        navn: 'BYS',
         kodeverk: 'LANDKODER',
+        navn: 'BYS',
       },
     },
     {
@@ -4456,8 +4525,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CAF',
       kilde: {
         kode: 'CAF',
-        navn: 'CAF',
         kodeverk: 'LANDKODER',
+        navn: 'CAF',
       },
     },
     {
@@ -4466,8 +4535,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CAN',
       kilde: {
         kode: 'CAN',
-        navn: 'CAN',
         kodeverk: 'LANDKODER',
+        navn: 'CAN',
       },
     },
     {
@@ -4476,8 +4545,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CCK',
       kilde: {
         kode: 'CCK',
-        navn: 'CCK',
         kodeverk: 'LANDKODER',
+        navn: 'CCK',
       },
     },
     {
@@ -4486,8 +4555,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CHE',
       kilde: {
         kode: 'CHE',
-        navn: 'CHE',
         kodeverk: 'LANDKODER',
+        navn: 'CHE',
       },
     },
     {
@@ -4496,8 +4565,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CHL',
       kilde: {
         kode: 'CHL',
-        navn: 'CHL',
         kodeverk: 'LANDKODER',
+        navn: 'CHL',
       },
     },
     {
@@ -4506,8 +4575,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CHN',
       kilde: {
         kode: 'CHN',
-        navn: 'CHN',
         kodeverk: 'LANDKODER',
+        navn: 'CHN',
       },
     },
     {
@@ -4516,8 +4585,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CIV',
       kilde: {
         kode: 'CIV',
-        navn: 'CIV',
         kodeverk: 'LANDKODER',
+        navn: 'CIV',
       },
     },
     {
@@ -4526,8 +4595,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CMR',
       kilde: {
         kode: 'CMR',
-        navn: 'CMR',
         kodeverk: 'LANDKODER',
+        navn: 'CMR',
       },
     },
     {
@@ -4536,8 +4605,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'COD',
       kilde: {
         kode: 'COD',
-        navn: 'COD',
         kodeverk: 'LANDKODER',
+        navn: 'COD',
       },
     },
     {
@@ -4546,8 +4615,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'COG',
       kilde: {
         kode: 'COG',
-        navn: 'COG',
         kodeverk: 'LANDKODER',
+        navn: 'COG',
       },
     },
     {
@@ -4556,8 +4625,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'COK',
       kilde: {
         kode: 'COK',
-        navn: 'COK',
         kodeverk: 'LANDKODER',
+        navn: 'COK',
       },
     },
     {
@@ -4566,8 +4635,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'COL',
       kilde: {
         kode: 'COL',
-        navn: 'COL',
         kodeverk: 'LANDKODER',
+        navn: 'COL',
       },
     },
     {
@@ -4576,8 +4645,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'COM',
       kilde: {
         kode: 'COM',
-        navn: 'COM',
         kodeverk: 'LANDKODER',
+        navn: 'COM',
       },
     },
     {
@@ -4586,8 +4655,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CPV',
       kilde: {
         kode: 'CPV',
-        navn: 'CPV',
         kodeverk: 'LANDKODER',
+        navn: 'CPV',
       },
     },
     {
@@ -4596,8 +4665,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CRI',
       kilde: {
         kode: 'CRI',
-        navn: 'CRI',
         kodeverk: 'LANDKODER',
+        navn: 'CRI',
       },
     },
     {
@@ -4606,8 +4675,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CSK',
       kilde: {
         kode: 'CSK',
-        navn: 'CSK',
         kodeverk: 'LANDKODER',
+        navn: 'CSK',
       },
     },
     {
@@ -4616,8 +4685,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CUB',
       kilde: {
         kode: 'CUB',
-        navn: 'CUB',
         kodeverk: 'LANDKODER',
+        navn: 'CUB',
       },
     },
     {
@@ -4626,8 +4695,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CUW',
       kilde: {
         kode: 'CUW',
-        navn: 'CUW',
         kodeverk: 'LANDKODER',
+        navn: 'CUW',
       },
     },
     {
@@ -4636,8 +4705,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CXR',
       kilde: {
         kode: 'CXR',
-        navn: 'CXR',
         kodeverk: 'LANDKODER',
+        navn: 'CXR',
       },
     },
     {
@@ -4646,8 +4715,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CYM',
       kilde: {
         kode: 'CYM',
-        navn: 'CYM',
         kodeverk: 'LANDKODER',
+        navn: 'CYM',
       },
     },
     {
@@ -4656,8 +4725,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CYP',
       kilde: {
         kode: 'CYP',
-        navn: 'CYP',
         kodeverk: 'LANDKODER',
+        navn: 'CYP',
       },
     },
     {
@@ -4666,8 +4735,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'CZE',
       kilde: {
         kode: 'CZE',
-        navn: 'CZE',
         kodeverk: 'LANDKODER',
+        navn: 'CZE',
       },
     },
     {
@@ -4676,8 +4745,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DDR',
       kilde: {
         kode: 'DDR',
-        navn: 'DDR',
         kodeverk: 'LANDKODER',
+        navn: 'DDR',
       },
     },
     {
@@ -4686,8 +4755,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DEU',
       kilde: {
         kode: 'DEU',
-        navn: 'DEU',
         kodeverk: 'LANDKODER',
+        navn: 'DEU',
       },
     },
     {
@@ -4696,8 +4765,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DJI',
       kilde: {
         kode: 'DJI',
-        navn: 'DJI',
         kodeverk: 'LANDKODER',
+        navn: 'DJI',
       },
     },
     {
@@ -4706,8 +4775,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DMA',
       kilde: {
         kode: 'DMA',
-        navn: 'DMA',
         kodeverk: 'LANDKODER',
+        navn: 'DMA',
       },
     },
     {
@@ -4716,8 +4785,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DNK',
       kilde: {
         kode: 'DNK',
-        navn: 'DNK',
         kodeverk: 'LANDKODER',
+        navn: 'DNK',
       },
     },
     {
@@ -4726,8 +4795,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DOM',
       kilde: {
         kode: 'DOM',
-        navn: 'DOM',
         kodeverk: 'LANDKODER',
+        navn: 'DOM',
       },
     },
     {
@@ -4736,8 +4805,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'DZA',
       kilde: {
         kode: 'DZA',
-        navn: 'DZA',
         kodeverk: 'LANDKODER',
+        navn: 'DZA',
       },
     },
     {
@@ -4746,8 +4815,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ECU',
       kilde: {
         kode: 'ECU',
-        navn: 'ECU',
         kodeverk: 'LANDKODER',
+        navn: 'ECU',
       },
     },
     {
@@ -4756,8 +4825,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'EGY',
       kilde: {
         kode: 'EGY',
-        navn: 'EGY',
         kodeverk: 'LANDKODER',
+        navn: 'EGY',
       },
     },
     {
@@ -4766,8 +4835,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ERI',
       kilde: {
         kode: 'ERI',
-        navn: 'ERI',
         kodeverk: 'LANDKODER',
+        navn: 'ERI',
       },
     },
     {
@@ -4776,8 +4845,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ESH',
       kilde: {
         kode: 'ESH',
-        navn: 'ESH',
         kodeverk: 'LANDKODER',
+        navn: 'ESH',
       },
     },
     {
@@ -4786,8 +4855,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ESP',
       kilde: {
         kode: 'ESP',
-        navn: 'ESP',
         kodeverk: 'LANDKODER',
+        navn: 'ESP',
       },
     },
     {
@@ -4796,8 +4865,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'EST',
       kilde: {
         kode: 'EST',
-        navn: 'EST',
         kodeverk: 'LANDKODER',
+        navn: 'EST',
       },
     },
     {
@@ -4806,8 +4875,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ETH',
       kilde: {
         kode: 'ETH',
-        navn: 'ETH',
         kodeverk: 'LANDKODER',
+        navn: 'ETH',
       },
     },
     {
@@ -4816,8 +4885,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'FIN',
       kilde: {
         kode: 'FIN',
-        navn: 'FIN',
         kodeverk: 'LANDKODER',
+        navn: 'FIN',
       },
     },
     {
@@ -4826,8 +4895,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'FJI',
       kilde: {
         kode: 'FJI',
-        navn: 'FJI',
         kodeverk: 'LANDKODER',
+        navn: 'FJI',
       },
     },
     {
@@ -4836,8 +4905,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'FLK',
       kilde: {
         kode: 'FLK',
-        navn: 'FLK',
         kodeverk: 'LANDKODER',
+        navn: 'FLK',
       },
     },
     {
@@ -4846,8 +4915,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'FRA',
       kilde: {
         kode: 'FRA',
-        navn: 'FRA',
         kodeverk: 'LANDKODER',
+        navn: 'FRA',
       },
     },
     {
@@ -4856,8 +4925,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'FRO',
       kilde: {
         kode: 'FRO',
-        navn: 'FRO',
         kodeverk: 'LANDKODER',
+        navn: 'FRO',
       },
     },
     {
@@ -4866,8 +4935,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'FSM',
       kilde: {
         kode: 'FSM',
-        navn: 'FSM',
         kodeverk: 'LANDKODER',
+        navn: 'FSM',
       },
     },
     {
@@ -4876,8 +4945,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GAB',
       kilde: {
         kode: 'GAB',
-        navn: 'GAB',
         kodeverk: 'LANDKODER',
+        navn: 'GAB',
       },
     },
     {
@@ -4886,8 +4955,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GBR',
       kilde: {
         kode: 'GBR',
-        navn: 'GBR',
         kodeverk: 'LANDKODER',
+        navn: 'GBR',
       },
     },
     {
@@ -4896,8 +4965,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GEO',
       kilde: {
         kode: 'GEO',
-        navn: 'GEO',
         kodeverk: 'LANDKODER',
+        navn: 'GEO',
       },
     },
     {
@@ -4906,8 +4975,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GGY',
       kilde: {
         kode: 'GGY',
-        navn: 'GGY',
         kodeverk: 'LANDKODER',
+        navn: 'GGY',
       },
     },
     {
@@ -4916,8 +4985,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GHA',
       kilde: {
         kode: 'GHA',
-        navn: 'GHA',
         kodeverk: 'LANDKODER',
+        navn: 'GHA',
       },
     },
     {
@@ -4926,8 +4995,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GIB',
       kilde: {
         kode: 'GIB',
-        navn: 'GIB',
         kodeverk: 'LANDKODER',
+        navn: 'GIB',
       },
     },
     {
@@ -4936,8 +5005,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GIN',
       kilde: {
         kode: 'GIN',
-        navn: 'GIN',
         kodeverk: 'LANDKODER',
+        navn: 'GIN',
       },
     },
     {
@@ -4946,8 +5015,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GLP',
       kilde: {
         kode: 'GLP',
-        navn: 'GLP',
         kodeverk: 'LANDKODER',
+        navn: 'GLP',
       },
     },
     {
@@ -4956,8 +5025,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GMB',
       kilde: {
         kode: 'GMB',
-        navn: 'GMB',
         kodeverk: 'LANDKODER',
+        navn: 'GMB',
       },
     },
     {
@@ -4966,8 +5035,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GNB',
       kilde: {
         kode: 'GNB',
-        navn: 'GNB',
         kodeverk: 'LANDKODER',
+        navn: 'GNB',
       },
     },
     {
@@ -4976,8 +5045,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GNQ',
       kilde: {
         kode: 'GNQ',
-        navn: 'GNQ',
         kodeverk: 'LANDKODER',
+        navn: 'GNQ',
       },
     },
     {
@@ -4986,8 +5055,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GRC',
       kilde: {
         kode: 'GRC',
-        navn: 'GRC',
         kodeverk: 'LANDKODER',
+        navn: 'GRC',
       },
     },
     {
@@ -4996,8 +5065,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GRD',
       kilde: {
         kode: 'GRD',
-        navn: 'GRD',
         kodeverk: 'LANDKODER',
+        navn: 'GRD',
       },
     },
     {
@@ -5006,8 +5075,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GRL',
       kilde: {
         kode: 'GRL',
-        navn: 'GRL',
         kodeverk: 'LANDKODER',
+        navn: 'GRL',
       },
     },
     {
@@ -5016,8 +5085,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GTM',
       kilde: {
         kode: 'GTM',
-        navn: 'GTM',
         kodeverk: 'LANDKODER',
+        navn: 'GTM',
       },
     },
     {
@@ -5026,8 +5095,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GUF',
       kilde: {
         kode: 'GUF',
-        navn: 'GUF',
         kodeverk: 'LANDKODER',
+        navn: 'GUF',
       },
     },
     {
@@ -5036,8 +5105,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GUM',
       kilde: {
         kode: 'GUM',
-        navn: 'GUM',
         kodeverk: 'LANDKODER',
+        navn: 'GUM',
       },
     },
     {
@@ -5046,8 +5115,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'GUY',
       kilde: {
         kode: 'GUY',
-        navn: 'GUY',
         kodeverk: 'LANDKODER',
+        navn: 'GUY',
       },
     },
     {
@@ -5056,8 +5125,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'HKG',
       kilde: {
         kode: 'HKG',
-        navn: 'HKG',
         kodeverk: 'LANDKODER',
+        navn: 'HKG',
       },
     },
     {
@@ -5066,8 +5135,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'HMD',
       kilde: {
         kode: 'HMD',
-        navn: 'HMD',
         kodeverk: 'LANDKODER',
+        navn: 'HMD',
       },
     },
     {
@@ -5076,8 +5145,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'HND',
       kilde: {
         kode: 'HND',
-        navn: 'HND',
         kodeverk: 'LANDKODER',
+        navn: 'HND',
       },
     },
     {
@@ -5086,8 +5155,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'HRV',
       kilde: {
         kode: 'HRV',
-        navn: 'HRV',
         kodeverk: 'LANDKODER',
+        navn: 'HRV',
       },
     },
     {
@@ -5096,8 +5165,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'HTI',
       kilde: {
         kode: 'HTI',
-        navn: 'HTI',
         kodeverk: 'LANDKODER',
+        navn: 'HTI',
       },
     },
     {
@@ -5106,8 +5175,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'HUN',
       kilde: {
         kode: 'HUN',
-        navn: 'HUN',
         kodeverk: 'LANDKODER',
+        navn: 'HUN',
       },
     },
     {
@@ -5116,8 +5185,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IDN',
       kilde: {
         kode: 'IDN',
-        navn: 'IDN',
         kodeverk: 'LANDKODER',
+        navn: 'IDN',
       },
     },
     {
@@ -5126,8 +5195,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IMN',
       kilde: {
         kode: 'IMN',
-        navn: 'IMN',
         kodeverk: 'LANDKODER',
+        navn: 'IMN',
       },
     },
     {
@@ -5136,8 +5205,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IND',
       kilde: {
         kode: 'IND',
-        navn: 'IND',
         kodeverk: 'LANDKODER',
+        navn: 'IND',
       },
     },
     {
@@ -5146,8 +5215,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IOT',
       kilde: {
         kode: 'IOT',
-        navn: 'IOT',
         kodeverk: 'LANDKODER',
+        navn: 'IOT',
       },
     },
     {
@@ -5156,8 +5225,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IRL',
       kilde: {
         kode: 'IRL',
-        navn: 'IRL',
         kodeverk: 'LANDKODER',
+        navn: 'IRL',
       },
     },
     {
@@ -5166,8 +5235,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IRN',
       kilde: {
         kode: 'IRN',
-        navn: 'IRN',
         kodeverk: 'LANDKODER',
+        navn: 'IRN',
       },
     },
     {
@@ -5176,8 +5245,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'IRQ',
       kilde: {
         kode: 'IRQ',
-        navn: 'IRQ',
         kodeverk: 'LANDKODER',
+        navn: 'IRQ',
       },
     },
     {
@@ -5186,8 +5255,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ISL',
       kilde: {
         kode: 'ISL',
-        navn: 'ISL',
         kodeverk: 'LANDKODER',
+        navn: 'ISL',
       },
     },
     {
@@ -5196,8 +5265,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ISR',
       kilde: {
         kode: 'ISR',
-        navn: 'ISR',
         kodeverk: 'LANDKODER',
+        navn: 'ISR',
       },
     },
     {
@@ -5206,8 +5275,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ITA',
       kilde: {
         kode: 'ITA',
-        navn: 'ITA',
         kodeverk: 'LANDKODER',
+        navn: 'ITA',
       },
     },
     {
@@ -5216,8 +5285,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'JAM',
       kilde: {
         kode: 'JAM',
-        navn: 'JAM',
         kodeverk: 'LANDKODER',
+        navn: 'JAM',
       },
     },
     {
@@ -5226,8 +5295,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'JEY',
       kilde: {
         kode: 'JEY',
-        navn: 'JEY',
         kodeverk: 'LANDKODER',
+        navn: 'JEY',
       },
     },
     {
@@ -5236,8 +5305,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'JOR',
       kilde: {
         kode: 'JOR',
-        navn: 'JOR',
         kodeverk: 'LANDKODER',
+        navn: 'JOR',
       },
     },
     {
@@ -5246,8 +5315,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'JPN',
       kilde: {
         kode: 'JPN',
-        navn: 'JPN',
         kodeverk: 'LANDKODER',
+        navn: 'JPN',
       },
     },
     {
@@ -5256,8 +5325,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KAZ',
       kilde: {
         kode: 'KAZ',
-        navn: 'KAZ',
         kodeverk: 'LANDKODER',
+        navn: 'KAZ',
       },
     },
     {
@@ -5266,8 +5335,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KEN',
       kilde: {
         kode: 'KEN',
-        navn: 'KEN',
         kodeverk: 'LANDKODER',
+        navn: 'KEN',
       },
     },
     {
@@ -5276,8 +5345,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KGZ',
       kilde: {
         kode: 'KGZ',
-        navn: 'KGZ',
         kodeverk: 'LANDKODER',
+        navn: 'KGZ',
       },
     },
     {
@@ -5286,8 +5355,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KHM',
       kilde: {
         kode: 'KHM',
-        navn: 'KHM',
         kodeverk: 'LANDKODER',
+        navn: 'KHM',
       },
     },
     {
@@ -5296,8 +5365,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KIR',
       kilde: {
         kode: 'KIR',
-        navn: 'KIR',
         kodeverk: 'LANDKODER',
+        navn: 'KIR',
       },
     },
     {
@@ -5306,8 +5375,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KNA',
       kilde: {
         kode: 'KNA',
-        navn: 'KNA',
         kodeverk: 'LANDKODER',
+        navn: 'KNA',
       },
     },
     {
@@ -5316,8 +5385,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KOR',
       kilde: {
         kode: 'KOR',
-        navn: 'KOR',
         kodeverk: 'LANDKODER',
+        navn: 'KOR',
       },
     },
     {
@@ -5326,8 +5395,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'KWT',
       kilde: {
         kode: 'KWT',
-        navn: 'KWT',
         kodeverk: 'LANDKODER',
+        navn: 'KWT',
       },
     },
     {
@@ -5336,8 +5405,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LAO',
       kilde: {
         kode: 'LAO',
-        navn: 'LAO',
         kodeverk: 'LANDKODER',
+        navn: 'LAO',
       },
     },
     {
@@ -5346,8 +5415,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LBN',
       kilde: {
         kode: 'LBN',
-        navn: 'LBN',
         kodeverk: 'LANDKODER',
+        navn: 'LBN',
       },
     },
     {
@@ -5356,8 +5425,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LBR',
       kilde: {
         kode: 'LBR',
-        navn: 'LBR',
         kodeverk: 'LANDKODER',
+        navn: 'LBR',
       },
     },
     {
@@ -5366,8 +5435,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LBY',
       kilde: {
         kode: 'LBY',
-        navn: 'LBY',
         kodeverk: 'LANDKODER',
+        navn: 'LBY',
       },
     },
     {
@@ -5376,8 +5445,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LCA',
       kilde: {
         kode: 'LCA',
-        navn: 'LCA',
         kodeverk: 'LANDKODER',
+        navn: 'LCA',
       },
     },
     {
@@ -5386,8 +5455,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LIE',
       kilde: {
         kode: 'LIE',
-        navn: 'LIE',
         kodeverk: 'LANDKODER',
+        navn: 'LIE',
       },
     },
     {
@@ -5396,8 +5465,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LKA',
       kilde: {
         kode: 'LKA',
-        navn: 'LKA',
         kodeverk: 'LANDKODER',
+        navn: 'LKA',
       },
     },
     {
@@ -5406,8 +5475,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LSO',
       kilde: {
         kode: 'LSO',
-        navn: 'LSO',
         kodeverk: 'LANDKODER',
+        navn: 'LSO',
       },
     },
     {
@@ -5416,8 +5485,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LTU',
       kilde: {
         kode: 'LTU',
-        navn: 'LTU',
         kodeverk: 'LANDKODER',
+        navn: 'LTU',
       },
     },
     {
@@ -5426,8 +5495,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LUX',
       kilde: {
         kode: 'LUX',
-        navn: 'LUX',
         kodeverk: 'LANDKODER',
+        navn: 'LUX',
       },
     },
     {
@@ -5436,8 +5505,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'LVA',
       kilde: {
         kode: 'LVA',
-        navn: 'LVA',
         kodeverk: 'LANDKODER',
+        navn: 'LVA',
       },
     },
     {
@@ -5446,8 +5515,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MAC',
       kilde: {
         kode: 'MAC',
-        navn: 'MAC',
         kodeverk: 'LANDKODER',
+        navn: 'MAC',
       },
     },
     {
@@ -5456,8 +5525,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MAF',
       kilde: {
         kode: 'MAF',
-        navn: 'MAF',
         kodeverk: 'LANDKODER',
+        navn: 'MAF',
       },
     },
     {
@@ -5466,8 +5535,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MAR',
       kilde: {
         kode: 'MAR',
-        navn: 'MAR',
         kodeverk: 'LANDKODER',
+        navn: 'MAR',
       },
     },
     {
@@ -5476,8 +5545,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MCO',
       kilde: {
         kode: 'MCO',
-        navn: 'MCO',
         kodeverk: 'LANDKODER',
+        navn: 'MCO',
       },
     },
     {
@@ -5486,8 +5555,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MDA',
       kilde: {
         kode: 'MDA',
-        navn: 'MDA',
         kodeverk: 'LANDKODER',
+        navn: 'MDA',
       },
     },
     {
@@ -5496,8 +5565,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MDG',
       kilde: {
         kode: 'MDG',
-        navn: 'MDG',
         kodeverk: 'LANDKODER',
+        navn: 'MDG',
       },
     },
     {
@@ -5506,8 +5575,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MDV',
       kilde: {
         kode: 'MDV',
-        navn: 'MDV',
         kodeverk: 'LANDKODER',
+        navn: 'MDV',
       },
     },
     {
@@ -5516,8 +5585,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MEX',
       kilde: {
         kode: 'MEX',
-        navn: 'MEX',
         kodeverk: 'LANDKODER',
+        navn: 'MEX',
       },
     },
     {
@@ -5526,8 +5595,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MHL',
       kilde: {
         kode: 'MHL',
-        navn: 'MHL',
         kodeverk: 'LANDKODER',
+        navn: 'MHL',
       },
     },
     {
@@ -5536,8 +5605,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MKD',
       kilde: {
         kode: 'MKD',
-        navn: 'MKD',
         kodeverk: 'LANDKODER',
+        navn: 'MKD',
       },
     },
     {
@@ -5546,8 +5615,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MLI',
       kilde: {
         kode: 'MLI',
-        navn: 'MLI',
         kodeverk: 'LANDKODER',
+        navn: 'MLI',
       },
     },
     {
@@ -5556,8 +5625,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MLT',
       kilde: {
         kode: 'MLT',
-        navn: 'MLT',
         kodeverk: 'LANDKODER',
+        navn: 'MLT',
       },
     },
     {
@@ -5566,8 +5635,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MMR',
       kilde: {
         kode: 'MMR',
-        navn: 'MMR',
         kodeverk: 'LANDKODER',
+        navn: 'MMR',
       },
     },
     {
@@ -5576,8 +5645,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MNE',
       kilde: {
         kode: 'MNE',
-        navn: 'MNE',
         kodeverk: 'LANDKODER',
+        navn: 'MNE',
       },
     },
     {
@@ -5586,8 +5655,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MNG',
       kilde: {
         kode: 'MNG',
-        navn: 'MNG',
         kodeverk: 'LANDKODER',
+        navn: 'MNG',
       },
     },
     {
@@ -5596,8 +5665,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MNP',
       kilde: {
         kode: 'MNP',
-        navn: 'MNP',
         kodeverk: 'LANDKODER',
+        navn: 'MNP',
       },
     },
     {
@@ -5606,8 +5675,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MOZ',
       kilde: {
         kode: 'MOZ',
-        navn: 'MOZ',
         kodeverk: 'LANDKODER',
+        navn: 'MOZ',
       },
     },
     {
@@ -5616,8 +5685,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MRT',
       kilde: {
         kode: 'MRT',
-        navn: 'MRT',
         kodeverk: 'LANDKODER',
+        navn: 'MRT',
       },
     },
     {
@@ -5626,8 +5695,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MSR',
       kilde: {
         kode: 'MSR',
-        navn: 'MSR',
         kodeverk: 'LANDKODER',
+        navn: 'MSR',
       },
     },
     {
@@ -5636,8 +5705,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MTQ',
       kilde: {
         kode: 'MTQ',
-        navn: 'MTQ',
         kodeverk: 'LANDKODER',
+        navn: 'MTQ',
       },
     },
     {
@@ -5646,8 +5715,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MUS',
       kilde: {
         kode: 'MUS',
-        navn: 'MUS',
         kodeverk: 'LANDKODER',
+        navn: 'MUS',
       },
     },
     {
@@ -5656,8 +5725,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MWI',
       kilde: {
         kode: 'MWI',
-        navn: 'MWI',
         kodeverk: 'LANDKODER',
+        navn: 'MWI',
       },
     },
     {
@@ -5666,8 +5735,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MYS',
       kilde: {
         kode: 'MYS',
-        navn: 'MYS',
         kodeverk: 'LANDKODER',
+        navn: 'MYS',
       },
     },
     {
@@ -5676,8 +5745,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'MYT',
       kilde: {
         kode: 'MYT',
-        navn: 'MYT',
         kodeverk: 'LANDKODER',
+        navn: 'MYT',
       },
     },
     {
@@ -5686,8 +5755,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NAM',
       kilde: {
         kode: 'NAM',
-        navn: 'NAM',
         kodeverk: 'LANDKODER',
+        navn: 'NAM',
       },
     },
     {
@@ -5696,8 +5765,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NCL',
       kilde: {
         kode: 'NCL',
-        navn: 'NCL',
         kodeverk: 'LANDKODER',
+        navn: 'NCL',
       },
     },
     {
@@ -5706,8 +5775,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NER',
       kilde: {
         kode: 'NER',
-        navn: 'NER',
         kodeverk: 'LANDKODER',
+        navn: 'NER',
       },
     },
     {
@@ -5716,8 +5785,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NFK',
       kilde: {
         kode: 'NFK',
-        navn: 'NFK',
         kodeverk: 'LANDKODER',
+        navn: 'NFK',
       },
     },
     {
@@ -5726,8 +5795,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NGA',
       kilde: {
         kode: 'NGA',
-        navn: 'NGA',
         kodeverk: 'LANDKODER',
+        navn: 'NGA',
       },
     },
     {
@@ -5736,8 +5805,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NIC',
       kilde: {
         kode: 'NIC',
-        navn: 'NIC',
         kodeverk: 'LANDKODER',
+        navn: 'NIC',
       },
     },
     {
@@ -5746,8 +5815,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NIU',
       kilde: {
         kode: 'NIU',
-        navn: 'NIU',
         kodeverk: 'LANDKODER',
+        navn: 'NIU',
       },
     },
     {
@@ -5756,8 +5825,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NLD',
       kilde: {
         kode: 'NLD',
-        navn: 'NLD',
         kodeverk: 'LANDKODER',
+        navn: 'NLD',
       },
     },
     {
@@ -5766,8 +5835,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NOR',
       kilde: {
         kode: 'NOR',
-        navn: 'NOR',
         kodeverk: 'LANDKODER',
+        navn: 'NOR',
       },
     },
     {
@@ -5776,8 +5845,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NPL',
       kilde: {
         kode: 'NPL',
-        navn: 'NPL',
         kodeverk: 'LANDKODER',
+        navn: 'NPL',
       },
     },
     {
@@ -5786,8 +5855,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NRU',
       kilde: {
         kode: 'NRU',
-        navn: 'NRU',
         kodeverk: 'LANDKODER',
+        navn: 'NRU',
       },
     },
     {
@@ -5796,8 +5865,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'NZL',
       kilde: {
         kode: 'NZL',
-        navn: 'NZL',
         kodeverk: 'LANDKODER',
+        navn: 'NZL',
       },
     },
     {
@@ -5806,8 +5875,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'OMN',
       kilde: {
         kode: 'OMN',
-        navn: 'OMN',
         kodeverk: 'LANDKODER',
+        navn: 'OMN',
       },
     },
     {
@@ -5816,8 +5885,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PAK',
       kilde: {
         kode: 'PAK',
-        navn: 'PAK',
         kodeverk: 'LANDKODER',
+        navn: 'PAK',
       },
     },
     {
@@ -5826,8 +5895,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PAN',
       kilde: {
         kode: 'PAN',
-        navn: 'PAN',
         kodeverk: 'LANDKODER',
+        navn: 'PAN',
       },
     },
     {
@@ -5836,8 +5905,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PCN',
       kilde: {
         kode: 'PCN',
-        navn: 'PCN',
         kodeverk: 'LANDKODER',
+        navn: 'PCN',
       },
     },
     {
@@ -5846,8 +5915,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PER',
       kilde: {
         kode: 'PER',
-        navn: 'PER',
         kodeverk: 'LANDKODER',
+        navn: 'PER',
       },
     },
     {
@@ -5856,8 +5925,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PHL',
       kilde: {
         kode: 'PHL',
-        navn: 'PHL',
         kodeverk: 'LANDKODER',
+        navn: 'PHL',
       },
     },
     {
@@ -5866,8 +5935,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PLW',
       kilde: {
         kode: 'PLW',
-        navn: 'PLW',
         kodeverk: 'LANDKODER',
+        navn: 'PLW',
       },
     },
     {
@@ -5876,8 +5945,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PNG',
       kilde: {
         kode: 'PNG',
-        navn: 'PNG',
         kodeverk: 'LANDKODER',
+        navn: 'PNG',
       },
     },
     {
@@ -5886,8 +5955,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'POL',
       kilde: {
         kode: 'POL',
-        navn: 'POL',
         kodeverk: 'LANDKODER',
+        navn: 'POL',
       },
     },
     {
@@ -5896,8 +5965,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PRI',
       kilde: {
         kode: 'PRI',
-        navn: 'PRI',
         kodeverk: 'LANDKODER',
+        navn: 'PRI',
       },
     },
     {
@@ -5906,8 +5975,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PRK',
       kilde: {
         kode: 'PRK',
-        navn: 'PRK',
         kodeverk: 'LANDKODER',
+        navn: 'PRK',
       },
     },
     {
@@ -5916,8 +5985,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PRT',
       kilde: {
         kode: 'PRT',
-        navn: 'PRT',
         kodeverk: 'LANDKODER',
+        navn: 'PRT',
       },
     },
     {
@@ -5926,8 +5995,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PRY',
       kilde: {
         kode: 'PRY',
-        navn: 'PRY',
         kodeverk: 'LANDKODER',
+        navn: 'PRY',
       },
     },
     {
@@ -5936,8 +6005,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PSE',
       kilde: {
         kode: 'PSE',
-        navn: 'PSE',
         kodeverk: 'LANDKODER',
+        navn: 'PSE',
       },
     },
     {
@@ -5946,8 +6015,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'PYF',
       kilde: {
         kode: 'PYF',
-        navn: 'PYF',
         kodeverk: 'LANDKODER',
+        navn: 'PYF',
       },
     },
     {
@@ -5956,8 +6025,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'QAT',
       kilde: {
         kode: 'QAT',
-        navn: 'QAT',
         kodeverk: 'LANDKODER',
+        navn: 'QAT',
       },
     },
     {
@@ -5966,8 +6035,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'REU',
       kilde: {
         kode: 'REU',
-        navn: 'REU',
         kodeverk: 'LANDKODER',
+        navn: 'REU',
       },
     },
     {
@@ -5976,8 +6045,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ROM',
       kilde: {
         kode: 'ROM',
-        navn: 'ROM',
         kodeverk: 'LANDKODER',
+        navn: 'ROM',
       },
     },
     {
@@ -5986,8 +6055,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ROU',
       kilde: {
         kode: 'ROU',
-        navn: 'ROU',
         kodeverk: 'LANDKODER',
+        navn: 'ROU',
       },
     },
     {
@@ -5996,8 +6065,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'RUS',
       kilde: {
         kode: 'RUS',
-        navn: 'RUS',
         kodeverk: 'LANDKODER',
+        navn: 'RUS',
       },
     },
     {
@@ -6006,8 +6075,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'RWA',
       kilde: {
         kode: 'RWA',
-        navn: 'RWA',
         kodeverk: 'LANDKODER',
+        navn: 'RWA',
       },
     },
     {
@@ -6016,8 +6085,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SAU',
       kilde: {
         kode: 'SAU',
-        navn: 'SAU',
         kodeverk: 'LANDKODER',
+        navn: 'SAU',
       },
     },
     {
@@ -6026,8 +6095,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SCG',
       kilde: {
         kode: 'SCG',
-        navn: 'SCG',
         kodeverk: 'LANDKODER',
+        navn: 'SCG',
       },
     },
     {
@@ -6036,8 +6105,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SDN',
       kilde: {
         kode: 'SDN',
-        navn: 'SDN',
         kodeverk: 'LANDKODER',
+        navn: 'SDN',
       },
     },
     {
@@ -6046,8 +6115,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SEN',
       kilde: {
         kode: 'SEN',
-        navn: 'SEN',
         kodeverk: 'LANDKODER',
+        navn: 'SEN',
       },
     },
     {
@@ -6056,8 +6125,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SGP',
       kilde: {
         kode: 'SGP',
-        navn: 'SGP',
         kodeverk: 'LANDKODER',
+        navn: 'SGP',
       },
     },
     {
@@ -6066,8 +6135,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SGS',
       kilde: {
         kode: 'SGS',
-        navn: 'SGS',
         kodeverk: 'LANDKODER',
+        navn: 'SGS',
       },
     },
     {
@@ -6076,8 +6145,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SHN',
       kilde: {
         kode: 'SHN',
-        navn: 'SHN',
         kodeverk: 'LANDKODER',
+        navn: 'SHN',
       },
     },
     {
@@ -6086,8 +6155,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SJM',
       kilde: {
         kode: 'SJM',
-        navn: 'SJM',
         kodeverk: 'LANDKODER',
+        navn: 'SJM',
       },
     },
     {
@@ -6096,8 +6165,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SLB',
       kilde: {
         kode: 'SLB',
-        navn: 'SLB',
         kodeverk: 'LANDKODER',
+        navn: 'SLB',
       },
     },
     {
@@ -6106,8 +6175,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SLE',
       kilde: {
         kode: 'SLE',
-        navn: 'SLE',
         kodeverk: 'LANDKODER',
+        navn: 'SLE',
       },
     },
     {
@@ -6116,8 +6185,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SLV',
       kilde: {
         kode: 'SLV',
-        navn: 'SLV',
         kodeverk: 'LANDKODER',
+        navn: 'SLV',
       },
     },
     {
@@ -6126,8 +6195,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SMR',
       kilde: {
         kode: 'SMR',
-        navn: 'SMR',
         kodeverk: 'LANDKODER',
+        navn: 'SMR',
       },
     },
     {
@@ -6136,8 +6205,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SOM',
       kilde: {
         kode: 'SOM',
-        navn: 'SOM',
         kodeverk: 'LANDKODER',
+        navn: 'SOM',
       },
     },
     {
@@ -6146,8 +6215,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SPM',
       kilde: {
         kode: 'SPM',
-        navn: 'SPM',
         kodeverk: 'LANDKODER',
+        navn: 'SPM',
       },
     },
     {
@@ -6156,8 +6225,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SRB',
       kilde: {
         kode: 'SRB',
-        navn: 'SRB',
         kodeverk: 'LANDKODER',
+        navn: 'SRB',
       },
     },
     {
@@ -6166,8 +6235,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SSD',
       kilde: {
         kode: 'SSD',
-        navn: 'SSD',
         kodeverk: 'LANDKODER',
+        navn: 'SSD',
       },
     },
     {
@@ -6176,8 +6245,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'STP',
       kilde: {
         kode: 'STP',
-        navn: 'STP',
         kodeverk: 'LANDKODER',
+        navn: 'STP',
       },
     },
     {
@@ -6186,8 +6255,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SUN',
       kilde: {
         kode: 'SUN',
-        navn: 'SUN',
         kodeverk: 'LANDKODER',
+        navn: 'SUN',
       },
     },
     {
@@ -6196,8 +6265,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SUR',
       kilde: {
         kode: 'SUR',
-        navn: 'SUR',
         kodeverk: 'LANDKODER',
+        navn: 'SUR',
       },
     },
     {
@@ -6206,8 +6275,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SVK',
       kilde: {
         kode: 'SVK',
-        navn: 'SVK',
         kodeverk: 'LANDKODER',
+        navn: 'SVK',
       },
     },
     {
@@ -6216,8 +6285,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SVN',
       kilde: {
         kode: 'SVN',
-        navn: 'SVN',
         kodeverk: 'LANDKODER',
+        navn: 'SVN',
       },
     },
     {
@@ -6226,8 +6295,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SWE',
       kilde: {
         kode: 'SWE',
-        navn: 'SWE',
         kodeverk: 'LANDKODER',
+        navn: 'SWE',
       },
     },
     {
@@ -6236,8 +6305,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SWZ',
       kilde: {
         kode: 'SWZ',
-        navn: 'SWZ',
         kodeverk: 'LANDKODER',
+        navn: 'SWZ',
       },
     },
     {
@@ -6246,8 +6315,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SXM',
       kilde: {
         kode: 'SXM',
-        navn: 'SXM',
         kodeverk: 'LANDKODER',
+        navn: 'SXM',
       },
     },
     {
@@ -6256,8 +6325,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SYC',
       kilde: {
         kode: 'SYC',
-        navn: 'SYC',
         kodeverk: 'LANDKODER',
+        navn: 'SYC',
       },
     },
     {
@@ -6266,8 +6335,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'SYR',
       kilde: {
         kode: 'SYR',
-        navn: 'SYR',
         kodeverk: 'LANDKODER',
+        navn: 'SYR',
       },
     },
     {
@@ -6276,8 +6345,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TCA',
       kilde: {
         kode: 'TCA',
-        navn: 'TCA',
         kodeverk: 'LANDKODER',
+        navn: 'TCA',
       },
     },
     {
@@ -6286,8 +6355,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TCD',
       kilde: {
         kode: 'TCD',
-        navn: 'TCD',
         kodeverk: 'LANDKODER',
+        navn: 'TCD',
       },
     },
     {
@@ -6296,8 +6365,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TGO',
       kilde: {
         kode: 'TGO',
-        navn: 'TGO',
         kodeverk: 'LANDKODER',
+        navn: 'TGO',
       },
     },
     {
@@ -6306,8 +6375,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'THA',
       kilde: {
         kode: 'THA',
-        navn: 'THA',
         kodeverk: 'LANDKODER',
+        navn: 'THA',
       },
     },
     {
@@ -6316,8 +6385,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TJK',
       kilde: {
         kode: 'TJK',
-        navn: 'TJK',
         kodeverk: 'LANDKODER',
+        navn: 'TJK',
       },
     },
     {
@@ -6326,8 +6395,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TKL',
       kilde: {
         kode: 'TKL',
-        navn: 'TKL',
         kodeverk: 'LANDKODER',
+        navn: 'TKL',
       },
     },
     {
@@ -6336,8 +6405,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TKM',
       kilde: {
         kode: 'TKM',
-        navn: 'TKM',
         kodeverk: 'LANDKODER',
+        navn: 'TKM',
       },
     },
     {
@@ -6346,8 +6415,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TLS',
       kilde: {
         kode: 'TLS',
-        navn: 'TLS',
         kodeverk: 'LANDKODER',
+        navn: 'TLS',
       },
     },
     {
@@ -6356,8 +6425,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TMP',
       kilde: {
         kode: 'TMP',
-        navn: 'TMP',
         kodeverk: 'LANDKODER',
+        navn: 'TMP',
       },
     },
     {
@@ -6366,8 +6435,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TON',
       kilde: {
         kode: 'TON',
-        navn: 'TON',
         kodeverk: 'LANDKODER',
+        navn: 'TON',
       },
     },
     {
@@ -6376,8 +6445,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TTO',
       kilde: {
         kode: 'TTO',
-        navn: 'TTO',
         kodeverk: 'LANDKODER',
+        navn: 'TTO',
       },
     },
     {
@@ -6386,8 +6455,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TUN',
       kilde: {
         kode: 'TUN',
-        navn: 'TUN',
         kodeverk: 'LANDKODER',
+        navn: 'TUN',
       },
     },
     {
@@ -6396,8 +6465,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TUR',
       kilde: {
         kode: 'TUR',
-        navn: 'TUR',
         kodeverk: 'LANDKODER',
+        navn: 'TUR',
       },
     },
     {
@@ -6406,8 +6475,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TUV',
       kilde: {
         kode: 'TUV',
-        navn: 'TUV',
         kodeverk: 'LANDKODER',
+        navn: 'TUV',
       },
     },
     {
@@ -6416,8 +6485,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TWN',
       kilde: {
         kode: 'TWN',
-        navn: 'TWN',
         kodeverk: 'LANDKODER',
+        navn: 'TWN',
       },
     },
     {
@@ -6426,8 +6495,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'TZA',
       kilde: {
         kode: 'TZA',
-        navn: 'TZA',
         kodeverk: 'LANDKODER',
+        navn: 'TZA',
       },
     },
     {
@@ -6436,8 +6505,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'UGA',
       kilde: {
         kode: 'UGA',
-        navn: 'UGA',
         kodeverk: 'LANDKODER',
+        navn: 'UGA',
       },
     },
     {
@@ -6446,8 +6515,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'UKR',
       kilde: {
         kode: 'UKR',
-        navn: 'UKR',
         kodeverk: 'LANDKODER',
+        navn: 'UKR',
       },
     },
     {
@@ -6456,8 +6525,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'UMI',
       kilde: {
         kode: 'UMI',
-        navn: 'UMI',
         kodeverk: 'LANDKODER',
+        navn: 'UMI',
       },
     },
     {
@@ -6466,8 +6535,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'URY',
       kilde: {
         kode: 'URY',
-        navn: 'URY',
         kodeverk: 'LANDKODER',
+        navn: 'URY',
       },
     },
     {
@@ -6476,8 +6545,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'USA',
       kilde: {
         kode: 'USA',
-        navn: 'USA',
         kodeverk: 'LANDKODER',
+        navn: 'USA',
       },
     },
     {
@@ -6486,8 +6555,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'UZB',
       kilde: {
         kode: 'UZB',
-        navn: 'UZB',
         kodeverk: 'LANDKODER',
+        navn: 'UZB',
       },
     },
     {
@@ -6496,8 +6565,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VAT',
       kilde: {
         kode: 'VAT',
-        navn: 'VAT',
         kodeverk: 'LANDKODER',
+        navn: 'VAT',
       },
     },
     {
@@ -6506,8 +6575,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VCT',
       kilde: {
         kode: 'VCT',
-        navn: 'VCT',
         kodeverk: 'LANDKODER',
+        navn: 'VCT',
       },
     },
     {
@@ -6516,8 +6585,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VEN',
       kilde: {
         kode: 'VEN',
-        navn: 'VEN',
         kodeverk: 'LANDKODER',
+        navn: 'VEN',
       },
     },
     {
@@ -6526,8 +6595,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VGB',
       kilde: {
         kode: 'VGB',
-        navn: 'VGB',
         kodeverk: 'LANDKODER',
+        navn: 'VGB',
       },
     },
     {
@@ -6536,8 +6605,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VIR',
       kilde: {
         kode: 'VIR',
-        navn: 'VIR',
         kodeverk: 'LANDKODER',
+        navn: 'VIR',
       },
     },
     {
@@ -6546,8 +6615,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VNM',
       kilde: {
         kode: 'VNM',
-        navn: 'VNM',
         kodeverk: 'LANDKODER',
+        navn: 'VNM',
       },
     },
     {
@@ -6556,8 +6625,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'VUT',
       kilde: {
         kode: 'VUT',
-        navn: 'VUT',
         kodeverk: 'LANDKODER',
+        navn: 'VUT',
       },
     },
     {
@@ -6566,8 +6635,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'WLF',
       kilde: {
         kode: 'WLF',
-        navn: 'WLF',
         kodeverk: 'LANDKODER',
+        navn: 'WLF',
       },
     },
     {
@@ -6576,8 +6645,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'WSM',
       kilde: {
         kode: 'WSM',
-        navn: 'WSM',
         kodeverk: 'LANDKODER',
+        navn: 'WSM',
       },
     },
     {
@@ -6586,8 +6655,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'XUK',
       kilde: {
         kode: 'XUK',
-        navn: 'XUK',
         kodeverk: 'LANDKODER',
+        navn: 'XUK',
       },
     },
     {
@@ -6596,8 +6665,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'XXK',
       kilde: {
         kode: 'XXK',
-        navn: 'XXK',
         kodeverk: 'LANDKODER',
+        navn: 'XXK',
       },
     },
     {
@@ -6606,8 +6675,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'XXX',
       kilde: {
         kode: 'XXX',
-        navn: 'XXX',
         kodeverk: 'LANDKODER',
+        navn: 'XXX',
       },
     },
     {
@@ -6616,8 +6685,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'YEM',
       kilde: {
         kode: 'YEM',
-        navn: 'YEM',
         kodeverk: 'LANDKODER',
+        navn: 'YEM',
       },
     },
     {
@@ -6626,8 +6695,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'YUG',
       kilde: {
         kode: 'YUG',
-        navn: 'YUG',
         kodeverk: 'LANDKODER',
+        navn: 'YUG',
       },
     },
     {
@@ -6636,8 +6705,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ZAF',
       kilde: {
         kode: 'ZAF',
-        navn: 'ZAF',
         kodeverk: 'LANDKODER',
+        navn: 'ZAF',
       },
     },
     {
@@ -6646,8 +6715,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ZAR',
       kilde: {
         kode: 'ZAR',
-        navn: 'ZAR',
         kodeverk: 'LANDKODER',
+        navn: 'ZAR',
       },
     },
     {
@@ -6656,8 +6725,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ZMB',
       kilde: {
         kode: 'ZMB',
-        navn: 'ZMB',
         kodeverk: 'LANDKODER',
+        navn: 'ZMB',
       },
     },
     {
@@ -6666,8 +6735,8 @@ export const oppslagKodeverkSomObjektK9Sak = {
       navn: 'ZWE',
       kilde: {
         kode: 'ZWE',
-        navn: 'ZWE',
         kodeverk: 'LANDKODER',
+        navn: 'ZWE',
       },
     },
   ],
@@ -8379,7 +8448,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'VEDTAK_RESULTAT_TYPE',
       navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'AVSLAG',
@@ -8429,7 +8498,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kode: '-',
       kodeverk: 'DOKUMENT_TYPE_ID',
       navn: '-',
-      kilde: 'UDEFINERT',
+      kilde: '-',
     },
     {
       kode: 'INNTEKTSMELDING',
@@ -8593,7 +8662,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '-',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke definert',
-        kilde: 'UDEFINERT',
+        kilde: '-',
       },
     ],
     FP_VK_2: [
@@ -8601,31 +8670,31 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1020',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker er ikke medlem',
-        kilde: 'SØKER_ER_IKKE_MEDLEM',
+        kilde: '1020',
       },
       {
         kode: '1021',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker er utvandret',
-        kilde: 'SØKER_ER_UTVANDRET',
+        kilde: '1021',
       },
       {
         kode: '1023',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker har ikke lovlig opphold',
-        kilde: 'SØKER_HAR_IKKE_LOVLIG_OPPHOLD',
+        kilde: '1023',
       },
       {
         kode: '1024',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker har ikke oppholdsrett',
-        kilde: 'SØKER_HAR_IKKE_OPPHOLDSRETT',
+        kilde: '1024',
       },
       {
         kode: '1025',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker er ikke bosatt',
-        kilde: 'SØKER_ER_IKKE_BOSATT',
+        kilde: '1025',
       },
     ],
     FP_VK_21: [],
@@ -8634,13 +8703,13 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1035',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke tilstrekkelig opptjening',
-        kilde: 'IKKE_TILSTREKKELIG_OPPTJENING',
+        kilde: '1035',
       },
       {
         kode: '1036',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke tilstrekkelig opptjening',
-        kilde: 'FYLLER_IKKE_ORDINÆRE_OPPTJENINGSREGLER',
+        kilde: '1036',
       },
     ],
     FP_VK_3: [
@@ -8648,7 +8717,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1007',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søkt for sent',
-        kilde: 'SØKT_FOR_SENT',
+        kilde: '1007',
       },
     ],
     FP_VK_34: [
@@ -8656,33 +8725,39 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
     ],
     FP_VK_41: [
       {
+        kode: '1035',
+        kodeverk: 'AVSLAGSARSAK',
+        navn: 'Ikke tilstrekkelig opptjening',
+        kilde: '1035',
+      },
+      {
         kode: '1041',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'For lavt brutto beregningsgrunnlag',
-        kilde: 'FOR_LAVT_BEREGNINGSGRUNNLAG',
+        kilde: '1041',
       },
       {
         kode: '1042',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'For lavt brutto beregningsgrunnlag',
-        kilde: 'FOR_LAVT_BEREGNINGSGRUNNLAG_8_47',
+        kilde: '1042',
       },
       {
         kode: '8000',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søkt frilans uten frilansinntekt',
-        kilde: 'SØKT_FRILANS_UTEN_FRILANS_INNTEKT',
+        kilde: '8000',
       },
       {
         kode: '8001',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Avkortet grunnet annen inntekt',
-        kilde: 'AVKORTET_GRUNNET_ANNEN_INNTEKT',
+        kilde: '8001',
       },
     ],
     K9_VK_1: [
@@ -8690,25 +8765,25 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1067',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke dokumentert sykdom, skade eller lyte.',
-        kilde: 'IKKE_DOKUMENTERT_SYKDOM_SKADE_ELLER_LYTE',
+        kilde: '1067',
       },
       {
         kode: '1068',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke mottatt dokumentasjon fra rett organ.',
-        kilde: 'DOKUMENTASJON_IKKE_FRA_RETT_ORGAN',
+        kilde: '1068',
       },
       {
         kode: '1069',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke behov for kontinuerlig pleie.',
-        kilde: 'IKKE_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE_PÅ_BAKGRUNN_AV_SYKDOM',
+        kilde: '1069',
       },
       {
         kode: '1071',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke dokumentert omsorgen for.',
-        kilde: 'IKKE_DOKUMENTERT_OMSORGEN_FOR',
+        kilde: '1071',
       },
     ],
     K9_VK_16: [
@@ -8716,19 +8791,19 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
       {
         kode: '1080',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Pleietrengende innlagt i stedet for hjemme',
-        kilde: 'PLEIETRENGENDE_INNLAGT_I_STEDET_FOR_HJEMME',
+        kilde: '1080',
       },
       {
         kode: '1081',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke i livets sluttfase',
-        kilde: 'IKKE_I_LIVETS_SLUTTFASE',
+        kilde: '1081',
       },
     ],
     K9_VK_17: [
@@ -8736,13 +8811,13 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
       {
         kode: '1103',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke langvarig syk',
-        kilde: 'IKKE_LANGVARIG_SYK',
+        kilde: '1103',
       },
     ],
     K9_VK_20: [
@@ -8750,19 +8825,25 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
       {
         kode: '1101',
         kodeverk: 'AVSLAGSARSAK',
-        navn: 'Opplæringen er ikke nødvendig for ta seg av den pleietrengende',
-        kilde: 'IKKE_NØDVENDIG_OPPLÆRING',
+        navn: 'Opplæringen er ikke nødvendig for å ta seg av den pleietrengende',
+        kilde: '1101',
       },
       {
         kode: '1104',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke på reise',
-        kilde: 'IKKE_PÅ_REISE',
+        kilde: '1104',
+      },
+      {
+        kode: '1105',
+        kodeverk: 'AVSLAGSARSAK',
+        navn: 'Kurset inneholder ikke opplæring',
+        kilde: '1105',
       },
     ],
     K9_VK_21: [
@@ -8770,7 +8851,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1102',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Institusjonen er ikke en godkjent institusjon',
-        kilde: 'IKKE_GODKJENT_INSTITUSJON',
+        kilde: '1102',
       },
     ],
     K9_VK_2_a: [
@@ -8778,31 +8859,31 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
       {
         kode: '1067',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke dokumentert sykdom, skade eller lyte.',
-        kilde: 'IKKE_DOKUMENTERT_SYKDOM_SKADE_ELLER_LYTE',
+        kilde: '1067',
       },
       {
         kode: '1068',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke mottatt dokumentasjon fra rett organ.',
-        kilde: 'DOKUMENTASJON_IKKE_FRA_RETT_ORGAN',
+        kilde: '1068',
       },
       {
         kode: '1069',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke behov for kontinuerlig pleie.',
-        kilde: 'IKKE_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE_PÅ_BAKGRUNN_AV_SYKDOM',
+        kilde: '1069',
       },
       {
         kode: '1071',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke dokumentert omsorgen for.',
-        kilde: 'IKKE_DOKUMENTERT_OMSORGEN_FOR',
+        kilde: '1071',
       },
     ],
     K9_VK_2_b: [
@@ -8810,31 +8891,31 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
       {
         kode: '1067',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke dokumentert sykdom, skade eller lyte.',
-        kilde: 'IKKE_DOKUMENTERT_SYKDOM_SKADE_ELLER_LYTE',
+        kilde: '1067',
       },
       {
         kode: '1068',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke mottatt dokumentasjon fra rett organ.',
-        kilde: 'DOKUMENTASJON_IKKE_FRA_RETT_ORGAN',
+        kilde: '1068',
       },
       {
         kode: '1069',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke behov for kontinuerlig pleie.',
-        kilde: 'IKKE_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE_PÅ_BAKGRUNN_AV_SYKDOM',
+        kilde: '1069',
       },
       {
         kode: '1071',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke dokumentert omsorgen for.',
-        kilde: 'IKKE_DOKUMENTERT_OMSORGEN_FOR',
+        kilde: '1071',
       },
     ],
     K9_VK_3: [
@@ -8842,7 +8923,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1090',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker er eldre enn høyeste tillate alder.',
-        kilde: 'SØKER_OVER_HØYESTE_ALDER',
+        kilde: '1090',
       },
     ],
     K9_VK_5_3: [
@@ -8850,7 +8931,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1092',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Barnet er eldre enn tillatt alder.',
-        kilde: 'BARN_OVER_HØYESTE_ALDER',
+        kilde: '1092',
       },
     ],
     K9_VK_9_6: [
@@ -8858,61 +8939,61 @@ export const oppslagKodeverkSomObjektK9Sak = {
         kode: '1019',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Manglende dokumentasjon',
-        kilde: 'MANGLENDE_DOKUMENTASJON',
+        kilde: '1019',
       },
       {
         kode: '1072',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke grunnlag for utvidet rett',
-        kilde: 'IKKE_UTVIDETRETT',
+        kilde: '1072',
       },
       {
         kode: '1073',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke kronisk syk eller funksjonshemmet',
-        kilde: 'IKKE_UTVIDETRETT_IKKE_KRONISK_SYK',
+        kilde: '1073',
       },
       {
         kode: '1074',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke økt risiko for fravær',
-        kilde: 'IKKE_UTVIDETRETT_IKKE_ØKT_RISIKO_FRAVÆR',
+        kilde: '1074',
       },
       {
         kode: '1075',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Varigheten er mindre enn seks måneder',
-        kilde: 'IKKE_MIDLERTIDIG_ALENE_VARIGHET_UNDER_SEKS_MÅN',
+        kilde: '1075',
       },
       {
         kode: '1076',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker oppfyller ikke kravene til midlertidig alene',
-        kilde: 'IKKE_MIDLERTIDIG_ALENE_REGNES_IKKE_SOM_Å_HA_ALENEOMSORG',
+        kilde: '1076',
       },
       {
         kode: '1077',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Ikke grunnlag for aleneomsorg',
-        kilde: 'IKKE_GRUNNLAG_FOR_ALENEOMSORG',
+        kilde: '1077',
       },
       {
         kode: '1078',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Foreldre bor sammen',
-        kilde: 'IKKE_GRUNNLAG_FOR_ALENEOMSORG_FORELDRE_BOR_SAMMEN',
+        kilde: '1078',
       },
       {
         kode: '1079',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Avtale om delt bosted',
-        kilde: 'IKKE_GRUNNLAG_FOR_ALENEOMSORG_DELT_BOSTED',
+        kilde: '1079',
       },
       {
         kode: '1093',
         kodeverk: 'AVSLAGSARSAK',
         navn: 'Søker oppfyller ikke midlertidig alene-vilkåret av andre grunner',
-        kilde: 'IKKE_MIDLERTIDIG_ALENE',
+        kilde: '1093',
       },
     ],
   },

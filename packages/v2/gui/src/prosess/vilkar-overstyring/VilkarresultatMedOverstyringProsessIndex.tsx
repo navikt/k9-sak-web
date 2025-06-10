@@ -11,6 +11,9 @@ import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
@@ -26,6 +29,19 @@ const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePer
     )
     .sort((a, b) => (a.periode.fom && b.periode.fom ? dateStringSorter(a.periode.fom, b.periode.fom) : 0))
     .reverse();
+};
+
+const getIconForVilkarStatus = (vilkarStatus: string, harAktivtAksjonspunkt: boolean) => {
+  if (vilkarStatus === vilkårStatus.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+  }
+  if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+  }
+  if (vilkarStatus === vilkårStatus.IKKE_VURDERT && harAktivtAksjonspunkt) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  return null;
 };
 
 export interface VilkarresultatMedOverstyringProsessIndexProps {
@@ -70,6 +86,9 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
+  const harAktivtAksjonspunkt = aksjonspunkter.some(
+    aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET,
+  );
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
@@ -103,12 +122,13 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           links={perioder.map((periode, index) => ({
             active: activeTab === index,
             label: `${periode.periode.fom && formatDate(periode.periode.fom)} - ${periode.periode.tom && formatDate(periode.periode.tom)}`,
+            icon: getIconForVilkarStatus(periode.vilkarStatus, harAktivtAksjonspunkt),
           }))}
           onClick={setActiveTab}
           heading="Perioder"
         />
       </div>
-      <div className={styles.contentContainer}>
+      <div>
         <VilkarresultatMedOverstyringHeader
           aksjonspunkter={aksjonspunkter}
           erOverstyrt={erOverstyrt}

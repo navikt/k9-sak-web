@@ -88,17 +88,20 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
     setRediger(!rediger);
   };
   return (
-    <AksjonspunktBox erAksjonspunktApent={rediger}>
-      <ReadMore header="Dette bør undersøker rundt etterbetalingen">
-        Saken stopper i simulering fordi arbeidsgiver har endret sitt refusjonskrav, eller har endret fra refusjon til
-        direkte utbetaling i en periode som allerede har blitt utbetalt til bruker. I tillegg er etterbetalingen høy. Du
-        må kontrollerer om dette er riktig. Dette kan gjøres ved å kontakte arbeidsgiver. Er det feil, må de sende inn
-        ny inntektsmelding. Får du ikke tak i arbeidsgiver, kan du kontakte søker og høre om de kan spørre
-        arbeidsgiveren sin.
+    <AksjonspunktBox erAksjonspunktApent={rediger} maxWidth={true}>
+      <ReadMore header="Dette bør du undersøke rundt etterbetalingen" size="small">
+        Saken stopper i simulering fordi det har kommet nye opplysninger i saken som gjør at en tidligere innvilget
+        periode/utbetaling nå går helt eller delvis til bruker. Dette kan skyldes en ny inntektsmelding hvor det er
+        endret refusjonsbeløp, eller at arbeidsgiver har endret fra refusjon til direkte utbetaling i en periode som
+        allerede var utbetalt. Det kan også skyldes endrede søknadsopplysninger, enten fra bruker eller via punsj. Denne
+        listen er ikke uttømmende, og det kan skyldes andre opplysninger/endringer i saken. Du må derfor undersøke om
+        det er riktig at en høy etterbetaling skal utbetales til bruker, og eventuelt gjøre nødvendige endringer eller
+        vurderinger for å få saken riktig.
       </ReadMore>
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack gap="4">
           <Textarea
+            size="small"
             label="Begrunn hvorfor du går videre med denne behandlingen."
             maxLength={1500}
             minLength={3}

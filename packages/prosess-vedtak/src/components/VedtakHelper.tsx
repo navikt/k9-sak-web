@@ -1,7 +1,9 @@
-import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import {
+  BehandlingDtoType as KlageBehandlingDtoType,
+  BehandlingDtoBehandlingResultatType as klageBehandlingsresultat,
+} from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
@@ -13,6 +15,16 @@ import {
 } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
+
+const erTilbakekrevingType = (type: string | undefined | { kode: string }) => {
+  if (typeof type === 'string') {
+    return KlageBehandlingDtoType.TILBAKEKREVING === type || KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type;
+  }
+  return (
+    KlageBehandlingDtoType.TILBAKEKREVING === type?.kode ||
+    KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type?.kode
+  );
+};
 
 const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
@@ -39,7 +51,7 @@ export const findTilbakekrevingText = (props: {
   return null;
 };
 
-export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
   if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -63,10 +75,14 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
     return 'VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetOpplæringspenger';
+  }
+
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
   if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -90,10 +106,14 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.VilkarStatusInnvilgetOpplæringspenger';
+  }
+
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
-export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
   if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }
@@ -115,6 +135,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytels
 
   if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
+  }
+
+  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return 'VedtakForm.OpplæringspengerIkkeInnvilget';
   }
 
   return 'VedtakForm.PleiepengerIkkeInnvilget';

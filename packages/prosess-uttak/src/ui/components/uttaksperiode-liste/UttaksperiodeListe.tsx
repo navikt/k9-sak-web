@@ -4,8 +4,12 @@ import dayjs from 'dayjs';
 import React, { type JSX } from 'react';
 import { Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
 import ContainerContext from '../../context/ContainerContext';
-import Uttak from '../uttak/Uttak';
+import UttakRad from '../uttak/UttakRad';
+import UttakRadOpplæringspenger from '../uttak/UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import ContainerContract from '../../../types/ContainerContract';
 
 interface UttaksperiodeListeProps {
   uttaksperioder: UttaksperiodeMedInntektsgradering[];
@@ -46,24 +50,31 @@ const splitUttakByDate = (
   return [beforeVirkningsdato, afterOrCoveringVirkningsdato];
 };
 
+const tableHeaders = (ytelsetype: FagsakYtelsesType) => {
+  if (ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Sykdom og opplæring', 'Søkers uttaksgrad'];
+  }
+  if (ytelsetype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+    return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleie i hjemmet', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
+  }
+  return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
+};
+
 const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
   const {
-    erFagytelsetypeLivetsSluttfase,
+    ytelsetype,
     virkningsdatoUttakNyeRegler,
     status = false,
-  } = React.useContext(ContainerContext);
+  } = React.useContext(ContainerContext) as ContainerContract;
   const { uttaksperioder, redigerVirkningsdatoFunc, redigerVirkningsdato, readOnly } = props;
 
   const [before, afterOrCovering] = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);
 
-  const headers = erFagytelsetypeLivetsSluttfase
-    ? ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleie i hjemmet', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad']
-    : ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
-
+  const headers = tableHeaders(ytelsetype);
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
-      velgPeriodeIndex(null);
+      velgPeriodeIndex(undefined);
     } else {
       velgPeriodeIndex(index);
     }
@@ -95,7 +106,15 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                   </td>
                 </Table.Row>
               )}
-              <Uttak uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
+              {ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER ? (
+                <UttakRadOpplæringspenger
+                  uttak={uttak}
+                  erValgt={valgtPeriodeIndex === index}
+                  velgPeriode={() => velgPeriode(index)}
+                />
+              ) : (
+                <UttakRad uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
+              )}
             </React.Fragment>
           ))}
           {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
@@ -135,12 +154,19 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                   </td>
                 </Table.Row>
               )}
-              <Uttak
-                uttak={uttak}
-                erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
-                velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
-                withBorderTop={index === 0 && !!virkningsdatoUttakNyeRegler}
-              />
+              {ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER ? (
+                <UttakRadOpplæringspenger
+                  uttak={uttak}
+                  erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
+                  velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
+                />
+              ) : (
+                <UttakRad
+                  uttak={uttak}
+                  erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
+                  velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
+                />
+              )}
             </React.Fragment>
           ))}
         </Table.Body>

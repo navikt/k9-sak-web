@@ -1,7 +1,6 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import { UngSakClientContext } from '@k9-sak-web/gui/app/UngSakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
@@ -38,6 +37,7 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -161,8 +161,7 @@ const BehandlingSupportIndex = ({
   const k9SakClient = useContext(K9SakClientContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
-  const ungClient = useContext(UngSakClientContext);
-  const notatBackendClient = new NotatBackendClient(ungClient);
+  const notatBackendClient = new NotatBackendClient(getUngSakClient());
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;

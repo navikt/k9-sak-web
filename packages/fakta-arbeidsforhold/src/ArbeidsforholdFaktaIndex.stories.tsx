@@ -1,9 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
+import { action } from 'storybook/actions';
 import ArbeidsforholdFaktaIndex from './ArbeidsforholdFaktaIndex';
 import arbeidsforholdKilder from './kodeverk/arbeidsforholdKilder';
 

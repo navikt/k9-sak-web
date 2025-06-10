@@ -1,4 +1,6 @@
 import type { KontrollerInntektPeriodeDto, RapportertInntektDto } from '@k9-sak-web/backend/ungsak/generated';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { getPathToAinntekt } from '@k9-sak-web/lib/paths/paths.js';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, VStack } from '@navikt/ds-react';
@@ -66,6 +68,7 @@ interface DetaljerOmInntektProps {
 }
 
 export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const location = useLocation();
   const { rapporterteInntekter } = inntektKontrollPeriode || {};
   return (
@@ -90,27 +93,25 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
       </Bleed>
       <HGrid gap="9" columns={2}>
         <Inntekt
-          title="Inntekt rapport av deltager"
+          title="Inntekt rapportert av deltaker"
           details={[
             {
               label: 'Samlet arbeidsinntekt',
               value: formaterInntekt(rapporterteInntekter?.bruker?.arbeidsinntekt),
             },
-            {
-              label: 'Ytelse',
-              value: formaterInntekt(rapporterteInntekter?.bruker?.ytelse),
-            },
           ]}
-          sumLabel="Sum inntekt fra deltager"
-          sumValue={summerInntekt(rapporterteInntekter?.bruker ?? {})}
+          sumLabel="Sum inntekt fra deltaker"
+          sumValue={formaterInntekt(rapporterteInntekter?.bruker?.arbeidsinntekt)}
         />
         <Inntekt
-          title="Inntekt rapportert i A-inntekt"
+          title="Inntekt rapportert i A-ordningen"
           details={rapporterteInntekter?.register?.inntekter?.map(inntekt => ({
-            label: inntekt.arbeidsgiverIdentifikator,
+            label: inntekt.ytelseType
+              ? kodeverkNavnFraKode(inntekt.ytelseType, KodeverkType.FAGSAK_YTELSE)
+              : inntekt.arbeidsgiverIdentifikator,
             value: formaterInntekt(inntekt.inntekt),
           }))}
-          sumLabel="Sum inntekt fra A-inntekt"
+          sumLabel="Sum inntekt fra A-ordningen"
           sumValue={summerInntekt(rapporterteInntekter?.register?.oppsummertRegister ?? {})}
         />
       </HGrid>

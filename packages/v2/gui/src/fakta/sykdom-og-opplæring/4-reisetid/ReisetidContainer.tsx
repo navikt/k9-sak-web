@@ -7,23 +7,12 @@ import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState, useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-const ReisetidContainer = ({
-  vurdering,
-  nullstillValgtVurdering,
-}: {
-  vurdering: ReisetidVurderingDto & { perioder: Period[] };
-  nullstillValgtVurdering: () => void;
-}) => {
+const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigering, setRedigering] = useState(false);
   if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
     return (
       <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
-        <ReisetidForm
-          vurdering={vurdering}
-          setRedigering={setRedigering}
-          redigering={redigering}
-          nullstillValgtVurdering={nullstillValgtVurdering}
-        />
+        <ReisetidForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
       </Wrapper>
     );
   }

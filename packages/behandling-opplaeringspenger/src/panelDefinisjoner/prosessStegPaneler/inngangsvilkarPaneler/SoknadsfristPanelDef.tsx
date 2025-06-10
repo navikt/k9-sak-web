@@ -3,9 +3,9 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../../data/opplaeringspengerBehandlingApi';
+import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKNADSFRIST';
@@ -15,7 +15,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-
     return <SoknadsfristVilkarProsessIndex {...props} {...deepCopyProps} />;
   };
 
@@ -27,8 +26,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getVilkarKoder = () => [vilkarType.SOKNADSFRISTVILKARET];
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.SOKNADSFRIST_STATUS];
-
-  getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0;
 
   getData = ({
     vilkarForSteg,

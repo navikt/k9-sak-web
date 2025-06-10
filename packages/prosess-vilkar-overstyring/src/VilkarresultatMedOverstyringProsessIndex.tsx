@@ -10,6 +10,9 @@ import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import AksjonspunktIkon from '@k9-sak-web/gui/shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +25,19 @@ const intl = createIntl(
   },
   cache,
 );
+
+const getIconForVilkarStatus = (vilkarStatusKode: string, harAktivtAksjonspunkt: boolean) => {
+  if (vilkarStatusKode === vilkarUtfallType.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+  }
+  if (vilkarStatusKode === vilkarUtfallType.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+  }
+  if (vilkarStatusKode === vilkarUtfallType.IKKE_VURDERT && harAktivtAksjonspunkt) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  return null;
+};
 
 interface VilkarresultatMedOverstyringProsessIndexProps {
   behandling: Behandling;
@@ -75,6 +91,10 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  const harAktivtAksjonspunkt = aksjonspunkter.some(
+    aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET,
+  );
+
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
@@ -99,6 +119,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             links={perioder.map((periode, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.periode.fom)} - ${formatDate(periode.periode.tom)}`,
+              icon: getIconForVilkarStatus(periode.vilkarStatus.kode, harAktivtAksjonspunkt),
             }))}
             onClick={setActiveTab}
             heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}

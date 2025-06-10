@@ -1,7 +1,7 @@
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { Fagsak } from '@k9-sak-web/types';
 import { InnloggetAnsattDto } from '@navikt/k9-sak-typescript-client';
 
@@ -26,6 +26,7 @@ const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
         fagsakId={fagsak.saksnummer}
         navAnsatt={navAnsatt}
         fagsakHarPleietrengende={!!fagsak.pleietrengendeAktørId}
+        sakstype={fagsak.sakstype}
       />
     </ErrorBoundary>
   );

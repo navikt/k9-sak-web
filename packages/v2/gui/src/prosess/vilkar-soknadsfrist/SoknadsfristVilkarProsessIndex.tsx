@@ -2,10 +2,11 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { Dayjs } from 'dayjs';
 import { useEffect, useState, type SetStateAction } from 'react';
+import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
@@ -13,9 +14,23 @@ import type { SoknadsfristAksjonspunktType } from './types/SoknadsfristAksjonspu
 import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
 import type { SubmitData } from './types/submitCallback';
 import type { SøknadsfristTilstand } from './types/SøknadsfristTilstand';
-import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
+import { formatDate, utledInnsendtSoknadsfrist } from './utils';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 
 const lovReferanse = '§ 22-13';
+
+const getIconForPeriode = (vilkarStatus: string, erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
+  if (erOverstyrt || harÅpentUløstAksjonspunkt) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  if (vilkarStatus === vilkårStatus.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+  }
+  if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+  }
+  return null;
+};
 
 interface SoknadsfristVilkarProsessIndexProps {
   aksjonspunkter: SoknadsfristAksjonspunktType[];
@@ -152,14 +167,7 @@ const SoknadsfristVilkarProsessIndex = ({
               periode.fom && periode.tom
                 ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`
                 : `Periode ${index + 1}`,
-            icon:
-              (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus === vilkårStatus.IKKE_VURDERT ? (
-                <ExclamationmarkTriangleFillIcon
-                  title="Aksjonspunkt"
-                  fontSize="1.5rem"
-                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl ml-2"
-                />
-              ) : null,
+            icon: getIconForPeriode(vilkarStatus, erOverstyrt, harÅpentUløstAksjonspunkt),
           }))}
           onClick={setActiveTab}
           heading="Perioder"

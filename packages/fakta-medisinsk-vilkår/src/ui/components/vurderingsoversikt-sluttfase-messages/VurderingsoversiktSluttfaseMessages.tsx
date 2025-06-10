@@ -6,7 +6,7 @@ import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/
 import ManglerGyldigSignaturMelding from '../mangler-gyldig-signatur-melding/ManglerGyldigSignaturMelding';
 
 interface VurderingsoversiktSluttfaseMessagesProps {
-  vurderingsoversikt: Vurderingsoversikt;
+  vurderingsoversikt: Vurderingsoversikt | null;
   harGyldigSignatur: boolean;
 }
 
@@ -25,7 +25,7 @@ const VurderingsoversiktSluttfaseMessages = ({
     );
   }
 
-  if (vurderingsoversikt.harIngenPerioderÅVise()) {
+  if (vurderingsoversikt && vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
       <Box marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
@@ -33,7 +33,7 @@ const VurderingsoversiktSluttfaseMessages = ({
     );
   }
 
-  if (vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
+  if (vurderingsoversikt?.harPerioderSomSkalVurderes() === true) {
     return (
       <Box marginBlock="0 6">
         <Alert size="small" variant="warning">
@@ -44,7 +44,7 @@ const VurderingsoversiktSluttfaseMessages = ({
       </Box>
     );
   }
-  return null;
+  return <></>;
 };
 
 export default VurderingsoversiktSluttfaseMessages;

@@ -7,7 +7,7 @@ import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/ut
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
   ArbeidsgiverOpplysningerWrapper,

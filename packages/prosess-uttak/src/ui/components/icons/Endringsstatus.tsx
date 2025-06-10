@@ -3,7 +3,7 @@ import { type JSX } from 'react';
 import EndringsstatusType from '../../../types/Endringsstatus';
 import PillIcon from './PillIcon';
 
-const Endringsstatus = ({ status }: { status: EndringsstatusType }): JSX.Element | null => {
+const Endringsstatus = ({ status }: { status?: EndringsstatusType }): JSX.Element | null => {
   if (status === 'NY') {
     return (
       <Tooltip content="Ny denne behandlingen">

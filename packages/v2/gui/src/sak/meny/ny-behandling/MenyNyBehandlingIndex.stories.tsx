@@ -5,9 +5,9 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect, userEvent } from 'storybook/test';
 import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 export default {

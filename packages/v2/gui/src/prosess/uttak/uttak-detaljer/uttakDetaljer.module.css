@@ -1,0 +1,114 @@
+.uttakDetaljer {
+  padding: var(--a-spacing-4);
+}
+
+.uttakDetaljerGraderingDetaljer {
+  background-color: var(--a-gray-50);
+  padding: var(--a-spacing-5);
+  color: var(--a-text-default);
+  border-radius: 5px;
+}
+
+.uttakDetaljerGraderingDetaljerHighlighted {
+  background-color: var(--a-deepblue-50);
+}
+
+.uttakDetaljerGraderingDetaljerNotHighlighted {
+  padding-top: var(--a-spacing-10);
+}
+
+.uttakDetaljerGraderingDetaljer svg {
+  color: var(--a-lightblue-800);
+  font-size: x-large;
+  margin: 0 var(--a-spacing-1) 0;
+}
+
+.uttakDetaljerDetailItem {
+  padding: var(--a-spacing-1) 0;
+}
+
+.uttakDetaljerDetailSum {
+  padding: var(--a-spacing-6) 0 var(--a-spacing-1);
+  border-bottom: 3px solid var(--a-lightblue-700);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.uttakDetaljerDataQuestionMark svg {
+  height: var(--a-font-size-large);
+}
+
+.uttakDetaljerExpandableDetailItem {
+  padding: var(--a-spacing-1) 0;
+  border-bottom: 1px solid var(--a-border-subtle);
+}
+
+.uttakDetaljerExpandableDetailItemHeader a {
+  color: var(--a-text-default);
+  text-decoration: none;
+}
+
+.uttakDetaljerExpandableDetailItem a > div {
+  display: flex;
+}
+
+.uttakDetaljerExpandableDetailItem span {
+  flex-grow: 1;
+}
+
+.uttakDetaljerExpandableDetailItem svg {
+  justify-self: right;
+}
+
+.uttakDetaljerExpandableDetailItemContentCollapsed {
+  display: none;
+}
+
+.uttakDetaljerNyGradering {
+  margin-top: var(--a-spacing-8);
+  display: inline-block;
+}
+
+.uttakDetaljerTag {
+  margin-top: -2rem;
+  margin-bottom: 1rem;
+}
+
+.uttakDetaljerBeregningFirma {
+  margin: var(--a-spacing-5) 0;
+}
+
+.uttakDetaljerTaptInntektBeregning {
+  margin: var(--a-spacing-4) 0;
+  display: inline-block;
+}
+
+.uttakDetaljerTaptInntektAnnotasjon {
+  display: inline-block;
+  width: 0.75rem;
+}
+
+.uttakDetaljerBeregningStrek {
+  border-bottom: 1px solid var(--a-border-subtle);
+  padding-bottom: var(--a-spacing-1);
+}
+
+.uttakDetaljerBeregningSum {
+  padding-top: var(--a-spacing-1);
+}
+
+.uttakDetaljerUtnullet {
+  text-decoration: line-through;
+  color: var(--a-gray-500);
+}
+
+.uttakDetaljerNyTag {
+  margin-left: var(--a-spacing-1);
+  display: inline-block;
+}
+
+.uttakDetaljerDetailtext {
+  color: var(--a-text-subtle);
+  padding-top: var(--a-spacing-3);
+  display: inline-block;
+}

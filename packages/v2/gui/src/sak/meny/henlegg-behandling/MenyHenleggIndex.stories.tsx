@@ -1,13 +1,13 @@
-import { BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated';
+import { BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   BehandlingsresultatDtoType as behandlingResultatTypeK9Sak,
   BehandlingDtoSakstype as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../../storybook/asyncAction';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
 

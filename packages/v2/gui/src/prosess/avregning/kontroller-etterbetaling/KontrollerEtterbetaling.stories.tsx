@@ -7,8 +7,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { HStack } from '@navikt/ds-react';
-import { fn, within, expect, userEvent, fireEvent } from '@storybook/test';
 import dayjs from 'dayjs';
+import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/FakeBehandlingAvregningBackendApi';
 import KontrollerEtterbetaling, {
   type BekreftKontrollerEtterbetalingAksjonspunktRequest,
@@ -79,7 +79,7 @@ export const LøsAksjonspunkt: Story = {
     const canvas = await within(canvasElement);
 
     await step('Skal ha aksjonspunktboks for kontroller etterbetaling', async () => {
-      await expect(await canvas.findByRole('button', { name: 'Dette bør undersøker rundt etterbetalingen' }));
+      await expect(await canvas.findByRole('button', { name: 'Dette bør du undersøke rundt etterbetalingen' }));
       await expect(
         await canvas.findByRole('textbox', { name: 'Begrunn hvorfor du går videre med denne behandlingen.' }),
       );

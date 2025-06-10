@@ -1,34 +1,34 @@
 import { Label } from '@navikt/ds-react';
 import * as React from 'react';
 import Utfall from '../constants/Utfall';
-import Inngangsvilkår from '../types/Inngangsvilkår';
-import vilkår from './Vilkår';
 import VilkårslisteItem from './VilkårslisteItem';
+import vilkårListe from './Vilkår';
 import styles from './vilkårsliste.module.css';
 
 import type { JSX } from 'react';
+import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
 
-interface VilkårslisteProps {
-  inngangsvilkår: Inngangsvilkår;
-}
+type VilkårType = { [key in VilkårMedPerioderDtoVilkarType]?: VilkårPeriodeDtoVilkarStatus };
 
-const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) =>
-  inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
+const erVilkårOppfylt = (vilkårkode: VilkårMedPerioderDtoVilkarType, vilkår: VilkårType) =>
+  vilkår[vilkårkode] === Utfall.OPPFYLT;
 
-const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
-  <div className={styles.vilkårsliste}>
-    <Label size="small" as="p">
-      Vilkår
-    </Label>
-    <ul>
-      {vilkår.map(
-        v =>
-          inngangsvilkår[v.kode] && (
-            <VilkårslisteItem key={v.kode} vilkår={v.name} erOppfylt={erVilkårOppfylt(v.kode, inngangsvilkår)} />
-          ),
-      )}
-    </ul>
-  </div>
-);
+const Vilkårsliste = ({ vilkår }: { vilkår: VilkårType }): JSX.Element => {
+  return (
+    <div className={styles.vilkårsliste}>
+      <Label size="small" as="p">
+        Vilkår
+      </Label>
+      <ul>
+        {vilkårListe.map(
+          v =>
+            vilkår[v.kode] && (
+              <VilkårslisteItem key={v.kode} vilkår={v.name} erOppfylt={erVilkårOppfylt(v.kode, vilkår)} />
+            ),
+        )}
+      </ul>
+    </div>
+  );
+};
 
 export default Vilkårsliste;

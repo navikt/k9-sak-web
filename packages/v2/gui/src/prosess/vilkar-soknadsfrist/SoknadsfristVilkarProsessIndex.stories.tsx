@@ -5,9 +5,9 @@ import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspunk
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { kravDokumentStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/KravDokumentStatus.js';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 

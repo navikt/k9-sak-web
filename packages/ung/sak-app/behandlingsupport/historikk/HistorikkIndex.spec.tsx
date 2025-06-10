@@ -1,4 +1,3 @@
-import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
@@ -25,20 +24,30 @@ describe('<HistorikkIndex>', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.HISTORY_UNGSAK, [
       {
-        opprettetTidspunkt: '2019-01-01',
-        historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
+        historikkinnslagUuid: '801e6e32-e3c4-4ec2-b4c5-3f3c7d1fd47f',
+        behandlingUuid: '5e0dfaff-3cf6-4877-860f-1b86b4eca51e',
+        aktør: {
+          type: { kode: 'VL', kodeverk: 'HISTORIKK_AKTOER' },
+          ident: null,
         },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
+        skjermlenke: { kode: 'VEDTAK', kodeverk: 'SKJERMLENKE_TYPE' },
+        opprettetTidspunkt: '2025-06-06T11:28:45.63222',
+        dokumenter: [],
+        tittel: null,
+        linjer: [{ type: 'TEKST', tekst: 'Vedtak er fattet: Innvilget.' }],
       },
       {
-        opprettetTidspunkt: '2019-01-06',
-        historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
+        historikkinnslagUuid: 'f402c588-ef15-438f-bf07-9b4325ed63e3',
+        behandlingUuid: 'b786e660-d2e0-4789-a28a-b58d34e2c3d5',
+        aktør: {
+          type: { kode: 'VL', kodeverk: 'HISTORIKK_AKTOER' },
+          ident: null,
         },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
+        skjermlenke: null,
+        opprettetTidspunkt: '2025-06-05T11:28:46.28268',
+        dokumenter: [],
+        tittel: 'Revurdering opprettet',
+        linjer: [{ type: 'TEKST', tekst: 'Kontroll av registerinntekt.' }],
       },
     ]);
 
@@ -48,7 +57,7 @@ describe('<HistorikkIndex>', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText(/06.01.2019/i)).toBeInTheDocument();
-    expect(screen.getByText(/01.01.2019/i)).toBeInTheDocument();
+    expect(screen.getByText(/06.06.2025/i)).toBeInTheDocument();
+    expect(screen.getByText(/05.06.2025/i)).toBeInTheDocument();
   });
 });

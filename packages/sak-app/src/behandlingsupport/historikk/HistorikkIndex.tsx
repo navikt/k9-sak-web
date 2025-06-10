@@ -17,17 +17,21 @@ import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkebob
 import dayjs from 'dayjs';
 import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
-import { HelpText, HStack, Switch } from '@navikt/ds-react';
+import { Alert, HelpText, HStack, Switch } from '@navikt/ds-react';
 import { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.jsx';
-import { HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9sak/generated';
 import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { EtablerteUlikeHistorikkinnslagTyper, NyeUlikeHistorikkinnslagTyper } from './historikkTypes.js';
-import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import ErrorBoundary from '../../app/ErrorBoundary';
+import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
+import {
+  KlageHistorikkInnslagV2,
+  NyeUlikeHistorikkinnslagTyper,
+  SakHistorikkInnslagV2,
+} from '@k9-sak-web/gui/sak/historikk/historikkTypeBerikning.js';
+import { isDev } from '@k9-sak-web/lib/paths/paths.js';
 
 const sortAndTagUlikeEtablerteHistorikkinnslagTyper = (
   historikkK9sak: Historikkinnslag[] = [],
@@ -42,14 +46,14 @@ const sortAndTagUlikeEtablerteHistorikkinnslagTyper = (
 };
 
 const sortAndTagUlikeNyeHistorikkinnslagTyper = (
-  historikkK9sak: HistorikkinnslagDtoV2[] = [],
+  historikkK9sak: SakHistorikkInnslagV2[] = [],
   historikkTilbake: TilbakeHistorikkinnslagV2[] = [],
-  historikkKlage: Historikkinnslag[] = [],
+  historikkKlage: KlageHistorikkInnslagV2[] = [],
 ): NyeUlikeHistorikkinnslagTyper[] => {
   return [
     ...historikkTilbake.map(v => ({ ...v, erTilbakekreving: true })),
-    ...historikkKlage.map(v => ({ ...v, erKlage: true })),
-    ...historikkK9sak.map(v => ({ ...v, erSak: true })),
+    ...historikkKlage,
+    ...historikkK9sak,
   ].toSorted((a, b) => dayjs(b.opprettetTidspunkt).diff(a.opprettetTidspunkt));
 };
 
@@ -66,14 +70,17 @@ interface OwnProps {
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
-  const historikkBackendApi: HistorikkBackendApi = useContext(HistorikkBackendApiContext);
+  const historikkBackendApi: HistorikkBackendApi | null = useContext(HistorikkBackendApiContext);
   const featureToggles = useContext(FeatureTogglesContext);
   const [visV2, setVisV2] = useState(featureToggles?.HISTORIKK_V2_VIS === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
   const compareDone = useRef(false);
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const compareTimeoutIdRef = useRef(0);
-  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
+
+  if (historikkBackendApi == null) {
+    throw new Error('HistorikkBackendApiContext ikke satt');
+  }
 
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
@@ -88,6 +95,13 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   const historikkK9SakV2Query = useQuery({
     queryKey: ['historikk/k9sak/v2', saksnummer, behandlingId, behandlingVersjon],
     queryFn: () => historikkBackendApi.hentAlleInnslagK9sak(saksnummer),
+    enabled: saksnummer != null && saksnummer.length > 0,
+    retry: 1, // <- 1 Nedjustert retry i starten, for å unngå å vente lenge når ein heller vil falle tilbake til v1 visning ved feil.
+  });
+
+  const historikkK9KlageV2Query = useQuery({
+    queryKey: ['historikk/k9klage/v2', saksnummer, behandlingId, behandlingVersjon],
+    queryFn: () => historikkBackendApi.hentAlleInnslagK9klage(saksnummer),
     enabled: saksnummer != null && saksnummer.length > 0,
     retry: 1, // <- 1 Nedjustert retry i starten, for å unngå å vente lenge når ein heller vil falle tilbake til v1 visning ved feil.
   });
@@ -139,6 +153,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
 
   const isLoading =
     historikkK9SakV2Query.isPending ||
+    historikkK9KlageV2Query.isPending ||
     isRequestNotDone(historikkK9SakState) ||
     (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState)) ||
     (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2));
@@ -149,8 +164,13 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   );
 
   const nyeHistorikkInnslag = useMemo(
-    () => sortAndTagUlikeNyeHistorikkinnslagTyper(historikkK9SakV2Query.data, historikkTilbakeV2, historikkKlage),
-    [historikkK9SakV2Query.data, historikkTilbakeV2, historikkKlage],
+    () =>
+      sortAndTagUlikeNyeHistorikkinnslagTyper(
+        historikkK9SakV2Query.data,
+        historikkTilbakeV2,
+        historikkK9KlageV2Query.data,
+      ),
+    [historikkK9SakV2Query.data, historikkTilbakeV2, historikkK9KlageV2Query.data],
   );
 
   const getTilbakeKodeverknavn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
@@ -194,13 +214,6 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   });
 
   const nyeHistorikkElementer = nyeHistorikkInnslag.map((innslag, idx) => {
-    let alleKodeverk = alleKodeverkK9Sak;
-    if (innslag.erTilbakekreving) {
-      alleKodeverk = alleKodeverkTilbake;
-    }
-    if (innslag.erKlage) {
-      alleKodeverk = alleKodeverkKlage;
-    }
     // tilbakekreving har her (tilbake) historikk innslag v2
     if (innslag.erTilbakekreving) {
       return (
@@ -216,14 +229,13 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       );
     } else if (innslag.erKlage) {
       return (
-        <HistorikkSakIndex
-          key={`${innslag.opprettetTidspunkt}-${innslag.aktoer.kode}-${idx}`}
-          historikkinnslag={innslag}
+        <InnslagBoble
+          key={`${innslag.uuid}`}
           saksnummer={saksnummer}
-          alleKodeverk={alleKodeverk}
-          erTilbakekreving={!!innslag.erTilbakekreving}
-          getBehandlingLocation={getBehandlingLocation}
+          innslag={innslag}
+          kjønn={kjønn}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
+          behandlingLocation={getBehandlingLocation(behandlingId)}
         />
       );
     } else if (innslag.erSak) {
@@ -235,11 +247,10 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
           kjønn={kjønn}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
           behandlingLocation={getBehandlingLocation(behandlingId)}
-          kodeverkoppslag={kodeverkoppslag}
         />
       );
     } else {
-      throw new Error(`Ugylding innslag objekt på saksnummer ${saksnummer}`);
+      throw new Error(`Ugyldig innslag objekt på saksnummer ${saksnummer}`);
     }
   });
 
@@ -263,6 +274,9 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
           } catch (err) {
             setVisV2(false);
             Sentry.captureException(err, { level: 'warning' });
+            if (isDev()) {
+              console.info('compareRenderedElementTexts kasta feil', err);
+            }
           } finally {
             compareDone.current = true;
           }
@@ -279,10 +293,22 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     <ErrorBoundary errorMessageCallback={() => setVisV2(false)}>{nyeHistorikkElementer}</ErrorBoundary>
   );
 
+  // Viss henting av data har feila, vis varsel om det.
+  const sakHentFeilAlert = historikkK9SakV2Query.isError ? (
+    <Alert variant="error" size="small">
+      Det har oppstått en feil ved henting av historikk fra k9-sak. Ingen innslag derifra vises.
+    </Alert>
+  ) : null;
+  const klageHentFeilAlert = historikkK9KlageV2Query.isError ? (
+    <Alert variant="error" size="small">
+      Det har oppstått en feil ved henting av historikk fra k9-klage. Ingen innslag derifra vises.
+    </Alert>
+  ) : null;
+
   return (
     <div className="grid gap-5">
       <HStack align="center">
-        <Switch size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
+        <Switch data-testid="NyVisningSwitch" size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
           Ny visning&nbsp;
         </Switch>
         <HelpText>
@@ -295,6 +321,8 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
           </p>
         </HelpText>
       </HStack>
+      {visV2 ? sakHentFeilAlert : null}
+      {visV2 ? klageHentFeilAlert : null}
       {visV2 ? nyeHistorikkElementerMedFeilgrense : etablerteHistorikkElementer}
     </div>
   );
