@@ -53,7 +53,7 @@ export const InnvilgetAlderOgUngdomsprogram: Story = {
   },
 };
 
-export const InngilvetAlderOgUtmeldtUngdomsprogram: Story = {
+export const InnvilgetAlderOgUtmeldtUngdomsprogram: Story = {
   args: {
     vilkar: [
       {
