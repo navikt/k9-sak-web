@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 interface DataFetcherProps {
   url: string;
@@ -16,9 +17,12 @@ const DataFetcher = ({ url, contentRenderer }: DataFetcherProps) => {
   React.useEffect(() => {
     let isMounted = true;
     axios
-      .get(url, {
-        cancelToken: httpCanceler.token,
-      })
+      .get(
+        url,
+        addLegacySerializerOption({
+          cancelToken: httpCanceler.token,
+        }),
+      )
       .then(
         response => {
           if (isMounted) {
