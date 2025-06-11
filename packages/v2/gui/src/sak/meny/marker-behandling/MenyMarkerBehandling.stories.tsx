@@ -1,30 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { asyncAction } from '../../../storybook/asyncAction';
-import MenyMarkerBehandlingV2 from './MenyMarkerBehandling';
+import { FakeMarkerBehandlingBackendApi } from '../../../storybook/mocks/FakeMarkerBehandlingBackendApi';
+import MarkerBehandlingModal from './components/MarkerBehandlingModal';
 
 const meta = {
   title: 'gui/sak/meny/marker-behandling',
-  component: MenyMarkerBehandlingV2,
-} satisfies Meta<typeof MenyMarkerBehandlingV2>;
+  component: MarkerBehandlingModal,
+} satisfies Meta<typeof MarkerBehandlingModal>;
 
 export default meta;
 
-export const VisMenyMarkerBehandlingHastekø: StoryObj<typeof MenyMarkerBehandlingV2> = {
+type Story = StoryObj<typeof meta>;
+
+const api = new FakeMarkerBehandlingBackendApi();
+export const VisMenyMarkerBehandlingHastekø: Story = {
   args: {
     behandlingUuid: '123',
-    markerBehandling: asyncAction('marker behandling'),
     brukHastekøMarkering: true,
     lukkModal: asyncAction('lukk modal'),
-    merknaderFraLos: {},
-  },
-};
-
-export const VisMenyMarkerBehandlingVanskeligKø: StoryObj<typeof MenyMarkerBehandlingV2> = {
-  args: {
-    behandlingUuid: '123',
-    markerBehandling: asyncAction('marker behandling'),
-    brukVanskeligKøMarkering: true,
-    lukkModal: asyncAction('lukk modal'),
-    merknaderFraLos: {},
+    api,
   },
 };

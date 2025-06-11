@@ -11,6 +11,7 @@ import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fp
 import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
@@ -20,7 +21,6 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyVergeIndexV2 from '@k9-sak-web/gui/sak/meny/verge/MenyVergeIndex.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyMarkerBehandling, {
   getMenytekst as getMenytekstMarkerBehandling,
 } from '@k9-sak-web/sak-meny-marker-behandling';
@@ -30,10 +30,10 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import { MerknadResponse } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -176,7 +176,7 @@ export const BehandlingMenuIndex = ({
 
   const { startRequest: markerBehandling } = restApiHooks.useRestApiRunner(K9sakApiKeys.LOS_LAGRE_MERKNAD);
 
-  const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadFraLos>(K9sakApiKeys.LOS_HENTE_MERKNAD);
+  const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadResponse>(K9sakApiKeys.LOS_HENTE_MERKNAD);
 
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -262,11 +262,9 @@ export const BehandlingMenuIndex = ({
           ),
           new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
             <MenyMarkerBehandlingV2
-              behandlingUuid={behandling?.uuid}
-              markerBehandling={markerBehandling}
+              behandlingUuid={behandling?.uuid ?? ''}
               lukkModal={lukkModal}
               brukHastekøMarkering
-              merknaderFraLos={merknaderFraLos}
             />
           )),
           new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
