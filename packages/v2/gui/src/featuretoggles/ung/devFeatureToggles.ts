@@ -1,7 +1,7 @@
 import type { FeatureToggles } from '../FeatureToggles.js';
 
 export const devFeatureToggles = {
-  BRUK_V2_MELDINGER: false,
+  BRUK_V2_MELDINGER: true,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
