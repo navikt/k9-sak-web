@@ -1,31 +1,13 @@
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { UngMeldingerBackendType } from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendType.js';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  BehandlingAppKontekst,
-  Fagsak,
-  FeatureToggles,
-  Personopplysninger,
-} from '@k9-sak-web/types';
-import { Alert } from '@navikt/ds-react';
-import { useQuery } from '@tanstack/react-query';
-import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
-import { useUngSakKodeverk } from '../../data/useKodeverk';
-import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
+import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
+import UngMeldingerBackendClient from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendClient.js';
+import { UngMessagesFormState } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesFormState.js';
+import { UngMessagesIndex } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesIndex.js';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { useState } from 'react';
 
 interface OwnProps {
-  fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
-  behandlingVersjon?: number;
-  personopplysninger?: Personopplysninger;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
-  readonly featureToggles?: FeatureToggles;
-  readonly backendApi: MeldingerSakIndexBackendApi & { hentMaler: UngMeldingerBackendType['hentMaler'] };
 }
 
 /**
@@ -33,19 +15,10 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MeldingIndex = ({
-  fagsak,
-  alleBehandlinger,
-  behandlingId,
-  behandlingVersjon,
-  personopplysninger,
-  arbeidsgiverOpplysninger,
-  featureToggles,
-  backendApi,
-}: OwnProps) => {
+const MeldingIndex = ({ alleBehandlinger, behandlingId }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  const revurderingVarslingArsak = useUngSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
-
+  const ungMeldingerBackendClient = new UngMeldingerBackendClient(getUngSakClient());
+  const [ungMessagesFormValues, setUngMessagesFormValues] = useState<UngMessagesFormState | undefined>(undefined);
   /*
     Før var det kode for å vise to ulike modaler etter at melding vart sendt i denne komponenten.
 
@@ -66,79 +39,14 @@ const MeldingIndex = ({
     window.location.reload();
   };
 
-  const skalHenteRevAp = requestApi.hasPath(UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
-  const { data: harApentKontrollerRevAp, state: stateRevAp } = restApiHooks.useRestApi<boolean>(
-    UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP,
-    undefined,
-    {
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !skalHenteRevAp,
-    },
-  );
-
-  const skalHenteBrevmaler = requestApi.hasPath(UngSakApiKeys.BREVMALER);
-  // const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmaler>(
-  //   UngSakApiKeys.BREVMALER,
-  //   undefined,
-  //   {
-  //     updateTriggers: [behandlingId, behandlingVersjon],
-  //   },
-  // );
-  const {
-    data: brevmaler,
-    isLoading: brevmalerIsLoading,
-    isError: brevmalerIsError,
-  } = useQuery({
-    queryKey: ['brevmaler', behandlingId, behandlingVersjon],
-    queryFn: () => backendApi.hentMaler(behandlingId),
-    select: data =>
-      (data.informasjonbrevValg ?? []).reduce(
-        (acc, valg) => {
-          if (valg.malType) {
-            acc[valg.malType] = {
-              ...valg,
-              navn: valg.malType,
-              kode: valg.malType,
-            };
-          }
-          return acc;
-        },
-        {} as Record<string, any>,
-      ),
-  });
-  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(UngSakApiKeys.SUBMIT_MESSAGE);
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
-
-  if (
-    (skalHenteBrevmaler && brevmalerIsLoading) ||
-    (skalHenteRevAp && stateRevAp === RestApiState.LOADING) ||
-    !brevmaler
-  ) {
-    return <LoadingPanel />;
-  }
-  if (skalHenteBrevmaler && brevmalerIsError) {
-    return <Alert variant="error">Feil ved henting av maler. Brevsending ikke mulig</Alert>;
-  }
-
   return (
-    <MeldingerSakIndex
+    <UngMessagesIndex
+      api={ungMeldingerBackendClient}
+      behandlingId={behandlingId}
       onMessageSent={reloadWindow}
-      behandlingVersjon={behandlingVersjon}
-      revurderingVarslingArsak={revurderingVarslingArsak}
-      templates={brevmaler}
-      isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
-      personopplysninger={personopplysninger}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-      erTilbakekreving={
-        behandling.type.kode === BehandlingType.TILBAKEKREVING ||
-        behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
-      }
-      featureToggles={featureToggles}
-      fagsak={fagsak}
-      behandling={behandling}
-      backendApi={backendApi}
-      submitMessage={submitMessage}
-      fetchPreview={fetchPreview}
+      språkkode={behandling?.språkkode.kode ?? ''}
+      ungMessagesFormValues={ungMessagesFormValues}
+      setUngMessagesFormValues={setUngMessagesFormValues}
     />
   );
 };

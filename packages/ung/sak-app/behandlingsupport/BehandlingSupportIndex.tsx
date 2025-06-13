@@ -1,16 +1,8 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
-import UngMeldingerBackendClient from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendClient.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  BehandlingAppKontekst,
-  Fagsak,
-  FeatureToggles,
-  NavAnsatt,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, FeatureToggles, NavAnsatt, Personopplysninger } from '@k9-sak-web/types';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
@@ -23,7 +15,7 @@ import {
   PersonGavelFillIcon,
   PersonGavelIcon,
 } from '@navikt/aksel-icons';
-import { Tabs, Tooltip } from '@navikt/ds-react';
+import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -132,7 +124,6 @@ interface OwnProps {
   behandlingVersjon?: number;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   navAnsatt: NavAnsatt;
   featureToggles?: FeatureToggles;
 }
@@ -150,13 +141,11 @@ const BehandlingSupportIndex = ({
   behandlingVersjon,
   behandlingRettigheter,
   personopplysninger,
-  arbeidsgiverOpplysninger,
   navAnsatt,
   featureToggles,
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
-  const meldingerBackendClient = new UngMeldingerBackendClient(getUngSakClient());
   const notatBackendClient = new NotatBackendClient(getUngSakClient());
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
@@ -230,7 +219,10 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
 
-  const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
+  const isPanelDisabled = () =>
+    valgtSupportPanel
+      ? !valgbareSupportPaneler.includes(valgtSupportPanel) && valgtSupportPanel !== SupportTabs.MELDINGER
+      : false;
 
   return (
     <Tabs defaultValue={aktivtSupportPanel} className={styles.tablistWrapper}>
@@ -258,8 +250,8 @@ const BehandlingSupportIndex = ({
         </Tabs.List>
       </div>
       <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>
-        {/* {isPanelDisabled() && <BodyShort>Dette panelet er ikke tilgjengelig</BodyShort>} */}
-        <div>
+        {isPanelDisabled() && <BodyShort>Dette panelet er ikke tilgjengelig</BodyShort>}
+        <div hidden={isPanelDisabled()}>
           <Tabs.Panel value={SupportTabs.TIL_BESLUTTER}>
             <TotrinnskontrollIndex
               fagsak={fagsak}
@@ -289,18 +281,7 @@ const BehandlingSupportIndex = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
-            {behandlingId && (
-              <MeldingIndex
-                fagsak={fagsak}
-                alleBehandlinger={alleBehandlinger}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                personopplysninger={personopplysninger}
-                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                featureToggles={featureToggles}
-                backendApi={meldingerBackendClient}
-              />
-            )}
+            {behandlingId && <MeldingIndex alleBehandlinger={alleBehandlinger} behandlingId={behandlingId} />}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.DOKUMENTER}>
             <DokumentIndex

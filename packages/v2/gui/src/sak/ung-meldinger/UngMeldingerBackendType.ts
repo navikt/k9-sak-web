@@ -1,12 +1,12 @@
 import type {
   BestillInformasjonsbrevResponse,
   ForhåndsvisInformasjonsbrevResponse,
-  InformasjonsbrevBestillingDto,
+  InformasjonsbrevBestillingRequest,
   InformasjonsbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 
 export interface UngMeldingerBackendType {
-  bestillBrev(data: InformasjonsbrevBestillingDto): Promise<BestillInformasjonsbrevResponse>;
-  forhåndsvisBrev(data: InformasjonsbrevBestillingDto): Promise<ForhåndsvisInformasjonsbrevResponse>;
+  bestillBrev(data: InformasjonsbrevBestillingRequest): Promise<BestillInformasjonsbrevResponse>;
+  forhåndsvisBrev(data: InformasjonsbrevBestillingRequest): Promise<ForhåndsvisInformasjonsbrevResponse>;
   hentMaler(behandlingId: number): Promise<InformasjonsbrevValgResponse>;
 }
