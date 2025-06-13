@@ -1,17 +1,18 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { UngMeldingerBackendType } from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendType.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
-  Brevmaler,
   Fagsak,
   FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 import { useUngSakKodeverk } from '../../data/useKodeverk';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
@@ -24,7 +25,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   readonly featureToggles?: FeatureToggles;
-  readonly backendApi: MeldingerSakIndexBackendApi;
+  readonly backendApi: MeldingerSakIndexBackendApi & { hentMaler: UngMeldingerBackendType['hentMaler'] };
 }
 
 /**
@@ -76,23 +77,46 @@ const MeldingIndex = ({
   );
 
   const skalHenteBrevmaler = requestApi.hasPath(UngSakApiKeys.BREVMALER);
-  const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmaler>(
-    UngSakApiKeys.BREVMALER,
-    undefined,
-    {
-      updateTriggers: [behandlingId, behandlingVersjon],
-    },
-  );
+  // const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmaler>(
+  //   UngSakApiKeys.BREVMALER,
+  //   undefined,
+  //   {
+  //     updateTriggers: [behandlingId, behandlingVersjon],
+  //   },
+  // );
+  const {
+    data: brevmaler,
+    isLoading: brevmalerIsLoading,
+    isError: brevmalerIsError,
+  } = useQuery({
+    queryKey: ['brevmaler', behandlingId, behandlingVersjon],
+    queryFn: () => backendApi.hentMaler(behandlingId),
+    select: data =>
+      (data.informasjonbrevValg ?? []).reduce(
+        (acc, valg) => {
+          if (valg.malType) {
+            acc[valg.malType] = {
+              ...valg,
+              navn: valg.malType,
+              kode: valg.malType,
+            };
+          }
+          return acc;
+        },
+        {} as Record<string, any>,
+      ),
+  });
   const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(UngSakApiKeys.SUBMIT_MESSAGE);
   const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (
-    (skalHenteBrevmaler && (stateBrevmaler === RestApiState.NOT_STARTED || stateBrevmaler === RestApiState.LOADING)) ||
-    (skalHenteRevAp && stateRevAp === RestApiState.LOADING)
+    (skalHenteBrevmaler && brevmalerIsLoading) ||
+    (skalHenteRevAp && stateRevAp === RestApiState.LOADING) ||
+    !brevmaler
   ) {
     return <LoadingPanel />;
   }
-  if (skalHenteBrevmaler && stateBrevmaler === RestApiState.ERROR) {
+  if (skalHenteBrevmaler && brevmalerIsError) {
     return <Alert variant="error">Feil ved henting av maler. Brevsending ikke mulig</Alert>;
   }
 

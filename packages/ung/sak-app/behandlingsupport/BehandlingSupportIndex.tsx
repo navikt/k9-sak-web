@@ -1,8 +1,7 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
-import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
+import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import UngMeldingerBackendClient from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendClient.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -24,9 +23,9 @@ import {
   PersonGavelFillIcon,
   PersonGavelIcon,
 } from '@navikt/aksel-icons';
-import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
+import { Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -37,7 +36,6 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -158,9 +156,7 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
-  const k9SakClient = useContext(K9SakClientContext);
-  const formidlingClient = useContext(FormidlingClientContext);
-  const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
+  const meldingerBackendClient = new UngMeldingerBackendClient(getUngSakClient());
   const notatBackendClient = new NotatBackendClient(getUngSakClient());
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
@@ -262,8 +258,8 @@ const BehandlingSupportIndex = ({
         </Tabs.List>
       </div>
       <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>
-        {isPanelDisabled() && <BodyShort>Dette panelet er ikke tilgjengelig</BodyShort>}
-        <div hidden={isPanelDisabled()}>
+        {/* {isPanelDisabled() && <BodyShort>Dette panelet er ikke tilgjengelig</BodyShort>} */}
+        <div>
           <Tabs.Panel value={SupportTabs.TIL_BESLUTTER}>
             <TotrinnskontrollIndex
               fagsak={fagsak}
