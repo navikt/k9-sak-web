@@ -80,8 +80,12 @@ export const UngMessages = (props: UngMessagesProps) => {
   };
 
   const handlePreview = async (data: UngMessagesFormState) => {
-    const pdfBlob = await forhåndsvisBrev(lagPayload(data));
-    window.open(URL.createObjectURL(pdfBlob));
+    try {
+      const pdfBlob = await forhåndsvisBrev(lagPayload(data));
+      window.open(URL.createObjectURL(pdfBlob));
+    } catch (error) {
+      console.error('Feil ved forhåndsvisning av brev:', error);
+    }
   };
 
   const isSubmitting = isSubmittingBestillBrev || isSubmittingForhåndsvisBrev;
