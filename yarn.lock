@@ -3980,7 +3980,6 @@ __metadata:
   resolution: "@k9-sak-web/behandling-ungdomsytelse@workspace:packages/behandling-ungdomsytelse"
   dependencies:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"

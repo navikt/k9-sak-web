@@ -17,7 +17,6 @@ export enum UngdomsytelseBehandlingApiKeys {
   PERSONOPPLYSNINGER = 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT = 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG = 'TILBAKEKREVINGVALG',
-  BEREGNINGSRESULTAT_UTBETALING = 'BEREGNINGSRESULTAT_UTBETALING',
   BEREGNINGSGRUNNLAG = 'BEREGNINGSGRUNNLAG',
   SOKNAD = 'SOKNAD',
   MEDLEMSKAP = 'MEDLEMSKAP',
@@ -39,7 +38,6 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/ung/sak/api/behandlinger', UngdomsytelseBehandlingApiKeys.BEHANDLING_UU)
 
   // behandlingsdata
-  .withRel('beregningsresultat-utbetalt', UngdomsytelseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', UngdomsytelseBehandlingApiKeys.VILKAR)
   .withRel('soknadsfrist-status', UngdomsytelseBehandlingApiKeys.SOKNADSFRIST_STATUS)
