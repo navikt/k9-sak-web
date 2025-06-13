@@ -17,20 +17,11 @@ export enum UngdomsytelseBehandlingApiKeys {
   PERSONOPPLYSNINGER = 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT = 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG = 'TILBAKEKREVINGVALG',
-  BEREGNINGSGRUNNLAG = 'BEREGNINGSGRUNNLAG',
   SOKNAD = 'SOKNAD',
-  MEDLEMSKAP = 'MEDLEMSKAP',
-  SEND_VARSEL_OM_REVURDERING = 'SEND_VARSEL_OM_REVURDERING',
   BEHANDLING_NY_BEHANDLENDE_ENHET = 'BEHANDLING_NY_BEHANDLENDE_ENHET',
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
-  INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
-  DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
-  DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
-  FRITEKSTDOKUMENTER = 'FRITEKSTDOKUMENTER',
-  OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   KONTROLLER_INNTEKT = 'KONTROLLER_INNTEKT',
 }
 
@@ -44,19 +35,8 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-personopplysninger', UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', UngdomsytelseBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withRel('beregningsgrunnlag-alle', UngdomsytelseBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withRel('soknad', UngdomsytelseBehandlingApiKeys.SOKNAD)
-  .withRel('soeker-medlemskap-v2', UngdomsytelseBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('sendt-varsel-om-revurdering', UngdomsytelseBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withRel('tilgjengelige-vedtaksbrev', UngdomsytelseBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
-  .withRel('informasjonsbehov-vedtaksbrev', UngdomsytelseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
-  .withRel('pleiepenger-fritekstdokumenter', UngdomsytelseBehandlingApiKeys.FRITEKSTDOKUMENTER)
-  .withRel('overlappende-ytelser', UngdomsytelseBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('kontroller-inntekt-perioder', UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT)
-
-  // operasjoner
-  .withRel('dokumentdata-lagre', UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_LAGRE)
-  .withRel('dokumentdata-hente', UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_HENTE)
 
   // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
   .withPost('/ung/sak/api/behandlinger/endre-pa-vent', UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD)
