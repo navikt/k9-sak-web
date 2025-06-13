@@ -1,11 +1,10 @@
 import {
   Aksjonspunkt,
-  Beregningsgrunnlag,
+  BeregningsresultatUtbetalt,
   Personopplysninger,
   SimuleringResultat,
   Soknad,
   Vilkar,
-  BeregningsresultatUtbetalt,
 } from '@k9-sak-web/types';
 
 export interface FetchedData {
@@ -14,7 +13,6 @@ export interface FetchedData {
   personopplysninger: Personopplysninger;
   soknad: Soknad;
   beregningsresultatUtbetaling: BeregningsresultatUtbetalt;
-  beregningsgrunnlag: Beregningsgrunnlag;
   simuleringResultat: SimuleringResultat;
 }
 

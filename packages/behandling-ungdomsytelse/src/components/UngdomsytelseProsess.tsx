@@ -155,9 +155,6 @@ const UngdomsytelseProsess = ({
   const { startRequest: forhandsvisTilbakekrevingMelding } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
     UngdomsytelseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   );
-  const { startRequest: lagreDokumentdata } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
-    UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_LAGRE,
-  );
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
@@ -181,7 +178,6 @@ const UngdomsytelseProsess = ({
     alleKodeverk,
     featureToggles,
     arbeidsgiverOpplysningerPerId,
-    lagreDokumentdata,
     ...data,
   };
 
@@ -204,7 +200,6 @@ const UngdomsytelseProsess = ({
     toggleFatterVedtakModal,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
-    lagreDokumentdata,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
