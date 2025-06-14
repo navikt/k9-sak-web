@@ -14,7 +14,7 @@ const meta: Meta<typeof UngMessages> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof UngMessages>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => {
