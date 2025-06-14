@@ -46,7 +46,7 @@ const MottakerSelect = ({ valgtMal, disabled, mottakere }: MottakerSelectProps) 
       disabled={disabled}
       selectValues={mottakere?.map(mottaker => (
         <option key={mottaker.id} value={mottaker.id}>
-          {mottaker.navn}
+          {`${mottaker.navn} (${mottaker.fnr})`}
         </option>
       ))}
       validate={[validateMottaker]}

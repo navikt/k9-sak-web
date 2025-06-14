@@ -82,7 +82,9 @@ export const UngMessages = (props: UngMessagesProps) => {
   const handlePreview = async (data: UngMessagesFormState) => {
     try {
       const pdfBlob = await forhåndsvisBrev(lagPayload(data));
-      window.open(URL.createObjectURL(pdfBlob));
+      const objectUrl = URL.createObjectURL(pdfBlob);
+      window.open(objectUrl);
+      URL.revokeObjectURL(objectUrl);
     } catch (error) {
       console.error('Feil ved forhåndsvisning av brev:', error);
     }
