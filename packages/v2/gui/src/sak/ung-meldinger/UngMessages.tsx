@@ -47,7 +47,7 @@ export const UngMessages = (props: UngMessagesProps) => {
   const valgtMalkode = formMethods.watch('valgtMalkode');
   const mottakere = brevmaler?.find(mal => mal.malType?.kode === valgtMalkode)?.mottakere;
   const valgtMal = brevmaler?.find(mal => mal.malType?.kode === valgtMalkode);
-  const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
+  const showFritekstInput = !!valgtMal?.støtterFritekst || !!valgtMal?.støtterTittelOgFritekst;
 
   const { mutateAsync: bestillBrev, isPending: isSubmittingBestillBrev } = useMutation({
     mutationFn: (payload: InformasjonsbrevBestillingRequest) => api.bestillBrev(payload),
