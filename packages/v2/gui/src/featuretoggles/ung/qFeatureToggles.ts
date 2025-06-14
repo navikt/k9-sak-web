@@ -1,7 +1,7 @@
 import type { FeatureToggles } from '../FeatureToggles.js';
 
 export const qFeatureToggles = {
-  BRUK_V2_MELDINGER: true,
+  BRUK_V2_MELDINGER: false,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
