@@ -4,12 +4,14 @@ import type {
 } from '@k9-sak-web/backend/ungsak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import withMaxWidth from '../../storybook/decorators/withMaxWidth';
 import { FakeUngMessagesBackendApi } from '../../storybook/mocks/FakeUngMessagesBackendApi';
 import { UngMessages } from './UngMessages';
 import type { UngMessagesFormState } from './UngMessagesFormState';
 
 const meta: Meta<typeof UngMessages> = {
   title: 'gui/sak/ung-meldinger/UngMessages',
+  decorators: [withMaxWidth(420)],
   component: UngMessages,
 };
 export default meta;
