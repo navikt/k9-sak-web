@@ -35,18 +35,13 @@ export const formatFødselsdato = (fnrOrDate?: string): string => {
   if (!fnrOrDate) return '';
   // If input is a date string (YYYY-MM-DD)
   if (/^\d{4}-\d{2}-\d{2}$/.test(fnrOrDate)) {
-    const [year, month, day] = fnrOrDate.split('-');
-    if (year && month && day) {
-      return `${day}.${month}.${year.slice(2)}`;
-    }
-    return '';
+    const date = dayjs(fnrOrDate, 'YYYY-MM-DD', true);
+    return date.isValid() ? date.format('DD.MM.YY') : '';
   }
   // If input is a fødselsnummer
-  if (fnrOrDate.length >= 6) {
-    const day = fnrOrDate.slice(0, 2);
-    const month = fnrOrDate.slice(2, 4);
-    const year = fnrOrDate.slice(4, 6);
-    return `${day}.${month}.${year}`;
+  if (/^\d{6}/.test(fnrOrDate)) {
+    const date = dayjs(fnrOrDate.slice(0, 6), 'DDMMYY', true);
+    return date.isValid() ? date.format('DD.MM.YY') : '';
   }
   return '';
 };
