@@ -30,3 +30,11 @@ export const formatCurrencyWithoutKr = (value: number) => {
 };
 
 export const beregnDagerTimer = (dur: string): number => Math.round(dayjs.duration(dur).asHours() * 100) / 100;
+
+export const formatFødselsdato = (fnr?: string): string => {
+  if (!fnr || fnr.length < 6) return '';
+  const day = fnr.slice(0, 2);
+  const month = fnr.slice(2, 4);
+  const year = fnr.slice(4, 6);
+  return `${day}.${month}.${year}`;
+};
