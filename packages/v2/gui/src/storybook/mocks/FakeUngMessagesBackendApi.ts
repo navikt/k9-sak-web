@@ -19,7 +19,7 @@ export class FakeUngMessagesBackendApi {
             navn: 'Fritekst generelt brev',
             kilde: 'GENERELT_FRITEKSTBREV',
           },
-          mottakere: [{ id: '9904458010078', idType: 'AKTØRID', navn: 'Kolibir Nina', fnr: '04458010078' }],
+          mottakere: [{ id: '9904458010078', idType: 'AKTØRID', navn: 'Kolibir Nina', fødselsdato: '1980-01-01' }],
           støtterFritekst: false,
           støtterTittelOgFritekst: true,
         },
