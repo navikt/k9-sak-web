@@ -4,6 +4,7 @@ import {
   type InformasjonsbrevValgDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { SelectField } from '@navikt/ft-form-hooks';
+import { formatFødselsdato } from '../../utils/formatters';
 
 interface MottakerSelectProps {
   valgtMal: InformasjonsbrevValgDto | undefined;
@@ -46,7 +47,7 @@ const MottakerSelect = ({ valgtMal, disabled, mottakere }: MottakerSelectProps) 
       disabled={disabled}
       selectValues={mottakere?.map(mottaker => (
         <option key={mottaker.id} value={mottaker.id}>
-          {`${mottaker.navn} (${mottaker.fnr})`}
+          {`${mottaker.navn} (${formatFødselsdato(mottaker.fnr)})`}
         </option>
       ))}
       validate={[validateMottaker]}

@@ -4,6 +4,7 @@ import {
   type InformasjonsbrevBestillingRequest,
   type InformasjonsbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
+import { fakePdf } from './fakePdf';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 
 export class FakeUngMessagesBackendApi {
@@ -33,6 +34,6 @@ export class FakeUngMessagesBackendApi {
 
   async forhåndsvisBrev(data: InformasjonsbrevBestillingRequest): Promise<ForhåndsvisInformasjonsbrevResponse> {
     ignoreUnusedDeclared(data);
-    return Promise.resolve(new Blob(['PDF'], { type: 'application/pdf' }));
+    return fakePdf();
   }
 }

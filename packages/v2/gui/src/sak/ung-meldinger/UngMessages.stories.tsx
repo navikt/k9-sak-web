@@ -1,9 +1,10 @@
-import type {
+import {
   InformasjonsbrevMottakerValgResponseIdType,
   KodeverdiSomObjektDokumentMalTypeKilde,
 } from '@k9-sak-web/backend/ungsak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { asyncAction } from '../../storybook/asyncAction';
 import withMaxWidth from '../../storybook/decorators/withMaxWidth';
 import { FakeUngMessagesBackendApi } from '../../storybook/mocks/FakeUngMessagesBackendApi';
 import { UngMessages } from './UngMessages';
@@ -28,12 +29,12 @@ export const Default: Story = {
           kode: 'GENERELT_FRITEKSTBREV',
           kodeverk: 'DOKUMENT_MAL_TYPE',
           navn: 'Fritekst generelt brev',
-          kilde: 'GENERELT_FRITEKSTBREV' as KodeverdiSomObjektDokumentMalTypeKilde,
+          kilde: KodeverdiSomObjektDokumentMalTypeKilde.GENERELT_FRITEKSTBREV,
         },
         mottakere: [
           {
             id: '9904458010078',
-            idType: 'AKTØRID' as InformasjonsbrevMottakerValgResponseIdType,
+            idType: InformasjonsbrevMottakerValgResponseIdType.AKTØRID,
             navn: 'Kolibir Nina',
             fnr: '04458010078',
           },
@@ -47,7 +48,7 @@ export const Default: Story = {
         api={mockApi}
         behandlingId={1}
         språkkode="nb"
-        onMessageSent={() => alert('onMessageSent fired!')}
+        onMessageSent={() => asyncAction('Melding er sendt')}
         brevmaler={brevmaler}
         ungMessagesFormValues={formValues}
         setUngMessagesFormValues={setFormValues}

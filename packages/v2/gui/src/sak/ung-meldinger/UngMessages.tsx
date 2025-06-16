@@ -12,11 +12,11 @@ import { useForm } from 'react-hook-form';
 import { FritekstInput } from './FritekstInput';
 import { MalSelect } from './MalSelect';
 import MottakerSelect from './MottakerSelect';
-import type { UngMeldingerBackendType } from './UngMeldingerBackendType';
+import type { UngMeldingerBackendApi } from './UngMeldingerBackendApi';
 import type { UngMessagesFormState } from './UngMessagesFormState';
 
 interface UngMessagesProps {
-  api: UngMeldingerBackendType;
+  api: UngMeldingerBackendApi;
   behandlingId: number;
   språkkode: string;
   onMessageSent: () => void;

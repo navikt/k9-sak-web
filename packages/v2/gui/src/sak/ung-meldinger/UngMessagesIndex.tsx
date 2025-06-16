@@ -1,11 +1,11 @@
 import { Alert, Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import type { UngMeldingerBackendType } from './UngMeldingerBackendType';
+import type { UngMeldingerBackendApi } from './UngMeldingerBackendApi';
 import { UngMessages } from './UngMessages';
 import type { UngMessagesFormState } from './UngMessagesFormState';
 
 interface UngMessagesProps {
-  api: UngMeldingerBackendType;
+  api: UngMeldingerBackendApi;
   behandlingId: number;
   språkkode: string;
   onMessageSent: () => void;
