@@ -57,22 +57,26 @@ export const UngMessages = (props: UngMessagesProps) => {
     mutationFn: (payload: InformasjonsbrevBestillingRequest) => api.forhåndsvisBrev(payload),
   });
 
-  const lagPayload = (data: UngMessagesFormState): InformasjonsbrevBestillingRequest => {
+  const lagPayload = (data: UngMessagesFormState): InformasjonsbrevBestillingRequest | undefined => {
     const valgtMottaker = mottakere?.find(mottaker => mottaker.id === data.mottaker);
-    return {
-      behandlingId,
-      dokumentMalType: data.valgtMalkode as InformasjonsbrevBestillingRequestDokumentMalType,
-      innhold: { overskrift: data.overskrift, brødtekst: data.brødtekst },
-      mottaker:
-        valgtMottaker && valgtMottaker.id && valgtMottaker.idType
-          ? { id: valgtMottaker?.id, type: valgtMottaker?.idType }
-          : undefined,
-    };
+    if (valgtMottaker && valgtMottaker.id && valgtMottaker.idType) {
+      return {
+        behandlingId,
+        dokumentMalType: data.valgtMalkode as InformasjonsbrevBestillingRequestDokumentMalType,
+        innhold: { overskrift: data.overskrift, brødtekst: data.brødtekst },
+        mottaker: { id: valgtMottaker?.id, type: valgtMottaker?.idType },
+      };
+    }
+    return undefined;
   };
 
   const handleSubmit = async (data: UngMessagesFormState) => {
     try {
-      await bestillBrev(lagPayload(data));
+      const payload = lagPayload(data);
+      if (!payload) {
+        throw new Error('Ingen gyldig mottaker valgt eller maltype angitt');
+      }
+      await bestillBrev(payload);
       onMessageSent();
     } catch (error) {
       console.error('Feil ved sending av brev:', error);
@@ -81,7 +85,11 @@ export const UngMessages = (props: UngMessagesProps) => {
 
   const handlePreview = async (data: UngMessagesFormState) => {
     try {
-      const pdfBlob = await forhåndsvisBrev(lagPayload(data));
+      const payload = lagPayload(data);
+      if (!payload) {
+        throw new Error('Ingen gyldig mottaker valgt eller maltype angitt');
+      }
+      const pdfBlob = await forhåndsvisBrev(payload);
       const objectUrl = URL.createObjectURL(pdfBlob);
       window.open(objectUrl);
       URL.revokeObjectURL(objectUrl);

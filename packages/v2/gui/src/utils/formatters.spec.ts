@@ -68,4 +68,15 @@ describe('formatFødselsdato', () => {
   it('ignores extra digits after 6', () => {
     expect(formatFødselsdato('31129912345')).toBe('31.12.99');
   });
+
+  it('formats YYYY-MM-DD to DD.MM.YY', () => {
+    expect(formatFødselsdato('1993-10-27')).toBe('27.10.93');
+    expect(formatFødselsdato('2000-01-01')).toBe('01.01.00');
+  });
+
+  it('returns empty string for invalid date string', () => {
+    expect(formatFødselsdato('1993-10')).toBe('');
+    expect(formatFødselsdato('1993-10-')).toBe('');
+    expect(formatFødselsdato('1993--27')).toBe('');
+  });
 });
