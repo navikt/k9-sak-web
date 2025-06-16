@@ -3704,7 +3704,7 @@ __metadata:
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.0.20250530164140"
     "@navikt/k9-sak-typescript-client": "npm:2.0.20250610145628"
-    "@navikt/ung-sak-typescript-client": "npm:0.2.20250613125024"
+    "@navikt/ung-sak-typescript-client": "npm:0.2.20250616131256"
     "@tanstack/eslint-plugin-query": "npm:^5.78.0"
   languageName: unknown
   linkType: soft
@@ -5071,10 +5071,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:0.2.20250613125024":
-  version: 0.2.20250613125024
-  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250613125024::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250613125024%2Fc5d0109ba984694fce81077e34be2a2a2567f924"
-  checksum: 10/aa42f3a0feec1fb262957001e58bb13b7a2e0febfdc9ef9d89574f5559820b2769e378a9b67eb1e0711cad5448f0519f020ef9f1987deb0a26a2b156450ce114
+"@navikt/ung-sak-typescript-client@npm:0.2.20250616131256":
+  version: 0.2.20250616131256
+  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250616131256::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250616131256%2Fa1a5971b846a5e2f9319f4bfdbaf5b5af3c89569"
+  checksum: 10/a343ce2d563902bb69f92e2237340bf6f1f4167489700c198ed5c11cc2068321c454263fec03fda5235e3c69e10908380f570a38f9323ae59c51bcdf56e9d87a
   languageName: node
   linkType: hard
 
