@@ -9,7 +9,7 @@ on:
       - master
 
 env:
-  TAG_LATEST_PROD: latest_prod
+  TAG_LATEST_PROD_UNG: latest_prod_ung
 jobs:
   build-docker-image:
     name: Build Docker image
@@ -17,8 +17,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    env:
-      CLUSTER: dev-gcp
     steps:
       - name: Hente kode
         uses: actions/checkout@v4
@@ -61,7 +59,7 @@ jobs:
       - name: Git diff url
         shell: bash
         run: |
-          dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD }}...${{ github.sha }}"
+          dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD_UNG }}...${{ github.sha }}"
           echo "Forskjell mellom denne build og prod: <${dynamic_url}>" >> $GITHUB_STEP_SUMMARY
 
   deploy-dev:
@@ -72,6 +70,7 @@ jobs:
       id-token: write
     env:
       CLUSTER: dev-gcp
+    environment: test
     needs: [build-docker-image]
     steps:
       - uses: actions/checkout@v4
@@ -89,12 +88,13 @@ jobs:
       id-token: write
     env:
       CLUSTER: prod-gcp
+    environment: prod
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev]
     steps:
       - uses: actions/checkout@v4
         with:
-          # Ta med litt historie og tags for å finne latest_prod commit hash
+          # Ta med litt historie og tags for å finne latest_prod_ung commit hash
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
@@ -120,9 +120,9 @@ jobs:
       - name: Print static git diff url
         shell: bash
         run: |
-          # disable exit on error temporarily in case latest_prod tag does not exist
+          # disable exit on error temporarily in case latest_prod_ung tag does not exist
           set +e
-          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD }})"
+          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD_UNG }})"
           # re-enable exit on error
           set -e
           if [ -n "${latest_prod_sha}" ]; then
@@ -142,17 +142,17 @@ jobs:
               await github.rest.git.updateRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'tags/${{ env.TAG_LATEST_PROD }}',
+                ref: 'tags/${{ env.TAG_LATEST_PROD_UNG }}',
                 sha: context.sha,
                 force: true
               })
             } catch (err) {
               if(err.status === 422) { // tag did not exist, try creating it
-                console.info('Tag for ${{ env.TAG_LATEST_PROD }} did not exist. Will try creating it');
+                console.info('Tag for ${{ env.TAG_LATEST_PROD_UNG }} did not exist. Will try creating it');
                 await github.rest.git.createRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD }}',
+                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD_UNG }}',
                   sha: context.sha
                 })
               } else {
