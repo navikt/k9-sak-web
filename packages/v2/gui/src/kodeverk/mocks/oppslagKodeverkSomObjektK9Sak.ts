@@ -2804,17 +2804,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'VIRKNINGSDATO_UTTAK_NYE_REGLER',
     },
     {
-      kode: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+      kode: 'VURDERT_OPPLÆRING_RESULTAT',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'Opplæring dokumentert',
-      kilde: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+      navn: 'Vurdert opplæring',
+      kilde: 'VURDERT_OPPLÆRING_RESULTAT',
     },
-    {
-      kode: 'VURDERT_OPPLÆRING_NØDVENDIG',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'Opplæring nødvendig',
-      kilde: 'VURDERT_OPPLÆRING_NØDVENDIG',
-    },
+
     {
       kode: 'VURDER_ETTERLØNN_SLUTTPAKKE',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',

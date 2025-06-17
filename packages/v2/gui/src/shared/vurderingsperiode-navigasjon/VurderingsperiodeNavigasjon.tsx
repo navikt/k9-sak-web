@@ -45,6 +45,7 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   onPeriodeClick: (periode: T | null) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
+  title?: string;
 }
 
 /**
@@ -56,6 +57,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   onPeriodeClick,
   customPeriodeRad,
   customPeriodeLabel,
+  title = 'Alle perioder',
 }: VurderingslisteProps<T>) => {
   // nyeste først
   const sortedPerioder = perioder.sort((a, b) => {
@@ -109,7 +111,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   return (
     <Box className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
-        Alle perioder
+        {title}
       </Heading>
 
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
