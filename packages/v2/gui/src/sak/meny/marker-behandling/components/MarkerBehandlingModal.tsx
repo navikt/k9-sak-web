@@ -40,7 +40,13 @@ const getMerknader = (merknader: MerknadResponse): string[] => {
 };
 
 const getGjeldendeMerknader = (merknader: MerknadResponse) => {
-  const gjeldendeMerknader: { tittel: string; begrunnelse: string; merknadKode: EndreMerknadRequestMerknadKode }[] = [];
+  interface Merknad {
+    tittel: string;
+    begrunnelse: string;
+    merknadKode: EndreMerknadRequestMerknadKode;
+  }
+
+  const gjeldendeMerknader: Merknad[] = [];
   if (merknader.hastesak.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Hastesak',
