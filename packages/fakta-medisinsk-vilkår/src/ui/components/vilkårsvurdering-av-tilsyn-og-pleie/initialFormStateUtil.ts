@@ -19,7 +19,7 @@ import {
 } from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
 
 function buildInitialFormStateForEdit(
-  { tekst, resultat, perioder, dokumenter }: Vurderingsversjon,
+  { tekst, resultat, perioder, dokumenter, manglerLegeerklæring }: Vurderingsversjon,
   vurderingstype: Vurderingstype,
 ):
   | VurderingAvTilsynsbehovFormState
@@ -30,6 +30,7 @@ function buildInitialFormStateForEdit(
 
   if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return {
+      [KTPFieldName.MANGLER_LEGEERKLÆRING]: manglerLegeerklæring,
       [KTPFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]: tekst,
       [KTPFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]: resultat === Vurderingsresultat.OPPFYLT,
       [KTPFieldName.PERIODER]: perioder,
