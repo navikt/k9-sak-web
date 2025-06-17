@@ -9,7 +9,7 @@ on:
       - master
 
 env:
-  TAG_LATEST_PROD_UNG: latest_prod_ung
+  TAG_LATEST_PROD: latest_prod_ung
 jobs:
   build-docker-image:
     name: Build Docker image
@@ -59,7 +59,7 @@ jobs:
       - name: Git diff url
         shell: bash
         run: |
-          dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD_UNG }}...${{ github.sha }}"
+          dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD }}...${{ github.sha }}"
           echo "Forskjell mellom denne build og prod: <${dynamic_url}>" >> $GITHUB_STEP_SUMMARY
 
   deploy-dev:
@@ -122,7 +122,7 @@ jobs:
         run: |
           # disable exit on error temporarily in case latest_prod_ung tag does not exist
           set +e
-          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD_UNG }})"
+          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD }})"
           # re-enable exit on error
           set -e
           if [ -n "${latest_prod_sha}" ]; then
@@ -142,17 +142,17 @@ jobs:
               await github.rest.git.updateRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'tags/${{ env.TAG_LATEST_PROD_UNG }}',
+                ref: 'tags/${{ env.TAG_LATEST_PROD }}',
                 sha: context.sha,
                 force: true
               })
             } catch (err) {
               if(err.status === 422) { // tag did not exist, try creating it
-                console.info('Tag for ${{ env.TAG_LATEST_PROD_UNG }} did not exist. Will try creating it');
+                console.info('Tag for ${{ env.TAG_LATEST_PROD }} did not exist. Will try creating it');
                 await github.rest.git.createRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD_UNG }}',
+                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD }}',
                   sha: context.sha
                 })
               } else {
