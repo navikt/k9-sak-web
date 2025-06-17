@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ScissorsIcon } from '@navikt/aksel-icons';
@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
-import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { type Periode } from './PeriodesplittDatoValg';
@@ -55,7 +55,7 @@ export const TilkommetAktivitetPanel = ({
     control,
     name: `VURDER_TILKOMMET_AKTIVITET_FORM.${formFieldIndex}.perioder`,
   });
-  fields.sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom)));
+  fields.sort(sortPeriodsByFom);
 
   const vurderInntektsforholdPerioder =
     beregningsgrunnlag.faktaOmFordeling?.vurderNyttInntektsforholdDto?.vurderInntektsforholdPerioder;
@@ -143,63 +143,54 @@ export const TilkommetAktivitetPanel = ({
   const overlapper = (fom: string, tom: string, dato: string): boolean =>
     !dayjs(fom).isAfter(dayjs(dato)) && !dayjs(tom).isBefore(dayjs(dato));
 
-  const finnNyePerioder = useCallback(
-    (nyFom: string): Periode[] => {
-      const fieldSomSplittes = fields.find(field => overlapper(field.fom, field.tom, nyFom));
-      if (!fieldSomSplittes) {
-        throw new Error(`Finner ikke field somme inneholder dato ${nyFom}`);
-      }
-      const splittDel1Tom = dayjs(nyFom).subtract(1, 'day');
-      const splittDel1 = {
-        fom: dayjs(fieldSomSplittes.fom).format(ISO_DATE_FORMAT),
-        tom: splittDel1Tom.format(ISO_DATE_FORMAT),
-      };
-      const splittDel2 = {
-        fom: dayjs(nyFom).format(ISO_DATE_FORMAT),
-        tom: fieldSomSplittes.tom,
-      };
-      return [splittDel1, splittDel2];
-    },
-    [fields],
-  );
+  const finnNyePerioder = (nyFom: string): Periode[] => {
+    const fieldSomSplittes = fields.find(field => overlapper(field.fom, field.tom, nyFom));
+    if (!fieldSomSplittes) {
+      throw new Error(`Finner ikke field somme inneholder dato ${nyFom}`);
+    }
+    const splittDel1Tom = dayjs(nyFom).subtract(1, 'day');
+    const splittDel1 = {
+      fom: dayjs(fieldSomSplittes.fom).format(ISO_DATE_FORMAT),
+      tom: splittDel1Tom.format(ISO_DATE_FORMAT),
+    };
+    const splittDel2 = {
+      fom: dayjs(nyFom).format(ISO_DATE_FORMAT),
+      tom: fieldSomSplittes.tom,
+    };
+    return [splittDel1, splittDel2];
+  };
 
-  const splittPeriode = useCallback(
-    (nyFom: string) => {
-      const fieldSomSplittes = fields.find(field => overlapper(field.fom, field.tom, nyFom));
-      if (!fieldSomSplittes) {
-        throw new Error(`Finner ikke field somme inneholder dato ${nyFom}`);
-      }
-      const nyePerioder = finnNyePerioder(nyFom);
-      const periodeFieldIndex = fields.indexOf(fieldSomSplittes);
-      const andelerFraField = fieldSomSplittes.inntektsforhold || [];
-      const splittDel1 = {
-        inntektsforhold: andelerFraField.map((andel, index) =>
-          mapInntektsforhold(andel, true, periodeFieldIndex, index),
-        ),
-        fom: nyePerioder[0]?.fom ?? '',
-        tom: nyePerioder[0]?.tom ?? '',
-      };
-      const splittDel2 = {
-        inntektsforhold: andelerFraField.map((andel, index) =>
-          mapInntektsforhold(andel, false, periodeFieldIndex, index),
-        ),
-        fom: nyePerioder[1]?.fom ?? '',
-        tom: nyePerioder[1]?.tom ?? '',
-      };
-      remove(periodeFieldIndex);
+  const splittPeriode = (nyFom: string) => {
+    const fieldSomSplittes = fields.find(field => overlapper(field.fom, field.tom, nyFom));
+    if (!fieldSomSplittes) {
+      throw new Error(`Finner ikke field somme inneholder dato ${nyFom}`);
+    }
+    const nyePerioder = finnNyePerioder(nyFom);
+    const periodeFieldIndex = fields.indexOf(fieldSomSplittes);
+    const andelerFraField = fieldSomSplittes.inntektsforhold || [];
+    const splittDel1 = {
+      inntektsforhold: andelerFraField.map((andel, index) => mapInntektsforhold(andel, true, periodeFieldIndex, index)),
+      fom: nyePerioder[0].fom,
+      tom: nyePerioder[0].tom,
+    };
+    const splittDel2 = {
+      inntektsforhold: andelerFraField.map((andel, index) =>
+        mapInntektsforhold(andel, false, periodeFieldIndex, index),
+      ),
+      fom: nyePerioder[1].fom,
+      tom: nyePerioder[1].tom,
+    };
+    remove(periodeFieldIndex);
+    insert(periodeFieldIndex, [splittDel1, splittDel2]);
+  };
 
-      insert(periodeFieldIndex, [splittDel1, splittDel2]);
-    },
-    [fields],
-  );
-
-  const åpneModal = useCallback(() => {
+  const åpneModal = () => {
     setModalErÅpen(true);
-  }, [modalErÅpen]);
+  };
 
-  const lukkModal = useCallback(() => {
+  const lukkModal = () => {
     setModalErÅpen(false);
-  }, [modalErÅpen]);
+  };
 
   return (
     <>
