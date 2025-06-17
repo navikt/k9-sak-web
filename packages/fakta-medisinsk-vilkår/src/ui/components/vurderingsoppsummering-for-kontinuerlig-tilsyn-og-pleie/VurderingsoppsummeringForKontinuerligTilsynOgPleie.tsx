@@ -53,7 +53,7 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
 
         {manglerLegeerklæring && (
           <Alert inline variant="error" size="small">
-            Det foreligger ikke legeerklæring for perioden.
+            Det foreligger ikke legeerklæring for perioden - vurdering av tilsyn og pleie er ikke gjennomført.
           </Alert>
         )}
         <Box marginBlock="8 0">
