@@ -1,6 +1,5 @@
 import { Behandling, OpplysningerFraSøknaden } from '@k9-sak-web/types';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import OppgittOpptjeningRevurdering from './OppgittOpptjeningRevurdering';
 
 const behandling = {

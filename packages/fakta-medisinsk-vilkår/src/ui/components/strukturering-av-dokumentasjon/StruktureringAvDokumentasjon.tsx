@@ -31,7 +31,7 @@ import styles from './struktureringAvDokumentasjon.module.css';
 interface StruktureringAvDokumentasjonProps {
   navigerTilNesteSteg: () => void;
   hentSykdomsstegStatus: () => Promise<[SykdomsstegStatusResponse, Dokument[]]>;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
+  sykdomsstegStatus: SykdomsstegStatusResponse | null;
 }
 
 const StruktureringAvDokumentasjon = ({
@@ -144,9 +144,9 @@ const StruktureringAvDokumentasjon = ({
       <DokumentoversiktMessages
         dokumentoversikt={dokumentoversikt}
         harRegistrertDiagnosekode={
-          !skalViseInnleggelsesperioderOgDiagnosekoder || !sykdomsstegStatus.manglerDiagnosekode
+          !skalViseInnleggelsesperioderOgDiagnosekoder || !sykdomsstegStatus?.manglerDiagnosekode
         }
-        kanNavigereVidere={nesteStegErVurderingFn(sykdomsstegStatus)}
+        kanNavigereVidere={sykdomsstegStatus ? nesteStegErVurderingFn(sykdomsstegStatus) : false}
         navigerTilNesteSteg={navigerTilNesteSteg}
       />
       {dokumentoversikt?.harDokumenter() === true && (
@@ -173,15 +173,19 @@ const StruktureringAvDokumentasjon = ({
               </>
             )}
             showDetailSection={visDokumentDetails}
-            detailSection={() => (
-              <Dokumentdetaljer
-                dokument={valgtDokument}
-                onChange={sjekkStatus}
-                editMode={visRedigeringAvDokument}
-                onEditClick={() => dispatch({ type: ActionType.REDIGER_DOKUMENT })}
-                strukturerteDokumenter={dokumentoversikt?.strukturerteDokumenter}
-              />
-            )}
+            detailSection={() =>
+              valgtDokument ? (
+                <Dokumentdetaljer
+                  dokument={valgtDokument}
+                  onChange={sjekkStatus}
+                  editMode={visRedigeringAvDokument}
+                  onEditClick={() => dispatch({ type: ActionType.REDIGER_DOKUMENT })}
+                  strukturerteDokumenter={dokumentoversikt?.strukturerteDokumenter}
+                />
+              ) : (
+                <></>
+              )
+            }
           />
 
           {skalViseInnleggelsesperioderOgDiagnosekoder && (

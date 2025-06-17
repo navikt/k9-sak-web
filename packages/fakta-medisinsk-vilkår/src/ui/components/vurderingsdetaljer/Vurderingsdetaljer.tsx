@@ -6,7 +6,7 @@ import VurderingsdetaljvisningForEksisterendeVurdering from '../vurderingsdetalj
 import VurderingsdetaljvisningForNyVurdering from '../vurderingsdetaljvisning-for-ny-vurdering/VurderingsdetaljvisningForNyVurdering';
 
 interface VurderingsdetaljerProps {
-  valgtVurderingselement: Vurderingselement;
+  valgtVurderingselement: Vurderingselement | null;
   vurderingsoversikt: Vurderingsoversikt;
   onVurderingLagret: () => Promise<void>;
   onAvbryt: () => void;
@@ -33,7 +33,7 @@ const Vurderingsdetaljer = ({
     await onVurderingLagret();
   };
 
-  let valgtVurderingContent = null;
+  let valgtVurderingContent = <></>;
   if (valgtVurderingselement) {
     valgtVurderingContent = (
       <VurderingsdetaljvisningForEksisterendeVurdering

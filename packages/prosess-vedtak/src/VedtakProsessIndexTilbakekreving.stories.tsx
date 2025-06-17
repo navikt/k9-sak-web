@@ -9,7 +9,7 @@ import {
   BehandlingDtoBehandlingResultatType,
 } from '@navikt/k9-sak-typescript-client';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent } from '@storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const behandling = {
@@ -40,17 +40,17 @@ export default meta;
 
 const aksjonspunkt5085 = {
   aksjonspunktType: AksjonspunktDtoAksjonspunktType.MANUELL,
-  begrunnelse: null,
-  besluttersBegrunnelse: null,
+  begrunnelse: undefined,
+  besluttersBegrunnelse: undefined,
   definisjon: AksjonspunktDtoDefinisjon.SJEKK_TILBAKEKREVING,
   erAktivt: true,
-  fristTid: null,
+  fristTid: undefined,
   kanLoses: true,
   status: AksjonspunktDtoStatus.OPPRETTET,
   toTrinnsBehandling: false,
-  toTrinnsBehandlingGodkjent: null,
-  vilkarType: null,
-  vurderPaNyttArsaker: null,
+  toTrinnsBehandlingGodkjent: undefined,
+  vilkarType: undefined,
+  vurderPaNyttArsaker: undefined,
   AksjonspunktDtoVenteårsak: AksjonspunktDtoVenteårsak.UDEFINERT,
 };
 

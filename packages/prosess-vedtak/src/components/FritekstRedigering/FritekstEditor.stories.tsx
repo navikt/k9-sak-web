@@ -1,10 +1,10 @@
-import React from 'react';
-import type { Decorator, Meta, StoryObj } from '@storybook/react';
-import { fn, expect, userEvent, waitFor } from '@storybook/test';
-import { createIntl, IntlShape, RawIntlProvider } from 'react-intl';
-import FritekstEditor from './FritekstEditor.js';
-import messages from '../../../i18n/nb_NO.json';
 import { Button, Modal } from '@navikt/ds-react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import { createIntl, IntlShape, RawIntlProvider } from 'react-intl';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
+import messages from '../../../i18n/nb_NO.json';
+import FritekstEditor from './FritekstEditor.js';
 
 const withRawIntlProvider =
   (intl: IntlShape): Decorator =>

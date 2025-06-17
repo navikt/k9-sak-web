@@ -60,6 +60,7 @@ const VisittkortPanel = ({
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
           showPersonAge={isUngWeb()}
+          age={fagsakPerson.alder}
         />
       </div>
     );
@@ -72,6 +73,7 @@ const VisittkortPanel = ({
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
           showPersonAge={isUngWeb()}
+          age={fagsakPerson.alder}
           renderLabelContent={() => (
             <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
           )}
@@ -125,6 +127,7 @@ const VisittkortPanel = ({
             }
             renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
             showPersonAge={isUngWeb()}
+            age={fagsakPerson.alder}
           />
           <div>
             {ungdomsytelseDeltakerStatus?.deltakerErIProgrammet && (

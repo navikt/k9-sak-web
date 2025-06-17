@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Heading } from '@navikt/ds-react';
 import { PeriodeRad } from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
@@ -45,6 +45,7 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   onPeriodeClick: (periode: T | null) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
+  title?: string;
 }
 
 /**
@@ -56,6 +57,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   onPeriodeClick,
   customPeriodeRad,
   customPeriodeLabel,
+  title = 'Alle perioder',
 }: VurderingslisteProps<T>) => {
   // nyeste først
   const sortedPerioder = perioder.sort((a, b) => {
@@ -73,6 +75,8 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     [perioderSomSkalVurderes, perioderSomErVurdert],
   );
 
+  const [harAutomatiskValgtPeriode, setHarAutomatiskValgtPeriode] = useState(false);
+
   // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
   useEffect(() => {
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
@@ -87,14 +91,16 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
       periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
     );
     const periodeSomErVurdert = allePerioder.find(periode => periode.resultat !== Resultat.MÅ_VURDERES);
-    if (!valgtPeriode) {
+    if (!valgtPeriode && !harAutomatiskValgtPeriode) {
       if (periodeSomMåVurderes) {
         onPeriodeClick(periodeSomMåVurderes);
+        setHarAutomatiskValgtPeriode(true);
       } else if (periodeSomErVurdert) {
         onPeriodeClick(periodeSomErVurdert);
+        setHarAutomatiskValgtPeriode(true);
       }
     }
-  }, [valgtPeriode, allePerioder, onPeriodeClick]);
+  }, [valgtPeriode, allePerioder, onPeriodeClick, harAutomatiskValgtPeriode]);
 
   const handlePeriodeClick = (index: number) => {
     if (allePerioder[index]) {
@@ -105,7 +111,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   return (
     <Box className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
-        Alle perioder
+        {title}
       </Heading>
 
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}

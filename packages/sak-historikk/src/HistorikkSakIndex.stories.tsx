@@ -1,8 +1,8 @@
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import HistorikkSakIndex from './HistorikkSakIndex';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect } from 'storybook/test';
+import HistorikkSakIndex from './HistorikkSakIndex';
 import behandlingStartet, { innsynOpprettet, nyeRegisteropplysninger, overlappendeSak } from './mock/historikkinnslag';
-import { expect } from '@storybook/test';
 
 const locationMock = {
   key: '1',

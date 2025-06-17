@@ -52,15 +52,13 @@ function buildInitialFormStateForEdit(
       [LivetsSluttfaseFieldName.PERIODER]: perioder,
     };
   }
-  if (vurderingstype === Vurderingstype.LANGVARIG_SYKDOM) {
-    return {
-      [LangvarigSykdomFieldName.VURDERING_LANGVARIG_SYKDOM]: tekst,
-      [LangvarigSykdomFieldName.HAR_LANGVARIG_SYKDOM]: resultat,
-      [LangvarigSykdomFieldName.DOKUMENTER]: dokumenterFraVurdering,
-      [LangvarigSykdomFieldName.PERIODER]: perioder,
-    };
-  }
-  return undefined;
+
+  return {
+    [LangvarigSykdomFieldName.VURDERING_LANGVARIG_SYKDOM]: tekst,
+    [LangvarigSykdomFieldName.HAR_LANGVARIG_SYKDOM]: resultat,
+    [LangvarigSykdomFieldName.DOKUMENTER]: dokumenterFraVurdering,
+    [LangvarigSykdomFieldName.PERIODER]: perioder,
+  };
 }
 
 export default buildInitialFormStateForEdit;

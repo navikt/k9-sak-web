@@ -12,7 +12,7 @@ import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 
 type Steg = typeof dokumentSteg | typeof tilsynOgPleieSteg | typeof toOmsorgspersonerSteg;
 
-export const stegForSakstype = (fagsakYtelseType: FagsakYtelsesType): Step[] => {
+export const stegForSakstype = (fagsakYtelseType: FagsakYtelsesType | undefined): Step[] => {
   if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return [opplæringspengerDokumentSteg, langvarigSykdomSteg];
   }
@@ -33,7 +33,7 @@ export const finnNesteStegForPleiepenger = (
     nyttDokumentHarIkkekontrollertEksisterendeVurderinger,
   }: StatusResponse,
   isOnMount?: boolean,
-): Steg => {
+): Steg | null => {
   if (harUklassifiserteDokumenter || manglerDiagnosekode || manglerGodkjentLegeerklæring) {
     return dokumentSteg;
   }
@@ -62,7 +62,7 @@ export const finnNesteStegForLivetsSluttfase = (
     nyttDokumentHarIkkekontrollertEksisterendeVurderinger,
   }: StatusResponse,
   isOnMount?: boolean,
-): Steg => {
+): Steg | null => {
   if (harUklassifiserteDokumenter || manglerGodkjentLegeerklæring) {
     return sluttfaseDokumentSteg;
   }
