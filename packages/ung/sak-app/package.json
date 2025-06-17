@@ -26,7 +26,7 @@
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/sak-meny-marker-behandling": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ds-react": "7.22.0",
+    "@navikt/ds-react": "7.23.0",
     "@navikt/ft-form-hooks": "^6.3.10",
     "@navikt/ft-plattform-komponenter": "^9.1.2",
     "@navikt/ft-ui-komponenter": "^4.4.2",
