@@ -6,7 +6,7 @@ export class FakeMarkerBehandlingBackendApi {
     ignoreUnusedDeclared(behandlingUuid);
     return Promise.resolve({
       hastesak: { aktiv: true, fritekst: 'En tekst om hvorfor dette er en hastesak' },
-      utenlandstilsnitt: { aktiv: false, fritekst: null },
+      utenlandstilsnitt: { aktiv: false, fritekst: undefined },
     });
   }
 
@@ -20,6 +20,7 @@ export class FakeMarkerBehandlingBackendApi {
     merknadKode: EndreMerknadRequestMerknadKode;
   }) {
     ignoreUnusedDeclared({ behandlingUuid, fritekst, merknadKode });
+    return Promise.resolve();
   }
 
   fjernMerknad({
@@ -30,5 +31,6 @@ export class FakeMarkerBehandlingBackendApi {
     merknadKode: SlettMerknadRequestMerknadKode;
   }) {
     ignoreUnusedDeclared({ behandlingUuid, merknadKode });
+    return Promise.resolve();
   }
 }

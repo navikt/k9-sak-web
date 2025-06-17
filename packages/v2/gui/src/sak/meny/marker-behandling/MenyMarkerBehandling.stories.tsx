@@ -16,7 +16,6 @@ const api = new FakeMarkerBehandlingBackendApi();
 export const VisMenyMarkerBehandlingHastekø: Story = {
   args: {
     behandlingUuid: '123',
-    brukHastekøMarkering: true,
     lukkModal: asyncAction('lukk modal'),
     api,
   },

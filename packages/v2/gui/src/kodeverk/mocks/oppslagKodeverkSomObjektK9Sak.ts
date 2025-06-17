@@ -8650,6 +8650,14 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'UTSATT_BEHANDLING',
     },
   ],
+  behandlingMerknadTyper: [
+    {
+      kode: '-',
+      kodeverk: 'BEHANDLING_MERKNAD_TYPE',
+      navn: 'Ikke definert',
+      kilde: 'HASTESAK',
+    },
+  ],
   avslagårsakerPrVilkårTypeKode: {
     '-': [],
     FP_VK_0: [

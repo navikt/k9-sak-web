@@ -9,18 +9,17 @@ import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-va
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
-import type { MarkerBehandlingBackendApiType } from '../MarkerBehandlingBackendApiType';
+import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';
 import styles from './markerBehandlingModal.module.css';
 
 const minLength3 = minLength(3);
 const maxLength100000 = maxLength(100000);
 
 interface PureOwnProps {
-  brukHastekøMarkering?: boolean;
   lukkModal: () => void;
   behandlingUuid: string;
   erVeileder?: boolean;
-  api: MarkerBehandlingBackendApiType;
+  api: MarkerBehandlingBackendApi;
 }
 
 interface FormValues {

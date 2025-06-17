@@ -21,9 +21,7 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyVergeIndexV2 from '@k9-sak-web/gui/sak/meny/verge/MenyVergeIndex.js';
-import MenyMarkerBehandling, {
-  getMenytekst as getMenytekstMarkerBehandling,
-} from '@k9-sak-web/sak-meny-marker-behandling';
+import { getMenytekst as getMenytekstMarkerBehandling } from '@k9-sak-web/sak-meny-marker-behandling';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -33,7 +31,6 @@ import {
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { MerknadResponse } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -174,10 +171,6 @@ export const BehandlingMenuIndex = ({
   );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(K9sakApiKeys.PARTER_MED_KLAGERETT);
 
-  const { startRequest: markerBehandling } = restApiHooks.useRestApiRunner(K9sakApiKeys.LOS_LAGRE_MERKNAD);
-
-  const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadResponse>(K9sakApiKeys.LOS_HENTE_MERKNAD);
-
   const featureToggles = useContext(FeatureTogglesContext);
 
   if (featureToggles.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
@@ -211,14 +204,7 @@ export const BehandlingMenuIndex = ({
   const previewHenleggBehandling = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (navAnsatt.kanVeilede) {
-    return (
-      <BehandlingMenuVeiledervisning
-        behandlingUuid={behandling?.uuid}
-        featureToggles={featureToggles}
-        markerBehandling={markerBehandling}
-        merknaderFraLos={merknaderFraLos}
-      />
-    );
+    return <BehandlingMenuVeiledervisning behandlingUuid={behandling?.uuid ?? ''} />;
   }
 
   const erPaVent = behandling ? behandling.behandlingPåVent : false;
@@ -368,13 +354,7 @@ export const BehandlingMenuIndex = ({
           />
         )),
         new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-          <MenyMarkerBehandling
-            behandlingUuid={behandling?.uuid}
-            markerBehandling={markerBehandling}
-            lukkModal={lukkModal}
-            brukHastekøMarkering
-            merknaderFraLos={merknaderFraLos}
-          />
+          <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} brukHastekøMarkering />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
           <MenyHenleggIndex

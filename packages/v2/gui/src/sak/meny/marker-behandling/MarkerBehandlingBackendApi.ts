@@ -6,7 +6,7 @@ import {
   type PostMerknadResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
 
-export type MarkerBehandlingBackendApiType = {
+export type MarkerBehandlingBackendApi = {
   getMerknader(behandlingUuid: string): Promise<GetMerknadResponse>;
   markerBehandling: ({
     behandlingUuid,
