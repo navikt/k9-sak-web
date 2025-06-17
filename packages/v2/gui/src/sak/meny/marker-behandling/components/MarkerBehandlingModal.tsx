@@ -3,7 +3,7 @@ import { EndreMerknadRequestMerknadKode, type MerknadResponse } from '@k9-sak-we
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button, Heading, HStack, Label, List, Loader, Modal, VStack } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
 import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useQuery } from '@tanstack/react-query';
@@ -66,7 +66,10 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
     isFetching,
   } = useQuery({
     queryKey: ['merknader', behandlingUuid],
-    queryFn: () => api.getMerknader(behandlingUuid),
+    queryFn: async () => {
+      const data = await api.getMerknader(behandlingUuid);
+      return data ?? null;
+    },
   });
   const tilgjengeligeMerknader = merknaderFraLos ? getMerknader(merknaderFraLos) : [];
   const buildInitialValues = (): FormValues => {
@@ -117,70 +120,67 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
         {isFetching ? (
           <Loader size="medium" title="Henter merknader..." />
         ) : (
-          <>
+          <VStack gap="4">
             {gjeldendeMerknader.length > 0 && (
-              <>
+              <div>
                 <Heading size="xsmall" level="4" spacing>
                   Gjeldende merknader
                 </Heading>
-                <List as="ul">
+                <List as="ul" size="small">
                   {gjeldendeMerknader.map(merknad => (
-                    <List.Item key={merknad.tittel}>
-                      <HStack gap="12" align="center">
-                        <VStack gap="2">
-                          <Label size="small">{merknad.tittel}</Label>
-                          <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
-                        </VStack>
+                    <List.Item title={merknad.tittel} key={merknad.tittel}>
+                      <HStack gap="12" align="center" justify="space-between">
+                        <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
                         <Button
                           type="button"
                           onClick={() => slettMerknad(merknad.merknadKode)}
                           variant="tertiary"
                           size="small"
-                          icon={<TrashIcon title="Slett periode" />}
+                          icon={<TrashIcon fontSize="1.5rem" title="Slett merknad" />}
                         />
                       </HStack>
                     </List.Item>
                   ))}
                 </List>
-              </>
+              </div>
             )}
             <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
-              <SelectField
-                name="merknad"
-                label="Velg merknad"
-                selectValues={tilgjengeligeMerknader.map(merknad => (
-                  <option key={merknad} value={merknad}>
-                    {merknad.charAt(0) + merknad.slice(1).toLowerCase()}
-                  </option>
-                ))}
-              />
-              {valgtMerknad && (
-                <div className={styles.textareaContainer}>
-                  <TextAreaField
-                    className={styles.textArea}
-                    name="begrunnelse"
-                    label="Kommentar"
-                    validate={[required, minLength3, maxLength100000, hasValidText]}
-                    maxLength={100000}
-                    readOnly={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
+              <VStack gap="6">
+                <VStack gap="4">
+                  <SelectField
+                    name="merknad"
+                    label="Velg ny merknad"
+                    selectValues={tilgjengeligeMerknader.map(merknad => (
+                      <option key={merknad} value={merknad}>
+                        {merknad.charAt(0) + merknad.slice(1).toLowerCase()}
+                      </option>
+                    ))}
                   />
+                  {valgtMerknad && (
+                    <TextAreaField
+                      name="begrunnelse"
+                      label="Kommentar"
+                      validate={[required, minLength3, maxLength100000, hasValidText]}
+                      maxLength={100000}
+                      readOnly={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
+                    />
+                  )}
+                </VStack>
+                <div className={styles.buttonContainer}>
+                  <Button
+                    variant="primary"
+                    size="small"
+                    disabled={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT || formState.isSubmitting}
+                  >
+                    {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
+                  </Button>
+                  <Button variant="secondary" size="small" onClick={lukkModal}>
+                    Lukk
+                  </Button>
                 </div>
-              )}
-
-              <div className={styles.buttonContainer}>
-                <Button
-                  variant="primary"
-                  size="small"
-                  disabled={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT || formState.isSubmitting}
-                >
-                  {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
-                </Button>
-                <Button variant="secondary" size="small" onClick={lukkModal}>
-                  Lukk
-                </Button>
-              </div>
+              </VStack>
             </Form>
-          </>
+          </VStack>
         )}
       </Modal.Body>
     </Modal>
