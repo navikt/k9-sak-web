@@ -28,7 +28,7 @@ interface FormValues {
 }
 
 const getMerknader = (merknader: MerknadResponse): string[] => {
-  const ubrukteMerknader = [];
+  const ubrukteMerknader: EndreMerknadRequestMerknadKode[] = [];
 
   if (!merknader.hastesak.aktiv) {
     ubrukteMerknader.push(EndreMerknadRequestMerknadKode.HASTESAK);
@@ -40,18 +40,18 @@ const getMerknader = (merknader: MerknadResponse): string[] => {
 };
 
 const getGjeldendeMerknader = (merknader: MerknadResponse) => {
-  const gjeldendeMerknader = [];
+  const gjeldendeMerknader: { tittel: string; begrunnelse: string; merknadKode: EndreMerknadRequestMerknadKode }[] = [];
   if (merknader.hastesak.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Hastesak',
-      begrunnelse: merknader.hastesak.fritekst,
+      begrunnelse: merknader.hastesak.fritekst ?? '',
       merknadKode: EndreMerknadRequestMerknadKode.HASTESAK,
     });
   }
   if (merknader.utenlandstilsnitt.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Utenlandstilsnitt',
-      begrunnelse: merknader.utenlandstilsnitt.fritekst,
+      begrunnelse: merknader.utenlandstilsnitt.fritekst ?? '',
       merknadKode: EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT,
     });
   }
