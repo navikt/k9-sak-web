@@ -169,15 +169,15 @@ export const TilkommetAktivitetPanel = ({
     const andelerFraField = fieldSomSplittes.inntektsforhold || [];
     const splittDel1 = {
       inntektsforhold: andelerFraField.map((andel, index) => mapInntektsforhold(andel, true, periodeFieldIndex, index)),
-      fom: nyePerioder[0].fom,
-      tom: nyePerioder[0].tom,
+      fom: nyePerioder[0]?.fom ?? '',
+      tom: nyePerioder[0]?.tom ?? '',
     };
     const splittDel2 = {
       inntektsforhold: andelerFraField.map((andel, index) =>
         mapInntektsforhold(andel, false, periodeFieldIndex, index),
       ),
-      fom: nyePerioder[1].fom,
-      tom: nyePerioder[1].tom,
+      fom: nyePerioder[1]?.fom ?? '',
+      tom: nyePerioder[1]?.tom ?? '',
     };
     remove(periodeFieldIndex);
     insert(periodeFieldIndex, [splittDel1, splittDel2]);

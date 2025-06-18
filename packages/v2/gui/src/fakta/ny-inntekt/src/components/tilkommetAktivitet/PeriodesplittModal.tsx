@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { Button, HStack, Modal, Select, VStack } from '@navikt/ds-react';
+import { Button, Modal, Select, VStack } from '@navikt/ds-react';
 import { calcDays, periodFormat, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
@@ -90,24 +90,20 @@ export const PeriodesplittModal = ({
         </VStack>
       </Modal.Body>
       <Modal.Footer>
-        <div className={styles.footerRad}>
-          <HStack gap="4">
-            <Button
-              size="small"
-              variant="primary"
-              onClick={splittPeriode}
-              disabled={!valgtSplittdato}
-              autoFocus
-              type="button"
-            >
-              Del opp periode
-            </Button>
+        <Button
+          size="small"
+          variant="primary"
+          onClick={splittPeriode}
+          disabled={!valgtSplittdato}
+          autoFocus
+          type="button"
+        >
+          Del opp periode
+        </Button>
 
-            <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
-              Avbryt
-            </Button>
-          </HStack>
-        </div>
+        <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
+          Avbryt
+        </Button>
       </Modal.Footer>
     </Modal>
   );
