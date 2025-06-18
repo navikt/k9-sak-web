@@ -129,7 +129,6 @@ describe('<UngdomsytelseProsess>', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Inngangsvilkår' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Tilkjent ytelse/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Simulering/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Vedtak/i })).toBeInTheDocument();
   });

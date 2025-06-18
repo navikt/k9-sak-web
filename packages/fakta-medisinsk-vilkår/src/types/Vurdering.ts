@@ -15,6 +15,7 @@ export interface Vurderingsversjon {
   resultat: Vurderingsresultat;
   perioder: Period[];
   dokumenter: Dokument[];
+  manglerLegeerklæring?: boolean;
 }
 
 class Vurdering {
