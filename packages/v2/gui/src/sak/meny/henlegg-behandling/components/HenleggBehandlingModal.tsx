@@ -9,7 +9,7 @@ import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak
 import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';
 import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { Klagepart } from '../types/Klagepart';
 import type { Personopplysninger } from '../types/Personopplysninger';
@@ -21,32 +21,6 @@ const maxLength1500 = maxLength(1500);
 
 export const erTilbakekrevingType = (type?: string) =>
   BehandlingTypeK9Klage.TILBAKEKREVING === type || BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING === type;
-
-const previewHenleggBehandlingDoc =
-  (
-    previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void,
-    ytelseType: string,
-    fritekst: string,
-    behandlingId: number,
-    behandlingType?: string,
-    valgtMottaker?: Klagepart,
-  ) =>
-  (): void => {
-    const data = erTilbakekrevingType(behandlingType)
-      ? {
-          ytelseType,
-          dokumentMal: 'HENLEG',
-          fritekst,
-          mottaker: 'Søker',
-          behandlingId,
-        }
-      : {
-          dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
-          dokumentdata: { fritekst: fritekst || ' ' },
-          overstyrtMottaker: valgtMottaker?.identifikasjon,
-        };
-    previewHenleggBehandling(true, data);
-  };
 
 const showHenleggelseFritekst = (behandlingTypeKode: string, årsakKode?: string): boolean =>
   BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING === behandlingTypeKode &&
@@ -133,7 +107,7 @@ const getShowLink = (årsakKode: string, fritekst: string, type: string): boolea
 
 interface HenleggBehandlingModalProps {
   cancelEvent: () => void;
-  previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
+  previewHenleggBehandling: (erHenleggelse: boolean, data: any) => Promise<void>;
   ytelseType: string;
   behandlingId: number;
   behandlingResultatTyper: string[];
@@ -169,6 +143,36 @@ export const HenleggBehandlingModal = ({
   arbeidsgiverOpplysningerPerId,
   brevmottakere,
 }: HenleggBehandlingModalProps) => {
+  const [isFetchingPreview, setIsFetchingPreview] = useState<boolean>(false);
+
+  const previewHenleggBehandlingDoc =
+    (
+      previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void,
+      ytelseType: string,
+      fritekst: string,
+      behandlingId: number,
+      behandlingType?: string,
+      valgtMottaker?: Klagepart,
+    ) =>
+    async (): Promise<void> => {
+      setIsFetchingPreview(true);
+      const data = erTilbakekrevingType(behandlingType)
+        ? {
+            ytelseType,
+            dokumentMal: 'HENLEG',
+            fritekst,
+            mottaker: 'Søker',
+            behandlingId,
+          }
+        : {
+            dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
+            dokumentdata: { fritekst: fritekst || ' ' },
+            overstyrtMottaker: valgtMottaker?.identifikasjon,
+          };
+      await previewHenleggBehandling(true, data);
+      setIsFetchingPreview(false);
+    };
+
   const formMethods = useForm<HenleggBehandlingFormvalues>({
     defaultValues: {
       årsakKode: '',
@@ -177,6 +181,7 @@ export const HenleggBehandlingModal = ({
       valgtMottaker: '',
     },
   });
+
   const [årsakKode, fritekst, valgtMottaker] = formMethods.watch(['årsakKode', 'fritekst', 'valgtMottaker']);
   const showLink = getShowLink(årsakKode, fritekst, behandlingType);
 
@@ -274,6 +279,7 @@ export const HenleggBehandlingModal = ({
                               valgtMottakerObjekt,
                             )}
                             data-testid="previewLink"
+                            loading={isFetchingPreview}
                           >
                             Forhåndsvis brev
                           </Button>

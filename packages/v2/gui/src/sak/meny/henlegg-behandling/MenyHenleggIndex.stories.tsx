@@ -23,7 +23,7 @@ export const HenleggFørstegangssøknadPleiepenger: StoryObj<typeof MenyHenleggI
     behandlingId: 1,
     behandlingVersjon: 2,
     henleggBehandling: asyncAction('henlegg behandling'),
-    forhandsvisHenleggBehandling: action('forhåndsvis henlegg behandling'),
+    forhandsvisHenleggBehandling: asyncAction('forhåndsvis henlegg behandling'),
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     behandlingType: BehandlingTypeK9SAK.FØRSTEGANGSSØKNAD,
     behandlingResultatTyper: [
