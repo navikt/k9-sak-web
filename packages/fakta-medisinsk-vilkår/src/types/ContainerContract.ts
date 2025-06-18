@@ -1,6 +1,7 @@
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Personopplysninger } from '@k9-sak-web/types';
 import BehandlingType from '../constants/BehandlingType';
+import { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface ContainerContract {
   endpoints: {
@@ -24,6 +25,7 @@ interface ContainerContract {
   fagsakYtelseType?: FagsakYtelsesType;
   behandlingType?: BehandlingType;
   pleietrengendePart?: Personopplysninger['pleietrengendePart'];
+  featureToggles?: FeatureToggles;
 }
 
 export default ContainerContract;

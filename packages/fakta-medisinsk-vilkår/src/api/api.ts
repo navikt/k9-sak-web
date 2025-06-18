@@ -22,7 +22,7 @@ export async function postNyVurdering(
   dryRun?: boolean,
 ): Promise<AnyType> {
   try {
-    const { perioder, resultat, tekst, dokumenter, type } = vurderingsversjonMedType;
+    const { perioder, resultat, tekst, dokumenter, type, manglerLegeerklæring } = vurderingsversjonMedType;
     return httpUtils.post(
       href,
       {
@@ -33,6 +33,7 @@ export async function postNyVurdering(
         tekst,
         tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
         dryRun: dryRun || false,
+        manglerLegeerklæring: manglerLegeerklæring || false,
       },
       httpErrorHandler,
       { signal },
