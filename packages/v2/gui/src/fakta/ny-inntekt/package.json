@@ -1,0 +1,28 @@
+{
+  "name": "@k9-sak-web/fakta-ny-inntekt",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "keywords": [],
+  "author": "NAV IT",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "vite serve"
+  },
+  "dependencies": {
+    "@navikt/aksel-icons": "7.23.1",
+    "@navikt/ds-css": "7.23.1",
+    "@navikt/ds-react": "7.23.1",
+    "@navikt/ft-form-hooks": "^6.3.13",
+    "@navikt/ft-form-validators": "^3.2.5",
+    "@navikt/ft-ui-komponenter": "^4.5.1",
+    "@navikt/ft-utils": "^3.6.3",
+    "classnames": "2.5.1",
+    "core-js": "3.43.0",
+    "dayjs": "1.11.13",
+    "react": "19.1.0",
+    "react-hook-form": "7.58.1",
+    "react-intl": "7.1.11",
+    "uuid": "11.1.0"
+  }
+}
