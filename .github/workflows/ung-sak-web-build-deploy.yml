@@ -8,15 +8,18 @@ on:
     branches:
       - master
 
+env:
+  TAG_LATEST_PROD: latest_prod_ung
 jobs:
-  build-deploy:
-    name: Build and deploy Docker image
+  build-docker-image:
+    name: Build Docker image
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-    env:
-      CLUSTER: dev-gcp
+    outputs:
+      tag: ${{ steps.docker-push.outputs.tag }}
+      image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
         uses: actions/checkout@v4
@@ -52,9 +55,110 @@ jobs:
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
-      - name: Deploy to nais
-        uses: nais/deploy/actions/deploy@v2
+      - name: Sett image for nais deploy
+        run: |
+          echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_OUTPUT
+          echo "TAG=${{steps.docker-push.outputs.tag}}" >> $GITHUB_OUTPUT
+      - name: Git diff url
+        shell: bash
+        run: |
+          dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD }}...${{ github.sha }}"
+          echo "Forskjell mellom denne build og prod: <${dynamic_url}>" >> $GITHUB_STEP_SUMMARY
+
+  deploy-dev:
+    name: Deploy to dev
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CLUSTER: dev-gcp
+    environment: test
+    needs: [build-docker-image]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
-          VAR: image=${{ steps.docker-push.outputs.image }}
+          VAR: image=${{ needs.build-docker-image.outputs.image }}
+
+  deploy-prod:
+    name: Deploy to prod
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      CLUSTER: prod-gcp
+    environment: prod
+    if: github.ref_name == 'master'
+    needs: [build-docker-image, deploy-dev]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Ta med litt historie og tags for å finne latest_prod_ung commit hash
+          fetch-tags: true
+          fetch-depth: 100
+      - name: tag deployment image tag
+        uses: actions/github-script@v7
+        env:
+          TAG: prod_${{ needs.build-docker-image.outputs.tag }}
+        with:
+          script: |
+            try {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{ env.TAG }}',
+                sha: context.sha
+              })
+            } catch (err) {
+              if(err.status === 422) { // tag already exists
+                console.info('Tag for deployment ${{ env.TAG }} already existed. Will leave it as is');
+              } else {
+                throw err;
+              }
+            }
+      - name: Print static git diff url
+        shell: bash
+        run: |
+          # disable exit on error temporarily in case latest_prod_ung tag does not exist
+          set +e
+          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD }})"
+          # re-enable exit on error
+          set -e
+          if [ -n "${latest_prod_sha}" ]; then
+            static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
+            echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
+          fi
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VAR: image=${{ needs.build-docker-image.outputs.image }}
+      - name: tag deployment done
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'tags/${{ env.TAG_LATEST_PROD }}',
+                sha: context.sha,
+                force: true
+              })
+            } catch (err) {
+              if(err.status === 422) { // tag did not exist, try creating it
+                console.info('Tag for ${{ env.TAG_LATEST_PROD }} did not exist. Will try creating it');
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD }}',
+                  sha: context.sha
+                })
+              } else {
+                throw err;
+              }
+            }

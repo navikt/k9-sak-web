@@ -5,6 +5,7 @@ import type { FeatureToggles } from './FeatureToggles.js';
 import { prodFeatureToggles } from './prodFeatureToggles.js';
 import { qFeatureToggles } from './qFeatureToggles.js';
 import { devFeatureToggles as ungDevFeatureToggles } from './ung/devFeatureToggles.js';
+import { prodFeatureToggles as ungProdFeatureToggles } from './ung/prodFeatureToggles.js';
 import { qFeatureToggles as ungQFeatureToggles } from './ung/qFeatureToggles.js';
 
 // feature-toggles/toggles.json returnerer array av {key: string, value: string} objekter
@@ -42,6 +43,8 @@ export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefine
     return { featureToggles: ungDevFeatureToggles };
   } else if (featureTogglesEnv === 'ung-sak-q') {
     return { featureToggles: ungQFeatureToggles };
+  } else if (featureTogglesEnv === 'ung-sak-prod') {
+    return { featureToggles: ungProdFeatureToggles };
   } else {
     // If feature toggles are not resolved, log it, and return prodFeatureToggles as default
     if (isError) {
