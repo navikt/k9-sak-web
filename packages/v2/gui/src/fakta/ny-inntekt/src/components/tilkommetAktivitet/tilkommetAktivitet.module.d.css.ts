@@ -11,7 +11,6 @@ declare const styles: {
   readonly "modalKnapp": string;
   readonly "separator": string;
   readonly "tilkommetAktivitet": string;
-  readonly "tittelRad": string;
 };
 export = styles;
 
