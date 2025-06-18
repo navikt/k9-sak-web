@@ -27,4 +27,5 @@ export const prodFeatureToggles = {
   OPPLAERINGSPENGER: false,
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
+  BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: false,
 } satisfies FeatureToggles;

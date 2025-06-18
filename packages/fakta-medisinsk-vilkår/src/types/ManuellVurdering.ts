@@ -11,6 +11,7 @@ interface ManuellVurdering {
   links: Link[];
   endretIDenneBehandlingen: boolean;
   erInnleggelsesperiode: boolean;
+  manglerLegeerklæring?: boolean;
 }
 
 export default ManuellVurdering;
