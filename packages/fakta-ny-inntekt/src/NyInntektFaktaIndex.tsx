@@ -1,8 +1,5 @@
-import { Tabs } from '@navikt/ds-react';
+import { Tabs, VStack } from '@navikt/ds-react';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@navikt/ft-utils';
-import dayjs from 'dayjs';
 import { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './components/felles/vilkårsperiodeUtils.js';
@@ -12,6 +9,7 @@ import { FaktaFordelBeregningAvklaringsbehovCode } from './types/interface/Fakta
 import { type VurderNyttInntektsforholdAP } from './types/interface/VurderNyttInntektsforholdAP.js';
 import type { Vilkår, Vilkårperiode } from './types/Vilkår.js';
 
+import { DateLabel, PeriodLabel } from '@navikt/ft-ui-komponenter';
 import type { ArbeidsgiverOpplysningerPerId } from './types/ArbeidsgiverOpplysninger.js';
 import type { Beregningsgrunnlag } from './types/Beregningsgrunnlag.js';
 
@@ -26,16 +24,13 @@ const intl = createIntl(
 
 const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
 
-const lagLabel = (bg: Beregningsgrunnlag, vilkårsperioder: Vilkårperiode[]): string => {
+const lagLabel = (bg: Beregningsgrunnlag, vilkårsperioder: Vilkårperiode[]) => {
   const vilkårPeriode = finnVilkårsperiode(vilkårsperioder, bg.vilkårsperiodeFom);
   if (vilkårPeriode) {
     const { fom, tom } = vilkårPeriode.periode;
-    if (tom !== null) {
-      return `${dayjs(fom).format(DDMMYYYY_DATE_FORMAT)} - ${dayjs(tom).format(DDMMYYYY_DATE_FORMAT)}`;
-    }
-    return `${dayjs(fom).format(DDMMYYYY_DATE_FORMAT)} - `;
+    return <PeriodLabel dateStringFom={fom} dateStringTom={tom} />;
   }
-  return `${dayjs(bg.vilkårsperiodeFom).format(DDMMYYYY_DATE_FORMAT)}`;
+  return <DateLabel dateString={bg.vilkårsperiodeFom} />;
 };
 
 const kreverManuellBehandlingFn = (bg: Beregningsgrunnlag) =>
@@ -76,37 +71,38 @@ export const NyInntektFaktaIndex = ({
 
   return (
     <RawIntlProvider value={intl}>
-      {skalBrukeTabs && (
-        <Tabs
-          value={aktivtBeregningsgrunnlagIndeks.toString()}
-          onChange={(clickedIndex: string) => setAktivtBeregningsgrunnlagIndeks(Number(clickedIndex))}
-        >
-          <Tabs.List>
-            {bgMedAvklaringsbehov.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => (
-              <Tabs.Tab
-                key={currentBeregningsgrunnlag.skjaeringstidspunktBeregning}
-                value={currentBeregningsgrunnlagIndex.toString()}
-                label={lagLabel(currentBeregningsgrunnlag, beregningsgrunnlagVilkår.perioder)}
-                className={
-                  skalVurderes(currentBeregningsgrunnlag, beregningsgrunnlagVilkår.perioder) ? 'harAksjonspunkt' : ''
-                }
-              />
-            ))}
-          </Tabs.List>
-        </Tabs>
-      )}
-      <VerticalSpacer eightPx />
-      <FordelBeregningsgrunnlagPanel
-        aktivtBeregningsgrunnlagIndeks={aktivtBeregningsgrunnlagIndeks}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        beregningsgrunnlagListe={bgMedAvklaringsbehov}
-        vilkarperioder={beregningsgrunnlagVilkår.perioder}
-        submittable={submittable}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        formData={formData}
-        setFormData={setFormData}
-      />
+      <VStack gap="2">
+        {skalBrukeTabs && (
+          <Tabs
+            value={aktivtBeregningsgrunnlagIndeks.toString()}
+            onChange={(clickedIndex: string) => setAktivtBeregningsgrunnlagIndeks(Number(clickedIndex))}
+          >
+            <Tabs.List>
+              {bgMedAvklaringsbehov.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => (
+                <Tabs.Tab
+                  key={currentBeregningsgrunnlag.skjaeringstidspunktBeregning}
+                  value={currentBeregningsgrunnlagIndex.toString()}
+                  label={lagLabel(currentBeregningsgrunnlag, beregningsgrunnlagVilkår.perioder)}
+                  className={
+                    skalVurderes(currentBeregningsgrunnlag, beregningsgrunnlagVilkår.perioder) ? 'harAksjonspunkt' : ''
+                  }
+                />
+              ))}
+            </Tabs.List>
+          </Tabs>
+        )}
+        <FordelBeregningsgrunnlagPanel
+          aktivtBeregningsgrunnlagIndeks={aktivtBeregningsgrunnlagIndeks}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          beregningsgrunnlagListe={bgMedAvklaringsbehov}
+          vilkarperioder={beregningsgrunnlagVilkår.perioder}
+          submittable={submittable}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </VStack>
     </RawIntlProvider>
   );
 };
