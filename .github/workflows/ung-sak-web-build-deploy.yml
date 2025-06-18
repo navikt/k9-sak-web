@@ -17,6 +17,9 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    outputs:
+      tag: ${{ steps.docker-push.outputs.tag }}
+      image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
         uses: actions/checkout@v4
