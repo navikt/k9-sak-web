@@ -169,8 +169,11 @@ export const HenleggBehandlingModal = ({
             dokumentdata: { fritekst: fritekst || ' ' },
             overstyrtMottaker: valgtMottaker?.identifikasjon,
           };
-      await previewHenleggBehandling(true, data);
-      setIsFetchingPreview(false);
+      try {
+        await previewHenleggBehandling(true, data);
+      } finally {
+        setIsFetchingPreview(false);
+      }
     };
 
   const formMethods = useForm<HenleggBehandlingFormvalues>({
