@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setValgtDato }: Props) => {
-  const [nyePerioder, setNyePerioder] = useState<Periode[]>();
+  const [nyePerioder, setNyePerioder] = useState<Periode[]>([]);
 
   const oppdaterSplittDatoValg = (dato: Date | undefined) => {
     const splitt = dayjs(dato).format(ISO_DATE_FORMAT);
@@ -50,7 +50,7 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
           <DatePicker.Input {...inputProps} label="Opprett ny vurdering fra" size="small" />
         </DatePicker>
       </FlexColumn>
-      {nyePerioder && (
+      {nyePerioder.length > 0 ? (
         <FlexColumn>
           <Label size="small" className={styles.periodeHeader}>
             Nye perioder til vurdering:
@@ -68,7 +68,7 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
             )}
           </ul>
         </FlexColumn>
-      )}
+      ) : null}
       <VerticalSpacer sixteenPx />
     </>
   );

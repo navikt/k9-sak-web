@@ -55,7 +55,7 @@ export const TilkommetAktivitetPanel = ({
     control,
     name: `VURDER_TILKOMMET_AKTIVITET_FORM.${formFieldIndex}.perioder`,
   });
-  fields.sort(sortPeriodsByFom);
+  const sortedFields = fields.toSorted(sortPeriodsByFom);
 
   const vurderInntektsforholdPerioder =
     beregningsgrunnlag.faktaOmFordeling?.vurderNyttInntektsforholdDto?.vurderInntektsforholdPerioder;
@@ -144,9 +144,9 @@ export const TilkommetAktivitetPanel = ({
     !dayjs(fom).isAfter(dayjs(dato)) && !dayjs(tom).isBefore(dayjs(dato));
 
   const finnNyePerioder = (nyFom: string): Periode[] => {
-    const fieldSomSplittes = fields.find(field => overlapper(field.fom, field.tom, nyFom));
+    const fieldSomSplittes = sortedFields.find(field => overlapper(field.fom, field.tom, nyFom));
     if (!fieldSomSplittes) {
-      throw new Error(`Finner ikke field somme inneholder dato ${nyFom}`);
+      throw new Error(`Finner ikke field som inneholder dato ${nyFom}`);
     }
     const splittDel1Tom = dayjs(nyFom).subtract(1, 'day');
     const splittDel1 = {
@@ -161,12 +161,12 @@ export const TilkommetAktivitetPanel = ({
   };
 
   const splittPeriode = (nyFom: string) => {
-    const fieldSomSplittes = fields.find(field => overlapper(field.fom, field.tom, nyFom));
+    const fieldSomSplittes = sortedFields.find(field => overlapper(field.fom, field.tom, nyFom));
     if (!fieldSomSplittes) {
-      throw new Error(`Finner ikke field somme inneholder dato ${nyFom}`);
+      throw new Error(`Finner ikke field som inneholder dato ${nyFom}`);
     }
     const nyePerioder = finnNyePerioder(nyFom);
-    const periodeFieldIndex = fields.indexOf(fieldSomSplittes);
+    const periodeFieldIndex = sortedFields.indexOf(fieldSomSplittes);
     const andelerFraField = fieldSomSplittes.inntektsforhold || [];
     const splittDel1 = {
       inntektsforhold: andelerFraField.map((andel, index) => mapInntektsforhold(andel, true, periodeFieldIndex, index)),
@@ -231,7 +231,7 @@ export const TilkommetAktivitetPanel = ({
       </FlexContainer>
       {modalErÅpen && (
         <PeriodesplittModal
-          fields={fields}
+          fields={sortedFields}
           forhåndsvisPeriodesplitt={finnNyePerioder}
           lukkModal={lukkModal}
           skalViseModal={modalErÅpen}
@@ -242,7 +242,7 @@ export const TilkommetAktivitetPanel = ({
         beregningsgrunnlag={beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         formName={formName}
-        fields={fields}
+        fields={sortedFields}
         formFieldIndex={formFieldIndex}
         readOnly={readOnly}
         erAksjonspunktÅpent={erAksjonspunktÅpent}
