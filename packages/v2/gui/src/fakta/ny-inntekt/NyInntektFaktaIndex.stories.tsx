@@ -77,7 +77,7 @@ const lagVilkår = (perioder: any[]): Vilkår => ({
 });
 
 const meta = {
-  title: 'fakta/fakta-ny-inntekt',
+  title: 'gui/fakta/ny-inntekt',
   component: NyInntektFaktaIndex,
   args: {
     submitCallback: asyncAction('Løs aksjonspunkt'),

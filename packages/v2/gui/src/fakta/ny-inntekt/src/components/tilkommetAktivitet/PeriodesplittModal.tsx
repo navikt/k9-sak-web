@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { Button, Modal, Select, VStack } from '@navikt/ds-react';
+import { Button, HStack, Modal, Select, VStack } from '@navikt/ds-react';
 import { calcDays, periodFormat, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
@@ -80,40 +79,35 @@ export const PeriodesplittModal = ({
             </Select>
           </div>
           {periodeKanSplittes && (
-            <FlexContainer>
-              <FlexRow className={styles.datoRad}>
-                <PeriodesplittDatoValg
-                  forhåndsvisPeriodesplitt={forhåndsvisPeriodesplitt}
-                  periode={valgtPeriode}
-                  setValgtDato={setValgtSplittdato}
-                />
-              </FlexRow>
-            </FlexContainer>
+            <div className={styles.datoRad}>
+              <PeriodesplittDatoValg
+                forhåndsvisPeriodesplitt={forhåndsvisPeriodesplitt}
+                periode={valgtPeriode}
+                setValgtDato={setValgtSplittdato}
+              />
+            </div>
           )}
         </VStack>
       </Modal.Body>
       <Modal.Footer>
-        <FlexContainer>
-          <FlexRow className={styles.footerRad}>
-            <FlexColumn>
-              <Button
-                size="small"
-                variant="primary"
-                onClick={splittPeriode}
-                disabled={!valgtSplittdato}
-                autoFocus
-                type="button"
-              >
-                Del opp periode
-              </Button>
-            </FlexColumn>
-            <FlexColumn>
-              <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
-                Avbryt
-              </Button>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
+        <div className={styles.footerRad}>
+          <HStack gap="4">
+            <Button
+              size="small"
+              variant="primary"
+              onClick={splittPeriode}
+              disabled={!valgtSplittdato}
+              autoFocus
+              type="button"
+            >
+              Del opp periode
+            </Button>
+
+            <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
+              Avbryt
+            </Button>
+          </HStack>
+        </div>
       </Modal.Footer>
     </Modal>
   );

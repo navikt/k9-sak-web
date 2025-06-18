@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ScissorsIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Box, Button, Heading, Label } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
@@ -205,28 +204,24 @@ export const TilkommetAktivitetPanel = ({
         </Box>
       )}
       <Box marginBlock="10 0">
-        <FlexContainer>
-          <FlexRow className={styles.tittelRad}>
-            <FlexColumn>
-              <Heading size="small" level="3">
-                Perioder med ny aktivitet
-              </Heading>
-            </FlexColumn>
-            <FlexColumn className={styles.modalKnapp}>
-              <Button
-                variant="tertiary"
-                loading={false}
-                disabled={readOnly}
-                onClick={åpneModal}
-                size="small"
-                type="button"
-                icon={<ScissorsIcon height={32} width={32} />}
-              >
-                Del opp periode
-              </Button>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
+        <HStack gap="4" justify="space-between">
+          <Heading size="small" level="3">
+            Perioder med ny aktivitet
+          </Heading>
+          <div className={styles.modalKnapp}>
+            <Button
+              variant="tertiary"
+              loading={false}
+              disabled={readOnly}
+              onClick={åpneModal}
+              size="small"
+              type="button"
+              icon={<ScissorsIcon height={32} width={32} />}
+            >
+              Del opp periode
+            </Button>
+          </div>
+        </HStack>
       </Box>
       {modalErÅpen && (
         <PeriodesplittModal

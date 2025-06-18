@@ -150,22 +150,24 @@ export const TilkommetAktivitetField = ({
         ))}
         {skalViseBegrunnelse && (
           <>
-            <Box marginBlock="10 0">
-              <TextAreaField
-                name={`${formName}.${formFieldIndex}.begrunnelse`}
-                label="Begrunnelse"
-                readOnly={readOnly}
-                validate={[required]}
-              />
-            </Box>
             <VStack gap="4">
+              <Box marginBlock="10 0">
+                <TextAreaField
+                  name={`${formName}.${formFieldIndex}.begrunnelse`}
+                  label="Begrunnelse"
+                  readOnly={readOnly}
+                  validate={[required]}
+                />
+              </Box>
               <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
-              <SubmitButton
-                isSubmittable={submittable}
-                isReadOnly={readOnly}
-                isSubmitting={formState.isSubmitting}
-                isDirty={formState.isDirty}
-              />
+              <div>
+                <SubmitButton
+                  isSubmittable={submittable}
+                  isReadOnly={readOnly}
+                  isSubmitting={formState.isSubmitting}
+                  isDirty={formState.isDirty}
+                />
+              </div>
             </VStack>
           </>
         )}

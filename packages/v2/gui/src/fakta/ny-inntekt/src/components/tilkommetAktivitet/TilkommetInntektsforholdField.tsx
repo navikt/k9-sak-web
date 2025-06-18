@@ -13,7 +13,7 @@ import type {
 } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
-import { ReactElement } from 'react';
+import { type ReactElement } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
 import styles from './tilkommetAktivitet.module.css';
