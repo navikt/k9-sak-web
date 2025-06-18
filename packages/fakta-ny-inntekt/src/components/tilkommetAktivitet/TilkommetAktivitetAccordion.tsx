@@ -1,14 +1,11 @@
 import { type ReactElement, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Accordion, Label } from '@navikt/ds-react';
+import { Accordion, Label, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import type {
   TilkommetAktivitetFormValues,
@@ -21,19 +18,19 @@ import { TidligereVurderteAktiviteterPanel } from './TidligereVurderteAktivitete
 import { TilkommetAktivitetField } from './TilkommetAktivitetField';
 import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils';
 
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { PeriodLabel } from '@navikt/ft-ui-komponenter';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
 import styles from './tilkommetAktivitetAccordion.module.css';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-
-const formatDate = (date: string): string => (date ? dayjs(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const renderDateHeading = (fom: string, tom: string | undefined): ReactElement => {
-  if (!tom || tom === TIDENES_ENDE) {
-    return <Label size="medium">{`${formatDate(fom)} - `}</Label>;
-  }
-  return <Label size="medium">{`${formatDate(fom)} - ${formatDate(tom)}`}</Label>;
+  return (
+    <Label size="medium">
+      <PeriodLabel dateStringFom={fom} dateStringTom={tom} />
+    </Label>
+  );
 };
 
 type Props = {
@@ -109,7 +106,7 @@ export const TilkommetAktivitetAccordion = ({
   }
 
   return (
-    <>
+    <VStack gap="6">
       <Accordion className={styles.statusOk}>
         {tidligereVurderte.map(tidligereVurdertPeriode => (
           <Accordion.Item
@@ -149,27 +146,29 @@ export const TilkommetAktivitetAccordion = ({
         ))}
       </Accordion>
       {fields.length > 1 && (
-        <div>
-          <VerticalSpacer fourtyPx />
-          <TextAreaField
-            name={`${formName}.${formFieldIndex}.begrunnelse`}
-            label="Begrunnelse for alle perioder"
-            readOnly={readOnly}
-            validate={[required]}
-          />
-          <VurdertAv
-            ident={avklaringsbehovTilkommetAktivitet?.vurdertAv}
-            date={avklaringsbehovTilkommetAktivitet?.vurdertTidspunkt}
-          />
-          <VerticalSpacer sixteenPx />
-          <SubmitButton
-            isSubmittable={submittable}
-            isReadOnly={readOnly}
-            isSubmitting={formMethods?.formState?.isSubmitting}
-            isDirty={formMethods?.formState?.isDirty}
-          />
-        </div>
+        <VStack gap="4">
+          <div>
+            <TextAreaField
+              name={`${formName}.${formFieldIndex}.begrunnelse`}
+              label="Begrunnelse for alle perioder"
+              readOnly={readOnly}
+              validate={[required]}
+            />
+            <VurdertAv
+              ident={avklaringsbehovTilkommetAktivitet?.vurdertAv}
+              date={avklaringsbehovTilkommetAktivitet?.vurdertTidspunkt}
+            />
+          </div>
+          <div>
+            <SubmitButton
+              isSubmittable={submittable}
+              isReadOnly={readOnly}
+              isSubmitting={formMethods?.formState?.isSubmitting}
+              isDirty={formMethods?.formState?.isDirty}
+            />
+          </div>
+        </VStack>
       )}
-    </>
+    </VStack>
   );
 };
