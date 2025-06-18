@@ -12,6 +12,7 @@ export default ({
   fagsakYtelseType,
   behandlingType,
   pleietrengendePart,
+  featureToggles,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -51,6 +52,7 @@ export default ({
         fagsakYtelseType,
         behandlingType,
         pleietrengendePart,
+        featureToggles,
       }}
     />
   );
