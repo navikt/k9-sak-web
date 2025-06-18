@@ -40,8 +40,8 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
-  const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
-  const harAksjonspunktMedTotrinnsbehandling = harAksjonspunkt && aksjonspunkter.some(ap => ap.toTrinnsBehandling);
+  const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
+  const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
