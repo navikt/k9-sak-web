@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { DatePicker, Label, useDatepicker } from '@navikt/ds-react';
+import { Box, DatePicker, Label, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { FlexColumn, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FlexColumn } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
 import { PeriodLabel } from '@navikt/ft-ui-komponenter';
@@ -44,7 +44,7 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
   });
 
   return (
-    <>
+    <Box marginBlock="0 4">
       <FlexColumn className={styles.datoVelger}>
         <DatePicker {...datepickerProps}>
           <DatePicker.Input {...inputProps} label="Opprett ny vurdering fra" size="small" />
@@ -69,7 +69,6 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
           </ul>
         </FlexColumn>
       ) : null}
-      <VerticalSpacer sixteenPx />
-    </>
+    </Box>
   );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { BodyShort, Table, Tag } from '@navikt/ds-react';
+import { BodyShort, Box, Table, Tag, VStack } from '@navikt/ds-react';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
@@ -117,7 +116,7 @@ export const TilkommetAktivitetField = ({
     return tableRows;
   };
   return (
-    <>
+    <VStack gap="4">
       <div className={styles.aktivitetContainer}>
         <Table size="small" className={styles.aktivitetTable}>
           <Table.Header>
@@ -132,43 +131,45 @@ export const TilkommetAktivitetField = ({
           <Table.Body>{getInntektsforholdTableRows(vurderInntektsforholdPeriode)}</Table.Body>
         </Table>
       </div>
-      <VerticalSpacer sixteenPx />
       <div className={erAksjonspunktÅpent ? styles.aksjonspunktContainer : ''}>
         {fields.map((field, index) => (
           <div key={field.id}>
-            <TilkommetInntektsforholdField
-              key={field.id}
-              formName={formName}
-              formFieldIndex={formFieldIndex}
-              periodeFieldIndex={periodeFieldIndex}
-              inntektsforholdFieldIndex={index}
-              field={field}
-              readOnly={readOnly}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            />
-            {index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 && <VerticalSpacer fourtyPx />}
+            <Box marginBlock={index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? '0 10' : '0'}>
+              <TilkommetInntektsforholdField
+                key={field.id}
+                formName={formName}
+                formFieldIndex={formFieldIndex}
+                periodeFieldIndex={periodeFieldIndex}
+                inntektsforholdFieldIndex={index}
+                field={field}
+                readOnly={readOnly}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+              />
+            </Box>
           </div>
         ))}
         {skalViseBegrunnelse && (
           <>
-            <VerticalSpacer fourtyPx />
-            <TextAreaField
-              name={`${formName}.${formFieldIndex}.begrunnelse`}
-              label="Begrunnelse"
-              readOnly={readOnly}
-              validate={[required]}
-            />
-            <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
-            <VerticalSpacer sixteenPx />
-            <SubmitButton
-              isSubmittable={submittable}
-              isReadOnly={readOnly}
-              isSubmitting={formState.isSubmitting}
-              isDirty={formState.isDirty}
-            />
+            <Box marginBlock="10 0">
+              <TextAreaField
+                name={`${formName}.${formFieldIndex}.begrunnelse`}
+                label="Begrunnelse"
+                readOnly={readOnly}
+                validate={[required]}
+              />
+            </Box>
+            <VStack gap="4">
+              <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
+              <SubmitButton
+                isSubmittable={submittable}
+                isReadOnly={readOnly}
+                isSubmitting={formState.isSubmitting}
+                isDirty={formState.isDirty}
+              />
+            </VStack>
           </>
         )}
       </div>
-    </>
+    </VStack>
   );
 };

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Button, Modal, Select } from '@navikt/ds-react';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import { Button, Modal, Select, VStack } from '@navikt/ds-react';
 import { calcDays, periodFormat, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
@@ -68,28 +68,29 @@ export const PeriodesplittModal = ({
     <Modal width="500px" open={skalViseModal} onClose={lukkModal} aria-label="Del opp periode">
       <Modal.Header>Del opp periode</Modal.Header>
       <Modal.Body>
-        <div>
-          <Select label="Hvilken periode ønsker du å dele opp?" onChange={endreValgtPeriode} size="small">
-            <option value={undefined}>Velg periode</option>
-            {perioder.map(periode => (
-              <option key={periode.fom} value={periode.fom}>
-                {periodFormat(periode.fom, periode.tom)}
-              </option>
-            ))}
-          </Select>
-        </div>
-        <VerticalSpacer sixteenPx />
-        {periodeKanSplittes && (
-          <FlexContainer>
-            <FlexRow className={styles.datoRad}>
-              <PeriodesplittDatoValg
-                forhåndsvisPeriodesplitt={forhåndsvisPeriodesplitt}
-                periode={valgtPeriode}
-                setValgtDato={setValgtSplittdato}
-              />
-            </FlexRow>
-          </FlexContainer>
-        )}
+        <VStack gap="4">
+          <div>
+            <Select label="Hvilken periode ønsker du å dele opp?" onChange={endreValgtPeriode} size="small">
+              <option value={undefined}>Velg periode</option>
+              {perioder.map(periode => (
+                <option key={periode.fom} value={periode.fom}>
+                  {periodFormat(periode.fom, periode.tom)}
+                </option>
+              ))}
+            </Select>
+          </div>
+          {periodeKanSplittes && (
+            <FlexContainer>
+              <FlexRow className={styles.datoRad}>
+                <PeriodesplittDatoValg
+                  forhåndsvisPeriodesplitt={forhåndsvisPeriodesplitt}
+                  periode={valgtPeriode}
+                  setValgtDato={setValgtSplittdato}
+                />
+              </FlexRow>
+            </FlexContainer>
+          )}
+        </VStack>
       </Modal.Body>
       <Modal.Footer>
         <FlexContainer>

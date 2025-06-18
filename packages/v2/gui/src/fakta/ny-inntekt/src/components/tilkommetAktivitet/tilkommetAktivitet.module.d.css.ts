@@ -5,7 +5,6 @@ declare const styles: {
   readonly "aktivitetTable": string;
   readonly "bruttoInntektContainer": string;
   readonly "bruttoInntektCurrency": string;
-  readonly "bruttoInntektInput": string;
   readonly "edited": string;
   readonly "inntektColumn": string;
   readonly "inntektsmeldingTag": string;

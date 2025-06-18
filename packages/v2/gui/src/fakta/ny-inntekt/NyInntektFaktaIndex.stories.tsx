@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { AktivitetStatus, OpptjeningAktivitetType } from '@navikt/ft-kodeverk';
 
-import { NyInntektFaktaIndex } from '../NyInntektFaktaIndex';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from '../testdata/TilkommetAktivitetMedForlengelse';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from '../testdata/TilkommetAktivitetMedForlengelseLukketAP';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from '../testdata/TilkommetAktivitetRevurderingLøstTidligere';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplitt } from '../testdata/TilkommetAktivitetRevurderingLøstTidligere1MaiKryss';
-import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from '../testdata/TilkommetAktivitetTrePerioderHelgMellom';
-import { type Vilkår } from './types/Vilkår';
+import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
+import { type Vilkår } from './src/types/Vilkår';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from './testdata/TilkommetAktivitetMedForlengelseLukketAP';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from './testdata/TilkommetAktivitetRevurderingLøstTidligere';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplitt } from './testdata/TilkommetAktivitetRevurderingLøstTidligere1MaiKryss';
+import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from './testdata/TilkommetAktivitetTrePerioderHelgMellom';
 
 import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import '@navikt/ds-css';
