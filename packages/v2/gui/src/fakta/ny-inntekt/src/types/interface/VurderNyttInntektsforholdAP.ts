@@ -1,4 +1,4 @@
-import type { BeregningAvklaringsbehovTilBekreftelse } from '../BeregningAvklaringsbehovTilBekreftelse';
+import type { BeregningAvklaringsbehovTilBekreftelse } from '../BeregningAvklaringsbehovTilBekreftelse.js';
 import { FaktaFordelBeregningAvklaringsbehovCode } from './FaktaFordelBeregningAvklaringsbehovCode.js';
 
 export type VurderNyttInntektsforholdAndelTransformedValues = {

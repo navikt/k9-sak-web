@@ -10,13 +10,13 @@ import { required } from '@navikt/ft-form-validators';
 import type {
   TilkommetAktivitetFormValues,
   TilkommetAktivitetValues,
-} from '../../types/FordelBeregningsgrunnlagPanelValues';
+} from '../../types/FordelBeregningsgrunnlagPanelValues.js';
 import { FaktaFordelBeregningAvklaringsbehovCode } from '../../types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
-import { SubmitButton } from '../felles/SubmitButton';
-import { VurdertIForrigeBehandlingIcon } from '../felles/VurdertIForrigeBehandlingIcon';
-import { TidligereVurderteAktiviteterPanel } from './TidligereVurderteAktiviteterPanel';
-import { TilkommetAktivitetField } from './TilkommetAktivitetField';
-import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils';
+import { SubmitButton } from '../felles/SubmitButton.js';
+import { VurdertIForrigeBehandlingIcon } from '../felles/VurdertIForrigeBehandlingIcon.js';
+import { TidligereVurderteAktiviteterPanel } from './TidligereVurderteAktiviteterPanel.js';
+import { TilkommetAktivitetField } from './TilkommetAktivitetField.js';
+import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils.js';
 
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { PeriodLabel } from '@navikt/ft-ui-komponenter';
@@ -106,7 +106,7 @@ export const TilkommetAktivitetAccordion = ({
   }
 
   return (
-    <VStack gap="6">
+    <VStack gap="9">
       <Accordion className={styles.statusOk}>
         {tidligereVurderte.map(tidligereVurdertPeriode => (
           <Accordion.Item

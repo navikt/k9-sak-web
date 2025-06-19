@@ -4160,27 +4160,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-ny-inntekt@workspace:packages/fakta-ny-inntekt":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-ny-inntekt@workspace:packages/fakta-ny-inntekt"
-  dependencies:
-    "@navikt/aksel-icons": "npm:7.23.1"
-    "@navikt/ds-css": "npm:7.23.1"
-    "@navikt/ds-react": "npm:7.23.1"
-    "@navikt/ft-form-hooks": "npm:^6.3.13"
-    "@navikt/ft-form-validators": "npm:^3.2.5"
-    "@navikt/ft-ui-komponenter": "npm:^4.5.1"
-    "@navikt/ft-utils": "npm:^3.6.3"
-    classnames: "npm:2.5.1"
-    core-js: "npm:3.43.0"
-    dayjs: "npm:1.11.13"
-    react: "npm:19.1.0"
-    react-hook-form: "npm:7.58.1"
-    react-intl: "npm:7.1.11"
-    uuid: "npm:11.1.0"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-om-barnet@npm:1.0.0, @k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet"
