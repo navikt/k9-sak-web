@@ -280,7 +280,7 @@ export const SettPaVentModal = ({
                 </BodyShort>
               )}
             </div>
-            <div className={showSelect ? `${styles.buttonContainer} mt-11` : styles.buttonContainer}>
+            <div className={showSelect ? `${styles.buttonContainer} mt-8` : styles.buttonContainer}>
               <Button
                 variant="primary"
                 size="small"
