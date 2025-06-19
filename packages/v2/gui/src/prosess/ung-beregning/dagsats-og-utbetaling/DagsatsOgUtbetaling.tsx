@@ -80,11 +80,10 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
   const grunnrettData = satser[satser.length - 1]?.satsperioder[0];
-  const sisteUtbetaling = satser.find(sats => sats.status === UngdomsytelseUtbetaltMånedDtoStatus.UTBETALT);
   return (
     <div className={styles.dagsatsSection}>
       <VStack gap="4">
-        <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} sisteUtbetaling={sisteUtbetaling} />
+        <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
         <VStack gap="8">
           {grunnrettData && (
             <div>
