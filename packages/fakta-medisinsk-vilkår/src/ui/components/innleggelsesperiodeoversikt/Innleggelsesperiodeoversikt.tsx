@@ -125,6 +125,7 @@ const Innleggelsesperiodeoversikt = ({
               Rediger liste
             </Button>
           )}
+          readOnly={readOnly}
         />
         <WriteAccessBoundContent
           otherRequirementsAreMet={innleggelsesperioder.length === 0}
