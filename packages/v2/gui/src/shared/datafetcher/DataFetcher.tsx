@@ -1,4 +1,5 @@
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
 
@@ -8,43 +9,20 @@ interface DataFetcherProps {
 }
 
 const DataFetcher = ({ url, contentRenderer }: DataFetcherProps) => {
-  const [fetchedData, setFetchedData] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [hasError, setHasError] = React.useState(false);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['dataFetcher', url],
+    queryFn: async ({ signal }) => {
+      const response = await axios.get(url, {
+        ...addLegacySerializerOption(),
+        signal,
+      });
+      return response.data;
+    },
+    refetchOnWindowFocus: false,
+    retry: 3,
+  });
 
-  const httpCanceler = React.useMemo(() => axios.CancelToken.source(), [url]);
-
-  React.useEffect(() => {
-    let isMounted = true;
-    axios
-      .get(
-        url,
-        addLegacySerializerOption({
-          cancelToken: httpCanceler.token,
-        }),
-      )
-      .then(
-        response => {
-          if (isMounted) {
-            setFetchedData(response.data);
-            setIsLoading(false);
-          }
-        },
-        () => {
-          if (isMounted) {
-            setHasError(true);
-            setIsLoading(false);
-          }
-        },
-      );
-
-    return () => {
-      isMounted = false;
-      httpCanceler.cancel();
-    };
-  }, []);
-
-  return <>{contentRenderer(fetchedData, isLoading, hasError)}</>;
+  return <>{contentRenderer(data, isLoading, isError)}</>;
 };
 
 export default DataFetcher;
