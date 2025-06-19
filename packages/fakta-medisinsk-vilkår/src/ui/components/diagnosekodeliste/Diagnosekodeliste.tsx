@@ -1,6 +1,7 @@
-import React, { type JSX } from 'react';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
+import { type JSX } from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
+import ContainerContext from '../../context/ContainerContext';
 import styles from './diagnosekodeliste.module.css';
 
 interface DiagnosekodelisteProps {
@@ -8,37 +9,42 @@ interface DiagnosekodelisteProps {
   onDeleteClick: (diagnosekode: string) => void;
 }
 
-const Diagnosekodeliste = ({ diagnosekoder, onDeleteClick }: DiagnosekodelisteProps): JSX.Element => (
-  <ul className={styles.diagnosekodeliste}>
-    {diagnosekoder.map(diagnosekode => {
-      const diagnosekodeBeskrivelse = diagnosekode?.beskrivelse
-        ? `${diagnosekode.kode} - ${diagnosekode.beskrivelse}`
-        : diagnosekode?.kode;
+const Diagnosekodeliste = ({ diagnosekoder, onDeleteClick }: DiagnosekodelisteProps): JSX.Element => {
+  const { readOnly } = React.useContext(ContainerContext);
 
-      return (
-        <li key={`${diagnosekode.kode}`} className={styles.diagnosekodeliste__element}>
-          <p className={styles.beskrivelse}>{diagnosekodeBeskrivelse}</p>
-          <WriteAccessBoundContent
-            contentRenderer={() => (
-              <div className={styles.lenkeContainer}>
-                <button
-                  type="button"
-                  className={`${styles.lenkeContainer__slettLenke} navds-link`}
-                  onClick={e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onDeleteClick(diagnosekode.kode);
-                  }}
-                >
-                  Slett
-                </button>
-              </div>
-            )}
-          />
-        </li>
-      );
-    })}
-  </ul>
-);
+  return (
+    <ul className={styles.diagnosekodeliste}>
+      {diagnosekoder.map(diagnosekode => {
+        const diagnosekodeBeskrivelse = diagnosekode?.beskrivelse
+          ? `${diagnosekode.kode} - ${diagnosekode.beskrivelse}`
+          : diagnosekode?.kode;
+
+        return (
+          <li key={`${diagnosekode.kode}`} className={styles.diagnosekodeliste__element}>
+            <p className={styles.beskrivelse}>{diagnosekodeBeskrivelse}</p>
+            <WriteAccessBoundContent
+              contentRenderer={() => (
+                <div className={styles.lenkeContainer}>
+                  <button
+                    type="button"
+                    className={`${styles.lenkeContainer__slettLenke} navds-link`}
+                    onClick={e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onDeleteClick(diagnosekode.kode);
+                    }}
+                  >
+                    Slett
+                  </button>
+                </div>
+              )}
+              readOnly={readOnly}
+            />
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 export default Diagnosekodeliste;

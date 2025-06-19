@@ -1,20 +1,20 @@
-import React, { type JSX } from 'react';
-import ContainerContext from '../../context/ContainerContext';
+import { type JSX } from 'react';
 
 interface WriteAccessBoundContentProps {
   contentRenderer: () => JSX.Element;
   otherRequirementsAreMet?: boolean;
+  readOnly: boolean;
 }
 
 const WriteAccessBoundContent = ({
   contentRenderer,
   otherRequirementsAreMet,
+  readOnly,
 }: WriteAccessBoundContentProps): JSX.Element => {
-  const { readOnly } = React.useContext(ContainerContext);
   if (readOnly === false && (otherRequirementsAreMet === true || otherRequirementsAreMet === undefined)) {
     return contentRenderer();
   }
-  return null;
+  return <></>;
 };
 
 export default WriteAccessBoundContent;
