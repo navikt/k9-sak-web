@@ -3,7 +3,7 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { type JSX } from 'react';
+import { useContext, type JSX } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
@@ -22,7 +22,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: BeredskapsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const { readOnly } = React.useContext(ContainerContext) || {};
+  const { readOnly } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = beredskapsperiode;
   return (
     <DetailView

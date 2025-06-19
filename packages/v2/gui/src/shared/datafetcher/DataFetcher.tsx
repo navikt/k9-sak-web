@@ -1,6 +1,6 @@
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import axios from 'axios';
 import React from 'react';
-import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 interface DataFetcherProps {
   url: string;

@@ -2,7 +2,7 @@ import { prettifyDateString } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
-import { useState, type JSX } from 'react';
+import { useContext, useState, type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
@@ -18,7 +18,7 @@ interface DuplikatlisteProps {
 const Duplikatliste = ({ dokumenter, onRemoveDuplikat }: DuplikatlisteProps): JSX.Element => {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
-  const { readOnly } = React.useContext(ContainerContext);
+  const { readOnly } = useContext(ContainerContext);
 
   return (
     <>

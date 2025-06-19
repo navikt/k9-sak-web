@@ -1,5 +1,5 @@
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
-import { type JSX } from 'react';
+import { useContext, type JSX } from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
 import ContainerContext from '../../context/ContainerContext';
 import styles from './diagnosekodeliste.module.css';
@@ -10,7 +10,7 @@ interface DiagnosekodelisteProps {
 }
 
 const Diagnosekodeliste = ({ diagnosekoder, onDeleteClick }: DiagnosekodelisteProps): JSX.Element => {
-  const { readOnly } = React.useContext(ContainerContext);
+  const { readOnly } = useContext(ContainerContext);
 
   return (
     <ul className={styles.diagnosekodeliste}>
