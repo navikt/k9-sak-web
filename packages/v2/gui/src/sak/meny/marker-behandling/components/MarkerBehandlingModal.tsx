@@ -115,7 +115,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
   const gjeldendeMerknader = merknaderFraLos ? getGjeldendeMerknader(merknaderFraLos) : [];
 
   return (
-    <Modal open onClose={lukkModal} aria-label="Modal for markering av behandling" portal width="38.375rem">
+    <Modal open onClose={lukkModal} aria-label="Modal for markering av behandling" width="38.375rem">
       <Modal.Header>
         <Heading as="h3" size="small">
           Marker behandling og send til egen kø

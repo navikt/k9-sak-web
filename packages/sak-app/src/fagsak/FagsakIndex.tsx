@@ -205,7 +205,7 @@ const FagsakIndex = () => {
   );
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const erHastesak = merknaderFraLos?.hastesak.aktiv;
+  const erHastesak = merknaderFraLos?.hastesak?.aktiv;
 
   if (!fagsak) {
     if (isRequestNotDone(fagsakState)) {
