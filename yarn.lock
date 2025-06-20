@@ -5042,12 +5042,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250611222625":
-  version: 2.0.20250611222625
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250611222625::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250611222625%2Fdaf753b7d91ab59484161490313c72523ca35fb2"
-  checksum: 10/47c9c32b42ad8092252f955fd36378ca89524fa3fb5f70693130ca9e60065db0e0fdba49e88f390758237e5c2cf3f506d4148859b9caa895b0d780a6b605a5a2
+"@navikt/k9-sak-typescript-client@portal:/Users/Vebjorn.Nordby/git/k9-sak/web/target/ts-client::locator=k9-sak-web%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@navikt/k9-sak-typescript-client@portal:/Users/Vebjorn.Nordby/git/k9-sak/web/target/ts-client::locator=k9-sak-web%40workspace%3A."
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@navikt/ung-sak-typescript-client@npm:0.2.20250617141600":
   version: 0.2.20250617141600
