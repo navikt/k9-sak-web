@@ -350,7 +350,7 @@ export const BehandlingMenuIndex = ({
           />
         )),
         new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-          <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} brukHastekøMarkering />
+          <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
           <MenyHenleggIndex
