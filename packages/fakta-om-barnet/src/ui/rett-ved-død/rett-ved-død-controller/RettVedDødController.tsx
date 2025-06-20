@@ -1,10 +1,10 @@
 import { get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Button } from '@navikt/ds-react';
 import { useContext, useEffect, useMemo, useReducer, type JSX } from 'react';
 import { RettVedDød } from '../../../types/RettVedDød';
 import ContainerContext from '../../context/ContainerContext';
-import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
 import RettVedDødForm from '../rett-ved-død-form/RettVedDødForm';
 import RettVedDødVurderingsdetaljer from '../rett-ved-død-vurderingsdetaljer/RettVedDødVurderingsdetaljer';
 import ActionType from './actionTypes';
@@ -64,6 +64,7 @@ const RettVedDødController = (): JSX.Element => {
                   Rediger vurdering
                 </Button>
               )}
+              readOnly={readOnly}
             />
           </div>
           <RettVedDødVurderingsdetaljer rettVedDød={rettVedDød} />

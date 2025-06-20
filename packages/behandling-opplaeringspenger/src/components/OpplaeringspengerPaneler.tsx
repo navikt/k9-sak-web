@@ -7,6 +7,7 @@ import {
   Rettigheter,
   SettPaVentParams,
 } from '@k9-sak-web/behandling-felles';
+import DataFetcher from '@k9-sak-web/gui/shared/datafetcher/DataFetcher.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -17,11 +18,10 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
-import DataFetcher from './DataFetcher';
 import OpplaeringspengerFakta from './OpplaeringspengerFakta';
 import OpplaeringspengerProsess from './OpplaeringspengerProsess';
 

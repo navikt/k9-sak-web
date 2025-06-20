@@ -5,13 +5,13 @@ import { Alert, Box, Button, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import DokumentKnapp from '../dokument-knapp/DokumentKnapp';
 import Duplikatliste from '../duplikatliste/Duplikatliste';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './strukturertDokumentDetaljer.module.css';
 
 interface StrukturertDokumentDetaljerProps {
@@ -67,7 +67,7 @@ const StrukturertDokumentDetaljer = ({
   strukturerteDokumenter,
   onRemoveDuplikat,
 }: StrukturertDokumentDetaljerProps): JSX.Element => {
-  const { fagsakYtelseType } = React.useContext(ContainerContext);
+  const { fagsakYtelseType, readOnly } = React.useContext(ContainerContext);
   const { type, datert, links, duplikater, duplikatAvId } = dokument;
   const harDuplikater = duplikater?.length > 0;
   const dokumentinnholdLink = findLinkByRel(LinkRel.DOKUMENT_INNHOLD, links);
@@ -97,6 +97,7 @@ const StrukturertDokumentDetaljer = ({
               Endre dokument
             </Button>
           )}
+          readOnly={readOnly}
         />
       )}
     >

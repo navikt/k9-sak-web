@@ -1,19 +1,19 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 
+import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Heading, HStack, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
-import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
 import { findLinkByRel } from '../../../util/linkUtils';
+import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import DiagnosekodeModal from '../diagnosekode-modal/DiagnosekodeModal';
 import Diagnosekodeliste from '../diagnosekodeliste/Diagnosekodeliste';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 
 // initialize diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
 // This reuse is possible since we don't use the paging functionality in the instance anyways.
@@ -33,7 +33,7 @@ interface DiagnosekodeoversiktProps {
 }
 
 const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, readOnly } = React.useContext(ContainerContext);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const addButtonRef = React.useRef<HTMLButtonElement>(undefined);
 
@@ -132,6 +132,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
               ref={addButtonRef}
             />
           )}
+          readOnly={readOnly}
         />
       </HStack>
       <hr style={{ color: '#B7B1A9' }} />
