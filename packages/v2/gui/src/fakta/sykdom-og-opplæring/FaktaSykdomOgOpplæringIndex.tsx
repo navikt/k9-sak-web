@@ -12,7 +12,11 @@ import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.j
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
-import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  VilkårMedPerioderDtoVilkarType,
+  VilkårPeriodeDtoVilkarStatus,
+  type OpprettLangvarigSykdomsVurderingData,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
@@ -54,7 +58,12 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
 
 type payloads =
   | InstitusjonAksjonspunktPayload
-  | { langvarigsykdomsvurderingUuid: string }
+  | {
+      langvarigsykdomsvurderingUuid?: string;
+      begrunnelse?: string;
+      vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'];
+    }
+  | { behandlingUuid?: string }
   | {
       perioder: {
         periode: {
@@ -78,7 +87,7 @@ type payloads =
       }[];
     };
 
-type aksjonspunktPayload = { kode: string; begrunnelse: string | null } & payloads;
+type aksjonspunktPayload = { kode: string; begrunnelse?: string | null } & payloads;
 type SykdomOgOpplæringProps = {
   readOnly: boolean;
   submitCallback: (payload: aksjonspunktPayload[]) => void;
@@ -89,7 +98,10 @@ type SykdomOgOpplæringProps = {
 type SykdomOgOpplæringContext = {
   readOnly: boolean;
   løsAksjonspunkt9300: (payload: InstitusjonAksjonspunktPayload) => void;
-  løsAksjonspunkt9301: (payload: { langvarigsykdomsvurderingUuid: string; begrunnelse: string }) => void;
+  løsAksjonspunkt9301: (
+    langvarigsykdomsvurderingUuid?: string,
+    vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
+  ) => void;
   løsAksjonspunkt9302: (payload: {
     periode: {
       fom: string;
@@ -137,14 +149,39 @@ const FaktaSykdomOgOpplæringIndex = ({
     ]);
   };
 
-  const løsAksjonspunkt9301 = (payload: { langvarigsykdomsvurderingUuid: string; begrunnelse: string }) => {
-    submitCallback([
-      {
-        kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
-        begrunnelse: payload.begrunnelse,
-        langvarigsykdomsvurderingUuid: payload.langvarigsykdomsvurderingUuid,
-      },
-    ]);
+  const løsAksjonspunkt9301 = (
+    langvarigsykdomsvurderingUuid?: string,
+    vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
+  ) => {
+    if (langvarigsykdomsvurderingUuid && vurderingData) {
+      submitCallback([
+        {
+          kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+          begrunnelse: vurderingData.begrunnelse,
+          langvarigsykdomsvurderingUuid,
+          vurderingData,
+        },
+      ]);
+      return;
+    }
+    if (vurderingData) {
+      submitCallback([
+        {
+          kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+          begrunnelse: vurderingData.begrunnelse,
+          vurderingData,
+        },
+      ]);
+    }
+
+    if (langvarigsykdomsvurderingUuid) {
+      submitCallback([
+        {
+          kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+          langvarigsykdomsvurderingUuid,
+        },
+      ]);
+    }
   };
 
   const løsAksjonspunkt9302 = (payload: {

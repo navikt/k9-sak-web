@@ -1,10 +1,18 @@
-import { BodyLong, BodyShort, Tag } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { ICD10 } from '@navikt/diagnosekoder';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { PencilIcon } from '@navikt/aksel-icons';
+import { useContext } from 'react';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
+
 const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+  const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
+  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
+
   const sykdomGodkjentText = () => {
     if (vurdering.godkjent === 'ja') {
       return 'Ja';
@@ -48,6 +56,18 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
           size="small"
           content={<Diagnoser diagnosekoder={vurdering.diagnosekoder} />}
         />
+      )}
+      {vurderingBruktIAksjonspunkt?.vurderingUuid === vurdering.uuid && (
+        <div>
+          <Button
+            size="small"
+            variant="primary"
+            icon={<PencilIcon />}
+            onClick={() => løsAksjonspunkt9301(vurdering.uuid)}
+          >
+            Benytt denne vurderingen
+          </Button>
+        </div>
       )}
     </div>
   );

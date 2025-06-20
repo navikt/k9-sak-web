@@ -9,12 +9,10 @@ export const NavigasjonsmenyRad = ({
   active,
   kanBenyttes,
   datoOnClick,
-  benyttOnClick,
 }: {
   periode: Vurderingselement;
   active: boolean;
   kanBenyttes: boolean;
-  benyttOnClick: () => void;
   datoOnClick: () => void;
 }) => {
   return (
@@ -36,13 +34,7 @@ export const NavigasjonsmenyRad = ({
             </Button>
           </div>
         </div>
-        {kanBenyttes ? (
-          <div className="flex items-center">
-            <Button onClick={benyttOnClick} size="small">
-              Benytt
-            </Button>
-          </div>
-        ) : (
+        {kanBenyttes ? null : (
           <div className="flex gap-1 ml-[-4px]">
             <CheckmarkIcon fontSize={24} className="text-green-500" />
             <BodyShort className="mt-[2px]">Valgt</BodyShort>
