@@ -47,7 +47,7 @@ const SykdomUperiodisertForm = ({
     formMethods.setValue('diagnosekoder', vurdering.diagnosekoder || []);
     formMethods.setValue('begrunnelse', vurdering.begrunnelse);
     formMethods.setValue('godkjent', vurdering.godkjent);
-  }, [vurdering, formMethods]);
+  }, []);
 
   const godkjent = formMethods.watch('godkjent');
   useEffect(() => {
