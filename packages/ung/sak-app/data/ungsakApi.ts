@@ -64,6 +64,7 @@ export enum UngSakApiKeys {
   LOS_LAGRE_MERKNAD = 'LOS_LAGRE_MERKNAD',
   LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
   BREV_MOTTAKER_ORGANISASJON = 'BREV_MOTTAKER_ORGANISASJON',
+  UNGDOMSPROGRAM_INFORMASJON = 'UNGDOMSPROGRAM_INFORMASJON',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -113,6 +114,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandling-perioder-årsak-med-vilkår', UngSakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
   .withRel('los-lagre-merknad', UngSakApiKeys.LOS_LAGRE_MERKNAD)
   .withRel('los-hente-merknad', UngSakApiKeys.LOS_HENTE_MERKNAD)
+  .withRel('ungdomsprogram-informasjon', UngSakApiKeys.UNGDOMSPROGRAM_INFORMASJON)
 
   .withPost('/ung/tilbake/api/brev/forhandsvis', UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(

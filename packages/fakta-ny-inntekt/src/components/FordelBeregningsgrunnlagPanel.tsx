@@ -1,5 +1,3 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import type { ArbeidsgiverOpplysningerPerId } from '../types/ArbeidsgiverOpplysninger.js';
 import type { BeregningAvklaringsbehov } from '../types/BeregningAvklaringsbehov.js';
 import type { Beregningsgrunnlag } from '../types/Beregningsgrunnlag.js';
@@ -69,7 +67,6 @@ export const FordelBeregningsgrunnlagPanel = ({
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             vilkarperioder={vilkarperioder}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
     </>
