@@ -39,6 +39,7 @@ const ReisetidIndex = () => {
               valgtPeriode={valgtVurdering}
               perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
+              nyesteFørst={false}
             />
           </>
         )}
