@@ -3,7 +3,7 @@ import { EndreMerknadRequestMerknadKode, type MerknadResponse } from '@k9-sak-we
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
+import { Bleed, BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
 import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useQuery } from '@tanstack/react-query';
@@ -136,13 +136,15 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                     <List.Item title={merknad.tittel} key={merknad.tittel}>
                       <HStack gap="12" align="center" justify="space-between">
                         <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
-                        <Button
-                          type="button"
-                          onClick={() => slettMerknad(merknad.merknadKode)}
-                          variant="tertiary"
-                          size="small"
-                          icon={<TrashIcon fontSize="1.5rem" title="Slett merknad" />}
-                        />
+                        <Bleed marginBlock="1 0">
+                          <Button
+                            type="button"
+                            onClick={() => slettMerknad(merknad.merknadKode)}
+                            variant="tertiary"
+                            size="small"
+                            icon={<TrashIcon fontSize="1.5rem" title="Slett merknad" />}
+                          />
+                        </Bleed>
                       </HStack>
                     </List.Item>
                   ))}
