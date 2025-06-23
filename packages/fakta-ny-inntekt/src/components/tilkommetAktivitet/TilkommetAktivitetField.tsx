@@ -4,11 +4,10 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { BodyShort, Table, Tag } from '@navikt/ds-react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { EditedIcon, PeriodLabel } from '@navikt/ft-ui-komponenter';
-import { formatCurrencyWithKr } from '@navikt/ft-utils';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { BeløpLabel, EditedIcon, PeriodLabel } from '@navikt/ft-ui-komponenter';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { SubmitButton } from '../felles/SubmitButton';
@@ -90,13 +89,13 @@ export const TilkommetAktivitetField = ({
               <BodyShort size="small">
                 {harBruttoInntekt && !harInntektsmelding && (
                   <>
-                    {formatCurrencyWithKr(inntektsforhold.bruttoInntektPrÅr || 0)}
+                    <BeløpLabel beløp={inntektsforhold.bruttoInntektPrÅr ?? 0} kr />
                     <EditedIcon />
                   </>
                 )}
                 {harInntektsmelding && (
                   <>
-                    {formatCurrencyWithKr(inntektsforhold.inntektFraInntektsmeldingPrÅr || 0)}
+                    <BeløpLabel beløp={inntektsforhold.inntektFraInntektsmeldingPrÅr ?? 0} kr />
                     <Tag className={styles.inntektsmeldingTag} variant="neutral" size="xsmall">
                       IM
                     </Tag>
