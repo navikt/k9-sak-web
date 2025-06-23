@@ -111,7 +111,7 @@ const SykdomUperiodisertIndex = () => {
                     (aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.UTFØRT &&
                       periode.id !== vurderingBruktIAksjonspunkt?.vurderingUuid)
                   }
-                  datoOnClick={() => onPeriodeClick(periode)}
+                  onClick={() => onPeriodeClick(periode)}
                 />
               )}
             />
