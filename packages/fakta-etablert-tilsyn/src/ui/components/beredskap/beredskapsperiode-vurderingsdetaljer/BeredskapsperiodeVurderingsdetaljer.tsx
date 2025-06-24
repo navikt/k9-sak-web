@@ -22,7 +22,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: BeredskapsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const { readOnly } = useContext(ContainerContext) || {};
+  const { readOnly = false } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = beredskapsperiode;
   return (
     <DetailView
