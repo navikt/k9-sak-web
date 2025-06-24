@@ -142,9 +142,9 @@ const UttakDetaljer = ({
         {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (
           <Box
             className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightTilsyn,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightTilsyn,
+              uttakDetaljerGraderingDetaljer: true,
+              uttakDetaljerGraderingDetaljerHighlight: shouldHighlightTilsyn,
+              uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightTilsyn,
             })}
             title="Gradering mot tilsyn"
           >
@@ -171,9 +171,9 @@ const UttakDetaljer = ({
 
         <Box
           className={cx({
-            uttakDetaljer__graderingDetaljer: true,
-            uttakDetaljer__graderingDetaljer__highlight: shouldHighlightArbeidstid,
-            uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightArbeidstid,
+            uttakDetaljerGraderingDetaljer: true,
+            uttakDetaljerGraderingDetaljerHighlight: shouldHighlightArbeidstid,
+            uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightArbeidstid,
           })}
           title="Gradering mot arbeidstid"
         >
@@ -199,9 +199,9 @@ const UttakDetaljer = ({
         {inntektsgradering && (
           <Box
             className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightInntekt,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightInntekt,
+              uttakDetaljerGraderingDetaljer: true,
+              uttakDetaljerGraderingDetaljerHighlight: shouldHighlightInntekt,
+              uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightInntekt,
             })}
             title="Gradering mot inntekt"
           >

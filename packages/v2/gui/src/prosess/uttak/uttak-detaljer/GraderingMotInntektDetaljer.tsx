@@ -112,16 +112,16 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
         <BodyShort as="div" size="small" className="leading-6">
           {løpendeInntekt} (utbetalt lønn) /
         </BodyShort>
-        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true, 'leading-6': true })}>
+        <BodyShort as="div" size="small" className={cx({ uttakDetaljerBeregningStrek: true, 'leading-6': true })}>
           {beregningsgrunnlag} (beregningsgrunnlag)
         </BodyShort>
-        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningSum: true, 'leading-6': true })}>
+        <BodyShort as="div" size="small" className={cx({ uttakDetaljerBeregningSum: true, 'leading-6': true })}>
           = {reduksjonsProsent} % reduksjon pga. utbetalt lønn
         </BodyShort>
       </VStack>
 
       <Box>
-        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__detailSum: true, 'leading-6': true })}>
+        <BodyShort as="div" size="small" className={cx({ uttakDetaljerDetailSum: true, 'leading-6': true })}>
           = {graderingsProsent} % totalt inntektstap
         </BodyShort>
       </Box>

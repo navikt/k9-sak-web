@@ -2,112 +2,112 @@
   padding: var(--a-spacing-4);
 }
 
-.uttakDetaljer__graderingDetaljer {
+.uttakDetaljerGraderingDetaljer {
   background-color: var(--a-gray-50);
   padding: var(--a-spacing-5);
   color: var(--a-text-default);
   border-radius: 5px;
 }
 
-.uttakDetaljer__graderingDetaljer__highlight {
+.uttakDetaljerGraderingDetaljerHighlight {
   background-color: var(--a-deepblue-50);
 }
 
-.uttakDetaljer__graderingDetaljer__notHighlighted {
+.uttakDetaljerGraderingDetaljerNotHighlighted {
   padding-top: var(--a-spacing-10);
 }
 
-.uttakDetaljer__graderingDetaljer svg {
+.uttakDetaljerGraderingDetaljer svg {
   color: var(--a-lightblue-800);
   font-size: x-large;
   margin: 0 var(--a-spacing-1) 0;
 }
 
-.uttakDetaljer__detailItem {
+.uttakDetaljerDetailItem {
   padding: var(--a-spacing-1) 0;
 }
 
-.uttakDetaljer__detailSum {
+.uttakDetaljerDetailSum {
   padding: var(--a-spacing-6) 0 var(--a-spacing-1);
   border-bottom: 3px solid var(--a-lightblue-700);
   display: inline-block;
   vertical-align: middle;
 }
 
-.uttakDetaljer__data__questionMark svg {
+.uttakDetaljerDataQuestionMark svg {
   height: var(--a-font-size-large);
 }
 
-.uttakDetaljer__expandableDetailItem {
+.uttakDetaljerExpandableDetailItem {
   padding: var(--a-spacing-1) 0;
   border-bottom: 1px solid var(--a-border-subtle);
 }
 
-.uttakDetaljer__expandableDetailItem__header a {
+.uttakDetaljerExpandableDetailItemHeader a {
   color: var(--a-text-default);
   text-decoration: none;
 }
 
-.uttakDetaljer__expandableDetailItem a > div {
+.uttakDetaljerExpandableDetailItem a > div {
   display: flex;
 }
 
-.uttakDetaljer__expandableDetailItem span {
+.uttakDetaljerExpandableDetailItem span {
   flex-grow: 1;
 }
 
-.uttakDetaljer__expandableDetailItem svg {
+.uttakDetaljerExpandableDetailItem svg {
   justify-self: right;
 }
 
-.uttakDetaljer__expandableDetailItem__contentCollapsed {
+.uttakDetaljerExpandableDetailItemContentCollapsed {
   display: none;
 }
 
-.uttakDetaljer__nyGradering {
+.uttakDetaljerNyGradering {
   margin-top: var(--a-spacing-8);
   display: inline-block;
 }
 
-.uttakDetaljer__tag {
+.uttakDetaljerTag {
   margin-top: -2rem;
   margin-bottom: 1rem;
 }
 
-.uttakDetaljer__beregningFirma {
+.uttakDetaljerBeregningFirma {
   margin: var(--a-spacing-5) 0;
 }
 
-.uttakDetaljer__taptInntektBeregning {
+.uttakDetaljerTaptInntektBeregning {
   margin: var(--a-spacing-4) 0;
   display: inline-block;
 }
 
-.uttakDetaljer__taptInntektAnnotasjon {
+.uttakDetaljerTaptInntektAnnotasjon {
   display: inline-block;
   width: 0.75rem;
 }
 
-.uttakDetaljer__beregningStrek {
+.uttakDetaljerBeregningStrek {
   border-bottom: 1px solid var(--a-border-subtle);
   padding-bottom: var(--a-spacing-1);
 }
 
-.uttakDetaljer__beregningSum {
+.uttakDetaljerBeregningSum {
   padding-top: var(--a-spacing-1);
 }
 
-.uttakDetaljer__utnullet {
+.uttakDetaljerUtnullet {
   text-decoration: line-through;
   color: var(--a-gray-500);
 }
 
-.uttakDetaljer__nyTag {
+.uttakDetaljerNyTag {
   margin-left: var(--a-spacing-1);
   display: inline-block;
 }
 
-.uttakDetaljer__detailtext {
+.uttakDetaljerDetailtext {
   color: var(--a-text-subtle);
   padding-top: var(--a-spacing-3);
   display: inline-block;
