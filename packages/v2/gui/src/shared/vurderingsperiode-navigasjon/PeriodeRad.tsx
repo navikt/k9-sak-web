@@ -3,7 +3,6 @@ import { Period } from '@navikt/ft-utils';
 import {
   Buildings3Icon,
   CheckmarkCircleFillIcon,
-  ChevronDownIcon,
   ChevronRightIcon,
   ExclamationmarkTriangleFillIcon,
   XMarkOctagonFillIcon,
@@ -88,7 +87,7 @@ export const RadDato = ({ perioder, active }: { perioder: Period[]; active: bool
 export const RadChevron = ({ active }: { active: boolean }) => {
   return (
     <div className="mr-4 float-right">
-      {active ? <ChevronRightIcon fontSize={24} /> : <ChevronDownIcon fontSize={24} />}
+      {active ? <ChevronRightIcon fontSize={24} /> : <ChevronRightIcon fontSize={24} className="opacity-50" />}
     </div>
   );
 };

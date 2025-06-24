@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultStory: Story = {
   args: {
-    behandling: { uuid: '123' },
+    behandling: { uuid: '123', versjon: 1 },
     api,
     barn: [
       {
