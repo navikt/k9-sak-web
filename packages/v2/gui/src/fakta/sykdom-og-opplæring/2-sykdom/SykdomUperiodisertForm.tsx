@@ -8,15 +8,7 @@ import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-re
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
 import { useContext, useEffect } from 'react';
-import {
-  useOppdaterSykdomsvurdering,
-  useOpprettSykdomsvurdering,
-  useVurdertLangvarigSykdom,
-} from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { useQueryClient } from '@tanstack/react-query';
-import { SykdomUperiodisertContext } from './SykdomUperiodisertIndex';
-import { BehandlingContext } from '../../../BehandlingContext';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
   Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
@@ -42,26 +34,7 @@ const SykdomUperiodisertForm = ({
   setRedigering: (redigering: boolean) => void;
   redigering: boolean;
 }) => {
-  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
-  const { setNyVurdering } = useContext(SykdomUperiodisertContext);
-  const { refetchBehandling } = useContext(BehandlingContext);
-  const queryClient = useQueryClient();
-  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
-  const { mutate: opprettSykdomsvurdering } = useOpprettSykdomsvurdering({
-    onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
-      setNyVurdering(false);
-    },
-  });
-  const { mutate: oppdaterSykdomsvurdering } = useOppdaterSykdomsvurdering({
-    onSuccess: async data => {
-      await queryClient.refetchQueries({ queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid] });
-      if (vurderingBruktIAksjonspunkt?.vurderingUuid === data.uuid) {
-        await refetchBehandling();
-      }
-      setRedigering(false);
-    },
-  });
+  const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm({
     defaultValues: {
       diagnosekoder: vurdering.diagnosekoder || [],
@@ -74,7 +47,7 @@ const SykdomUperiodisertForm = ({
     formMethods.setValue('diagnosekoder', vurdering.diagnosekoder || []);
     formMethods.setValue('begrunnelse', vurdering.begrunnelse);
     formMethods.setValue('godkjent', vurdering.godkjent);
-  }, [vurdering, formMethods]);
+  }, []);
 
   const godkjent = formMethods.watch('godkjent');
   useEffect(() => {
@@ -92,15 +65,14 @@ const SykdomUperiodisertForm = ({
       formMethods={formMethods}
       onSubmit={data => {
         return vurdering.uuid
-          ? oppdaterSykdomsvurdering({
+          ? løsAksjonspunkt9301(vurdering.uuid, {
               behandlingUuid,
               diagnoser: data.diagnosekoder,
               begrunnelse: data.begrunnelse,
               godkjent: data.godkjent === 'ja',
-              uuid: vurdering.uuid,
               avslagsårsak: data.godkjent !== 'ja' ? finnAvslagsårsak(data.godkjent) : undefined,
             })
-          : opprettSykdomsvurdering({
+          : løsAksjonspunkt9301(undefined, {
               behandlingUuid,
               diagnoser: data.diagnosekoder,
               begrunnelse: data.begrunnelse,
@@ -147,11 +119,9 @@ const SykdomUperiodisertForm = ({
           description="Her kan du legge inn én eller flere diagnoser."
           name="diagnosekoder"
           size="small"
-          disabled={
-            formMethods.watch('godkjent') === 'mangler_dokumentasjon' || formMethods.watch('godkjent') === 'nei'
-          }
+          disabled={godkjent === 'mangler_dokumentasjon' || godkjent === 'nei'}
         />
-        {formMethods.watch('godkjent') === 'mangler_dokumentasjon' && (
+        {godkjent === 'mangler_dokumentasjon' && (
           <Alert variant="info" size="small">
             Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
             <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
@@ -159,7 +129,7 @@ const SykdomUperiodisertForm = ({
         )}
         <div className="flex gap-4">
           <Button variant="primary" type="submit" size="small">
-            {vurdering.uuid ? 'Oppdater sykdomsvurdering' : 'Lagre ny sykdomsvurdering'}
+            {vurdering.uuid ? 'Oppdater og benytt vurdering' : 'Lagre og benytt vurdering'}
           </Button>
           {redigering && (
             <div>

@@ -47,7 +47,7 @@ const defaultVurdering = {
 } as UperiodisertSykdom;
 
 const SykdomUperiodisertIndex = () => {
-  const { behandlingUuid, readOnly, løsAksjonspunkt9301, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const { behandlingUuid, readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const aksjonspunkt9301 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
@@ -111,13 +111,7 @@ const SykdomUperiodisertIndex = () => {
                     (aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.UTFØRT &&
                       periode.id !== vurderingBruktIAksjonspunkt?.vurderingUuid)
                   }
-                  datoOnClick={() => onPeriodeClick(periode)}
-                  benyttOnClick={() =>
-                    løsAksjonspunkt9301({
-                      langvarigsykdomsvurderingUuid: periode.uuid,
-                      begrunnelse: periode.begrunnelse,
-                    })
-                  }
+                  onClick={() => onPeriodeClick(periode)}
                 />
               )}
             />
