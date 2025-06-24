@@ -3,16 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
 
-interface DataFetcherProps {
+interface DataFetcherProps<T> {
   url: string;
-  contentRenderer: (data: any, isLoading: boolean, hasError: boolean) => React.ReactNode;
+  contentRenderer: (data: T | undefined, isLoading: boolean, hasError: boolean) => React.ReactNode;
 }
 
-const DataFetcher = ({ url, contentRenderer }: DataFetcherProps) => {
+const DataFetcher = <T,>({ url, contentRenderer }: DataFetcherProps<T>) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['dataFetcher', url],
     queryFn: async ({ signal }) => {
-      const response = await axios.get(url, {
+      const response = await axios.get<T>(url, {
         ...addLegacySerializerOption(),
         signal,
       });

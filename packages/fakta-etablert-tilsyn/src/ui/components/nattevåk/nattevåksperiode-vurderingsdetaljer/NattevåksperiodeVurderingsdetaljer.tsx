@@ -22,7 +22,7 @@ const NattevåksperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: NattevåksperiodeVurderingsdetaljerProps) => {
-  const { readOnly } = useContext(ContainerContext) || {};
+  const { readOnly = false } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = nattevåksperiode;
   return (
     <DetailView
@@ -34,7 +34,7 @@ const NattevåksperiodeVurderingsdetaljer = ({
               Rediger vurdering
             </Button>
           )}
-          readOnly={!!readOnly}
+          readOnly={readOnly}
         />
       )}
     >
