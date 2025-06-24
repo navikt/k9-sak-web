@@ -46,7 +46,6 @@ export enum UngSakApiKeys {
   PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE = 'PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
-  LOS_LAGRE_MERKNAD = 'LOS_LAGRE_MERKNAD',
   LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
   UNGDOMSPROGRAM_INFORMASJON = 'UNGDOMSPROGRAM_INFORMASJON',
 }
@@ -87,7 +86,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('bekreft-totrinnsaksjonspunkt', UngSakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
   .withRel('behandling-rettigheter', UngSakApiKeys.BEHANDLING_RETTIGHETER)
   .withRel('tilgjengelige-vedtaksbrev', UngSakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
-  .withRel('los-lagre-merknad', UngSakApiKeys.LOS_LAGRE_MERKNAD)
   .withRel('los-hente-merknad', UngSakApiKeys.LOS_HENTE_MERKNAD)
   .withRel('ungdomsprogram-informasjon', UngSakApiKeys.UNGDOMSPROGRAM_INFORMASJON)
 
