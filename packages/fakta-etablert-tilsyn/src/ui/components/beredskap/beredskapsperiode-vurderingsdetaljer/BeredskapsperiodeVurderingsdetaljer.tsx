@@ -34,7 +34,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
               Rediger vurdering
             </Button>
           )}
-          readOnly={!!readOnly}
+          readOnly={readOnly}
         />
       )}
     >
