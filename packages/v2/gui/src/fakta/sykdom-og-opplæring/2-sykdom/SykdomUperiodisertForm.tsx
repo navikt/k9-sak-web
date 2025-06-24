@@ -119,11 +119,9 @@ const SykdomUperiodisertForm = ({
           description="Her kan du legge inn én eller flere diagnoser."
           name="diagnosekoder"
           size="small"
-          disabled={
-            formMethods.watch('godkjent') === 'mangler_dokumentasjon' || formMethods.watch('godkjent') === 'nei'
-          }
+          disabled={godkjent === 'mangler_dokumentasjon' || godkjent === 'nei'}
         />
-        {formMethods.watch('godkjent') === 'mangler_dokumentasjon' && (
+        {godkjent === 'mangler_dokumentasjon' && (
           <Alert variant="info" size="small">
             Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
             <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
