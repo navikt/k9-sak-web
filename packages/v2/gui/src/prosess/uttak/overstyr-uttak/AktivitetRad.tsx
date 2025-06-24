@@ -1,17 +1,15 @@
 import React from 'react';
-
+import dayjs from 'dayjs';
 import { Delete, Edit } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
-
-import dayjs from 'dayjs';
-
-import { OverstyringUttak } from '../../../types';
-import styles from './aktivitetRad.module.css';
+import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import BegrunnelseBoks from './components/BegrunnelseBoks';
+
+import styles from './aktivitetRad.module.css';
 
 interface ownProps {
   index: number;
-  overstyring: OverstyringUttak;
+  overstyring: OverstyrUttakPeriodeDto;
   handleRediger: (index: number) => void;
   visOverstyringSkjema: boolean;
   handleSlett: (id: string) => void;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { useFormContext, FieldArrayWithId } from 'react-hook-form';
+import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
 
 import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
-import { OverstyrUttakFormFieldName, arbeidstypeTilVisning } from '../../../constants';
+// import { OverstyrUttakFormFieldName, arbeidstypeTilVisning } from '../../../constants';
 
 import styles from './overstyrAktivitetListe.module.css';
-import { OverstyrUttakFormData } from '../../../types';
-import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
+// import { OverstyrUttakFormData } from '../../../types';
+// import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 
 type ownProps = {
   fields: FieldArrayWithId<OverstyrUttakFormData, OverstyrUttakFormFieldName.UTBETALINGSGRADER, 'id'>[];

@@ -1,44 +1,58 @@
+import React, { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import dayjs from 'dayjs';
-import React, { useContext, useEffect, useState } from 'react';
-import { FormProvider, Resolver, useFieldArray, useForm } from 'react-hook-form';
-
-import { Button, DatePicker, Heading, Loader, TextField, Textarea, useRangeDatepicker } from '@navikt/ds-react';
+import { FormProvider, type Resolver, useFieldArray, useForm } from 'react-hook-form';
+import {
+  Button,
+  DatePicker,
+  Heading,
+  Loader,
+  TextField,
+  Textarea,
+  useRangeDatepicker,
+  type DatePickerProps,
+} from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-
-import { OverstyrUttakFormFieldName } from '../../../constants/OverstyrUttakFormFieldName';
-import { OverstyrUttakFormData } from '../../../types';
-import {
-  finnSisteSluttDatoFraPerioderTilVurdering,
-  finnTidligsteStartDatoFraPerioderTilVurdering,
-} from '../../../util/dateUtils';
-import {
-  formaterOverstyring,
-  formaterOverstyringAktiviteter,
-  overstyrUttakFormValidationSchema,
-} from '../../../util/overstyringUtils';
-import ContainerContext from '../../context/ContainerContext';
-import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
+// import ContainerContext from '../../context/ContainerContext';
+// import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
 import styles from './overstyringUttakForm.module.css';
+import { OverstyrUttakFormFieldName } from '../constants/OverstyrUttakFormFieldName';
+import {
+  finnSisteSluttDatoFraPerioderTilVurdering,
+  finnTidligsteStartDatoFraPerioderTilVurdering,
+  formaterOverstyring,
+  formaterOverstyringAktiviteter,
+  overstyrUttakFormValidationSchema,
+} from '../utils/overstyringUtils';
+import type { OverstyrUttakFormData } from '../types/OverstyrUttakFormData';
+import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { useQuery } from '@tanstack/react-query';
 
 type OwnProps = {
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
   handleAvbrytOverstyringForm: () => void;
   overstyring?: OverstyrUttakFormData;
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  perioderTilVurdering?: string[];
+  api: BehandlingUttakBackendClient;
 };
 
 const OverstyringUttakForm: React.FC<OwnProps> = ({
+  behandling,
   handleAvbrytOverstyringForm,
   overstyring,
   loading,
   setLoading,
+  perioderTilVurdering,
+  api,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
-  const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
+  // const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
+  // const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
   const resolver: Resolver<OverstyrUttakFormData, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
     any,
@@ -56,8 +70,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
     mode: 'onChange',
     resolver,
   });
-
-  const tidligesteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering);
+  const tidligsteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering ?? []);
   const {
     control,
     setValue,
@@ -73,44 +86,79 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
 
   const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
     onRangeChange: values => {
-      setValue(OverstyrUttakFormFieldName.FOM, values.from);
-      setValue(OverstyrUttakFormFieldName.TOM, values.to);
+      if (values) {
+        setValue(OverstyrUttakFormFieldName.FOM, values.from);
+        setValue(OverstyrUttakFormFieldName.TOM, values.to);
+      }
     },
     defaultSelected: erNyOverstyring
       ? undefined
       : { from: dayjs(overstyring.fom).toDate(), to: dayjs(overstyring.tom).toDate() },
-    defaultMonth: dayjs(tidligesteStartDato).toDate(),
+    defaultMonth: dayjs(tidligsteStartDato).toDate(),
   });
 
   const watchFraDato = watch(OverstyrUttakFormFieldName.FOM, undefined);
   const watchTilDato = watch(OverstyrUttakFormFieldName.TOM, undefined);
 
-  useEffect(() => {
-    const handleHentAktuelleAktiviteter = async (fom: Date, tom: Date) => {
-      const aktiviteter = await hentAktuelleAktiviteter(fom, tom);
-      replaceAktiviteter(formaterOverstyringAktiviteter(aktiviteter));
-    };
+  const {
+    data: arbeidsgivere,
+    isLoading: lasterAktiviteter,
+    // isError: overstyrteError,
+  } = useQuery({
+    queryKey: ['overstyrte', behandling.uuid, watchFraDato, watchTilDato],
+    queryFn: async () => {
+      const aktuelleAktiviteter = await api.hentAktuelleAktiviteter(
+        behandling.uuid,
+        dayjs(watchFraDato).format('YYYY-MM-DD'),
+        dayjs(watchTilDato).format('YYYY-MM-DD'),
+      );
+      if (aktuelleAktiviteter.arbeidsforholdsperioder) {
+        replaceAktiviteter(formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder));
+      }
 
-    if (watchFraDato && watchTilDato) {
-      void handleHentAktuelleAktiviteter(watchFraDato, watchTilDato);
-      setDeaktiverLeggTil(false);
-    }
-  }, [watchFraDato, watchTilDato]);
+      return aktuelleAktiviteter.arbeidsgiverOversikt.arbeidsgivere || [];
+    },
+  });
 
-  const disabledDays = [
-    date => dayjs(date).isBefore(tidligesteStartDato),
+  // useEffect(() => {
+  //   const handleHentAktuelleAktiviteter = async (fom: Date, tom: Date) => {
+  //     // const aktiviteter = await hentAktuelleAktiviteter(fom, tom);
+  //     const {
+  //       data: aktiviteter,
+  //       isLoading: lasterAktiviteter,
+  //       // isError: overstyrteError,
+  //     } = useQuery({
+  //       queryKey: ['overstyrte', behandling.uuid,],
+  //       queryFn: () =>
+  //         api.hentAktuelleAktiviteter(
+  //           behandling.uuid,
+  //           dayjs(fom).format('YYYY-MM-DD'),
+  //           dayjs(tom).format('YYYY-MM-DD'),
+  //         ),
+  //     });
+  //     replaceAktiviteter(formaterOverstyringAktiviteter(aktiviteter));
+  //   };
+
+  //   if (watchFraDato && watchTilDato) {
+  //     void handleHentAktuelleAktiviteter(watchFraDato, watchTilDato);
+  //     setDeaktiverLeggTil(false);
+  //   }
+  // }, [replaceAktiviteter, watchFraDato, watchTilDato]);
+
+  const disabledDays: DatePickerProps['disabled'] = [
+    date => dayjs(date).isBefore(tidligsteStartDato),
     date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering)),
   ];
 
   const handleSubmit = (values: OverstyrUttakFormData) => {
     setLoading(true);
-    handleOverstyringAksjonspunkt({
-      gåVidere: false,
-      erVilkarOk: false,
-      periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
-      lagreEllerOppdater: [{ ...formaterOverstyring(values) }],
-      slett: [],
-    });
+    // handleOverstyringAksjonspunkt({
+    //   gåVidere: false,
+    //   erVilkarOk: false,
+    //   periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
+    //   lagreEllerOppdater: [{ ...formaterOverstyring(values) }],
+    //   slett: [],
+    // });
     setLoading(false);
   };
 

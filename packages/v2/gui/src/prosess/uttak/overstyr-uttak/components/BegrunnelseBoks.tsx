@@ -3,11 +3,11 @@ import React from 'react';
 import { Heading, BodyShort } from '@navikt/ds-react';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 
-import { OverstyringUttak } from '../../../../types';
-import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
+// import { OverstyringUttak } from '../../../../types';
+// import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
 
 import styles from './begrunnelseBoks.module.css';
-import { arbeidstypeTilVisning } from '../../../../constants/Arbeidstype';
+// import { arbeidstypeTilVisning } from '../../../../constants/Arbeidstype';
 import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
 
 interface BegrunnelseBoksProps {
