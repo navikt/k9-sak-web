@@ -374,8 +374,6 @@
   "packages/rest-api/src/requestApi/error/RequestErrorEventHandler.ts",
   "packages/rest-api/src/requestApi/requestApi.spec.ts",
   "packages/rest-api/src/requestApi/requestRunner.spec.ts",
-  "packages/sak-aktor/src/AktorSakIndex.stories.tsx",
-  "packages/sak-aktor/src/components/AktoerGrid.tsx",
   "packages/sak-app/src/app/components/Dekorator.tsx",
   "packages/sak-app/src/app/useTrackRouteParam.tsx",
   "packages/sak-app/src/behandling/BehandlingEventHandler.ts",

@@ -4472,19 +4472,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/sak-aktor@npm:1.0.0, @k9-sak-web/sak-aktor@workspace:packages/sak-aktor":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/sak-aktor@workspace:packages/sak-aktor"
-  dependencies:
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@k9-sak-web/gui": "workspace:^"
-    "@k9-sak-web/types": "npm:1.0.0"
-    react: "npm:19.1.0"
-    react-intl: "npm:7.1.11"
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/sak-app@npm:1.0.0, @k9-sak-web/sak-app@workspace:packages/sak-app":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
@@ -4515,7 +4502,6 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
-    "@k9-sak-web/sak-aktor": "npm:1.0.0"
     "@k9-sak-web/sak-meldinger": "npm:1.0.0"
     "@k9-sak-web/sak-meny-marker-behandling": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
@@ -4607,7 +4593,6 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
-    "@k9-sak-web/sak-aktor": "npm:1.0.0"
     "@k9-sak-web/sak-meldinger": "npm:1.0.0"
     "@k9-sak-web/sak-meny-marker-behandling": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
