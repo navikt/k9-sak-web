@@ -39,7 +39,7 @@ const lagToOmsorgspersonerVurdering = (
   const resultat = formState[FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]
     ? Vurderingsresultat.OPPFYLT
     : Vurderingsresultat.IKKE_OPPFYLT;
-  const perioder = formState[FieldName.PERIODER].map(
+  const perioder = (formState[FieldName.PERIODER] ?? []).map(
     periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_TO_OMSORGSPERSONER];
@@ -63,7 +63,7 @@ interface VurderingAvToOmsorgspersonerFormProps {
   defaultValues: VurderingAvToOmsorgspersonerFormState;
   onSubmit: (nyVurdering: Partial<Vurderingsversjon>) => void;
   resterendeVurderingsperioder?: Period[];
-  perioderSomKanVurderes?: Period[];
+  perioderSomKanVurderes: Period[];
   dokumenter: Dokument[];
   onAvbryt: () => void;
   isSubmitting: boolean;
@@ -84,7 +84,10 @@ const VurderingAvToOmsorgspersonerForm = ({
     defaultValues,
   });
 
-  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
+  const perioderSomBlirVurdert: Period[] | undefined = useWatch({
+    control: formMethods.control,
+    name: FieldName.PERIODER,
+  });
 
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(period => period.asListOfDays());
@@ -119,7 +122,7 @@ const VurderingAvToOmsorgspersonerForm = ({
   );
 
   return (
-    <DetailViewVurdering title="Vurdering av to omsorgspersoner" perioder={defaultValues[FieldName.PERIODER]}>
+    <DetailViewVurdering title="Vurdering av to omsorgspersoner" perioder={defaultValues[FieldName.PERIODER] || []}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
         <FormWithButtons
@@ -234,12 +237,14 @@ const VurderingAvToOmsorgspersonerForm = ({
                 },
               }}
               renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                numberOfItems > 1 && (
+                numberOfItems > 1 ? (
                   <DeleteButton
                     onClick={() => {
                       fieldArrayMethods.remove(index);
                     }}
                   />
+                ) : (
+                  <></>
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (

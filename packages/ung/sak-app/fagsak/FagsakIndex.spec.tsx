@@ -121,7 +121,7 @@ describe('<FagsakIndex>', () => {
     sprakkode: undefined,
     behandlingKoet: undefined,
     toTrinnsBehandling: undefined,
-    behandlingÅrsaker: undefined,
+    behandlingÅrsaker: [],
   };
 
   it('skal hente alle behandlinger fra ungsak, tilbake og klage', () => {

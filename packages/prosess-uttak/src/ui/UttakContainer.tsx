@@ -1,10 +1,15 @@
-import { HStack, Heading, VStack } from '@navikt/ds-react';
+import { Alert, HStack, Heading, VStack } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import React, { type JSX } from 'react';
-import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
+import { AksjonspunktDtoStatus } from '@navikt/k9-sak-typescript-client';
+import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
+import {
+  aksjonspunktVurderDatoKode,
+  aksjonspunktVurderOverlappendeYtelsekode,
+  aksjonspunktkodeVentAnnenPSBSakKode,
+} from '../constants/Aksjonspunkter';
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
-import AnnenSakStripe from '@k9-sak-web/gui/prosess/uttak/components/annenSakStripe/AnnenSakSripe.js';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
 import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
@@ -44,6 +49,15 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
   const harAksjonspunktVurderDatoMedStatusOpprettet = aksjonspunktkoder?.some(
     aksjonspunktkode => aksjonspunktkode === aksjonspunktVurderDatoKode,
   );
+  const harEtUløstAksjonspunktIUttak = aksjonspunkter?.some(
+    ap =>
+      ap.status.kode === AksjonspunktDtoStatus.OPPRETTET &&
+      [
+        aksjonspunktVurderDatoKode,
+        aksjonspunktkodeVentAnnenPSBSakKode,
+        aksjonspunktVurderOverlappendeYtelsekode,
+      ].includes(ap.definisjon.kode),
+  );
 
   return (
     <ContainerContext.Provider value={containerData}>
@@ -54,10 +68,19 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
           </Heading>
           {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
         </HStack>
-        <AnnenSakStripe
-          harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt}
-          erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
-        />
+
+        <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+
+        <OverstyrUttakContextProvider>
+          {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
+            <ContentMaxWidth>
+              <Alert variant="warning" size="small">
+                Aktive aksjonspunkter i uttak må løses før uttak kan overstyres.
+              </Alert>
+            </ContentMaxWidth>
+          )}
+          {!harEtUløstAksjonspunktIUttak && <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />}
+        </OverstyrUttakContextProvider>
 
         {vurderOverlappendeSakComponent && (
           <div className={styles.overlappendeSakContainer}>{vurderOverlappendeSakComponent}</div>
@@ -67,7 +90,8 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
           <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
         </OverstyrUttakContextProvider>
 
-        <UtsattePerioderStripe utsattePerioder={utsattePerioder} />
+        <UtsattePerioderStripe />
+
         {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
         {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) ||
           harAksjonspunktVurderDatoMedStatusOpprettet ||
@@ -77,7 +101,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
               virkningsdatoUttakNyeRegler && redigerVirkningsdato ? () => setRedigervirkningsdato(false) : undefined
             }
             initialValues={{
-              begrunnelse: aksjonspunktVurderDato?.begrunnelse,
+              begrunnelse: aksjonspunktVurderDato?.begrunnelse ?? '',
               virkningsdato: virkningsdatoUttakNyeRegler,
             }}
             readOnly={readOnly}
@@ -85,7 +109,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
         )}
         {!harVentAnnenPSBSakAksjonspunkt && (
           <UttaksperiodeListe
-            uttaksperioder={lagUttaksperiodeliste(uttaksperioder, inntektsgraderinger)}
+            uttaksperioder={lagUttaksperiodeliste(uttaksperioder, inntektsgraderinger ?? [])}
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
             redigerVirkningsdato={redigerVirkningsdato}
             readOnly={readOnly}

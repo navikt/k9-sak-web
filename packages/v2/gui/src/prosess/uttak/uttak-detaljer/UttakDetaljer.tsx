@@ -1,5 +1,4 @@
-import type { JSX } from 'react';
-import classNames from 'classnames/bind';
+import { type JSX } from 'react';
 import {
   UttaksperiodeInfoUtfall,
   type UttaksperiodeInfoUtfall as UttaksperiodeInfoUtfallType,
@@ -20,10 +19,8 @@ import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
-
 import styles from './uttakDetaljer.module.css';
-
-const cx = classNames.bind(styles);
+import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
@@ -79,17 +76,11 @@ const shouldHighlight = (aktuellÅrsak: UttaksperiodeInfoÅrsakerType, årsaker:
 export interface UttakDetaljerProps {
   uttak: UttaksperiodeMedInntektsgradering;
   arbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
-  erFagytelsetypeLivetsSluttfase: boolean;
-
   manueltOverstyrt: boolean;
+  ytelsetype: FagsakYtelsesType;
 }
 
-const UttakDetaljer = ({
-  uttak,
-  arbeidsforhold,
-  erFagytelsetypeLivetsSluttfase,
-  manueltOverstyrt,
-}: UttakDetaljerProps): JSX.Element => {
+const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
   const {
@@ -122,6 +113,11 @@ const UttakDetaljer = ({
     årsaker &&
     shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
+  const skalViseGraderingMotTilsyn = ![
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
+  ].some(ytelse => ytelse === ytelsetype);
+
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
   const harBarnetsDødsfallÅrsak = årsaker?.some(årsak =>
     BarnetsDødsfallÅrsakerMedTekst.some(barnetsDødsfallÅrsak => årsak === barnetsDødsfallÅrsak.årsak),
@@ -139,13 +135,9 @@ const UttakDetaljer = ({
         </Alert>
       )}
       <HGrid gap="8" columns={3} align="start" className={styles['uttakDetaljer']}>
-        {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (
+        {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
-            className={cx({
-              uttakDetaljerGraderingDetaljer: true,
-              uttakDetaljerGraderingDetaljerHighlight: shouldHighlightTilsyn,
-              uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightTilsyn,
-            })}
+            className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
@@ -170,11 +162,7 @@ const UttakDetaljer = ({
         )}
 
         <Box
-          className={cx({
-            uttakDetaljerGraderingDetaljer: true,
-            uttakDetaljerGraderingDetaljerHighlight: shouldHighlightArbeidstid,
-            uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightArbeidstid,
-          })}
+          className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightArbeidstid ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
           title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
@@ -198,11 +186,7 @@ const UttakDetaljer = ({
 
         {inntektsgradering && (
           <Box
-            className={cx({
-              uttakDetaljerGraderingDetaljer: true,
-              uttakDetaljerGraderingDetaljerHighlight: shouldHighlightInntekt,
-              uttakDetaljerGraderingDetaljerNotHighlighted: !shouldHighlightInntekt,
-            })}
+            className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (

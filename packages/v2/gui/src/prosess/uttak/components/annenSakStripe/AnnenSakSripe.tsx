@@ -1,16 +1,16 @@
 import { Alert } from '@navikt/ds-react';
 import React from 'react';
-import styles from './annenSakStripe.module.css';
+import ContainerContext from '../../context/ContainerContext';
+import styles from './infostripe.module.css';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-interface AnneAnnenSakStripeProps {
+interface InfostripeProps {
   harVentAnnenPSBSakAksjonspunkt: boolean;
-  erFagytelsetypeLivetsSluttfase: boolean;
 }
 
-const AnnenSakStripe: React.FC<AnneAnnenSakStripeProps> = ({
-  harVentAnnenPSBSakAksjonspunkt,
-  erFagytelsetypeLivetsSluttfase,
-}) => {
+const Infostripe: React.FC<InfostripeProps> = ({ harVentAnnenPSBSakAksjonspunkt }) => {
+  const { ytelsetype } = React.useContext(ContainerContext) as ContainerContract;
+
   if (!harVentAnnenPSBSakAksjonspunkt) {
     return null;
   }
@@ -21,8 +21,9 @@ const AnnenSakStripe: React.FC<AnneAnnenSakStripeProps> = ({
         Det er nødvendig med mer informasjon fra andre saker før dette steget kan fullføres.
         <ol className={styles.infostripePunktliste}>
           <li>
-            Åpne alle behandlinger tilknyttet {erFagytelsetypeLivetsSluttfase ? 'pleietrengende' : 'barnet'} og behandle
-            de til uttakssteget.
+            Åpne alle behandlinger tilknyttet{' '}
+            {ytelsetype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE ? 'pleietrengende' : 'barnet'} og behandle de til
+            uttakssteget.
           </li>
           <li>
             Oppdater siden (Ctrl+R). Gå til saken som nå har kommet forbi uttak, behandle videre og beslutt, før neste
@@ -34,4 +35,4 @@ const AnnenSakStripe: React.FC<AnneAnnenSakStripeProps> = ({
   );
 };
 
-export default AnnenSakStripe;
+export default Infostripe;

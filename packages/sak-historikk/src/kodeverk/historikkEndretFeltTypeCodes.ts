@@ -512,13 +512,9 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ER_LANGVARIG_SYK',
     feltId: 'HistorikkEndretFelt.LangvarigSyk',
   },
-  VURDERT_OPPLÆRING_DOKUMENTERT: {
-    kode: 'VURDERT_OPPLÆRING_DOKUMENTERT',
-    feltId: 'HistorikkEndretFelt.OpplæringDokumentert',
-  },
-  VURDERT_OPPLÆRING_NØDVENDIG: {
-    kode: 'VURDERT_OPPLÆRING_NØDVENDIG',
-    feltId: 'HistorikkEndretFelt.OpplæringNødvendig',
+  VURDERT_OPPLÆRING_RESULTAT: {
+    kode: 'VURDERT_OPPLÆRING_RESULTAT',
+    feltId: 'HistorikkEndretFelt.OpplæringResultat',
   },
   GODKJENT_REISETID: {
     kode: 'GODKJENT_REISETID',

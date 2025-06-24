@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
 import UttakContainer from './UttakContainer';
@@ -203,7 +203,6 @@ export const Uttak: Story = {
         },
       ],
       utsattePerioder: [],
-      erFagytelsetypeLivetsSluttfase: false,
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: '',
       readOnly: false,
@@ -459,7 +458,6 @@ export const UttakMedInntektsgradering: Story = {
         },
       ],
       utsattePerioder: [],
-      erFagytelsetypeLivetsSluttfase: false,
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: null,
       readOnly: false,

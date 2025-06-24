@@ -1,11 +1,10 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
-import { Heading } from '@navikt/ds-react';
-import { useContext } from 'react';
-import { UngSakClientContext } from '../../app/UngSakClientContext';
+import { Box, Heading } from '@navikt/ds-react';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
+import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 
 interface UngVedtakIndexProps {
   aksjonspunkter: AksjonspunktDto[];
@@ -22,11 +21,11 @@ export const UngVedtakIndex = ({
   vilkar,
   isReadOnly,
 }: UngVedtakIndexProps) => {
-  const ungSakClient = useContext(UngSakClientContext);
+  const ungSakClient = getUngSakClient();
   const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
   return (
-    <>
-      <Heading size="small" level="2">
+    <Box paddingInline="4 8" paddingBlock="2">
+      <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
       <UngVedtak
@@ -37,6 +36,6 @@ export const UngVedtakIndex = ({
         vilkår={vilkar}
         readOnly={isReadOnly}
       />
-    </>
+    </Box>
   );
 };

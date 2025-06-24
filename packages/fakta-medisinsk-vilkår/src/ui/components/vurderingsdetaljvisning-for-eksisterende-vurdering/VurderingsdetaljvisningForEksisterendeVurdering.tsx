@@ -65,7 +65,7 @@ const getSummaryComponent = (vurderingstype: Vurderingstype) => {
 };
 
 const erAutomatiskVurdertInnleggelsesperiode = (vurderingselement: Vurderingselement) =>
-  !(vurderingselement as ManuellVurdering).resultat;
+  !(vurderingselement as ManuellVurdering).resultat && !vurderingselement?.manglerLegeerklæring;
 
 const VurderingsdetaljvisningForEksisterendeVurdering = ({
   vurderingsoversikt,
@@ -78,6 +78,10 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
   const { endpoints } = React.useContext(ContainerContext);
   const { vurderingstype } = React.useContext(VurderingContext);
 
+  if (!vurderingstype) {
+    return <></>;
+  }
+
   if (erAutomatiskVurdertInnleggelsesperiode(vurderingselement)) {
     return (
       <VurderingsoppsummeringForInnleggelsesperiode
@@ -89,7 +93,6 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
 
   const manuellVurdering = vurderingselement as ManuellVurdering;
   const url = findHrefByRel(LinkRel.HENT_VURDERING, manuellVurdering.links);
-
   return (
     <VurderingsdetaljerFetcher
       url={url}
@@ -102,7 +105,7 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
           return (
             <EndreVurderingController
               endreVurderingLink={endreLink}
-              dataTilVurderingUrl={endpoints.dataTilVurdering}
+              dataTilVurderingUrl={endpoints?.dataTilVurdering}
               formRenderer={(dokumenter, onSubmit, isSubmitting) => {
                 if (Vurderingstype.LIVETS_SLUTTFASE === vurderingstype) {
                   return (
@@ -117,38 +120,42 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
                     />
                   );
                 }
-                return (
-                  <FormComponent
-                    defaultValues={buildInitialFormStateForEdit(vurderingsversjon, vurderingstype)}
-                    resterendeVurderingsperioder={vurderingsoversikt.resterendeVurderingsperioder}
-                    perioderSomKanVurderes={vurderingsoversikt.perioderSomKanVurderes}
-                    dokumenter={dokumenter}
-                    onSubmit={onSubmit}
-                    onAvbryt={onAvbrytClick}
-                    isSubmitting={isSubmitting}
-                    harPerioderDerPleietrengendeErOver18år={vurderingsoversikt.harPerioderDerPleietrengendeErOver18år}
-                    barnetsAttenårsdag={
-                      vurderingsoversikt.harPerioderDerPleietrengendeErOver18år
-                        ? addYearsToDate(vurderingsoversikt.pleietrengendesFødselsdato, 18)
-                        : undefined
-                    }
-                  />
-                );
+                if (FormComponent) {
+                  return (
+                    <FormComponent
+                      defaultValues={buildInitialFormStateForEdit(vurderingsversjon, vurderingstype) ?? {}}
+                      resterendeVurderingsperioder={vurderingsoversikt.resterendeVurderingsperioder}
+                      perioderSomKanVurderes={vurderingsoversikt.perioderSomKanVurderes}
+                      dokumenter={dokumenter}
+                      onSubmit={onSubmit}
+                      onAvbryt={onAvbrytClick}
+                      isSubmitting={isSubmitting}
+                      harPerioderDerPleietrengendeErOver18år={vurderingsoversikt.harPerioderDerPleietrengendeErOver18år}
+                      barnetsAttenårsdag={
+                        vurderingsoversikt.harPerioderDerPleietrengendeErOver18år
+                          ? (addYearsToDate(vurderingsoversikt.pleietrengendesFødselsdato, 18) ?? '')
+                          : ''
+                      }
+                    />
+                  );
+                }
               }}
               vurderingsid={vurderingselement.id}
-              vurderingsversjonId={vurderingsversjon.versjon}
+              vurderingsversjonId={vurderingsversjon.versjon ?? ''}
               onVurderingLagret={onVurderingLagret}
             />
           );
         }
 
         const SummaryComponent = getSummaryComponent(vurderingstype);
-        return (
+        return SummaryComponent ? (
           <SummaryComponent
             vurdering={vurdering}
             redigerVurdering={onEditClick}
             erInnleggelsesperiode={vurderingselement.erInnleggelsesperiode}
           />
+        ) : (
+          <></>
         );
       }}
     />

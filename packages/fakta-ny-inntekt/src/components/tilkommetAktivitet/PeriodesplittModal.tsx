@@ -1,9 +1,8 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Button, Modal, Select } from '@navikt/ds-react';
-import { calcDays, DDMMYYYY_DATE_FORMAT, TIDENES_ENDE } from '@navikt/ft-utils';
-import dayjs from 'dayjs';
+import { calcDays, periodFormat, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { type Periode, PeriodesplittDatoValg } from './PeriodesplittDatoValg';
@@ -31,16 +30,6 @@ const periodeInneholderFlereVirkedager = (periode: Periode): boolean => {
 const lagPerioderFraFields = (fields: TilkommetAktivitetValues[]): Periode[] =>
   fields.map(field => ({ fom: field.fom, tom: field.tom }));
 
-const lagPeriodeString = (fom: string, tom: string): string => {
-  const fomString = dayjs(fom).format(DDMMYYYY_DATE_FORMAT);
-  if (tom && tom !== TIDENES_ENDE) {
-    const tomString = dayjs(tom).format(DDMMYYYY_DATE_FORMAT);
-    const tekst = fomString.concat(' - ', tomString);
-    return tekst;
-  }
-  return fomString.concat(' - ');
-};
-
 export const PeriodesplittModal = ({
   fields,
   forhåndsvisPeriodesplitt,
@@ -53,14 +42,14 @@ export const PeriodesplittModal = ({
 
   const perioder = useMemo(() => lagPerioderFraFields(fields), [fields]);
 
-  const splittPeriode = useCallback(() => {
+  const splittPeriode = () => {
     if (valgtSplittdato && valgtPeriode) {
       utførPeriodesplitt(valgtSplittdato);
       lukkModal();
     }
-  }, [fields, valgtSplittdato, valgtPeriode, lukkModal, utførPeriodesplitt]);
+  };
 
-  const endreValgtPeriode = useCallback((event: any) => {
+  const endreValgtPeriode = (event: any) => {
     const val = event.target.value;
     const valg = perioder.find(p => p.fom === val);
     if (valg) {
@@ -68,7 +57,7 @@ export const PeriodesplittModal = ({
     } else {
       setValgtPeriode(undefined);
     }
-  }, []);
+  };
 
   const periodeKanSplittes = valgtPeriode && periodeInneholderFlereVirkedager(valgtPeriode);
   if (!skalViseModal) {
@@ -84,7 +73,7 @@ export const PeriodesplittModal = ({
             <option value={undefined}>Velg periode</option>
             {perioder.map(periode => (
               <option key={periode.fom} value={periode.fom}>
-                {lagPeriodeString(periode.fom, periode.tom)}
+                {periodFormat(periode.fom, periode.tom)}
               </option>
             ))}
           </Select>

@@ -1,9 +1,16 @@
 import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated';
 import type { HistorikkBackendApi } from '../../sak/historikk/HistorikkBackendApi.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
+import {
+  type KlageHistorikkInnslagV2,
+  type SakHistorikkInnslagV2,
+} from '../../sak/historikk/historikkTypeBerikning.js';
+import { HistorikkInnslagTypeBeriker } from '../../sak/historikk/historikkTypeBerikning.js';
+import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
+import type { HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 
-// Kopi av respons frå backend i dev
-const fakeResponse: HentAlleInnslagV2Response = [
+// Kopi av respons frå k9-sak backend i dev
+const fakeK9SakResponse: HentAlleInnslagV2Response = [
   {
     behandlingId: 1005501,
     aktør: {
@@ -217,11 +224,144 @@ const fakeResponse: HentAlleInnslagV2Response = [
     linjer: [],
     uuid: '92bfbbef-9c71-483c-885b-a5b393679b53',
   },
+  {
+    behandlingId: 1000301,
+    aktør: {
+      type: 'BESL',
+      ident: 'Z990422',
+    },
+    opprettetTidspunkt: '2024-12-02T07:46:22.373',
+    dokumenter: [],
+    tittel: 'Sak retur',
+    linjer: [
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'FAKTA_OM_MEDISINSK',
+        tekst: ': __Godkjent__',
+      },
+      {
+        type: 'TEKST',
+        tekst: '(Aksjonspunkt: Kontroller legeerklæring)',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Kommentar: test',
+      },
+      {
+        type: 'LINJESKIFT',
+      },
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'VEDTAK',
+        tekst: ': __Må vurderes på nytt__',
+      },
+      {
+        type: 'TEKST',
+        tekst: '(Aksjonspunkt: Fritekstbrev)',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Kommentar: Vedtaksbrev må vurderes igjen',
+      },
+    ],
+    uuid: '52ae8488-6376-4c50-949c-f03abc9676f8',
+  },
+];
+
+const fakeK9KlageResponse: HistorikkinnslagDtoV2[] = [
+  {
+    behandlingId: 999952,
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-05-06T11:16:01.228',
+    dokumenter: [],
+    tittel: 'Behandling er henlagt',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: 'Henlagt, søknaden er feilopprettet',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Henlegger fra verdikjedetest',
+      },
+    ],
+    uuid: '0e722618-9b62-4935-a261-c7895ead7d9f',
+  },
+  {
+    behandlingId: 999952,
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-05-06T11:16:00.607',
+    dokumenter: [],
+    tittel: 'Klagebehandling Vedtaksinstans',
+    linjer: [
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Vedtaket som er påklagd__ er satt til __Førstegangsbehandling 06.05.2025__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Er klager part i saken__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Er klagefristen overholdt__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Er klagen signert__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Klages det på konkrete elementer i vedtaket__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'autotest',
+      },
+    ],
+    uuid: 'd2d54535-8f0c-424e-8dfd-621a750bdb4c',
+  },
+  {
+    behandlingId: 999952,
+    aktør: {
+      type: 'SOKER',
+    },
+    opprettetTidspunkt: '2025-05-06T11:15:54.829',
+    dokumenter: [],
+    tittel: 'Behandling startet',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: '__Klage mottatt__',
+      },
+    ],
+    uuid: 'b62d9bb8-8f1b-446d-8861-67a593c0507c',
+  },
 ];
 
 export class FakeHistorikkBackend implements HistorikkBackendApi {
-  async hentAlleInnslagK9sak(saksnummer: string): Promise<HentAlleInnslagV2Response> {
+  #beriker: HistorikkInnslagTypeBeriker;
+  constructor(kodeverkoppslag: K9Kodeverkoppslag) {
+    this.#beriker = new HistorikkInnslagTypeBeriker(kodeverkoppslag);
+  }
+
+  async hentAlleInnslagK9sak(saksnummer: string): Promise<SakHistorikkInnslagV2[]> {
     ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeResponse);
+    return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.sakHistorikkInnslagV2(innslag)));
+  }
+
+  async hentAlleInnslagK9klage(saksnummer: string): Promise<KlageHistorikkInnslagV2[]> {
+    ignoreUnusedDeclared(saksnummer);
+    return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.klageHistorikkInnslagV2(innslag)));
   }
 }

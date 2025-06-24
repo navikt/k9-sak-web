@@ -1,4 +1,7 @@
 name: 'Storybook Tests'
+permissions:
+  contents: read
+  packages: read
 on:
   workflow_call:
 jobs:

@@ -8,7 +8,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import { removeSpacesFromNumber } from '@navikt/ft-utils';
+import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
@@ -36,7 +36,7 @@ const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeri
     perioder:
       inntektKontrollperioder.map(periode => {
         return {
-          fastsattInntekt: periode.fastsattInntekt != null ? `${periode.fastsattInntekt}` : '',
+          fastsattInntekt: periode.fastsattInntekt != null ? `${parseCurrencyInput(periode.fastsattInntekt)}` : '',
           valg: periode.valg ?? '',
           begrunnelse: periode.begrunnelse ?? '',
           periode: periode.periode,
@@ -107,10 +107,10 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                 <Label size="small">Periode</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert av deltager</Label>
+                <Label size="small">Rapportert av deltaker</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert i A-inntekt</Label>
+                <Label size="small">Rapportert i A-ordningen</Label>
               </Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>

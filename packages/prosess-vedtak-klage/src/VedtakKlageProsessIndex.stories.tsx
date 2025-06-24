@@ -2,9 +2,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { action } from 'storybook/actions';
 import VedtakKlageProsessIndex from './VedtakKlageProsessIndex';
 
 const behandling = {

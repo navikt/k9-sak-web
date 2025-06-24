@@ -9,7 +9,7 @@ import {
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Tabs } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -25,6 +25,7 @@ interface OwnProps {
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   useMultipleRestApi: (endpoints: EndpointData[], options: Options) => RestApiData<any>;
+  featureToggles: FeatureToggles | undefined;
 }
 
 const InngangsvilkarPanel = ({
@@ -35,6 +36,7 @@ const InngangsvilkarPanel = ({
   apentFaktaPanelInfo,
   oppdaterProsessStegOgFaktaPanelIUrl,
   useMultipleRestApi,
+  featureToggles,
 }: OwnProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const filteredPanels = prosessStegData.filter(stegData => stegData.getKomponentData);
@@ -132,6 +134,7 @@ const InngangsvilkarPanel = ({
                     alleKodeverk,
                     submitCallback,
                     visAllePerioder,
+                    featureToggles,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
@@ -148,6 +151,7 @@ const InngangsvilkarPanel = ({
                     alleKodeverk,
                     submitCallback,
                     visAllePerioder,
+                    featureToggles,
                     ...stegData.getKomponentData(),
                   })}
                 </div>

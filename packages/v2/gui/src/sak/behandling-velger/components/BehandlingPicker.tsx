@@ -18,16 +18,16 @@ import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
-const getBehandlingNavn = (behandlingTypeKode: string, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
-  switch (behandlingTypeKode) {
+const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
+  switch (behandlingType) {
     case BehandlingDtoType.FØRSTEGANGSSØKNAD:
-      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE);
+      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE);
 
     case k9KlageBehandlingType.KLAGE:
-      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
+      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
 
     case k9KlageBehandlingType.TILBAKEKREVING:
-      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
+      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
 
     default:
       return 'Viderebehandling';
@@ -73,22 +73,15 @@ const renderListItems = ({
           to={getBehandlingLocation(behandling.id)}
         >
           <BehandlingPickerItemContent
-            behandlingTypeNavn={getBehandlingNavn(behandling.type, kodeverkNavnFraKode)}
-            behandlingsresultatTypeNavn={
-              behandling.behandlingsresultat
-                ? kodeverkNavnFraKode(behandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
-                : undefined
-            }
-            behandlingsresultatTypeKode={
-              behandling.behandlingsresultat ? behandling.behandlingsresultat.type : undefined
+            behandling={behandling}
+            behandlingTypeNavn={
+              behandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && behandling.visningsnavn
+                ? behandling.visningsnavn
+                : getBehandlingNavn(behandling.type, kodeverkNavnFraKode)
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={søknadsperioderFraBehandling}
-            erFerdigstilt={!!behandling.avsluttet}
-            erUnntaksløype={behandling.type === BehandlingDtoType.UNNTAKSBEHANDLING}
             index={sorterteOgFiltrerteBehandlinger.length - index}
-            opprettet={behandling.opprettet}
-            avsluttet={behandling.avsluttet}
           />
         </NavLink>
       </li>
@@ -240,7 +233,7 @@ const BehandlingPicker = ({
       if (!filterListe.some(filter => filter.value === behandling.type)) {
         filterListe.push({
           value: behandling.type,
-          label: getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
+          label: behandling.visningsnavn || getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
         });
       }
       if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
@@ -338,7 +331,11 @@ const BehandlingPicker = ({
             valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type : undefined
           }
           behandlingsårsaker={getÅrsaksliste()}
-          behandlingTypeNavn={getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)}
+          behandlingTypeNavn={
+            valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && valgtBehandling.visningsnavn
+              ? valgtBehandling.visningsnavn
+              : getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
+          }
           behandlingTypeKode={valgtBehandling.type}
           søknadsperioder={søknadsperioderForValgtehandling}
           createLocationForSkjermlenke={createLocationForSkjermlenke}

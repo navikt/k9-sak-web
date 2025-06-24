@@ -1,14 +1,14 @@
+import type { ReisetidPeriodeVurderingDtoResultat, ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { Period } from '@navikt/ft-utils';
+import { useContext, useState } from 'react';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
-import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
-import { useContext, useState } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { Period } from '@navikt/ft-utils';
-import type { ReisetidPeriodeVurderingDtoResultat, ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
-import ReisetidContainer from './ReisetidContainer';
-import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { CenteredLoader } from '../CenteredLoader';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
+import ReisetidContainer from './ReisetidContainer';
 
 interface ReisetidVurderingselement extends Omit<Vurderingselement, 'resultat'>, ReisetidVurderingDto {
   perioder: Period[];
@@ -39,6 +39,7 @@ const ReisetidIndex = () => {
               valgtPeriode={valgtVurdering}
               perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
+              nyesteFørst={false}
             />
           </>
         )}

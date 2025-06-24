@@ -1,6 +1,5 @@
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
 export default {

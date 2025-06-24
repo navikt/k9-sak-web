@@ -2,7 +2,6 @@ import { Location, Search } from 'history';
 
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import { IS_DEV } from '../constants';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';
@@ -13,8 +12,6 @@ type QueryParams = {
   stotte?: string;
   risiko?: boolean;
 };
-
-const DEV_LOGIN_URL = 'http://localhost:8080/k9/sak/jetty/login';
 
 export const fagsakRoutePath = '/fagsak/:saksnummer//*';
 export const behandlingerRoutePath = `behandling//*`;
@@ -95,19 +92,3 @@ export const erUrlUnderBehandling = (location: Location): boolean => !location.p
 
 export const erBehandlingValgt = (location: Location): boolean =>
   location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');
-
-export const redirectToLogin = () => {
-  if (IS_DEV) {
-    window.location.assign(DEV_LOGIN_URL);
-  }
-  return undefined;
-};
-
-export const goToLos = () => {
-  const path = getPathToK9Los();
-  window.location.assign(path);
-};
-
-export const goToSearch = () => {
-  window.location.assign('/ung/web');
-};

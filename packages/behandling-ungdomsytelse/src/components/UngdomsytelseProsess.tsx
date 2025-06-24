@@ -9,7 +9,6 @@ import {
   ProsessStegContainer,
   ProsessStegPanel,
   Rettigheter,
-  lagDokumentdata,
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
@@ -60,13 +59,7 @@ const getForhandsvisFptilbakeCallback =
   };
 
 const getLagringSideeffekter =
-  (
-    toggleIverksetterVedtakModal,
-    toggleFatterVedtakModal,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
-    lagreDokumentdata,
-  ) =>
+  (toggleIverksetterVedtakModal, toggleFatterVedtakModal, oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside) =>
   async aksjonspunktModels => {
     const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
       apModel =>
@@ -87,11 +80,6 @@ const getLagringSideeffekter =
 
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-
-    if (aksjonspunktModels[0].isVedtakSubmission) {
-      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-      if (dokumentdata) await lagreDokumentdata(dokumentdata);
-    }
 
     // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
     return () => {
@@ -155,9 +143,6 @@ const UngdomsytelseProsess = ({
   const { startRequest: forhandsvisTilbakekrevingMelding } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
     UngdomsytelseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   );
-  const { startRequest: lagreDokumentdata } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
-    UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_LAGRE,
-  );
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
@@ -181,7 +166,6 @@ const UngdomsytelseProsess = ({
     alleKodeverk,
     featureToggles,
     arbeidsgiverOpplysningerPerId,
-    lagreDokumentdata,
     ...data,
   };
 
@@ -204,7 +188,6 @@ const UngdomsytelseProsess = ({
     toggleFatterVedtakModal,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
-    lagreDokumentdata,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
@@ -237,6 +220,7 @@ const UngdomsytelseProsess = ({
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}
         velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+        noBorder
       >
         <ProsessStegPanel
           valgtProsessSteg={valgtPanel}

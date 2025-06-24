@@ -1,5 +1,5 @@
 import type { EndreResponse, NotatDto, OpprettResponse, SkjulResponse } from '@k9-sak-web/backend/k9sak/generated';
-import { OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingDtoSakstype, OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
 import { HttpResponse, delay, http, type PathParams } from 'msw';
 import NotatISakIndex from './NotaterIndex';
 
@@ -23,6 +23,7 @@ export const VisNotatISakPanel = () => (
       navAnsatt={{
         brukernavn: 'saksbeh',
       }}
+      sakstype={BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN}
     />
   </div>
 );

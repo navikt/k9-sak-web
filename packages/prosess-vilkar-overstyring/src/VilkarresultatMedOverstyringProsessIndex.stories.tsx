@@ -4,8 +4,8 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
-import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { action } from 'storybook/actions';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
 const avslagsarsaker = [

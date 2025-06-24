@@ -30,7 +30,7 @@ const UttakDetaljerEkspanderbar: React.FC<UttakEkspanderbarProps> = ({ title, ch
         </a>
       </Box>
       <div
-        className={`uttakDetaljerExpandableDetailItem__content ${
+        className={`uttakDetaljerExpandableDetailItemContent ${
           utvid ? '' : styles.uttakDetaljerExpandableDetailItemContentCollapsed
         }`}
       >

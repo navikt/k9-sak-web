@@ -7,8 +7,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { HStack } from '@navikt/ds-react';
-import { fn, within, expect, userEvent, fireEvent } from '@storybook/test';
 import dayjs from 'dayjs';
+import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/FakeBehandlingAvregningBackendApi';
 import KontrollerEtterbetaling, {
   type BekreftKontrollerEtterbetalingAksjonspunktRequest,

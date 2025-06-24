@@ -6,6 +6,7 @@ import Uttaksperioder from './Uttaksperioder';
 import { Inntektsgradering } from '.';
 import { ReactNode } from 'react';
 import { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface ContainerContract {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status'>;
@@ -21,7 +22,7 @@ interface ContainerContract {
   aktivBehandlingUuid: string;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   aksjonspunktkoder: string[];
-  erFagytelsetypeLivetsSluttfase: boolean;
+  ytelsetype: FagsakYtelsesType;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
   handleOverstyringAksjonspunkt?: (data: OverstyringUttakRequest) => Promise<void>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({

@@ -2,7 +2,7 @@ import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 import { Alert, Button } from '@navikt/ds-react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -12,11 +12,12 @@ import { Period } from '@navikt/ft-utils';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
-import type {
-  LangvarigSykdomVurderingDto,
-  LangvarigSykdomVurderingDtoAvslagsårsak,
-  SaksnummerDto,
-  ValgtLangvarigSykdomVurderingDto,
+import {
+  AksjonspunktDtoStatus,
+  type LangvarigSykdomVurderingDto,
+  type LangvarigSykdomVurderingDtoAvslagsårsak,
+  type SaksnummerDto,
+  type ValgtLangvarigSykdomVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
@@ -46,16 +47,26 @@ const defaultVurdering = {
 } as UperiodisertSykdom;
 
 const SykdomUperiodisertIndex = () => {
-  const { behandlingUuid, readOnly, løsAksjonspunkt9301, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+  const { behandlingUuid, readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const aksjonspunkt9301 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
     useLangvarigSykVurderingerFagsak(behandlingUuid);
   const { data: vurderingBruktIAksjonspunkt, isLoading: isLoadingVurderingBruktIAksjonspunkt } =
     useVurdertLangvarigSykdom(behandlingUuid);
+
+  const [valgtPeriode, setValgtPeriode] = useState<SykdomVurderingselement | null>(null);
+  const [nyVurdering, setNyVurdering] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (langvarigSykVurderinger?.length === 0) {
+      setNyVurdering(true);
+    }
+  }, [langvarigSykVurderinger]);
+
   const mappedVurderinger = langvarigSykVurderinger?.map(element => ({
     ...element,
-    godkjent: utledGodkjent(element) as 'ja' | 'nei' | 'mangler_dokumentasjon',
+    godkjent: utledGodkjent(element),
   }));
   const vurderingsliste = langvarigSykVurderinger?.map(element => ({
     ...element,
@@ -63,9 +74,6 @@ const SykdomUperiodisertIndex = () => {
     id: element.uuid,
     resultat: utledResultat(element),
   }));
-
-  const [valgtPeriode, setValgtPeriode] = useState<SykdomVurderingselement | null>(null);
-  const [nyVurdering, setNyVurdering] = useState<boolean>(false);
 
   const velgPeriode = (periode: SykdomVurderingselement | null) => {
     setValgtPeriode(periode);
@@ -82,7 +90,6 @@ const SykdomUperiodisertIndex = () => {
   if (isLoadingLangvarigSykVurderinger || isLoadingVurderingBruktIAksjonspunkt) {
     return <CenteredLoader />;
   }
-
   return (
     <>
       <SykdomUperiodisertContext.Provider value={{ setNyVurdering }}>
@@ -90,6 +97,7 @@ const SykdomUperiodisertIndex = () => {
         <NavigationWithDetailView
           navigationSection={() => (
             <Vurderingsnavigasjon<SykdomVurderingselement>
+              title="Alle vurderinger"
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
@@ -98,14 +106,12 @@ const SykdomUperiodisertIndex = () => {
                 <NavigasjonsmenyRad
                   periode={periode}
                   active={periode.id === valgtPeriode?.id}
-                  valgt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
-                  datoOnClick={() => onPeriodeClick(periode)}
-                  benyttOnClick={() =>
-                    løsAksjonspunkt9301({
-                      langvarigsykdomsvurderingUuid: periode.uuid,
-                      begrunnelse: periode.begrunnelse,
-                    })
+                  kanBenyttes={
+                    aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.OPPRETTET ||
+                    (aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.UTFØRT &&
+                      periode.id !== vurderingBruktIAksjonspunkt?.vurderingUuid)
                   }
+                  onClick={() => onPeriodeClick(periode)}
                 />
               )}
             />
@@ -113,7 +119,7 @@ const SykdomUperiodisertIndex = () => {
           showDetailSection
           belowNavigationContent={
             !readOnly &&
-            harAksjonspunkt9301 && (
+            !!aksjonspunkt9301 && (
               <Button variant="tertiary" icon={<PlusIcon />} onClick={handleNyVurdering}>
                 Legg til ny sykdomsvurdering
               </Button>

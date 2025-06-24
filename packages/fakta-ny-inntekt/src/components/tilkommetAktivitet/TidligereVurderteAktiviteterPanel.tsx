@@ -1,8 +1,7 @@
 import { type JSX } from 'react';
 
 import { BodyShort, Table, Tag } from '@navikt/ds-react';
-import { EditedIcon } from '@navikt/ft-ui-komponenter';
-import { formatCurrencyWithKr } from '@navikt/ft-utils';
+import { BeløpLabel, EditedIcon } from '@navikt/ft-ui-komponenter';
 
 import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
 import { getInntektsforholdIdentifikator } from './TilkommetInntektsforholdField';
@@ -42,13 +41,13 @@ export const TidligereVurderteAktiviteterPanel = ({
               <BodyShort size="small">
                 {harBruttoInntekt && (
                   <>
-                    {formatCurrencyWithKr(inntektsforhold.bruttoInntektPrÅr || 0)}
+                    <BeløpLabel beløp={inntektsforhold.bruttoInntektPrÅr ?? 0} kr />
                     <EditedIcon />
                   </>
                 )}
                 {harInntektsmelding && !harBruttoInntekt && (
                   <>
-                    {formatCurrencyWithKr(inntektsforhold.inntektFraInntektsmeldingPrÅr || 0)}
+                    <BeløpLabel beløp={inntektsforhold.inntektFraInntektsmeldingPrÅr ?? 0} kr />
                     <Tag className={styles.inntektsmeldingTag} variant="neutral" size="xsmall">
                       IM
                     </Tag>
