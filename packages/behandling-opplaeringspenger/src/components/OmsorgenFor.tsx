@@ -15,7 +15,7 @@ interface OmsorgenForProps {
   }[]) => void;
 }
 
-export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
+export default ({ behandling: { links, sakstype }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -39,6 +39,7 @@ export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallbac
         ]),
         readOnly: readOnly || !harAksjonspunkt,
         onFinished: løsAksjonspunkt,
+        sakstype,
       }}
     />
   );

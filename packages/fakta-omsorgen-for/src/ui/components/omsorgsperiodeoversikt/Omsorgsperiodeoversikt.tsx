@@ -1,10 +1,10 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import hash from 'object-hash';
-import React, { useContext, useEffect, type JSX } from 'react';
+import React, { useEffect, type JSX } from 'react';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
-import ContainerContext from '../../context/ContainerContext';
+import { useOmsorgenForContext } from '../../context/ContainerContext';
 import Fosterbarn from '../fosterbarn/Fosterbarn';
 import OmsorgsperiodeVurderingsdetaljer from '../omsorgsperiode-vurderingsdetaljer/OmsorgsperiodeVurderingsdetaljer';
 import OmsorgsperiodeoversiktMessages from '../omsorgsperiodeoversikt-messages/OmsorgsperiodeoversiktMessages';
@@ -16,7 +16,7 @@ interface OmsorgsperiodeoversiktProps {
 }
 
 const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: OmsorgsperiodeoversiktProps): JSX.Element => {
-  const { readOnly, sakstype } = useContext(ContainerContext);
+  const { readOnly, sakstype } = useOmsorgenForContext();
   const [valgtPeriode, setValgtPeriode] = React.useState<Omsorgsperiode>(null);
   const [erRedigeringsmodus, setErRedigeringsmodus] = React.useState(false);
   const [fosterbarn, setFosterbarn] = React.useState<string[]>([]);
