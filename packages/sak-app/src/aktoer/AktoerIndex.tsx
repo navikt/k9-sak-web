@@ -1,13 +1,12 @@
-import React from 'react';
-
-import { Aktor, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import AktorSakIndex from '@k9-sak-web/sak-aktor';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
-import useTrackRouteParam from '../app/useTrackRouteParam';
-import { restApiHooks, K9sakApiKeys } from '../data/k9sakApi';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import AktorSakIndex from '@k9-sak-web/gui/sak/aktør/AktorSakIndex.js';
+import { Aktørinfo } from '@k9-sak-web/gui/sak/aktør/Aktørinfo.js';
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 
 /**
  * AktoerIndex
@@ -22,7 +21,7 @@ const AktoerIndex = () => {
     K9sakApiKeys.KODEVERK,
   );
 
-  const { data, state } = restApiHooks.useRestApi<Aktor>(
+  const { data, state } = restApiHooks.useRestApi<Aktørinfo>(
     K9sakApiKeys.AKTOER_INFO,
     { aktoerId: selectedAktoerId },
     { keepData: true, suspendRequest: !selectedAktoerId, updateTriggers: [selectedAktoerId] },
@@ -34,7 +33,7 @@ const AktoerIndex = () => {
 
   return (
     <KodeverkProvider behandlingType={undefined} kodeverk={alleKodeverk}>
-      <AktorSakIndex valgtAktorId={selectedAktoerId} aktorInfo={data} alleKodeverk={alleKodeverk} />
+      <AktorSakIndex valgtAktorId={selectedAktoerId} aktorInfo={data} />
     </KodeverkProvider>
   );
 };
