@@ -10,7 +10,7 @@ import MarkerBehandlingModal from './components/MarkerBehandlingModal';
 const meta = {
   title: 'gui/sak/meny/marker-behandling',
   component: MarkerBehandlingModal,
-  decorators: [withFeatureToggles({ LOS_MARKER_BEHANDLING_SUBMIT: true })],
+  decorators: [withFeatureToggles({ LOS_MARKER_BEHANDLING_SUBMIT: true, MARKERING_UTENLANDSTILSNITT: true })],
 } satisfies Meta<typeof MarkerBehandlingModal>;
 
 export default meta;
