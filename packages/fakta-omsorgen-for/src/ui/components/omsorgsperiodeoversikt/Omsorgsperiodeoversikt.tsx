@@ -55,7 +55,7 @@ const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: Omsorgsperiodeoversi
               <VurderingAvOmsorgsperioderForm
                 key={hash(valgtPeriode)}
                 omsorgsperiode={valgtPeriode}
-                onAvbryt={() => velgPeriode(null)}
+                onAvbryt={erRedigeringsmodus ? () => setErRedigeringsmodus(false) : undefined}
                 fosterbarn={fosterbarn}
               />
             );
