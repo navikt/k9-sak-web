@@ -4,6 +4,7 @@ import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.j
 import { BehandlingTypeKodeverk } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import Kodeverk from './kodeverkTsType';
 import Behandlingsresultat from './behandlingsresultatTsType';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 export type BehandlingAppKontekst = Implements<
   BehandlingInfo,
@@ -50,6 +51,7 @@ export type BehandlingAppKontekst = Implements<
       manueltOpprettet: boolean;
       erAutomatiskRevurdering?: boolean;
     };
+    sakstype: FagsakYtelsesType;
   }>
 >;
 
