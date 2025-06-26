@@ -89,6 +89,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     fagsakYtelsesType.OMSORGSPENGER,
     fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER
   ].some(t => t === sakstype);
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
