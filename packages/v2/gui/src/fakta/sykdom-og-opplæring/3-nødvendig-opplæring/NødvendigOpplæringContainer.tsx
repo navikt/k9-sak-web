@@ -44,9 +44,18 @@ const Wrapper = ({
 }) => {
   const { readOnly } = useContext(SykdomOgOpplæringContext);
   const enkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
+  const perioder = (
+    <div data-testid="Periode" className="flex gap-2">
+      <CalendarIcon fontSize="20" />
+      <BodyShort size="small">
+        {enkeltdag ? vurdering.perioder[0]?.prettifyPeriod().split(' - ')[0] : vurdering.perioder[0]?.prettifyPeriod()}
+      </BodyShort>
+    </div>
+  );
   return (
     <DetailView
       title="Vurdering av nødvendig opplæring"
+      border
       contentAfterTitleRenderer={() => {
         if (vurdering.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
           return null;
@@ -57,16 +66,8 @@ const Wrapper = ({
           </Button>
         );
       }}
+      belowTitleContent={perioder}
     >
-      <div data-testid="Periode" className="flex gap-2">
-        <CalendarIcon fontSize="20" />
-        <BodyShort size="small">
-          {enkeltdag
-            ? vurdering.perioder[0]?.prettifyPeriod().split(' - ')[0]
-            : vurdering.perioder[0]?.prettifyPeriod()}
-        </BodyShort>
-      </div>
-      <div className="border-none bg-border-subtle h-[2px] mt-4" />
       <div className="mt-6">{children}</div>
     </DetailView>
   );
