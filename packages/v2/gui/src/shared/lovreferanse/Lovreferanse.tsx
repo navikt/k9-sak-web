@@ -6,6 +6,11 @@ type LovreferanseProps = {
    *
    * Denne teksten antas å være på formatet "§ 9-1", "§§ 9-2 og 9-3", "§ 8", "§ 9-3 jamfør 8-9" osv. */
   children: string;
+  /**
+   * Om lovreferansen er for Ungdomsprogrammet.
+   * Dette brukes for å bestemme hvilken lovdatalenke som skal brukes.
+   * Hvis ikke satt, vil den bruke lovdatalenken for vanlig lovreferanse. */
+  isUng?: boolean;
 };
 
 /**
@@ -16,12 +21,14 @@ type LovreferanseProps = {
  * <Lovreferanse>§§ 9-1 og 9-2 jf. 22-21</Lovreferanse>
  * ```
  * */
-export const Lovreferanse = ({ children }: LovreferanseProps) => {
-  return <span>{berikMedLovdataLenker(children)}</span>;
+export const Lovreferanse = ({ children, isUng }: LovreferanseProps) => {
+  return <span>{berikMedLovdataLenker(children, isUng)}</span>;
 };
 
-const berikMedLovdataLenker = (lovreferanse: string) => {
-  const grunnUrlen = 'https://lovdata.no/lov/1997-02-28-19/';
+const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
+  const grunnUrlen = isUng
+    ? 'https://lovdata.no/LTI/forskrift/2025-06-20-1182/'
+    : 'https://lovdata.no/lov/1997-02-28-19/';
 
   const seksjonsRegex = /(\d+(-\d+)?)/;
 
@@ -42,9 +49,10 @@ const berikMedLovdataLenker = (lovreferanse: string) => {
         return <span key={index}>{del} </span>;
       }
 
-      const link = kapittelOgKanskjeParagraf.includes('-')
-        ? `${grunnUrlen}§${kapittelOgKanskjeParagraf}`
-        : `${grunnUrlen}§${kapittelOgKanskjeParagraf}-1`;
+      const link =
+        kapittelOgKanskjeParagraf.includes('-') || isUng
+          ? `${grunnUrlen}§${kapittelOgKanskjeParagraf}`
+          : `${grunnUrlen}§${kapittelOgKanskjeParagraf}-1`;
 
       const prefix = del.includes('§§') ? '§§ ' : del.includes('§') ? '§ ' : '';
       const suffix = del.endsWith(',') ? ', ' : ' ';
