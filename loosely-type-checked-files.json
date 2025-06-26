@@ -203,7 +203,6 @@
   "packages/fakta-omsorgen-for/src/types/Omsorgsperiode.ts",
   "packages/fakta-omsorgen-for/src/ui/OmsorgenForContainer.tsx",
   "packages/fakta-omsorgen-for/src/ui/components/fosterbarn/Fosterbarn.tsx",
-  "packages/fakta-omsorgen-for/src/ui/components/omsorgsperiode-vurderingsdetaljer/OmsorgsperiodeVurderingsdetaljer.tsx",
   "packages/fakta-omsorgen-for/src/ui/components/omsorgsperiodeoversikt-messages/OmsorgsperiodeoversiktMessages.tsx",
   "packages/fakta-omsorgen-for/src/ui/components/omsorgsperiodeoversikt/Omsorgsperiodeoversikt.tsx",
   "packages/fakta-omsorgen-for/src/ui/components/periodenavigasjon/Periodenavigasjon.tsx",
