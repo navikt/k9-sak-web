@@ -48,7 +48,11 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
         <LabelledContent
           label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
           size="small"
-          content={vurdering.institusjon}
+          content={
+            <BodyShort size="small" className="whitespace-pre-wrap">
+              {vurdering.institusjon}
+            </BodyShort>
+          }
         />
       </Box>
 

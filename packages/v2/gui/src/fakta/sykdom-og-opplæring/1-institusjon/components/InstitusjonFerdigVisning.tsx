@@ -3,6 +3,7 @@ import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/gener
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
+import { CogIcon } from '@navikt/aksel-icons';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -12,13 +13,13 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
   <>
     <div className="flex flex-col gap-6 mt-6">
       <LabelledContent
-        label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
+        label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
         size="small"
         content={
           ((vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK ||
-            vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) &&
-            'Ja') ||
-          'Nei'
+            vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) && (
+            <BodyShort size="small">Ja</BodyShort>
+          )) || <BodyShort size="small">Nei</BodyShort>
         }
       />
       {vurdering.begrunnelse && (
@@ -34,6 +35,12 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
             }
           />
           <VurdertAv ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
+        </div>
+      )}
+      {vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK && (
+        <div className="flex gap-2 items-center">
+          <CogIcon fontSize="20" />
+          <BodyShort size="small">Automatisk vurdering</BodyShort>
         </div>
       )}
     </div>

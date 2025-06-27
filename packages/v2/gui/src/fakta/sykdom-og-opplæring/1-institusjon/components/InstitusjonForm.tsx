@@ -101,8 +101,9 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 mt-6">
         <RadioGroupPanel
+          size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
-          label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
+          label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
           radios={[
             { label: 'Ja', value: 'ja' },
             { label: 'Nei', value: 'nei' },
@@ -118,6 +119,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
             name={InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING}
             render={({ field }) => (
               <Checkbox
+                size="small"
                 checked={field.value === 'ja'}
                 onChange={event => {
                   field.onChange(event.target.checked ? 'ja' : 'nei');
@@ -132,6 +134,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         {visBegrunnelse() && (
           <TextAreaField
             name={InstitusjonFormFields.BEGRUNNELSE}
+            size="small"
             label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
             validate={[required, minLength(3), maxLength(10000)]}
             readOnly={readOnly}
