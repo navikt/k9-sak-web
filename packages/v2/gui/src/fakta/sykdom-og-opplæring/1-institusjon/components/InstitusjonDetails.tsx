@@ -16,10 +16,7 @@ interface OwnProps {
 
 const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
-  const erManueltVurdert =
-    vurdering.resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT ||
-    vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT;
-  const visEndreLink = !readOnly && erManueltVurdert;
+  const visEndreLink = !readOnly;
   const perioder = vurdering.perioder.map(periode => (
     <div key={periode.prettifyPeriod()} data-testid="Periode" className="flex gap-2">
       <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
