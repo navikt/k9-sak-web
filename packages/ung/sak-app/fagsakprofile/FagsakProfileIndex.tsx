@@ -1,4 +1,6 @@
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import { BehandlingDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
@@ -12,7 +14,6 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { BehandlingDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { Location } from 'history';
 import { useCallback } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
@@ -22,11 +23,8 @@ import {
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
-import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
-import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useUngSakKodeverkMedNavn } from '../data/useKodeverk';
 import styles from './fagsakProfileIndex.module.css';
-import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {
   if (alleBehandlinger.length === 1) {
@@ -51,24 +49,9 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-export const FagsakProfileIndex = ({
-  fagsak,
-  alleBehandlinger,
-  harHentetBehandlinger,
-  behandlingId,
-  behandlingVersjon,
-  oppfriskBehandlinger,
-  fagsakRettigheter,
-  behandlingRettigheter,
-  personopplysninger,
-  arbeidsgiverOpplysningerPerId,
-}: OwnProps) => {
+export const FagsakProfileIndex = ({ fagsak, alleBehandlinger, harHentetBehandlinger, behandlingId }: OwnProps) => {
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
   const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(getUngSakClient());
-
-  const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
-    ytelseType: fagsak.sakstype,
-  });
 
   const match = useMatch('/fagsak/:saksnummer/');
   const shouldRedirectToBehandlinger = !!match;
@@ -94,25 +77,7 @@ export const FagsakProfileIndex = ({
           saksnummer={fagsak.saksnummer}
           fagsakYtelseType={fagsak.sakstype}
           fagsakStatus={fagsakStatusMedNavn.kode}
-          renderBehandlingMeny={() => {
-            if (!fagsakRettigheter || !behandlendeEnheter) {
-              return <LoadingPanel />;
-            }
-            return (
-              <BehandlingMenuIndex
-                fagsak={fagsak}
-                alleBehandlinger={alleBehandlinger}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                oppfriskBehandlinger={oppfriskBehandlinger}
-                behandlingRettigheter={behandlingRettigheter}
-                sakRettigheter={fagsakRettigheter}
-                behandlendeEnheter={behandlendeEnheter}
-                personopplysninger={personopplysninger}
-                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              />
-            );
-          }}
+          renderBehandlingMeny={() => null}
           renderBehandlingVelger={() => {
             const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
             const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
