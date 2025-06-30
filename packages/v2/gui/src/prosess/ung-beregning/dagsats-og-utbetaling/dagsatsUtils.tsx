@@ -11,7 +11,7 @@ export const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
         <circle cx="5" cy="5" r="5" fill="#417DA0" />
       </svg>
     );
-    tooltipTekst = 'Når deltaker er under 25 år, ganger vi grunnbeløpet med 1,33.';
+    tooltipTekst = 'Når deltaker er under 25 år, ganger vi grunnbeløpet med 2/3 av 2,041.';
   } else if (satstype === UngdomsytelseSatsPeriodeDtoSatsType.HØY) {
     icon = (
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
