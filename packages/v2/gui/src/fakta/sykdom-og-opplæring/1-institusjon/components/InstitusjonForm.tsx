@@ -8,6 +8,7 @@ import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVur
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import InstitusjonVelger from './InstitusjonVelger.js';
 
 enum InstitusjonFormFields {
   BEGRUNNELSE = 'begrunnelse',
@@ -100,6 +101,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   return (
     <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 mt-6">
+        <InstitusjonVelger />
         <RadioGroupPanel
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}

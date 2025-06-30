@@ -81,6 +81,15 @@ export const useInstitusjonInfo = (behandlingUuid: string) => {
   });
 };
 
+export const useAlleInstitusjoner = () => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['alleInstitusjoner'],
+    queryFn: () => backendClient.hentAlleInstitusjoner(),
+  });
+};
+
 export const useVurdertOpplæring = (behandlingUuid: string) => {
   const backendClient = useSykdomBackendClient();
 

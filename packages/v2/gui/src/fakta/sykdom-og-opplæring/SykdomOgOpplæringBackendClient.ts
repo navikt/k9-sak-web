@@ -32,6 +32,10 @@ export default class SykdomOgOpplæringBackendClient {
     return this.#k9sak.opplæringspenger.hentVurdertInstitusjon(behandlingUuid);
   }
 
+  async hentAlleInstitusjoner() {
+    return this.#k9sak.opplæringsinstitusjon.hentAlle();
+  }
+
   // Nødvendig opplæring
   async getVurdertOpplæring(behandlingUuid: string) {
     return this.#k9sak.opplæringspenger.hentVurdertOpplæring(behandlingUuid);

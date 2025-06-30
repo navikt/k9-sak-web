@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, BodyShort } from '@navikt/ds-react';
+import { Button, BodyShort } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
@@ -7,7 +7,6 @@ import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 import DetailView from '../../../../shared/detailView/DetailView.js';
 import { PencilIcon, CalendarIcon } from '@navikt/aksel-icons';
-import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -41,18 +40,6 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
       }
       belowTitleContent={perioder}
     >
-      <Box className="mt-8">
-        <LabelledContent
-          label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
-          size="small"
-          content={
-            <BodyShort size="small" className="whitespace-pre-wrap">
-              {vurdering.institusjon}
-            </BodyShort>
-          }
-        />
-      </Box>
-
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (
         <InstitusjonFerdigVisning vurdering={vurdering} />
       ) : (
