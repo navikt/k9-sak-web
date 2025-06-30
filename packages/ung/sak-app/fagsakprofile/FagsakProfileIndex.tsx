@@ -23,6 +23,8 @@ import {
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
+import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
+import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useUngSakKodeverkMedNavn } from '../data/useKodeverk';
 import styles from './fagsakProfileIndex.module.css';
 
@@ -49,9 +51,24 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-export const FagsakProfileIndex = ({ fagsak, alleBehandlinger, harHentetBehandlinger, behandlingId }: OwnProps) => {
+export const FagsakProfileIndex = ({
+  fagsak,
+  alleBehandlinger,
+  harHentetBehandlinger,
+  behandlingId,
+  behandlingVersjon,
+  oppfriskBehandlinger,
+  fagsakRettigheter,
+  behandlingRettigheter,
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+}: OwnProps) => {
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
   const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(getUngSakClient());
+
+  const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
+    ytelseType: fagsak.sakstype,
+  });
 
   const match = useMatch('/fagsak/:saksnummer/');
   const shouldRedirectToBehandlinger = !!match;
@@ -77,7 +94,26 @@ export const FagsakProfileIndex = ({ fagsak, alleBehandlinger, harHentetBehandli
           saksnummer={fagsak.saksnummer}
           fagsakYtelseType={fagsak.sakstype}
           fagsakStatus={fagsakStatusMedNavn.kode}
-          renderBehandlingMeny={() => null}
+          renderBehandlingMeny={() => {
+            if (!fagsakRettigheter || !behandlendeEnheter) {
+              return <LoadingPanel />;
+            }
+            return (
+              <BehandlingMenuIndex
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                oppfriskBehandlinger={oppfriskBehandlinger}
+                behandlingRettigheter={behandlingRettigheter}
+                sakRettigheter={fagsakRettigheter}
+                behandlendeEnheter={behandlendeEnheter}
+                personopplysninger={personopplysninger}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                showAsDisabled
+              />
+            );
+          }}
           renderBehandlingVelger={() => {
             const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
             const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
