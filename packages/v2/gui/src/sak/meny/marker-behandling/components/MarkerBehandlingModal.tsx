@@ -9,6 +9,7 @@ import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-va
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
+import type { FeatureToggles } from '../../../../featuretoggles/FeatureToggles';
 import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';
 import styles from './markerBehandlingModal.module.css';
 
@@ -27,13 +28,13 @@ interface FormValues {
   begrunnelse: string;
 }
 
-const getMerknader = (merknader: MerknadResponse): string[] => {
+const getMerknader = (merknader: MerknadResponse, featureToggles: FeatureToggles): string[] => {
   const ubrukteMerknader: EndreMerknadRequestMerknadKode[] = [];
 
   if (!merknader.hastesak.aktiv) {
     ubrukteMerknader.push(EndreMerknadRequestMerknadKode.HASTESAK);
   }
-  if (!merknader.utenlandstilsnitt.aktiv) {
+  if (!merknader.utenlandstilsnitt.aktiv && featureToggles.MARKERING_UTENLANDSTILSNITT) {
     ubrukteMerknader.push(EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT);
   }
   return ubrukteMerknader;
@@ -76,7 +77,9 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
       return data ?? null;
     },
   });
-  const tilgjengeligeMerknader = merknaderFraLos ? getMerknader(merknaderFraLos) : [];
+
+  const featureToggles = useContext(FeatureTogglesContext);
+  const tilgjengeligeMerknader = merknaderFraLos ? getMerknader(merknaderFraLos, featureToggles) : [];
   const buildInitialValues = (): FormValues => {
     return {
       merknad: '',
@@ -85,7 +88,6 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
   };
 
   const formMethods = useForm<FormValues>({ defaultValues: buildInitialValues() });
-  const featureToggles = useContext(FeatureTogglesContext);
   const formState = useFormState({ control: formMethods.control });
   const valgtMerknad = useWatch({ control: formMethods.control, name: 'merknad' });
 
