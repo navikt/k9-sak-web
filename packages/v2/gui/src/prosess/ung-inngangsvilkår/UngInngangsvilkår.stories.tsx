@@ -54,8 +54,8 @@ export const InnvilgetAlderOgUngdomsprogram: Story = {
     ],
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Vilkåret er oppfylt 01.02.2025 - 30.01.2026')).toBeInTheDocument();
-    await expect(canvas.getByText('Deltaker meldt inn 01.02.2025')).toBeInTheDocument();
+    await expect(canvas.getByText('Vilkåret er oppfylt 03.02.2025 - 01.02.2026')).toBeInTheDocument();
+    await expect(canvas.getByText('Deltaker meldt inn 03.02.2025')).toBeInTheDocument();
   },
 };
 
