@@ -13,32 +13,33 @@ import {
   type DatePickerProps,
 } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-// import ContainerContext from '../../context/ContainerContext';
-// import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
 import styles from './overstyringUttakForm.module.css';
-import { OverstyrUttakFormFieldName } from '../constants/OverstyrUttakFormFieldName';
 import {
   finnSisteSluttDatoFraPerioderTilVurdering,
   finnTidligsteStartDatoFraPerioderTilVurdering,
-  formaterOverstyring,
   formaterOverstyringAktiviteter,
   overstyrUttakFormValidationSchema,
 } from '../utils/overstyringUtils';
-import type { OverstyrUttakFormData } from '../types/OverstyrUttakFormData';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  ArbeidsgiverOversiktDto,
+  BehandlingDto,
+  OverstyrUttakPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { useQuery } from '@tanstack/react-query';
+import { OverstyrUttakHandling, type HandleOverstyringType } from './OverstyrUttak';
 
 type OwnProps = {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
   handleAvbrytOverstyringForm: () => void;
-  overstyring?: OverstyrUttakFormData;
+  overstyring?: OverstyrUttakPeriodeDto; // OverstyrUttakFormData;
   loading: boolean;
   setLoading: (loading: boolean) => void;
   perioderTilVurdering?: string[];
   api: BehandlingUttakBackendClient;
+  handleOverstyring: HandleOverstyringType;
 };
 
 const OverstyringUttakForm: React.FC<OwnProps> = ({
@@ -46,65 +47,65 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   handleAvbrytOverstyringForm,
   overstyring,
   loading,
-  setLoading,
+  handleOverstyring,
   perioderTilVurdering,
   api,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  // const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
-  // const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
+  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>(undefined);
+
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
-  const resolver: Resolver<OverstyrUttakFormData, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
+  const resolver: Resolver<OverstyrUttakPeriodeDto, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
     any,
     any
   >;
-  const formMethods = useForm<OverstyrUttakFormData>({
+
+  const formMethods = useForm<OverstyrUttakPeriodeDto>({
     reValidateMode: 'onBlur',
     defaultValues: overstyring || {
-      [OverstyrUttakFormFieldName.FOM]: undefined,
-      [OverstyrUttakFormFieldName.TOM]: undefined,
-      [OverstyrUttakFormFieldName.UTTAKSGRAD]: undefined,
-      [OverstyrUttakFormFieldName.BEGRUNNELSE]: '',
-      [OverstyrUttakFormFieldName.UTBETALINGSGRADER]: [],
+      periode: {
+        fom: undefined,
+        tom: undefined,
+      },
+      søkersUttaksgrad: undefined,
+      begrunnelse: '',
+      utbetalingsgrader: [],
     },
     mode: 'onChange',
     resolver,
   });
-  const tidligsteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering ?? []);
+  const tidligsteStartDato: Date = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering ?? []);
+
   const {
     control,
     setValue,
     watch,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = formMethods;
 
   const { fields, replace: replaceAktiviteter } = useFieldArray({
     control,
-    name: OverstyrUttakFormFieldName.UTBETALINGSGRADER,
+    name: 'utbetalingsgrader',
   });
 
   const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
     onRangeChange: values => {
       if (values) {
-        setValue(OverstyrUttakFormFieldName.FOM, values.from);
-        setValue(OverstyrUttakFormFieldName.TOM, values.to);
+        setValue('periode.fom', values.from ? dayjs(values.from).format('YYYY-MM-DD') : '');
+        setValue('periode.tom', values.to ? dayjs(values.to).format('YYYY-MM-DD') : '');
       }
     },
     defaultSelected: erNyOverstyring
       ? undefined
-      : { from: dayjs(overstyring.fom).toDate(), to: dayjs(overstyring.tom).toDate() },
+      : { from: dayjs(overstyring.periode.fom).toDate(), to: dayjs(overstyring.periode.tom).toDate() },
     defaultMonth: dayjs(tidligsteStartDato).toDate(),
   });
 
-  const watchFraDato = watch(OverstyrUttakFormFieldName.FOM, undefined);
-  const watchTilDato = watch(OverstyrUttakFormFieldName.TOM, undefined);
+  const watchFraDato = watch('periode.fom', undefined);
+  const watchTilDato = watch('periode.tom', undefined);
 
-  const {
-    data: arbeidsgivere,
-    isLoading: lasterAktiviteter,
-    // isError: overstyrteError,
-  } = useQuery({
+  const { isLoading: lasterAktiviteter } = useQuery({
     queryKey: ['overstyrte', behandling.uuid, watchFraDato, watchTilDato],
     queryFn: async () => {
       const aktuelleAktiviteter = await api.hentAktuelleAktiviteter(
@@ -115,58 +116,29 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
       if (aktuelleAktiviteter.arbeidsforholdsperioder) {
         replaceAktiviteter(formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder));
       }
-
-      return aktuelleAktiviteter.arbeidsgiverOversikt.arbeidsgivere || [];
+      setArbeidsgivere(aktuelleAktiviteter.arbeidsgiverOversikt?.arbeidsgivere ?? undefined);
+      return aktuelleAktiviteter;
     },
   });
 
-  // useEffect(() => {
-  //   const handleHentAktuelleAktiviteter = async (fom: Date, tom: Date) => {
-  //     // const aktiviteter = await hentAktuelleAktiviteter(fom, tom);
-  //     const {
-  //       data: aktiviteter,
-  //       isLoading: lasterAktiviteter,
-  //       // isError: overstyrteError,
-  //     } = useQuery({
-  //       queryKey: ['overstyrte', behandling.uuid,],
-  //       queryFn: () =>
-  //         api.hentAktuelleAktiviteter(
-  //           behandling.uuid,
-  //           dayjs(fom).format('YYYY-MM-DD'),
-  //           dayjs(tom).format('YYYY-MM-DD'),
-  //         ),
-  //     });
-  //     replaceAktiviteter(formaterOverstyringAktiviteter(aktiviteter));
-  //   };
-
-  //   if (watchFraDato && watchTilDato) {
-  //     void handleHentAktuelleAktiviteter(watchFraDato, watchTilDato);
-  //     setDeaktiverLeggTil(false);
-  //   }
-  // }, [replaceAktiviteter, watchFraDato, watchTilDato]);
+  useEffect(
+    () => setDeaktiverLeggTil(Boolean(watchFraDato && watchTilDato && !isValid)),
+    [watchFraDato, watchTilDato, isValid],
+  );
 
   const disabledDays: DatePickerProps['disabled'] = [
     date => dayjs(date).isBefore(tidligsteStartDato),
-    date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering)),
+    date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering ?? [])),
   ];
-
-  const handleSubmit = (values: OverstyrUttakFormData) => {
-    setLoading(true);
-    // handleOverstyringAksjonspunkt({
-    //   gåVidere: false,
-    //   erVilkarOk: false,
-    //   periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
-    //   lagreEllerOppdater: [{ ...formaterOverstyring(values) }],
-    //   slett: [],
-    // });
-    setLoading(false);
-  };
 
   return (
     <div className={styles.overstyringSkjemaWrapper}>
       <Heading size="xsmall">Overstyr periode</Heading>
       <FormProvider {...formMethods}>
-        <Form onSubmit={handleSubmit} formMethods={formMethods}>
+        <Form
+          onSubmit={values => handleOverstyring({ action: OverstyrUttakHandling.LAGRE, values })}
+          formMethods={formMethods}
+        >
           <div className={styles.overstyringDatoOgUttaksgrad}>
             <DatePicker {...datepickerProps} disabled={disabledDays}>
               <div className={styles.overstyringDatoVelger}>
@@ -175,7 +147,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
               </div>
             </DatePicker>
             <TextField
-              {...register(OverstyrUttakFormFieldName.UTTAKSGRAD)}
+              {...register('søkersUttaksgrad')}
               label="Ny uttaksgrad (%)"
               size="small"
               htmlSize={3}
@@ -184,7 +156,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
               max={100}
               type="number"
               disabled={loading}
-              error={errors[OverstyrUttakFormFieldName.UTTAKSGRAD]?.message}
+              error={errors['søkersUttaksgrad']?.message}
             />
           </div>
 
@@ -193,7 +165,9 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
               {lasterAktiviteter && <Loader />}
               {!lasterAktiviteter && (
                 <>
-                  {fields.length > 0 && <OverstyrAktivitetListe fields={fields} loading={loading} />}
+                  {fields.length > 0 && (
+                    <OverstyrAktivitetListe fields={fields} loading={loading} arbeidsgivere={arbeidsgivere} />
+                  )}
                   {fields.length === 0 && <>Kunne ikke finne noen overstyrbare aktiviteter i den angitte perioden</>}
                 </>
               )}
@@ -202,10 +176,10 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
 
           <div className={styles.overstyringBegrunnelse}>
             <Textarea
-              {...register(OverstyrUttakFormFieldName.BEGRUNNELSE)}
+              {...register('begrunnelse')}
               label="Begrunnelse"
               disabled={loading}
-              error={errors[OverstyrUttakFormFieldName.BEGRUNNELSE]?.message}
+              error={errors['begrunnelse']?.message}
             />
           </div>
           <div className={styles.overstyringKnapperad}>

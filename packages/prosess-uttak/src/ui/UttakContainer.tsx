@@ -1,6 +1,6 @@
 import { Alert, HStack, Heading, VStack } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import React, { type JSX } from 'react';
+import React, { useContext, type JSX } from 'react';
 import { AksjonspunktDtoStatus } from '@navikt/k9-sak-typescript-client';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import {
@@ -10,13 +10,15 @@ import {
 } from '../constants/Aksjonspunkter';
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
-import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
+
+import OverstyrUttak from '@k9-sak-web/gui/prosess/uttak/overstyr-uttak/OverstyrUttak.js';
 import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
+import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
+import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
 import VurderDato from './components/vurderDato/VurderDato';
 import ContainerContext from './context/ContainerContext';
-import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
-
+import Infostripe from './components/infostripe/Infostripe';
 import styles from './mainComponent.module.css';
 
 interface MainComponentProps {
@@ -30,12 +32,14 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
     aksjonspunktkoder,
     aksjonspunkter,
     virkningsdatoUttakNyeRegler,
-    erOverstyrer,
+    erOverstyrer = false,
     readOnly,
     vurderOverlappendeSakComponent,
-    erFagytelsetypeLivetsSluttfase,
     utsattePerioder,
+    behandling,
+    perioderTilVurdering,
   } = containerData;
+
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
 
@@ -59,6 +63,9 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
       ].includes(ap.definisjon.kode),
   );
 
+  const k9SakClient = useContext(K9SakClientContext);
+  const uttakApi = new BehandlingUttakBackendClient(k9SakClient);
+
   return (
     <ContainerContext.Provider value={containerData}>
       <VStack gap="4">
@@ -68,29 +75,32 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
           </Heading>
           {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
         </HStack>
-
         <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+        {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
+          <ContentMaxWidth>
+            <Alert variant="warning" size="small">
+              Aktive aksjonspunkter i uttak må løses før uttak kan overstyres.
+            </Alert>
+          </ContentMaxWidth>
+        )}
 
-        <OverstyrUttakContextProvider>
-          {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
-            <ContentMaxWidth>
-              <Alert variant="warning" size="small">
-                Aktive aksjonspunkter i uttak må løses før uttak kan overstyres.
-              </Alert>
-            </ContentMaxWidth>
-          )}
-          {!harEtUløstAksjonspunktIUttak && <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />}
-        </OverstyrUttakContextProvider>
+        {!harEtUløstAksjonspunktIUttak && (
+          <OverstyrUttak // Flyttet til v2
+            behandling={behandling}
+            overstyringAktiv={overstyringAktiv}
+            erOverstyrer={erOverstyrer}
+            perioderTilVurdering={perioderTilVurdering ?? []}
+            harAksjonspunktForOverstyringAvUttak={harAksjonspunktForOverstyringAvUttak}
+            api={uttakApi}
+          />
+        )}
 
         {vurderOverlappendeSakComponent && (
           <div className={styles.overlappendeSakContainer}>{vurderOverlappendeSakComponent}</div>
         )}
 
-        <OverstyrUttakContextProvider>
-          <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
-        </OverstyrUttakContextProvider>
-
-        <UtsattePerioderStripe />
+        {/* Flyttet til v2 */}
+        <UtsattePerioderStripe utsattePerioder={utsattePerioder} />
 
         {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
         {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) ||
@@ -102,7 +112,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
             }
             initialValues={{
               begrunnelse: aksjonspunktVurderDato?.begrunnelse ?? '',
-              virkningsdato: virkningsdatoUttakNyeRegler,
+              virkningsdato: virkningsdatoUttakNyeRegler ?? '',
             }}
             readOnly={readOnly}
           />

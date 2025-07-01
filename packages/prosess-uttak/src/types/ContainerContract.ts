@@ -1,15 +1,12 @@
-import { OverstyringUttakRequest } from '@k9-sak-web/behandling-pleiepenger';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
-import KodeverkMedNavn from './kodeverkMedNavnTsType';
 import Uttaksperioder from './Uttaksperioder';
 import { Inntektsgradering } from '.';
 import { ReactNode } from 'react';
-import { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface ContainerContract {
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status'>;
+  behandling: Pick<Behandling, 'uuid' | 'versjon' | 'status'>; // Pick<BehandlingDto, 'uuid' | 'versjon' | 'status'>;
   httpErrorHandler?: (status: number, locationHeader?: string) => void;
   endpoints?: {
     behandlingUttakOverstyrbareAktiviteter: string;
@@ -24,7 +21,7 @@ interface ContainerContract {
   aksjonspunktkoder: string[];
   ytelsetype: FagsakYtelsesType;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
-  handleOverstyringAksjonspunkt?: (data: OverstyringUttakRequest) => Promise<void>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({
     begrunnelse,
     virkningsdato,
@@ -32,7 +29,7 @@ interface ContainerContract {
     begrunnelse: string;
     virkningsdato: string;
   }) => void;
-  virkningsdatoUttakNyeRegler: string;
+  virkningsdatoUttakNyeRegler: string | undefined;
   aksjonspunkter?: Aksjonspunkt[];
   versjon?: number;
   erOverstyrer?: boolean;

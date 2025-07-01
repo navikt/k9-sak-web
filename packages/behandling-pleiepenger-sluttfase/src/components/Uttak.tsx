@@ -3,9 +3,10 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { BehandlingDto } from '@navikt/k9-sak-typescript-client';
 
 interface UttakProps {
-  uuid: string;
+  behandling: Pick<BehandlingDto, 'versjon' | 'uuid'>;
   uttaksperioder: any;
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
@@ -18,7 +19,7 @@ interface UttakProps {
 }
 
 export default ({
-  uuid,
+  behandling,
   uttaksperioder,
   utsattePerioder,
   perioderTilVurdering = [],
@@ -43,10 +44,11 @@ export default ({
   return (
     <Uttak
       containerData={{
+        behandling,
         uttaksperioder,
         utsattePerioder,
         perioderTilVurdering,
-        aktivBehandlingUuid: uuid,
+        aktivBehandlingUuid: behandling.uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
         ytelsetype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,

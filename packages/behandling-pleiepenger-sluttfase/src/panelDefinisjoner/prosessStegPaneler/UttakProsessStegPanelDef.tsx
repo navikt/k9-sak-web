@@ -23,7 +23,7 @@ class PanelDef extends ProsessStegPanelDef {
     <>
       <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
       <Uttak
-        uuid={behandling.uuid}
+        behandling={behandling}
         uttaksperioder={uttaksperioder}
         utsattePerioder={utsattePerioder}
         alleKodeverk={alleKodeverk}
