@@ -9,13 +9,8 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import InstitusjonVelger from './InstitusjonVelger.js';
+import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 
-enum InstitusjonFormFields {
-  REDIGERT_INSTITUSJON_NAVN = 'redigertInstitusjonNavn',
-  BEGRUNNELSE = 'begrunnelse',
-  GODKJENT_INSTITUSJON = 'godkjentInstitusjon',
-  SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING = 'skalLeggeTilValgfriSkriftligVurdering',
-}
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
@@ -106,7 +101,10 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   return (
     <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 mt-6">
-        <InstitusjonVelger name={InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN} institusjonFraSøknad={vurdering.institusjon} />
+        <InstitusjonVelger
+          institusjonFraSøknad={vurdering.institusjon}
+          redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
+        />
         <RadioGroupPanel
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
