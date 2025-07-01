@@ -33,7 +33,7 @@ export default class SykdomOgOpplæringBackendClient {
   }
 
   async hentAlleInstitusjoner() {
-    return this.#k9sak.opplæringsinstitusjon.hentAlle();
+    return this.#k9sak.opplæringsinstitusjon.hentAlleV2();
   }
 
   // Nødvendig opplæring

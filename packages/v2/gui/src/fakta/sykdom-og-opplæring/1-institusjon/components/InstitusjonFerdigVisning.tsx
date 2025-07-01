@@ -1,4 +1,4 @@
-import { BodyShort, Box } from '@navikt/ds-react';
+import { BodyShort, Box, Tag } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
@@ -16,9 +16,20 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
         label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
         size="small"
         content={
-          <BodyShort size="small" className="whitespace-pre-wrap">
-            {vurdering.institusjon}
-          </BodyShort>
+          vurdering.redigertInstitusjonNavn ? (
+            <BodyShort size="small" className="whitespace-pre-wrap">
+              {vurdering.redigertInstitusjonNavn}
+            </BodyShort>
+          ) : (
+            <div className="flex gap-2 items-center">
+              <BodyShort size="small" className="whitespace-pre-wrap">
+                {vurdering.institusjon}{' '}
+              </BodyShort>
+              <Tag size="small" variant="info">
+                Fra søknad
+              </Tag>
+            </div>
+          )
         }
       />
     </Box>

@@ -11,6 +11,7 @@ import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/gener
 import InstitusjonVelger from './InstitusjonVelger.js';
 
 enum InstitusjonFormFields {
+  REDIGERT_INSTITUSJON_NAVN = 'redigertInstitusjonNavn',
   BEGRUNNELSE = 'begrunnelse',
   GODKJENT_INSTITUSJON = 'godkjentInstitusjon',
   SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING = 'skalLeggeTilValgfriSkriftligVurdering',
@@ -19,11 +20,13 @@ interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
   [InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING]: string;
+  [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: string;
 }
 
 export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
   begrunnelse: string | null;
+  redigertInstitusjonNavn?: string;
   journalpostId: {
     journalpostId: string;
   };
@@ -64,6 +67,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         vurdering.begrunnelse,
         vurdering.resultat,
       ),
+      [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
     },
   });
 
@@ -84,6 +88,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
       journalpostId: vurdering.journalpostId,
+      redigertInstitusjonNavn: values[InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN],
     });
   };
 
@@ -101,7 +106,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   return (
     <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 mt-6">
-        <InstitusjonVelger />
+        <InstitusjonVelger name={InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN} institusjonFraSøknad={vurdering.institusjon} />
         <RadioGroupPanel
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
