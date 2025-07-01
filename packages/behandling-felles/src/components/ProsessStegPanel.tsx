@@ -31,7 +31,7 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
   lagreOverstyringUttak?: (params: any) => void;
   erOverstyrer?: boolean;
-  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 const ProsessStegPanel = ({
