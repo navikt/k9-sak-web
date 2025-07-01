@@ -37,7 +37,7 @@ export const RegistrereVergeInfoPanelImpl = ({
         <Heading size="small" className="mb-2">
           Verge
         </Heading>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
             {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
           </AksjonspunktHelpText>
