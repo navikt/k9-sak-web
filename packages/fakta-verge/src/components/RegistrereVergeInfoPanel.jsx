@@ -1,7 +1,7 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BodyShort } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -37,7 +37,23 @@ export const RegistrereVergeInfoPanelImpl = ({
         {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
-      <BodyShort size="small">{[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.HjelpeTekst' })]}</BodyShort>
+      <Alert variant="info">
+        <div className="flex flex-col gap-4">
+          <Label>Mer om verge for mindreårige</Label>
+          <BodyLong>
+            Når søker er under 18 år, må en verge signere søknaden. For mindreårige vil det vanligvis være den eller de
+            foreldrene som har foreldreansvar, du kan se dette i Modia.
+          </BodyLong>
+          <BodyLong>
+            Hvis vi ikke har signatur må du kontakte vergene, og be dem sende signert papirsøknad og førsteside for
+            innsending i søkers fødselsnummer innen en frist. Hvis vi ikke får signatur fra verge, må saken henlegges
+            fra Behandlingsmenyen.
+          </BodyLong>
+          <BodyLong className="mt-2">
+            Merk at hvis vi får signatur, må brevene i saken manuelt sendes til vergene i tillegg til søker.
+          </BodyLong>
+        </div>
+      </Alert>
       <form onSubmit={formProps.handleSubmit}>
         <VerticalSpacer twentyPx />
         <FaktaBegrunnelseTextField
