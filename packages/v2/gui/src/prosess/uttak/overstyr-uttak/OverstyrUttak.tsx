@@ -1,27 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, Heading, HelpText, Loader, Modal, Table } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import AktivitetRad from './AktivitetRad';
 import OverstyringUttakForm from './OverstyringUttakForm';
 import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
-import { useMutation, useQuery, type UseMutateFunction } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { BehandlingDto, OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
-import { aksjonspunktCodes, type AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import styles from './overstyrUttakForm.module.css';
-
-export enum OverstyrUttakHandling {
-  SLETT = 'SLETT',
-  BEKREFT = 'BEKREFT',
-  LAGRE = 'LAGRE',
-}
-
-type OverstyringUttakHandling = {
-  action: keyof typeof OverstyrUttakHandling;
-  values?: OverstyrUttakPeriodeDto;
-};
-
-export type HandleOverstyringType = UseMutateFunction<unknown, Error, OverstyringUttakHandling, void>;
+import type { OverstyringUttakHandling, OverstyrUttakAksjonspunktDto } from '../types/OverstyringUttakTypes';
 
 interface ownProps {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
@@ -30,15 +18,13 @@ interface ownProps {
   harAksjonspunktForOverstyringAvUttak: boolean;
   perioderTilVurdering: any[];
   api: BehandlingUttakBackendClient;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
 }
 
-interface OverstyrUttakRequest {
-  '@type': AksjonspunktCodes;
-  gåVidere: boolean;
-  erVilkarOk: boolean;
-  periode: { fom: string; tom: string };
-  lagreEllerOppdater: OverstyrUttakPeriodeDto[];
-  slett: { id: number | string }[];
+export enum OverstyrUttakHandling {
+  SLETT = 'SLETT',
+  BEKREFT = 'BEKREFT',
+  LAGRE = 'LAGRE',
 }
 
 const OverstyrUttak: React.FC<ownProps> = ({
@@ -48,6 +34,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
   harAksjonspunktForOverstyringAvUttak,
   behandling,
   api,
+  hentBehandling,
 }) => {
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -62,7 +49,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
 
   const { mutate: handleOverstyring } = useMutation({
     mutationFn: async ({ action, values }: OverstyringUttakHandling) => {
-      const overstyrteAksjonspunktDto: OverstyrUttakRequest = {
+      const overstyrteAksjonspunktDto: OverstyrUttakAksjonspunktDto = {
         '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK,
         gåVidere: false,
         erVilkarOk: false,
@@ -92,20 +79,23 @@ const OverstyrUttak: React.FC<ownProps> = ({
       });
     },
     onMutate: () => setLoading(true),
-    onSettled: () => setLoading(false),
+    onSuccess: () => {
+      void hentBehandling({ behandlingId: behandling.uuid }, false);
+      window.scroll(0, 0);
+    },
+    onError: error => {
+      setLoading(false);
+      throw new Error(`Feil ved overstyring av uttak: ${error.message}`);
+    },
   });
 
   const handleSlett = async (id: number): Promise<void> => {
-    ref.current?.close();
-    setBekreftSlettId(false);
     setLoading(true);
     handleOverstyring({
       action: OverstyrUttakHandling.SLETT,
       values: { id, begrunnelse: '', periode: { fom: '', tom: '' } },
     });
   };
-
-  const ref = useRef<HTMLDialogElement>(null);
 
   const handleAvbrytOverstyringForm = () => {
     setVisOverstyringSkjema(false);
@@ -117,16 +107,13 @@ const OverstyrUttak: React.FC<ownProps> = ({
     setVisOverstyringSkjema(true);
   };
 
-  const bekreftSletting = (id: number) => {
-    setBekreftSlettId(id);
-    ref.current?.showModal();
-  };
+  const bekreftSletting = (id: number) => setBekreftSlettId(id);
 
   const harNoeÅVise =
     (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0 && leseModus) ||
     (overstyringAktiv && erOverstyrer);
 
-  const arbeidsgivere = overstyrte?.arbeidsgiverOversikt.arbeidsgivere;
+  const arbeidsgivere = overstyrte?.arbeidsgiverOversikt?.arbeidsgivere;
 
   const tableHeaders = (
     <Table.Header>
@@ -200,7 +187,8 @@ const OverstyrUttak: React.FC<ownProps> = ({
           <>
             {bekreftSlettId && (
               <Modal
-                ref={ref}
+                open={!!bekreftSlettId}
+                onClose={() => setBekreftSlettId(false)}
                 width="small"
                 header={{
                   heading: 'Er du sikker på at du vil slette en overstyring?',
@@ -208,14 +196,21 @@ const OverstyrUttak: React.FC<ownProps> = ({
                   closeButton: false,
                 }}
               >
-                <Modal.Footer>
-                  <Button size="small" variant="danger" onClick={() => handleSlett(bekreftSlettId)}>
-                    Slett
-                  </Button>
-                  <Button size="small" variant="primary" onClick={() => ref.current?.close()}>
-                    Avbryt
-                  </Button>
-                </Modal.Footer>
+                {loading && (
+                  <HStack padding="space-20" justify="center">
+                    <Loader size="large" title="Venter..." />
+                  </HStack>
+                )}
+                {!loading && (
+                  <Modal.Footer>
+                    <Button size="small" variant="danger" onClick={() => handleSlett(bekreftSlettId)} loading={loading}>
+                      Slett
+                    </Button>
+                    <Button size="small" variant="primary" onClick={() => setBekreftSlettId(false)} loading={loading}>
+                      Avbryt
+                    </Button>
+                  </Modal.Footer>
+                )}
               </Modal>
             )}
             {!visOverstyringSkjema && (

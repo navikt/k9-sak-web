@@ -38,6 +38,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
     utsattePerioder,
     behandling,
     perioderTilVurdering,
+    hentBehandling,
   } = containerData;
 
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
@@ -92,6 +93,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
             perioderTilVurdering={perioderTilVurdering ?? []}
             harAksjonspunktForOverstyringAvUttak={harAksjonspunktForOverstyringAvUttak}
             api={uttakApi}
+            hentBehandling={hentBehandling}
           />
         )}
 

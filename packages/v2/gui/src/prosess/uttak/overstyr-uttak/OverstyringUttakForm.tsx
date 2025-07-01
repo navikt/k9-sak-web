@@ -29,7 +29,8 @@ import type {
   OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { useQuery } from '@tanstack/react-query';
-import { OverstyrUttakHandling, type HandleOverstyringType } from './OverstyrUttak';
+import { OverstyrUttakHandling } from './OverstyrUttak';
+import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
 
 type OwnProps = {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;

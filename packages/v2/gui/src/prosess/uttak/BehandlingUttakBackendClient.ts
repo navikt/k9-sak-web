@@ -7,7 +7,7 @@ import type {
   OverstyrbareUttakAktiviterDto,
   OverstyrbareAktiviteterForUttakRequest,
 } from '@k9-sak-web/backend/k9sak/generated';
-import type { OverstyringUttakRequest } from './types/OverstyringUttakRequest';
+import type { OverstyringUttakRequest } from './types/OverstyringUttakTypes';
 
 export default class BehandlingUttakBackendClient {
   #k9sak: K9SakClient;
