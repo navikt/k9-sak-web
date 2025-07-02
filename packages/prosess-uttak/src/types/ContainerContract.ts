@@ -21,7 +21,7 @@ interface ContainerContract {
   aksjonspunktkoder: string[];
   ytelsetype: FagsakYtelsesType;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling | BehandlingDto>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({
     begrunnelse,
     virkningsdato,
