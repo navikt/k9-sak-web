@@ -171,7 +171,10 @@ const OverstyrUttak: React.FC<ownProps> = ({
                         visOverstyringSkjema={visOverstyringSkjema}
                         handleSlett={bekreftSletting}
                         loading={loading}
-                        erTilVurdering={erOverstyringInnenforPerioderTilVurdering(overstyring, perioderTilVurdering)}
+                        erTilVurdering={erOverstyringInnenforPerioderTilVurdering(
+                          overstyring,
+                          perioderTilVurdering ?? [],
+                        )}
                         leseModus={leseModus}
                         arbeidsgivere={arbeidsgivere}
                       />
