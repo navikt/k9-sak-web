@@ -54,7 +54,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
         gåVidere: false,
         erVilkarOk: false,
         periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
-        lagreEllerOppdater: [], // { ...values, søkersUttaksgrad: values.søkersUttaksgrad ? values.søkersUttaksgrad : undefined },
+        lagreEllerOppdater: [],
         slett: [],
       };
 
