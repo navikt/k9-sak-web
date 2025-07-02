@@ -135,65 +135,63 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   return (
     <div className={styles.overstyringSkjemaWrapper}>
       <Heading size="xsmall">Overstyr periode</Heading>
-      <FormProvider {...formMethods}>
-        <Form
-          onSubmit={values => handleOverstyring({ action: OverstyrUttakHandling.LAGRE, values })}
-          formMethods={formMethods}
-        >
-          <div className={styles.overstyringDatoOgUttaksgrad}>
-            <DatePicker {...datepickerProps} disabled={disabledDays}>
-              <div className={styles.overstyringDatoVelger}>
-                <DatePicker.Input {...fromInputProps} label="Fra og med" size="small" disabled={loading} />
-                <DatePicker.Input {...toInputProps} label="Til og med" size="small" disabled={loading} />
-              </div>
-            </DatePicker>
-            <TextField
-              {...register('søkersUttaksgrad')}
-              label="Ny uttaksgrad (%)"
-              size="small"
-              htmlSize={3}
-              maxLength={3}
-              min={0}
-              max={100}
-              type="number"
-              disabled={loading}
-              error={errors['søkersUttaksgrad']?.message}
-            />
-          </div>
-
-          {lasterAktiviteter !== null && (
-            <div className={styles.overstyringAktivitetListe}>
-              {lasterAktiviteter && <Loader />}
-              {!lasterAktiviteter && (
-                <>
-                  {fields.length > 0 && (
-                    <OverstyrAktivitetListe fields={fields} loading={loading} arbeidsgivere={arbeidsgivere} />
-                  )}
-                  {fields.length === 0 && <>Kunne ikke finne noen overstyrbare aktiviteter i den angitte perioden</>}
-                </>
-              )}
+      <Form
+        onSubmit={values => handleOverstyring({ action: OverstyrUttakHandling.LAGRE, values })}
+        formMethods={formMethods}
+      >
+        <div className={styles.overstyringDatoOgUttaksgrad}>
+          <DatePicker {...datepickerProps} disabled={disabledDays}>
+            <div className={styles.overstyringDatoVelger}>
+              <DatePicker.Input {...fromInputProps} label="Fra og med" size="small" disabled={loading} />
+              <DatePicker.Input {...toInputProps} label="Til og med" size="small" disabled={loading} />
             </div>
-          )}
+          </DatePicker>
+          <TextField
+            {...register('søkersUttaksgrad')}
+            label="Ny uttaksgrad (%)"
+            size="small"
+            htmlSize={3}
+            maxLength={3}
+            min={0}
+            max={100}
+            type="number"
+            disabled={loading}
+            error={errors['søkersUttaksgrad']?.message}
+          />
+        </div>
 
-          <div className={styles.overstyringBegrunnelse}>
-            <Textarea
-              {...register('begrunnelse')}
-              label="Begrunnelse"
-              disabled={loading}
-              error={errors['begrunnelse']?.message}
-            />
+        {lasterAktiviteter !== null && (
+          <div className={styles.overstyringAktivitetListe}>
+            {lasterAktiviteter && <Loader />}
+            {!lasterAktiviteter && (
+              <>
+                {fields.length > 0 && (
+                  <OverstyrAktivitetListe fields={fields} loading={loading} arbeidsgivere={arbeidsgivere} />
+                )}
+                {fields.length === 0 && <>Kunne ikke finne noen overstyrbare aktiviteter i den angitte perioden</>}
+              </>
+            )}
           </div>
-          <div className={styles.overstyringKnapperad}>
-            <Button variant="primary" size="small" disabled={deaktiverLeggTil} loading={loading}>
-              {erNyOverstyring && <>Legg til overstyring</>}
-              {!erNyOverstyring && <>Endre overstyring</>}
-            </Button>
-            <Button variant="secondary" size="small" onClick={handleAvbrytOverstyringForm} loading={loading}>
-              Avbryt
-            </Button>
-          </div>
-        </Form>
-      </FormProvider>
+        )}
+
+        <div className={styles.overstyringBegrunnelse}>
+          <Textarea
+            {...register('begrunnelse')}
+            label="Begrunnelse"
+            disabled={loading}
+            error={errors['begrunnelse']?.message}
+          />
+        </div>
+        <div className={styles.overstyringKnapperad}>
+          <Button variant="primary" size="small" disabled={deaktiverLeggTil} loading={loading}>
+            {erNyOverstyring && <>Legg til overstyring</>}
+            {!erNyOverstyring && <>Endre overstyring</>}
+          </Button>
+          <Button variant="secondary" size="small" onClick={handleAvbrytOverstyringForm} loading={loading}>
+            Avbryt
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 };
