@@ -16,7 +16,7 @@ interface ownProps {
   overstyringAktiv: boolean;
   erOverstyrer: boolean;
   harAksjonspunktForOverstyringAvUttak: boolean;
-  perioderTilVurdering: any[];
+  perioderTilVurdering: string[] | undefined;
   api: BehandlingUttakBackendClient;
   hentBehandling?: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
 }
