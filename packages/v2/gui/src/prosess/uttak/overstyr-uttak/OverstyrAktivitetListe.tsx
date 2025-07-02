@@ -16,7 +16,6 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading, arbeidsgi
   const {
     register,
     formState: { errors },
-    getValues,
   } = useFormContext<OverstyrUttakPeriodeDto>();
 
   return (
@@ -24,7 +23,6 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading, arbeidsgi
       <Label size="small">Ny utbetalingsgrad per aktivitet</Label>
       <div className={styles.overstyringSkjemaAktiviteter}>
         {fields.map((field, index) => {
-          console.log('value', getValues(`utbetalingsgrader.${index}.utbetalingsgrad`));
           const arbeidstype =
             field.arbeidsforhold?.type !== 'BA' ? arbeidstypeTilVisning[field.arbeidsforhold?.type] : false;
           const harFeil = !!errors['utbetalingsgrader']?.[index]?.utbetalingsgrad;

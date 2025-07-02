@@ -44,8 +44,4 @@ export default class BehandlingUttakBackendClient {
   async overstyringUttak(requestBody: OverstyringUttakRequest): Promise<BekreftResponse> {
     return this.#k9sak.aksjonspunkt.overstyr(requestBody);
   }
-
-  async slettOverstyringUttak(requestBody: OverstyringUttakRequest): Promise<BekreftResponse> {
-    return this.#k9sak.aksjonspunkt.overstyr(requestBody);
-  }
 }
