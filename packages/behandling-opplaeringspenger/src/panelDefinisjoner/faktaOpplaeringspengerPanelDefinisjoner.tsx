@@ -1,3 +1,4 @@
+import UtenlandsoppholdFaktaPanelDef from '@k9-sak-web/behandling-pleiepenger/src/panelDefinisjoner/faktaPaneler/UtenlandsoppholdFaktaPanelDef';
 import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanelDef';
 import BeregningFaktaPanelDef from './faktaPaneler/BeregningFaktaPanelDef';
 import DirekteOvergangFaktaPanelDef from './faktaPaneler/DirekteOvergangFaktaPanelDef';
@@ -32,6 +33,7 @@ const faktaPanelDefinisjoner = [
   new InntektOgYtelserFaktaPanelDef(),
   new SoknadsperioderFaktaPanelDef(),
   new VergeFaktaPanelDef(),
+  new UtenlandsoppholdFaktaPanelDef(),
 ];
 
 export default faktaPanelDefinisjoner;
