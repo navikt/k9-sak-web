@@ -1,7 +1,7 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Alert, BodyLong, BodyShort, Heading, Label } from '@navikt/ds-react';
+import { Alert, BodyLong, Heading, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -38,9 +38,7 @@ export const RegistrereVergeInfoPanelImpl = ({
           Verge
         </Heading>
         <div className="flex flex-col gap-4">
-          <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-            {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
-          </AksjonspunktHelpText>
+          <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>Søker er under 18 år.</AksjonspunktHelpText>
           <Alert variant="info">
             <div className="flex flex-col gap-4">
               <Label>Mer om verge for mindreårige</Label>
@@ -65,7 +63,7 @@ export const RegistrereVergeInfoPanelImpl = ({
             isSubmittable={submittable}
             isReadOnly={readOnly}
             hasBegrunnelse={!!initialValues.begrunnelse}
-            label={intl.formatMessage({ id: 'RegistrereVergeInfoPanel.Begrunnelse' })}
+            label={'Begrunnelse'}
           />
           <VerticalSpacer twentyPx />
           <FaktaSubmitButton
