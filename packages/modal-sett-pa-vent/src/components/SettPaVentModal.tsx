@@ -39,7 +39,6 @@ const venterEtterlysInntektsmeldingKode = 'VENTER_ETTERLYS_IM';
 
 const isButtonDisabled = (
   frist: string,
-  showAvbryt: boolean,
   hasManualPaVent: boolean,
   erVenterEtterlysInntektsmelding: boolean,
   formHasChanges: boolean,
@@ -48,7 +47,7 @@ const isButtonDisabled = (
     return false;
   }
   const dateNotValid = !!hasValidDate(frist) || !!dateAfterOrEqualToToday(frist);
-  const defaultOptions = (!hasManualPaVent || showAvbryt) && !formHasChanges;
+  const defaultOptions = !hasManualPaVent && !formHasChanges;
   return defaultOptions || dateNotValid;
 };
 
@@ -305,13 +304,7 @@ export const SettPaVentModal = ({
                 }
                 className={styles.button}
                 onClick={getHovedknappOnClick}
-                disabled={isButtonDisabled(
-                  frist,
-                  showAvbryt,
-                  hasManualPaVent,
-                  erVenterEtterlysInntektsmelding,
-                  formHasChanges,
-                )}
+                disabled={isButtonDisabled(frist, hasManualPaVent, erVenterEtterlysInntektsmelding, formHasChanges)}
                 loading={isSubmitting}
               >
                 {getHovedknappTekst()}
