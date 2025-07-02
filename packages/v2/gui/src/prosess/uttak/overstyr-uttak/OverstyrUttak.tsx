@@ -18,7 +18,7 @@ interface ownProps {
   harAksjonspunktForOverstyringAvUttak: boolean;
   perioderTilVurdering: string[] | undefined;
   api: BehandlingUttakBackendClient;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Pick<BehandlingDto, 'uuid' | 'versjon'>>;
 }
 
 export enum OverstyrUttakHandling {
