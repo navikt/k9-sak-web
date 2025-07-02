@@ -18,7 +18,7 @@ interface ownProps {
   harAksjonspunktForOverstyringAvUttak: boolean;
   perioderTilVurdering: any[];
   api: BehandlingUttakBackendClient;
-  hentBehandling: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
 }
 
 export enum OverstyrUttakHandling {
@@ -80,7 +80,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
     },
     onMutate: () => setLoading(true),
     onSuccess: () => {
-      void hentBehandling({ behandlingId: behandling.uuid }, false);
+      void hentBehandling?.({ behandlingId: behandling.uuid }, false);
       window.scroll(0, 0);
     },
     onError: error => {
