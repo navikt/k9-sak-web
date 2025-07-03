@@ -1,4 +1,9 @@
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
+dayjs.extend(customParseFormat);
 
 export const isDayAfter = (d1: dayjs.Dayjs, d2: dayjs.Dayjs) => {
   const dayAfterD1 = d1.add(1, 'day').utc(true).startOf('day');
