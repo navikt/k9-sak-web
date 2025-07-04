@@ -1,13 +1,15 @@
+import type { FC } from 'react';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
-import React from 'react';
-import Period from '../../../types/Period';
-import { sortPeriodsChronological } from '../../../util/periodUtils';
-import ContainerContext from '../../context/ContainerContext';
+import Period from '@k9-sak-web/prosess-uttak/src/types/Period';
+import { sortPeriodsChronological } from '@k9-sak-web/prosess-uttak/src/util/periodUtils';
+
 import styles from './utsattePerioderStripe.module.css';
 
-const UtsattePerioderStripe = () => {
-  const { utsattePerioder } = React.useContext(ContainerContext);
+interface UtsattePerioderProps {
+  utsattePerioder: string[];
+}
 
+const UtsattePerioderStripe: FC<UtsattePerioderProps> = ({ utsattePerioder }) => {
   if (!utsattePerioder || utsattePerioder.length === 0) {
     return null;
   }

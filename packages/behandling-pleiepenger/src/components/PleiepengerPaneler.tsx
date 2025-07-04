@@ -21,7 +21,6 @@ import moment from 'moment';
 import { useState } from 'react';
 import { Arbeidstype } from '../types';
 import FetchedData from '../types/FetchedData';
-import { OverstyringUttakRequest } from '../types/OverstyringUttakRequest';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
@@ -44,7 +43,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
   dokumenter: Dokument[];
-  lagreOverstyringUttak: (values: OverstyringUttakRequest) => void;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 interface FaktaPanelInfo {
@@ -81,7 +80,7 @@ const PleiepengerPaneler = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   dokumenter,
-  lagreOverstyringUttak,
+  hentBehandling,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
@@ -155,7 +154,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
-        lagreOverstyringUttak={lagreOverstyringUttak}
+        hentBehandling={hentBehandling}
       />
       <PleiepengerFakta
         behandling={behandling}

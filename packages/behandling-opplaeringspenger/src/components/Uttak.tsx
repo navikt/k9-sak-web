@@ -2,10 +2,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
-import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
 
 interface UttakProps {
-  uuid: string;
+  behandling: Pick<Behandling, 'versjon' | 'uuid' | 'status'>;
   uttaksperioder: any;
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
@@ -18,7 +18,7 @@ interface UttakProps {
 }
 
 export default ({
-  uuid,
+  behandling,
   uttaksperioder,
   utsattePerioder,
   perioderTilVurdering = [],
@@ -43,9 +43,10 @@ export default ({
   return (
     <Uttak
       containerData={{
+        behandling,
         uttaksperioder,
         utsattePerioder,
-        aktivBehandlingUuid: uuid,
+        aktivBehandlingUuid: behandling.uuid,
         perioderTilVurdering,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,

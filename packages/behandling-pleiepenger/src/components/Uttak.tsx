@@ -2,19 +2,16 @@ import { useContext } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
-import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Inntektsgradering, Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
 import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSakIndex.js';
-import { OverstyringUttakRequest } from '../types';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { VStack } from '@navikt/ds-react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface UttakProps {
-  uuid: string;
   behandling: Behandling;
   uttaksperioder: any;
   inntektsgraderinger: Inntektsgradering[];
@@ -25,14 +22,13 @@ interface UttakProps {
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: AlleKodeverk;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
-  lagreOverstyringUttak: (values: any) => void;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
   relevanteAksjonspunkter: string[];
   erOverstyrer: boolean;
   readOnly: boolean;
 }
 
 export default ({
-  uuid,
   behandling,
   uttaksperioder,
   inntektsgraderinger,
@@ -43,7 +39,7 @@ export default ({
   alleKodeverk,
   submitCallback,
   virkningsdatoUttakNyeRegler,
-  lagreOverstyringUttak,
+  hentBehandling,
   relevanteAksjonspunkter,
   erOverstyrer,
   readOnly,
@@ -63,14 +59,6 @@ export default ({
 
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
-
-  const handleOverstyringAksjonspunkt = async (values: OverstyringUttakRequest) => {
-    lagreOverstyringUttak({
-      '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
-      ...VilkarResultPicker.transformValues(values),
-      ...values,
-    });
-  };
 
   const VurderOverlappendeSakComponent = () => {
     const aksjonspunkt = aksjonspunkter.find(
@@ -103,8 +91,9 @@ export default ({
   return (
     <Uttak
       containerData={{
+        behandling,
         httpErrorHandler: httpErrorHandlerCaller,
-        endpoints: findEndpointsFromRels(links, [
+        endpoints: findEndpointsFromRels(links ?? [], [
           { rel: 'pleiepenger-overstyrtbare-aktiviteter', desiredName: 'behandlingUttakOverstyrbareAktiviteter' },
           { rel: 'pleiepenger-overstyrt-uttak', desiredName: 'behandlingUttakOverstyrt' },
         ]),
@@ -112,15 +101,15 @@ export default ({
         inntektsgraderinger,
         perioderTilVurdering,
         utsattePerioder,
-        aktivBehandlingUuid: uuid,
         ytelsetype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+        aktivBehandlingUuid: behandling.uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,
         aksjonspunkter: funnedeRelevanteAksjonspunkter,
-        handleOverstyringAksjonspunkt,
+        hentBehandling,
         versjon,
         erOverstyrer,
         status: behandlingStatus.kode,

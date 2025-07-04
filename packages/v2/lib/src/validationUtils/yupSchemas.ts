@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 export const yupValiderProsent = Yup.number()
-  .required('Feltet er påkrevd')
   .transform((val, orig) => (orig === '' ? undefined : val))
   .typeError('Må være et tall')
   .max(100, 'Maks 100')

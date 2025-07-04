@@ -3,7 +3,11 @@ import type {
   EgneOverlappendeSakerDto,
   BekreftResponse,
   BekreftData,
+  GetOverstyrtUttakResponse,
+  OverstyrbareUttakAktiviterDto,
+  OverstyrbareAktiviteterForUttakRequest,
 } from '@k9-sak-web/backend/k9sak/generated';
+import type { OverstyringUttakRequest } from './types/OverstyringUttakTypes';
 
 export default class BehandlingUttakBackendClient {
   #k9sak: K9SakClient;
@@ -18,5 +22,26 @@ export default class BehandlingUttakBackendClient {
 
   async bekreftAksjonspunkt(requestBody: BekreftData['requestBody']): Promise<BekreftResponse> {
     return this.#k9sak.aksjonspunkt.bekreft(requestBody);
+  }
+
+  async hentOverstyringUttak(behandlingUuid: string): Promise<GetOverstyrtUttakResponse> {
+    const result = await this.#k9sak.behandlingUttak.getOverstyrtUttak(behandlingUuid);
+    return result ?? { overstyringer: [] };
+  }
+
+  async hentAktuelleAktiviteter(
+    behandlingUuid: OverstyrbareAktiviteterForUttakRequest['behandlingIdDto'],
+    fom: OverstyrbareAktiviteterForUttakRequest['fom'],
+    tom: OverstyrbareAktiviteterForUttakRequest['tom'],
+  ): Promise<OverstyrbareUttakAktiviterDto> {
+    return this.#k9sak.behandlingUttak.hentOverstyrbareAktiviterForUttak({
+      behandlingIdDto: behandlingUuid,
+      fom,
+      tom,
+    });
+  }
+
+  async overstyringUttak(requestBody: OverstyringUttakRequest): Promise<BekreftResponse> {
+    return this.#k9sak.aksjonspunkt.overstyr(requestBody);
   }
 }

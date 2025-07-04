@@ -16,14 +16,13 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     alleKodeverk,
     submitCallback,
-    lagreOverstyringUttak,
+    hentBehandling,
     virkningsdatoUttakNyeRegler,
     relevanteAksjonspunkter,
     erOverstyrer,
     isReadOnly,
   }) => (
     <Uttak
-      uuid={behandling.uuid}
       behandling={behandling}
       uttaksperioder={uttaksperioder}
       inntektsgraderinger={inntektsgraderinger}
@@ -33,7 +32,7 @@ class PanelDef extends ProsessStegPanelDef {
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      lagreOverstyringUttak={lagreOverstyringUttak}
+      hentBehandling={hentBehandling}
       virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
       erOverstyrer={erOverstyrer}

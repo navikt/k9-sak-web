@@ -7,8 +7,8 @@ export default class Period {
 
   constructor(periodenøkkel: string) {
     const [fomValue, tomValue] = periodenøkkel.split('/');
-    this.fom = fomValue;
-    this.tom = tomValue;
+    this.fom = fomValue ?? '';
+    this.tom = tomValue ?? '';
   }
 
   prettifyPeriod(): string {
