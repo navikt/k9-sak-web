@@ -70,6 +70,7 @@ const meta = {
     requestUngdomsytelseApi.mock(UngdomsytelseBehandlingApiKeys.TILBAKEKREVINGVALG, tilbakekrevingvalg);
   },
   parameters: {
+    layout: 'fullscreen',
     msw: {
       handlers: [
         http.get('/ung/sak/api/behandling/perioder-med-vilkar', async () => {
