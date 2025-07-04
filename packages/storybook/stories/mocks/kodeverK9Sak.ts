@@ -55,6 +55,11 @@ export const kodeverkK9Sak = {
       navn: 'Pleiepenger sykt barn',
     },
     {
+      kode: 'UNG',
+      kodeverk: 'FAGSAK_YTELSE',
+      navn: 'Ungdomsprogramytelse',
+    },
+    {
       kode: 'OMP_KS',
       kodeverk: 'FAGSAK_YTELSE',
       navn: 'Ekstra omsorgsdager kronisk syk',
