@@ -196,6 +196,8 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, {});
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, {});
+    requestApi.mock(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, {});
+    requestApi.mock(K9sakApiKeys.BEHANDLING_RETTIGHETER, {});
 
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
