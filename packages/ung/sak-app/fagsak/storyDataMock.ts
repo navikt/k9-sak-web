@@ -23,9 +23,15 @@ export const sakBruker = {
 
 export const fetchFagsak = {
   saksnummer: '5YCCV',
-  sakstype: { kode: 'UNG', kodeverk: 'FAGSAK_YTELSE' },
-  gyldigPeriode: { fom: '2025-03-14', tom: '2026-03-12' },
-  status: { kode: 'LOP', kodeverk: 'FAGSAK_STATUS' },
+  sakstype: 'UNG',
+  gyldigPeriode: {
+    fom: '2025-03-14',
+    tom: '2026-03-12',
+  },
+  status: {
+    kode: 'LOP',
+    kodeverk: 'FAGSAK_STATUS',
+  },
   kanRevurderingOpprettes: true,
   opprettet: '2025-07-04T13:38:07.268',
   endret: '2025-07-04T13:38:19.398',
