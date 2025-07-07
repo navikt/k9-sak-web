@@ -15,7 +15,7 @@ interface OwnProps {
 
 const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
-  const visEndreLink = !readOnly;
+  const visEndreLink = !readOnly && vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES;
   const perioder = vurdering.perioder.map(periode => (
     <div key={periode.prettifyPeriod()} data-testid="Periode" className="flex gap-2">
       <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>

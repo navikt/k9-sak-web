@@ -16,6 +16,8 @@ interface InstitusjonFormValues {
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
   [InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING]: string;
   [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: string;
+  [InstitusjonFormFields.ANNEN_INSTITUSJON]: boolean;
+  [InstitusjonFormFields.ORGANISASJONSNUMMER]: string;
 }
 
 export interface InstitusjonAksjonspunktPayload {
@@ -63,6 +65,8 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         vurdering.resultat,
       ),
       [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
+      [InstitusjonFormFields.ANNEN_INSTITUSJON]: false,
+      [InstitusjonFormFields.ORGANISASJONSNUMMER]: '',
     },
   });
 

@@ -33,7 +33,8 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
       border
       contentAfterTitleRenderer={() =>
         !readOnly &&
-        harAksjonspunkt9301 && (
+        harAksjonspunkt9301 &&
+        vurdering.behandlingUuid === behandlingUuid && (
           <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
         )
       }
