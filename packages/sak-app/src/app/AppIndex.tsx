@@ -23,6 +23,7 @@ import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ErrorProvider } from '@k9-sak-web/gui/app/alerts/ErrorContext.js';
 
 const EMPTY_ARRAY = [];
 
@@ -83,19 +84,21 @@ const AppIndex = () => {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AppConfigResolver>
-          <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-            <LanguageProvider>
-              <Dekorator
-                hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-                queryStrings={queryStrings}
-                setSiteHeight={setSiteHeight}
-                pathname={location.pathname}
-              />
-              {shouldRenderHome && <Home headerHeight={headerHeight} />}
-              {forbiddenErrors.length > 0 && <ForbiddenPage />}
-              {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-            </LanguageProvider>
-          </ErrorBoundary>
+          <ErrorProvider>
+            <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+              <LanguageProvider>
+                <Dekorator
+                  hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+                  queryStrings={queryStrings}
+                  setSiteHeight={setSiteHeight}
+                  pathname={location.pathname}
+                />
+                {shouldRenderHome && <Home headerHeight={headerHeight} />}
+                {forbiddenErrors.length > 0 && <ForbiddenPage />}
+                {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
+              </LanguageProvider>
+            </ErrorBoundary>
+          </ErrorProvider>
         </AppConfigResolver>
       </QueryClientProvider>
     </ErrorBoundary>

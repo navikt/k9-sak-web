@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ApiError } from '@k9-sak-web/backend/k9sak/generated';
 import { TopplinjeAlerts } from './alerts/TopplinjeAlerts.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
-import { type ErrorWithAlertInfo, isErrorWithAlertInfo } from './alerts/AlertInfo.js';
+import { isErrorWithAlertInfo } from './alerts/AlertInfo.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { useErrorContext } from './alerts/ErrorContext.js';
 
 /**
  * Fanger opp uhandterte promise rejections. Kan deretter avgjere om feil skal analyserast og vise feilmelding, eller
  * om den skal propagerast vidare og bli rapportert som uhandtert i nettlesaren.
  */
 export const UnhandledRejectionCatcher = () => {
-  const [errors, setErrors] = useState<ErrorWithAlertInfo[]>([]);
-  const removeError = (errorId: number) => setErrors(errors.filter(err => err.errorId !== errorId));
+  const { errors, addError, removeError } = useErrorContext();
+
   useEffect(() => {
-    const addError = (err: ErrorWithAlertInfo) => setErrors([...errors, err]);
     const listener = (event: PromiseRejectionEvent) => {
       let error = event.reason;
       if (error instanceof ApiError && !(error instanceof ExtendedApiError)) {
@@ -39,7 +39,7 @@ export const UnhandledRejectionCatcher = () => {
     return () => {
       removeEventListener('unhandledrejection', listener);
     };
-  }, []);
+  }, [addError]);
 
   return <TopplinjeAlerts errors={errors} onErrorDismiss={err => removeError(err.errorId)} />;
 };
