@@ -7,7 +7,7 @@ import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
-const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
 
@@ -76,4 +76,4 @@ const RedigerKnapp = ({
   );
 };
 
-export default SykdomUperiodisertFormContainer;
+export default SykdomUperiodisertContainer;
