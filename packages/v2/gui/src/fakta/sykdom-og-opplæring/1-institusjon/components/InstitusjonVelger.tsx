@@ -1,9 +1,9 @@
-import { BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
 import { useAlleInstitusjoner, useHentOrganisasjonsnummer } from '../../SykdomOgOpplæringQueries';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CheckboxField, InputField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { useEffect, useState } from 'react';
-import { ExternalLinkIcon, PencilIcon } from '@navikt/aksel-icons';
+import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
@@ -49,6 +49,7 @@ const InstitusjonVelger = ({
   return (
     <InstitusjonFraSøknadForm
       institusjonFraSøknad={institusjonFraSøknad}
+      gjeldendeInstitusjon={gjeldendeInstitusjon}
       institusjoner={institusjoner}
       endreInstitusjon={endreInstitusjon}
       setEndreInstitusjon={setEndreInstitusjon}
@@ -56,20 +57,14 @@ const InstitusjonVelger = ({
   );
 };
 
-const validateOrganisasjonResponse = (navn: string, organisasjonsnummer: string) => {
-  if (!navn) {
-    return `Fant ingen organisasjon med organisasjonsnummer ${organisasjonsnummer}`;
-  }
-
-  return true;
-};
-
 const InstitusjonFraSøknadForm = ({
+  gjeldendeInstitusjon,
   institusjonFraSøknad,
   institusjoner,
   endreInstitusjon,
   setEndreInstitusjon,
 }: {
+  gjeldendeInstitusjon: string;
   institusjonFraSøknad: string;
   institusjoner: HentAlleV2Response;
   endreInstitusjon: boolean;
@@ -91,11 +86,19 @@ const InstitusjonFraSøknadForm = ({
 
   return (
     <div className="flex flex-col gap-3">
+      <Label size="small">På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?</Label>
       <div className="flex gap-2 items-center">
-        <BodyShort size="small">Annen: {institusjonFraSøknad}</BodyShort>
-        <Tag size="small" variant="info">
-          Fra søknad
-        </Tag>
+        <BodyShort size="small">Annen: {gjeldendeInstitusjon}</BodyShort>
+        {institusjonFraSøknad === gjeldendeInstitusjon ? (
+          <Tag size="small" variant="info">
+            Fra søknad
+          </Tag>
+        ) : (
+          <PersonPencilFillIcon
+            className="ml-1 align-middle text-2xl text-border-warning"
+            title="Endret av saksbehandler"
+          />
+        )}
       </div>
       <div>
         <EndreInstitusjonButton setEndreInstitusjon={setEndreInstitusjon} endreInstitusjon={endreInstitusjon} />
@@ -112,9 +115,10 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
 
   // cleanup on unmount
 
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const organisasjonsnummer = watch(InstitusjonFormFields.ORGANISASJONSNUMMER);
   const harOrganisasjonsnummer = watch(InstitusjonFormFields.HAR_ORGANISASJONSNUMMER);
+  const institusjonFraOrganisasjonsnummer = watch(InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER);
   const {
     mutate: hentOrganisasjonInfo,
     isPending,
@@ -124,8 +128,6 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
     isError,
     error,
   } = useHentOrganisasjonsnummer(organisasjonsnummer);
-
-  console.log(error?.errorData);
 
   useEffect(() => {
     // hent på nytt hvis organisasjonsnummer endres
@@ -143,6 +145,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
   useEffect(() => {
     resetField(InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST);
     resetField(InstitusjonFormFields.ORGANISASJONSNUMMER);
+    resetField(InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER);
   }, [harOrganisasjonsnummer, resetField]);
 
   useEffect(() => {
@@ -150,9 +153,16 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
       resetField(InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST);
       resetField(InstitusjonFormFields.ORGANISASJONSNUMMER);
       resetField(InstitusjonFormFields.HAR_ORGANISASJONSNUMMER);
+      resetField(InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER);
       reset();
     };
   }, [resetField, reset]);
+
+  useEffect(() => {
+    if (organisasjonsInfo?.navn !== institusjonFraOrganisasjonsnummer) {
+      setValue(InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER, organisasjonsInfo?.navn);
+    }
+  }, [organisasjonsInfo, setValue, institusjonFraOrganisasjonsnummer]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -167,17 +177,13 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
       />
       {visOrganisasjonsnummer && (
         <>
-          <div className="flex flex-row gap-5">
+          <div className="flex flex-row flex-wrap gap-x-5 items-start">
             <InputField
               label="Organisasjonsnummer (9 siffer)"
               size="small"
               name={InstitusjonFormFields.ORGANISASJONSNUMMER}
               className="w-[275px]"
-              validate={[
-                required,
-                hasValidOrgNumber,
-                () => validateOrganisasjonResponse(organisasjonsInfo?.navn || '', organisasjonsnummer),
-              ]}
+              validate={[required, hasValidOrgNumber]}
             />
             <Link href="https://www.brreg.no/enhet/sok" target="_blank" className="mt-7 no-underline">
               <Button variant="tertiary" icon={<ExternalLinkIcon />} type="button" size="small">
@@ -189,9 +195,9 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
           {isError && <ErrorMessage size="small">{error?.errorData?.feltFeil?.[0]?.melding}</ErrorMessage>}
           {organisasjonsInfo && <BodyShort size="small">{organisasjonsInfo?.navn}</BodyShort>}
           {!organisasjonsInfo && isSuccess && (
-            <Label size="small" variant="error">
-              Fant ingen institusjon med organisasjonsnummer {organisasjonsnummer}
-            </Label>
+            <Alert size="small" variant="warning">
+              Fant ingen institusjon med organisasjonsnummer {organisasjonsnummer}.
+            </Alert>
           )}
         </>
       )}
@@ -199,6 +205,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
         <InputField
           label="Navn på institusjonen/kompetansesenteret"
           size="small"
+          className="w-[275px]"
           name={InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST}
         />
       )}

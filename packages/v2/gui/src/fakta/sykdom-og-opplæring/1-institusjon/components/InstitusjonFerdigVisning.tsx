@@ -1,9 +1,9 @@
-import { BodyShort, Box, Tag } from '@navikt/ds-react';
+import { BodyShort, Box, Label, Tag } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { CogIcon } from '@navikt/aksel-icons';
+import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -15,21 +15,12 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
       <LabelledContent
         label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
         size="small"
+        hideLabel={true}
         content={
-          vurdering.redigertInstitusjonNavn ? (
-            <BodyShort size="small" className="whitespace-pre-wrap">
-              {vurdering.redigertInstitusjonNavn}
-            </BodyShort>
-          ) : (
-            <div className="flex gap-2 items-center">
-              <BodyShort size="small" className="whitespace-pre-wrap">
-                {vurdering.institusjon}{' '}
-              </BodyShort>
-              <Tag size="small" variant="info">
-                Fra søknad
-              </Tag>
-            </div>
-          )
+          <InstitusjonsnavnFerdigVisning
+            gjeldendeInstitusjon={vurdering.redigertInstitusjonNavn || vurdering.institusjon}
+            institusjonFraSøknad={vurdering.institusjon}
+          />
         }
       />
     </Box>
@@ -68,5 +59,32 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => (
     </div>
   </>
 );
+
+const InstitusjonsnavnFerdigVisning = ({
+  gjeldendeInstitusjon,
+  institusjonFraSøknad,
+}: {
+  gjeldendeInstitusjon: string;
+  institusjonFraSøknad: string;
+}) => {
+  return (
+    <div className="flex flex-col gap-3">
+      <Label size="small">På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?</Label>
+      <div className="flex gap-2 items-center">
+        <BodyShort size="small">Annen: {gjeldendeInstitusjon}</BodyShort>
+        {institusjonFraSøknad === gjeldendeInstitusjon ? (
+          <Tag size="small" variant="info">
+            Fra søknad
+          </Tag>
+        ) : (
+          <PersonPencilFillIcon
+            className="ml-1 align-middle text-2xl text-border-warning"
+            title="Endret av saksbehandler"
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default InstitusjonFerdigVisning;
