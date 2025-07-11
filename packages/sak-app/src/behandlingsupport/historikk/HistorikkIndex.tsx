@@ -281,7 +281,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
             compareDone.current = true;
           }
         }
-      }, 1_000);
+      }, 3_000);
     }
   }, [isLoading, etablerteHistorikkInnslag, nyeHistorikkInnslag, etablerteHistorikkElementer, nyeHistorikkElementer]); // Ønsker bevisst å berre køyre samanlikningssjekk ein gang.
 
