@@ -6,14 +6,13 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomUperiodisertFormContainer from './SykdomUperiodisertFormContainer';
+import SykdomUperiodisertContainer from './SykdomUperiodisertContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { Period } from '@navikt/ft-utils';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
 import {
-  AksjonspunktDtoStatus,
   type LangvarigSykdomVurderingDto,
   type LangvarigSykdomVurderingDtoAvslagsårsak,
   type SaksnummerDto,
@@ -106,11 +105,8 @@ const SykdomUperiodisertIndex = () => {
                 <NavigasjonsmenyRad
                   periode={periode}
                   active={periode.id === valgtPeriode?.id}
-                  kanBenyttes={
-                    aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.OPPRETTET ||
-                    (aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.UTFØRT &&
-                      periode.id !== vurderingBruktIAksjonspunkt?.vurderingUuid)
-                  }
+                  erBruktIAksjonspunkt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
+                  erFraTidligereBehandling={periode.behandlingUuid !== behandlingUuid}
                   onClick={() => onPeriodeClick(periode)}
                 />
               )}
@@ -127,10 +123,10 @@ const SykdomUperiodisertIndex = () => {
           }
           detailSection={() => {
             if (nyVurdering) {
-              return <SykdomUperiodisertFormContainer vurdering={defaultVurdering} />;
+              return <SykdomUperiodisertContainer vurdering={defaultVurdering} />;
             }
             if (valgtVurdering) {
-              return <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />;
+              return <SykdomUperiodisertContainer vurdering={valgtVurdering} />;
             }
             return null;
           }}

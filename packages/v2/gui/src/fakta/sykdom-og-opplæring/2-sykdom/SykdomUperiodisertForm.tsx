@@ -43,12 +43,6 @@ const SykdomUperiodisertForm = ({
     },
   });
 
-  useEffect(() => {
-    formMethods.setValue('diagnosekoder', vurdering.diagnosekoder || []);
-    formMethods.setValue('begrunnelse', vurdering.begrunnelse);
-    formMethods.setValue('godkjent', vurdering.godkjent);
-  }, []);
-
   const godkjent = formMethods.watch('godkjent');
   useEffect(() => {
     if (godkjent === 'mangler_dokumentasjon') {
@@ -123,13 +117,14 @@ const SykdomUperiodisertForm = ({
         />
         {godkjent === 'mangler_dokumentasjon' && (
           <Alert variant="info" size="small">
-            Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
-            <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
+            Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter{' '}
+            <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>. Før du kan avslå må du etterlyse
+            dokumentasjon fra bruker.
           </Alert>
         )}
         <div className="flex gap-4">
           <Button variant="primary" type="submit" size="small">
-            {vurdering.uuid ? 'Oppdater og benytt vurdering' : 'Lagre og benytt vurdering'}
+            Bekreft og fortsett
           </Button>
           {redigering && (
             <div>
