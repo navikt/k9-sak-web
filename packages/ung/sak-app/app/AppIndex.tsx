@@ -1,5 +1,4 @@
-import moment from 'moment';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
@@ -7,7 +6,6 @@ import ForbiddenPage from '@k9-sak-web/gui/app/feilmeldinger/ForbiddenPage.js';
 import UnauthorizedPage from '@k9-sak-web/gui/app/feilmeldinger/UnauthorizedPage.js';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
-import { NavAnsatt } from '@k9-sak-web/types';
 
 import AppConfigResolver from './AppConfigResolver';
 import LanguageProvider from './LanguageProvider';
@@ -20,7 +18,6 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const EMPTY_ARRAY = [];
 const queryClient = new QueryClient({
@@ -41,20 +38,6 @@ const AppIndex = () => {
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
-
-  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
-
-  useEffect(() => {
-    if (navAnsatt?.funksjonellTid) {
-      // TODO (TOR) Dette endrar jo berre moment. Kva med kode som brukar Date direkte?
-      const diffInMinutes = moment().diff(navAnsatt.funksjonellTid, 'minutes');
-      // Hvis diffInMinutes har avvik på over 5min: override moment.now (ref. http://momentjs.com/docs/#/customization/now/)
-      if (diffInMinutes >= 5 || diffInMinutes <= -5) {
-        const diff = moment().diff(navAnsatt.funksjonellTid);
-        moment.now = () => Date.now() - diff;
-      }
-    }
-  }, [navAnsatt?.funksjonellTid]);
 
   const setSiteHeight = useCallback((newHeaderHeight): void => {
     document.documentElement.setAttribute('style', `height: calc(100% - ${newHeaderHeight}px)`);
