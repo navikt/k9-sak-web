@@ -15,41 +15,47 @@ export const InnvilgetAlderOgUngdomsprogram: Story = {
     vilkar: [
       {
         vilkarType: 'UNG_VK_2',
-        lovReferanse: 'Forskrift om ungdomsprogram og ungdomsprogramytelse § 8',
+        lovReferanse: 'Forskrift om forsøk med ungdomsprogram og ungdomsprogramytelse § 8',
         overstyrbar: false,
         perioder: [
           {
+            avslagKode: undefined,
             merknadParametere: {},
             vilkarStatus: 'OPPFYLT',
             periode: {
-              fom: '2025-02-01',
-              tom: '2026-01-30',
+              fom: '2025-02-03',
+              tom: '2026-02-01',
             },
+            begrunnelse: undefined,
             vurderesIBehandlingen: true,
+            merknad: '-',
           },
         ],
       },
       {
         vilkarType: 'UNG_VK_1',
-        lovReferanse: 'Forskrift om ungdomsprogram og ungdomsprogramytelse § 3 bokstav a',
+        lovReferanse: 'Forskrift om forsøk med ungdomsprogram og ungdomsprogramytelse § 8 jamfør 3 bokstav a',
         overstyrbar: false,
         perioder: [
           {
+            avslagKode: undefined,
             merknadParametere: {},
             vilkarStatus: 'OPPFYLT',
             periode: {
-              fom: '2025-02-01',
-              tom: '2026-01-30',
+              fom: '2025-02-03',
+              tom: '2026-02-01',
             },
+            begrunnelse: undefined,
             vurderesIBehandlingen: true,
+            merknad: '-',
           },
         ],
       },
     ],
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Vilkåret er oppfylt 01.02.2025 - 30.01.2026')).toBeInTheDocument();
-    await expect(canvas.getByText('Deltaker meldt inn 01.02.2025')).toBeInTheDocument();
+    await expect(canvas.getByText('Vilkåret er oppfylt 03.02.2025 - 01.02.2026')).toBeInTheDocument();
+    await expect(canvas.getByText('Deltaker meldt inn 03.02.2025')).toBeInTheDocument();
   },
 };
 

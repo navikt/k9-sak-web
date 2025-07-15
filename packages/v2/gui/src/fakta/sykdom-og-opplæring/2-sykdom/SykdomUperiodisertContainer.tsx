@@ -7,7 +7,7 @@ import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
-const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
 
@@ -21,27 +21,24 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm =
     !readOnly && ((redigering && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
+  const perioder = (
+    <div data-testid="Periode" className="flex gap-2">
+      <CalendarIcon fontSize="20" />
+      <BodyShort size="small">{dayjs(vurdering.vurdertTidspunkt).format('DD.MM.YYYY')}</BodyShort>
+    </div>
+  );
   return (
     <DetailView
       title="Vurdering av sykdom"
+      border
       contentAfterTitleRenderer={() =>
         !readOnly &&
         harAksjonspunkt9301 && (
           <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
         )
       }
+      belowTitleContent={perioder}
     >
-      <div data-testid="Periode" className="flex items-center gap-2">
-        {vurdering.vurdertTidspunkt && (
-          <>
-            <div className="flex my-auto gap-2">
-              <CalendarIcon fontSize="20" />
-              <BodyShort size="small">{dayjs(vurdering.vurdertTidspunkt).format('DD.MM.YYYY')}</BodyShort>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="border-none bg-border-subtle h-[2px] mt-4" />
       <div className="mt-6">
         {visForm ? (
           <SykdomUperiodisertForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
@@ -79,4 +76,4 @@ const RedigerKnapp = ({
   );
 };
 
-export default SykdomUperiodisertFormContainer;
+export default SykdomUperiodisertContainer;

@@ -162,7 +162,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
     {
       kode: 'UNG',
       kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Ungdomsytelse',
+      navn: 'Ungdomsprogramytelse',
       kilde: 'UNG',
     },
   ],

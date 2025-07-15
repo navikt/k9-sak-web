@@ -35,9 +35,15 @@ const Wrapper = ({
   redigering: boolean;
 }) => {
   const { readOnly } = useContext(SykdomOgOpplæringContext);
+  const reisetidBeskrivelse = (
+    <div data-testid="Periode" className="flex gap-2">
+      <Description vurdering={vurdering} />
+    </div>
+  );
   return (
     <DetailView
       title="Vurdering av reisetid"
+      border
       contentAfterTitleRenderer={() => {
         if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
           return null;
@@ -48,11 +54,8 @@ const Wrapper = ({
           </Button>
         );
       }}
+      belowTitleContent={reisetidBeskrivelse}
     >
-      <div data-testid="Periode" className="flex gap-2">
-        <Description vurdering={vurdering} />
-      </div>
-      <div className="border-none bg-border-subtle h-[2px] mt-4" />
       <div className="mt-6">{children}</div>
     </DetailView>
   );

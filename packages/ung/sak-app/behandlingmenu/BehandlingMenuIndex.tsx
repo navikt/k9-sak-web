@@ -32,6 +32,8 @@ import {
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import { ChevronDownIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
@@ -91,6 +93,7 @@ interface OwnProps {
   behandlendeEnheter: BehandlendeEnheter;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  showAsDisabled?: boolean;
 }
 
 export const BehandlingMenuIndex = ({
@@ -104,6 +107,7 @@ export const BehandlingMenuIndex = ({
   behandlendeEnheter,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
+  showAsDisabled,
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
@@ -180,6 +184,20 @@ export const BehandlingMenuIndex = ({
   }
 
   const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
+
+  if (showAsDisabled) {
+    return (
+      <Button
+        size="small"
+        variant="secondary-neutral"
+        icon={<ChevronDownIcon title="Ekspander" fontSize="1.5rem" />}
+        iconPosition="right"
+        disabled
+      >
+        Behandlingsmeny
+      </Button>
+    );
+  }
 
   if (featureToggles?.SAK_MENY_V2) {
     return (
