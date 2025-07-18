@@ -19,7 +19,7 @@
     "react-dom": "19.1.0",
     "react-intl": "7.1.11",
     "react-redux": "9.2.0",
-    "react-router": "7.6.2",
+    "react-router": "7.7.0",
     "redux-form": "8.3.10"
   },
   "devDependencies": {
