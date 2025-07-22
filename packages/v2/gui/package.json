@@ -24,15 +24,15 @@
     "@navikt/diagnosekoder": "^1.2025.0",
     "@navikt/ft-form-hooks": "^6.3.13",
     "@navikt/ft-form-validators": "^3.2.5",
-    "@navikt/ft-utils": "^3.6.8",
-    "@tanstack/react-query": "^5.83.0",
+    "@navikt/ft-utils": "^3.6.3",
+    "@tanstack/react-query": "^5.81.5",
     "@types/object-hash": "^3.0.6",
     "axios": "1.10.0",
     "dayjs": "^1.11.13",
     "object-hash": "^3.0.0",
     "react": "19.1.0",
-    "react-hook-form": "7.60.0",
-    "react-router": "7.7.0",
+    "react-hook-form": "7.58.1",
+    "react-router": "7.6.2",
     "yup": "^1.6.1"
   }
 }
