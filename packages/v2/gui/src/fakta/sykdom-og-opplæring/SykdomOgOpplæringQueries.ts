@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  ApiError,
   type GetBrevMottakerinfoEregData,
   type GetBrevMottakerinfoEregResponse,
   type OppdaterLangvarigSykdomsVurderingData,
