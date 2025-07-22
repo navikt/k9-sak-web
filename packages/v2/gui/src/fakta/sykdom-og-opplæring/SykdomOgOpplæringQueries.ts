@@ -98,7 +98,6 @@ export const useHentOrganisasjonsnummer = (organisasjonsnummer: string) => {
 
   return useMutation<GetBrevMottakerinfoEregResponse, K9SakApiError, GetBrevMottakerinfoEregData['requestBody']>({
     mutationFn: () => backendClient.hentOrganisasjonsnummer(organisasjonsnummer),
-    throwOnError: true,
   });
 };
 
