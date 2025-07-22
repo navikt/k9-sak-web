@@ -14,6 +14,7 @@ import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFakt
 import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
 import SykdomOgOpplæringPanelDef from './faktaPaneler/SykdomOgOpplæringPanelDef';
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
+import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),
@@ -32,6 +33,7 @@ const faktaPanelDefinisjoner = [
   new InntektOgYtelserFaktaPanelDef(),
   new SoknadsperioderFaktaPanelDef(),
   new VergeFaktaPanelDef(),
+  new UtenlandsoppholdFaktaPanelDef(),
 ];
 
 export default faktaPanelDefinisjoner;
