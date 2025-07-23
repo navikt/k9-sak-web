@@ -1,7 +1,6 @@
-@import url('tailwindcss/base');
+@config "../../tailwind.config.cjs";
+@import "tailwindcss";
 @import url('@navikt/ds-css');
-@import url('tailwindcss/components');
-@import url('tailwindcss/utilities');
 @import url('dayPicker.css');
 @import url('@k9-sak-web/gui/tokens/tokens.css');
 
