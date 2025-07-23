@@ -5752,19 +5752,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/vite@npm:^4.1.11":
-  version: 4.1.11
-  resolution: "@tailwindcss/vite@npm:4.1.11"
-  dependencies:
-    "@tailwindcss/node": "npm:4.1.11"
-    "@tailwindcss/oxide": "npm:4.1.11"
-    tailwindcss: "npm:4.1.11"
-  peerDependencies:
-    vite: ^5.2.0 || ^6 || ^7
-  checksum: 10/8f25a4dac6c562b67f46ccbbe013f42e5f139e53a825d13f66be00d2d9e757b819d60afc9666b0f20a0fcc357e2c1d697a359114d582f8f2d8312b8c333cc031
-  languageName: node
-  linkType: hard
-
 "@tanstack/eslint-plugin-query@npm:^5.81.2":
   version: 5.81.2
   resolution: "@tanstack/eslint-plugin-query@npm:5.81.2"
@@ -12583,7 +12570,6 @@ __metadata:
     "@storybook/react-vite": "npm:9.0.17"
     "@storybook/test-runner": "npm:^0.23.0"
     "@tailwindcss/postcss": "npm:^4.1.11"
-    "@tailwindcss/vite": "npm:^4.1.11"
     "@testing-library/dom": "npm:10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
     "@testing-library/react": "npm:16.3.0"

@@ -1,3 +1,5 @@
+@config "../../tailwind.config.cjs";
+@import "tailwindcss";
 
 .hide-legend legend {
   position: absolute;
