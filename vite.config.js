@@ -102,15 +102,13 @@ export default ({ mode }) => {
       outDir: './dist/k9/web',
       sourcemap: true,
       rollupOptions: {
-        external: [
-          "mockServiceWorker.js"
-        ],
+        external: ['mockServiceWorker.js'],
         plugins: [sourcemaps({ exclude: /@sentry/ })],
         output: {
           manualChunks: {
-            diagnosekoder: ['@navikt/diagnosekoder']
-          }
-        }
+            diagnosekoder: ['@navikt/diagnosekoder'],
+          },
+        },
       },
     },
     test: {
