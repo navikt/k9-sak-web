@@ -7,6 +7,7 @@ import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/akse
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
+import { getFeilmeldingFraFeilDto } from '../../../../app/feilmeldinger/errorUtils.js';
 
 const InstitusjonVelger = ({
   institusjonFraSøknad,
@@ -128,7 +129,6 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
     isError,
     error,
   } = useHentOrganisasjonsnummer(organisasjonsnummer);
-
   useEffect(() => {
     // hent på nytt hvis organisasjonsnummer endres
     if (organisasjonsnummer?.length === 9 && !isPending && !isSuccess && !isError) {
@@ -201,7 +201,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
             </Link>
           </div>
           {isPending && <Skeleton variant="text" width="100%" height="100px" />}
-          {isError && <ErrorMessage size="small">{error?.errorData?.feltFeil?.[0]?.melding}</ErrorMessage>}
+          {isError && <ErrorMessage size="small">{getFeilmeldingFraFeilDto(error?.errorData)}</ErrorMessage>}
           {organisasjonsInfo && <BodyShort size="small">{organisasjonsInfo?.navn}</BodyShort>}
           {!organisasjonsInfo && isSuccess && (
             <Alert size="small" variant="warning">
