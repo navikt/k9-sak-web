@@ -164,6 +164,15 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
     }
   }, [organisasjonsInfo, setValue, institusjonFraOrganisasjonsnummer]);
 
+  // Custom validator som sjekker om organisasjonsnummer er skrevet inn uten å få treff
+  const validateOrganisasjonsnummerHarTreff = (value: string) => {
+    // Kun valider hvis organisasjonsnummer er komplett (9 siffer) og søk er fullført
+    if (value?.length === 9 && isSuccess && !organisasjonsInfo && !isPending) {
+      return `Fant ingen institusjon med organisasjonsnummer ${value}.`;
+    }
+    return null;
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <RadioGroupPanel
@@ -183,7 +192,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
               size="small"
               name={InstitusjonFormFields.ORGANISASJONSNUMMER}
               className="w-[275px]"
-              validate={[required, hasValidOrgNumber]}
+              validate={[required, hasValidOrgNumber, validateOrganisasjonsnummerHarTreff]}
             />
             <Link href="https://www.brreg.no/enhet/sok" target="_blank" className="mt-7 no-underline">
               <Button variant="tertiary" icon={<ExternalLinkIcon />} type="button" size="small">
