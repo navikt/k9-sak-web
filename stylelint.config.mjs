@@ -50,6 +50,14 @@ export default {
     "selector-pseudo-class-no-unknown": null,
     "keyframes-name-pattern": null,
     "no-descending-specificity": null,
+    // Tailwind CSS 4 support
+    'import-notation': null, // Allow both url() and string notation for @import
+    'at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['theme', 'source'] // Allow Tailwind CSS 4 @theme and @source directives
+      }
+    ],
     'unit-allowed-list': [
       'em',
       'ex',
