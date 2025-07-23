@@ -1,9 +1,12 @@
-@import url('tailwindcss/base');
+@import "tailwindcss";
 @import url('@navikt/ds-css');
-@import url('tailwindcss/components');
-@import url('tailwindcss/utilities');
 @import url('dayPicker.css');
 @import url('@k9-sak-web/gui/tokens/tokens.css');
+
+@theme {
+  --color-warning-yellow: #ff9100;
+  --font-sans: "Source Sans Pro", "Arial", "sans-serif";
+}
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
 html {
