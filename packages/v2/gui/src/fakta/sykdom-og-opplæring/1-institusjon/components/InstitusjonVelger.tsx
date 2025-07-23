@@ -9,6 +9,8 @@ import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { getFeilmeldingFraFeilDto } from '../../../../app/feilmeldinger/errorUtils.js';
 
+const ANTALL_SIFFER_ORGNR = 9;
+
 const InstitusjonVelger = ({
   institusjonFraSøknad,
   redigertInstitusjonNavn,
@@ -131,11 +133,11 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
   } = useHentOrganisasjonsnummer(organisasjonsnummer);
   useEffect(() => {
     // hent på nytt hvis organisasjonsnummer endres
-    if (organisasjonsnummer?.length === 9 && !isPending && !isSuccess && !isError) {
+    if (organisasjonsnummer?.length === ANTALL_SIFFER_ORGNR && !isPending && !isSuccess && !isError) {
       hentOrganisasjonInfo(organisasjonsnummer);
     }
     // nullstill data hvis organisasjonsnummer ikke er 9 siffer
-    if (organisasjonsnummer?.length !== 9) {
+    if (organisasjonsnummer?.length !== ANTALL_SIFFER_ORGNR) {
       reset();
     }
   }, [organisasjonsnummer, hentOrganisasjonInfo, isPending, reset, organisasjonsInfo, isSuccess, isError]);
@@ -167,7 +169,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
   // Custom validator som sjekker om organisasjonsnummer er skrevet inn uten å få treff
   const validateOrganisasjonsnummerHarTreff = (value: string) => {
     // Kun valider hvis organisasjonsnummer er komplett (9 siffer) og søk er fullført
-    if (value?.length === 9 && isSuccess && !organisasjonsInfo && !isPending) {
+    if (value?.length === ANTALL_SIFFER_ORGNR && isSuccess && !organisasjonsInfo && !isPending) {
       return `Fant ingen institusjon med organisasjonsnummer ${value}.`;
     }
     return null;
@@ -214,7 +216,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
         <InputField
           label="Navn på institusjonen/kompetansesenteret"
           size="small"
-          className="w-[275px]"
+          className="w-2/3"
           name={InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST}
         />
       )}
@@ -242,7 +244,6 @@ const InstitusjonSelect = ({ institusjoner }: { institusjoner: HentAlleV2Respons
           label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
           size="small"
           {...field}
-          hideLabel
           disabled={annenInstitusjon}
         >
           {institusjoner.map(institusjon => (
@@ -263,6 +264,15 @@ const EndreInstitusjonButton = ({
   setEndreInstitusjon: (endreInstitusjon: boolean) => void;
   endreInstitusjon: boolean;
 }) => {
+  if (endreInstitusjon) {
+    return (
+      <div>
+        <Button variant="secondary" size="small" type="button" onClick={() => setEndreInstitusjon(!endreInstitusjon)}>
+          Avbryt
+        </Button>
+      </div>
+    );
+  }
   return (
     <div>
       <Button
