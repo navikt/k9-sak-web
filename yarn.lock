@@ -2463,7 +2463,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.25.1"
     "@navikt/fnrvalidator": "npm:2.1.5"
     "@navikt/ft-plattform-komponenter": "npm:^9.1.4"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     date-fns: "npm:4.1.0"
     date-fns-tz: "npm:3.2.0"
@@ -3191,7 +3191,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^9.0.11"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.31"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.4.12"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3228,7 +3228,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^9.0.11"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.31"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.4.12"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3270,7 +3270,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^9.0.11"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.31"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.4.12"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3312,7 +3312,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3468,7 +3468,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^9.1.4"
     "@popperjs/core": "npm:2.11.8"
     "@tanstack/react-query": "npm:^5.83.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
     dayjs: "npm:1.11.13"
@@ -3583,7 +3583,7 @@ __metadata:
     "@navikt/ft-utils": "npm:^3.6.3"
     "@tanstack/react-query": "npm:^5.83.0"
     "@types/object-hash": "npm:^3.0.6"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     dayjs: "npm:^1.11.13"
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.0"
@@ -3789,7 +3789,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     node-cache: "npm:5.1.2"
   languageName: unknown
   linkType: soft
@@ -3836,7 +3836,7 @@ __metadata:
     "@sentry/browser": "npm:9.40.0"
     "@sentry/react": "npm:^9.40.0"
     "@tanstack/react-query": "npm:^5.83.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -3925,7 +3925,7 @@ __metadata:
     "@sentry/browser": "npm:9.40.0"
     "@sentry/react": "npm:^9.40.0"
     "@tanstack/react-query": "npm:^5.83.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -7009,14 +7009,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.10.0":
-  version: 1.10.0
-  resolution: "axios@npm:1.10.0"
+"axios@npm:1.11.0":
+  version: 1.11.0
+  resolution: "axios@npm:1.11.0"
   dependencies:
     follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.4"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/d43c80316a45611fd395743e15d16ea69a95f2b7f7095f2bb12cb78f9ca0a905194a02e52a3bf4e0db9f85fd1186d6c690410644c10ecd8bb0a468e57c2040e4
+  checksum: 10/232df4af7a4e4e07baa84621b9cc4b0c518a757b4eacc7f635c0eb3642cb98dff347326739f24b891b3b4481b7b838c79a3a0c4819c9fbc1fc40232431b9c5dc
   languageName: node
   linkType: hard
 
@@ -10025,7 +10025,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0":
+"form-data@npm:^4.0.0, form-data@npm:^4.0.4":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
   dependencies:
@@ -12528,7 +12528,7 @@ __metadata:
     "@types/react-collapse": "npm:5.0.4"
     "@types/redux-form": "npm:8.3.11"
     "@vitejs/plugin-react": "npm:^4.7.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     axios-mock-adapter: "npm:2.1.0"
     cross-env: "npm:7.0.3"
     date-fns: "npm:4.1.0"
