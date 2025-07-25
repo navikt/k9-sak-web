@@ -1,16 +1,18 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useContext } from 'react';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import {
+  type GetBrevMottakerinfoEregData,
+  type GetBrevMottakerinfoEregResponse,
   type OppdaterLangvarigSykdomsVurderingData,
   type OppdaterLangvarigSykdomsVurderingResponse,
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
 import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
+import { getK9SakClient } from '@k9-sak-web/backend/k9sak/client';
+import type { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 
 export const useSykdomBackendClient = () => {
-  const k9SakClient = useContext(K9SakClientContext);
+  const k9SakClient = getK9SakClient();
   return new SykdomOgOpplæringBackendClient(k9SakClient);
 };
 
@@ -71,6 +73,7 @@ export const useVurdertLangvarigSykdom = (behandlingUuid: string) => {
   });
 };
 
+// institusjon
 export const useInstitusjonInfo = (behandlingUuid: string) => {
   const backendClient = useSykdomBackendClient();
 
@@ -81,6 +84,24 @@ export const useInstitusjonInfo = (behandlingUuid: string) => {
   });
 };
 
+export const useAlleInstitusjoner = () => {
+  const backendClient = useSykdomBackendClient();
+
+  return useQuery({
+    queryKey: ['alleInstitusjoner'],
+    queryFn: () => backendClient.hentAlleInstitusjoner(),
+  });
+};
+
+export const useHentOrganisasjonsnummer = (organisasjonsnummer: string) => {
+  const backendClient = useSykdomBackendClient();
+
+  return useMutation<GetBrevMottakerinfoEregResponse, K9SakApiError, GetBrevMottakerinfoEregData['requestBody']>({
+    mutationFn: () => backendClient.hentOrganisasjonsnummer(organisasjonsnummer),
+  });
+};
+
+// nødvendig opplæring
 export const useVurdertOpplæring = (behandlingUuid: string) => {
   const backendClient = useSykdomBackendClient();
 

@@ -8,21 +8,24 @@ import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVur
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import InstitusjonVelger from './InstitusjonVelger.js';
+import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 
-enum InstitusjonFormFields {
-  BEGRUNNELSE = 'begrunnelse',
-  GODKJENT_INSTITUSJON = 'godkjentInstitusjon',
-  SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING = 'skalLeggeTilValgfriSkriftligVurdering',
-}
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
   [InstitusjonFormFields.GODKJENT_INSTITUSJON]: string;
   [InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING]: string;
+  [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: string;
+  [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: string;
+  [InstitusjonFormFields.ANNEN_INSTITUSJON]: boolean;
+  [InstitusjonFormFields.ORGANISASJONSNUMMER]: string;
+  [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: string;
 }
 
 export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
   begrunnelse: string | null;
+  redigertInstitusjonNavn?: string;
   journalpostId: {
     journalpostId: string;
   };
@@ -52,6 +55,26 @@ const utledOmDetErValgfriSkriftligVurdering = (begrunnelse: string, resultat: In
   return 'nei';
 };
 
+const utledRedigertInstitusjonNavn = (
+  helseinstitusjonEllerKompetansesenterFritekst: string,
+  institusjonFraOrganisasjonsnummer: string,
+  redigertInstitusjonNavn: string,
+  annenInstitusjon: boolean,
+) => {
+  // Har søkt opp institusjon fra organisasjonsnummer
+  if (institusjonFraOrganisasjonsnummer) {
+    return institusjonFraOrganisasjonsnummer;
+  }
+
+  // Har skrevet inn navn på institusjonen/kompetansesenteret i fritekst
+  if (annenInstitusjon && helseinstitusjonEllerKompetansesenterFritekst) {
+    return helseinstitusjonEllerKompetansesenterFritekst;
+  }
+
+  // Har valgt institusjon fra listen, eller beholdt institusjon som er satt fra tidligere vurdering.
+  return redigertInstitusjonNavn;
+};
+
 const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }: OwnProps) => {
   const { løsAksjonspunkt9300 } = useContext(SykdomOgOpplæringContext);
 
@@ -63,6 +86,11 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         vurdering.begrunnelse,
         vurdering.resultat,
       ),
+      [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
+      [InstitusjonFormFields.ANNEN_INSTITUSJON]: false,
+      [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: '',
+      [InstitusjonFormFields.ORGANISASJONSNUMMER]: '',
+      [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: '',
     },
   });
 
@@ -83,6 +111,12 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
       journalpostId: vurdering.journalpostId,
+      redigertInstitusjonNavn: utledRedigertInstitusjonNavn(
+        values[InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST],
+        values[InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER],
+        values[InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN],
+        values[InstitusjonFormFields.ANNEN_INSTITUSJON],
+      ),
     });
   };
 
@@ -100,9 +134,14 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   return (
     <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 mt-6">
+        <InstitusjonVelger
+          institusjonFraSøknad={vurdering.institusjon}
+          redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
+        />
         <RadioGroupPanel
+          size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
-          label="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
+          label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
           radios={[
             { label: 'Ja', value: 'ja' },
             { label: 'Nei', value: 'nei' },
@@ -118,6 +157,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
             name={InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING}
             render={({ field }) => (
               <Checkbox
+                size="small"
                 checked={field.value === 'ja'}
                 onChange={event => {
                   field.onChange(event.target.checked ? 'ja' : 'nei');
@@ -132,6 +172,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         {visBegrunnelse() && (
           <TextAreaField
             name={InstitusjonFormFields.BEGRUNNELSE}
+            size="small"
             label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
             validate={[required, minLength(3), maxLength(10000)]}
             readOnly={readOnly}
