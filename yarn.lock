@@ -2435,7 +2435,7 @@ __metadata:
     "@navikt/ds-react": "npm:7.25.1"
     "@navikt/fnrvalidator": "npm:2.1.5"
     "@navikt/ft-plattform-komponenter": "npm:^9.1.4"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     date-fns: "npm:4.1.0"
     date-fns-tz: "npm:3.2.0"
@@ -2989,7 +2989,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.0.20250530164140"
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250702130338"
+    "@navikt/k9-sak-typescript-client": "npm:2.0.20250723152518"
     "@navikt/ung-sak-typescript-client": "npm:0.2.20250702153810"
     "@tanstack/eslint-plugin-query": "npm:^5.81.2"
   languageName: unknown
@@ -3154,7 +3154,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^9.0.11"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.31"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.4.12"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3191,7 +3191,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^9.0.11"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.31"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.4.12"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3233,7 +3233,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:^9.0.11"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:^9.2.31"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^8.4.12"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3275,7 +3275,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     react: "npm:19.1.0"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3431,7 +3431,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^9.1.4"
     "@popperjs/core": "npm:2.11.8"
     "@tanstack/react-query": "npm:^5.83.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
     dayjs: "npm:1.11.13"
@@ -3547,7 +3547,7 @@ __metadata:
     "@navikt/ft-utils": "npm:^3.6.3"
     "@tanstack/react-query": "npm:^5.83.0"
     "@types/object-hash": "npm:^3.0.6"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     dayjs: "npm:^1.11.13"
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.0"
@@ -3753,7 +3753,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     node-cache: "npm:5.1.2"
   languageName: unknown
   linkType: soft
@@ -3800,7 +3800,7 @@ __metadata:
     "@sentry/browser": "npm:9.40.0"
     "@sentry/react": "npm:^9.40.0"
     "@tanstack/react-query": "npm:^5.83.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -3889,7 +3889,7 @@ __metadata:
     "@sentry/browser": "npm:9.40.0"
     "@sentry/react": "npm:^9.40.0"
     "@tanstack/react-query": "npm:^5.83.0"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -4379,10 +4379,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250702130338":
-  version: 2.0.20250702130338
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250702130338::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250702130338%2F27b9b83c0e0d01434af7a96d6441d040041eea36"
-  checksum: 10/fe00ea09a02717f3b254b44e254dbc5c9537b7a03cd23e608c923065ddaae4213c084a41a7cc0d1fb59868be98fab9bf3272af167ae4c9d33054040849588b38
+"@navikt/k9-sak-typescript-client@npm:2.0.20250723152518":
+  version: 2.0.20250723152518
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250723152518::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250723152518%2F39d8afdbbc36138cc027945056865668cea9835d"
+  checksum: 10/26eeedeb265cac175dc7e3a1d7d6e7e700a45f5a1da9b5e83fb043b4610ca464788391d162eb542f5edd4d79f89f805412a12ef4a5071ca98e09ccc02c865a77
   languageName: node
   linkType: hard
 
@@ -6837,14 +6837,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.10.0":
-  version: 1.10.0
-  resolution: "axios@npm:1.10.0"
+"axios@npm:1.11.0":
+  version: 1.11.0
+  resolution: "axios@npm:1.11.0"
   dependencies:
     follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.4"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/d43c80316a45611fd395743e15d16ea69a95f2b7f7095f2bb12cb78f9ca0a905194a02e52a3bf4e0db9f85fd1186d6c690410644c10ecd8bb0a468e57c2040e4
+  checksum: 10/232df4af7a4e4e07baa84621b9cc4b0c518a757b4eacc7f635c0eb3642cb98dff347326739f24b891b3b4481b7b838c79a3a0c4819c9fbc1fc40232431b9c5dc
   languageName: node
   linkType: hard
 
@@ -9885,14 +9885,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
+"form-data@npm:^4.0.0, form-data@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "form-data@npm:4.0.4"
   dependencies:
     asynckit: "npm:^0.4.0"
     combined-stream: "npm:^1.0.8"
+    es-set-tostringtag: "npm:^2.1.0"
+    hasown: "npm:^2.0.2"
     mime-types: "npm:^2.1.12"
-  checksum: 10/7264aa760a8cf09482816d8300f1b6e2423de1b02bba612a136857413fdc96d7178298ced106817655facc6b89036c6e12ae31c9eb5bdc16aabf502ae8a5d805
+  checksum: 10/a4b62e21932f48702bc468cc26fb276d186e6b07b557e3dd7cc455872bdbb82db7db066844a64ad3cf40eaf3a753c830538183570462d3649fdfd705601cbcfb
   languageName: node
   linkType: hard
 
@@ -12393,7 +12395,7 @@ __metadata:
     "@types/redux-form": "npm:8.3.11"
     "@vitejs/plugin-react": "npm:^4.7.0"
     autoprefixer: "npm:^10.4.21"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     axios-mock-adapter: "npm:2.1.0"
     cross-env: "npm:7.0.3"
     date-fns: "npm:4.1.0"

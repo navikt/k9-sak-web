@@ -82,7 +82,7 @@ export const Avslagsårsaker: Story = {
       sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING).navn,
     );
     const kursInneholderIkkeOpplæringRadio = canvas.getByText(
-      sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING).navn,
+      sakKodeverkOppslag.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN).navn,
     );
     await expect(opplæringIkkeNødvendigRadio).toBeVisible();
     await expect(kursInneholderIkkeOpplæringRadio).toBeVisible();
