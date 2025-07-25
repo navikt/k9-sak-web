@@ -3491,7 +3491,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.25.1"
     "@navikt/ds-react": "npm:7.25.1"
     "@navikt/ft-form-hooks": "npm:^6.3.13"
-    "@navikt/ft-form-validators": "npm:^3.2.5"
+    "@navikt/ft-form-validators": "npm:^4.0.6"
     "@navikt/ft-ui-komponenter": "npm:^4.5.1"
     "@navikt/ft-utils": "npm:^3.6.3"
     classnames: "npm:2.5.1"
@@ -3579,7 +3579,7 @@ __metadata:
     "@k9-sak-web/lib": "npm:1.0.0"
     "@navikt/diagnosekoder": "npm:^1.2025.0"
     "@navikt/ft-form-hooks": "npm:^6.3.13"
-    "@navikt/ft-form-validators": "npm:^3.2.5"
+    "@navikt/ft-form-validators": "npm:^4.0.6"
     "@navikt/ft-utils": "npm:^3.6.3"
     "@tanstack/react-query": "npm:^5.83.0"
     "@types/object-hash": "npm:^3.0.6"
@@ -3728,7 +3728,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.25.1"
     "@navikt/ds-react": "npm:7.25.1"
     "@navikt/ft-form-hooks": "npm:^6.3.13"
-    "@navikt/ft-form-validators": "npm:^3.2.5"
+    "@navikt/ft-form-validators": "npm:^4.0.6"
     "@navikt/ft-plattform-komponenter": "npm:^9.1.4"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
@@ -3752,7 +3752,7 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-form-hooks": "npm:^6.3.13"
-    "@navikt/ft-form-validators": "npm:^3.2.5"
+    "@navikt/ft-form-validators": "npm:^4.0.6"
     react: "npm:19.1.0"
     react-hook-form: "npm:7.58.1"
     react-intl: "npm:7.1.11"
@@ -4236,6 +4236,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-form-validators@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@navikt/ft-form-validators@npm:4.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F4.0.6%2F328c21a5882eda2c92805618cde353673d854e2f"
+  dependencies:
+    "@navikt/ft-utils": "npm:^3.6.8"
+    dayjs: "npm:1.11.13"
+  peerDependencies:
+    "@navikt/ft-utils": 2.x
+    dayjs: 1.11.x
+  checksum: 10/6f331bc02c3e22b862f71bd8e9a57b23524b439cb2f745fe3f4631ec6371facb4db64a6192708d380419d98350b8ce0ddfea5092668a3ecbad3bdca7d1192ebf
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-kodeverk@npm:^3.0.0":
   version: 3.0.0
   resolution: "@navikt/ft-kodeverk@npm:3.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F3.0.0%2Fea0c122c12db155492f220b588ac8f17c00babdd"
@@ -4387,6 +4400,20 @@ __metadata:
     react: "*"
     react-intl: 6.x
   checksum: 10/639631c860f301f9d309311a4e496fac52961df3bf9356ed4b97f45da12a340507fd356c2f966e8a7a2d29ce706d508083c67c2af64485e68001fae6999fdc7b
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-utils@npm:^3.6.8":
+  version: 3.6.8
+  resolution: "@navikt/ft-utils@npm:3.6.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F3.6.8%2F81d7b43cbf049497024767965c8093d77bfc2c04"
+  dependencies:
+    dayjs: "npm:1.11.13"
+    react-intl: "npm:7.1.11"
+  peerDependencies:
+    dayjs: 1.11.x
+    react: "*"
+    react-intl: 6.x
+  checksum: 10/a13af90464fef3a57c04bc34e71088dc1ffcfea058196da507ae48823433e54781d9725c89179cd99fad1481d7184e9c72a7b88271ecde02c1968c167e1edf4d
   languageName: node
   linkType: hard
 
