@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@navikt/ds-react": "7.25.1",
-    "@navikt/ft-plattform-komponenter": "^9.1.4",
+    "@navikt/ft-plattform-komponenter": "^9.1.9",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
