@@ -58,7 +58,7 @@ const OmPleietrengende = (): JSX.Element => {
             <span className="font-semibold ml-1">{pleietrengende.diagnosekoder}</span>
           </p>
           {pleietrengende.dødsdato ? (
-            <p className="text-white bg-black rounded pr-2 pl-2 my-0 leading-6">{`Død ${pleietrengende.dødsdato}`}</p>
+            <p className="text-white bg-black rounded-sm pr-2 pl-2 my-0 leading-6">{`Død ${pleietrengende.dødsdato}`}</p>
           ) : null}
         </div>
       )}
