@@ -79,6 +79,12 @@ export default {
           'grid-template'
         ]
       }
+    ],
+    'at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['theme', 'config']
+      }
     ]
   },
 };
