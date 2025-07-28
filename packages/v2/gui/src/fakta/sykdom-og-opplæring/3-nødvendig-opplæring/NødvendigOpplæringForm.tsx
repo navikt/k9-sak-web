@@ -130,9 +130,9 @@ const NødvendigOpplæringForm = ({
                     </Link>{' '}
                     når du skriver vurderingen.
                   </BodyShort>
-                  <div className="mt-8">
+                  <div className="mt-4">
                     Vurderingen skal beskrive:
-                    <List>
+                    <List size="small">
                       <ListItem>Om kursinnholdet tilsier at det er opplæring</ListItem>
                       <ListItem>Om det er årsakssammenheng mellom opplæringen og sykdom til barnet</ListItem>
                     </List>
