@@ -10,7 +10,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-form-hooks": "^6.3.13",
-    "@navikt/ft-form-validators": "^4.0.6",
+    "@navikt/ft-form-validators": "^4.0.7",
     "react": "19.1.0",
     "react-hook-form": "7.58.1",
     "react-intl": "7.1.11"
