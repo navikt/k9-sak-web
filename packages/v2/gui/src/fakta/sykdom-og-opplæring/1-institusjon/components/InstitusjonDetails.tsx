@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, BodyShort } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
@@ -21,6 +21,13 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
       <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
     </div>
   ));
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.journalpostId]);
+
   return (
     <DetailView
       title="Vurdering av institusjon"

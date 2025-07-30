@@ -17,6 +17,14 @@ const booleanToRadioValue = (value: boolean | undefined) => {
   return value ? 'ja' : 'nei';
 };
 
+const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] }) => {
+  return {
+    dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
+    begrunnelse: vurdering.begrunnelse,
+    nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
+  };
+};
+
 const NødvendigOpplæringForm = ({
   vurdering,
   setRedigering,
@@ -37,12 +45,15 @@ const NødvendigOpplæringForm = ({
       tom: Date;
     };
   }>({
-    defaultValues: {
-      dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
-      begrunnelse: vurdering.begrunnelse,
-      nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
-    },
+    defaultValues: defaultValues(vurdering),
   });
+
+  useEffect(() => {
+    formMethods.reset({
+      ...defaultValues(vurdering),
+    });
+  }, [vurdering.perioder]);
+
   const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
