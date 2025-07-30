@@ -3,7 +3,7 @@ import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import { Period } from '@navikt/ft-utils';
 import { Button, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import dayjs from 'dayjs';
@@ -15,6 +15,17 @@ interface ReisetidFormProps {
   redigering: boolean;
 }
 
+const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] }) => {
+  return {
+    begrunnelse: vurdering.reisetid.begrunnelse,
+    godkjent: resultatTilJaNei(vurdering.reisetid.resultat),
+    periode: {
+      fom: new Date(vurdering.perioder[0]?.fom as string),
+      tom: new Date(vurdering.perioder[0]?.tom as string),
+    },
+  };
+};
+
 const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProps) => {
   const { løsAksjonspunkt9303, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
@@ -25,15 +36,15 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
       tom: Date;
     };
   }>({
-    defaultValues: {
-      begrunnelse: vurdering.reisetid.begrunnelse,
-      godkjent: resultatTilJaNei(vurdering.reisetid.resultat),
-      periode: {
-        fom: new Date(vurdering.perioder[0]?.fom as string),
-        tom: new Date(vurdering.perioder[0]?.tom as string),
-      },
-    },
+    defaultValues: defaultValues(vurdering),
   });
+
+  useEffect(() => {
+    // reset form til values fra annen vurdering når vi bytter vurdering
+    formMethods.reset({
+      ...defaultValues(vurdering),
+    });
+  }, [vurdering.perioder]);
   const oppgittReisedager = vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad;
   const vurderingGjelderEnkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
 

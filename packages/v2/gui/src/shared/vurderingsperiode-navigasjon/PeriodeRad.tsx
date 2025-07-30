@@ -43,7 +43,8 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   if (
     resultat === Resultat.IKKE_GODKJENT_MANUELT ||
     resultat === Resultat.IKKE_OPPFYLT ||
-    resultat === Resultat.IKKE_GODKJENT
+    resultat === Resultat.IKKE_GODKJENT ||
+    resultat === Resultat.IKKE_DOKUMENTERT
   ) {
     return (
       <XMarkOctagonFillIcon
