@@ -76,7 +76,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
   return (
     <>
       <div className={styles.mainContainerWithSideMenu}>
-        <div className="shrink-0">
+        <div className="flex-shrink-0">
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,

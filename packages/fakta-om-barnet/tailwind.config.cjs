@@ -1,7 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+/* eslint-disable global-require */
 module.exports = {
-  content: ['./packages/**/*.{js,jsx,ts,tsx}', './public/client/index.html'],
-  // eslint-disable-next-line global-require
+  content: ['./src/**/*.{ts,tsx}'],
   presets: [require('@navikt/ds-tailwind')],
   theme: {
     extend: {
@@ -11,8 +10,8 @@ module.exports = {
       sans: ['Source Sans Pro', 'Arial', 'sans-serif'],
     },
   },
+  plugins: [],
   corePlugins: {
     preflight: false,
   },
-  plugins: [],
 };
