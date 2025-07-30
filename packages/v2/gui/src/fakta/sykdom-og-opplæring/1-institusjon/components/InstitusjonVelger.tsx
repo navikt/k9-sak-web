@@ -239,13 +239,21 @@ const InstitusjonSelect = ({ institusjoner }: { institusjoner: HentAlleV2Respons
     <Controller
       control={control}
       name={InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN}
-      render={({ field }) => (
+      rules={{
+        required: {
+          value: !annenInstitusjon,
+          message: 'Du må velge en institusjon',
+        },
+      }}
+      render={({ field, fieldState }) => (
         <Select
           label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
           size="small"
           {...field}
+          error={fieldState.error?.message}
           disabled={annenInstitusjon}
         >
+          <option value="">Velg institusjon</option>
           {institusjoner.map(institusjon => (
             <option key={institusjon.uuid} value={institusjon.navn}>
               {institusjon.navn}
