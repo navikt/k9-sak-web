@@ -1192,28 +1192,10 @@ export const oppslagKodeverkSomObjektK9Klage = {
       kilde: 'BEHANDLENDE_ENHET',
     },
     {
-      kode: 'ER_ANKEFRIST_IKKE_OVERHOLDT',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'Er ankefrist ikke overholdt',
-      kilde: 'ER_ANKEFRIST_IKKE_OVERHOLDT',
-    },
-    {
-      kode: 'ER_ANKEN_IKKE_SIGNERT',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'er anken ikke signert.',
-      kilde: 'ER_ANKEN_IKKE_SIGNERT',
-    },
-    {
       kode: 'ER_ANKER_IKKE_PART',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
       navn: 'Angir om anker ikke er part i saken.',
       kilde: 'ER_ANKER_IKKE_PART',
-    },
-    {
-      kode: 'ER_ANKE_IKKE_KONKRET',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'Er anke ikke konkret.',
-      kilde: 'ER_ANKE_IKKE_KONKRET',
     },
     {
       kode: 'ER_KLAGEFRIST_OVERHOLDT',

@@ -5457,11 +5457,6 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
-      "kode": "ER_ANKE_IKKE_KONKRET",
-      "navn": "Er anke ikke konkret.",
-      "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
-    },
-    {
       "kode": "DELVIS_TILRETTELEGGING_FOM",
       "navn": "Delvis tilrettelegging FOM",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
