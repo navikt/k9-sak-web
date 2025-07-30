@@ -5767,11 +5767,6 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
-      "kode": "ANKESTATUS",
-      "navn": "ankestatus",
-      "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
-    },
-    {
       "kode": "ER_KLAGER_PART",
       "navn": "Er klagefrist overholdt",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
