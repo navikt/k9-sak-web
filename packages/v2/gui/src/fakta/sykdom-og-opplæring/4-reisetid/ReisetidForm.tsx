@@ -67,7 +67,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
           <Textarea
             label="Vurdering"
             {...formMethods.register('begrunnelse', {
-              validate: value => (value.length > 0 ? undefined : 'Vurdering er påkrevd'),
+              validate: value => (value?.length > 0 ? undefined : 'Vurdering er påkrevd'),
             })}
             size="small"
             readOnly={readOnly}
@@ -75,7 +75,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
           />
           <Controller
             name="godkjent"
-            rules={{ validate: value => (value.length > 0 ? undefined : 'Vurdering er påkrevd') }}
+            rules={{ validate: value => (value?.length > 0 ? undefined : 'Vurdering er påkrevd') }}
             render={({ field }) => (
               <RadioGroup
                 legend={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}
