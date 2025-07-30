@@ -5767,8 +5767,8 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
-      "kode": "ANKE_AVSLUTTET",
-      "navn": "anken er avsluttet.",
+      "kode": "ANKESTATUS",
+      "navn": "ankestatus",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {

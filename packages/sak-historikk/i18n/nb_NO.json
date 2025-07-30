@@ -280,7 +280,7 @@
   "HistorikkEndretFelt.PaAnketBehandlingId": "Vedtaket som er anket",
   "HistorikkEndretFelt.AnkeOmgjoerAarsak": "Omgjøringsårsak",
   "HistorikkEndretFelt.AnkeAvvistAarsak": "Avvisningsårsak",
-  "HistorikkEndretFelt.AnkeAvsluttet": "Anken er avsluttet",
+  "HistorikkEndretFelt.Ankestatus": "Ankestatus",
   "HistorikkEndretFelt.Faresignaler": "Resultat",
   "HistorikkEndretFelt.MilitærEllerSiviltjeneste": "Har søker militær- eller siviltjeneste i opptjeningsperioden",
   "HistorikkEndretFelt.NyRefusjonsfrist": "Utvidelse av frist for fremsatt refusjonskrav for {value}",
