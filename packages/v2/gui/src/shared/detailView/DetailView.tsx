@@ -20,7 +20,7 @@ export const DetailView = ({
   // Vi vil egentlig ha en border alle stedene denne er brukt. Men mange steder er den allerede implementert i "children"
   border = false,
 }: DetailViewProps) => {
-  const cls = `border border-solid border-[#c6c2bf] rounded-sm p-6 bg-[#cce1f342] ${className ?? ''}`;
+  const cls = `border border-solid border-[#c6c2bf] rounded p-6 bg-[#cce1f342] ${className ?? ''}`;
   return (
     <div className={cls}>
       <div className="flex items-center justify-between">
