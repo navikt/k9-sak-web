@@ -18,6 +18,12 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
       setRedigering(false);
     }
   }, [vurdering, behandlingUuid]);
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.uuid]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm =
     !readOnly && ((redigering && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
