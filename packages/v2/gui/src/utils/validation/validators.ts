@@ -14,7 +14,7 @@ export const hasValidText = (text: string) => {
   const { invalidCharacters } = validateTextCharacters(text);
   if (invalidCharacters && invalidCharacters.length > 0) {
     const invalidCharacterString: string = invalidCharacters
-      .map(invalidChar => invalidChar.replace(/[\t]/, 'Tabulatortegn'))
+      .map(invalidChar => invalidChar.replace(/\t/g, 'Tabulatortegn'))
       .join('');
     return `Følgende tegn er ikke tillatt: ${invalidCharacterString}`;
   }
