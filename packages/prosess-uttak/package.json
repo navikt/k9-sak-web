@@ -11,10 +11,10 @@
   "license": "MIT",
   "devDependencies": {
     "vite": "^6.3.5",
-    "vite-plugin-node-polyfills": "^0.23.0"
+    "vite-plugin-node-polyfills": "^0.24.0"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.2.1",
     "@navikt/ds-css": "7.25.1",
     "@navikt/ds-react": "7.25.1",
     "@navikt/ft-form-hooks": "^6.3.13",
