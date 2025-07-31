@@ -1,7 +1,7 @@
 import { Period } from '@navikt/ft-utils';
 import {
   KodeverdiSomObjektAvslagsårsakKilde,
-  OpplæringVurderingDtoAvslagsÅrsak,
+  OpplæringVurderingDtoAvslagsårsak,
   OpplæringVurderingDtoResultat,
 } from '@navikt/k9-sak-typescript-client';
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
@@ -49,7 +49,7 @@ type Story = StoryObj<typeof meta>;
 export const Avslagsårsaker: Story = {
   args: {
     vurdering: {
-      avslagsÅrsak: OpplæringVurderingDtoAvslagsÅrsak.IKKE_NØDVENDIG_OPPLÆRING,
+      avslagsårsak: OpplæringVurderingDtoAvslagsårsak.IKKE_NØDVENDIG_OPPLÆRING,
       begrunnelse: 'Begrunnelse for at opplæring ikke er nødvendig',
       dokumentertOpplæring: false,
       nødvendigOpplæring: false,
