@@ -1986,28 +1986,13 @@ export const kodeverkK9Klage = {
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
     },
     {
-      kode: 'ER_ANKEFRIST_IKKE_OVERHOLDT',
-      navn: 'Er ankefrist ikke overholdt',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-    },
-    {
       kode: 'ER_ANKER_IKKE_PART',
       navn: 'Angir om anker ikke er part i saken.',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
     },
     {
-      kode: 'ER_ANKEN_IKKE_SIGNERT',
-      navn: 'er anken ikke signert.',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-    },
-    {
       kode: 'ER_KLAGEN_SIGNERT',
       navn: 'Er klagefrist overholdt',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-    },
-    {
-      kode: 'ER_ANKE_IKKE_KONKRET',
-      navn: 'Er anke ikke konkret.',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
     },
     {
