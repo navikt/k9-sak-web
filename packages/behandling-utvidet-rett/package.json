@@ -18,6 +18,6 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "react": "19.1.0"
+    "react": "19.1.1"
   }
 }

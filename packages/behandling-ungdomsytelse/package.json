@@ -16,7 +16,7 @@
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "axios": "1.11.0",
-    "react": "19.1.0",
+    "react": "19.1.1",
     "react-intl": "7.1.11"
   }
 }

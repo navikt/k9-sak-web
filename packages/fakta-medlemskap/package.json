@@ -16,7 +16,7 @@
     "i18n-iso-countries": "7.14.0",
     "moment": "2.30.1",
     "prop-types": "15.8.1",
-    "react": "19.1.0",
+    "react": "19.1.1",
     "react-intl": "7.1.11",
     "react-redux": "9.2.0",
     "redux": "5.0.1",
