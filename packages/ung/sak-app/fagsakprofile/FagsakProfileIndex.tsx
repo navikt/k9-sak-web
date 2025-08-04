@@ -117,11 +117,11 @@ export const FagsakProfileIndex = ({
           renderBehandlingVelger={() => {
             const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
             const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
-            const erTilbakekreving = alleBehandlinger.some(
-              behandling => behandling.type.kode === BehandlingDtoType.TILBAKEKREVING,
-            );
-            konverterKodeverkTilKode(behandlingerV2, erTilbakekreving);
-            konverterKodeverkTilKode(fagsakV2, erTilbakekreving);
+            behandlingerV2.forEach(behandling => {
+              const erTilbakekreving = behandling.type.kode === BehandlingDtoType.TILBAKEKREVING;
+              konverterKodeverkTilKode(behandling, erTilbakekreving);
+            });
+            konverterKodeverkTilKode(fagsakV2, false);
             return (
               <BehandlingVelgerSakV2
                 behandlinger={behandlingerV2}
