@@ -25,6 +25,14 @@ const finnAvslagsårsak = (godkjent: string) => {
   return undefined;
 };
 
+const defaultValues = (vurdering: UperiodisertSykdom) => {
+  return {
+    diagnosekoder: vurdering.diagnosekoder || [],
+    begrunnelse: vurdering.begrunnelse || '',
+    godkjent: vurdering.godkjent || '',
+  };
+};
+
 const SykdomUperiodisertForm = ({
   vurdering,
   setRedigering,
@@ -36,12 +44,14 @@ const SykdomUperiodisertForm = ({
 }) => {
   const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm({
-    defaultValues: {
-      diagnosekoder: vurdering.diagnosekoder || [],
-      begrunnelse: vurdering.begrunnelse || '',
-      godkjent: vurdering.godkjent || '',
-    },
+    defaultValues: defaultValues(vurdering),
   });
+
+  useEffect(() => {
+    formMethods.reset({
+      ...defaultValues(vurdering),
+    });
+  }, [vurdering.uuid]);
 
   const godkjent = formMethods.watch('godkjent');
   useEffect(() => {
