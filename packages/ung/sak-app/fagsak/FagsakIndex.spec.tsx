@@ -132,8 +132,12 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(UngSakApiKeys.SAK_RETTIGHETER, {
       behandlingTypeKanOpprettes: [],
     });
+    requestApi.mock(UngSakApiKeys.SAK_RETTIGHETER_TILBAKE, {
+      behandlingTypeKanOpprettes: [],
+    });
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.BEHANDLINGER_UNGSAK, [behandling]);
+    requestApi.mock(UngSakApiKeys.BEHANDLINGER_TILBAKE, []);
     requestApi.mock(UngSakApiKeys.HENT_SAKSBEHANDLERE, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, []);
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
