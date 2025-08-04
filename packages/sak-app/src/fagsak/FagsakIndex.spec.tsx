@@ -1,10 +1,10 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
@@ -191,7 +191,7 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_TILBAKE, [behandling2]);
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_KLAGE, [behandling3]);
     requestApi.mock(K9sakApiKeys.HENT_SAKSBEHANDLERE, {});
-    requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, []);
+    requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, {});
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});

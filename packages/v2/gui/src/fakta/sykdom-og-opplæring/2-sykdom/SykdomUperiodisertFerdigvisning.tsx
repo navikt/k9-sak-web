@@ -1,10 +1,17 @@
-import { BodyLong, BodyShort, Tag } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { ICD10 } from '@navikt/diagnosekoder';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { useContext } from 'react';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
+
 const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+  const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
+  const { data: vurderingBruktIAksjonspunkt } = useVurdertLangvarigSykdom(behandlingUuid);
+
   const sykdomGodkjentText = () => {
     if (vurdering.godkjent === 'ja') {
       return 'Ja';
@@ -49,6 +56,13 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
           content={<Diagnoser diagnosekoder={vurdering.diagnosekoder} />}
         />
       )}
+      {vurderingBruktIAksjonspunkt?.vurderingUuid !== vurdering.uuid && (
+        <div>
+          <Button size="small" variant="primary" onClick={() => løsAksjonspunkt9301(vurdering.uuid)}>
+            Bruk denne sykdomsvurderingen
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -62,7 +76,7 @@ const Diagnoser = ({ diagnosekoder = [] }: { diagnosekoder?: string[] }) => {
       {diagnosekoder.map(diagnose => {
         const diagnosekode = ICD10.find(d => d.code === diagnose);
         return (
-          <Tag size="small" key={diagnose} variant="info-moderate" className="border-none rounded">
+          <Tag size="small" key={diagnose} variant="neutral-moderate" className="border-none rounded">
             {diagnosekode?.code} - {diagnosekode?.text}
           </Tag>
         );

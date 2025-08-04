@@ -1,14 +1,15 @@
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { type JSX } from 'react';
+import { useContext, type JSX } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
+import ContainerContext from '../../../context/ContainerContext';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
-import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
 import styles from './beredskapsperiodeVurderingsdetaljer.module.css';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface BeredskapsperiodeVurderingsdetaljerProps {
   beredskapsperiode: Vurderingsperiode;
@@ -21,6 +22,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: BeredskapsperiodeVurderingsdetaljerProps): JSX.Element => {
+  const { readOnly = false } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = beredskapsperiode;
   return (
     <DetailView
@@ -32,6 +34,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
               Rediger vurdering
             </Button>
           )}
+          readOnly={readOnly}
         />
       )}
     >

@@ -25,6 +25,7 @@ import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -275,7 +276,7 @@ const VurderingAvLivetsSluttfaseForm = ({
                   <br />
                 </>
               }
-              validators={{ required }}
+              validators={{ required, hasValidText }}
             />
           </Box>
           <Box marginBlock="8 0">

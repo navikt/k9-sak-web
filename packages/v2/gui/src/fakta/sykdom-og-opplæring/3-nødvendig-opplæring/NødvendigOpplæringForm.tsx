@@ -17,6 +17,14 @@ const booleanToRadioValue = (value: boolean | undefined) => {
   return value ? 'ja' : 'nei';
 };
 
+const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] }) => {
+  return {
+    dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
+    begrunnelse: vurdering.begrunnelse,
+    nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
+  };
+};
+
 const NødvendigOpplæringForm = ({
   vurdering,
   setRedigering,
@@ -37,12 +45,15 @@ const NødvendigOpplæringForm = ({
       tom: Date;
     };
   }>({
-    defaultValues: {
-      dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
-      begrunnelse: vurdering.begrunnelse,
-      nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
-    },
+    defaultValues: defaultValues(vurdering),
   });
+
+  useEffect(() => {
+    formMethods.reset({
+      ...defaultValues(vurdering),
+    });
+  }, [vurdering.perioder]);
+
   const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
   const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
@@ -130,9 +141,9 @@ const NødvendigOpplæringForm = ({
                     </Link>{' '}
                     når du skriver vurderingen.
                   </BodyShort>
-                  <div className="mt-8">
+                  <div className="mt-4">
                     Vurderingen skal beskrive:
-                    <List>
+                    <List size="small">
                       <ListItem>Om kursinnholdet tilsier at det er opplæring</ListItem>
                       <ListItem>Om det er årsakssammenheng mellom opplæringen og sykdom til barnet</ListItem>
                     </List>
@@ -191,7 +202,7 @@ const NødvendigOpplæringForm = ({
                   : {
                       validate: value => {
                         return value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING ||
-                          value === KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING
+                          value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN
                           ? undefined
                           : 'Avslagsårsak er påkrevd';
                       },
@@ -212,10 +223,10 @@ const NødvendigOpplæringForm = ({
                       ).navn
                     }
                   </Radio>
-                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING}>
+                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN}>
                     {
                       k9Kodeverkoppslag.k9sak.avslagsårsaker(
-                        KodeverdiSomObjektAvslagsårsakKilde.KURS_INNEHOLDER_IKKE_OPPLÆRING,
+                        KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN,
                       ).navn
                     }
                   </Radio>

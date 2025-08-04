@@ -14,7 +14,7 @@ import type { Barn } from './types/Barn';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
 
 interface Props {
-  behandling: { uuid: string };
+  behandling: { uuid: string; versjon: number };
   api: UngBeregningBackendApiType;
   barn: Barn[];
   submitCallback: (data: unknown) => Promise<any>;
@@ -47,7 +47,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     isLoading: kontrollInntektIsLoading,
     isError: kontrollInntektIsError,
   } = useQuery({
-    queryKey: ['kontrollInntekt', behandling.uuid],
+    queryKey: ['kontrollInntekt', behandling.uuid, behandling.versjon],
     queryFn: () => api.getKontrollerInntekt(behandling.uuid),
     select: sortInntekt,
   });
