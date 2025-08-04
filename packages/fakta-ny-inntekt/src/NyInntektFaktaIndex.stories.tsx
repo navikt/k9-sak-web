@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
+import { AktivitetStatus, OpptjeningAktivitetType } from '@navikt/ft-kodeverk';
 
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from '../testdata/TilkommetAktivitetMedForlengelse';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from '../testdata/TilkommetAktivitetMedForlengelseLukketAP';
@@ -14,7 +14,7 @@ import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 
 const agOpplysninger = {
   874652202: {
@@ -115,13 +115,13 @@ export const TilkommetAktivitet: Story = {
             periodeAarsaker: [],
             beregningsgrunnlagPrStatusOgAndel: [
               {
-                aktivitetStatus: 'AT',
+                aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                 andelsnr: 2,
                 inntektskategori: '-',
                 arbeidsforhold: {
                   arbeidsgiverIdent: '999999997',
                   startdato: '2022-10-27',
-                  arbeidsforholdType: 'ARBEID',
+                  arbeidsforholdType: OpptjeningAktivitetType.ARBEID,
                   belopFraInntektsmeldingPrMnd: 40000,
                 },
                 lagtTilAvSaksbehandler: false,
@@ -129,7 +129,7 @@ export const TilkommetAktivitet: Story = {
                 skalFastsetteGrunnlag: false,
               },
               {
-                aktivitetStatus: 'BA',
+                aktivitetStatus: AktivitetStatus.BRUKERS_ANDEL,
                 beregningsperiodeFom: '2018-01-01',
                 beregningsperiodeTom: '2020-12-31',
                 beregnetPrAar: 0,
@@ -168,7 +168,7 @@ export const TilkommetAktivitet: Story = {
             periodeAarsaker: ['ENDRING_I_AKTIVITETER_SØKT_FOR'],
             beregningsgrunnlagPrStatusOgAndel: [
               {
-                aktivitetStatus: 'BA',
+                aktivitetStatus: AktivitetStatus.BRUKERS_ANDEL,
                 beregningsperiodeFom: '2018-01-01',
                 beregningsperiodeTom: '2020-12-31',
                 beregnetPrAar: 0,
@@ -225,7 +225,7 @@ export const TilkommetAktivitet: Story = {
                     arbeidsgiverIdent: '999999997',
                     fom: '2022-10-27',
                     tom: '9999-12-31',
-                    arbeidsforholdType: 'ARBEID',
+                    arbeidsforholdType: OpptjeningAktivitetType.ARBEID,
                   },
                 ],
               },
@@ -236,7 +236,7 @@ export const TilkommetAktivitet: Story = {
             {
               fastsattBelop: 0,
               inntektskategori: 'ARBEIDSTAKER_UTEN_FERIEPENGER',
-              aktivitetStatus: 'BA',
+              aktivitetStatus: AktivitetStatus.BRUKERS_ANDEL,
               andelsnr: 1,
               skalKunneEndreAktivitet: false,
               lagtTilAvSaksbehandler: false,
@@ -272,7 +272,7 @@ export const TilkommetAktivitet: Story = {
                   {
                     andelsnr: 1,
                     inntektskategori: 'ARBEIDSTAKER_UTEN_FERIEPENGER',
-                    aktivitetStatus: 'BA',
+                    aktivitetStatus: AktivitetStatus.BRUKERS_ANDEL,
                     kilde: 'PROSESS_START',
                     lagtTilAvSaksbehandler: false,
                     andelIArbeid: [100],
@@ -285,17 +285,17 @@ export const TilkommetAktivitet: Story = {
                     arbeidsforhold: {
                       arbeidsgiverIdent: '999999997',
                       startdato: '2022-10-27',
-                      arbeidsforholdType: 'ARBEID',
+                      arbeidsforholdType: OpptjeningAktivitetType.ARBEID,
                     },
                     inntektskategori: '-',
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     kilde: 'PROSESS_PERIODISERING',
                     lagtTilAvSaksbehandler: false,
                     andelIArbeid: [0],
                     refusjonskravPrAar: 0,
                     belopFraInntektsmeldingPrAar: 480000,
                     nyttArbeidsforhold: true,
-                    arbeidsforholdType: 'ARBEID',
+                    arbeidsforholdType: OpptjeningAktivitetType.ARBEID,
                   },
                 ],
                 skalRedigereInntekt: true,
@@ -309,7 +309,7 @@ export const TilkommetAktivitet: Story = {
                   {
                     andelsnr: 1,
                     inntektskategori: 'ARBEIDSTAKER_UTEN_FERIEPENGER',
-                    aktivitetStatus: 'BA',
+                    aktivitetStatus: AktivitetStatus.BRUKERS_ANDEL,
                     kilde: 'PROSESS_START',
                     lagtTilAvSaksbehandler: false,
                     andelIArbeid: [100],
@@ -327,7 +327,7 @@ export const TilkommetAktivitet: Story = {
               {
                 arbeidsgiverIdent: '999999997',
                 startdato: '2022-10-27',
-                arbeidsforholdType: 'ARBEID',
+                arbeidsforholdType: OpptjeningAktivitetType.ARBEID,
                 perioderMedGraderingEllerRefusjon: [
                   {
                     erRefusjon: false,
@@ -386,7 +386,7 @@ export const TilkommetAktivitet: Story = {
                 tom: '9999-12-31',
                 tilkomneInntektsforhold: [
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '123',
                     arbeidsgiverId: '999999997',
                     bruttoInntektPrÅr: 480000,
@@ -478,14 +478,14 @@ export const TilkommetAktivitetMedForlengelse: Story = {
                 tom: '2022-11-20',
                 tilkomneInntektsforhold: [
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '123',
                     arbeidsgiverId: '999999997',
                     bruttoInntektPrÅr: undefined,
                     skalRedusereUtbetaling: false,
                   },
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '456',
                     arbeidsgiverId: '974652293',
                     bruttoInntektPrÅr: 1349,
@@ -644,7 +644,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
                 tom: '2023-04-14',
                 tilkomneInntektsforhold: [
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '123',
                     arbeidsgiverId: '999999997',
                     bruttoInntektPrÅr: undefined,
@@ -657,7 +657,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
                 tom: '2023-04-17',
                 tilkomneInntektsforhold: [
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '123',
                     arbeidsgiverId: '999999997',
                     bruttoInntektPrÅr: undefined,
@@ -670,7 +670,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
                 tom: '2023-04-21',
                 tilkomneInntektsforhold: [
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '123',
                     arbeidsgiverId: '999999997',
                     bruttoInntektPrÅr: 200000,
@@ -683,14 +683,14 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
                 tom: '2023-04-28',
                 tilkomneInntektsforhold: [
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '123',
                     arbeidsgiverId: '999999997',
                     bruttoInntektPrÅr: 200000,
                     skalRedusereUtbetaling: true,
                   },
                   {
-                    aktivitetStatus: 'AT',
+                    aktivitetStatus: AktivitetStatus.ARBEIDSTAKER,
                     arbeidsforholdId: '456',
                     arbeidsgiverId: '974652293',
                     bruttoInntektPrÅr: 350000,

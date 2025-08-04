@@ -74,7 +74,11 @@ const renderListItems = ({
         >
           <BehandlingPickerItemContent
             behandling={behandling}
-            behandlingTypeNavn={behandling.visningsnavn || getBehandlingNavn(behandling.type, kodeverkNavnFraKode)}
+            behandlingTypeNavn={
+              behandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && behandling.visningsnavn
+                ? behandling.visningsnavn
+                : getBehandlingNavn(behandling.type, kodeverkNavnFraKode)
+            }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={søknadsperioderFraBehandling}
             index={sorterteOgFiltrerteBehandlinger.length - index}
@@ -328,7 +332,9 @@ const BehandlingPicker = ({
           }
           behandlingsårsaker={getÅrsaksliste()}
           behandlingTypeNavn={
-            valgtBehandling.visningsnavn || getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
+            valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && valgtBehandling.visningsnavn
+              ? valgtBehandling.visningsnavn
+              : getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
           }
           behandlingTypeKode={valgtBehandling.type}
           søknadsperioder={søknadsperioderForValgtehandling}

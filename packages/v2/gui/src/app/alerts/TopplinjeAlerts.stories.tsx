@@ -1,10 +1,10 @@
-import { TopplinjeAlerts } from './TopplinjeAlerts.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { makeFakeExtendedApiError, makeFakeK9SakValidationError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
+import { makeFakeExtendedApiError, makeFakeK9SakValidationError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import GeneralAsyncError from './GeneralAsyncError.js';
+import { TopplinjeAlerts } from './TopplinjeAlerts.js';
 
 const meta = {
   title: 'gui/app/alerts/TopplinjeAlerts.tsx',

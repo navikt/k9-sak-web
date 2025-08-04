@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import NetworkErrorPage from './NetworkErrorPage.js';
 
 const meta = {

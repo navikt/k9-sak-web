@@ -1,8 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import AnkeProsessIndex from './AnkeProsessIndex';
 
 const behandling = {

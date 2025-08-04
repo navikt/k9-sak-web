@@ -3,9 +3,9 @@ import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
+import { Alert, Box, Button, Checkbox, CheckboxGroup, Label, Link, Tooltip } from '@navikt/ds-react';
 import React, { useState, type JSX } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
@@ -25,6 +25,7 @@ import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -32,6 +33,7 @@ type AnyType = any;
 export enum FieldName {
   VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE = 'vurderingAvKontinuerligTilsynOgPleie',
   HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE = 'harBehovForKontinuerligTilsynOgPleie',
+  MANGLER_LEGEERKLÆRING = 'manglerLegeerklæring',
   PERIODER = 'perioder',
   DOKUMENTER = 'dokumenter',
 }
@@ -44,10 +46,20 @@ const lagTilsynsbehovVurdering = (
     ? Vurderingsresultat.OPPFYLT
     : Vurderingsresultat.IKKE_OPPFYLT;
 
-  const perioder = formState[FieldName.PERIODER].map(
+  const perioder = (formState[FieldName.PERIODER] ?? []).map(
     periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE];
+
+  if (formState[FieldName.MANGLER_LEGEERKLÆRING]) {
+    return {
+      manglerLegeerklæring: true,
+      resultat: undefined,
+      perioder,
+      tekst: undefined,
+      dokumenter: undefined,
+    };
+  }
 
   return {
     resultat,
@@ -59,6 +71,7 @@ const lagTilsynsbehovVurdering = (
 
 export interface VurderingAvTilsynsbehovFormState {
   [FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]?: string;
+  [FieldName.MANGLER_LEGEERKLÆRING]?: boolean;
   [FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]?: boolean;
   [FieldName.PERIODER]?: Period[];
   [FieldName.DOKUMENTER]: string[];
@@ -68,12 +81,12 @@ interface VurderingAvTilsynsbehovFormProps {
   defaultValues: VurderingAvTilsynsbehovFormState;
   onSubmit: (nyVurdering: Partial<Vurderingsversjon>) => void;
   resterendeVurderingsperioder?: Period[];
-  perioderSomKanVurderes?: Period[];
+  perioderSomKanVurderes: Period[];
   dokumenter: Dokument[];
   onAvbryt: () => void;
   isSubmitting: boolean;
   harPerioderDerPleietrengendeErOver18år?: boolean;
-  barnetsAttenårsdag?: string;
+  barnetsAttenårsdag: string;
 }
 
 const VurderingAvTilsynsbehovForm = ({
@@ -87,13 +100,13 @@ const VurderingAvTilsynsbehovForm = ({
   harPerioderDerPleietrengendeErOver18år,
   barnetsAttenårsdag,
 }: VurderingAvTilsynsbehovFormProps): JSX.Element => {
-  const { readOnly } = React.useContext(ContainerContext);
+  const { readOnly, featureToggles } = React.useContext(ContainerContext);
   const formMethods = useForm({
     defaultValues,
     mode: 'onChange',
   });
   const [visAlleDokumenter, setVisAlleDokumenter] = useState(false);
-  const [dokumentFilter, setDokumentFilter] = useState([]);
+  const [dokumentFilter, setDokumentFilter] = useState<string[]>([]);
 
   const updateDokumentFilter = valgtFilter => {
     if (dokumentFilter.includes(valgtFilter)) {
@@ -138,7 +151,12 @@ const VurderingAvTilsynsbehovForm = ({
     return true;
   };
 
-  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
+  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER }) ?? [];
+  const manglerLegeerklæring: boolean | undefined = useWatch({
+    control: formMethods.control,
+    name: FieldName.MANGLER_LEGEERKLÆRING,
+  });
+
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(p => p.asListOfDays());
     const dagerSomBlirVurdert = (perioderSomBlirVurdert || [])
@@ -161,7 +179,7 @@ const VurderingAvTilsynsbehovForm = ({
         }
         return isSameOrBefore(barnetsAttenårsdag, periode.fom);
       }),
-    [perioderSomBlirVurdert],
+    [barnetsAttenårsdag, harPerioderDerPleietrengendeErOver18år, perioderSomBlirVurdert],
   );
 
   const hullISøknadsperiodene = React.useMemo(
@@ -181,7 +199,7 @@ const VurderingAvTilsynsbehovForm = ({
   const sammenhengendeSøknadsperioder = slåSammenSammenhengendePerioder(perioderSomKanVurderes);
 
   return (
-    <DetailViewVurdering title="Vurdering av tilsyn og pleie" perioder={defaultValues[FieldName.PERIODER]}>
+    <DetailViewVurdering title="Vurdering av tilsyn og pleie" perioder={defaultValues[FieldName.PERIODER] || []}>
       <div id="modal" />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
@@ -205,7 +223,8 @@ const VurderingAvTilsynsbehovForm = ({
               {dokumentFilter.length > 0 && (
                 <div className={styles.filterKnappContainer}>
                   {dokumentFilter.map(filter => {
-                    const { label } = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
+                    const option = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
+                    const label = option ? option.label : filter;
                     return (
                       <button
                         onClick={() => updateDokumentFilter(filter)}
@@ -245,9 +264,13 @@ const VurderingAvTilsynsbehovForm = ({
                       />
                     ),
                   }))}
-                  validators={{
-                    harBruktDokumentasjon,
-                  }}
+                  validators={
+                    manglerLegeerklæring
+                      ? {}
+                      : {
+                          harBruktDokumentasjon,
+                        }
+                  }
                   disabled={readOnly}
                 />
               </div>
@@ -264,10 +287,30 @@ const VurderingAvTilsynsbehovForm = ({
               )}
             </Box>
           )}
+          {featureToggles?.BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE && (
+            <Box marginBlock="8 0">
+              <Controller
+                name={FieldName.MANGLER_LEGEERKLÆRING}
+                render={({ field }) => (
+                  <CheckboxGroup legend="Mangler det legeerklæring for perioden?" size="small">
+                    <Checkbox
+                      onChange={e => {
+                        field.onChange(e.target.checked ? true : false);
+                      }}
+                      checked={field.value === true}
+                    >
+                      Mangler legeerklæring - vurdering av tilsyn og pleie skal ikke gjennomføres
+                    </Checkbox>
+                  </CheckboxGroup>
+                )}
+              />
+            </Box>
+          )}
+
           <Box marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
-              disabled={readOnly}
+              disabled={readOnly || manglerLegeerklæring}
               textareaClass={styles.begrunnelsesfelt}
               name={FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE}
               label={
@@ -302,15 +345,15 @@ const VurderingAvTilsynsbehovForm = ({
                   </ul>
                 </>
               }
-              validators={{ required }}
+              validators={manglerLegeerklæring ? {} : { required, hasValidText }}
             />
           </Box>
           <Box marginBlock="8 0">
             <YesOrNoQuestionRHF
               question="Er det behov for tilsyn og pleie?"
               name={FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
-              validators={{ required }}
-              disabled={readOnly}
+              validators={manglerLegeerklæring ? {} : { required }}
+              disabled={readOnly || manglerLegeerklæring}
             />
           </Box>
           <Box marginBlock="8 0">
@@ -352,15 +395,17 @@ const VurderingAvTilsynsbehovForm = ({
                   invalidDateRanges: hullISøknadsperiodene,
                 },
               }}
-              renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                numberOfItems > 1 && (
-                  <DeleteButton
-                    onClick={() => {
-                      fieldArrayMethods.remove(index);
-                    }}
-                  />
-                )
-              }
+              renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) => {
+                if (numberOfItems > 1)
+                  return (
+                    <DeleteButton
+                      onClick={() => {
+                        fieldArrayMethods.remove(index);
+                      }}
+                    />
+                  );
+                return <></>;
+              }}
               renderAfterFieldArray={fieldArrayMethods => (
                 <Box marginBlock="6 0">
                   <AddButton

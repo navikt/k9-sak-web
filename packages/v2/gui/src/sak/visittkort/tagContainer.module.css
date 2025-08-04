@@ -1,7 +1,3 @@
-.flexContainer {
-  display: flex;
-}
-
 .tag:global(.navds-tag) {
-  margin-top: 0.9375rem;
+  margin-top: 1.25rem;
 }

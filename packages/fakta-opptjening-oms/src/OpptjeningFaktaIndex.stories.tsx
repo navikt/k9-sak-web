@@ -1,11 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { Aksjonspunkt, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
+import { Aksjonspunkt, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
+import { action } from 'storybook/actions';
 import OpptjeningFaktaIndex from './OpptjeningFaktaIndex';
 
 const behandling = {

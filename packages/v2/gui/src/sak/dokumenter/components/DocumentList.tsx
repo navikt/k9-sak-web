@@ -16,6 +16,7 @@ import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
@@ -88,16 +89,20 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     fagsakYtelsesType.OMSORGSPENGER,
     fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
   ].some(t => t === sakstype);
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
-      .get<Kompletthet>(`/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`, {
-        signal,
-        params: {
-          behandlingUuid,
-        },
-      })
+      .get<Kompletthet>(
+        `/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`,
+        addLegacySerializerOption({
+          signal,
+          params: {
+            behandlingUuid,
+          },
+        }),
+      )
       .then(({ data }) => {
         const inntektsmeldingerIBruk = data?.vurderinger?.flatMap(kompletthetvurdering =>
           kompletthetvurdering.vurderinger.filter(vurdering => vurdering.vurdering === 'I_BRUK'),

@@ -14,7 +14,7 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent } from '@storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 import type { Behandling } from './types/Behandling';
 import type { Medlemskap } from './types/Medlemskap';

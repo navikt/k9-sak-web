@@ -4,8 +4,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 
 import { HStack } from '@navikt/ds-react';
-import { expect, fireEvent, fn, userEvent, within } from '@storybook/test';
 import dayjs from 'dayjs';
+import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
 import { stdDato, visnDato } from '../../../utils/formatters';
 

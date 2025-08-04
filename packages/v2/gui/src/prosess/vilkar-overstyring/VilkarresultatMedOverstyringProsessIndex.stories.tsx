@@ -7,14 +7,14 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { action } from '@storybook/addon-actions';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
 import React from 'react';
+import { action } from 'storybook/actions';
+import { expect } from 'storybook/test';
 import VilkarresultatMedOverstyringProsessIndex, {
   type VilkarresultatMedOverstyringProsessIndexProps,
 } from './VilkarresultatMedOverstyringProsessIndex';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 
 const vilkarOpptjening = [
   {

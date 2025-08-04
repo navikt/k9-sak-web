@@ -1,23 +1,15 @@
-import MenyMarkerBehandling from '@k9-sak-web/sak-meny-marker-behandling';
-import { FeatureToggles, MerknadFraLos } from '@k9-sak-web/types';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import { Button } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 interface VeiledervisningProps {
   behandlingUuid: string;
-  featureToggles: FeatureToggles;
-  markerBehandling: (values: any) => Promise<any>;
-  merknaderFraLos: MerknadFraLos;
 }
 
-const BehandlingMenuVeiledervisning: React.FC<VeiledervisningProps> = ({
-  behandlingUuid,
-  featureToggles,
-  markerBehandling,
-  merknaderFraLos,
-}) => {
+const BehandlingMenuVeiledervisning: React.FC<VeiledervisningProps> = ({ behandlingUuid }) => {
   const [visMarkerBehandlingModal, setVisMarkerBehandlingModal] = useState(false);
-
+  const featureToggles = useContext(FeatureTogglesContext);
   if (!featureToggles?.LOS_MARKER_BEHANDLING) {
     return null;
   }
@@ -28,12 +20,9 @@ const BehandlingMenuVeiledervisning: React.FC<VeiledervisningProps> = ({
         Marker behandling
       </Button>
       {visMarkerBehandlingModal && (
-        <MenyMarkerBehandling
+        <MenyMarkerBehandlingV2
           behandlingUuid={behandlingUuid}
-          markerBehandling={markerBehandling}
           lukkModal={() => setVisMarkerBehandlingModal(!visMarkerBehandlingModal)}
-          brukHastekøMarkering
-          merknaderFraLos={merknaderFraLos}
           erVeileder
         />
       )}

@@ -5,8 +5,8 @@ import Dokumentoversikt from '../../../types/Dokumentoversikt';
 interface State {
   visDokumentDetails: boolean;
   isLoading: boolean;
-  dokumentoversikt: Dokumentoversikt;
-  valgtDokument: Dokument;
+  dokumentoversikt: Dokumentoversikt | null;
+  valgtDokument: Dokument | null;
   dokumentoversiktFeilet: boolean;
   visRedigeringAvDokument: boolean;
 }
@@ -14,7 +14,7 @@ interface State {
 interface Action {
   type: ActionType;
   dokumentoversikt?: Dokumentoversikt;
-  valgtDokument?: Dokument;
+  valgtDokument?: Dokument | null;
 }
 
 const vilkårsdokumentReducer = (state: State, action: Action): State => {
@@ -22,8 +22,8 @@ const vilkårsdokumentReducer = (state: State, action: Action): State => {
     case ActionType.VIS_DOKUMENTOVERSIKT: {
       return {
         ...state,
-        dokumentoversikt: action.dokumentoversikt,
-        valgtDokument: action.valgtDokument,
+        dokumentoversikt: action.dokumentoversikt ?? null,
+        valgtDokument: action.valgtDokument ?? null,
         isLoading: false,
         visDokumentDetails: false,
         dokumentoversiktFeilet: false,
@@ -39,7 +39,7 @@ const vilkårsdokumentReducer = (state: State, action: Action): State => {
     case ActionType.VELG_DOKUMENT:
       return {
         ...state,
-        valgtDokument: action.valgtDokument,
+        valgtDokument: action.valgtDokument ?? null,
         visRedigeringAvDokument: false,
         visDokumentDetails: true,
       };

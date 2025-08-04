@@ -1,12 +1,9 @@
 import { Label } from '@navikt/ds-react';
 import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
-import classNames from 'classnames/bind';
 import * as React from 'react';
 import styles from './uttakUtregning.module.css';
 
 import type { JSX } from 'react';
-
-const cx = classNames.bind(styles);
 
 interface UttakUtregningProps {
   heading: string;
@@ -16,9 +13,7 @@ interface UttakUtregningProps {
 }
 
 const UttakUtregning = ({ heading, children, highlight, headingPostContent }: UttakUtregningProps): JSX.Element => {
-  const uttakUtregningCls = cx('uttakUtregning', {
-    'uttakUtregning--highlighted': highlight,
-  });
+  const uttakUtregningCls = `${styles.uttakUtregning} ${highlight ? styles.uttakUtregningHighlighted : ''}`;
   return (
     <div className={uttakUtregningCls}>
       <div className={styles.uttakUtregningHeadingContainer}>

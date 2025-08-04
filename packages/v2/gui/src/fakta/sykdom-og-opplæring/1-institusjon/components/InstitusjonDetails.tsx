@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Box, Button, BodyShort } from '@navikt/ds-react';
+import { useEffect, useState } from 'react';
+import { Button, BodyShort } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
@@ -7,7 +7,6 @@ import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 import DetailView from '../../../../shared/detailView/DetailView.js';
 import { PencilIcon, CalendarIcon } from '@navikt/aksel-icons';
-import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -16,14 +15,23 @@ interface OwnProps {
 
 const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
-  const erManueltVurdert =
-    vurdering.resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT ||
-    vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT;
-  const visEndreLink = !readOnly && erManueltVurdert;
+  const visEndreLink = !readOnly && vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES;
+  const perioder = vurdering.perioder.map(periode => (
+    <div key={periode.prettifyPeriod()} data-testid="Periode" className="flex gap-2">
+      <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
+    </div>
+  ));
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.journalpostId]);
 
   return (
     <DetailView
       title="Vurdering av institusjon"
+      border
       contentAfterTitleRenderer={() =>
         visEndreLink && !redigering ? (
           <Button
@@ -37,21 +45,8 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
           </Button>
         ) : null
       }
+      belowTitleContent={perioder}
     >
-      {vurdering.perioder.map(periode => (
-        <div key={periode.prettifyPeriod()} data-testid="Periode" className="flex gap-2">
-          <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
-        </div>
-      ))}
-
-      <Box className="mt-8">
-        <LabelledContent
-          label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
-          size="small"
-          content={vurdering.institusjon}
-        />
-      </Box>
-
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (
         <InstitusjonFerdigVisning vurdering={vurdering} />
       ) : (

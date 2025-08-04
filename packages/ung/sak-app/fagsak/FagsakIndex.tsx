@@ -11,6 +11,7 @@ import {
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { BehandlingsresultatDtoType, GetUngdomsprogramInformasjonResponse } from '@k9-sak-web/backend/ungsak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -112,6 +113,24 @@ const FagsakIndex = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
+  const { data: ungdomsprogramInformasjon } = restApiHooks.useRestApi<GetUngdomsprogramInformasjonResponse>(
+    UngSakApiKeys.UNGDOMSPROGRAM_INFORMASJON,
+    {},
+    {
+      updateTriggers: [behandlingId],
+      suspendRequest: !behandling,
+    },
+  );
+
+  const ungdomsytelseDeltakerStatus = useMemo(() => {
+    const erUtmeldt = !!ungdomsprogramInformasjon?.opphørsdato;
+    const erIProgrammet =
+      !erUtmeldt &&
+      alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatDtoType.INNVILGET);
+
+    return { deltakerErUtmeldt: erUtmeldt, deltakerErIProgrammet: erIProgrammet };
+  }, [alleBehandlinger, ungdomsprogramInformasjon]);
+
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     UngSakApiKeys.ARBEIDSGIVERE,
     {},
@@ -204,7 +223,6 @@ const FagsakIndex = () => {
                   behandlingVersjon={behandlingVersjon}
                   behandlingRettigheter={behandlingRettigheter}
                   personopplysninger={behandlingPersonopplysninger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   navAnsatt={navAnsatt}
                   featureToggles={featureToggles}
                 />
@@ -228,6 +246,7 @@ const FagsakIndex = () => {
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
+                    ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
                   />
                 </div>
               );

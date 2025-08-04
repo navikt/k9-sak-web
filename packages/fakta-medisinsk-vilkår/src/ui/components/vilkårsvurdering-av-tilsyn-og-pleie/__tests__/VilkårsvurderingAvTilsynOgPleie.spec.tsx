@@ -100,14 +100,14 @@ const renderVilkårsvurderingComponent = (
 };
 
 describe('VilkårsvurderingAvTilsynOgPleie', () => {
-  let httpGetSpy = null;
-  let httpPostSpy = null;
+  let httpGetSpy: any = null;
+  let httpPostSpy: any = null;
 
-  let sykdomsstegFerdigStatusSpy = null;
-  let sykdomsstegDokumentUferdigStatusSpy = null;
-  let sykdomsstegKTPUferdigStatusSpy = null;
+  let sykdomsstegFerdigStatusSpy: any = null;
+  let sykdomsstegDokumentUferdigStatusSpy: any = null;
+  let sykdomsstegKTPUferdigStatusSpy: any = null;
 
-  let navigerTilNesteStegSpy = null;
+  let navigerTilNesteStegSpy: any = null;
 
   beforeAll(() => {
     httpGetSpy = vi.spyOn(httpUtils, 'get');

@@ -1,4 +1,3 @@
-import { type HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9sak/generated';
 import { Chat, VStack, Button } from '@navikt/ds-react';
 import { Avatar } from '../snakkeboble/Avatar.jsx';
 import type { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
@@ -6,17 +5,17 @@ import { formatDate, getStyle, utledPlassering } from '../snakkeboble/snakkebobl
 import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
 import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
-import type { K9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from '../historikkTypeBerikning.js';
+import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
 
 export interface InnslagBobleProps {
-  readonly innslag: HistorikkinnslagDtoV2;
+  readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2;
   readonly kjønn: Kjønn;
   readonly behandlingLocation: InnslagLinjeProps['behandlingLocation'];
   readonly createLocationForSkjermlenke: InnslagLinjeProps['createLocationForSkjermlenke'];
   readonly saksnummer: string;
-  readonly kodeverkoppslag: K9Kodeverkoppslag; // <- Kan erstattast med useContext når samanlikningssjekk er fjerna
 }
 
 export const InnslagBoble = ({
@@ -25,21 +24,22 @@ export const InnslagBoble = ({
   behandlingLocation,
   createLocationForSkjermlenke,
   saksnummer,
-  kodeverkoppslag,
 }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
-  const rolleNavn = kodeverkoppslag.k9sak.historikkAktører(innslag.aktør.type).navn;
-  const position = utledPlassering(innslag.aktør.type);
+  const rolleNavn = innslag.aktør.type.navn;
+  const position = utledPlassering(innslag.aktør.type.kilde);
+  // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const doCutOff = innslag.linjer.length > 2;
   return (
     <Chat
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
-      avatar={<Avatar aktørType={innslag.aktør.type} kjønn={kjønn} />}
+      avatar={<Avatar aktørType={innslag.aktør.type.kilde} kjønn={kjønn} />}
       timestamp={`${formatDate(innslag.opprettetTidspunkt)}`}
-      name={`${rolleNavn} ${innslag.aktør.ident ?? ''}`}
+      name={`${rolleNavn} ${hentSaksbehandlerNavn(innslag.aktør.ident ?? '')}`}
       position={position}
       toptextPosition="left"
-      className={getStyle(innslag.aktør.type, kjønn)}
+      className={getStyle(innslag.aktør.type.kilde, kjønn)}
     >
       <Chat.Bubble>
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
@@ -50,7 +50,6 @@ export const InnslagBoble = ({
               linje={linje}
               behandlingLocation={behandlingLocation}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
-              kodeverkoppslag={kodeverkoppslag}
             />
           </div>
         ))}
