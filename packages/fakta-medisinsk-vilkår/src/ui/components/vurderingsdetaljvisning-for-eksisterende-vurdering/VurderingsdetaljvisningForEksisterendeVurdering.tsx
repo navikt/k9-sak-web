@@ -65,7 +65,7 @@ const getSummaryComponent = (vurderingstype: Vurderingstype) => {
 };
 
 const erAutomatiskVurdertInnleggelsesperiode = (vurderingselement: Vurderingselement) =>
-  !(vurderingselement as ManuellVurdering).resultat;
+  !(vurderingselement as ManuellVurdering).resultat && !vurderingselement?.manglerLegeerklæring;
 
 const VurderingsdetaljvisningForEksisterendeVurdering = ({
   vurderingsoversikt,

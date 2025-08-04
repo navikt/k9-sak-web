@@ -42,6 +42,7 @@ function makeDefaultValues(
   | VurderingLangvarigSykdomFormState {
   if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return {
+      [KTPFieldName.MANGLER_LEGEERKLÆRING]: false,
       [KTPFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]: '',
       [KTPFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]: undefined,
       [KTPFieldName.PERIODER]: perioder,

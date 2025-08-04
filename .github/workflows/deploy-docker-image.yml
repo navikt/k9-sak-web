@@ -1,4 +1,4 @@
-name: Deploy Docker image
+name: Build and deploy k9-sak-web
 on:
   push:
     paths-ignore:

@@ -162,7 +162,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
     {
       kode: 'UNG',
       kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Ungdomsytelse',
+      navn: 'Ungdomsprogramytelse',
       kilde: 'UNG',
     },
   ],
@@ -8648,6 +8648,14 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kodeverk: 'ÅRSAK_TIL_VURDERING',
       navn: 'Utsatt behandling',
       kilde: 'UTSATT_BEHANDLING',
+    },
+  ],
+  behandlingMerknadTyper: [
+    {
+      kode: '-',
+      kodeverk: 'BEHANDLING_MERKNAD_TYPE',
+      navn: 'Ikke definert',
+      kilde: 'HASTESAK',
     },
   ],
   avslagårsakerPrVilkårTypeKode: {

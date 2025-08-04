@@ -1,4 +1,3 @@
-import { JSX } from 'react';
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -6,6 +5,7 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
+import { JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
@@ -137,7 +137,7 @@ const getPeriod = (ingenPerioderMedAvvik: boolean, periodeFom: string, mottaker:
   );
 
 interface ResultatPerFagområde {
-  fagOmrådeKode: Kodeverk;
+  fagOmrådeKode: Kodeverk | string;
   rader: SimuleringResultatRad[];
 }
 
@@ -199,10 +199,14 @@ const AvregningTable = ({
                         const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
                         const rowClassnames = `${isRowToggable ? styles.rowBorderDashed : styles.rowBorderSolid}`;
                         const boldText = isFeilUtbetalt || ingenPerioderMedAvvik;
+                        const fagområdeKode =
+                          typeof fagOmråde.fagOmrådeKode === 'string'
+                            ? fagOmråde.fagOmrådeKode
+                            : fagOmråde.fagOmrådeKode.kode;
                         return (
                           <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
                             <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
-                              <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
+                              <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
                             </Table.DataCell>
                             {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
                           </Table.Row>

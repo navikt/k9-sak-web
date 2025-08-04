@@ -1,14 +1,12 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
   FagsakPerson,
   Kodeverk,
   KodeverkMedNavn,
-  MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
   SaksbehandlereInfo,
@@ -28,7 +26,7 @@ import K9StatusBackendClient from '@k9-sak-web/gui/shared/statusstriper/K9Status
 import Punsjstripe from '@k9-sak-web/gui/shared/statusstriper/punsjstripe/Punsjstripe.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import { DirekteOvergangDto } from '@navikt/k9-sak-typescript-client';
+import { DirekteOvergangDto, MerknadResponse } from '@navikt/k9-sak-typescript-client';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -197,7 +195,7 @@ const FagsakIndex = () => {
 
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadFraLos>(
+  const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadResponse>(
     K9sakApiKeys.LOS_HENTE_MERKNAD,
     {},
     {
@@ -207,8 +205,7 @@ const FagsakIndex = () => {
   );
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-
-  const erHastesak = merknaderFraLos && merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK);
+  const erHastesak = merknaderFraLos?.hastesak?.aktiv;
 
   if (!fagsak) {
     if (isRequestNotDone(fagsakState)) {

@@ -15,7 +15,7 @@ interface OwnProps {
     årsakKode: string;
     begrunnelse: string;
   }) => Promise<void>;
-  forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
+  forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => Promise<void>;
   ytelseType: string;
   behandlingType: string;
   behandlingResultatTyper: string[];

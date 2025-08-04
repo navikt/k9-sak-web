@@ -13,7 +13,7 @@ export type SimuleringResultatRad = Readonly<{
 }>;
 
 export type SimuleringResultatPerFagområde = Readonly<{
-  fagOmrådeKode: Kodeverk;
+  fagOmrådeKode: Kodeverk | string;
   rader: SimuleringResultatRad[];
 }>;
 

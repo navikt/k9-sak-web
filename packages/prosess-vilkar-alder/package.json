@@ -9,10 +9,10 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-form-hooks": "^6.3.10",
-    "@navikt/ft-form-validators": "^3.2.3",
+    "@navikt/ft-form-hooks": "^6.3.13",
+    "@navikt/ft-form-validators": "^4.0.6",
     "react": "19.1.0",
-    "react-hook-form": "7.57.0",
+    "react-hook-form": "7.58.1",
     "react-intl": "7.1.11"
   }
 }

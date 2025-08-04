@@ -46,8 +46,25 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
   title?: string;
+  nyesteFørst?: boolean;
 }
+const sortNyestFørst = (a: Vurderingselement, b: Vurderingselement) => {
+  const periodeA = a.perioder[0]?.fom;
+  const periodeB = b.perioder[0]?.fom;
+  if (periodeA && periodeB) {
+    return new Date(periodeB).getTime() - new Date(periodeA).getTime();
+  }
+  return 0;
+};
 
+const sortEldestFørst = (a: Vurderingselement, b: Vurderingselement) => {
+  const periodeA = a.perioder[0]?.fom;
+  const periodeB = b.perioder[0]?.fom;
+  if (periodeA && periodeB) {
+    return new Date(periodeA).getTime() - new Date(periodeB).getTime();
+  }
+  return 0;
+};
 /**
  * Navigasjon for perioder som må vurderes og er vurdert
  */
@@ -58,16 +75,10 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   customPeriodeRad,
   customPeriodeLabel,
   title = 'Alle perioder',
+  nyesteFørst = true,
 }: VurderingslisteProps<T>) => {
   // nyeste først
-  const sortedPerioder = perioder.sort((a, b) => {
-    const periodeA = a.perioder[0]?.fom;
-    const periodeB = b.perioder[0]?.fom;
-    if (periodeA && periodeB) {
-      return new Date(periodeB).getTime() - new Date(periodeA).getTime();
-    }
-    return 0;
-  });
+  const sortedPerioder = perioder.sort(nyesteFørst ? sortNyestFørst : sortEldestFørst);
   const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
   const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
   const allePerioder = useMemo(
