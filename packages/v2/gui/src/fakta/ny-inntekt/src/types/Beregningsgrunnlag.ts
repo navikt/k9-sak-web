@@ -1,7 +1,7 @@
-import type { BeregningAvklaringsbehov } from './BeregningAvklaringsbehov';
-import type { BeregningsgrunnlagArbeidsforhold } from './BeregningsgrunnlagArbeidsforhold';
+import type { BeregningAvklaringsbehov } from './BeregningAvklaringsbehov.js';
+import type { BeregningsgrunnlagArbeidsforhold } from './BeregningsgrunnlagArbeidsforhold.js';
 import type { FaktaOmBeregning } from './BeregningsgrunnlagFakta.js';
-import type { FaktaOmFordeling, RefusjonTilVurdering } from './BeregningsgrunnlagFordeling';
+import type { FaktaOmFordeling, RefusjonTilVurdering } from './BeregningsgrunnlagFordeling.js';
 import type { Besteberegninggrunnlag } from './Besteberegning.js';
 
 export type InntektsgrunnlagInntekt = Readonly<{
