@@ -7,7 +7,7 @@ import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
-const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
+const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
 
@@ -18,6 +18,12 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
       setRedigering(false);
     }
   }, [vurdering, behandlingUuid]);
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.uuid]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm =
     !readOnly && ((redigering && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
@@ -33,7 +39,8 @@ const SykdomUperiodisertFormContainer = ({ vurdering }: { vurdering: Uperiodiser
       border
       contentAfterTitleRenderer={() =>
         !readOnly &&
-        harAksjonspunkt9301 && (
+        harAksjonspunkt9301 &&
+        vurdering.behandlingUuid === behandlingUuid && (
           <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
         )
       }
@@ -76,4 +83,4 @@ const RedigerKnapp = ({
   );
 };
 
-export default SykdomUperiodisertFormContainer;
+export default SykdomUperiodisertContainer;

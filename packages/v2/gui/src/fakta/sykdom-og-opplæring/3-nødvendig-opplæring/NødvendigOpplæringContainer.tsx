@@ -14,7 +14,7 @@ const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVur
   const [redigering, setRedigering] = useState(false);
   useEffect(() => {
     setRedigering(false);
-  }, [vurdering]);
+  }, [vurdering.perioder]);
 
   if (!readOnly && harAksjonspunkt9302 && (vurdering.resultat === 'MÅ_VURDERES' || redigering)) {
     return (

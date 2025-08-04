@@ -1,14 +1,12 @@
 import { Period } from '@navikt/ft-utils';
 
 import {
-  Buildings3Icon,
   CheckmarkCircleFillIcon,
   ChevronRightIcon,
   ExclamationmarkTriangleFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 import { Tooltip } from '@navikt/ds-react';
-import { OverlayedIcons } from '../indicatorWithOverlay/IndicatorWithOverlay';
 import styles from './periodeRad.module.css';
 import type { ResultatType } from './VurderingsperiodeNavigasjon';
 import { Resultat } from './VurderingsperiodeNavigasjon';
@@ -30,20 +28,12 @@ const renderStatusIcon = (resultat?: ResultatType) => {
     );
   }
 
-  if (resultat === Resultat.GODKJENT_AUTOMATISK) {
-    return (
-      <Tooltip content="Vilkåret er automatisk oppfylt">
-        <OverlayedIcons
-          indicatorRenderer={() => (
-            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
-          )}
-          overlayRenderer={() => <Buildings3Icon fontSize={24} />}
-        />
-      </Tooltip>
-    );
-  }
-
-  if (resultat === Resultat.GODKJENT_MANUELT || resultat === Resultat.OPPFYLT || resultat === Resultat.GODKJENT) {
+  if (
+    resultat === Resultat.GODKJENT_MANUELT ||
+    resultat === Resultat.OPPFYLT ||
+    resultat === Resultat.GODKJENT ||
+    resultat === Resultat.GODKJENT_AUTOMATISK
+  ) {
     return (
       <Tooltip content="Vilkåret er oppfylt">
         <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
@@ -53,7 +43,8 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   if (
     resultat === Resultat.IKKE_GODKJENT_MANUELT ||
     resultat === Resultat.IKKE_OPPFYLT ||
-    resultat === Resultat.IKKE_GODKJENT
+    resultat === Resultat.IKKE_GODKJENT ||
+    resultat === Resultat.IKKE_DOKUMENTERT
   ) {
     return (
       <XMarkOctagonFillIcon

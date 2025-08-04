@@ -21,6 +21,7 @@ import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -184,7 +185,7 @@ const VurderingAvToOmsorgspersonerForm = ({
                   </ul>
                 </>
               }
-              validators={{ required }}
+              validators={{ required, hasValidText }}
               disabled={readOnly}
               id="begrunnelsesfelt"
             />

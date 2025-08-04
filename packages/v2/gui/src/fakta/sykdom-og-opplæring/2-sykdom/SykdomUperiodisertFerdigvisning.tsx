@@ -59,7 +59,7 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
       {vurderingBruktIAksjonspunkt?.vurderingUuid !== vurdering.uuid && (
         <div>
           <Button size="small" variant="primary" onClick={() => løsAksjonspunkt9301(vurdering.uuid)}>
-            Benytt denne vurderingen
+            Bruk denne sykdomsvurderingen
           </Button>
         </div>
       )}
@@ -76,7 +76,7 @@ const Diagnoser = ({ diagnosekoder = [] }: { diagnosekoder?: string[] }) => {
       {diagnosekoder.map(diagnose => {
         const diagnosekode = ICD10.find(d => d.code === diagnose);
         return (
-          <Tag size="small" key={diagnose} variant="info-moderate" className="border-none rounded">
+          <Tag size="small" key={diagnose} variant="neutral-moderate" className="border-none rounded">
             {diagnosekode?.code} - {diagnosekode?.text}
           </Tag>
         );
