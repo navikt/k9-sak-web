@@ -68,13 +68,23 @@ server {
     error_page 504 = @504_json;
   }
 
+  location  "/ung/tilbake/" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
   # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
   location @rewrites {
     rewrite ^(.+)$ "/ung/web/index.html" last;
   }
 
   location @401_json {
-    default_type application/json;
+    default_type application/json;π
     add_header Location /ung/sak/resource/login?original=$request_uri always;
     return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
   }

@@ -3,11 +3,11 @@ import fs from 'fs/promises';
 import path from 'path';
 import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
-import { createHtmlPlugin } from "vite-plugin-html";
+import { createHtmlPlugin } from 'vite-plugin-html';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
-import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
-import { featureTogglesFactory } from "./_mocks/featureToggles.js";
+import { createMockResponder, staticJsonResponse } from './_mocks/createMockResponder.js';
+import { featureTogglesFactory } from './_mocks/featureToggles.js';
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -26,7 +26,7 @@ const createProxy = (target, pathRewrite) => ({
       // går til dev server istadenfor proxied server. Dette for å unngå CORS feil når request går direkte til proxied server.
       if (proxyRes.headers.location?.startsWith(target)) {
         // eslint-disable-next-line no-param-reassign
-        proxyRes.headers.location = proxyRes.headers.location.replace(target, "")
+        proxyRes.headers.location = proxyRes.headers.location.replace(target, '');
       }
     });
   },
@@ -34,14 +34,14 @@ const createProxy = (target, pathRewrite) => ({
 
 function excludeMsw() {
   return {
-    name: "exclude-msw",
+    name: 'exclude-msw',
     resolveId(source) {
-      return source === "virtual-module" ? source : null;
+      return source === 'virtual-module' ? source : null;
     },
-    renderStart(outputOptions, _inputOptions) {
+    renderStart(outputOptions) {
       const outDir = outputOptions.dir;
       if (!outDir.includes('storybook')) {
-        const msWorker = path.resolve(outDir, "mockServiceWorker.js");
+        const msWorker = path.resolve(outDir, 'mockServiceWorker.js');
         fs.rm(msWorker).then(() => console.log(`Deleted ${msWorker}`));
       }
     },
@@ -72,31 +72,47 @@ export default ({ mode }) => {
             });
           },
         },
-        '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8901', staticJsonResponse(featureTogglesFactory())),
+        '/ung/tilbake': {
+          target: process.env.APP_URL_UNG_TILBAKE || 'http://localhost:8903',
+          changeOrigin: !!process.env.APP_URL_UNG_TILBAKE,
+          ws: false,
+          secure: false,
+          configure: proxy => {
+            proxy.on('proxyRes', (proxyRes, req, res) => {
+              if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_UNG_TILBAKE)) {
+                // eslint-disable-next-line no-param-reassign, prefer-destructuring
+                proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_UNG_TILBAKE)[1];
+              }
+            });
+          },
+        },
+        '/ung/feature-toggle/toggles.json': createMockResponder(
+          'http://localhost:8901',
+          staticJsonResponse(featureTogglesFactory()),
+        ),
       },
     },
     base: '/ung/web',
     publicDir: './public',
     plugins: [
       createHtmlPlugin({
-        template: 'ung.html'
+        template: 'ung.html',
       }),
       react({
         include: [/\.jsx$/, /\.tsx?$/],
-
       }),
       svgr(),
       excludeMsw(),
       {
         // Endre namn på bygd entrypoint html frå ung.html til index.html
-        name: "rename-html-entry",
+        name: 'rename-html-entry',
         closeBundle: async () => {
-          const buildDir = path.join(__dirname, "dist/ung/web")
-          const oldPath = path.join(buildDir, "ung.html")
-          const newPath = path.join(buildDir, "index.html")
-          await fs.rename(oldPath, newPath)
-        }
-      }
+          const buildDir = path.join(__dirname, 'dist/ung/web');
+          const oldPath = path.join(buildDir, 'ung.html');
+          const newPath = path.join(buildDir, 'index.html');
+          await fs.rename(oldPath, newPath);
+        },
+      },
     ],
     build: {
       // Relative to the root
@@ -104,9 +120,7 @@ export default ({ mode }) => {
       sourcemap: true,
       rollupOptions: {
         input: './ung.html',
-        external: [
-          "mockServiceWorker.js"
-        ],
+        external: ['mockServiceWorker.js'],
         plugins: [sourcemaps({ exclude: /@sentry/ })],
       },
     },
