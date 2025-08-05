@@ -5,10 +5,17 @@ import ReisetidFerdigvisning from './ReisetidFerdigvisning';
 import DetailView from '../../../shared/detailView/DetailView';
 import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigering, setRedigering] = useState(false);
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.perioder]);
+
   if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
     return (
       <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>

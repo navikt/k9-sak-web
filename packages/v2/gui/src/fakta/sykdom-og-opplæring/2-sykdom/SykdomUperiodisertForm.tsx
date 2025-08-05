@@ -25,6 +25,14 @@ const finnAvslagsårsak = (godkjent: string) => {
   return undefined;
 };
 
+const defaultValues = (vurdering: UperiodisertSykdom) => {
+  return {
+    diagnosekoder: vurdering.diagnosekoder || [],
+    begrunnelse: vurdering.begrunnelse || '',
+    godkjent: vurdering.godkjent || '',
+  };
+};
+
 const SykdomUperiodisertForm = ({
   vurdering,
   setRedigering,
@@ -36,18 +44,14 @@ const SykdomUperiodisertForm = ({
 }) => {
   const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm({
-    defaultValues: {
-      diagnosekoder: vurdering.diagnosekoder || [],
-      begrunnelse: vurdering.begrunnelse || '',
-      godkjent: vurdering.godkjent || '',
-    },
+    defaultValues: defaultValues(vurdering),
   });
 
   useEffect(() => {
-    formMethods.setValue('diagnosekoder', vurdering.diagnosekoder || []);
-    formMethods.setValue('begrunnelse', vurdering.begrunnelse);
-    formMethods.setValue('godkjent', vurdering.godkjent);
-  }, []);
+    formMethods.reset({
+      ...defaultValues(vurdering),
+    });
+  }, [vurdering.uuid]);
 
   const godkjent = formMethods.watch('godkjent');
   useEffect(() => {
@@ -123,13 +127,14 @@ const SykdomUperiodisertForm = ({
         />
         {godkjent === 'mangler_dokumentasjon' && (
           <Alert variant="info" size="small">
-            Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter
-            <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>.
+            Behandlingen vil gå videre til avslag for manglende dokumentasjon på sykdom etter{' '}
+            <Lovreferanse>§ 9-14</Lovreferanse> og <Lovreferanse>§ 22-3</Lovreferanse>. Før du kan avslå må du etterlyse
+            dokumentasjon fra bruker.
           </Alert>
         )}
         <div className="flex gap-4">
           <Button variant="primary" type="submit" size="small">
-            {vurdering.uuid ? 'Oppdater og benytt vurdering' : 'Lagre og benytt vurdering'}
+            Bekreft og fortsett
           </Button>
           {redigering && (
             <div>

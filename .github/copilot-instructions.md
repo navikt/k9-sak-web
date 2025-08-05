@@ -1,0 +1,1 @@
+When performing code review, allow naming in Norwegian. 
