@@ -13,7 +13,7 @@
     "formik": "2.4.6",
     "moment": "2.30.1",
     "react": "19.1.1",
-    "react-hook-form": "7.58.1",
+    "react-hook-form": "7.62.0",
     "react-intl": "7.1.11",
     "react-redux": "9.2.0",
     "redux": "5.0.1",
