@@ -1,34 +1,30 @@
 import React from 'react';
-
 import { Heading, BodyShort } from '@navikt/ds-react';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-
-import { OverstyringUttak } from '../../../../types';
-import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
-
-import styles from './begrunnelseBoks.module.css';
-import { arbeidstypeTilVisning } from '../../../../constants/Arbeidstype';
 import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
+import { utledAktivitetNavn } from '../../utils/overstyringUtils';
+import type { ArbeidsgiverOversiktDto, OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import styles from './begrunnelseBoks.module.css';
 
 interface BegrunnelseBoksProps {
   begrunnelse: string;
-  overstyring: OverstyringUttak;
+  overstyring: OverstyrUttakPeriodeDto;
+  arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
 }
 
-const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyring }) => {
+const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyring, arbeidsgivere }) => {
   const { utbetalingsgrader, saksbehandler } = overstyring;
-  const { utledAktivitetNavn } = useOverstyrUttak();
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   return (
     <div className={styles.begrunnelseBoks}>
-      {utbetalingsgrader.length > 0 && (
+      {utbetalingsgrader && utbetalingsgrader.length > 0 && (
         <>
           <Heading level="3" size="xsmall">
             Ny utbetalingsgrad per aktivitet
           </Heading>
           <div className={styles.utbetalingsgrader}>
             {utbetalingsgrader.map(utbetalingsgrad => {
-              const arbeidstype = arbeidstypeTilVisning[utbetalingsgrad.arbeidsforhold.type];
+              const arbeidstype = utbetalingsgrad.arbeidsforhold.type;
               const { arbeidsforhold: af } = utbetalingsgrad;
               return (
                 <div
@@ -36,7 +32,7 @@ const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyr
                   className={styles.utbetalingsgrad}
                 >
                   <div className={styles.utbetalingsgradNavn}>
-                    {utledAktivitetNavn(utbetalingsgrad.arbeidsforhold)}
+                    {utledAktivitetNavn(utbetalingsgrad.arbeidsforhold, arbeidsgivere)}
                     {arbeidstype && <span>, {arbeidstype}</span>}
                   </div>
                   <div className={styles.utbetalingsgradProsent}>{utbetalingsgrad.utbetalingsgrad} %</div>
