@@ -22,7 +22,7 @@
     "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "3.0.20250530164140",
+    "@navikt/k9-klage-typescript-client": "3.0.20250805141426",
     "@navikt/k9-sak-typescript-client": "2.0.20250731124543",
     "@navikt/ung-sak-typescript-client": "0.2.20250728105557"
   },

@@ -2503,15 +2503,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hey-api/client-fetch@npm:=0.10.0":
-  version: 0.10.0
-  resolution: "@hey-api/client-fetch@npm:0.10.0"
-  peerDependencies:
-    "@hey-api/openapi-ts": < 2
-  checksum: 10/f77dc512047f2fcbba4a1be079020c6c821391b34da426079e1e306ee2ee9f83e7f1130ad7a697a340f2e29bde1e0ce8af3b88a4f8631b849426bd7b2cc24fb9
-  languageName: node
-  linkType: hard
-
 "@hookform/error-message@npm:^2.0.1":
   version: 2.0.1
   resolution: "@hookform/error-message@npm:2.0.1"
@@ -2988,7 +2979,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
-    "@navikt/k9-klage-typescript-client": "npm:3.0.20250530164140"
+    "@navikt/k9-klage-typescript-client": "npm:3.0.20250805141426"
     "@navikt/k9-sak-typescript-client": "npm:2.0.20250731124543"
     "@navikt/ung-sak-typescript-client": "npm:0.2.20250728105557"
     "@tanstack/eslint-plugin-query": "npm:^5.81.2"
@@ -4369,12 +4360,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-klage-typescript-client@npm:3.0.20250530164140":
-  version: 3.0.20250530164140
-  resolution: "@navikt/k9-klage-typescript-client@npm:3.0.20250530164140::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.0.20250530164140%2F29ef2f2a9cd2310dde4445b083d85ad15b3fae6b"
-  dependencies:
-    "@hey-api/client-fetch": "npm:=0.10.0"
-  checksum: 10/01f45605f6dccd37d744a490ae5860382604742701893c180f08c4771c96d5ebd0c83883fb48666690b639fac4443157cc6c8d63ea91a902ffef4344dd5003cf
+"@navikt/k9-klage-typescript-client@npm:3.0.20250805141426":
+  version: 3.0.20250805141426
+  resolution: "@navikt/k9-klage-typescript-client@npm:3.0.20250805141426::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.0.20250805141426%2F68b235b012b08529e4a41af8b1884affbc4c41eb"
+  checksum: 10/81707efb9555e094dfd35c3918d8d42d4768129c7615a0cf750ec80f9a4c9fe97d1ff354d8513407b55b02ed9715f921c0983d1817415e08e0174f6042ed4818
   languageName: node
   linkType: hard
 
