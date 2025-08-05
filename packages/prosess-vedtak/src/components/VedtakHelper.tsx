@@ -1,6 +1,6 @@
 import {
-  BehandlingDtoType as KlageBehandlingDtoType,
-  BehandlingDtoBehandlingResultatType as klageBehandlingsresultat,
+  klage_kodeverk_behandling_BehandlingType as BehandlingType,
+  klage_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
@@ -18,12 +18,9 @@ import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
 const erTilbakekrevingType = (type: string | undefined | { kode: string }) => {
   if (typeof type === 'string') {
-    return KlageBehandlingDtoType.TILBAKEKREVING === type || KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type;
+    return BehandlingType.TILBAKEKREVING === type || BehandlingType.REVURDERING_TILBAKEKREVING === type;
   }
-  return (
-    KlageBehandlingDtoType.TILBAKEKREVING === type?.kode ||
-    KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type?.kode
-  );
+  return BehandlingType.TILBAKEKREVING === type?.kode || BehandlingType.REVURDERING_TILBAKEKREVING === type?.kode;
 };
 
 const tilbakekrevingMedInntrekk = (
@@ -52,10 +49,10 @@ export const findTilbakekrevingText = (props: {
 };
 
 export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_MEDHOLD) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
@@ -83,10 +80,10 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
 };
 
 export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_MEDHOLD) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
@@ -114,10 +111,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
 };
 
 export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_OPPHEVET) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_AVVIST) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_AVVIST) {
     return 'VedtakForm.ResultatKlageAvvist';
   }
 
