@@ -24,9 +24,9 @@
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
     "object-hash": "3.0.0",
-    "react": "19.1.0",
+    "react": "19.1.1",
     "react-collapse": "5.1.1",
-    "react-dom": "19.1.0",
+    "react-dom": "19.1.1",
     "react-hook-form": "7.58.1",
     "react-intl": "7.1.11"
   },
