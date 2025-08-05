@@ -43,6 +43,8 @@ spec:
       value: 'http://ung-sak'
     - name: APP_PORT
       value: '9005'
+    - name: APP_URL_UNG_TILBAKE
+      value: 'http://ung-tilbake.k9saksbehandling'
 
     # Setter flagg som bestemmer hvilket sett med feature toggles som skal brukes i frontend.
     # Faktiske feature toggles for ulike miljø er satt i ulike filer i packages/v2/gui/src/featuretoggles
