@@ -1,4 +1,4 @@
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';

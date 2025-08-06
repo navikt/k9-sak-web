@@ -1,4 +1,4 @@
-import type { BehandlingDto as KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { klage_kontrakt_behandling_BehandlingDto as KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { BehandlingDto } from '@navikt/k9-sak-typescript-client';
 
 export type Behandling = {

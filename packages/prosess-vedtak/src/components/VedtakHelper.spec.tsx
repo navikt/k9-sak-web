@@ -1,5 +1,5 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { klage_kodeverk_behandling_BehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   AvslagsårsakPrPeriodeDto,
