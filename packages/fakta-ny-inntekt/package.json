@@ -21,7 +21,7 @@
     "core-js": "3.44.0",
     "dayjs": "1.11.13",
     "react": "19.1.1",
-    "react-hook-form": "7.58.1",
+    "react-hook-form": "7.62.0",
     "react-intl": "7.1.11",
     "uuid": "11.1.0"
   }
