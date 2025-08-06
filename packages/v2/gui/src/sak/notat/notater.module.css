@@ -28,6 +28,6 @@
   margin-top: 0.75rem;
 }
 
-:global(.navds-button).leggTilNotatKnapp {
+:global(.aksel-button).leggTilNotatKnapp {
   margin-top: 1rem;
 }

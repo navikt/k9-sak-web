@@ -1,24 +1,24 @@
-.alert :global(.navds-heading) {
+.alert :global(.aksel-heading) {
   margin-bottom: 0;
   margin-top: 0.125rem;
 }
 
-.alert :global(.navds-alert__wrapper) {
+.alert :global(.aksel-alert__wrapper) {
   max-width: none;
 }
 
-.alertAccordion :global(button.navds-accordion__header) {
+.alertAccordion :global(button.aksel-accordion__header) {
   border: none;
   padding: 0;
   box-shadow: none;
   margin-top: 0.25rem;
 }
 
-.alertAccordion :global(.navds-accordion__content) {
+.alertAccordion :global(.aksel-accordion__content) {
   border: none;
 }
 
-h3.alertAccordion__heading:global(.navds-heading--xsmall) {
+h3.alertAccordion__heading:global(.aksel-heading--xsmall) {
   font-weight: var(--navds-font-weight-regular);
   margin-bottom: 0;
 }

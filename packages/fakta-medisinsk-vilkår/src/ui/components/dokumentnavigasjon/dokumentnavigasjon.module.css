@@ -32,7 +32,7 @@
   margin-left: 3.125rem;
 }
 
-.dokumentnavigasjon :global(.navds-accordion__content) {
+.dokumentnavigasjon :global(.aksel-accordion__content) {
   border: 1px solid #6a6a6a;
   border-radius: 4px;
   border-top-left-radius: 0;
@@ -43,7 +43,7 @@
   padding-right: 0;
 }
 
-.dokumentnavigasjon :global(.navds-accordion__header) {
+.dokumentnavigasjon :global(.aksel-accordion__header) {
   border: 1px solid #6a6a6a;
   border-bottom: none;
   border-radius: 4px;
@@ -51,12 +51,12 @@
   border-bottom-right-radius: 0;
 }
 
-.dokumentnavigasjon :global(.navds-accordion__header[aria-expanded='false']) {
+.dokumentnavigasjon :global(.aksel-accordion__header[aria-expanded='false']) {
   box-shadow: none;
   border-bottom: 1px solid #6a6a6a;
   border-radius: 4px;
 }
 
-.dokumentnavigasjon :global(.navds-accordion__header[aria-expanded='true']) {
+.dokumentnavigasjon :global(.aksel-accordion__header[aria-expanded='true']) {
   box-shadow: none;
 }

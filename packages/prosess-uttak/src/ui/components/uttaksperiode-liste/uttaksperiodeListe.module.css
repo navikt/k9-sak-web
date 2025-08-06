@@ -9,11 +9,11 @@
   margin: 1rem 0;
 }
 
-.alertRow :global(.navds-alert__wrapper) {
+.alertRow :global(.aksel-alert__wrapper) {
   max-width: 100% !important;
 }
 
-.alertRow:global(.navds-alert) {
+.alertRow:global(.aksel-alert) {
   padding: 0.5rem 1rem !important;
 }
 

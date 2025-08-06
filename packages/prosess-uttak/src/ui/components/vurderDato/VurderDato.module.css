@@ -8,12 +8,12 @@
   margin-bottom: 1rem;
 }
 
-.alertAccordion :global(.navds-accordion__header) {
+.alertAccordion :global(.aksel-accordion__header) {
   --a-spacing-3: 0;
 
   box-shadow: none !important;
 }
 
-.alertAccordion :global(.navds-accordion__content) {
+.alertAccordion :global(.aksel-accordion__content) {
   --a-spacing-5: 0;
 }

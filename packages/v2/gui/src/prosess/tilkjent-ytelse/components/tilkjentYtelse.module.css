@@ -76,7 +76,7 @@
   width: 500px;
 }
 
-:global(.navds-tag).tilkjentYtelseTag {
+:global(.aksel-tag).tilkjentYtelseTag {
   border-radius: 0.25rem !important;
   border: 1px solid var(--border-default, rgb(2 20 49 / 49%)) !important;
   background: var(--surface-neutral-subtle, rgb(18 43 68 / 8%)) !important;

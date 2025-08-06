@@ -57,7 +57,7 @@
   margin-left: 0.75rem;
 }
 
-.relatertFagsakName:global(.navds-body-short) {
+.relatertFagsakName:global(.aksel-body-short) {
   color: var(--a-blue-500);
   font-weight: 400;
   line-height: 1.25rem;

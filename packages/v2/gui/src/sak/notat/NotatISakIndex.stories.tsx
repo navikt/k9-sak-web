@@ -144,6 +144,6 @@ VisNotatISakPanel.parameters = {
     ],
   },
   screenshot: {
-    mask: '.navds-chat__top-text',
+    mask: '.aksel-chat__top-text',
   },
 };
