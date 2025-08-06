@@ -30,9 +30,9 @@
     "axios": "1.11.0",
     "dayjs": "^1.11.13",
     "object-hash": "^3.0.0",
-    "react": "19.1.0",
+    "react": "19.1.1",
     "react-hook-form": "7.58.1",
-    "react-router": "7.7.0",
+    "react-router": "7.7.1",
     "yup": "^1.6.1"
   }
 }
