@@ -32,6 +32,7 @@ const scrollToVurderDatoContainer = () => {
       observer.disconnect();
     };
   }
+  return undefined;
 };
 const VurderDato = ({ avbryt, initialValues, readOnly, api, behandling, oppdaterBehandling }: Props) => {
   useEffect(() => {
