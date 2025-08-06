@@ -15,6 +15,11 @@ type Story = StoryObj<typeof UttakContainer>;
 export const Uttak: Story = {
   args: {
     containerData: {
+      behandling: {
+        versjon: 1,
+        uuid: '123456',
+        status: { kode: 'OPPRETTET', kodeverk: 'Behandlingsstatus' },
+      },
       aktivBehandlingUuid: '123456',
       uttaksperioder: {
         '2021-03-01/2021-03-08': {
@@ -213,6 +218,11 @@ export const Uttak: Story = {
 export const UttakMedInntektsgradering: Story = {
   args: {
     containerData: {
+      behandling: {
+        versjon: 1,
+        uuid: '123456',
+        status: { kode: 'OPPRETTET', kodeverk: 'Behandlingsstatus' },
+      },
       aktivBehandlingUuid: '123456',
       uttaksperioder: {
         '2023-01-02/2023-01-31': {

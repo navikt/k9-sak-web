@@ -1,6 +1,5 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeHistorikkBackend.js';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
@@ -201,7 +200,6 @@ const meta = {
   decorators: [
     withMaxWidth(600),
     withKodeverkContext(),
-    withFeatureToggles({ HISTORIKK_V2_VIS: true }),
     withFakeHistorikkBackend(),
     withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
   ],
@@ -216,14 +214,13 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-export const HistorikkinnslagV1: Story = {
+export const HistorikkinnslagV2: Story = {
   args: {
     saksnummer: '12345',
     behandlingId: 1,
     behandlingVersjon: 2,
     kjønn: kjønn.MANN,
   },
-  decorators: [withFeatureToggles({ HISTORIKK_V2_VIS: false })],
   play: async ({ canvas }) => {
     const boble1El = (await canvas.findByText(/23.01.2025 - 14:47/)).parentElement?.parentElement;
     await expect(boble1El).toHaveTextContent('Vedtak fattet');
@@ -265,16 +262,9 @@ export const HistorikkinnslagV1: Story = {
     await expect(boble6El).toHaveTextContent(
       'Oppgave til INTERESSANT INTUITIV KATT DIAMETER om å sende inntektsmelding for skjæringstidspunkt 2024-10-01',
     );
-  },
-};
-
-export const HistorikkinnslagV2: Story = {
-  args: HistorikkinnslagV1.args,
-  play: async params => {
-    await HistorikkinnslagV1.play?.(params);
     await delay(1_400); // Vent til samanlikningssjekk har køyrt
     // Sjekk at ingenting har feila slik at visning har bytta til v1
-    const nyVisningCheck = await params.canvas.findByTestId('NyVisningSwitch');
+    const nyVisningCheck = await canvas.findByTestId('NyVisningSwitch');
     await expect(nyVisningCheck).toBeChecked();
   },
 };

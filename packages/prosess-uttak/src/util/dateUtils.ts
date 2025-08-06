@@ -4,8 +4,6 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 
-import { OverstyringUttak } from '../types';
-
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 
 dayjs.extend(utc);
@@ -29,23 +27,4 @@ export const finnTidligsteStartDatoFraPerioderTilVurdering = (perioderTilVurderi
 export const finnSisteSluttDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
   const sluttDatoer = perioderTilVurdering.map(periodeString => dayjs(periodeString.split('/')[1]));
   return new Date(Math.max(...sluttDatoer.map(date => date.valueOf())));
-};
-
-export const erOverstyringInnenforPerioderTilVurdering = (
-  overstyring: OverstyringUttak,
-  perioderTilVurdering: string[],
-): boolean => {
-  const overstyringStartDato = dayjs(overstyring.periode.fom);
-  const overstyringSluttDato = dayjs(overstyring.periode.tom);
-
-  return perioderTilVurdering.some(periodeString => {
-    const [periodeStartStr, periodeSluttStr] = periodeString.split('/');
-    const periodeStartDato = dayjs(periodeStartStr);
-    const periodeSluttDato = dayjs(periodeSluttStr);
-
-    return (
-      (overstyringStartDato.isBefore(periodeSluttDato) || overstyringStartDato.isSame(periodeSluttDato, 'day')) &&
-      (overstyringSluttDato.isAfter(periodeStartDato) || overstyringSluttDato.isSame(periodeStartDato, 'day'))
-    );
-  });
 };

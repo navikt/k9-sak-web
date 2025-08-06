@@ -18,6 +18,7 @@ import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/M
 import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/MenyNyBehandlingIndex.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
@@ -33,7 +34,6 @@ import {
 } from '@k9-sak-web/types';
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import moment from 'moment';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
@@ -57,7 +57,11 @@ const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
 ];
 
 const findNewBehandlingId = (alleBehandlinger: BehandlingAppKontekst[]): number => {
-  alleBehandlinger.sort((b1, b2) => moment(b2.opprettet).diff(moment(b1.opprettet)));
+  alleBehandlinger.sort((b1, b2) =>
+    initializeDate(b2.opprettet, undefined, undefined, true).diff(
+      initializeDate(b1.opprettet, undefined, undefined, true),
+    ),
+  );
   return alleBehandlinger[0].id;
 };
 
@@ -163,14 +167,17 @@ export const BehandlingMenuIndex = ({
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
 
-  const lagNyBehandling = useCallback(async (bTypeKode: string, params: any) => {
-    let lagNy = lagNyBehandlingUngSak;
-    if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
-      lagNy = lagNyBehandlingTilbake;
-    }
-    await lagNy(params);
-    oppfriskBehandlinger();
-  }, []);
+  const lagNyBehandling = useCallback(
+    async (bTypeKode: string, params: any) => {
+      let lagNy = lagNyBehandlingUngSak;
+      if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
+        lagNy = lagNyBehandlingTilbake;
+      }
+      await lagNy(params);
+      oppfriskBehandlinger();
+    },
+    [lagNyBehandlingTilbake, lagNyBehandlingUngSak, oppfriskBehandlinger],
+  );
 
   const uuidForSistLukkede = useMemo(
     () => getUuidForSisteLukkedeForsteEllerRevurd(alleBehandlinger),
