@@ -1,5 +1,6 @@
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import {
+  isKlagevurderingOmgjørType,
   KlagevurderingOmgjør,
   type KlagevurderingOmgjørType,
 } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
@@ -7,7 +8,7 @@ import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Label } from '@navikt/ds-react';
 
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
   ArbeidsforholdOverstyringDtoHandling,
   BehandlingDtoStatus,
@@ -139,11 +140,10 @@ const getTextForKlageHelper = (
       break;
     case Klagevurdering.MEDHOLD_I_KLAGE:
       if (
-        klageVurderingResultat.klageVurderingOmgjoer &&
+        isKlagevurderingOmgjørType(klageVurderingResultat.klageVurderingOmgjoer) &&
         klageVurderingResultat.klageVurderingOmgjoer !== KlagevurderingOmgjør.UDEFINERT
       ) {
-        aksjonspunktText =
-          omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer as keyof typeof KlagevurderingOmgjør];
+        aksjonspunktText = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
         break;
       }
       aksjonspunktText = 'Vedtaket er omgjort';
