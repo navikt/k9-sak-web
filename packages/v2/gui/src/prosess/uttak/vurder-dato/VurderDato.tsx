@@ -2,6 +2,8 @@ import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
 import { useEffect } from 'react';
 import styles from './VurderDato.module.css';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
+import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 
 interface Props {
   avbryt?: () => void;
@@ -10,6 +12,9 @@ interface Props {
     begrunnelse: string;
   };
   readOnly: boolean;
+  api: BehandlingUttakBackendClient;
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
+  oppdaterBehandling: () => void;
 }
 
 // eslint-disable-next-line consistent-return
@@ -17,7 +22,7 @@ const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');
   if (vurderDatoContainer) {
     const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
+      if (entries[0]?.isIntersecting) {
         vurderDatoContainer.scrollIntoView({ behavior: 'smooth' });
         observer.disconnect();
       }
@@ -28,7 +33,7 @@ const scrollToVurderDatoContainer = () => {
     };
   }
 };
-const VurderDato = ({ avbryt, initialValues, readOnly }: Props) => {
+const VurderDato = ({ avbryt, initialValues, readOnly, api, behandling, oppdaterBehandling }: Props) => {
   useEffect(() => {
     // avbryt er kun definert når vi skal redigere et løst aksjonspunkt
     if (typeof avbryt === 'function') {
@@ -36,7 +41,7 @@ const VurderDato = ({ avbryt, initialValues, readOnly }: Props) => {
     }
   }, []);
   return (
-    <div className={styles.vurderDatoContainer}>
+    <div className={styles['vurderDatoContainer']}>
       <Alert variant="warning" size="small" className="mt-4">
         <Label size="small">Vurder hvilken dato endringer i uttak skal gjelde fra</Label>
         <BodyLong size="small">
@@ -45,8 +50,8 @@ const VurderDato = ({ avbryt, initialValues, readOnly }: Props) => {
           praksis.
         </BodyLong>
       </Alert>
-      <Alert variant="info" className={styles.info}>
-        <Accordion className={styles.alertAccordion} indent={false}>
+      <Alert variant="info" className={styles['info']}>
+        <Accordion className={styles['alertAccordion']} indent={false}>
           <Accordion.Item className="!shadow-none">
             <Accordion.Header>
               <Label size="small">Hva innebærer endringene i uttak?</Label>
@@ -74,7 +79,14 @@ const VurderDato = ({ avbryt, initialValues, readOnly }: Props) => {
           </Accordion.Item>
         </Accordion>
       </Alert>
-      <VurderDatoAksjonspunkt avbryt={avbryt} initialValues={initialValues} readOnly={readOnly} />
+      <VurderDatoAksjonspunkt
+        avbryt={avbryt}
+        initialValues={initialValues}
+        readOnly={readOnly}
+        api={api}
+        behandling={behandling}
+        oppdaterBehandling={oppdaterBehandling}
+      />
     </div>
   );
 };

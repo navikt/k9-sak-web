@@ -8,21 +8,12 @@ interface Props {
   behandling: BehandlingDto;
   aksjonspunkt: AksjonspunktDto;
   readOnly: boolean;
+  oppdaterBehandling: () => void;
 }
 
-const VurderOverlappendeSakIndex = ({ behandling, aksjonspunkt, readOnly }: Props) => {
+const VurderOverlappendeSakIndex = ({ behandling, aksjonspunkt, readOnly, oppdaterBehandling }: Props) => {
   const k9SakClient = useContext(K9SakClientContext);
   const behandlingUttakBakcendClient = new BehandlingUttakBackendClient(k9SakClient);
-
-  /*
-   * Midlertidig fiks for å oppdatere behandling etter å ha fullført aksjonspunkt. Ifm med
-   * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
-   * tilpasses til å kunne trigge oppdatering av behandling "on-demand"
-   */
-  const oppdaterBehandling = () => {
-    // FIXME temp fiks for å håndtere oppdatering av behandling
-    window.location.reload();
-  };
 
   return (
     <VurderOverlappendeSak
