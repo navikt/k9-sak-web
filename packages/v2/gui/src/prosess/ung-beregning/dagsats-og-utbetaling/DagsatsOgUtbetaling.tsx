@@ -82,9 +82,9 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
   const grunnrettData = satser[satser.length - 1]?.satsperioder[0];
   return (
     <div className={styles.dagsatsSection}>
-      <VStack gap="4">
+      <VStack gap="space-16">
         <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
-        <VStack gap="8">
+        <VStack gap="space-32">
           {grunnrettData && (
             <div>
               <Heading size="xsmall" level="2">

@@ -17,7 +17,7 @@ export const BeregningsDetaljerUtregning = ({
   satsperioder,
 }: BeregningsDetaljerUtregningProps) => (
   <>
-    <VStack gap="4">
+    <VStack gap="space-16">
       {satsperioder?.map(({ dagsats, antallDager, fom, tom, dagsatsBarnetillegg, antallBarn }) => (
         <React.Fragment key={`${fom}-${tom}`}>
           <HStack justify="space-between">

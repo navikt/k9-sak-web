@@ -45,8 +45,8 @@ const OpptjeningPanel = ({
   const formMethods = useFormContext<VilkårFieldFormValues>();
   return (
     <>
-      <VStack gap="4">
-        <HStack gap="4">
+      <VStack gap="space-16">
+        <HStack gap="space-16">
           {aksjonspunktErLøst ? (
             originalErVilkarOk ? (
               <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />

@@ -41,14 +41,14 @@ export const AksjonspunktArbeidOgInntekt = ({
         borderRadius="0 medium medium 0"
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
-        <VStack gap="8">
+        <VStack gap="space-32">
           <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
-            <HStack gap="2" wrap={false}>
+            <HStack gap="space-8" wrap={false}>
               <PersonFillIcon title="Deltaker" fontSize="1.5rem" className={styles.personIcon} />
 
-              <VStack gap="2">
+              <VStack gap="space-8">
                 <Heading size="xsmall" as="h3">
                   Beskrivelse fra deltaker for avvik i perioden{' '}
                   {periode?.fom && periode.tom && (
@@ -61,7 +61,7 @@ export const AksjonspunktArbeidOgInntekt = ({
               </VStack>
             </HStack>
           </Box>
-          <VStack gap="6">
+          <VStack gap="space-24">
             <Box maxWidth="70ch">
               <TextAreaField
                 name={`perioder.${fieldIndex}.begrunnelse`}
@@ -71,7 +71,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                 readOnly={isReadOnly}
               />
             </Box>
-            <VStack gap="2">
+            <VStack gap="space-8">
               <RadioGroupPanel
                 name={`perioder.${fieldIndex}.valg`}
                 label="Hvilken inntekt skal benyttes?"
@@ -94,7 +94,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                 ]}
               />
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
-                <VStack gap="4">
+                <VStack gap="space-16">
                   <InputField
                     name={`perioder.${fieldIndex}.fastsattInntekt`}
                     label="Oppgi samlet arbeidsinntekt og ytelse"
@@ -109,7 +109,7 @@ export const AksjonspunktArbeidOgInntekt = ({
               )}
             </VStack>
             {!isReadOnly && (
-              <HStack gap="2">
+              <HStack gap="space-8">
                 <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
                   Bekreft og fortsett
                 </Button>

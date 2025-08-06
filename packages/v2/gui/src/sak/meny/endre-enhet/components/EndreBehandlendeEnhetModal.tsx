@@ -59,7 +59,7 @@ export const EndreBehandlendeEnhetModal = ({
     <Modal className={styles.modal} open aria-label="Endre behandlende enhet" onClose={lukkModal}>
       <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
         <Modal.Header closeButton={false}>
-          <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
             <div className="relative">
               <CheckmarkCircleFillIcon
                 fontSize={30}
@@ -76,13 +76,13 @@ export const EndreBehandlendeEnhetModal = ({
           </HGrid>
         </Modal.Header>
         <Modal.Body>
-          <HGrid gap="1" columns={{ xs: '1fr 5fr 6fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 5fr 6fr' }}>
             <div />
             <div>
               <SelectField name="nyEnhet" label="Ny enhet" validate={[required]} selectValues={selectOptions()} />
             </div>
           </HGrid>
-          <HGrid gap="1" columns={{ xs: '1fr 8fr 3fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
             <Box marginBlock="2 0">
               <TextAreaField
@@ -93,7 +93,7 @@ export const EndreBehandlendeEnhetModal = ({
               />
             </Box>
           </HGrid>
-          <HGrid gap="1" columns={{ xs: '1fr 8fr 3fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
             <Box marginBlock="4 0">
               <div className={styles.floatButtons}>

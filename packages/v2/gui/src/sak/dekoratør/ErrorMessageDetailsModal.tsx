@@ -46,7 +46,7 @@ const ErrorMessageDetailsModal = ({ showModal, closeModalFn, errorDetails }: Own
             </React.Fragment>
           ))}
       </div>
-      <HGrid gap="1" columns={{ xs: '12fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '12fr' }}>
         <Button variant="secondary" className={styles.cancelButton} size="small" type="reset" onClick={closeModalFn}>
           Lukk
         </Button>

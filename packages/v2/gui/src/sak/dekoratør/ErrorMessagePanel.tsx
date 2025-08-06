@@ -47,7 +47,7 @@ export const ErrorMessagePanel = (props: OwnProps) => {
   return (
     <div className={styles.container}>
       {errorMessagesWithId.map((message, index) => (
-        <HStack gap="3" key={message.id}>
+        <HStack gap="space-12" key={message.id}>
           <Detail className={styles.wordWrap}>{`${message.message} `}</Detail>
           {message.additionalInfo && (
             <Detail>

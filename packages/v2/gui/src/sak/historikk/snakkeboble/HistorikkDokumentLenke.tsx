@@ -16,7 +16,7 @@ export const HistorikkDokumentLenke = ({
   const isUng = isUngWeb();
   if (utgått) {
     return (
-      <HStack align="center" gap="1">
+      <HStack align="center" gap="space-4">
         <FileIcon title={tag} width={24} height={24} />
         <BodyShort size="small">{tag} (utgått)</BodyShort>
       </HStack>
@@ -26,7 +26,7 @@ export const HistorikkDokumentLenke = ({
     <HStack
       as="a"
       align="center"
-      gap="1"
+      gap="space-4"
       href={`${isUng ? DOCUMENT_SERVER_URL_UNG : DOCUMENT_SERVER_URL_K9}?saksnummer=${saksnummer}&journalpostId=${journalpostId}&dokumentId=${dokumentId}`}
       target="_blank"
       rel="noopener noreferrer"

@@ -166,7 +166,7 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
     const items = formatItems(newPerioder);
     return (
       <div className={styles.timelineContainer}>
-        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
           <div className={styles.sokerContainer}>
             <Image
               className={styles.iconMedsoker}

@@ -83,7 +83,7 @@ const renderRadioGroupField = renderNavField(
         ))}
       {!isVertical && (
         <>
-          <HStack gap="4">
+          <HStack gap="space-16">
             {radios.map(radio => (
               <Radio key={`${radio.value}`} value={parse(radio.value)} disabled={radio.disabled || readOnly}>
                 {radio.label}

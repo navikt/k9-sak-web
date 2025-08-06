@@ -1,26 +1,26 @@
-import { type JSX } from 'react';
 import {
   UttaksperiodeInfoUtfall,
-  type UttaksperiodeInfoUtfall as UttaksperiodeInfoUtfallType,
   UttaksperiodeInfoÅrsaker,
-  type UttaksperiodeInfoÅrsaker as UttaksperiodeInfoÅrsakerType,
-  type Utenlandsopphold,
   type ArbeidsgiverOversiktDto,
+  type Utenlandsopphold,
+  type UttaksperiodeInfoUtfall as UttaksperiodeInfoUtfallType,
+  type UttaksperiodeInfoÅrsaker as UttaksperiodeInfoÅrsakerType,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
-import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
+import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
-import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
-import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
-import type { UttaksperiodeMedInntektsgradering } from '../types/UttaksperiodeMedInntektsgradering';
+import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
+import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
+import type { UttaksperiodeMedInntektsgradering } from '../types/UttaksperiodeMedInntektsgradering';
+import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
+import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
+import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
 import styles from './uttakDetaljer.module.css';
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
@@ -134,7 +134,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
           Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
         </Alert>
       )}
-      <HGrid gap="8" columns={3} align="start" className={styles['uttakDetaljer']}>
+      <HGrid gap="space-32" columns={3} align="start" className={styles['uttakDetaljer']}>
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}

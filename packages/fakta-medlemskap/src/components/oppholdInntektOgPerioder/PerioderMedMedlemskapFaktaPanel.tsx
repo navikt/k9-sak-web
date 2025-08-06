@@ -86,7 +86,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
       merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]}
       useIntl={false}
     >
-      <VStack gap="4">
+      <VStack gap="space-16">
         <Table>
           <Table.Header>
             <Table.Row>

@@ -20,7 +20,7 @@ const Inntekt = ({
   sumValue?: string;
 }) => {
   return (
-    <VStack gap="3">
+    <VStack gap="space-12">
       <Heading size="xsmall" level="3">
         {title}
       </Heading>
@@ -72,7 +72,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
   const location = useLocation();
   const { rapporterteInntekter } = inntektKontrollPeriode || {};
   return (
-    <VStack gap="8">
+    <VStack gap="space-32">
       <Bleed marginBlock="0 2" asChild>
         <HStack justify="space-between" align="baseline">
           <Heading size="small" level="2">
@@ -91,7 +91,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
           </Button>
         </HStack>
       </Bleed>
-      <HGrid gap="9" columns={2}>
+      <HGrid gap="space-36" columns={2}>
         <Inntekt
           title="Inntekt rapportert av deltaker"
           details={[

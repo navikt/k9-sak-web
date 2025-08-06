@@ -3,12 +3,12 @@ import { type Location } from 'history';
 import { BodyLong, Chat, VStack } from '@navikt/ds-react';
 import type { HistorikkinnslagV2 } from '../tilbake/historikkinnslagTsTypeV2.js';
 
-import { HistorikkDokumentLenke } from './HistorikkDokumentLenke';
-import { formatDate, getStyle, parseBoldText, utledPlassering } from './snakkebobleUtils';
-import { Avatar } from './Avatar';
-import { Skjermlenke } from './Skjermlenke';
 import type { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types/GetKodeverkNavnFraKodeFnType.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { Avatar } from './Avatar';
+import { HistorikkDokumentLenke } from './HistorikkDokumentLenke';
+import { Skjermlenke } from './Skjermlenke';
+import { formatDate, getStyle, parseBoldText, utledPlassering } from './snakkebobleUtils';
 import { Tittel } from './Tittel.js';
 
 interface Props {
@@ -57,7 +57,7 @@ export const Snakkeboble = ({
         ))}
 
         {dokumenter && (
-          <VStack gap="1">
+          <VStack gap="space-4">
             {dokumenter.map(dokumentLenke => (
               <HistorikkDokumentLenke
                 key={`${dokumentLenke.dokumentId}-${dokumentLenke.journalpostId}`}

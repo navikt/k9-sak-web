@@ -79,7 +79,7 @@ const VilkarresultatMedOverstyringHeader = ({
   return (
     <>
       <FlexContainer>
-        <HStack gap="4">
+        <HStack gap="space-16">
           {!erOverstyrt && erVilkarOk !== undefined && (
             <>
               {erVilkarOk ? (

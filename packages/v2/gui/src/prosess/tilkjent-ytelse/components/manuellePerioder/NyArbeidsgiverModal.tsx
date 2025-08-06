@@ -25,7 +25,7 @@ const NyArbeidsgiverModal = ({ showModal = false, closeEvent, cancelEvent }: Own
   return (
     <Modal className={styles['modal']} open={showModal} aria-label="Ny arbeidsgiver" onClose={cancelEvent}>
       <Modal.Body>
-        <VStack gap="4">
+        <VStack gap="space-16">
           <InputField label="Navn" name="nyArbeidsgiverForm.navn" validate={[required]} format={value => value} />
           <InputField
             label="Organisasjonsnummer"

@@ -49,7 +49,7 @@ export const VurderNyoppstartet = ({
   };
 
   return (
-    <VStack gap="4">
+    <VStack gap="space-16">
       <Heading level="1" size="medium">
         Nyoppstartet
       </Heading>
@@ -59,7 +59,7 @@ export const VurderNyoppstartet = ({
         </Alert>
       )}
       <Form<FormValues> formMethods={formMethods} onSubmit={onSubmit}>
-        <VStack gap="4">
+        <VStack gap="space-16">
           <RadioGroupPanel
             name="erNyoppstartet"
             label="Er søker nyoppstartet?"

@@ -271,7 +271,7 @@ export const SoknadsfristVilkarForm = ({
                 </Label>
               </div>
               <div className="mt-4" />
-              <HStack gap="4">
+              <HStack gap="space-16">
                 <OverstyrBekreftKnappPanel
                   disabled={!formMethods.formState.isValid}
                   submitting={formMethods.formState.isSubmitting}
@@ -292,7 +292,7 @@ export const SoknadsfristVilkarForm = ({
             </>
           )}
           {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
-            <HStack gap="4">
+            <HStack gap="space-16">
               <Button
                 variant="primary"
                 size="small"

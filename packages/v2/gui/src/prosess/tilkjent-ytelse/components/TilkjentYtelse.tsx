@@ -169,7 +169,7 @@ export const TilkjentYtelse = ({
   return (
     <div className={styles['timelineContainer']}>
       <div className="mt-8">
-        <VStack gap="2">
+        <VStack gap="space-8">
           <Timeline startDate={startDato.toDate()} endDate={endDato.add(1, 'days').toDate()}>
             <Timeline.Row label={finnRolle(personopplysninger)}>
               {timelineData.map(periode => (

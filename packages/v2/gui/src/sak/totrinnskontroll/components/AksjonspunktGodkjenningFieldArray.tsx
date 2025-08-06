@@ -164,10 +164,10 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 {visArsaker && (
                   <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                     {!visKunBegrunnelse && (
-                      <VStack gap="2">
+                      <VStack gap="space-8">
                         <Detail className="blokk-xs">Årsak</Detail>
                         <Fieldset legend="" hideLegend>
-                          <HStack gap="20">
+                          <HStack gap="space-80">
                             <div>
                               <CheckboxField
                                 name={`aksjonspunktGodkjenning.${index}.feilFakta`}

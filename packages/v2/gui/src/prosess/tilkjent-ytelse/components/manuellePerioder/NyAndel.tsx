@@ -1,7 +1,7 @@
 import { inntektskategorier, type Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { PlusCircleIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Fieldset, HGrid, HStack, VStack } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
@@ -105,12 +105,12 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
   return (
     <>
       <Fieldset legend="Ny andel" hideLegend>
-        <VStack gap="5">
+        <VStack gap="space-20">
           {fields.map((field, index) => {
             const erSN = erSelvstendigNæringsdrivende(field.inntektskategori);
             const erFL = erFrilans(field.inntektskategori);
             return (
-              <HStack gap="2" key={field.fieldId}>
+              <HStack gap="space-8" key={field.fieldId}>
                 <SelectField
                   label="Inntektskategori"
                   name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
@@ -199,7 +199,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
           })}
         </VStack>
 
-        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
           {!readOnly && (
             <Button
               size="xsmall"

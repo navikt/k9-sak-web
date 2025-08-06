@@ -102,13 +102,13 @@ export const UngMessages = (props: UngMessagesProps) => {
 
   return (
     <Form formMethods={formMethods}>
-      <VStack gap="4">
+      <VStack gap="space-16">
         {brevmaler && <MalSelect brevmaler={brevmaler} />}
         {mottakere && <MottakerSelect mottakere={mottakere} valgtMal={valgtMal} disabled={false} />}
         {showFritekstInput && (
           <FritekstInput malStøtterTittel={!!valgtMal?.støtterTittelOgFritekst} språkkode={språkkode} />
         )}
-        <HStack gap="3">
+        <HStack gap="space-12">
           <Button
             type="submit"
             size="small"

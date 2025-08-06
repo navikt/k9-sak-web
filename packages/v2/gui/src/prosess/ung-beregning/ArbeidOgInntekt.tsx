@@ -153,7 +153,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                   defaultOpen={harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>
-                    <HStack gap="2" align="center">
+                    <HStack gap="space-8" align="center">
                       {harAvvik ? (
                         <ExclamationmarkTriangleFillIcon fontSize="1.5rem" className={styles.exclamationmarkIcon} />
                       ) : (

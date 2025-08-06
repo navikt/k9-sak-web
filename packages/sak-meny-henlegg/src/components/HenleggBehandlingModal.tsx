@@ -2,9 +2,9 @@ import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { Button, Detail, Fieldset, HGrid, Modal } from '@navikt/ds-react';
@@ -169,7 +169,7 @@ export const HenleggBehandlingModalImpl = ({
         <form onSubmit={handleSubmit}>
           <div>
             <Fieldset legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })} hideLegend>
-              <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+              <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
                 <div>
                   <SelectField
                     name="årsakKode"
@@ -184,7 +184,7 @@ export const HenleggBehandlingModalImpl = ({
                   />
                 </div>
               </HGrid>
-              <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+              <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
                 <div>
                   <TextAreaField
                     name="begrunnelse"
@@ -195,7 +195,7 @@ export const HenleggBehandlingModalImpl = ({
                 </div>
               </HGrid>
               {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
-                <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+                <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
                   <div className={styles.fritekstTilBrevTextArea}>
                     <TextAreaField
                       name="fritekst"
@@ -207,7 +207,7 @@ export const HenleggBehandlingModalImpl = ({
                 </HGrid>
               )}
               <VerticalSpacer sixteenPx />
-              <HGrid gap="1" columns={{ xs: '7fr 4fr 1fr' }}>
+              <HGrid gap="space-4" columns={{ xs: '7fr 4fr 1fr' }}>
                 <div>
                   <Button
                     variant="primary"

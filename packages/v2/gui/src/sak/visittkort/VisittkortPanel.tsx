@@ -114,7 +114,7 @@ const VisittkortPanel = ({
 
   return (
     <div className={styles.container}>
-      <HStack gap="4">
+      <HStack gap="space-16">
         <HStack>
           <PersonCard
             name={søker.navn}
@@ -148,7 +148,7 @@ const VisittkortPanel = ({
 
         <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
         <div className={styles.pushRight}>
-          <HStack gap="2">
+          <HStack gap="space-8">
             {barnSoktFor?.map(barn => (
               <div className={styles.flexContainer} key={barn.aktoerId}>
                 <PersonCard
@@ -163,7 +163,7 @@ const VisittkortPanel = ({
             ))}
           </HStack>
           <div>
-            <HStack gap="2">
+            <HStack gap="space-8">
               {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
               {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
               {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}

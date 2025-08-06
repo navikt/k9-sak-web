@@ -17,7 +17,7 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
 
   return (
     <VilkårComponent>
-      <HStack gap="4">
+      <HStack gap="space-16">
         {vilkårErOppfylt ? (
           <CheckmarkCircleFillIcon
             title="Vilkåret er oppfylt"
@@ -31,8 +31,8 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
             style={{ color: 'var(--a-surface-danger)' }}
           />
         )}
-        <VStack gap="2">
-          <HStack gap="4" align="baseline">
+        <VStack gap="space-8">
+          <HStack gap="space-16" align="baseline">
             <Heading size="small" level="2">
               Alder
             </Heading>

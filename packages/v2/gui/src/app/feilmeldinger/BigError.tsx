@@ -1,5 +1,5 @@
-import { Heading, HStack, VStack } from '@navikt/ds-react';
 import { XMarkOctagonIcon } from '@navikt/aksel-icons';
+import { Heading, HStack, VStack } from '@navikt/ds-react';
 
 export interface BigErrorProps {
   readonly title?: string;
@@ -18,7 +18,7 @@ export const DefaultErrorMsg = () => (
 
 export const BigError = ({ title = 'Uventet feil', children = <DefaultErrorMsg /> }: BigErrorProps) => {
   return (
-    <HStack justify="center" align="center" gap="4" marginBlock="24">
+    <HStack justify="center" align="center" gap="space-16" marginBlock="24">
       <XMarkOctagonIcon fontSize="4rem" style={{ color: 'var(--a-text-danger)' }} />
       <VStack>
         {title && <Heading size="large">{title}</Heading>}

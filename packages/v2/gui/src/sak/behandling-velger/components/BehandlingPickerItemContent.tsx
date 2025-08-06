@@ -67,14 +67,14 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
             {erUnntaksløype ? getUnntaksløypeText() : ''}
           </Heading>
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             <CalendarIcon title="Kalender" fontSize="1.5rem" />
 
             {søknadsperioder?.length > 0 && (
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
           </HStack>
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">
               Resultat

@@ -91,7 +91,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
         )}
         <div className={styles.contentContainer}>
           <FlexContainer>
-            <HStack gap="4">
+            <HStack gap="space-16">
               {erVilkarOk !== undefined && (
                 <>
                   {erVilkarOk ? (

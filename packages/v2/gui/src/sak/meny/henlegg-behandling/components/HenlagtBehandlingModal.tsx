@@ -22,7 +22,7 @@ const HenlagtBehandlingModal = ({ showModal, closeEvent }: OwnProps) => (
     width="small"
   >
     <Modal.Body>
-      <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '1fr 9fr 2fr' }}>
         <div className="relative">
           <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
           <div className={styles.divider} />

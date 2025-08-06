@@ -56,7 +56,7 @@ const PeriodeRad = ({
             return (
               <Table.Row key={item.fieldId} id={item.fieldId}>
                 <Table.DataCell>
-                  <HStack gap="2">
+                  <HStack gap="space-8">
                     <Datepicker name={`perioder.${index}.fom`} label="" isReadOnly />
                     <Datepicker name={`perioder.${index}.tom`} label="" isReadOnly />
                   </HStack>

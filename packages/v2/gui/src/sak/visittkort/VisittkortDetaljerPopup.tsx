@@ -36,8 +36,8 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
 
   return (
     <div className={styles.container}>
-      <VStack gap="4">
-        <HStack gap="4">
+      <VStack gap="space-16">
+        <HStack gap="space-16">
           {personopplysninger.region && (
             <Tooltip content="Statsborgerskap" placement="bottom">
               <Tag variant="info" className={styles.etikett} size="small">
@@ -70,8 +70,8 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
             </Tag>
           </Tooltip>
         </HStack>
-        <VStack gap="2">
-          <HStack gap="2">
+        <VStack gap="space-8">
+          <HStack gap="space-8">
             <div className={styles.labels}>
               <BodyShort size="small">Bostedsadresse</BodyShort>
             </div>
@@ -79,7 +79,7 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
               {adresser[adresseType.BOSTEDSADRESSE] || '-'}
             </Label>
           </HStack>
-          <HStack gap="2">
+          <HStack gap="space-8">
             <div className={styles.labels}>
               <BodyShort size="small">Postadresse i Norge</BodyShort>
             </div>
@@ -87,7 +87,7 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
               {adresser[adresseType.POSTADRESSE] || '-'}
             </Label>
           </HStack>
-          <HStack gap="2">
+          <HStack gap="space-8">
             <div className={styles.labels}>
               <BodyShort size="small">Midlertidig adresse</BodyShort>
             </div>
@@ -95,7 +95,7 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
               {midlertidigAdresse || '-'}
             </Label>
           </HStack>
-          <HStack gap="2">
+          <HStack gap="space-8">
             <div className={styles.labels}>
               <BodyShort size="small">Postadresse i utlandet</BodyShort>
             </div>

@@ -80,7 +80,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <Box marginBlock="4">
         <HStack justify="space-between">
-          <VStack gap="4">
+          <VStack gap="space-16">
             <div>
               <Label size="small" as="p">
                 Resultat

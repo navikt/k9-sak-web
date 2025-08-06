@@ -106,7 +106,7 @@ export const TilkommetAktivitetAccordion = ({
   }
 
   return (
-    <VStack gap="6">
+    <VStack gap="space-24">
       <Accordion className={styles.statusOk}>
         {tidligereVurderte.map(tidligereVurdertPeriode => (
           <Accordion.Item
@@ -146,7 +146,7 @@ export const TilkommetAktivitetAccordion = ({
         ))}
       </Accordion>
       {fields.length > 1 && (
-        <VStack gap="4">
+        <VStack gap="space-16">
           <div>
             <TextAreaField
               name={`${formName}.${formFieldIndex}.begrunnelse`}

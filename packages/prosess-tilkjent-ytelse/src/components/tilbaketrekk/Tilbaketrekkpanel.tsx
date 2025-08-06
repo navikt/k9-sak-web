@@ -106,7 +106,7 @@ export const Tilbaketrekkpanel = ({
       </div>
       <VerticalSpacer twentyPx />
       <Form formMethods={formMethods} onSubmit={handleSubmit}>
-        <HGrid gap="1" columns={{ xs: '9fr 3fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '9fr 3fr' }}>
           <RadioGroupPanel
             name={radioFieldName}
             validate={[required]}
@@ -126,7 +126,7 @@ export const Tilbaketrekkpanel = ({
             ]}
           />
         </HGrid>
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <TextAreaField
             name={begrunnelseFieldName}
             label="Vurdering"
@@ -135,7 +135,7 @@ export const Tilbaketrekkpanel = ({
             readOnly={readOnly}
           />
         </HGrid>
-        <HGrid gap="1" columns={{ xs: '2fr 10fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '2fr 10fr' }}>
           <div>
             <VerticalSpacer eightPx />
             <Button

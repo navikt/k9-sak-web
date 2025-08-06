@@ -1,9 +1,15 @@
 import React, { useEffect, useState, type FC } from 'react';
 
-import * as yup from 'yup';
-import { useQuery } from '@tanstack/react-query';
-import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {
+  PeriodeMedOverlappValg,
+  type AksjonspunktDto,
+  type BehandlingDto,
+  type BekreftData,
+  type EgneOverlappendeSakerDto,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   Alert,
   BodyShort,
@@ -18,21 +24,15 @@ import {
   VStack,
 } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import {
-  PeriodeMedOverlappValg,
-  type AksjonspunktDto,
-  type BehandlingDto,
-  type BekreftData,
-  type EgneOverlappendeSakerDto,
-} from '@k9-sak-web/backend/k9sak/generated';
-import type { ObjectSchema } from 'yup';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
-import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
-import styles from './VurderOverlappendeSak.module.css';
-import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { useFieldArray, useForm } from 'react-hook-form';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
+import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
+import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
+import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
+import styles from './VurderOverlappendeSak.module.css';
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
 interface Props {
@@ -197,7 +197,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
     egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.vurdertTidspunkt)?.vurdertTidspunkt || undefined;
 
   return (
-    <VStack gap="4" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
+    <VStack gap="space-16" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
       {!readOnly && (
         <Alert variant={'warning'}>
           <Heading spacing size="xsmall" level="3">
@@ -229,7 +229,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
 
       <Box className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}>
         <Form formMethods={formMethods} onSubmit={submit}>
-          <VStack gap="5">
+          <VStack gap="space-20">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
             {overlappendeIsLoading && <Loader size="large" />}
             {overlappendeSuccess && (
@@ -314,7 +314,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                           Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
                         </Alert>
 
-                        <HStack gap="4">
+                        <HStack gap="space-16">
                           <Button type="submit" size="small" disabled={readOnly} loading={loading}>
                             Bekreft og fortsett
                           </Button>

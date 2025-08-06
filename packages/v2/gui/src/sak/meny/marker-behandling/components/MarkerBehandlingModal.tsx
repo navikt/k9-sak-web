@@ -127,7 +127,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
         {isFetching ? (
           <Loader size="medium" title="Henter merknader..." />
         ) : (
-          <VStack gap="4">
+          <VStack gap="space-16">
             {gjeldendeMerknader.length > 0 && (
               <div>
                 <Heading size="xsmall" level="4" spacing>
@@ -136,7 +136,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                 <List as="ul" size="small">
                   {gjeldendeMerknader.map(merknad => (
                     <List.Item title={merknad.tittel} key={merknad.tittel}>
-                      <HStack gap="12" align="center" justify="space-between">
+                      <HStack gap="space-48" align="center" justify="space-between">
                         <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
                         <Bleed marginBlock="1 0">
                           <Button
@@ -154,8 +154,8 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
               </div>
             )}
             <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
-              <VStack gap="6">
-                <VStack gap="4">
+              <VStack gap="space-24">
+                <VStack gap="space-16">
                   <SelectField
                     name="merknad"
                     label="Velg ny merknad"

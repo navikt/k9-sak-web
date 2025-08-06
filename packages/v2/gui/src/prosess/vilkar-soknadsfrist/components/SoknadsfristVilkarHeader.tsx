@@ -60,7 +60,7 @@ const SoknadsfristVilkarHeader = ({
   return (
     <>
       <>
-        <HStack gap="4" align="center">
+        <HStack gap="space-16" align="center">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
             <>
               {originalErVilkarOk ? (

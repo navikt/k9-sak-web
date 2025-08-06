@@ -1,14 +1,14 @@
-import { useState, type FC } from 'react';
-import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
-import '@k9-sak-web/gui/utils/validation/yupSchemas';
 import type { AksjonspunktDto, BehandlingDto, BekreftData } from '@k9-sak-web/backend/k9sak/generated';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
-import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';
+import '@k9-sak-web/gui/utils/validation/yupSchemas';
+import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
+import { useState, type FC } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
+import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
@@ -99,7 +99,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
         vurderinger for å få saken riktig.
       </ReadMore>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <VStack gap="4">
+        <VStack gap="space-16">
           <Textarea
             size="small"
             label="Begrunn hvorfor du går videre med denne behandlingen."

@@ -33,7 +33,7 @@ const lagOppholdIUtland = (utlandsOpphold: Opphold['utlandsopphold']) =>
   Array.isArray(utlandsOpphold) && utlandsOpphold.length > 0 ? (
     utlandsOpphold.map(u => (
       <div key={`${u.landNavn}${u.fom}${u.tom}`}>
-        <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }}>
           <BodyShort size="small">{capitalizeFirstLetter(formatLandNavn(u.landNavn))}</BodyShort>
           <BodyShort size="small">
             <PeriodLabel showTodayString dateStringFom={u.fom} dateStringTom={u.tom} />
@@ -67,7 +67,7 @@ const OppholdINorgeOgAdresser = ({
   foreldre,
 }: OppholdINorgeOgAdresserProps) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter?.[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
-    <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
       <div>
         <FaktaGruppe withoutBorder titleCode="Opplysninger oppgitt i søknaden" useIntl={false}>
           <Detail>Opphold utenfor Norge</Detail>

@@ -92,7 +92,7 @@ const BehandlingSelected = ({
       <div className={styles.infoContainer}>
         <div>
           {søknadsperioder?.length > 0 && (
-            <HStack gap="2" align={'center'}>
+            <HStack gap="space-8" align={'center'}>
               <CalendarIcon title="Kalender" fontSize="1.5rem" />
               <BodyShort size="small">
                 {getFormattedSøknadserioder(
@@ -102,7 +102,7 @@ const BehandlingSelected = ({
               </BodyShort>
             </HStack>
           )}
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">
               {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}

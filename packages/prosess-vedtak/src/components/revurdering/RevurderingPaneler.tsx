@@ -54,7 +54,7 @@ const RevurderingPaneler = ({
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
   return (
-    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
+    <HGrid gap="space-4" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
       <div>
         {isInnvilget(behandlingresultat.type) && (
           <VedtakInnvilgetRevurderingPanel

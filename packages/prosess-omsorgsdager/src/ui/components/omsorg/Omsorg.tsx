@@ -1,3 +1,4 @@
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Button, HStack, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,7 +12,6 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './omsorg.module.css';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 type FormData = {
   harOmsorgen: string;
@@ -171,7 +171,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
                   size="small"
                   name="harOmsorgen"
                 >
-                  <HStack gap="1">
+                  <HStack gap="space-4">
                     <RadioButtonWithBooleanValue label="Ja" value="true" name="harOmsorgen" />
                     <RadioButtonWithBooleanValue label="Nei" value="false" name="harOmsorgen" />
                   </HStack>

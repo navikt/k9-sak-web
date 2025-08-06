@@ -211,8 +211,8 @@ export const HenleggBehandlingModal = ({
         <Form<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={handleSubmit}>
           <div>
             <Fieldset legend="Henlegg behandling" hideLegend>
-              <VStack gap="4">
-                <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+              <VStack gap="space-16">
+                <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
                   <div>
                     <SelectField
                       name="årsakKode"
@@ -227,7 +227,7 @@ export const HenleggBehandlingModal = ({
                   </div>
                 </HGrid>
                 {showLink && behandlingType === BehandlingTypeK9Klage.KLAGE && (
-                  <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+                  <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
                     <Brevmottakere
                       brevmottakere={brevmottakere}
                       personopplysninger={personopplysninger}
@@ -235,7 +235,7 @@ export const HenleggBehandlingModal = ({
                     />
                   </HGrid>
                 )}
-                <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+                <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
                   <div>
                     <TextAreaField
                       name="begrunnelse"
@@ -246,7 +246,7 @@ export const HenleggBehandlingModal = ({
                   </div>
                 </HGrid>
                 {showHenleggelseFritekst(behandlingType, årsakKode) && (
-                  <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+                  <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
                     <TextAreaField
                       name="fritekst"
                       label="Fritekst til brev"
@@ -255,7 +255,7 @@ export const HenleggBehandlingModal = ({
                     />
                   </HGrid>
                 )}
-                <HGrid gap="1" columns={{ xs: '7fr 4fr 1fr' }}>
+                <HGrid gap="space-4" columns={{ xs: '7fr 4fr 1fr' }}>
                   <div>
                     <Button variant="primary" size="small" className={styles.button} type="submit">
                       Henlegg behandling

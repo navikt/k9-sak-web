@@ -88,8 +88,8 @@ const VilkarresultatMedOverstyringHeader = ({
   };
   return (
     <Box marginBlock={'0 2'}>
-      <VStack gap="2">
-        <HStack gap="4">
+      <VStack gap="space-8">
+        <HStack gap="space-16">
           {!erOverstyrt && erVilkarOk !== undefined && (
             <>
               {erVilkarOk ? (
@@ -108,7 +108,7 @@ const VilkarresultatMedOverstyringHeader = ({
             </Detail>
           )}
         </HStack>
-        <HStack gap="4">
+        <HStack gap="space-16">
           <Box marginBlock={'2 0'}>{vilkårResultatText(erVilkarOk, periode)}</Box>
           {erVilkarOk !== undefined &&
             !isHidden(

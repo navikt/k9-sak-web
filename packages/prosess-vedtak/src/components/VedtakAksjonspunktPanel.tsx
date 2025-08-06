@@ -40,7 +40,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
 }) => {
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   return (
-    <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
       <div>
         <Heading level="2" size="medium" data-testid="vedtakAksjonspunktPanel">
           {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}

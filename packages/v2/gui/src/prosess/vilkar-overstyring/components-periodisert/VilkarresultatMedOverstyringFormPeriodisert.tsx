@@ -1,4 +1,4 @@
-import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
+import type { AksjonspunktDto, InnvilgetMerknad, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
@@ -138,18 +138,18 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
           <Box marginBlock={'4 0'}>
             {!erOverstyrt && erVilkarOk !== undefined && (
               <Box marginBlock={'1 0'}>
-                <HStack gap="4" align="center">
+                <HStack gap="space-16" align="center">
                   <EditedIcon />
                   <BodyShort size="small">Endret av saksbehandler</BodyShort>
                 </HStack>
               </Box>
             )}
             {erOverstyrt && (
-              <VStack gap="4">
+              <VStack gap="space-16">
                 <Alert size="small" inline variant="warning">
                   Overstyring skal kun gjøres i unntakstilfeller
                 </Alert>
-                <HStack gap="4">
+                <HStack gap="space-16">
                   <OverstyrBekreftKnappPanel
                     submitting={formMethods.formState.isSubmitting}
                     pristine={!isSolvable || !formMethods.formState.isDirty}
