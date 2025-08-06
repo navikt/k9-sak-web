@@ -277,12 +277,12 @@ const MedisinskVilkår = (): JSX.Element => {
         </VStack>
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <Box marginBlock="0 4">
+            <Box.New marginBlock="0 4">
               <NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController
                 dokumenter={nyeDokumenterSomIkkeErVurdert}
                 afterEndringerRegistrert={afterEndringerUtifraNyeDokumenterRegistrert}
               />
-            </Box>
+            </Box.New>
           )}
           otherRequirementsAreMet={
             !!(

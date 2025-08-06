@@ -14,7 +14,7 @@ import {
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
-import { RadioGroupPanel } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import moment from 'moment';
 import { FunctionComponent, useMemo } from 'react';
@@ -67,7 +67,7 @@ interface StaticFunctions {
  */
 export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedlemskapFaktaPanelProps> &
   StaticFunctions = ({ readOnly, fodselsdato, alleMerknaderFraBeslutter, alleKodeverk }) => {
-  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { getValues, control } = useFormContext<OppholdInntektOgPerioderFormState>();
   const {
     oppholdInntektOgPeriodeForm: { fixedMedlemskapPerioder, hasPeriodeAksjonspunkt, isPeriodAksjonspunktClosed },
   } = getValues();
@@ -119,7 +119,8 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
           {hasPeriodeAksjonspunkt && (
             <FlexRow>
               <FlexColumn>
-                <RadioGroupPanel
+                <RhfRadioGroup
+                  control={control}
                   name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType.kode"
                   validate={[required]}
                   isReadOnly={readOnly}

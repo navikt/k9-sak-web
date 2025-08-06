@@ -32,7 +32,7 @@ const Inntekt = ({
           </BodyShort>
         </HStack>
       ))}
-      <Box borderColor="border-default" borderWidth="0 0 1 0" />
+      <Box.New borderWidth="0 0 1 0" />
       <HStack justify="space-between" align="center">
         <BodyShort size="small" className={styles.sumLabel} weight="semibold">
           {sumLabel}

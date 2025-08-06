@@ -4,7 +4,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BeregningsresultatFp } from '@k9-sak-web/types';
 import { Button, HGrid, Label } from '@navikt/ds-react';
-import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
@@ -105,9 +105,10 @@ export const Tilbaketrekkpanel = ({
         </FlexContainer>
       </div>
       <VerticalSpacer twentyPx />
-      <Form formMethods={formMethods} onSubmit={handleSubmit}>
+      <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
         <HGrid gap="space-4" columns={{ xs: '9fr 3fr' }}>
-          <RadioGroupPanel
+          <RhfRadioGroup
+            control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
             isHorizontal
@@ -127,7 +128,8 @@ export const Tilbaketrekkpanel = ({
           />
         </HGrid>
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
-          <TextAreaField
+          <RhfTextarea
+            control={formMethods.control}
             name={begrunnelseFieldName}
             label="Vurdering"
             validate={[required, maxLength1500, minLength3, hasValidText]}
@@ -152,7 +154,7 @@ export const Tilbaketrekkpanel = ({
             </Button>
           </div>
         </HGrid>
-      </Form>
+      </RhfForm>
     </div>
   );
 };

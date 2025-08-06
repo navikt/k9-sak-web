@@ -4,7 +4,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
-import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
@@ -153,10 +153,11 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                 </List>
               </div>
             )}
-            <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
+            <RhfForm<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
               <VStack gap="space-24">
                 <VStack gap="space-16">
-                  <SelectField
+                  <RhfSelect
+                    control={formMethods.control}
                     name="merknad"
                     label="Velg ny merknad"
                     selectValues={tilgjengeligeMerknader.map(merknad => (
@@ -166,7 +167,8 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                     ))}
                   />
                   {valgtMerknad && (
-                    <TextAreaField
+                    <RhfTextarea
+                      control={formMethods.control}
                       name="begrunnelse"
                       label="Kommentar"
                       validate={[required, minLength3, maxLength100000, hasValidText]}
@@ -188,7 +190,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                   </Button>
                 </div>
               </VStack>
-            </Form>
+            </RhfForm>
           </VStack>
         )}
       </Modal.Body>

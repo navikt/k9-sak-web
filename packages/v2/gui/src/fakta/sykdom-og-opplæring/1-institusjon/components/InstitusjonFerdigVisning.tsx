@@ -1,10 +1,10 @@
-import { BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
 import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { useAlleInstitusjoner } from '../../SykdomOgOpplæringQueries.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -13,7 +13,7 @@ interface OwnProps {
 const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
   return (
     <>
-      <Box className="mt-8">
+      <Box.New className="mt-8">
         <LabelledContent
           label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
           size="small"
@@ -25,7 +25,7 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
             />
           }
         />
-      </Box>
+      </Box.New>
       <div className="flex flex-col gap-6 mt-6">
         <LabelledContent
           label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"

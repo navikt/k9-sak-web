@@ -59,13 +59,13 @@ const OmsorgenForContainer = ({ data }: MainComponentProps): JSX.Element => {
     <IntlProvider locale="nb-NO" messages={teksterForSakstype(sakstype)}>
       <ContainerContext.Provider value={data}>
         <h1 style={{ fontSize: 22 }}>{sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}</h1>
-        <Box marginBlock="6 0">
+        <Box.New marginBlock="6 0">
           <PageContainer isLoading={isLoading} hasError={omsorgsperiodeoversiktHarFeilet}>
             <div className={styles.mainComponent}>
               <Omsorgsperiodeoversikt omsorgsperiodeoversikt={omsorgsperiodeoversikt} />
             </div>
           </PageContainer>
-        </Box>
+        </Box.New>
       </ContainerContext.Provider>
     </IntlProvider>
   );

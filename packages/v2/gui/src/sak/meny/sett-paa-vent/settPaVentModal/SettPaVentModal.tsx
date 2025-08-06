@@ -5,7 +5,7 @@ import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/type
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Label, Modal, Select } from '@navikt/ds-react';
-import { Datepicker, Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import {
   ariaCheck,
   dateAfterOrEqualToToday,
@@ -183,7 +183,7 @@ export const SettPaVentModal = ({
       onClose={cancelEvent}
       data-testid="SettPaVentModal"
     >
-      <Form<FormState> formMethods={formMethods} onSubmit={handleSubmit} data-testid="ventModalForm">
+      <RhfForm<FormState> formMethods={formMethods} onSubmit={handleSubmit} data-testid="ventModalForm">
         <Modal.Header>
           <div className={styles.topContainer}>
             <div>
@@ -196,7 +196,8 @@ export const SettPaVentModal = ({
               </BodyShort>
               {showEndreFrist && (
                 <div className={styles.datePicker}>
-                  <Datepicker
+                  <RhfDatepicker
+                    control={formMethods.control}
                     name="frist"
                     validate={[required, hasValidDate, dateAfterOrEqualToToday]}
                     data-testid="datofelt"
@@ -222,7 +223,8 @@ export const SettPaVentModal = ({
                     <option value="">Inntektsmelding</option>
                   </Select>
                 ) : (
-                  <SelectField
+                  <RhfSelect
+                    control={formMethods.control}
                     name="ventearsak"
                     label={
                       <Label size="small" as="p">
@@ -252,7 +254,8 @@ export const SettPaVentModal = ({
               </div>
             )}
             {showKommentarInput && (
-              <TextAreaField
+              <RhfTextarea
+                control={formMethods.control}
                 name="ventearsakVariant"
                 maxLength={200}
                 readOnly={!hasManualPaVent}
@@ -272,11 +275,11 @@ export const SettPaVentModal = ({
               {!hasManualPaVent && showFristenTekst && (
                 <BodyShort size="small">
                   OBS! Fristen på denne behandlingen er utløpt!
-                  <Box marginBlock={'2 0'}>
+                  <Box.New marginBlock={'2 0'}>
                     {`Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.
                     Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.
                     For mer informasjon, se rutine under tilbakekreving.`}
-                  </Box>
+                  </Box.New>
                 </BodyShort>
               )}
             </div>
@@ -314,7 +317,7 @@ export const SettPaVentModal = ({
             </div>
           </div>
         </Modal.Body>
-      </Form>
+      </RhfForm>
     </Modal>
   );
 };

@@ -1,14 +1,14 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { FlexColumn, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
-import { InputField, SelectField } from '@navikt/ft-form-hooks';
+import { RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
+import { hasValidDecimal, maxValue, minValue, required } from '@navikt/ft-form-validators';
 import { useContext, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
@@ -120,7 +120,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
           return (
             <FlexRow key={field.fieldId}>
               <FlexColumn>
-                <SelectField
+                <RhfSelect
+                  control={control}
                   label="Inntektskategori"
                   name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
                   selectValues={getInntektskategori(inntektskategorier)}
@@ -129,7 +130,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
               {!erSN && !erFL && (
                 <>
                   <div className="flex items-end">
-                    <SelectField
+                    <RhfSelect
+                      control={control}
                       label="Arbeidsgiver"
                       name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
                       validate={
@@ -152,7 +154,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
                   </div>
                   {skillUtPrivatperson && (
                     <div className="flex items-end">
-                      <SelectField
+                      <RhfSelect
+                        control={control}
                         label="Arbeidsgiver (privatperson)"
                         name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
                         validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
@@ -163,7 +166,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
                 </>
               )}
               <FlexColumn>
-                <InputField
+                <RhfTextField
+                  control={control}
                   label="Til søker"
                   name={`nyPeriodeForm.andeler.${index}.tilSoker`}
                   validate={[required, minValue0, maxValue3999, hasValidDecimal]}
@@ -172,7 +176,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
               </FlexColumn>
               {!erSN && !erFL && (
                 <FlexColumn>
-                  <InputField
+                  <RhfTextField
+                    control={control}
                     label="Refusjon"
                     name={`nyPeriodeForm.andeler.${index}.refusjon`}
                     validate={[required, minValue0, maxValue3999, hasValidDecimal]}
@@ -182,7 +187,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
               )}
               {!erSN && (
                 <FlexColumn>
-                  <InputField
+                  <RhfTextField
+                    control={control}
                     label="Uttaksgrad"
                     name={`nyPeriodeForm.andeler.${index}.utbetalingsgrad`}
                     validate={[required, minValue0, maxValue100, hasValidDecimal]}

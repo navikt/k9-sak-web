@@ -51,12 +51,10 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const avsluttet = behandling.avsluttet;
   const visKunStartdato = erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type);
   return (
-    <Box
-      background="surface-default"
+    <Box.New
       padding="4"
       className={erAutomatiskRevurdering && !erUngdomsytelse(behandling.sakstype) ? styles.indent : ''}
       borderWidth="1"
-      borderColor="border-subtle"
       borderRadius="medium"
     >
       <div className={styles.behandlingPicker}>
@@ -104,7 +102,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
           <ChevronRightIcon title="Åpne" fontSize="1.5rem" style={{ color: 'var(--a-blue-500)', fontSize: '1.5rem' }} />
         </div>
       </div>
-    </Box>
+    </Box.New>
   );
 };
 

@@ -1,7 +1,7 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { Alert, Button, HGrid } from '@navikt/ds-react';
-import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
@@ -87,9 +87,10 @@ export const Tilbaketrekkpanel = ({
         beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og
         arbeidsgiver.
       </Alert>
-      <Form formMethods={formMethods} onSubmit={handleSubmit} className="mt-5">
+      <RhfForm formMethods={formMethods} onSubmit={handleSubmit} className="mt-5">
         <HGrid gap="space-4" columns={{ xs: '9fr 3fr' }}>
-          <RadioGroupPanel
+          <RhfRadioGroup
+            control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
             isHorizontal
@@ -109,7 +110,8 @@ export const Tilbaketrekkpanel = ({
           />
         </HGrid>
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
-          <TextAreaField
+          <RhfTextarea
+            control={formMethods.control}
             name={begrunnelseFieldName}
             label="Vurdering"
             validate={[required, maxLength1500, minLength3, hasValidText]}
@@ -134,7 +136,7 @@ export const Tilbaketrekkpanel = ({
             </Button>
           </div>
         </HGrid>
-      </Form>
+      </RhfForm>
     </div>
   );
 };

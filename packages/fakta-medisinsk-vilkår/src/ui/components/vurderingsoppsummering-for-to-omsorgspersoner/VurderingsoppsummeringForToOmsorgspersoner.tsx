@@ -1,12 +1,12 @@
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import DokumentLink from '../dokument-link/DokumentLink';
 
 interface VurderingsoppsummeringForToOmsorgspersonerProps {
@@ -30,9 +30,9 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
       perioder={perioder}
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
-      <Box marginBlock="6 0">
+      <Box.New marginBlock="6 0">
         {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
-        <Box marginBlock="4 0">
+        <Box.New marginBlock="4 0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen av behov for to omsorgspersoner samtidig?"
             content={
@@ -45,22 +45,22 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
               />
             }
           />
-        </Box>
-        <Box marginBlock="8 0">
+        </Box.New>
+        <Box.New marginBlock="8 0">
           <LabelledContent
             label="Gjør en vurdering av om det er behov for to omsorgspersoner samtidig etter § 9-10, andre ledd."
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
-        </Box>
-        <Box marginBlock="8 0">
+        </Box.New>
+        <Box.New marginBlock="8 0">
           <LabelledContent
             label="Er det behov for to omsorgspersoner samtidig?"
             content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
           />
-        </Box>
-        <Box marginBlock="8 0">
+        </Box.New>
+        <Box.New marginBlock="8 0">
           <LabelledContent
             label="Perioder vurdert"
             content={
@@ -72,8 +72,8 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
               </ul>
             }
           />
-        </Box>
-      </Box>
+        </Box.New>
+      </Box.New>
     </DetailViewVurdering>
   );
 };

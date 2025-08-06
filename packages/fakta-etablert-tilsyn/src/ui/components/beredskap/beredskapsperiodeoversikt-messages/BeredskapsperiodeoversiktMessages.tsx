@@ -13,11 +13,11 @@ const BeredskapsperiodeoversiktMessages = ({ beredskapData }: Beredskapsperiodeo
   if (beredskapData.harPerioderTilVurdering()) {
     const perioderTilVurdering = beredskapData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <Alert size="small" variant="warning">
           {`Vurder behov for beredskap i ${getStringMedPerioder(perioderTilVurdering)}.`}
         </Alert>
-      </Box>
+      </Box.New>
     );
   }
   return null;

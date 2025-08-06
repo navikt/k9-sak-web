@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
-import { CheckboxField, Form } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -77,8 +77,8 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box marginBlock="4">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
+      <Box.New marginBlock="4">
         <HStack justify="space-between">
           <VStack gap="space-16">
             <div>
@@ -125,14 +125,16 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               <Fieldset legend="Valg for brev" size="small">
                 <div>
                   {vedtaksbrevValg?.kanOverstyreRediger && (
-                    <CheckboxField
+                    <RhfCheckbox
+                      control={formMethods.control}
                       name="redigerAutomatiskBrev"
                       label="Rediger automatisk brev"
                       disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
                     />
                   )}
                   {vedtaksbrevValg?.kanOverstyreHindre && (
-                    <CheckboxField
+                    <RhfCheckbox
+                      control={formMethods.control}
                       name="hindreUtsendingAvBrev"
                       label="Hindre utsending av brev"
                       disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
@@ -143,7 +145,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
             </div>
           )}
         </HStack>
-      </Box>
-    </Form>
+      </Box.New>
+    </RhfForm>
   );
 };

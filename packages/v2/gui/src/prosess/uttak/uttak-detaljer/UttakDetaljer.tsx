@@ -136,17 +136,17 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
       )}
       <HGrid gap="space-32" columns={3} align="start" className={styles['uttakDetaljer']}>
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
-          <Box
+          <Box.New
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
-              <Box className={styles.uttakDetaljerTag}>
+              <Box.New className={styles.uttakDetaljerTag}>
                 <Tag size="medium" variant="alt3-moderate">
                   <CheckmarkIcon />
                   Gir lavest pleiepengegrad
                 </Tag>
-              </Box>
+              </Box.New>
             )}
             <HStack>
               <HandHeartIcon className="!ml-[-4px]" />
@@ -158,20 +158,20 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               )}
             </HStack>
             <GraderingMotTilsynDetaljer graderingMotTilsyn={graderingMotTilsyn} pleiebehov={pleiebehov || 0} />
-          </Box>
+          </Box.New>
         )}
 
-        <Box
+        <Box.New
           className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightArbeidstid ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
           title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
-            <Box className={styles.uttakDetaljerTag}>
+            <Box.New className={styles.uttakDetaljerTag}>
               <Tag size="medium" variant="alt3-moderate">
                 <CheckmarkIcon />
                 Gir lavest pleiepengegrad
               </Tag>
-            </Box>
+            </Box.New>
           )}
           <HStack>
             <BriefcaseClockIcon className="!ml-[-4px]" />
@@ -182,20 +182,20 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
             utbetalingsgrader={utbetalingsgrader || []}
             søkersTapteArbeidstid={søkersTapteArbeidstid}
           />
-        </Box>
+        </Box.New>
 
         {inntektsgradering && (
-          <Box
+          <Box.New
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (
-              <Box className={styles.uttakDetaljerTag}>
+              <Box.New className={styles.uttakDetaljerTag}>
                 <Tag size="medium" variant="alt3-moderate">
                   <CheckmarkIcon />
                   Gir lavest pleiepengegrad
                 </Tag>
-              </Box>
+              </Box.New>
             )}
             <HStack>
               <SackKronerIcon className="!ml-[-4px]" />
@@ -205,7 +205,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               alleArbeidsforhold={arbeidsforhold || {}}
               inntektsgradering={inntektsgradering}
             />
-          </Box>
+          </Box.New>
         )}
       </HGrid>
     </>

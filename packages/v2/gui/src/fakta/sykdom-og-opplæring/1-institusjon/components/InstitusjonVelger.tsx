@@ -1,13 +1,13 @@
-import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
-import { useAlleInstitusjoner, useHentOrganisasjonsnummer } from '../../SykdomOgOpplæringQueries';
-import { Controller, useFormContext } from 'react-hook-form';
-import { CheckboxField, InputField, RadioGroupPanel } from '@navikt/ft-form-hooks';
-import { useEffect, useState } from 'react';
-import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated';
+import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
+import { RhfCheckbox, RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
+import { useEffect, useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { getFeilmeldingFraFeilDto } from '../../../../app/feilmeldinger/errorUtils.js';
+import { useAlleInstitusjoner, useHentOrganisasjonsnummer } from '../../SykdomOgOpplæringQueries';
+import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 
 const ANTALL_SIFFER_ORGNR = 9;
 
@@ -118,7 +118,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
 
   // cleanup on unmount
 
-  const { watch, setValue } = useFormContext();
+  const { watch, setValue, control } = useFormContext();
   const organisasjonsnummer = watch(InstitusjonFormFields.ORGANISASJONSNUMMER);
   const harOrganisasjonsnummer = watch(InstitusjonFormFields.HAR_ORGANISASJONSNUMMER);
   const institusjonFraOrganisasjonsnummer = watch(InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER);
@@ -177,7 +177,8 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
 
   return (
     <div className="flex flex-col gap-4">
-      <RadioGroupPanel
+      <RhfRadioGroup
+        control={control}
         name={InstitusjonFormFields.HAR_ORGANISASJONSNUMMER}
         label="Har institusjonen/kompetansesenteret et organisasjonsnummer?"
         radios={[
@@ -189,7 +190,8 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
       {visOrganisasjonsnummer && (
         <>
           <div className="flex flex-row flex-wrap gap-x-5 items-start">
-            <InputField
+            <RhfTextField
+              control={control}
               label="Organisasjonsnummer (9 siffer)"
               size="small"
               name={InstitusjonFormFields.ORGANISASJONSNUMMER}
@@ -213,7 +215,8 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
         </>
       )}
       {visFritekst && (
-        <InputField
+        <RhfTextField
+          control={control}
           label="Navn på institusjonen/kompetansesenteret"
           size="small"
           className="w-2/3"
@@ -297,7 +300,7 @@ const EndreInstitusjonButton = ({
 };
 
 const AnnenInstitusjonCheckbox = () => {
-  const { resetField } = useFormContext();
+  const { resetField, control } = useFormContext();
 
   // cleanup on unmount
   useEffect(() => {
@@ -307,7 +310,11 @@ const AnnenInstitusjonCheckbox = () => {
   }, [resetField]);
 
   return (
-    <CheckboxField label="Annen institusjon eller kompetansesenter" name={InstitusjonFormFields.ANNEN_INSTITUSJON} />
+    <RhfCheckbox
+      control={control}
+      label="Annen institusjon eller kompetansesenter"
+      name={InstitusjonFormFields.ANNEN_INSTITUSJON}
+    />
   );
 };
 

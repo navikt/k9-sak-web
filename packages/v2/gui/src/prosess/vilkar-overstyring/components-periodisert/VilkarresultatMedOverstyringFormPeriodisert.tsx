@@ -5,7 +5,7 @@ import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKna
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, VStack } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { type FunctionComponent, type SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { EditedIcon } from '../../../shared/EditedIcon';
@@ -110,13 +110,13 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
   const opprettetAv = overstyringAksjonspunkt?.opprettetAv ? overstyringAksjonspunkt.opprettetAv : '';
 
   return (
-    <Form formMethods={formMethods} onSubmit={onSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
         <div className={`${styles.aksjonspunktBox} ${erOverstyrt ? styles.aksjonspunktBoxOpen : ''}`}>
           <Label data-testid="overstyringform" size="small" as="p">
             Manuell overstyring av automatisk vurdering
           </Label>
-          <Box marginBlock={'2 0'}>
+          <Box.New marginBlock={'2 0'}>
             <VilkarresultatMedBegrunnelse
               skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
               readOnly={isReadOnly || !erOverstyrt}
@@ -134,15 +134,15 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
               vilkarType={vilkarType}
               relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
             />
-          </Box>
-          <Box marginBlock={'4 0'}>
+          </Box.New>
+          <Box.New marginBlock={'4 0'}>
             {!erOverstyrt && erVilkarOk !== undefined && (
-              <Box marginBlock={'1 0'}>
+              <Box.New marginBlock={'1 0'}>
                 <HStack gap="space-16" align="center">
                   <EditedIcon />
                   <BodyShort size="small">Endret av saksbehandler</BodyShort>
                 </HStack>
-              </Box>
+              </Box.New>
             )}
             {erOverstyrt && (
               <VStack gap="space-16">
@@ -168,10 +168,10 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
                 </HStack>
               </VStack>
             )}
-          </Box>
+          </Box.New>
         </div>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

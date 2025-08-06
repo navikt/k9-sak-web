@@ -1,6 +1,6 @@
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HGrid, Modal } from '@navikt/ds-react';
-import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import styles from './endreBehandlendeEnhetModal.module.css';
@@ -57,7 +57,7 @@ export const EndreBehandlendeEnhetModal = ({
   };
   return (
     <Modal className={styles.modal} open aria-label="Endre behandlende enhet" onClose={lukkModal}>
-      <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
+      <RhfForm<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
         <Modal.Header closeButton={false}>
           <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
             <div className="relative">
@@ -79,23 +79,30 @@ export const EndreBehandlendeEnhetModal = ({
           <HGrid gap="space-4" columns={{ xs: '1fr 5fr 6fr' }}>
             <div />
             <div>
-              <SelectField name="nyEnhet" label="Ny enhet" validate={[required]} selectValues={selectOptions()} />
+              <RhfSelect
+                control={formMethods.control}
+                name="nyEnhet"
+                label="Ny enhet"
+                validate={[required]}
+                selectValues={selectOptions()}
+              />
             </div>
           </HGrid>
           <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
-            <Box marginBlock="2 0">
-              <TextAreaField
+            <Box.New marginBlock="2 0">
+              <RhfTextarea
+                control={formMethods.control}
                 name="begrunnelse"
                 label="Begrunnelse"
                 validate={[required, maxLength400, hasValidText]}
                 maxLength={400}
               />
-            </Box>
+            </Box.New>
           </HGrid>
           <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
-            <Box marginBlock="4 0">
+            <Box.New marginBlock="4 0">
               <div className={styles.floatButtons}>
                 <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse)} type="submit">
                   OK
@@ -104,10 +111,10 @@ export const EndreBehandlendeEnhetModal = ({
                   Avbryt
                 </Button>
               </div>
-            </Box>
+            </Box.New>
           </HGrid>
         </Modal.Body>
-      </Form>
+      </RhfForm>
     </Modal>
   );
 };

@@ -41,7 +41,7 @@ export const BeregningsDetaljerUtregning = ({
         </React.Fragment>
       ))}
 
-      <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
+      <Box.New borderWidth="0 0 1 0" />
 
       {reduksjon && rapportertInntekt ? (
         <>
@@ -53,7 +53,7 @@ export const BeregningsDetaljerUtregning = ({
               - {formatCurrencyWithKr(reduksjon)}
             </BodyShort>
           </HStack>
-          <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
+          <Box.New borderWidth="0 0 1 0" />
         </>
       ) : null}
 

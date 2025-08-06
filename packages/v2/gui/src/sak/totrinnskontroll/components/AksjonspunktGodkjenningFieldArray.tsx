@@ -4,7 +4,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
-import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import * as Sentry from '@sentry/browser';
@@ -145,7 +145,8 @@ export const AksjonspunktGodkjenningFieldArray = ({
                   </div>
                 ))}
               <Fieldset legend="" hideLegend>
-                <RadioGroupPanel
+                <RhfRadioGroup
+                  control={control}
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
                   isReadOnly={readOnly}
                   isTrueOrFalseSelection
@@ -169,24 +170,28 @@ export const AksjonspunktGodkjenningFieldArray = ({
                         <Fieldset legend="" hideLegend>
                           <HStack gap="space-80">
                             <div>
-                              <CheckboxField
+                              <RhfCheckbox
+                                control={control}
                                 name={`aksjonspunktGodkjenning.${index}.feilFakta`}
                                 label="Feil fakta"
                                 readOnly={readOnly}
                               />
-                              <CheckboxField
+                              <RhfCheckbox
+                                control={control}
                                 name={`aksjonspunktGodkjenning.${index}.feilRegel`}
                                 label="Feil regelforståelse"
                                 readOnly={readOnly}
                               />
                             </div>
                             <div>
-                              <CheckboxField
+                              <RhfCheckbox
+                                control={control}
                                 name={`aksjonspunktGodkjenning.${index}.feilLov`}
                                 label="Feil lovanvendelse"
                                 readOnly={readOnly}
                               />
-                              <CheckboxField
+                              <RhfCheckbox
+                                control={control}
                                 name={`aksjonspunktGodkjenning.${index}.annet`}
                                 label="Annet"
                                 readOnly={readOnly}
@@ -202,7 +207,8 @@ export const AksjonspunktGodkjenningFieldArray = ({
                       </VStack>
                     )}
                     <div className="mt-4">
-                      <TextAreaField
+                      <RhfTextarea
+                        control={control}
                         name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                         label="Begrunnelse"
                         validate={[required, minLength3, maxLength2000, hasValidText]}

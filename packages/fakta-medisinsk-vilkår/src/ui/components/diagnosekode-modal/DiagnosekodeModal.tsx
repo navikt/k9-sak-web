@@ -1,6 +1,6 @@
+import type { ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import { Box, Button, Modal } from '@navikt/ds-react';
 import React, { useEffect, type JSX } from 'react';
-import type { ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import DiagnosekodeSelector from '../../form/pure/PureDiagnosekodeSelector';
 import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.module.css';
 
@@ -45,7 +45,7 @@ const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: Di
             setSelectedDiagnosekoder([]);
           }}
         >
-          <Box marginBlock="6 0">
+          <Box.New marginBlock="6 0">
             {renderDiagnosekodeSelektor && (
               <DiagnosekodeSelector
                 initialDiagnosekodeValue=""
@@ -59,8 +59,8 @@ const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: Di
                 searcher={searcher}
               />
             )}
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <div style={{ display: 'flex' }}>
               <Button
                 size="small"
@@ -82,7 +82,7 @@ const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: Di
                 Avbryt
               </Button>
             </div>
-          </Box>
+          </Box.New>
         </form>
       </Modal.Body>
     </Modal>

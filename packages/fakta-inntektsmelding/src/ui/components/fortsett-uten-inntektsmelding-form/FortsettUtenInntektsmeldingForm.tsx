@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Alert, Box, Button, Box as DSBox, Heading } from '@navikt/ds-react';
-import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
@@ -37,7 +37,7 @@ const FortsettUtenInntektsmeldingForm = ({
 }: FortsettUtenInntektsmeldingFormProps): JSX.Element => {
   const { arbeidsforhold, readOnly } = React.useContext(ContainerContext);
 
-  const { watch, reset } = formMethods;
+  const { watch, reset, control } = formMethods;
   const { beslutningFieldName, begrunnelseFieldName } = tilstand;
   const beslutningId = `beslutning-${tilstand.periodeOpprinneligFormat}`;
   const begrunnelseId = `begrunnelse-${tilstand.periodeOpprinneligFormat}`;
@@ -118,8 +118,8 @@ const FortsettUtenInntektsmeldingForm = ({
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <Form formMethods={formMethods} onSubmit={submit}>
-      <DSBox background="surface-default" padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
+    <RhfForm formMethods={formMethods} onSubmit={submit}>
+      <DSBox padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
@@ -136,7 +136,8 @@ const FortsettUtenInntektsmeldingForm = ({
           </ul>
         </Alert>
         <div className={styles.fortsettUtenInntektsmelding__radiogroup}>
-          <RadioGroupPanel
+          <RhfRadioGroup
+            control={control}
             name={beslutningFieldName}
             label="Kan du gå videre uten inntektsmelding?"
             radios={radios[aksjonspunktKode]}
@@ -146,7 +147,8 @@ const FortsettUtenInntektsmeldingForm = ({
         </div>
         <>
           {skalViseBegrunnelse && (
-            <TextAreaField
+            <RhfTextarea
+              control={control}
               name={begrunnelseFieldName}
               label={
                 <>
@@ -168,7 +170,7 @@ const FortsettUtenInntektsmeldingForm = ({
               validate={[v => (!v ? 'Du må fylle inn en verdi' : null)]}
             />
           )}
-          <Box marginBlock="6 0">
+          <Box.New marginBlock="6 0">
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
               {!harFlereTilstanderTilVurdering && !!beslutning && (
                 <Button variant="primary" size="small">
@@ -181,10 +183,10 @@ const FortsettUtenInntektsmeldingForm = ({
                 </Button>
               )}
             </div>
-          </Box>
+          </Box.New>
         </>
       </DSBox>
-    </Form>
+    </RhfForm>
   );
 };
 

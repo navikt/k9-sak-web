@@ -4,7 +4,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { PlusCircleIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Fieldset, HGrid, HStack, VStack } from '@navikt/ds-react';
-import { InputField, SelectField } from '@navikt/ft-form-hooks';
+import { RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidDecimal, maxValue, minValue, required } from '@navikt/ft-form-validators';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -111,7 +111,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
             const erFL = erFrilans(field.inntektskategori);
             return (
               <HStack gap="space-8" key={field.fieldId}>
-                <SelectField
+                <RhfSelect
+                  control={control}
                   label="Inntektskategori"
                   name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
                   selectValues={getInntektskategori(inntektskategorier)}
@@ -120,7 +121,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                 {!erSN && !erFL && (
                   <div>
                     <div className="flex items-end">
-                      <SelectField
+                      <RhfSelect
+                        control={control}
                         label="Arbeidsgiver"
                         name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
                         validate={
@@ -148,7 +150,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                     </div>
                     {skillUtPrivatperson && (
                       <div className="flex items-end">
-                        <SelectField
+                        <RhfSelect
+                          control={control}
                           label="Arbeidsgiver (privatperson)"
                           name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
                           validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
@@ -159,14 +162,16 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                   </div>
                 )}
 
-                <InputField
+                <RhfTextField
+                  control={control}
                   label="Til søker"
                   name={`nyPeriodeForm.andeler.${index}.tilSoker`}
                   validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                   format={value => value}
                 />
                 {!erSN && !erFL && (
-                  <InputField
+                  <RhfTextField
+                    control={control}
                     label="Refusjon"
                     name={`nyPeriodeForm.andeler.${index}.refusjon`}
                     validate={[required, minValue0, maxValue3999, hasValidDecimal]}
@@ -174,7 +179,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                   />
                 )}
                 {!erSN && (
-                  <InputField
+                  <RhfTextField
+                    control={control}
                     label="Uttaksgrad"
                     name={`nyPeriodeForm.andeler.${index}.utbetalingsgrad`}
                     validate={[required, minValue0, maxValue100, hasValidDecimal]}

@@ -5,7 +5,6 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type { Periode, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { Dayjs } from 'dayjs';
@@ -14,6 +13,7 @@ import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';
@@ -229,7 +229,7 @@ export const SoknadsfristVilkarForm = ({
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
       {Array.isArray(dokumenterIAktivPeriode) && dokumenterIAktivPeriode.length > 0 && (
         <div
           className={`${styles.aksjonspunkt} ${erOverstyrt || harÅpentAksjonspunkt || editForm ? styles.apentAksjonspunkt : ''}`}
@@ -319,7 +319,7 @@ export const SoknadsfristVilkarForm = ({
           )}
         </div>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

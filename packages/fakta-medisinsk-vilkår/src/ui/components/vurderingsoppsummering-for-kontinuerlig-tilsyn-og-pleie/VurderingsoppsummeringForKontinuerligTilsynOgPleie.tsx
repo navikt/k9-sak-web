@@ -1,12 +1,12 @@
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Alert, BodyShort, Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import DokumentLink from '../dokument-link/DokumentLink';
 
 interface VurderingsoppsummeringForKontinuerligTilsynOgPleieProps {
@@ -30,14 +30,14 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
       perioder={perioder}
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : undefined}
     >
-      <Box marginBlock="6 0">
+      <Box.New marginBlock="6 0">
         {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
         {!manglerLegeerklæring && (
-          <Box marginBlock="4 0">
+          <Box.New marginBlock="4 0">
             <LabelledContent
               label="Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?"
               content={
-                <Box marginBlock="4 0">
+                <Box.New marginBlock="4 0">
                   <BasicList
                     elements={dokumenter
                       .filter(({ benyttet }) => benyttet)
@@ -45,10 +45,10 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
                         <DokumentLink dokument={dokument} visDokumentIkon />
                       ))}
                   />
-                </Box>
+                </Box.New>
               }
             />
-          </Box>
+          </Box.New>
         )}
 
         {manglerLegeerklæring && (
@@ -56,7 +56,7 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
             Det foreligger ikke legeerklæring for perioden - vurdering av tilsyn og pleie er ikke gjennomført.
           </Alert>
         )}
-        <Box marginBlock="8 0">
+        <Box.New marginBlock="8 0">
           {!manglerLegeerklæring && (
             <LabelledContent
               label="Gjør en vurdering av om det er behov for kontinuerlig tilsyn og pleie som følge
@@ -67,19 +67,19 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
             />
           )}
           <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} size="small" />
-        </Box>
+        </Box.New>
 
         {!manglerLegeerklæring && (
-          <Box marginBlock="8 0">
+          <Box.New marginBlock="8 0">
             <LabelledContent
               size="small"
               label="Er det behov for tilsyn og pleie?"
               content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
             />
-          </Box>
+          </Box.New>
         )}
 
-        <Box marginBlock="8 0">
+        <Box.New marginBlock="8 0">
           <LabelledContent
             label={resultat === Vurderingsresultat.OPPFYLT ? 'Perioder innvilget' : 'Perioder avslått'}
             size="small"
@@ -96,8 +96,8 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
               </ul>
             }
           />
-        </Box>
-      </Box>
+        </Box.New>
+      </Box.New>
     </DetailViewVurdering>
   );
 };

@@ -13,7 +13,7 @@ export const UngInngangsvilkår = (props: UngInngangsvilkårProps) => {
   const ungdomsprogramvilkår = vilkår.find(v => v.vilkarType === VilkårMedPerioderDtoVilkarType.UNGDOMSPROGRAMVILKÅRET);
 
   return (
-    <Box marginBlock="2 8" marginInline="4 0">
+    <Box.New marginBlock="2 8" marginInline="4 0">
       <VStack gap="space-16">
         <Heading size="medium" level="1">
           Inngangsvilkår
@@ -23,6 +23,6 @@ export const UngInngangsvilkår = (props: UngInngangsvilkårProps) => {
           {ungdomsprogramvilkår && <Ungdomsvilkår vilkår={ungdomsprogramvilkår} />}
         </VStack>
       </VStack>
-    </Box>
+    </Box.New>
   );
 };

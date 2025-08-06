@@ -1,6 +1,6 @@
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Table } from '@navikt/ds-react';
-import { Datepicker } from '@navikt/ft-form-hooks';
+import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 import Andeler from './Andeler';
@@ -57,8 +57,8 @@ const PeriodeRad = ({
               <Table.Row key={item.fieldId} id={item.fieldId}>
                 <Table.DataCell>
                   <HStack gap="space-8">
-                    <Datepicker name={`perioder.${index}.fom`} label="" isReadOnly />
-                    <Datepicker name={`perioder.${index}.tom`} label="" isReadOnly />
+                    <RhfDatepicker control={control} name={`perioder.${index}.fom`} label="" isReadOnly />
+                    <RhfDatepicker control={control} name={`perioder.${index}.tom`} label="" isReadOnly />
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell>

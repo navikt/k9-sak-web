@@ -23,7 +23,7 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -227,8 +227,10 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
         </Alert>
       )}
 
-      <Box className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}>
-        <Form formMethods={formMethods} onSubmit={submit}>
+      <Box.New
+        className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}
+      >
+        <RhfForm formMethods={formMethods} onSubmit={submit}>
           <VStack gap="space-20">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
             {overlappendeIsLoading && <Loader size="large" />}
@@ -338,8 +340,8 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
               </>
             )}
           </VStack>
-        </Form>
-      </Box>
+        </RhfForm>
+      </Box.New>
     </VStack>
   );
 };

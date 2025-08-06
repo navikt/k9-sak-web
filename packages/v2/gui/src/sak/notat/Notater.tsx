@@ -1,8 +1,8 @@
 import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
-import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { useMemo, useState } from 'react';
-import { type UseFormReturn } from 'react-hook-form';
+import { useFormContext, type UseFormReturn } from 'react-hook-form';
 import ChatComponent, { type EndreNotatPayload, type SkjulNotatPayload } from './components/ChatComponent';
 import styles from './notater.module.css';
 import type { FormState } from './types/FormState';
@@ -41,6 +41,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   fagsakHarPleietrengende,
   endreNotat,
 }) => {
+  const { control } = useFormContext();
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
 
   const toggleVisSkjulteNotater = () => {
@@ -68,12 +69,13 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               Vis skjulte notater
             </Switch>
           </div>
-          <Form<FormState> formMethods={formMethods} onSubmit={submitNyttNotat}>
+          <RhfForm<FormState> formMethods={formMethods} onSubmit={submitNyttNotat}>
             <div className={styles.nyttNotat}>
-              <TextAreaField name="notatTekst" size="small" label="Skriv et nytt notat" />
+              <RhfTextarea control={control} name="notatTekst" size="small" label="Skriv et nytt notat" />
             </div>
             {fagsakHarPleietrengende && (
-              <CheckboxField
+              <RhfCheckbox
+                control={control}
                 className={styles.visAlleNotater}
                 name="visNotatIAlleSaker"
                 label="Vis notat i alle saker tilknyttet pleietrengende"
@@ -82,7 +84,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
             <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
               Legg til notat
             </Button>
-          </Form>
+          </RhfForm>
           {!hasGetNotaterError && notater?.length === 0 && (
             <Alert className={styles.alert} size="small" variant="info">
               Ingen notater er publisert i saken

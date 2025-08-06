@@ -1,16 +1,15 @@
-import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
-import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
-import type { Period } from '@navikt/ft-utils';
+import { KodeverdiSomObjektAvslagsårsakKilde, type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext, useEffect } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import type { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
-import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
+import { useContext, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -71,7 +70,7 @@ const NødvendigOpplæringForm = ({
   const nødvendigOpplæring = formMethods.watch('nødvendigOpplæring');
   return (
     <>
-      <Form
+      <RhfForm
         formMethods={formMethods}
         onSubmit={data => {
           const nødvendigOpplæring = data.nødvendigOpplæring === 'ja';
@@ -247,7 +246,7 @@ const NødvendigOpplæringForm = ({
             </div>
           )}
         </div>
-      </Form>
+      </RhfForm>
     </>
   );
 };

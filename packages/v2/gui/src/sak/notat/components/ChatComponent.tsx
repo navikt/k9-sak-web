@@ -1,7 +1,7 @@
 import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
-import { Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
@@ -107,7 +107,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   };
 
   return (
-    <Form<FormState>
+    <RhfForm<FormState>
       formMethods={formMethods}
       onSubmit={submit}
       className={position === ChatPosition.Right ? styles.chatRight : styles.chatLeft}
@@ -123,7 +123,8 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
             <BodyLong size="small">{notatTekst}</BodyLong>
           ) : (
             <>
-              <TextAreaField
+              <RhfTextarea
+                control={formMethods.control}
                 name="notatTekst"
                 validate={[required, minLength3, maxLength2000]}
                 hideLabel
@@ -178,7 +179,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
           </div>
         </Chat.Bubble>
       </Chat>
-    </Form>
+    </RhfForm>
   );
 };
 export default ChatComponent;

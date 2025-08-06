@@ -1,9 +1,10 @@
-import { TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 
 import styles from './faktaBegrunnelseTextField.module.css';
 
+import { RhfTextarea } from '@navikt/ft-form-hooks';
+import { useFormContext } from 'react-hook-form';
 import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov';
 
 const minLength3 = minLength(3);
@@ -37,12 +38,14 @@ export const FaktaBegrunnelseTextField = ({
   hasVurderingText = false,
   name = 'begrunnelse',
 }: Props) => {
+  const { control } = useFormContext();
   const defaultLabel = hasVurderingText ? 'Vurdering' : 'Begrunn endringene';
   const textAreaLabel = label || defaultLabel;
   return (
     (isSubmittable || hasBegrunnelse) && (
       <div className={styles.begrunnelseTextField}>
-        <TextAreaField
+        <RhfTextarea
+          control={control}
           name={name}
           label={isReadOnly ? '' : textAreaLabel}
           validate={isReadOnly ? [] : [required, minLength3, maxLength1500, hasValidText]}

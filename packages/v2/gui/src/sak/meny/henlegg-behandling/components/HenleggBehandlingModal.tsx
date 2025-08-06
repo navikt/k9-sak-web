@@ -7,7 +7,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';
-import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -208,13 +208,14 @@ export const HenleggBehandlingModal = ({
       }}
     >
       <Modal.Body>
-        <Form<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={handleSubmit}>
+        <RhfForm<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={handleSubmit}>
           <div>
             <Fieldset legend="Henlegg behandling" hideLegend>
               <VStack gap="space-16">
                 <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
                   <div>
-                    <SelectField
+                    <RhfSelect
+                      control={formMethods.control}
                       name="årsakKode"
                       label="Velg årsak til henleggelse"
                       validate={[required]}
@@ -237,7 +238,8 @@ export const HenleggBehandlingModal = ({
                 )}
                 <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
                   <div>
-                    <TextAreaField
+                    <RhfTextarea
+                      control={formMethods.control}
                       name="begrunnelse"
                       label="Begrunnelse"
                       validate={[required, maxLength1500, hasValidText]}
@@ -247,7 +249,8 @@ export const HenleggBehandlingModal = ({
                 </HGrid>
                 {showHenleggelseFritekst(behandlingType, årsakKode) && (
                   <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
-                    <TextAreaField
+                    <RhfTextarea
+                      control={formMethods.control}
                       name="fritekst"
                       label="Fritekst til brev"
                       validate={[required, hasValidText]}
@@ -294,7 +297,7 @@ export const HenleggBehandlingModal = ({
               </VStack>
             </Fieldset>
           </div>
-        </Form>
+        </RhfForm>
       </Modal.Body>
     </Modal>
   );

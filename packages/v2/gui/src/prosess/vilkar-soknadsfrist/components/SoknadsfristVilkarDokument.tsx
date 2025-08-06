@@ -2,7 +2,7 @@ import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
-import { Datepicker, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfTextarea } from '@navikt/ft-form-hooks';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -15,6 +15,7 @@ import {
 import type { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import type { Dayjs } from 'dayjs';
 import { useCallback, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import RadioGroupPanel from '../../../shared/hook-form/RadioGroupPanel';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import { formatDate } from '../utils';
@@ -56,6 +57,7 @@ export const SoknadsfristVilkarDokument = ({
   periode,
   kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarDokumentProps) => {
+  const { control } = useFormContext();
   const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus === 'OPPFYLT';
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
@@ -91,7 +93,8 @@ export const SoknadsfristVilkarDokument = ({
           <div>
             <div>
               <div className="mt-2" />
-              <TextAreaField
+              <RhfTextarea
+                control={control}
                 name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
                 label="Vurder om det har vært fristavbrytende kontakt"
                 validate={[required, minLength3, maxLength1500, hasValidText]}
@@ -143,7 +146,8 @@ export const SoknadsfristVilkarDokument = ({
               label: 'Vilkåret er oppfylt for deler av perioden',
               element: (
                 <div className="my-2">
-                  <Datepicker
+                  <RhfDatepicker
+                    control={control}
                     name={`avklarteKrav.${dokumentIndex}.fraDato`}
                     label="Oppgi dato søknadsfristvilkåret er oppfylt fra"
                     validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}

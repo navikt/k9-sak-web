@@ -123,17 +123,17 @@ const VurderingAvNattevåksperioderForm = ({
           shouldShowSubmitButton={!readOnly}
           smallButtons
         >
-          <Box marginBlock="6 0">
+          <Box.New marginBlock="6 0">
             <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <TextAreaRHF
               label="Gjør en vurdering av om det er behov for nattevåk etter § 9-11, tredje ledd."
               name={FieldName.BEGRUNNELSE}
               disabled={readOnly}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <RadioGroupPanelRHF
               question="Er det behov for nattevåk?"
               radios={[
@@ -144,9 +144,9 @@ const VurderingAvNattevåksperioderForm = ({
               name={FieldName.HAR_BEHOV_FOR_NATTEVÅK}
               disabled={readOnly}
             />
-          </Box>
+          </Box.New>
           {erDetBehovForNattevåk === RadioOptions.JA_DELER && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <PeriodpickerListRHF
                 name={FieldName.PERIODER}
                 legend="I hvilke perioder er det behov for nattevåk?"
@@ -164,19 +164,19 @@ const VurderingAvNattevåksperioderForm = ({
                   )
                 }
                 renderAfterFieldArray={fieldArrayMethods => (
-                  <Box marginBlock="6 0">
+                  <Box.New marginBlock="6 0">
                     <AddButton
                       label="Legg til periode"
                       onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                       id="leggTilPeriodeKnapp"
                     />
-                  </Box>
+                  </Box.New>
                 )}
               />
-            </Box>
+            </Box.New>
           )}
           {perioderUtenBehovForNattevåk.length > 0 && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <Alert size="small" variant="info">
                 <LabelledContent
                   label="Resterende perioder har søkeren ikke behov for nattevåk:"
@@ -187,7 +187,7 @@ const VurderingAvNattevåksperioderForm = ({
                   ))}
                 />
               </Alert>
-            </Box>
+            </Box.New>
           )}
         </FormWithButtons>
       </FormProvider>
