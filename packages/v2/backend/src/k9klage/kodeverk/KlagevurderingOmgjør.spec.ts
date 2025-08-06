@@ -1,4 +1,4 @@
-import { isKlagevurderingOmgjørType, KlagevurderingOmgjør } from './KlagevurderingOmgjør.ts';
+import { isKlagevurderingOmgjørType, KlagevurderingOmgjør } from './KlagevurderingOmgjør.js';
 
 describe('isKlagevurderingOmgjørType', () => {
   it('skal returnere true for enum verdier', () => {
