@@ -13,7 +13,7 @@ import {
   type HistorikkAktørDtoType,
   HistorikkAktørDtoType as historikkAktør,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { type HistorikkAktørDtoType as KlageHistorikkAktørDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { type klage_kodeverk_historikk_HistorikkAktør as KlageHistorikkAktørDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { isLegacyTilbakeHistorikkAktor } from './snakkebobleUtils.jsx';
 
 interface Props {
