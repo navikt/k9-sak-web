@@ -36,7 +36,6 @@ spec:
     outbound:
       rules:
         - application: ung-sak
-        - application: ung-tilbake
   env:
     - name: APP_NAME
       value: ung-sak-web
