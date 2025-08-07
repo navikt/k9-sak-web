@@ -22,13 +22,13 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
           <CheckmarkCircleFillIcon
             title="Vilkåret er oppfylt"
             fontSize="1.75rem"
-            style={{ color: 'var(--a-surface-success)' }}
+            style={{ color: 'var(--ax-bg-success-strong)' }}
           />
         ) : (
           <XMarkOctagonFillIcon
             title="Vilkåret er ikke oppfylt"
             fontSize="1.75rem"
-            style={{ color: 'var(--a-surface-danger)' }}
+            style={{ color: 'var(--ax-bg-danger-strong)' }}
           />
         )}
         <VStack gap="space-8">

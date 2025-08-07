@@ -60,11 +60,11 @@
 }
 
 :global(.opptjening .undefined:active) {
-  background-color: var(--a-orange-200);
-  border-color: var(--a-orange-500);
+  background-color: var(--ax-warning-300);
+  border-color: var(--ax-warning-600);
 }
 
 :global(.opptjening .undefined.vis-item.vis-selected) {
-  background-color: var(--a-orange-500);
+  background-color: var(--ax-warning-600);
   border: 1px solid #4a4a4a;
 }

@@ -12,33 +12,33 @@
 }
 
 .bubbleSaksbehandler {
-  --ac-chat-bubble-bg: var(--a-purple-100);
-  --ac-chat-avatar-bg: var(--a-purple-300);
+  --ac-chat-bubble-bg: var(--ax-meta-purple-200);
+  --ac-chat-avatar-bg: var(--ax-meta-purple-400);
 }
 
 .bubbleBeslutter {
-  --ac-chat-bubble-bg: var(--a-green-100);
-  --ac-chat-avatar-bg: var(--a-green-300);
+  --ac-chat-bubble-bg: var(--ax-success-200);
+  --ac-chat-avatar-bg: var(--ax-success-400);
 }
 
 .bubbleVedtakslosningen {
-  --ac-chat-bubble-bg: var(--a-gray-100);
-  --ac-chat-avatar-bg: var(--a-gray-300);
+  --ac-chat-bubble-bg: var(--ax-neutral-200);
+  --ac-chat-avatar-bg: var(--ax-neutral-400);
 }
 
 .bubbleSoker {
-  --ac-chat-bubble-bg: var(--a-orange-100);
-  --ac-chat-avatar-bg: var(--a-orange-300);
+  --ac-chat-bubble-bg: var(--ax-warning-200);
+  --ac-chat-avatar-bg: var(--ax-warning-400);
 }
 
 .bubbleSokerKvinne {
-  --ac-chat-bubble-bg: var(--a-orange-100);
-  --ac-chat-avatar-bg: var(--a-red-300);
+  --ac-chat-bubble-bg: var(--ax-warning-200);
+  --ac-chat-avatar-bg: var(--ax-danger-400);
 }
 
 .bubbleSokerMann {
-  --ac-chat-bubble-bg: var(--a-orange-100);
-  --ac-chat-avatar-bg: var(--a-blue-400);
+  --ac-chat-bubble-bg: var(--ax-warning-200);
+  --ac-chat-avatar-bg: var(--ax-accent-500);
 }
 
 .bubbleArbeidsgiver {
@@ -47,8 +47,8 @@
 }
 
 .bubbleUdefinert {
-  --ac-chat-bubble-bg: var(--a-surface-warning-subtle);
-  --ac-chat-avatar-bg: var(--a-surface-warning);
+  --ac-chat-bubble-bg: var(--ax-bg-warning-soft);
+  --ac-chat-avatar-bg: var(--ax-bg-warning-strong);
 }
 
 .chatRight {

@@ -14,7 +14,7 @@ const SlettPeriodeModal = ({ showModal = false, closeEvent, cancelEvent }: OwnPr
       <Modal.Body>
         <VStack gap="space-8">
           <HStack gap="space-16">
-            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             <BodyShort size="small" className={styles['modalLabel']}>
               Perioden vil bli slettet
             </BodyShort>

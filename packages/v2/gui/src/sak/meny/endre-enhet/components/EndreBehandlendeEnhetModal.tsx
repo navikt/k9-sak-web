@@ -63,7 +63,7 @@ export const EndreBehandlendeEnhetModal = ({
             <div className="relative">
               <CheckmarkCircleFillIcon
                 fontSize={30}
-                style={{ color: 'var(--a-surface-success)' }}
+                style={{ color: 'var(--ax-bg-success-strong)' }}
                 aria-label="Endre enhet"
               />
               <div className={styles.divider} />

@@ -1,11 +1,11 @@
 .saksbehandler {
-  --ac-chat-avatar-bg: var(--a-purple-100);
-  --ac-chat-bubble-bg: var(--a-purple-100);
+  --ac-chat-avatar-bg: var(--ax-meta-purple-200);
+  --ac-chat-bubble-bg: var(--ax-meta-purple-200);
 }
 
 .beslutter {
-  --ac-chat-avatar-bg: var(--a-green-100);
-  --ac-chat-bubble-bg: var(--a-green-100);
+  --ac-chat-avatar-bg: var(--ax-success-200);
+  --ac-chat-bubble-bg: var(--ax-success-200);
 }
 
 .vedtakslosningen {

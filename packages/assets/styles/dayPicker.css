@@ -165,7 +165,7 @@
 }
 
 .DayPicker-Day:last-child {
-  color: var(--a-nav-red);
+  color: var(--ax-text-logo);
 }
 
 .DayPicker--interactionDisabled .DayPicker-Day {
@@ -203,10 +203,10 @@
 }
 
 .DayPicker-Day--sunday:not(.DayPicker-Day--today) {
-  color: var(--a-nav-red);
+  color: var(--ax-text-logo);
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled, .DayPicker-Day--outside) {
-  background-color: var(--a-deepblue-500);
+  background-color: var(--ax-brand-blue-600);
   color: var(--a-white);
 }

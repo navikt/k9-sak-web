@@ -32,7 +32,7 @@
 
 .overskrift:focus .knapp {
   border-radius: 5px;
-  outline: 2px solid var(--a-blue-500);
+  outline: 2px solid var(--ax-accent-600);
 }
 
 .overskrift:focus .knapp:hover {
@@ -46,7 +46,7 @@
 .knapp {
   background-color: inherit;
   border: none;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   font-size: 0.9em;
   padding: 0.2em;
   text-decoration: underline;
@@ -58,7 +58,7 @@
 }
 
 .dagerNavKanUtbetale .overskrift {
-  border-color: var(--a-purple-500);
+  border-color: var(--ax-meta-purple-600);
 }
 
 .dagerSokerHarRettPa .overskrift {
@@ -70,7 +70,7 @@
 }
 
 .restdager .overskrift {
-  border-color: var(--a-green-500);
+  border-color: var(--ax-success-600);
 }
 
 .overskrifttekst {
@@ -241,7 +241,7 @@ tbody:nth-child(odd) .banner {
 .knappForAlleUtregninger {
   background-color: inherit;
   border: none;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   font-size: 0.9em;
   margin-left: auto;
   padding: 0.2em;
@@ -254,7 +254,7 @@ tbody:nth-child(odd) .banner {
 }
 
 .knappForAlleUtregninger:focus {
-  outline: 2px solid var(--a-blue-500);
+  outline: 2px solid var(--ax-accent-600);
 }
 
 .knappForAlleUtregninger img {

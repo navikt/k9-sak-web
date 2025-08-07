@@ -141,7 +141,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                           <PlusCircleIcon
                             title="Ny arbeidsgiver"
                             fontSize="1.5rem"
-                            className="text-[var(--a-blue-500)]"
+                            className="text-[var(--ax-accent-600)]"
                           />
                         }
                         onClick={() => setOpen(true)}
@@ -197,7 +197,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                       remove(index);
                     }}
                     data-testid="removeButton"
-                    icon={<XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--a-nav-red)]" />}
+                    icon={<XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--ax-text-logo)]" />}
                   />
                 )}
               </HStack>
@@ -212,7 +212,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
               variant="secondary-neutral"
               type="button"
               onClick={() => append(defaultAndel)}
-              icon={<PlusCircleIcon fontSize="1.5rem" className="text-[var(--a-blue-500)]" />}
+              icon={<PlusCircleIcon fontSize="1.5rem" className="text-[var(--ax-accent-600)]" />}
               iconPosition="left"
             >
               Ny andel

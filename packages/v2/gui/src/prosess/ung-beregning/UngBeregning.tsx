@@ -82,7 +82,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
                   label="Inntekt"
                   icon={
                     harUløstAksjonspunkt && (
-                      <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                      <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--ax-text-warning-decoration)" />
                     )
                   }
                 />

@@ -241,7 +241,7 @@ const FatterVedtakApprovalModal = ({
             <CheckmarkCircleFillIcon
               title={altImgText}
               fontSize={30}
-              style={{ color: 'var(--a-surface-success)', marginTop: '6px' }}
+              style={{ color: 'var(--ax-bg-success-strong)', marginTop: '6px' }}
             />
             <div className={styles.divider} />
           </div>

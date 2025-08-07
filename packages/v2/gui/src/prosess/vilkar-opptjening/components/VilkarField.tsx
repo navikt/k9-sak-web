@@ -89,9 +89,9 @@ export const VilkarField = ({
         {readOnly && (
           <div className="flex gap-4">
             {erVilkarOk(field?.kode) ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )}
             <BodyShort size="small">{vilkarVurderingTekst()}</BodyShort>
           </div>

@@ -69,7 +69,7 @@ const PeriodeRad = ({
                     <div className={styles['iconContainer']}>
                       <Button
                         icon={
-                          <XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--a-nav-red)]" />
+                          <XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--ax-text-logo)]" />
                         }
                         variant="tertiary"
                         size="small"

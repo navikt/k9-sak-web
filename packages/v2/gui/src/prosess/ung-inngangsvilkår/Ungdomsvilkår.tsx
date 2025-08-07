@@ -75,7 +75,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
             <CheckmarkCircleFillIcon
               title="Vilkåret er oppfylt"
               fontSize="1.75rem"
-              style={{ color: 'var(--a-surface-success)' }}
+              style={{ color: 'var(--ax-bg-success-strong)' }}
             />
             <VStack gap="space-8">
               <VilkårHeadingSection lovreferanse={vilkår?.lovReferanse} />

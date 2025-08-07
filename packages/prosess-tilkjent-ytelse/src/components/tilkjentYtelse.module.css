@@ -86,7 +86,7 @@
 }
 
 .detailsPeriode {
-  background-color: var(--a-green-100);
+  background-color: var(--ax-success-200);
   margin-right: 8px;
   max-width: 500px;
   padding: 16px;

@@ -14,7 +14,7 @@
 .buttonLink {
   background: none;
   border: 0;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   cursor: pointer;
   font: inherit;
   padding: 0;
@@ -62,7 +62,7 @@
 .knappContainer {
   align-self: flex-start;
   border: none;
-  background: var(--a-blue-50);
+  background: var(--ax-accent-100);
   border-radius: 4px;
   padding: 1.4375rem 1.75rem 0.9375rem;
   order: 1;

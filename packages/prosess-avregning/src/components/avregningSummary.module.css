@@ -28,12 +28,12 @@
 }
 
 .resultSum .redNumbers .redNumber {
-  color: var(--a-nav-red);
+  color: var(--ax-text-logo);
   font-weight: bold;
 }
 
 .resultSum .redNumbers .lastNumberRed {
-  color: var(--a-nav-red);
+  color: var(--ax-text-logo);
   font-weight: bold;
   padding-left: 15px;
 }

@@ -93,9 +93,9 @@ const VilkarresultatMedOverstyringHeader = ({
           {!erOverstyrt && erVilkarOk !== undefined && (
             <>
               {erVilkarOk ? (
-                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
               ) : (
-                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
               )}
             </>
           )}

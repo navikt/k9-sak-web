@@ -113,9 +113,9 @@ export const SoknadsfristVilkarDokument = ({
           <div className="flex">
             <div className="px-2">
               {erVilkarOk ? (
-                <CheckmarkIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+                <CheckmarkIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
               ) : (
-                <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--a-surface-danger)' }} />
+                <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--ax-bg-danger-strong)' }} />
               )}
             </div>
             <div className="px-2">

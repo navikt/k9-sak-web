@@ -32,10 +32,10 @@ const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus,
     return <AksjonspunktIkon size="small" />;
   }
   if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
-    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
   if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT) {
-    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
   return null;
 };

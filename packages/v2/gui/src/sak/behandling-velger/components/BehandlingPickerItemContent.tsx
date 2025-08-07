@@ -99,7 +99,11 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         </div>
         <div className={styles.åpneText}>
           <BodyShort size="small">Åpne</BodyShort>
-          <ChevronRightIcon title="Åpne" fontSize="1.5rem" style={{ color: 'var(--a-blue-500)', fontSize: '1.5rem' }} />
+          <ChevronRightIcon
+            title="Åpne"
+            fontSize="1.5rem"
+            style={{ color: 'var(--ax-accent-600)', fontSize: '1.5rem' }}
+          />
         </div>
       </div>
     </Box.New>

@@ -45,11 +45,11 @@ export const getStatusIcon = (behandlingsresultatTypeKode?: string, className?: 
   }
 
   if (behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.INNVILGET) {
-    return <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
 
   if (behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.AVSLÅTT) {
-    return <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
 
   return null;

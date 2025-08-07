@@ -187,7 +187,7 @@ export const SettPaVentModal = ({
         <Modal.Header>
           <div className={styles.topContainer}>
             <div>
-              <CheckmarkCircleFillIcon fontSize={30} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={30} style={{ color: 'var(--ax-bg-success-strong)' }} />
             </div>
             <div className={styles.divider} />
             <div className={styles.calendarContainer}>

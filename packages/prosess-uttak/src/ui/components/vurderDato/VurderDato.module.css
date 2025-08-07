@@ -9,11 +9,13 @@
 }
 
 .alertAccordion :global(.aksel-accordion__header) {
-  --a-spacing-3: 0;
+  /* stylelint-disable-next-line */
+  --aksel-legacy__a-spacing-3: 0;
 
   box-shadow: none !important;
 }
 
 .alertAccordion :global(.aksel-accordion__content) {
-  --a-spacing-5: 0;
+  /* stylelint-disable-next-line */
+  --aksel-legacy__a-spacing-5: 0;
 }
