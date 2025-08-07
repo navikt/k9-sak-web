@@ -19,7 +19,7 @@ export const DefaultErrorMsg = () => (
 export const BigError = ({ title = 'Uventet feil', children = <DefaultErrorMsg /> }: BigErrorProps) => {
   return (
     <HStack justify="center" align="center" gap="space-16" marginBlock="24">
-      <XMarkOctagonIcon fontSize="4rem" style={{ color: 'var(--a-text-danger)' }} />
+      <XMarkOctagonIcon fontSize="4rem" style={{ color: 'var(--ax-text-danger-subtle)' }} />
       <VStack>
         {title && <Heading size="large">{title}</Heading>}
         {children && <div>{children}</div>}
