@@ -1,5 +1,6 @@
 @import url('tailwindcss/base');
 @import url('@navikt/ds-css');
+@import url('@navikt/ds-tokens/darkside-css');
 @import url('tailwindcss/components');
 @import url('tailwindcss/utilities');
 @import url('dayPicker.css');

@@ -2,7 +2,19 @@ import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import type { Period } from '@navikt/ft-utils';
-import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
+import {
+  Alert,
+  BodyShort,
+  Button,
+  Heading,
+  Label,
+  Link,
+  List,
+  Radio,
+  RadioGroup,
+  ReadMore,
+  Textarea,
+} from '@navikt/ds-react';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
 import { useContext, useEffect } from 'react';
@@ -11,6 +23,8 @@ import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
+import { Periodevisning } from '../../../shared/detailView/DetailView.js';
+import InstitusjonOgSykdomInfo from './InstitusjonOgSykdomInfo.js';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
   if (value === undefined) return '';
@@ -100,7 +114,7 @@ const NødvendigOpplæringForm = ({
             }
             render={({ field }) => (
               <RadioGroup
-                legend="Er nødvendig opplæring dokumentert med legeerklæring?"
+                legend="Har vi fått legeerklæring?"
                 {...field}
                 readOnly={readOnly}
                 size="small"
@@ -111,11 +125,17 @@ const NødvendigOpplæringForm = ({
               </RadioGroup>
             )}
           />
+          <div className={`flex flex-col gap-6 ${opplæringIkkeDokumentertMedLegeerklæring ? 'opacity-30' : ''}`}>
+            <div className="mt-4">
+              <Heading size="small" level="2" className="!mb-0">
+                Vurdering av nødvendig opplæring
+              </Heading>
+              <Periodevisning perioder={vurdering.perioder} />
+            </div>
+            <div className="border-none bg-border-subtle h-[2px]" />
+            <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
+          </div>
           <div>
-            <Label htmlFor="begrunnelse" size="small">
-              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
-              <Lovreferanse> § 9-14</Lovreferanse>
-            </Label>
             <Textarea
               {...formMethods.register('begrunnelse', {
                 validate: opplæringIkkeDokumentertMedLegeerklæring
@@ -124,7 +144,13 @@ const NødvendigOpplæringForm = ({
               })}
               readOnly={readOnly}
               size="small"
-              label=""
+              label={
+                <Label htmlFor="begrunnelse" size="small">
+                  Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
+                  <Lovreferanse> § 9-14, første ledd</Lovreferanse>
+                </Label>
+              }
+              minRows={3}
               id="begrunnelse"
               error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
               disabled={opplæringIkkeDokumentertMedLegeerklæring}
@@ -141,11 +167,15 @@ const NødvendigOpplæringForm = ({
                     </Link>{' '}
                     når du skriver vurderingen.
                   </BodyShort>
-                  <div className="mt-4">
+                  <div className="mt-6">
                     Vurderingen skal beskrive:
-                    <List size="small">
-                      <ListItem>Om kursinnholdet tilsier at det er opplæring</ListItem>
-                      <ListItem>Om det er årsakssammenheng mellom opplæringen og sykdom til barnet</ListItem>
+                    {/* overrider margin-block i List sitt child element ul med important*/}
+                    <List size="small" className="[&>ul]:!m-0">
+                      {/* !mb-0 overrider marign-block-end med important*/}
+                      <ListItem className="!mb-0">Om kursinnholdet tilsier at det er opplæring</ListItem>
+                      <ListItem className="!mb-0">
+                        Om det er årsakssammenheng mellom opplæringen og sykdom til barnet
+                      </ListItem>
                     </List>
                   </div>
                 </ReadMore>
@@ -170,11 +200,12 @@ const NødvendigOpplæringForm = ({
                 error={formMethods.formState.errors.nødvendigOpplæring?.message as string | undefined}
               >
                 <Radio value="ja">Ja</Radio>
+                <Radio value="delvis">Deler av perioden</Radio>
                 <Radio value="nei">Nei</Radio>
               </RadioGroup>
             )}
           />
-          {nødvendigOpplæring === 'ja' && (
+          {nødvendigOpplæring === 'delvis' && (
             <PeriodePicker
               minDate={new Date(vurdering.opplæring.fom)}
               maxDate={new Date(vurdering.opplæring.tom)}
@@ -233,6 +264,13 @@ const NødvendigOpplæringForm = ({
                 </RadioGroup>
               )}
             />
+          )}
+          {opplæringIkkeDokumentertMedLegeerklæring && (
+            <Alert variant="info" size="small">
+              Behandlingen vil gå videre til avslag for manglende dokumentasjon av nødvendig opplæring etter{' '}
+              <Lovreferanse>§9-14</Lovreferanse> og <Lovreferanse>§22-3</Lovreferanse>. Før du kan avslå må du etterlyse
+              dokumentasjon fra bruker.
+            </Alert>
           )}
           {!readOnly && (
             <div className="flex gap-4">
