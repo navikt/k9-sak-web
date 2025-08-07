@@ -38,7 +38,7 @@ export const getStatusIcon = (behandlingsresultatTypeKode?: string, className?: 
       <ExclamationmarkTriangleFillIcon
         fontSize="1.25rem"
         className={className}
-        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+        style={{ color: 'var(--ax-text-warning-decoration)' }}
         title="Under behandling"
       />
     );

@@ -26,11 +26,7 @@ const ErrorMessageDetailsModal = ({ showModal, closeModalFn, errorDetails }: Own
     header={{
       heading: 'Detaljert informasjon',
       closeButton: false,
-      icon: (
-        <ExclamationmarkTriangleFillIcon
-          style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
-        />
-      ),
+      icon: <ExclamationmarkTriangleFillIcon style={{ color: 'var(--ax-text-warning-decoration))' }} />,
     }}
   >
     <Modal.Body>

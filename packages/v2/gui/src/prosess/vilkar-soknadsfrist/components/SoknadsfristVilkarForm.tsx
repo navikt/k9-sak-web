@@ -264,7 +264,7 @@ export const SoknadsfristVilkarForm = ({
                 <ExclamationmarkTriangleFillIcon
                   title="Aksjonspunkt"
                   fontSize="1.5rem"
-                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl"
+                  className="text-[var(--ax-text-warning-decoration))] text-2xl"
                 />
                 <Label size="small" as="p">
                   Overstyring skal kun gjøres i unntakstilfeller

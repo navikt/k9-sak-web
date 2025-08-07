@@ -59,7 +59,7 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
         <div className={styles.medisinskVilkårTabItem__warningIcon}>
           <ExclamationmarkTriangleFillIcon
             fontSize="1.5rem"
-            style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))', fontSize: '1.5rem' }}
+            style={{ color: 'var(--ax-text-warning-decoration))', fontSize: '1.5rem' }}
           />
         </div>
       )}

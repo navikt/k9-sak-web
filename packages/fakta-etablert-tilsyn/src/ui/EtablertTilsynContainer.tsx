@@ -34,10 +34,7 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
     <div className={cls}>
       {label}
       {showWarningIcon && (
-        <ExclamationmarkTriangleFillIcon
-          fontSize="1.5rem"
-          style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
-        />
+        <ExclamationmarkTriangleFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-text-warning-decoration))' }} />
       )}
     </div>
   );

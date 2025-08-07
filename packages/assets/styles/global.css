@@ -1,5 +1,4 @@
 @import url('tailwindcss/base');
-@import url('@navikt/ds-css');
 @import url('tailwindcss/components');
 @import url('tailwindcss/utilities');
 @import url('dayPicker.css');
@@ -526,7 +525,7 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   width: 80px;
 }
 
-.aksel-tabs__tab.harAksjonspunkt {
+.navds-tabs__tab.harAksjonspunkt {
   border-top: 5px solid var(--a-orange-200) !important;
 }
 

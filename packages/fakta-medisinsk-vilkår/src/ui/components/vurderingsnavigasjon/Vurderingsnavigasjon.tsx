@@ -89,7 +89,7 @@ const Vurderingsnavigasjon = ({
           <ExclamationmarkTriangleFillIcon
             title="Perioden må vurderes"
             fontSize="1.5rem"
-            style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+            style={{ color: 'var(--ax-text-warning-decoration))' }}
           />
         )}
         visParterLabel={visParterLabel}
