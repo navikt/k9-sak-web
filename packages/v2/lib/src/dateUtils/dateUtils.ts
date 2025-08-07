@@ -5,6 +5,106 @@ import { initializeDate } from './initializeDate';
 export const TIDENES_ENDE = '9999-12-31';
 export const TIMER_PER_DAG = 7.5;
 
+// Type for periods that can be combined
+export type Period = { fom: string; tom: string };
+
+// Type for single dates or periods
+export type DateOrPeriod = string | Period;
+
+// Helper function to check if a date is within a period
+const isDateInPeriod = (date: string, period: Period): boolean => {
+  const dateObj = initializeDate(date);
+  const fomObj = initializeDate(period.fom);
+  const tomObj = initializeDate(period.tom);
+  return dateObj.isSameOrAfter(fomObj) && dateObj.isSameOrBefore(tomObj);
+};
+
+// Helper function to check if two periods are consecutive (edge to edge)
+const arePeriodsConsecutive = (period1: Period, period2: Period): boolean => {
+  const period1Tom = initializeDate(period1.tom);
+  const period2Fom = initializeDate(period2.fom);
+  return period1Tom.add(1, 'day').isSame(period2Fom);
+};
+
+// Helper function to check if two periods can be combined
+const canCombinePeriods = (period1: Period, period2: Period): boolean => {
+  // Check if periods overlap
+  const hasOverlap = isDateInPeriod(period2.fom, period1) || isDateInPeriod(period1.tom, period2);
+  // Check if periods are consecutive
+  const areConsecutive = arePeriodsConsecutive(period1, period2);
+  return hasOverlap || areConsecutive;
+};
+
+// Helper function to combine two periods
+const combineTwoPeriods = (period1: Period, period2: Period): Period => {
+  const fom1 = initializeDate(period1.fom);
+  const tom1 = initializeDate(period1.tom);
+  const fom2 = initializeDate(period2.fom);
+  const tom2 = initializeDate(period2.tom);
+  
+  const newFom = fom1.isBefore(fom2) ? period1.fom : period2.fom;
+  const newTom = tom1.isAfter(tom2) ? period1.tom : period2.tom;
+  
+  return { fom: newFom, tom: newTom };
+};
+
+// Helper function to convert single dates to periods
+const convertDateToPeriod = (dateOrPeriod: DateOrPeriod): Period => {
+  if (typeof dateOrPeriod === 'string') {
+    return { fom: dateOrPeriod, tom: dateOrPeriod };
+  }
+  return dateOrPeriod;
+};
+
+// Helper function to sort periods by start date
+const sortPeriodsByFom = (periods: Period[]): Period[] => {
+  return periods.sort((a, b) => {
+    const aFom = initializeDate(a.fom);
+    const bFom = initializeDate(b.fom);
+    return aFom.isBefore(bFom) ? -1 : aFom.isAfter(bFom) ? 1 : 0;
+  });
+};
+
+/**
+ * Combines consecutive and overlapping periods into a minimal set of non-overlapping periods.
+ * Can handle both single dates (as strings) and periods (as objects with fom and tom).
+ * 
+ * @param datesOrPeriods - Array of dates (strings) or periods (objects with fom and tom)
+ * @returns Array of combined periods
+ */
+export const combineConsecutivePeriods = (datesOrPeriods: DateOrPeriod[]): Period[] => {
+  if (!datesOrPeriods || datesOrPeriods.length === 0) {
+    return [];
+  }
+
+  // Convert all inputs to periods
+  const periods: Period[] = datesOrPeriods.map(convertDateToPeriod);
+  
+  // Sort periods by start date
+  const sortedPeriods = sortPeriodsByFom(periods);
+  const combinedPeriods: Period[] = [];
+
+  for (const currentPeriod of sortedPeriods) {
+    const lastCombinedPeriod = combinedPeriods[combinedPeriods.length - 1];
+    
+    if (!lastCombinedPeriod) {
+      combinedPeriods.push(currentPeriod);
+      continue;
+    }
+
+    if (canCombinePeriods(lastCombinedPeriod, currentPeriod)) {
+      // Combine with the last period
+      const combinedPeriod = combineTwoPeriods(lastCombinedPeriod, currentPeriod);
+      combinedPeriods[combinedPeriods.length - 1] = combinedPeriod;
+    } else {
+      // Add as a new period
+      combinedPeriods.push(currentPeriod);
+    }
+  }
+
+  return combinedPeriods;
+};
+
 export const calcDays = (fraDatoPeriode: Dayjs | string, tilDatoPeriode: Dayjs | string, notWeekends = true) => {
   if (tilDatoPeriode === TIDENES_ENDE) {
     return checkDays(undefined, undefined);
@@ -187,3 +287,4 @@ export const formatereLukketPeriode = (periode: string): string => {
   }
   return `${formatDate(fom)} - ${formatDate(tom)}`;
 };
+

@@ -17,7 +17,7 @@ interface OpplæringVurderingselement extends Omit<Vurderingselement, 'resultat'
 
 const NødvendigOpplæring = () => {
   const { behandlingUuid, aksjonspunkter, readOnly } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
+  const aksjonspunkt9302 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
   const { data: vurdertOpplæring, isLoading: isLoadingVurdertOpplæring } = useVurdertOpplæring(behandlingUuid);
   const [valgtVurdering, setValgtVurdering] = useState<OpplæringVurderingselement | null>(null);
   const vurderingsliste = vurdertOpplæring?.vurderinger.map(vurdering => ({
@@ -30,7 +30,7 @@ const NødvendigOpplæring = () => {
   }
   return (
     <div>
-      {harAksjonspunkt9302 && !readOnly && (
+      {aksjonspunkt9302?.status.kode === 'OPPRETTET' && !readOnly && (
         <Alert className="mb-4" variant="warning" size="small">
           Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
         </Alert>

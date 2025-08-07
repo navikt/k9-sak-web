@@ -13,6 +13,7 @@ import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
+  OpplæringVurderingDtoResultat,
   VilkårMedPerioderDtoVilkarType,
   VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
@@ -103,14 +104,15 @@ type SykdomOgOpplæringContext = {
     vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
   ) => void;
   løsAksjonspunkt9302: (payload: {
-    periode: {
-      fom: string;
-      tom: string;
+    perioder: {
+      periode: {
+        fom: string;
+        tom: string;
+      };
+      begrunnelse: string | null;
+      avslagsårsak?: string;
+      vurdertOpplæringResultat: OpplæringVurderingDtoResultat;
     };
-    begrunnelse: string | null;
-    nødvendigOpplæring: boolean;
-    dokumentertOpplæring: boolean;
-    avslagsårsak?: string;
   }) => void;
   løsAksjonspunkt9303: (payload: {
     periode: {

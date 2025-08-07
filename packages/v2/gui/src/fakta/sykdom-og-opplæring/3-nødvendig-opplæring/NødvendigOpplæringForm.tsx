@@ -1,7 +1,12 @@
-import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  OpplæringVurderingDtoAvslagsårsak,
+  OpplæringVurderingDtoResultat,
+  type OpplæringVurderingDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
-import type { Period } from '@navikt/ft-utils';
+import { Controller, useFieldArray, useForm, useFormContext } from 'react-hook-form';
+import { Period } from '@navikt/ft-utils';
+import { Period as PeriodType } from '@navikt/ft-utils';
 import {
   Alert,
   BodyShort,
@@ -20,23 +25,61 @@ import { ListItem } from '@navikt/ds-react/List';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
-import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { Periodevisning } from '../../../shared/detailView/DetailView.js';
 import InstitusjonOgSykdomInfo from './InstitusjonOgSykdomInfo.js';
+import { Datepicker } from '@navikt/ft-form-hooks';
+import { PlusCircleIcon, TrashIcon } from '@navikt/aksel-icons';
+import { combineConsecutivePeriods, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 
-const booleanToRadioValue = (value: boolean | undefined) => {
-  if (value === undefined) return '';
-  return value ? 'ja' : 'nei';
+const utledNødvendigOpplæring = (resultat: OpplæringVurderingDtoResultat): 'JA' | 'DELVIS' | 'NEI' | '' => {
+  if (resultat === OpplæringVurderingDtoResultat.GODKJENT) {
+    return 'JA';
+  }
+  if (resultat === OpplæringVurderingDtoResultat.IKKE_GODKJENT) {
+    return 'NEI';
+  }
+  return '';
 };
 
-const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] }) => {
+const utledHarLegeerklæring = (resultat: OpplæringVurderingDtoResultat): 'JA' | 'NEI' | '' => {
+  if (resultat === OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT) {
+    return 'NEI';
+  }
+  if (resultat === OpplæringVurderingDtoResultat.MÅ_VURDERES) {
+    return '';
+  }
+  return 'JA';
+};
+
+const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: PeriodType[] }) => {
   return {
-    dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
     begrunnelse: vurdering.begrunnelse,
-    nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
+    resultat: vurdering.resultat,
+    harLegeerklæring: utledHarLegeerklæring(vurdering.resultat),
+    harNødvendigOpplæring: utledNødvendigOpplæring(vurdering.resultat),
+    perioder: vurdering.perioder.map(periode => ({
+      resultat: vurdering.resultat,
+      avslagsårsak: vurdering.avslagsårsak,
+      fom: periode.fom,
+      tom: periode.tom,
+    })),
   };
+};
+
+type NødvendigOpplæringFormFields = {
+  begrunnelse: string;
+  resultat: OpplæringVurderingDtoResultat;
+  harLegeerklæring: 'JA' | 'NEI' | '';
+  harNødvendigOpplæring: 'JA' | 'DELVIS' | 'NEI' | '';
+  avslagsårsak?: OpplæringVurderingDtoAvslagsårsak;
+  perioder: {
+    resultat?: OpplæringVurderingDtoResultat;
+    avslagsårsak?: OpplæringVurderingDtoAvslagsårsak;
+    fom: string;
+    tom: string;
+  }[];
 };
 
 const NødvendigOpplæringForm = ({
@@ -44,21 +87,12 @@ const NødvendigOpplæringForm = ({
   setRedigering,
   redigering,
 }: {
-  vurdering: OpplæringVurderingDto & { perioder: Period[] };
+  vurdering: OpplæringVurderingDto & { perioder: PeriodType[] };
   setRedigering: (redigering: boolean) => void;
   redigering: boolean;
 }) => {
   const { løsAksjonspunkt9302, readOnly } = useContext(SykdomOgOpplæringContext);
-  const formMethods = useForm<{
-    dokumentertOpplæring: string;
-    nødvendigOpplæring: string;
-    begrunnelse: string;
-    avslagsårsak?: string;
-    periode?: {
-      fom: Date;
-      tom: Date;
-    };
-  }>({
+  const formMethods = useForm<NødvendigOpplæringFormFields>({
     defaultValues: defaultValues(vurdering),
   });
 
@@ -70,47 +104,32 @@ const NødvendigOpplæringForm = ({
 
   const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
-  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
+  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('harLegeerklæring') === 'NEI';
 
   useEffect(() => {
     if (opplæringIkkeDokumentertMedLegeerklæring) {
-      formMethods.setValue('nødvendigOpplæring', '');
       formMethods.setValue('begrunnelse', '');
-      formMethods.setValue('avslagsårsak', KodeverdiSomObjektAvslagsårsakKilde.MANGLENDE_DOKUMENTASJON);
+      formMethods.setValue('harNødvendigOpplæring', '');
     } else {
-      formMethods.setValue('avslagsårsak', undefined);
+      formMethods.setValue('harNødvendigOpplæring', '');
     }
   }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
 
-  const nødvendigOpplæring = formMethods.watch('nødvendigOpplæring');
+  const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   return (
     <>
-      <Form
-        formMethods={formMethods}
-        onSubmit={data => {
-          const nødvendigOpplæring = data.nødvendigOpplæring === 'ja';
-          const periode = nødvendigOpplæring ? data.periode : vurdering.opplæring;
-
-          løsAksjonspunkt9302({
-            periode: {
-              fom: dayjs(periode?.fom).format('YYYY-MM-DD'),
-              tom: dayjs(periode?.tom).format('YYYY-MM-DD'),
-            },
-            begrunnelse: data.begrunnelse ? data.begrunnelse : null,
-            nødvendigOpplæring: data.nødvendigOpplæring === 'ja',
-            dokumentertOpplæring: data.dokumentertOpplæring === 'ja',
-            avslagsårsak: data.avslagsårsak,
-          });
-        }}
-      >
+      <Form formMethods={formMethods} onSubmit={data => {}}>
         <div className="flex flex-col gap-6">
           <Controller
             control={formMethods.control}
-            name="dokumentertOpplæring"
+            name="harLegeerklæring"
             rules={
               opplæringIkkeDokumentertMedLegeerklæring
                 ? undefined
-                : { validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }
+                : {
+                    validate: value =>
+                      value?.length && value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd',
+                  }
             }
             render={({ field }) => (
               <RadioGroup
@@ -118,10 +137,10 @@ const NødvendigOpplæringForm = ({
                 {...field}
                 readOnly={readOnly}
                 size="small"
-                error={formMethods.formState.errors.dokumentertOpplæring?.message as string | undefined}
+                error={formMethods.formState.errors.harLegeerklæring?.message as string | undefined}
               >
-                <Radio value="ja">Ja</Radio>
-                <Radio value="nei">Nei</Radio>
+                <Radio value="JA">Ja</Radio>
+                <Radio value="NEI">Nei</Radio>
               </RadioGroup>
             )}
           />
@@ -140,7 +159,7 @@ const NødvendigOpplæringForm = ({
               {...formMethods.register('begrunnelse', {
                 validate: opplæringIkkeDokumentertMedLegeerklæring
                   ? undefined
-                  : value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
+                  : value => (value?.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
               })}
               readOnly={readOnly}
               size="small"
@@ -184,46 +203,32 @@ const NødvendigOpplæringForm = ({
           </div>
           <Controller
             control={formMethods.control}
-            name="nødvendigOpplæring"
+            name="harNødvendigOpplæring"
             rules={
               opplæringIkkeDokumentertMedLegeerklæring
                 ? undefined
-                : { validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }
+                : {
+                    validate: value =>
+                      value?.length && value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd',
+                  }
             }
             disabled={opplæringIkkeDokumentertMedLegeerklæring}
             render={({ field }) => (
               <RadioGroup
-                legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
+                legend="Har søker opplæring som er nødvendig?"
                 {...field}
                 readOnly={readOnly}
                 size="small"
-                error={formMethods.formState.errors.nødvendigOpplæring?.message as string | undefined}
+                error={formMethods.formState.errors.harNødvendigOpplæring?.message as string | undefined}
               >
-                <Radio value="ja">Ja</Radio>
-                <Radio value="delvis">Deler av perioden</Radio>
-                <Radio value="nei">Nei</Radio>
+                <Radio value="JA">Ja</Radio>
+                <Radio value="DELVIS">Deler av perioden</Radio>
+                <Radio value="NEI">Nei</Radio>
               </RadioGroup>
             )}
           />
-          {nødvendigOpplæring === 'delvis' && (
-            <PeriodePicker
-              minDate={new Date(vurdering.opplæring.fom)}
-              maxDate={new Date(vurdering.opplæring.tom)}
-              size="small"
-              fromField={{
-                name: 'periode.fom',
-                validate: value => {
-                  return value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd';
-                },
-              }}
-              toField={{
-                name: 'periode.tom',
-                validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
-              }}
-              readOnly={readOnly}
-            />
-          )}
-          {nødvendigOpplæring === 'nei' && (
+          {nødvendigOpplæring === 'DELVIS' && <DelvisOpplæring vurdering={vurdering} />}
+          {nødvendigOpplæring === 'NEI' && (
             <Controller
               control={formMethods.control}
               name="avslagsårsak"
@@ -287,6 +292,109 @@ const NødvendigOpplæringForm = ({
         </div>
       </Form>
     </>
+  );
+};
+
+const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: PeriodType[] } }) => {
+  const opprinneligPeriode = vurdering.perioder[0]!;
+  const formMethods = useFormContext<NødvendigOpplæringFormFields>();
+  const readOnly = useContext(SykdomOgOpplæringContext).readOnly;
+  const { fields, append, remove, update } = useFieldArray({
+    control: formMethods.control,
+    name: 'perioder',
+  });
+  console.log(formMethods.watch('perioder'));
+  console.log(fields);
+
+  const opprinneligPeriodeDays = new Period(opprinneligPeriode.fom, opprinneligPeriode.tom).asListOfDays();
+  const perioderDays = fields.map(periode => new Period(periode.fom, periode.tom).asListOfDays());
+  const uncoveredDays = opprinneligPeriodeDays.filter(day => !perioderDays.some(period => period.includes(day)));
+  const uncoveredPeriods = combineConsecutivePeriods(uncoveredDays);
+
+  console.log(uncoveredPeriods);
+  return (
+    <div id="delvis-opplæring">
+      <div className="flex flex-col gap-4">
+        <Label size="small">I hvilken periode er det nødvendig opplæring?</Label>
+        {fields.map((v, index) => (
+          <div className="flex gap-4" key={v.id}>
+            <Controller
+              control={formMethods.control}
+              name={`perioder.${index}.fom`}
+              render={({ field }) => (
+                <Datepicker
+                  {...field}
+                  label="Fra"
+                  size="small"
+                  disabled={readOnly}
+                  validate={[
+                    (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
+                    (value: string) =>
+                      value && dayjs(value).isSameOrBefore(dayjs(v.tom)) ? undefined : 'Fra må være før til',
+                  ]}
+                  fromDate={new Date(opprinneligPeriode.fom)}
+                  toDate={new Date(opprinneligPeriode.tom)}
+                  onChange={value => {
+                    field.onChange(value);
+                    update(index, { ...v, fom: value });
+                  }}
+                />
+              )}
+            />
+            <Controller
+              control={formMethods.control}
+              name={`perioder.${index}.tom`}
+              render={({ field }) => (
+                <Datepicker
+                  {...field}
+                  label="Til"
+                  size="small"
+                  disabled={readOnly}
+                  validate={[
+                    (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
+                    (value: string) =>
+                      value && dayjs(v.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra',
+                  ]}
+                  fromDate={new Date(vurdering.opplæring.fom)}
+                  toDate={new Date(vurdering.opplæring.tom)}
+                  onChange={value => {
+                    field.onChange(value);
+                    update(index, { ...v, tom: value });
+                  }}
+                />
+              )}
+            />
+            {index > 0 && (
+              <Button variant="tertiary" size="small" type="button" onClick={() => remove(index)} icon={<TrashIcon />}>
+                Fjern
+              </Button>
+            )}
+          </div>
+        ))}
+        <div>
+          <Button
+            variant="tertiary"
+            size="small"
+            type="button"
+            icon={<PlusCircleIcon />}
+            iconPosition="left"
+            onClick={() => {
+              append({
+                fom: '',
+                tom: '',
+                resultat: undefined,
+                avslagsårsak: undefined,
+              });
+            }}
+          >
+            Legg til ny periode
+          </Button>
+          <div>
+            {`Hva vil du gjøre med dagene ${uncoveredPeriods.map(period => formatPeriod(period.fom, period.tom)).join(', ')}?`}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
