@@ -36,7 +36,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   ) {
     return (
       <Tooltip content="Vilkåret er oppfylt">
-        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
       </Tooltip>
     );
   }
@@ -50,7 +50,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
       <XMarkOctagonFillIcon
         title="Vilkåret er ikke oppfylt"
         fontSize={24}
-        style={{ color: 'var(--a-surface-danger)' }}
+        style={{ color: 'var(--ax-bg-danger-strong)' }}
       />
     );
   }

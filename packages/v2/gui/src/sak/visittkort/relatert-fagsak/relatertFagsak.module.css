@@ -28,7 +28,7 @@
   align-items: center;
   background: transparent;
   border: none;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   cursor: pointer;
   display: flex;
   overflow: hidden;
@@ -58,7 +58,7 @@
 }
 
 .relatertFagsakName:global(.aksel-body-short) {
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   font-weight: 400;
   line-height: 1.25rem;
   padding: 0 1.5px;
