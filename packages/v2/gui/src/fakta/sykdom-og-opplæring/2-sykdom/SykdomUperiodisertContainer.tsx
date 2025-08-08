@@ -14,7 +14,7 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
   const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   useEffect(() => {
-    if (!vurdering.vurdertTidspunkt || vurdering.behandlingUuid !== behandlingUuid) {
+    if (!vurdering.vurdertTidspunkt || vurdering.kanOppdateres !== true) {
       setRedigering(false);
     }
   }, [vurdering, behandlingUuid]);
