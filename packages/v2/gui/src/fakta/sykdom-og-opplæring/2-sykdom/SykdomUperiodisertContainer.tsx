@@ -14,10 +14,10 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
   const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   useEffect(() => {
-    if (!vurdering.vurdertTidspunkt || vurdering.behandlingUuid !== behandlingUuid) {
+    if (!vurdering.vurdertTidspunkt || vurdering.kanOppdateres !== true) {
       setRedigering(false);
     }
-  }, [vurdering, behandlingUuid]);
+  }, [vurdering]);
 
   useEffect(() => {
     if (redigering) {
@@ -40,7 +40,7 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
       contentAfterTitleRenderer={() =>
         !readOnly &&
         harAksjonspunkt9301 &&
-        vurdering.behandlingUuid === behandlingUuid && (
+        vurdering.kanOppdateres && (
           <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
         )
       }
