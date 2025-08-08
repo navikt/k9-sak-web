@@ -37,6 +37,7 @@ interface ContainerContract {
   status?: string | false;
   readOnly: boolean;
   vurderOverlappendeSakComponent?: ReactNode;
+  oppdaterBehandling: () => void;
 }
 
 export default ContainerContract;

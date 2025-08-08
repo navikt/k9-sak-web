@@ -12,6 +12,8 @@ const meta: Meta<typeof UttakContainer> = {
 export default meta;
 type Story = StoryObj<typeof UttakContainer>;
 
+function oppdaterBehandling(): void {}
+
 export const Uttak: Story = {
   args: {
     containerData: {
@@ -211,6 +213,7 @@ export const Uttak: Story = {
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: '',
       readOnly: false,
+      oppdaterBehandling,
     },
   },
 };
@@ -471,6 +474,7 @@ export const UttakMedInntektsgradering: Story = {
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: null,
       readOnly: false,
+      oppdaterBehandling,
     },
   },
   decorators: [],

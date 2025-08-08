@@ -1,10 +1,10 @@
 import { Button } from '@navikt/ds-react';
 import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import ContainerContext from '../../context/ContainerContext';
 import styles from './VurderDatoAksjonspunkt.module.css';
+import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
+import { AksjonspunktDtoDefinisjon, type BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 
 interface FormData {
   virkningsdato: string;
@@ -18,21 +18,37 @@ interface Props {
     begrunnelse: string;
   };
   readOnly: boolean;
+  api: BehandlingUttakBackendClient;
+  behandling: Pick<BehandlingDto, 'id' | 'versjon'>;
+  oppdaterBehandling: () => void;
 }
 
-const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly }: Props) => {
-  const { løsAksjonspunktVurderDatoNyRegelUttak } = React.useContext(ContainerContext);
+const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly, api, behandling, oppdaterBehandling }: Props) => {
   const formMethods = useForm<FormData>({
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: FormData) => {
-    løsAksjonspunktVurderDatoNyRegelUttak(data);
+  const onSubmit = async (data: FormData) => {
+    const { id: behandlingId, versjon: behandlingVersjon } = behandling;
+
+    const payload = {
+      behandlingId: `${behandlingId}`,
+      behandlingVersjon,
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+          kode: AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+          ...data,
+        },
+      ],
+    };
+    await api.bekreftAksjonspunkt(payload);
+    oppdaterBehandling();
   };
 
   return (
     <Form formMethods={formMethods} onSubmit={onSubmit}>
-      <div className={styles.vurderDatoAksjonspunktContainer}>
+      <div className={styles['vurderDatoAksjonspunktContainer']}>
         <Datepicker
           name="virkningsdato"
           label="Endringsdato"
@@ -51,8 +67,8 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly }: Props) => {
           readOnly={readOnly}
         />
         {!readOnly && (
-          <div className={styles.knapper}>
-            <Button size="small" type="submit" className={styles.bekreft}>
+          <div className={styles['knapper']}>
+            <Button size="small" type="submit" className={styles['bekreft']}>
               Bekreft og fortsett
             </Button>
             {avbryt && (
