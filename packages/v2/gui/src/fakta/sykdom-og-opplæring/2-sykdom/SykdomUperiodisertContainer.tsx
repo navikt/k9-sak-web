@@ -40,7 +40,7 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
       contentAfterTitleRenderer={() =>
         !readOnly &&
         harAksjonspunkt9301 &&
-        vurdering.behandlingUuid === behandlingUuid && (
+        vurdering.kanOppdateres && (
           <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
         )
       }
