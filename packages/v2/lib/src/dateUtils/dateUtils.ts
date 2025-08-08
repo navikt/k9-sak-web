@@ -41,10 +41,10 @@ const combineTwoPeriods = (period1: Period, period2: Period): Period => {
   const tom1 = initializeDate(period1.tom);
   const fom2 = initializeDate(period2.fom);
   const tom2 = initializeDate(period2.tom);
-  
+
   const newFom = fom1.isBefore(fom2) ? period1.fom : period2.fom;
   const newTom = tom1.isAfter(tom2) ? period1.tom : period2.tom;
-  
+
   return { fom: newFom, tom: newTom };
 };
 
@@ -65,10 +65,29 @@ const sortPeriodsByFom = (periods: Period[]): Period[] => {
   });
 };
 
+export const getDaysInPeriod = (period: Period): string[] => {
+  const days = [];
+  const startDate = initializeDate(period.fom);
+  const endDate = initializeDate(period.tom);
+  for (let date = startDate; date.isSameOrBefore(endDate); date = date.add(1, 'day')) {
+    days.push(date.format(ISO_DATE_FORMAT));
+  }
+  return days;
+};
+
+export const findUncoveredDays = (opprinneligPeriode: Period, perioder: Period[]): string[] => {
+  console.log(perioder);
+  const opprinneligPeriodeDays = getDaysInPeriod(opprinneligPeriode);
+  const perioderDays = perioder.map(periode => getDaysInPeriod(periode));
+  console.log(perioderDays);
+  const uncoveredDays = opprinneligPeriodeDays.filter(day => !perioderDays.some(period => period.includes(day)));
+  return uncoveredDays;
+};
+
 /**
  * Combines consecutive and overlapping periods into a minimal set of non-overlapping periods.
  * Can handle both single dates (as strings) and periods (as objects with fom and tom).
- * 
+ *
  * @param datesOrPeriods - Array of dates (strings) or periods (objects with fom and tom)
  * @returns Array of combined periods
  */
@@ -79,14 +98,14 @@ export const combineConsecutivePeriods = (datesOrPeriods: DateOrPeriod[]): Perio
 
   // Convert all inputs to periods
   const periods: Period[] = datesOrPeriods.map(convertDateToPeriod);
-  
+
   // Sort periods by start date
   const sortedPeriods = sortPeriodsByFom(periods);
   const combinedPeriods: Period[] = [];
 
   for (const currentPeriod of sortedPeriods) {
     const lastCombinedPeriod = combinedPeriods[combinedPeriods.length - 1];
-    
+
     if (!lastCombinedPeriod) {
       combinedPeriods.push(currentPeriod);
       continue;
@@ -287,4 +306,3 @@ export const formatereLukketPeriode = (periode: string): string => {
   }
   return `${formatDate(fom)} - ${formatDate(tom)}`;
 };
-

@@ -48,10 +48,9 @@ const InstitusjonOgSykdomInfo = ({ perioder }: { perioder: PeriodType[] }) => {
         {isLoadingLangvarigSykdom || isLoadingVurdertLangvarigSykdom ? (
           <Skeleton variant="text" width="50%" height="24px" />
         ) : (
-          diagnosekoder?.map((kode, index, array) => (
+          diagnosekoder?.map((kode, index) => (
             <BodyShort size="small" key={index}>
               {ICD10.find(icd => icd.code === kode)?.text}
-              {index < array.length - 1 && ', '}
             </BodyShort>
           ))
         )}
