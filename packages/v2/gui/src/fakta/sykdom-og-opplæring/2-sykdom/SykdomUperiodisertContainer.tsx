@@ -17,7 +17,7 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
     if (!vurdering.vurdertTidspunkt || vurdering.kanOppdateres !== true) {
       setRedigering(false);
     }
-  }, [vurdering, behandlingUuid]);
+  }, [vurdering]);
 
   useEffect(() => {
     if (redigering) {
