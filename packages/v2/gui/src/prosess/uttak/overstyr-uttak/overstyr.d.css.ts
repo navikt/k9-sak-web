@@ -1,5 +1,4 @@
 declare const styles: {
-  readonly "infostripe": string;
+  readonly infostripe: string;
 };
 export = styles;
-

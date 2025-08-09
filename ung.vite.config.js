@@ -73,6 +73,7 @@ export default ({ mode }) => {
           },
         },
         '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8901', staticJsonResponse(featureTogglesFactory())),
+        '/ung/tilbake': createProxy(process.env.APP_URL_UNG_TILBAKE || 'http://localhost:8903'),
       },
     },
     base: '/ung/web',
