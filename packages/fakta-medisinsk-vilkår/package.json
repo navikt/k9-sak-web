@@ -30,7 +30,7 @@
     "react": "19.1.1",
     "react-collapse": "5.1.1",
     "react-dom": "19.1.1",
-    "react-hook-form": "7.58.1",
+    "react-hook-form": "7.62.0",
     "react-outside-click-handler": "1.3.0"
   },
   "msw": {
