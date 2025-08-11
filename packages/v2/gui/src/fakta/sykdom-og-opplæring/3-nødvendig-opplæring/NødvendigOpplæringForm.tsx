@@ -11,8 +11,8 @@ import {
   useFormContext,
   type ControllerProps,
   type FieldArrayWithId,
-  type UseFieldArrayAppend,
   type UseFieldArrayRemove,
+  type UseFieldArrayReplace,
 } from 'react-hook-form';
 import { Period } from '@navikt/ft-utils';
 import {
@@ -411,7 +411,11 @@ const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & {
 
 const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: string; tom: string }[] }) => {
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
-  const { fields, append, remove, update, replace } = useFieldArray({
+  const { fields, append, remove, update, replace } = useFieldArray<
+    NødvendigOpplæringFormFields,
+    'perioderUtenNødvendigOpplæring',
+    'id'
+  >({
     control: formMethods.control,
     name: 'perioderUtenNødvendigOpplæring',
   });
@@ -460,7 +464,7 @@ const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: strin
   useEffect(() => {
     if (!periodeSomMåDekkes) return;
     const uncoveredDays = findUncoveredDays(
-      periodeSomMåDekkes!,
+      periodeSomMåDekkes,
       fields.map(periode => ({ fom: periode.fom, tom: periode.tom })),
     );
     if (uncoveredDays.length === 0) return;
@@ -474,7 +478,7 @@ const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: strin
         ].sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom))),
       );
     }
-  }, [fields.length, fields, periodeSomMåDekkes, remove, append]);
+  }, [fields.length, fields, periodeSomMåDekkes, remove, replace]);
 
   return (
     <>
@@ -499,7 +503,7 @@ const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: strin
                         <PeriodeHandlinger
                           periodeUtenNødvendigOpplæring={periodeUtenNødvendigOpplæring}
                           index={index}
-                          append={append}
+                          replace={replace}
                           remove={remove}
                           kanSlette={array.length > 1}
                         />
@@ -599,13 +603,13 @@ const Avslagsårsak = ({
 
 const PeriodeHandlinger = ({
   periodeUtenNødvendigOpplæring,
-  append,
+  replace,
   remove,
   index,
   kanSlette,
 }: {
   periodeUtenNødvendigOpplæring: NødvendigOpplæringFormFields['perioderUtenNødvendigOpplæring'][number];
-  append: UseFieldArrayAppend<NødvendigOpplæringFormFields, 'perioderUtenNødvendigOpplæring'>;
+  replace: UseFieldArrayReplace<NødvendigOpplæringFormFields, 'perioderUtenNødvendigOpplæring'>;
   remove: UseFieldArrayRemove;
   index: number;
   kanSlette: boolean;
@@ -632,7 +636,6 @@ const PeriodeHandlinger = ({
     );
 
     const combinedPeriods = combineConsecutivePeriods(uncoveredDays);
-    remove();
     const newPeriods = [...combinedPeriods, { fom: klippetPeriode.fom, tom: klippetPeriode.tom }]
       .sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom)))
       .map(period => ({
@@ -641,7 +644,7 @@ const PeriodeHandlinger = ({
         resultat: '' as const,
         avslagsårsak: '' as const,
       }));
-    newPeriods.forEach(period => append(period));
+    replace(newPeriods);
 
     handleCloseModal();
   };
