@@ -9,6 +9,7 @@ import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 import { useContext } from 'react';
+
 const NødvendigOpplæringFerdigvisning = ({ vurdering }: { vurdering: OpplæringVurderingDto }) => {
   if (vurdering.resultat === OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID) {
     return (

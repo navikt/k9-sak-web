@@ -198,7 +198,7 @@ const NødvendigOpplæringForm = ({
                 {...field}
                 readOnly={readOnly}
                 size="small"
-                error={formMethods.formState.errors.harLegeerklæring?.message as string | undefined}
+                error={formMethods.formState.errors.harLegeerklæring?.message}
               >
                 <Radio value={JA}>Ja</Radio>
                 <Radio value={NEI}>Nei</Radio>
@@ -232,7 +232,7 @@ const NødvendigOpplæringForm = ({
               }
               minRows={3}
               id="begrunnelse"
-              error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
+              error={formMethods.formState.errors.begrunnelse?.message}
               disabled={opplæringIkkeDokumentertMedLegeerklæring}
               description={
                 <ReadMore header="Hva skal vurderingen inneholde?" size="small">
@@ -281,7 +281,7 @@ const NødvendigOpplæringForm = ({
                   {...field}
                   readOnly={readOnly}
                   size="small"
-                  error={formMethods.formState.errors.harNødvendigOpplæring?.message as string | undefined}
+                  error={formMethods.formState.errors.harNødvendigOpplæring?.message}
                 >
                   <Radio value={JA}>Ja</Radio>
                   {periodeErEnkeltdag ? (
