@@ -1,4 +1,4 @@
-     import {
+import {
   OpplæringVurderingDtoResultat,
   type OpplæringVurderingDto,
   type OpplæringVurderingDtoAvslagsårsak,
@@ -12,15 +12,7 @@ import {
   type UseFieldArrayReplace,
 } from 'react-hook-form';
 import { Period } from '@navikt/ft-utils';
-import {
-  Alert,
-  Button,
-  Label,
-  Modal,
-  Radio,
-  RadioGroup,
-  DatePicker,
-} from '@navikt/ds-react';
+import { Alert, Button, Label, Modal, Radio, RadioGroup, DatePicker } from '@navikt/ds-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
@@ -58,8 +50,8 @@ type NødvendigOpplæringFormFields = {
 export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const opprinneligPeriode = vurdering.perioder[0]!;
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
-      const context = useContext(SykdomOgOpplæringContext);
-    const readOnly = context.readOnly;
+  const context = useContext(SykdomOgOpplæringContext);
+  const readOnly = context.readOnly;
   const { fields, append, remove, update } = useFieldArray({
     control: formMethods.control,
     name: 'perioder',
@@ -159,7 +151,7 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
 
 export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: string; tom: string }[] }) => {
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
-  const { fields, append, remove, update, replace } = useFieldArray<
+  const { fields, remove, update, replace } = useFieldArray<
     NødvendigOpplæringFormFields,
     'perioderUtenNødvendigOpplæring',
     'id'
@@ -171,21 +163,24 @@ export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom
 
   useEffect(() => {
     if (perioder.length > 0) {
+      console.log('perioder', perioder);
       setPeriodeSomMåDekkes(perioder[0]!);
     }
   }, [perioder]);
 
   useEffect(() => {
-    remove();
-    perioder.forEach(period => {
-      append({
-        fom: period.fom,
-        tom: period.tom,
-        resultat: '',
-        avslagsårsak: '',
-      });
-    });
-  }, [perioder, remove, append]);
+    console.log('replace', perioder);
+    replace(
+      perioder.map(period => {
+        return {
+          fom: period.fom,
+          tom: period.tom,
+          resultat: '',
+          avslagsårsak: '',
+        };
+      }),
+    );
+  }, [JSON.stringify(perioder), replace]);
 
   const checkWhichExistingPeriodToPutPeriodIn = (
     fields: FieldArrayWithId<NødvendigOpplæringFormFields, 'perioderUtenNødvendigOpplæring', 'id'>[],
