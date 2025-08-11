@@ -163,13 +163,11 @@ export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom
 
   useEffect(() => {
     if (perioder.length > 0) {
-      console.log('perioder', perioder);
       setPeriodeSomMåDekkes(perioder[0]!);
     }
   }, [perioder]);
 
   useEffect(() => {
-    console.log('replace', perioder);
     replace(
       perioder.map(period => {
         return {
