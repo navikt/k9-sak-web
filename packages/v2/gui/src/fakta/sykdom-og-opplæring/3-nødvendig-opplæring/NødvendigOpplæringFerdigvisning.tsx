@@ -4,11 +4,7 @@ import type { Period } from '@navikt/ft-utils';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
-const NødvendigOpplæringFerdigvisning = ({
-  vurdering,
-}: {
-  vurdering: OpplæringVurderingDto & { perioder: Period[] };
-}) => {
+const NødvendigOpplæringFerdigvisning = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   return (
     <div className="flex flex-col gap-6">
       <LabelledContent

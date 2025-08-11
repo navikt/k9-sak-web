@@ -6,13 +6,13 @@ export const TIDENES_ENDE = '9999-12-31';
 export const TIMER_PER_DAG = 7.5;
 
 // Type for periods that can be combined
-export type Period = { fom: string; tom: string };
+export type FomTom = { fom: string; tom: string };
 
 // Type for single dates or periods
-export type DateOrPeriod = string | Period;
+export type DateOrPeriod = string | FomTom;
 
 // Helper function to check if a date is within a period
-const isDateInPeriod = (date: string, period: Period): boolean => {
+const isDateInPeriod = (date: string, period: FomTom): boolean => {
   const dateObj = initializeDate(date);
   const fomObj = initializeDate(period.fom);
   const tomObj = initializeDate(period.tom);
@@ -20,14 +20,14 @@ const isDateInPeriod = (date: string, period: Period): boolean => {
 };
 
 // Helper function to check if two periods are consecutive (edge to edge)
-const arePeriodsConsecutive = (period1: Period, period2: Period): boolean => {
+const arePeriodsConsecutive = (period1: FomTom, period2: FomTom): boolean => {
   const period1Tom = initializeDate(period1.tom);
   const period2Fom = initializeDate(period2.fom);
   return period1Tom.add(1, 'day').isSame(period2Fom);
 };
 
 // Helper function to check if two periods can be combined
-const canCombinePeriods = (period1: Period, period2: Period): boolean => {
+const canCombinePeriods = (period1: FomTom, period2: FomTom): boolean => {
   // Check if periods overlap
   const hasOverlap = isDateInPeriod(period2.fom, period1) || isDateInPeriod(period1.tom, period2);
   // Check if periods are consecutive
@@ -36,7 +36,7 @@ const canCombinePeriods = (period1: Period, period2: Period): boolean => {
 };
 
 // Helper function to combine two periods
-const combineTwoPeriods = (period1: Period, period2: Period): Period => {
+const combineTwoPeriods = (period1: FomTom, period2: FomTom): FomTom => {
   const fom1 = initializeDate(period1.fom);
   const tom1 = initializeDate(period1.tom);
   const fom2 = initializeDate(period2.fom);
@@ -49,7 +49,7 @@ const combineTwoPeriods = (period1: Period, period2: Period): Period => {
 };
 
 // Helper function to convert single dates to periods
-const convertDateToPeriod = (dateOrPeriod: DateOrPeriod): Period => {
+const convertDateToPeriod = (dateOrPeriod: DateOrPeriod): FomTom => {
   if (typeof dateOrPeriod === 'string') {
     return { fom: dateOrPeriod, tom: dateOrPeriod };
   }
@@ -57,7 +57,7 @@ const convertDateToPeriod = (dateOrPeriod: DateOrPeriod): Period => {
 };
 
 // Helper function to sort periods by start date
-const sortPeriodsByFom = (periods: Period[]): Period[] => {
+const sortPeriodsByFom = (periods: FomTom[]): FomTom[] => {
   return periods.sort((a, b) => {
     const aFom = initializeDate(a.fom);
     const bFom = initializeDate(b.fom);
@@ -65,7 +65,7 @@ const sortPeriodsByFom = (periods: Period[]): Period[] => {
   });
 };
 
-export const getDaysInPeriod = (period: Period): string[] => {
+export const getDaysInPeriod = (period: FomTom): string[] => {
   const days = [];
   const startDate = initializeDate(period.fom);
   const endDate = initializeDate(period.tom);
@@ -75,11 +75,18 @@ export const getDaysInPeriod = (period: Period): string[] => {
   return days;
 };
 
-export const findUncoveredDays = (opprinneligPeriode: Period, perioder: Period[]): string[] => {
-  console.log(perioder);
+export const checkIfPeriodsAreEdgeToEdge = (period1: FomTom, period2: FomTom): boolean => {
+  const period1Tom = initializeDate(period1.tom);
+  const period2Fom = initializeDate(period2.fom);
+  const period1Fom = initializeDate(period1.fom);
+  const period2Tom = initializeDate(period2.tom);
+
+  return period1Tom.add(1, 'day').isSame(period2Fom) || period1Fom.isSame(period2Tom.add(1, 'day'));
+};
+
+export const findUncoveredDays = (opprinneligPeriode: FomTom, perioder: FomTom[]): string[] => {
   const opprinneligPeriodeDays = getDaysInPeriod(opprinneligPeriode);
   const perioderDays = perioder.map(periode => getDaysInPeriod(periode));
-  console.log(perioderDays);
   const uncoveredDays = opprinneligPeriodeDays.filter(day => !perioderDays.some(period => period.includes(day)));
   return uncoveredDays;
 };
@@ -91,17 +98,17 @@ export const findUncoveredDays = (opprinneligPeriode: Period, perioder: Period[]
  * @param datesOrPeriods - Array of dates (strings) or periods (objects with fom and tom)
  * @returns Array of combined periods
  */
-export const combineConsecutivePeriods = (datesOrPeriods: DateOrPeriod[]): Period[] => {
+export const combineConsecutivePeriods = (datesOrPeriods: DateOrPeriod[]): FomTom[] => {
   if (!datesOrPeriods || datesOrPeriods.length === 0) {
     return [];
   }
 
   // Convert all inputs to periods
-  const periods: Period[] = datesOrPeriods.map(convertDateToPeriod);
+  const periods: FomTom[] = datesOrPeriods.map(convertDateToPeriod);
 
   // Sort periods by start date
   const sortedPeriods = sortPeriodsByFom(periods);
-  const combinedPeriods: Period[] = [];
+  const combinedPeriods: FomTom[] = [];
 
   for (const currentPeriod of sortedPeriods) {
     const lastCombinedPeriod = combinedPeriods[combinedPeriods.length - 1];

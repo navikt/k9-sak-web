@@ -10,10 +10,11 @@ import {
   useForm,
   useFormContext,
   type ControllerProps,
+  type FieldArrayWithId,
   type UseFieldArrayAppend,
   type UseFieldArrayRemove,
 } from 'react-hook-form';
-import { Period as PeriodType } from '@navikt/ft-utils';
+import { Period } from '@navikt/ft-utils';
 import {
   Alert,
   BodyShort,
@@ -37,15 +38,17 @@ import dayjs from 'dayjs';
 import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { Periodevisning } from '../../../shared/detailView/DetailView.js';
-import InstitusjonOgSykdomInfo from './InstitusjonOgSykdomInfo.js';
 import { Datepicker as RHFDatepicker } from '@navikt/ft-form-hooks';
 import { PlusCircleIcon, ScissorsFillIcon, TrashIcon } from '@navikt/aksel-icons';
 import {
+  checkIfPeriodsAreEdgeToEdge,
   combineConsecutivePeriods,
   findUncoveredDays,
   formatPeriod,
   getDaysInPeriod,
 } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo.js';
+import type { nødvendigOpplæringPayload } from '../FaktaSykdomOgOpplæringIndex.js';
 
 const utledNødvendigOpplæring = (resultat: OpplæringVurderingDtoResultat): 'JA' | 'DELVIS' | 'NEI' | '' => {
   if (resultat === OpplæringVurderingDtoResultat.GODKJENT) {
@@ -67,24 +70,27 @@ const utledHarLegeerklæring = (resultat: OpplæringVurderingDtoResultat): 'JA' 
   return 'JA';
 };
 
-const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: PeriodType[] }) => {
+const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] }) => {
   return {
     begrunnelse: vurdering.begrunnelse,
     resultat: vurdering.resultat,
     harLegeerklæring: utledHarLegeerklæring(vurdering.resultat),
     harNødvendigOpplæring: utledNødvendigOpplæring(vurdering.resultat),
-    perioder: vurdering.perioder.map(periode => ({
-      resultat: vurdering.resultat,
-      avslagsårsak: vurdering.avslagsårsak,
-      fom: periode.fom,
-      tom: periode.tom,
-    })),
+    // Her er det bare en periode, så vi kan bruke perioder[0]!
+    perioder: [
+      {
+        resultat: vurdering.resultat,
+        avslagsårsak: vurdering.avslagsårsak,
+        fom: vurdering.perioder[0]!.fom,
+        tom: vurdering.perioder[0]!.tom,
+      },
+    ],
   };
 };
 
 type NødvendigOpplæringFormFields = {
   begrunnelse: string;
-  resultat: OpplæringVurderingDtoResultat;
+  resultat: OpplæringVurderingDtoResultat | '';
   harLegeerklæring: 'JA' | 'NEI' | '';
   harNødvendigOpplæring: 'JA' | 'DELVIS' | 'NEI' | '';
   avslagsårsak?: OpplæringVurderingDtoAvslagsårsak;
@@ -107,11 +113,11 @@ const NødvendigOpplæringForm = ({
   setRedigering,
   redigering,
 }: {
-  vurdering: OpplæringVurderingDto & { perioder: PeriodType[] };
+  vurdering: OpplæringVurderingDto & { perioder: Period[] };
   setRedigering: (redigering: boolean) => void;
   redigering: boolean;
 }) => {
-  const { readOnly } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<NødvendigOpplæringFormFields>({
     defaultValues: defaultValues(vurdering),
   });
@@ -136,7 +142,37 @@ const NødvendigOpplæringForm = ({
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   return (
     <>
-      <Form formMethods={formMethods} onSubmit={() => {}}>
+      <Form
+        formMethods={formMethods}
+        onSubmit={data => {
+          const perioder = data.perioder.map(periode => ({
+            begrunnelse: data.begrunnelse,
+            resultat:
+              data.harNødvendigOpplæring === 'JA' || data.harNødvendigOpplæring === 'DELVIS'
+                ? OpplæringVurderingDtoResultat.GODKJENT
+                : OpplæringVurderingDtoResultat.IKKE_GODKJENT,
+            avslagsårsak: data.avslagsårsak || null,
+            periode: {
+              fom: dayjs(periode.fom).format('YYYY-MM-DD'),
+              tom: dayjs(periode.tom).format('YYYY-MM-DD'),
+            },
+          }));
+
+          const perioderUtenNødvendigOpplæring = data.perioderUtenNødvendigOpplæring.map(periode => ({
+            begrunnelse: data.begrunnelse,
+            resultat: periode.resultat,
+            avslagsårsak: periode.avslagsårsak || null,
+            periode: {
+              fom: dayjs(periode.fom).format('YYYY-MM-DD'),
+              tom: dayjs(periode.tom).format('YYYY-MM-DD'),
+            },
+          }));
+
+          løsAksjonspunkt9302({
+            perioder: [...perioder, ...perioderUtenNødvendigOpplæring],
+          } as nødvendigOpplæringPayload);
+        }}
+      >
         <div className="flex flex-col gap-6">
           <Controller
             control={formMethods.control}
@@ -272,7 +308,7 @@ const NødvendigOpplæringForm = ({
   );
 };
 
-const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: PeriodType[] } }) => {
+const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const opprinneligPeriode = vurdering.perioder[0]!;
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
   const readOnly = useContext(SykdomOgOpplæringContext).readOnly;
@@ -375,19 +411,20 @@ const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & {
 
 const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: string; tom: string }[] }) => {
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove, update, replace } = useFieldArray({
     control: formMethods.control,
     name: 'perioderUtenNødvendigOpplæring',
   });
-  console.log(fields);
-  // sorter etter fom dato
-  const sortedFields = fields.sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom)));
-  console.log(sortedFields);
+  const [periodeSomMåDekkes, setPeriodeSomMåDekkes] = useState<{ fom: string; tom: string } | null>(null);
 
   useEffect(() => {
-    // rydd opp gamle perioder
+    if (perioder.length > 0) {
+      setPeriodeSomMåDekkes(perioder[0]!);
+    }
+  }, [JSON.stringify(perioder)]);
+
+  useEffect(() => {
     remove();
-    // legg til nye perioder
     perioder.forEach(period => {
       append({
         fom: period.fom,
@@ -398,54 +435,97 @@ const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom: strin
     });
   }, [JSON.stringify(perioder)]);
 
+  const checkWhichExistingPeriodToPutPeriodIn = (
+    fields: FieldArrayWithId<NødvendigOpplæringFormFields, 'perioderUtenNødvendigOpplæring', 'id'>[],
+    uncoveredPeriod: { fom: string; tom: string },
+  ) => {
+    return fields.find(field => checkIfPeriodsAreEdgeToEdge(field, uncoveredPeriod));
+  };
+
+  const expandPeriod = (
+    existingPeriod: FieldArrayWithId<NødvendigOpplæringFormFields, 'perioderUtenNødvendigOpplæring', 'id'>,
+    newPeriod: { fom: string; tom: string },
+  ) => {
+    const isBefore = dayjs(newPeriod.fom).isBefore(dayjs(existingPeriod?.fom));
+    if (isBefore) {
+      return {
+        ...existingPeriod,
+        fom: newPeriod.fom,
+      };
+    }
+
+    return { ...existingPeriod, tom: newPeriod.tom };
+  };
+
+  useEffect(() => {
+    if (!periodeSomMåDekkes) return;
+    const uncoveredDays = findUncoveredDays(
+      periodeSomMåDekkes!,
+      fields.map(periode => ({ fom: periode.fom, tom: periode.tom })),
+    );
+    if (uncoveredDays.length === 0) return;
+    const uncoveredPeriods = combineConsecutivePeriods(uncoveredDays);
+    const existingPeriod = checkWhichExistingPeriodToPutPeriodIn(fields, uncoveredPeriods[0]!);
+    if (existingPeriod) {
+      replace(
+        [
+          ...fields.filter(field => field.id !== existingPeriod.id),
+          expandPeriod(existingPeriod, uncoveredPeriods[0]!),
+        ].sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom))),
+      );
+    }
+  }, [fields.length, fields, periodeSomMåDekkes, remove, append]);
+
   return (
     <>
-      {sortedFields.map((periodeUtenNødvendigOpplæring, index, array) => (
-        <React.Fragment key={periodeUtenNødvendigOpplæring.id}>
-          <div className="mt-4">
-            <Controller
-              control={formMethods.control}
-              name={`perioderUtenNødvendigOpplæring.${index}.resultat`}
-              render={({ field }) => (
-                <RadioGroup
-                  {...field}
-                  onChange={value => {
-                    field.onChange(value);
-                    update(index, { ...periodeUtenNødvendigOpplæring, resultat: value });
-                  }}
-                  legend={
-                    <div>
-                      Hva vil du gjøre med dagene{' '}
-                      {formatPeriod(periodeUtenNødvendigOpplæring.fom, periodeUtenNødvendigOpplæring.tom)}?{' '}
-                      <PeriodeHandlinger
-                        periodeUtenNødvendigOpplæring={periodeUtenNødvendigOpplæring}
-                        index={index}
-                        append={append}
-                        remove={remove}
-                        kanSlette={array.length > 1}
-                      />
-                    </div>
-                  }
-                  size="small"
-                >
-                  <Radio value={OpplæringVurderingDtoResultat.IKKE_GODKJENT}>Avslag</Radio>
-                  <Radio value={OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID}>Vurder som reisetid</Radio>
-                </RadioGroup>
-              )}
-            />
-          </div>
-          {periodeUtenNødvendigOpplæring.resultat === OpplæringVurderingDtoResultat.IKKE_GODKJENT && (
+      {fields.map((periodeUtenNødvendigOpplæring, index, array) => {
+        return (
+          <React.Fragment key={periodeUtenNødvendigOpplæring.id}>
             <div className="mt-4">
-              <Avslagsårsak
-                name={`perioderUtenNødvendigOpplæring.${index}.avslagsårsak`}
-                fieldValue={periodeUtenNødvendigOpplæring}
-                update={update}
-                index={index}
+              <Controller
+                control={formMethods.control}
+                name={`perioderUtenNødvendigOpplæring.${index}.resultat`}
+                render={({ field }) => (
+                  <RadioGroup
+                    {...field}
+                    onChange={value => {
+                      field.onChange(value);
+                      update(index, { ...periodeUtenNødvendigOpplæring, resultat: value });
+                    }}
+                    legend={
+                      <div>
+                        Hva vil du gjøre med dagene{' '}
+                        {formatPeriod(periodeUtenNødvendigOpplæring.fom, periodeUtenNødvendigOpplæring.tom)}?{' '}
+                        <PeriodeHandlinger
+                          periodeUtenNødvendigOpplæring={periodeUtenNødvendigOpplæring}
+                          index={index}
+                          append={append}
+                          remove={remove}
+                          kanSlette={array.length > 1}
+                        />
+                      </div>
+                    }
+                    size="small"
+                  >
+                    <Radio value={OpplæringVurderingDtoResultat.IKKE_GODKJENT}>Avslag</Radio>
+                    <Radio value={OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID}>Vurder som reisetid</Radio>
+                  </RadioGroup>
+                )}
               />
             </div>
-          )}
-        </React.Fragment>
-      ))}
+            {periodeUtenNødvendigOpplæring.resultat === OpplæringVurderingDtoResultat.IKKE_GODKJENT && (
+              <div className="mt-4">
+                <Avslagsårsak
+                  name={`perioderUtenNødvendigOpplæring.${index}.avslagsårsak`}
+                  fieldValue={periodeUtenNødvendigOpplæring}
+                  update={update}
+                  index={index}
+                />
+              </div>
+            )}
+          </React.Fragment>
+        );
+      })}
     </>
   );
 };
@@ -536,6 +616,7 @@ const PeriodeHandlinger = ({
 
   const handleCloseModal = () => {
     setVisModal(false);
+    setError(null);
     setKlippetPeriode(null);
   };
   const antallDager = getDaysInPeriod(periodeUtenNødvendigOpplæring).length;
@@ -551,13 +632,15 @@ const PeriodeHandlinger = ({
     );
 
     const combinedPeriods = combineConsecutivePeriods(uncoveredDays);
-    remove(index);
-    const newPeriods = [...combinedPeriods, { fom: klippetPeriode.fom, tom: klippetPeriode.tom }].map(period => ({
-      fom: period.fom,
-      tom: period.tom,
-      resultat: periodeUtenNødvendigOpplæring.resultat,
-      avslagsårsak: periodeUtenNødvendigOpplæring.avslagsårsak,
-    }));
+    remove();
+    const newPeriods = [...combinedPeriods, { fom: klippetPeriode.fom, tom: klippetPeriode.tom }]
+      .sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom)))
+      .map(period => ({
+        fom: period.fom,
+        tom: period.tom,
+        resultat: '' as const,
+        avslagsårsak: '' as const,
+      }));
     newPeriods.forEach(period => append(period));
 
     handleCloseModal();
@@ -600,10 +683,10 @@ const PeriodeHandlinger = ({
           />
           {error && <Alert variant="error">{error}</Alert>}
           <div className="flex justify-between mt-4">
-            <Button variant="tertiary" onClick={handleCloseModal}>
+            <Button variant="tertiary" type="button" onClick={handleCloseModal}>
               Avbryt
             </Button>
-            <Button variant="primary" onClick={handleSubmit}>
+            <Button variant="primary" type="button" onClick={handleSubmit}>
               Legg til
             </Button>
           </div>
