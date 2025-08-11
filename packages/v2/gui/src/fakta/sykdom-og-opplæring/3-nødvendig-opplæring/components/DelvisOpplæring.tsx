@@ -180,6 +180,8 @@ export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom
         };
       }),
     );
+    // perioder er faktisk i dependency arrayet så disabler warning her. Må ha stringify så vi ikke får infinite loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(perioder), replace]);
 
   const checkWhichExistingPeriodToPutPeriodIn = (
