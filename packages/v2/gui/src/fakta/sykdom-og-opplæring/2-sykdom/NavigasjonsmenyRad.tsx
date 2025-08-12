@@ -40,7 +40,7 @@ export const NavigasjonsmenyRad = ({
           </div>
           {erBruktIAksjonspunkt ? (
             <div className="flex gap-1 ml-[-4px]">
-              <CheckmarkIcon fontSize={24} className="text-green-500" />
+              <CheckmarkIcon fontSize={24} className="text-ax-success-600" />
               <BodyShort className="mt-[2px]">Valgt</BodyShort>
             </div>
           ) : null}

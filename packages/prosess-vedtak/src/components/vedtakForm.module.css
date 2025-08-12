@@ -31,7 +31,7 @@
 }
 
 .smallTextArea {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   box-sizing: border-box;

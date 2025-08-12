@@ -67,7 +67,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             {manueltOverstyrt && (
               <>
                 <PersonPencilFillIcon
-                  className="ml-1 align-middle text-2xl text-border-warning"
+                  className="ml-1 align-middle text-2xl text-ax-border-warning"
                   title="Manuelt overstyrt"
                 />
                 <HelpText

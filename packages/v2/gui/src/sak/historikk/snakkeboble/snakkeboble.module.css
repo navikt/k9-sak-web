@@ -42,8 +42,8 @@
 }
 
 .bubbleArbeidsgiver {
-  --ac-chat-bubble-bg: var(--a-lightblue-100);
-  --ac-chat-avatar-bg: var(--a-lightblue-300);
+  --ac-chat-bubble-bg: var(--ax-bg-moderate);
+  --ac-chat-avatar-bg: var(--ax-border-subtle);
 }
 
 .bubbleUdefinert {

@@ -57,7 +57,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
 
           return (
             <Box.New key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
-              <BodyShort size="small" className="text-text-subtle font-semibold leading-6">
+              <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (
                   <Tag size="small" variant="info">

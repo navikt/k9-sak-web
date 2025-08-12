@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   color: #262626;
   height: 100%;
   line-height: 1.4286;
@@ -178,11 +178,11 @@ som fra core/og muligen import fra alla andra komponenter
   background: var(--ax-success-600)
     repeating-linear-gradient(
       45deg,
-      var(--a-white),
-      var(--a-white) 20%,
+      var(--ax-bg-default),
+      var(--ax-bg-default) 20%,
       transparent 20%,
       transparent 50%,
-      var(--a-white) 50%
+      var(--ax-bg-default) 50%
     );
   background-size: 12px 12px;
   opacity: 0.9;
@@ -566,11 +566,11 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 .snakkeboble.snakkeboble__ekstern .panel {
-  background: var(--a-lightblue-100);
+  background: var(--ax-bg-moderate);
 }
 
 .snakkeboble.snakkeboble__ekstern .snakkeboble__snakkebole-pil {
-  background: var(--a-lightblue-100);
+  background: var(--ax-bg-moderate);
 }
 
 .snakkeboble__kompakt {

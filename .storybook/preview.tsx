@@ -3,6 +3,7 @@ import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import '@navikt/ds-css/darkside';
 import { Theme } from '@navikt/ds-react/Theme';
+import '@navikt/ds-tokens/darkside-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

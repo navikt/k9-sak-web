@@ -103,7 +103,7 @@ const Vurderingsnavigasjon = ({
           <InformationSquareFillIcon
             title="Perioden kan vurderes"
             fontSize="1.5rem"
-            style={{ color: 'var(--a-lightblue-700)' }}
+            style={{ color: 'var(--ax-text-info-icon)' }}
           />
         )}
         visParterLabel={visParterLabel}

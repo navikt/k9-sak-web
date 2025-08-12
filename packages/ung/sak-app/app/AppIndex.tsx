@@ -16,6 +16,7 @@ import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import '@navikt/ds-css/darkside';
 import { Theme } from '@navikt/ds-react/Theme';
+import '@navikt/ds-tokens/darkside-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';

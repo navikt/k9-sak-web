@@ -49,7 +49,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
             <InformationSquareFillIcon
               title="Deltagelse er opphørt"
               fontSize="1.75rem"
-              style={{ color: 'var(--a-lightblue-700)' }}
+              style={{ color: 'var(--ax-text-info-icon)' }}
             />
             <VStack gap="space-8">
               <VilkårHeadingSection lovreferanse={vilkår?.lovReferanse} />
@@ -62,7 +62,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
             <InformationSquareFillIcon
               title="Startdato er endret"
               fontSize="1.75rem"
-              style={{ color: 'var(--a-lightblue-700)' }}
+              style={{ color: 'var(--ax-text-info-icon)' }}
             />
             <VStack gap="space-8">
               <VilkårHeadingSection lovreferanse={vilkår?.lovReferanse} />

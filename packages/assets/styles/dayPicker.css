@@ -6,7 +6,7 @@
 }
 
 .DayPickerInput-Overlay {
-  background: var(--a-white);
+  background: var(--ax-bg-default);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   left: 0;
@@ -16,7 +16,7 @@
 }
 
 .calendarWrapper {
-  background: var(--a-white);
+  background: var(--ax-bg-default);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   left: 0;
@@ -208,5 +208,5 @@
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled, .DayPicker-Day--outside) {
   background-color: var(--ax-brand-blue-600);
-  color: var(--a-white);
+  color: var(--ax-bg-default);
 }

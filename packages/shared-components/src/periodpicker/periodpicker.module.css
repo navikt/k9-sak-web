@@ -103,7 +103,7 @@
 }
 
 .calendarWrapper {
-  background: var(--a-white);
+  background: var(--ax-bg-default);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   left: 0;

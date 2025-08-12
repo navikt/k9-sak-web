@@ -64,7 +64,7 @@ export const RadStatus = ({ resultat }: { resultat?: ResultatType }) => {
 export const RadDato = ({ perioder, active }: { perioder: Period[]; active: boolean }) => {
   return (
     <div className="flex ml-3 items-center">
-      <div className={`min-w-[10.125rem] ${active ? '' : 'text-blue-500 underline'}`}>
+      <div className={`min-w-[10.125rem] ${active ? '' : 'text-ax-accent-600 underline'}`}>
         {perioder.map(v => (
           <div key={v.prettifyPeriod()}>
             {v.asListOfDays().length > 1 ? v.prettifyPeriod() : v.prettifyPeriod().split(' - ')[0]}

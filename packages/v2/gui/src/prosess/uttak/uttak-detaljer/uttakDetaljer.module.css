@@ -18,7 +18,7 @@
 }
 
 .uttakDetaljerGraderingDetaljer svg {
-  color: var(--a-lightblue-800);
+  color: var(--ax-border-brand-blue-strong);
   font-size: x-large;
   margin: 0 var(--ax-space-4) 0;
 }
@@ -29,7 +29,7 @@
 
 .uttakDetaljerDetailSum {
   padding: var(--ax-space-24) 0 var(--ax-space-4);
-  border-bottom: 3px solid var(--a-lightblue-700);
+  border-bottom: 3px solid var(--ax-text-info-icon);
   display: inline-block;
   vertical-align: middle;
 }
