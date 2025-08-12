@@ -13,10 +13,10 @@ import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
 import {
-  type LangvarigSykdomVurderingDto,
-  type LangvarigSykdomVurderingDtoAvslagsårsak,
-  type SaksnummerDto,
-  type ValgtLangvarigSykdomVurderingDto,
+  type sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
+  type kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  type sak_kontrakt_behandling_SaksnummerDto as SaksnummerDto,
+  type sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_ValgtLangvarigSykdomVurderingDto as ValgtLangvarigSykdomVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
@@ -36,7 +36,7 @@ interface SykdomVurderingselement extends Vurderingselement {
   saksnummer: SaksnummerDto;
   vurdertAv: string;
   vurdertTidspunkt: string;
-  avslagsårsak?: LangvarigSykdomVurderingDtoAvslagsårsak;
+  avslagsårsak?: Avslagsårsak;
 }
 
 const defaultVurdering = {

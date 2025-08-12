@@ -1,5 +1,5 @@
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
-import type { BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { ung_sak_kontrakt_behandling_BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungsak/generated';
 
 export type Behandling = {
   ansvarligSaksbehandler: BehandlingDto['ansvarligSaksbehandler'];

@@ -8,13 +8,13 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import {
-  AksjonspunktDtoAksjonspunktType,
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  AksjonspunktDtoVenteårsak,
-  BehandlingDtoBehandlingResultatType,
-  BehandlingÅrsakDtoBehandlingArsakType,
-} from '@navikt/k9-sak-typescript-client';
+  kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
+  kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
+  kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 const behandling = {
   id: 1,
@@ -24,31 +24,31 @@ const behandling = {
   språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
-    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
+    type: BehandlingResultatType.IKKE_FASTSATT,
   },
   behandlingHenlagt: false,
   behandlingPåVent: false,
   behandlingÅrsaker: [
     {
-      behandlingArsakType: BehandlingÅrsakDtoBehandlingArsakType.ETTER_KLAGE,
+      behandlingArsakType: BehandlingÅrsakType.ETTER_KLAGE,
     },
   ],
 };
 
 const aksjonspunkt5085 = {
-  aksjonspunktType: AksjonspunktDtoAksjonspunktType.MANUELL,
+  aksjonspunktType: AksjonspunktType.MANUELL,
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: AksjonspunktDtoDefinisjon.SJEKK_TILBAKEKREVING,
+  definisjon: AksjonspunktDefinisjon.SJEKK_TILBAKEKREVING,
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: AksjonspunktDtoStatus.OPPRETTET,
+  status: AksjonspunktStatus.OPPRETTET,
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: AksjonspunktDtoVenteårsak.UDEFINERT,
+  venteårsak: Venteårsak.UDEFINERT,
 };
 
 describe('<AvslagårsakListe>', () => {
@@ -60,7 +60,7 @@ describe('<AvslagårsakListe>', () => {
             ...behandling,
             type: behandlingType.SOKNAD,
             behandlingsresultat: {
-              type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
+              type: BehandlingResultatType.IKKE_FASTSATT,
             },
           }}
           vilkar={[]}
@@ -103,14 +103,14 @@ describe('<AvslagårsakListe>', () => {
             ...behandling,
             type: behandlingType.SOKNAD,
             behandlingsresultat: {
-              type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
+              type: BehandlingResultatType.IKKE_FASTSATT,
             },
           }}
           vilkar={[]}
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[
             {
-              definisjon: AksjonspunktDtoDefinisjon.FORESLÅ_VEDTAK,
+              definisjon: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
               begrunnelse: undefined,
               kanLoses: true,
               erAktivt: true,

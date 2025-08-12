@@ -1,4 +1,4 @@
-import { PersonopplysningDtoNavBrukerKjonn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated';
+import { kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from 'storybook/test';
 import VisittkortPanel from './VisittkortPanel';

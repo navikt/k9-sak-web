@@ -1,6 +1,6 @@
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
-import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
+import { kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from 'storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';

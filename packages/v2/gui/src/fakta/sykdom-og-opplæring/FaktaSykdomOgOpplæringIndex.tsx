@@ -13,8 +13,8 @@ import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
-  VilkårMedPerioderDtoVilkarType,
-  VilkårPeriodeDtoVilkarStatus,
+  kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
+  kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
 } from '@k9-sak-web/backend/k9sak/generated';
 

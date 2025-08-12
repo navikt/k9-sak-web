@@ -1,6 +1,6 @@
 import {
-  BehandlingAksjonspunktDtoFagsakStatus as fagsakStatus,
-  MatchFagsakYtelseType as fagsakYtelseType,
+  kodeverk_behandling_FagsakStatus as fagsakStatus,
+  kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { sortFagsaker } from './FagsakList';
 

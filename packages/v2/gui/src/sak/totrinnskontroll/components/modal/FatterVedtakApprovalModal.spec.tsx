@@ -1,6 +1,6 @@
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
+import { kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 

@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Button, ErrorMessage } from '@navikt/ds-react';
 
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import styles from './vedtakForm.module.css';
 
 interface Props {

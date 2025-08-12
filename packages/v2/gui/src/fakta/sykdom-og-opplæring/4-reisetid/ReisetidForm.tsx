@@ -1,4 +1,4 @@
-import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import { Period } from '@navikt/ft-utils';

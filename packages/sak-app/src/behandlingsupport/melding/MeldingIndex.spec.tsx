@@ -1,7 +1,7 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import type { BehandlingAppKontekst, Brevmaler, Fagsak, FeatureToggles } from '@k9-sak-web/types';
-import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import type { sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@navikt/k9-sak-typescript-client';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ import { reducer as formReducer } from 'redux-form';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
-import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';

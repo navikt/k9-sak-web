@@ -14,7 +14,7 @@ import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, requ
 import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
-import { AksjonspunktDtoDefinisjon } from '@navikt/k9-sak-typescript-client';
+import { kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@navikt/k9-sak-typescript-client';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';

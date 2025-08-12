@@ -1,4 +1,8 @@
-import { ApiError, type BestillBrevDto, K9SakClient } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  ApiError,
+  type sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
+  K9SakClient,
+} from '@k9-sak-web/backend/k9sak/generated';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';

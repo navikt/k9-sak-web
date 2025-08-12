@@ -1,4 +1,4 @@
-import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
 
 export type Personopplysninger = {
   aktoerId?: PersonopplysningDto['aktoerId'];

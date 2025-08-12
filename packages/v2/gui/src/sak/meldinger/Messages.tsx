@@ -4,7 +4,11 @@ import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
-import type { BestillBrevDto, MottakerDto, FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
+  sak_kontrakt_dokument_MottakerDto as MottakerDto,
+  sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {

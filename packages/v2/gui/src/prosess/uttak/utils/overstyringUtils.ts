@@ -4,11 +4,11 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { yupValiderProsent } from '@k9-sak-web/lib/validationUtils/yupSchemas.js';
 import {
-  OverstyrUttakArbeidsforholdDtoType,
-  type ArbeidsgiverOversiktDto,
-  type OverstyrUttakArbeidsforholdDto,
-  type OverstyrUttakPeriodeDto,
-  type OverstyrUttakUtbetalingsgradDto,
+  kodeverk_uttak_UttakArbeidType as UttakArbeidType,
+  type sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type sak_kontrakt_uttak_overstyring_OverstyrUttakArbeidsforholdDto as OverstyrUttakArbeidsforholdDto,
+  type sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+  type sak_kontrakt_uttak_overstyring_OverstyrUttakUtbetalingsgradDto as OverstyrUttakUtbetalingsgradDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 
@@ -19,7 +19,7 @@ export const utledAktivitetNavn = (
   arbeidsforhold: OverstyrUttakArbeidsforholdDto,
   arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ): string => {
-  if (arbeidsforhold.type === OverstyrUttakArbeidsforholdDtoType.KUN_YTELSE) return arbeidstypeTilVisning.BA;
+  if (arbeidsforhold.type === UttakArbeidType.KUN_YTELSE) return arbeidstypeTilVisning.BA;
 
   if (!arbeidsgivere || Object.keys(arbeidsgivere).length === 0) return '';
 
@@ -77,7 +77,7 @@ export const formaterOverstyringAktiviteter = (
 ): OverstyrUttakUtbetalingsgradDto[] =>
   aktiviteter.map(aktivitet => ({
     arbeidsforhold: {
-      type: (aktivitet.type as OverstyrUttakArbeidsforholdDtoType) || OverstyrUttakArbeidsforholdDtoType.ANNET,
+      type: aktivitet.type ?? UttakArbeidType.ANNET,
       orgnr: aktivitet.orgnr,
       aktørId: aktivitet.aktørId,
       arbeidsforholdId: aktivitet.arbeidsforholdId,

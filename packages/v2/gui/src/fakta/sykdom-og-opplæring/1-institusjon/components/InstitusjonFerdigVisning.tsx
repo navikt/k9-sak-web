@@ -1,5 +1,5 @@
 import { BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
-import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
@@ -31,8 +31,8 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
           label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
           size="small"
           content={
-            ((vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK ||
-              vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) && (
+            ((vurdering.resultat === InstitusjonResultat.GODKJENT_AUTOMATISK ||
+              vurdering.resultat === InstitusjonResultat.GODKJENT_MANUELT) && (
               <BodyShort size="small">Ja</BodyShort>
             )) || <BodyShort size="small">Nei</BodyShort>
           }
@@ -52,7 +52,7 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
             <VurdertAv ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
           </div>
         )}
-        {vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK && (
+        {vurdering.resultat === InstitusjonResultat.GODKJENT_AUTOMATISK && (
           <div className="flex gap-2 items-center">
             <CogIcon fontSize="20" />
             <BodyShort size="small">Automatisk vurdering</BodyShort>

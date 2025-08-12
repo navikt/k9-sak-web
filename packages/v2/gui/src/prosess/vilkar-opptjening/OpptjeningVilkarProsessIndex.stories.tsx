@@ -1,10 +1,10 @@
 import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  FastsattOpptjeningAktivitetDtoKlasse,
-  FastsattOpptjeningAktivitetDtoType,
-  VilkårPeriodeDtoMerknad,
-  VilkårPeriodeDtoVilkarStatus,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
+  kodeverk_opptjening_OpptjeningAktivitetKlassifisering as FastsattOpptjeningAktivitetDtoKlasse,
+  kodeverk_opptjening_OpptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType,
+  kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
+  kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -172,7 +172,7 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
     ],
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
         status: AksjonspunktDtoStatus.OPPRETTET,
       },
     ],
@@ -254,7 +254,7 @@ export const VisPanelForPSBÅpentAksjonspunktUten847B: Story = {
     ],
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
         status: AksjonspunktDtoStatus.OPPRETTET,
       },
     ],
@@ -295,7 +295,7 @@ export const VisPanelForPSBÅpentAksjonspunktMed847B: Story = {
     ],
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
         status: AksjonspunktDtoStatus.OPPRETTET,
       },
     ],

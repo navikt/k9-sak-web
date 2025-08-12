@@ -4,7 +4,10 @@ import { guid } from '@fpsak-frontend/utils';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Form } from '@navikt/ft-form-hooks';
-import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
+import {
+  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
+} from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';

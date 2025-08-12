@@ -3,14 +3,14 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { screen } from '@testing-library/react';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingDtoBehandlingResultatType } from '@navikt/k9-sak-typescript-client';
+import { kodeverk_behandling_BehandlingResultatType as BehandlingResultatType } from '@navikt/k9-sak-typescript-client';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
 const foreldrepenger = fagsakYtelsesType.FORELDREPENGER;
 const behandlingsresultat = {
-  type: BehandlingDtoBehandlingResultatType.INNVILGET,
+  type: BehandlingResultatType.INNVILGET,
 };
 
 describe('<VedtakInnvilgetPanel>', () => {

@@ -1,5 +1,5 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
 const lagAksjonspunktTilbaketrekk = (begrunnelse: string): AksjonspunktDto => ({

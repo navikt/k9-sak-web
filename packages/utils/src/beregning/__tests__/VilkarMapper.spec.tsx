@@ -1,9 +1,9 @@
 import { BeregningReferanse } from '@k9-sak-web/types';
 import {
-  VilkårMedPerioderDto,
-  VilkårMedPerioderDtoVilkarType,
-  VilkårPeriodeDtoMerknad,
-  VilkårPeriodeDtoVilkarStatus,
+  sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  kodeverk_vilkår_VilkårType as VilkårType,
+  kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
+  kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@navikt/k9-sak-typescript-client';
 import { describe, expect, it } from 'vitest';
 import mapVilkar from '../VilkarMapper';
@@ -25,14 +25,14 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.OMSORGEN_FOR,
+        vilkarType: VilkårType.OMSORGEN_FOR,
         overstyrbar: true,
         perioder: [
           {
             avslagKode: undefined,
             begrunnelse: 'Test begrunnelse 1',
             vurderesIBehandlingen: true,
-            merknad: VilkårPeriodeDtoMerknad.UDEFINERT,
+            merknad: Merknad.UDEFINERT,
             merknadParametere: { param1: 'value1' },
             periode: { fom: '2025-01-01', tom: '2025-01-31' },
             vilkarStatus: 'OPPFYLT',
@@ -41,7 +41,7 @@ describe('VilkarMapper', () => {
             avslagKode: 'AVSLAG_1',
             begrunnelse: 'Test begrunnelse 2',
             vurderesIBehandlingen: false,
-            merknad: VilkårPeriodeDtoMerknad.UDEFINERT,
+            merknad: Merknad.UDEFINERT,
             merknadParametere: { param2: 'value2' },
             periode: { fom: '2025-02-01', tom: '2025-02-28' },
             vilkarStatus: 'IKKE_OPPFYLT',
@@ -53,7 +53,7 @@ describe('VilkarMapper', () => {
       const result = mapVilkar(vilkar, beregningreferanser);
 
       expect(result).toEqual({
-        vilkarType: VilkårMedPerioderDtoVilkarType.OMSORGEN_FOR,
+        vilkarType: VilkårType.OMSORGEN_FOR,
         overstyrbar: true,
         perioder: [
           {
@@ -90,7 +90,7 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDLEMSKAPSVILKÅRET,
+        vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET,
         overstyrbar: false,
         perioder: [
           {
@@ -115,14 +115,14 @@ describe('VilkarMapper', () => {
       const beregningreferanser: BeregningReferanse[] = [];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.ALDERSVILKÅR,
+        vilkarType: VilkårType.ALDERSVILKÅR,
         overstyrbar: true,
         perioder: [
           {
             avslagKode: undefined,
             begrunnelse: 'Test begrunnelse',
             vurderesIBehandlingen: true,
-            merknad: VilkårPeriodeDtoMerknad.UDEFINERT,
+            merknad: Merknad.UDEFINERT,
             merknadParametere: {},
             periode: { fom: '2025-01-01', tom: '2025-01-31' },
             vilkarStatus: 'OPPFYLT',
@@ -146,7 +146,7 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: false,
         perioder: [],
         relevanteInnvilgetMerknader: [],
@@ -167,14 +167,14 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: true,
         perioder: [
           {
             avslagKode: undefined,
             begrunnelse: 'Test begrunnelse 1',
             vurderesIBehandlingen: true,
-            merknad: VilkårPeriodeDtoMerknad.UDEFINERT,
+            merknad: Merknad.UDEFINERT,
             merknadParametere: {},
             periode: { fom: '2025-01-01', tom: '2025-01-15' },
             vilkarStatus: 'OPPFYLT',
@@ -183,7 +183,7 @@ describe('VilkarMapper', () => {
             avslagKode: undefined,
             begrunnelse: 'Test begrunnelse 2',
             vurderesIBehandlingen: true,
-            merknad: VilkårPeriodeDtoMerknad.UDEFINERT,
+            merknad: Merknad.UDEFINERT,
             merknadParametere: {},
             periode: { fom: '2025-01-01', tom: '2025-01-31' },
             vilkarStatus: 'OPPFYLT',
@@ -202,14 +202,14 @@ describe('VilkarMapper', () => {
       const beregningreferanser: BeregningReferanse[] = [];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: false,
         perioder: [
           {
             avslagKode: 'CUSTOM_AVSLAG',
             begrunnelse: 'Custom begrunnelse with special characters: æøå',
             vurderesIBehandlingen: false,
-            merknad: VilkårPeriodeDtoMerknad.UDEFINERT,
+            merknad: Merknad.UDEFINERT,
             merknadParametere: {
               complexParam: 'test',
               arrayParam: '123',
@@ -228,7 +228,7 @@ describe('VilkarMapper', () => {
       expect(periode.avslagKode).toBe('CUSTOM_AVSLAG');
       expect(periode.begrunnelse).toBe('Custom begrunnelse with special characters: æøå');
       expect(periode.vurderesIBehandlingen).toBe(false);
-      expect(periode.merknad).toBe(VilkårPeriodeDtoMerknad.UDEFINERT);
+      expect(periode.merknad).toBe(Merknad.UDEFINERT);
       expect(periode.merknadParametere).toEqual({
         complexParam: 'test',
         arrayParam: '123',
@@ -248,7 +248,7 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.UDEFINERT,
+        vilkarType: VilkårType.UDEFINERT,
         overstyrbar: undefined,
         perioder: [
           {
@@ -257,7 +257,7 @@ describe('VilkarMapper', () => {
             vurderesIBehandlingen: undefined,
             merknad: undefined,
             periode: { fom: '2025-01-01', tom: '2025-01-31' },
-            vilkarStatus: VilkårPeriodeDtoVilkarStatus.UDEFINERT,
+            vilkarStatus: VilkårUtfall.UDEFINERT,
           },
         ],
         relevanteInnvilgetMerknader: [],
@@ -273,7 +273,7 @@ describe('VilkarMapper', () => {
       expect(periode.vurderesIBehandlingen).toBeUndefined();
       expect(periode.merknad).toBeUndefined();
       expect(periode.merknadParametere).toBeUndefined();
-      expect(periode.vilkarStatus).toEqual(VilkårPeriodeDtoVilkarStatus.UDEFINERT);
+      expect(periode.vilkarStatus).toEqual(VilkårUtfall.UDEFINERT);
       expect(periode.erForlengelse).toBe(false);
     });
   });
@@ -301,7 +301,7 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: true,
         perioder: [
           {
@@ -332,7 +332,7 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: true,
         perioder: [
           {
@@ -363,7 +363,7 @@ describe('VilkarMapper', () => {
       ];
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: true,
         perioder: [
           {
@@ -402,7 +402,7 @@ describe('VilkarMapper', () => {
       }));
 
       const vilkar: VilkårMedPerioderDto = {
-        vilkarType: VilkårMedPerioderDtoVilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         overstyrbar: true,
         perioder: Array.from({ length: 50 }, (_, i) => ({
           avslagKode: undefined,

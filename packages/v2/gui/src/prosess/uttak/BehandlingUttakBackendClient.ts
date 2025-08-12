@@ -1,11 +1,11 @@
 import type {
   K9SakClient,
-  EgneOverlappendeSakerDto,
+  sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
   BekreftResponse,
   BekreftData,
   GetOverstyrtUttakResponse,
-  OverstyrbareUttakAktiviterDto,
-  OverstyrbareAktiviteterForUttakRequest,
+  sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
+  sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest as OverstyrbareAktiviteterForUttakRequest,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { OverstyringUttakRequest } from './types/OverstyringUttakTypes';
 

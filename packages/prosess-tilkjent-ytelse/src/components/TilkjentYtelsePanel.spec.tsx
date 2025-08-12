@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 

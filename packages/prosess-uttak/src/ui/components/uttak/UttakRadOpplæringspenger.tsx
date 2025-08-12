@@ -20,7 +20,7 @@ import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
+import { kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated';
 
 const cx = classNames.bind(styles);
 
@@ -65,12 +65,10 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
       !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
   });
 
-  const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(
-    vilkar => vilkar === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
-  );
+  const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === VilkårUtfall.OPPFYLT);
 
   const harOppfyltAlleVilkårSykdomOgOpplæring = opplæringspengerVilkår.every(
-    vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
+    vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårUtfall.OPPFYLT,
   );
 
   const alleVilkårErOppfylt = harOppfyltAlleInngangsvilkår && harOppfyltAlleVilkårSykdomOgOpplæring;

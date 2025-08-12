@@ -1,11 +1,11 @@
 import { type JSX } from 'react';
 import {
-  UttaksperiodeInfoUtfall,
-  type UttaksperiodeInfoUtfall as UttaksperiodeInfoUtfallType,
-  UttaksperiodeInfoÅrsaker,
-  type UttaksperiodeInfoÅrsaker as UttaksperiodeInfoÅrsakerType,
-  type Utenlandsopphold,
-  type ArbeidsgiverOversiktDto,
+  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
+  type pleiepengerbarn_uttak_kontrakter_Utfall as UttaksperiodeInfoUtfallType,
+  pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
+  type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
+  type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
+  type sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
@@ -59,7 +59,7 @@ const utenlandsoppholdInfo = (
     return null;
   }
 
-  if (utfall === UttaksperiodeInfoUtfall.IKKE_OPPFYLT) {
+  if (utfall === Utfall.IKKE_OPPFYLT) {
     return null;
   }
 
@@ -106,12 +106,12 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
     !manueltOverstyrt &&
     !shouldHighlightInntekt &&
     årsaker &&
-    shouldHighlight(UttaksperiodeInfoÅrsaker.GRADERT_MOT_TILSYN, årsaker || []);
+    shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker || []);
   const shouldHighlightArbeidstid =
     !manueltOverstyrt &&
     !shouldHighlightInntekt &&
     årsaker &&
-    shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
+    shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
   const skalViseGraderingMotTilsyn = ![
     fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,

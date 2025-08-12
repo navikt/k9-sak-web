@@ -1,5 +1,5 @@
 import NødvendigOpplæringFerdigvisning from './NødvendigOpplæringFerdigvisning';
-import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import DetailView from '../../../shared/detailView/DetailView';

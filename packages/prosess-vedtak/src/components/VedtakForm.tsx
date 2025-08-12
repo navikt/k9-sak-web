@@ -25,16 +25,16 @@ import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Checkbox, Label } from '@navikt/ds-react';
 import {
-  AksjonspunktDto,
-  AvslagsårsakPrPeriodeDto,
-  BehandlingsresultatDto,
-  BehandlingÅrsakDto,
-  DokumentMedUstrukturerteDataDto,
-  OverlappendeYtelseDto,
-  PersonopplysningDto,
-  TilbakekrevingValgDto,
-  VilkårMedPerioderDto,
-} from '@navikt/k9-sak-typescript-client';
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
+  sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+  sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
+  sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
+  sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';

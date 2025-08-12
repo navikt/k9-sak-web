@@ -3,14 +3,13 @@ import { Box, Heading } from '@navikt/ds-react';
 import { PeriodeRad } from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
 import {
-  type InstitusjonVurderingDtoResultat,
-  OpplæringVurderingDtoResultat,
-  type SykdomVurderingOversiktElementResultat,
-  InstitusjonVurderingDtoResultat as instEnumObject,
-  SykdomVurderingOversiktElementResultat as sykdomEnumObject,
-  OpplæringVurderingDtoResultat as opplæringEnumObject,
-  ReisetidPeriodeVurderingDtoResultat,
-  ReisetidPeriodeVurderingDtoResultat as reisetidEnumObject,
+  type sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
+  sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
+  sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
+  kodeverk_sykdom_Resultat as sykdomEnumObject,
+  type sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
+  sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
 import styles from './periodeRad.module.css';
 
@@ -18,18 +17,18 @@ export type ResultatType =
   | InstitusjonVurderingDtoResultat
   | SykdomVurderingOversiktElementResultat
   | OpplæringVurderingDtoResultat
-  | ReisetidPeriodeVurderingDtoResultat;
+  | ReisetidResultat;
 
 type ResultatKeys =
   | keyof typeof instEnumObject
   | keyof typeof sykdomEnumObject
-  | keyof typeof opplæringEnumObject
+  | keyof typeof OpplæringVurderingDtoResultat
   | keyof typeof reisetidEnumObject;
 
 export const Resultat = {
   ...instEnumObject,
   ...sykdomEnumObject,
-  ...opplæringEnumObject,
+  ...OpplæringVurderingDtoResultat,
   ...reisetidEnumObject,
 } satisfies Record<ResultatKeys, ResultatType>;
 

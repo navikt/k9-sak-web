@@ -1,3 +1,3 @@
-import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 
 export type SoknadsfristVilkarType = { lovReferanse?: string; perioder?: Array<VilkårPeriodeDto> };

@@ -4,7 +4,7 @@ import Uttaksperioder from './Uttaksperioder';
 import { Inntektsgradering } from '.';
 import { ReactNode } from 'react';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 
 interface ContainerContract {
   behandling: Pick<Behandling, 'uuid' | 'versjon' | 'status'>; // Pick<BehandlingDto, 'uuid' | 'versjon' | 'status'>;

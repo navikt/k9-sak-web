@@ -7,12 +7,12 @@ import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fps
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoStatus,
-  TilbakekrevingValgDtoVidereBehandling,
-} from '@navikt/k9-sak-typescript-client';
+  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
+  kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
+  kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messages from '../../i18n/nb_NO.json';
@@ -49,8 +49,8 @@ describe('<VedtakForm>', () => {
     mangler: [],
   };
   const aksjonspunktBase = {
-    definisjon: AksjonspunktDtoDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
-    status: AksjonspunktDtoStatus.OPPRETTET,
+    definisjon: AksjonspunktDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
+    status: AksjonspunktStatus.OPPRETTET,
     toTrinnsBehandling: true,
     kanLoses: true,
     erAktivt: true,
@@ -73,7 +73,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.INNVILGET,
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
@@ -93,7 +93,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -121,12 +121,12 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.AVSLÅTT,
+      type: BehandlingResultatType.AVSLÅTT,
     };
     const aksjonspunkter = [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
-        status: AksjonspunktDtoStatus.OPPRETTET,
+        definisjon: AksjonspunktDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
+        status: AksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -148,7 +148,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -175,7 +175,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.INNVILGET,
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -199,7 +199,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -225,7 +225,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.INNVILGET,
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -249,7 +249,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -277,7 +277,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.AVSLÅTT,
+      type: BehandlingResultatType.AVSLÅTT,
     };
     const aksjonspunkter = [
       {
@@ -309,7 +309,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -337,7 +337,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.INNVILGET,
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
@@ -354,7 +354,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={BehandlingDtoStatus.AVSLUTTET}
+          behandlingStatus={BehandlingStatus.AVSLUTTET}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPåVent={false}
@@ -367,7 +367,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -393,7 +393,7 @@ describe('<VedtakForm>', () => {
   it('skal ikke vise knapper når status er iverksetter vedtak', () => {
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.INNVILGET,
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
@@ -411,7 +411,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={BehandlingDtoStatus.IVERKSETTER_VEDTAK}
+          behandlingStatus={BehandlingStatus.IVERKSETTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPåVent={false}
@@ -424,7 +424,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -452,7 +452,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: BehandlingDtoBehandlingResultatType.INNVILGET,
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
@@ -468,7 +468,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={BehandlingDtoStatus.FATTER_VEDTAK}
+          behandlingStatus={BehandlingStatus.FATTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPåVent={false}
@@ -481,7 +481,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -508,7 +508,7 @@ describe('<VedtakForm>', () => {
   const previewCallback = vi.fn();
   const behandlingsresultat = {
     id: 1,
-    type: BehandlingDtoBehandlingResultatType.INNVILGET,
+    type: BehandlingResultatType.INNVILGET,
   };
   const aksjonspunkter = [
     {
@@ -552,7 +552,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -593,7 +593,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -635,7 +635,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}
@@ -686,7 +686,7 @@ describe('<VedtakForm>', () => {
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           vilkar={[]}

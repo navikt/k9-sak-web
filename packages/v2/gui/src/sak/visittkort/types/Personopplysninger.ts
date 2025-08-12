@@ -1,4 +1,7 @@
-import type { AvklartPersonstatus, PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  sak_kontrakt_person_AvklartPersonstatus as AvklartPersonstatus,
+  sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 export type Personopplysninger = {
   navn: string;

@@ -1,4 +1,4 @@
-import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { type sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import type { Period } from '@navikt/ft-utils';
@@ -9,7 +9,7 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
+import { kodeverk_vilkår_Avslagsårsak as Avslagsårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 
 const booleanToRadioValue = (value: boolean | undefined) => {
@@ -62,7 +62,7 @@ const NødvendigOpplæringForm = ({
     if (opplæringIkkeDokumentertMedLegeerklæring) {
       formMethods.setValue('nødvendigOpplæring', '');
       formMethods.setValue('begrunnelse', '');
-      formMethods.setValue('avslagsårsak', KodeverdiSomObjektAvslagsårsakKilde.MANGLENDE_DOKUMENTASJON);
+      formMethods.setValue('avslagsårsak', Avslagsårsak.MANGLENDE_DOKUMENTASJON);
     } else {
       formMethods.setValue('avslagsårsak', undefined);
     }
@@ -201,8 +201,8 @@ const NødvendigOpplæringForm = ({
                   ? undefined
                   : {
                       validate: value => {
-                        return value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING ||
-                          value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN
+                        return value === Avslagsårsak.IKKE_NØDVENDIG_OPPLÆRING ||
+                          value === Avslagsårsak.IKKE_OPPLÆRING_I_PERIODEN
                           ? undefined
                           : 'Avslagsårsak er påkrevd';
                       },
@@ -216,19 +216,11 @@ const NødvendigOpplæringForm = ({
                   size="small"
                   error={formMethods.formState.errors.avslagsårsak?.message as string | undefined}
                 >
-                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING}>
-                    {
-                      k9Kodeverkoppslag.k9sak.avslagsårsaker(
-                        KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING,
-                      ).navn
-                    }
+                  <Radio value={Avslagsårsak.IKKE_NØDVENDIG_OPPLÆRING}>
+                    {k9Kodeverkoppslag.k9sak.avslagsårsaker(Avslagsårsak.IKKE_NØDVENDIG_OPPLÆRING).navn}
                   </Radio>
-                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN}>
-                    {
-                      k9Kodeverkoppslag.k9sak.avslagsårsaker(
-                        KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN,
-                      ).navn
-                    }
+                  <Radio value={Avslagsårsak.IKKE_OPPLÆRING_I_PERIODEN}>
+                    {k9Kodeverkoppslag.k9sak.avslagsårsaker(Avslagsårsak.IKKE_OPPLÆRING_I_PERIODEN).navn}
                   </Radio>
                 </RadioGroup>
               )}

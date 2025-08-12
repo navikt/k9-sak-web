@@ -1,8 +1,4 @@
-import {
-  PersonopplysningDtoNavBrukerKjonn as personopplysningDtoNavBrukerKjonn,
-  type PersonopplysningDtoNavBrukerKjonn,
-} from '@navikt/k9-sak-typescript-client';
-
-export const kjønn = personopplysningDtoNavBrukerKjonn;
-
-export type Kjønn = PersonopplysningDtoNavBrukerKjonn;
+export {
+  type kodeverk_person_NavBrukerKjønn as Kjønn,
+  kodeverk_person_NavBrukerKjønn as kjønn,
+} from '@k9-sak-web/backend/k9sak/generated';

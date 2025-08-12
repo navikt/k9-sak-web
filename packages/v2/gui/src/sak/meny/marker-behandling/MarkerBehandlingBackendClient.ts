@@ -1,10 +1,9 @@
 import type {
   DeleteMerknadResponse,
-  EndreMerknadRequestMerknadKode,
+  kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadType,
   GetMerknadResponse,
   K9SakClient,
   PostMerknadResponse,
-  SlettMerknadRequestMerknadKode,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 export default class MarkerBehandlingBackendClient {
@@ -25,7 +24,7 @@ export default class MarkerBehandlingBackendClient {
   }: {
     behandlingUuid: string;
     fritekst: string;
-    merknadKode: EndreMerknadRequestMerknadKode;
+    merknadKode: BehandlingMerknadType;
   }): Promise<PostMerknadResponse> {
     return this.#backendClient.los.postMerknad({
       behandlingUuid,
@@ -39,7 +38,7 @@ export default class MarkerBehandlingBackendClient {
     merknadKode,
   }: {
     behandlingUuid: string;
-    merknadKode: SlettMerknadRequestMerknadKode;
+    merknadKode: BehandlingMerknadType;
   }): Promise<DeleteMerknadResponse> {
     return this.#backendClient.los.deleteMerknad({
       behandlingUuid,

@@ -1,4 +1,7 @@
-import { VilkårPeriodeDtoVilkarStatus, type OpptjeningDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
+  type sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';

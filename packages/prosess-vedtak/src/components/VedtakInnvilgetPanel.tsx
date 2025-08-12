@@ -2,7 +2,10 @@ import { isDelvisInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResult
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { BehandlingsresultatDto, TilbakekrevingValgDto } from '@navikt/k9-sak-typescript-client';
+import {
+  sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+} from '@navikt/k9-sak-typescript-client';
 import { IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';

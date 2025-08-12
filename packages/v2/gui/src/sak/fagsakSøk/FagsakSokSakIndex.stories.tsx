@@ -1,7 +1,7 @@
 import {
-  BehandlingAksjonspunktDtoBehandlingType as behandlingType,
-  BehandlingAksjonspunktDtoFagsakStatus as fagsakStatus,
-  MatchFagsakYtelseType as fagsakYtelseType,
+  kodeverk_behandling_BehandlingType as behandlingType,
+  kodeverk_behandling_FagsakStatus as fagsakStatus,
+  kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';

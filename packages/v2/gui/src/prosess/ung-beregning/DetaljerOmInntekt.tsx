@@ -1,4 +1,7 @@
-import type { KontrollerInntektPeriodeDto, RapportertInntektDto } from '@k9-sak-web/backend/ungsak/generated';
+import type {
+  ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
+  ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
+} from '@k9-sak-web/backend/ungsak/generated';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { getPathToAinntekt } from '@k9-sak-web/lib/paths/paths.js';

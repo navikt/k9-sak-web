@@ -1,4 +1,4 @@
-import type { TotrinnskontrollSkjermlenkeContextDto } from '@navikt/k9-sak-typescript-client';
+import type { sak_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto as TotrinnskontrollSkjermlenkeContextDto } from '@navikt/k9-sak-typescript-client';
 import type { TotrinnskontrollAksjonspunkt } from './TotrinnskontrollAksjonspunkt';
 
 export type TotrinnskontrollSkjermlenkeContext = {

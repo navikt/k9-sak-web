@@ -1,4 +1,8 @@
-import type { BekreftData, BekreftResponse, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  BekreftData,
+  BekreftResponse,
+  sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 export type BehandlingUttakBackendApiType = {
   getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto>;

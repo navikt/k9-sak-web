@@ -2,7 +2,10 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { Delete, Edit } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
-import type { ArbeidsgiverOversiktDto, OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import BegrunnelseBoks from './components/BegrunnelseBoks';
 
 import styles from './aktivitetRad.module.css';

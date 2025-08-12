@@ -1,5 +1,5 @@
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
+import type { sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import type { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 

@@ -8,10 +8,10 @@ import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import {
-  AvslagsårsakPrPeriodeDto,
-  BeregningsgrunnlagPeriodeDto,
-  TilbakekrevingValgDto,
-  TilbakekrevingValgDtoVidereBehandling,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
+  sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
 } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
@@ -27,7 +27,7 @@ const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
   simuleringResultat: VedtakSimuleringResultat,
 ) =>
-  tilbakekrevingKode === TilbakekrevingValgDtoVidereBehandling.OPPRETT_TILBAKEKREVING &&
+  tilbakekrevingKode === TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING &&
   (simuleringResultat.simuleringResultat?.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = (props: {

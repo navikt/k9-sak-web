@@ -1,4 +1,4 @@
-import { EndreMerknadRequestMerknadKode, SlettMerknadRequestMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
+import { kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 
 export class FakeMarkerBehandlingBackendApi {
@@ -17,19 +17,13 @@ export class FakeMarkerBehandlingBackendApi {
   }: {
     behandlingUuid: string;
     fritekst: string;
-    merknadKode: EndreMerknadRequestMerknadKode;
+    merknadKode: BehandlingMerknadKode;
   }) {
     ignoreUnusedDeclared({ behandlingUuid, fritekst, merknadKode });
     return Promise.resolve();
   }
 
-  fjernMerknad({
-    behandlingUuid,
-    merknadKode,
-  }: {
-    behandlingUuid: string;
-    merknadKode: SlettMerknadRequestMerknadKode;
-  }) {
+  fjernMerknad({ behandlingUuid, merknadKode }: { behandlingUuid: string; merknadKode: BehandlingMerknadKode }) {
     ignoreUnusedDeclared({ behandlingUuid, merknadKode });
     return Promise.resolve();
   }

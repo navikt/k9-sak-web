@@ -1,9 +1,9 @@
 import {
-  AksjonspunktDtoDefinisjon,
-  VilkårPeriodeDtoMerknad,
-  type AksjonspunktDto,
-  type OpptjeningDto,
-  type VilkårPeriodeDto,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
+  type sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
+  type sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Button, HelpText, Label } from '@navikt/ds-react';
@@ -134,7 +134,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
     vilkarField?.vurderesIAksjonspunkt
   );
   const aksjonspunktErLøst = aksjonspunkter.some(
-    ap => AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET === ap.definisjon && ap.status === 'UTFO',
+    ap => AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET === ap.definisjon && ap.status === 'UTFO',
   );
 
   const visRedigeringsknapp = !readOnly && aksjonspunktErLøst && !redigererOpptjening;

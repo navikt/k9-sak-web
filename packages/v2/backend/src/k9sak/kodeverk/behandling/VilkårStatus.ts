@@ -1,8 +1,5 @@
 import type { Kodeverk } from '../../../shared/Kodeverk.ts';
-import {
-  type VilkårPeriodeDtoVilkarStatus as typeUnion,
-  VilkårPeriodeDtoVilkarStatus as enumObj,
-} from '../../generated';
+import { type kodeverk_vilkår_Utfall as typeUnion, kodeverk_vilkår_Utfall as enumObj } from '../../generated';
 
 export type VilkårStatus = typeUnion;
 

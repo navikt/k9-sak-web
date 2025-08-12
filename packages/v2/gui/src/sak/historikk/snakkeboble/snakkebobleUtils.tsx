@@ -4,8 +4,8 @@ import { kjønn as kjønnKode } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.
 import styles from './snakkeboble.module.css';
 import { historikkAktor, type HistorikkAktor } from '../tilbake/historikkinnslagTsTypeV2.js';
 import {
-  type HistorikkAktørDtoType,
-  HistorikkAktørDtoType as historikkAktør,
+  type kodeverk_historikk_HistorikkAktør as HistorikkAktørDtoType,
+  kodeverk_historikk_HistorikkAktør as historikkAktør,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 export const isLegacyTilbakeHistorikkAktor = (

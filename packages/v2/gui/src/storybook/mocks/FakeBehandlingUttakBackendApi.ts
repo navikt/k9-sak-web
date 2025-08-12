@@ -1,4 +1,4 @@
-import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { BehandlingUttakBackendApiType } from '../../prosess/uttak/BehandlingUttakBackendApiType';
 import type { BekreftVurderOverlappendeSakerAksjonspunktRequest } from '../../prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSak';
 

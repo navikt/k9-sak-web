@@ -1,4 +1,4 @@
-import type { TotrinnskontrollAksjonspunkterDto } from '@navikt/k9-sak-typescript-client';
+import type { sak_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto as TotrinnskontrollAksjonspunkterDto } from '@navikt/k9-sak-typescript-client';
 import type { OpptjeningAktivitet } from './OpptjeningAktivitet';
 
 export type TotrinnskontrollAksjonspunkt = {

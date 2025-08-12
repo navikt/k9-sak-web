@@ -1,8 +1,8 @@
 import {
-  type AksjonspunktDtoDefinisjon as generatedAksjonspunktCodeEnumUnion,
-  AksjonspunktDtoDefinisjon,
+  type kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as generatedAksjonspunktCodeEnumUnion,
+  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
 } from '../generated';
 
 export type AksjonspunktCodes = generatedAksjonspunktCodeEnumUnion;
 
-export const aksjonspunktCodes = AksjonspunktDtoDefinisjon;
+export const aksjonspunktCodes = kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon;

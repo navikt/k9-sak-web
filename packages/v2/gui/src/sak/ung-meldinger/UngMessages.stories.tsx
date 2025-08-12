@@ -1,6 +1,6 @@
 import {
-  InformasjonsbrevMottakerValgResponseIdType,
-  KodeverdiSomObjektDokumentMalTypeKilde,
+  ung_kodeverk_formidling_IdType as InformasjonsbrevMottakerValgResponseIdType,
+  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
 } from '@k9-sak-web/backend/ungsak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
@@ -29,7 +29,7 @@ export const Default: Story = {
           kode: 'GENERELT_FRITEKSTBREV',
           kodeverk: 'DOKUMENT_MAL_TYPE',
           navn: 'Fritekst generelt brev',
-          kilde: KodeverdiSomObjektDokumentMalTypeKilde.GENERELT_FRITEKSTBREV,
+          kilde: DokumentMalType.GENERELT_FRITEKSTBREV,
         },
         mottakere: [
           {

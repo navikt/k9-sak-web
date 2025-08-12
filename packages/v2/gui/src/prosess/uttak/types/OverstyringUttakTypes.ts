@@ -2,9 +2,9 @@
 import type { UseMutateFunction } from '@tanstack/react-query';
 import type { OverstyrUttakHandling } from '../overstyr-uttak/OverstyrUttak';
 import type {
-  BekreftetAksjonspunktDto,
-  BekreftetOgOverstyrteAksjonspunkterDto,
-  OverstyrUttakPeriodeDto,
+  sak_kontrakt_aksjonspunkt_BekreftetAksjonspunktDto as BekreftetAksjonspunktDto,
+  sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto as BekreftetOgOverstyrteAksjonspunkterDto,
+  sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 export type OverstyringUttakHandling = {

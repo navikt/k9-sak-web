@@ -1,4 +1,8 @@
-import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';

@@ -1,6 +1,6 @@
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Heading, Link } from '@navikt/ds-react';
-import { DokumentMedUstrukturerteDataDto } from '@navikt/k9-sak-typescript-client';
+import { sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import styles from './ustrukturerteDokumenter.module.css';
 

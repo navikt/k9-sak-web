@@ -1,6 +1,6 @@
-import type { UttakArbeidsforholdType } from '@k9-sak-web/backend/k9sak/generated';
+import type { kodeverk_uttak_UttakArbeidType } from '@k9-sak-web/backend/k9sak/generated';
 
-export const arbeidstypeTilVisning: Record<UttakArbeidsforholdType, string> = {
+export const arbeidstypeTilVisning: Record<kodeverk_uttak_UttakArbeidType, string> = {
   AT: 'Arbeidstaker',
   FL: 'Frilanser',
   DP: 'Dagpenger',

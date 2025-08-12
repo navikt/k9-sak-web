@@ -3,7 +3,7 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
+import { kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';
@@ -12,8 +12,8 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AvregningProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [
-    AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
-    AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+    AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+    AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
   ];
 
   getEndepunkter = () => [UnntakBehandlingApiKeys.TILBAKEKREVINGVALG];
