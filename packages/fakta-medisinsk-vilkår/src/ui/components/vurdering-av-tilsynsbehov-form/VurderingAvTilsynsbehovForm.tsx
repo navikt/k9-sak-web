@@ -299,7 +299,7 @@ const VurderingAvTilsynsbehovForm = ({
                       }}
                       checked={field.value === true}
                     >
-                      Mangler legeerklæring - vurdering av tilsyn og pleie skal ikke gjennomføres
+                      Mangler riktig legeerklæring for perioden, jmf. §9-16
                     </Checkbox>
                   </CheckboxGroup>
                 )}
