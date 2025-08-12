@@ -2503,15 +2503,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hey-api/client-fetch@npm:=0.10.0":
-  version: 0.10.0
-  resolution: "@hey-api/client-fetch@npm:0.10.0"
-  peerDependencies:
-    "@hey-api/openapi-ts": < 2
-  checksum: 10/f77dc512047f2fcbba4a1be079020c6c821391b34da426079e1e306ee2ee9f83e7f1130ad7a697a340f2e29bde1e0ce8af3b88a4f8631b849426bd7b2cc24fb9
-  languageName: node
-  linkType: hard
-
 "@hookform/error-message@npm:^2.0.1":
   version: 2.0.1
   resolution: "@hookform/error-message@npm:2.0.1"
@@ -2988,9 +2979,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
-    "@navikt/k9-klage-typescript-client": "npm:3.0.20250530164140"
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250806134814"
-    "@navikt/ung-sak-typescript-client": "npm:0.2.20250728105557"
+    "@navikt/k9-klage-typescript-client": "npm:3.1.20250806103540"
+    "@navikt/k9-sak-typescript-client": "npm:2.0.20250811133704"
+    "@navikt/ung-sak-typescript-client": "npm:0.2.20250808091711"
     "@tanstack/eslint-plugin-query": "npm:^5.81.2"
   languageName: unknown
   linkType: soft
@@ -4369,26 +4360,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-klage-typescript-client@npm:3.0.20250530164140":
-  version: 3.0.20250530164140
-  resolution: "@navikt/k9-klage-typescript-client@npm:3.0.20250530164140::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.0.20250530164140%2F29ef2f2a9cd2310dde4445b083d85ad15b3fae6b"
-  dependencies:
-    "@hey-api/client-fetch": "npm:=0.10.0"
-  checksum: 10/01f45605f6dccd37d744a490ae5860382604742701893c180f08c4771c96d5ebd0c83883fb48666690b639fac4443157cc6c8d63ea91a902ffef4344dd5003cf
+"@navikt/k9-klage-typescript-client@npm:3.1.20250806103540":
+  version: 3.1.20250806103540
+  resolution: "@navikt/k9-klage-typescript-client@npm:3.1.20250806103540::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.1.20250806103540%2Ffd7078f3b9d28452774985ab9c08098e889c640d"
+  checksum: 10/f43fccb643f63b0c2f2d414a632802d7b65e5751da96540945c014ab0cb9804e41cfba5873ea256f7729dff024b80cc3d66cebe20717c604bfc4cf99de49f5d5
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.0.20250806134814":
-  version: 2.0.20250806134814
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250806134814::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250806134814%2Fad869c0b9548f8b3cc08cf729818dc35219e9ea3"
-  checksum: 10/807ca3abf8bcc3ce859261505189d3408a96dce90a70340101c2f4d6c075e75598c4a732fc6cfa5d4ded50741409694fb92b08c669a9b378e55cc79bcbff5447
+"@navikt/k9-sak-typescript-client@npm:2.0.20250811133704":
+  version: 2.0.20250811133704
+  resolution: "@navikt/k9-sak-typescript-client@npm:2.0.20250811133704::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.0.20250811133704%2Fce8b56587fe9839a6336bd9fab823044872eeb8d"
+  checksum: 10/ce1ec29da1e124540951568420328665800c6a310b9a1f5113547d85fdb83808e7f2d44ce6b1857641c54fdb834e9a49018a923d7f22a760edff565d83f400ca
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:0.2.20250728105557":
-  version: 0.2.20250728105557
-  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250728105557::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250728105557%2Fd988dbab4db8799c1b5eea32cd0e0482d41a817a"
-  checksum: 10/fc97dcfd6e5c2738f4dd02cf44af742657953233d3716133d892b15c27a3fa94cb850cadcbc27779ba433837b631fd7b2657c82d3b9f6df27f879a5b756d3ec8
+"@navikt/ung-sak-typescript-client@npm:0.2.20250808091711":
+  version: 0.2.20250808091711
+  resolution: "@navikt/ung-sak-typescript-client@npm:0.2.20250808091711::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F0.2.20250808091711%2Fc6622a3905963a3239ef2e973710f600abac1b17"
+  checksum: 10/231b4e69e00f1b53368f8bd72af5e262dac460f4a61cae90eb68c1b6ea50346c41327eb3bacb03acf8b7a8269971819210f6bb35c42af5aed2dbabb76c80c0c7
   languageName: node
   linkType: hard
 
