@@ -3,14 +3,20 @@ import {
   OpplæringVurderingDtoResultat,
   type OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { Alert, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 import { useContext } from 'react';
+import { Periodevisning } from '../../../shared/detailView/DetailView';
+import { Period } from '@fpsak-frontend/utils';
 
-const NødvendigOpplæringFerdigvisning = ({ vurdering }: { vurdering: OpplæringVurderingDto }) => {
+const NødvendigOpplæringFerdigvisning = ({
+  vurdering,
+}: {
+  vurdering: OpplæringVurderingDto & { perioder: Period[] };
+}) => {
   if (vurdering.resultat === OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID) {
     return (
       <Alert variant="info" size="small">
@@ -22,7 +28,8 @@ const NødvendigOpplæringFerdigvisning = ({ vurdering }: { vurdering: Opplærin
   return (
     <div className="flex flex-col gap-6">
       <LabelledContent
-        label="Er nødvendig opplæring dokumentert med legeerklæring?"
+        label="Har vi fått legeerklæring?"
+        description="Legeerklæringen skal dokumentere om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet."
         size="small"
         content={
           <BodyShort size="small">
@@ -30,12 +37,19 @@ const NødvendigOpplæringFerdigvisning = ({ vurdering }: { vurdering: Opplærin
           </BodyShort>
         }
       />
+      <div className="mt-4">
+        <Heading size="small" level="2" className="!mb-0">
+          Vurdering av nødvendig opplæring
+        </Heading>
+        <Periodevisning perioder={vurdering.perioder} />
+      </div>
+      <div className="border-none bg-border-subtle h-[2px]" />
       <div>
         <LabelledContent
           label={
             <>
               Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
-              <Lovreferanse> § 9-14</Lovreferanse>
+              <Lovreferanse> § 9-14, første ledd</Lovreferanse>
             </>
           }
           indentContent
@@ -51,7 +65,7 @@ const NødvendigOpplæringFerdigvisning = ({ vurdering }: { vurdering: Opplærin
         <VurdertAv ident={vurdering.vurdertAv} date={vurdering.vurdertTidspunkt} size="small" />
       </div>
       <LabelledContent
-        label="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
+        label="Har søker opplæring som er nødvendig?"
         size="small"
         content={
           <BodyShort size="small">

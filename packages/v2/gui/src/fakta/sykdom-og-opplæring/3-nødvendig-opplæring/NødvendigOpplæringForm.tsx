@@ -10,6 +10,7 @@ import {
   Alert,
   BodyShort,
   Button,
+  Detail,
   Heading,
   Label,
   Link,
@@ -62,7 +63,7 @@ const utledHarLegeerklæring = (resultat: OpplæringVurderingDtoResultat): 'JA' 
   if (resultat === OpplæringVurderingDtoResultat.MÅ_VURDERES) {
     return '';
   }
-  return 'JA';
+  return JA;
 };
 
 const utledNødvendigOpplæring = (
@@ -198,6 +199,12 @@ const NødvendigOpplæringForm = ({
                 {...field}
                 readOnly={readOnly}
                 size="small"
+                description={
+                  <Detail>
+                    Legeerklæringen skal dokumentere om opplæringen er nødvendig for at søker skal kunne ta seg av og
+                    behandle barnet.
+                  </Detail>
+                }
                 error={formMethods.formState.errors.harLegeerklæring?.message}
               >
                 <Radio value={JA}>Ja</Radio>
@@ -284,11 +291,7 @@ const NødvendigOpplæringForm = ({
                   error={formMethods.formState.errors.harNødvendigOpplæring?.message}
                 >
                   <Radio value={JA}>Ja</Radio>
-                  {periodeErEnkeltdag ? (
-                    <Radio value={VURDERES_SOM_REISETID}>Vurderes som reisetid</Radio>
-                  ) : (
-                    <Radio value={DELVIS}>Deler av perioden</Radio>
-                  )}
+                  {!periodeErEnkeltdag && <Radio value={DELVIS}>Deler av perioden</Radio>}
                   <Radio value={NEI}>Nei</Radio>
                 </RadioGroup>
               );

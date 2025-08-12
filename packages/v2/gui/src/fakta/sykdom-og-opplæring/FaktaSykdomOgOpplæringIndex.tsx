@@ -279,23 +279,43 @@ const SykdomOgOpplæring = () => {
             {harAksjonspunkt9300 || institusjonVilkårErVurdert ? (
               <FaktaInstitusjonIndex />
             ) : (
-              <Alert variant="info">Ikke vurdert</Alert>
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
             )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.SYKDOM} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9301 ? <SykdomUperiodisertIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9301 ? (
+              <SykdomUperiodisertIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.OPPLÆRING} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9302 ? <NødvendigOpplæringIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9302 ? (
+              <NødvendigOpplæringIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.REISETID} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9303 ? <ReisetidIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9303 ? (
+              <ReisetidIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
       </Tabs>

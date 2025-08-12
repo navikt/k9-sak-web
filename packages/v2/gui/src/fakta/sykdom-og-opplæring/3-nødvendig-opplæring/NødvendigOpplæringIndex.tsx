@@ -5,7 +5,7 @@ import { useVurdertOpplæring } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
-import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { OpplæringVurderingDtoResultat, type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import NødvendigOpplæringContainer from './NødvendigOpplæringContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { CenteredLoader } from '../CenteredLoader';
@@ -16,8 +16,7 @@ interface OpplæringVurderingselement extends Omit<Vurderingselement, 'resultat'
 }
 
 const NødvendigOpplæring = () => {
-  const { behandlingUuid, aksjonspunkter, readOnly } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9302 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
+  const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
   const { data: vurdertOpplæring, isLoading: isLoadingVurdertOpplæring } = useVurdertOpplæring(behandlingUuid);
   const [valgtVurdering, setValgtVurdering] = useState<OpplæringVurderingselement | null>(null);
   const vurderingsliste = vurdertOpplæring?.vurderinger.map(vurdering => ({
@@ -30,7 +29,7 @@ const NødvendigOpplæring = () => {
   }
   return (
     <div>
-      {aksjonspunkt9302?.status.kode === 'OPPRETTET' && !readOnly && (
+      {valgtVurdering?.resultat === OpplæringVurderingDtoResultat.MÅ_VURDERES && !readOnly && (
         <Alert className="mb-4" variant="warning" size="small">
           Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
         </Alert>
