@@ -66,7 +66,7 @@ const sortPeriodsByFom = (periods: FomTom[]): FomTom[] => {
 };
 
 export const getDaysInPeriod = (period: FomTom): string[] => {
-  const days = [];
+  const days: string[] = [];
   const startDate = initializeDate(period.fom);
   const endDate = initializeDate(period.tom);
   for (let date = startDate; date.isSameOrBefore(endDate); date = date.add(1, 'day')) {

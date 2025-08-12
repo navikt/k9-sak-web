@@ -77,6 +77,7 @@ export const Avslagsårsaker: Story = {
       { exact: false },
     );
     await expect(vurderingTextInput).toBeVisible();
+    await userEvent.clear(vurderingTextInput);
     await userEvent.type(vurderingTextInput, 'Testbegrunnelse');
     const harSøkerOpplæringGroup = canvas.getByRole('group', { name: /Har søker opplæring som er nødvendig/ });
     const neiKnapp = within(harSøkerOpplæringGroup).getByLabelText('Nei');
@@ -93,11 +94,14 @@ export const Avslagsårsaker: Story = {
     const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
     await userEvent.click(bekreftKnapp);
     const expectedSubmitData = {
-      periode: { fom: '2025-02-14', tom: '2025-02-23' },
-      begrunnelse: 'Testbegrunnelse',
-      nødvendigOpplæring: false,
-      dokumentertOpplæring: true,
-      avslagsårsak: '1101',
+      perioder: [
+        {
+          periode: { fom: '2025-02-14', tom: '2025-02-23' },
+          begrunnelse: 'Testbegrunnelse',
+          resultat: OpplæringVurderingDtoResultat.IKKE_GODKJENT,
+          avslagsårsak: '1101',
+        },
+      ],
     };
     await expect(løsAksjonspunkt9302).toHaveBeenCalledWith(expectedSubmitData);
   },
