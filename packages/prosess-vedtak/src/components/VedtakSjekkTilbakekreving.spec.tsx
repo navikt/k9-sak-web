@@ -8,12 +8,12 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import {
-  kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
-  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
-  kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
-  kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 const behandling = {

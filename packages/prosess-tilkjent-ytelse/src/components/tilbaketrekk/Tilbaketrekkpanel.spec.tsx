@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';

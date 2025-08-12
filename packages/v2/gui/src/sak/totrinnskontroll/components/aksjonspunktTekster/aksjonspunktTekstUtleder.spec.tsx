@@ -2,10 +2,10 @@ import { klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as KlageA
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import {
-  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   folketrygdloven_kalkulus_kodeverk_FaktaOmBeregningTilfelle as FaktaOmBeregningTilfeller,
-  kodeverk_arbeidsforhold_ArbeidsforholdHandlingType as ArbeidsforholdHandlingType,
+  k9_kodeverk_arbeidsforhold_ArbeidsforholdHandlingType as ArbeidsforholdHandlingType,
 } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';

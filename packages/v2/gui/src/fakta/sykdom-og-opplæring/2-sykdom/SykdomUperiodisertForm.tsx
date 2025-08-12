@@ -1,6 +1,6 @@
 import {
-  type sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
-  kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
+  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';

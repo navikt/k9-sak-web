@@ -3,8 +3,8 @@ import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIn
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
-  sak_kontrakt_dokument_DokumentDto as DokumentDto,
-  sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+  k9_sak_kontrakt_dokument_DokumentDto as DokumentDto,
+  k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';

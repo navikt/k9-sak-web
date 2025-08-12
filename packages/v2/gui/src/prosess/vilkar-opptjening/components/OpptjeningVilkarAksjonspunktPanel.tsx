@@ -1,9 +1,9 @@
 import {
-  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
-  type sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
-  type sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
+  type k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Button, HelpText, Label } from '@navikt/ds-react';

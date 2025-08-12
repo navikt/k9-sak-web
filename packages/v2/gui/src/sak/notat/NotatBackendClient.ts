@@ -1,5 +1,5 @@
 import {
-  kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
+  k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
   type EndreResponse as K9EndreResponse,
   type HentResponse as K9HentResponse,
   type OpprettResponse as K9OpprettResponse,

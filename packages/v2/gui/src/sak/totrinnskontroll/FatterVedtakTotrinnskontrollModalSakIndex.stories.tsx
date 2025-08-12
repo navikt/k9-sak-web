@@ -1,8 +1,8 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
-  kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
 } from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';

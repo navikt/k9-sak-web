@@ -1,8 +1,8 @@
 import {
-  kodeverk_person_NavBrukerKjønn as navBrukerKjonn,
-  kodeverk_person_PersonstatusType as personstatus,
-  type sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
-  type sak_kontrakt_fagsak_RelatertSakDto as RelatertSakDto,
+  k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn,
+  k9_kodeverk_person_PersonstatusType as personstatus,
+  type k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
+  type k9_sak_kontrakt_fagsak_RelatertSakDto as RelatertSakDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { HStack } from '@navikt/ds-react';

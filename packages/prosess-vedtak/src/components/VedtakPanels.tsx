@@ -9,14 +9,14 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
-  sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
-  sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
-  sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
-  sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-  sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-  sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
+  k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
+  k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client';
 import { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
 import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';

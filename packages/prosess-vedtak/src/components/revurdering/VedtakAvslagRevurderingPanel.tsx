@@ -3,8 +3,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import {
-  sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-  sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';

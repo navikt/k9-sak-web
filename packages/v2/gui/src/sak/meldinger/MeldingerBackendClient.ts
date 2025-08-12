@@ -1,6 +1,6 @@
 import {
   ApiError,
-  type sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
+  type k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
   K9SakClient,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';

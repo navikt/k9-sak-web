@@ -1,7 +1,7 @@
 import { Period } from '@navikt/ft-utils';
 import {
-  kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';

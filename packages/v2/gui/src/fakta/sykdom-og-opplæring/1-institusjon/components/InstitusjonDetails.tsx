@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, BodyShort } from '@navikt/ds-react';
-import { sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';

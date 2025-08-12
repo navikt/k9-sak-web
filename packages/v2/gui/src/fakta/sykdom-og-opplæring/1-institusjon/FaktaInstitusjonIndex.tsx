@@ -1,9 +1,9 @@
 import { useState, useMemo, useContext } from 'react';
 import { Period } from '@navikt/ft-utils';
 import {
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
-  type sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto as InstitusjonPeriodeDto,
-  type sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto as InstitusjonPeriodeDto,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';

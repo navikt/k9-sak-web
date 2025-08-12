@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import type {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { K9SakClientContext } from '../../../app/K9SakClientContext';
 import BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';

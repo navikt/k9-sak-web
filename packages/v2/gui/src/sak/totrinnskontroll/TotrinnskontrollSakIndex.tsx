@@ -8,9 +8,9 @@ import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { type KodeverkObject, KodeverkType, type KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import {
-  kodeverk_behandling_aksjonspunkt_VurderÅrsak as Årsak,
-  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+  k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as Årsak,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';

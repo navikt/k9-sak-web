@@ -1,4 +1,4 @@
-import { type sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import type { Period } from '@navikt/ft-utils';
@@ -9,7 +9,7 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import dayjs from 'dayjs';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import { kodeverk_vilkår_Avslagsårsak as Avslagsårsak } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 
 const booleanToRadioValue = (value: boolean | undefined) => {

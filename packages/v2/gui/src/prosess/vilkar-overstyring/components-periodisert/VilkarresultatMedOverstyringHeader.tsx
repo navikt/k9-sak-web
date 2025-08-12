@@ -1,6 +1,6 @@
 import type {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';

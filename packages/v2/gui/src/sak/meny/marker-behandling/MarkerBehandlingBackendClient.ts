@@ -1,6 +1,6 @@
 import type {
   DeleteMerknadResponse,
-  kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadType,
+  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadType,
   GetMerknadResponse,
   K9SakClient,
   PostMerknadResponse,

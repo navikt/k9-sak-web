@@ -1,7 +1,7 @@
 import {
-  kodeverk_behandling_BehandlingStatus as behandlingStatus,
-  kodeverk_vilkår_VilkårUtfallMerknad as merknad,
-  kodeverk_behandling_FagsakYtelseType as sakstype,
+  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as merknad,
+  k9_kodeverk_behandling_FagsakYtelseType as sakstype,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';

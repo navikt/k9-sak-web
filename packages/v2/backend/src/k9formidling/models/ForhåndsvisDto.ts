@@ -1,6 +1,6 @@
 import type {
-  sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
-  sak_kontrakt_dokument_MottakerDto as MottakerDto,
+  k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
+  k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
 } from '@navikt/k9-sak-typescript-client';
 import type { AvsenderApplikasjon } from './AvsenderApplikasjon.js';
 import type { FagsakYtelsesType } from '../../k9sak/kodeverk/FagsakYtelsesType.ts';

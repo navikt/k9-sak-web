@@ -1,4 +1,4 @@
-import type { sak_kontrakt_fagsak_FagsakDto as FagsakDto } from '../../generated';
+import type { k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto } from '../../generated';
 import type { Kodeverk } from '../../../shared/Kodeverk.js';
 
 export type FagsakStatus = Exclude<FagsakDto['status'], undefined | null>;

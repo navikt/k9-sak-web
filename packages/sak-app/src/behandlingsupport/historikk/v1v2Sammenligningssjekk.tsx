@@ -5,7 +5,7 @@ import { flushSync } from 'react-dom';
 import { MemoryRouter } from 'react-router';
 import React, { ReactNode, JSX } from 'react';
 import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
-import { kodeverk_historikk_HistorikkinnslagType as HistorikkinnslagTypeEnum } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_historikk_HistorikkinnslagType as HistorikkinnslagTypeEnum } from '@k9-sak-web/backend/k9sak/generated';
 
 class HistorikkV1V2Sammenligningsfeil extends Error {
   public readonly opprettetTidspunkt: string;

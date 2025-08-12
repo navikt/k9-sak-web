@@ -1,5 +1,5 @@
 import type { klage_kontrakt_behandling_BehandlingDto as KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type { sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 
 export type Behandling = {
   behandlingsresultat: BehandlingDto['behandlingsresultat'];

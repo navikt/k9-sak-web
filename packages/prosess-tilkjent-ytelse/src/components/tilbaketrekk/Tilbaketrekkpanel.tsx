@@ -7,8 +7,8 @@ import { Button, HGrid, Label } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import styles from './tilbaketrekkpanel.module.css';

@@ -1,5 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 

@@ -6,8 +6,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 import {
-  kodeverk_behandling_BehandlingType as BehandlingType,
-  kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
+  k9_kodeverk_behandling_BehandlingType as BehandlingType,
+  k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
 } from '@navikt/k9-sak-typescript-client';
 import VedtakForm from '../VedtakForm';
 

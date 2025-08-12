@@ -1,4 +1,4 @@
-import { kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 
 export class FakeMarkerBehandlingBackendApi {

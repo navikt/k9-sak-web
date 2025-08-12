@@ -1,4 +1,4 @@
-import { kodeverk_geografisk_AdresseType as adresseType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_geografisk_AdresseType as adresseType } from '@k9-sak-web/backend/k9sak/generated';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, HStack, Label, Tag, Tooltip, VStack } from '@navikt/ds-react';

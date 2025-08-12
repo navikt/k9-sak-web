@@ -7,8 +7,8 @@ import styles from './vilkårsliste.module.css';
 
 import type { JSX } from 'react';
 import {
-  kodeverk_vilkår_VilkårType as VilkårType,
-  kodeverk_vilkår_Utfall as VilkårUtfall,
+  k9_kodeverk_vilkår_VilkårType as VilkårType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 type VilkårTypeMap = { [key in VilkårType]?: VilkårUtfall };

@@ -4,8 +4,8 @@ import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
 import { utledAktivitetNavn } from '../../utils/overstyringUtils';
 import type {
-  sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import styles from './begrunnelseBoks.module.css';
 

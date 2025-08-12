@@ -3,8 +3,8 @@ import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vilkå
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import {
-  kodeverk_behandling_BehandlingType as BehandlingType,
-  kodeverk_vilkår_Utfall as VilkårUtfall,
+  k9_kodeverk_behandling_BehandlingType as BehandlingType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@navikt/k9-sak-typescript-client';
 import AvslagsårsakListe from './AvslagsårsakListe';
 

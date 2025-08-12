@@ -1,4 +1,4 @@
 export {
-  type kodeverk_person_NavBrukerKjønn as Kjønn,
-  kodeverk_person_NavBrukerKjønn as kjønn,
+  type k9_kodeverk_person_NavBrukerKjønn as Kjønn,
+  k9_kodeverk_person_NavBrukerKjønn as kjønn,
 } from '@k9-sak-web/backend/k9sak/generated';

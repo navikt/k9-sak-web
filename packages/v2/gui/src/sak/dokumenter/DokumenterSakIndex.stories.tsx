@@ -1,5 +1,5 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';

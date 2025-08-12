@@ -4,8 +4,8 @@ import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHje
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import {
-  kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
-  kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
 } from '@navikt/k9-sak-typescript-client';
 import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';

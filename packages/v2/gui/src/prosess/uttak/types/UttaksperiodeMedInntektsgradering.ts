@@ -1,6 +1,6 @@
 import type {
-  sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
-  sak_typer_Periode as Periode,
+  k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
+  k9_sak_typer_Periode as Periode,
   pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
 } from '@k9-sak-web/backend/k9sak/generated';
 

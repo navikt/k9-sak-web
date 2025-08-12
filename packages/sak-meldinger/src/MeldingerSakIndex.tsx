@@ -17,7 +17,7 @@ import V2Messages, {
 } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { StickyStateReducer } from '@k9-sak-web/gui/utils/StickyStateReducer.js';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import type { sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import messages from '../i18n/nb_NO.json';
 import Messages, { type FormValues, type BackendApi as MessagesBackendApi } from './components/Messages';
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';

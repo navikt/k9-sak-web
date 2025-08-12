@@ -1,7 +1,7 @@
 import type {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-  sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  k9_sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';

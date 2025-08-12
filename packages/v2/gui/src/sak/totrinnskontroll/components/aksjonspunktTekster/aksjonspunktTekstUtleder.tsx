@@ -11,9 +11,9 @@ import { Label } from '@navikt/ds-react';
 import type { klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
   folketrygdloven_kalkulus_kodeverk_ArbeidsforholdHandlingType as HandlingType,
-  kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-  type sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
-  type sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+  type k9_sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
+  type k9_sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
 } from '@navikt/k9-sak-typescript-client';
 import hash from 'object-hash';
 import React, { type JSX, type ReactNode } from 'react';

@@ -1,7 +1,7 @@
 // import { MerknadEndretDtoMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
 import {
-  kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
-  type sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
+  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
+  type k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';

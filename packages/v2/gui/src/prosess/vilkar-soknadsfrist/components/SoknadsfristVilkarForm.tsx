@@ -8,8 +8,8 @@ import { Alert, Button, HStack, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type {
-  sak_typer_Periode as Periode,
-  sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  k9_sak_typer_Periode as Periode,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { Dayjs } from 'dayjs';
 import hash from 'object-hash';

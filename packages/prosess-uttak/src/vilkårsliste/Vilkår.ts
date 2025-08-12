@@ -1,4 +1,4 @@
-import { kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated';
 
 const vilkår = [
   {

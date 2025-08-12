@@ -5,7 +5,7 @@ import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/f
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';

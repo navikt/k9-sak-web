@@ -2,8 +2,8 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
-  kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
-  kodeverk_vilkår_Utfall as VilkårUtfall,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
 import { intlMock } from '../../i18n';

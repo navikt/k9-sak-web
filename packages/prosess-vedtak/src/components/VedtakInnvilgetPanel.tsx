@@ -3,8 +3,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import {
-  sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
-  sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
 } from '@navikt/k9-sak-typescript-client';
 import { IntlShape } from 'react-intl';
 import { connect } from 'react-redux';

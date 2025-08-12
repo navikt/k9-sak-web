@@ -1,7 +1,7 @@
 import { Alert, HStack, Heading, VStack } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import React, { useContext, type JSX } from 'react';
-import { kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import {
   aksjonspunktVurderDatoKode,

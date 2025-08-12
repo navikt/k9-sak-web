@@ -1,7 +1,7 @@
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import type {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';

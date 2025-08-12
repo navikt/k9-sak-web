@@ -3,8 +3,8 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { BodyShort } from '@navikt/ds-react';
 import {
-  sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@navikt/k9-sak-typescript-client';
 import { FormattedMessage } from 'react-intl';
 

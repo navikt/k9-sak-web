@@ -7,11 +7,11 @@ import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fps
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import {
-  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
-  kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
-  kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

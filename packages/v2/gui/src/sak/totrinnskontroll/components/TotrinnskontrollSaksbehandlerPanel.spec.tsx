@@ -1,4 +1,4 @@
-import { kodeverk_behandling_BehandlingStatus as BehandlingAksjonspunktDtoBehandlingStatus } from '@navikt/k9-sak-typescript-client';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingAksjonspunktDtoBehandlingStatus } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import TotrinnskontrollSaksbehandlerPanel from './TotrinnskontrollSaksbehandlerPanel';

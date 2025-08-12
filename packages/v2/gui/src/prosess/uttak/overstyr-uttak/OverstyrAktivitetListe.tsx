@@ -2,8 +2,8 @@ import React from 'react';
 import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
 import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
 import type {
-  sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { utledAktivitetNavn } from '../utils/overstyringUtils';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';

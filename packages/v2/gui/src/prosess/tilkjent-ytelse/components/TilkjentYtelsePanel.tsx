@@ -6,8 +6,8 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Heading } from '@navikt/ds-react';
 import type {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';

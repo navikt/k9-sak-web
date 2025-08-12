@@ -7,7 +7,7 @@ import UttakDetaljer from '@k9-sak-web/gui/prosess/uttak/uttak-detaljer/UttakDet
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { UttaksperiodeMedInntektsgradering as UttaksperiodeMedInntektsgraderingV2 } from '@k9-sak-web/gui/prosess/uttak/types/UttaksperiodeMedInntektsgradering.js';
 import { ArbeidsgiverOpplysninger, UttaksperiodeMedInntektsgradering } from '../../../types';
-import { sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
 import ContainerContext from '@k9-sak-web/prosess-uttak/src/ui/context/ContainerContext';
 import type ContainerContract from '@k9-sak-web/prosess-uttak/src/types/ContainerContract';
 

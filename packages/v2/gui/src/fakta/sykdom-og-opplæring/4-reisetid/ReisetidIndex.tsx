@@ -1,6 +1,6 @@
 import type {
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@navikt/ft-utils';
 import { useContext, useState } from 'react';

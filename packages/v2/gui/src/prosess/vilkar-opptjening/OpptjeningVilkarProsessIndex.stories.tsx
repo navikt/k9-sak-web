@@ -1,10 +1,10 @@
 import {
-  kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
-  kodeverk_opptjening_OpptjeningAktivitetKlassifisering as FastsattOpptjeningAktivitetDtoKlasse,
-  kodeverk_opptjening_OpptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType,
-  kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
-  kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
+  k9_kodeverk_opptjening_OpptjeningAktivitetKlassifisering as FastsattOpptjeningAktivitetDtoKlasse,
+  k9_kodeverk_opptjening_OpptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
+  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';

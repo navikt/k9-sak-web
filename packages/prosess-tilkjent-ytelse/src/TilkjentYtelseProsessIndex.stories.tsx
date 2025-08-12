@@ -7,8 +7,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
-  sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 

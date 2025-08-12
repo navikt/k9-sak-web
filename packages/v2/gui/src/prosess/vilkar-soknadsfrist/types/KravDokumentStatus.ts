@@ -1,4 +1,4 @@
-import type { sak_kontrakt_krav_KravDokumentType as KravDokumentType } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_krav_KravDokumentType as KravDokumentType } from '@k9-sak-web/backend/k9sak/generated';
 import type { SøknadsfristPeriode } from './SøknadsfristPeriode';
 
 type AvklarteOpplysninger = {

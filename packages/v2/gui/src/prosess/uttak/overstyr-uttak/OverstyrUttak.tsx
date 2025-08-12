@@ -6,7 +6,7 @@ import OverstyringUttakForm from './OverstyringUttakForm';
 import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import styles from './overstyrUttakForm.module.css';
 import type { OverstyringUttakHandling, OverstyrUttakAksjonspunktDto } from '../types/OverstyringUttakTypes';

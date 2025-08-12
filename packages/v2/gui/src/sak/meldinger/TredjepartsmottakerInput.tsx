@@ -4,7 +4,7 @@ import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import type { sak_web_app_tjenester_brev_UtilgjengeligÅrsak as utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_brev_UtilgjengeligÅrsak as utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated';
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 

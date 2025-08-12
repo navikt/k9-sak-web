@@ -2,9 +2,9 @@ import React, { type FC } from 'react';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import {
-  kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
-  type sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
+  k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 

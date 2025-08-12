@@ -27,8 +27,8 @@ import Punsjstripe from '@k9-sak-web/gui/shared/statusstriper/punsjstripe/Punsjs
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import {
-  sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
-  sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
+  k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
+  k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
 import {
   behandlingerRoutePath,

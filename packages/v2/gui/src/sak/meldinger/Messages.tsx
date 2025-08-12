@@ -5,9 +5,9 @@ import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import type {
-  sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
-  sak_kontrakt_dokument_MottakerDto as MottakerDto,
-  sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
+  k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
+  k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
+  k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';

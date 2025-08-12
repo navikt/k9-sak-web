@@ -3,13 +3,13 @@ import { Box, Heading } from '@navikt/ds-react';
 import { PeriodeRad } from './PeriodeRad';
 import type { Period } from '@navikt/ft-utils';
 import {
-  type sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-  type kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
-  kodeverk_sykdom_Resultat as sykdomEnumObject,
-  type sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
-  sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
+  k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
 import styles from './periodeRad.module.css';
 

@@ -20,11 +20,11 @@ import {
 import { Form } from '@navikt/ft-form-hooks';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
-  kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
-  type sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   type BekreftData,
-  type sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { ObjectSchema } from 'yup';
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';

@@ -1,4 +1,4 @@
-import type { sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { BodyShort } from '@navikt/ds-react';
 import type { Period } from '@navikt/ft-utils';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';

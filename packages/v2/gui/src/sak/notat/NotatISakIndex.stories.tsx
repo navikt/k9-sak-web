@@ -1,12 +1,12 @@
 import type {
   EndreResponse,
-  sak_kontrakt_notat_NotatDto as NotatDto,
+  k9_sak_kontrakt_notat_NotatDto as NotatDto,
   OpprettResponse,
   SkjulResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
 import {
-  kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
-  kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
+  k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
+  k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { HttpResponse, delay, http, type PathParams } from 'msw';
 import NotatISakIndex from './NotaterIndex';

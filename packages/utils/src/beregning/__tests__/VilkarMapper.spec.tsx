@@ -1,9 +1,9 @@
 import { BeregningReferanse } from '@k9-sak-web/types';
 import {
-  sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  kodeverk_vilkår_VilkårType as VilkårType,
-  kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
-  kodeverk_vilkår_Utfall as VilkårUtfall,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_kodeverk_vilkår_VilkårType as VilkårType,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@navikt/k9-sak-typescript-client';
 import { describe, expect, it } from 'vitest';
 import mapVilkar from '../VilkarMapper';

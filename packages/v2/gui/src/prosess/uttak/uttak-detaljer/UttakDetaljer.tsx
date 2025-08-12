@@ -5,7 +5,7 @@ import {
   pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
   type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
   type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
-  type sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';

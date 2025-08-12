@@ -4,11 +4,11 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { yupValiderProsent } from '@k9-sak-web/lib/validationUtils/yupSchemas.js';
 import {
-  kodeverk_uttak_UttakArbeidType as UttakArbeidType,
-  type sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type sak_kontrakt_uttak_overstyring_OverstyrUttakArbeidsforholdDto as OverstyrUttakArbeidsforholdDto,
-  type sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
-  type sak_kontrakt_uttak_overstyring_OverstyrUttakUtbetalingsgradDto as OverstyrUttakUtbetalingsgradDto,
+  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakArbeidsforholdDto as OverstyrUttakArbeidsforholdDto,
+  type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+  type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakUtbetalingsgradDto as OverstyrUttakUtbetalingsgradDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 

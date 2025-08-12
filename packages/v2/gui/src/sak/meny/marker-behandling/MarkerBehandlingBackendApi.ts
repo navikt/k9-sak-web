@@ -1,6 +1,6 @@
 import {
-  kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
-  kodeverk_produksjonsstyring_BehandlingMerknadType as SlettMerknadRequestMerknadKode,
+  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
+  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as SlettMerknadRequestMerknadKode,
   type DeleteMerknadResponse,
   type GetMerknadResponse,
   type PostMerknadResponse,

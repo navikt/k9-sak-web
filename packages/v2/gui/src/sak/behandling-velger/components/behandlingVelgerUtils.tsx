@@ -1,4 +1,4 @@
-import { kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated';
 import {
   ung_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
   ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
