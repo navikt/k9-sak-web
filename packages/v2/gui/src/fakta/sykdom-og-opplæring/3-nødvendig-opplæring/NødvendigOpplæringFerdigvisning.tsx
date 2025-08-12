@@ -10,7 +10,7 @@ import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 import { useContext } from 'react';
 import { Periodevisning } from '../../../shared/detailView/DetailView';
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@navikt/ft-utils';
 
 const NødvendigOpplæringFerdigvisning = ({
   vurdering,
