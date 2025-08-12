@@ -2,6 +2,7 @@ import { Button } from '@navikt/ds-react';
 import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import styles from './VurderDatoAksjonspunkt.module.css';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import { AksjonspunktDtoDefinisjon, type BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
@@ -28,22 +29,29 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly, api, behandli
     defaultValues: initialValues,
   });
 
-  const onSubmit = async (data: FormData) => {
-    const { id: behandlingId, versjon: behandlingVersjon } = behandling;
+  const mutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      const { id: behandlingId, versjon: behandlingVersjon } = behandling;
+      const payload = {
+        behandlingId: `${behandlingId}`,
+        behandlingVersjon,
+        bekreftedeAksjonspunktDtoer: [
+          {
+            '@type': AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+            kode: AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+            ...data,
+          },
+        ],
+      };
+      return api.bekreftAksjonspunkt(payload);
+    },
+    onSuccess: () => {
+      oppdaterBehandling();
+    },
+  });
 
-    const payload = {
-      behandlingId: `${behandlingId}`,
-      behandlingVersjon,
-      bekreftedeAksjonspunktDtoer: [
-        {
-          '@type': AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-          kode: AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-          ...data,
-        },
-      ],
-    };
-    await api.bekreftAksjonspunkt(payload);
-    oppdaterBehandling();
+  const onSubmit = async (data: FormData) => {
+    await mutation.mutateAsync(data);
   };
 
   return (
