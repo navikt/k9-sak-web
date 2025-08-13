@@ -14,6 +14,8 @@ import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
 import { CenteredLoader } from '../CenteredLoader.js';
+import { Alert } from '@navikt/ds-react';
+
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
   vurderinger: InstitusjonVurderingDto[];
@@ -73,6 +75,11 @@ const FaktaInstitusjonIndex = () => {
 
   return (
     <div>
+      {valgtVurdering?.resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES && !readOnly && (
+        <Alert variant="warning" size="small" contentMaxWidth={false} className="mb-4">
+          {`Vurder om opplæringen er utført ved godkjent helseinstitusjon eller kompetansesenter i perioden ${valgtVurdering.perioder.map(periode => periode.prettifyPeriod()).join(', ')}.`}
+        </Alert>
+      )}
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>
