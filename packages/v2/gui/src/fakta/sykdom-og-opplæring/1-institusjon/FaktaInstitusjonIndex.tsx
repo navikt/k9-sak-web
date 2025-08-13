@@ -75,7 +75,7 @@ const FaktaInstitusjonIndex = () => {
 
   return (
     <div>
-      {valgtVurdering?.resultat === InstitusjonVurderingDtoResultat.MÅ_VURDERES && !readOnly && (
+      {valgtVurdering?.resultat === InstitusjonResultat.MÅ_VURDERES && !readOnly && (
         <Alert variant="warning" size="small" contentMaxWidth={false} className="mb-4">
           {`Vurder om opplæringen er utført ved godkjent helseinstitusjon eller kompetansesenter i perioden ${valgtVurdering.perioder.map(periode => periode.prettifyPeriod()).join(', ')}.`}
         </Alert>
