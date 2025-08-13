@@ -525,7 +525,7 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   width: 80px;
 }
 
-.navds-tabs__tab.harAksjonspunkt {
+.aksel-tabs__tab.harAksjonspunkt {
   border-top: 5px solid var(--ax-warning-300) !important;
 }
 

@@ -19,7 +19,6 @@ import Home from './components/Home';
 import '@fpsak-frontend/assets/styles/global.css';
 import '@navikt/ds-css/darkside';
 import { Theme } from '@navikt/ds-react/Theme';
-import '@navikt/ds-tokens/darkside-css';
 import '@navikt/ft-fakta-beregning/dist/style.css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
