@@ -2,8 +2,6 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   type GetBrevMottakerinfoEregData,
   type GetBrevMottakerinfoEregResponse,
-  type OppdaterLangvarigSykdomsVurderingData,
-  type OppdaterLangvarigSykdomsVurderingResponse,
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated';
@@ -35,22 +33,6 @@ export const useVilkår = (behandlingUuid: string) => {
   return useQuery({
     queryKey: ['vilkår', behandlingUuid],
     queryFn: () => backendClient.getVilkår(behandlingUuid),
-  });
-};
-export const useOppdaterSykdomsvurdering = ({
-  onSuccess,
-}: {
-  onSuccess?: (data: OppdaterLangvarigSykdomsVurderingResponse) => void;
-}) => {
-  const backendClient = useSykdomBackendClient();
-
-  return useMutation<
-    OppdaterLangvarigSykdomsVurderingResponse,
-    Error,
-    OppdaterLangvarigSykdomsVurderingData['requestBody']
-  >({
-    mutationFn: requestBody => backendClient.oppdaterSykdomsvurdering(requestBody),
-    onSuccess,
   });
 };
 

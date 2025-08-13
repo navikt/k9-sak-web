@@ -1,6 +1,7 @@
 import { Period } from '@navikt/ft-utils';
 
 import {
+  AirplaneIcon,
   CheckmarkCircleFillIcon,
   ChevronRightIcon,
   ExclamationmarkTriangleFillIcon,
@@ -25,6 +26,14 @@ const renderStatusIcon = (resultat?: ResultatType) => {
         fontSize="1.5rem"
         style={{ color: 'var(--ax-text-warning-decoration))' }}
       />
+    );
+  }
+
+  if (resultat === Resultat.VURDERES_SOM_REISETID) {
+    return (
+      <Tooltip content="Perioden vurderes som reisetid">
+        <AirplaneIcon fontSize={26} />
+      </Tooltip>
     );
   }
 

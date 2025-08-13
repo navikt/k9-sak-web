@@ -11,7 +11,10 @@ import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
-  Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
+  Pick<
+    Partial<LangvarigSykdomVurderingDto>,
+    'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv' | 'kanOppdateres'
+  > & {
     godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
   };
 

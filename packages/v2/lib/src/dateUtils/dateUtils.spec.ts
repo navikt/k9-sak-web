@@ -15,6 +15,8 @@ import {
   isValidDate,
   splitWeeksAndDays,
   timeFormat,
+  combineConsecutivePeriods,
+  type DateOrPeriod,
 } from './dateUtils';
 
 describe('dateUtils', () => {
@@ -234,5 +236,89 @@ describe('dateUtils', () => {
     it('should return input if period is invalid', () => {
       expect(formatereLukketPeriode('invalid-period')).toBe('invalid-period');
     });
+  });
+});
+
+describe('combineConsecutivePeriods', () => {
+  it('should return empty array for empty input', () => {
+    expect(combineConsecutivePeriods([])).toEqual([]);
+  });
+
+  it('should handle single dates', () => {
+    const dates: DateOrPeriod[] = ['2023-01-01', '2023-01-03', '2023-01-02'];
+    const result = combineConsecutivePeriods(dates);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-03' }]);
+  });
+
+  it('should handle periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-03', tom: '2023-01-07' },
+      { fom: '2023-01-10', tom: '2023-01-12' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([
+      { fom: '2023-01-01', tom: '2023-01-07' },
+      { fom: '2023-01-10', tom: '2023-01-12' },
+    ]);
+  });
+
+  it('should handle mixed dates and periods', () => {
+    const mixed: DateOrPeriod[] = [
+      '2023-01-01',
+      { fom: '2023-01-02', tom: '2023-01-04' },
+      '2023-01-05',
+      { fom: '2023-01-08', tom: '2023-01-10' },
+    ];
+    const result = combineConsecutivePeriods(mixed);
+    expect(result).toEqual([
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-08', tom: '2023-01-10' },
+    ]);
+  });
+
+  it('should handle consecutive periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-06', tom: '2023-01-10' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-10' }]);
+  });
+
+  it('should handle overlapping periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-03', tom: '2023-01-07' },
+      { fom: '2023-01-06', tom: '2023-01-10' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-10' }]);
+  });
+
+  it('should handle non-overlapping periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-10', tom: '2023-01-15' },
+      { fom: '2023-01-20', tom: '2023-01-25' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-10', tom: '2023-01-15' },
+      { fom: '2023-01-20', tom: '2023-01-25' },
+    ]);
+  });
+
+  it('should handle single date', () => {
+    const dates: DateOrPeriod[] = ['2023-01-01'];
+    const result = combineConsecutivePeriods(dates);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-01' }]);
+  });
+
+  it('should handle single period', () => {
+    const periods: DateOrPeriod[] = [{ fom: '2023-01-01', tom: '2023-01-05' }];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-05' }]);
   });
 });
