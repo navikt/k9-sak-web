@@ -37,8 +37,3 @@
 .wordWrap {
   white-space: pre-line;
 }
-
-.closeButton {
-  --ac-button-secondary-border: white;
-  --ac-button-secondary-text: white;
-}

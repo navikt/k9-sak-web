@@ -65,11 +65,10 @@ export const ErrorMessagePanel = (props: OwnProps) => {
       ))}
       <div className={styles.lukkContainer}>
         <Button
-          variant="secondary"
-          icon={<XMarkIcon title="Lukk" />}
+          variant="tertiary"
+          icon={<XMarkIcon title="Lukk" color="white" />}
           onClick={removeErrorMessage}
           size="small"
-          className={styles.closeButton}
         />
       </div>
       {isModalOpen && (

@@ -22,8 +22,8 @@ import UttakDetaljerV2Wrapper from '../uttak-detaljer/UttakDetaljerV2Wrapper';
 
 import styles from './uttak.module.css';
 
-import type { JSX } from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { JSX } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +57,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
   return (
     <>
-      <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
+      <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''}`} onClick={velgPeriode}>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
