@@ -1,5 +1,5 @@
 import { Kodeverk } from '@k9-sak-web/types';
-import { Label } from '@navikt/ds-react';
+import { BodyShort, Link } from '@navikt/ds-react';
 import { Location } from 'history';
 import { NavLink } from 'react-router';
 import { scrollUp } from './historikkUtils';
@@ -23,14 +23,16 @@ const Skjermlenke = ({
     return null;
   }
   return (
-    <Label size="small" as="p">
-      <NavLink
+    <BodyShort size="small">
+      <Link
+        variant="action"
+        as={NavLink}
         to={createLocationForSkjermlenke(behandlingLocation, skjermlenke.kode)}
-        onClick={scrollUpOnClick && scrollUp}
+        onClick={scrollUpOnClick ? scrollUp : undefined}
       >
-        {getKodeverknavn(skjermlenke)}
-      </NavLink>
-    </Label>
+        {getKodeverknavn?.(skjermlenke)}
+      </Link>
+    </BodyShort>
   );
 };
 

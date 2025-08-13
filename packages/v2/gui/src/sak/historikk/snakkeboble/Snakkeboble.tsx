@@ -8,7 +8,7 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { Avatar } from './Avatar';
 import { HistorikkDokumentLenke } from './HistorikkDokumentLenke';
 import { Skjermlenke } from './Skjermlenke';
-import { formatDate, getStyle, parseBoldText, utledPlassering } from './snakkebobleUtils';
+import { formatDate, getColor, getStyle, parseBoldText, utledPlassering } from './snakkebobleUtils';
 import { Tittel } from './Tittel.js';
 
 interface Props {
@@ -38,7 +38,9 @@ export const Snakkeboble = ({
       name={`${rolleNavn} ${aktør.ident || ''}`}
       position={utledPlassering(aktør.type)}
       toptextPosition="left"
-      className={getStyle(aktør.type, kjønn)}
+      className={getStyle(aktør.type)}
+      data-color={getColor(aktør.type)}
+      variant="neutral"
     >
       <Chat.Bubble>
         {tittel && <Tittel>{tittel}</Tittel>}

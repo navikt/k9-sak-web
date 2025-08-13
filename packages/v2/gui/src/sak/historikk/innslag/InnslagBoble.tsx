@@ -6,7 +6,7 @@ import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerO
 import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from '../historikkTypeBerikning.js';
 import { Avatar } from '../snakkeboble/Avatar.jsx';
 import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
-import { formatDate, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
+import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
 import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
 
@@ -39,7 +39,9 @@ export const InnslagBoble = ({
       name={`${rolleNavn} ${hentSaksbehandlerNavn(innslag.aktør.ident ?? '')}`}
       position={position}
       toptextPosition="left"
-      className={getStyle(innslag.aktør.type.kilde, kjønn)}
+      className={getStyle(innslag.aktør.type.kilde)}
+      data-color={getColor(innslag.aktør.type.kilde)}
+      variant="neutral"
     >
       <Chat.Bubble>
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
