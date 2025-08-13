@@ -13,10 +13,24 @@ import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
+  OpplæringVurderingDtoResultat,
   VilkårMedPerioderDtoVilkarType,
   VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
+  OpplæringVurderingDtoAvslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
+
+export type nødvendigOpplæringPayload = {
+  perioder: {
+    periode: {
+      fom: string;
+      tom: string;
+    };
+    begrunnelse: string | null;
+    resultat: OpplæringVurderingDtoResultat;
+    avslagsårsak?: OpplæringVurderingDtoAvslagsårsak;
+  }[];
+};
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   if (
@@ -64,18 +78,7 @@ type payloads =
       vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'];
     }
   | { behandlingUuid?: string }
-  | {
-      perioder: {
-        periode: {
-          fom: string;
-          tom: string;
-        };
-        begrunnelse: string | null;
-        nødvendigOpplæring: boolean;
-        dokumentertOpplæring: boolean;
-        avslagsårsak?: string;
-      }[];
-    }
+  | nødvendigOpplæringPayload
   | {
       reisetid: {
         periode: {
@@ -102,16 +105,7 @@ type SykdomOgOpplæringContext = {
     langvarigsykdomsvurderingUuid?: string,
     vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
   ) => void;
-  løsAksjonspunkt9302: (payload: {
-    periode: {
-      fom: string;
-      tom: string;
-    };
-    begrunnelse: string | null;
-    nødvendigOpplæring: boolean;
-    dokumentertOpplæring: boolean;
-    avslagsårsak?: string;
-  }) => void;
+  løsAksjonspunkt9302: (payload: nødvendigOpplæringPayload) => void;
   løsAksjonspunkt9303: (payload: {
     periode: {
       fom: string;
@@ -184,29 +178,12 @@ const FaktaSykdomOgOpplæringIndex = ({
     }
   };
 
-  const løsAksjonspunkt9302 = (payload: {
-    periode: {
-      fom: string;
-      tom: string;
-    };
-    begrunnelse: string | null;
-    nødvendigOpplæring: boolean;
-    dokumentertOpplæring: boolean;
-    avslagsårsak?: string;
-  }) => {
+  const løsAksjonspunkt9302 = (payload: nødvendigOpplæringPayload) => {
     submitCallback([
       {
         kode: aksjonspunktCodes.VURDER_OPPLÆRING,
-        begrunnelse: payload.begrunnelse,
-        perioder: [
-          {
-            periode: payload.periode,
-            begrunnelse: payload.begrunnelse,
-            nødvendigOpplæring: payload.nødvendigOpplæring,
-            dokumentertOpplæring: payload.dokumentertOpplæring,
-            avslagsårsak: payload.avslagsårsak,
-          },
-        ],
+        begrunnelse: payload.perioder[0]?.begrunnelse,
+        perioder: [...payload.perioder],
       },
     ]);
   };
@@ -302,23 +279,43 @@ const SykdomOgOpplæring = () => {
             {harAksjonspunkt9300 || institusjonVilkårErVurdert ? (
               <FaktaInstitusjonIndex />
             ) : (
-              <Alert variant="info">Ikke vurdert</Alert>
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
             )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.SYKDOM} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9301 ? <SykdomUperiodisertIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9301 ? (
+              <SykdomUperiodisertIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.OPPLÆRING} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9302 ? <NødvendigOpplæringIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9302 ? (
+              <NødvendigOpplæringIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.REISETID} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9303 ? <ReisetidIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9303 ? (
+              <ReisetidIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
       </Tabs>
