@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 import { Alert, Label, ReadMore } from '@navikt/ds-react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { InputField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
@@ -14,6 +13,7 @@ import type {
 } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
+import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
 import { ReactElement } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
@@ -144,7 +144,8 @@ export const TilkommetInntektsforholdField = ({
 
   return (
     <>
-      <RadioGroupPanel
+      <RhfRadioGroup
+        control={formMethods.control}
         label={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
         radios={[
@@ -173,7 +174,8 @@ export const TilkommetInntektsforholdField = ({
           <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
           <VerticalSpacer eightPx />
           <div className={styles.bruttoInntektContainer}>
-            <InputField
+            <RhfTextField
+              control={formMethods.control}
               name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.bruttoInntektPrÅr`}
               label="Fastsett årsinntekt"
               hideLabel

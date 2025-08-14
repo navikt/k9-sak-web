@@ -139,7 +139,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 <CheckboxFieldFormik name="markerSomVanskelig" label={{ id: 'MenyMarkerBehandling.VanskeligÅLøse' }} />
               )}
               {brukHastekøMarkering && (
-                <VStack gap="4">
+                <VStack gap="space-16">
                   <Alert variant="warning">
                     Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
                   </Alert>

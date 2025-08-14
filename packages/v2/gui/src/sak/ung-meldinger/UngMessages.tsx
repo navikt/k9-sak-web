@@ -5,7 +5,7 @@ import type {
 } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -101,14 +101,14 @@ export const UngMessages = (props: UngMessagesProps) => {
   const isSubmitting = isSubmittingBestillBrev || isSubmittingForhåndsvisBrev;
 
   return (
-    <Form formMethods={formMethods}>
-      <VStack gap="4">
+    <RhfForm formMethods={formMethods}>
+      <VStack gap="space-16">
         {brevmaler && <MalSelect brevmaler={brevmaler} />}
         {mottakere && <MottakerSelect mottakere={mottakere} valgtMal={valgtMal} disabled={false} />}
         {showFritekstInput && (
           <FritekstInput malStøtterTittel={!!valgtMal?.støtterTittelOgFritekst} språkkode={språkkode} />
         )}
-        <HStack gap="3">
+        <HStack gap="space-12">
           <Button
             type="submit"
             size="small"
@@ -131,6 +131,6 @@ export const UngMessages = (props: UngMessagesProps) => {
           </Button>
         </HStack>
       </VStack>
-    </Form>
+    </RhfForm>
   );
 };

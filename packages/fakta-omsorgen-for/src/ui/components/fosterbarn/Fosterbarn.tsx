@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Delete } from '@navikt/ds-icons';
-import { Box, Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
+import { Box, Button, Heading, Table, TextField } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
 import React, { useContext, useEffect } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -30,15 +30,15 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
   }, [fosterbarnFormValues]);
 
   return (
-    <Box marginBlock="0 6">
-      <DSBox background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
-        <Box marginBlock="0 4">
+    <Box.New marginBlock="0 6">
+      <Box.New padding="4" borderWidth="1" borderRadius="medium">
+        <Box.New marginBlock="0 4">
           <Heading level="2" size="medium">
             Fosterbarn
           </Heading>
-        </Box>
+        </Box.New>
         {fields.length > 0 && (
-          <Box marginBlock="0 4">
+          <Box.New marginBlock="0 4">
             <Table>
               <Table.Header>
                 <Table.Row>
@@ -92,14 +92,14 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
                 ))}
               </Table.Body>
             </Table>
-          </Box>
+          </Box.New>
         )}
 
         <Button variant="secondary" onClick={() => append({ fødselsnummer: '' })} size="small">
           Legg til fosterbarn
         </Button>
-      </DSBox>
-    </Box>
+      </Box.New>
+    </Box.New>
   );
 };
 

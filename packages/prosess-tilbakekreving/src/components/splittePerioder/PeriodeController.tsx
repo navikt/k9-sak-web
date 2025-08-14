@@ -120,7 +120,7 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
     const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
 
     return (
-      <HGrid gap="1" columns={{ xs: '2fr 8fr 2fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '2fr 8fr 2fr' }}>
         <div>
           <Label size="small" as="p">
             <FormattedMessage id="PeriodeController.Detaljer" />

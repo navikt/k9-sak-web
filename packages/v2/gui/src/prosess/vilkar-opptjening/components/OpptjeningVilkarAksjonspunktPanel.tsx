@@ -6,8 +6,9 @@ import {
   type k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { PencilIcon } from '@navikt/aksel-icons';
 import { Button, HelpText, Label } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useContext, useState } from 'react';
@@ -20,7 +21,6 @@ import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import OpptjeningPanel from './OpptjeningPanel';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
 import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder } from './VilkarField';
-import { PencilIcon } from '@navikt/aksel-icons';
 
 dayjs.extend(isBetween);
 
@@ -166,7 +166,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
       });
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit} className="ml-8">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit} className="ml-8">
       <OpptjeningPanel
         title="Opptjening"
         isAksjonspunktOpen={skalKunneEndreOpptjening}
@@ -241,7 +241,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
           </div>
         )}
       </OpptjeningPanel>
-    </Form>
+    </RhfForm>
   );
 };
 

@@ -4,7 +4,6 @@ import { useFormContext } from 'react-hook-form';
 import { Accordion, Label, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 
 import type {
@@ -19,6 +18,7 @@ import { TilkommetAktivitetField } from './TilkommetAktivitetField';
 import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils';
 
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { PeriodLabel } from '@navikt/ft-ui-komponenter';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
@@ -106,7 +106,7 @@ export const TilkommetAktivitetAccordion = ({
   }
 
   return (
-    <VStack gap="6">
+    <VStack gap="space-24">
       <Accordion className={styles.statusOk}>
         {tidligereVurderte.map(tidligereVurdertPeriode => (
           <Accordion.Item
@@ -146,9 +146,10 @@ export const TilkommetAktivitetAccordion = ({
         ))}
       </Accordion>
       {fields.length > 1 && (
-        <VStack gap="4">
+        <VStack gap="space-16">
           <div>
-            <TextAreaField
+            <RhfTextarea
+              control={formMethods.control}
               name={`${formName}.${formFieldIndex}.begrunnelse`}
               label="Begrunnelse for alle perioder"
               readOnly={readOnly}

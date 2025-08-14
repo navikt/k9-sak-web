@@ -28,7 +28,7 @@ const TimeLineControl = ({
   zoomOutCallback,
 }: TimeLineControlProps) => {
   return (
-    <HGrid gap="1" columns={{ xs: '12fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '12fr' }}>
       <div>
         <div className={styles.scrollButtonContainer}>
           {children}

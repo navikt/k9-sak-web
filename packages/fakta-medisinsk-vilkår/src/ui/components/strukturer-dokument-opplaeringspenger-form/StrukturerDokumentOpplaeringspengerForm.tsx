@@ -54,10 +54,10 @@ const StrukturerDokumentOpplaeringspengerForm = ({
           shouldShowSubmitButton={!readOnly}
           smallButtons
         >
-          <Box marginBlock="8 0">
+          <Box.New marginBlock="8 0">
             <DokumentKnapp href={dokumentLink.href} />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <RadioGroupPanelRHF
               name={FieldName.INNEHOLDER_MEDISINSKE_OPPLYSNINGER}
               disabled={readOnly}
@@ -82,8 +82,8 @@ const StrukturerDokumentOpplaeringspengerForm = ({
               ]}
               validators={{ required }}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <DatepickerRHF
               name={FieldName.DATERT}
               disabled={readOnly}
@@ -93,7 +93,7 @@ const StrukturerDokumentOpplaeringspengerForm = ({
               toDate={dateConstants.today.toDate()}
               inputId="datertField"
             />
-          </Box>
+          </Box.New>
           <DuplikatRadiobuttons dokument={dokument} strukturerteDokumenter={strukturerteDokumenter} />
         </FormWithButtons>
       </FormProvider>

@@ -5,7 +5,6 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type {
   k9_sak_typer_Periode as Periode,
@@ -17,6 +16,7 @@ import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';
@@ -232,7 +232,7 @@ export const SoknadsfristVilkarForm = ({
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
       {Array.isArray(dokumenterIAktivPeriode) && dokumenterIAktivPeriode.length > 0 && (
         <div
           className={`${styles.aksjonspunkt} ${erOverstyrt || harÅpentAksjonspunkt || editForm ? styles.apentAksjonspunkt : ''}`}
@@ -267,14 +267,14 @@ export const SoknadsfristVilkarForm = ({
                 <ExclamationmarkTriangleFillIcon
                   title="Aksjonspunkt"
                   fontSize="1.5rem"
-                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl"
+                  className="text-[var(--ax-text-warning-decoration))] text-2xl"
                 />
                 <Label size="small" as="p">
                   Overstyring skal kun gjøres i unntakstilfeller
                 </Label>
               </div>
               <div className="mt-4" />
-              <HStack gap="4">
+              <HStack gap="space-16">
                 <OverstyrBekreftKnappPanel
                   disabled={!formMethods.formState.isValid}
                   submitting={formMethods.formState.isSubmitting}
@@ -295,7 +295,7 @@ export const SoknadsfristVilkarForm = ({
             </>
           )}
           {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
-            <HStack gap="4">
+            <HStack gap="space-16">
               <Button
                 variant="primary"
                 size="small"
@@ -322,7 +322,7 @@ export const SoknadsfristVilkarForm = ({
           )}
         </div>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

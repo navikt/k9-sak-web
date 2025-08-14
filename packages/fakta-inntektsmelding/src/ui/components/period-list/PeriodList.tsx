@@ -34,7 +34,7 @@ const PeriodList = ({
   <ul className={styles.periodList}>
     {tilstander.sort(sorterSkjæringstidspunkt).map(tilstand => (
       <li className={styles.periodList__element} key={tilstand.periode.prettifyPeriod()}>
-        <HStack marginBlock="0 4" align="center" gap="1">
+        <HStack marginBlock="0 4" align="center" gap="space-4">
           <CalendarIcon fontSize="1.5rem" />
           <BodyShort size="small">{tilstand.periode.prettifyPeriod()}</BodyShort>
         </HStack>

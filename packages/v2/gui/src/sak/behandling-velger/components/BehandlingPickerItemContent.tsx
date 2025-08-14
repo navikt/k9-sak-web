@@ -51,12 +51,10 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const avsluttet = behandling.avsluttet;
   const visKunStartdato = erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type);
   return (
-    <Box
-      background="surface-default"
+    <Box.New
       padding="4"
       className={erAutomatiskRevurdering && !erUngdomsytelse(behandling.sakstype) ? styles.indent : ''}
       borderWidth="1"
-      borderColor="border-subtle"
       borderRadius="medium"
     >
       <div className={styles.behandlingPicker}>
@@ -67,14 +65,14 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
             {erUnntaksløype ? getUnntaksløypeText() : ''}
           </Heading>
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             <CalendarIcon title="Kalender" fontSize="1.5rem" />
 
             {søknadsperioder?.length > 0 && (
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
           </HStack>
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">
               Resultat
@@ -101,10 +99,14 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         </div>
         <div className={styles.åpneText}>
           <BodyShort size="small">Åpne</BodyShort>
-          <ChevronRightIcon title="Åpne" fontSize="1.5rem" style={{ color: 'var(--a-blue-500)', fontSize: '1.5rem' }} />
+          <ChevronRightIcon
+            title="Åpne"
+            fontSize="1.5rem"
+            style={{ color: 'var(--ax-accent-600)', fontSize: '1.5rem' }}
+          />
         </div>
       </div>
-    </Box>
+    </Box.New>
   );
 };
 

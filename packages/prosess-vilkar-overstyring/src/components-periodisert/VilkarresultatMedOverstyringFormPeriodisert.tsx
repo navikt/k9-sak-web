@@ -10,7 +10,7 @@ import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import moment from 'moment';
 import { FunctionComponent, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -132,7 +132,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   const opprettetAv = overstyringAksjonspunkt ? overstyringAksjonspunkt.opprettetAv : '';
 
   return (
-    <Form formMethods={formMethods} onSubmit={onSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
         <AksjonspunktBox erAksjonspunktApent={!!erOverstyrt}>
           <Label data-testid="overstyringform" size="small" as="p">
@@ -210,7 +210,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
           )}
         </AksjonspunktBox>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Button, Modal, VStack } from '@navikt/ds-react';
-import { InputField } from '@navikt/ft-form-hooks';
+import { RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
 import type { NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
@@ -25,9 +25,16 @@ const NyArbeidsgiverModal = ({ showModal = false, closeEvent, cancelEvent }: Own
   return (
     <Modal className={styles['modal']} open={showModal} aria-label="Ny arbeidsgiver" onClose={cancelEvent}>
       <Modal.Body>
-        <VStack gap="4">
-          <InputField label="Navn" name="nyArbeidsgiverForm.navn" validate={[required]} format={value => value} />
-          <InputField
+        <VStack gap="space-16">
+          <RhfTextField
+            control={formMethods.control}
+            label="Navn"
+            name="nyArbeidsgiverForm.navn"
+            validate={[required]}
+            format={value => value}
+          />
+          <RhfTextField
+            control={formMethods.control}
             label="Organisasjonsnummer"
             name="nyArbeidsgiverForm.orgNr"
             validate={[required, hasValidOrgNumber]}

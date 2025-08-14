@@ -5,7 +5,6 @@ import { BodyShort, Table, Tag } from '@navikt/ds-react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { TextAreaField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { BeløpLabel, EditedIcon, PeriodLabel } from '@navikt/ft-ui-komponenter';
 
@@ -14,6 +13,7 @@ import { SubmitButton } from '../felles/SubmitButton';
 import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
 import { TilkommetInntektsforholdField } from './TilkommetInntektsforholdField';
 
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
@@ -152,7 +152,8 @@ export const TilkommetAktivitetField = ({
         {skalViseBegrunnelse && (
           <>
             <VerticalSpacer fourtyPx />
-            <TextAreaField
+            <RhfTextarea
+              control={control}
               name={`${formName}.${formFieldIndex}.begrunnelse`}
               label="Begrunnelse"
               readOnly={readOnly}

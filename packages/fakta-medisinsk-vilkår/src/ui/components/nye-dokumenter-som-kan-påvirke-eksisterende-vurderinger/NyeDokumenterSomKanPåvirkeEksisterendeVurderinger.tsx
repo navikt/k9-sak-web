@@ -58,11 +58,11 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderinger = ({
   isSubmitting,
 }: NyeDokumenterSomKanPåvirkeEksisterendeVurderingerProps): JSX.Element => (
   <div className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger}>
-    <Box marginBlock="6 0">
+    <Box.New marginBlock="6 0">
       <div className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__content}>
         <Label size="small">Vurder om nytt dokument fører til endringer i eksisterende vurderinger.</Label>
         <NyeDokumenterListe dokumenter={dokumenter} />
-        <Box marginBlock="6 0">
+        <Box.New marginBlock="6 0">
           <Button
             size="small"
             onClick={() => onEndringerRegistrertClick()}
@@ -72,9 +72,9 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderinger = ({
           >
             Eventuelle endringer er registrert
           </Button>
-        </Box>
+        </Box.New>
       </div>
-    </Box>
+    </Box.New>
   </div>
 );
 

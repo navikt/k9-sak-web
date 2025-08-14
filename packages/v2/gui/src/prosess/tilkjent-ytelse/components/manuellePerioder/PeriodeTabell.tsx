@@ -88,7 +88,7 @@ export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
 
   return (
     <>
-      <VStack gap="5">
+      <VStack gap="space-20">
         <PeriodeRad
           arbeidsgivere={arbeidsgivere}
           openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
@@ -96,7 +96,7 @@ export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
           isNyPeriodeFormOpen={isNyPeriodeFormOpen}
           readOnly={readOnly}
         />
-        <HStack gap="2">
+        <HStack gap="space-8">
           <Button variant="primary" size="small" disabled={disableButtons} loading={isSubmitting}>
             Bekreft og fortsett
           </Button>

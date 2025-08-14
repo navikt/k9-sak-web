@@ -3,9 +3,6 @@ import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
-import { Period } from '@navikt/ft-utils';
 import {
   Alert,
   BodyShort,
@@ -20,16 +17,19 @@ import {
   ReadMore,
   Textarea,
 } from '@navikt/ds-react';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext, useEffect } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
+import { useContext, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Periodevisning } from '../../../shared/detailView/DetailView.js';
-import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo.js';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import type { nødvendigOpplæringPayload } from '../FaktaSykdomOgOpplæringIndex.js';
-import { DelvisOpplæring } from './components/DelvisOpplæring';
 import { Avslagsårsak } from './components/Avslagsårsak';
+import { DelvisOpplæring } from './components/DelvisOpplæring';
+import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo.js';
 
 const JA = 'JA' as const;
 const DELVIS = 'DELVIS' as const;
@@ -177,7 +177,7 @@ const NødvendigOpplæringForm = ({
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
   return (
     <>
-      <Form
+      <RhfForm
         formMethods={formMethods}
         onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
       >
@@ -319,7 +319,7 @@ const NødvendigOpplæringForm = ({
             </div>
           )}
         </div>
-      </Form>
+      </RhfForm>
     </>
   );
 };

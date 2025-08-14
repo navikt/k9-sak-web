@@ -7,13 +7,13 @@ const UteståendeEndringerMelding = (): JSX.Element => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   return (
-    <Box marginBlock="0 4">
+    <Box.New marginBlock="0 4">
       <Alert size="small" variant="warning">
         <BodyShort size="small">
           OBS! Det er gjort endringer i sykdomssteget. For at endringene som er gjort skal bli tatt med i behandlingen,
           trykk på Fortsett.
         </BodyShort>
-        <Box marginBlock="2 0">
+        <Box.New marginBlock="2 0">
           <Button
             size="small"
             disabled={isSubmitting}
@@ -26,9 +26,9 @@ const UteståendeEndringerMelding = (): JSX.Element => {
           >
             Fortsett
           </Button>
-        </Box>
+        </Box.New>
       </Alert>
-    </Box>
+    </Box.New>
   );
 };
 

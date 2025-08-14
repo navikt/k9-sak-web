@@ -1,10 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail } from '@navikt/ds-react';
-import { RadioGroupPanel } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
+import { required } from '@navikt/ft-form-validators';
 import { FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, StatusForBorgerFaktaPanelFormState } from './FormState';
@@ -28,13 +28,14 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
   readOnly,
   alleMerknaderFraBeslutter,
 }) => {
-  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { getValues, control } = useFormContext<OppholdInntektOgPerioderFormState>();
   const {
     oppholdInntektOgPeriodeForm: { erEosBorger, isBorgerAksjonspunktClosed, apKode },
   } = getValues();
   return (
     <FaktaGruppe titleCode="Status for søker" merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]} useIntl={false}>
-      <RadioGroupPanel
+      <RhfRadioGroup
+        control={control}
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
         isReadOnly={readOnly}
@@ -55,7 +56,8 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
           <VerticalSpacer fourPx />
-          <RadioGroupPanel
+          <RhfRadioGroup
+            control={control}
             name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
             validate={[required]}
             isReadOnly={readOnly}
@@ -82,7 +84,8 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         <ArrowBox alignOffset={130}>
           <Detail>Lovlig opphold</Detail>
           <VerticalSpacer fourPx />
-          <RadioGroupPanel
+          <RhfRadioGroup
+            control={control}
             name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
             validate={[required]}
             isReadOnly={readOnly}

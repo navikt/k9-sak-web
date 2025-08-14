@@ -31,7 +31,7 @@
 .stepArrowContainer:before {
   border: solid transparent;
   border-color: rgb(0 0 0 / 0%);
-  border-bottom-color: var(--a-gray-300);
+  border-bottom-color: var(--ax-neutral-400);
   border-width: 13px;
   bottom: 100%;
   content: ' ';
