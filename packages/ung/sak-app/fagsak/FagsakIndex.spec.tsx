@@ -138,6 +138,8 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
+    requestApi.mock(UngSakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, {});
+    requestApi.mock(UngSakApiKeys.BEHANDLING_RETTIGHETER, {});
 
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>

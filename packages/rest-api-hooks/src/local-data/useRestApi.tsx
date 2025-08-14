@@ -28,9 +28,9 @@ const defaultOptions = {
 export const getUseRestApiMock = (requestApi: AbstractRequestApi) =>
   function useRestApi<T>(key: string, params?: any, options: Options = defaultOptions): RestApiData<T> {
     return {
-      state: options.suspendRequest ? RestApiState.NOT_STARTED : RestApiState.SUCCESS,
+      state: !options.keepData && options.suspendRequest ? RestApiState.NOT_STARTED : RestApiState.SUCCESS,
       error: undefined,
-      data: options.suspendRequest ? undefined : requestApi.startRequest(key, params),
+      data: !options.keepData && options.suspendRequest ? undefined : requestApi.startRequest(key, params),
     };
   };
 
