@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, Checkbox } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
