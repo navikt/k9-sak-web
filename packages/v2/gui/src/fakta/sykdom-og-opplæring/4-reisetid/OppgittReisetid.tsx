@@ -1,4 +1,4 @@
-import type { ReisetidInfoFraSøker } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidInfoFraSøker as ReisetidInfoFraSøker } from '@k9-sak-web/backend/k9sak/generated';
 import { Label, BodyLong, Tag } from '@navikt/ds-react';
 import { Period } from '@navikt/ft-utils';
 

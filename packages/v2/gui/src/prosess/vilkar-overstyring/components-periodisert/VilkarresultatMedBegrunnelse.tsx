@@ -1,4 +1,8 @@
-import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+  k9_sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Box } from '@navikt/ds-react';
 import React, { type FunctionComponent } from 'react';
 import VilkarBegrunnelse from './VilkarBegrunnelse';

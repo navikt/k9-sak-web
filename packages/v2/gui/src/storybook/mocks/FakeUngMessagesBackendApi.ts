@@ -1,7 +1,7 @@
 import {
   type BestillInformasjonsbrevResponse,
   type ForhåndsvisInformasjonsbrevResponse,
-  type InformasjonsbrevBestillingRequest,
+  type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
   type InformasjonsbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { fakePdf } from './fakePdf';

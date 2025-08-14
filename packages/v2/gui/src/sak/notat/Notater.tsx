@@ -1,4 +1,7 @@
-import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto,
+  k9_sak_kontrakt_notat_NotatDto as NotatDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import React, { useMemo, useState } from 'react';

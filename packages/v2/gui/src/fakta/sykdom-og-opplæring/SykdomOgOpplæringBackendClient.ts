@@ -29,7 +29,7 @@ export default class SykdomOgOpplæringBackendClient {
   }
 
   async hentAlleInstitusjoner() {
-    return this.#k9sak.opplæringsinstitusjon.hentAlleV2();
+    return this.#k9sak.opplæringsinstitusjonSaksbehandling.hentAlleV2();
   }
 
   async hentOrganisasjonsnummer(organisasjonsnummer: string) {

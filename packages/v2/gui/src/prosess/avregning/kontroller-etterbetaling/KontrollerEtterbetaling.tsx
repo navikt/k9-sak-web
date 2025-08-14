@@ -4,7 +4,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import '@k9-sak-web/gui/utils/validation/yupSchemas';
-import type { AksjonspunktDto, BehandlingDto, BekreftData } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  BekreftData,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';

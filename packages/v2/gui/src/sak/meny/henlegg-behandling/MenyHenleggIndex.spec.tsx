@@ -1,7 +1,7 @@
 import {
-  BehandlingDtoType,
-  BehandlingDtoBehandlingResultatType as behandlingResultatType,
-  BehandlingDtoSakstype as fagsakYtelseType,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatType,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';

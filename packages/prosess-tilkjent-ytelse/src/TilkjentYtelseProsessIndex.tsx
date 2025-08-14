@@ -1,9 +1,9 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ArbeidsgiverOpplysningerPerId, Fagsak } from '@k9-sak-web/types';
 import {
-  AksjonspunktDto,
-  BehandlingDto,
-  BeregningsresultatMedUtbetaltePeriodeDto,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@navikt/k9-sak-typescript-client';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';

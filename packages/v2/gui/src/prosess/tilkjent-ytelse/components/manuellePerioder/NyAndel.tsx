@@ -63,7 +63,7 @@ const erSelvstendigNæringsdrivende = (inntektskategori: Inntektskategori) =>
     inntektskategorier.JORDBRUKER,
     inntektskategorier.FISKER,
     inntektskategorier.SELVSTENDIG_NÆRINGSDRIVENDE,
-  ].includes(inntektskategori);
+  ].some(ik => ik === inntektskategori);
 
 const erFrilans = (inntektskategori: string) => inntektskategori === inntektskategorier.FRILANSER;
 
@@ -71,7 +71,7 @@ const defaultAndel: NyPeriodeFormAndeler = {
   arbeidsgiverOrgnr: '',
   arbeidsgiverPersonIdent: undefined,
   eksternArbeidsforholdId: '',
-  inntektskategori: inntektskategorier['-'],
+  inntektskategori: inntektskategorier.UDEFINERT,
   refusjon: 0,
   tilSoker: 0,
   utbetalingsgrad: 0,

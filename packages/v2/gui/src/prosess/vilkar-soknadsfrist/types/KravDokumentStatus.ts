@@ -1,4 +1,4 @@
-import type { KravDokumentStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/KravDokumentStatus.js';
+import type { k9_sak_kontrakt_krav_KravDokumentType as KravDokumentType } from '@k9-sak-web/backend/k9sak/generated';
 import type { SøknadsfristPeriode } from './SøknadsfristPeriode';
 
 type AvklarteOpplysninger = {
@@ -15,6 +15,6 @@ export type KravDokument = {
   journalpostId: string;
   overstyrteOpplysninger?: AvklarteOpplysninger;
   status: Array<SøknadsfristPeriode>;
-  type?: KravDokumentStatusType;
+  type?: KravDokumentType;
   id?: string;
 };

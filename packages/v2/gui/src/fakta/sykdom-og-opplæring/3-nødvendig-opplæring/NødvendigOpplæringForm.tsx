@@ -1,7 +1,7 @@
 import {
-  OpplæringVurderingDtoAvslagsårsak,
-  OpplæringVurderingDtoResultat,
-  type OpplæringVurderingDto,
+  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';

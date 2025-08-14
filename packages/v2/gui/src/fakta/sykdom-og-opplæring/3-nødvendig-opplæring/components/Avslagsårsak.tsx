@@ -1,19 +1,11 @@
 import {
-  OpplæringVurderingDtoAvslagsårsak,
-  OpplæringVurderingDtoResultat,
+  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated';
-import {
-  Controller,
-  useFormContext,
-  type ControllerProps,
-} from 'react-hook-form';
-import {
-  Radio,
-  RadioGroup,
-} from '@navikt/ds-react';
+import { Controller, useFormContext, type ControllerProps } from 'react-hook-form';
+import { Radio, RadioGroup } from '@navikt/ds-react';
 import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
-import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
 import { K9KodeverkoppslagContext } from '../../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 
 type NødvendigOpplæringFormFields = {
@@ -63,8 +55,8 @@ export const Avslagsårsak = ({
           ? undefined
           : {
               validate: value => {
-                return value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING ||
-                  value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN
+                return value === OpplæringVurderingDtoAvslagsårsak.IKKE_NØDVENDIG_OPPLÆRING ||
+                  value === OpplæringVurderingDtoAvslagsårsak.IKKE_OPPLÆRING_I_PERIODEN
                   ? undefined
                   : 'Avslagsårsak er påkrevd';
               },
@@ -85,17 +77,11 @@ export const Avslagsårsak = ({
               }
             }}
           >
-            <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING}>
-              {
-                (k9Kodeverkoppslag as any).k9sak.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING)
-                  .navn
-              }
+            <Radio value={OpplæringVurderingDtoAvslagsårsak.IKKE_NØDVENDIG_OPPLÆRING}>
+              {k9Kodeverkoppslag.k9sak.avslagsårsaker(OpplæringVurderingDtoAvslagsårsak.IKKE_NØDVENDIG_OPPLÆRING).navn}
             </Radio>
-            <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN}>
-              {
-                (k9Kodeverkoppslag as any).k9sak.avslagsårsaker(KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN)
-                  .navn
-              }
+            <Radio value={OpplæringVurderingDtoAvslagsårsak.IKKE_OPPLÆRING_I_PERIODEN}>
+              {k9Kodeverkoppslag.k9sak.avslagsårsaker(OpplæringVurderingDtoAvslagsårsak.IKKE_OPPLÆRING_I_PERIODEN).navn}
             </Radio>
           </RadioGroup>
         );

@@ -24,9 +24,9 @@ import {
 } from '../utils/overstyringUtils';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import type {
-  ArbeidsgiverOversiktDto,
-  BehandlingDto,
-  OverstyrUttakPeriodeDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { useQuery } from '@tanstack/react-query';
 import { OverstyrUttakHandling } from './OverstyrUttak';
