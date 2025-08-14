@@ -2980,14 +2980,9 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20250806103540"
-<<<<<<< Updated upstream
-    "@navikt/k9-sak-typescript-client": "npm:2.1.20250813152841"
-    "@navikt/ung-sak-typescript-client": "npm:1.0.20250813152847"
-=======
-    "@navikt/k9-sak-typescript-client": "npm:2.0.20250731124543"
-    "@navikt/ung-sak-typescript-client": "npm:0.2.20250728105557"
-    "@navikt/ung-tilbake-typescript-client": "npm:3.0.20250807142234"
->>>>>>> Stashed changes
+  "@navikt/k9-sak-typescript-client": "npm:2.1.20250813152841"
+  "@navikt/ung-sak-typescript-client": "npm:1.0.20250813152847"
+  "@navikt/ung-tilbake-typescript-client": "npm:3.0.20250807142234"
     "@tanstack/eslint-plugin-query": "npm:^5.81.2"
   languageName: unknown
   linkType: soft
