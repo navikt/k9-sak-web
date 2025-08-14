@@ -1,9 +1,9 @@
 import { klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Sak,
-  BehandlingDtoSakstype as fagsakYtelseType,
-  type ArbeidsgiverOversiktDto,
+  k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Sak,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';

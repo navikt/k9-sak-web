@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 import {
-  BehandlingDtoSakstype,
-  BehandlingDtoStatus,
-  BehandlingDtoType,
-  BehandlingsresultatDtoType,
-  type BehandlingDto,
+  k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';

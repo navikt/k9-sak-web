@@ -1,6 +1,6 @@
 // Funksjon for å rendre gitt react node og returnere tekst innhaldet frå den. (bubble-wrapper element)
 // Brukt til å samanlikne tekst i gammalt historikk innslag med nytt, sikre at nytt innslag har all info frå gammalt.
-import { KodeverdiSomObjektHistorikkinnslagTypeKilde } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_historikk_HistorikkinnslagType as HistorikkinnslagTypeEnum } from '@k9-sak-web/backend/k9sak/generated';
 import { JSX, ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
@@ -118,7 +118,7 @@ const checkRenderedElementTexts = async (
 // kan dei leggast inn her for å undertrykke feilrapportering
 const historikkInnslagMissingWordsExemptions = new Map<string, string[]>();
 historikkInnslagMissingWordsExemptions.set('KLAGE_BEH_NFP', ['endret', 'fra']);
-historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.FAKTA_ENDRET, [
+historikkInnslagMissingWordsExemptions.set(HistorikkinnslagTypeEnum.FAKTA_ENDRET, [
   'Aldersvilkåret',
   // v1 mangler støtte for EndretFeltVerdiTypeCode.UAVKLART, så er ein feil i v1 som ikkje er i v2:
   'EndretFeltVerdiTypeCode',
@@ -128,17 +128,10 @@ historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTyp
   'INN',
   // ===
 ]);
-historikkInnslagMissingWordsExemptions.set(
-  KodeverdiSomObjektHistorikkinnslagTypeKilde.TILBAKEKREVING_VIDEREBEHANDLING,
-  ['satt'],
-);
-historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.SAK_RETUR, [
-  'Vurdering',
-  'eller',
-  'Fastsatt',
-]);
+historikkInnslagMissingWordsExemptions.set(HistorikkinnslagTypeEnum.TILBAKEKREVING_VIDEREBEHANDLING, ['satt']);
+historikkInnslagMissingWordsExemptions.set(HistorikkinnslagTypeEnum.SAK_RETUR, ['Vurdering', 'eller', 'Fastsatt']);
 // Historikkinnslag av type BEH_AVBRUTT_OVERLAPP har ingen mal i frontend(!)
-historikkInnslagMissingWordsExemptions.set(KodeverdiSomObjektHistorikkinnslagTypeKilde.BEH_AVBRUTT_OVERLAPP, [
+historikkInnslagMissingWordsExemptions.set(HistorikkinnslagTypeEnum.BEH_AVBRUTT_OVERLAPP, [
   'Kan',
   'ikke',
   'finne',

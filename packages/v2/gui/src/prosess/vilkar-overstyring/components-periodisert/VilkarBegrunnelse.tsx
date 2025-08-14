@@ -1,4 +1,4 @@
-import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';

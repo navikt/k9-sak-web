@@ -12,7 +12,7 @@ import {
   minLength,
   required,
 } from '@navikt/ft-form-validators';
-import type { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { Dayjs } from 'dayjs';
 import { useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';

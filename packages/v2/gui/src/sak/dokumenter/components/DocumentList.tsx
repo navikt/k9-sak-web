@@ -1,5 +1,5 @@
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/Kommunikasjonsretning.js';
+import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';

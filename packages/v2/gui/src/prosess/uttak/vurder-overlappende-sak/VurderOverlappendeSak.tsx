@@ -1,12 +1,13 @@
 import React, { useEffect, useState, type FC } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import {
-  PeriodeMedOverlappValg,
-  type AksjonspunktDto,
-  type BehandlingDto,
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   type BekreftData,
-  type EgneOverlappendeSakerDto,
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -33,6 +34,7 @@ import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../util
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import styles from './VurderOverlappendeSak.module.css';
+
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
 interface Props {

@@ -1,4 +1,4 @@
-import type { FeilDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_FeilDto as FeilDto } from '@k9-sak-web/backend/k9sak/generated';
 
 /**
  * Henter feilmelding fra FeilDto.

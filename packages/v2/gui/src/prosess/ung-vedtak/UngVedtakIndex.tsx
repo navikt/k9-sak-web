@@ -1,5 +1,5 @@
 import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
 import { Box, Heading } from '@navikt/ds-react';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';

@@ -1,7 +1,7 @@
 import { type UtilgjengeligÅrsak } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import {
-  type InformasjonsbrevMottakerValgResponse,
-  type InformasjonsbrevValgDto,
+  type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevMottakerValgResponse as InformasjonsbrevMottakerValgResponse,
+  type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { RhfSelect } from '@navikt/ft-form-hooks';
 import { useFormContext } from 'react-hook-form';

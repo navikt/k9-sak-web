@@ -3,7 +3,11 @@ import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/Fo
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
-import type { BestillBrevDto, FritekstbrevinnholdDto, MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
+  k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
+  k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';

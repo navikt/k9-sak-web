@@ -13,11 +13,11 @@ import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
-  OpplæringVurderingDtoResultat,
-  VilkårMedPerioderDtoVilkarType,
-  VilkårPeriodeDtoVilkarStatus,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  k9_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
+  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
-  OpplæringVurderingDtoAvslagsårsak,
+  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 export type nødvendigOpplæringPayload = {

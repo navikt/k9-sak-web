@@ -1,8 +1,8 @@
 import {
-  UttakArbeidsforholdType,
-  type ArbeidsgiverOversiktDto,
-  type Utbetalingsgrader,
-  type UttaksperiodeInfo,
+  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidsforholdType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type pleiepengerbarn_uttak_kontrakter_Utbetalingsgrader as Utbetalingsgrader,
+  type pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';

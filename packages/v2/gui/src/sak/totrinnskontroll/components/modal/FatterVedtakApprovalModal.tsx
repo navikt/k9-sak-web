@@ -4,9 +4,8 @@ import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHje
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import {
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoStatus,
-  BehandlingsresultatDtoType,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
 } from '@navikt/k9-sak-typescript-client';
 import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
@@ -38,7 +37,7 @@ const getInfoTextCode = (
     return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT) {
+  if (behandlingsresultat?.type === BehandlingsresultatType.AVSLÅTT) {
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
@@ -211,7 +210,7 @@ const FatterVedtakApprovalModal = ({
   erKlageWithKA,
 }: OwnProps) => {
   const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatDtoType.OPPHØR;
+    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatType.OPPHØR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,

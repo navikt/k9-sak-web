@@ -15,9 +15,9 @@ import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
 import type {
-  ArbeidsgiverOversiktDto,
-  BehandlingDto,
-  OverstyrUttakPeriodeDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';

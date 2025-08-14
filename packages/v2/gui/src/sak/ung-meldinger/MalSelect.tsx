@@ -1,4 +1,4 @@
-import type { InformasjonsbrevValgDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto } from '@k9-sak-web/backend/ungsak/generated';
 import { RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';

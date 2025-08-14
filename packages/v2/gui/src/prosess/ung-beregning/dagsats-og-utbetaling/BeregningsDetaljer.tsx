@@ -1,4 +1,4 @@
-import type { UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_ungdomsytelse_beregning_UngdomsytelseSatsPeriodeDto as UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
 import { Box, Heading, VStack } from '@navikt/ds-react';
 import { BeregningsDetaljerUtregning } from './BeregningsDetaljerUtregning';
 

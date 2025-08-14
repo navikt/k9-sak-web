@@ -1,5 +1,5 @@
 import {
-  UngdomsytelseUtbetaltMånedDtoStatus,
+  ung_sak_kontrakt_ungdomsytelse_ytelse_UtbetalingStatus as UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';

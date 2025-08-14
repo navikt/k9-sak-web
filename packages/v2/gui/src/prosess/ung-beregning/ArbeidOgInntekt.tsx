@@ -1,8 +1,8 @@
 import {
-  KontrollerInntektPeriodeDtoStatus,
-  KontrollerInntektPeriodeDtoValg,
-  type KontrollerInntektPeriodeDto,
-  type RapportertInntektDto,
+  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
+  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
+  type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
+  type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
@@ -24,8 +24,8 @@ const formaterInntekt = (inntekt: RapportertInntektDto) => {
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
 };
 
-const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
-  if (status === KontrollerInntektPeriodeDtoStatus.AVVIK) {
+const formaterStatus = (status?: PeriodeStatus) => {
+  if (status === PeriodeStatus.AVVIK) {
     return 'Avvik';
   }
   return 'Ingen avvik';
@@ -48,7 +48,7 @@ const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeri
 type Formvalues = {
   perioder: {
     fastsattInntekt: string;
-    valg: KontrollerInntektPeriodeDtoValg | '';
+    valg: BrukKontrollertInntektValg | '';
     begrunnelse: string;
     periode: KontrollerInntektPeriodeDto['periode'];
   }[];
@@ -76,7 +76,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
           perioder: values.perioder.map(periode => ({
             periode: periode.periode,
             fastsattInnntekt:
-              periode.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
+              periode.valg === BrukKontrollertInntektValg.MANUELT_FASTSATT
                 ? removeSpacesFromNumber(periode.fastsattInntekt)
                 : undefined,
             valg: periode.valg,
@@ -121,7 +121,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                 i => i.periode?.fom === field.periode?.fom && i.periode?.tom === field.periode?.tom,
               );
               const isLastRow = index === fields.length - 1;
-              const harAvvik = inntektKontrollPeriode?.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
+              const harAvvik = inntektKontrollPeriode?.status === PeriodeStatus.AVVIK;
               const harAksjonspunkt = inntektKontrollPeriode?.erTilVurdering && harAvvik;
               const harBrukerrapportertInntekt =
                 inntektKontrollPeriode?.rapporterteInntekter?.bruker?.arbeidsinntekt != undefined;

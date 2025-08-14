@@ -6,7 +6,10 @@ import { BeregningsresultatFp } from '@k9-sak-web/types';
 import { Button, HGrid, Label } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
+} from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import styles from './tilbaketrekkpanel.module.css';
 
