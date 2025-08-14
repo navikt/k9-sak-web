@@ -71,7 +71,7 @@ export const NyInntektFaktaIndex = ({
 
   return (
     <RawIntlProvider value={intl}>
-      <VStack gap="2">
+      <VStack gap="space-8">
         {skalBrukeTabs && (
           <Tabs
             value={aktivtBeregningsgrunnlagIndeks.toString()}

@@ -41,5 +41,6 @@ export interface Vurdering {
 export enum Kode {
   FORTSETT = 'FORTSETT',
   MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
+  IKKE_INNTEKTSTAP = 'IKKE_INNTEKTSTAP',
   TOM = '-',
 }

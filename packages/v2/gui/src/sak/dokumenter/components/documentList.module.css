@@ -5,7 +5,7 @@
 }
 
 .starIcon {
-  color: var(--a-orange-400);
+  color: var(--ax-warning-500);
   height: 1.25rem;
   margin-bottom: -0.25rem;
   margin-left: 0.625rem;
@@ -39,12 +39,12 @@
 }
 
 .documentAnchor {
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   text-decoration: underline;
 }
 
 .documentAnchor:visited {
-  color: var(--a-purple-500);
+  color: var(--ax-meta-purple-600);
 }
 
 .documentAnchorPlain {

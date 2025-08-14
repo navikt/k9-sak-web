@@ -271,7 +271,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
         <VerticalSpacer twentyPx />
         {!readOnly && !data.erForeldet && vurdertePerioder.length > 0 && (
           <>
-            <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+            <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
               <div>
                 <DSLabel size="small" as="p">
                   <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
@@ -298,11 +298,11 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
             <VerticalSpacer twentyPx />
           </>
         )}
-        <HGrid gap="1" columns={{ xs: data.erForeldet ? '12fr' : '6fr 6fr' }}>
+        <HGrid gap="space-4" columns={{ xs: data.erForeldet ? '12fr' : '6fr 6fr' }}>
           <div>
             {data.erForeldet && <ForeldetFormPanel />}
             {!data.erForeldet && (
-              <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+              <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
                 <div>
                   <DSLabel size="small" as="p">
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
@@ -338,7 +338,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
             )}
           </div>
           <div>
-            <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+            <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
               <div>
                 {valgtVilkarResultatType && (
                   <>

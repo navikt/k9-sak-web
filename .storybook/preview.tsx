@@ -1,6 +1,8 @@
 import '@fpsak-frontend/assets/styles/global.css';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
+import '@navikt/ds-css/darkside';
+import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -38,7 +40,9 @@ const preview: Preview = {
         <Provider store={store}>
           <MemoryRouter>
             <QueryClientProvider client={queryClient}>
-              <Story />
+              <Theme theme="light">
+                <Story />
+              </Theme>
             </QueryClientProvider>
           </MemoryRouter>
         </Provider>

@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Label, Modal } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './henlagtBehandlingModal.module.css';
 
@@ -25,7 +24,7 @@ const HenlagtBehandlingModal = ({ intl, showModal, closeEvent }: OwnProps & Wrap
     width="small"
   >
     <Modal.Body>
-      <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '1fr 9fr 2fr' }}>
         <div className="relative">
           <Image
             className={styles.image}

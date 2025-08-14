@@ -3,7 +3,7 @@ import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-com
 import { guid } from '@fpsak-frontend/utils';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
@@ -68,9 +68,9 @@ export const TilkjentYtelseForm = ({
         </>
       )}
 
-      <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
+      <RhfForm formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
         <PeriodeTabell readOnly={readOnly} />
-      </Form>
+      </RhfForm>
     </>
   );
 };

@@ -1,6 +1,5 @@
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { BodyShort, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
-import React from 'react';
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';
 import styles from './advarselModal.module.css';
@@ -22,7 +21,7 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
   return (
     <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={submit}>
       <Modal.Body>
-        <HGrid gap="1" columns={{ xs: '1fr 8fr 2fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 8fr 2fr' }}>
           <div className="relative">
             <Image className={styles.image} alt={bodyText} src={advarselImageUrl} />
             <div className={styles.divider} />

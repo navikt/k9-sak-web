@@ -1,10 +1,9 @@
 import { Controller, useForm } from 'react-hook-form';
 
 import { Box, Button, Checkbox } from '@navikt/ds-react';
-import { Form, TextAreaField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import InstitusjonVelger from './InstitusjonVelger.js';
@@ -14,6 +13,7 @@ import {
   utledOmDetErValgfriSkriftligVurdering,
   utledRedigertInstitusjonNavn,
 } from '../utils.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
@@ -71,7 +71,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     });
   }, [vurdering.journalpostId]);
 
-  const { watch } = formMethods;
+  const { watch, control } = formMethods;
   const skalLeggeTilValgfriSkriftligVurdering = watch(InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING);
   const resultat = watch(InstitusjonFormFields.GODKJENT_INSTITUSJON);
   useEffect(() => {
@@ -109,13 +109,14 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
   };
 
   return (
-    <Form<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
+    <RhfForm<InstitusjonFormValues> formMethods={formMethods} onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 mt-6">
         <InstitusjonVelger
           institusjonFraSøknad={vurdering.institusjon}
           redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
         />
-        <RadioGroupPanel
+        <RhfRadioGroup
+          control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
           label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
@@ -147,7 +148,8 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         )}
 
         {visBegrunnelse() && (
-          <TextAreaField
+          <RhfTextarea
+            control={control}
             name={InstitusjonFormFields.BEGRUNNELSE}
             size="small"
             label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
@@ -159,7 +161,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
       </div>
 
       {!readOnly && (
-        <Box className="flex mt-8">
+        <Box.New className="flex mt-8">
           <Button size="small">Bekreft og fortsett</Button>
 
           {erRedigering && (
@@ -169,9 +171,9 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
               </Button>
             </div>
           )}
-        </Box>
+        </Box.New>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

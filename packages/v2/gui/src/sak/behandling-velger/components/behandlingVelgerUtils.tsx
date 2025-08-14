@@ -41,18 +41,18 @@ export const getStatusIcon = (behandlingsresultatTypeKode?: string, className?: 
       <ExclamationmarkTriangleFillIcon
         fontSize="1.25rem"
         className={className}
-        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+        style={{ color: 'var(--ax-text-warning-decoration)' }}
         title="Under behandling"
       />
     );
   }
 
   if (behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.INNVILGET) {
-    return <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
 
   if (behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.AVSLÅTT) {
-    return <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
 
   return null;

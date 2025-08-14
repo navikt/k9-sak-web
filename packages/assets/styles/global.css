@@ -1,6 +1,4 @@
 @import url('tailwindcss/base');
-@import url('@navikt/ds-css');
-@import url('@navikt/ds-tokens/darkside-css');
 @import url('tailwindcss/components');
 @import url('tailwindcss/utilities');
 @import url('dayPicker.css');
@@ -12,7 +10,7 @@ html {
 }
 
 body {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   color: #262626;
   height: 100%;
   line-height: 1.4286;
@@ -55,7 +53,7 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .soknad {
-  background-color: var(--a-blue-600);
+  background-color: var(--ax-accent-700);
   pointer-events: none;
   top: 6px !important;
 }
@@ -87,7 +85,7 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .revurdering {
-  background-color: var(--a-green-600);
+  background-color: var(--ax-success-700);
   pointer-events: none;
   top: 12px !important;
 }
@@ -177,21 +175,21 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .gradert {
-  background: var(--a-green-500)
+  background: var(--ax-success-600)
     repeating-linear-gradient(
       45deg,
-      var(--a-white),
-      var(--a-white) 20%,
+      var(--ax-bg-default),
+      var(--ax-bg-default) 20%,
       transparent 20%,
       transparent 50%,
-      var(--a-white) 50%
+      var(--ax-bg-default) 50%
     );
   background-size: 12px 12px;
   opacity: 0.9;
 }
 
 .gradert.vis-item.vis-selected {
-  background-color: var(--a-green-500);
+  background-color: var(--ax-success-600);
   opacity: 1;
 }
 
@@ -257,8 +255,8 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .godkjentPeriode:active {
-  background-color: var(--a-green-500);
-  border-color: var(--a-green-500);
+  background-color: var(--ax-success-600);
+  border-color: var(--ax-success-600);
 }
 
 .vis-current-time {
@@ -266,7 +264,7 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .godkjentPeriode.vis-item.vis-selected {
-  background-color: var(--a-green-500);
+  background-color: var(--ax-success-600);
   border-radius: 6px;
 }
 
@@ -279,23 +277,23 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .mellomliggendePeriode:active {
-  background-color: var(--a-green-500);
-  border-color: var(--a-green-500);
+  background-color: var(--ax-success-600);
+  border-color: var(--ax-success-600);
 }
 
 .mellomliggendePeriode.vis-item.vis-selected {
-  background-color: var(--a-green-500);
+  background-color: var(--ax-success-600);
   border-radius: 6px;
 }
 
 .innvilget.vis-item.vis-selected {
-  background-color: var(--a-green-500);
+  background-color: var(--ax-success-600);
   border-radius: 6px;
 }
 
 .innvilgetnullprosent {
   background-color: transparent;
-  border-color: var(--a-green-500);
+  border-color: var(--ax-success-600);
   border-radius: 8px;
 }
 
@@ -306,7 +304,7 @@ som fra core/og muligen import fra alla andra komponenter
 
 .opphold-manuell {
   background-color: transparent;
-  border-color: var(--a-orange-500);
+  border-color: var(--ax-warning-600);
   border-radius: 6px;
 }
 
@@ -316,7 +314,7 @@ som fra core/og muligen import fra alla andra komponenter
 
 .opphold-manuell.vis-item.vis-selected {
   background-color: transparent;
-  border-color: var(--a-orange-500);
+  border-color: var(--ax-warning-600);
   border-radius: 6px;
   border-style: dashed;
   border-width: 1.5px;
@@ -324,7 +322,7 @@ som fra core/og muligen import fra alla andra komponenter
 
 .opphold {
   background-color: transparent;
-  border-color: var(--a-green-500);
+  border-color: var(--ax-success-600);
   border-radius: 6px;
 }
 
@@ -334,14 +332,14 @@ som fra core/og muligen import fra alla andra komponenter
 
 .opphold.vis-item.vis-selected {
   background-color: transparent;
-  border-color: var(--a-green-500);
+  border-color: var(--ax-success-600);
   border-radius: 6px;
   border-style: dashed;
   border-width: 1.5px;
 }
 
 .vis-item.endretPeriode {
-  border-top-color: var(--a-orange-500);
+  border-top-color: var(--ax-warning-600);
   border-top-width: 5px;
 }
 
@@ -455,7 +453,7 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .godkjent {
-  background-color: var(--a-green-200);
+  background-color: var(--ax-success-300);
 }
 
 .avvist {
@@ -470,11 +468,11 @@ div .vis-tooltip {
 }
 
 .tableRowHighlight {
-  background-color: var(--a-orange-100);
+  background-color: var(--ax-warning-200);
 }
 
 .tableRowHighlight:hover {
-  background-color: var(--a-orange-100) !important;
+  background-color: var(--ax-warning-200) !important;
 }
 
 input[type='number'] {
@@ -527,8 +525,8 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   width: 80px;
 }
 
-.navds-tabs__tab.harAksjonspunkt {
-  border-top: 5px solid var(--a-orange-200) !important;
+.aksel-tabs__tab.harAksjonspunkt {
+  border-top: 5px solid var(--ax-warning-300) !important;
 }
 
 .snakkeboble .panel {
@@ -536,19 +534,19 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 .snakkeboble.snakkeboble__saksbehandler .panel {
-  background: var(--a-purple-100);
+  background: var(--ax-meta-purple-200);
 }
 
 .snakkeboble.snakkeboble__saksbehandler .snakkeboble__snakkebole-pil {
-  background: var(--a-purple-100);
+  background: var(--ax-meta-purple-200);
 }
 
 .snakkeboble.snakkeboble__beslutter .panel {
-  background: var(--a-green-100);
+  background: var(--ax-success-200);
 }
 
 .snakkeboble.snakkeboble__beslutter .snakkeboble__snakkebole-pil {
-  background: var(--a-green-100);
+  background: var(--ax-success-200);
 }
 
 .snakkeboble.snakkeboble__losningen .panel {
@@ -568,11 +566,11 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 .snakkeboble.snakkeboble__ekstern .panel {
-  background: var(--a-lightblue-100);
+  background: var(--ax-bg-moderate);
 }
 
 .snakkeboble.snakkeboble__ekstern .snakkeboble__snakkebole-pil {
-  background: var(--a-lightblue-100);
+  background: var(--ax-bg-moderate);
 }
 
 .snakkeboble__kompakt {

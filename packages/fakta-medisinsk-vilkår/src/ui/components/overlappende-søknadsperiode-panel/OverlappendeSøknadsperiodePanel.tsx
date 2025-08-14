@@ -11,7 +11,7 @@ const OverlappendeSøknadsperiodePanel = ({
   onProgressButtonClick,
   overlappendeVurderingsperioder,
 }: OverlappendeSøknadsperiodePanelProps): JSX.Element => (
-  <Box padding="4" borderColor="border-warning" borderWidth="2">
+  <Box.New padding="4" borderWidth="2">
     <BodyShort size="small">
       {`Søknadsperioden overlapper med en eller flere tidligere vurderte perioder
                 (${prettifyPeriodList(
@@ -22,7 +22,7 @@ const OverlappendeSøknadsperiodePanel = ({
     <Button size="small" onClick={onProgressButtonClick} style={{ marginTop: '1rem' }}>
       Utført, eventuelle nye vurderinger er registrert
     </Button>
-  </Box>
+  </Box.New>
 );
 
 export default OverlappendeSøknadsperiodePanel;

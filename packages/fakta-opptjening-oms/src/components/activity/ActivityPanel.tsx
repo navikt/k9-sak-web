@@ -173,7 +173,7 @@ export const ActivityPanel = ({
     className={styles.panel}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
   >
-    <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
       <Label size="small" as="p">
         <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
       </Label>
@@ -190,7 +190,7 @@ export const ActivityPanel = ({
         />
       </div>
     </HGrid>
-    <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
       <FlexContainer>
         <FlexRow>
           <FlexColumn>

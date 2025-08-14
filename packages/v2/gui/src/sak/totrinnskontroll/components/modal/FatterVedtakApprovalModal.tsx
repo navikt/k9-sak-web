@@ -235,12 +235,12 @@ const FatterVedtakApprovalModal = ({
   return (
     <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
       <Modal.Body>
-        <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <CheckmarkCircleFillIcon
               title={altImgText}
               fontSize={30}
-              style={{ color: 'var(--a-surface-success)', marginTop: '6px' }}
+              style={{ color: 'var(--ax-bg-success-strong)', marginTop: '6px' }}
             />
             <div className={styles.divider} />
           </div>

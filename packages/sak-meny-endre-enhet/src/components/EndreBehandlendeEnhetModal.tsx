@@ -3,7 +3,6 @@ import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
@@ -57,7 +56,7 @@ export const EndreBehandlendeEnhetModal = ({
     >
       <form onSubmit={handleSubmit}>
         <Modal.Header closeButton={false}>
-          <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
             <div className="relative">
               <Image
                 className={styles.image}
@@ -74,7 +73,7 @@ export const EndreBehandlendeEnhetModal = ({
           </HGrid>
         </Modal.Header>
         <Modal.Body>
-          <HGrid gap="1" columns={{ xs: '1fr 5fr 6fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 5fr 6fr' }}>
             <div />
             <div>
               <SelectField
@@ -87,7 +86,7 @@ export const EndreBehandlendeEnhetModal = ({
               />
             </div>
           </HGrid>
-          <HGrid gap="1" columns={{ xs: '1fr 8fr 3fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
             <div>
               <VerticalSpacer eightPx />
@@ -99,7 +98,7 @@ export const EndreBehandlendeEnhetModal = ({
               />
             </div>
           </HGrid>
-          <HGrid gap="1" columns={{ xs: '1fr 8fr 3fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
             <div>
               <VerticalSpacer sixteenPx />

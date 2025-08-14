@@ -4,6 +4,19 @@ import {
   type k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
 import {
+  checkIfPeriodsAreEdgeToEdge,
+  combineConsecutivePeriods,
+  findUncoveredDays,
+  formatPeriod,
+  getDaysInPeriod,
+} from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { PlusCircleIcon, ScissorsFillIcon, TrashIcon } from '@navikt/aksel-icons';
+import { Alert, Button, DatePicker, Label, Modal, Radio, RadioGroup } from '@navikt/ds-react';
+import { RhfDatepicker } from '@navikt/ft-form-hooks';
+import { Period } from '@navikt/ft-utils';
+import dayjs from 'dayjs';
+import React, { useContext, useEffect, useState } from 'react';
+import {
   Controller,
   useFieldArray,
   useFormContext,
@@ -11,20 +24,7 @@ import {
   type UseFieldArrayRemove,
   type UseFieldArrayReplace,
 } from 'react-hook-form';
-import { Period } from '@navikt/ft-utils';
-import { Alert, Button, Label, Modal, Radio, RadioGroup, DatePicker } from '@navikt/ds-react';
-import React, { useContext, useEffect, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
-import dayjs from 'dayjs';
-import { Datepicker as RHFDatepicker } from '@navikt/ft-form-hooks';
-import { PlusCircleIcon, ScissorsFillIcon, TrashIcon } from '@navikt/aksel-icons';
-import {
-  checkIfPeriodsAreEdgeToEdge,
-  combineConsecutivePeriods,
-  findUncoveredDays,
-  formatPeriod,
-  getDaysInPeriod,
-} from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Avslagsårsak } from './Avslagsårsak';
 
 type NødvendigOpplæringFormFields = {
@@ -73,8 +73,9 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               control={formMethods.control}
               name={`perioder.${index}.fom`}
               render={({ field }) => (
-                <RHFDatepicker
+                <RhfDatepicker
                   {...field}
+                  control={formMethods.control}
                   label="Fra"
                   size="small"
                   disabled={readOnly}
@@ -96,8 +97,9 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               control={formMethods.control}
               name={`perioder.${index}.tom`}
               render={({ field }) => (
-                <RHFDatepicker
+                <RhfDatepicker
                   {...field}
+                  control={formMethods.control}
                   label="Til"
                   size="small"
                   disabled={readOnly}

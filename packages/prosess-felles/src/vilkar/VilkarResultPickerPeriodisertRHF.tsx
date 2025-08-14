@@ -4,14 +4,15 @@ import { Label } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 import { BodyShort } from '@navikt/ds-react';
-import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
+import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
 import { FunctionComponent, ReactNode } from 'react';
+import { useFormContext } from 'react-hook-form';
 import styles from './vilkarResultPicker.module.css';
-import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
 
 export type VilkarResultPickerFormState = {
   erVilkarOk: string;
@@ -80,6 +81,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   valgtPeriodeFom,
   valgtPeriodeTom,
 }) => {
+  const { control } = useFormContext();
   const ugyldigeFomDatoer = () => [
     (date: Date) => isBefore(date, parse(periodeFom, 'yyyy-MM-dd', new Date())),
     (date: Date) => isAfter(date, parse(valgtPeriodeTom, 'yyyy-MM-dd', new Date())),
@@ -116,7 +118,8 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
       )}
 
       {(!readOnly || erVilkarOk === undefined) && (
-        <RadioGroupPanel
+        <RhfRadioGroup
+          control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           isReadOnly={readOnly}
@@ -152,7 +155,8 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
       {erVilkarOk !== undefined && (
         <>
           {erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsarsaker && (
-            <SelectField
+            <RhfSelect
+              control={control}
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
               label="Avslagsårsak"
               selectValues={avslagsarsaker.map(aa => (
@@ -168,14 +172,16 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT) && (
             <>
               <VerticalSpacer eightPx />
-              <Datepicker
+              <RhfDatepicker
+                control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
                 label="Fra dato"
                 isReadOnly={readOnly}
                 validate={[required, hasValidDate]}
                 disabledDays={ugyldigeFomDatoer()}
               />
-              <Datepicker
+              <RhfDatepicker
+                control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
                 label="Til dato"
                 disabledDays={ugyldigeTomDatoer()}
@@ -190,7 +196,8 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             relevanteInnvilgetMerknader.length > 0 && (
               <>
                 <VerticalSpacer sixteenPx />
-                <SelectField
+                <RhfSelect
+                  control={control}
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
                   label="Hjemmel for innvilgelse"
                   selectValues={relevanteInnvilgetMerknader.map(iu => (
@@ -207,7 +214,8 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           {erVilkarOk === vilkarUtfallPeriodisert.IKKE_OPPFYLT && avslagsarsaker && (
             <>
               <VerticalSpacer eightPx />
-              <SelectField
+              <RhfSelect
+                control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
                 label="Avslagsårsak"
                 selectValues={avslagsarsaker.map(aa => (
@@ -219,7 +227,8 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 validate={[required]}
               />
               {erMedlemskapsPanel && (
-                <Datepicker
+                <RhfDatepicker
+                  control={control}
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
                   label="Dato"
                   isReadOnly={readOnly}

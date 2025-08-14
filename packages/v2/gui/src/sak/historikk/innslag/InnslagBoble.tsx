@@ -1,14 +1,14 @@
-import { Chat, VStack, Button } from '@navikt/ds-react';
-import { Avatar } from '../snakkeboble/Avatar.jsx';
 import type { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
-import { formatDate, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button, Chat, VStack } from '@navikt/ds-react';
+import { useState } from 'react';
+import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
+import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from '../historikkTypeBerikning.js';
+import { Avatar } from '../snakkeboble/Avatar.jsx';
+import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
+import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
 import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
-import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
-import { useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
-import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from '../historikkTypeBerikning.js';
-import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
 
 export interface InnslagBobleProps {
   readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2;
@@ -39,7 +39,9 @@ export const InnslagBoble = ({
       name={`${rolleNavn} ${hentSaksbehandlerNavn(innslag.aktør.ident ?? '')}`}
       position={position}
       toptextPosition="left"
-      className={getStyle(innslag.aktør.type.kilde, kjønn)}
+      className={getStyle(innslag.aktør.type.kilde)}
+      data-color={getColor(innslag.aktør.type.kilde)}
+      variant="neutral"
     >
       <Chat.Bubble>
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
@@ -55,7 +57,7 @@ export const InnslagBoble = ({
         ))}
 
         {innslag.dokumenter != null ? (
-          <VStack gap="1">
+          <VStack gap="space-4">
             {innslag.dokumenter.map(dokument => (
               <HistorikkDokumentLenke
                 key={`${dokument.dokumentId}-${dokument.journalpostId}`}

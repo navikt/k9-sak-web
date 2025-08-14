@@ -22,21 +22,21 @@ const VurderingsoversiktMessages = ({
 
   if (!harGyldigSignatur) {
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <ManglerGyldigSignaturMelding>
           Du kan ikke vurdere behov for
           {` ${vurderingsnavn} `}
           før søker har sendt inn legeerklæring fra sykehus/spesialisthelsetjenesten.
         </ManglerGyldigSignaturMelding>
-      </Box>
+      </Box.New>
     );
   }
 
   if (vurderingsoversikt && vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
-      </Box>
+      </Box.New>
     );
   }
 
@@ -47,20 +47,20 @@ const VurderingsoversiktMessages = ({
 
     return (
       <>
-        <Box marginBlock="0 6">
+        <Box.New marginBlock="0 6">
           <Alert size="small" variant="warning">
             {`Vurder behov for ${vurderingsnavn} for ${getHumanReadablePeriodString(
               vurderingsoversikt.resterendeVurderingsperioder,
             )}.`}
           </Alert>
-        </Box>
+        </Box.New>
         {vurderingsoversikt.harPerioderDerPleietrengendeErOver18år && (
-          <Box marginBlock="0 6">
+          <Box.New marginBlock="0 6">
             <Alert size="small" variant="warning">
               Barnet er 18 år {barnetsAttenårsdag}. Du må gjøre en egen vurdering etter § 9-10, tredje ledd fra datoen
               barnet fyller 18 år.
             </Alert>
-          </Box>
+          </Box.New>
         )}
       </>
     );
@@ -68,12 +68,12 @@ const VurderingsoversiktMessages = ({
         Please note:
         So long as this doesnt actually do anything upon the click-event, it should be commented out.
         overlappendeVurderingsperioder && overlappendeVurderingsperioder.length > 0 && (
-            <Box marginBlock="4 0">
+            <Box.New marginBlock="4 0">
             <OverlappendeSøknadsperiodePanel
             onProgressButtonClick={() => console.log('does something')}
             overlappendeVurderingsperioder={overlappendeVurderingsperioder}
             />
-            </Box>)
+            </Box.New>)
             */
   }
   return <></>;

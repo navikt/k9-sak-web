@@ -1,6 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import { RadioGroupField, SelectField } from '@fpsak-frontend/form';
@@ -26,7 +25,7 @@ export const KlageVurderingRadioOptionsKa = ({ readOnly = true, medholdReasons, 
         text={intl.formatMessage({ id: 'KlageVurderingRadioOptionsKa.VurderingForKlage' })}
       />
       <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '4fr 4fr 4fr' }}>
         <RadioGroupField
           name="klageVurdering"
           validate={[required]}
