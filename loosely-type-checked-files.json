@@ -138,7 +138,6 @@
   "packages/fakta-inntektsmelding/src/ui/components/arbeidsgiver-tekst/ArbeidsgiverTekst.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/inntektsmelding-mottatt-item/InntektsmeldingMottattItem.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/kompletthetsoversikt/Kompletthetsoversikt.tsx",
-  "packages/fakta-inntektsmelding/src/ui/components/period-list/FortsettUtenInntektsmeldingAvslag.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/period-list/FortsettUtenInntektsmeldingInfo.tsx",
   "packages/fakta-inntektsmelding/src/ui/reducer.ts",
   "packages/fakta-inntektsmelding/src/util/utils.ts",
