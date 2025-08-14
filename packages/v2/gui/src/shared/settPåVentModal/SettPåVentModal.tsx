@@ -17,7 +17,7 @@ import {
 } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import styles from './settPaVentModal.module.css';
+import styles from './settPåVentModal.module.css';
 
 const initFrist = (): string => {
   const date = new Date();
@@ -103,7 +103,7 @@ interface UtvidetKodeverkObject extends KodeverkObject {
 }
 
 const maxLength200 = maxLength(200);
-export const SettPaVentModal = ({
+export const SettPåVentModal = ({
   submitCallback,
   cancelEvent,
   showModal,
@@ -330,4 +330,4 @@ const buildInitialValues = (
   ventearsakVariant: ventearsakVariant ?? undefined,
 });
 
-export default SettPaVentModal;
+export default SettPåVentModal;

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { type sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-
 import NetworkErrorPage from '@k9-sak-web/gui/app/feilmeldinger/NetworkErrorPage.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { extractErrorInfo } from '@k9-sak-web/rest-api-hooks/src/error/extractErrorInfo';
+import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import {
   requestTilbakekrevingApi,
@@ -56,7 +56,7 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   harApenRevurdering,
   setRequestPendingMessage,
 }: OwnProps) => {
-  const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
+  const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: BehandlingDto; previous?: BehandlingDto }>({
     current: undefined,
     previous: undefined,
   });
@@ -77,7 +77,7 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
     startRequest: hentBehandling,
     data: behandlingRes,
     state: behandlingState,
-  } = restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE);
+  } = restApiTilbakekrevingHooks.useRestApiRunner<BehandlingDto>(TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -88,7 +88,7 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   const { startRequest: settBehandlingPaVent } = restApiTilbakekrevingHooks.useRestApiRunner(
     TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD,
   );
-  const { startRequest: taBehandlingAvVent } = restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(
+  const { startRequest: taBehandlingAvVent } = restApiTilbakekrevingHooks.useRestApiRunner<BehandlingDto>(
     TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING,
   );
   const { startRequest: henleggBehandling } = restApiTilbakekrevingHooks.useRestApiRunner(

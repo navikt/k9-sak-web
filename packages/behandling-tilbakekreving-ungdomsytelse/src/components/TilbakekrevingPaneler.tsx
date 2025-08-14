@@ -1,17 +1,16 @@
-import React from 'react';
-
-import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-
-import TilbakekrevingProsess from './TilbakekrevingProsess';
-import TilbakekrevingFakta from './TilbakekrevingFakta';
+import { type sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import FetchedData from '../types/fetchedDataTsType';
+import TilbakekrevingFakta from './TilbakekrevingFakta';
+import TilbakekrevingProsess from './TilbakekrevingProsess';
+import BehandlingPåVent from './behandlingPåVent/BehandlingPåVent';
 
 interface OwnProps {
   fetchedData: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
-  behandling: Behandling;
+  behandling: BehandlingDto;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -23,7 +22,7 @@ interface OwnProps {
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   hasFetchError: boolean;
-  setBehandling: (behandling: Behandling) => void;
+  setBehandling: (behandling: BehandlingDto) => void;
 }
 
 const TilbakekrevingPaneler = ({
@@ -45,13 +44,7 @@ const TilbakekrevingPaneler = ({
   setBehandling,
 }: OwnProps) => (
   <>
-    <BehandlingPaVent
-      behandling={behandling}
-      aksjonspunkter={fetchedData?.aksjonspunkter}
-      kodeverk={kodeverk}
-      settPaVent={settPaVent}
-      erTilbakekreving
-    />
+    <BehandlingPåVent behandling={behandling} aksjonspunkter={fetchedData?.aksjonspunkter} settPaVent={settPaVent} />
     <TilbakekrevingProsess
       data={fetchedData}
       fagsak={fagsak}

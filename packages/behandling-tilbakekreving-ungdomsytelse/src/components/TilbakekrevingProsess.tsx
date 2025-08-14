@@ -1,9 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { type sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import {
   FatterVedtakStatusModal,
   ProsessStegContainer,
@@ -12,7 +10,9 @@ import {
   Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useCallback, useState } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
@@ -28,7 +28,7 @@ interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
-  behandling: Behandling;
+  behandling: BehandlingDto;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
@@ -37,13 +37,13 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
   harApenRevurdering: boolean;
-  setBehandling: (behandling: Behandling) => void;
+  setBehandling: (behandling: BehandlingDto) => void;
 }
 
 const getHentFritekstbrevHtmlCallback =
   (
     hentFriteksbrevHtml: (data: any) => Promise<any>,
-    behandling: Behandling,
+    behandling: BehandlingDto,
     fagsak: Fagsak,
     fagsakPerson: FagsakPerson,
   ) =>
@@ -54,7 +54,7 @@ const getHentFritekstbrevHtmlCallback =
       ytelseType: fagsak.sakstype,
       saksnummer: fagsak.saksnummer,
       aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type),
     });
 
 const getLagringSideeffekter =
@@ -97,7 +97,7 @@ const TilbakekrevingProsess = ({
   );
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiTilbakekrevingHooks.useRestApiRunner<BehandlingDto>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const { startRequest: beregnBelop } = restApiTilbakekrevingHooks.useRestApiRunner(
