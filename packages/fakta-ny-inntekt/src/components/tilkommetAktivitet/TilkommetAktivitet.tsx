@@ -4,7 +4,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
-import { Form } from '@navikt/ft-form-hooks';
 import { isAksjonspunktOpen } from '@navikt/ft-kodeverk';
 
 import { ErrorBoundary } from '@navikt/ft-ui-komponenter';
@@ -26,6 +25,7 @@ import { finnVilkårsperiode, vurderesIBehandlingen } from '../felles/vilkårspe
 import { TilkommetAktivitetPanel } from './TilkommetAktivitetPanel';
 import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils';
 
+import { RhfForm } from '@navikt/ft-form-hooks';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
 import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov.js';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
@@ -241,7 +241,7 @@ export const TilkommetAktivitet = ({
   return (
     <ErrorBoundary errorMessage="Noe gikk galt ved visning av tilkommet aktivitet">
       <div className={styles.tilkommetAktivitet}>
-        <Form
+        <RhfForm
           formMethods={formMethods}
           onSubmit={async values => {
             if (Object.keys(errors).length === 0) {
@@ -282,7 +282,7 @@ export const TilkommetAktivitet = ({
               </div>
             );
           })}
-        </Form>
+        </RhfForm>
       </div>
     </ErrorBoundary>
   );

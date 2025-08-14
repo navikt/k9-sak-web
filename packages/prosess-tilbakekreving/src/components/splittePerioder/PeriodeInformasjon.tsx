@@ -25,10 +25,10 @@ interface OwnProps {
 const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
   const daysAndWeeks = calcDaysAndWeeks(fom, tom);
   return (
-    <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
       <div>
         <div className={styles.infoSummary}>
-          <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+          <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
             <div>
               <Label size="small" as="p">
                 {`${initializeDate(fom).format(DDMMYYYY_DATE_FORMAT)} - ${initializeDate(tom).format(DDMMYYYY_DATE_FORMAT)}`}
@@ -39,7 +39,7 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
             </div>
           </HGrid>
           <div className={styles.resultSum}>
-            <HGrid gap="4" columns={{ xs: '6fr 6fr' }} className={styles.redNumbers}>
+            <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }} className={styles.redNumbers}>
               <div>
                 <BodyShort size="small" className={styles.resultName}>
                   <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />:

@@ -3,8 +3,8 @@
   justify-content: center;
 }
 
-.container svg:global(.navds-loader.loader),
-.container svg:global(.navds-loader.loader circle) {
+.container svg:global(.aksel-loader.loader),
+.container svg:global(.aksel-loader.loader circle) {
   animation-duration: 1.8s !important;
   animation-delay: 0s !important;
   animation-iteration-count: infinite !important;

@@ -117,7 +117,7 @@ export class PeriodeController extends Component {
     const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
 
     return (
-      <HGrid gap="1" columns={{ xs: '3fr 7fr 2fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '3fr 7fr 2fr' }}>
         <Label size="small" as="p">
           <FormattedMessage id="PeriodeController.Detaljer" />
           {isEdited && <EditedIcon />}

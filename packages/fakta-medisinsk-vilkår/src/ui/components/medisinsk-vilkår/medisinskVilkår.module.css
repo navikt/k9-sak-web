@@ -12,12 +12,12 @@
   }
 }
 
-.medisinskVilkår :global .navds-alert {
+.medisinskVilkår :global .aksel-alert {
   padding-top: 0.4375rem;
   padding-bottom: 0.4375rem;
 }
 
-.medisinskVilkår :global .navds-alert__wrapper {
+.medisinskVilkår :global .aksel-alert__wrapper {
   display: flex;
   max-width: 47rem;
 }

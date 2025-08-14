@@ -66,8 +66,8 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
   const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
   const harUløstAksjonspunkt = aksjonspunkt && aksjonspunkt.status === AksjonspunktDtoStatus.OPPRETTET;
   return (
-    <Box paddingInline="4 8" paddingBlock="2">
-      <Box minHeight="100svh">
+    <Box.New paddingInline="4 8" paddingBlock="2">
+      <Box.New minHeight="100svh">
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
@@ -82,7 +82,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
                   label="Inntekt"
                   icon={
                     harUløstAksjonspunkt && (
-                      <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
+                      <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--ax-text-warning-decoration)" />
                     )
                   }
                 />
@@ -90,7 +90,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
               {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
               {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
             </Tabs.List>
-            <Box maxWidth="860px">
+            <Box.New maxWidth="860px">
               <Tabs.Panel value="inntekt">
                 {inntekt?.kontrollperioder && (
                   <ArbeidOgInntekt
@@ -100,7 +100,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
                   />
                 )}
               </Tabs.Panel>
-            </Box>
+            </Box.New>
             <Tabs.Panel value="barn">
               <BarnPanel barn={barn} />
             </Tabs.Panel>
@@ -109,8 +109,8 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
             </Tabs.Panel>
           </Tabs>
         )}
-      </Box>
-    </Box>
+      </Box.New>
+    </Box.New>
   );
 };
 

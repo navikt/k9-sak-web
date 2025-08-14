@@ -52,7 +52,7 @@
   margin: 0;
 }
 
-.diagnosekodeContainer__diagnosekodeList :global(.navds-body-short) {
+.diagnosekodeContainer__diagnosekodeList :global(.aksel-body-short) {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 500px;

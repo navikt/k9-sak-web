@@ -14,6 +14,8 @@ import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import '@navikt/ds-css/darkside';
+import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
@@ -61,23 +63,25 @@ const AppIndex = () => {
     // Ytterste feilgrense viser alltid separat feil-side, fordi viss feil har skjedd i AppConfigResolver eller lenger ute
     // er det sannsynlegvis så grunnleggande at ingenting vil fungere.
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AppConfigResolver>
-          <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-            <LanguageProvider>
-              <Dekorator
-                hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-                queryStrings={queryStrings}
-                setSiteHeight={setSiteHeight}
-                pathname={location.pathname}
-              />
-              {shouldRenderHome && <Home headerHeight={headerHeight} />}
-              {forbiddenErrors.length > 0 && <ForbiddenPage />}
-              {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-            </LanguageProvider>
-          </ErrorBoundary>
-        </AppConfigResolver>
-      </QueryClientProvider>
+      <Theme theme="light">
+        <QueryClientProvider client={queryClient}>
+          <AppConfigResolver>
+            <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+              <LanguageProvider>
+                <Dekorator
+                  hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+                  queryStrings={queryStrings}
+                  setSiteHeight={setSiteHeight}
+                  pathname={location.pathname}
+                />
+                {shouldRenderHome && <Home headerHeight={headerHeight} />}
+                {forbiddenErrors.length > 0 && <ForbiddenPage />}
+                {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
+              </LanguageProvider>
+            </ErrorBoundary>
+          </AppConfigResolver>
+        </QueryClientProvider>
+      </Theme>
     </ErrorBoundary>
   );
 };

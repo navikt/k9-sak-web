@@ -3,7 +3,7 @@ import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.
 import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
-import { Datepicker } from '@navikt/ft-form-hooks';
+import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import Andeler from './Andeler';
 import { TilkjentYtelseFormState } from './FormState';
@@ -60,10 +60,10 @@ const PeriodeRad = ({
                 <Table.DataCell>
                   <FlexRow>
                     <FlexColumn>
-                      <Datepicker name={`perioder.${index}.fom`} label="" isReadOnly />
+                      <RhfDatepicker control={control} name={`perioder.${index}.fom`} label="" isReadOnly />
                     </FlexColumn>
                     <FlexColumn>
-                      <Datepicker name={`perioder.${index}.tom`} label="" isReadOnly />
+                      <RhfDatepicker control={control} name={`perioder.${index}.tom`} label="" isReadOnly />
                     </FlexColumn>
                   </FlexRow>
                 </Table.DataCell>

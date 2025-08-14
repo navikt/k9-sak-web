@@ -1,5 +1,5 @@
 import { Button } from '@navikt/ds-react';
-import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -31,9 +31,10 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly }: Props) => {
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={onSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
       <div className={styles.vurderDatoAksjonspunktContainer}>
-        <Datepicker
+        <RhfDatepicker
+          control={formMethods.control}
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
@@ -42,7 +43,8 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly }: Props) => {
           validate={[required, hasValidDate]}
           isReadOnly={readOnly}
         />
-        <TextAreaField
+        <RhfTextarea
+          control={formMethods.control}
           name="begrunnelse"
           label="Begrunnelse"
           size="small"
@@ -63,7 +65,7 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly }: Props) => {
           </div>
         )}
       </div>
-    </Form>
+    </RhfForm>
   );
 };
 

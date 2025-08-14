@@ -70,7 +70,12 @@ const HeaderWithErrorPanel = ({
   return (
     <div>
       <InternalHeader className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}>
-        <InternalHeader.Title href={getHeaderTitleHref(getPathToLos, headerTitleHref)}>{ytelse}</InternalHeader.Title>
+        <InternalHeader.Title
+          className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}
+          href={getHeaderTitleHref(getPathToLos, headerTitleHref)}
+        >
+          {ytelse}
+        </InternalHeader.Title>
         <Spacer />
         {/*
             Går mot en backend som BAKS styrer.
@@ -91,7 +96,10 @@ const HeaderWithErrorPanel = ({
           </div>
         )}
         <Dropdown>
-          <InternalHeader.Button as={Dropdown.Toggle}>
+          <InternalHeader.Button
+            as={Dropdown.Toggle}
+            className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}
+          >
             <MenuGridIcon style={{ fontSize: '1.5rem' }} title="Systemer og oppslagsverk" />
           </InternalHeader.Button>
           <Dropdown.Menu>

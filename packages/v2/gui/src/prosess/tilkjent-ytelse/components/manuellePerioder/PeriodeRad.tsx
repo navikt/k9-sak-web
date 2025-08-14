@@ -1,6 +1,6 @@
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Table } from '@navikt/ds-react';
-import { Datepicker } from '@navikt/ft-form-hooks';
+import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 import Andeler from './Andeler';
@@ -56,9 +56,9 @@ const PeriodeRad = ({
             return (
               <Table.Row key={item.fieldId} id={item.fieldId}>
                 <Table.DataCell>
-                  <HStack gap="2">
-                    <Datepicker name={`perioder.${index}.fom`} label="" isReadOnly />
-                    <Datepicker name={`perioder.${index}.tom`} label="" isReadOnly />
+                  <HStack gap="space-8">
+                    <RhfDatepicker control={control} name={`perioder.${index}.fom`} label="" isReadOnly />
+                    <RhfDatepicker control={control} name={`perioder.${index}.tom`} label="" isReadOnly />
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell>
@@ -69,7 +69,7 @@ const PeriodeRad = ({
                     <div className={styles['iconContainer']}>
                       <Button
                         icon={
-                          <XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--a-nav-red)]" />
+                          <XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--ax-text-logo)]" />
                         }
                         variant="tertiary"
                         size="small"

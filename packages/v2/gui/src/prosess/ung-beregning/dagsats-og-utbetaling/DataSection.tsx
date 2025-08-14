@@ -6,7 +6,7 @@ import styles from './dataSection.module.css';
 
 const DataBox = ({ children, maxHeight }: { children: React.ReactNode; maxHeight?: string }) => (
   <div className={styles.dataBox} style={{ maxHeight }}>
-    <VStack gap="4">{children}</VStack>
+    <VStack gap="space-16">{children}</VStack>
   </div>
 );
 
@@ -18,11 +18,11 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
   return (
     <HStack>
       <DataBox maxHeight="185px">
-        <HStack gap="2" marginInline="05 0">
+        <HStack gap="space-8" marginInline="05 0">
           <InformationSquareIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Nøkkelinformasjon</Label>
         </HStack>
-        <HStack gap="4">
+        <HStack gap="space-16">
           <BodyShort size="small">
             <b>Startdato:</b>{' '}
             {ungdomsprogramInformasjon?.startdato ? formatDate(ungdomsprogramInformasjon?.startdato) : ''}
