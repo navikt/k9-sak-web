@@ -11,6 +11,7 @@ import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -151,7 +152,7 @@ const FortsettUtenInntektsmeldingForm = ({
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={submit}>
-      <Box.New padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
+      <AksjonspunktBox erAksjonspunktApent={true}>
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
@@ -223,7 +224,7 @@ const FortsettUtenInntektsmeldingForm = ({
             </div>
           </Box.New>
         </>
-      </Box.New>
+      </AksjonspunktBox>
     </RhfForm>
   );
 };
