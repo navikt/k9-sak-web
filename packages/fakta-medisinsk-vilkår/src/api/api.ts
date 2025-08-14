@@ -63,7 +63,7 @@ export async function postEndreVurdering(
   dryRun?: boolean,
 ): Promise<AnyType> {
   try {
-    const { perioder, resultat, tekst, dokumenter, versjon } = vurderingsversjon;
+    const { perioder, resultat, tekst, dokumenter, versjon, manglerLegeerklæring } = vurderingsversjon;
     return httpUtils.post(
       href,
       {
@@ -75,6 +75,7 @@ export async function postEndreVurdering(
         perioder,
         tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
         dryRun: dryRun || false,
+        manglerLegeerklæring: manglerLegeerklæring || false,
       },
       httpErrorHandler,
       { signal },

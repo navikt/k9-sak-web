@@ -1,14 +1,21 @@
-import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import ReisetidForm from './ReisetidForm';
 import { Period } from '@navikt/ft-utils';
 import ReisetidFerdigvisning from './ReisetidFerdigvisning';
 import DetailView from '../../../shared/detailView/DetailView';
 import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigering, setRedigering] = useState(false);
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.perioder]);
+
   if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
     return (
       <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>

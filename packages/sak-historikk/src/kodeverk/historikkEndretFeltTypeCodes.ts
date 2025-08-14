@@ -404,6 +404,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ER_KLAGER_PART',
     feltId: 'HistorikkEndretFelt.PaKlagdBehandlingId',
   },
+  ANKE_RESULTAT: {
+    kode: 'PA_ANKET_BEHANDLINGID',
+    feltId: 'HistorikkEndretFelt.PaAnketBehandlingId',
+  },
   ANKE_OMGJØR_ÅRSAK: {
     kode: 'ANKE_OMGJØR_ÅRSAK',
     feltId: 'HistorikkEndretFelt.AnkeOmgjoerAarsak',
@@ -412,9 +416,21 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ANKE_AVVIST_ÅRSAK',
     feltId: 'HistorikkEndretFelt.AnkeAvvistAarsak',
   },
-  ANKE_AVSLUTTET: {
-    kode: 'ANKE_AVSLUTTET',
-    feltId: 'HistorikkEndretFelt.AnkeAvsluttet',
+  ER_ANKER_IKKE_PART: {
+    kode: 'ER_ANKER_IKKE_PART',
+    feltId: 'HistorikkEndretFelt.ErAnkerIkkePart',
+  },
+  ER_ANKE_IKKE_KONKRET: {
+    kode: 'ER_ANKE_IKKE_KONKRET',
+    feltId: 'HistorikkEndretFelt.ErAnkeIkkeKonkret',
+  },
+  ER_ANKEFRIST_IKKE_OVERHOLDT: {
+    kode: 'ER_ANKEFRIST_IKKE_OVERHOLDT',
+    feltId: 'HistorikkEndretFelt.ErAnkefristIkkeOverholdt',
+  },
+  ER_ANKEN_IKKE_SIGNERT: {
+    kode: 'ER_ANKEN_IKKE_SIGNERT',
+    feltId: 'HistorikkEndretFelt.ErAnkenIkkeSignert',
   },
   PA_ANKET_BEHANDLINGID: {
     kode: 'PA_ANKET_BEHANDLINGID',

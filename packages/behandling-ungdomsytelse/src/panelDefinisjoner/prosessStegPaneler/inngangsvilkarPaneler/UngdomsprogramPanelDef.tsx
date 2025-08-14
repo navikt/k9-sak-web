@@ -1,4 +1,4 @@
-import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/generated';
+import { ung_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/ungsak/generated';
 import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
@@ -17,7 +17,7 @@ class UngdomsprogramPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [];
 
-  getVilkarKoder = () => [VilkårMedPerioderDtoVilkarType.UNGDOMSPROGRAMVILKÅRET];
+  getVilkarKoder = () => [VilkårType.UNGDOMSPROGRAMVILKÅRET];
 
   getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0;
 

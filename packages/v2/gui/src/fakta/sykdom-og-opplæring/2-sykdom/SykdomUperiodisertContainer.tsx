@@ -2,22 +2,28 @@ import dayjs from 'dayjs';
 import SykdomUperiodisertForm, { type UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useContext, useEffect, useState } from 'react';
-import { Button, BodyShort } from '@navikt/ds-react';
+import { BodyShort, Button } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
-  const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [redigering, setRedigering] = useState(false);
 
   const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
 
   useEffect(() => {
-    if (!vurdering.vurdertTidspunkt || vurdering.behandlingUuid !== behandlingUuid) {
+    if (!vurdering.vurdertTidspunkt || !vurdering.kanOppdateres) {
       setRedigering(false);
     }
-  }, [vurdering, behandlingUuid]);
+  }, [vurdering]);
+
+  useEffect(() => {
+    if (redigering) {
+      setRedigering(false);
+    }
+  }, [vurdering.uuid]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm =
     !readOnly && ((redigering && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
@@ -33,7 +39,8 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
       border
       contentAfterTitleRenderer={() =>
         !readOnly &&
-        harAksjonspunkt9301 && (
+        harAksjonspunkt9301 &&
+        vurdering.kanOppdateres && (
           <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
         )
       }

@@ -1,5 +1,5 @@
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import { BehandlingDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
@@ -118,7 +118,7 @@ export const FagsakProfileIndex = ({
             const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
             const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
             const erTilbakekreving = alleBehandlinger.some(
-              behandling => behandling.type.kode === BehandlingDtoType.TILBAKEKREVING,
+              behandling => behandling.type.kode === KlageBehandlingType.TILBAKEKREVING,
             );
             konverterKodeverkTilKode(behandlingerV2, erTilbakekreving);
             konverterKodeverkTilKode(fagsakV2, erTilbakekreving);

@@ -5,7 +5,10 @@ import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/t
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
-import { BehandlingDtoType, TilbakekrevingValgDtoVidereBehandling } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_kodeverk_behandling_BehandlingType as BehandlingType,
+  k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
+} from '@navikt/k9-sak-typescript-client';
 import VedtakForm from '../VedtakForm';
 
 const createBehandling = behandlingResultatType => ({
@@ -57,7 +60,7 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
-    revurdering.type = BehandlingDtoType.REVURDERING;
+    revurdering.type = BehandlingType.REVURDERING;
 
     revurdering.aksjonspunkter.push({
       id: 0,
@@ -95,7 +98,7 @@ describe('<VedtakRevurderingForm>', () => {
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -155,7 +158,7 @@ describe('<VedtakRevurderingForm>', () => {
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -207,7 +210,7 @@ describe('<VedtakRevurderingForm>', () => {
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -258,7 +261,7 @@ describe('<VedtakRevurderingForm>', () => {
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -304,7 +307,7 @@ describe('<VedtakRevurderingForm>', () => {
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
           tilbakekrevingvalg={{
-            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            videreBehandling: TilbakekrevingVidereBehandling.UDEFINIERT,
             erTilbakekrevingVilkårOppfylt: false,
           }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}

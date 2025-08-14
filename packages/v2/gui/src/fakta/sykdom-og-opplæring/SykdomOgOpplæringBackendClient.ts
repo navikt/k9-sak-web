@@ -1,5 +1,5 @@
-import { type K9SakClient, type OppdaterLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
-import { type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
+import { type K9SakClient, type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
+
 export default class SykdomOgOpplæringBackendClient {
   #k9sak: K9SakClient;
 
@@ -15,10 +15,6 @@ export default class SykdomOgOpplæringBackendClient {
     return this.#k9sak.opplæringspenger.opprettLangvarigSykdomsVurdering(payload);
   }
 
-  async oppdaterSykdomsvurdering(payload: OppdaterLangvarigSykdomsVurderingData['requestBody']) {
-    return this.#k9sak.opplæringspenger.oppdaterLangvarigSykdomsVurdering(payload);
-  }
-
   async hentLangvarigSykVurderingerFagsak(behandlingUuid: string) {
     return this.#k9sak.opplæringspenger.hentLangvarigSykVurderingerFagsak(behandlingUuid);
   }
@@ -30,6 +26,14 @@ export default class SykdomOgOpplæringBackendClient {
   // Institusjon
   async getInstitusjonInfo(behandlingUuid: string) {
     return this.#k9sak.opplæringspenger.hentVurdertInstitusjon(behandlingUuid);
+  }
+
+  async hentAlleInstitusjoner() {
+    return this.#k9sak.opplæringsinstitusjonSaksbehandling.hentAlleV2();
+  }
+
+  async hentOrganisasjonsnummer(organisasjonsnummer: string) {
+    return this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr: organisasjonsnummer });
   }
 
   // Nødvendig opplæring

@@ -1,22 +1,22 @@
 import { oppslagKodeverkSomObjektK9Sak } from '../mocks/oppslagKodeverkSomObjektK9Sak.js';
 import {
-  AndelForFaktaOmBeregningDtoAktivitetStatus,
-  type KodeverdiSomObjektAktivitetStatus,
-  VenteårsakSomObjektKilde,
+  folketrygdloven_kalkulus_kodeverk_AktivitetStatus as AndelForFaktaOmBeregningDtoAktivitetStatus,
+  type k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_arbeidsforhold_AktivitetStatus as AktivitetStatus,
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { K9SakKodeverkoppslag } from './K9SakKodeverkoppslag.js';
 import { OrUndefined } from './GeneriskKodeverkoppslag.js';
 
 describe('Kodeverkoppslag', () => {
   const oppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
-  const dagpenger: KodeverdiSomObjektAktivitetStatus = {
+  const dagpenger: AktivitetStatus = {
     kode: 'DP',
     kodeverk: 'AKTIVITET_STATUS',
     navn: 'Dagpenger',
     kilde: 'DP',
   };
   it('skal returnere kodeverdi objekt for gitt kodeverdi enum', () => {
-    const found: KodeverdiSomObjektAktivitetStatus | undefined = oppslag.aktivitetStatuser(
+    const found: AktivitetStatus | undefined = oppslag.aktivitetStatuser(
       AndelForFaktaOmBeregningDtoAktivitetStatus.DAGPENGER,
       'or undefined',
     );
@@ -25,7 +25,7 @@ describe('Kodeverkoppslag', () => {
 
   it('skal returnere undefined for ugyldig kodeverdi når "or undefined" er gitt', () => {
     // @ts-expect-error Tester at ugyldig enum verdi gir undefined når 'or undefined' er satt (og typescript feil)
-    const found: KodeverdiSomObjektAktivitetStatus | undefined = oppslag.aktivitetStatuser('XOXO', OrUndefined);
+    const found: AktivitetStatus | undefined = oppslag.aktivitetStatuser('XOXO', OrUndefined);
     expect(found).toBeUndefined();
   });
 
@@ -35,7 +35,7 @@ describe('Kodeverkoppslag', () => {
   });
 
   it('skal returnere venteårsak med ekstra property satt', () => {
-    const venteårsak = oppslag.venteårsaker(VenteårsakSomObjektKilde.LEGEERKLÆRING);
+    const venteårsak = oppslag.venteårsaker(Venteårsak.LEGEERKLÆRING);
     expect(venteårsak).toEqual({
       kode: 'LEGEERKLÆRING',
       kodeverk: 'VENT_AARSAK',
@@ -47,9 +47,7 @@ describe('Kodeverkoppslag', () => {
   });
 
   it('skal ikkje ha undefined som retur type', () => {
-    const found: KodeverdiSomObjektAktivitetStatus = oppslag.aktivitetStatuser(
-      AndelForFaktaOmBeregningDtoAktivitetStatus.DAGPENGER,
-    );
+    const found: AktivitetStatus = oppslag.aktivitetStatuser(AndelForFaktaOmBeregningDtoAktivitetStatus.DAGPENGER);
     expect(found).toEqual(dagpenger);
   });
 

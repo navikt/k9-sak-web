@@ -1,7 +1,7 @@
 import type {
-  InformasjonsbrevBestillingRequest,
-  InformasjonsbrevBestillingRequestDokumentMalType,
-  InformasjonsbrevValgDto,
+  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
+  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
@@ -62,7 +62,7 @@ export const UngMessages = (props: UngMessagesProps) => {
     if (valgtMottaker && valgtMottaker.id && valgtMottaker.idType) {
       return {
         behandlingId,
-        dokumentMalType: data.valgtMalkode as InformasjonsbrevBestillingRequestDokumentMalType,
+        dokumentMalType: data.valgtMalkode as DokumentMalType,
         innhold: { overskrift: data.overskrift, brødtekst: data.brødtekst },
         mottaker: { id: valgtMottaker?.id, type: valgtMottaker?.idType },
       };

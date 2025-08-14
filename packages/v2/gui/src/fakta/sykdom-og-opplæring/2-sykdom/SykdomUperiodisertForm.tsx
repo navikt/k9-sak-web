@@ -1,6 +1,6 @@
 import {
-  type LangvarigSykdomVurderingDto,
-  LangvarigSykdomVurderingDtoAvslagsårsak,
+  type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
+  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { Form } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,18 +11,29 @@ import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
-  Pick<Partial<LangvarigSykdomVurderingDto>, 'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv'> & {
+  Pick<
+    Partial<LangvarigSykdomVurderingDto>,
+    'uuid' | 'behandlingUuid' | 'vurdertTidspunkt' | 'vurdertAv' | 'kanOppdateres'
+  > & {
     godkjent: 'ja' | 'nei' | 'mangler_dokumentasjon' | '';
   };
 
 const finnAvslagsårsak = (godkjent: string) => {
   if (godkjent === 'mangler_dokumentasjon') {
-    return LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON;
+    return Avslagsårsak.MANGLENDE_DOKUMENTASJON;
   }
   if (godkjent === 'nei') {
-    return LangvarigSykdomVurderingDtoAvslagsårsak.IKKE_LANGVARIG_SYK;
+    return Avslagsårsak.IKKE_LANGVARIG_SYK;
   }
   return undefined;
+};
+
+const defaultValues = (vurdering: UperiodisertSykdom) => {
+  return {
+    diagnosekoder: vurdering.diagnosekoder || [],
+    begrunnelse: vurdering.begrunnelse || '',
+    godkjent: vurdering.godkjent || '',
+  };
 };
 
 const SykdomUperiodisertForm = ({
@@ -36,12 +47,14 @@ const SykdomUperiodisertForm = ({
 }) => {
   const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm({
-    defaultValues: {
-      diagnosekoder: vurdering.diagnosekoder || [],
-      begrunnelse: vurdering.begrunnelse || '',
-      godkjent: vurdering.godkjent || '',
-    },
+    defaultValues: defaultValues(vurdering),
   });
+
+  useEffect(() => {
+    formMethods.reset({
+      ...defaultValues(vurdering),
+    });
+  }, [vurdering.uuid]);
 
   const godkjent = formMethods.watch('godkjent');
   useEffect(() => {

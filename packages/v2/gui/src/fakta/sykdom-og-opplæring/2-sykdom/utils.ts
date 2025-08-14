@@ -1,6 +1,6 @@
-import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 
-import { LangvarigSykdomVurderingDtoAvslagsårsak } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { Resultat } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
 
 export const utledResultat = (element: LangvarigSykdomVurderingDto) => {
@@ -17,7 +17,7 @@ export const utledGodkjent = (element: LangvarigSykdomVurderingDto) => {
   if (element.godkjent) {
     return 'ja' as const;
   }
-  if (element.avslagsårsak === LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON) {
+  if (element.avslagsårsak === Avslagsårsak.MANGLENDE_DOKUMENTASJON) {
     return 'mangler_dokumentasjon' as const;
   }
   return 'nei' as const;
