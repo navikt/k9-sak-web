@@ -27,4 +27,5 @@ export const prodFeatureToggles = {
   BRUK_V2_VILKAR_OPPTJENING: false,
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: true,
   MARKERING_UTENLANDSTILSNITT: false,
+  AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: false,
 } satisfies FeatureToggles;
