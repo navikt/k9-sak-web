@@ -156,6 +156,9 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagNyBehandlingUngSak } = restApiHooks.useRestApiRunner<boolean>(
     UngSakApiKeys.NEW_BEHANDLING_UNGSAK,
   );
+  const { startRequest: lagNyBehandlingTilbake } = restApiHooks.useRestApiRunner<boolean>(
+    UngSakApiKeys.NEW_BEHANDLING_TILBAKE,
+  );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
@@ -166,11 +169,14 @@ export const BehandlingMenuIndex = ({
 
   const lagNyBehandling = useCallback(
     async (bTypeKode: string, params: any) => {
-      const lagNy = lagNyBehandlingUngSak;
+      let lagNy = lagNyBehandlingUngSak;
+      if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
+        lagNy = lagNyBehandlingTilbake;
+      }
       await lagNy(params);
       oppfriskBehandlinger();
     },
-    [lagNyBehandlingUngSak, oppfriskBehandlinger],
+    [lagNyBehandlingTilbake, lagNyBehandlingUngSak, oppfriskBehandlinger],
   );
 
   const uuidForSistLukkede = useMemo(

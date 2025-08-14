@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import { SettPaVentModal } from './SettPaVentModal';
+import { SettPåVentModal } from './SettPåVentModal';
 
 describe('<SettPaVentModal>', () => {
   it('skal rendre åpen modal', () => {
     const cancelEventCallback = vi.fn();
 
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         cancelEvent={cancelEventCallback}
         frist="2099-10-10"
         submitCallback={vi.fn()}
@@ -24,7 +24,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         cancelEvent={vi.fn()}
         frist="2099-10-10"
@@ -41,7 +41,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal disable knapp for lagring når frist er en ugyldig dato', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         cancelEvent={vi.fn()}
         frist="1999-10-10"
@@ -58,7 +58,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal disable knapp for lagring når frist er en historisk dato', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         cancelEvent={vi.fn()}
         frist="2015-10-10"
@@ -75,7 +75,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal kunne velge årsak', async () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         cancelEvent={vi.fn()}
         frist="2099-10-10"
@@ -91,7 +91,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal ikke vise frist-input når behandling automatisk er satt på vent uten frist', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         submitCallback={vi.fn()}
         cancelEvent={vi.fn()}
@@ -105,7 +105,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal vise frist-input når behandling automatisk er satt på vent med frist', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         submitCallback={vi.fn()}
         cancelEvent={vi.fn()}
@@ -120,7 +120,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal vise årsak-input som readonly når behandling automatisk er satt på vent', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         submitCallback={vi.fn()}
         cancelEvent={vi.fn()}
@@ -135,7 +135,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal vise fristen tekst for tilbakekreving behandling venter på kravgrunnlag og fristen er utløpt', () => {
     render(
-      <SettPaVentModal
+      <SettPåVentModal
         showModal
         submitCallback={vi.fn()}
         cancelEvent={vi.fn()}

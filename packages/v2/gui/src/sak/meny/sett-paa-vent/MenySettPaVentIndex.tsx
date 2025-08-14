@@ -1,6 +1,6 @@
+import SettPåVentModal, { type FormState } from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useCallback } from 'react';
-import SettPaVentModal, { type FormState } from './settPaVentModal/SettPaVentModal';
 
 interface OwnProps {
   behandlingId: number;
@@ -38,7 +38,7 @@ export const MenySettPaVentIndexV2 = ({
   );
 
   return (
-    <SettPaVentModal
+    <SettPåVentModal
       showModal
       submitCallback={submit}
       cancelEvent={lukkModal}
