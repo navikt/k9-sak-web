@@ -2308,7 +2308,7 @@ __metadata:
     history: "npm:5.3.0"
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
   languageName: unknown
   linkType: soft
 
@@ -2379,7 +2379,7 @@ __metadata:
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -3543,7 +3543,7 @@ __metadata:
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.1"
     react-hook-form: "npm:7.62.0"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
     yup: "npm:^1.6.1"
   languageName: unknown
   linkType: soft
@@ -3601,7 +3601,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
     redux-form: "npm:8.3.10"
   languageName: unknown
   linkType: soft
@@ -3800,7 +3800,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
     redux-thunk: "npm:3.1.0"
@@ -3887,7 +3887,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -12322,7 +12322,7 @@ __metadata:
     prettier: "npm:3.6.2"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
-    react-router: "npm:7.7.1"
+    react-router: "npm:7.8.0"
     rollup-plugin-sourcemaps2: "npm:^0.5.3"
     storybook: "npm:9.0.17"
     stylelint: "npm:16.22.0"
@@ -14678,9 +14678,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:7.7.1":
-  version: 7.7.1
-  resolution: "react-router@npm:7.7.1"
+"react-router@npm:7.8.0":
+  version: 7.8.0
+  resolution: "react-router@npm:7.8.0"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -14690,7 +14690,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10/70a6030df198705152bab4ae455e3634233f74da0e42c49c15eeb5a47c94a975474210bf0908f0cbaafa8fafb697f6e257d90bc1f0ba6dbc39ff41c7c62898ec
+  checksum: 10/bb46458bd15f73749a82d8ba0818d9ea98088378d569fd500aa4477cd08c1e359241b97de579f29e8bc78f8b81c76f660255b27a6249c305e4c66399f073e4df
   languageName: node
   linkType: hard
 
