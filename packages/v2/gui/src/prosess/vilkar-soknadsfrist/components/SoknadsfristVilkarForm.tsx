@@ -7,7 +7,10 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import type { Periode, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import type {
+  k9_sak_typer_Periode as Periode,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { useState, type SetStateAction } from 'react';

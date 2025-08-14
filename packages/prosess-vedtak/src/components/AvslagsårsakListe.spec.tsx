@@ -3,8 +3,8 @@ import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vilkå
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import {
-  BehandlingAksjonspunktDtoBehandlingType,
-  VilkårPeriodeDtoVilkarStatus,
+  k9_kodeverk_behandling_BehandlingType as BehandlingType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@navikt/k9-sak-typescript-client';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
@@ -22,7 +22,7 @@ describe('<AvslagårsakListe>', () => {
               antattGodkjentArbeid: 'P0D',
               antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
             },
-            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
+            vilkarStatus: VilkårUtfall.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-16', tom: '2020-03-19' },
             begrunnelse: null,
           },
@@ -32,7 +32,7 @@ describe('<AvslagårsakListe>', () => {
               antattGodkjentArbeid: 'P0D',
               antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
             },
-            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
+            vilkarStatus: VilkårUtfall.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-23', tom: '2020-03-26' },
             begrunnelse: null,
           },
@@ -46,7 +46,7 @@ describe('<AvslagårsakListe>', () => {
           {
             avslagKode: '1020',
             merknadParametere: {},
-            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
+            vilkarStatus: VilkårUtfall.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-16', tom: '2020-03-26' },
             begrunnelse: null,
           },
@@ -56,7 +56,7 @@ describe('<AvslagårsakListe>', () => {
 
     renderWithIntlAndReduxForm(
       <KodeverkProvider
-        behandlingType={BehandlingAksjonspunktDtoBehandlingType.FØRSTEGANGSSØKNAD}
+        behandlingType={BehandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

@@ -1,11 +1,11 @@
 import NødvendigOpplæringFerdigvisning from './NødvendigOpplæringFerdigvisning';
-import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import DetailView from '../../../shared/detailView/DetailView';
-import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
+import { PencilIcon } from '@navikt/aksel-icons';
 import { useEffect, useState, useContext } from 'react';
-import { BodyShort, Button } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
@@ -43,18 +43,10 @@ const Wrapper = ({
   redigering: boolean;
 }) => {
   const { readOnly } = useContext(SykdomOgOpplæringContext);
-  const enkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
-  const perioder = (
-    <div data-testid="Periode" className="flex gap-2">
-      <CalendarIcon fontSize="20" />
-      <BodyShort size="small">
-        {enkeltdag ? vurdering.perioder[0]?.prettifyPeriod().split(' - ')[0] : vurdering.perioder[0]?.prettifyPeriod()}
-      </BodyShort>
-    </div>
-  );
+
   return (
     <DetailView
-      title="Vurdering av nødvendig opplæring"
+      title="Dokumentasjon"
       border
       contentAfterTitleRenderer={() => {
         if (vurdering.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
@@ -66,7 +58,7 @@ const Wrapper = ({
           </Button>
         );
       }}
-      belowTitleContent={perioder}
+      perioder={vurdering.perioder}
     >
       <div className="mt-6">{children}</div>
     </DetailView>

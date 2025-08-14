@@ -1,9 +1,9 @@
 import { useState, useMemo, useContext } from 'react';
 import { Period } from '@navikt/ft-utils';
 import {
-  InstitusjonVurderingDtoResultat,
-  type InstitusjonPeriodeDto,
-  type InstitusjonVurderingDto,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto as InstitusjonPeriodeDto,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';
@@ -14,6 +14,8 @@ import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
 import { CenteredLoader } from '../CenteredLoader.js';
+import { Alert } from '@navikt/ds-react';
+
 export interface FaktaInstitusjonProps {
   perioder: InstitusjonPeriodeDto[];
   vurderinger: InstitusjonVurderingDto[];
@@ -48,7 +50,7 @@ const FaktaInstitusjonIndex = () => {
           ...periode,
           periode: periodObj,
           perioder: [periodObj],
-          resultat: vurdering?.resultat ?? InstitusjonVurderingDtoResultat.MÅ_VURDERES,
+          resultat: vurdering?.resultat ?? InstitusjonResultat.MÅ_VURDERES,
         });
       }
     });
@@ -73,6 +75,11 @@ const FaktaInstitusjonIndex = () => {
 
   return (
     <div>
+      {valgtVurdering?.resultat === InstitusjonResultat.MÅ_VURDERES && !readOnly && (
+        <Alert variant="warning" size="small" contentMaxWidth={false} className="mb-4">
+          {`Vurder om opplæringen er utført ved godkjent helseinstitusjon eller kompetansesenter i perioden ${valgtVurdering.perioder.map(periode => periode.prettifyPeriod()).join(', ')}.`}
+        </Alert>
+      )}
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>

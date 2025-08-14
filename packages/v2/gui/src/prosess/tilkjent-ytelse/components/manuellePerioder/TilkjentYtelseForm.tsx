@@ -3,7 +3,7 @@ import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/Ak
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Form } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../../types/BeregningsresultatMedUtbetaltePeriode';

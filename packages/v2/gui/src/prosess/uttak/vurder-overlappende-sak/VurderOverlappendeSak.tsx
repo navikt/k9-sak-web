@@ -20,11 +20,11 @@ import {
 import { Form } from '@navikt/ft-form-hooks';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
-  PeriodeMedOverlappValg,
-  type AksjonspunktDto,
-  type BehandlingDto,
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   type BekreftData,
-  type EgneOverlappendeSakerDto,
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { ObjectSchema } from 'yup';
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
@@ -33,6 +33,7 @@ import styles from './VurderOverlappendeSak.module.css';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import { format } from 'date-fns';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
 interface Props {

@@ -1,4 +1,4 @@
-import { AksjonspunktDtoVenteårsak } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_aksjonspunkt_Venteårsak as AksjonspunktDtoVenteårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
