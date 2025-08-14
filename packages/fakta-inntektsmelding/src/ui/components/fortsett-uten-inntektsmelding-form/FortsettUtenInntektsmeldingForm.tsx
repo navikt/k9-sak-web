@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Alert, Box, Button, Box as DSBox, Heading } from '@navikt/ds-react';
+import { Alert, Box, Button, Heading } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -119,7 +119,7 @@ const FortsettUtenInntektsmeldingForm = ({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <RhfForm formMethods={formMethods} onSubmit={submit}>
-      <DSBox padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
+      <Box.New padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
@@ -185,7 +185,7 @@ const FortsettUtenInntektsmeldingForm = ({
             </div>
           </Box.New>
         </>
-      </DSBox>
+      </Box.New>
     </RhfForm>
   );
 };

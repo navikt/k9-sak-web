@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Delete } from '@navikt/ds-icons';
-import { Box, Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
+import { Box, Button, Heading, Table, TextField } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
 import React, { useContext, useEffect } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -31,7 +31,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
 
   return (
     <Box.New marginBlock="0 6">
-      <DSBox padding="4" borderWidth="1" borderRadius="medium">
+      <Box.New padding="4" borderWidth="1" borderRadius="medium">
         <Box.New marginBlock="0 4">
           <Heading level="2" size="medium">
             Fosterbarn
@@ -98,7 +98,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
         <Button variant="secondary" onClick={() => append({ fødselsnummer: '' })} size="small">
           Legg til fosterbarn
         </Button>
-      </DSBox>
+      </Box.New>
     </Box.New>
   );
 };

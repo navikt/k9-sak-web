@@ -2,7 +2,7 @@ import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/gen
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { useMemo, useState } from 'react';
-import { useFormContext, type UseFormReturn } from 'react-hook-form';
+import { type UseFormReturn } from 'react-hook-form';
 import ChatComponent, { type EndreNotatPayload, type SkjulNotatPayload } from './components/ChatComponent';
 import styles from './notater.module.css';
 import type { FormState } from './types/FormState';
@@ -41,7 +41,6 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   fagsakHarPleietrengende,
   endreNotat,
 }) => {
-  const { control } = useFormContext();
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
 
   const toggleVisSkjulteNotater = () => {
@@ -71,11 +70,11 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
           </div>
           <RhfForm<FormState> formMethods={formMethods} onSubmit={submitNyttNotat}>
             <div className={styles.nyttNotat}>
-              <RhfTextarea control={control} name="notatTekst" size="small" label="Skriv et nytt notat" />
+              <RhfTextarea control={formMethods.control} name="notatTekst" size="small" label="Skriv et nytt notat" />
             </div>
             {fagsakHarPleietrengende && (
               <RhfCheckbox
-                control={control}
+                control={formMethods.control}
                 className={styles.visAlleNotater}
                 name="visNotatIAlleSaker"
                 label="Vis notat i alle saker tilknyttet pleietrengende"
