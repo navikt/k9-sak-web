@@ -20,7 +20,6 @@ const FortsettUtenInntektsmeldingAvslag = ({
   const readOnly = context?.readOnly ?? false;
 
   const kode = tilstand?.vurdering?.kode;
-  const beskrivelse = tilstand?.vurdering?.beskrivelse;
 
   if ([Kode.MANGLENDE_GRUNNLAG, Kode.IKKE_INNTEKTSTAP].includes(kode) && !redigeringsmodus && tilstand.tilVurdering) {
     return (
