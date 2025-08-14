@@ -1,4 +1,4 @@
-import { klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import {

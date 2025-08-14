@@ -1,6 +1,6 @@
 import {
-  type klage_kontrakt_FeilDto as FeilDto,
-  type klage_kontrakt_FeltFeilDto as FeltFeilDto,
+  type k9_klage_kontrakt_FeilDto as FeilDto,
+  type k9_klage_kontrakt_FeltFeilDto as FeltFeilDto,
 } from '../generated/types.js';
 import { isObject } from '../../typecheck/isObject.js';
 import { isString } from '../../typecheck/isString.js';

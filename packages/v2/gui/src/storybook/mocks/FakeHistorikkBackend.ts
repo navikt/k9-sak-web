@@ -7,7 +7,7 @@ import {
 } from '../../sak/historikk/historikkTypeBerikning.js';
 import { HistorikkInnslagTypeBeriker } from '../../sak/historikk/historikkTypeBerikning.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
-import type { klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 
 // Kopi av respons frå k9-sak backend i dev
 const fakeK9SakResponse: HentAlleInnslagV2Response = [

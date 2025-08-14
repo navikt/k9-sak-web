@@ -1,4 +1,4 @@
-import { klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { k9_klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Sak,

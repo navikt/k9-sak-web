@@ -1,6 +1,6 @@
 import {
-  klage_kodeverk_behandling_BehandlingType as BehandlingType,
-  klage_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_klage_kodeverk_behandling_BehandlingType as BehandlingType,
+  k9_klage_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
