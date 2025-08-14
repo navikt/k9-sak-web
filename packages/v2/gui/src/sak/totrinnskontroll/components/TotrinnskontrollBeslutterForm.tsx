@@ -1,4 +1,4 @@
-import type { klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import type { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button } from '@navikt/ds-react';
