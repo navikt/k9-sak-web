@@ -5,7 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import styles from './VurderDatoAksjonspunkt.module.css';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import { AksjonspunktDtoDefinisjon, type BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 
 interface FormData {
   virkningsdato: string;
