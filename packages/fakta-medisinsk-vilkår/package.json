@@ -21,7 +21,7 @@
     "@navikt/ds-css": "7.28.0",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "7.28.0",
-    "@navikt/ft-plattform-komponenter": "^10.0.4",
+    "@navikt/ft-plattform-komponenter": "^10.1.0",
     "@popperjs/core": "2.11.8",
     "@tanstack/react-query": "^5.83.0",
     "axios": "1.11.0",
