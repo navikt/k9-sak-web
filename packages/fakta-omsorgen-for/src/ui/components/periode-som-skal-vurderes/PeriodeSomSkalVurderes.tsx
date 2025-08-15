@@ -15,7 +15,7 @@ const PeriodeSomSkalVurderes = ({ periode }: PeriodeSomSkalVurderesProps): JSX.E
       <ExclamationmarkTriangleFillIcon
         title="Perioden må vurderes"
         fontSize="1.5rem"
-        style={{ color: 'var(--ax-text-warning-decoration))' }}
+        style={{ color: 'var(--ax-text-warning-decoration)' }}
       />
       <div className={styles.periodeSomSkalVurderes__texts}>
         <div>
