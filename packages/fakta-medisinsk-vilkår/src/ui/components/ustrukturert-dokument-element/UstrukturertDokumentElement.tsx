@@ -24,7 +24,7 @@ const UstrukturertDokumentElement = ({
       <ExclamationmarkTriangleFillIcon
         title="Dokumentet må håndteres"
         fontSize="1.5rem"
-        style={{ color: 'var(--ax-text-warning-decoration))' }}
+        style={{ color: 'var(--ax-text-warning-decoration)' }}
       />
 
       <div className={styles.ustrukturertDokumentElement__texts}>
