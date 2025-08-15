@@ -5,7 +5,7 @@ import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { Period } from '@navikt/ft-utils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
@@ -20,7 +20,7 @@ interface NødvendigOpplæringAlertProps {
 
 const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: NødvendigOpplæringAlertProps) => {
   const { readOnly, løsAksjonspunkt9302, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9302 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
+  const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   const alleVurderingerFerdigVurdert = vurderingsliste?.every(
     vurdering => vurdering.resultat !== OpplæringVurderingDtoResultat.MÅ_VURDERES,
   );
@@ -49,12 +49,7 @@ const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: Nødven
     );
   }
 
-  if (
-    isAksjonspunktOpen(aksjonspunkt9302?.status) &&
-    alleVurderingerFerdigVurdert &&
-    !readOnly &&
-    vurderingsliste?.length
-  ) {
+  if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && !readOnly && vurderingsliste?.length) {
     return (
       <Alert className="mb-4 p-4" variant="info" size="small">
         <div className="flex flex-col gap-2">

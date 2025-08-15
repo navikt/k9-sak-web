@@ -5,7 +5,7 @@ import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_ValgtLangvarigSykdomVurderingDto as ValgtLangvarigSykdomVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface SykdomUperiodisertAlertProps {
@@ -15,7 +15,7 @@ interface SykdomUperiodisertAlertProps {
 
 const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: SykdomUperiodisertAlertProps) => {
   const { readOnly, behandlingUuid, aksjonspunkter, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9301 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
+  const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   const løsAksjonspunktUtenEndringer = () => {
     if (!vurderingBruktIAksjonspunkt) return;
@@ -26,7 +26,7 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
   const harVurderingFraTidligereBehandling = vurderinger?.some(v => v.behandlingUuid !== behandlingUuid);
 
   if (
-    isAksjonspunktOpen(aksjonspunkt9301?.status) &&
+    aksjonspunktErÅpent &&
     vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' &&
     !readOnly &&
     vurderinger &&
@@ -46,7 +46,7 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
     );
   }
 
-  if (isAksjonspunktOpen(aksjonspunkt9301?.status) && harVurderingFraTidligereBehandling && !readOnly) {
+  if (aksjonspunktErÅpent && harVurderingFraTidligereBehandling && !readOnly) {
     return (
       <Alert className="mb-4" variant="warning" size="small">
         Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
@@ -55,7 +55,7 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
     );
   }
 
-  if (isAksjonspunktOpen(aksjonspunkt9301?.status) && !readOnly) {
+  if (aksjonspunktErÅpent && !readOnly) {
     return (
       <Alert className="mb-4" variant="warning" size="small">
         Vurder om barnet har en funksjonshemning eller en langvarig sykdom.
