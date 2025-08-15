@@ -11,8 +11,8 @@ import OppgittReisetid from './OppgittReisetid';
 import { resultatTilJaNei } from './utils';
 interface ReisetidFormProps {
   vurdering: ReisetidVurderingDto & { perioder: Period[] };
-  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
-  redigering: boolean;
+  setRedigerer: React.Dispatch<React.SetStateAction<boolean>>;
+  redigerer: boolean;
 }
 
 const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] }) => {
@@ -26,7 +26,7 @@ const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] })
   };
 };
 
-const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProps) => {
+const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps) => {
   const { løsAksjonspunkt9303, readOnly } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<{
     begrunnelse: string;
@@ -110,8 +110,8 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
               <Button variant="primary" onClick={submit} size="small">
                 Bekreft og fortsett
               </Button>
-              {redigering && (
-                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              {redigerer && (
+                <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                   Avbryt redigering
                 </Button>
               )}

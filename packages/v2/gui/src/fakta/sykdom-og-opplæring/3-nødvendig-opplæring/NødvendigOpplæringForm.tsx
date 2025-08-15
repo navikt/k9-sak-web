@@ -146,12 +146,12 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
 
 const NødvendigOpplæringForm = ({
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
-  setRedigering: (redigering: boolean) => void;
-  redigering: boolean;
+  setRedigerer: (redigerer: boolean) => void;
+  redigerer: boolean;
 }) => {
   const { readOnly, løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<NødvendigOpplæringFormFields>({
@@ -311,8 +311,8 @@ const NødvendigOpplæringForm = ({
               <Button variant="primary" type="submit" size="small">
                 Bekreft og fortsett
               </Button>
-              {redigering && (
-                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              {redigerer && (
+                <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                   Avbryt redigering
                 </Button>
               )}
