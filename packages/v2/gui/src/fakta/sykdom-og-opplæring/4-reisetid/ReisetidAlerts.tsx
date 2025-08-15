@@ -12,9 +12,9 @@ interface ReisetidAlertProps {
 const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   const { aksjonspunkter, readOnly, løsAksjonspunkt9303 } = useContext(SykdomOgOpplæringContext);
   const aksjonspunkt9303 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9303');
-  const førsteVurdering = vurdertReisetid?.vurderinger[0];
+  const førsteVurderingIListen = vurdertReisetid?.vurderinger[0];
 
-  if (!førsteVurdering) return null;
+  if (!førsteVurderingIListen) return null;
 
   const alleVurderingerFerdigVurdert = vurdertReisetid.vurderinger.every(
     vurdering => vurdering.reisetid.resultat !== ReisetidResultat.MÅ_VURDERES,
@@ -22,14 +22,14 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
 
   // Vi tar en vilkårlig vurdering fra listen for å løse aksjonspunktet
   const løsAksjonspunktUtenEndringer = () => {
-    if (!førsteVurdering) return;
+    if (!førsteVurderingIListen) return;
     løsAksjonspunkt9303({
       periode: {
-        fom: førsteVurdering.reisetid.periode.fom,
-        tom: førsteVurdering.reisetid.periode.tom,
+        fom: førsteVurderingIListen.reisetid.periode.fom,
+        tom: førsteVurderingIListen.reisetid.periode.tom,
       },
-      begrunnelse: førsteVurdering.reisetid.begrunnelse,
-      godkjent: førsteVurdering.reisetid.resultat === ReisetidResultat.GODKJENT,
+      begrunnelse: førsteVurderingIListen.reisetid.begrunnelse,
+      godkjent: førsteVurderingIListen.reisetid.resultat === ReisetidResultat.GODKJENT,
     });
   };
 
@@ -45,7 +45,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     isAksjonspunktOpen(aksjonspunkt9303?.status.kode) &&
     alleVurderingerFerdigVurdert &&
     !readOnly &&
-    førsteVurdering
+    førsteVurderingIListen
   ) {
     return (
       <Alert variant="info" size="small" className="mb-4 p-4">
