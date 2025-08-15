@@ -156,21 +156,21 @@ export const TilkommetInntektsforholdField = ({
         isTrueOrFalseSelection
       />
       {skalRedusereValg === false && (
-        <Box marginBlock="4 0">
+        <Box.New marginBlock="4 0">
           <Alert size="small" variant="info">
             Utgangspunktet er at alle nye inntektskilder som kommer etter skjæringstidspunktet skal kunne medføre
             gradering mot inntekt. Du skal derfor vanligvis velge "ja", som betyr at K9 vurderer om pleiepengene skal
             graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9 bruke denne aktiviteten for å vurdere søkers
             inntektstap.
           </Alert>
-        </Box>
+        </Box.New>
       )}
       {skalRedusereValg && (
         <>
-          <Box marginBlock="4 2">
+          <Box.New marginBlock="4 2">
             <Label size="small">Fastsett årsinntekt</Label>
             <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
-          </Box>
+          </Box.New>
           <div className={styles.bruttoInntektContainer}>
             <RhfTextField
               control={formMethods.control}

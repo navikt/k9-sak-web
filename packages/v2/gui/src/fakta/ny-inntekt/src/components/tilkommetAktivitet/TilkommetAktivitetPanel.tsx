@@ -195,15 +195,15 @@ export const TilkommetAktivitetPanel = ({
     <>
       {getAksjonspunktText()}
       {!!vurderInntektsforholdPerioder && erAksjonspunktÅpent && (
-        <Box marginBlock="2 0">
+        <Box.New marginBlock="2 0">
           <Alert size="small" variant="info" title="">
             Inntekter som kommer til underveis i en løpende pleiepengeperiode er ikke en del av søkers
             beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om pleiepengene skal
             graderes mot den nye inntekten.
           </Alert>
-        </Box>
+        </Box.New>
       )}
-      <Box marginBlock="10 0">
+      <Box.New marginBlock="10 0">
         <HStack gap="space-16" justify="space-between">
           <Heading size="small" level="3">
             Perioder med ny aktivitet
@@ -222,7 +222,7 @@ export const TilkommetAktivitetPanel = ({
             </Button>
           </div>
         </HStack>
-      </Box>
+      </Box.New>
       {modalErÅpen && (
         <PeriodesplittModal
           fields={sortedFields}

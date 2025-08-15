@@ -134,7 +134,7 @@ export const TilkommetAktivitetField = ({
       <div className={erAksjonspunktÅpent ? styles.aksjonspunktContainer : ''}>
         {fields.map((field, index) => (
           <div key={field.id}>
-            <Box marginBlock={index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? '0 10' : '0'}>
+            <Box.New marginBlock={index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? '0 10' : '0'}>
               <TilkommetInntektsforholdField
                 key={field.id}
                 formName={formName}
@@ -145,13 +145,13 @@ export const TilkommetAktivitetField = ({
                 readOnly={readOnly}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               />
-            </Box>
+            </Box.New>
           </div>
         ))}
         {skalViseBegrunnelse && (
           <>
             <VStack gap="space-16">
-              <Box marginBlock="10 0">
+              <Box.New marginBlock="10 0">
                 <RhfTextarea
                   control={control}
                   name={`${formName}.${formFieldIndex}.begrunnelse`}
@@ -159,7 +159,7 @@ export const TilkommetAktivitetField = ({
                   readOnly={readOnly}
                   validate={[required]}
                 />
-              </Box>
+              </Box.New>
               <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
               <div>
                 <SubmitButton
