@@ -3,7 +3,7 @@ import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_
 import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Alert, Button } from '@navikt/ds-react';
-import { isAksjonspunktOpen, harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface ReisetidAlertProps {
@@ -42,12 +42,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     );
   }
 
-  if (
-    aksjonspunktErÅpent &&
-    alleVurderingerFerdigVurdert &&
-    !readOnly &&
-    førsteVurderingIListen
-  ) {
+  if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && !readOnly && førsteVurderingIListen) {
     return (
       <Alert variant="info" size="small" className="mb-4 p-4">
         Reisetid er ferdig vurdert og du kan gå videre i behandlingen.
