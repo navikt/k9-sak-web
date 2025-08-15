@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
 import { CalendarIcon } from '@navikt/aksel-icons';
-import { BodyShort, HStack } from '@navikt/ds-react';
+import { BodyShort, HStack, VStack } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import Aksjonspunkt from '../../../types/Aksjonspunkt';
@@ -34,32 +34,33 @@ const PeriodList = ({
   <ul className={styles.periodList}>
     {tilstander.sort(sorterSkjæringstidspunkt).map(tilstand => (
       <li className={styles.periodList__element} key={tilstand.periode.prettifyPeriod()}>
-        <HStack marginBlock="0 4" align="center" gap="1">
+        <HStack marginBlock="0 4" align="center" gap="space-4">
           <CalendarIcon fontSize="1.5rem" />
           <BodyShort size="small">{tilstand.periode.prettifyPeriod()}</BodyShort>
         </HStack>
-
         {listHeadingRenderer()}
-        {listItemRenderer(tilstand.periode)}
-        <FortsettUtenInntektsmeldingForm
-          onSubmit={onFormSubmit}
-          tilstand={tilstand}
-          aksjonspunkt={aksjonspunkt}
-          formMethods={formMethods}
-          redigeringsmodus={tilstand.redigeringsmodus}
-          setRedigeringsmodus={tilstand.setRedigeringsmodus}
-          harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
-        />
-        <FortsettUtenInntektsmeldingInfo
-          tilstand={tilstand}
-          redigeringsmodus={tilstand.redigeringsmodus}
-          setRedigeringsmodus={tilstand.setRedigeringsmodus}
-        />
-        <FortsettUtenInntektsmeldingAvslag
-          tilstand={tilstand}
-          redigeringsmodus={tilstand.redigeringsmodus}
-          setRedigeringsmodus={tilstand.setRedigeringsmodus}
-        />
+        <VStack gap={'space-16'}>
+          {listItemRenderer(tilstand.periode)}
+          <FortsettUtenInntektsmeldingForm
+            onSubmit={onFormSubmit}
+            tilstand={tilstand}
+            aksjonspunkt={aksjonspunkt}
+            formMethods={formMethods}
+            redigeringsmodus={tilstand.redigeringsmodus}
+            setRedigeringsmodus={tilstand.setRedigeringsmodus}
+            harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
+          />
+          <FortsettUtenInntektsmeldingInfo
+            tilstand={tilstand}
+            redigeringsmodus={tilstand.redigeringsmodus}
+            setRedigeringsmodus={tilstand.setRedigeringsmodus}
+          />
+          <FortsettUtenInntektsmeldingAvslag
+            tilstand={tilstand}
+            redigeringsmodus={tilstand.redigeringsmodus}
+            setRedigeringsmodus={tilstand.setRedigeringsmodus}
+          />
+        </VStack>
       </li>
     ))}
   </ul>

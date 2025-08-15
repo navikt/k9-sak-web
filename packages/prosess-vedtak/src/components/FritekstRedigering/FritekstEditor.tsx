@@ -240,7 +240,7 @@ const FritekstEditor = ({
               <FritekstFeilmeldinger />
             </div>
             <VerticalSpacer thirtyTwoPx />
-            <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+            <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
               <div>
                 <Button
                   type="button"

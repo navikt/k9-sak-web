@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import dayjs from 'dayjs';
-import { type Resolver, useFieldArray, useForm } from 'react-hook-form';
 import {
   Button,
   DatePicker,
@@ -12,25 +9,28 @@ import {
   useRangeDatepicker,
   type DatePickerProps,
 } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import dayjs from 'dayjs';
+import React, { useEffect, useState } from 'react';
+import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
-import styles from './overstyringUttakForm.module.css';
+import type {
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { useQuery } from '@tanstack/react-query';
+import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
+import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
 import {
   finnSisteSluttDatoFraPerioderTilVurdering,
   finnTidligsteStartDatoFraPerioderTilVurdering,
   formaterOverstyringAktiviteter,
   overstyrUttakFormValidationSchema,
 } from '../utils/overstyringUtils';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type {
-  ArbeidsgiverOversiktDto,
-  BehandlingDto,
-  OverstyrUttakPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
-import { useQuery } from '@tanstack/react-query';
+import styles from './overstyringUttakForm.module.css';
 import { OverstyrUttakHandling } from './OverstyrUttak';
-import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
 
 type OwnProps = {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
@@ -135,7 +135,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   return (
     <div className={styles.overstyringSkjemaWrapper}>
       <Heading size="xsmall">Overstyr periode</Heading>
-      <Form
+      <RhfForm
         onSubmit={values => handleOverstyring({ action: OverstyrUttakHandling.LAGRE, values })}
         formMethods={formMethods}
       >
@@ -191,7 +191,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
             Avbryt
           </Button>
         </div>
-      </Form>
+      </RhfForm>
     </div>
   );
 };

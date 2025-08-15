@@ -1,7 +1,7 @@
 import type {
   BestillInformasjonsbrevResponse,
   ForhåndsvisInformasjonsbrevResponse,
-  InformasjonsbrevBestillingRequest,
+  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
   InformasjonsbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 

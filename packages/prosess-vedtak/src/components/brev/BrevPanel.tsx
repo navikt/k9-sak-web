@@ -19,7 +19,10 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
-import { BehandlingsresultatDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+} from '@navikt/k9-sak-typescript-client';
 import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';

@@ -35,15 +35,15 @@ const DokumentoversiktMessages = ({
   return (
     <>
       {harRegistrertDiagnosekode === false && (
-        <Box marginBlock="0 6">
+        <Box.New marginBlock="0 6">
           <Alert size="small" variant="warning">
             Diagnosekode mangler. Du må legge til en diagnosekode for å vurdere tilsyn og pleie.
           </Alert>
-        </Box>
+        </Box.New>
       )}
       {visFristForDokumentasjonUtløptMelding && !readOnly && (
         <>
-          <Box marginBlock="0 6">
+          <Box.New marginBlock="0 6">
             <Alert size="small" variant="warning">
               {erPleiepengerSluttfaseFagsak ? (
                 <>Dokumentasjon signert av lege eller helseinstitusjon mangler. </>
@@ -52,21 +52,21 @@ const DokumentoversiktMessages = ({
               )}
               Sett saken på vent mens du innhenter mer dokumentasjon.
             </Alert>
-          </Box>
-          <Box marginBlock="0 6">
+          </Box.New>
+          <Box.New marginBlock="0 6">
             <FristForDokumentasjonUtløptPanel
               onProceedClick={() => onFinished({ ikkeVentPåGodkjentLegeerklæring: true })}
             />
-          </Box>
+          </Box.New>
         </>
       )}
       {visHåndterNyeDokumenterMelding && fagsakYtelseType !== fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && (
-        <Box marginBlock="0 6">
+        <Box.New marginBlock="0 6">
           <Alert size="small" variant="warning">
             Dokumentasjon signert av sykehuslege/spesialisthelsetjenesten mangler. Håndter eventuelle nye dokumenter,
             eller sett saken på vent mens du innhenter mer dokumentasjon.
           </Alert>
-        </Box>
+        </Box.New>
       )}
       {dokumentoversikt.harDokumenter() === false && (
         <Alert size="small" variant="info">
@@ -74,7 +74,7 @@ const DokumentoversiktMessages = ({
         </Alert>
       )}
       {kanNavigereVidere && !readOnly && (
-        <Box marginBlock="0 6">
+        <Box.New marginBlock="0 6">
           <Alert
             size="small"
             data-testid="dokumentasjon-ferdig"
@@ -96,7 +96,7 @@ const DokumentoversiktMessages = ({
               </Button>
             </div>
           </Alert>
-        </Box>
+        </Box.New>
       )}
     </>
   );

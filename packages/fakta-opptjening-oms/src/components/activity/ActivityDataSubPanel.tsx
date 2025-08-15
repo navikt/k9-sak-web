@@ -85,7 +85,7 @@ const ActivityDataSubPanel = ({
 }: ActivityDataSubPanelProps) => (
   <>
     {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NÆRING, ...ytelseTypes]) && (
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
         <div>
           {!isManuallyAdded && (
             <>
@@ -131,7 +131,7 @@ const ActivityDataSubPanel = ({
     )}
     <VerticalSpacer eightPx />
     {isOfType(selectedActivityType, OAType.NÆRING) && (
-      <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
         <DatepickerField name="naringRegistreringsdato" label={{ id: 'ActivityPanel.Registreringsdato' }} readOnly />
       </HGrid>
     )}

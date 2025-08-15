@@ -1,13 +1,13 @@
 import {
-  type LangvarigSykdomVurderingDto,
-  LangvarigSykdomVurderingDtoAvslagsårsak,
+  type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
+  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
 import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
-import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import DiagnosekodeVelger from '../../../shared/diagnosekodeVelger/DiagnosekodeVelger';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekoder' | 'begrunnelse'> &
@@ -20,10 +20,10 @@ export type UperiodisertSykdom = Pick<LangvarigSykdomVurderingDto, 'diagnosekode
 
 const finnAvslagsårsak = (godkjent: string) => {
   if (godkjent === 'mangler_dokumentasjon') {
-    return LangvarigSykdomVurderingDtoAvslagsårsak.MANGLENDE_DOKUMENTASJON;
+    return Avslagsårsak.MANGLENDE_DOKUMENTASJON;
   }
   if (godkjent === 'nei') {
-    return LangvarigSykdomVurderingDtoAvslagsårsak.IKKE_LANGVARIG_SYK;
+    return Avslagsårsak.IKKE_LANGVARIG_SYK;
   }
   return undefined;
 };
@@ -68,7 +68,7 @@ const SykdomUperiodisertForm = ({
   }
 
   return (
-    <Form
+    <RhfForm
       formMethods={formMethods}
       onSubmit={data => {
         return vurdering.uuid
@@ -148,7 +148,7 @@ const SykdomUperiodisertForm = ({
           )}
         </div>
       </div>
-    </Form>
+    </RhfForm>
   );
 };
 

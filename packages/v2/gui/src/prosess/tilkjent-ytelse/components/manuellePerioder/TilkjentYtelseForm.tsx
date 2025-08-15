@@ -1,9 +1,9 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
-import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { Form } from '@navikt/ft-form-hooks';
+import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../../types/BeregningsresultatMedUtbetaltePeriode';
@@ -64,9 +64,9 @@ export const TilkjentYtelseForm = ({
         </div>
       )}
 
-      <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
+      <RhfForm formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
         <PeriodeTabell readOnly={readOnly} featureToggles={featureToggles} />
-      </Form>
+      </RhfForm>
     </>
   );
 };

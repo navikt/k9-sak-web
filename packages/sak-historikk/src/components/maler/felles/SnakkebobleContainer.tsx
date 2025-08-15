@@ -1,6 +1,6 @@
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
-import { Kodeverk } from '@k9-sak-web/types';
 import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
+import { Kodeverk } from '@k9-sak-web/types';
 import {
   CogIcon,
   PersonGavelIcon,
@@ -10,6 +10,8 @@ import {
   QuestionmarkIcon,
 } from '@navikt/aksel-icons';
 import { Chat } from '@navikt/ds-react';
+import { ChatProps } from '@navikt/ds-react/Chat';
+import { AkselColor } from '@navikt/ds-react/types/theme';
 import React from 'react';
 import styles from './snakkebobleContainer.module.css';
 
@@ -45,30 +47,30 @@ const getAvatar = (aktoer: Kodeverk): React.JSX.Element => {
   return avatar;
 };
 
-const getClassname = (aktoer: Kodeverk): string => {
-  let classname;
+const getColor = (aktoer: Kodeverk): ChatProps['data-color'] => {
+  let color: AkselColor;
   switch (aktoer.kode) {
     case HistorikkAktor.SAKSBEHANDLER:
-      classname = styles.saksbehandler;
+      color = 'meta-purple';
       break;
     case HistorikkAktor.BESLUTTER:
-      classname = styles.beslutter;
+      color = 'success';
       break;
     case HistorikkAktor.VEDTAKSLOSNINGEN:
-      classname = styles.vedtakslosningen;
+      color = 'neutral';
       break;
     case HistorikkAktor.ARBEIDSGIVER:
-      classname = styles.arbeidsgiver;
+      color = 'info';
       break;
     case HistorikkAktor.SOKER:
-      classname = styles.soker;
+      color = 'warning';
       break;
     default:
-      classname = '';
+      color = 'warning';
       break;
   }
 
-  return classname;
+  return color;
 };
 
 interface OwnProps {
@@ -91,7 +93,8 @@ const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', opprettetAv, child
         position={pilHøyre(aktoer) ? 'right' : 'left'}
         name={`${rolleNavn} ${hentSaksbehandlerNavn(opprettetAv) || ''}`}
         avatar={getAvatar(aktoer)}
-        className={getClassname(aktoer)}
+        data-color={getColor(aktoer)}
+        variant="neutral"
       >
         <Chat.Bubble>{children}</Chat.Bubble>
       </Chat>

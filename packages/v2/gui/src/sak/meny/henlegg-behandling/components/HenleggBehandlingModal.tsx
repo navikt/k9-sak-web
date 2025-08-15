@@ -1,13 +1,13 @@
 import { klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Sak,
-  BehandlingDtoSakstype as fagsakYtelseType,
-  type ArbeidsgiverOversiktDto,
+  k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Sak,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';
-import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -208,13 +208,14 @@ export const HenleggBehandlingModal = ({
       }}
     >
       <Modal.Body>
-        <Form<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={handleSubmit}>
+        <RhfForm<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={handleSubmit}>
           <div>
             <Fieldset legend="Henlegg behandling" hideLegend>
-              <VStack gap="4">
-                <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+              <VStack gap="space-16">
+                <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
                   <div>
-                    <SelectField
+                    <RhfSelect
+                      control={formMethods.control}
                       name="årsakKode"
                       label="Velg årsak til henleggelse"
                       validate={[required]}
@@ -227,7 +228,7 @@ export const HenleggBehandlingModal = ({
                   </div>
                 </HGrid>
                 {showLink && behandlingType === BehandlingTypeK9Klage.KLAGE && (
-                  <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+                  <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
                     <Brevmottakere
                       brevmottakere={brevmottakere}
                       personopplysninger={personopplysninger}
@@ -235,9 +236,10 @@ export const HenleggBehandlingModal = ({
                     />
                   </HGrid>
                 )}
-                <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+                <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
                   <div>
-                    <TextAreaField
+                    <RhfTextarea
+                      control={formMethods.control}
                       name="begrunnelse"
                       label="Begrunnelse"
                       validate={[required, maxLength1500, hasValidText]}
@@ -246,8 +248,9 @@ export const HenleggBehandlingModal = ({
                   </div>
                 </HGrid>
                 {showHenleggelseFritekst(behandlingType, årsakKode) && (
-                  <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
-                    <TextAreaField
+                  <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
+                    <RhfTextarea
+                      control={formMethods.control}
                       name="fritekst"
                       label="Fritekst til brev"
                       validate={[required, hasValidText]}
@@ -255,7 +258,7 @@ export const HenleggBehandlingModal = ({
                     />
                   </HGrid>
                 )}
-                <HGrid gap="1" columns={{ xs: '7fr 4fr 1fr' }}>
+                <HGrid gap="space-4" columns={{ xs: '7fr 4fr 1fr' }}>
                   <div>
                     <Button variant="primary" size="small" className={styles.button} type="submit">
                       Henlegg behandling
@@ -294,7 +297,7 @@ export const HenleggBehandlingModal = ({
               </VStack>
             </Fieldset>
           </div>
-        </Form>
+        </RhfForm>
       </Modal.Body>
     </Modal>
   );

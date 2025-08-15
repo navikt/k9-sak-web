@@ -1,4 +1,4 @@
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 
 export type AksjonspunktType = NonNullable<AksjonspunktDto['aksjonspunktType']>;
 type AksjonspunktTypeName = 'MANUELL' | 'AUTOPUNKT' | 'OVERSTYRING' | 'SAKSBEHANDLEROVERSTYRING';

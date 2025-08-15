@@ -1,7 +1,7 @@
 import {
-  AksjonspunktDtoDefinisjon,
-  type AksjonspunktDto,
-  type BehandlingDto,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -19,8 +19,8 @@ const bekreftAksjonspunktRequest: BekreftKontrollerEtterbetalingAksjonspunktRequ
   behandlingVersjon: 1,
   bekreftedeAksjonspunktDtoer: [
     {
-      '@type': AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
-      kode: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+      '@type': AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+      kode: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
       begrunnelse: 'Dette er en grundig begrunnelse',
     },
   ],
@@ -55,7 +55,7 @@ const aksjonspunkt: AksjonspunktDto = {
   aksjonspunktType: 'MANU',
   erAktivt: true,
   besluttersBegrunnelse: undefined,
-  definisjon: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+  definisjon: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
   vilkarType: undefined,
   vurderPaNyttArsaker: undefined,
   venteårsak: '-',

@@ -6,7 +6,7 @@ import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import messages from './i18n/nb_NO.json';
 
-import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import VilkårBackendClient from '@k9-sak-web/gui/sak/meny/ny-behandling/VilkårBackendClient.js';
 import { useQuery } from '@tanstack/react-query';
@@ -86,7 +86,7 @@ const MenyNyBehandlingIndex = ({
   });
 
   const sisteDagISøknadsperiode = vilkår
-    ?.find(v => v.vilkarType === VilkårMedPerioderDtoVilkarType.SØKNADSFRIST)
+    ?.find(v => v.vilkarType === VilkårType.SØKNADSFRIST)
     ?.perioder?.reduce((senesteDatoFunnet, current) => {
       const tomDato = dayjs(current.periode.tom);
       return !senesteDatoFunnet || tomDato.isAfter(senesteDatoFunnet) ? tomDato.toDate() : senesteDatoFunnet;

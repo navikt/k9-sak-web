@@ -1,6 +1,5 @@
 import { Heading, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
@@ -15,10 +14,10 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
@@ -78,7 +77,7 @@ export const BehandleKlageFormNfpImpl = ({
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
-        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '8fr 2fr 2fr' }}>
           <div>
             <ProsessStegSubmitButton
               formName={formProps.form}

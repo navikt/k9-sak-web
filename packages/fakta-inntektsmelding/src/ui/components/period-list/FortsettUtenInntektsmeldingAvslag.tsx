@@ -16,13 +16,19 @@ const FortsettUtenInntektsmeldingAvslag = ({
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
 }): JSX.Element | null => {
-  const { readOnly } = React.useContext(ContainerContext);
+  const context = React.useContext(ContainerContext);
+  const readOnly = context?.readOnly ?? false;
 
-  if (tilstand?.vurdering?.kode === Kode.MANGLENDE_GRUNNLAG && !redigeringsmodus && tilstand.tilVurdering) {
+  const kode = tilstand?.vurdering?.kode;
+
+  if ([Kode.MANGLENDE_GRUNNLAG, Kode.IKKE_INNTEKTSTAP].includes(kode) && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
-          <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>
+          {kode === Kode.MANGLENDE_GRUNNLAG && <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>}
+          {kode === Kode.IKKE_INNTEKTSTAP && (
+            <span>Kan ikke gå videre på grunn av manglende inntektstap, søknad avslås.</span>
+          )}
           {!readOnly && (
             <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
               <span>Rediger vurdering</span>

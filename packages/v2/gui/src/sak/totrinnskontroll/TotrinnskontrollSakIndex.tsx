@@ -8,10 +8,10 @@ import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { type KodeverkObject, KodeverkType, type KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoVurderPaNyttArsaker,
-  BehandlingAksjonspunktDtoBehandlingStatus,
-} from '@navikt/k9-sak-typescript-client';
+  k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as Årsak,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
@@ -32,16 +32,16 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
 const getArsaker = (apData: AksjonspunktGodkjenningData): string[] => {
   const arsaker: string[] = [];
   if (apData.feilFakta) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_FAKTA);
+    arsaker.push(Årsak.FEIL_FAKTA);
   }
   if (apData.feilLov) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_LOV);
+    arsaker.push(Årsak.FEIL_LOV);
   }
   if (apData.feilRegel) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_REGEL);
+    arsaker.push(Årsak.FEIL_REGEL);
   }
   if (apData.annet) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.ANNET);
+    arsaker.push(Årsak.ANNET);
   }
   return arsaker;
 };
@@ -95,7 +95,7 @@ const TotrinnskontrollSakIndex = ({
       const fatterVedtakAksjonspunktDto = {
         '@type': erTilbakekreving
           ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK
-          : AksjonspunktDtoDefinisjon.FATTER_VEDTAK,
+          : AksjonspunktDefinisjon.FATTER_VEDTAK,
         begrunnelse: null,
         aksjonspunktGodkjenningDtos,
       };
@@ -125,7 +125,7 @@ const TotrinnskontrollSakIndex = ({
     [location, createLocationForSkjermlenke],
   );
 
-  const erStatusFatterVedtak = behandling.status === BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;
+  const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
   const skjermlenkeTyper = hentKodeverkForKode(
     KodeverkType.SKJERMLENKE_TYPE,
     getBehandlingTypeForKodeverk(behandling, erTilbakekreving),

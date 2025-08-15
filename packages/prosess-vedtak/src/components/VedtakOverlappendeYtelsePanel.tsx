@@ -7,7 +7,7 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
-import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
@@ -61,7 +61,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
   );
 
   /**
-   * Sorter radene slik at raden som har en periode med den tidligeste datoen sorteres øverst
+   * Sorter radene slik at raden som har en periode med den tidligste datoen sorteres øverst
    * for å unngå "rotete" pølsefest
    */
   const rader = sorterOverlappendeRader(usorterteRader);

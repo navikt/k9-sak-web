@@ -10,8 +10,10 @@ import {
 } from '@k9-sak-web/types';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { BehandlingsresultatDtoType, GetUngdomsprogramInformasjonResponse } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  GetUngdomsprogramInformasjonResponse,
+} from '@k9-sak-web/backend/ungsak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -125,8 +127,7 @@ const FagsakIndex = () => {
   const ungdomsytelseDeltakerStatus = useMemo(() => {
     const erUtmeldt = !!ungdomsprogramInformasjon?.opphørsdato;
     const erIProgrammet =
-      !erUtmeldt &&
-      alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatDtoType.INNVILGET);
+      !erUtmeldt && alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatType.INNVILGET);
 
     return { deltakerErUtmeldt: erUtmeldt, deltakerErIProgrammet: erIProgrammet };
   }, [alleBehandlinger, ungdomsprogramInformasjon]);

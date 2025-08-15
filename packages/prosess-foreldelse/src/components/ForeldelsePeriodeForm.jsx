@@ -4,7 +4,7 @@ import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekre
 import { Button, Detail, HGrid } from '@navikt/ds-react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -61,7 +61,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
           beregnBelop={beregnBelop}
         />
         <VerticalSpacer twentyPx />
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <div>
             <TextAreaField
               name="begrunnelse"

@@ -1,6 +1,6 @@
 import { BeregningReferanse } from '@k9-sak-web/types';
 import { Vilkar as FTVilkarType } from '@navikt/ft-types';
-import { VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 
 type Periode = { fom: string; tom: string };
 

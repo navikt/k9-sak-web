@@ -1,5 +1,5 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
@@ -67,7 +67,7 @@ const MenyNyBehandlingIndexV2 = ({
   });
 
   const sisteDagISøknadsperiode = vilkår
-    ?.find(v => v.vilkarType === VilkårMedPerioderDtoVilkarType.SØKNADSFRIST)
+    ?.find(v => v.vilkarType === VilkårType.SØKNADSFRIST)
     ?.perioder?.reduce<Date | null>((senesteDatoFunnet, current) => {
       const tomDato = dayjs(current.periode.tom);
       return !senesteDatoFunnet || tomDato.isAfter(senesteDatoFunnet) ? tomDato.toDate() : senesteDatoFunnet;

@@ -1,9 +1,9 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { Alert, Button, HGrid } from '@navikt/ds-react';
-import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../../types/BeregningsresultatMedUtbetaltePeriode';
 
@@ -87,9 +87,10 @@ export const Tilbaketrekkpanel = ({
         beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og
         arbeidsgiver.
       </Alert>
-      <Form formMethods={formMethods} onSubmit={handleSubmit} className="mt-5">
-        <HGrid gap="1" columns={{ xs: '9fr 3fr' }}>
-          <RadioGroupPanel
+      <RhfForm formMethods={formMethods} onSubmit={handleSubmit} className="mt-5">
+        <HGrid gap="space-4" columns={{ xs: '9fr 3fr' }}>
+          <RhfRadioGroup
+            control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
             isHorizontal
@@ -108,8 +109,9 @@ export const Tilbaketrekkpanel = ({
             ]}
           />
         </HGrid>
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
-          <TextAreaField
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
+          <RhfTextarea
+            control={formMethods.control}
             name={begrunnelseFieldName}
             label="Vurdering"
             validate={[required, maxLength1500, minLength3, hasValidText]}
@@ -117,7 +119,7 @@ export const Tilbaketrekkpanel = ({
             readOnly={readOnly}
           />
         </HGrid>
-        <HGrid gap="1" columns={{ xs: '2fr 10fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '2fr 10fr' }}>
           <div>
             <Button
               variant="primary"
@@ -134,7 +136,7 @@ export const Tilbaketrekkpanel = ({
             </Button>
           </div>
         </HGrid>
-      </Form>
+      </RhfForm>
     </div>
   );
 };
