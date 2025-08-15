@@ -29,7 +29,6 @@ const NødvendigOpplæringFerdigvisning = ({
     <div className="flex flex-col gap-6">
       <LabelledContent
         label="Har vi fått legeerklæring?"
-        description="Legeerklæringen skal dokumentere om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet."
         size="small"
         content={
           <BodyShort size="small">

@@ -3,13 +3,17 @@ import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, Checkbox } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
-import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonVelger from './InstitusjonVelger.js';
+import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
+import {
+  utledGodkjentInstitusjon,
+  utledOmDetErValgfriSkriftligVurdering,
+  utledRedigertInstitusjonNavn,
+} from '../utils.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
@@ -37,43 +41,6 @@ interface OwnProps {
   erRedigering: boolean;
   avbrytRedigering: () => void;
 }
-
-const utledGodkjentInstitusjon = (resultat: InstitusjonVurderingDtoResultat) => {
-  if (resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
-    return 'ja';
-  }
-  if (resultat === InstitusjonVurderingDtoResultat.IKKE_GODKJENT_MANUELT) {
-    return 'nei';
-  }
-  return '';
-};
-
-const utledOmDetErValgfriSkriftligVurdering = (begrunnelse: string, resultat: InstitusjonVurderingDtoResultat) => {
-  if (begrunnelse && resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) {
-    return 'ja';
-  }
-  return 'nei';
-};
-
-const utledRedigertInstitusjonNavn = (
-  helseinstitusjonEllerKompetansesenterFritekst: string,
-  institusjonFraOrganisasjonsnummer: string,
-  redigertInstitusjonNavn: string,
-  annenInstitusjon: boolean,
-) => {
-  // Har søkt opp institusjon fra organisasjonsnummer
-  if (institusjonFraOrganisasjonsnummer) {
-    return institusjonFraOrganisasjonsnummer;
-  }
-
-  // Har skrevet inn navn på institusjonen/kompetansesenteret i fritekst
-  if (annenInstitusjon && helseinstitusjonEllerKompetansesenterFritekst) {
-    return helseinstitusjonEllerKompetansesenterFritekst;
-  }
-
-  // Har valgt institusjon fra listen, eller beholdt institusjon som er satt fra tidligere vurdering.
-  return redigertInstitusjonNavn;
-};
 
 const defaultValues = (vurdering: InstitusjonVurderingDtoMedPerioder) => {
   return {
