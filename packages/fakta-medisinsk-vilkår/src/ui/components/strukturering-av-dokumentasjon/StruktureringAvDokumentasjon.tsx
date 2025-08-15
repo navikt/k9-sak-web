@@ -161,7 +161,7 @@ const StruktureringAvDokumentasjon = ({
                   valgtDokument={valgtDokument}
                   expandedByDefault
                 />
-                <Box marginBlock="6 0">
+                <Box.New marginBlock="6 0">
                   <Dokumentnavigasjon
                     tittel="Andre dokumenter"
                     dokumenter={dokumentoversikt.strukturerteDokumenter}
@@ -169,7 +169,7 @@ const StruktureringAvDokumentasjon = ({
                     valgtDokument={valgtDokument}
                     displayFilterOption
                   />
-                </Box>
+                </Box.New>
               </>
             )}
             showDetailSection={visDokumentDetails}
@@ -189,13 +189,13 @@ const StruktureringAvDokumentasjon = ({
           />
 
           {skalViseInnleggelsesperioderOgDiagnosekoder && (
-            <Box marginBlock="16 0">
+            <Box.New marginBlock="16 0">
               <DokumentasjonFooter
                 firstSectionRenderer={() => <Innleggelsesperiodeoversikt onInnleggelsesperioderUpdated={sjekkStatus} />}
                 secondSectionRenderer={() => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} />}
                 thirdSectionRenderer={() => <SignertSeksjon harGyldigSignatur={dokumentoversikt.harGyldigSignatur()} />}
               />
-            </Box>
+            </Box.New>
           )}
         </div>
       )}

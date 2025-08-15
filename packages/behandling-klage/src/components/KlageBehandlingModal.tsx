@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './klageBehandlingModal.module.css';
 
@@ -24,7 +23,7 @@ const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & W
     aria-label={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
     onClose={lukkModal}
   >
-    <HGrid gap="4" columns={{ xs: '1fr 9fr 2fr' }}>
+    <HGrid gap="space-16" columns={{ xs: '1fr 9fr 2fr' }}>
       <div className="relative">
         <Image className={styles.image} src={innvilgetImageUrl} />
         <div className={styles.divider} />

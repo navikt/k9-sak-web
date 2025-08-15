@@ -1,9 +1,16 @@
 import React, { useEffect, useState, type FC } from 'react';
 
-import * as yup from 'yup';
-import { useQuery } from '@tanstack/react-query';
-import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import {
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  type BekreftData,
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   Alert,
   BodyShort,
@@ -17,22 +24,17 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import {
-  PeriodeMedOverlappValg,
-  type AksjonspunktDto,
-  type BehandlingDto,
-  type BekreftData,
-  type EgneOverlappendeSakerDto,
-} from '@k9-sak-web/backend/k9sak/generated';
-import type { ObjectSchema } from 'yup';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
-import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
-import styles from './VurderOverlappendeSak.module.css';
-import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { useFieldArray, useForm } from 'react-hook-form';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
+import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
+import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
+import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
+import styles from './VurderOverlappendeSak.module.css';
+
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
 interface Props {
@@ -197,7 +199,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
     egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.vurdertTidspunkt)?.vurdertTidspunkt || undefined;
 
   return (
-    <VStack gap="4" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
+    <VStack gap="space-16" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
       {!readOnly && (
         <Alert variant={'warning'}>
           <Heading spacing size="xsmall" level="3">
@@ -227,9 +229,11 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
         </Alert>
       )}
 
-      <Box className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}>
-        <Form formMethods={formMethods} onSubmit={submit}>
-          <VStack gap="5">
+      <Box.New
+        className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}
+      >
+        <RhfForm formMethods={formMethods} onSubmit={submit}>
+          <VStack gap="space-20">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
             {overlappendeIsLoading && <Loader size="large" />}
             {overlappendeSuccess && (
@@ -314,7 +318,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                           Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
                         </Alert>
 
-                        <HStack gap="4">
+                        <HStack gap="space-16">
                           <Button type="submit" size="small" disabled={readOnly} loading={loading}>
                             Bekreft og fortsett
                           </Button>
@@ -338,8 +342,8 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
               </>
             )}
           </VStack>
-        </Form>
-      </Box>
+        </RhfForm>
+      </Box.New>
     </VStack>
   );
 };

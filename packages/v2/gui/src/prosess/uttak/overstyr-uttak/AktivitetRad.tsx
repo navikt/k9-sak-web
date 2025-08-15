@@ -1,23 +1,25 @@
 import React from 'react';
-
+import dayjs from 'dayjs';
 import { Delete, Edit } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
-
-import dayjs from 'dayjs';
-
-import { OverstyringUttak } from '../../../types';
-import styles from './aktivitetRad.module.css';
+import type {
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import BegrunnelseBoks from './components/BegrunnelseBoks';
+
+import styles from './aktivitetRad.module.css';
 
 interface ownProps {
   index: number;
-  overstyring: OverstyringUttak;
+  overstyring: OverstyrUttakPeriodeDto;
   handleRediger: (index: number) => void;
   visOverstyringSkjema: boolean;
-  handleSlett: (id: string) => void;
+  handleSlett: (id: number) => void;
   loading: boolean;
   leseModus: boolean;
   erTilVurdering: boolean;
+  arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
 }
 
 const AktivitetRad: React.FC<ownProps> = ({
@@ -29,8 +31,9 @@ const AktivitetRad: React.FC<ownProps> = ({
   leseModus,
   loading,
   erTilVurdering,
+  arbeidsgivere,
 }) => {
-  const { id, periode, søkersUttaksgrad, begrunnelse } = overstyring;
+  const { id = -1, periode, søkersUttaksgrad, begrunnelse } = overstyring;
   const { fom, tom } = periode;
 
   return (
@@ -39,13 +42,13 @@ const AktivitetRad: React.FC<ownProps> = ({
       expandOnRowClick
       content={
         <div className={styles.begrunnelseWrapper}>
-          <BegrunnelseBoks begrunnelse={begrunnelse} overstyring={overstyring} />
+          <BegrunnelseBoks begrunnelse={begrunnelse} overstyring={overstyring} arbeidsgivere={arbeidsgivere} />
         </div>
       }
     >
       <Table.DataCell>{dayjs(fom).format('DD.MM.YYYY')}</Table.DataCell>
       <Table.DataCell>{dayjs(tom).format('DD.MM.YYYY')}</Table.DataCell>
-      <Table.DataCell>{søkersUttaksgrad} %</Table.DataCell>
+      <Table.DataCell>{søkersUttaksgrad ? `${søkersUttaksgrad} %` : `-`}</Table.DataCell>
       {!leseModus && (
         <Table.DataCell>
           {erTilVurdering && (

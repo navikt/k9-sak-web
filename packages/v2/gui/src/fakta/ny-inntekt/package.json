@@ -10,18 +10,18 @@
     "dev": "vite serve"
   },
   "dependencies": {
-    "@navikt/aksel-icons": "7.25.1",
-    "@navikt/ds-css": "7.25.1",
-    "@navikt/ds-react": "7.25.1",
-    "@navikt/ft-form-hooks": "^6.3.13",
-    "@navikt/ft-form-validators": "^4.0.6",
-    "@navikt/ft-ui-komponenter": "^4.5.1",
-    "@navikt/ft-utils": "^3.6.3",
+    "@navikt/aksel-icons": "7.28.0",
+    "@navikt/ds-css": "7.28.0",
+    "@navikt/ds-react": "7.28.0",
+    "@navikt/ft-form-hooks": "^9.0.2",
+    "@navikt/ft-form-validators": "^4.1.2",
+    "@navikt/ft-ui-komponenter": "^6.0.2",
+    "@navikt/ft-utils": "^3.7.2",
     "classnames": "2.5.1",
     "core-js": "3.44.0",
     "dayjs": "1.11.13",
-    "react": "19.1.0",
-    "react-hook-form": "7.58.1",
+    "react": "19.1.1",
+    "react-hook-form": "7.62.0",
     "react-intl": "7.1.11",
     "uuid": "11.1.0"
   }

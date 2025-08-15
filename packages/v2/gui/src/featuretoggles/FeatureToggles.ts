@@ -17,7 +17,6 @@ export interface FeatureToggles {
   OPPTJENING_READ_ONLY_PERIODER: boolean;
   SAK_MENY_V2: boolean;
   AKSJONSPUNKT_OVERLAPPENDE_SAKER: boolean;
-  HISTORIKK_V2_VIS: boolean;
   VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK: boolean;
   NY_INNTEKT_EGET_PANEL: boolean;
   BRUK_V2_FAKTA_INSTITUSJON: boolean;
@@ -26,4 +25,5 @@ export interface FeatureToggles {
   BRUK_V2_VILKAR_OPPTJENING: boolean;
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: boolean;
   MARKERING_UTENLANDSTILSNITT: boolean;
+  AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: boolean;
 }

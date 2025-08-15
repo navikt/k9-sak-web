@@ -1,5 +1,5 @@
-import { type K9SakClient, type OppdaterLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
-import { type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
+import { type K9SakClient, type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
+
 export default class SykdomOgOpplæringBackendClient {
   #k9sak: K9SakClient;
 
@@ -13,10 +13,6 @@ export default class SykdomOgOpplæringBackendClient {
 
   async opprettSykdomsvurdering(payload: OpprettLangvarigSykdomsVurderingData['requestBody']) {
     return this.#k9sak.opplæringspenger.opprettLangvarigSykdomsVurdering(payload);
-  }
-
-  async oppdaterSykdomsvurdering(payload: OppdaterLangvarigSykdomsVurderingData['requestBody']) {
-    return this.#k9sak.opplæringspenger.oppdaterLangvarigSykdomsVurdering(payload);
   }
 
   async hentLangvarigSykVurderingerFagsak(behandlingUuid: string) {
@@ -33,7 +29,7 @@ export default class SykdomOgOpplæringBackendClient {
   }
 
   async hentAlleInstitusjoner() {
-    return this.#k9sak.opplæringsinstitusjon.hentAlleV2();
+    return this.#k9sak.opplæringsinstitusjonSaksbehandling.hentAlleV2();
   }
 
   async hentOrganisasjonsnummer(organisasjonsnummer: string) {

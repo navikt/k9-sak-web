@@ -1,24 +1,25 @@
 import React from 'react';
-import { useFormContext, FieldArrayWithId } from 'react-hook-form';
-
+import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
 import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
-import { OverstyrUttakFormFieldName, arbeidstypeTilVisning } from '../../../constants';
-
+import type {
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { utledAktivitetNavn } from '../utils/overstyringUtils';
+import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 import styles from './overstyrAktivitetListe.module.css';
-import { OverstyrUttakFormData } from '../../../types';
-import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 
 type ownProps = {
-  fields: FieldArrayWithId<OverstyrUttakFormData, OverstyrUttakFormFieldName.UTBETALINGSGRADER, 'id'>[];
+  fields: FieldArrayWithId<OverstyrUttakPeriodeDto, 'utbetalingsgrader', 'id'>[];
   loading: boolean;
+  arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
 };
 
-const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
+const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading, arbeidsgivere }) => {
   const {
     register,
     formState: { errors },
-  } = useFormContext();
-  const { utledAktivitetNavn } = useOverstyrUttak();
+  } = useFormContext<OverstyrUttakPeriodeDto>();
 
   return (
     <>
@@ -27,22 +28,17 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
         {fields.map((field, index) => {
           const arbeidstype =
             field.arbeidsforhold?.type !== 'BA' ? arbeidstypeTilVisning[field.arbeidsforhold?.type] : false;
-          const harFeil =
-            !!errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER]?.[index]?.[
-              OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD
-            ];
+          const harFeil = !!errors['utbetalingsgrader']?.[index]?.utbetalingsgrad;
 
           return (
             <div key={field.id} className={styles.overstyringSkjemaAktivitet}>
               <div>
-                {utledAktivitetNavn(field.arbeidsforhold)}
+                {utledAktivitetNavn(field.arbeidsforhold, arbeidsgivere)}
                 {arbeidstype && <span>, {arbeidstype}</span>}
               </div>
               <div className={harFeil ? 'navds-error-message navds-label' : ''}>
                 <TextField
-                  {...register(
-                    `${OverstyrUttakFormFieldName.UTBETALINGSGRADER}.${index}.${OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD}`,
-                  )}
+                  {...register(`utbetalingsgrader.${index}.utbetalingsgrad`)}
                   className={harFeil ? 'navds-text-field--error' : ''}
                   label="Ny utbetalingsgrad (%)"
                   hideLabel
@@ -57,11 +53,7 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
                 %
                 {harFeil && (
                   <ErrorMessage className="inline ml-4">
-                    {
-                      errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER][index][
-                        OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD
-                      ]?.message
-                    }
+                    {errors['utbetalingsgrader']?.[index]?.utbetalingsgrad?.message || 'Ukjent feil'}
                   </ErrorMessage>
                 )}
               </div>

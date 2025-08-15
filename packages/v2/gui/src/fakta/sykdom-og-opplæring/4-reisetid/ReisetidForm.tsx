@@ -1,12 +1,12 @@
-import type { ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
-import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
-import { Period } from '@navikt/ft-utils';
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Button, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
-import { useContext, useEffect } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
+import { useContext, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import OppgittReisetid from './OppgittReisetid';
 import { resultatTilJaNei } from './utils';
 interface ReisetidFormProps {
@@ -61,7 +61,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
 
   return (
     <>
-      <Form formMethods={formMethods}>
+      <RhfForm formMethods={formMethods}>
         <div className="flex flex-col gap-6">
           <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} size="small" />
           <Textarea
@@ -118,7 +118,7 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
             </div>
           )}
         </div>
-      </Form>
+      </RhfForm>
     </>
   );
 };

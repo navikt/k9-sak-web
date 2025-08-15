@@ -1,7 +1,7 @@
 import type {
   GetSatsOgUtbetalingPerioderResponse,
   GetUngdomsprogramInformasjonResponse,
-  KontrollerInntektDto,
+  ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
   UngSakClient,
 } from '@k9-sak-web/backend/ungsak/generated';
 

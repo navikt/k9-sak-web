@@ -5,7 +5,7 @@ import { guid } from '@fpsak-frontend/utils';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import React, { useContext, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from './FormState';
@@ -249,7 +249,7 @@ export const OppholdInntektOgPerioderForm = ({
     Object.keys(medlemskap?.personopplysninger).length > 0;
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
       <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
         {getHelpTexts(aksjonspunkter).map(helpText => (
           <React.Fragment key={helpText}>{helpText}</React.Fragment>
@@ -293,7 +293,7 @@ export const OppholdInntektOgPerioderForm = ({
           Bekreft og fortsett
         </Button>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

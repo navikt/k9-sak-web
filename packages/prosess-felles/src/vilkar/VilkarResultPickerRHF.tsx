@@ -4,13 +4,14 @@ import { Label } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
-import { FunctionComponent, ReactNode } from 'react';
-import styles from './vilkarResultPicker.module.css';
 import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
+import { BodyShort } from '@navikt/ds-react';
+import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
+import { hasValidDate, required } from '@navikt/ft-form-validators';
+import { FunctionComponent, ReactNode } from 'react';
+import { useFormContext } from 'react-hook-form';
+import styles from './vilkarResultPicker.module.css';
 
 export type VilkarResultPickerFormState = {
   erVilkarOk: boolean;
@@ -61,6 +62,7 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   fieldNamePrefix,
   relevanteInnvilgetMerknader,
 }) => {
+  const { control } = useFormContext();
   return (
     <div className={styles.container}>
       <VerticalSpacer sixteenPx />
@@ -79,7 +81,8 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
         </FlexContainer>
       )}
       {(!readOnly || erVilkarOk === undefined) && (
-        <RadioGroupPanel
+        <RhfRadioGroup
+          control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           isReadOnly={readOnly}
@@ -102,7 +105,8 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
         relevanteInnvilgetMerknader.length > 0 && (
           <>
             <VerticalSpacer sixteenPx />
-            <SelectField
+            <RhfSelect
+              control={control}
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
               label="Vilkårsmerknad"
               selectValues={relevanteInnvilgetMerknader.map(iu => (
@@ -118,7 +122,8 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>
           <VerticalSpacer sixteenPx />
-          <SelectField
+          <RhfSelect
+            control={control}
             name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
             label="Avslagsårsak"
             selectValues={avslagsarsaker.map(aa => (
@@ -132,7 +137,8 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
           {erMedlemskapsPanel && (
             <>
               <VerticalSpacer eightPx />
-              <Datepicker
+              <RhfDatepicker
+                control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
                 label="Dato"
                 isReadOnly={readOnly}

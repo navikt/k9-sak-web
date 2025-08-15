@@ -12,8 +12,8 @@
   width: 500px;
 }
 
-.modal svg:global(.navds-loader.loader),
-.modal svg:global(.navds-loader.loader circle) {
+.modal svg:global(.aksel-loader.loader),
+.modal svg:global(.aksel-loader.loader circle) {
   animation-duration: 1.8s !important;
   animation-delay: 0s !important;
   animation-iteration-count: infinite !important;

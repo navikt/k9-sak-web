@@ -43,7 +43,7 @@ export const Default: StoryObj<typeof TredjepartsmottakerInput> = {
       setShowError(true);
     }, [value]);
     return (
-      <VStack gap="4">
+      <VStack gap="space-16">
         <TredjepartsmottakerInput {...args} showValidation={showValidation} onChange={onChange} />
         <Button type="button" onClick={onSimulateSubmit}>
           Simulate submit

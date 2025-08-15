@@ -41,25 +41,3 @@ export function useUngSakKodeverkMedNavn<T = KodeverkMedNavn>(kodeverkOjekt: Kod
   const kodeverk = kodeverkForType.find(k => k.kode === kodeverkOjekt.kode);
   return kodeverk;
 }
-
-/**
- * Hook som brukes når en har behov for en funksjon som slår opp kodeverknavn. For å kunne bruke denne
- * må @see useGlobalStateRestApi først brukes for å hente data fra backend
- */
-export function useGetKodeverkFn() {
-  const alleUngSakKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
-    UngSakApiKeys.KODEVERK,
-  );
-
-  return (kodeverkOjekt: Kodeverk) => {
-    const kodeverkType = kodeverkTyper[kodeverkOjekt.kodeverk];
-
-    const kodeverkForType = alleUngSakKodeverk[kodeverkType];
-
-    if (!kodeverkForType || kodeverkForType.length === 0) {
-      throw Error(`Det finnes ingen kodeverk for type ${kodeverkType} med kode ${kodeverkOjekt.kode}`);
-    }
-    const kodeverk = kodeverkForType.find(k => k.kode === kodeverkOjekt.kode);
-    return kodeverk;
-  };
-}

@@ -1,9 +1,8 @@
 import { DateLabel } from '@fpsak-frontend/shared-components';
+import { K9AksjonspunktBorderColor } from '@k9-sak-web/gui/tokens/tokens.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { K9AksjonspunktBorderColor } from '@k9-sak-web/gui/tokens/tokens.js';
 import { OppholdInntektOgPerioderFormState } from './FormState';
 import { Periode } from './Periode';
 
@@ -49,7 +48,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
                 {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
                   <ExclamationmarkTriangleFillIcon
                     fontSize="1.5rem"
-                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl mr-2"
+                    className="text-[var(--ax-text-warning-decoration))] text-2xl mr-2"
                   />
                 )}
                 <DateLabel dateString={periode.vurderingsdato} />

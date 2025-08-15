@@ -1,7 +1,7 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { Box, Button } from '@navikt/ds-react';
-import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import AksjonspunktHelpText from '../../../shared/aksjonspunktHelpText/AksjonspunktHelpText';
@@ -31,7 +31,7 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
     if (erVilkaretOk === false) return 'false';
     return null;
   };
-  const methods = useForm<Inputs>({
+  const formMethods = useForm<Inputs>({
     defaultValues: {
       begrunnelse: begrunnelseTekst,
       erVilkarOk: getErVilkaretOk(),
@@ -42,7 +42,7 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
   };
 
   return (
-    <Form<Inputs> formMethods={methods} onSubmit={bekreftAksjonspunkt}>
+    <RhfForm<Inputs> formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
       <AksjonspunktHelpText isAksjonspunktOpen>
         {[
           'Vurder om aldersvilkåret er oppfylt.',
@@ -50,7 +50,7 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
         ]}
       </AksjonspunktHelpText>
 
-      <Box marginBlock={'4 0'}>
+      <Box.New marginBlock={'4 0'}>
         <div className={style.opplysninger}>
           <p className="label">Opplysninger fra søknaden:</p>
           <b>Søkers barn:</b>
@@ -62,16 +62,18 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
         </div>
 
         <div className={style.vurdering}>
-          <TextAreaField
+          <RhfTextarea
+            control={formMethods.control}
             label="Vurder om aldersvilkåret er oppfylt"
             name="begrunnelse"
             validate={[required, minLength3, maxLength2000]}
             maxLength={2000}
           />
         </div>
-      </Box>
-      <Box marginBlock={'4 0'}>
-        <RadioGroupPanel
+      </Box.New>
+      <Box.New marginBlock={'4 0'}>
+        <RhfRadioGroup
+          control={formMethods.control}
           isHorizontal
           label="Er aldersvilkåret oppfylt?"
           name="erVilkarOk"
@@ -82,13 +84,13 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
             { value: 'false', label: 'Nei' },
           ]}
         />
-      </Box>
-      <Box marginBlock={'4 0'}>
+      </Box.New>
+      <Box.New marginBlock={'4 0'}>
         <Button size="small" variant="primary" type="submit">
           Bekreft og fortsett
         </Button>
-      </Box>
-    </Form>
+      </Box.New>
+    </RhfForm>
   );
 };
 

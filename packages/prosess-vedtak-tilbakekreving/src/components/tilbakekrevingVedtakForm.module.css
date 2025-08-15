@@ -1,7 +1,7 @@
 .buttonLink {
   background: none;
   border: 0;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   cursor: pointer;
   font: inherit;
 }

@@ -2,7 +2,6 @@ import { useFormContext } from 'react-hook-form';
 
 import { Alert, Box, Label, ReadMore } from '@navikt/ds-react';
 
-import { InputField, RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
@@ -13,7 +12,8 @@ import type {
 } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
-import { type ReactElement } from 'react';
+import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
+import type { ReactElement } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
 import styles from './tilkommetAktivitet.module.css';
@@ -143,7 +143,8 @@ export const TilkommetInntektsforholdField = ({
 
   return (
     <>
-      <RadioGroupPanel
+      <RhfRadioGroup
+        control={formMethods.control}
         label={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
         radios={[
@@ -171,7 +172,8 @@ export const TilkommetInntektsforholdField = ({
             <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
           </Box>
           <div className={styles.bruttoInntektContainer}>
-            <InputField
+            <RhfTextField
+              control={formMethods.control}
               name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.bruttoInntektPrÅr`}
               label="Fastsett årsinntekt"
               hideLabel

@@ -18,7 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
     isReadOnly,
   }) => (
     <Uttak
-      uuid={behandling.uuid}
+      behandling={behandling}
       uttaksperioder={uttaksperioder}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}

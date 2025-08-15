@@ -1,4 +1,4 @@
-import { LinjeType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_Linje_Type as LinjeType } from '@k9-sak-web/backend/k9sak/generated';
 import { NavLink } from 'react-router';
 import type { Location } from 'history';
 import { parseBoldText, scrollUp } from '../snakkeboble/snakkebobleUtils.jsx';

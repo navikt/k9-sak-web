@@ -1,4 +1,4 @@
-import { FagsakDtoSakstype } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_FagsakYtelseType as FagsakDtoSakstype } from '@k9-sak-web/backend/k9sak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import AktorSakIndex from './AktorSakIndex';
 

@@ -1,6 +1,7 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Button, Checkbox, CheckboxGroup, Label, Link, Tooltip } from '@navikt/ds-react';
@@ -25,7 +26,6 @@ import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
-import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -213,7 +213,7 @@ const VurderingAvTilsynsbehovForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginBlock="6 0">
+            <Box.New marginBlock="6 0">
               <Label size="small" aria-hidden="true">
                 Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?
               </Label>
@@ -285,10 +285,10 @@ const VurderingAvTilsynsbehovForm = ({
                   {visAlleDokumenter ? `Vis færre dokumenter` : `Vis alle dokumenter (${dokumenter.length})`}
                 </Button>
               )}
-            </Box>
+            </Box.New>
           )}
           {featureToggles?.BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <Controller
                 name={FieldName.MANGLER_LEGEERKLÆRING}
                 render={({ field }) => (
@@ -299,15 +299,15 @@ const VurderingAvTilsynsbehovForm = ({
                       }}
                       checked={field.value === true}
                     >
-                      Mangler legeerklæring - vurdering av tilsyn og pleie skal ikke gjennomføres
+                      Mangler riktig legeerklæring for perioden, jmf. §9-16
                     </Checkbox>
                   </CheckboxGroup>
                 )}
               />
-            </Box>
+            </Box.New>
           )}
 
-          <Box marginBlock="8 0">
+          <Box.New marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly || manglerLegeerklæring}
@@ -347,16 +347,16 @@ const VurderingAvTilsynsbehovForm = ({
               }
               validators={manglerLegeerklæring ? {} : { required, hasValidText }}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <YesOrNoQuestionRHF
               question="Er det behov for tilsyn og pleie?"
               name={FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
               validators={manglerLegeerklæring ? {} : { required }}
               disabled={readOnly || manglerLegeerklæring}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -407,23 +407,23 @@ const VurderingAvTilsynsbehovForm = ({
                 return <></>;
               }}
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginBlock="6 0">
+                <Box.New marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                     id="leggTilPeriodeKnapp"
                   />
-                </Box>
+                </Box.New>
               )}
             />
-          </Box>
+          </Box.New>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
-            </Box>
+            </Box.New>
           )}
         </FormWithButtons>
       </FormProvider>

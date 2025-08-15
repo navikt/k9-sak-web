@@ -15,10 +15,7 @@ interface ManglerContentProps {
 
 const ManglerContent = ({ tekst }: ManglerContentProps) => (
   <div className={styles.mottattLabel}>
-    <ExclamationmarkTriangleFillIcon
-      fontSize="1.5rem"
-      style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
-    />
+    <ExclamationmarkTriangleFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-text-warning-decoration)' }} />
     <span className={styles.mottattLabel__text}>{tekst}</span>
   </div>
 );

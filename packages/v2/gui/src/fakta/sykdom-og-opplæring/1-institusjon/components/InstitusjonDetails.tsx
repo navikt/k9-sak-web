@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Button, BodyShort } from '@navikt/ds-react';
-import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { Button } from '@navikt/ds-react';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning.js';
 import InstitusjonForm from './InstitusjonForm.js';
 import DetailView from '../../../../shared/detailView/DetailView.js';
-import { PencilIcon, CalendarIcon } from '@navikt/aksel-icons';
+import { PencilIcon } from '@navikt/aksel-icons';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -16,11 +16,6 @@ interface OwnProps {
 const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
   const visEndreLink = !readOnly && vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES;
-  const perioder = vurdering.perioder.map(periode => (
-    <div key={periode.prettifyPeriod()} data-testid="Periode" className="flex gap-2">
-      <CalendarIcon fontSize="20" /> <BodyShort size="small">{periode.prettifyPeriod()}</BodyShort>
-    </div>
-  ));
 
   useEffect(() => {
     if (redigering) {
@@ -45,7 +40,7 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
           </Button>
         ) : null
       }
-      belowTitleContent={perioder}
+      perioder={vurdering.perioder}
     >
       {vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES && !redigering ? (
         <InstitusjonFerdigVisning vurdering={vurdering} />

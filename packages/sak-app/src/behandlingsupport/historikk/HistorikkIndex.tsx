@@ -22,7 +22,6 @@ import { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBack
 import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.jsx';
 import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
@@ -71,8 +70,7 @@ interface OwnProps {
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
   const historikkBackendApi: HistorikkBackendApi | null = useContext(HistorikkBackendApiContext);
-  const featureToggles = useContext(FeatureTogglesContext);
-  const [visV2, setVisV2] = useState(featureToggles?.HISTORIKK_V2_VIS === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
+  const [visV2, setVisV2] = useState(true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
   const compareDone = useRef(false);
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();

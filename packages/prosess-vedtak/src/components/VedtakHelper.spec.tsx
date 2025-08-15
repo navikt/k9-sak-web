@@ -1,12 +1,12 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingDtoBehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { klage_kodeverk_behandling_BehandlingResultatType as klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
-  AvslagsårsakPrPeriodeDto,
-  AvslagsårsakPrPeriodeDtoAvslagsårsak,
-  BehandlingDtoBehandlingResultatType,
-  BeregningsgrunnlagPeriodeDto,
-  TilbakekrevingValgDtoVidereBehandling,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_frisinn_Avslagsårsak as AvslagsårsakPrPeriodeDtoAvslagsårsak,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
+  k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingValgDtoVidereBehandling,
 } from '@navikt/k9-sak-typescript-client';
 import {
   findAvslagResultatText,

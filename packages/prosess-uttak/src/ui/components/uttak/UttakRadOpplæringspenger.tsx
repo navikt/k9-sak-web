@@ -20,7 +20,7 @@ import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated';
 
 const cx = classNames.bind(styles);
 
@@ -65,12 +65,10 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
       !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
   });
 
-  const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(
-    vilkar => vilkar === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
-  );
+  const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === VilkårUtfall.OPPFYLT);
 
   const harOppfyltAlleVilkårSykdomOgOpplæring = opplæringspengerVilkår.every(
-    vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårPeriodeDtoVilkarStatus.OPPFYLT,
+    vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårUtfall.OPPFYLT,
   );
 
   const alleVilkårErOppfylt = harOppfyltAlleInngangsvilkår && harOppfyltAlleVilkårSykdomOgOpplæring;
@@ -87,7 +85,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
             {manueltOverstyrt && (
               <>
                 <PersonPencilFillIcon
-                  className="ml-1 align-middle text-2xl text-border-warning"
+                  className="ml-1 align-middle text-2xl text-ax-border-warning"
                   title="Manuelt overstyrt"
                 />
                 <HelpText
@@ -104,17 +102,17 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.uttak__vilkarIconContainer}`}>
           {harOppfyltAlleInngangsvilkår ? (
-            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
           ) : (
-            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
           )}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           <div className={styles.uttak__iconContainer}>
             {harOppfyltAlleVilkårSykdomOgOpplæring ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )}
           </div>
         </Table.DataCell>
