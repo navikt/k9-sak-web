@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
@@ -8,7 +7,6 @@ import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling }
 import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { VStack } from '@navikt/ds-react';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface UttakProps {
@@ -44,7 +42,6 @@ export default ({
   erOverstyrer,
   readOnly,
 }: UttakProps) => {
-  const featureToggles = useContext(FeatureTogglesContext);
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -65,7 +62,7 @@ export default ({
       aksjonspunkt => aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE === aksjonspunkt.definisjon.kode,
     );
 
-    if (featureToggles.AKSJONSPUNKT_OVERLAPPENDE_SAKER && aksjonspunkt) {
+    if (aksjonspunkt) {
       const deepCopyProps = JSON.parse(
         JSON.stringify({
           behandling: behandling,
