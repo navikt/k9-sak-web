@@ -17,7 +17,7 @@ import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsa
 import OverstyrUttak from '@k9-sak-web/gui/prosess/uttak/overstyr-uttak/OverstyrUttak.js';
 import Infostripe from './components/infostripe/Infostripe';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
-import VurderDato from './components/vurderDato/VurderDato';
+import VurderDato from '@k9-sak-web/gui/prosess/uttak/vurder-dato/VurderDato.js';
 import ContainerContext from './context/ContainerContext';
 import styles from './mainComponent.module.css';
 
@@ -39,6 +39,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
     behandling,
     perioderTilVurdering,
     hentBehandling,
+    oppdaterBehandling,
   } = containerData;
 
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
@@ -117,6 +118,9 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
               virkningsdato: virkningsdatoUttakNyeRegler ?? '',
             }}
             readOnly={readOnly}
+            api={uttakApi}
+            behandling={behandling}
+            oppdaterBehandling={oppdaterBehandling}
           />
         )}
         {!harVentAnnenPSBSakAksjonspunkt && (
