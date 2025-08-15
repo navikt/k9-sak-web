@@ -3,7 +3,7 @@ import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_
 import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Alert, Button } from '@navikt/ds-react';
-import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { isAksjonspunktOpen, harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface ReisetidAlertProps {
@@ -12,7 +12,7 @@ interface ReisetidAlertProps {
 
 const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   const { aksjonspunkter, readOnly, løsAksjonspunkt9303 } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9303 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID);
+  const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID);
   // Vi tar en vilkårlig vurdering fra listen for å løse aksjonspunktet
   const førsteVurderingIListen = vurdertReisetid?.vurderinger[0];
 
@@ -34,7 +34,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     });
   };
 
-  if (isAksjonspunktOpen(aksjonspunkt9303?.status) && !readOnly) {
+  if (aksjonspunktErÅpent && !readOnly) {
     return (
       <Alert variant="warning" size="small" className="mb-4">
         Vurder reisetid på andre dager enn søker har opplæring.
@@ -43,7 +43,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   }
 
   if (
-    isAksjonspunktOpen(aksjonspunkt9303?.status) &&
+    aksjonspunktErÅpent &&
     alleVurderingerFerdigVurdert &&
     !readOnly &&
     førsteVurderingIListen

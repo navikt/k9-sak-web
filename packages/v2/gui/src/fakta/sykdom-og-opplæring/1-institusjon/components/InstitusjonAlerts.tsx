@@ -5,7 +5,7 @@ import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
-import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../../utils/aksjonspunktUtils';
+import { harÅpentAksjonspunkt } from '../../../../utils/aksjonspunktUtils';
 import { utledGodkjentInstitusjon } from '../utils';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
@@ -18,8 +18,7 @@ interface FaktaInstitusjonAlertProps {
 const InstitusjonAlerts = ({ valgtVurdering, vurderinger }: FaktaInstitusjonAlertProps) => {
   const { readOnly, aksjonspunkter, løsAksjonspunkt9300 } = useContext(SykdomOgOpplæringContext);
 
-  const aksjonspunkt9300 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
-  const harÅpentAksjonspunkt = isAksjonspunktOpen(aksjonspunkt9300?.status);
+  const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
 
   const alleVurderingerErGjort = vurderinger?.every(
     vurdering => vurdering.resultat !== InstitusjonResultat.MÅ_VURDERES,
@@ -45,7 +44,7 @@ const InstitusjonAlerts = ({ valgtVurdering, vurderinger }: FaktaInstitusjonAler
     );
   }
 
-  if (alleVurderingerErGjort && harÅpentAksjonspunkt && !readOnly && vurderinger && vurderinger.length > 0) {
+  if (alleVurderingerErGjort && aksjonspunktErÅpent && !readOnly && vurderinger && vurderinger.length > 0) {
     return (
       <Alert variant="info" size="small" className="mb-4 p-4">
         Institusjoner er ferdig vurdert og du kan gå videre i behandlingen.

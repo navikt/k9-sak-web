@@ -219,7 +219,7 @@ const NødvendigOpplæringForm = ({
               </Heading>
               <Periodevisning perioder={vurdering.perioder} />
             </div>
-            <div className="border-none bg-border-subtle h-[2px]" />
+            <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
             <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
           </div>
           <div>
