@@ -24,7 +24,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
       <ExclamationmarkTriangleFillIcon
         title="Perioden må vurderes"
         fontSize="1.5rem"
-        style={{ color: 'var(--ax-text-warning-decoration))' }}
+        style={{ color: 'var(--ax-text-warning-decoration)' }}
       />
     );
   }

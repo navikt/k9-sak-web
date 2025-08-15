@@ -29,7 +29,7 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
                 <ExclamationmarkTriangleFillIcon
                   fontSize="1.25rem"
                   data-testid="sidemenu-aksjonspunkt-icon"
-                  style={{ color: 'var(--ax-text-warning-decoration))', fontSize: '1.25rem' }}
+                  style={{ color: 'var(--ax-text-warning-decoration)', fontSize: '1.25rem' }}
                 />
               ) : undefined,
             }))}
