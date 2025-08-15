@@ -307,7 +307,6 @@
   "packages/prosess-unntak/src/components/BehandleUnntakForm.tsx",
   "packages/prosess-uttak-antall-dager-sluttfase/src/Fremdriftslinje.tsx",
   "packages/prosess-uttak/src/ui/Uttak.stories.tsx",
-  "packages/prosess-uttak/src/ui/components/vurderDato/VurderDatoAksjonspunkt.tsx",
   "packages/prosess-vedtak-tilbakekreving/src/components/TilbakekrevingVedtak.tsx",
   "packages/prosess-vedtak-tilbakekreving/src/components/TilbakekrevingVedtakForm.spec.tsx",
   "packages/prosess-vedtak-tilbakekreving/src/components/TilbakekrevingVedtakPeriodeTabell.spec.tsx",
