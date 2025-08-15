@@ -3,7 +3,7 @@ import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_
 import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Alert, Button } from '@navikt/ds-react';
-import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils';
+import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface ReisetidAlertProps {
@@ -12,7 +12,7 @@ interface ReisetidAlertProps {
 
 const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   const { aksjonspunkter, readOnly, løsAksjonspunkt9303 } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9303 = aksjonspunkter.find(akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_REISETID);
+  const aksjonspunkt9303 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID);
   // Vi tar en vilkårlig vurdering fra listen for å løse aksjonspunktet
   const førsteVurderingIListen = vurdertReisetid?.vurderinger[0];
 

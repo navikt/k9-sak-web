@@ -20,6 +20,7 @@ import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
@@ -47,9 +48,7 @@ const defaultVurdering = {
 
 const SykdomUperiodisertIndex = () => {
   const { behandlingUuid, readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9301 = aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_LANGVARIG_SYK,
-  );
+  const aksjonspunkt9301 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
     useLangvarigSykVurderingerFagsak(behandlingUuid);

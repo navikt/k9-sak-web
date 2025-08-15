@@ -9,6 +9,7 @@ import DetailView from '../../../../shared/detailView/DetailView.js';
 import { PencilIcon } from '@navikt/aksel-icons';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../../utils/aksjonspunktUtils.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -17,9 +18,7 @@ interface OwnProps {
 
 const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9300 = !!aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_INSTITUSJON,
-  );
+  const harAksjonspunkt9300 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
   const [redigerer, setRedigerer] = useState(false);
   const visRediger =
     !readOnly &&

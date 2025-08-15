@@ -7,14 +7,13 @@ import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const [redigerer, setRedigerer] = useState(false);
 
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_LANGVARIG_SYK,
-  );
+  const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   useEffect(() => {
     if (!vurdering.vurdertTidspunkt || !vurdering.kanOppdateres) {
@@ -66,9 +65,7 @@ const RedigerKnapp = ({
   vurdering: UperiodisertSykdom;
 }) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_LANGVARIG_SYK,
-  );
+  const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   if (redigerer || !vurdering.kanOppdateres || readOnly || !harAksjonspunkt9301) {
     return null;

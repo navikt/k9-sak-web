@@ -8,12 +8,11 @@ import { useEffect, useState, useContext } from 'react';
 import { Button } from '@navikt/ds-react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9302 = !!aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_OPPLÆRING,
-  );
+  const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   const [redigerer, setRedigerer] = useState(false);
   useEffect(() => {
     setRedigerer(false);
@@ -46,9 +45,7 @@ const Wrapper = ({
   redigerer: boolean;
 }) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9302 = !!aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_OPPLÆRING,
-  );
+  const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   return (
     <DetailView
       title="Dokumentasjon"

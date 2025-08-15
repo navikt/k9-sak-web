@@ -5,7 +5,7 @@ import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils';
+import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { Period } from '@navikt/ft-utils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
@@ -20,7 +20,7 @@ interface NødvendigOpplæringAlertProps {
 
 const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: NødvendigOpplæringAlertProps) => {
   const { readOnly, løsAksjonspunkt9302, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9302 = aksjonspunkter.find(akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_OPPLÆRING);
+  const aksjonspunkt9302 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   const alleVurderingerFerdigVurdert = vurderingsliste?.every(
     vurdering => vurdering.resultat !== OpplæringVurderingDtoResultat.MÅ_VURDERES,
   );

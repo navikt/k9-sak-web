@@ -5,7 +5,7 @@ import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
-import { isAksjonspunktOpen } from '../../../../utils/aksjonspunktUtils';
+import { isAksjonspunktOpen, finnAksjonspunkt } from '../../../../utils/aksjonspunktUtils';
 import { utledGodkjentInstitusjon } from '../utils';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
@@ -18,9 +18,7 @@ interface FaktaInstitusjonAlertProps {
 const InstitusjonAlerts = ({ valgtVurdering, vurderinger }: FaktaInstitusjonAlertProps) => {
   const { readOnly, aksjonspunkter, løsAksjonspunkt9300 } = useContext(SykdomOgOpplæringContext);
 
-  const aksjonspunkt9300 = aksjonspunkter.find(
-    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_INSTITUSJON,
-  );
+  const aksjonspunkt9300 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
   const harÅpentAksjonspunkt = isAksjonspunktOpen(aksjonspunkt9300?.status);
 
   const alleVurderingerErGjort = vurderinger?.every(
