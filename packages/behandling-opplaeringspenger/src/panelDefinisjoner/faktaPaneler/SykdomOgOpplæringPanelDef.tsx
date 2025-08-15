@@ -25,7 +25,7 @@ class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
     return (
       <FaktaSykdomOgOpplæringIndex
         submitCallback={submitCallback}
-        readOnly={deepCopyProps.readOnly}
+        readOnly={readOnly}
         behandlingUuid={behandling.uuid}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
       />
