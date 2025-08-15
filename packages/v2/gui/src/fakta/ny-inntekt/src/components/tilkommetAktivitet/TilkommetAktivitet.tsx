@@ -14,16 +14,16 @@ import type {
   TilkommetAktivitetFormValues,
   TilkommetAktivitetValues,
   TilkommetInntektsforholdFieldValues,
-} from '../../types/FordelBeregningsgrunnlagPanelValues';
+} from '../../types/FordelBeregningsgrunnlagPanelValues.js';
 import { FaktaFordelBeregningAvklaringsbehovCode } from '../../types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
 import type {
   VurderNyttInntektsforholdAP,
   VurderNyttInntektsforholTransformedValues,
-} from '../../types/interface/VurderNyttInntektsforholdAP';
-import { type Vilkårperiode } from '../../types/Vilkår';
-import { finnVilkårsperiode, vurderesIBehandlingen } from '../felles/vilkårsperiodeUtils';
-import { TilkommetAktivitetPanel } from './TilkommetAktivitetPanel';
-import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils';
+} from '../../types/interface/VurderNyttInntektsforholdAP.js';
+import { type Vilkårperiode } from '../../types/Vilkår.js';
+import { finnVilkårsperiode, vurderesIBehandlingen } from '../felles/vilkårsperiodeUtils.js';
+import { TilkommetAktivitetPanel } from './TilkommetAktivitetPanel.js';
+import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils.js';
 
 import { RhfForm } from '@navikt/ft-form-hooks';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';

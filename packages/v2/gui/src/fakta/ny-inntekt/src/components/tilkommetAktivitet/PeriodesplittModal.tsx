@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Button, Modal, Select } from '@navikt/ds-react';
+import { Button, Modal, Select, VStack } from '@navikt/ds-react';
 import { calcDays, periodFormat, TIDENES_ENDE } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
@@ -68,51 +67,43 @@ export const PeriodesplittModal = ({
     <Modal width="500px" open={skalViseModal} onClose={lukkModal} aria-label="Del opp periode">
       <Modal.Header>Del opp periode</Modal.Header>
       <Modal.Body>
-        <div>
-          <Select label="Hvilken periode ønsker du å dele opp?" onChange={endreValgtPeriode} size="small">
-            <option value={undefined}>Velg periode</option>
-            {perioder.map(periode => (
-              <option key={periode.fom} value={periode.fom}>
-                {periodFormat(periode.fom, periode.tom)}
-              </option>
-            ))}
-          </Select>
-        </div>
-        <VerticalSpacer sixteenPx />
-        {periodeKanSplittes && (
-          <FlexContainer>
-            <FlexRow className={styles.datoRad}>
+        <VStack gap="space-16">
+          <div>
+            <Select label="Hvilken periode ønsker du å dele opp?" onChange={endreValgtPeriode} size="small">
+              <option value={undefined}>Velg periode</option>
+              {perioder.map(periode => (
+                <option key={periode.fom} value={periode.fom}>
+                  {periodFormat(periode.fom, periode.tom)}
+                </option>
+              ))}
+            </Select>
+          </div>
+          {periodeKanSplittes && (
+            <div className={styles.datoRad}>
               <PeriodesplittDatoValg
                 forhåndsvisPeriodesplitt={forhåndsvisPeriodesplitt}
                 periode={valgtPeriode}
                 setValgtDato={setValgtSplittdato}
               />
-            </FlexRow>
-          </FlexContainer>
-        )}
+            </div>
+          )}
+        </VStack>
       </Modal.Body>
       <Modal.Footer>
-        <FlexContainer>
-          <FlexRow className={styles.footerRad}>
-            <FlexColumn>
-              <Button
-                size="small"
-                variant="primary"
-                onClick={splittPeriode}
-                disabled={!valgtSplittdato}
-                autoFocus
-                type="button"
-              >
-                Del opp periode
-              </Button>
-            </FlexColumn>
-            <FlexColumn>
-              <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
-                Avbryt
-              </Button>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
+        <Button
+          size="small"
+          variant="primary"
+          onClick={splittPeriode}
+          disabled={!valgtSplittdato}
+          autoFocus
+          type="button"
+        >
+          Del opp periode
+        </Button>
+
+        <Button size="small" variant="secondary" onClick={lukkModal} autoFocus type="button">
+          Avbryt
+        </Button>
       </Modal.Footer>
     </Modal>
   );

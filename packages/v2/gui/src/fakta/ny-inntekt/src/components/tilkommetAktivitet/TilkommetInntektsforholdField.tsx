@@ -1,8 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, Label, ReadMore } from '@navikt/ds-react';
+import { Alert, Box, Label, ReadMore } from '@navikt/ds-react';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
@@ -14,7 +13,7 @@ import type {
 import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
 import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
 import styles from './tilkommetAktivitet.module.css';
@@ -157,22 +156,21 @@ export const TilkommetInntektsforholdField = ({
         isTrueOrFalseSelection
       />
       {skalRedusereValg === false && (
-        <>
-          <VerticalSpacer sixteenPx />
+        <Box.New marginBlock="4 0">
           <Alert size="small" variant="info">
             Utgangspunktet er at alle nye inntektskilder som kommer etter skjæringstidspunktet skal kunne medføre
             gradering mot inntekt. Du skal derfor vanligvis velge "ja", som betyr at K9 vurderer om pleiepengene skal
             graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9 bruke denne aktiviteten for å vurdere søkers
             inntektstap.
           </Alert>
-        </>
+        </Box.New>
       )}
       {skalRedusereValg && (
         <>
-          <VerticalSpacer sixteenPx />
-          <Label size="small">Fastsett årsinntekt</Label>
-          <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
-          <VerticalSpacer eightPx />
+          <Box.New marginBlock="4 2">
+            <Label size="small">Fastsett årsinntekt</Label>
+            <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
+          </Box.New>
           <div className={styles.bruttoInntektContainer}>
             <RhfTextField
               control={formMethods.control}

@@ -1,16 +1,11 @@
 .datoRad {
   background-color: var(--ax-neutral-400);
   border-radius: 5px;
-  height: 130px;
   padding: 16px;
 }
 
 .boks {
   width: 50%;
-}
-
-.footerRad {
-  width: 55%;
 }
 
 .datoVelger {

@@ -2,9 +2,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import NyInntektFaktaIndex from '@k9-sak-web/fakta-ny-inntekt';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import NyInntektFaktaIndex from '@k9-sak-web/gui/fakta/ny-inntekt/NyInntektFaktaIndex.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 class NyInntektPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.NY_INNTEKT;
