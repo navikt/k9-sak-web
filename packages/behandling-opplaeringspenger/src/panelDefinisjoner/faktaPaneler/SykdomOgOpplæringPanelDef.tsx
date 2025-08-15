@@ -24,9 +24,9 @@ class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps, false);
     return (
       <FaktaSykdomOgOpplæringIndex
-        submitCallback={deepCopyProps.submitCallback}
+        submitCallback={submitCallback}
         readOnly={deepCopyProps.readOnly}
-        behandlingUuid={deepCopyProps.behandling.uuid}
+        behandlingUuid={behandling.uuid}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
       />
     );
