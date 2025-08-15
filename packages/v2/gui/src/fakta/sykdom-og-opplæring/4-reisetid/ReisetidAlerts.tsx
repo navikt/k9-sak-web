@@ -3,7 +3,7 @@ import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_
 import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Alert, Button } from '@navikt/ds-react';
-import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { aksjonspunktErUtført, harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface ReisetidAlertProps {
@@ -33,6 +33,14 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
       godkjent: førsteVurderingIListen.reisetid.resultat === ReisetidResultat.GODKJENT,
     });
   };
+
+  if (!aksjonspunktErUtført(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING) && !readOnly) {
+    return (
+      <Alert variant="info" size="small" className="mb-4 p-4">
+        Du må vurdere nødvendig opplæring før du kan vurdere reisetid.
+      </Alert>
+    );
+  }
 
   if (aksjonspunktErÅpent && !readOnly) {
     return (

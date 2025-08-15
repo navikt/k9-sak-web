@@ -7,6 +7,8 @@ import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState, useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigerer, setRedigerer] = useState(false);
 
@@ -41,7 +43,8 @@ const Wrapper = ({
   setRedigerer: React.Dispatch<React.SetStateAction<boolean>>;
   redigerer: boolean;
 }) => {
-  const { readOnly } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+
   const reisetidBeskrivelse = (
     <div data-testid="Periode" className="flex gap-2">
       <Description vurdering={vurdering} />
@@ -56,7 +59,8 @@ const Wrapper = ({
           vurdering.reisetid.resultat === 'MÅ_VURDERES' ||
           redigerer ||
           readOnly ||
-          !vurdering.reisetid.erTilVurdering
+          !vurdering.reisetid.erTilVurdering ||
+          !harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)
         ) {
           return null;
         }

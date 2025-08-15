@@ -15,3 +15,8 @@ export const harÅpentAksjonspunkt = (aksjonspunkter: AksjonspunktDto[], kode: A
   const aksjonspunkt = finnAksjonspunkt(aksjonspunkter, kode);
   return isAksjonspunktOpen(aksjonspunkt?.status);
 };
+
+export const aksjonspunktErUtført = (aksjonspunkter: AksjonspunktDto[], kode: AksjonspunktCodes): boolean => {
+  const aksjonspunkt = finnAksjonspunkt(aksjonspunkter, kode);
+  return aksjonspunkt?.status === aksjonspunktStatus.UTFØRT;
+};
