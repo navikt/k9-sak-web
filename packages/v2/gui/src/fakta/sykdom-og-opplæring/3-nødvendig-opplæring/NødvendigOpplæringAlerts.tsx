@@ -7,6 +7,7 @@ import {
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils';
 import { Period } from '@navikt/ft-utils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface OpplæringVurderingselement extends Omit<{ resultat: string }, 'resultat'>, OpplæringVurderingDto {
   perioder: Period[];
@@ -19,7 +20,7 @@ interface NødvendigOpplæringAlertProps {
 
 const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: NødvendigOpplæringAlertProps) => {
   const { readOnly, løsAksjonspunkt9302, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9302 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
+  const aksjonspunkt9302 = aksjonspunkter.find(akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_OPPLÆRING);
   const alleVurderingerFerdigVurdert = vurderingsliste?.every(
     vurdering => vurdering.resultat !== OpplæringVurderingDtoResultat.MÅ_VURDERES,
   );
@@ -49,7 +50,7 @@ const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: Nødven
   }
 
   if (
-    isAksjonspunktOpen(aksjonspunkt9302?.status.kode) &&
+    isAksjonspunktOpen(aksjonspunkt9302?.status) &&
     alleVurderingerFerdigVurdert &&
     !readOnly &&
     vurderingsliste?.length

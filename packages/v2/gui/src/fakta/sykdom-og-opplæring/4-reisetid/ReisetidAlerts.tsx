@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Alert, Button } from '@navikt/ds-react';
 import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface ReisetidAlertProps {
   vurdertReisetid: ReisetidDto | undefined;
@@ -11,7 +12,8 @@ interface ReisetidAlertProps {
 
 const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   const { aksjonspunkter, readOnly, løsAksjonspunkt9303 } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9303 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9303');
+  const aksjonspunkt9303 = aksjonspunkter.find(akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_REISETID);
+  // Vi tar en vilkårlig vurdering fra listen for å løse aksjonspunktet
   const førsteVurderingIListen = vurdertReisetid?.vurderinger[0];
 
   if (!førsteVurderingIListen) return null;
@@ -20,7 +22,6 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     vurdering => vurdering.reisetid.resultat !== ReisetidResultat.MÅ_VURDERES,
   );
 
-  // Vi tar en vilkårlig vurdering fra listen for å løse aksjonspunktet
   const løsAksjonspunktUtenEndringer = () => {
     if (!førsteVurderingIListen) return;
     løsAksjonspunkt9303({
@@ -33,7 +34,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     });
   };
 
-  if (isAksjonspunktOpen(aksjonspunkt9303?.status.kode) && !readOnly) {
+  if (isAksjonspunktOpen(aksjonspunkt9303?.status) && !readOnly) {
     return (
       <Alert variant="warning" size="small" className="mb-4">
         Vurder reisetid på andre dager enn søker har opplæring.
@@ -42,7 +43,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   }
 
   if (
-    isAksjonspunktOpen(aksjonspunkt9303?.status.kode) &&
+    isAksjonspunktOpen(aksjonspunkt9303?.status) &&
     alleVurderingerFerdigVurdert &&
     !readOnly &&
     førsteVurderingIListen

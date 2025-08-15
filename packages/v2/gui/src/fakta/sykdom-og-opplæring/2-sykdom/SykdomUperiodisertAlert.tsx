@@ -6,6 +6,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface SykdomUperiodisertAlertProps {
   vurderinger: LangvarigSykdomVurderingDto[] | undefined;
@@ -14,7 +15,9 @@ interface SykdomUperiodisertAlertProps {
 
 const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: SykdomUperiodisertAlertProps) => {
   const { readOnly, behandlingUuid, aksjonspunkter, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9301 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+  const aksjonspunkt9301 = aksjonspunkter.find(
+    akspunkt => akspunkt.definisjon === aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+  );
 
   const løsAksjonspunktUtenEndringer = () => {
     if (!vurderingBruktIAksjonspunkt) return;
@@ -25,7 +28,7 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
   const harVurderingFraTidligereBehandling = vurderinger?.some(v => v.behandlingUuid !== behandlingUuid);
 
   if (
-    isAksjonspunktOpen(aksjonspunkt9301?.status.kode) &&
+    isAksjonspunktOpen(aksjonspunkt9301?.status) &&
     vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' &&
     !readOnly &&
     vurderinger &&
@@ -45,7 +48,7 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
     );
   }
 
-  if (isAksjonspunktOpen(aksjonspunkt9301?.status.kode) && harVurderingFraTidligereBehandling && !readOnly) {
+  if (isAksjonspunktOpen(aksjonspunkt9301?.status) && harVurderingFraTidligereBehandling && !readOnly) {
     return (
       <Alert className="mb-4" variant="warning" size="small">
         Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
@@ -54,7 +57,7 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
     );
   }
 
-  if (isAksjonspunktOpen(aksjonspunkt9301?.status.kode) && !readOnly) {
+  if (isAksjonspunktOpen(aksjonspunkt9301?.status) && !readOnly) {
     return (
       <Alert className="mb-4" variant="warning" size="small">
         Vurder om barnet har en funksjonshemning eller en langvarig sykdom.

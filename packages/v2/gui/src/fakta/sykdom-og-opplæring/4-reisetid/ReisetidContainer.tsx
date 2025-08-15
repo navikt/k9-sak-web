@@ -8,23 +8,23 @@ import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState, useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
-  const [redigering, setRedigering] = useState(false);
+  const [redigerer, setRedigerer] = useState(false);
 
   useEffect(() => {
-    if (redigering) {
-      setRedigering(false);
+    if (redigerer) {
+      setRedigerer(false);
     }
   }, [vurdering.perioder]);
 
-  if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering) {
+  if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigerer) {
     return (
-      <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
-        <ReisetidForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
+      <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
+        <ReisetidForm vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer} />
       </Wrapper>
     );
   }
   return (
-    <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
+    <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
       <ReisetidFerdigvisning vurdering={vurdering} />
     </Wrapper>
   );
@@ -33,13 +33,13 @@ const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { 
 const Wrapper = ({
   children,
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   children: React.ReactNode;
   vurdering: ReisetidVurderingDto & { perioder: Period[] };
-  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
-  redigering: boolean;
+  setRedigerer: React.Dispatch<React.SetStateAction<boolean>>;
+  redigerer: boolean;
 }) => {
   const { readOnly } = useContext(SykdomOgOpplæringContext);
   const reisetidBeskrivelse = (
@@ -52,11 +52,16 @@ const Wrapper = ({
       title="Vurdering av reisetid"
       border
       contentAfterTitleRenderer={() => {
-        if (vurdering.reisetid.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
+        if (
+          vurdering.reisetid.resultat === 'MÅ_VURDERES' ||
+          redigerer ||
+          readOnly ||
+          !vurdering.reisetid.erTilVurdering
+        ) {
           return null;
         }
         return (
-          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigering(v => !v)}>
+          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigerer(v => !v)}>
             Rediger vurdering
           </Button>
         );

@@ -3,6 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling } from '@k9-sak-web/types';
 import FaktaSykdomOgOpplæringIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/FaktaSykdomOgOpplæringIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.SYKDOM_OG_OPPLAERING;
@@ -19,12 +20,14 @@ class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
   getEndepunkter = () => [];
 
   getKomponent = ({ readOnly, submitCallback, behandling, aksjonspunkter }) => {
+    const deepCopyProps = JSON.parse(JSON.stringify({ readOnly, submitCallback, behandling, aksjonspunkter }));
+    konverterKodeverkTilKode(deepCopyProps, false);
     return (
       <FaktaSykdomOgOpplæringIndex
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        behandlingUuid={behandling.uuid}
-        aksjonspunkter={aksjonspunkter}
+        submitCallback={deepCopyProps.submitCallback}
+        readOnly={deepCopyProps.readOnly}
+        behandlingUuid={deepCopyProps.behandling.uuid}
+        aksjonspunkter={deepCopyProps.aksjonspunkter}
       />
     );
   };

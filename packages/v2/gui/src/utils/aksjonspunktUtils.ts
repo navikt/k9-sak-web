@@ -1,3 +1,6 @@
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
 
 export const isAksjonspunktOpen = (statusKode?: string): boolean => statusKode === aksjonspunktStatus.OPPRETTET;
+export const harAksjonspunkt = (aksjonspunkter: AksjonspunktDto[], kode: string): boolean =>
+  !!aksjonspunkter.find(akspunkt => akspunkt.definisjon === kode);
