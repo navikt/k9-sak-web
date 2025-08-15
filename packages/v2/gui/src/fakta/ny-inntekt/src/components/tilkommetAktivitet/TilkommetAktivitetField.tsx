@@ -116,7 +116,7 @@ export const TilkommetAktivitetField = ({
     return tableRows;
   };
   return (
-    <VStack gap="4">
+    <VStack gap="space-16">
       <div className={styles.aktivitetContainer}>
         <Table size="small" className={styles.aktivitetTable}>
           <Table.Header>
@@ -150,7 +150,7 @@ export const TilkommetAktivitetField = ({
         ))}
         {skalViseBegrunnelse && (
           <>
-            <VStack gap="4">
+            <VStack gap="space-16">
               <Box marginBlock="10 0">
                 <RhfTextarea
                   control={control}

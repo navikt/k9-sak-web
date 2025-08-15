@@ -204,7 +204,7 @@ export const TilkommetAktivitetPanel = ({
         </Box>
       )}
       <Box marginBlock="10 0">
-        <HStack gap="4" justify="space-between">
+        <HStack gap="space-16" justify="space-between">
           <Heading size="small" level="3">
             Perioder med ny aktivitet
           </Heading>

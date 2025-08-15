@@ -67,7 +67,7 @@ export const PeriodesplittModal = ({
     <Modal width="500px" open={skalViseModal} onClose={lukkModal} aria-label="Del opp periode">
       <Modal.Header>Del opp periode</Modal.Header>
       <Modal.Body>
-        <VStack gap="4">
+        <VStack gap="space-16">
           <div>
             <Select label="Hvilken periode ønsker du å dele opp?" onChange={endreValgtPeriode} size="small">
               <option value={undefined}>Velg periode</option>

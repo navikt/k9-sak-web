@@ -44,7 +44,7 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
 
   return (
     <div>
-      <HStack gap="4">
+      <HStack gap="space-16">
         <div className={styles.datoVelger}>
           <DatePicker {...datepickerProps}>
             <DatePicker.Input {...inputProps} label="Opprett ny vurdering fra" size="small" />
