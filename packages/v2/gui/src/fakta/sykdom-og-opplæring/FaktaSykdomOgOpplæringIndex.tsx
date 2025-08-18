@@ -1,5 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { harÅpentAksjonspunkt, harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
@@ -8,7 +8,7 @@ import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
@@ -33,37 +33,16 @@ export type nødvendigOpplæringPayload = {
 };
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
-  if (
-    aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.VURDER_LANGVARIG_SYK &&
-        ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK)) {
     return tabCodes.SYKDOM;
   }
-  if (
-    aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.VURDER_OPPLÆRING && ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING)) {
     return tabCodes.OPPLÆRING;
   }
-  if (
-    aksjonspunkter.some(
-      ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_REISETID && ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)) {
     return tabCodes.REISETID;
   }
-
-  if (
-    aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.VURDER_INSTITUSJON && ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON)) {
     return tabCodes.INSTITUSJON;
   }
 
@@ -235,10 +214,10 @@ const SykdomOgOpplæring = () => {
   const { data: vilkår } = useVilkår(behandlingUuid);
   const [activeTab, setActiveTab] = useState(initActiveTab);
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
-  const harAksjonspunkt9300 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9300');
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
-  const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
-  const harAksjonspunkt9303 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9303');
+  const harAksjonspunkt9300 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
+  const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
+  const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
+  const harAksjonspunkt9303 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID);
 
   // Trenger en ekstra sjekk på institusjon fordi vilkåret kan vurderes automatisk, og da får vi aldri aksjonspunkt
   const institusjonVilkår = vilkår?.find(

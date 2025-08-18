@@ -9,10 +9,12 @@ import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import OppgittReisetid from './OppgittReisetid';
 import { resultatTilJaNei } from './utils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktErUtført } from '../../../utils/aksjonspunktUtils';
 interface ReisetidFormProps {
   vurdering: ReisetidVurderingDto & { perioder: Period[] };
-  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
-  redigering: boolean;
+  setRedigerer: React.Dispatch<React.SetStateAction<boolean>>;
+  redigerer: boolean;
 }
 
 const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] }) => {
@@ -26,8 +28,11 @@ const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] })
   };
 };
 
-const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProps) => {
-  const { løsAksjonspunkt9303, readOnly } = useContext(SykdomOgOpplæringContext);
+const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps) => {
+  const { løsAksjonspunkt9303, readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+
+  const harLøstNødvendigOpplæring = aksjonspunktErUtført(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
+  const lesemodus = readOnly || !harLøstNødvendigOpplæring;
   const formMethods = useForm<{
     begrunnelse: string;
     godkjent: string;
@@ -70,17 +75,18 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
               validate: value => (value?.length > 0 ? undefined : 'Vurdering er påkrevd'),
             })}
             size="small"
-            readOnly={readOnly}
+            disabled={lesemodus}
             error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
           />
           <Controller
             name="godkjent"
             rules={{ validate: value => (value?.length > 0 ? undefined : 'Vurdering er påkrevd') }}
+            disabled={!harLøstNødvendigOpplæring}
             render={({ field }) => (
               <RadioGroup
                 legend={vurderingGjelderEnkeltdag ? 'Innvilges reisedag?' : 'Innvilges reisedager?'}
                 {...field}
-                readOnly={readOnly}
+                readOnly={lesemodus}
                 size="small"
                 error={formMethods.formState.errors.godkjent?.message as string | undefined}
               >
@@ -102,16 +108,16 @@ const ReisetidForm = ({ vurdering, setRedigering, redigering }: ReisetidFormProp
                 name: 'periode.tom',
                 validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
               }}
-              readOnly={readOnly}
+              readOnly={lesemodus}
             />
           )}
-          {!readOnly && (
+          {!lesemodus && (
             <div className="flex gap-4">
               <Button variant="primary" onClick={submit} size="small">
                 Bekreft og fortsett
               </Button>
-              {redigering && (
-                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              {redigerer && (
+                <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                   Avbryt redigering
                 </Button>
               )}

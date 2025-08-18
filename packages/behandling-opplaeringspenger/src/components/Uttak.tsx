@@ -71,6 +71,16 @@ export default ({
     return <></>;
   };
 
+  /*
+   * Midlertidig fiks for å oppdatere behandling etter å ha fullført aksjonspunkt. Ifm med
+   * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
+   * tilpasses til å kunne trigge oppdatering av behandling "on-demand"
+   */
+  const oppdaterBehandling = () => {
+    // FIXME temp fiks for å håndtere oppdatering av behandling
+    window.location.reload();
+  };
+
   return (
     <Uttak
       containerData={{
@@ -88,6 +98,7 @@ export default ({
         erOverstyrer: false, // Overstyring er ikke implementert for Pleiepenger
         readOnly,
         vurderOverlappendeSakComponent: VurderOverlappendeSakComponent(),
+        oppdaterBehandling,
       }}
     />
   );
