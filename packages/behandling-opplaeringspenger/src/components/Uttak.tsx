@@ -63,6 +63,7 @@ export default ({
             behandling={deepCopyProps.behandling}
             aksjonspunkt={deepCopyProps.aksjonspunkt}
             readOnly={readOnly}
+            oppdaterBehandling={oppdaterBehandling}
           />
         </VStack>
       );
