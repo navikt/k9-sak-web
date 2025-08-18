@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { ScissorsIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, Heading, Label } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
@@ -170,15 +169,15 @@ export const TilkommetAktivitetPanel = ({
     const andelerFraField = fieldSomSplittes.inntektsforhold || [];
     const splittDel1 = {
       inntektsforhold: andelerFraField.map((andel, index) => mapInntektsforhold(andel, true, periodeFieldIndex, index)),
-      fom: nyePerioder[0].fom,
-      tom: nyePerioder[0].tom,
+      fom: nyePerioder[0]?.fom ?? '',
+      tom: nyePerioder[0]?.tom ?? '',
     };
     const splittDel2 = {
       inntektsforhold: andelerFraField.map((andel, index) =>
         mapInntektsforhold(andel, false, periodeFieldIndex, index),
       ),
-      fom: nyePerioder[1].fom,
-      tom: nyePerioder[1].tom,
+      fom: nyePerioder[1]?.fom ?? '',
+      tom: nyePerioder[1]?.tom ?? '',
     };
     remove(periodeFieldIndex);
     insert(periodeFieldIndex, [splittDel1, splittDel2]);
@@ -196,25 +195,20 @@ export const TilkommetAktivitetPanel = ({
     <>
       {getAksjonspunktText()}
       {!!vurderInntektsforholdPerioder && erAksjonspunktÅpent && (
-        <>
-          <VerticalSpacer eightPx />
+        <Box.New marginBlock="2 0">
           <Alert size="small" variant="info" title="">
             Inntekter som kommer til underveis i en løpende pleiepengeperiode er ikke en del av søkers
             beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om pleiepengene skal
             graderes mot den nye inntekten.
           </Alert>
-        </>
+        </Box.New>
       )}
-      <VerticalSpacer fourtyPx />
-
-      <FlexContainer>
-        <FlexRow className={styles.tittelRad}>
-          <FlexColumn>
-            <Heading size="small" level="3">
-              Perioder med ny aktivitet
-            </Heading>
-          </FlexColumn>
-          <FlexColumn className={styles.modalKnapp}>
+      <Box.New marginBlock="10 0">
+        <HStack gap="space-16" justify="space-between">
+          <Heading size="small" level="3">
+            Perioder med ny aktivitet
+          </Heading>
+          <div className={styles.modalKnapp}>
             <Button
               variant="tertiary"
               loading={false}
@@ -226,9 +220,9 @@ export const TilkommetAktivitetPanel = ({
             >
               Del opp periode
             </Button>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
+          </div>
+        </HStack>
+      </Box.New>
       {modalErÅpen && (
         <PeriodesplittModal
           fields={sortedFields}
