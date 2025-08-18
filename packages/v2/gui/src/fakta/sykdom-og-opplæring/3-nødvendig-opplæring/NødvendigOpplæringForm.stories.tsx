@@ -61,8 +61,8 @@ export const Avslagsårsaker: Story = {
       vurdertAv: 'testbruker',
       vurdertTidspunkt: '2025-02-14T10:00:00Z',
     },
-    setRedigering: action('setRedigering'),
-    redigering: true,
+    setRedigerer: action('setRedigerer'),
+    redigerer: true,
   },
   play: async ({ canvas }) => {
     const harViFåttLegeerklæringGroup = canvas.getByRole('group', {

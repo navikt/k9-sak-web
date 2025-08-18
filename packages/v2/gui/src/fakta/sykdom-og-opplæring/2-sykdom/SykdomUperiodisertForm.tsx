@@ -38,12 +38,12 @@ const defaultValues = (vurdering: UperiodisertSykdom) => {
 
 const SykdomUperiodisertForm = ({
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   vurdering: UperiodisertSykdom;
-  setRedigering: (redigering: boolean) => void;
-  redigering: boolean;
+  setRedigerer: (redigerer: boolean) => void;
+  redigerer: boolean;
 }) => {
   const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm({
@@ -139,9 +139,9 @@ const SykdomUperiodisertForm = ({
           <Button variant="primary" type="submit" size="small">
             Bekreft og fortsett
           </Button>
-          {redigering && (
+          {redigerer && (
             <div>
-              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                 Avbryt redigering
               </Button>
             </div>

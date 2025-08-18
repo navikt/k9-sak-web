@@ -43,19 +43,18 @@ export const DetailView = ({
 };
 
 export const Periodevisning = ({ perioder }: { perioder: Period[] }) => {
+  if (perioder.length === 0) {
+    return null;
+  }
+
   return (
     <div data-testid="Periode" className="flex gap-2">
-      <CalendarIcon fontSize="20" />
-      {perioder.map(periode => {
-        const enkeltdag = periode.asListOfDays().length === 1;
-        return (
-          <div key={periode.fom + periode.tom}>
-            <BodyShort size="small">
-              {enkeltdag ? periode.prettifyPeriod().split(' - ')[0] : periode.prettifyPeriod()}
-            </BodyShort>
-          </div>
-        );
-      })}
+      <CalendarIcon fontSize="20" className="flex-shrink-0" />
+      {perioder.length === 1 ? (
+        <BodyShort size="small">{perioder[0]?.prettifyPeriod()}</BodyShort>
+      ) : (
+        <BodyShort size="small">{perioder.map(periode => periode.prettifyPeriod()).join(', ')}</BodyShort>
+      )}
     </div>
   );
 };
