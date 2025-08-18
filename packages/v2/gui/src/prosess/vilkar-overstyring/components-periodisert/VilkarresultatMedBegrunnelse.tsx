@@ -1,14 +1,14 @@
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
   k9_sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Box } from '@navikt/ds-react';
 import React, { type FunctionComponent } from 'react';
-import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { type VilkarresultatMedBegrunnelseState } from './FormState';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -65,10 +65,10 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   return (
     <>
       {skalViseBegrunnelse && (
-        <Box marginBlock={'0 2'}>
+        <Box.New marginBlock={'0 2'}>
           <VilkarBegrunnelse isReadOnly={readOnly} />
           <VurdertAv ident={opprettetAv} />
-        </Box>
+        </Box.New>
       )}
       <VilkarResultPickerPeriodisertRHF
         customVilkarOppfyltText={customVilkarOppfyltText ?? 'Vilkåret er oppfylt'}

@@ -32,7 +32,7 @@ export const TopplinjeAlerts = ({ errors, onErrorDismiss }: TopplinjeAlertsProps
       <ErrorAlert error={err} onClose={() => onErrorDismiss(err)} key={`err-${err.errorId}`} />
     ));
     return (
-      <VStack gap="4" padding="8">
+      <VStack gap="space-16" padding="8">
         {errorAlerts}
       </VStack>
     );

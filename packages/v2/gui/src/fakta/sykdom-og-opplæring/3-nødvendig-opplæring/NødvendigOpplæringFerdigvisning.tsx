@@ -29,7 +29,6 @@ const NødvendigOpplæringFerdigvisning = ({
     <div className="flex flex-col gap-6">
       <LabelledContent
         label="Har vi fått legeerklæring?"
-        description="Legeerklæringen skal dokumentere om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet."
         size="small"
         content={
           <BodyShort size="small">
@@ -43,7 +42,7 @@ const NødvendigOpplæringFerdigvisning = ({
         </Heading>
         <Periodevisning perioder={vurdering.perioder} />
       </div>
-      <div className="border-none bg-border-subtle h-[2px]" />
+      <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
       <div>
         <LabelledContent
           label={

@@ -33,10 +33,10 @@ const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePer
 
 const getIconForVilkarStatus = (vilkarStatus: string, harAktivtAksjonspunkt: boolean) => {
   if (vilkarStatus === vilkårStatus.OPPFYLT) {
-    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
   if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
-    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
   if (vilkarStatus === vilkårStatus.IKKE_VURDERT && harAktivtAksjonspunkt) {
     return <AksjonspunktIkon size="small" />;

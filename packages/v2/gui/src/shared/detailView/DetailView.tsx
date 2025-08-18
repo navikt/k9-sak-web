@@ -36,26 +36,25 @@ export const DetailView = ({
       </div>
       {perioder && <div className="mt-1">{<Periodevisning perioder={perioder} />}</div>}
       {belowTitleContent && <div className="mt-1">{belowTitleContent}</div>}
-      {border && <div className="border-none bg-border-subtle h-[2px] mt-4" />}
+      {border && <div className="border-none bg-ax-border-neutral-subtle h-[2px] mt-4" />}
       {children}
     </div>
   );
 };
 
 export const Periodevisning = ({ perioder }: { perioder: Period[] }) => {
+  if (perioder.length === 0) {
+    return null;
+  }
+
   return (
     <div data-testid="Periode" className="flex gap-2">
-      <CalendarIcon fontSize="20" />
-      {perioder.map(periode => {
-        const enkeltdag = periode.asListOfDays().length === 1;
-        return (
-          <div key={periode.fom + periode.tom}>
-            <BodyShort size="small">
-              {enkeltdag ? periode.prettifyPeriod().split(' - ')[0] : periode.prettifyPeriod()}
-            </BodyShort>
-          </div>
-        );
-      })}
+      <CalendarIcon fontSize="20" className="flex-shrink-0" />
+      {perioder.length === 1 ? (
+        <BodyShort size="small">{perioder[0]?.prettifyPeriod()}</BodyShort>
+      ) : (
+        <BodyShort size="small">{perioder.map(periode => periode.prettifyPeriod()).join(', ')}</BodyShort>
+      )}
     </div>
   );
 };

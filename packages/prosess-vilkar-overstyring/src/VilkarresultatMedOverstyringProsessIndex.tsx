@@ -28,10 +28,10 @@ const intl = createIntl(
 
 const getIconForVilkarStatus = (vilkarStatusKode: string, harAktivtAksjonspunkt: boolean) => {
   if (vilkarStatusKode === vilkarUtfallType.OPPFYLT) {
-    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
   if (vilkarStatusKode === vilkarUtfallType.IKKE_OPPFYLT) {
-    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
   if (vilkarStatusKode === vilkarUtfallType.IKKE_VURDERT && harAktivtAksjonspunkt) {
     return <AksjonspunktIkon size="small" />;

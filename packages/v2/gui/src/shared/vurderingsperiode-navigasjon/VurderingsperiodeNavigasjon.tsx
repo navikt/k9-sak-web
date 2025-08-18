@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Heading } from '@navikt/ds-react';
-import { PeriodeRad } from './PeriodeRad';
-import type { Period } from '@navikt/ft-utils';
 import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
   type k9_kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
-  k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
+  k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { Box, Heading } from '@navikt/ds-react';
+import type { Period } from '@navikt/ft-utils';
+import React, { useEffect, useMemo, useState } from 'react';
+import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
 
 export type ResultatType =
@@ -119,7 +119,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   };
 
   return (
-    <Box className="min-w-[400px]">
+    <Box.New className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
         {title}
       </Heading>
@@ -149,7 +149,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </ul>
         </>
       )}
-    </Box>
+    </Box.New>
   );
 };
 

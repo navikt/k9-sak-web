@@ -7,7 +7,7 @@ import {
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -95,8 +95,8 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
   });
 
   return (
-    <Form<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
-      <Box marginBlock="7 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
+    <RhfForm<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
+      <Box.New marginBlock="7 0" borderRadius="large" borderWidth="1">
         <Table>
           <Table.Header>
             <Table.Row>
@@ -141,9 +141,9 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
-                        <Box marginInline="2 0" padding="6" background="bg-default">
+                        <Box.New marginInline="2 0" padding="6">
                           <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
-                        </Box>
+                        </Box.New>
                       </Bleed>
                     )
                   }
@@ -153,7 +153,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                   defaultOpen={harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>
-                    <HStack gap="2" align="center">
+                    <HStack gap="space-8" align="center">
                       {harAvvik ? (
                         <ExclamationmarkTriangleFillIcon fontSize="1.5rem" className={styles.exclamationmarkIcon} />
                       ) : (
@@ -189,7 +189,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
             })}
           </Table.Body>
         </Table>
-      </Box>
-    </Form>
+      </Box.New>
+    </RhfForm>
   );
 };

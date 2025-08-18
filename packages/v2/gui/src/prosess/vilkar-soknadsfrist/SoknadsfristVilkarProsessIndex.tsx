@@ -24,10 +24,10 @@ const getIconForPeriode = (vilkarStatus: string, erOverstyrt: boolean, harÅpent
     return <AksjonspunktIkon size="small" />;
   }
   if (vilkarStatus === vilkårStatus.OPPFYLT) {
-    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
   if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
-    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
   return null;
 };

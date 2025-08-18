@@ -38,26 +38,26 @@ const NattevåksperiodeVurderingsdetaljer = ({
         />
       )}
     >
-      <Box marginBlock="6 0">
+      <Box.New marginBlock="6 0">
         <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
-      </Box>
-      <Box marginBlock="8 0">
+      </Box.New>
+      <Box.New marginBlock="8 0">
         <LabelledContent
           label="Vurdering av om det er behov for nattevåk"
           content={<span className="whitespace-pre-wrap">{nattevåksperiode.begrunnelse}</span>}
           indentContent
         />
         <VurdertAv ident={opprettetAv} date={opprettetTidspunkt} />
-      </Box>
-      <Box marginBlock="8 0">
+      </Box.New>
+      <Box.New marginBlock="8 0">
         <LabelledContent
           label="Er det behov for nattevåk?"
           content={nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}
         />
-      </Box>
-      <Box marginBlock="8 0">
+      </Box.New>
+      <Box.New marginBlock="8 0">
         <LabelledContent label="Perioder vurdert" content={nattevåksperiode.periode.prettifyPeriod()} />
-      </Box>
+      </Box.New>
     </DetailView>
   );
 };

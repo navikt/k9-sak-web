@@ -1,8 +1,11 @@
-interface Perioder {
+import { Kode } from './KompletthetData';
+
+export interface Perioder {
   periode: string;
   fortsett: boolean;
   begrunnelse?: string;
   kode: string;
+  vurdering?: Kode;
 }
 
 interface AksjonspunktRequestPayload {

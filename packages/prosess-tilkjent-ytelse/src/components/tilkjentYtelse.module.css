@@ -6,7 +6,7 @@
 /* our custom classes overrule the styles for selected events,
    so lets define a new style for the selected events */
 .vis-item.vis-selected {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   border-color: black;
   box-shadow: 0 0 10px gray;
   color: black;
@@ -20,7 +20,7 @@
   animation-duration: 2s;
   animation-name: fadein;
   animation-timing-function: ease-out;
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   max-height: 1600px;
   position: relative;
   transition: all 2s;
@@ -86,14 +86,14 @@
 }
 
 .detailsPeriode {
-  background-color: var(--a-green-100);
+  background-color: var(--ax-success-200);
   margin-right: 8px;
   max-width: 500px;
   padding: 16px;
   width: 500px;
 }
 
-:global(.navds-tag).tilkjentYtelseTag {
+:global(.aksel-tag).tilkjentYtelseTag {
   border-radius: 0.25rem !important;
   border: 1px solid var(--border-default, rgb(2 20 49 / 49%)) !important;
   background: var(--surface-neutral-subtle, rgb(18 43 68 / 8%)) !important;

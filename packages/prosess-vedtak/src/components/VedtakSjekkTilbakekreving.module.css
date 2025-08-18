@@ -2,7 +2,7 @@
   margin-bottom: 1.4375rem;
 }
 
-.aksjonspunktAlert :global(.navds-alert__wrapper) {
+.aksjonspunktAlert :global(.aksel-alert__wrapper) {
   flex: 1;
   max-width: none;
 }

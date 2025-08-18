@@ -1,11 +1,11 @@
 // Funksjon for å rendre gitt react node og returnere tekst innhaldet frå den. (bubble-wrapper element)
 // Brukt til å samanlikne tekst i gammalt historikk innslag med nytt, sikre at nytt innslag har all info frå gammalt.
-import { createRoot } from 'react-dom/client';
-import { flushSync } from 'react-dom';
-import { MemoryRouter } from 'react-router';
-import React, { ReactNode, JSX } from 'react';
-import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
 import { k9_kodeverk_historikk_HistorikkinnslagType as HistorikkinnslagTypeEnum } from '@k9-sak-web/backend/k9sak/generated';
+import { JSX, ReactNode } from 'react';
+import { flushSync } from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import { MemoryRouter } from 'react-router';
+import { EtablerteUlikeHistorikkinnslagTyper } from './historikkTypes.js';
 
 class HistorikkV1V2Sammenligningsfeil extends Error {
   public readonly opprettetTidspunkt: string;
@@ -42,7 +42,7 @@ const extractBubbleWrapperStrings = async (node: ReactNode): Promise<string[]> =
     const el = <MemoryRouter>{node}</MemoryRouter>;
     root.render(el);
   });
-  const bubble = div.querySelector('.navds-chat__bubble-wrapper');
+  const bubble = div.querySelector('.aksel-chat__bubble-wrapper');
   if (bubble instanceof HTMLElement) {
     // If the bubble has expandable (BubbleText) components, click the expand button so that we compare the full text.
     const expandButtons = () =>

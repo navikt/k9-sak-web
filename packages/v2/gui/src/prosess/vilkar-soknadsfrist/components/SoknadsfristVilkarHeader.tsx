@@ -60,13 +60,13 @@ const SoknadsfristVilkarHeader = ({
   return (
     <>
       <>
-        <HStack gap="4" align="center">
+        <HStack gap="space-16" align="center">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
             <>
               {originalErVilkarOk ? (
-                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
               ) : (
-                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
               )}
             </>
           )}

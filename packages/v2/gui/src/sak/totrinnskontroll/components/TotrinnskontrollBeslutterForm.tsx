@@ -2,7 +2,7 @@ import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto }
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import type { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { ariaCheck } from '@navikt/ft-form-validators';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@navikt/k9-sak-typescript-client';
@@ -98,7 +98,7 @@ export const TotrinnskontrollBeslutterForm = ({
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={onSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
       {!readOnly && (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen>
@@ -144,7 +144,7 @@ export const TotrinnskontrollBeslutterForm = ({
           Send til saksbehandler
         </Button>
       </div>
-    </Form>
+    </RhfForm>
   );
 };
 
