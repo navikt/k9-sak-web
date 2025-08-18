@@ -3,6 +3,9 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
+import { VStack } from '@navikt/ds-react';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSakIndex.js';
 
 interface UttakProps {
   behandling: Pick<Behandling, 'versjon' | 'uuid' | 'status'>;
@@ -40,6 +43,35 @@ export default ({
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
 
+  const VurderOverlappendeSakComponent = () => {
+    const aksjonspunkt = aksjonspunkter.find(
+      aksjonspunkt => aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE === aksjonspunkt.definisjon.kode,
+    );
+
+    if (aksjonspunkt) {
+      const deepCopyProps = JSON.parse(
+        JSON.stringify({
+          behandling: behandling,
+          aksjonspunkt: aksjonspunkt,
+        }),
+      );
+      konverterKodeverkTilKode(deepCopyProps, false);
+
+      return (
+        <VStack>
+          <VurderOverlappendeSakIndex
+            behandling={deepCopyProps.behandling}
+            aksjonspunkt={deepCopyProps.aksjonspunkt}
+            readOnly={readOnly}
+            oppdaterBehandling={oppdaterBehandling}
+          />
+        </VStack>
+      );
+    }
+
+    return <></>;
+  };
+
   /*
    * Midlertidig fiks for å oppdatere behandling etter å ha fullført aksjonspunkt. Ifm med
    * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
@@ -66,6 +98,7 @@ export default ({
         virkningsdatoUttakNyeRegler,
         erOverstyrer: false, // Overstyring er ikke implementert for Pleiepenger
         readOnly,
+        vurderOverlappendeSakComponent: VurderOverlappendeSakComponent(),
         oppdaterBehandling,
       }}
     />
