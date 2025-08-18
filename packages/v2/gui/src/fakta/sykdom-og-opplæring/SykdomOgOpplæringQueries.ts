@@ -13,7 +13,7 @@ export const useSykdomBackendClient = () => {
   const k9SakClient = getK9SakClient();
   return new SykdomOgOpplæringBackendClient(k9SakClient);
 };
-
+const MAX_RETRIES = 3;
 export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
   const backendClient = useSykdomBackendClient();
 
@@ -24,6 +24,7 @@ export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => vo
   >({
     mutationFn: requestBody => backendClient.opprettSykdomsvurdering(requestBody),
     onSuccess,
+    retry: MAX_RETRIES,
   });
 };
 
@@ -33,6 +34,7 @@ export const useVilkår = (behandlingUuid: string) => {
   return useQuery({
     queryKey: ['vilkår', behandlingUuid],
     queryFn: () => backendClient.getVilkår(behandlingUuid),
+    retry: MAX_RETRIES,
   });
 };
 
@@ -43,6 +45,7 @@ export const useLangvarigSykVurderingerFagsak = (behandlingUuid: string) => {
     queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid],
     queryFn: () => backendClient.hentLangvarigSykVurderingerFagsak(behandlingUuid),
     enabled: !!behandlingUuid,
+    retry: MAX_RETRIES,
   });
 };
 
@@ -52,6 +55,7 @@ export const useVurdertLangvarigSykdom = (behandlingUuid: string) => {
   return useQuery({
     queryKey: ['vurdertLangvarigSykdom', behandlingUuid],
     queryFn: () => backendClient.hentVurdertLangvarigSykdom(behandlingUuid),
+    retry: MAX_RETRIES,
   });
 };
 
@@ -63,6 +67,7 @@ export const useInstitusjonInfo = (behandlingUuid: string) => {
     queryKey: ['institusjonInfo', behandlingUuid],
     queryFn: () => backendClient.getInstitusjonInfo(behandlingUuid),
     enabled: !!behandlingUuid,
+    retry: MAX_RETRIES,
   });
 };
 
@@ -72,6 +77,7 @@ export const useAlleInstitusjoner = () => {
   return useQuery({
     queryKey: ['alleInstitusjoner'],
     queryFn: () => backendClient.hentAlleInstitusjoner(),
+    retry: MAX_RETRIES,
   });
 };
 
@@ -80,6 +86,7 @@ export const useHentOrganisasjonsnummer = (organisasjonsnummer: string) => {
 
   return useMutation<GetBrevMottakerinfoEregResponse, K9SakApiError, GetBrevMottakerinfoEregData['requestBody']>({
     mutationFn: () => backendClient.hentOrganisasjonsnummer(organisasjonsnummer),
+    retry: MAX_RETRIES,
   });
 };
 
@@ -90,6 +97,7 @@ export const useVurdertOpplæring = (behandlingUuid: string) => {
   return useQuery({
     queryKey: ['vurdertOpplæring', behandlingUuid],
     queryFn: () => backendClient.getVurdertOpplæring(behandlingUuid),
+    retry: MAX_RETRIES,
   });
 };
 
@@ -99,5 +107,6 @@ export const useVurdertReisetid = (behandlingUuid: string) => {
   return useQuery({
     queryKey: ['vurdertReisetid', behandlingUuid],
     queryFn: () => backendClient.getVurdertReisetid(behandlingUuid),
+    retry: MAX_RETRIES,
   });
 };

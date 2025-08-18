@@ -1,5 +1,5 @@
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { harÅpentAksjonspunkt, harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
+import { aksjonspunktCodes, type AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harÅpentAksjonspunkt, harAksjonspunkt, aksjonspunktErUtført } from '../../utils/aksjonspunktUtils.js';
 import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
@@ -11,14 +11,25 @@ import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
-import { useVilkår } from './SykdomOgOpplæringQueries.js';
+import {
+  useInstitusjonInfo,
+  useVurdertReisetid,
+  useVilkår,
+  useVurdertOpplæring,
+  useVurdertLangvarigSykdom,
+} from './SykdomOgOpplæringQueries.js';
 import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   k9_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { CheckmarkIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { DelvisOppfyltIkon } from '../../shared/DelvisOppfyltIkon.js';
 
 export type nødvendigOpplæringPayload = {
   perioder: {
@@ -213,7 +224,6 @@ const SykdomOgOpplæring = () => {
   const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
   const { data: vilkår } = useVilkår(behandlingUuid);
   const [activeTab, setActiveTab] = useState(initActiveTab);
-  const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   const harAksjonspunkt9300 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
   const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
   const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
@@ -235,22 +245,22 @@ const SykdomOgOpplæring = () => {
           <Tabs.Tab
             value={tabCodes.INSTITUSJON}
             label="Institusjon"
-            icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
+            icon={<InstitusjonIcon aksjonspunktKode={aksjonspunktCodes.VURDER_INSTITUSJON} />}
           />
           <Tabs.Tab
             value={tabCodes.SYKDOM}
             label="Sykdom"
-            icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />}
+            icon={<SykdomIcon aksjonspunktKode={aksjonspunktCodes.VURDER_LANGVARIG_SYK} />}
           />
           <Tabs.Tab
             value={tabCodes.OPPLÆRING}
             label="Nødvendig opplæring"
-            icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
+            icon={<OpplæringIcon aksjonspunktKode={aksjonspunktCodes.VURDER_OPPLÆRING} />}
           />
           <Tabs.Tab
             value={tabCodes.REISETID}
             label="Reisetid"
-            icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
+            icon={<ReisetidIcon aksjonspunktKode={aksjonspunktCodes.VURDER_REISETID} />}
           />
         </Tabs.List>
         <Tabs.Panel value={tabCodes.INSTITUSJON} lazy={false}>
@@ -300,6 +310,106 @@ const SykdomOgOpplæring = () => {
       </Tabs>
     </div>
   );
+};
+
+const InstitusjonIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
+  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { data: institusjonInfo } = useInstitusjonInfo(behandlingUuid);
+
+  if (!institusjonInfo) {
+    return null;
+  }
+
+  return (
+    <Icon
+      aksjonspunktKode={aksjonspunktKode}
+      godkjent={institusjonInfo.vurderinger.map(
+        v =>
+          v.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT ||
+          v.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK,
+      )}
+    />
+  );
+};
+
+const SykdomIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
+  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { data: sykdomInfo } = useVurdertLangvarigSykdom(behandlingUuid);
+
+  if (!sykdomInfo) {
+    return null;
+  }
+
+  return (
+    <Icon
+      aksjonspunktKode={aksjonspunktKode}
+      godkjent={[sykdomInfo.resultat === LangvarigSykdomVurderingDtoResultat.GODKJENT]}
+    />
+  );
+};
+
+const OpplæringIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
+  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { data: opplæringInfo } = useVurdertOpplæring(behandlingUuid);
+
+  if (!opplæringInfo) {
+    return null;
+  }
+
+  return (
+    <Icon
+      aksjonspunktKode={aksjonspunktKode}
+      godkjent={opplæringInfo.vurderinger.map(
+        v =>
+          v.resultat === OpplæringVurderingDtoResultat.GODKJENT ||
+          v.resultat === OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID,
+      )}
+    />
+  );
+};
+
+const ReisetidIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
+  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { data: reisetidInfo } = useVurdertReisetid(behandlingUuid);
+
+  if (!reisetidInfo) {
+    return null;
+  }
+
+  return (
+    <Icon
+      aksjonspunktKode={aksjonspunktKode}
+      godkjent={reisetidInfo.vurderinger.map(v => v.reisetid.resultat === ReisetidVurderingDtoResultat.GODKJENT)}
+    />
+  );
+};
+
+const Icon = ({ aksjonspunktKode, godkjent }: { aksjonspunktKode: AksjonspunktCodes; godkjent: boolean[] }) => {
+  const { aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktKode);
+  const aksjonspunktUtført = aksjonspunktErUtført(aksjonspunkter, aksjonspunktKode);
+
+  if (aksjonspunktErÅpent) {
+    return <AksjonspunktIkon />;
+  }
+
+  if (aksjonspunktUtført && godkjent.length === 0) {
+    return null;
+  }
+
+  if (aksjonspunktUtført && godkjent.every(g => g)) {
+    return <CheckmarkIcon className="text-ax-success-600" />;
+  }
+
+  if (aksjonspunktUtført && godkjent.some(g => g) && godkjent.some(g => !g)) {
+    return <DelvisOppfyltIkon />;
+  }
+
+  if (aksjonspunktUtført && godkjent.every(g => !g)) {
+    return <XMarkOctagonFillIcon className="text-ax-danger-600" />;
+  }
+
+  return null;
 };
 
 export default FaktaSykdomOgOpplæringIndex;
