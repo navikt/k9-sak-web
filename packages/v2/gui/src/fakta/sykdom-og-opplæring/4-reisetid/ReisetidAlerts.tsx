@@ -42,14 +42,6 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     );
   }
 
-  if (aksjonspunktErÅpent && !readOnly) {
-    return (
-      <Alert variant="warning" size="small" className="mb-4">
-        Vurder reisetid på andre dager enn søker har opplæring.
-      </Alert>
-    );
-  }
-
   if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && !readOnly && førsteVurderingIListen) {
     return (
       <Alert variant="info" size="small" className="mb-4 p-4">
@@ -62,6 +54,15 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
       </Alert>
     );
   }
+
+  if (aksjonspunktErÅpent && !readOnly) {
+    return (
+      <Alert variant="warning" size="small" className="mb-4">
+        Vurder reisetid på andre dager enn søker har opplæring.
+      </Alert>
+    );
+  }
+
   return null;
 };
 
