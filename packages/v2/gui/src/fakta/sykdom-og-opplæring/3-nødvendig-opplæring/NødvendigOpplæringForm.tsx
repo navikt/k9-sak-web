@@ -120,7 +120,7 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
 
 const onSubmit = (data: NødvendigOpplæringFormFields) => {
   const perioder = data.perioder.map(periode => ({
-    begrunnelse: data.begrunnelse,
+    begrunnelse: data.begrunnelse || null,
     resultat: nødvendigOpplæringTilResultat(data.harNødvendigOpplæring),
     avslagsårsak: data.avslagsårsak || null,
     periode: {
@@ -130,7 +130,7 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
   }));
 
   const perioderUtenNødvendigOpplæring = data.perioderUtenNødvendigOpplæring.map(periode => ({
-    begrunnelse: data.begrunnelse,
+    begrunnelse: data.begrunnelse || null,
     resultat: periode.resultat,
     avslagsårsak: periode.avslagsårsak || null,
     periode: {
