@@ -289,7 +289,7 @@ export const OppholdInntektOgPerioderForm = ({
         <GrunnlagForAutomatiskVurdering personopplysninger={medlemskap.personopplysninger} soknad={soknad} />
       )}
 
-      <Box marginBlock="5 0">
+      <Box.New marginBlock="5 0">
         {!erAutomatiskVurdert && (
           <Button
             variant="primary"
@@ -300,7 +300,7 @@ export const OppholdInntektOgPerioderForm = ({
             Bekreft og fortsett
           </Button>
         )}
-      </Box>
+      </Box.New>
     </RhfForm>
   );
 };

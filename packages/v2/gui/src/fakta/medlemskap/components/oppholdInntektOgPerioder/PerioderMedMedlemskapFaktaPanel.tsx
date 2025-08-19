@@ -70,7 +70,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
       title="Perioder med medlemskap"
       merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE]}
     >
-      <VStack gap="4">
+      <VStack gap="space-16">
         <Table>
           <Table.Header>
             <Table.Row>
@@ -101,7 +101,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
             })}
           </Table.Body>
         </Table>
-        <VStack gap="4">
+        <VStack gap="space-16">
           {hasPeriodeAksjonspunkt && (
             <RhfRadioGroup
               control={control}

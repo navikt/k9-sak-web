@@ -75,15 +75,8 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
     periode => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null,
   );
   return (
-    <Box
-      marginBlock="4 0"
-      background="surface-default"
-      padding="4"
-      borderWidth="1"
-      borderColor="border-subtle"
-      borderRadius="medium"
-    >
-      <VStack gap="5">
+    <Box.New marginBlock="4 0" padding="4" borderWidth="1" borderRadius="medium">
+      <VStack gap="space-20">
         <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
 
         <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
@@ -107,7 +100,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
 
         {submittable && (
           <>
-            <HStack gap="4">
+            <HStack gap="space-16">
               <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={!formState.isDirty}>
                 Oppdater
               </Button>
@@ -123,7 +116,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
           </>
         )}
       </VStack>
-    </Box>
+    </Box.New>
   );
 };
 

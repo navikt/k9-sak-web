@@ -54,7 +54,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
       {erEosBorger && (
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
-          <Box marginBlock="1 0">
+          <Box.New marginBlock="1 0">
             <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
@@ -77,13 +77,13 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
                 },
               ]}
             />
-          </Box>
+          </Box.New>
         </ArrowBox>
       )}
       {erEosBorger === false && (
         <ArrowBox alignOffset={117}>
           <Detail>Lovlig opphold</Detail>
-          <Box marginBlock="1 0">
+          <Box.New marginBlock="1 0">
             <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
@@ -106,7 +106,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
                 },
               ]}
             />
-          </Box>
+          </Box.New>
         </ArrowBox>
       )}
     </FaktaGruppe>
