@@ -6,7 +6,7 @@ import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
-import { RadioGroupPanel } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -49,7 +49,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
   alleMerknaderFraBeslutter,
 }) => {
   const { kodeverkNavnFraKode, hentKodeverkForKode } = useKodeverkContext();
-  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { getValues, control } = useFormContext<OppholdInntektOgPerioderFormState>();
   const kodeverkVurderingTypes: KodeverkObject[] = hentKodeverkForKode(
     KodeverkType.MEDLEMSKAP_MANUELL_VURDERING_TYPE,
   ) as KodeverkObject[];
@@ -103,8 +103,9 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
         </Table>
         <VStack gap="4">
           {hasPeriodeAksjonspunkt && (
-            <RadioGroupPanel
-              name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType.kode"
+            <RhfRadioGroup
+              control={control}
+              name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType"
               validate={[required]}
               isReadOnly={readOnly}
               isEdited={isPeriodAksjonspunktClosed}

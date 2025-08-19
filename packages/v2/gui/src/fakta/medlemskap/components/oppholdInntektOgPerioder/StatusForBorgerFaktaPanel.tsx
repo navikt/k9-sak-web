@@ -3,7 +3,7 @@ import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Box, Detail } from '@navikt/ds-react';
-import { RadioGroupPanel } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -26,13 +26,14 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
   readOnly,
   alleMerknaderFraBeslutter,
 }) => {
-  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { getValues, control } = useFormContext<OppholdInntektOgPerioderFormState>();
   const {
     oppholdInntektOgPeriodeForm: { erEosBorger, isBorgerAksjonspunktClosed, apKode },
   } = getValues();
   return (
     <FaktaGruppe merknaderFraBeslutter={apKode ? alleMerknaderFraBeslutter[apKode] : undefined}>
-      <RadioGroupPanel
+      <RhfRadioGroup
+        control={control}
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
         isReadOnly={readOnly}
@@ -54,7 +55,8 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
           <Box marginBlock="1 0">
-            <RadioGroupPanel
+            <RhfRadioGroup
+              control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
               validate={[required]}
               isReadOnly={readOnly}
@@ -82,7 +84,8 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         <ArrowBox alignOffset={117}>
           <Detail>Lovlig opphold</Detail>
           <Box marginBlock="1 0">
-            <RadioGroupPanel
+            <RhfRadioGroup
+              control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
               validate={[required]}
               isReadOnly={readOnly}

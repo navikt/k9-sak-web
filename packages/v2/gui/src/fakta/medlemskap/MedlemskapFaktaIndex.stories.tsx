@@ -1,18 +1,18 @@
-import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  AvklartPersonstatusOrginalPersonstatus,
-  BehandlingDtoType,
-  MedlemskapPerioderDtoDekningType,
-  MedlemskapPerioderDtoKildeType,
-  PersonadresseDtoAdresseType,
-  PersonopplysningDtoRegion,
-  PersonopplysningDtoSivilstand,
-} from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
+  k9_kodeverk_person_PersonstatusType as AvklartPersonstatusOrginalPersonstatus,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  k9_kodeverk_medlem_MedlemskapDekningType as MedlemskapPerioderDtoDekningType,
+  k9_kodeverk_medlem_MedlemskapKildeType as MedlemskapPerioderDtoKildeType,
+  k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
+  k9_kodeverk_geografisk_Region as PersonopplysningDtoRegion,
+  k9_kodeverk_person_SivilstandType as PersonopplysningDtoSivilstand,
+} from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from 'storybook/test';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';

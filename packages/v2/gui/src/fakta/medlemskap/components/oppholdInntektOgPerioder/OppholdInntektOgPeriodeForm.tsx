@@ -2,7 +2,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { getCurrentISODate } from '@k9-sak-web/gui/utils/dateutils.js';
 import { Alert, Box, Button, HStack, VStack } from '@navikt/ds-react';
-import { TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { type FunctionComponent, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -94,7 +94,8 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
 
         {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (submittable || !!begrunnelse) && (
           <>
-            <TextAreaField
+            <RhfTextarea
+              control={control}
               name="oppholdInntektOgPeriodeForm.begrunnelse"
               label="Begrunn endringene"
               readOnly={readOnly}

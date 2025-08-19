@@ -1,12 +1,12 @@
-import {
-  PersonadresseDtoAdresseType,
-  PersonDtoPersonstatusType,
-  PersonopplysningDtoSivilstand,
-} from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
+import {
+  k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
+  k9_kodeverk_person_PersonstatusType as PersonDtoPersonstatusType,
+  k9_kodeverk_person_SivilstandType as PersonopplysningDtoSivilstand,
+} from '@navikt/k9-sak-typescript-client';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import BostedSokerView from './components/BostedSokerView';
 
 const personopplysninger = {

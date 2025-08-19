@@ -1,14 +1,17 @@
-import type { PersonDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonDto as PersonDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Box, Button } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
 import React, { useContext, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { Medlemskap } from '../../types/Medlemskap';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
@@ -20,7 +23,7 @@ import OppholdInntektOgPeriodeForm, {
   buildInitialValuesOppholdInntektOgPeriodeForm,
 } from './OppholdInntektOgPeriodeForm';
 
-export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
+export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 const {
@@ -31,7 +34,7 @@ const {
   AVKLAR_FORTSATT_MEDLEMSKAP,
 } = aksjonspunktCodes;
 
-const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
+const getHelpTexts = (aksjonspunkter: AksjonspunktDto[]) => {
   const helpTexts: string[] = [];
   if (hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter)) {
     helpTexts.push('Vurder om søker fortsatt har gyldig medlemskap i perioden');
@@ -76,7 +79,7 @@ const medlemAksjonspunkter = [
   AVKLAR_FORTSATT_MEDLEMSKAP,
 ];
 
-export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjonspunkter: Aksjonspunkt[]) => {
+export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjonspunkter: AksjonspunktDto[]) => {
   const aktiveMedlemAksjonspunkter = aksjonspunkter
     .filter(ap => medlemAksjonspunkter.some(mp => mp === ap.definisjon))
     .filter(ap => ap.erAktivt);
