@@ -48,7 +48,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
                 {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
                   <ExclamationmarkTriangleFillIcon
                     fontSize="1.5rem"
-                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl mr-2"
+                    className="text-[var(--ax-text-warning-decoration))] text-2xl mr-2"
                   />
                 )}
                 <DateLabel dateString={periode.vurderingsdato} />

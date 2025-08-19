@@ -125,7 +125,7 @@ export const NyBehandlingModal = ({
     >
       <form onSubmit={handleSubmit}>
         <ModalBody>
-          <VStack gap="5">
+          <VStack gap="space-20">
             <SelectField
               name="behandlingType"
               label="Hva slags behandling ønsker du å opprette?"
@@ -187,7 +187,7 @@ export const NyBehandlingModal = ({
           </VStack>
         </ModalBody>
         <ModalFooter>
-          <HStack gap="2" justify="end">
+          <HStack gap="space-8" justify="end">
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>

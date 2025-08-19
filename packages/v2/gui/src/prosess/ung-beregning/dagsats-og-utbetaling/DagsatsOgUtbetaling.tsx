@@ -1,5 +1,5 @@
 import {
-  UngdomsytelseUtbetaltMånedDtoStatus,
+  ung_sak_kontrakt_ungdomsytelse_ytelse_UtbetalingStatus as UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
@@ -82,21 +82,15 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
   const grunnrettData = satser[satser.length - 1]?.satsperioder[0];
   return (
     <div className={styles.dagsatsSection}>
-      <VStack gap="4">
+      <VStack gap="space-16">
         <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
-        <VStack gap="8">
+        <VStack gap="space-32">
           {grunnrettData && (
             <div>
               <Heading size="xsmall" level="2">
                 Grunnrett
               </Heading>
-              <Box
-                marginBlock="4 0"
-                borderRadius="large"
-                borderWidth="1"
-                borderColor="border-divider"
-                maxWidth="43.5rem"
-              >
+              <Box.New marginBlock="4 0" borderRadius="large" borderWidth="1" maxWidth="43.5rem">
                 <Table>
                   <Table.Header>
                     <Table.Row>
@@ -130,7 +124,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                     </Table.Row>
                   </Table.Body>
                 </Table>
-              </Box>
+              </Box.New>
             </div>
           )}
           <div>
@@ -138,14 +132,14 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               Beregning av dagsats og utbetaling
             </Heading>
             {satser.length === 0 && (
-              <Box marginBlock="3 0" maxWidth="43.5rem">
+              <Box.New marginBlock="3 0" maxWidth="43.5rem">
                 <Alert variant="info" size="small">
                   Ingen utbetaling enda
                 </Alert>
-              </Box>
+              </Box.New>
             )}
             {satser.length > 0 && (
-              <Box marginBlock="4 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
+              <Box.New marginBlock="4 0" borderRadius="large" borderWidth="1">
                 <Table>
                   <Table.Header>
                     <Table.Row>
@@ -281,7 +275,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                     )}
                   </Table.Body>
                 </Table>
-              </Box>
+              </Box.New>
             )}
           </div>
         </VStack>

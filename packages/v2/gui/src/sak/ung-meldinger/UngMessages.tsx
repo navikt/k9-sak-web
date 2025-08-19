@@ -1,11 +1,11 @@
 import type {
-  InformasjonsbrevBestillingRequest,
-  InformasjonsbrevBestillingRequestDokumentMalType,
-  InformasjonsbrevValgDto,
+  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
+  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -62,7 +62,7 @@ export const UngMessages = (props: UngMessagesProps) => {
     if (valgtMottaker && valgtMottaker.id && valgtMottaker.idType) {
       return {
         behandlingId,
-        dokumentMalType: data.valgtMalkode as InformasjonsbrevBestillingRequestDokumentMalType,
+        dokumentMalType: data.valgtMalkode as DokumentMalType,
         innhold: { overskrift: data.overskrift, brødtekst: data.brødtekst },
         mottaker: { id: valgtMottaker?.id, type: valgtMottaker?.idType },
       };
@@ -101,14 +101,14 @@ export const UngMessages = (props: UngMessagesProps) => {
   const isSubmitting = isSubmittingBestillBrev || isSubmittingForhåndsvisBrev;
 
   return (
-    <Form formMethods={formMethods}>
-      <VStack gap="4">
+    <RhfForm formMethods={formMethods}>
+      <VStack gap="space-16">
         {brevmaler && <MalSelect brevmaler={brevmaler} />}
         {mottakere && <MottakerSelect mottakere={mottakere} valgtMal={valgtMal} disabled={false} />}
         {showFritekstInput && (
           <FritekstInput malStøtterTittel={!!valgtMal?.støtterTittelOgFritekst} språkkode={språkkode} />
         )}
-        <HStack gap="3">
+        <HStack gap="space-12">
           <Button
             type="submit"
             size="small"
@@ -131,6 +131,6 @@ export const UngMessages = (props: UngMessagesProps) => {
           </Button>
         </HStack>
       </VStack>
-    </Form>
+    </RhfForm>
   );
 };

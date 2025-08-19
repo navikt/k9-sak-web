@@ -41,7 +41,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
     ];
     return (
       <>
-        <VStack gap="6">
+        <VStack gap="space-24">
           {sortertePeriodebeskrivelser
             .filter((periodebeskrivelse, index) => (visAlleBeskrivelser ? true : index <= 2))
             .map(periodebeskrivelse => (

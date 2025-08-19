@@ -22,9 +22,9 @@
     "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "3.0.20250530164140",
-    "@navikt/k9-sak-typescript-client": "2.0.20250731124543",
-    "@navikt/ung-sak-typescript-client": "0.2.20250728105557"
+    "@navikt/k9-klage-typescript-client": "3.1.20250806103540",
+    "@navikt/k9-sak-typescript-client": "2.1.20250813152841",
+    "@navikt/ung-sak-typescript-client": "1.0.20250813152847"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.81.2"

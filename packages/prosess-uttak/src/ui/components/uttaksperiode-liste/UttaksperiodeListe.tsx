@@ -9,7 +9,6 @@ import UttakRadOpplæringspenger from '../uttak/UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import ContainerContract from '../../../types/ContainerContract';
 
 interface UttaksperiodeListeProps {
   uttaksperioder: UttaksperiodeMedInntektsgradering[];
@@ -20,7 +19,7 @@ interface UttaksperiodeListeProps {
 
 const splitUttakByDate = (
   uttaksperioder: Uttaksperiode[],
-  virkningsdatoUttakNyeRegler: string | null,
+  virkningsdatoUttakNyeRegler: string | undefined,
 ): [Uttaksperiode[], Uttaksperiode[]] => {
   // If virkningsdatoUttakNyeRegler is null, consider all periods as before the date.
   if (!virkningsdatoUttakNyeRegler) {
@@ -62,11 +61,10 @@ const tableHeaders = (ytelsetype: FagsakYtelsesType) => {
 
 const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
-  const {
-    ytelsetype,
-    virkningsdatoUttakNyeRegler,
-    status = false,
-  } = React.useContext(ContainerContext) as ContainerContract;
+  const containerContext = React.useContext(ContainerContext);
+  const ytelsetype = containerContext?.ytelsetype ?? fagsakYtelsesType.PLEIEPENGER_SYKT_BARN; // TODO: usikker på fallback til pleiepenger sykt barn
+  const virkningsdatoUttakNyeRegler = containerContext?.virkningsdatoUttakNyeRegler;
+  const status = containerContext?.status ?? false;
   const { uttaksperioder, redigerVirkningsdatoFunc, redigerVirkningsdato, readOnly } = props;
 
   const [before, afterOrCovering] = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);

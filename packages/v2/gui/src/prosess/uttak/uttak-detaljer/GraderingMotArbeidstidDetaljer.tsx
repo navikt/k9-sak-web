@@ -1,15 +1,15 @@
-import type { FC } from 'react';
-import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import {
-  UttakArbeidsforholdType,
-  type ArbeidsgiverOversiktDto,
-  type Utbetalingsgrader,
-  type UttaksperiodeInfo,
+  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidsforholdType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type pleiepengerbarn_uttak_kontrakter_Utbetalingsgrader as Utbetalingsgrader,
+  type pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
+import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
+import type { FC } from 'react';
 
-import styles from './uttakDetaljer.module.css';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
+import styles from './uttakDetaljer.module.css';
 
 interface ownProps {
   alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
@@ -34,7 +34,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
   return (
     <VStack>
-      <VStack gap="8" className={`${styles.uttakDetaljerDetailItem} mt-2`}>
+      <VStack gap="space-32" className={`${styles.uttakDetaljerDetailItem} mt-2`}>
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem?.arbeidsforhold?.aktørId || utbetalingsgradItem?.arbeidsforhold?.organisasjonsnummer;
@@ -56,8 +56,8 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 
           return (
-            <Box key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
-              <BodyShort size="small" className="text-text-subtle font-semibold leading-6">
+            <Box.New key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
+              <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (
                   <Tag size="small" variant="info">
@@ -75,7 +75,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                 Normal arbeidstid: {beregnetNormalArbeidstid} timer
               </BodyShort>
               <BodyShort as="div" size="small" className={`${styles.uttakDetaljerBeregningStrek} leading-6`}>
-                <HStack gap="1" className="leading-6">
+                <HStack gap="space-4" className="leading-6">
                   Faktisk arbeidstid:
                   <span className={faktiskOverstigerNormal ? styles.uttakDetaljerUtnullet : ''}>
                     {beregnetFaktiskArbeidstid}
@@ -91,11 +91,11 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
               <BodyShort className="mt-1 leading-6" size="small">
                 = {fraværsprosent} % fravær{' '}
               </BodyShort>
-            </Box>
+            </Box.New>
           );
         })}
       </VStack>
-      <Box>
+      <Box.New>
         <BodyShort size="small" className={styles.uttakDetaljerDetailSum}>
           = {søkersTapteArbeidstid}% tapt arbeidstid {harNyInntekt ? '*' : ''}
         </BodyShort>
@@ -105,7 +105,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
             blir ikke tatt med i utregningen av tapt arbeidstid.
           </Detail>
         )}
-      </Box>
+      </Box.New>
     </VStack>
   );
 };

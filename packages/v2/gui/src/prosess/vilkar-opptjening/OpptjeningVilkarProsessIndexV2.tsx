@@ -1,4 +1,7 @@
-import { VilkårPeriodeDtoVilkarStatus, type OpptjeningDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
+  type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -32,10 +35,10 @@ const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus,
     return <AksjonspunktIkon size="small" />;
   }
   if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
-    return <CheckmarkCircleFillIcon style={{ color: 'var(--a-surface-success)' }} />;
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
   if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT) {
-    return <XMarkOctagonFillIcon style={{ color: 'var(--a-surface-danger)' }} />;
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
   return null;
 };

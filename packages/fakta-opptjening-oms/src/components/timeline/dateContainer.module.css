@@ -11,7 +11,7 @@
 }
 
 .dates {
-  background: var(--a-white);
+  background: var(--ax-bg-default);
   height: 28px;
   position: absolute;
   top: 20px;

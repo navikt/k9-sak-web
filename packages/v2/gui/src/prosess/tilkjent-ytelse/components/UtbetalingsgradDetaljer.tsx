@@ -18,7 +18,7 @@ const UtbetalingsgradDetaljer = ({
         <div className={!utbetalingsgradVedTilkommetInntektErMinst ? 'font-semibold flex items-center' : ''}>
           {`Resultat fra uttak: ${utbetalingsgradFraUttak}%`}
           {!utbetalingsgradVedTilkommetInntektErMinst && (
-            <CheckmarkIcon fontSize="1.5rem" className="text-icon-success" />
+            <CheckmarkIcon fontSize="1.5rem" className="text-ax-text-success-decoration" />
           )}
         </div>
       </li>
@@ -26,7 +26,7 @@ const UtbetalingsgradDetaljer = ({
         <div className={utbetalingsgradVedTilkommetInntektErMinst ? 'font-semibold flex items-center' : ''}>
           {`Resultat grunnet ny inntekt: ${utbetalingsgradEtterReduksjonVedTilkommetInntekt}%`}
           {utbetalingsgradVedTilkommetInntektErMinst && (
-            <CheckmarkIcon fontSize="1.5rem" className="text-icon-success" />
+            <CheckmarkIcon fontSize="1.5rem" className="text-ax-text-success-decoration" />
           )}
         </div>
       </li>

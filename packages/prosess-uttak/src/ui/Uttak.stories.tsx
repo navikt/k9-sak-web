@@ -12,9 +12,16 @@ const meta: Meta<typeof UttakContainer> = {
 export default meta;
 type Story = StoryObj<typeof UttakContainer>;
 
+function oppdaterBehandling(): void {}
+
 export const Uttak: Story = {
   args: {
     containerData: {
+      behandling: {
+        versjon: 1,
+        uuid: '123456',
+        status: { kode: 'OPPRETTET', kodeverk: 'Behandlingsstatus' },
+      },
       aktivBehandlingUuid: '123456',
       uttaksperioder: {
         '2021-03-01/2021-03-08': {
@@ -206,6 +213,7 @@ export const Uttak: Story = {
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: '',
       readOnly: false,
+      oppdaterBehandling,
     },
   },
 };
@@ -213,6 +221,11 @@ export const Uttak: Story = {
 export const UttakMedInntektsgradering: Story = {
   args: {
     containerData: {
+      behandling: {
+        versjon: 1,
+        uuid: '123456',
+        status: { kode: 'OPPRETTET', kodeverk: 'Behandlingsstatus' },
+      },
       aktivBehandlingUuid: '123456',
       uttaksperioder: {
         '2023-01-02/2023-01-31': {
@@ -461,6 +474,7 @@ export const UttakMedInntektsgradering: Story = {
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: null,
       readOnly: false,
+      oppdaterBehandling,
     },
   },
   decorators: [],

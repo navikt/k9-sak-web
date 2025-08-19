@@ -1,4 +1,4 @@
-import type { UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_ungdomsytelse_beregning_UngdomsytelseSatsPeriodeDto as UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
 import { formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, HStack, VStack } from '@navikt/ds-react';
 import React from 'react';
@@ -17,7 +17,7 @@ export const BeregningsDetaljerUtregning = ({
   satsperioder,
 }: BeregningsDetaljerUtregningProps) => (
   <>
-    <VStack gap="4">
+    <VStack gap="space-16">
       {satsperioder?.map(({ dagsats, antallDager, fom, tom, dagsatsBarnetillegg, antallBarn }) => (
         <React.Fragment key={`${fom}-${tom}`}>
           <HStack justify="space-between">
@@ -41,7 +41,7 @@ export const BeregningsDetaljerUtregning = ({
         </React.Fragment>
       ))}
 
-      <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
+      <Box.New borderWidth="0 0 1 0" />
 
       {reduksjon && rapportertInntekt ? (
         <>
@@ -53,7 +53,7 @@ export const BeregningsDetaljerUtregning = ({
               - {formatCurrencyWithKr(reduksjon)}
             </BodyShort>
           </HStack>
-          <Box borderColor="border-subtle" borderWidth="0 0 1 0" />
+          <Box.New borderWidth="0 0 1 0" />
         </>
       ) : null}
 

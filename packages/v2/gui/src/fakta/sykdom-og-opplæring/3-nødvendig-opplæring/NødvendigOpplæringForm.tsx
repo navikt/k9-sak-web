@@ -1,50 +1,160 @@
-import { type OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
-import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
-import type { Period } from '@navikt/ft-utils';
-import { BodyShort, Button, Label, Link, List, Radio, RadioGroup, ReadMore, Textarea } from '@navikt/ds-react';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import {
+  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
+} from '@k9-sak-web/backend/k9sak/generated';
+import {
+  Alert,
+  BodyShort,
+  Button,
+  Detail,
+  Heading,
+  Label,
+  Link,
+  List,
+  Radio,
+  RadioGroup,
+  ReadMore,
+  Textarea,
+} from '@navikt/ds-react';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext, useEffect } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
-import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
-import { KodeverdiSomObjektAvslagsårsakKilde } from '@k9-sak-web/backend/k9sak/generated';
-import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
+import { useContext, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Periodevisning } from '../../../shared/detailView/DetailView.js';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import type { nødvendigOpplæringPayload } from '../FaktaSykdomOgOpplæringIndex.js';
+import { Avslagsårsak } from './components/Avslagsårsak';
+import { DelvisOpplæring } from './components/DelvisOpplæring';
+import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo.js';
 
-const booleanToRadioValue = (value: boolean | undefined) => {
-  if (value === undefined) return '';
-  return value ? 'ja' : 'nei';
+const JA = 'JA' as const;
+const DELVIS = 'DELVIS' as const;
+const NEI = 'NEI' as const;
+const VURDERES_SOM_REISETID = 'VURDERES_SOM_REISETID' as const;
+
+type NødvendigOpplæringFormFields = {
+  begrunnelse: string;
+  resultat: OpplæringVurderingDtoResultat | '';
+  harLegeerklæring: 'JA' | 'NEI' | '';
+  harNødvendigOpplæring: 'JA' | 'DELVIS' | 'NEI' | 'VURDERES_SOM_REISETID' | '';
+  avslagsårsak?: OpplæringVurderingDtoAvslagsårsak;
+  perioder: {
+    resultat: OpplæringVurderingDtoResultat | '';
+    avslagsårsak: OpplæringVurderingDtoAvslagsårsak | '';
+    fom: string;
+    tom: string;
+  }[];
+  perioderUtenNødvendigOpplæring: {
+    fom: string;
+    tom: string;
+    resultat: OpplæringVurderingDtoResultat | '';
+    avslagsårsak: OpplæringVurderingDtoAvslagsårsak | '';
+  }[];
+};
+
+const utledHarLegeerklæring = (resultat: OpplæringVurderingDtoResultat): 'JA' | 'NEI' | '' => {
+  if (resultat === OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT) {
+    return NEI;
+  }
+  if (resultat === OpplæringVurderingDtoResultat.MÅ_VURDERES) {
+    return '';
+  }
+  return JA;
+};
+
+const utledNødvendigOpplæring = (
+  resultat: OpplæringVurderingDtoResultat,
+): 'JA' | 'DELVIS' | 'NEI' | 'VURDERES_SOM_REISETID' | '' => {
+  if (resultat === OpplæringVurderingDtoResultat.GODKJENT) {
+    return JA;
+  }
+  if (resultat === OpplæringVurderingDtoResultat.IKKE_GODKJENT) {
+    return NEI;
+  }
+
+  if (resultat === OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID) {
+    return VURDERES_SOM_REISETID;
+  }
+
+  return '';
+};
+
+const nødvendigOpplæringTilResultat = (nødvendigOpplæring: 'JA' | 'DELVIS' | 'NEI' | 'VURDERES_SOM_REISETID' | '') => {
+  if (nødvendigOpplæring === JA) {
+    return OpplæringVurderingDtoResultat.GODKJENT;
+  }
+  if (nødvendigOpplæring === DELVIS) {
+    return OpplæringVurderingDtoResultat.GODKJENT;
+  }
+  if (nødvendigOpplæring === NEI) {
+    return OpplæringVurderingDtoResultat.IKKE_GODKJENT;
+  }
+  if (nødvendigOpplæring === VURDERES_SOM_REISETID) {
+    return OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID;
+  }
+  return '';
 };
 
 const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] }) => {
   return {
-    dokumentertOpplæring: booleanToRadioValue(vurdering.dokumentertOpplæring),
     begrunnelse: vurdering.begrunnelse,
-    nødvendigOpplæring: booleanToRadioValue(vurdering.nødvendigOpplæring),
+    resultat: vurdering.resultat,
+    harLegeerklæring: utledHarLegeerklæring(vurdering.resultat),
+    harNødvendigOpplæring: utledNødvendigOpplæring(vurdering.resultat),
+    // Her er det bare en periode, så vi kan bruke perioder[0]!
+    perioder: [
+      {
+        resultat: vurdering.resultat,
+        avslagsårsak: vurdering.avslagsårsak,
+        fom: vurdering.perioder[0]!.fom,
+        tom: vurdering.perioder[0]!.tom,
+      },
+    ],
+    perioderUtenNødvendigOpplæring: [],
+  };
+};
+
+const onSubmit = (data: NødvendigOpplæringFormFields) => {
+  const perioder = data.perioder.map(periode => ({
+    begrunnelse: data.begrunnelse || null,
+    resultat: nødvendigOpplæringTilResultat(data.harNødvendigOpplæring),
+    avslagsårsak: data.avslagsårsak || null,
+    periode: {
+      fom: dayjs(periode.fom).format('YYYY-MM-DD'),
+      tom: dayjs(periode.tom).format('YYYY-MM-DD'),
+    },
+  }));
+
+  const perioderUtenNødvendigOpplæring = data.perioderUtenNødvendigOpplæring.map(periode => ({
+    begrunnelse: data.begrunnelse || null,
+    resultat: periode.resultat,
+    avslagsårsak: periode.avslagsårsak || null,
+    periode: {
+      fom: dayjs(periode.fom).format('YYYY-MM-DD'),
+      tom: dayjs(periode.tom).format('YYYY-MM-DD'),
+    },
+  }));
+
+  return {
+    perioder: [...perioder, ...perioderUtenNødvendigOpplæring],
   };
 };
 
 const NødvendigOpplæringForm = ({
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
-  setRedigering: (redigering: boolean) => void;
-  redigering: boolean;
+  setRedigerer: (redigerer: boolean) => void;
+  redigerer: boolean;
 }) => {
-  const { løsAksjonspunkt9302, readOnly } = useContext(SykdomOgOpplæringContext);
-  const formMethods = useForm<{
-    dokumentertOpplæring: string;
-    nødvendigOpplæring: string;
-    begrunnelse: string;
-    avslagsårsak?: string;
-    periode?: {
-      fom: Date;
-      tom: Date;
-    };
-  }>({
+  const { readOnly, løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
+  const formMethods = useForm<NødvendigOpplæringFormFields>({
     defaultValues: defaultValues(vurdering),
   });
 
@@ -52,81 +162,84 @@ const NødvendigOpplæringForm = ({
     formMethods.reset({
       ...defaultValues(vurdering),
     });
-  }, [vurdering.perioder]);
+  }, [formMethods, vurdering]);
 
-  const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
-
-  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('dokumentertOpplæring') === 'nei';
+  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('harLegeerklæring') === 'NEI';
 
   useEffect(() => {
     if (opplæringIkkeDokumentertMedLegeerklæring) {
-      formMethods.setValue('nødvendigOpplæring', '');
       formMethods.setValue('begrunnelse', '');
-      formMethods.setValue('avslagsårsak', KodeverdiSomObjektAvslagsårsakKilde.MANGLENDE_DOKUMENTASJON);
-    } else {
-      formMethods.setValue('avslagsårsak', undefined);
+      formMethods.setValue('harNødvendigOpplæring', '');
     }
   }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
 
-  const nødvendigOpplæring = formMethods.watch('nødvendigOpplæring');
+  const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
+  const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
   return (
     <>
-      <Form
+      <RhfForm
         formMethods={formMethods}
-        onSubmit={data => {
-          const nødvendigOpplæring = data.nødvendigOpplæring === 'ja';
-          const periode = nødvendigOpplæring ? data.periode : vurdering.opplæring;
-
-          løsAksjonspunkt9302({
-            periode: {
-              fom: dayjs(periode?.fom).format('YYYY-MM-DD'),
-              tom: dayjs(periode?.tom).format('YYYY-MM-DD'),
-            },
-            begrunnelse: data.begrunnelse ? data.begrunnelse : null,
-            nødvendigOpplæring: data.nødvendigOpplæring === 'ja',
-            dokumentertOpplæring: data.dokumentertOpplæring === 'ja',
-            avslagsårsak: data.avslagsårsak,
-          });
-        }}
+        onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
       >
         <div className="flex flex-col gap-6">
           <Controller
             control={formMethods.control}
-            name="dokumentertOpplæring"
+            name="harLegeerklæring"
             rules={
               opplæringIkkeDokumentertMedLegeerklæring
                 ? undefined
-                : { validate: value => (value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd') }
+                : {
+                    validate: value =>
+                      value?.length && value.length > 0 ? undefined : 'Dokumentert opplæring er påkrevd',
+                  }
             }
             render={({ field }) => (
               <RadioGroup
-                legend="Er nødvendig opplæring dokumentert med legeerklæring?"
+                legend="Har vi fått legeerklæring?"
                 {...field}
                 readOnly={readOnly}
                 size="small"
-                error={formMethods.formState.errors.dokumentertOpplæring?.message as string | undefined}
+                description={
+                  <Detail>
+                    Legeerklæringen skal dokumentere om opplæringen er nødvendig for at søker skal kunne ta seg av og
+                    behandle barnet.
+                  </Detail>
+                }
+                error={formMethods.formState.errors.harLegeerklæring?.message}
               >
-                <Radio value="ja">Ja</Radio>
-                <Radio value="nei">Nei</Radio>
+                <Radio value={JA}>Ja</Radio>
+                <Radio value={NEI}>Nei</Radio>
               </RadioGroup>
             )}
           />
+          <div className={`flex flex-col gap-6 ${opplæringIkkeDokumentertMedLegeerklæring ? 'opacity-30' : ''}`}>
+            <div className="mt-4">
+              <Heading size="small" level="2" className="!mb-0">
+                Vurdering av nødvendig opplæring
+              </Heading>
+              <Periodevisning perioder={vurdering.perioder} />
+            </div>
+            <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
+            <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
+          </div>
           <div>
-            <Label htmlFor="begrunnelse" size="small">
-              Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
-              <Lovreferanse> § 9-14</Lovreferanse>
-            </Label>
             <Textarea
               {...formMethods.register('begrunnelse', {
                 validate: opplæringIkkeDokumentertMedLegeerklæring
                   ? undefined
-                  : value => (value.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
+                  : value => (value?.length > 0 ? undefined : 'Begrunnelse er påkrevd'),
               })}
               readOnly={readOnly}
               size="small"
-              label=""
+              label={
+                <Label htmlFor="begrunnelse" size="small">
+                  Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter
+                  <Lovreferanse> § 9-14, første ledd</Lovreferanse>
+                </Label>
+              }
+              minRows={3}
               id="begrunnelse"
-              error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
+              error={formMethods.formState.errors.begrunnelse?.message}
               disabled={opplæringIkkeDokumentertMedLegeerklæring}
               description={
                 <ReadMore header="Hva skal vurderingen inneholde?" size="small">
@@ -141,11 +254,15 @@ const NødvendigOpplæringForm = ({
                     </Link>{' '}
                     når du skriver vurderingen.
                   </BodyShort>
-                  <div className="mt-4">
+                  <div className="mt-6">
                     Vurderingen skal beskrive:
-                    <List size="small">
-                      <ListItem>Om kursinnholdet tilsier at det er opplæring</ListItem>
-                      <ListItem>Om det er årsakssammenheng mellom opplæringen og sykdom til barnet</ListItem>
+                    {/* overrider margin-block i List sitt child element ul med important*/}
+                    <List size="small" className="[&>ul]:!m-0">
+                      {/* !mb-0 overrider marign-block-end med important*/}
+                      <ListItem className="!mb-0">Om kursinnholdet tilsier at det er opplæring</ListItem>
+                      <ListItem className="!mb-0">
+                        Om det er årsakssammenheng mellom opplæringen og sykdom til barnet
+                      </ListItem>
                     </List>
                   </div>
                 </ReadMore>
@@ -154,100 +271,55 @@ const NødvendigOpplæringForm = ({
           </div>
           <Controller
             control={formMethods.control}
-            name="nødvendigOpplæring"
+            name="harNødvendigOpplæring"
             rules={
               opplæringIkkeDokumentertMedLegeerklæring
                 ? undefined
-                : { validate: value => (value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd') }
+                : {
+                    validate: value =>
+                      value?.length && value.length > 0 ? undefined : 'Nødvendig opplæring er påkrevd',
+                  }
             }
             disabled={opplæringIkkeDokumentertMedLegeerklæring}
-            render={({ field }) => (
-              <RadioGroup
-                legend="Har søker hatt opplæring som er nødvendig for å kunne ta seg av og behandle barnet?"
-                {...field}
-                readOnly={readOnly}
-                size="small"
-                error={formMethods.formState.errors.nødvendigOpplæring?.message as string | undefined}
-              >
-                <Radio value="ja">Ja</Radio>
-                <Radio value="nei">Nei</Radio>
-              </RadioGroup>
-            )}
-          />
-          {nødvendigOpplæring === 'ja' && (
-            <PeriodePicker
-              minDate={new Date(vurdering.opplæring.fom)}
-              maxDate={new Date(vurdering.opplæring.tom)}
-              size="small"
-              fromField={{
-                name: 'periode.fom',
-                validate: value => {
-                  return value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd';
-                },
-              }}
-              toField={{
-                name: 'periode.tom',
-                validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
-              }}
-              readOnly={readOnly}
-            />
-          )}
-          {nødvendigOpplæring === 'nei' && (
-            <Controller
-              control={formMethods.control}
-              name="avslagsårsak"
-              rules={
-                opplæringIkkeDokumentertMedLegeerklæring
-                  ? undefined
-                  : {
-                      validate: value => {
-                        return value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING ||
-                          value === KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN
-                          ? undefined
-                          : 'Avslagsårsak er påkrevd';
-                      },
-                    }
-              }
-              render={({ field }) => (
+            render={({ field }) => {
+              return (
                 <RadioGroup
+                  legend="Har søker opplæring som er nødvendig?"
                   {...field}
-                  legend="Avslagsårsak"
                   readOnly={readOnly}
                   size="small"
-                  error={formMethods.formState.errors.avslagsårsak?.message as string | undefined}
+                  error={formMethods.formState.errors.harNødvendigOpplæring?.message}
                 >
-                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING}>
-                    {
-                      k9Kodeverkoppslag.k9sak.avslagsårsaker(
-                        KodeverdiSomObjektAvslagsårsakKilde.IKKE_NØDVENDIG_OPPLÆRING,
-                      ).navn
-                    }
-                  </Radio>
-                  <Radio value={KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN}>
-                    {
-                      k9Kodeverkoppslag.k9sak.avslagsårsaker(
-                        KodeverdiSomObjektAvslagsårsakKilde.IKKE_OPPLÆRING_I_PERIODEN,
-                      ).navn
-                    }
-                  </Radio>
+                  <Radio value={JA}>Ja</Radio>
+                  {!periodeErEnkeltdag && <Radio value={DELVIS}>Deler av perioden</Radio>}
+                  <Radio value={NEI}>Nei</Radio>
                 </RadioGroup>
-              )}
-            />
+              );
+            }}
+          />
+          {nødvendigOpplæring === DELVIS && <DelvisOpplæring vurdering={vurdering} />}
+          {nødvendigOpplæring === NEI && <Avslagsårsak name="avslagsårsak" />}
+          {opplæringIkkeDokumentertMedLegeerklæring && (
+            <Alert variant="info" size="small">
+              Behandlingen vil gå videre til avslag for manglende dokumentasjon av nødvendig opplæring etter{' '}
+              <Lovreferanse>§9-14</Lovreferanse> og <Lovreferanse>§22-3</Lovreferanse>. Før du kan avslå må du etterlyse
+              dokumentasjon fra bruker.
+            </Alert>
           )}
           {!readOnly && (
             <div className="flex gap-4">
               <Button variant="primary" type="submit" size="small">
                 Bekreft og fortsett
               </Button>
-              {redigering && (
-                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              {redigerer && (
+                <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                   Avbryt redigering
                 </Button>
               )}
             </div>
           )}
         </div>
-      </Form>
+      </RhfForm>
     </>
   );
 };

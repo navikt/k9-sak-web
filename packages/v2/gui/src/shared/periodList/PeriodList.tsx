@@ -41,8 +41,8 @@ export const PeriodList = ({ perioder, tittel, customRenderFunc }: OwnProps) => 
             const { period, items = [] } = periode;
             return (
               <li className={styles.element} key={period.fom}>
-                <VStack gap="4">
-                  <HStack gap="1">
+                <VStack gap="space-16">
+                  <HStack gap="space-4">
                     <CalendarIcon fontSize="1.5rem" />
                     {period.prettifyPeriod()}
                   </HStack>

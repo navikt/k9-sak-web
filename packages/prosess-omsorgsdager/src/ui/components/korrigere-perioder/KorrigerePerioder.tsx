@@ -196,7 +196,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
             size="small"
             name="fravaerGrunnetSmittevernhensynEllerStengt"
           >
-            <HStack gap="1">
+            <HStack gap="space-4">
               <RadioButtonWithBooleanValue label="Ja" value="true" name="fravaerGrunnetSmittevernhensynEllerStengt" />
               <RadioButtonWithBooleanValue label="Nei" value="false" name="fravaerGrunnetSmittevernhensynEllerStengt" />
               <RadioButtonWithBooleanValue

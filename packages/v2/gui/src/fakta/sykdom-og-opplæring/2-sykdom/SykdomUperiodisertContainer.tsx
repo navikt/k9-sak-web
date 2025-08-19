@@ -2,31 +2,33 @@ import dayjs from 'dayjs';
 import SykdomUperiodisertForm, { type UperiodisertSykdom } from './SykdomUperiodisertForm';
 import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useContext, useEffect, useState } from 'react';
-import { Button, BodyShort } from '@navikt/ds-react';
+import { BodyShort, Button } from '@navikt/ds-react';
 import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import { DetailView } from '../../../shared/detailView/DetailView';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
-  const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const [redigering, setRedigering] = useState(false);
+  const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const [redigerer, setRedigerer] = useState(false);
 
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+  const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   useEffect(() => {
-    if (!vurdering.vurdertTidspunkt || vurdering.behandlingUuid !== behandlingUuid) {
-      setRedigering(false);
+    if (!vurdering.vurdertTidspunkt || !vurdering.kanOppdateres) {
+      setRedigerer(false);
     }
-  }, [vurdering, behandlingUuid]);
+  }, [vurdering]);
 
   useEffect(() => {
-    if (redigering) {
-      setRedigering(false);
+    if (redigerer) {
+      setRedigerer(false);
     }
   }, [vurdering.uuid]);
   // Ferdigvisning hvis det er vurdert og vi skal redigere, eller ikke vurdert
   const visForm =
-    !readOnly && ((redigering && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
+    !readOnly && ((redigerer && vurdering.vurdertTidspunkt) || (!vurdering.vurdertTidspunkt && harAksjonspunkt9301));
   const perioder = (
     <div data-testid="Periode" className="flex gap-2">
       <CalendarIcon fontSize="20" />
@@ -37,18 +39,14 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
     <DetailView
       title="Vurdering av sykdom"
       border
-      contentAfterTitleRenderer={() =>
-        !readOnly &&
-        harAksjonspunkt9301 &&
-        vurdering.behandlingUuid === behandlingUuid && (
-          <RedigerKnapp redigering={redigering} setRedigering={setRedigering} vurdering={vurdering} />
-        )
-      }
+      contentAfterTitleRenderer={() => (
+        <RedigerKnapp redigerer={redigerer} setRedigerer={setRedigerer} vurdering={vurdering} />
+      )}
       belowTitleContent={perioder}
     >
       <div className="mt-6">
         {visForm ? (
-          <SykdomUperiodisertForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
+          <SykdomUperiodisertForm vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer} />
         ) : (
           <SykdomUperiodisertFerdigvisning vurdering={vurdering} />
         )}
@@ -58,27 +56,26 @@ const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSyk
 };
 
 const RedigerKnapp = ({
-  redigering,
-  setRedigering,
+  redigerer,
+  setRedigerer,
   vurdering,
 }: {
-  redigering: boolean;
-  setRedigering: (redigering: boolean) => void;
+  redigerer: boolean;
+  setRedigerer: (redigerer: boolean) => void;
   vurdering: UperiodisertSykdom;
 }) => {
-  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
-  // Vi kan kun redigere vurderinger som er opprettet i samme behandling som vi er i
-  if (behandlingUuid !== vurdering.behandlingUuid) {
+  if (redigerer || !vurdering.kanOppdateres || readOnly || !harAksjonspunkt9301) {
     return null;
   }
+  // Vi kan kun redigere vurderinger som er opprettet i samme behandling som vi er i
   return (
     <div className="float-right">
-      {!redigering && (
-        <Button size="small" variant="tertiary" icon={<PencilIcon />} onClick={() => setRedigering(!redigering)}>
-          Rediger vurdering
-        </Button>
-      )}
+      <Button size="small" variant="tertiary" icon={<PencilIcon />} onClick={() => setRedigerer(!redigerer)}>
+        Rediger vurdering
+      </Button>
     </div>
   );
 };

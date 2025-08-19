@@ -1,5 +1,5 @@
 import { Box } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './fadingPanel.module.css';
 
 interface OwnProps {
@@ -13,13 +13,9 @@ interface OwnProps {
  * Wrapper rundt Panel-komponent. Animerer(fade-in) innholdet i panelet.
  */
 const FadingPanel = ({ withoutTopMargin = false, children }: OwnProps) => (
-  <Box
-    background="surface-default"
-    padding="4"
-    className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}
-  >
+  <Box.New padding="4" className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}>
     {children}
-  </Box>
+  </Box.New>
 );
 
 export default FadingPanel;

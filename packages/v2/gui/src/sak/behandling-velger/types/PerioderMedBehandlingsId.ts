@@ -1,10 +1,10 @@
 import type {
-  Periode as K9Periode,
-  PeriodeMedÅrsaker as K9PeriodeMedÅrsaker,
+  k9_sak_typer_Periode as K9Periode,
+  k9_sak_kontrakt_krav_PeriodeMedÅrsaker as K9PeriodeMedÅrsaker,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type {
-  Periode as UngPeriode,
-  PeriodeMedÅrsaker as UngPeriodeMedÅrsaker,
+  ung_sak_typer_Periode as UngPeriode,
+  ung_sak_kontrakt_krav_PeriodeMedÅrsaker as UngPeriodeMedÅrsaker,
 } from '@k9-sak-web/backend/ungsak/generated';
 
 export type K9UngPeriode = K9Periode | UngPeriode;

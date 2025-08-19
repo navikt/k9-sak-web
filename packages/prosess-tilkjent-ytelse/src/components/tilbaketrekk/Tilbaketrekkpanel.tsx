@@ -4,9 +4,12 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BeregningsresultatFp } from '@k9-sak-web/types';
 import { Button, HGrid, Label } from '@navikt/ds-react';
-import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
+} from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import styles from './tilbaketrekkpanel.module.css';
 
@@ -105,9 +108,10 @@ export const Tilbaketrekkpanel = ({
         </FlexContainer>
       </div>
       <VerticalSpacer twentyPx />
-      <Form formMethods={formMethods} onSubmit={handleSubmit}>
-        <HGrid gap="1" columns={{ xs: '9fr 3fr' }}>
-          <RadioGroupPanel
+      <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
+        <HGrid gap="space-4" columns={{ xs: '9fr 3fr' }}>
+          <RhfRadioGroup
+            control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
             isHorizontal
@@ -126,8 +130,9 @@ export const Tilbaketrekkpanel = ({
             ]}
           />
         </HGrid>
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
-          <TextAreaField
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
+          <RhfTextarea
+            control={formMethods.control}
             name={begrunnelseFieldName}
             label="Vurdering"
             validate={[required, maxLength1500, minLength3, hasValidText]}
@@ -135,7 +140,7 @@ export const Tilbaketrekkpanel = ({
             readOnly={readOnly}
           />
         </HGrid>
-        <HGrid gap="1" columns={{ xs: '2fr 10fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '2fr 10fr' }}>
           <div>
             <VerticalSpacer eightPx />
             <Button
@@ -152,7 +157,7 @@ export const Tilbaketrekkpanel = ({
             </Button>
           </div>
         </HGrid>
-      </Form>
+      </RhfForm>
     </div>
   );
 };

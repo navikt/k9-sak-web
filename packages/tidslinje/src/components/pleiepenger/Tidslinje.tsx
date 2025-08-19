@@ -132,7 +132,7 @@ const Tidslinje = ({
 
   return (
     <div className={`${styles.timelineContainer} ${withBorder ? styles['timelineContainer--border'] : ''}`}>
-      <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
         <div className={styles.timelineIkonContainer}>
           {rader.map(({ ikon, id }) => (
             <Image key={id} src={ikon.src} alt={ikon.imageText} tooltip={ikon.title} />

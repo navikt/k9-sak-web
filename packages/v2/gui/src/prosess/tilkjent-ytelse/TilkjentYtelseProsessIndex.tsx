@@ -1,5 +1,8 @@
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import type { AksjonspunktDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';

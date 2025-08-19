@@ -1,6 +1,6 @@
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Loader } from '@navikt/ds-react';
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';

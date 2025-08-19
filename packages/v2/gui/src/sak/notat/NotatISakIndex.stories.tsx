@@ -1,5 +1,13 @@
-import type { EndreResponse, NotatDto, OpprettResponse, SkjulResponse } from '@k9-sak-web/backend/k9sak/generated';
-import { BehandlingDtoSakstype, OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  EndreResponse,
+  k9_sak_kontrakt_notat_NotatDto as NotatDto,
+  OpprettResponse,
+  SkjulResponse,
+} from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
+  k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { HttpResponse, delay, http, type PathParams } from 'msw';
 import NotatISakIndex from './NotaterIndex';
 
@@ -144,6 +152,6 @@ VisNotatISakPanel.parameters = {
     ],
   },
   screenshot: {
-    mask: '.navds-chat__top-text',
+    mask: '.aksel-chat__top-text',
   },
 };

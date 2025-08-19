@@ -1,7 +1,8 @@
-import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
-import { TextAreaField } from '@navikt/ft-form-hooks';
+import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { type VilkarBegrunnelseFormState } from './FormState';
 
 const minLength3 = minLength(3);
@@ -21,16 +22,20 @@ interface StaticFunctions {
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før overstyring av vilkår eller beregning.
  */
-const VilkarBegrunnelse: FunctionComponent<OwnProps> & StaticFunctions = ({ isReadOnly }) => (
-  <TextAreaField
-    name="begrunnelse"
-    label="Vurdering"
-    validate={[required, minLength3, maxLength1500, hasValidText]}
-    maxLength={1500}
-    readOnly={isReadOnly}
-    placeholder="Begrunn vurderingen din"
-  />
-);
+const VilkarBegrunnelse: FunctionComponent<OwnProps> & StaticFunctions = ({ isReadOnly }) => {
+  const { control } = useFormContext();
+  return (
+    <RhfTextarea
+      control={control}
+      name="begrunnelse"
+      label="Vurdering"
+      validate={[required, minLength3, maxLength1500, hasValidText]}
+      maxLength={1500}
+      readOnly={isReadOnly}
+      placeholder="Begrunn vurderingen din"
+    />
+  );
+};
 
 VilkarBegrunnelse.buildInitialValues = (periode: VilkårPeriodeDto) => ({
   begrunnelse: periode && periode.begrunnelse ? periode.begrunnelse : '',

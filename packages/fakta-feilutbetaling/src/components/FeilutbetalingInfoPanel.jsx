@@ -113,14 +113,14 @@ export class FeilutbetalingInfoPanelImpl extends Component {
         </AksjonspunktHelpText>
         <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
-          <HGrid gap="4" columns={{ xs: '12fr', md: '6fr 6fr' }} className={styles.smallMarginBottom}>
+          <HGrid gap="space-16" columns={{ xs: '12fr', md: '6fr 6fr' }} className={styles.smallMarginBottom}>
             <div>
               <div className={styles.smallMarginBottom}>
                 <Label size="small" as="p">
                   <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
                 </Label>
               </div>
-              <HGrid gap="4" columns={{ xs: '12fr', md: '4fr 4fr 4fr' }}>
+              <HGrid gap="space-16" columns={{ xs: '12fr', md: '4fr 4fr 4fr' }}>
                 <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
@@ -152,14 +152,14 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </BodyShort>
                 </div>
               </HGrid>
-              <HGrid gap="4" columns={{ xs: '11fr 1fr' }} className={styles.smallMarginTop}>
+              <HGrid gap="space-16" columns={{ xs: '11fr 1fr' }} className={styles.smallMarginTop}>
                 <CheckboxField
                   name="behandlePerioderSamlet"
                   label={{ id: 'FeilutbetalingInfoPanel.BehandlePerioderSamlet' }}
                   readOnly={readOnly}
                 />
               </HGrid>
-              <HGrid gap="4" columns={{ xs: '11fr 1fr' }} className={styles.smallMarginTop}>
+              <HGrid gap="space-16" columns={{ xs: '11fr 1fr' }} className={styles.smallMarginTop}>
                 <div>
                   <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
                     <FeilutbetalingPerioderTable
@@ -182,7 +182,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
                 </Label>
               </div>
-              <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+              <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
                 <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
@@ -206,7 +206,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </div>
                 )}
               </HGrid>
-              <HGrid gap="4" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
+              <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
                 <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
@@ -231,7 +231,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   )}
                 </div>
               </HGrid>
-              <HGrid gap="4" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
+              <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
                 <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Tilbakekrevingsvalg" />
@@ -245,7 +245,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               </HGrid>
             </div>
           </HGrid>
-          <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+          <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
             <TextAreaField
               name="begrunnelse"
               label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
@@ -256,7 +256,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
             />
           </HGrid>
           <VerticalSpacer eightPx />
-          <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+          <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
             <div>
               <Button
                 variant="primary"

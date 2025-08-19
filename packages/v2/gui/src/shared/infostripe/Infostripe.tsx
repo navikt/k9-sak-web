@@ -9,7 +9,7 @@ interface InfostripeProps {
 
 export const Infostripe = ({ content, iconRenderer }: InfostripeProps) => (
   <div className={styles.infostripe}>
-    <HStack gap="2" align="center">
+    <HStack gap="space-8" align="center">
       <div className={styles.iconContainer}>{iconRenderer()}</div>
       {typeof content === 'string' ? <BodyShort>{content}</BodyShort> : content}
     </HStack>

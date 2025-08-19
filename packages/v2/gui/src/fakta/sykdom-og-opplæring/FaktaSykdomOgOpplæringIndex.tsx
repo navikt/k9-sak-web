@@ -1,5 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { harÅpentAksjonspunkt, harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
@@ -8,48 +8,41 @@ import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import type { Aksjonspunkt } from '@k9-sak-web/lib/kodeverk/types/Aksjonspunkt.js';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
-  VilkårMedPerioderDtoVilkarType,
-  VilkårPeriodeDtoVilkarStatus,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  k9_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
+  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
+  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated';
 
+export type nødvendigOpplæringPayload = {
+  perioder: {
+    periode: {
+      fom: string;
+      tom: string;
+    };
+    begrunnelse: string | null;
+    resultat: OpplæringVurderingDtoResultat;
+    avslagsårsak?: OpplæringVurderingDtoAvslagsårsak;
+  }[];
+};
+
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
-  if (
-    aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.VURDER_LANGVARIG_SYK &&
-        ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK)) {
     return tabCodes.SYKDOM;
   }
-  if (
-    aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.VURDER_OPPLÆRING && ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING)) {
     return tabCodes.OPPLÆRING;
   }
-  if (
-    aksjonspunkter.some(
-      ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_REISETID && ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)) {
     return tabCodes.REISETID;
   }
-
-  if (
-    aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.VURDER_INSTITUSJON && ap.status.kode === aksjonspunktStatus.OPPRETTET,
-    )
-  ) {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON)) {
     return tabCodes.INSTITUSJON;
   }
 
@@ -64,18 +57,7 @@ type payloads =
       vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'];
     }
   | { behandlingUuid?: string }
-  | {
-      perioder: {
-        periode: {
-          fom: string;
-          tom: string;
-        };
-        begrunnelse: string | null;
-        nødvendigOpplæring: boolean;
-        dokumentertOpplæring: boolean;
-        avslagsårsak?: string;
-      }[];
-    }
+  | nødvendigOpplæringPayload
   | {
       reisetid: {
         periode: {
@@ -102,16 +84,7 @@ type SykdomOgOpplæringContext = {
     langvarigsykdomsvurderingUuid?: string,
     vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
   ) => void;
-  løsAksjonspunkt9302: (payload: {
-    periode: {
-      fom: string;
-      tom: string;
-    };
-    begrunnelse: string | null;
-    nødvendigOpplæring: boolean;
-    dokumentertOpplæring: boolean;
-    avslagsårsak?: string;
-  }) => void;
+  løsAksjonspunkt9302: (payload: nødvendigOpplæringPayload) => void;
   løsAksjonspunkt9303: (payload: {
     periode: {
       fom: string;
@@ -184,29 +157,12 @@ const FaktaSykdomOgOpplæringIndex = ({
     }
   };
 
-  const løsAksjonspunkt9302 = (payload: {
-    periode: {
-      fom: string;
-      tom: string;
-    };
-    begrunnelse: string | null;
-    nødvendigOpplæring: boolean;
-    dokumentertOpplæring: boolean;
-    avslagsårsak?: string;
-  }) => {
+  const løsAksjonspunkt9302 = (payload: nødvendigOpplæringPayload) => {
     submitCallback([
       {
         kode: aksjonspunktCodes.VURDER_OPPLÆRING,
-        begrunnelse: payload.begrunnelse,
-        perioder: [
-          {
-            periode: payload.periode,
-            begrunnelse: payload.begrunnelse,
-            nødvendigOpplæring: payload.nødvendigOpplæring,
-            dokumentertOpplæring: payload.dokumentertOpplæring,
-            avslagsårsak: payload.avslagsårsak,
-          },
-        ],
+        begrunnelse: payload.perioder[0]?.begrunnelse,
+        perioder: [...payload.perioder],
       },
     ]);
   };
@@ -258,10 +214,10 @@ const SykdomOgOpplæring = () => {
   const { data: vilkår } = useVilkår(behandlingUuid);
   const [activeTab, setActiveTab] = useState(initActiveTab);
   const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
-  const harAksjonspunkt9300 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9300');
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
-  const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
-  const harAksjonspunkt9303 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9303');
+  const harAksjonspunkt9300 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
+  const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
+  const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
+  const harAksjonspunkt9303 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID);
 
   // Trenger en ekstra sjekk på institusjon fordi vilkåret kan vurderes automatisk, og da får vi aldri aksjonspunkt
   const institusjonVilkår = vilkår?.find(
@@ -302,23 +258,43 @@ const SykdomOgOpplæring = () => {
             {harAksjonspunkt9300 || institusjonVilkårErVurdert ? (
               <FaktaInstitusjonIndex />
             ) : (
-              <Alert variant="info">Ikke vurdert</Alert>
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
             )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.SYKDOM} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9301 ? <SykdomUperiodisertIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9301 ? (
+              <SykdomUperiodisertIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.OPPLÆRING} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9302 ? <NødvendigOpplæringIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9302 ? (
+              <NødvendigOpplæringIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
         <Tabs.Panel value={tabCodes.REISETID} lazy={false}>
           <div className="mt-4">
-            {harAksjonspunkt9303 ? <ReisetidIndex /> : <Alert variant="info">Ikke vurdert</Alert>}
+            {harAksjonspunkt9303 ? (
+              <ReisetidIndex />
+            ) : (
+              <Alert variant="info" size="small">
+                Ikke vurdert
+              </Alert>
+            )}
           </div>
         </Tabs.Panel>
       </Tabs>

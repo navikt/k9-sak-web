@@ -1,6 +1,6 @@
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Alert, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
-import { Datepicker, Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, minLength, required } from '@navikt/ft-form-validators';
 import { useForm, useWatch } from 'react-hook-form';
 
@@ -49,7 +49,7 @@ export const VurderNyoppstartet = ({
   };
 
   return (
-    <VStack gap="4">
+    <VStack gap="space-16">
       <Heading level="1" size="medium">
         Nyoppstartet
       </Heading>
@@ -58,9 +58,10 @@ export const VurderNyoppstartet = ({
           Vurder om søker er nyoppstartet
         </Alert>
       )}
-      <Form<FormValues> formMethods={formMethods} onSubmit={onSubmit}>
-        <VStack gap="4">
-          <RadioGroupPanel
+      <RhfForm<FormValues> formMethods={formMethods} onSubmit={onSubmit}>
+        <VStack gap="space-16">
+          <RhfRadioGroup
+            control={formMethods.control}
             name="erNyoppstartet"
             label="Er søker nyoppstartet?"
             isTrueOrFalseSelection
@@ -78,22 +79,24 @@ export const VurderNyoppstartet = ({
             isReadOnly={readOnly}
           />
           {erNyoppstartet && (
-            <Datepicker
+            <RhfDatepicker
+              control={formMethods.control}
               name="fom"
               label="Dato for nyoppstartet"
               validate={[required, hasValidDate]}
               isReadOnly={readOnly}
             />
           )}
-          <Box maxWidth="70ch">
-            <TextAreaField
+          <Box.New maxWidth="70ch">
+            <RhfTextarea
+              control={formMethods.control}
               name="begrunnelse"
               label="Begrunnelse"
               validate={[required, minLength(3)]}
               maxLength={1500}
               readOnly={readOnly}
             />
-          </Box>
+          </Box.New>
           {!readOnly && (
             <HStack>
               <Button type="submit" size="small">
@@ -102,7 +105,7 @@ export const VurderNyoppstartet = ({
             </HStack>
           )}
         </VStack>
-      </Form>
+      </RhfForm>
     </VStack>
   );
 };

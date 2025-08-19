@@ -3,12 +3,12 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Box, Button } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
 import React, { useContext, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { Medlemskap } from '../../types/Medlemskap';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
@@ -258,7 +258,7 @@ export const OppholdInntektOgPerioderForm = ({
     Object.keys(medlemskap.personopplysninger).length > 0;
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
       <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
         {getHelpTexts(aksjonspunkter).map(helpText => (
           <React.Fragment key={helpText}>{helpText}</React.Fragment>
@@ -298,7 +298,7 @@ export const OppholdInntektOgPerioderForm = ({
           </Button>
         )}
       </Box>
-    </Form>
+    </RhfForm>
   );
 };
 

@@ -91,13 +91,13 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
         )}
         <div className={styles.contentContainer}>
           <FlexContainer>
-            <HStack gap="4">
+            <HStack gap="space-16">
               {erVilkarOk !== undefined && (
                 <>
                   {erVilkarOk ? (
-                    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+                    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
                   ) : (
-                    <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+                    <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
                   )}
                 </>
               )}

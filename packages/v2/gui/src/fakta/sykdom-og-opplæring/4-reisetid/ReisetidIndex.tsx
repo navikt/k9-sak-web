@@ -1,4 +1,7 @@
-import type { ReisetidPeriodeVurderingDtoResultat, ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultatType,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Period } from '@navikt/ft-utils';
 import { useContext, useState } from 'react';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
@@ -9,10 +12,11 @@ import { CenteredLoader } from '../CenteredLoader';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
 import ReisetidContainer from './ReisetidContainer';
+import ReisetidAlerts from './ReisetidAlerts';
 
 interface ReisetidVurderingselement extends Omit<Vurderingselement, 'resultat'>, ReisetidVurderingDto {
   perioder: Period[];
-  resultat: ReisetidPeriodeVurderingDtoResultat;
+  resultat: ReisetidResultatType;
 }
 
 const ReisetidIndex = () => {
@@ -32,6 +36,7 @@ const ReisetidIndex = () => {
 
   return (
     <div>
+      <ReisetidAlerts vurdertReisetid={vurdertReisetid} />
       <NavigationWithDetailView
         navigationSection={() => (
           <>

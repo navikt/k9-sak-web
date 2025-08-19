@@ -2,10 +2,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
-import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
 
 interface UttakProps {
-  uuid: string;
+  behandling: Pick<Behandling, 'versjon' | 'uuid' | 'status'>;
   uttaksperioder: any;
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
@@ -18,7 +18,7 @@ interface UttakProps {
 }
 
 export default ({
-  uuid,
+  behandling,
   uttaksperioder,
   utsattePerioder,
   perioderTilVurdering = [],
@@ -40,13 +40,24 @@ export default ({
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
 
+  /*
+   * Midlertidig fiks for å oppdatere behandling etter å ha fullført aksjonspunkt. Ifm med
+   * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
+   * tilpasses til å kunne trigge oppdatering av behandling "on-demand"
+   */
+  const oppdaterBehandling = () => {
+    // FIXME temp fiks for å håndtere oppdatering av behandling
+    window.location.reload();
+  };
+
   return (
     <Uttak
       containerData={{
+        behandling,
         uttaksperioder,
         utsattePerioder,
         perioderTilVurdering,
-        aktivBehandlingUuid: uuid,
+        aktivBehandlingUuid: behandling.uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
         ytelsetype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
@@ -56,6 +67,7 @@ export default ({
         aksjonspunkter: funnedeRelevanteAksjonspunkter,
         erOverstyrer: false, // Overstyring er ikke implementert for PILS
         readOnly,
+        oppdaterBehandling,
       }}
     />
   );

@@ -1,6 +1,9 @@
-import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto,
+  k9_sak_kontrakt_notat_NotatDto as NotatDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
-import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { useMemo, useState } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
 import ChatComponent, { type EndreNotatPayload, type SkjulNotatPayload } from './components/ChatComponent';
@@ -68,12 +71,13 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               Vis skjulte notater
             </Switch>
           </div>
-          <Form<FormState> formMethods={formMethods} onSubmit={submitNyttNotat}>
+          <RhfForm<FormState> formMethods={formMethods} onSubmit={submitNyttNotat}>
             <div className={styles.nyttNotat}>
-              <TextAreaField name="notatTekst" size="small" label="Skriv et nytt notat" />
+              <RhfTextarea control={formMethods.control} name="notatTekst" size="small" label="Skriv et nytt notat" />
             </div>
             {fagsakHarPleietrengende && (
-              <CheckboxField
+              <RhfCheckbox
+                control={formMethods.control}
                 className={styles.visAlleNotater}
                 name="visNotatIAlleSaker"
                 label="Vis notat i alle saker tilknyttet pleietrengende"
@@ -82,7 +86,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
             <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
               Legg til notat
             </Button>
-          </Form>
+          </RhfForm>
           {!hasGetNotaterError && notater?.length === 0 && (
             <Alert className={styles.alert} size="small" variant="info">
               Ingen notater er publisert i saken
