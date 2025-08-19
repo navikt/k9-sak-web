@@ -1,11 +1,8 @@
-import {
-  type sif_tilbakekreving_web_app_tjenester_behandling_aksjonspunkt_dto_AksjonspunktDto as AksjonspunktDto,
-  type sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungtilbake/kodeverk/AksjonspunktCodes.js';
 import SettPåVentModal from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 interface SettPaVentParams {
   formData: {
@@ -17,8 +14,8 @@ interface SettPaVentParams {
 }
 
 interface BehandlingPaVentProps {
-  behandling: BehandlingDto;
-  aksjonspunkter: AksjonspunktDto[];
+  behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
   settPaVent: (params: SettPaVentParams) => Promise<any>;
 }
 

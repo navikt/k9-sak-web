@@ -1,6 +1,5 @@
-import { type sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import FetchedData from '../types/fetchedDataTsType';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
@@ -10,7 +9,7 @@ interface OwnProps {
   fetchedData: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
-  behandling: BehandlingDto;
+  behandling: Behandling;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
@@ -22,7 +21,7 @@ interface OwnProps {
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   hasFetchError: boolean;
-  setBehandling: (behandling: BehandlingDto) => void;
+  setBehandling: (behandling: Behandling) => void;
 }
 
 const TilbakekrevingPaneler = ({

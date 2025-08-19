@@ -1,7 +1,6 @@
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { type sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import {
   FatterVedtakStatusModal,
   ProsessStegContainer,
@@ -10,7 +9,7 @@ import {
   Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useCallback, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
@@ -28,7 +27,7 @@ interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
-  behandling: BehandlingDto;
+  behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
@@ -37,13 +36,13 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
   harApenRevurdering: boolean;
-  setBehandling: (behandling: BehandlingDto) => void;
+  setBehandling: (behandling: Behandling) => void;
 }
 
 const getHentFritekstbrevHtmlCallback =
   (
     hentFriteksbrevHtml: (data: any) => Promise<any>,
-    behandling: BehandlingDto,
+    behandling: Behandling,
     fagsak: Fagsak,
     fagsakPerson: FagsakPerson,
   ) =>
@@ -97,7 +96,7 @@ const TilbakekrevingProsess = ({
   );
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiTilbakekrevingHooks.useRestApiRunner<BehandlingDto>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const { startRequest: beregnBelop } = restApiTilbakekrevingHooks.useRestApiRunner(

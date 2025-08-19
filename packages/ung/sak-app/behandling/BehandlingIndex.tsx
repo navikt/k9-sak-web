@@ -130,6 +130,7 @@ const BehandlingIndex = ({
 
   const defaultProps = {
     behandlingId,
+    behandlingUuid: behandling?.uuid,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
     kodeverk: kodeverk,
@@ -158,7 +159,7 @@ const BehandlingIndex = ({
     [alleBehandlinger],
   );
 
-  const behandlingTypeKode = behandling?.type ?? undefined;
+  const behandlingTypeKode = behandling?.type.kode ?? undefined;
 
   if (!behandling) {
     return <LoadingPanel />;
