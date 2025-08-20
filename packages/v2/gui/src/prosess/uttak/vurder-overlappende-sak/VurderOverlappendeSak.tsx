@@ -6,7 +6,6 @@ import {
   k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  type BekreftData,
   type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
   type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
@@ -58,19 +57,6 @@ export interface VurderOverlappendeSakFormData {
     endretAutomatisk?: boolean;
   }[];
 }
-
-export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['body'] & {
-  bekreftedeAksjonspunktDtoer: Array<{
-    '@type': string;
-    kode: string | null | undefined;
-    perioder: Array<{
-      valg: PeriodeMedOverlappValg;
-      begrunnelse: string;
-      periode: { fom: string; tom: string };
-      søkersUttaksgrad?: number;
-    }>;
-  }>;
-};
 
 const gyldigAksjonspunktType = '9292' as const;
 

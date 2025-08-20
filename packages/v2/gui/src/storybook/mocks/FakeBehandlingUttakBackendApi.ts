@@ -1,10 +1,12 @@
-import type { k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BehandlingUttakBackendApiType } from '../../prosess/uttak/BehandlingUttakBackendApiType';
-import type { BekreftVurderOverlappendeSakerAksjonspunktRequest } from '../../prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSak';
 
 export class FakeBehandlingUttakBackendApi implements BehandlingUttakBackendApiType {
   #egneOverlappendeSaker: EgneOverlappendeSakerDto[];
-  #bekreftAksjonspunkt: BekreftVurderOverlappendeSakerAksjonspunktRequest | undefined;
+  #bekreftAksjonspunkt: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto | undefined;
 
   constructor(egneOverlappendeSaker: EgneOverlappendeSakerDto[]) {
     this.#egneOverlappendeSaker = egneOverlappendeSaker;
@@ -14,7 +16,7 @@ export class FakeBehandlingUttakBackendApi implements BehandlingUttakBackendApiT
     return egneOverlappendeSaker;
   }
 
-  async bekreftAksjonspunkt(requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest) {
+  async bekreftAksjonspunkt(requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) {
     console.log('Bekreft aksjonspunkt', requestBody);
     this.#bekreftAksjonspunkt = requestBody;
   }
