@@ -149,6 +149,7 @@ interface AvregningTableProps {
     perioderPerMottaker: SimuleringMottaker[];
   };
   ingenPerioderMedAvvik: boolean;
+  isUngFagsak: boolean;
 }
 
 const AvregningTable = ({
@@ -156,6 +157,7 @@ const AvregningTable = ({
   toggleDetails,
   showDetails,
   ingenPerioderMedAvvik,
+  isUngFagsak,
 }: AvregningTableProps) => (
   <>
     {simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
@@ -219,17 +221,28 @@ const AvregningTable = ({
                     ingenPerioderMedAvvik,
                     mottaker.resultatPerFagområde,
                     mottaker.resultatOgMotregningRader,
-                  ).map((resultat, resultatIndex) => {
-                    const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
-                    return (
-                      <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
-                        <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
-                          <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
-                        </Table.DataCell>
-                        {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
-                      </Table.Row>
-                    );
-                  }),
+                  )
+                    .filter(resultat => {
+                      if (
+                        isUngFagsak &&
+                        (resultat.feltnavn === avregningCodes.INNTREKKNESTEMÅNED ||
+                          resultat.feltnavn === avregningCodes.INNTREKK)
+                      ) {
+                        return false;
+                      }
+                      return true;
+                    })
+                    .map((resultat, resultatIndex) => {
+                      const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
+                      return (
+                        <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
+                          <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
+                            <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                          </Table.DataCell>
+                          {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
+                        </Table.Row>
+                      );
+                    }),
                 )}
             </Table.Body>
           </Table>
