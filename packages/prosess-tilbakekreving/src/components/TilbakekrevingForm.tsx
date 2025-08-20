@@ -16,7 +16,7 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
