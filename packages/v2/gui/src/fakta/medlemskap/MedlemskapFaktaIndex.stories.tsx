@@ -299,9 +299,7 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter: Story = {
               begrunnelse: 'Dette er en begrunnelse',
               erEosBorger: false,
               lovligOppholdVurdering: undefined,
-              medlemskapManuellVurderingType: {
-                kode: 'UNNTAK',
-              },
+              medlemskapManuellVurderingType: 'UNNTAK',
               oppholdsrettVurdering: undefined,
               vurderingsdato: '2018-11-07',
               bosattVurdering: undefined,
@@ -311,9 +309,7 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter: Story = {
               begrunnelse: 'Dette er en begrunnelse',
               erEosBorger: false,
               lovligOppholdVurdering: undefined,
-              medlemskapManuellVurderingType: {
-                kode: 'MEDLEM',
-              },
+              medlemskapManuellVurderingType: 'MEDLEM',
               oppholdsrettVurdering: undefined,
               vurderingsdato: '2019-11-07',
               bosattVurdering: undefined,
@@ -328,9 +324,7 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter: Story = {
               begrunnelse: 'Dette er en begrunnelse',
               erEosBorger: false,
               lovligOppholdVurdering: undefined,
-              medlemskapManuellVurderingType: {
-                kode: 'UNNTAK',
-              },
+              medlemskapManuellVurderingType: 'UNNTAK',
               oppholdsrettVurdering: undefined,
               vurderingsdato: '2018-11-07',
               bosattVurdering: undefined,
@@ -340,9 +334,7 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter: Story = {
               begrunnelse: 'Dette er en begrunnelse',
               erEosBorger: false,
               lovligOppholdVurdering: undefined,
-              medlemskapManuellVurderingType: {
-                kode: 'MEDLEM',
-              },
+              medlemskapManuellVurderingType: 'MEDLEM',
               oppholdsrettVurdering: undefined,
               vurderingsdato: '2019-11-07',
               bosattVurdering: undefined,
