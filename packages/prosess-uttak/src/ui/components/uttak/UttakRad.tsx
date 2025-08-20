@@ -22,8 +22,8 @@ import UttakDetaljerV2Wrapper from '../uttak-detaljer/UttakDetaljerV2Wrapper';
 
 import styles from './uttak.module.css';
 
-import type { JSX } from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { JSX } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +57,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
   return (
     <>
-      <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
+      <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''}`} onClick={velgPeriode}>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
@@ -67,7 +67,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             {manueltOverstyrt && (
               <>
                 <PersonPencilFillIcon
-                  className="ml-1 align-middle text-2xl text-border-warning"
+                  className="ml-1 align-middle text-2xl text-ax-border-warning"
                   title="Manuelt overstyrt"
                 />
                 <HelpText
@@ -84,26 +84,26 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.uttak__vilkarIconContainer}`}>
           {harOppfyltAlleInngangsvilkår ? (
-            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
           ) : (
-            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
           )}
         </Table.DataCell>
         {erFagytelsetypeLivetsSluttfase && (
           <Table.DataCell>
             {uttaksgrad === 0 ? (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             ) : (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             )}
           </Table.DataCell>
         )}
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           <div className={styles.uttak__iconContainer}>
             {harPleiebehov ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )}
           </div>
           {harPleiebehov && visPleiebehovProsent ? `${pleiebehov}%` : null}

@@ -24,7 +24,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
       <ExclamationmarkTriangleFillIcon
         title="Perioden må vurderes"
         fontSize="1.5rem"
-        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+        style={{ color: 'var(--ax-text-warning-decoration)' }}
       />
     );
   }
@@ -45,7 +45,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
   ) {
     return (
       <Tooltip content="Vilkåret er oppfylt">
-        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
       </Tooltip>
     );
   }
@@ -59,7 +59,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
       <XMarkOctagonFillIcon
         title="Vilkåret er ikke oppfylt"
         fontSize={24}
-        style={{ color: 'var(--a-surface-danger)' }}
+        style={{ color: 'var(--ax-bg-danger-strong)' }}
       />
     );
   }
@@ -73,7 +73,7 @@ export const RadStatus = ({ resultat }: { resultat?: ResultatType }) => {
 export const RadDato = ({ perioder, active }: { perioder: Period[]; active: boolean }) => {
   return (
     <div className="flex ml-3 items-center">
-      <div className={`min-w-[10.125rem] ${active ? '' : 'text-blue-500 underline'}`}>
+      <div className={`min-w-[10.125rem] ${active ? '' : 'text-ax-accent-600 underline'}`}>
         {perioder.map(v => (
           <div key={v.prettifyPeriod()}>
             {v.asListOfDays().length > 1 ? v.prettifyPeriod() : v.prettifyPeriod().split(' - ')[0]}

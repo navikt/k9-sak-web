@@ -3,7 +3,8 @@ import {
   type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevMottakerValgResponse as InformasjonsbrevMottakerValgResponse,
   type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto,
 } from '@k9-sak-web/backend/ungsak/generated';
-import { SelectField } from '@navikt/ft-form-hooks';
+import { RhfSelect } from '@navikt/ft-form-hooks';
+import { useFormContext } from 'react-hook-form';
 import { formatFødselsdato } from '../../utils/formatters';
 
 interface MottakerSelectProps {
@@ -27,6 +28,7 @@ const unavailableCauseTxt = (cause: UtilgjengeligÅrsak | undefined): string | u
 };
 
 const MottakerSelect = ({ valgtMal, disabled, mottakere }: MottakerSelectProps) => {
+  const { control } = useFormContext();
   const resolveMottaker = (mottakerId: string | undefined) => valgtMal?.mottakere?.find(m => m.id === mottakerId);
 
   const validateMottaker = (valgtMottakerId: string) => {
@@ -40,7 +42,8 @@ const MottakerSelect = ({ valgtMal, disabled, mottakere }: MottakerSelectProps) 
   };
 
   return (
-    <SelectField
+    <RhfSelect
+      control={control}
       name="mottaker"
       label="Mottaker"
       size="small"

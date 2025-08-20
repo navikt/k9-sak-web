@@ -6,7 +6,7 @@
 }
 
 .DayPickerInput-Overlay {
-  background: var(--a-white);
+  background: var(--ax-bg-default);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   left: 0;
@@ -16,7 +16,7 @@
 }
 
 .calendarWrapper {
-  background: var(--a-white);
+  background: var(--ax-bg-default);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   left: 0;
@@ -165,7 +165,7 @@
 }
 
 .DayPicker-Day:last-child {
-  color: var(--a-nav-red);
+  color: var(--ax-text-logo);
 }
 
 .DayPicker--interactionDisabled .DayPicker-Day {
@@ -203,10 +203,10 @@
 }
 
 .DayPicker-Day--sunday:not(.DayPicker-Day--today) {
-  color: var(--a-nav-red);
+  color: var(--ax-text-logo);
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled, .DayPicker-Day--outside) {
-  background-color: var(--a-deepblue-500);
-  color: var(--a-white);
+  background-color: var(--ax-brand-blue-600);
+  color: var(--ax-bg-default);
 }

@@ -1,21 +1,21 @@
 .invisibleButton {
   background: none;
   border: 0;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   cursor: pointer;
   padding: 8px;
 }
 
 .invisibleButton:focus {
-  background-color: var(--a-orange-300);
+  background-color: var(--ax-warning-400);
   border: 0;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   padding-bottom: 4px;
   text-decoration: none;
 }
 
 .invisibleButton:focus:hover {
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
 }
 
 .invisibleButton i {

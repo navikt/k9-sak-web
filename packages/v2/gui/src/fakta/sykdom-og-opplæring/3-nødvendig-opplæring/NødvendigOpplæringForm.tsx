@@ -3,9 +3,6 @@ import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
-import { Form } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
-import { Period } from '@navikt/ft-utils';
 import {
   Alert,
   BodyShort,
@@ -20,16 +17,19 @@ import {
   ReadMore,
   Textarea,
 } from '@navikt/ds-react';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { ListItem } from '@navikt/ds-react/List';
-import { useContext, useEffect } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
+import { useContext, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Periodevisning } from '../../../shared/detailView/DetailView.js';
-import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo.js';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import type { nødvendigOpplæringPayload } from '../FaktaSykdomOgOpplæringIndex.js';
-import { DelvisOpplæring } from './components/DelvisOpplæring';
 import { Avslagsårsak } from './components/Avslagsårsak';
+import { DelvisOpplæring } from './components/DelvisOpplæring';
+import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo.js';
 
 const JA = 'JA' as const;
 const DELVIS = 'DELVIS' as const;
@@ -120,7 +120,7 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
 
 const onSubmit = (data: NødvendigOpplæringFormFields) => {
   const perioder = data.perioder.map(periode => ({
-    begrunnelse: data.begrunnelse,
+    begrunnelse: data.begrunnelse || null,
     resultat: nødvendigOpplæringTilResultat(data.harNødvendigOpplæring),
     avslagsårsak: data.avslagsårsak || null,
     periode: {
@@ -130,7 +130,7 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
   }));
 
   const perioderUtenNødvendigOpplæring = data.perioderUtenNødvendigOpplæring.map(periode => ({
-    begrunnelse: data.begrunnelse,
+    begrunnelse: data.begrunnelse || null,
     resultat: periode.resultat,
     avslagsårsak: periode.avslagsårsak || null,
     periode: {
@@ -146,12 +146,12 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
 
 const NødvendigOpplæringForm = ({
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
-  setRedigering: (redigering: boolean) => void;
-  redigering: boolean;
+  setRedigerer: (redigerer: boolean) => void;
+  redigerer: boolean;
 }) => {
   const { readOnly, løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<NødvendigOpplæringFormFields>({
@@ -177,7 +177,7 @@ const NødvendigOpplæringForm = ({
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
   return (
     <>
-      <Form
+      <RhfForm
         formMethods={formMethods}
         onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
       >
@@ -219,7 +219,7 @@ const NødvendigOpplæringForm = ({
               </Heading>
               <Periodevisning perioder={vurdering.perioder} />
             </div>
-            <div className="border-none bg-border-subtle h-[2px]" />
+            <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
             <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
           </div>
           <div>
@@ -311,15 +311,15 @@ const NødvendigOpplæringForm = ({
               <Button variant="primary" type="submit" size="small">
                 Bekreft og fortsett
               </Button>
-              {redigering && (
-                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              {redigerer && (
+                <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                   Avbryt redigering
                 </Button>
               )}
             </div>
           )}
         </div>
-      </Form>
+      </RhfForm>
     </>
   );
 };

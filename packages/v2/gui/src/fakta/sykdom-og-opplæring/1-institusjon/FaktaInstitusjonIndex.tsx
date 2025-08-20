@@ -1,10 +1,6 @@
 import { useState, useMemo, useContext } from 'react';
 import { Period } from '@navikt/ft-utils';
-import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto as InstitusjonPeriodeDto,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView.js';
@@ -14,13 +10,7 @@ import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
 import { CenteredLoader } from '../CenteredLoader.js';
-import { Alert } from '@navikt/ds-react';
-
-export interface FaktaInstitusjonProps {
-  perioder: InstitusjonPeriodeDto[];
-  vurderinger: InstitusjonVurderingDto[];
-  readOnly: boolean;
-}
+import InstitusjonAlerts from './components/InstitusjonAlerts.js';
 
 const FaktaInstitusjonIndex = () => {
   const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
@@ -48,7 +38,6 @@ const FaktaInstitusjonIndex = () => {
       } else {
         grouped.set(id, {
           ...periode,
-          periode: periodObj,
           perioder: [periodObj],
           resultat: vurdering?.resultat ?? InstitusjonResultat.MÅ_VURDERES,
         });
@@ -75,11 +64,7 @@ const FaktaInstitusjonIndex = () => {
 
   return (
     <div>
-      {valgtVurdering?.resultat === InstitusjonResultat.MÅ_VURDERES && !readOnly && (
-        <Alert variant="warning" size="small" contentMaxWidth={false} className="mb-4">
-          {`Vurder om opplæringen er utført ved godkjent helseinstitusjon eller kompetansesenter i perioden ${valgtVurdering.perioder.map(periode => periode.prettifyPeriod()).join(', ')}.`}
-        </Alert>
-      )}
+      <InstitusjonAlerts valgtVurdering={valgtVurdering} vurderinger={vurderinger} />
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>

@@ -38,7 +38,7 @@
   padding-left: 1.5rem;
 }
 
-.fortsettUtenInntektsmelding__radiogroupAlert :global(.navds-alert__wrapper) {
+.fortsettUtenInntektsmelding__radiogroupAlert :global(.aksel-alert__wrapper) {
   max-width: none;
 }
 

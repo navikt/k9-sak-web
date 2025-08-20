@@ -4,7 +4,7 @@ import { type JSX } from 'react';
 
 const InnleggelsesperiodeIkonOverIkkeOppfylt = (): JSX.Element => (
   <OverlayedIcons
-    indicatorRenderer={() => <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />}
+    indicatorRenderer={() => <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />}
     overlayRenderer={() => <Buildings3Icon fontSize={24} />}
   />
 );

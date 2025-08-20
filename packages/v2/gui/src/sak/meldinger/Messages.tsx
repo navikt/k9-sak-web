@@ -1,27 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
+import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type {
   k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
-  k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
   k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
+  k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
 } from '@k9-sak-web/backend/k9sak/generated';
-import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
+import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
+import { useEffect, useRef, useState } from 'react';
 import {
   type ArbeidsgiverOpplysningerPerId,
   bestemAvsenderApp,
   type Personopplysninger,
 } from '../../utils/formidling.js';
-import TredjepartsmottakerInput, {
-  type BackendApi as TredjepartsmottakerBackendApi,
-  type TredjepartsmottakerError,
-  type TredjepartsmottakerValue,
-} from './TredjepartsmottakerInput.js';
-import MottakerSelect from './MottakerSelect.js';
+import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
+import type { BehandlingInfo } from '../BehandlingInfo.js';
+import type { Fagsak } from '../Fagsak.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type Error,
@@ -32,11 +30,13 @@ import FritekstInput, {
   type Valid,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.js';
-import type { BehandlingInfo } from '../BehandlingInfo.js';
-import type { Fagsak } from '../Fagsak.js';
-import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import MottakerSelect from './MottakerSelect.js';
 import { TredjepartsmottakerCheckbox } from './TredjepartsmottakerCheckbox.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
+import TredjepartsmottakerInput, {
+  type BackendApi as TredjepartsmottakerBackendApi,
+  type TredjepartsmottakerError,
+  type TredjepartsmottakerValue,
+} from './TredjepartsmottakerInput.js';
 
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(
@@ -415,7 +415,7 @@ const Messages = ({
   };
 
   return (
-    <VStack gap="4">
+    <VStack gap="space-16">
       <MalSelect maler={maler} valgtMalkode={valgtMalkode} onChange={setValgtMalkode} />
       <FritekstForslagSelect fritekstForslag={fritekstForslag} value={valgtFritekst} onChange={setValgtFritekst} />
       <MottakerSelect
@@ -449,7 +449,7 @@ const Messages = ({
         showValidation={showValidation}
         stickyState={{ ...stickyState.fritekst }}
       />
-      <HStack gap="3">
+      <HStack gap="space-12">
         <Button size="small" variant="primary" icon={<PaperplaneIcon />} loading={isBusy} onClick={submitHandler}>
           Send brev
         </Button>

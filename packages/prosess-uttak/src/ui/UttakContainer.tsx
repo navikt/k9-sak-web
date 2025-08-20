@@ -1,8 +1,8 @@
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated';
+import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import { Alert, HStack, Heading, VStack } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import React, { useContext, type JSX } from 'react';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated';
-import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import {
   aksjonspunktVurderDatoKode,
   aksjonspunktVurderOverlappendeYtelsekode,
@@ -11,14 +11,14 @@ import {
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
 
-import OverstyrUttak from '@k9-sak-web/gui/prosess/uttak/overstyr-uttak/OverstyrUttak.js';
-import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
-import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
-import VurderDato from './components/vurderDato/VurderDato';
-import ContainerContext from './context/ContainerContext';
+import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
+import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
+import OverstyrUttak from '@k9-sak-web/gui/prosess/uttak/overstyr-uttak/OverstyrUttak.js';
 import Infostripe from './components/infostripe/Infostripe';
+import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
+import VurderDato from '@k9-sak-web/gui/prosess/uttak/vurder-dato/VurderDato.js';
+import ContainerContext from './context/ContainerContext';
 import styles from './mainComponent.module.css';
 
 interface MainComponentProps {
@@ -39,6 +39,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
     behandling,
     perioderTilVurdering,
     hentBehandling,
+    oppdaterBehandling,
   } = containerData;
 
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
@@ -69,7 +70,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
 
   return (
     <ContainerContext.Provider value={containerData}>
-      <VStack gap="4">
+      <VStack gap="space-16">
         <HStack justify="start" className={styles.overstyringsHeader}>
           <Heading size="small" level="1">
             Uttak
@@ -117,6 +118,9 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
               virkningsdato: virkningsdatoUttakNyeRegler ?? '',
             }}
             readOnly={readOnly}
+            api={uttakApi}
+            behandling={behandling}
+            oppdaterBehandling={oppdaterBehandling}
           />
         )}
         {!harVentAnnenPSBSakAksjonspunkt && (

@@ -73,7 +73,7 @@ const TilkjentYtelseTimeLineData = ({
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   return (
     <TimeLineDataContainer>
-      <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
         <div>
           <Label size="small" as="p">
             Detaljer for valgt periode

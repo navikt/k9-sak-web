@@ -73,7 +73,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                     {aksjonspunkt.totrinnskontrollGodkjent ? (
                       <div>
                         <span>
-                          <CheckmarkIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+                          <CheckmarkIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
                         </span>
                         <span>Godkjent</span>
                       </div>
@@ -82,7 +82,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                         {aksjonspunkt.vurderPaNyttArsaker?.map(item => (
                           <div key={`${item}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
-                              <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--a-surface-danger)' }} />
+                              <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--ax-bg-danger-strong)' }} />
                             </span>
                             <span>{vurderArsaker.find(arsak => item === arsak.kode)?.navn}</span>
                           </div>

@@ -7,25 +7,27 @@ import { PencilIcon } from '@navikt/aksel-icons';
 import { useEffect, useState, useContext } from 'react';
 import { Button } from '@navikt/ds-react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9302 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9302');
-  const [redigering, setRedigering] = useState(false);
+  const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
+  const [redigerer, setRedigerer] = useState(false);
   useEffect(() => {
-    setRedigering(false);
+    setRedigerer(false);
   }, [vurdering.perioder]);
 
-  if (!readOnly && harAksjonspunkt9302 && (vurdering.resultat === 'MÅ_VURDERES' || redigering)) {
+  if (!readOnly && harAksjonspunkt9302 && (vurdering.resultat === 'MÅ_VURDERES' || redigerer)) {
     return (
-      <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
-        <NødvendigOpplæringForm vurdering={vurdering} setRedigering={setRedigering} redigering={redigering} />
+      <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
+        <NødvendigOpplæringForm vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer} />
       </Wrapper>
     );
   }
 
   return (
-    <Wrapper vurdering={vurdering} setRedigering={setRedigering} redigering={redigering}>
+    <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
       <NødvendigOpplæringFerdigvisning vurdering={vurdering} />
     </Wrapper>
   );
@@ -34,26 +36,26 @@ const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVur
 const Wrapper = ({
   children,
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   children: React.ReactNode;
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
-  setRedigering: React.Dispatch<React.SetStateAction<boolean>>;
-  redigering: boolean;
+  setRedigerer: React.Dispatch<React.SetStateAction<boolean>>;
+  redigerer: boolean;
 }) => {
-  const { readOnly } = useContext(SykdomOgOpplæringContext);
-
+  const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   return (
     <DetailView
       title="Dokumentasjon"
       border
       contentAfterTitleRenderer={() => {
-        if (vurdering.resultat === 'MÅ_VURDERES' || redigering || readOnly) {
+        if (vurdering.resultat === 'MÅ_VURDERES' || redigerer || readOnly || !harAksjonspunkt9302) {
           return null;
         }
         return (
-          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigering(v => !v)}>
+          <Button variant="tertiary" size="small" icon={<PencilIcon />} onClick={() => setRedigerer(v => !v)}>
             Rediger vurdering
           </Button>
         );

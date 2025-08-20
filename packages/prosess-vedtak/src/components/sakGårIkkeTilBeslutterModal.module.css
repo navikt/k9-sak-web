@@ -8,7 +8,7 @@
   margin-top: 1.4375rem;
 }
 
-.submitButton:global(.navds-button) {
+.submitButton:global(.aksel-button) {
   margin-right: 1.375rem;
 }
 

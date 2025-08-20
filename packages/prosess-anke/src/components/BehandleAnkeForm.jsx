@@ -161,7 +161,7 @@ const BehandleAnkeFormImpl = ({
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
         <div>
           <SelectField
             readOnly={readOnly}
@@ -178,7 +178,7 @@ const BehandleAnkeFormImpl = ({
       <BodyShort size="small">
         <FormattedMessage id="Ankebehandling.Resultat" />
       </BodyShort>
-      <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '4fr 4fr 4fr' }}>
         <RadioGroupField
           name="ankeVurdering"
           validate={[required]}
@@ -214,7 +214,7 @@ const BehandleAnkeFormImpl = ({
         />
       </HGrid>
       {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && (
-        <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
           <div>
             <ArrowBox>
               <BodyShort size="small">
@@ -261,7 +261,7 @@ const BehandleAnkeFormImpl = ({
         </HGrid>
       )}
       {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (
-        <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
           <div>
             <ArrowBox>
               <RadioGroupField
@@ -302,7 +302,7 @@ const BehandleAnkeFormImpl = ({
         </HGrid>
       )}
 
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
         <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
       </HGrid>
 
@@ -310,7 +310,7 @@ const BehandleAnkeFormImpl = ({
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
-        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '8fr 2fr 2fr' }}>
           <div>
             <ProsessStegSubmitButton
               formName={formProps.form}

@@ -1,10 +1,10 @@
 import { inntektskategorier, type Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { PlusCircleIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Fieldset, HGrid, HStack, VStack } from '@navikt/ds-react';
-import { InputField, SelectField } from '@navikt/ft-form-hooks';
+import { RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidDecimal, maxValue, minValue, required } from '@navikt/ft-form-validators';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -105,13 +105,14 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
   return (
     <>
       <Fieldset legend="Ny andel" hideLegend>
-        <VStack gap="5">
+        <VStack gap="space-20">
           {fields.map((field, index) => {
             const erSN = erSelvstendigNæringsdrivende(field.inntektskategori);
             const erFL = erFrilans(field.inntektskategori);
             return (
-              <HStack gap="2" key={field.fieldId}>
-                <SelectField
+              <HStack gap="space-8" key={field.fieldId}>
+                <RhfSelect
+                  control={control}
                   label="Inntektskategori"
                   name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
                   selectValues={getInntektskategori(inntektskategorier)}
@@ -120,7 +121,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                 {!erSN && !erFL && (
                   <div>
                     <div className="flex items-end">
-                      <SelectField
+                      <RhfSelect
+                        control={control}
                         label="Arbeidsgiver"
                         name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
                         validate={
@@ -139,7 +141,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                           <PlusCircleIcon
                             title="Ny arbeidsgiver"
                             fontSize="1.5rem"
-                            className="text-[var(--a-blue-500)]"
+                            className="text-[var(--ax-accent-600)]"
                           />
                         }
                         onClick={() => setOpen(true)}
@@ -148,7 +150,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                     </div>
                     {skillUtPrivatperson && (
                       <div className="flex items-end">
-                        <SelectField
+                        <RhfSelect
+                          control={control}
                           label="Arbeidsgiver (privatperson)"
                           name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
                           validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
@@ -159,14 +162,16 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                   </div>
                 )}
 
-                <InputField
+                <RhfTextField
+                  control={control}
                   label="Til søker"
                   name={`nyPeriodeForm.andeler.${index}.tilSoker`}
                   validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                   format={value => value}
                 />
                 {!erSN && !erFL && (
-                  <InputField
+                  <RhfTextField
+                    control={control}
                     label="Refusjon"
                     name={`nyPeriodeForm.andeler.${index}.refusjon`}
                     validate={[required, minValue0, maxValue3999, hasValidDecimal]}
@@ -174,7 +179,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                   />
                 )}
                 {!erSN && (
-                  <InputField
+                  <RhfTextField
+                    control={control}
                     label="Uttaksgrad"
                     name={`nyPeriodeForm.andeler.${index}.utbetalingsgrad`}
                     validate={[required, minValue0, maxValue100, hasValidDecimal]}
@@ -191,7 +197,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                       remove(index);
                     }}
                     data-testid="removeButton"
-                    icon={<XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--a-nav-red)]" />}
+                    icon={<XMarkIcon title="Slett Perioden" fontSize="1.5rem" className="text-[var(--ax-text-logo)]" />}
                   />
                 )}
               </HStack>
@@ -199,14 +205,14 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
           })}
         </VStack>
 
-        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
           {!readOnly && (
             <Button
               size="xsmall"
               variant="secondary-neutral"
               type="button"
               onClick={() => append(defaultAndel)}
-              icon={<PlusCircleIcon fontSize="1.5rem" className="text-[var(--a-blue-500)]" />}
+              icon={<PlusCircleIcon fontSize="1.5rem" className="text-[var(--ax-accent-600)]" />}
               iconPosition="left"
             >
               Ny andel

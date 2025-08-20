@@ -16,25 +16,25 @@
   margin-bottom: 1.4375rem;
 }
 
-.aksjonspunktAlert :global(.navds-alert__wrapper) {
+.aksjonspunktAlert :global(.aksel-alert__wrapper) {
   flex: 1;
   max-width: none;
 }
 
-.accordion :global(.navds-accordion__header) {
+.accordion :global(.aksel-accordion__header) {
   border: none;
   padding: 0;
 }
 
-.accordion :global(.navds-accordion__header:not(:focus-visible)) {
+.accordion :global(.aksel-accordion__header:not(:focus-visible)) {
   box-shadow: none;
 }
 
-.accordion :global(.navds-accordion__header[aria-expanded='true']) {
+.accordion :global(.aksel-accordion__header[aria-expanded='true']) {
   background-color: transparent;
 }
 
-.accordion :global(.navds-accordion__content) {
+.accordion :global(.aksel-accordion__content) {
   border: none;
   margin-top: 1rem;
   padding: 0;

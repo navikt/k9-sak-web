@@ -1,9 +1,10 @@
 import { k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box } from '@navikt/ds-react';
-import { RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useContext } from 'react';
+import { useFormContext } from 'react-hook-form';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import type { VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import type { VilkårFieldType } from '../types/VilkårFieldType';
@@ -50,6 +51,7 @@ export const VilkarField = ({
   readOnly,
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<VilkårFieldFormValues>) => {
+  const { control } = useFormContext();
   const featureToggles = useContext(FeatureTogglesContext);
   const erIkkeOppfyltText = (
     <>
@@ -73,7 +75,8 @@ export const VilkarField = ({
 
   return (
     <div className="mt-4">
-      <TextAreaField
+      <RhfTextarea
+        control={control}
         name={`${fieldPrefix}.begrunnelse`}
         size="small"
         label={erOmsorgspenger ? 'Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B' : 'Vurdering'}
@@ -82,19 +85,20 @@ export const VilkarField = ({
         maxLength={1500}
       />
 
-      <Box marginBlock="4">
+      <Box.New marginBlock="4">
         {readOnly && (
           <div className="flex gap-4">
             {erVilkarOk(field?.kode) ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )}
             <BodyShort size="small">{vilkarVurderingTekst()}</BodyShort>
           </div>
         )}
         {!readOnly && (
-          <RadioGroupPanel
+          <RhfRadioGroup
+            control={control}
             name={`${fieldPrefix}.kode`}
             validate={[required]}
             isReadOnly={readOnly}
@@ -137,7 +141,7 @@ export const VilkarField = ({
             })}
           />
         )}
-      </Box>
+      </Box.New>
     </div>
   );
 };
