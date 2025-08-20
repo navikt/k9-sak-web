@@ -369,10 +369,15 @@ const OpplæringIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCo
 };
 
 const ReisetidIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
-  const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
+  const { behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const { data: reisetidInfo } = useVurdertReisetid(behandlingUuid);
 
-  if (!reisetidInfo) {
+  const aksjonspunktForNødvendigOpplæringErÅpent = harÅpentAksjonspunkt(
+    aksjonspunkter,
+    aksjonspunktCodes.VURDER_OPPLÆRING,
+  );
+
+  if (!reisetidInfo || aksjonspunktForNødvendigOpplæringErÅpent) {
     return null;
   }
 
