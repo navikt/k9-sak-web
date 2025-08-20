@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import { DatePicker, Label, useDatepicker } from '@navikt/ds-react';
+import { DatePicker, HStack, Label, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { FlexColumn, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
 import { PeriodLabel } from '@navikt/ft-ui-komponenter';
@@ -44,32 +43,33 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
   });
 
   return (
-    <>
-      <FlexColumn className={styles.datoVelger}>
-        <DatePicker {...datepickerProps}>
-          <DatePicker.Input {...inputProps} label="Opprett ny vurdering fra" size="small" />
-        </DatePicker>
-      </FlexColumn>
-      {nyePerioder.length > 0 ? (
-        <FlexColumn>
-          <Label size="small" className={styles.periodeHeader}>
-            Nye perioder til vurdering:
-          </Label>
-          <ul>
-            {nyePerioder[0] && (
-              <li>
-                <PeriodLabel dateStringFom={nyePerioder[0].fom} dateStringTom={nyePerioder[0].tom} />
-              </li>
-            )}
-            {nyePerioder[1] && (
-              <li>
-                <PeriodLabel dateStringFom={nyePerioder[1].fom} dateStringTom={nyePerioder[1].tom} />
-              </li>
-            )}
-          </ul>
-        </FlexColumn>
-      ) : null}
-      <VerticalSpacer sixteenPx />
-    </>
+    <div>
+      <HStack gap="space-16">
+        <div className={styles.datoVelger}>
+          <DatePicker {...datepickerProps}>
+            <DatePicker.Input {...inputProps} label="Opprett ny vurdering fra" size="small" />
+          </DatePicker>
+        </div>
+        {nyePerioder.length > 0 ? (
+          <div>
+            <Label size="small" className={styles.periodeHeader}>
+              Nye perioder til vurdering:
+            </Label>
+            <ul>
+              {nyePerioder[0] && (
+                <li>
+                  <PeriodLabel dateStringFom={nyePerioder[0].fom} dateStringTom={nyePerioder[0].tom} />
+                </li>
+              )}
+              {nyePerioder[1] && (
+                <li>
+                  <PeriodLabel dateStringFom={nyePerioder[1].fom} dateStringTom={nyePerioder[1].tom} />
+                </li>
+              )}
+            </ul>
+          </div>
+        ) : null}
+      </HStack>
+    </div>
   );
 };

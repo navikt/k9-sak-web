@@ -3,7 +3,7 @@ import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_
 import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Alert, Button } from '@navikt/ds-react';
-import { aksjonspunktErUtført, harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface ReisetidAlertProps {
@@ -13,6 +13,11 @@ interface ReisetidAlertProps {
 const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   const { aksjonspunkter, readOnly, løsAksjonspunkt9303 } = useContext(SykdomOgOpplæringContext);
   const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID);
+  const tidligereAksjonspunkterErÅpne = [
+    harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON),
+    harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK),
+    harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING),
+  ].some(Boolean);
   // Vi tar en vilkårlig vurdering fra listen for å løse aksjonspunktet
   const førsteVurderingIListen = vurdertReisetid?.vurderinger[0];
 
@@ -34,18 +39,11 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
     });
   };
 
-  if (!aksjonspunktErUtført(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING) && !readOnly) {
+  if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && tidligereAksjonspunkterErÅpne && !readOnly) {
     return (
-      <Alert variant="info" size="small" className="mb-4 p-4">
-        Du må vurdere nødvendig opplæring før du kan vurdere reisetid.
-      </Alert>
-    );
-  }
-
-  if (aksjonspunktErÅpent && !readOnly) {
-    return (
-      <Alert variant="warning" size="small" className="mb-4">
-        Vurder reisetid på andre dager enn søker har opplæring.
+      <Alert variant="warning" size="small" className="mb-4 p-4">
+        Reisetid er ferdig vurdert, men du må vurdere institusjon, langvarig sykdom og nødvendig opplæring før du kan gå
+        videre i behandlingen.
       </Alert>
     );
   }
@@ -62,6 +60,15 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
       </Alert>
     );
   }
+
+  if (aksjonspunktErÅpent && !readOnly) {
+    return (
+      <Alert variant="warning" size="small" className="mb-4">
+        Vurder reisetid på andre dager enn søker har opplæring.
+      </Alert>
+    );
+  }
+
   return null;
 };
 
