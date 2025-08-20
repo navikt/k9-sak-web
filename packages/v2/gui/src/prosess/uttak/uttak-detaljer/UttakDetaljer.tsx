@@ -5,7 +5,7 @@ import {
   type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
   type pleiepengerbarn_uttak_kontrakter_Utfall as UttaksperiodeInfoUtfallType,
   type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';

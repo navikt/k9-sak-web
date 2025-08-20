@@ -1,5 +1,5 @@
-import { ApiError } from '@navikt/k9-sak-typescript-client';
-import type { ApiResult } from '@navikt/k9-sak-typescript-client/core/ApiResult.js';
+import { ApiError } from '@navikt/ung-sak-typescript-client';
+import type { ApiResult } from '@navikt/ung-sak-typescript-client/core/ApiResult.js';
 import { isObject } from '../../typecheck/isObject.js';
 import { isString } from '../../typecheck/isString.js';
 

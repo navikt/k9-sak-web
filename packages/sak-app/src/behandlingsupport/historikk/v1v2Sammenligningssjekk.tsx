@@ -1,6 +1,6 @@
 // Funksjon for å rendre gitt react node og returnere tekst innhaldet frå den. (bubble-wrapper element)
 // Brukt til å samanlikne tekst i gammalt historikk innslag med nytt, sikre at nytt innslag har all info frå gammalt.
-import { k9_kodeverk_historikk_HistorikkinnslagType as HistorikkinnslagTypeEnum } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_historikk_HistorikkinnslagType as HistorikkinnslagTypeEnum } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { JSX, ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';

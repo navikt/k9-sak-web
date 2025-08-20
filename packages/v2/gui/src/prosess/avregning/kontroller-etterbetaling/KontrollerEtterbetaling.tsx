@@ -2,8 +2,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  BekreftData,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto as BekreftedeAksjonspunkterDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas';
@@ -26,13 +27,7 @@ interface KontrollerEtterbetalingFormData {
   begrunnelse: string;
 }
 
-export type BekreftKontrollerEtterbetalingAksjonspunktRequest = BekreftData['requestBody'] & {
-  bekreftedeAksjonspunktDtoer: Array<{
-    '@type': string;
-    kode: string | null | undefined;
-    begrunnelse: string;
-  }>;
-};
+export type BekreftKontrollerEtterbetalingAksjonspunktRequest = BekreftedeAksjonspunkterDto;
 
 const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
   const [loading, setLoading] = useState(false);
@@ -61,19 +56,15 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
     try {
       setLoading(true);
-      const requestBody: BekreftKontrollerEtterbetalingAksjonspunktRequest = {
-        behandlingId: `${behandling.id}`,
-        behandlingVersjon: behandling.versjon,
-        bekreftedeAksjonspunktDtoer: [
-          {
-            '@type': aksjonspunkt.definisjon || '',
-            kode: aksjonspunkt.definisjon,
-            begrunnelse: data.begrunnelse,
-          },
-        ],
-      };
-
-      await api.bekreftAksjonspunkt(requestBody);
+      if (aksjonspunkt.definisjon == AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING) {
+        throw new Error(
+          `Forventet aksjonspunkt kode ${AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING}, fikk ${aksjonspunkt.definisjon}.`,
+        );
+      }
+      if (behandling.id == null) {
+        throw new Error(`behandling.id null. Kan ikke bekrefte aksjonspunkt`);
+      }
+      await api.bekreftAksjonspunktSjekkHøyEtterbetaling(behandling.id, behandling.versjon, data.begrunnelse);
       oppdaterBehandling();
     } finally {
       setLoading(false);
