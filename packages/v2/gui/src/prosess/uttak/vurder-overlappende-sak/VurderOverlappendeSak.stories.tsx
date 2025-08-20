@@ -34,20 +34,14 @@ const andrePeriodeMedOverlapp = {
   saksnummer: ['FGHIJ'],
 };
 
-const egneOverlappendeSakerDtoer = [
+const egneOverlappendeSakerDtoer: EgneOverlappendeSakerDto[] = [
   {
     // array index 0 matcher med sak med uuid 0 i testdataene
     perioderMedOverlapp: [
       {
-        fastsattUttaksgrad: null,
-        saksbehandler: null,
-        vurdertTidspunkt: null,
         ...førstePeriodeMedOverlapp,
       },
       {
-        fastsattUttaksgrad: null,
-        saksbehandler: null,
-        vurdertTidspunkt: null,
         ...andrePeriodeMedOverlapp,
       },
     ],
@@ -160,7 +154,7 @@ const bekreftAksjonspunktMedSplittRequest: BekreftVurderOverlappendeSakerAksjons
   ],
 };
 
-const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer as EgneOverlappendeSakerDto[]);
+const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer);
 const meta = {
   title: 'gui/prosess/Uttak/Overlappende-Saker',
   component: VurderOverlappendeSak,
