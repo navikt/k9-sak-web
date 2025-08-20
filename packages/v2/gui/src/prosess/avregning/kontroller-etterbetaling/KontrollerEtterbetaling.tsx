@@ -56,7 +56,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
     try {
       setLoading(true);
-      if (aksjonspunkt.definisjon == AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING) {
+      if (aksjonspunkt.definisjon != AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING) {
         throw new Error(
           `Forventet aksjonspunkt kode ${AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING}, fikk ${aksjonspunkt.definisjon}.`,
         );
