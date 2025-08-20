@@ -26,6 +26,7 @@ import avregningSimuleringResultatPropType from '../propTypes/avregningSimulerin
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
+import { ung_kodeverk_behandling_FagsakYtelseType } from '@navikt/ung-sak-typescript-client';
 import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
@@ -119,10 +120,12 @@ export class AvregningPanelImpl extends Component {
       harVurderFeilutbetalingAP,
       harSjekkHøyEtterbetalingAP,
       behandling,
+      fagsak,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
-
+    const fagsakSakstype = typeof fagsak?.sakstype === 'string' ? fagsak?.sakstype : fagsak?.sakstype?.kode;
+    const isUngFagsak = fagsakSakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
     return (
       <>
         <VStack gap="space-32">
@@ -143,6 +146,7 @@ export class AvregningPanelImpl extends Component {
                 etterbetaling={simuleringResultatOption.sumEtterbetaling}
                 inntrekk={simuleringResultatOption.sumInntrekk}
                 ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+                isUngFagsak={isUngFagsak}
               />
 
               <AvregningTable
@@ -150,6 +154,7 @@ export class AvregningPanelImpl extends Component {
                 toggleDetails={this.toggleDetails}
                 simuleringResultat={simuleringResultatOption}
                 ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+                isUngFagsak={isUngFagsak}
               />
               {hasOpenTilbakekrevingsbehandling && (
                 <Label size="small" as="p">

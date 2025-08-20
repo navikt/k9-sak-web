@@ -11,6 +11,7 @@ import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9Kodeverkop
 import { useContext } from 'react';
 import { Periodevisning } from '../../../shared/detailView/DetailView';
 import { Period } from '@navikt/ft-utils';
+import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo';
 
 const NødvendigOpplæringFerdigvisning = ({
   vurdering,
@@ -43,6 +44,8 @@ const NødvendigOpplæringFerdigvisning = ({
         <Periodevisning perioder={vurdering.perioder} />
       </div>
       <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
+      <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
+
       <div>
         <LabelledContent
           label={
