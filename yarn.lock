@@ -2459,7 +2459,7 @@ __metadata:
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     vis-data: "npm:7.1.10"
-    vis-timeline: "npm:7.7.4"
+    vis-timeline: "npm:8.3.0"
   languageName: unknown
   linkType: soft
 
@@ -17140,20 +17140,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-timeline@npm:7.7.4":
-  version: 7.7.4
-  resolution: "vis-timeline@npm:7.7.4"
+"vis-timeline@npm:8.3.0":
+  version: 8.3.0
+  resolution: "vis-timeline@npm:8.3.0"
   peerDependencies:
     "@egjs/hammerjs": ^2.0.0
     component-emitter: ^1.3.0
     keycharm: ^0.2.0 || ^0.3.0 || ^0.4.0
     moment: ^2.24.0
-    propagating-hammerjs: ^1.4.0 || ^2.0.0
+    propagating-hammerjs: ^1.4.0 || ^2.0.0 || ^3.0.0
     uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
-    vis-data: ^6.3.0 || ^7.0.0
-    vis-util: ^5.0.1
+    vis-data: ">=8.0.0"
+    vis-util: ">=6.0.0"
     xss: ^1.0.0
-  checksum: 10/4585e4f53803577715f90320b13d7546bb88ab13aeb641b34cc248bd3aca25706e89e80c891cecc08cc2145a2383122e1b0db595e506b39b892d832277cb16df
+  checksum: 10/a77f2f5ff2c05107be12a0d2243486a4198d4dd22f3f715665fad41a5eb94b5b55756876248fc7041f12af70a87210f21178c912a69c0db9bb341cb941830ea5
   languageName: node
   linkType: hard
 
