@@ -24,6 +24,10 @@ const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: Nødven
   const alleVurderingerFerdigVurdert = vurderingsliste?.every(
     vurdering => vurdering.resultat !== OpplæringVurderingDtoResultat.MÅ_VURDERES,
   );
+  const tidligereAksjonspunkterErÅpne = [
+    harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON),
+    harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK),
+  ].some(Boolean);
 
   const løsAksjonspunktUtenEndringer = (vurderingsliste: OpplæringVurderingselement[]) => {
     if (vurderingsliste.length === 0) return;
@@ -45,6 +49,19 @@ const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: Nødven
     return (
       <Alert className="mb-4" variant="warning" size="small">
         Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
+      </Alert>
+    );
+  }
+
+  if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && tidligereAksjonspunkterErÅpne && !readOnly) {
+    return (
+      <Alert className="mb-4 p-4" variant="warning" size="small">
+        <div className="flex flex-col gap-2">
+          <span>
+            Nødvendig opplæring er ferdig vurdert, men du må vurdere institusjon og langvarig sykdom før du kan gå
+            videre i behandlingen.
+          </span>
+        </div>
       </Alert>
     );
   }
