@@ -1,7 +1,7 @@
 import {
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';

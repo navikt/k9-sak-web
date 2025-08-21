@@ -2,16 +2,18 @@ import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
+import VurderOverlappendeSak from './VurderOverlappendeSak';
 
 import { HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
 import { stdDato, visnDato } from '../../../utils/formatters';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.ts';
 
 dayjs.locale('nb');
 
@@ -34,20 +36,14 @@ const andrePeriodeMedOverlapp = {
   saksnummer: ['FGHIJ'],
 };
 
-const egneOverlappendeSakerDtoer = [
+const egneOverlappendeSakerDtoer: EgneOverlappendeSakerDto[] = [
   {
     // array index 0 matcher med sak med uuid 0 i testdataene
     perioderMedOverlapp: [
       {
-        fastsattUttaksgrad: null,
-        saksbehandler: null,
-        vurdertTidspunkt: null,
         ...førstePeriodeMedOverlapp,
       },
       {
-        fastsattUttaksgrad: null,
-        saksbehandler: null,
-        vurdertTidspunkt: null,
         ...andrePeriodeMedOverlapp,
       },
     ],
@@ -92,13 +88,23 @@ const egneOverlappendeSakerDtoer = [
   },
 ];
 
-const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
+// Hjelpemetode for å lage korrekt (sub)type
+const vurderSøskensakerDto: (
+  data: k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+) => DTOWithDiscriminatorType<k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto, '9292'> = (
+  data: k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+) => {
+  return {
+    '@type': '9292',
+    ...data,
+  };
+};
+
+const bekreftAksjonspunktRequest = {
   behandlingId: '123',
   behandlingVersjon: 1,
   bekreftedeAksjonspunktDtoer: [
-    {
-      '@type': '9292',
-      kode: '9292',
+    vurderSøskensakerDto({
       begrunnelse: 'Dette er en grundig begrunnelse',
       perioder: [
         {
@@ -115,17 +121,15 @@ const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequ
           søkersUttaksgrad: 60,
         },
       ],
-    },
+    }),
   ],
 };
 
-const bekreftAksjonspunktMedSplittRequest: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
+const bekreftAksjonspunktMedSplittRequest = {
   behandlingId: '123',
   behandlingVersjon: 1,
   bekreftedeAksjonspunktDtoer: [
-    {
-      '@type': '9292',
-      kode: '9292',
+    vurderSøskensakerDto({
       begrunnelse: 'Dette er en grundig begrunnelse',
       perioder: [
         {
@@ -156,11 +160,11 @@ const bekreftAksjonspunktMedSplittRequest: BekreftVurderOverlappendeSakerAksjons
           søkersUttaksgrad: undefined,
         },
       ],
-    },
+    }),
   ],
 };
 
-const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer as EgneOverlappendeSakerDto[]);
+const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer);
 const meta = {
   title: 'gui/prosess/Uttak/Overlappende-Saker',
   component: VurderOverlappendeSak,

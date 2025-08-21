@@ -6,10 +6,14 @@ import OverstyringUttakForm from './OverstyringUttakForm';
 import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import styles from './overstyrUttakForm.module.css';
-import type { OverstyringUttakHandling, OverstyrUttakAksjonspunktDto } from '../types/OverstyringUttakTypes';
+import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 
 interface ownProps {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
@@ -49,10 +53,12 @@ const OverstyrUttak: React.FC<ownProps> = ({
 
   const { mutate: handleOverstyring } = useMutation({
     mutationFn: async ({ action, values }: OverstyringUttakHandling) => {
-      const overstyrteAksjonspunktDto: OverstyrUttakAksjonspunktDto = {
+      const overstyrteAksjonspunktDto: DTOWithDiscriminatorType<
+        k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+        typeof aksjonspunktCodes.OVERSTYRING_AV_UTTAK
+      > = {
         '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK,
         gåVidere: false,
-        erVilkarOk: false,
         periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
         lagreEllerOppdater: [],
         slett: [],
@@ -68,7 +74,6 @@ const OverstyrUttak: React.FC<ownProps> = ({
 
       if (action === OverstyrUttakHandling.BEKREFT) {
         overstyrteAksjonspunktDto.gåVidere = true;
-        overstyrteAksjonspunktDto.erVilkarOk = true;
       }
 
       return api.overstyringUttak({

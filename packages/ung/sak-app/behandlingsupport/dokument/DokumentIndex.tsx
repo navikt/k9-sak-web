@@ -5,7 +5,7 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
   k9_sak_kontrakt_dokument_DokumentDto as DokumentDto,
   k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { UngSakApiKeys, restApiHooks } from '../../data/ungsakApi';

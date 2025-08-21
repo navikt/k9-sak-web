@@ -20,7 +20,7 @@ import styles from './uttak.module.css';
 
 import type { JSX } from 'react';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const cx = classNames.bind(styles);
 

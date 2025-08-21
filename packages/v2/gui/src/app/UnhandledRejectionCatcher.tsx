@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ApiError } from '@k9-sak-web/backend/k9sak/generated';
+import { ApiError } from '@k9-sak-web/backend/ungsak/generated';
 import { TopplinjeAlerts } from './alerts/TopplinjeAlerts.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import { type ErrorWithAlertInfo, isErrorWithAlertInfo } from './alerts/AlertInfo.js';
