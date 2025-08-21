@@ -31,6 +31,7 @@ export const SubmitButton = ({ isReadOnly, isSubmittable, onClick, isSubmitting,
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable)}
         onClick={onClick || ariaCheck}
         type={onClick ? 'button' : 'submit'}
+        variant="primary"
       >
         Bekreft og fortsett
       </Button>
