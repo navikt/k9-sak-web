@@ -1,16 +1,16 @@
-import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaGruppe, PeriodLabel } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
+import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { useFormContext } from 'react-hook-form';
-import { Foreldre } from './FormState';
-import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
-import { Opphold } from './Opphold';
+import type { Foreldre } from '../../types/FormState';
+import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
+import type { Opphold } from '../../types/Opphold';
+import BostedSokerView from '../bostedSøker/components/BostedSokerView';
 import styles from './oppholdINorgeOgAdresser.module.css';
 
 countries.registerLocale(norwegianLocale);
@@ -25,7 +25,7 @@ const formatLandNavn = (landNavn: string) => {
     if (landNavn === 'XXK') {
       return 'Kosovo';
     }
-    return countries.getName(landNavn, 'no');
+    return countries.getName(landNavn, 'no') ?? '';
   }
   return landNavn;
 };
@@ -48,7 +48,6 @@ const lagOppholdIUtland = (utlandsOpphold: Opphold['utlandsopphold']) =>
 
 interface OppholdINorgeOgAdresserProps {
   readOnly: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter?: MerknaderFraBeslutter;
   opphold: {
     utlandsopphold?: any[];
@@ -61,7 +60,6 @@ interface OppholdINorgeOgAdresserProps {
 const OppholdINorgeOgAdresser = ({
   alleMerknaderFraBeslutter,
   opphold,
-  alleKodeverk,
   hasBosattAksjonspunkt,
   readOnly,
   isBosattAksjonspunktClosed,
@@ -69,28 +67,22 @@ const OppholdINorgeOgAdresser = ({
 }: OppholdINorgeOgAdresserProps) => {
   const { control } = useFormContext();
   return (
-    <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter?.[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
+    <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter?.[aksjonspunktCodes.AVKLAR_OM_ER_BOSATT]}>
       <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
         <div>
-          <FaktaGruppe withoutBorder titleCode="Opplysninger oppgitt i søknaden" useIntl={false}>
+          <FaktaGruppe withoutBorder title="Opplysninger oppgitt i søknaden">
             <Detail>Opphold utenfor Norge</Detail>
             <div className="mt-2" />
             {!!opphold && lagOppholdIUtland(opphold.utlandsopphold)}
           </FaktaGruppe>
         </div>
         <div>
-          <FaktaGruppe withoutBorder titleCode="Bostedsadresse fra folkeregisteret" useIntl={false}>
+          <FaktaGruppe withoutBorder title="Bostedsadresse fra folkeregisteret">
             {foreldre.map(f => (
               <div key={f.personopplysning.navn}>
-                {f.isApplicant && (
-                  <BostedSokerFaktaIndex personopplysninger={f.personopplysning} alleKodeverk={alleKodeverk} />
-                )}
+                {f.isApplicant && <BostedSokerView personopplysninger={f.personopplysning} />}
                 {!f.isApplicant && (
-                  <BostedSokerFaktaIndex
-                    sokerTypeText="Den andre forelderen"
-                    personopplysninger={f.personopplysning}
-                    alleKodeverk={alleKodeverk}
-                  />
+                  <BostedSokerView sokerTypeText="Den andre forelderen" personopplysninger={f.personopplysning} />
                 )}
               </div>
             ))}
