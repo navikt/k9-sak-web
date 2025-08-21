@@ -42,7 +42,11 @@ const extractBubbleWrapperStrings = async (node: ReactNode): Promise<string[]> =
     const el = <MemoryRouter>{node}</MemoryRouter>;
     root.render(el);
   });
-  const bubble = div.querySelector('.aksel-chat__bubble-wrapper');
+  let bubble = div.querySelector('.aksel-chat__bubble-wrapper');
+  if (bubble == null) {
+    // Av ukjent grunn (mistenker oppgradering av aksel), må vi no kanskje søke etter denne klassen istadenfor opprinneleg klasse.
+    bubble = div.querySelector('.navds-chat__bubble-wrapper');
+  }
   if (bubble instanceof HTMLElement) {
     // If the bubble has expandable (BubbleText) components, click the expand button so that we compare the full text.
     const expandButtons = () =>
