@@ -403,7 +403,7 @@ const Icon = ({ aksjonspunktKode, godkjent }: { aksjonspunktKode: AksjonspunktCo
   }
 
   if (aksjonspunktUtført && godkjent.every(g => g)) {
-    return <CheckmarkIcon className="text-ax-success-600" />;
+    return <CheckmarkIcon className="text-ax-brand-blue-500" />;
   }
 
   if (aksjonspunktUtført && godkjent.some(g => g) && godkjent.some(g => !g)) {
