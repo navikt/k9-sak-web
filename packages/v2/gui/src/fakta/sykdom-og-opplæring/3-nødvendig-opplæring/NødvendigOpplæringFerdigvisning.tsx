@@ -2,7 +2,7 @@ import {
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
@@ -11,6 +11,7 @@ import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9Kodeverkop
 import { useContext } from 'react';
 import { Periodevisning } from '../../../shared/detailView/DetailView';
 import { Period } from '@navikt/ft-utils';
+import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo';
 
 const NødvendigOpplæringFerdigvisning = ({
   vurdering,
@@ -43,6 +44,8 @@ const NødvendigOpplæringFerdigvisning = ({
         <Periodevisning perioder={vurdering.perioder} />
       </div>
       <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
+      <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
+
       <div>
         <LabelledContent
           label={

@@ -12,7 +12,7 @@ import { kjønn as kjønnKode } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.
 import {
   type k9_kodeverk_historikk_HistorikkAktør as HistorikkAktørDtoType,
   k9_kodeverk_historikk_HistorikkAktør as historikkAktør,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type k9_klage_kodeverk_historikk_HistorikkAktør as KlageHistorikkAktørDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { isLegacyTilbakeHistorikkAktor } from './snakkebobleUtils.jsx';
 

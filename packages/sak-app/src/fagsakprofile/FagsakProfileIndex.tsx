@@ -1,6 +1,5 @@
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import { k9_klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
@@ -13,7 +12,7 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
@@ -27,6 +26,7 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import { useFpSakKodeverkMedNavn } from '../data/useKodeverk';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import styles from './fagsakProfileIndex.module.css';
+import { k9SakOrUngSak } from '@k9-sak-web/gui/utils/multibackend.js';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {
   if (alleBehandlinger.length === 1) {
@@ -63,8 +63,7 @@ export const FagsakProfileIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(k9SakClient);
+  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(k9SakOrUngSak.k9Sak);
 
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
 

@@ -1,9 +1,8 @@
 import { FailingK9SakKodeverkoppslag, K9SakKodeverkoppslag } from './K9SakKodeverkoppslag.js';
 import { useQuery } from '@tanstack/react-query';
-import { useContext } from 'react';
-import { K9SakClientContext } from '../../app/K9SakClientContext.jsx';
 import { FailingK9KlageKodeverkoppslag, K9KlageKodeverkoppslag } from './K9KlageKodeverkoppslag.js';
-import { kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9klage/generated/sdk.js';
+import { kodeverk_alleKodeverdierSomObjekt as k9klage_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9klage/generated/sdk.js';
+import { kodeverk_alleKodeverdierSomObjekt as k9sak_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export interface K9Kodeverkoppslag {
   readonly isPending: boolean;
@@ -14,15 +13,14 @@ export interface K9Kodeverkoppslag {
 
 // Bruk context istadenfor denne hook. `useContext(K9KodeverkoppslagContext)`
 export const useK9Kodeverkoppslag = (hentKlageKodeverk: boolean): K9Kodeverkoppslag => {
-  const k9sakClient = useContext(K9SakClientContext);
   const k9sakQuery = useQuery({
     queryKey: ['k9sak-kodeverkoppslag'],
-    queryFn: () => k9sakClient.kodeverk.alleKodeverdierSomObjekt(),
+    queryFn: async () => (await k9sak_kodeverk_alleKodeverdierSomObjekt()).data,
   });
   const k9klageQuery = useQuery({
     queryKey: ['k9klage-kodeverkoppslag'],
     queryFn: async () => {
-      const res = await kodeverk_alleKodeverdierSomObjekt();
+      const res = await k9klage_kodeverk_alleKodeverdierSomObjekt();
       return res.data;
     },
     enabled: hentKlageKodeverk,

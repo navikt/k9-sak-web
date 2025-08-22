@@ -1,10 +1,9 @@
-import type { ApiError } from '@navikt/ung-sak-typescript-client';
-import { ExtendedApiError } from '../../shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError } from '../../shared/instrumentation/v2/ExtendedApiError.js';
 import { isUngSakErrorData, type UngSakErrorData } from './errorData.js';
 
 export class UngSakApiError extends ExtendedApiError {
-  constructor(apiError: ApiError, navCallid: string | null) {
-    super(apiError, navCallid);
+  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
+    super(req, resp, error, navCallid);
     this.name = UngSakApiError.name;
   }
 

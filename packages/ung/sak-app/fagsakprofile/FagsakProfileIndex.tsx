@@ -1,6 +1,5 @@
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import { k9_klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
@@ -64,7 +63,7 @@ export const FagsakProfileIndex = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(getUngSakClient());
+  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient('ungSak');
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype,

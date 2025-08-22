@@ -1,12 +1,12 @@
-import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2 as HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2 as HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as K9KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { HistorikkinnslagV2 as TilbakeHistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/tilbake/historikkinnslagTsTypeV2.js';
-import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_Linje as GeneratedK9SakLinje } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_Linje as GeneratedK9SakLinje } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2_Linje as GeneratedK9KlageLinje } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type {
   k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_behandling_aksjonspunkt_SkjermlenkeType as K9SakKodeverdiSomObjektSkjermlenkeType,
   k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_historikk_HistorikkAktør as K9SakKodeverdiSomObjektHistorikkAktør,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type {
   k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_behandling_aksjonspunkt_SkjermlenkeType as K9KlageKodeverdiSomObjektSkjermlenkeType,
   k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_historikk_HistorikkAktør as K9KlageKodeverdiSomObjektHistorikkAktør,

@@ -1,7 +1,7 @@
 import {
   type k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as generatedAksjonspunktCodeEnumUnion,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-} from '../generated';
+} from '../generated/types.js';
 
 export type AksjonspunktCodes = generatedAksjonspunktCodeEnumUnion;
 

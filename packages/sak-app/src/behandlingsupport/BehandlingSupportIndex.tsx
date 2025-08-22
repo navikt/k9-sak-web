@@ -1,6 +1,5 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import {
@@ -160,12 +159,11 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
-  const k9SakClient = useContext(K9SakClientContext);
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
-  const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
-  const historikkBackendClient = new HistorikkBackendClient(k9SakClient, kodeverkoppslag);
-  const notatBackendClient = new NotatBackendClient(k9SakClient);
+  const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
+  const historikkBackendClient = new HistorikkBackendClient(kodeverkoppslag);
+  const notatBackendClient = new NotatBackendClient('k9Sak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;

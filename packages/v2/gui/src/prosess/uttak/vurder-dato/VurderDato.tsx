@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import styles from './VurderDato.module.css';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 interface Props {
   avbryt?: () => void;

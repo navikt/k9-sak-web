@@ -1,4 +1,4 @@
-import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
 import type { Behandling } from '../types/Behandling';
 import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';

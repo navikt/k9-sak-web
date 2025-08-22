@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { dateStringSorter } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 
 export type VilkårType = { lovReferanse?: string; perioder?: Array<VilkårPeriodeDto> };

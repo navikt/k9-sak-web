@@ -1,5 +1,4 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
-import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { BehandlingAppKontekst, Fagsak, FeatureToggles, NavAnsatt, Personopplysninger } from '@k9-sak-web/types';
@@ -146,7 +145,7 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
-  const notatBackendClient = new NotatBackendClient(getUngSakClient());
+  const notatBackendClient = new NotatBackendClient('ungSak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;

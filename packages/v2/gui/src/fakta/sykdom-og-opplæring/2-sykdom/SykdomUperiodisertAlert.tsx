@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import {
   type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_ValgtLangvarigSykdomVurderingDto as ValgtLangvarigSykdomVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
@@ -16,6 +16,7 @@ interface SykdomUperiodisertAlertProps {
 const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: SykdomUperiodisertAlertProps) => {
   const { readOnly, behandlingUuid, aksjonspunkter, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
+  const institusjonAksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
 
   const løsAksjonspunktUtenEndringer = () => {
     if (!vurderingBruktIAksjonspunkt) return;
@@ -24,6 +25,19 @@ const SykdomUperiodisertAlert = ({ vurderinger, vurderingBruktIAksjonspunkt }: S
   };
 
   const harVurderingFraTidligereBehandling = vurderinger?.some(v => v.behandlingUuid !== behandlingUuid);
+
+  if (
+    aksjonspunktErÅpent &&
+    institusjonAksjonspunktErÅpent &&
+    !readOnly &&
+    vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES'
+  ) {
+    return (
+      <Alert className="mb-4" variant="warning" size="small">
+        Sykdom er ferdig vurdert, men du må vurdere institusjon før du kan gå videre i behandlingen.
+      </Alert>
+    );
+  }
 
   if (
     aksjonspunktErÅpent &&

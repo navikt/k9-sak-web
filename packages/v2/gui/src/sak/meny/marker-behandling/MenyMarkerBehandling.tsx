@@ -1,6 +1,3 @@
-/* eslint-disable arrow-body-style */
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import { useContext } from 'react';
 import MarkerBehandlingModal from './components/MarkerBehandlingModal';
 import MarkerBehandlingBackendClient from './MarkerBehandlingBackendClient';
 
@@ -11,8 +8,7 @@ interface OwnProps {
 }
 
 const MenyMarkerBehandlingV2 = ({ lukkModal, behandlingUuid, erVeileder }: OwnProps) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const markerBehandlingBackendClient = new MarkerBehandlingBackendClient(k9SakClient);
+  const markerBehandlingBackendClient = new MarkerBehandlingBackendClient();
   return (
     <MarkerBehandlingModal
       lukkModal={lukkModal}

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import { harÅpentAksjonspunkt } from '../../../../utils/aksjonspunktUtils';
 import { utledGodkjentInstitusjon } from '../utils';

@@ -1,7 +1,7 @@
 import type {
   sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto,
   k9_sak_kontrakt_notat_NotatDto as NotatDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';

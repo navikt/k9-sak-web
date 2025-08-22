@@ -6,7 +6,7 @@ import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import {
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
 

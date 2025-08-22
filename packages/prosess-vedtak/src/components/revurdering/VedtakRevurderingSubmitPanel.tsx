@@ -13,7 +13,7 @@ import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikState } from 'formik';
 import styles from '../vedtakForm.module.css';
 

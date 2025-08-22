@@ -1,7 +1,7 @@
 import { DateLabel } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table } from '@navikt/ds-react';
-import { k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useState } from 'react';
 import OppholdINorgeOgAdresser from './OppholdINorgeOgAdresser';
 import { Soknad } from './Soknad';

@@ -8,7 +8,7 @@ import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
@@ -18,7 +18,7 @@ import {
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export type nødvendigOpplæringPayload = {
   perioder: {
@@ -54,7 +54,7 @@ type payloads =
   | {
       langvarigsykdomsvurderingUuid?: string;
       begrunnelse?: string;
-      vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'];
+      vurderingData?: OpprettLangvarigSykdomsVurderingData['body'];
     }
   | { behandlingUuid?: string }
   | nødvendigOpplæringPayload
@@ -82,7 +82,7 @@ type SykdomOgOpplæringContext = {
   løsAksjonspunkt9300: (payload: InstitusjonAksjonspunktPayload) => void;
   løsAksjonspunkt9301: (
     langvarigsykdomsvurderingUuid?: string,
-    vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
+    vurderingData?: OpprettLangvarigSykdomsVurderingData['body'],
   ) => void;
   løsAksjonspunkt9302: (payload: nødvendigOpplæringPayload) => void;
   løsAksjonspunkt9303: (payload: {
@@ -124,7 +124,7 @@ const FaktaSykdomOgOpplæringIndex = ({
 
   const løsAksjonspunkt9301 = (
     langvarigsykdomsvurderingUuid?: string,
-    vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
+    vurderingData?: OpprettLangvarigSykdomsVurderingData['body'],
   ) => {
     if (langvarigsykdomsvurderingUuid && vurderingData) {
       submitCallback([

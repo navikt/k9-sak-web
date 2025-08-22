@@ -1,5 +1,5 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
 import VilkårBackendClient from './VilkårBackendClient';
-import { getSakClient } from '@k9-sak-web/backend/shared/getSakClient.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
   BehandlingTypeK9Klage.TILBAKEKREVING,
@@ -58,8 +58,9 @@ const MenyNyBehandlingIndexV2 = ({
   aktorId,
   gjeldendeVedtakBehandlendeEnhetId,
 }: OwnProps) => {
-  const sakClient = getSakClient(ytelseType);
-  const vilkårBackendClient = new VilkårBackendClient(sakClient);
+  const vilkårBackendClient = new VilkårBackendClient(
+    ytelseType === fagsakYtelsesType.UNGDOMSYTELSE ? 'ungSak' : 'k9Sak',
+  );
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
     queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),
