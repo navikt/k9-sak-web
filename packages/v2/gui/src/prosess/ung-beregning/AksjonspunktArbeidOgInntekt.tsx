@@ -1,7 +1,7 @@
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';

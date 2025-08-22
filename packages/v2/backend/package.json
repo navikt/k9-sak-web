@@ -11,16 +11,12 @@
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/*": "./src/k9klage/*",
     "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*",
-    "./ungsak/generated": "./src/ungsak/generated/index.js",
-    "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
-    "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*",
-    "./ungsak/client": "./src/ungsak/client.js",
-    "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
+    "./ungsak/*": "./src/ungsak/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "3.1.20250806103540",
     "@navikt/k9-sak-typescript-client": "3.0.20250821112818",
-    "@navikt/ung-sak-typescript-client": "1.0.20250813152847"
+    "@navikt/ung-sak-typescript-client": "2.0.20250822131842"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.81.2"

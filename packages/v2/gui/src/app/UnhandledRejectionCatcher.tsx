@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { ApiError } from '@k9-sak-web/backend/ungsak/generated';
 import { TopplinjeAlerts } from './alerts/TopplinjeAlerts.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import { type ErrorWithAlertInfo, isErrorWithAlertInfo } from './alerts/AlertInfo.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { UngSakApiError } from '@k9-sak-web/backend/ungsak/errorhandling/UngSakApiError.js';
 
 /**
  * Fanger opp uhandterte promise rejections. Kan deretter avgjere om feil skal analyserast og vise feilmelding, eller
@@ -15,15 +14,12 @@ export const UnhandledRejectionCatcher = () => {
   useEffect(() => {
     const addError = (err: ErrorWithAlertInfo) => setErrors([...errors, err]);
     const listener = (event: PromiseRejectionEvent) => {
-      let error = event.reason;
-      if (error instanceof ApiError && !(error instanceof ExtendedApiError)) {
-        error = new ExtendedApiError(error, null);
-      }
+      const error = event.reason;
       if (isErrorWithAlertInfo(error)) {
         addError(error);
         // Avgjer om feil ikkje skal propagerast vidare oppover.
         // Valideringsfeil blir rekna som brukarfeil i utgangspunktet, så rapporterer det ikkje vidare automatisk
-        if (error instanceof K9SakApiError && error.erValideringsfeil) {
+        if ((error instanceof K9SakApiError || error instanceof UngSakApiError) && error.erValideringsfeil) {
           event.preventDefault();
         }
       }

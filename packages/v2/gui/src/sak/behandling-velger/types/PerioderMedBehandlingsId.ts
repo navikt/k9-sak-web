@@ -5,7 +5,7 @@ import type {
 import type {
   ung_sak_typer_Periode as UngPeriode,
   ung_sak_kontrakt_krav_PeriodeMedÅrsaker as UngPeriodeMedÅrsaker,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 export type K9UngPeriode = K9Periode | UngPeriode;
 export type K9UngPeriodeMedÅrsaker = K9PeriodeMedÅrsaker | UngPeriodeMedÅrsaker;
