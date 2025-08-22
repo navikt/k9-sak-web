@@ -6,7 +6,7 @@ import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
   k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
 import type { Period } from '@navikt/ft-utils';
 import React, { useEffect, useMemo, useState } from 'react';

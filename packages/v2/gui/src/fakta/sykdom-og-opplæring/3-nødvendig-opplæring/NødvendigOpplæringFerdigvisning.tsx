@@ -2,7 +2,7 @@ import {
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';

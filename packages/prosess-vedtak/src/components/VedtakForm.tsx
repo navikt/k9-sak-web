@@ -34,7 +34,7 @@ import {
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';

@@ -1,8 +1,8 @@
-import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
   ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';

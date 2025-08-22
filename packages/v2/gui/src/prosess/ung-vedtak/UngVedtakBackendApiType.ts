@@ -1,4 +1,7 @@
-import type { ForhåndsvisVedtaksbrevResponse, VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/generated';
+import type {
+  ForhåndsvisVedtaksbrevResponse,
+  VedtaksbrevValgResponse,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 export type UngVedtakBackendApiType = {
   forhåndsvisVedtaksbrev(behandlingId: number): Promise<ForhåndsvisVedtaksbrevResponse>;

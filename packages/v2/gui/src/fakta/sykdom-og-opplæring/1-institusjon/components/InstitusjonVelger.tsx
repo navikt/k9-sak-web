@@ -1,4 +1,4 @@
-import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated';
+import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';

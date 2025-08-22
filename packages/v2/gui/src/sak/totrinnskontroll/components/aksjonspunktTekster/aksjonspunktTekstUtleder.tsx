@@ -14,7 +14,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   type k9_sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
   type k9_sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import hash from 'object-hash';
 import React, { type JSX, type ReactNode } from 'react';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';

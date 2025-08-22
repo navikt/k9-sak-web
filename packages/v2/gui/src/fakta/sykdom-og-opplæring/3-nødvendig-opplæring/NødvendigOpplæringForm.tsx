@@ -2,7 +2,7 @@ import {
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   Alert,
   BodyShort,
@@ -119,9 +119,13 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
 };
 
 const onSubmit = (data: NødvendigOpplæringFormFields) => {
+  const resultat =
+    data.harLegeerklæring === 'NEI'
+      ? OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT
+      : nødvendigOpplæringTilResultat(data.harNødvendigOpplæring);
   const perioder = data.perioder.map(periode => ({
     begrunnelse: data.begrunnelse || null,
-    resultat: nødvendigOpplæringTilResultat(data.harNødvendigOpplæring),
+    resultat: resultat,
     avslagsårsak: data.avslagsårsak || null,
     periode: {
       fom: dayjs(periode.fom).format('YYYY-MM-DD'),

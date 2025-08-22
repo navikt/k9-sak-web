@@ -8,7 +8,7 @@ import { Heading } from '@navikt/ds-react';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';

@@ -1,10 +1,9 @@
-import { ExtendedApiError } from '../../shared/instrumentation/ExtendedApiError.js';
-import type { ApiError } from '@navikt/k9-sak-typescript-client';
+import { ExtendedApiError } from '../../shared/instrumentation/v2/ExtendedApiError.js';
 import { isK9SakErrorData, type K9SakErrorData } from './errorData.js';
 
 export class K9SakApiError extends ExtendedApiError {
-  constructor(apiError: ApiError, navCallid: string | null) {
-    super(apiError, navCallid);
+  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
+    super(req, resp, error, navCallid);
     this.name = K9SakApiError.name;
   }
 

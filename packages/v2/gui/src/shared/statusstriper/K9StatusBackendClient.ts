@@ -1,22 +1,21 @@
 import type {
   GetUferdigJournalpostIderPrAktoer1Response,
-  K9SakClient,
   MatchFagsakerResponse,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import {
+  fagsak_matchFagsaker,
+  journalposter_getUferdigJournalpostIderPrAktoer1,
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export default class K9StatusBackendClient {
-  #k9sak: K9SakClient;
-
-  constructor(k9sakClient: K9SakClient) {
-    this.#k9sak = k9sakClient;
-  }
+  constructor() {}
 
   async getAndreSakerPåSøker(fagsakYtelseType: FagsakYtelsesType, søkerIdent: string): Promise<MatchFagsakerResponse> {
-    return this.#k9sak.fagsak.matchFagsaker({ ytelseType: fagsakYtelseType, bruker: søkerIdent });
+    return (await fagsak_matchFagsaker({ body: { ytelseType: fagsakYtelseType, bruker: søkerIdent } })).data;
   }
 
   async getUferdigePunsjoppgaver(saksnummer: string): Promise<GetUferdigJournalpostIderPrAktoer1Response> {
-    return this.#k9sak.journalposter.getUferdigJournalpostIderPrAktoer1({ saksnummer });
+    return (await journalposter_getUferdigJournalpostIderPrAktoer1({ query: { saksnummer: { saksnummer } } })).data;
   }
 }

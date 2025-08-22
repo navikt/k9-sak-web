@@ -2,7 +2,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 export const kanAksjonspunktRedigeres = (

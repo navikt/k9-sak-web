@@ -1,7 +1,7 @@
 import {
   type k9_sak_kontrakt_FeilDto as FeilDto,
   type k9_sak_kontrakt_FeltFeilDto as FeltFeilDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '../generated/types.js';
 import { isObject } from '../../typecheck/isObject.js';
 import { isString } from '../../typecheck/isString.js';
 import { isArray } from '../../typecheck/isArray.js';

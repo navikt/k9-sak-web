@@ -1,4 +1,4 @@
-import type { ung_sak_kontrakt_ungdomsytelse_UngdomsprogramInformasjonDto as UngdomsprogramInformasjonDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_ungdomsytelse_UngdomsprogramInformasjonDto as UngdomsprogramInformasjonDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, VStack } from '@navikt/ds-react';

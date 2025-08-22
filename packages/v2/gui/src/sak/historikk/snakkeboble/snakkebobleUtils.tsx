@@ -3,7 +3,7 @@ import { dateFormat, timeFormat } from '@navikt/ft-utils';
 import {
   k9_kodeverk_historikk_HistorikkAktør as historikkAktør,
   type k9_kodeverk_historikk_HistorikkAktør as HistorikkAktørDtoType,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { ChatProps } from '@navikt/ds-react';
 import type { AkselColor } from '@navikt/ds-react/types/theme';
 import { historikkAktor, type HistorikkAktor } from '../tilbake/historikkinnslagTsTypeV2.js';
