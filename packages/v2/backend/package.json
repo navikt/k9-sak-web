@@ -19,6 +19,6 @@
     "@navikt/ung-sak-typescript-client": "2.0.20250822131842"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.81.2"
+    "@tanstack/eslint-plugin-query": "^5.83.1"
   }
 }
