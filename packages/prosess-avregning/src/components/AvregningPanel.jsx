@@ -26,7 +26,7 @@ import avregningSimuleringResultatPropType from '../propTypes/avregningSimulerin
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import { ung_kodeverk_behandling_FagsakYtelseType } from '@navikt/ung-sak-typescript-client';
+import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
