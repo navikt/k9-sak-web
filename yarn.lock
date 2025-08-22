@@ -2980,7 +2980,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20250806103540"
-    "@navikt/k9-sak-typescript-client": "npm:2.1.20250813152841"
+    "@navikt/k9-sak-typescript-client": "npm:3.0.20250821112818"
     "@navikt/ung-sak-typescript-client": "npm:1.0.20250813152847"
     "@tanstack/eslint-plugin-query": "npm:^5.81.2"
   languageName: unknown
@@ -4273,10 +4273,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:2.1.20250813152841":
-  version: 2.1.20250813152841
-  resolution: "@navikt/k9-sak-typescript-client@npm:2.1.20250813152841::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F2.1.20250813152841%2Fe56a9a05c6a78cc9e64e88f762770fa7bcd3b22c"
-  checksum: 10/0d11f72bfa87c858fce7c4808a79933aaff2a51cc359f37af2f79cc030cdeb9ab56fe52fa01096c62c489259c8beabee066251a4a6160021b4c022f1697f439f
+"@navikt/k9-sak-typescript-client@npm:3.0.20250821112818":
+  version: 3.0.20250821112818
+  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20250821112818::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20250821112818%2Fc2e84e8fc9ab2804fe08bf4283d3dabb857310a6"
+  checksum: 10/06d49da743fa97d4f3a811773f58d1e33788006b7455303c535b121d5116028b30d03804fbb9f0cac18f431ebe41e11ef31cca8961bb4828b2416c2d050d7bf9
   languageName: node
   linkType: hard
 
@@ -7423,12 +7423,12 @@ __metadata:
   linkType: hard
 
 "cipher-base@npm:^1.0.0, cipher-base@npm:^1.0.1, cipher-base@npm:^1.0.3":
-  version: 1.0.4
-  resolution: "cipher-base@npm:1.0.4"
+  version: 1.0.6
+  resolution: "cipher-base@npm:1.0.6"
   dependencies:
-    inherits: "npm:^2.0.1"
-    safe-buffer: "npm:^5.0.1"
-  checksum: 10/3d5d6652ca499c3f7c5d7fdc2932a357ec1e5aa84f2ad766d850efd42e89753c97b795c3a104a8e7ae35b4e293f5363926913de3bf8181af37067d9d541ca0db
+    inherits: "npm:^2.0.4"
+    safe-buffer: "npm:^5.2.1"
+  checksum: 10/faf232deff2351448ea23d265eb8723e035ebbb454baca45fb60c1bd71056ede8b153bef1b221e067f13e6b9288ebb83bb6ae2d5dd4cec285411f9fc22ec1f5b
   languageName: node
   linkType: hard
 
@@ -15452,19 +15452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sha.js@npm:^2.4.0, sha.js@npm:^2.4.8":
-  version: 2.4.11
-  resolution: "sha.js@npm:2.4.11"
-  dependencies:
-    inherits: "npm:^2.0.1"
-    safe-buffer: "npm:^5.0.1"
-  bin:
-    sha.js: ./bin.js
-  checksum: 10/d833bfa3e0a67579a6ce6e1bc95571f05246e0a441dd8c76e3057972f2a3e098465687a4369b07e83a0375a88703577f71b5b2e966809e67ebc340dbedb478c7
-  languageName: node
-  linkType: hard
-
-"sha.js@npm:^2.4.11":
+"sha.js@npm:^2.4.0, sha.js@npm:^2.4.11, sha.js@npm:^2.4.8":
   version: 2.4.12
   resolution: "sha.js@npm:2.4.12"
   dependencies:

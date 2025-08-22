@@ -4,24 +4,18 @@ import {
   type GetBrevMottakerinfoEregResponse,
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
-import { getK9SakClient } from '@k9-sak-web/backend/k9sak/client';
 import type { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 
 export const useSykdomBackendClient = () => {
-  const k9SakClient = getK9SakClient();
-  return new SykdomOgOpplæringBackendClient(k9SakClient);
+  return new SykdomOgOpplæringBackendClient();
 };
 
 export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
   const backendClient = useSykdomBackendClient();
 
-  return useMutation<
-    OpprettLangvarigSykdomsVurderingResponse,
-    Error,
-    OpprettLangvarigSykdomsVurderingData['requestBody']
-  >({
+  return useMutation<OpprettLangvarigSykdomsVurderingResponse, Error, OpprettLangvarigSykdomsVurderingData['body']>({
     mutationFn: requestBody => backendClient.opprettSykdomsvurdering(requestBody),
     onSuccess,
   });
@@ -78,7 +72,7 @@ export const useAlleInstitusjoner = () => {
 export const useHentOrganisasjonsnummer = (organisasjonsnummer: string) => {
   const backendClient = useSykdomBackendClient();
 
-  return useMutation<GetBrevMottakerinfoEregResponse, K9SakApiError, GetBrevMottakerinfoEregData['requestBody']>({
+  return useMutation<GetBrevMottakerinfoEregResponse, K9SakApiError, GetBrevMottakerinfoEregData['body']>({
     mutationFn: () => backendClient.hentOrganisasjonsnummer(organisasjonsnummer),
   });
 };

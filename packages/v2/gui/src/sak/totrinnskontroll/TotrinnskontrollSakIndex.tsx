@@ -11,7 +11,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as Årsak,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';

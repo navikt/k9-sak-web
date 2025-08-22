@@ -5,7 +5,7 @@ import {
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
   type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';

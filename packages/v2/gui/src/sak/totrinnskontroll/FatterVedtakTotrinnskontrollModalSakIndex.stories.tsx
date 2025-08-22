@@ -3,7 +3,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
 import FatterVedtakTotrinnskontrollModalSakIndex from './FatterVedtakTotrinnskontrollModalSakIndex';

@@ -16,7 +16,6 @@ import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -29,7 +28,7 @@ import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import {
   k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
   k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -69,8 +68,7 @@ const erOmsorgspenger = (fagsak: Fagsak) =>
  * Container komponent. Er rot for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 const FagsakIndex = () => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const k9StatusBackendClient = new K9StatusBackendClient(k9SakClient);
+  const k9StatusBackendClient = new K9StatusBackendClient();
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();

@@ -1,8 +1,4 @@
-import {
-  ApiError,
-  type k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
-  K9SakClient,
-} from '@k9-sak-web/backend/k9sak/generated';
+import { type k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
@@ -13,14 +9,14 @@ import {
   type RequestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
+import { brev_bestillDokument, brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import { isAbortedFetchError } from '@k9-sak-web/backend/shared/isAbortedFetchError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
 
 export default class MeldingerBackendClient {
-  #k9sak: K9SakClient;
-
   #formidling: FormidlingClient;
 
-  constructor(k9sakClient: K9SakClient, formidlingClient: FormidlingClient) {
-    this.#k9sak = k9sakClient;
+  constructor(formidlingClient: FormidlingClient) {
     this.#formidling = formidlingClient;
   }
 
@@ -32,35 +28,35 @@ export default class MeldingerBackendClient {
       // organisasjonsnr må vere 9 siffer for å vere gyldig, så avbryt uten å kontakte server viss det ikkje er det.
       return { invalidOrgnum: true };
     }
-    const abortListenerRemover = new AbortController(); // Trengs nok eigentleg ikkje
     try {
-      const promise = this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr: organisasjonsnr.trim() });
-      abort?.addEventListener('abort', () => promise.cancel(), { signal: abortListenerRemover.signal });
-      const resp = await promise;
+      const resp = (
+        await brev_getBrevMottakerinfoEreg({
+          body: { organisasjonsnr: organisasjonsnr.trim() },
+          signal: abort,
+        })
+      ).data;
       if (resp !== null && resp.navn !== undefined && resp.navn !== null) {
         return {
           name: resp.navn,
           utilgjengelig: resp.utilgjengeligÅrsak || undefined,
         };
       }
-      if (promise.isCancelled) {
-        return requestIntentionallyAborted;
-      }
       return {
         notFound: true,
       };
     } catch (e) {
-      if (e instanceof ApiError && e.status === 400) {
+      if (isAbortedFetchError(e)) {
+        return requestIntentionallyAborted;
+      }
+      if (e instanceof ExtendedApiError && e.status === 400) {
         return { invalidOrgnum: true };
       }
       throw e;
-    } finally {
-      abortListenerRemover.abort();
     }
   }
 
   async bestillDokument(bestilling: BestillBrevDto): Promise<void> {
-    return this.#k9sak.brev.bestillDokument(bestilling);
+    await brev_bestillDokument({ body: bestilling });
   }
 
   async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {

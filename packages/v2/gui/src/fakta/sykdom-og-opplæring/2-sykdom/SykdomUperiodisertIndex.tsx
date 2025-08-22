@@ -15,7 +15,7 @@ import { utledGodkjent } from './utils';
 import {
   type k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
   type k9_sak_kontrakt_behandling_SaksnummerDto as SaksnummerDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';

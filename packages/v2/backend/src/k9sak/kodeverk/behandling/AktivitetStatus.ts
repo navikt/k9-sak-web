@@ -1,5 +1,5 @@
 import type { Kodeverk } from '../../../shared/Kodeverk';
-import { type k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '../../generated';
+import { type k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '../../generated/types.js';
 
 export type AktivitetStatusType = Exclude<BeregningsresultatPeriodeAndelDto['aktivitetStatus'], null | undefined>;
 export type AktivitetStatusTypeKodeverk = Kodeverk<AktivitetStatusType, 'AKTIVITET_STATUS'>;
