@@ -1,6 +1,6 @@
 import {
-  klage_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  type klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto,
+  k9_klage_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  type k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';

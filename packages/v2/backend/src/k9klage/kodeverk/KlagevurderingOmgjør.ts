@@ -1,6 +1,6 @@
 import {
-  type klage_kodeverk_vedtak_KlageVurderingOmgjør as KlagevurderingOmgjørT,
-  klage_kodeverk_vedtak_KlageVurderingOmgjør as KlagevurderingOmgjørV,
+  type k9_klage_kodeverk_vedtak_KlageVurderingOmgjør as KlagevurderingOmgjørT,
+  k9_klage_kodeverk_vedtak_KlageVurderingOmgjør as KlagevurderingOmgjørV,
 } from '@navikt/k9-klage-typescript-client/types';
 
 export type KlagevurderingOmgjørType = KlagevurderingOmgjørT;
