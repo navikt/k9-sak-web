@@ -90,7 +90,7 @@
     "@types/react": "19.1.8",
     "@types/react-collapse": "5.0.4",
     "@types/redux-form": "8.3.11",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^5.0.1",
     "autoprefixer": "^10.4.21",
     "axios-mock-adapter": "2.1.0",
     "cross-env": "7.0.3",
