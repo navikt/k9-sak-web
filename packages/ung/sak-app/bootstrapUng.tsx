@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router';
 
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
 
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
@@ -15,12 +15,11 @@ import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import { AxiosError } from 'axios';
 import AppIndex from './app/AppIndex';
+import { configureUngSakClient } from '@k9-sak-web/backend/ungsak/configureUngSakClient.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
-
-console.debug('************** bootstrapUng');
 
 init({
   environment,
@@ -50,7 +49,7 @@ init({
           String(exception.message),
           String(requestUrl.pathname),
         ];
-        event.extra.callId = exception.response.config.headers['Nav-Callid'];
+        event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
       } else if (exception instanceof ExtendedApiError) {
         event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
         event.extra.callId = exception.navCallid;
@@ -61,7 +60,9 @@ init({
       }
     } catch (e) {
       try {
-        event.exception.values.push(e);
+        if (event.exception?.values != null) {
+          event.exception.values.push(e);
+        }
         console.error('Sentry beforeSend failure. Will send the original event with extra error attached', e);
       } catch (e2) {
         console.error(
@@ -74,6 +75,8 @@ init({
     return event;
   },
 });
+
+configureUngSakClient();
 
 const store = configureStore();
 

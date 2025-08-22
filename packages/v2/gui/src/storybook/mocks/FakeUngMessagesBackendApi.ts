@@ -1,9 +1,8 @@
 import {
-  type BestillInformasjonsbrevResponse,
   type ForhåndsvisInformasjonsbrevResponse,
   type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
   type InformasjonsbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { fakePdf } from './fakePdf';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 
@@ -27,7 +26,7 @@ export class FakeUngMessagesBackendApi {
     };
   }
 
-  async bestillBrev(data: InformasjonsbrevBestillingRequest): Promise<BestillInformasjonsbrevResponse> {
+  async bestillBrev(data: InformasjonsbrevBestillingRequest): Promise<void> {
     ignoreUnusedDeclared(data);
     return Promise.resolve();
   }

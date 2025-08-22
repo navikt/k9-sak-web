@@ -427,7 +427,6 @@
   "packages/ung/sak-app/behandlingsupport/dokument/DokumentIndex.tsx",
   "packages/ung/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex.spec.tsx",
   "packages/ung/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex.tsx",
-  "packages/ung/sak-app/bootstrapUng.tsx",
   "packages/ung/sak-app/data/useKodeverk.tsx",
   "packages/ung/sak-app/data/useVisForhandsvisningAvMelding.tsx",
   "packages/ung/sak-app/fagsak/FagsakIndex.tsx",

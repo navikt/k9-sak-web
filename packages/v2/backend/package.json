@@ -11,11 +11,7 @@
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/*": "./src/k9klage/*",
     "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*",
-    "./ungsak/generated": "./src/ungsak/generated/index.js",
-    "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
-    "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*",
-    "./ungsak/client": "./src/ungsak/client.js",
-    "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
+    "./ungsak/*": "./src/ungsak/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "3.1.20250806103540",

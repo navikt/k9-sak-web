@@ -9,7 +9,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import {
   ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
   ung_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-} from '@navikt/ung-sak-typescript-client';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
