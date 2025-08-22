@@ -7,18 +7,19 @@ import { Alert, Tabs } from '@navikt/ds-react';
 import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
-import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
+
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   k9_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type OpprettLangvarigSykdomsVurderingData,
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { InstitusjonIcon, SykdomIcon, OpplæringIcon, ReisetidIcon } from './TabIcons.js';
 
 export type nødvendigOpplæringPayload = {
   perioder: {
@@ -213,7 +214,6 @@ const SykdomOgOpplæring = () => {
   const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
   const { data: vilkår } = useVilkår(behandlingUuid);
   const [activeTab, setActiveTab] = useState(initActiveTab);
-  const aksjonspunktTab = finnTabMedAksjonspunkt(aksjonspunkter);
   const harAksjonspunkt9300 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
   const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
   const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
@@ -235,22 +235,22 @@ const SykdomOgOpplæring = () => {
           <Tabs.Tab
             value={tabCodes.INSTITUSJON}
             label="Institusjon"
-            icon={aksjonspunktTab === 'institusjon' && <AksjonspunktIkon />}
+            icon={<InstitusjonIcon aksjonspunktKode={aksjonspunktCodes.VURDER_INSTITUSJON} />}
           />
           <Tabs.Tab
             value={tabCodes.SYKDOM}
             label="Sykdom"
-            icon={aksjonspunktTab === 'sykdom' && <AksjonspunktIkon />}
+            icon={<SykdomIcon aksjonspunktKode={aksjonspunktCodes.VURDER_LANGVARIG_SYK} />}
           />
           <Tabs.Tab
             value={tabCodes.OPPLÆRING}
             label="Nødvendig opplæring"
-            icon={aksjonspunktTab === 'opplæring' && <AksjonspunktIkon />}
+            icon={<OpplæringIcon aksjonspunktKode={aksjonspunktCodes.VURDER_OPPLÆRING} />}
           />
           <Tabs.Tab
             value={tabCodes.REISETID}
             label="Reisetid"
-            icon={aksjonspunktTab === 'reisetid' && <AksjonspunktIkon />}
+            icon={<ReisetidIcon aksjonspunktKode={aksjonspunktCodes.VURDER_REISETID} />}
           />
         </Tabs.List>
         <Tabs.Panel value={tabCodes.INSTITUSJON} lazy={false}>
