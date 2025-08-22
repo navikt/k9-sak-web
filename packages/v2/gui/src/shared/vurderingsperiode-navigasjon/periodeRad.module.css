@@ -12,6 +12,10 @@
   width: 100%;
 }
 
+.interactiveListElement button {
+  background: transparent;
+}
+
 .interactiveListElement:first-of-type {
   border-top: 1px solid #c6c2bf;
 }
@@ -45,4 +49,8 @@
   color: #262626;
   font-weight: bold;
   text-decoration: none;
+}
+
+.interactiveListElementActive button {
+  background: transparent;
 }
