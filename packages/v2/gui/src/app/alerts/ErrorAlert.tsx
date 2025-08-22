@@ -1,4 +1,5 @@
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError as ExtendedApiErrorV1 } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError as ExtendedApiErrorV2 } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
 import { Alert, BodyLong, Heading } from '@navikt/ds-react';
 import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
@@ -41,7 +42,7 @@ const GeneralAsyncErrorMsg = ({ error }: { readonly error: GeneralAsyncError }) 
   </>
 );
 
-const ApiErrorMsg = ({ error }: { readonly error: ExtendedApiError }) => (
+const ApiErrorMsg = ({ error }: { readonly error: ExtendedApiErrorV1 | ExtendedApiErrorV2 }) => (
   <>
     <MsgHeading>Server rapporterte feil:</MsgHeading>
     <BodyLong>
@@ -74,7 +75,7 @@ const ErrorMsg = ({ error }: Pick<ErrorAlertProps, 'error'>) => {
     return <K9SakErrorMsg error={error} />;
   }
   // XXX Legg til handtering av evt andre spesifikke ExtendedApiError subklasser her
-  if (error instanceof ExtendedApiError) {
+  if (error instanceof ExtendedApiErrorV1 || error instanceof ExtendedApiErrorV2) {
     return <ApiErrorMsg error={error} />;
   }
   if (error instanceof GeneralAsyncError) {

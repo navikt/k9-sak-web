@@ -3,7 +3,7 @@ import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import {
   $k9_sak_kontrakt_dokument_BestillBrevDto as $BestillBrevDto,
   $k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as $FritekstbrevinnholdDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/schemas.js';
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 import { StickyStateReducer } from '../../utils/StickyStateReducer.js';

@@ -8,7 +8,7 @@ import { createContext, useContext, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import {
@@ -27,7 +27,7 @@ import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidVurderingDtoResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomVurderingDtoResultat,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CheckmarkIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { DelvisOppfyltIkon } from '../../shared/DelvisOppfyltIkon.js';
 
@@ -65,7 +65,7 @@ type payloads =
   | {
       langvarigsykdomsvurderingUuid?: string;
       begrunnelse?: string;
-      vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'];
+      vurderingData?: OpprettLangvarigSykdomsVurderingData['body'];
     }
   | { behandlingUuid?: string }
   | nødvendigOpplæringPayload
@@ -93,7 +93,7 @@ type SykdomOgOpplæringContext = {
   løsAksjonspunkt9300: (payload: InstitusjonAksjonspunktPayload) => void;
   løsAksjonspunkt9301: (
     langvarigsykdomsvurderingUuid?: string,
-    vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
+    vurderingData?: OpprettLangvarigSykdomsVurderingData['body'],
   ) => void;
   løsAksjonspunkt9302: (payload: nødvendigOpplæringPayload) => void;
   løsAksjonspunkt9303: (payload: {
@@ -135,7 +135,7 @@ const FaktaSykdomOgOpplæringIndex = ({
 
   const løsAksjonspunkt9301 = (
     langvarigsykdomsvurderingUuid?: string,
-    vurderingData?: OpprettLangvarigSykdomsVurderingData['requestBody'],
+    vurderingData?: OpprettLangvarigSykdomsVurderingData['body'],
   ) => {
     if (langvarigsykdomsvurderingUuid && vurderingData) {
       submitCallback([

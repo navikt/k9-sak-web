@@ -1,7 +1,7 @@
 import type {
   k9_sak_typer_Periode as K9Periode,
   k9_sak_kontrakt_krav_PeriodeMedÅrsaker as K9PeriodeMedÅrsaker,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type {
   ung_sak_typer_Periode as UngPeriode,
   ung_sak_kontrakt_krav_PeriodeMedÅrsaker as UngPeriodeMedÅrsaker,

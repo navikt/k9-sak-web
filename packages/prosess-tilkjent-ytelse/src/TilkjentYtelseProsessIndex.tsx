@@ -4,7 +4,7 @@ import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 

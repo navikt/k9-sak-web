@@ -1,4 +1,4 @@
-import { k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';

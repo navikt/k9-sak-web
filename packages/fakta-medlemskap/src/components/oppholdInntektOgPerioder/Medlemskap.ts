@@ -1,5 +1,5 @@
 import { Kodeverk } from '@k9-sak-web/types';
-import { k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Periode } from './Periode';
 
 export interface MedlemskapPeriode {

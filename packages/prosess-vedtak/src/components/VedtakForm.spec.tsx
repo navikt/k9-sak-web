@@ -12,7 +12,7 @@ import {
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
   k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messages from '../../i18n/nb_NO.json';

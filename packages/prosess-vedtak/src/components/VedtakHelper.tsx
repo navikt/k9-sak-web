@@ -12,7 +12,7 @@ import {
   folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
