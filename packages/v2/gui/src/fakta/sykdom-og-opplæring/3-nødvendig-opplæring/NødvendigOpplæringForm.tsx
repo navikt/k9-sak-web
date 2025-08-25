@@ -168,14 +168,20 @@ const NødvendigOpplæringForm = ({
     });
   }, [formMethods, vurdering]);
 
-  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('harLegeerklæring') === 'NEI';
+  const harNødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
+  const harLegeerklæring = formMethods.watch('harLegeerklæring');
+  const opplæringIkkeDokumentertMedLegeerklæring = harLegeerklæring === 'NEI';
 
   useEffect(() => {
-    if (opplæringIkkeDokumentertMedLegeerklæring) {
-      formMethods.setValue('begrunnelse', '');
-      formMethods.setValue('harNødvendigOpplæring', '');
-    }
-  }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
+    formMethods.setValue('begrunnelse', '');
+    formMethods.setValue('harNødvendigOpplæring', '');
+  }, [harLegeerklæring, formMethods]);
+
+  useEffect(() => {
+    formMethods.setValue('perioderUtenNødvendigOpplæring', []);
+    formMethods.resetField('perioder.0.fom', { keepTouched: true });
+    formMethods.resetField('perioder.0.tom', { keepTouched: true });
+  }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
