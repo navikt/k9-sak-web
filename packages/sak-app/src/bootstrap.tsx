@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router';
 
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';

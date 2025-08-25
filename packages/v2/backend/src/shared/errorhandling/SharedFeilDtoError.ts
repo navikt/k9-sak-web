@@ -1,4 +1,4 @@
-import { ExtendedApiError } from '../instrumentation/v2/ExtendedApiError.js';
+import { ExtendedApiError } from './ExtendedApiError.js';
 import { type FeilDtoUnion, feilTypeUnion, isFeilDtoUnion } from './FeilDtoUnion.js';
 
 export abstract class SharedFeilDtoError extends ExtendedApiError {
