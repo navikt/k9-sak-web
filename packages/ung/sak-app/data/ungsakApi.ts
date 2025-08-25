@@ -27,6 +27,7 @@ export enum UngSakApiKeys {
   BEHANDLINGER_UNGSAK = 'BEHANDLINGER_UNGSAK',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
   NEW_BEHANDLING_UNGSAK = 'NEW_BEHANDLING_UNGSAK',
+  NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   HISTORY_UNGSAK = 'HISTORY_UNGSAK',
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
@@ -50,6 +51,7 @@ export enum UngSakApiKeys {
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
   LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
   UNGDOMSPROGRAM_INFORMASJON = 'UNGDOMSPROGRAM_INFORMASJON',
+  PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -99,6 +101,7 @@ const endpoints = new RestApiConfigBuilder()
     UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
     { isResponseBlob: true },
   )
+  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
 
   .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_UNGSAK)
 
@@ -110,6 +113,8 @@ const endpoints = new RestApiConfigBuilder()
 
   // Kun brukt for søk på localhost
   .withPost('/ung/sak/api/fagsak/sok', UngSakApiKeys.SEARCH_FAGSAK)
+
+  .withRel('parter-klagerett', UngSakApiKeys.PARTER_MED_KLAGERETT)
 
   .build();
 
