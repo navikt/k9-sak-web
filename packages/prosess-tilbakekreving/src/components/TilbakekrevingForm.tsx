@@ -16,7 +16,7 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -432,9 +432,9 @@ const settOppPeriodeDataForDetailForm = createSelector(
 
     return perioderFormState.map((periodeFormState: CustomVilkarsVurdertePeriode) => {
       const periode = finnOriginalPeriode(periodeFormState, perioder.perioder) as CustomPeriode;
-      const erForeldet = periode.foreldelseVurderingType
+      const erForeldet = periode?.foreldelseVurderingType
         ? periode.foreldelseVurderingType.kode === foreldelseVurderingType.FORELDET
-        : periode.foreldet;
+        : !!periode?.foreldet;
       return {
         redusertBeloper: periode.redusertBeloper,
         ytelser: periode.ytelser,

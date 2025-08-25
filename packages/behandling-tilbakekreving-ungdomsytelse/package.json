@@ -1,0 +1,24 @@
+{
+  "name": "@k9-sak-web/behandling-tilbakekreving-ungdomsytelse",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@fpsak-frontend/fakta-feilutbetaling": "1.0.0",
+    "@fpsak-frontend/fakta-verge": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/prosess-tilbakekreving": "1.0.0",
+    "@fpsak-frontend/prosess-vedtak-tilbakekreving": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0",
+    "@k9-sak-web/behandling-felles": "1.0.0",
+    "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/rest-api": "1.0.0",
+    "@k9-sak-web/rest-api-hooks": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
+    "@navikt/ft-kodeverk": "^3.0.0",
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "^8.1.2",
+    "react": "19.1.1",
+    "react-intl": "7.1.11"
+  }
+}
