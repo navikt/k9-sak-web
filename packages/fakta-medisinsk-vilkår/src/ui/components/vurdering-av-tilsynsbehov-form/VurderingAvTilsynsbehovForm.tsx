@@ -182,13 +182,7 @@ const VurderingAvTilsynsbehovForm = ({
         return isSameOrBefore(barnetsAttenårsdag, periode.fom);
       }) ??
         false),
-    [
-      barnetsAttenårsdag,
-      harPerioderDerPleietrengendeErOver18år,
-      perioderSomBlirVurdert,
-      harPerioderDerPleietrengendeErOver18år,
-      barnetsAttenårsdag,
-    ],
+    [barnetsAttenårsdag, harPerioderDerPleietrengendeErOver18år, perioderSomBlirVurdert],
   );
 
   const hullISøknadsperiodene = React.useMemo(
