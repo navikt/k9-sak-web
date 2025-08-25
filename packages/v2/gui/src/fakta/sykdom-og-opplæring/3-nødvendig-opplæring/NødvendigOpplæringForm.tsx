@@ -179,8 +179,7 @@ const NødvendigOpplæringForm = ({
 
   useEffect(() => {
     formMethods.setValue('perioderUtenNødvendigOpplæring', []);
-    formMethods.resetField('perioder.0.fom', { keepTouched: true });
-    formMethods.resetField('perioder.0.tom', { keepTouched: true });
+    formMethods.resetField('perioder', { keepTouched: true });
   }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
