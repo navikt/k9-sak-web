@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
-
+import { Aksjonspunkt, Behandling, FagsakPerson, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
 import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
-import { ForeldelseProsessIndex, ForeldelsesresultatActivity } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
+import {
+  ForeldelseProsessIndex,
+  ForeldelsesresultatActivity,
+  VurderForeldelseAp,
+} from '@navikt/ft-prosess-tilbakekreving-foreldelse';
+import React, { useState } from 'react';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
-const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
+interface ForeldelseProsessIndexWrapperProps {
+  behandling: Behandling;
+  perioderForeldelse: FeilutbetalingPerioderWrapper;
+  kodeverkSamling: unknown;
+  beregnBelop: (params: unknown) => Promise<unknown>;
+  alleMerknaderFraBeslutter: {
+    [key: string]: {
+      notAccepted?: boolean;
+    };
+  };
+  aksjonspunkter: Aksjonspunkt[];
+  submitCallback: (aksjonspunktData: VurderForeldelseAp[]) => Promise<void>;
+  isReadOnly: boolean;
+  fagsakPerson: FagsakPerson;
+}
+
+const ForeldelseProsessIndexWrapper: React.FC = (props: ForeldelseProsessIndexWrapperProps) => {
   const [formData, setFormData] = useState<ForeldelsesresultatActivity[] | undefined>(undefined);
   const {
     behandling,
@@ -20,7 +40,7 @@ const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
 
   const relasjonsRolleType = fagsakPerson.erKvinne ? RelasjonsRolleType.MOR : RelasjonsRolleType.FAR;
 
-  const submitForeldelse = (values: any) => submitCallback([values]);
+  const submitForeldelse = (values: VurderForeldelseAp) => submitCallback([values]);
 
   return (
     <ForeldelseProsessIndex

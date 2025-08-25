@@ -39,9 +39,10 @@ const BehandlingPaVent = ({ behandling, aksjonspunkter, settPaVent }: Behandling
 
   const erManueltSattPaVent = useMemo(
     () =>
-      (aksjonspunkter || [])
-        .filter(ap => isAksjonspunktOpen(`${ap.status}`))
-        .some(ap => ap.definisjon === aksjonspunktCodes.VENT_PÅ_BRUKERTILBAKEMELDING),
+      aksjonspunkter?.some(
+        ap =>
+          isAksjonspunktOpen(`${ap.status}`) && ap.definisjon.kode === aksjonspunktCodes.VENT_PÅ_BRUKERTILBAKEMELDING,
+      ) ?? false,
     [aksjonspunkter],
   );
 
