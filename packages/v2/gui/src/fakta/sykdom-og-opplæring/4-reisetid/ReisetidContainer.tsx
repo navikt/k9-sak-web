@@ -7,7 +7,7 @@ import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
 import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
 import { useState, useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigerer, setRedigerer] = useState(false);
@@ -60,7 +60,7 @@ const Wrapper = ({
           redigerer ||
           readOnly ||
           !vurdering.reisetid.erTilVurdering ||
-          !harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)
+          !harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)
         ) {
           return null;
         }

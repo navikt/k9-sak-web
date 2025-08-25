@@ -86,17 +86,15 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   );
 
   const [harAutomatiskValgtPeriode, setHarAutomatiskValgtPeriode] = useState(false);
-
-  // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
   useEffect(() => {
+    // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
       onPeriodeClick(null);
+      setHarAutomatiskValgtPeriode(false);
+      return;
     }
-  }, [valgtPeriode, allePerioder, onPeriodeClick]);
-
-  // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
-  // Hvis ikke vi har en periode som må vurderes, og det finnes en periode som er vurdert, så velger vi den første periode som er vurdert
-  useEffect(() => {
+    // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
+    // Hvis ikke vi har en periode som må vurderes, og det finnes en periode som er vurdert, så velger vi den første periode som er vurdert
     const periodeSomMåVurderes = allePerioder.find(
       periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
     );
