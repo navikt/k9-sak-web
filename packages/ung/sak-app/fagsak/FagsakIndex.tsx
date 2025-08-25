@@ -57,6 +57,10 @@ const FagsakIndex = () => {
     UngSakApiKeys.KODEVERK,
   );
 
+  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    UngSakApiKeys.KODEVERK_TILBAKE,
+  );
+
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
 
   const { data: fagsakPerson, state: fagsakPersonState } = restApiHooks.useGlobalStateRestApi<FagsakPerson>(
@@ -176,7 +180,11 @@ const FagsakIndex = () => {
 
   return (
     <>
-      <KodeverkProvider behandlingType={behandling ? behandling?.type?.kode : undefined} kodeverk={alleKodeverkUngSak}>
+      <KodeverkProvider
+        behandlingType={behandling ? behandling?.type?.kode : undefined}
+        kodeverk={alleKodeverkUngSak}
+        tilbakeKodeverk={alleKodeverkTilbake}
+      >
         <SaksbehandlernavnContext.Provider
           value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
         >
