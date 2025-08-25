@@ -7,6 +7,7 @@ import {
   Rettigheter,
   SettPaVentParams,
 } from '@k9-sak-web/behandling-felles';
+import DataFetcher from '@k9-sak-web/gui/shared/datafetcher/DataFetcher.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -17,14 +18,12 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Arbeidstype } from '../types';
 import FetchedData from '../types/FetchedData';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
-import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
-import { OverstyringUttakRequest } from '../types/OverstyringUttakRequest';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -44,7 +43,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
   dokumenter: Dokument[];
-  lagreOverstyringUttak: (values: OverstyringUttakRequest) => void;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 interface FaktaPanelInfo {
@@ -81,7 +80,7 @@ const PleiepengerPaneler = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   dokumenter,
-  lagreOverstyringUttak,
+  hentBehandling,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
@@ -155,7 +154,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
-        lagreOverstyringUttak={lagreOverstyringUttak}
+        hentBehandling={hentBehandling}
       />
       <PleiepengerFakta
         behandling={behandling}

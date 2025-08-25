@@ -165,15 +165,15 @@ const EndreVurderingController = ({
   return (
     <PageContainer isLoading={hentDataTilVurderingPågår} hasError={hentDataTilVurderingHarFeilet} preventUnmount>
       {lagreVurderingHarFeilet && (
-        <Box marginBlock="0 4">
+        <Box.New marginBlock="0 4">
           <LagreVurderingFeiletMelding />
-        </Box>
+        </Box.New>
       )}
       {formRenderer(dokumenter, beOmBekreftelseFørLagringHvisNødvendig, isSubmitting)}
       {lagreVurderingHarFeilet && (
-        <Box marginBlock="4 0">
+        <Box.New marginBlock="4 0">
           <LagreVurderingFeiletMelding />
-        </Box>
+        </Box.New>
       )}
       <OverlappendePeriodeModal
         perioderMedEndring={perioderMedEndring || []}

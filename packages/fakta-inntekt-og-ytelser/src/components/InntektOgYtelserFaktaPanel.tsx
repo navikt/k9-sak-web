@@ -24,16 +24,16 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
   const intl = useIntl();
   if (!inntekter || inntekter.length === 0) {
     return (
-      <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
+      <Box.New padding="4" borderWidth="1" borderRadius="medium">
         <BodyShort size="small">
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
         </BodyShort>
-      </Box>
+      </Box.New>
     );
   }
 
   return (
-    <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
+    <Box.New padding="4" borderWidth="1" borderRadius="medium">
       <Table>
         <Table.Header>
           <Table.Row>
@@ -59,7 +59,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
           })}
         </Table.Body>
       </Table>
-    </Box>
+    </Box.New>
   );
 };
 

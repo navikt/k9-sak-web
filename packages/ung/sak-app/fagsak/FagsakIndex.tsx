@@ -10,11 +10,10 @@ import {
 } from '@k9-sak-web/types';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
-  BehandlingsresultatDtoType,
-  BehandlingÅrsakDtoBehandlingArsakType,
-} from '@k9-sak-web/backend/ungsak/generated';
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  GetUngdomsprogramInformasjonResponse,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -116,19 +115,22 @@ const FagsakIndex = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
-  const ungdomsytelseDeltakerStatus = useMemo(() => {
-    const erUtmeldt = alleBehandlinger.some(b =>
-      b.behandlingÅrsaker.some(
-        a => a.behandlingArsakType.kode === BehandlingÅrsakDtoBehandlingArsakType.RE_HENDELSE_OPPHØR_UNGDOMSPROGRAM,
-      ),
-    );
+  const { data: ungdomsprogramInformasjon } = restApiHooks.useRestApi<GetUngdomsprogramInformasjonResponse>(
+    UngSakApiKeys.UNGDOMSPROGRAM_INFORMASJON,
+    {},
+    {
+      updateTriggers: [behandlingId],
+      suspendRequest: !behandling,
+    },
+  );
 
+  const ungdomsytelseDeltakerStatus = useMemo(() => {
+    const erUtmeldt = !!ungdomsprogramInformasjon?.opphørsdato;
     const erIProgrammet =
-      !erUtmeldt &&
-      alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatDtoType.INNVILGET);
+      !erUtmeldt && alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatType.INNVILGET);
 
     return { deltakerErUtmeldt: erUtmeldt, deltakerErIProgrammet: erIProgrammet };
-  }, [alleBehandlinger]);
+  }, [alleBehandlinger, ungdomsprogramInformasjon]);
 
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     UngSakApiKeys.ARBEIDSGIVERE,
@@ -222,7 +224,6 @@ const FagsakIndex = () => {
                   behandlingVersjon={behandlingVersjon}
                   behandlingRettigheter={behandlingRettigheter}
                   personopplysninger={behandlingPersonopplysninger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   navAnsatt={navAnsatt}
                   featureToggles={featureToggles}
                 />

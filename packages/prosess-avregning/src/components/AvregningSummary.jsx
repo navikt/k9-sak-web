@@ -13,7 +13,15 @@ import styles from './avregningSummary.module.css';
  *
  * Presentationskomponent
  */
-const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = null, ingenPerioderMedAvvik }) => (
+const AvregningSummary = ({
+  fom,
+  tom,
+  feilutbetaling,
+  etterbetaling,
+  inntrekk = null,
+  ingenPerioderMedAvvik,
+  isUngFagsak,
+}) => (
   <>
     <BodyShort size="small" className={styles.summaryTitle}>
       <FormattedMessage id="Avregning.bruker" />
@@ -31,7 +39,7 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = 
             {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
           </Label>
           <div className={styles.resultSum}>
-            <HGrid gap="1" columns={{ xs: '3fr 2fr 7fr' }}>
+            <HGrid gap="space-4" columns={{ xs: '3fr 2fr 7fr' }}>
               <BodyShort size="small" className={styles.resultName}>
                 <FormattedMessage id="Avregning.etterbetaling" />:
               </BodyShort>
@@ -40,7 +48,7 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = 
               </BodyShort>
             </HGrid>
             <HGrid
-              gap="1"
+              gap="space-4"
               columns={{ xs: inntrekk !== null ? '3fr 2fr 4fr 3fr' : '3fr 2fr 7fr' }}
               className={styles.redNumbers}
             >
@@ -52,7 +60,7 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = 
               <BodyShort size="small" className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
                 {formatCurrencyNoKr(feilutbetaling)}
               </BodyShort>
-              {inntrekk !== null && (
+              {inntrekk !== null && !isUngFagsak && (
                 <BodyShort size="small">
                   <FormattedMessage id="Avregning.inntrekk" />:
                   <span className={inntrekk ? styles.lastNumberRed : styles.lastNumberPositiv}>

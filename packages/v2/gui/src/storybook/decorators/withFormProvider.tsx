@@ -1,6 +1,6 @@
 import type { Decorator } from '@storybook/react';
-import { useForm, type FieldValues, type UseFormProps, FormProvider } from 'react-hook-form';
-import { action } from '@storybook/addon-actions';
+import { FormProvider, useForm, type FieldValues, type UseFormProps } from 'react-hook-form';
+import { action } from 'storybook/actions';
 
 export const withFormProvider =
   <TFieldValues extends FieldValues = FieldValues, TContext = any>(

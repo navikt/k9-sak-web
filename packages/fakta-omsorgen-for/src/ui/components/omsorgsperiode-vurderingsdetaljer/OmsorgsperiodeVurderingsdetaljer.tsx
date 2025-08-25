@@ -1,15 +1,16 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
-import { Box, Button } from '@navikt/ds-react';
-import { useContext, type JSX } from 'react';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
+import { BodyShort, Box, Button, Label, Tag } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
-import ContainerContext from '../../context/ContainerContext';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
+import { useOmsorgenForContext } from '../../context/ContainerContext';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -23,39 +24,49 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   registrertForeldrerelasjon,
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
   const intl = useIntl();
-  const { sakstype } = useContext(ContainerContext);
+  const { sakstype, readOnly } = useOmsorgenForContext();
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const begrunnelseRenderer = () => {
-    let label = intl.formatMessage({ id: 'vurdering.hjemmel' });
+    let label = (
+      <Label size="small">
+        {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
+        <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
+      </Label>
+    );
     let begrunnelse = '';
     if (omsorgsperiode.erManueltVurdert()) {
-      begrunnelse = omsorgsperiode.begrunnelse;
+      begrunnelse = omsorgsperiode.begrunnelse || '';
     } else if (omsorgsperiode.erAutomatiskVurdert()) {
       if (!erOMP) {
         begrunnelse = registrertForeldrerelasjon
           ? 'Søker er folkeregistrert forelder'
           : 'Søker er ikke folkeregistrert forelder';
       }
-      label = 'Automatisk vurdert';
+      label = <Label size="small">Automatisk vurdert</Label>;
     }
     return (
       <>
         <LabelledContent
           label={label}
-          content={<span className="whitespace-pre-wrap">{begrunnelse}</span>}
+          content={
+            <BodyShort size="small" className="whitespace-pre-wrap">
+              {begrunnelse}
+            </BodyShort>
+          }
+          size="small"
           indentContent
         />
-        <VurdertAv ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
+        <VurdertAv size="small" ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );
   };
 
   const resultatRenderer = () => {
     if (omsorgsperiode.erOppfylt()) {
-      return 'Ja';
+      return <BodyShort size="small">Ja</BodyShort>;
     }
     if (omsorgsperiode.erIkkeOppfylt()) {
-      return 'Nei';
+      return <BodyShort size="small">Nei</BodyShort>;
     }
     return null;
   };
@@ -70,6 +81,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   return (
     <DetailView
       title={erOMP ? 'Vurdering' : 'Vurdering av omsorg'}
+      border
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
@@ -77,30 +89,49 @@ const OmsorgsperiodeVurderingsdetaljer = ({
               Rediger vurdering
             </Button>
           )}
+          readOnly={readOnly}
         />
       )}
     >
       {omsorgsperiode.erManueltVurdert() && (
         <>
           {omsorgsperiode.relasjon && (
-            <Box marginBlock="8 0">
-              <LabelledContent label="Oppgitt relasjon i søknaden" content={omsorgsperiode.relasjon} />
-            </Box>
+            <Box.New marginBlock="8 0">
+              <LabelledContent
+                size="small"
+                label="Hvilken relasjon har søker til barnet?"
+                content={
+                  <div className="flex gap-2 items-center">
+                    <BodyShort size="small" className="whitespace-pre-wrap">
+                      {omsorgsperiode.relasjon}
+                    </BodyShort>
+                    <Tag size="small" variant="info">
+                      Fra søknad
+                    </Tag>
+                  </div>
+                }
+              />
+            </Box.New>
           )}
           {skalViseRelasjonsbeskrivelse && (
-            <Box marginBlock="8 0">
-              <LabelledContent label="Beskrivelse fra søker" content={omsorgsperiode.relasjonsbeskrivelse} />
-            </Box>
+            <Box.New marginBlock="8 0">
+              <LabelledContent
+                size="small"
+                label="Beskrivelse fra søker"
+                content={
+                  <BodyShort size="small" className="whitespace-pre-wrap">
+                    {omsorgsperiode.relasjonsbeskrivelse}
+                  </BodyShort>
+                }
+              />
+            </Box.New>
           )}
         </>
       )}
-      <Box marginBlock="8 0">{begrunnelseRenderer()}</Box>
-      <Box marginBlock="8 0">
-        <LabelledContent label={harSøkerOmsorgenLabel} content={resultatRenderer()} />
-      </Box>
-      <Box marginBlock="8 0">
-        <LabelledContent label="Perioder" content={omsorgsperiode.periode.prettifyPeriod()} />
-      </Box>
+      <Box.New marginBlock="8 0">{begrunnelseRenderer()}</Box.New>
+      <Box.New marginBlock="8 0">
+        <LabelledContent size="small" label={harSøkerOmsorgenLabel} content={resultatRenderer()} />
+      </Box.New>
     </DetailView>
   );
 };

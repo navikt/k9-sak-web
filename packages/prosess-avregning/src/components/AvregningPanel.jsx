@@ -11,12 +11,12 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
-import { AksjonspunktDtoDefinisjon } from '@navikt/k9-sak-typescript-client';
+import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,6 +26,7 @@ import avregningSimuleringResultatPropType from '../propTypes/avregningSimulerin
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
+import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
@@ -119,19 +120,21 @@ export class AvregningPanelImpl extends Component {
       harVurderFeilutbetalingAP,
       harSjekkHøyEtterbetalingAP,
       behandling,
+      fagsak,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
-
+    const fagsakSakstype = typeof fagsak?.sakstype === 'string' ? fagsak?.sakstype : fagsak?.sakstype?.kode;
+    const isUngFagsak = fagsakSakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
     return (
       <>
-        <VStack gap="8">
+        <VStack gap="space-32">
           <Heading size="small" level="2">
             <FormattedMessage id="Avregning.Title" />
           </Heading>
           {harSjekkHøyEtterbetalingAP && <KontrollerEtterbetalingAlert />}
           {simuleringResultatOption && (
-            <VStack gap="2">
+            <VStack gap="space-8">
               <AksjonspunktHelpText isAksjonspunktOpen={harVurderFeilutbetalingAP}>
                 {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
               </AksjonspunktHelpText>
@@ -143,6 +146,7 @@ export class AvregningPanelImpl extends Component {
                 etterbetaling={simuleringResultatOption.sumEtterbetaling}
                 inntrekk={simuleringResultatOption.sumInntrekk}
                 ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+                isUngFagsak={isUngFagsak}
               />
 
               <AvregningTable
@@ -150,6 +154,7 @@ export class AvregningPanelImpl extends Component {
                 toggleDetails={this.toggleDetails}
                 simuleringResultat={simuleringResultatOption}
                 ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+                isUngFagsak={isUngFagsak}
               />
               {hasOpenTilbakekrevingsbehandling && (
                 <Label size="small" as="p">
@@ -160,9 +165,9 @@ export class AvregningPanelImpl extends Component {
           )}
           {!simuleringResultat && <FormattedMessage id="Avregning.ingenData" />}
           {harVurderFeilutbetalingAP && (
-            <VStack gap="2">
+            <VStack gap="space-8">
               <form onSubmit={formProps.handleSubmit}>
-                <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+                <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
                   <TextAreaField
                     name="begrunnelse"
                     label={{ id: 'Avregning.vurdering' }}
@@ -189,7 +194,7 @@ export class AvregningPanelImpl extends Component {
                             element: (
                               <div className={styles.varsel}>
                                 <ArrowBox alignOffset={20}>
-                                  <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+                                  <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
                                     <BodyShort size="small" className={styles.bold}>
                                       <FormattedMessage id="Avregning.varseltekst" />
                                     </BodyShort>
@@ -251,7 +256,7 @@ export class AvregningPanelImpl extends Component {
                     </div>
                   )}
                 </HGrid>
-                <HGrid className="mt-4" gap="1" columns={{ xs: '6fr 6fr' }}>
+                <HGrid className="mt-4" gap="space-4" columns={{ xs: '6fr 6fr' }}>
                   <div>
                     <Button
                       variant="primary"

@@ -18,23 +18,22 @@ import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/M
 import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/MenyNyBehandlingIndex.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
-import MenyMarkerBehandling, {
-  getMenytekst as getMenytekstMarkerBehandling,
-} from '@k9-sak-web/sak-meny-marker-behandling';
+import { getMenytekst as getMenytekstMarkerBehandling } from '@k9-sak-web/sak-meny-marker-behandling';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import moment from 'moment';
+import { ChevronDownIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
@@ -58,7 +57,11 @@ const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
 ];
 
 const findNewBehandlingId = (alleBehandlinger: BehandlingAppKontekst[]): number => {
-  alleBehandlinger.sort((b1, b2) => moment(b2.opprettet).diff(moment(b1.opprettet)));
+  alleBehandlinger.sort((b1, b2) =>
+    initializeDate(b2.opprettet, undefined, undefined, true).diff(
+      initializeDate(b1.opprettet, undefined, undefined, true),
+    ),
+  );
   return alleBehandlinger[0].id;
 };
 
@@ -90,6 +93,7 @@ interface OwnProps {
   behandlendeEnheter: BehandlendeEnheter;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  showAsDisabled?: boolean;
 }
 
 export const BehandlingMenuIndex = ({
@@ -103,6 +107,7 @@ export const BehandlingMenuIndex = ({
   behandlendeEnheter,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
+  showAsDisabled,
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
@@ -155,19 +160,18 @@ export const BehandlingMenuIndex = ({
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
 
-  const { startRequest: markerBehandling } = restApiHooks.useRestApiRunner(UngSakApiKeys.LOS_LAGRE_MERKNAD);
-
-  const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadFraLos>(UngSakApiKeys.LOS_HENTE_MERKNAD);
-
   const featureToggles = useContext(FeatureTogglesContext);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
 
-  const lagNyBehandling = useCallback(async (bTypeKode: string, params: any) => {
-    const lagNy = lagNyBehandlingUngSak;
-    await lagNy(params);
-    oppfriskBehandlinger();
-  }, []);
+  const lagNyBehandling = useCallback(
+    async (bTypeKode: string, params: any) => {
+      const lagNy = lagNyBehandlingUngSak;
+      await lagNy(params);
+      oppfriskBehandlinger();
+    },
+    [lagNyBehandlingUngSak, oppfriskBehandlinger],
+  );
 
   const uuidForSistLukkede = useMemo(
     () => getUuidForSisteLukkedeForsteEllerRevurd(alleBehandlinger),
@@ -176,17 +180,24 @@ export const BehandlingMenuIndex = ({
   const previewHenleggBehandling = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (navAnsatt.kanVeilede) {
-    return (
-      <BehandlingMenuVeiledervisning
-        behandlingUuid={behandling?.uuid}
-        featureToggles={featureToggles}
-        markerBehandling={markerBehandling}
-        merknaderFraLos={merknaderFraLos}
-      />
-    );
+    return <BehandlingMenuVeiledervisning behandlingUuid={behandling?.uuid ?? ''} />;
   }
 
   const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
+
+  if (showAsDisabled) {
+    return (
+      <Button
+        size="small"
+        variant="secondary-neutral"
+        icon={<ChevronDownIcon title="Ekspander" fontSize="1.5rem" />}
+        iconPosition="right"
+        disabled
+      >
+        Behandlingsmeny
+      </Button>
+    );
+  }
 
   if (featureToggles?.SAK_MENY_V2) {
     return (
@@ -215,13 +226,7 @@ export const BehandlingMenuIndex = ({
             ),
           ),
           new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-            <MenyMarkerBehandlingV2
-              behandlingUuid={behandling?.uuid}
-              markerBehandling={markerBehandling}
-              lukkModal={lukkModal}
-              brukHastekøMarkering
-              merknaderFraLos={merknaderFraLos}
-            />
+            <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
           )),
           new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
             <MenyHenleggIndexV2
@@ -320,13 +325,7 @@ export const BehandlingMenuIndex = ({
           />
         )),
         new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-          <MenyMarkerBehandling
-            behandlingUuid={behandling?.uuid}
-            markerBehandling={markerBehandling}
-            lukkModal={lukkModal}
-            brukHastekøMarkering
-            merknaderFraLos={merknaderFraLos}
-          />
+          <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
           <MenyHenleggIndex

@@ -1,5 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
-import React, { MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
 
@@ -12,7 +12,7 @@ const TimeLineNavigation = ({
 }) => {
   const intl = useIntl();
   return (
-    <HGrid gap="1" columns={{ xs: '11fr 1fr' }} className={className}>
+    <HGrid gap="space-4" columns={{ xs: '11fr 1fr' }} className={className}>
       <div />
       <div>
         <TimeLineButton

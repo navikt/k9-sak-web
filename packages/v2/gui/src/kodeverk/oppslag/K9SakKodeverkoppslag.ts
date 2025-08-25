@@ -1,9 +1,9 @@
-import { type AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated';
+import { type AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   GeneriskKodeverkoppslag,
+  type Kilde,
   type Kodeverkoppslag,
   type OrUndefined,
-  type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
 // Lag type av alle oppslagsobjekt som følger korrekt mønster med å vere ei liste av objekter med kilde property som er ein enum type.
@@ -46,6 +46,13 @@ export class K9SakKodeverkoppslag
 
   avslagsårsaker<U extends OrUndefined = undefined>(kode: Kilde<EO, 'avslagsårsaker'>, undefinedIfNotFound?: U) {
     return this.finnObjektFraKilde('avslagsårsaker', kode, undefinedIfNotFound);
+  }
+
+  behandlingMerknadTyper<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'behandlingMerknadTyper'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('behandlingMerknadTyper', kode, undefinedIfNotFound);
   }
 
   behandlingResultatTyper<U extends OrUndefined = undefined>(

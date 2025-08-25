@@ -1,23 +1,23 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { expect, fn, userEvent, within } from '@storybook/test';
-import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
-import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
-import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
-import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
-import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
-import Messages, { type MessagesProps } from './Messages.js';
 import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
+import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
+import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
+import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
+import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
-import { action } from '@storybook/addon-actions';
 import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
+import Messages, { type MessagesProps } from './Messages.js';
 
 const newStickyState = (): MessagesProps['stickyState'] => ({
   messages: new StickyStateReducer(),

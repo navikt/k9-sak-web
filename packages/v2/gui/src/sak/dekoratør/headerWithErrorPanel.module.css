@@ -23,6 +23,6 @@
 }
 
 .containerDev {
-  --ac-internalheader-bg: #0a0;
-  --ac-internalheader-divider: #59514b;
+  background-color: #0a0;
+  color: white;
 }

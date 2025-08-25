@@ -23,7 +23,7 @@ import {
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
-import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';

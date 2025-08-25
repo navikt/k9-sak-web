@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { expect, within } from '@storybook/test';
+import { expect, within } from 'storybook/test';
 import { Lovreferanse } from './Lovreferanse';
 
 const meta = {
@@ -29,6 +29,21 @@ export const DefaultStory: Story = {
       await expect(linkEls()).toHaveLength(1);
       await expect(linkEls()[0]).toHaveTextContent('9-1');
       await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-1');
+    });
+  },
+};
+
+export const UngdomsprogramFårRiktigLenke: Story = {
+  args: {
+    children: 'Forskrift om ungdomsprogram og ungdomsprogramytelse § 8',
+    isUng: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls } = elemsfinder(canvasElement);
+    await step('Enkeltparagrafer blir riktig lenket', async () => {
+      await expect(linkEls()).toHaveLength(1);
+      await expect(linkEls()[0]).toHaveTextContent('8');
+      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/LTI/forskrift/2025-06-20-1182/§8');
     });
   },
 };

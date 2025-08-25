@@ -6,14 +6,16 @@ import vilkårListe from './Vilkår';
 import styles from './vilkårsliste.module.css';
 
 import type { JSX } from 'react';
-import { VilkårMedPerioderDtoVilkarType, VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_vilkår_VilkårType as VilkårType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
-type VilkårType = { [key in VilkårMedPerioderDtoVilkarType]?: VilkårPeriodeDtoVilkarStatus };
+type VilkårTypeMap = { [key in VilkårType]?: VilkårUtfall };
 
-const erVilkårOppfylt = (vilkårkode: VilkårMedPerioderDtoVilkarType, vilkår: VilkårType) =>
-  vilkår[vilkårkode] === Utfall.OPPFYLT;
+const erVilkårOppfylt = (vilkårkode: VilkårType, vilkår: VilkårTypeMap) => vilkår[vilkårkode] === Utfall.OPPFYLT;
 
-const Vilkårsliste = ({ vilkår }: { vilkår: VilkårType }): JSX.Element => {
+const Vilkårsliste = ({ vilkår }: { vilkår: VilkårTypeMap }): JSX.Element => {
   return (
     <div className={styles.vilkårsliste}>
       <Label size="small" as="p">

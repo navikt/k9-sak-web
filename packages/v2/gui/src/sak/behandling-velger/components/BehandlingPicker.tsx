@@ -1,5 +1,8 @@
 import { behandlingType as k9KlageBehandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { BehandlingDtoStatus, BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';

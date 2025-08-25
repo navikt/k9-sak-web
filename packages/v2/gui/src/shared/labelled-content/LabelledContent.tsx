@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
+import { Detail, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 
 export interface LabelledContentProps {
@@ -9,18 +9,31 @@ export interface LabelledContentProps {
   labelTag?: React.ElementType;
   indentContent?: boolean;
   size?: 'medium' | 'small';
+  hideLabel?: boolean;
+  description?: string;
 }
 
-export const LabelledContent = ({ label, content, labelTag, indentContent, size = 'small' }: LabelledContentProps) => {
+export const LabelledContent = ({
+  label,
+  content,
+  labelTag,
+  indentContent,
+  size = 'small',
+  hideLabel = false,
+  description,
+}: LabelledContentProps) => {
   const cl = classNames('mt-2', {
     'border-solid border-t-0 border-r-0 border-b-0 border-l-4 border-[#c9c9c9] py-[3px] pl-[13px]':
       content && indentContent,
   });
   return (
     <div>
-      <Label className="font-bold" as={labelTag || 'p'} size={size}>
-        {label}
-      </Label>
+      {!hideLabel && (
+        <Label className="font-bold" as={labelTag || 'p'} size={size}>
+          {label}
+        </Label>
+      )}
+      {description && <Detail className="mt-1">{description}</Detail>}
       <div className={cl}>{content}</div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { composeStories } from '@storybook/react';
-import { userEvent } from '@storybook/test';
 import { act, render, screen } from '@testing-library/react';
+import { userEvent } from 'storybook/test';
 import * as stories from '../MedlemskapFaktaIndex.stories';
 
 describe('<MedlemskapInfoPanel>', () => {

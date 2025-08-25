@@ -1,4 +1,7 @@
-import type { KontrollerInntektPeriodeDto, RapportertInntektDto } from '@k9-sak-web/backend/ungsak/generated';
+import type {
+  ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
+  ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { getPathToAinntekt } from '@k9-sak-web/lib/paths/paths.js';
@@ -20,7 +23,7 @@ const Inntekt = ({
   sumValue?: string;
 }) => {
   return (
-    <VStack gap="3">
+    <VStack gap="space-12">
       <Heading size="xsmall" level="3">
         {title}
       </Heading>
@@ -32,7 +35,7 @@ const Inntekt = ({
           </BodyShort>
         </HStack>
       ))}
-      <Box borderColor="border-default" borderWidth="0 0 1 0" />
+      <Box.New borderWidth="0 0 1 0" />
       <HStack justify="space-between" align="center">
         <BodyShort size="small" className={styles.sumLabel} weight="semibold">
           {sumLabel}
@@ -72,7 +75,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
   const location = useLocation();
   const { rapporterteInntekter } = inntektKontrollPeriode || {};
   return (
-    <VStack gap="8">
+    <VStack gap="space-32">
       <Bleed marginBlock="0 2" asChild>
         <HStack justify="space-between" align="baseline">
           <Heading size="small" level="2">
@@ -91,7 +94,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
           </Button>
         </HStack>
       </Bleed>
-      <HGrid gap="9" columns={2}>
+      <HGrid gap="space-36" columns={2}>
         <Inntekt
           title="Inntekt rapportert av deltaker"
           details={[

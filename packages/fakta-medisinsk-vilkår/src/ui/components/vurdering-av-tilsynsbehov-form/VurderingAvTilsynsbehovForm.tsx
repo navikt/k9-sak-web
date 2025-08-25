@@ -1,11 +1,12 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
+import { Alert, Box, Button, Checkbox, CheckboxGroup, Label, Link, Tooltip } from '@navikt/ds-react';
 import React, { useState, type JSX } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
@@ -32,6 +33,7 @@ type AnyType = any;
 export enum FieldName {
   VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE = 'vurderingAvKontinuerligTilsynOgPleie',
   HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE = 'harBehovForKontinuerligTilsynOgPleie',
+  MANGLER_LEGEERKLÆRING = 'manglerLegeerklæring',
   PERIODER = 'perioder',
   DOKUMENTER = 'dokumenter',
 }
@@ -49,6 +51,16 @@ const lagTilsynsbehovVurdering = (
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE];
 
+  if (formState[FieldName.MANGLER_LEGEERKLÆRING]) {
+    return {
+      manglerLegeerklæring: true,
+      resultat: undefined,
+      perioder,
+      tekst: undefined,
+      dokumenter: undefined,
+    };
+  }
+
   return {
     resultat,
     perioder,
@@ -59,6 +71,7 @@ const lagTilsynsbehovVurdering = (
 
 export interface VurderingAvTilsynsbehovFormState {
   [FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]?: string;
+  [FieldName.MANGLER_LEGEERKLÆRING]?: boolean;
   [FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]?: boolean;
   [FieldName.PERIODER]?: Period[];
   [FieldName.DOKUMENTER]: string[];
@@ -87,7 +100,7 @@ const VurderingAvTilsynsbehovForm = ({
   harPerioderDerPleietrengendeErOver18år,
   barnetsAttenårsdag,
 }: VurderingAvTilsynsbehovFormProps): JSX.Element => {
-  const { readOnly } = React.useContext(ContainerContext);
+  const { readOnly, featureToggles } = React.useContext(ContainerContext);
   const formMethods = useForm({
     defaultValues,
     mode: 'onChange',
@@ -142,6 +155,10 @@ const VurderingAvTilsynsbehovForm = ({
     control: formMethods.control,
     name: FieldName.PERIODER,
   });
+  const manglerLegeerklæring: boolean | undefined = useWatch({
+    control: formMethods.control,
+    name: FieldName.MANGLER_LEGEERKLÆRING,
+  });
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(p => p.asListOfDays());
     const dagerSomBlirVurdert = (perioderSomBlirVurdert || [])
@@ -165,7 +182,13 @@ const VurderingAvTilsynsbehovForm = ({
         return isSameOrBefore(barnetsAttenårsdag, periode.fom);
       }) ??
         false),
-    [perioderSomBlirVurdert, harPerioderDerPleietrengendeErOver18år, barnetsAttenårsdag],
+    [
+      barnetsAttenårsdag,
+      harPerioderDerPleietrengendeErOver18år,
+      perioderSomBlirVurdert,
+      harPerioderDerPleietrengendeErOver18år,
+      barnetsAttenårsdag,
+    ],
   );
 
   const hullISøknadsperiodene = React.useMemo(
@@ -199,7 +222,7 @@ const VurderingAvTilsynsbehovForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginBlock="6 0">
+            <Box.New marginBlock="6 0">
               <Label size="small" aria-hidden="true">
                 Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?
               </Label>
@@ -250,9 +273,13 @@ const VurderingAvTilsynsbehovForm = ({
                       />
                     ),
                   }))}
-                  validators={{
-                    harBruktDokumentasjon,
-                  }}
+                  validators={
+                    manglerLegeerklæring
+                      ? {}
+                      : {
+                          harBruktDokumentasjon,
+                        }
+                  }
                   disabled={readOnly}
                 />
               </div>
@@ -267,12 +294,32 @@ const VurderingAvTilsynsbehovForm = ({
                   {visAlleDokumenter ? `Vis færre dokumenter` : `Vis alle dokumenter (${dokumenter.length})`}
                 </Button>
               )}
-            </Box>
+            </Box.New>
           )}
-          <Box marginBlock="8 0">
+          {featureToggles?.BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE && (
+            <Box.New marginBlock="8 0">
+              <Controller
+                name={FieldName.MANGLER_LEGEERKLÆRING}
+                render={({ field }) => (
+                  <CheckboxGroup legend="Mangler det legeerklæring for perioden?" size="small">
+                    <Checkbox
+                      onChange={e => {
+                        field.onChange(e.target.checked ? true : false);
+                      }}
+                      checked={field.value === true}
+                    >
+                      Mangler riktig legeerklæring for perioden, jmf. §9-16
+                    </Checkbox>
+                  </CheckboxGroup>
+                )}
+              />
+            </Box.New>
+          )}
+
+          <Box.New marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
-              disabled={readOnly}
+              disabled={readOnly || manglerLegeerklæring}
               textareaClass={styles.begrunnelsesfelt}
               name={FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE}
               label={
@@ -307,18 +354,18 @@ const VurderingAvTilsynsbehovForm = ({
                   </ul>
                 </>
               }
-              validators={{ required }}
+              validators={manglerLegeerklæring ? {} : { required, hasValidText }}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <YesOrNoQuestionRHF
               question="Er det behov for tilsyn og pleie?"
               name={FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
-              validators={{ required }}
-              disabled={readOnly}
+              validators={manglerLegeerklæring ? {} : { required }}
+              disabled={readOnly || manglerLegeerklæring}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -369,23 +416,23 @@ const VurderingAvTilsynsbehovForm = ({
                 return <></>;
               }}
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginBlock="6 0">
+                <Box.New marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                     id="leggTilPeriodeKnapp"
                   />
-                </Box>
+                </Box.New>
               )}
             />
-          </Box>
+          </Box.New>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
-            </Box>
+            </Box.New>
           )}
         </FormWithButtons>
       </FormProvider>

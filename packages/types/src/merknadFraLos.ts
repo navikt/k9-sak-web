@@ -1,5 +1,5 @@
 interface MerknadFraLos {
-  merknadKoder?: Array<'HASTESAK' | null> | null;
+  merknadType: { kode: string };
   fritekst?: string;
 }
 

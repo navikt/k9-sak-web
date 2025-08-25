@@ -1,4 +1,5 @@
 import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Tag, Tooltip } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
@@ -6,10 +7,10 @@ import React, { useEffect, type JSX } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';
 import usePrevious from '../../../util/hooks';
+import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import VurderingsperiodeElement from '../vurderingsperiode/VurderingsperiodeElement';
 import Vurderingsperioder from '../vurderingsperioder/Vurderingsperioder';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './vurderingsnavigasjon.module.css';
 
 interface VurderingsnavigasjonProps {
@@ -37,6 +38,7 @@ const Vurderingsnavigasjon = ({
   const [activeIndex, setActiveIndex] = React.useState(harPerioderSomSkalVurderes ? 0 : -1);
   const previousVisRadForNyVurdering = usePrevious(visRadForNyVurdering);
   const harValgfrieVurderingsperioder = resterendeValgfrieVurderingsperioder?.length > 0;
+  const { readOnly } = React.useContext(ContainerContext);
 
   useEffect(() => {
     if (visRadForNyVurdering === false && previousVisRadForNyVurdering === true) {
@@ -64,7 +66,7 @@ const Vurderingsnavigasjon = ({
           <div className={styles.vurderingsperiode__postElementContainer}>
             {(vurderingsperiode as ManuellVurdering).endretIDenneBehandlingen && (
               <Tooltip content="Vurderingen er opprettet i denne behandlingen">
-                <PersonPencilFillIcon fontSize="1.5rem" style={{ color: 'var(--a-orange-500' }} />
+                <PersonPencilFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-warning-600' }} />
               </Tooltip>
             )}
 
@@ -87,7 +89,7 @@ const Vurderingsnavigasjon = ({
           <ExclamationmarkTriangleFillIcon
             title="Perioden må vurderes"
             fontSize="1.5rem"
-            style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+            style={{ color: 'var(--ax-text-warning-decoration)' }}
           />
         )}
         visParterLabel={visParterLabel}
@@ -101,7 +103,7 @@ const Vurderingsnavigasjon = ({
           <InformationSquareFillIcon
             title="Perioden kan vurderes"
             fontSize="1.5rem"
-            style={{ color: 'var(--a-lightblue-700)' }}
+            style={{ color: 'var(--ax-text-info-icon)' }}
           />
         )}
         visParterLabel={visParterLabel}
@@ -137,6 +139,7 @@ const Vurderingsnavigasjon = ({
                 ariaLabel="Opprett vurdering"
               />
             )}
+            readOnly={readOnly}
           />
         )}
       </div>

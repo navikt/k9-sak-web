@@ -37,5 +37,3 @@ export const useVisForhandsvisningAvMelding = (behandling: BehandlingInfo, fagsa
     }
   };
 };
-
-export default useVisForhandsvisningAvMelding;

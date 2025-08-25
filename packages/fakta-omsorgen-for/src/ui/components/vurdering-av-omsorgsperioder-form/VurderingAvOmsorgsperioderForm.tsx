@@ -1,11 +1,12 @@
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
-import { Alert, Box, Label } from '@navikt/ds-react';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Alert, BodyShort, Box, Label, Tag } from '@navikt/ds-react';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
@@ -13,12 +14,11 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import ContainerContext from '../../context/ContainerContext';
+import { useOmsorgenForContext } from '../../context/ContainerContext';
 import { required } from '../../form/validators/index';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 export enum FieldName {
   BEGRUNNELSE = 'begrunnelse',
@@ -46,7 +46,7 @@ const finnResterendePerioder = (perioderFraForm: FormPeriod[], periodeTilVurderi
 
 interface VurderingAvOmsorgsperioderFormProps {
   omsorgsperiode: Omsorgsperiode;
-  onAvbryt: () => void;
+  onAvbryt?: () => void;
   fosterbarn: string[];
 }
 
@@ -61,7 +61,7 @@ const VurderingAvOmsorgsperioderForm = ({
   onAvbryt,
   fosterbarn,
 }: VurderingAvOmsorgsperioderFormProps): JSX.Element => {
-  const { onFinished, readOnly, sakstype } = React.useContext(ContainerContext);
+  const { onFinished, readOnly, sakstype } = useOmsorgenForContext();
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const erOLP = sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER;
   const intl = useIntl();
@@ -120,22 +120,35 @@ const VurderingAvOmsorgsperioderForm = ({
     { value: RadioOptions.HELE, label: 'Ja' },
     { value: RadioOptions.DELER, label: 'Ja, i deler av perioden' },
     { value: RadioOptions.NEI, label: 'Nei' },
-  ].filter(radio => (erOLP ? radio.value !== RadioOptions.DELER : true));
+  ].filter(radio => (erOLP && radio.value === RadioOptions.DELER ? false : true));
 
   return (
     <div className={styles.vurderingAvOmsorgsperioderForm}>
-      <DetailView title={erOMP ? 'Vurdering' : 'Vurdering av omsorg'}>
+      <DetailView title={erOMP ? 'Vurdering' : 'Vurdering av omsorg'} border>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...formMethods}>
           {omsorgsperiode.relasjon && (
-            <Box marginBlock="8 0">
-              <LabelledContent label="Oppgitt relasjon i søknaden" content={omsorgsperiode.relasjon} />
-            </Box>
+            <Box.New marginBlock="8 0">
+              <LabelledContent
+                label="Hvilken relasjon har søker til barnet?"
+                content={
+                  <div className="flex gap-2 items-center">
+                    <BodyShort size="small">{omsorgsperiode.relasjon}</BodyShort>
+                    <Tag size="small" variant="info">
+                      Fra søknad
+                    </Tag>
+                  </div>
+                }
+              />
+            </Box.New>
           )}
           {skalViseRelasjonsbeskrivelse && (
-            <Box marginBlock="8 0">
-              <LabelledContent label="Beskrivelse fra søker" content={omsorgsperiode.relasjonsbeskrivelse} />
-            </Box>
+            <Box.New marginBlock="8 0">
+              <LabelledContent
+                label="Beskrivelse fra søker"
+                content={<BodyShort size="small">{omsorgsperiode.relasjonsbeskrivelse}</BodyShort>}
+              />
+            </Box.New>
           )}
           <FormWithButtons
             onSubmit={formMethods.handleSubmit(handleSubmit)}
@@ -144,15 +157,15 @@ const VurderingAvOmsorgsperioderForm = ({
             shouldShowSubmitButton={!readOnly}
             smallButtons
           >
-            <Box marginBlock="8 0">
-              <Label htmlFor={FieldName.BEGRUNNELSE}>
-                {intl.formatMessage({ id: 'vurdering.hjemmel' })}
+            <Box.New marginBlock="8 0">
+              <Label size="small" htmlFor={FieldName.BEGRUNNELSE}>
+                {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
                 <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
               </Label>
               {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
               <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
-            </Box>
-            <Box marginBlock="8 0">
+            </Box.New>
+            <Box.New marginBlock="8 0">
               <RadioGroupPanelRHF
                 question={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
                 radios={radios}
@@ -160,9 +173,9 @@ const VurderingAvOmsorgsperioderForm = ({
                 validators={{ required }}
                 disabled={readOnly}
               />
-            </Box>
+            </Box.New>
             {harSøkerOmsorgenFor === RadioOptions.DELER && (
-              <Box marginBlock="8 0">
+              <Box.New marginBlock="8 0">
                 <PeriodpickerListRHF
                   name={FieldName.PERIODER}
                   legend="I hvilke perioder har søker omsorgen for barnet?"
@@ -194,13 +207,13 @@ const VurderingAvOmsorgsperioderForm = ({
                     )
                   }
                   renderAfterFieldArray={fieldArrayMethods => (
-                    <Box marginBlock="6 0">
+                    <Box.New marginBlock="6 0">
                       <AddButton
                         label="Legg til periode"
                         onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                         id="leggTilPeriodeKnapp"
                       />
-                    </Box>
+                    </Box.New>
                   )}
                   validators={{
                     overlaps: (valgtPeriode: Period) => {
@@ -219,10 +232,10 @@ const VurderingAvOmsorgsperioderForm = ({
                     },
                   }}
                 />
-              </Box>
+              </Box.New>
             )}
             {resterendePerioder.length > 0 && (
-              <Box marginBlock="8 0">
+              <Box.New marginBlock="8 0">
                 <Alert size="small" variant="info">
                   <LabelledContent
                     label="Resterende perioder har søkeren ikke omsorgen for barnet:"
@@ -233,7 +246,7 @@ const VurderingAvOmsorgsperioderForm = ({
                     ))}
                   />
                 </Alert>
-              </Box>
+              </Box.New>
             )}
           </FormWithButtons>
         </FormProvider>

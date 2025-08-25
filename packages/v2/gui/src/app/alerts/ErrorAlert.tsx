@@ -1,4 +1,4 @@
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
 import { Alert, BodyLong, Heading } from '@navikt/ds-react';
 import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';

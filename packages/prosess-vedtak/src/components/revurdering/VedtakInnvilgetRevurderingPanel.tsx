@@ -7,10 +7,10 @@ import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import {
-  AvslagsårsakPrPeriodeDto,
-  BehandlingsresultatDto,
-  TilbakekrevingValgDto,
-} from '@navikt/k9-sak-typescript-client';
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';

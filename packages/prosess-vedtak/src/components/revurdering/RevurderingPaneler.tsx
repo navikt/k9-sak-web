@@ -6,10 +6,10 @@ import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { HGrid } from '@navikt/ds-react';
 import {
-  AvslagsårsakPrPeriodeDto,
-  TilbakekrevingValgDto,
-  VilkårMedPerioderDto,
-} from '@navikt/k9-sak-typescript-client';
+  type k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  type folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikState } from 'formik';
 import { BeregningResultat } from '../../types/BeregningResultat';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
@@ -54,7 +54,7 @@ const RevurderingPaneler = ({
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
   return (
-    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
+    <HGrid gap="space-4" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
       <div>
         {isInnvilget(behandlingresultat.type) && (
           <VedtakInnvilgetRevurderingPanel

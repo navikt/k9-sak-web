@@ -7,7 +7,7 @@ import { Behandling, Fagsak, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
-import { BehandlingDtoSakstype } from '@navikt/ung-sak-typescript-client';
+import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
@@ -31,6 +31,7 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
   lagreOverstyringUttak?: (params: any) => void;
   erOverstyrer?: boolean;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 const ProsessStegPanel = ({
@@ -45,7 +46,7 @@ const ProsessStegPanel = ({
   lagreOverstyrteAksjonspunkter,
   useMultipleRestApi,
   featureToggles,
-  lagreOverstyringUttak,
+  hentBehandling,
   erOverstyrer = false,
 }: OwnProps) => {
   const erHenlagtOgVedtakStegValgt =
@@ -111,7 +112,7 @@ const ProsessStegPanel = ({
           aksjonspunkter={valgtProsessSteg.getAksjonspunkter()}
           isReadOnly={valgtProsessSteg.getErReadOnly()}
           visAksjonspunktMarkering={delPaneler.length === 1}
-          noBorder={fagsak?.sakstype === BehandlingDtoSakstype.UNGDOMSYTELSE}
+          noBorder={fagsak?.sakstype === FagsakYtelseType.UNGDOMSYTELSE}
         >
           {delPaneler.length === 1 && (
             <FadingPanel>
@@ -125,7 +126,7 @@ const ProsessStegPanel = ({
                     formData,
                     setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
-                    lagreOverstyringUttak,
+                    hentBehandling,
                     erOverstyrer,
                     ...delPaneler[0].getKomponentData(),
                     ...data,

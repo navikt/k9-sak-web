@@ -13,7 +13,7 @@
 }
 
 .editButton {
-  :global(.navds-label) {
+  :global(.aksel-label) {
     font-size: 0.875rem;
     text-decoration: underline;
   }

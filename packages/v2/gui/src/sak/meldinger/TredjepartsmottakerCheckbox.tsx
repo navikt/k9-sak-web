@@ -1,5 +1,5 @@
-import { BodyShort, Checkbox, HStack, Link, Spacer } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
+import { BodyShort, Checkbox, HStack, Link, Spacer } from '@navikt/ds-react';
 
 export interface TredjepartsmottakerCheckboxProps {
   readonly checked: boolean;
@@ -8,7 +8,7 @@ export interface TredjepartsmottakerCheckboxProps {
 }
 
 export const TredjepartsmottakerCheckbox = ({ checked, onChange, disabled }: TredjepartsmottakerCheckboxProps) => (
-  <HStack gap="1">
+  <HStack gap="space-4">
     <Checkbox checked={checked} onChange={() => onChange(!checked)} size="small" disabled={disabled}>
       Send til tredjepart
     </Checkbox>

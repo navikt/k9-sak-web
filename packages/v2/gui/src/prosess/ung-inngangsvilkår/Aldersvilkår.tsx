@@ -1,4 +1,7 @@
-import { VilkårPeriodeDtoVilkarStatus, type VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/generated';
+import {
+  ung_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
+  type ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Detail, Heading, HStack, VStack } from '@navikt/ds-react';
@@ -17,31 +20,31 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
 
   return (
     <VilkårComponent>
-      <HStack gap="4">
+      <HStack gap="space-16">
         {vilkårErOppfylt ? (
           <CheckmarkCircleFillIcon
             title="Vilkåret er oppfylt"
             fontSize="1.75rem"
-            style={{ color: 'var(--a-surface-success)' }}
+            style={{ color: 'var(--ax-bg-success-strong)' }}
           />
         ) : (
           <XMarkOctagonFillIcon
             title="Vilkåret er ikke oppfylt"
             fontSize="1.75rem"
-            style={{ color: 'var(--a-surface-danger)' }}
+            style={{ color: 'var(--ax-bg-danger-strong)' }}
           />
         )}
-        <VStack gap="2">
-          <HStack gap="4" align="baseline">
+        <VStack gap="space-8">
+          <HStack gap="space-16" align="baseline">
             <Heading size="small" level="2">
               Alder
             </Heading>
             {vilkår?.lovReferanse && (
-              <Box>
+              <Box.New>
                 <Detail className={styles.lovreferanse}>
-                  <Lovreferanse>{vilkår.lovReferanse}</Lovreferanse>
+                  <Lovreferanse isUng>{vilkår.lovReferanse}</Lovreferanse>
                 </Detail>
-              </Box>
+              </Box.New>
             )}
           </HStack>
           {fomDatoAldersvilkår && tomDatoAldersvilkår && (

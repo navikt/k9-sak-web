@@ -1,4 +1,7 @@
-import { BehandlingDtoBehandlingResultatType, BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
@@ -92,7 +95,7 @@ const BehandlingSelected = ({
       <div className={styles.infoContainer}>
         <div>
           {søknadsperioder?.length > 0 && (
-            <HStack gap="2" align={'center'}>
+            <HStack gap="space-8" align={'center'}>
               <CalendarIcon title="Kalender" fontSize="1.5rem" />
               <BodyShort size="small">
                 {getFormattedSøknadserioder(
@@ -102,7 +105,7 @@ const BehandlingSelected = ({
               </BodyShort>
             </HStack>
           )}
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">
               {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}

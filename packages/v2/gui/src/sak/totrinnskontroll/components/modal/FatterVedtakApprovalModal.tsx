@@ -4,10 +4,9 @@ import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHje
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import {
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoStatus,
-  BehandlingsresultatDtoType,
-} from '@navikt/k9-sak-typescript-client';
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
 
@@ -38,7 +37,7 @@ const getInfoTextCode = (
     return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT) {
+  if (behandlingsresultat?.type === BehandlingsresultatType.AVSLÅTT) {
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
@@ -211,7 +210,7 @@ const FatterVedtakApprovalModal = ({
   erKlageWithKA,
 }: OwnProps) => {
   const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatDtoType.OPPHØR;
+    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatType.OPPHØR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
@@ -236,12 +235,12 @@ const FatterVedtakApprovalModal = ({
   return (
     <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
       <Modal.Body>
-        <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <CheckmarkCircleFillIcon
               title={altImgText}
               fontSize={30}
-              style={{ color: 'var(--a-surface-success)', marginTop: '6px' }}
+              style={{ color: 'var(--ax-bg-success-strong)', marginTop: '6px' }}
             />
             <div className={styles.divider} />
           </div>

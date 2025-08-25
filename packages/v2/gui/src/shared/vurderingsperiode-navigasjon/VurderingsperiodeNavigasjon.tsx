@@ -1,35 +1,34 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Heading } from '@navikt/ds-react';
-import { PeriodeRad } from './PeriodeRad';
-import type { Period } from '@navikt/ft-utils';
 import {
-  type InstitusjonVurderingDtoResultat,
-  OpplæringVurderingDtoResultat,
-  type SykdomVurderingOversiktElementResultat,
-  InstitusjonVurderingDtoResultat as instEnumObject,
-  SykdomVurderingOversiktElementResultat as sykdomEnumObject,
-  OpplæringVurderingDtoResultat as opplæringEnumObject,
-  ReisetidPeriodeVurderingDtoResultat,
-  ReisetidPeriodeVurderingDtoResultat as reisetidEnumObject,
-} from '@k9-sak-web/backend/k9sak/generated';
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
+  type k9_kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
+  k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Box, Heading } from '@navikt/ds-react';
+import type { Period } from '@navikt/ft-utils';
+import React, { useEffect, useMemo, useState } from 'react';
+import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat
   | SykdomVurderingOversiktElementResultat
   | OpplæringVurderingDtoResultat
-  | ReisetidPeriodeVurderingDtoResultat;
+  | ReisetidResultat;
 
 type ResultatKeys =
   | keyof typeof instEnumObject
   | keyof typeof sykdomEnumObject
-  | keyof typeof opplæringEnumObject
+  | keyof typeof OpplæringVurderingDtoResultat
   | keyof typeof reisetidEnumObject;
 
 export const Resultat = {
   ...instEnumObject,
   ...sykdomEnumObject,
-  ...opplæringEnumObject,
+  ...OpplæringVurderingDtoResultat,
   ...reisetidEnumObject,
 } satisfies Record<ResultatKeys, ResultatType>;
 
@@ -45,8 +44,26 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   onPeriodeClick: (periode: T | null) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
+  title?: string;
+  nyesteFørst?: boolean;
 }
+const sortNyestFørst = (a: Vurderingselement, b: Vurderingselement) => {
+  const periodeA = a.perioder[0]?.fom;
+  const periodeB = b.perioder[0]?.fom;
+  if (periodeA && periodeB) {
+    return new Date(periodeB).getTime() - new Date(periodeA).getTime();
+  }
+  return 0;
+};
 
+const sortEldestFørst = (a: Vurderingselement, b: Vurderingselement) => {
+  const periodeA = a.perioder[0]?.fom;
+  const periodeB = b.perioder[0]?.fom;
+  if (periodeA && periodeB) {
+    return new Date(periodeA).getTime() - new Date(periodeB).getTime();
+  }
+  return 0;
+};
 /**
  * Navigasjon for perioder som må vurderes og er vurdert
  */
@@ -56,16 +73,11 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   onPeriodeClick,
   customPeriodeRad,
   customPeriodeLabel,
+  title = 'Alle perioder',
+  nyesteFørst = true,
 }: VurderingslisteProps<T>) => {
   // nyeste først
-  const sortedPerioder = perioder.sort((a, b) => {
-    const periodeA = a.perioder[0]?.fom;
-    const periodeB = b.perioder[0]?.fom;
-    if (periodeA && periodeB) {
-      return new Date(periodeB).getTime() - new Date(periodeA).getTime();
-    }
-    return 0;
-  });
+  const sortedPerioder = perioder.sort(nyesteFørst ? sortNyestFørst : sortEldestFørst);
   const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
   const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
   const allePerioder = useMemo(
@@ -107,9 +119,9 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   };
 
   return (
-    <Box className="min-w-[400px]">
+    <Box.New className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
-        Alle perioder
+        {title}
       </Heading>
 
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
@@ -137,7 +149,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </ul>
         </>
       )}
-    </Box>
+    </Box.New>
   );
 };
 

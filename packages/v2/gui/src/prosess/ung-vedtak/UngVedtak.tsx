@@ -1,11 +1,11 @@
 import {
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoStatus,
-  type AksjonspunktDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
+  ung_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
-import { CheckboxField, Form } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -40,7 +40,8 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
-  const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
+  const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
+  const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,16 +77,16 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box marginBlock="4">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
+      <Box.New marginBlock="4">
         <HStack justify="space-between">
-          <VStack gap="4">
+          <VStack gap="space-16">
             <div>
               <Label size="small" as="p">
                 Resultat
               </Label>
               <BodyShort size="small">
-                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er opphørt'}
+                {behandlingErInnvilget ? 'Ungdomsprogramytelse er innvilget' : 'Ungdomsprogramytelse er opphørt'}
               </BodyShort>
             </div>
             {behandlingErAvslått && (
@@ -114,7 +115,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
             {harAksjonspunkt && !readOnly && (
               <div>
                 <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
-                  Fatt vedtak
+                  {harAksjonspunktMedTotrinnsbehandling ? 'Send til beslutter' : 'Fatt vedtak'}
                 </Button>
               </div>
             )}
@@ -124,14 +125,16 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
               <Fieldset legend="Valg for brev" size="small">
                 <div>
                   {vedtaksbrevValg?.kanOverstyreRediger && (
-                    <CheckboxField
+                    <RhfCheckbox
+                      control={formMethods.control}
                       name="redigerAutomatiskBrev"
                       label="Rediger automatisk brev"
                       disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
                     />
                   )}
                   {vedtaksbrevValg?.kanOverstyreHindre && (
-                    <CheckboxField
+                    <RhfCheckbox
+                      control={formMethods.control}
                       name="hindreUtsendingAvBrev"
                       label="Hindre utsending av brev"
                       disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
@@ -142,7 +145,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
             </div>
           )}
         </HStack>
-      </Box>
-    </Form>
+      </Box.New>
+    </RhfForm>
   );
 };

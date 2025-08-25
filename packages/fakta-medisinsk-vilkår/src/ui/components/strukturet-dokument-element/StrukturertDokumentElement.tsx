@@ -33,7 +33,7 @@ const StrukturertDokumentElement = ({
       <CheckmarkCircleFillIcon
         title="Dokumentet er ferdig håndtert"
         fontSize={24}
-        style={{ color: 'var(--a-surface-success)' }}
+        style={{ color: 'var(--ax-bg-success-strong)' }}
       />
       <div className={styles.strukturertDokumentElement__texts}>
         <p className={styles.strukturertDokumentElement__texts__type}>

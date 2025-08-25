@@ -22,7 +22,7 @@ const OkAvbrytModal = ({ headerText, okButtonText = 'OK', showModal, cancel, sub
       </Modal.Header>
     )}
     <Modal.Body>
-      <HStack gap="2">
+      <HStack gap="space-8">
         <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus>
           {okButtonText}
         </Button>

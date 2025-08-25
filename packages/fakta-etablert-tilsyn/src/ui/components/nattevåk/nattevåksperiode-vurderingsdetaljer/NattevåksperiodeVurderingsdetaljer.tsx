@@ -1,13 +1,15 @@
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Box, Button } from '@navikt/ds-react';
+import { useContext } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
+import ContainerContext from '../../../context/ContainerContext';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
-import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
 import styles from './nattevåksperiodeVurderingsdetaljer.module.css';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 
 interface NattevåksperiodeVurderingsdetaljerProps {
   nattevåksperiode: Vurderingsperiode;
@@ -20,6 +22,7 @@ const NattevåksperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: NattevåksperiodeVurderingsdetaljerProps) => {
+  const { readOnly = false } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = nattevåksperiode;
   return (
     <DetailView
@@ -31,29 +34,30 @@ const NattevåksperiodeVurderingsdetaljer = ({
               Rediger vurdering
             </Button>
           )}
+          readOnly={readOnly}
         />
       )}
     >
-      <Box marginBlock="6 0">
+      <Box.New marginBlock="6 0">
         <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
-      </Box>
-      <Box marginBlock="8 0">
+      </Box.New>
+      <Box.New marginBlock="8 0">
         <LabelledContent
           label="Vurdering av om det er behov for nattevåk"
           content={<span className="whitespace-pre-wrap">{nattevåksperiode.begrunnelse}</span>}
           indentContent
         />
         <VurdertAv ident={opprettetAv} date={opprettetTidspunkt} />
-      </Box>
-      <Box marginBlock="8 0">
+      </Box.New>
+      <Box.New marginBlock="8 0">
         <LabelledContent
           label="Er det behov for nattevåk?"
           content={nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}
         />
-      </Box>
-      <Box marginBlock="8 0">
+      </Box.New>
+      <Box.New marginBlock="8 0">
         <LabelledContent label="Perioder vurdert" content={nattevåksperiode.periode.prettifyPeriod()} />
-      </Box>
+      </Box.New>
     </DetailView>
   );
 };

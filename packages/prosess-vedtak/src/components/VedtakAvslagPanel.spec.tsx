@@ -1,7 +1,10 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingDtoBehandlingResultatType, VilkårPeriodeDtoVilkarStatus } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { screen } from '@testing-library/react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -20,7 +23,7 @@ describe('<VedtakAvslagPanel>', () => {
       relevanteInnvilgetMerknader: [],
       perioder: [
         {
-          vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT,
+          vilkarStatus: VilkårUtfall.IKKE_OPPFYLT,
           periode: { fom: '', tom: '' },
         },
       ],
@@ -29,7 +32,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   const behandlingsresultat = {
     id: 1,
-    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
+    type: BehandlingResultatType.IKKE_FASTSATT,
   };
 
   it('skal rendre avslagspanel for pleiepenger', () => {

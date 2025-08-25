@@ -5,7 +5,7 @@ import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/f
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
@@ -17,22 +17,23 @@ export type PeriodeMedId = BeregningsresultatPeriodeDto & { id: number };
 const parseDateString = (dateString: string) => initializeDate(dateString, ISO_DATE_FORMAT).toDate();
 
 const getOptions = (nyePerioder: PeriodeMedId[]) => {
-  const firstPeriod = nyePerioder[0];
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
+  const FIVE_YEARS_IN_MS = 1000 * 60 * 60 * 24 * 365 * 5;
+  const ONE_MONTH_IN_MS = 1000 * 60 * 60 * 24 * 30;
 
   return {
-    end: moment(lastPeriod?.tom).add(2, 'days').toDate(),
+    end: moment(lastPeriod?.tom).add(1, 'days').toDate(),
     locale: moment.locale('nb'),
     margin: { item: 10 },
     moment,
     orientation: { axis: 'top' },
     showCurrentTime: false,
     stack: false,
-    start: moment(firstPeriod?.fom).subtract(1, 'days').toDate(),
+    start: moment(lastPeriod?.fom).subtract(1, 'year').toDate(),
     tooltip: { followMouse: true },
     width: '100%',
-    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-    zoomMin: 1000 * 60 * 60 * 24 * 30,
+    zoomMax: FIVE_YEARS_IN_MS,
+    zoomMin: ONE_MONTH_IN_MS,
   };
 };
 

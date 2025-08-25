@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router';
 
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
@@ -15,6 +15,7 @@ import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
 import { AxiosError } from 'axios';
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
+import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
@@ -75,6 +76,7 @@ init({
   },
 });
 
+configureK9SakClient();
 configureK9KlageClient();
 
 const store = configureStore();

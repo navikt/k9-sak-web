@@ -1,7 +1,7 @@
 import { Component, type ReactNode, type ErrorInfo } from 'react';
 import { captureException, withScope } from '@sentry/browser';
 import ErrorPage from './ErrorPage.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
 import UnauthorizedPage from './UnauthorizedPage.js';
 import ForbiddenPage from './ForbiddenPage.js';
 import NotFoundPage from './NotFoundPage.js';

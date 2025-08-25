@@ -2,14 +2,14 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
-  AksjonspunktDtoAksjonspunktType,
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  AksjonspunktDtoVenteårsak,
-  BehandlingDtoBehandlingResultatType,
-} from '@navikt/k9-sak-typescript-client';
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent } from '@storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const behandling = {
@@ -20,7 +20,7 @@ const behandling = {
   språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
-    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
+    type: BehandlingResultatType.IKKE_FASTSATT,
   },
   behandlingPåVent: false,
   behandlingHenlagt: false,
@@ -39,19 +39,19 @@ const meta: Meta<typeof VedtakProsessIndex> = {
 export default meta;
 
 const aksjonspunkt5085 = {
-  aksjonspunktType: AksjonspunktDtoAksjonspunktType.MANUELL,
-  begrunnelse: null,
-  besluttersBegrunnelse: null,
-  definisjon: AksjonspunktDtoDefinisjon.SJEKK_TILBAKEKREVING,
+  aksjonspunktType: AksjonspunktType.MANUELL,
+  begrunnelse: undefined,
+  besluttersBegrunnelse: undefined,
+  definisjon: AksjonspunktDefinisjon.SJEKK_TILBAKEKREVING,
   erAktivt: true,
-  fristTid: null,
+  fristTid: undefined,
   kanLoses: true,
-  status: AksjonspunktDtoStatus.OPPRETTET,
+  status: AksjonspunktStatus.OPPRETTET,
   toTrinnsBehandling: false,
-  toTrinnsBehandlingGodkjent: null,
-  vilkarType: null,
-  vurderPaNyttArsaker: null,
-  AksjonspunktDtoVenteårsak: AksjonspunktDtoVenteårsak.UDEFINERT,
+  toTrinnsBehandlingGodkjent: undefined,
+  vilkarType: undefined,
+  vurderPaNyttArsaker: undefined,
+  venteårsak: Venteårsak.UDEFINERT,
 };
 
 export const visSjekkTilbakekreving: StoryObj<typeof meta> = {

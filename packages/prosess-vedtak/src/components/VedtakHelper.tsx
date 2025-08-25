@@ -1,6 +1,6 @@
 import {
-  BehandlingDtoType as KlageBehandlingDtoType,
-  BehandlingDtoBehandlingResultatType as klageBehandlingsresultat,
+  k9_klage_kodeverk_behandling_BehandlingType as BehandlingType,
+  k9_klage_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
@@ -8,29 +8,26 @@ import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import {
-  AvslagsårsakPrPeriodeDto,
-  BeregningsgrunnlagPeriodeDto,
-  TilbakekrevingValgDto,
-  TilbakekrevingValgDtoVidereBehandling,
-} from '@navikt/k9-sak-typescript-client';
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
 const erTilbakekrevingType = (type: string | undefined | { kode: string }) => {
   if (typeof type === 'string') {
-    return KlageBehandlingDtoType.TILBAKEKREVING === type || KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type;
+    return BehandlingType.TILBAKEKREVING === type || BehandlingType.REVURDERING_TILBAKEKREVING === type;
   }
-  return (
-    KlageBehandlingDtoType.TILBAKEKREVING === type?.kode ||
-    KlageBehandlingDtoType.REVURDERING_TILBAKEKREVING === type?.kode
-  );
+  return BehandlingType.TILBAKEKREVING === type?.kode || BehandlingType.REVURDERING_TILBAKEKREVING === type?.kode;
 };
 
 const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
   simuleringResultat: VedtakSimuleringResultat,
 ) =>
-  tilbakekrevingKode === TilbakekrevingValgDtoVidereBehandling.OPPRETT_TILBAKEKREVING &&
+  tilbakekrevingKode === TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING &&
   (simuleringResultat.simuleringResultat?.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = (props: {
@@ -52,10 +49,10 @@ export const findTilbakekrevingText = (props: {
 };
 
 export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_MEDHOLD) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
@@ -83,10 +80,10 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
 };
 
 export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_MEDHOLD) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_MEDHOLD) {
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
@@ -114,10 +111,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
 };
 
 export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: FagsakYtelsesType) => {
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_OPPHEVET) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }
-  if (behandlingResultatTypeKode === klageBehandlingsresultat.KLAGE_AVVIST) {
+  if (behandlingResultatTypeKode === BehandlingResultatType.KLAGE_AVVIST) {
     return 'VedtakForm.ResultatKlageAvvist';
   }
 

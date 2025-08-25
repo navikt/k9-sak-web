@@ -1,13 +1,13 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  BehandlingÅrsakDtoBehandlingArsakType,
-  BehandlingDtoSakstype as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect, userEvent } from 'storybook/test';
 import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 export default {

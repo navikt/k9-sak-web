@@ -1,26 +1,24 @@
 import type {
   GetSatsOgUtbetalingPerioderResponse,
   GetUngdomsprogramInformasjonResponse,
-  KontrollerInntektDto,
-  UngSakClient,
-} from '@k9-sak-web/backend/ungsak/generated';
+  ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import {
+  kontroll_hentKontrollerInntekt,
+  ung_getSatsOgUtbetalingPerioder,
+  ung_getUngdomsprogramInformasjon,
+} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 
 export default class UngBeregningBackendClient {
-  #ungsak: UngSakClient;
-
-  constructor(ungsakClient: UngSakClient) {
-    this.#ungsak = ungsakClient;
-  }
-
   async getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<GetSatsOgUtbetalingPerioderResponse> {
-    return this.#ungsak.ung.getSatsOgUtbetalingPerioder(behandlingUuid);
+    return (await ung_getSatsOgUtbetalingPerioder({ query: { behandlingUuid } })).data;
   }
 
   async getKontrollerInntekt(behandlingUuid: string): Promise<KontrollerInntektDto> {
-    return this.#ungsak.kontroll.hentKontrollerInntekt(behandlingUuid);
+    return (await kontroll_hentKontrollerInntekt({ query: { behandlingUuid } })).data;
   }
 
   async getUngdomsprogramInformasjon(behandlingUuid: string): Promise<GetUngdomsprogramInformasjonResponse> {
-    return this.#ungsak.ung.getUngdomsprogramInformasjon(behandlingUuid);
+    return (await ung_getUngdomsprogramInformasjon({ query: { behandlingUuid } })).data;
   }
 }

@@ -1,6 +1,6 @@
 import { composeStories } from '@storybook/react';
-import { screen, userEvent } from '@storybook/test';
 import { act, render } from '@testing-library/react';
+import { screen, userEvent } from 'storybook/test';
 import * as stories from './MedlemskapFaktaIndex.stories';
 
 describe('MedlemskapFaktaIndex', () => {

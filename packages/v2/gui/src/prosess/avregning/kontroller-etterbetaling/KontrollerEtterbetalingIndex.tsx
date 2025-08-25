@@ -1,7 +1,8 @@
-import { useContext } from 'react';
-import type { AksjonspunktDto, BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { K9SakClientContext } from '../../../app/K9SakClientContext';
 import BehandlingAvregningBackendClient from '../AvregningBackendClient';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 
@@ -12,8 +13,7 @@ interface Props {
 }
 
 const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Props) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const behandlingAvregningBackendClient = new BehandlingAvregningBackendClient(k9SakClient);
+  const behandlingAvregningBackendClient = new BehandlingAvregningBackendClient();
 
   /*
    * Kopierer props for å unngå at konverteringen av kodeverk endrer verdiene i props.

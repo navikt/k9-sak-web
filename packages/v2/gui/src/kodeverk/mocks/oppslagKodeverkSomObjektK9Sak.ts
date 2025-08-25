@@ -1,4 +1,4 @@
-import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 // Data i denne konstant er ein direkte kopi av response body frå /k9/sak/api/kodeverk/alle/objekt, med X-Json-Serializer-Option: openapi-compat.
 // Brukast for å kunne gjere kodeverk oppslag i test/stories.
@@ -162,7 +162,7 @@ export const oppslagKodeverkSomObjektK9Sak = {
     {
       kode: 'UNG',
       kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Ungdomsytelse',
+      navn: 'Ungdomsprogramytelse',
       kilde: 'UNG',
     },
   ],
@@ -2804,17 +2804,12 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kilde: 'VIRKNINGSDATO_UTTAK_NYE_REGLER',
     },
     {
-      kode: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+      kode: 'VURDERT_OPPLÆRING_RESULTAT',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'Opplæring dokumentert',
-      kilde: 'VURDERT_OPPLÆRING_DOKUMENTERT',
+      navn: 'Vurdert opplæring',
+      kilde: 'VURDERT_OPPLÆRING_RESULTAT',
     },
-    {
-      kode: 'VURDERT_OPPLÆRING_NØDVENDIG',
-      kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
-      navn: 'Opplæring nødvendig',
-      kilde: 'VURDERT_OPPLÆRING_NØDVENDIG',
-    },
+
     {
       kode: 'VURDER_ETTERLØNN_SLUTTPAKKE',
       kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE',
@@ -8653,6 +8648,14 @@ export const oppslagKodeverkSomObjektK9Sak = {
       kodeverk: 'ÅRSAK_TIL_VURDERING',
       navn: 'Utsatt behandling',
       kilde: 'UTSATT_BEHANDLING',
+    },
+  ],
+  behandlingMerknadTyper: [
+    {
+      kode: '-',
+      kodeverk: 'BEHANDLING_MERKNAD_TYPE',
+      navn: 'Ikke definert',
+      kilde: 'HASTESAK',
     },
   ],
   avslagårsakerPrVilkårTypeKode: {

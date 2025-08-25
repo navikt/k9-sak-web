@@ -1,4 +1,4 @@
-import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
@@ -15,7 +15,7 @@ interface OwnProps {
     årsakKode: string;
     begrunnelse: string;
   }) => Promise<void>;
-  forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
+  forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => Promise<void>;
   ytelseType: string;
   behandlingType: string;
   behandlingResultatTyper: string[];

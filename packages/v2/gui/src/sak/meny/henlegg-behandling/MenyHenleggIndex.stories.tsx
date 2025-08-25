@@ -1,13 +1,13 @@
-import { BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { k9_klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  BehandlingsresultatDtoType as behandlingResultatTypeK9Sak,
-  BehandlingDtoSakstype as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Sak,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../../storybook/asyncAction';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
 
@@ -23,7 +23,7 @@ export const HenleggFørstegangssøknadPleiepenger: StoryObj<typeof MenyHenleggI
     behandlingId: 1,
     behandlingVersjon: 2,
     henleggBehandling: asyncAction('henlegg behandling'),
-    forhandsvisHenleggBehandling: action('forhåndsvis henlegg behandling'),
+    forhandsvisHenleggBehandling: asyncAction('forhåndsvis henlegg behandling'),
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     behandlingType: BehandlingTypeK9SAK.FØRSTEGANGSSØKNAD,
     behandlingResultatTyper: [

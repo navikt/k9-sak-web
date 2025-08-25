@@ -1,4 +1,7 @@
-import { type BehandlingDtoType as typeUnion, BehandlingDtoType as enumObj } from '../../generated';
+import {
+  type k9_kodeverk_behandling_BehandlingType as typeUnion,
+  k9_kodeverk_behandling_BehandlingType as enumObj,
+} from '../../generated/types.js';
 import type { Kodeverk } from '../../../shared/Kodeverk.js';
 
 export type BehandlingType = typeUnion;

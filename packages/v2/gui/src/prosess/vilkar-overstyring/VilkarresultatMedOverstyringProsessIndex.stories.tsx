@@ -1,20 +1,20 @@
 import {
-  BehandlingDtoStatus as behandlingStatus,
-  VilkårPeriodeDtoMerknad as merknad,
-  FagsakDtoSakstype as sakstype,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as merknad,
+  k9_kodeverk_behandling_FagsakYtelseType as sakstype,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { action } from '@storybook/addon-actions';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
 import React from 'react';
+import { action } from 'storybook/actions';
+import { expect } from 'storybook/test';
 import VilkarresultatMedOverstyringProsessIndex, {
   type VilkarresultatMedOverstyringProsessIndexProps,
 } from './VilkarresultatMedOverstyringProsessIndex';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 
 const vilkarOpptjening = [
   {

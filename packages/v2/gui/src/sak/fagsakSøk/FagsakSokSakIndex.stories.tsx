@@ -1,13 +1,13 @@
 import {
-  BehandlingAksjonspunktDtoBehandlingType as behandlingType,
-  BehandlingAksjonspunktDtoFagsakStatus as fagsakStatus,
-  MatchFagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_behandling_BehandlingType as behandlingType,
+  k9_kodeverk_behandling_FagsakStatus as fagsakStatus,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect } from 'storybook/test';
 import FagsakSøkSakIndexV2 from './FagsakSøkSakIndex';
 
 const fagsaker = [

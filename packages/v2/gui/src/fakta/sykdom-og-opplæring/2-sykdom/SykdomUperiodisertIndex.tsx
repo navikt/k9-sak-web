@@ -1,26 +1,26 @@
 import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
-import { Alert, Button } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomUperiodisertFormContainer from './SykdomUperiodisertFormContainer';
+import SykdomUperiodisertContainer from './SykdomUperiodisertContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { Period } from '@navikt/ft-utils';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
 import {
-  AksjonspunktDtoStatus,
-  type LangvarigSykdomVurderingDto,
-  type LangvarigSykdomVurderingDtoAvslagsårsak,
-  type SaksnummerDto,
-  type ValgtLangvarigSykdomVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+  type k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  type k9_sak_kontrakt_behandling_SaksnummerDto as SaksnummerDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
+import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
@@ -37,7 +37,7 @@ interface SykdomVurderingselement extends Vurderingselement {
   saksnummer: SaksnummerDto;
   vurdertAv: string;
   vurdertTidspunkt: string;
-  avslagsårsak?: LangvarigSykdomVurderingDtoAvslagsårsak;
+  avslagsårsak?: Avslagsårsak;
 }
 
 const defaultVurdering = {
@@ -47,8 +47,8 @@ const defaultVurdering = {
 } as UperiodisertSykdom;
 
 const SykdomUperiodisertIndex = () => {
-  const { behandlingUuid, readOnly, løsAksjonspunkt9301, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9301 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+  const { behandlingUuid, readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
+  const aksjonspunkt9301 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
     useLangvarigSykVurderingerFagsak(behandlingUuid);
@@ -93,10 +93,14 @@ const SykdomUperiodisertIndex = () => {
   return (
     <>
       <SykdomUperiodisertContext.Provider value={{ setNyVurdering }}>
-        <Warning vurderinger={langvarigSykVurderinger} vurderingBruktIAksjonspunkt={vurderingBruktIAksjonspunkt} />
+        <SykdomUperiodisertAlert
+          vurderinger={langvarigSykVurderinger}
+          vurderingBruktIAksjonspunkt={vurderingBruktIAksjonspunkt}
+        />
         <NavigationWithDetailView
           navigationSection={() => (
             <Vurderingsnavigasjon<SykdomVurderingselement>
+              title="Alle vurderinger"
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
@@ -105,18 +109,9 @@ const SykdomUperiodisertIndex = () => {
                 <NavigasjonsmenyRad
                   periode={periode}
                   active={periode.id === valgtPeriode?.id}
-                  kanBenyttes={
-                    aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.OPPRETTET ||
-                    (aksjonspunkt9301?.status.kode === AksjonspunktDtoStatus.UTFØRT &&
-                      periode.id !== vurderingBruktIAksjonspunkt?.vurderingUuid)
-                  }
-                  datoOnClick={() => onPeriodeClick(periode)}
-                  benyttOnClick={() =>
-                    løsAksjonspunkt9301({
-                      langvarigsykdomsvurderingUuid: periode.uuid,
-                      begrunnelse: periode.begrunnelse,
-                    })
-                  }
+                  erBruktIAksjonspunkt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
+                  erFraTidligereBehandling={periode.behandlingUuid !== behandlingUuid}
+                  onClick={() => onPeriodeClick(periode)}
                 />
               )}
             />
@@ -132,47 +127,16 @@ const SykdomUperiodisertIndex = () => {
           }
           detailSection={() => {
             if (nyVurdering) {
-              return <SykdomUperiodisertFormContainer vurdering={defaultVurdering} />;
+              return <SykdomUperiodisertContainer vurdering={defaultVurdering} />;
             }
             if (valgtVurdering) {
-              return <SykdomUperiodisertFormContainer vurdering={valgtVurdering} />;
+              return <SykdomUperiodisertContainer vurdering={valgtVurdering} />;
             }
             return null;
           }}
         />
       </SykdomUperiodisertContext.Provider>
     </>
-  );
-};
-
-const Warning = ({
-  vurderinger = [],
-  vurderingBruktIAksjonspunkt,
-}: {
-  vurderinger: LangvarigSykdomVurderingDto[] | undefined;
-  vurderingBruktIAksjonspunkt: ValgtLangvarigSykdomVurderingDto | undefined;
-}) => {
-  const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
-
-  const harVurderingFraTidligereBehandling = vurderinger.some(v => v.behandlingUuid !== behandlingUuid);
-  if (vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' || readOnly || !harAksjonspunkt9301) {
-    return null;
-  }
-
-  if (harVurderingFraTidligereBehandling) {
-    return (
-      <Alert className="my-5" variant="warning">
-        Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
-        sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
-      </Alert>
-    );
-  }
-
-  return (
-    <Alert className="my-5" variant="warning">
-      Vurder om barnet har en funksjonshemning eller en langvarig sykdom.
-    </Alert>
   );
 };
 

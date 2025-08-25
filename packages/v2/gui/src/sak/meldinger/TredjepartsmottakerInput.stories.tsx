@@ -3,12 +3,12 @@ import type {
   TredjepartsmottakerOrgnrInputProps,
   TredjepartsmottakerValue,
 } from '@k9-sak-web/gui/sak/meldinger/TredjepartsmottakerInput.js';
-import { Button, VStack } from '@navikt/ds-react';
-import { action } from '@storybook/addon-actions';
-import type { Meta, StoryObj } from '@storybook/react';
-import { useCallback, useState } from 'react';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
+import { Button, VStack } from '@navikt/ds-react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { useCallback, useState } from 'react';
+import { action } from 'storybook/actions';
 import TredjepartsmottakerInput from './TredjepartsmottakerInput.js';
 
 const meta: Meta<typeof TredjepartsmottakerInput> = {
@@ -43,7 +43,7 @@ export const Default: StoryObj<typeof TredjepartsmottakerInput> = {
       setShowError(true);
     }, [value]);
     return (
-      <VStack gap="4">
+      <VStack gap="space-16">
         <TredjepartsmottakerInput {...args} showValidation={showValidation} onChange={onChange} />
         <Button type="button" onClick={onSimulateSubmit}>
           Simulate submit

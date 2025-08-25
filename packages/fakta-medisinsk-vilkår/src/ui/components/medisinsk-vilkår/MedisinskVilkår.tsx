@@ -31,6 +31,7 @@ import AksjonspunktFerdigStripe from '../aksjonspunkt-ferdig-stripe/Aksjonspunkt
 // eslint-disable-next-line max-len
 import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController from '../nye-dokumenter-som-kan-påvirke-eksisterende-vurderinger/NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController';
 import StruktureringAvDokumentasjon from '../strukturering-av-dokumentasjon/StruktureringAvDokumentasjon';
 import UteståendeEndringerMelding from '../utestående-endringer-melding/UteståendeEndringerMelding';
@@ -38,7 +39,6 @@ import VilkarsvurderingAvLivetsSluttfase from '../vilkarsvurdering-av-livets-slu
 import VilkårsvurderingAvTilsynOgPleie from '../vilkårsvurdering-av-tilsyn-og-pleie/VilkårsvurderingAvTilsynOgPleie';
 import VilkårsvurderingAvToOmsorgspersoner from '../vilkårsvurdering-av-to-omsorgspersoner/VilkårsvurderingAvToOmsorgspersoner';
 import VilkårsvurderingLangvarigSykdom from '../vilkårsvurdering-langvarig-sykdom/VilkarsvurderingLangvarigSykdom';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import ActionType from './actionTypes';
 import styles from './medisinskVilkår.module.css';
 import medisinskVilkårReducer from './reducer';
@@ -59,7 +59,7 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
         <div className={styles.medisinskVilkårTabItem__warningIcon}>
           <ExclamationmarkTriangleFillIcon
             fontSize="1.5rem"
-            style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))', fontSize: '1.5rem' }}
+            style={{ color: 'var(--ax-text-warning-decoration)', fontSize: '1.5rem' }}
           />
         </div>
       )}
@@ -90,7 +90,8 @@ const MedisinskVilkår = (): JSX.Element => {
   });
 
   const { isLoading, hasError, activeStep, markedStep, sykdomsstegStatus, nyeDokumenterSomIkkeErVurdert } = state;
-  const { endpoints, httpErrorHandler, visFortsettknapp, fagsakYtelseType } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, visFortsettknapp, fagsakYtelseType, readOnly } =
+    React.useContext(ContainerContext);
 
   const dokumentStegForSakstype = stegForSakstype(fagsakYtelseType).find(stepObj => stepObj.id === StepId.Dokument);
 
@@ -276,12 +277,12 @@ const MedisinskVilkår = (): JSX.Element => {
         </VStack>
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <Box marginBlock="0 4">
+            <Box.New marginBlock="0 4">
               <NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController
                 dokumenter={nyeDokumenterSomIkkeErVurdert}
                 afterEndringerRegistrert={afterEndringerUtifraNyeDokumenterRegistrert}
               />
-            </Box>
+            </Box.New>
           )}
           otherRequirementsAreMet={
             !!(
@@ -291,6 +292,7 @@ const MedisinskVilkår = (): JSX.Element => {
               activeStep !== dokumentStegForSakstype
             )
           }
+          readOnly={readOnly}
         />
 
         <WriteAccessBoundContent
@@ -303,12 +305,14 @@ const MedisinskVilkår = (): JSX.Element => {
               activeStep !== dokumentStegForSakstype
             )
           }
+          readOnly={readOnly}
         />
         <WriteAccessBoundContent
           contentRenderer={() => <UteståendeEndringerMelding />}
           otherRequirementsAreMet={
             kanLøseAksjonspunkt && !!harDataSomIkkeHarBlittTattMedIBehandling && visFortsettknapp === false
           }
+          readOnly={readOnly}
         />
 
         <Tabs

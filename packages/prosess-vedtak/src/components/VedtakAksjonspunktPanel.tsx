@@ -1,7 +1,7 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { HGrid, Heading } from '@navikt/ds-react';
-import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import React from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -40,7 +40,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
 }) => {
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   return (
-    <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
       <div>
         <Heading level="2" size="medium" data-testid="vedtakAksjonspunktPanel">
           {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}

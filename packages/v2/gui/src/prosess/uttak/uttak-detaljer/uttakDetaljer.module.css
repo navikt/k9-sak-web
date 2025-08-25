@@ -1,50 +1,50 @@
 .uttakDetaljer {
-  padding: var(--a-spacing-4);
+  padding: var(--ax-space-16);
 }
 
 .uttakDetaljerGraderingDetaljer {
-  background-color: var(--a-gray-50);
-  padding: var(--a-spacing-5);
-  color: var(--a-text-default);
+  background-color: var(--ax-neutral-100);
+  padding: var(--ax-space-20);
+  color: var(--ax-text-neutral);
   border-radius: 5px;
 }
 
 .uttakDetaljerGraderingDetaljerHighlighted {
-  background-color: var(--a-deepblue-50);
+  background-color: var(--ax-brand-blue-100);
 }
 
 .uttakDetaljerGraderingDetaljerNotHighlighted {
-  padding-top: var(--a-spacing-10);
+  padding-top: var(--ax-space-40);
 }
 
 .uttakDetaljerGraderingDetaljer svg {
-  color: var(--a-lightblue-800);
+  color: var(--ax-border-brand-blue-strong);
   font-size: x-large;
-  margin: 0 var(--a-spacing-1) 0;
+  margin: 0 var(--ax-space-4) 0;
 }
 
 .uttakDetaljerDetailItem {
-  padding: var(--a-spacing-1) 0;
+  padding: var(--ax-space-4) 0;
 }
 
 .uttakDetaljerDetailSum {
-  padding: var(--a-spacing-6) 0 var(--a-spacing-1);
-  border-bottom: 3px solid var(--a-lightblue-700);
+  padding: var(--ax-space-24) 0 var(--ax-space-4);
+  border-bottom: 3px solid var(--ax-text-info-icon);
   display: inline-block;
   vertical-align: middle;
 }
 
 .uttakDetaljerDataQuestionMark svg {
-  height: var(--a-font-size-large);
+  height: var(--ax-font-size-large);
 }
 
 .uttakDetaljerExpandableDetailItem {
-  padding: var(--a-spacing-1) 0;
-  border-bottom: 1px solid var(--a-border-subtle);
+  padding: var(--ax-space-4) 0;
+  border-bottom: 1px solid var(--ax-border-neutral-subtle);
 }
 
 .uttakDetaljerExpandableDetailItemHeader a {
-  color: var(--a-text-default);
+  color: var(--ax-text-neutral);
   text-decoration: none;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .uttakDetaljerNyGradering {
-  margin-top: var(--a-spacing-8);
+  margin-top: var(--ax-space-32);
   display: inline-block;
 }
 
@@ -75,11 +75,11 @@
 }
 
 .uttakDetaljerBeregningFirma {
-  margin: var(--a-spacing-5) 0;
+  margin: var(--ax-space-20) 0;
 }
 
 .uttakDetaljerTaptInntektBeregning {
-  margin: var(--a-spacing-4) 0;
+  margin: var(--ax-space-16) 0;
   display: inline-block;
 }
 
@@ -89,26 +89,26 @@
 }
 
 .uttakDetaljerBeregningStrek {
-  border-bottom: 1px solid var(--a-border-subtle);
-  padding-bottom: var(--a-spacing-1);
+  border-bottom: 1px solid var(--ax-border-neutral-subtle);
+  padding-bottom: var(--ax-space-4);
 }
 
 .uttakDetaljerBeregningSum {
-  padding-top: var(--a-spacing-1);
+  padding-top: var(--ax-space-4);
 }
 
 .uttakDetaljerUtnullet {
   text-decoration: line-through;
-  color: var(--a-gray-500);
+  color: var(--ax-neutral-600);
 }
 
 .uttakDetaljerNyTag {
-  margin-left: var(--a-spacing-1);
+  margin-left: var(--ax-space-4);
   display: inline-block;
 }
 
 .uttakDetaljerDetailtext {
-  color: var(--a-text-subtle);
-  padding-top: var(--a-spacing-3);
+  color: var(--ax-text-neutral-subtle);
+  padding-top: var(--ax-space-12);
   display: inline-block;
 }
