@@ -86,11 +86,11 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   );
 
   const [harAutomatiskValgtPeriode, setHarAutomatiskValgtPeriode] = useState(false);
-
   // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
   useEffect(() => {
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
       onPeriodeClick(null);
+      setHarAutomatiskValgtPeriode(false);
     }
   }, [valgtPeriode, allePerioder, onPeriodeClick]);
 
