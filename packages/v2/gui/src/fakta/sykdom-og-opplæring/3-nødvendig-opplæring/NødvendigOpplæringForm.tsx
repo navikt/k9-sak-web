@@ -119,8 +119,10 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
 };
 
 const onSubmit = (data: NødvendigOpplæringFormFields) => {
-
-  const resultat = data.harLegeerklæring === 'NEI' ? OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT : nødvendigOpplæringTilResultat(data.harNødvendigOpplæring);
+  const resultat =
+    data.harLegeerklæring === 'NEI'
+      ? OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT
+      : nødvendigOpplæringTilResultat(data.harNødvendigOpplæring);
   const perioder = data.perioder.map(periode => ({
     begrunnelse: data.begrunnelse || null,
     resultat: resultat,
