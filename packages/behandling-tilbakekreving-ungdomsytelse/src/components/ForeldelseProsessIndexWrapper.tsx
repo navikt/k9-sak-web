@@ -1,4 +1,4 @@
-import { Aksjonspunkt, Behandling, FagsakPerson, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
+import { FagsakPerson } from '@k9-sak-web/types';
 import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
 import {
   ForeldelseProsessIndex,
@@ -9,16 +9,16 @@ import React, { useState } from 'react';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
 interface ForeldelseProsessIndexWrapperProps {
-  behandling: Behandling;
-  perioderForeldelse: FeilutbetalingPerioderWrapper;
-  kodeverkSamling: unknown;
-  beregnBelop: (params: unknown) => Promise<unknown>;
+  behandling: any;
+  perioderForeldelse: any;
+  kodeverkSamling: any;
+  beregnBelop: (params: any) => Promise<any>;
   alleMerknaderFraBeslutter: {
     [key: string]: {
       notAccepted?: boolean;
     };
   };
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: any[];
   submitCallback: (aksjonspunktData: VurderForeldelseAp[]) => Promise<void>;
   isReadOnly: boolean;
   fagsakPerson: FagsakPerson;
