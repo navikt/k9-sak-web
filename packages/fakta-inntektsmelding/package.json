@@ -10,9 +10,9 @@
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "msw": "2.10.4",
+    "msw": "2.10.5",
     "vite": "^6.3.5",
-    "vite-plugin-node-polyfills": "^0.23.0"
+    "vite-plugin-node-polyfills": "^0.24.0"
   },
   "dependencies": {
     "@navikt/ds-css": "7.28.1",
