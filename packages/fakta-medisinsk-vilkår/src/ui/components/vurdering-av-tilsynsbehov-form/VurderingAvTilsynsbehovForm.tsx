@@ -151,12 +151,14 @@ const VurderingAvTilsynsbehovForm = ({
     return true;
   };
 
-  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER }) ?? [];
+  const perioderSomBlirVurdert: Period[] | undefined = useWatch({
+    control: formMethods.control,
+    name: FieldName.PERIODER,
+  });
   const manglerLegeerklæring: boolean | undefined = useWatch({
     control: formMethods.control,
     name: FieldName.MANGLER_LEGEERKLÆRING,
   });
-
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(p => p.asListOfDays());
     const dagerSomBlirVurdert = (perioderSomBlirVurdert || [])
@@ -173,12 +175,13 @@ const VurderingAvTilsynsbehovForm = ({
   const visLovparagrafForPleietrengendeOver18år = React.useMemo(
     () =>
       harPerioderDerPleietrengendeErOver18år &&
-      perioderSomBlirVurdert.some(periode => {
+      (perioderSomBlirVurdert?.some(periode => {
         if ((periode as AnyType).period) {
           return isSameOrBefore(barnetsAttenårsdag, (periode as AnyType).period.fom);
         }
         return isSameOrBefore(barnetsAttenårsdag, periode.fom);
-      }),
+      }) ??
+        false),
     [barnetsAttenårsdag, harPerioderDerPleietrengendeErOver18år, perioderSomBlirVurdert],
   );
 
