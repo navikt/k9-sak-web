@@ -9,7 +9,7 @@ export interface Periode {
   isBosattAksjonspunktClosed: boolean;
   isPeriodAksjonspunktClosed: boolean;
   lovligOppholdVurdering?: boolean;
-  medlemskapManuellVurderingType: string;
+  medlemskapManuellVurderingType?: string;
   oppholdsrettVurdering?: boolean;
   personopplysninger: Personopplysninger;
   vurderingsdato: string;
