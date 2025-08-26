@@ -1,16 +1,9 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
-import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
-import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
-import MenyNyBehandlingIndex, {
-  getMenytekst as getNyBehandlingMenytekst,
-} from '@fpsak-frontend/sak-meny-ny-behandling';
-import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
-import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
@@ -22,7 +15,6 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
-import { getMenytekst as getMenytekstMarkerBehandling } from '@k9-sak-web/sak-meny-marker-behandling';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -205,36 +197,36 @@ export const BehandlingMenuIndex = ({
     );
   }
 
-  if (featureToggles?.SAK_MENY_V2) {
-    return (
-      <MenySakIndexV2
-        data={[
-          new MenyData(behandlingRettigheter?.behandlingKanGjenopptas, 'Fortsett behandlingen').medModal(lukkModal => (
-            <MenyTaAvVentIndexV2
+  return (
+    <MenySakIndexV2
+      data={[
+        new MenyData(behandlingRettigheter?.behandlingKanGjenopptas, 'Fortsett behandlingen').medModal(lukkModal => (
+          <MenyTaAvVentIndexV2
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            taBehandlingAvVent={resumeBehandling}
+            lukkModal={lukkModal}
+          />
+        )),
+        new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Sett behandlingen på vent').medModal(
+          lukkModal => (
+            <MenySettPaVentIndexV2
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
-              taBehandlingAvVent={resumeBehandling}
+              settBehandlingPaVent={setBehandlingOnHold}
               lukkModal={lukkModal}
+              erTilbakekreving={
+                behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
+                behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
+              }
             />
-          )),
-          new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Sett behandlingen på vent').medModal(
-            lukkModal => (
-              <MenySettPaVentIndexV2
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                settBehandlingPaVent={setBehandlingOnHold}
-                lukkModal={lukkModal}
-                erTilbakekreving={
-                  behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
-                  behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
-                }
-              />
-            ),
           ),
-          new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-            <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
-          )),
-          new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
+        ),
+        new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, 'Marker behandling').medModal(lukkModal => (
+          <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
+        )),
+        new MenyData(behandlingRettigheter?.behandlingKanHenlegges, 'Henlegg behandlingen og avslutt').medModal(
+          lukkModal => (
             <MenyHenleggIndexV2
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
@@ -251,107 +243,10 @@ export const BehandlingMenuIndex = ({
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               hentMottakere={hentMottakere}
             />
-          )),
-          new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, getMenytekst()).medModal(lukkModal => (
-            <MenyEndreBehandlendeEnhetIndexV2
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              behandlendeEnhetId={behandling?.behandlendeEnhetId}
-              behandlendeEnhetNavn={behandling?.behandlendeEnhetNavn}
-              nyBehandlendeEnhet={nyBehandlendeEnhet}
-              behandlendeEnheter={behandlendeEnheter}
-              lukkModal={lukkModal}
-            />
-          )),
-          new MenyData(!sakRettigheter.sakSkalTilInfotrygd, getNyBehandlingMenytekst()).medModal(lukkModal => (
-            <MenyNyBehandlingIndexV2
-              saksnummer={fagsak.saksnummer}
-              behandlingId={behandlingId}
-              behandlingUuid={behandling?.uuid}
-              behandlingVersjon={behandlingVersjon}
-              behandlingType={behandling?.type.kode}
-              uuidForSistLukkede={uuidForSistLukkede}
-              behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
-                behandlingType: b.behandlingType.kode,
-                kanOppretteBehandling: b.kanOppretteBehandling,
-              }))}
-              kanTilbakekrevingOpprettes={{
-                kanBehandlingOpprettes,
-                kanRevurderingOpprettes,
-              }}
-              erTilbakekrevingAktivert={erTilbakekrevingAktivert}
-              behandlingstyper={menyKodeverk.getKodeverkForBehandlingstyper(
-                BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES,
-                kodeverkTyper.BEHANDLING_TYPE,
-              )}
-              tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
-                BehandlingType.TILBAKEKREVING_REVURDERING,
-                kodeverkTyper.BEHANDLING_AARSAK,
-              )}
-              revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(
-                BehandlingType.REVURDERING,
-                kodeverkTyper.BEHANDLING_AARSAK,
-              )}
-              ytelseType={fagsak.sakstype}
-              lagNyBehandling={lagNyBehandling}
-              sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
-              sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
-              lukkModal={lukkModal}
-              aktorId={fagsakPerson.aktørId}
-              gjeldendeVedtakBehandlendeEnhetId={alleBehandlinger.find(b => b.gjeldendeVedtak)?.behandlendeEnhetId}
-            />
-          )),
-        ]}
-      />
-    );
-  }
-
-  return (
-    <MenySakIndex
-      data={[
-        new MenyData(behandlingRettigheter?.behandlingKanGjenopptas, getTaAvVentMenytekst()).medModal(lukkModal => (
-          <MenyTaAvVentIndex
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            taBehandlingAvVent={resumeBehandling}
-            lukkModal={lukkModal}
-          />
-        )),
-        new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, getSettPaVentMenytekst()).medModal(lukkModal => (
-          <MenySettPaVentIndex
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            settBehandlingPaVent={setBehandlingOnHold}
-            ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
-            lukkModal={lukkModal}
-            erTilbakekreving={
-              behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
-              behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
-            }
-          />
-        )),
-        new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-          <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
-        )),
-        new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
-          <MenyHenleggIndex
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            forhandsvisHenleggBehandling={previewHenleggBehandling}
-            henleggBehandling={shelveBehandling}
-            ytelseType={fagsak.sakstype}
-            behandlingType={behandling?.type}
-            behandlingUuid={behandling?.uuid}
-            behandlingResultatTyper={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)}
-            lukkModal={lukkModal}
-            gaaTilSokeside={gaaTilSokeside}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            hentMottakere={hentMottakere}
-          />
-        )),
-        new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, getMenytekst()).medModal(lukkModal => (
-          <MenyEndreBehandlendeEnhetIndex
+          ),
+        ),
+        new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, 'Endre behandlende enhet').medModal(lukkModal => (
+          <MenyEndreBehandlendeEnhetIndexV2
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             behandlendeEnhetId={behandling?.behandlendeEnhetId}
@@ -361,15 +256,18 @@ export const BehandlingMenuIndex = ({
             lukkModal={lukkModal}
           />
         )),
-        new MenyData(!sakRettigheter.sakSkalTilInfotrygd, getNyBehandlingMenytekst()).medModal(lukkModal => (
-          <MenyNyBehandlingIndex
+        new MenyData(!sakRettigheter.sakSkalTilInfotrygd, 'Opprett ny behandling').medModal(lukkModal => (
+          <MenyNyBehandlingIndexV2
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}
             behandlingUuid={behandling?.uuid}
             behandlingVersjon={behandlingVersjon}
-            behandlingType={behandling?.type}
+            behandlingType={behandling?.type.kode}
             uuidForSistLukkede={uuidForSistLukkede}
-            behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes}
+            behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
+              behandlingType: b.behandlingType.kode,
+              kanOppretteBehandling: b.kanOppretteBehandling,
+            }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,
               kanRevurderingOpprettes,
