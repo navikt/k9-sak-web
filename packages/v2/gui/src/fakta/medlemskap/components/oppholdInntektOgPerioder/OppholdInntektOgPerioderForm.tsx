@@ -1,39 +1,48 @@
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { guid } from '@fpsak-frontend/utils';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonDto as PersonDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
+import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { Box, Button } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
+import { guid } from '@navikt/ft-utils';
 import React, { useContext, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from './FormState';
+import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
+import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from '../../types/FormState';
+import type { Medlemskap } from '../../types/Medlemskap';
+import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
+import type { Periode } from '../../types/Periode';
+import type { Søknad } from '../../types/Søknad';
 import GrunnlagForAutomatiskVurdering from './GrunnlagForAutomatiskVurdering';
-import { Medlemskap } from './Medlemskap';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
-import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
-import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
-import { Periode } from './Periode';
-import { Soknad } from './Soknad';
+import OppholdInntektOgPeriodeForm, {
+  buildInitialValuesOppholdInntektOgPeriodeForm,
+} from './OppholdInntektOgPeriodeForm';
+
+export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>
+  aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 const {
-  AVKLAR_OM_BRUKER_ER_BOSATT,
-  AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+  AVKLAR_OM_ER_BOSATT,
+  AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
   AVKLAR_OPPHOLDSRETT,
   AVKLAR_LOVLIG_OPPHOLD,
   AVKLAR_FORTSATT_MEDLEMSKAP,
 } = aksjonspunktCodes;
 
-const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
-  const helpTexts = [];
+const getHelpTexts = (aksjonspunkter: AksjonspunktDto[]) => {
+  const helpTexts: string[] = [];
   if (hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter)) {
     helpTexts.push('Vurder om søker fortsatt har gyldig medlemskap i perioden');
   }
-  if (hasAksjonspunkt(AVKLAR_OM_BRUKER_ER_BOSATT, aksjonspunkter)) {
+  if (hasAksjonspunkt(AVKLAR_OM_ER_BOSATT, aksjonspunkter)) {
     helpTexts.push('Vurder om søker er bosatt i Norge');
   }
-  if (hasAksjonspunkt(AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, aksjonspunkter)) {
+  if (hasAksjonspunkt(AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE, aksjonspunkter)) {
     helpTexts.push('Vurder om søker har gyldig medlemskap i perioden');
   }
   if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, aksjonspunkter)) {
@@ -45,36 +54,38 @@ const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
   return helpTexts;
 };
 
-const createNewPerioder = (perioder: Periode[], id: string, values): Periode[] => {
+const createNewPerioder = (perioder: Periode[], id: string, values: Periode): Periode[] => {
   const updatedIndex = perioder.findIndex(p => p.id === id);
   const updatedPeriode = perioder.find(p => p.id === id);
-
+  if (updatedIndex === -1 || !updatedPeriode) {
+    throw new Error('Period not found');
+  }
   return [
     ...perioder.slice(0, updatedIndex),
     {
-      ...updatedPeriode,
-      ...values,
+      // Merge the existing period data with the new values to create an updated period
+      ...updatedPeriode, // Existing period data
+      ...values, // New values to update the period
     },
     ...perioder.slice(updatedIndex + 1),
   ];
 };
 
 const medlemAksjonspunkter = [
-  AVKLAR_OM_BRUKER_ER_BOSATT,
-  AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+  AVKLAR_OM_ER_BOSATT,
+  AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
   AVKLAR_OPPHOLDSRETT,
   AVKLAR_LOVLIG_OPPHOLD,
   AVKLAR_FORTSATT_MEDLEMSKAP,
 ];
 
-export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjonspunkter: Aksjonspunkt[]) => {
+export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjonspunkter: AksjonspunktDto[]) => {
   const aktiveMedlemAksjonspunkter = aksjonspunkter
-    .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
-    .filter(ap => ap.erAktivt)
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    .filter(ap => medlemAksjonspunkter.some(mp => mp === ap.definisjon))
+    .filter(ap => ap.erAktivt);
 
   return aktiveMedlemAksjonspunkter.map(aksjonspunkt => ({
-    kode: aksjonspunkt.definisjon.kode,
+    kode: aksjonspunkt.definisjon,
     bekreftedePerioder: values.perioder
       .map(periode => {
         const {
@@ -101,32 +112,30 @@ export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjo
       })
       .filter(
         periode =>
-          periode.aksjonspunkter.includes(aksjonspunkt.definisjon.kode) ||
+          periode.aksjonspunkter.some(ap => ap === aksjonspunkt.definisjon) ||
           (periode.aksjonspunkter.length > 0 &&
-            aksjonspunkt.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+            aksjonspunkt.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
       ),
   }));
 };
 
 const buildInitialValues = (
-  soknad: Soknad,
-  fagsakPerson: FagsakPerson,
+  soknad: Søknad,
+  fagsakPerson: PersonDto,
   medlemskap: Medlemskap,
   perioder: Periode[],
   aksjonspunkter: Aksjonspunkt[],
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] },
-  valgtPeriode?: Periode,
+  valgtPeriode: Periode,
 ): OppholdInntektOgPerioderFormState => ({
   soknad,
   person: fagsakPerson,
   gjeldendeFom: medlemskap.fom,
   perioder,
-  oppholdInntektOgPeriodeForm: OppholdInntektOgPeriodeForm.buildInitialValues(
+  oppholdInntektOgPeriodeForm: buildInitialValuesOppholdInntektOgPeriodeForm(
     aksjonspunkter,
     soknad,
     medlemskap.medlemskapPerioder,
     medlemskap.fom,
-    alleKodeverk,
     valgtPeriode,
   ),
 });
@@ -137,12 +146,11 @@ interface OppholdInntektOgPerioderFormProps {
   readOnly: boolean;
   isRevurdering: boolean;
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandlingId: number;
   behandlingVersjon: number;
   medlemskap: Medlemskap;
-  soknad: Soknad;
-  fagsakPerson: FagsakPerson;
+  soknad: Søknad;
+  fagsakPerson: PersonDto;
   submitCallback: (aksjonspunktData: any) => Promise<void>;
 }
 
@@ -150,7 +158,6 @@ export const OppholdInntektOgPerioderForm = ({
   readOnly,
   submittable,
   aksjonspunkter,
-  alleKodeverk,
   alleMerknaderFraBeslutter,
   soknad,
   fagsakPerson,
@@ -166,24 +173,28 @@ export const OppholdInntektOgPerioderForm = ({
       })),
     [medlemskap],
   );
-  const [valgtPeriode, setValgtPeriode] = useState(initialPerioder?.length > 0 ? initialPerioder[0] : undefined);
+  const [valgtPeriode, setValgtPeriode] = useState(initialPerioder[0]);
 
-  const getInitialValues = (oppdatertePerioder?: Periode[], nyValgtPeriode?: Periode) =>
-    buildInitialValues(
+  const getInitialValues = (oppdatertePerioder?: Periode[], nyValgtPeriode?: Periode) => {
+    const periode = nyValgtPeriode || valgtPeriode;
+    if (periode === undefined) {
+      return undefined;
+    }
+    return buildInitialValues(
       soknad,
       fagsakPerson,
       medlemskap,
       oppdatertePerioder || initialPerioder,
       aksjonspunkter,
-      alleKodeverk,
-      nyValgtPeriode || valgtPeriode,
+      periode,
     );
+  };
 
   const formMethods = useForm<OppholdInntektOgPerioderFormState>({
     defaultValues: getInitialValues(),
   });
 
-  const hasOpenAksjonspunkter = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const hasOpenAksjonspunkter = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
 
   const handleSubmit = async (formState: OppholdInntektOgPerioderFormState) => {
     await submitCallback(transformValues(formState, aksjonspunkter));
@@ -194,20 +205,20 @@ export const OppholdInntektOgPerioderForm = ({
   const periodeResetCallback = () => {
     formMethods.reset({
       ...formMethods.getValues(),
-      oppholdInntektOgPeriodeForm: getInitialValues().oppholdInntektOgPeriodeForm,
+      oppholdInntektOgPeriodeForm: getInitialValues()?.oppholdInntektOgPeriodeForm,
     });
   };
 
   const velgPeriodeCallback = (id: string, periode: Periode) => {
     const nyValgtPeriode = {
-      id,
       ...periode,
+      id,
     };
 
     formMethods.reset(
       {
         ...formMethods.getValues(),
-        oppholdInntektOgPeriodeForm: getInitialValues(perioder, nyValgtPeriode).oppholdInntektOgPeriodeForm,
+        oppholdInntektOgPeriodeForm: getInitialValues(perioder, nyValgtPeriode)?.oppholdInntektOgPeriodeForm,
       },
       { keepDirty: true },
     );
@@ -246,7 +257,8 @@ export const OppholdInntektOgPerioderForm = ({
   const erAutomatiskVurdert =
     medlemskap?.medlemskapPerioder?.length === 0 &&
     medlemskap?.perioder?.length === 0 &&
-    Object.keys(medlemskap?.personopplysninger).length > 0;
+    medlemskap?.personopplysninger &&
+    Object.keys(medlemskap.personopplysninger).length > 0;
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
@@ -270,29 +282,25 @@ export const OppholdInntektOgPerioderForm = ({
           submittable={submittable}
           updateOppholdInntektPeriode={updateOppholdInntektPeriode}
           periodeResetCallback={periodeResetCallback}
-          alleKodeverk={alleKodeverk}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
       )}
-      {featureToggles?.AUTOMATISK_VURDERT_MEDLEMSKAP && erAutomatiskVurdert && (
-        <GrunnlagForAutomatiskVurdering
-          alleKodeverk={alleKodeverk}
-          personopplysninger={medlemskap.personopplysninger}
-          soknad={soknad}
-        />
+      {featureToggles?.['AUTOMATISK_VURDERT_MEDLEMSKAP'] && erAutomatiskVurdert && (
+        <GrunnlagForAutomatiskVurdering personopplysninger={medlemskap.personopplysninger} soknad={soknad} />
       )}
 
-      <VerticalSpacer twentyPx />
-      {!erAutomatiskVurdert && (
-        <Button
-          variant="primary"
-          size="small"
-          disabled={isConfirmButtonDisabled()}
-          loading={formMethods.formState.isSubmitting}
-        >
-          Bekreft og fortsett
-        </Button>
-      )}
+      <Box.New marginBlock="5 0">
+        {!erAutomatiskVurdert && (
+          <Button
+            variant="primary"
+            size="small"
+            disabled={isConfirmButtonDisabled()}
+            loading={formMethods.formState.isSubmitting}
+          >
+            Bekreft og fortsett
+          </Button>
+        )}
+      </Box.New>
     </RhfForm>
   );
 };

@@ -43,7 +43,11 @@ const TilbakekrevingPaneler = ({
   setBehandling,
 }: OwnProps) => (
   <>
-    <BehandlingPåVent behandling={behandling} aksjonspunkter={fetchedData?.aksjonspunkter ?? []} settPaVent={settPaVent} />
+    <BehandlingPåVent
+      behandling={behandling}
+      aksjonspunkter={fetchedData?.aksjonspunkter ?? []}
+      settPaVent={settPaVent}
+    />
     <TilbakekrevingProsess
       data={fetchedData}
       fagsak={fagsak}
