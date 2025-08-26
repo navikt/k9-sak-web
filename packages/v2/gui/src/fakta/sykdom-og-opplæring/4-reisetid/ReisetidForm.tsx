@@ -57,8 +57,8 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
       begrunnelse: data.begrunnelse,
       godkjent: data.godkjent === 'ja',
       periode: {
-        fom: dayjs(data.periode.fom).format('YYYY-MM-DD'),
-        tom: dayjs(data.periode.tom).format('YYYY-MM-DD'),
+        fom: data.godkjent === 'ja' ? dayjs(data.periode.fom).format('YYYY-MM-DD') : vurdering.perioder[0]?.fom as string,
+        tom: data.godkjent === 'ja' ? dayjs(data.periode.tom).format('YYYY-MM-DD') : vurdering.perioder[0]?.tom as string,
       },
     });
   });
