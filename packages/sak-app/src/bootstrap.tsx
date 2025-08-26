@@ -16,6 +16,7 @@ import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
 import { AxiosError } from 'axios';
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
+import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
@@ -78,6 +79,7 @@ init({
 
 configureK9SakClient();
 configureK9KlageClient();
+configureK9TilbakeClient();
 
 const store = configureStore();
 

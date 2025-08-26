@@ -10,7 +10,7 @@
     "./k9sak/*": "./src/k9sak/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/*": "./src/k9klage/*",
-    "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*",
+    "./k9tilbake/*": "./src/k9tilbake/*",
     "./ungsak/*": "./src/ungsak/*"
   },
   "dependencies": {
