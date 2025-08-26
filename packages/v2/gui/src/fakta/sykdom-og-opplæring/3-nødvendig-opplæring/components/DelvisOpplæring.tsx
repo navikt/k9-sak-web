@@ -98,8 +98,10 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
                   disabled={readOnly}
                   validate={[
                     (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
-                    (value: string) =>
-                      value && dayjs(value).isSameOrBefore(dayjs(v.tom)) ? undefined : 'Fra må være før til',
+                    (value: string) => {
+                      if (!value || !v.tom) return undefined;
+                      return dayjs(value).isSameOrBefore(dayjs(v.tom)) ? undefined : 'Fra må være før til';
+                    },
                     (value: string) => {
                       if (!value || !v.tom) return undefined;
                       const currentPeriod = { fom: value, tom: v.tom };
@@ -130,8 +132,10 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
                   disabled={readOnly}
                   validate={[
                     (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
-                    (value: string) =>
-                      value && dayjs(v.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra',
+                    (value: string) => {
+                      if (!value || !v.fom) return undefined;
+                      return dayjs(v.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra';
+                    },
                     (value: string) => {
                       if (!value || !v.fom) return undefined;
                       const currentPeriod = { fom: v.fom, tom: value };
