@@ -52,7 +52,6 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
   }, [vurdering.perioder]);
   const oppgittReisedager = vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad;
   const vurderingGjelderEnkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
-
   const submit = formMethods.handleSubmit(data => {
     løsAksjonspunkt9303({
       begrunnelse: data.begrunnelse,
