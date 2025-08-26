@@ -1,16 +1,21 @@
 /* eslint-disable class-methods-use-this */
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class OmsorgenForPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getId = () => 'OMSORGENFOR';
 
-  getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
+  getTekstKode = () => 'Omsorg';
 
-  getKomponent = props => this.overstyringDef.getKomponent({ ...props, lovReferanse: '§ 9-5' });
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, lovReferanse: '§ 9-5' });
+  };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR];
 
