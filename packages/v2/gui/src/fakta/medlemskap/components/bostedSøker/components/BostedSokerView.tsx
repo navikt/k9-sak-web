@@ -1,13 +1,13 @@
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import getAddresses from '@k9-sak-web/gui/utils/getAddresses.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 import {
   type k9_sak_kontrakt_person_PersonadresseDto as PersonadresseDto,
   k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
   k9_kodeverk_person_PersonstatusType as PersonopplysningDtoPersonstatus,
   k9_kodeverk_geografisk_Region as PersonopplysningDtoRegion,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import getAddresses from '@k9-sak-web/gui/utils/getAddresses.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 import type { Foreldre } from '../../../types/FormState';
 import styles from './bostedSokerView.module.css';
 

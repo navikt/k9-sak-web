@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_person_PersonDto as PersonDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_person_PersonDto as PersonDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import OppholdInntektOgPerioderForm from './components/oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 import type { Aksjonspunkt } from './types/Aksjonspunkt';

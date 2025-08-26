@@ -1,4 +1,4 @@
-import { type k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import { type k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export type Personopplysninger = Pick<
   PersonopplysningDto,
