@@ -1,13 +1,15 @@
 import { Location } from 'history';
-import { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import { lazy, Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
 import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -26,6 +28,14 @@ import {
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
+
+const BehandlingTilbakekrevingUngdomsytelseIndex = lazy(
+  () => import('@k9-sak-web/behandling-tilbakekreving-ungdomsytelse'),
+);
+
+const erTilbakekreving = (behandlingTypeKode: string): boolean =>
+  behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
+  behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
 
 const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -120,6 +130,7 @@ const BehandlingIndex = ({
 
   const defaultProps = {
     behandlingId,
+    behandlingUuid: behandling?.uuid,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
     kodeverk: kodeverk,
@@ -133,8 +144,43 @@ const BehandlingIndex = ({
     valgtProsessSteg: query.punkt,
   };
 
-  if (!behandlingId) {
+  const fagsakBehandlingerInfo = useMemo(
+    () =>
+      alleBehandlinger
+        .filter(b => !b.behandlingHenlagt)
+        .map(b => ({
+          id: b.id,
+          uuid: b.uuid,
+          type: b.type,
+          status: b.status,
+          opprettet: b.opprettet,
+          avsluttet: b.avsluttet,
+        })),
+    [alleBehandlinger],
+  );
+
+  const behandlingTypeKode = behandling?.type.kode ?? undefined;
+
+  if (!behandling) {
     return <LoadingPanel />;
+  }
+
+  if (erTilbakekreving(behandlingTypeKode)) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingTilbakekrevingUngdomsytelseIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            harApenRevurdering={fagsakBehandlingerInfo.some(
+              b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
+            )}
+            valgtFaktaSteg={query.fakta}
+            key={behandlingId}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
   }
 
   return (

@@ -5,7 +5,7 @@ import { BodyShort } from '@navikt/ds-react';
 import {
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormattedMessage } from 'react-intl';
 
 const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[]) => {

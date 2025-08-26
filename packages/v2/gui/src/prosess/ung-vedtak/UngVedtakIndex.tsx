@@ -1,5 +1,4 @@
-import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
-import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
@@ -21,8 +20,7 @@ export const UngVedtakIndex = ({
   vilkar,
   isReadOnly,
 }: UngVedtakIndexProps) => {
-  const ungSakClient = getUngSakClient();
-  const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
+  const ungVedtakBackendClient = new UngVedtakBackendClient();
   return (
     <Box.New paddingInline="4 8" paddingBlock="2">
       <Heading size="medium" level="1" spacing>

@@ -14,7 +14,7 @@ import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, requ
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@navikt/k9-sak-typescript-client';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -26,7 +26,7 @@ import avregningSimuleringResultatPropType from '../propTypes/avregningSimulerin
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import { ung_kodeverk_behandling_FagsakYtelseType } from '@navikt/ung-sak-typescript-client';
+import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor

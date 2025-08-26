@@ -1,4 +1,4 @@
-import type { MatchFagsakerResponse } from '@k9-sak-web/backend/k9sak/generated';
+import type { MatchFagsakerResponse } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { expect } from 'storybook/test';

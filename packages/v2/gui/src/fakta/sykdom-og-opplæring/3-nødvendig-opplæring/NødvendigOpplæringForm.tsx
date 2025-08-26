@@ -2,7 +2,7 @@ import {
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   Alert,
   BodyShort,
@@ -119,9 +119,13 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
 };
 
 const onSubmit = (data: NødvendigOpplæringFormFields) => {
+  const resultat =
+    data.harLegeerklæring === 'NEI'
+      ? OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT
+      : nødvendigOpplæringTilResultat(data.harNødvendigOpplæring);
   const perioder = data.perioder.map(periode => ({
     begrunnelse: data.begrunnelse || null,
-    resultat: nødvendigOpplæringTilResultat(data.harNødvendigOpplæring),
+    resultat: resultat,
     avslagsårsak: data.avslagsårsak || null,
     periode: {
       fom: dayjs(periode.fom).format('YYYY-MM-DD'),
@@ -164,14 +168,19 @@ const NødvendigOpplæringForm = ({
     });
   }, [formMethods, vurdering]);
 
-  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('harLegeerklæring') === 'NEI';
+  const harNødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
+  const harLegeerklæring = formMethods.watch('harLegeerklæring');
+  const opplæringIkkeDokumentertMedLegeerklæring = harLegeerklæring === 'NEI';
 
   useEffect(() => {
-    if (opplæringIkkeDokumentertMedLegeerklæring) {
-      formMethods.setValue('begrunnelse', '');
-      formMethods.setValue('harNødvendigOpplæring', '');
-    }
-  }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
+    formMethods.setValue('begrunnelse', '');
+    formMethods.setValue('harNødvendigOpplæring', '');
+  }, [harLegeerklæring, formMethods]);
+
+  useEffect(() => {
+    formMethods.setValue('perioderUtenNødvendigOpplæring', []);
+    formMethods.resetField('perioder', { keepTouched: true });
+  }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;

@@ -2,8 +2,9 @@ import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
   type k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
+  checkForOverlap,
   checkIfPeriodsAreEdgeToEdge,
   combineConsecutivePeriods,
   findUncoveredDays,
@@ -50,6 +51,7 @@ type NødvendigOpplæringFormFields = {
 export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const opprinneligPeriode = vurdering.perioder[0]!;
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
+  const submitCount = formMethods.formState.submitCount;
   const context = useContext(SykdomOgOpplæringContext);
   const readOnly = context.readOnly;
   const { fields, append, remove, update } = useFieldArray({
@@ -62,6 +64,21 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
     fields.map(periode => ({ fom: periode.fom, tom: periode.tom })),
   );
   const uncoveredPeriods = combineConsecutivePeriods(uncoveredDays);
+  const perioder = formMethods.watch('perioder');
+  const touchedFieldsIndexes = formMethods.formState.touchedFields?.perioder
+    ?.map((v, index) => (v ? index : undefined))
+    .filter(v => v !== undefined);
+
+  useEffect(() => {
+    if (submitCount > 0) {
+      perioder.forEach((periode, index) => {
+        if (periode.fom && periode.tom) {
+          void formMethods.trigger(`perioder.${index}.fom`);
+          void formMethods.trigger(`perioder.${index}.tom`);
+        }
+      });
+    }
+  }, [JSON.stringify(perioder), JSON.stringify(touchedFieldsIndexes), submitCount]);
 
   return (
     <div id="delvis-opplæring">
@@ -83,6 +100,14 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
                     (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
                     (value: string) =>
                       value && dayjs(value).isSameOrBefore(dayjs(v.tom)) ? undefined : 'Fra må være før til',
+                    (value: string) => {
+                      if (!value || !v.tom) return undefined;
+                      const currentPeriod = { fom: value, tom: v.tom };
+                      const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
+                      return checkForOverlap(index, currentPeriod, allPeriods)
+                        ? 'Perioden kan ikke overlappe med andre perioder'
+                        : undefined;
+                    },
                   ]}
                   fromDate={new Date(opprinneligPeriode.fom)}
                   toDate={new Date(opprinneligPeriode.tom)}
@@ -107,6 +132,14 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
                     (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
                     (value: string) =>
                       value && dayjs(v.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra',
+                    (value: string) => {
+                      if (!value || !v.fom) return undefined;
+                      const currentPeriod = { fom: v.fom, tom: value };
+                      const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
+                      return checkForOverlap(index, currentPeriod, allPeriods)
+                        ? 'Perioden kan ikke overlappe med andre perioder'
+                        : undefined;
+                    },
                   ]}
                   fromDate={new Date(vurdering.opplæring.fom)}
                   toDate={new Date(vurdering.opplæring.tom)}

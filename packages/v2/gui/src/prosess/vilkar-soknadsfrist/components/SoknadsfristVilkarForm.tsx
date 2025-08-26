@@ -9,7 +9,7 @@ import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type {
   k9_sak_typer_Periode as Periode,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { useState, type SetStateAction } from 'react';

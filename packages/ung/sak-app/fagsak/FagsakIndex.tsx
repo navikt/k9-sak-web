@@ -13,7 +13,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router';
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
   GetUngdomsprogramInformasjonResponse,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -55,6 +55,10 @@ const FagsakIndex = () => {
 
   const alleKodeverkUngSak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     UngSakApiKeys.KODEVERK,
+  );
+
+  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    UngSakApiKeys.KODEVERK_TILBAKE,
   );
 
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
@@ -176,7 +180,11 @@ const FagsakIndex = () => {
 
   return (
     <>
-      <KodeverkProvider behandlingType={behandling ? behandling?.type?.kode : undefined} kodeverk={alleKodeverkUngSak}>
+      <KodeverkProvider
+        behandlingType={behandling ? behandling?.type?.kode : undefined}
+        kodeverk={alleKodeverkUngSak}
+        tilbakeKodeverk={alleKodeverkTilbake}
+      >
         <SaksbehandlernavnContext.Provider
           value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
         >

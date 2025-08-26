@@ -1,4 +1,4 @@
-import type { Kodeverk } from '../../shared/Kodeverk.ts';
+import type { Kodeverk } from '../../shared/Kodeverk.js';
 
 /**
  * Skal matche no.nav.k9.kodeverk.api.Kodeverdi.Språkkode
