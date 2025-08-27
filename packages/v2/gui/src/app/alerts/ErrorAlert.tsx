@@ -1,11 +1,11 @@
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
-import { Alert, BodyLong, Heading } from '@navikt/ds-react';
-import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
+import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
+import type { PropsWithChildren } from 'react';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import { ErrorIdEncouragementMsg } from './ErrorIdEncouragementMsg.js';
 import GeneralAsyncError from './GeneralAsyncError.js';
-import type { PropsWithChildren } from 'react';
+import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 
 export interface ErrorAlertProps {
   readonly error: ErrorWithAlertInfo;
@@ -32,9 +32,9 @@ const GeneralAsyncErrorMsg = ({ error }: { readonly error: GeneralAsyncError }) 
     <BodyLong>{error.message}</BodyLong>
     <BodyLong>
       Det hjelper kanskje å{' '}
-      <a href="#" onClick={() => window.location.reload()}>
+      <Link inlineText href="#" onClick={() => window.location.reload()}>
         laste siden på nytt{' '}
-      </a>
+      </Link>
       og prøve igjen.
     </BodyLong>
     <ErrorIdEncouragementMsg errorId={error.errorId} errorName={error.name} />

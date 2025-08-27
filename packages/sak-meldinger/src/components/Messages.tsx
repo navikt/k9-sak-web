@@ -11,7 +11,10 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { RequestIntentionallyAborted } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -22,17 +25,14 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
-import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BodyShort, Button, Checkbox, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import { RequestIntentionallyAborted } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
-import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -401,7 +401,7 @@ export const MessagesImpl = ({
               {intl.formatMessage({ id: 'Messages.Submit' })}
             </Button>
             {brevmalkode && (
-              <a
+              <Link
                 href=""
                 onClick={previewMessage}
                 onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
@@ -409,7 +409,7 @@ export const MessagesImpl = ({
                 data-testid="previewLink"
               >
                 {intl.formatMessage({ id: 'Messages.Preview' })}
-              </a>
+              </Link>
             )}
           </div>
         </>
