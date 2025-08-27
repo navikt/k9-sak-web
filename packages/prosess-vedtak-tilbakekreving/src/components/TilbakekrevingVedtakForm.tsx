@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -21,6 +20,7 @@ import underavsnittType from '../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
+import { Link } from '@navikt/ds-react';
 import styles from './tilbakekrevingVedtakForm.module.css';
 
 const formName = 'TilbakekrevingVedtakForm';
@@ -112,7 +112,7 @@ export const TilbakekrevingVedtakFormImpl = ({
         {perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && (
           <FlexColumn>
             <div className={styles.padding}>
-              <a
+              <Link
                 href=""
                 onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)}
                 onKeyDown={e =>
@@ -122,7 +122,7 @@ export const TilbakekrevingVedtakFormImpl = ({
                 data-testid="previewLink"
               >
                 <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
-              </a>
+              </Link>
             </div>
           </FlexColumn>
         )}
