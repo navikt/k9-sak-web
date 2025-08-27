@@ -1,5 +1,5 @@
 import { XMarkOctagonIcon } from '@navikt/aksel-icons';
-import { Heading, HStack, VStack } from '@navikt/ds-react';
+import { Heading, HStack, Link, VStack } from '@navikt/ds-react';
 
 export interface BigErrorProps {
   readonly title?: string;
@@ -9,9 +9,9 @@ export interface BigErrorProps {
 export const DefaultErrorMsg = () => (
   <p>
     Forsøk gjerne å{' '}
-    <a href="#" onClick={() => window.location.reload()}>
+    <Link inlineText href="#" onClick={() => window.location.reload()}>
       laste siden på nytt{' '}
-    </a>
+    </Link>
     . Meld fra i porten hvis problemet vedvarer.
   </p>
 );

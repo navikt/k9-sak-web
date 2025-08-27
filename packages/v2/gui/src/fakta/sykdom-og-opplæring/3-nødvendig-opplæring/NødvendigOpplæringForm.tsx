@@ -173,9 +173,11 @@ const NødvendigOpplæringForm = ({
   const opplæringIkkeDokumentertMedLegeerklæring = harLegeerklæring === 'NEI';
 
   useEffect(() => {
-    formMethods.setValue('begrunnelse', '');
-    formMethods.setValue('harNødvendigOpplæring', '');
-  }, [harLegeerklæring, formMethods]);
+    if (opplæringIkkeDokumentertMedLegeerklæring) {
+      formMethods.setValue('begrunnelse', '');
+      formMethods.setValue('harNødvendigOpplæring', '');
+    }
+  }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
 
   useEffect(() => {
     formMethods.setValue('perioderUtenNødvendigOpplæring', []);

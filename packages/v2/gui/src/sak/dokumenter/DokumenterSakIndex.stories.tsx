@@ -1,5 +1,5 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
@@ -44,7 +44,7 @@ const fagsak = {
 };
 
 const meta = {
-  title: 'gui/sak/sak-dokumenter/DokumenterSakIndex.tsx',
+  title: 'gui/sak/dokumenter/DokumenterSakIndex.tsx',
   component: DokumenterSakIndex,
 } satisfies Meta<typeof DokumenterSakIndex>;
 

@@ -43,7 +43,7 @@ export type PerioderMedMedlemskapFaktaPanelFormState = {
   fixedMedlemskapPerioder?: FixedMedlemskapPerioder[];
   hasPeriodeAksjonspunkt?: boolean;
   isPeriodAksjonspunktClosed?: boolean;
-  medlemskapManuellVurderingType: string;
+  medlemskapManuellVurderingType?: string;
 };
 
 export type OppholdInntektOgPerioderFormState = {
