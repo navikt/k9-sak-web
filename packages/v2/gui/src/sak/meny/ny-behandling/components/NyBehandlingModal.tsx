@@ -96,7 +96,7 @@ export const NyBehandlingModal = ({
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, ytelsesbehandlingUuid: uuidForSistLukkede });
       }
       if (erTilbakekreving(behandlingType) && behandlingUuid) {
-        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingUuid: behandlingUuid });
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingUuid });
       }
     }
   }, [
