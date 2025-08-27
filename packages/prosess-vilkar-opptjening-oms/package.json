@@ -13,7 +13,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-plattform-komponenter": "^10.1.3",
     "classnames": "2.5.1",
-    "dayjs": "1.11.13",
+    "dayjs": "1.11.14",
     "lodash": "4.17.21",
     "prop-types": "15.8.1",
     "react": "19.1.1",
