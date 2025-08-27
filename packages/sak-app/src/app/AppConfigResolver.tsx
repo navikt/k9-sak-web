@@ -46,7 +46,8 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const klageAktivert = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
-  const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert);
+  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert, tilbakeAktivert);
 
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
