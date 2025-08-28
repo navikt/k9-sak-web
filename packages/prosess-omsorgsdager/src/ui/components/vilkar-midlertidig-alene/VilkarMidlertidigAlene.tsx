@@ -1,10 +1,12 @@
-import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
-import { hanteringAvDatoForDatoVelger } from '../../../util/dateUtils';
-import { booleanTilTekst, tekstTilBoolean } from '../../../util/stringUtils';
+import { booleanTilTekst, tekstTilBoolean, utledTilgjengeligeÅr } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
@@ -17,6 +19,9 @@ import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemod
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import tekst from './vilkar-midlertidig-alene-tekst';
 import styles from './vilkarMidlertidigAlene.module.css';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 type FormData = {
   begrunnelse: string;
@@ -47,8 +52,13 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const formStateKey = `${behandlingsID}-utvidetrett-ma`;
   const harAksjonspunktOgVilkarLostTidligere =
+    informasjonTilLesemodus &&
+    informasjonTilLesemodus.begrunnelse &&
     informasjonTilLesemodus.begrunnelse.length > 0 &&
+    informasjonTilLesemodus.dato &&
+    informasjonTilLesemodus.dato.til &&
     informasjonTilLesemodus.dato.til.length > 0 &&
+    informasjonTilLesemodus.dato.fra &&
     informasjonTilLesemodus.dato.fra.length > 0;
 
   const methods = useForm<FormData>({
@@ -58,7 +68,9 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       fraDato: harAksjonspunktOgVilkarLostTidligere
         ? informasjonTilLesemodus.dato.fra
         : soknadsopplysninger.soknadsdato,
-      tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
+      tilDato: harAksjonspunktOgVilkarLostTidligere
+        ? dayjs.tz(informasjonTilLesemodus.dato.til, 'YYYY-MM-DD', 'Europe/Oslo').format('DD.MM.YYYY')
+        : '0',
       erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
@@ -73,6 +85,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     handleSubmit,
     watch,
     setValue,
+    register,
   } = methods;
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
@@ -110,14 +123,15 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
         fra: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
-        til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : '',
+        til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen)
+          ? dayjs.tz(tilDato, 'DD.MM.YYYY', 'Europe/Oslo').format('YYYY-MM-DD')
+          : '',
         avslagsårsakKode,
       });
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
   };
-
   return (
     <div
       className={classNames(
@@ -125,7 +139,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks,
       )}
     >
-      {vedtakFattetVilkarOppfylt && (
+      {vedtakFattetVilkarOppfylt && informasjonOmVilkar && (
         <VilkarStatus
           vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
           aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -135,7 +149,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         />
       )}
 
-      {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && (
+      {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && informasjonTilLesemodus && (
         <VilkarMidlertidigAleneLesemodus
           soknadsopplysninger={soknadsopplysninger}
           informasjonTilLesemodus={informasjonTilLesemodus}
@@ -218,12 +232,21 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 >
                   <DatePicker titel="Fra" navn="fraDato" valideringsFunksjoner={{ erDatoFyltUt, erDatoGyldig }} />
 
-                  <DatePicker
-                    titel="Til"
-                    navn="tilDato"
-                    valideringsFunksjoner={{ erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret }}
-                    begrensningerIKalender={hanteringAvDatoForDatoVelger(soknadsopplysninger.soknadsdato)}
-                  />
+                  <Select
+                    {...register('tilDato', {
+                      validate: { erDatoFyltUt, erDatoSisteDagenIÅret },
+                    })}
+                    label="Til"
+                    size="small"
+                    onChange={e => setValue('tilDato', e.target.value)}
+                    defaultValue={'0'}
+                  >
+                    {utledTilgjengeligeÅr(dayjs().toString(), 1, 5).map(år => (
+                      <option key={år.value} value={år.title} disabled={år.disabled}>
+                        {år.title}
+                      </option>
+                    ))}
+                  </Select>
                 </Fieldset>
               )}
 
