@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -28,14 +28,14 @@ import {
 } from '@k9-sak-web/types';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { Button } from '@navikt/ds-react';
-import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Button, Link } from '@navikt/ds-react';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
-import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -324,7 +324,7 @@ export const MessagesTilbakekrevingImpl = ({
               {intl.formatMessage({ id: 'Messages.Submit' })}
             </Button>
             {brevmalkode && (
-              <a
+              <Link
                 href=""
                 onClick={previewMessage}
                 onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
@@ -332,7 +332,7 @@ export const MessagesTilbakekrevingImpl = ({
                 data-testid="previewLink"
               >
                 {intl.formatMessage({ id: 'Messages.Preview' })}
-              </a>
+              </Link>
             )}
           </div>
         </>

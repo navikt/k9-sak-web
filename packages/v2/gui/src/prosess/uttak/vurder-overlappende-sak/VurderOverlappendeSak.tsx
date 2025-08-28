@@ -10,6 +10,7 @@ import {
   type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
@@ -19,6 +20,7 @@ import {
   Button,
   Heading,
   HStack,
+  Link,
   List,
   Loader,
   ReadMore,
@@ -35,7 +37,6 @@ import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../util
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import styles from './VurderOverlappendeSak.module.css';
-import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
 
@@ -254,9 +255,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                                 saksnummer.map((sakNr, index) => (
                                   <React.Fragment key={`${fom}-${tom}-${sakNr}-link`}>
                                     {index > 0 && ', '}
-                                    <a href={`/k9/web/fagsak/${sakNr}`} target="_blank">
+                                    <Link href={`/k9/web/fagsak/${sakNr}`} target="_blank">
                                       {sakNr}
-                                    </a>
+                                    </Link>
                                   </React.Fragment>
                                 ))}
                               )

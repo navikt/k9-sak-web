@@ -1,4 +1,4 @@
-import { Button, HGrid } from '@navikt/ds-react';
+import { Button, HGrid, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -41,7 +41,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVed
             {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenning' })}
           </Button>
         )}
-        <a
+        <Link
           href=""
           onClick={previewBrev}
           onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
@@ -49,7 +49,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVed
           data-testid="previewLink"
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
-        </a>
+        </Link>
       </div>
     </HGrid>
   );

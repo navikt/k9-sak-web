@@ -31,6 +31,12 @@ export const goToSearch = () => {
 
 export const isDev = () => IS_DEV;
 
+export const isDevOrQ = () => {
+  const { host } = window.location;
+  const isQ = host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no';
+  return IS_DEV || isQ;
+};
+
 export const getPathToAinntekt = (pathname: string) => {
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
