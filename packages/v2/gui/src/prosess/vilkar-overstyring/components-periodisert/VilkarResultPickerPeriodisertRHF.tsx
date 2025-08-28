@@ -6,7 +6,7 @@ import type {
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, BodyShort, Box } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
@@ -163,22 +163,24 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           {(erVilkarOk === vilkårStatusPeriodisert.DELVIS_OPPFYLT ||
             erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT) && (
             <Box.New marginBlock={'2 0'}>
-              <RhfDatepicker
-                control={control}
-                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
-                label="Fra dato"
-                isReadOnly={readOnly}
-                validate={[required, hasValidDate]}
-                disabledDays={ugyldigeFomDatoer()}
-              />
-              <RhfDatepicker
-                control={control}
-                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
-                label="Til dato"
-                disabledDays={ugyldigeTomDatoer()}
-                isReadOnly={readOnly}
-                validate={[required, hasValidDate]}
-              />
+              <VStack gap="space-16">
+                <RhfDatepicker
+                  control={control}
+                  name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
+                  label="Fra dato"
+                  isReadOnly={readOnly}
+                  validate={[required, hasValidDate]}
+                  disabledDays={ugyldigeFomDatoer()}
+                />
+                <RhfDatepicker
+                  control={control}
+                  name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
+                  label="Til dato"
+                  disabledDays={ugyldigeTomDatoer()}
+                  isReadOnly={readOnly}
+                  validate={[required, hasValidDate]}
+                />
+              </VStack>
             </Box.New>
           )}
 
