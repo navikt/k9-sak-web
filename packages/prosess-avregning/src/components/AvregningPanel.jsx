@@ -11,10 +11,10 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
-import { BodyShort, Button, Detail, HGrid, Heading, Label, VStack } from '@navikt/ds-react';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -230,7 +230,7 @@ export class AvregningPanelImpl extends Component {
                                     ]}
                                   />
                                   <VerticalSpacer fourPx />
-                                  <a
+                                  <Link
                                     href=""
                                     onClick={e => {
                                       this.previewMessage(e, previewCallback);
@@ -238,7 +238,7 @@ export class AvregningPanelImpl extends Component {
                                     className={styles.previewLink}
                                   >
                                     <FormattedMessage id="Messages.PreviewText" />
-                                  </a>
+                                  </Link>
                                 </ArrowBox>
                               </div>
                             ),

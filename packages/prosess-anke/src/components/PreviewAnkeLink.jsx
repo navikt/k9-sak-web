@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';

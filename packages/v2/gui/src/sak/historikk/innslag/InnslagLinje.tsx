@@ -1,9 +1,9 @@
 import { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_Linje_Type as LinjeType } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { NavLink } from 'react-router';
+import { BodyLong, Link } from '@navikt/ds-react';
 import type { Location } from 'history';
-import { parseBoldText, scrollUp } from '../snakkeboble/snakkebobleUtils.jsx';
-import { BodyLong } from '@navikt/ds-react';
+import { NavLink } from 'react-router';
 import type { NyHistorikkLinje } from '../historikkTypeBerikning.js';
+import { parseBoldText, scrollUp } from '../snakkeboble/snakkebobleUtils.jsx';
 
 export interface InnslagLinjeProps {
   readonly linje: NyHistorikkLinje;
@@ -26,9 +26,9 @@ export const InnslagLinje = ({ linje, behandlingLocation, createLocationForSkjer
       }
       return (
         <>
-          <NavLink to={location} onClick={scrollUp}>
+          <Link inlineText as={NavLink} to={location} onClick={scrollUp}>
             {linje.skjermlenkeType.navn}
-          </NavLink>
+          </Link>
           {linje.tekst != null ? parseBoldText(linje.tekst) : null}
         </>
       );
