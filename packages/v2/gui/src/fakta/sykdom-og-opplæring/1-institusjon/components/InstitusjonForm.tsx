@@ -30,6 +30,7 @@ export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
   begrunnelse: string | null;
   redigertInstitusjonNavn?: string;
+  organisasjonsnummer: string | null;
   journalpostId: {
     journalpostId: string;
   };
@@ -53,7 +54,7 @@ const defaultValues = (vurdering: InstitusjonVurderingDtoMedPerioder) => {
     [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
     [InstitusjonFormFields.ANNEN_INSTITUSJON]: false,
     [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: '',
-    [InstitusjonFormFields.ORGANISASJONSNUMMER]: '',
+    [InstitusjonFormFields.ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer,
     [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: '',
   };
 };
@@ -84,6 +85,9 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     const skalSendeBegrunnelse =
       values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'nei' ||
       values[InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING] === 'ja';
+    const skalSendeOrgnaisasjonsnummer =
+      values[InstitusjonFormFields.HAR_ORGANISASJONSNUMMER] === 'ja' &&
+      values[InstitusjonFormFields.ORGANISASJONSNUMMER].length === 9;
     løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
@@ -94,6 +98,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         values[InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN],
         values[InstitusjonFormFields.ANNEN_INSTITUSJON],
       ),
+      organisasjonsnummer: skalSendeOrgnaisasjonsnummer ? values[InstitusjonFormFields.ORGANISASJONSNUMMER] : null,
     });
   };
 
