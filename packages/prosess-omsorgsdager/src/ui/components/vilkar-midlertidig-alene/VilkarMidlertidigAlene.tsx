@@ -53,12 +53,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const formStateKey = `${behandlingsID}-utvidetrett-ma`;
   const harAksjonspunktOgVilkarLostTidligere =
     informasjonTilLesemodus &&
-    informasjonTilLesemodus.begrunnelse &&
     informasjonTilLesemodus.begrunnelse.length > 0 &&
-    informasjonTilLesemodus.dato &&
-    informasjonTilLesemodus.dato.til &&
     informasjonTilLesemodus.dato.til.length > 0 &&
-    informasjonTilLesemodus.dato.fra &&
     informasjonTilLesemodus.dato.fra.length > 0;
 
   const methods = useForm<FormData>({
