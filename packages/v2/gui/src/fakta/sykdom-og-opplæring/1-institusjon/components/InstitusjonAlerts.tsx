@@ -33,6 +33,7 @@ const InstitusjonAlerts = ({ valgtVurdering, vurderinger }: FaktaInstitusjonAler
         journalpostId: vurderinger[0]?.journalpostId.journalpostId ?? '',
       },
       begrunnelse: vurderinger[0]?.begrunnelse ?? '',
+      organisasjonsnummer: vurderinger[0]?.organisasjonsnummer ?? null,
     });
   };
 
