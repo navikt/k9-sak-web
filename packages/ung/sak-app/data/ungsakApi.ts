@@ -101,7 +101,7 @@ const endpoints = new RestApiConfigBuilder()
     UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
     { isResponseBlob: true },
   )
-  .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
+  .withAsyncPost('/ung/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
 
   .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_UNGSAK)
 
