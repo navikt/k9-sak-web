@@ -3,7 +3,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
+import { BodyShort, Detail, Fieldset, HStack, Link, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
@@ -130,9 +130,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
 
         return (
           <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
-            <NavLink to={lenke()} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
+            <Link as={NavLink} to={lenke()} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
               {hentSkjermlenkeTypeKodeverkNavn()}
-            </NavLink>
+            </Link>
             <div className={styles.approvalItemContainer}>
               {aksjonspunktText
                 ?.filter(text => !!text)

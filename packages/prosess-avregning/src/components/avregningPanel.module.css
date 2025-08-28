@@ -18,8 +18,3 @@
 .bold {
   font-weight: bold;
 }
-
-.previewLink {
-  color: var(--ax-accent-600);
-  font-weight: bold;
-}

@@ -1,13 +1,14 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useCallback } from 'react';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
 import VilkårBackendClient from './VilkårBackendClient';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
   BehandlingTypeK9Klage.TILBAKEKREVING,
@@ -31,8 +32,8 @@ interface OwnProps {
   };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; ytelsesbehandlingUuid: string }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string }) => void;
   lukkModal: () => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
@@ -64,7 +65,7 @@ const MenyNyBehandlingIndexV2 = ({
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
     queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),
-    enabled: !!behandlingUuid,
+    enabled: !!behandlingUuid && !erTilbakekreving(behandlingType),
   });
 
   const sisteDagISøknadsperiode = vilkår

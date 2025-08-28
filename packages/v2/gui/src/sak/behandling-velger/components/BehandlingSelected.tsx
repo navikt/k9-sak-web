@@ -4,7 +4,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
-import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
+import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
 import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
 import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
@@ -135,13 +135,14 @@ const BehandlingSelected = ({
       </div>
       {getÅrsakerForBehandling()}
       {visLenkeTilFaktapanel && (
-        <NavLink
+        <Link
+          as={NavLink}
           to={createLocationForSkjermlenke(location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
           onClick={() => window.scroll(0, 0)}
           className={styles.faktapanelLenke}
         >
           <BodyShort size="small">Søknadsperioder med årsaker for behandling</BodyShort>
-        </NavLink>
+        </Link>
       )}
     </div>
   );

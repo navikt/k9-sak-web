@@ -3,6 +3,7 @@ import { k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehan
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
@@ -56,8 +57,8 @@ interface NyBehandlingModalProps {
   behandlingUuid?: string;
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; ytelsesbehandlingUuid: string }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string }) => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
   sisteDagISøknadsperiode?: Date | null;
@@ -90,15 +91,12 @@ export const NyBehandlingModal = ({
   sisteDagISøknadsperiode,
 }: NyBehandlingModalProps) => {
   useEffect(() => {
-    const erTilbakekreving =
-      behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
-      behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
     if (erTilbakekrevingAktivert) {
       if (uuidForSistLukkede !== undefined) {
-        sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid: uuidForSistLukkede });
+        sjekkOmTilbakekrevingKanOpprettes({ saksnummer, ytelsesbehandlingUuid: uuidForSistLukkede });
       }
-      if (erTilbakekreving && behandlingUuid) {
-        sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
+      if (erTilbakekreving(behandlingType) && behandlingUuid) {
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingUuid });
       }
     }
   }, [
