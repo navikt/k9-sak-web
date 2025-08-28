@@ -235,7 +235,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                     label="Til"
                     size="small"
                     onChange={e => setValue('tilDato', e.target.value)}
-                    defaultValue={'0'}
                   >
                     {utledTilgjengeligeÅr(dayjs().toString(), 1, 5).map(år => (
                       <option key={år.value} value={år.title} disabled={år.disabled}>
