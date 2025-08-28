@@ -2365,7 +2365,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
-    vis-data: "npm:7.1.10"
+    vis-data: "npm:8.0.1"
     vis-timeline: "npm:7.7.4"
   languageName: unknown
   linkType: soft
@@ -16899,13 +16899,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-data@npm:7.1.10":
-  version: 7.1.10
-  resolution: "vis-data@npm:7.1.10"
+"vis-data@npm:8.0.1":
+  version: 8.0.1
+  resolution: "vis-data@npm:8.0.1"
   peerDependencies:
     uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
-    vis-util: ^5.0.1
-  checksum: 10/23fb2ef26864153013372e1d95107765be86dd9ce96f987bf99fdd93759fbe5ec1bd2603d354ca18a03f0fb607b829396ec02fe005aead63ef24599512f21402
+    vis-util: ">=6.0.0"
+  checksum: 10/d69045c555a79fde292270d42f111b0d1ba644989481eec08393f73cf64573563e6533718eff0534f4255f44d363b078d0520704190328b97f8e244d4b4c8b73
   languageName: node
   linkType: hard
 
