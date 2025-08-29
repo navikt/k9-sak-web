@@ -33,7 +33,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
         {inntektsforhold.map(inntForhold => {
-          const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;
+          const { arbeidsgiverIdentifikator } = inntForhold;
           const arbeidsforholdData = arbeidsgiverIdentifikator
             ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
             : undefined;
@@ -51,9 +51,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                   </Tag>
                 )}
               </BodyShort>
-              <BodyShort size="small">
-                Inntekt: {formatNOK(inntForhold.bruttoInntekt)}
-              </BodyShort>
+              <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
             </Box.New>
           );
         })}
