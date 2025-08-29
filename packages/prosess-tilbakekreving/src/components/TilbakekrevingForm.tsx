@@ -10,13 +10,19 @@ import {
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { AksjonspunktHelpText, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpText,
+  FadingPanel,
+  FaktaGruppe,
+  usePrevious,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Component } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -33,9 +39,9 @@ import TilbakekrevingPeriodeForm, {
   CustomPeriode,
   CustomPerioder,
   CustomVilkarsVurdertePeriode,
-  TILBAKEKREVING_PERIODE_FORM_NAME,
   periodeFormBuildInitialValues,
   periodeFormTransformValues,
+  TILBAKEKREVING_PERIODE_FORM_NAME,
 } from './TilbakekrevingPeriodeForm';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
 import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
@@ -95,7 +101,7 @@ const formaterPerioderForTidslinje = (
   });
 
 interface OwnProps {
-  vilkarsVurdertePerioder?: CustomVilkarsVurdertePeriode[];
+  vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[];
   dataForDetailForm?: DataForPeriode[];
   behandlingFormPrefix: string;
   readOnly: boolean;
@@ -116,93 +122,104 @@ interface DispatchProps {
   reduxFormInitialize: (...args: any[]) => any;
 }
 
-interface StateProps {
-  valgtPeriode?: CustomVilkarsVurdertePeriode;
-}
-
 /**
  * TilbakekrevingForm
  *
  * Behandlingspunkt Tilbakekreving. Setter opp en tidslinje som lar en velge periode. Ved valg blir et detaljevindu vist.
  */
-export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps & InjectedFormProps, StateProps> {
-  constructor(props: OwnProps & DispatchProps & InjectedFormProps) {
-    super(props);
-    this.state = {
-      valgtPeriode: null,
-    };
-  }
+export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & InjectedFormProps) => {
+  const [valgtPeriode, setValgtPeriode] = useState<CustomVilkarsVurdertePeriode | null>(null);
+  const {
+    vilkarsVurdertePerioder,
+    reduxFormInitialize: formInitialize,
+    behandlingFormPrefix,
+    readOnly,
+    readOnlySubmitButton,
+    antallPerioderMedAksjonspunkt,
+    merknaderFraBeslutter,
+    dataForDetailForm,
+    navBrukerKjonn,
+    behandlingId,
+    behandlingVersjon,
+    alleKodeverk,
+    beregnBelop,
+    ...formProps
+  } = props;
 
-  componentDidMount() {
-    const { vilkarsVurdertePerioder } = this.props;
-    if (vilkarsVurdertePerioder) {
-      this.setPeriode(vilkarsVurdertePerioder.find(harApentAksjonspunkt));
+  const initializeValgtPeriodeForm = useCallback(
+    (valgtPeriode?: CustomVilkarsVurdertePeriode) => {
+      formInitialize(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, valgtPeriode);
+    },
+    [formInitialize, behandlingFormPrefix],
+  );
+
+  const setPeriode = useCallback(
+    (periode: CustomVilkarsVurdertePeriode | TidslinjePeriode | undefined) => {
+      const valgt = periode
+        ? vilkarsVurdertePerioder?.find(p => p.fom === periode.fom && p.tom === periode.tom)
+        : undefined;
+
+      setValgtPeriode(valgt ?? null);
+      initializeValgtPeriodeForm(valgt);
+    },
+    [initializeValgtPeriodeForm, vilkarsVurdertePerioder],
+  );
+
+  useEffect(() => {
+    const periode = vilkarsVurdertePerioder?.find(harApentAksjonspunkt);
+    if (periode) {
+      setPeriode(periode);
     }
-  }
+    // Skal kun kjøre ved mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  componentDidUpdate(prevProps: OwnProps & InjectedFormProps) {
-    const { vilkarsVurdertePerioder } = this.props;
-    if (!prevProps.vilkarsVurdertePerioder && vilkarsVurdertePerioder) {
-      this.setPeriode(vilkarsVurdertePerioder.find(harApentAksjonspunkt));
+  const previousVilkarsVurdertePerioder = usePrevious(vilkarsVurdertePerioder);
+
+  useEffect(() => {
+    if (!previousVilkarsVurdertePerioder && vilkarsVurdertePerioder) {
+      const periode = vilkarsVurdertePerioder.find(harApentAksjonspunkt);
+      if (periode) {
+        setPeriode(periode);
+      }
     }
-  }
+  }, [previousVilkarsVurdertePerioder, vilkarsVurdertePerioder, setPeriode]);
 
-  setPeriode = (periode: CustomVilkarsVurdertePeriode | TidslinjePeriode) => {
-    const { vilkarsVurdertePerioder } = this.props;
-    const valgt = periode
-      ? vilkarsVurdertePerioder.find(p => p.fom === periode.fom && p.tom === periode.tom)
-      : undefined;
-    this.setState((state: any) => ({ ...state, valgtPeriode: valgt }));
-    this.initializeValgtPeriodeForm(valgt);
+  const togglePeriode = () => {
+    const periode = valgtPeriode ? undefined : vilkarsVurdertePerioder?.[0];
+    setPeriode(periode);
   };
 
-  togglePeriode = () => {
-    const { vilkarsVurdertePerioder } = this.props;
-    const { valgtPeriode } = this.state;
-    const periode = valgtPeriode ? undefined : vilkarsVurdertePerioder[0];
-    this.setPeriode(periode);
+  const setNestePeriode = () => {
+    const index = vilkarsVurdertePerioder.findIndex(p => p.fom === valgtPeriode?.fom && p.tom === valgtPeriode?.tom);
+    setPeriode(vilkarsVurdertePerioder[index + 1]);
   };
 
-  setNestePeriode = () => {
-    const { vilkarsVurdertePerioder } = this.props;
-    const { valgtPeriode } = this.state;
-    const index = vilkarsVurdertePerioder.findIndex(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom);
-    this.setPeriode(vilkarsVurdertePerioder[index + 1]);
+  const setForrigePeriode = () => {
+    const index = vilkarsVurdertePerioder.findIndex(p => p.fom === valgtPeriode?.fom && p.tom === valgtPeriode?.tom);
+    setPeriode(vilkarsVurdertePerioder[index - 1]);
   };
 
-  setForrigePeriode = () => {
-    const { vilkarsVurdertePerioder } = this.props;
-    const { valgtPeriode } = this.state;
-    const index = vilkarsVurdertePerioder.findIndex(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom);
-    this.setPeriode(vilkarsVurdertePerioder[index - 1]);
-  };
-
-  oppdaterPeriode = (values: any) => {
-    const { vilkarsVurdertePerioder, reduxFormChange: formChange, behandlingFormPrefix } = this.props;
+  const oppdaterPeriode = (values: any) => {
+    const { reduxFormChange: formChange, behandlingFormPrefix } = props;
     const { ...verdier } = omit(values, 'erSplittet') as CustomVilkarsVurdertePeriode;
 
     const otherThanUpdated = vilkarsVurdertePerioder.filter(o => o.fom !== verdier.fom && o.tom !== verdier.tom);
     const sortedActivities = otherThanUpdated.concat(verdier).sort(sortPeriods);
     formChange(`${behandlingFormPrefix}.${TILBAKEKREVING_FORM_NAME}`, 'vilkarsVurdertePerioder', sortedActivities);
-    this.togglePeriode();
+    togglePeriode();
 
     const periodeMedApenAksjonspunkt = sortedActivities.find(harApentAksjonspunkt);
     if (periodeMedApenAksjonspunkt) {
-      this.setPeriode(periodeMedApenAksjonspunkt);
+      setPeriode(periodeMedApenAksjonspunkt);
     }
   };
 
-  initializeValgtPeriodeForm = (valgtPeriode: CustomVilkarsVurdertePeriode) => {
-    const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, valgtPeriode);
-  };
-
-  oppdaterSplittedePerioder = (perioder: any) => {
-    const { vilkarsVurdertePerioder, reduxFormChange: formChange, behandlingFormPrefix } = this.props;
-    const { valgtPeriode } = this.state;
+  const oppdaterSplittedePerioder = (perioder: any) => {
+    const { reduxFormChange: formChange, behandlingFormPrefix } = props;
 
     const periode = vilkarsVurdertePerioder.find(
-      (p: CustomVilkarsVurdertePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
+      (p: CustomVilkarsVurdertePeriode) => p.fom === valgtPeriode?.fom && p.tom === valgtPeriode?.tom,
     );
     const nyePerioder = perioder.map((p: CustomVilkarsVurdertePeriode) => ({
       ...emptyFeltverdiOmFinnes(periode),
@@ -211,111 +228,92 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
     }));
 
     const otherThanUpdated = vilkarsVurdertePerioder.filter(
-      o => o.fom !== valgtPeriode.fom && o.tom !== valgtPeriode.tom,
+      o => o.fom !== valgtPeriode?.fom && o.tom !== valgtPeriode?.tom,
     );
     const sortedActivities = otherThanUpdated.concat(nyePerioder).sort(sortPeriods);
 
-    this.togglePeriode();
+    togglePeriode();
     formChange(`${behandlingFormPrefix}.${TILBAKEKREVING_FORM_NAME}`, 'vilkarsVurdertePerioder', sortedActivities);
-    this.setPeriode(nyePerioder[0]);
+    setPeriode(nyePerioder[0]);
   };
 
-  render() {
-    const {
-      behandlingFormPrefix,
-      readOnly,
-      readOnlySubmitButton,
-      antallPerioderMedAksjonspunkt,
-      merknaderFraBeslutter,
-      vilkarsVurdertePerioder,
-      dataForDetailForm,
-      navBrukerKjonn,
-      behandlingId,
-      behandlingVersjon,
-      alleKodeverk,
-      beregnBelop,
-      ...formProps
-    } = this.props;
-    const { valgtPeriode } = this.state;
+  const perioderFormatertForTidslinje = formaterPerioderForTidslinje(vilkarsVurdertePerioder, dataForDetailForm);
+  const isApOpen = perioderFormatertForTidslinje.some((p: TidslinjePeriode) => p.isAksjonspunktOpen);
+  const valgtPeriodeFormatertForTidslinje = valgtPeriode
+    ? perioderFormatertForTidslinje.find(
+        (p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
+      )
+    : undefined;
 
-    const perioderFormatertForTidslinje = formaterPerioderForTidslinje(vilkarsVurdertePerioder, dataForDetailForm);
-    const isApOpen = perioderFormatertForTidslinje.some((p: TidslinjePeriode) => p.isAksjonspunktOpen);
-    const valgtPeriodeFormatertForTidslinje = valgtPeriode
-      ? perioderFormatertForTidslinje.find(
-          (p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
-        )
-      : undefined;
-
-    return (
-      <form onSubmit={formProps.handleSubmit}>
-        <FadingPanel>
-          <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
-            <Heading size="small" level="2">
-              <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
-            </Heading>
-            <VerticalSpacer twentyPx />
-            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-              {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}
-            </AksjonspunktHelpText>
-            <VerticalSpacer twentyPx />
-            {vilkarsVurdertePerioder && (
-              <>
-                <TilbakekrevingTimelinePanel
-                  perioder={perioderFormatertForTidslinje}
-                  valgtPeriode={valgtPeriodeFormatertForTidslinje}
-                  setPeriode={this.setPeriode}
-                  toggleDetaljevindu={this.togglePeriode}
-                  hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
-                  kjonn={navBrukerKjonn}
+  return (
+    <form onSubmit={formProps.handleSubmit}>
+      <FadingPanel>
+        <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
+          <Heading size="small" level="2">
+            <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
+          </Heading>
+          <VerticalSpacer twentyPx />
+          <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+            {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}
+          </AksjonspunktHelpText>
+          <VerticalSpacer twentyPx />
+          {vilkarsVurdertePerioder && (
+            <>
+              <TilbakekrevingTimelinePanel
+                perioder={perioderFormatertForTidslinje}
+                valgtPeriode={valgtPeriodeFormatertForTidslinje}
+                setPeriode={setPeriode}
+                toggleDetaljevindu={togglePeriode}
+                hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
+                kjonn={navBrukerKjonn}
+              />
+              {valgtPeriode && (
+                <TilbakekrevingPeriodeForm
+                  key={valgtPeriodeFormatertForTidslinje?.id}
+                  periode={valgtPeriode}
+                  data={dataForDetailForm?.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)}
+                  behandlingFormPrefix={behandlingFormPrefix}
+                  antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
+                  readOnly={readOnly}
+                  setNestePeriode={setNestePeriode}
+                  setForrigePeriode={setForrigePeriode}
+                  skjulPeriode={togglePeriode}
+                  oppdaterPeriode={oppdaterPeriode}
+                  oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                  alleKodeverk={alleKodeverk}
+                  beregnBelop={beregnBelop}
+                  vilkarsVurdertePerioder={vilkarsVurdertePerioder}
                 />
-                {valgtPeriode && (
-                  <TilbakekrevingPeriodeForm
-                    key={valgtPeriodeFormatertForTidslinje.id}
-                    periode={valgtPeriode}
-                    data={dataForDetailForm.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)}
-                    behandlingFormPrefix={behandlingFormPrefix}
-                    antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
-                    readOnly={readOnly}
-                    setNestePeriode={this.setNestePeriode}
-                    setForrigePeriode={this.setForrigePeriode}
-                    skjulPeriode={this.togglePeriode}
-                    oppdaterPeriode={this.oppdaterPeriode}
-                    oppdaterSplittedePerioder={this.oppdaterSplittedePerioder}
-                    behandlingId={behandlingId}
-                    behandlingVersjon={behandlingVersjon}
-                    alleKodeverk={alleKodeverk}
-                    beregnBelop={beregnBelop}
-                    vilkarsVurdertePerioder={vilkarsVurdertePerioder}
-                  />
-                )}
-              </>
-            )}
-            <VerticalSpacer twentyPx />
-            {formProps.error && (
-              <>
-                <Alert size="small" variant="error">
-                  <FormattedMessage id={formProps.error} />
-                </Alert>
-                <VerticalSpacer twentyPx />
-              </>
-            )}
-            <ProsessStegSubmitButton
-              formName={TILBAKEKREVING_FORM_NAME}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
-              isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-          </FaktaGruppe>
-        </FadingPanel>
-      </form>
-    );
-  }
-}
+              )}
+            </>
+          )}
+          <VerticalSpacer twentyPx />
+          {formProps.error && (
+            <>
+              <Alert size="small" variant="error">
+                <FormattedMessage id={formProps.error} />
+              </Alert>
+              <VerticalSpacer twentyPx />
+            </>
+          )}
+          <ProsessStegSubmitButton
+            formName={TILBAKEKREVING_FORM_NAME}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            isReadOnly={readOnly}
+            isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
+            isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
+        </FaktaGruppe>
+      </FadingPanel>
+    </form>
+  );
+};
 
 export const transformValues = (
   values: { vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[] },
