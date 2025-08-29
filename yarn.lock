@@ -1826,7 +1826,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     formik: "npm:2.4.6"
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
@@ -2298,7 +2298,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     lodash: "npm:4.17.21"
     prop-types: "npm:15.8.1"
     react: "npm:19.1.1"
@@ -3308,7 +3308,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     lodash: "npm:4.17.21"
     react: "npm:19.1.1"
     react-collapse: "npm:5.1.1"
@@ -3330,7 +3330,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     msw: "npm:2.10.5"
     react: "npm:19.1.1"
     react-collapse: "npm:5.1.1"
@@ -3356,7 +3356,7 @@ __metadata:
     axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     msw: "npm:2.10.5"
     react: "npm:19.1.1"
     react-collapse: "npm:5.1.1"
@@ -3376,7 +3376,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     msw: "npm:2.10.5"
     react: "npm:19.1.1"
     react-collapse: "npm:5.1.1"
@@ -3399,7 +3399,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     msw: "npm:2.10.5"
     object-hash: "npm:3.0.0"
     react: "npm:19.1.1"
@@ -3449,7 +3449,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.85.5"
     "@types/object-hash": "npm:^3.0.6"
     axios: "npm:1.11.0"
-    dayjs: "npm:^1.11.14"
+    dayjs: "npm:^1.11.15"
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.1"
     react-hook-form: "npm:7.62.0"
@@ -3468,7 +3468,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/lib@workspace:packages/v2/lib"
   dependencies:
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
   languageName: unknown
   linkType: soft
 
@@ -3541,7 +3541,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.28.1"
     "@navikt/ds-react": "npm:7.28.1"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     lodash: "npm:4.17.21"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
@@ -3597,7 +3597,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.14"
+    dayjs: "npm:1.11.15"
     react: "npm:19.1.1"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.1.1"
@@ -3690,8 +3690,8 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:^11.1.5"
     "@navikt/ft-ui-komponenter": "npm:^6.2.0"
-    "@sentry/browser": "npm:10.6.0"
-    "@sentry/react": "npm:10.6.0"
+    "@sentry/browser": "npm:10.8.0"
+    "@sentry/react": "npm:10.8.0"
     "@tanstack/react-query": "npm:^5.85.5"
     axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
@@ -3757,8 +3757,8 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:^9.1.4"
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@navikt/ft-ui-komponenter": "npm:^6.2.0"
-    "@sentry/browser": "npm:10.6.0"
-    "@sentry/react": "npm:10.6.0"
+    "@sentry/browser": "npm:10.8.0"
+    "@sentry/react": "npm:10.8.0"
     "@tanstack/react-query": "npm:^5.85.5"
     axios: "npm:1.11.0"
     classnames: "npm:2.5.1"
@@ -4319,10 +4319,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rolldown/pluginutils@npm:1.0.0-beta.32":
-  version: 1.0.0-beta.32
-  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.32"
-  checksum: 10/c0bdfda4ed00f1c06810ef2df0fe7133bd3253d54d82e3ca9e5d6e40560ea809997a2267927e83c3f3e5d3fb1df9d5da5251dc734150cca0b1a9c44947ade22f
+"@rolldown/pluginutils@npm:1.0.0-beta.34":
+  version: 1.0.0-beta.34
+  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.34"
+  checksum: 10/8ac36812fc8670f7b1617c0f37457ba1d570c9ede08d20316aca3d69b01b0adff61f7d1810d1eadc6927e4f108d6ea0df9131b7f1211ac0f080e8061308e0b30
   languageName: node
   linkType: hard
 
@@ -4664,54 +4664,54 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry-internal/browser-utils@npm:10.6.0"
+"@sentry-internal/browser-utils@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry-internal/browser-utils@npm:10.8.0"
   dependencies:
-    "@sentry/core": "npm:10.6.0"
-  checksum: 10/1128ca29e07c1c0dda872f6cd00f4da89682ea660155820603e094f460313f50ff7f06767721d1b57e6ac6b3dc8029a20faaa6f1009c823d257bf93fe3a88992
+    "@sentry/core": "npm:10.8.0"
+  checksum: 10/eac723040bdb031a063561a0cf592397573f8c544ca01e1973354c61d85390bb02683c45ef8ba536e8b8cf2ef7d0ce399abebfce7d8dea065dc4f876d8344d0f
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry-internal/feedback@npm:10.6.0"
+"@sentry-internal/feedback@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry-internal/feedback@npm:10.8.0"
   dependencies:
-    "@sentry/core": "npm:10.6.0"
-  checksum: 10/a568db12def5ef831f49e5f0fba9bfaada523f2b9eb35b73c9723bacf3e94efe44a0cf84aa7c73c491dc5acfe05f6de24a234a73e13eb9864c62de4831f7f9ef
+    "@sentry/core": "npm:10.8.0"
+  checksum: 10/b52f53497516ec495354da4b599aba9d2573ab95fc466ef93c4c1f0f1cd5f04e394b47526655edd47d9c59817e0450feda4a2f8af57ea44539986633848f68c3
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay-canvas@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry-internal/replay-canvas@npm:10.6.0"
+"@sentry-internal/replay-canvas@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry-internal/replay-canvas@npm:10.8.0"
   dependencies:
-    "@sentry-internal/replay": "npm:10.6.0"
-    "@sentry/core": "npm:10.6.0"
-  checksum: 10/d1063bcfecc67224f900d652cad941b0006ea190dc7290991849e7c34357c7be25862d5b1237e30bdba46b3d470a3181e6dba76c5816bab8a8e787b4b03487e8
+    "@sentry-internal/replay": "npm:10.8.0"
+    "@sentry/core": "npm:10.8.0"
+  checksum: 10/6b6e4377503e682b884249b07be70447674915436cb357b4a3e04ce24d621e1494b16354879ddee4f17c291c3c8df8d58d4d5ef409214dcba333f33d361b7398
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry-internal/replay@npm:10.6.0"
+"@sentry-internal/replay@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry-internal/replay@npm:10.8.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.6.0"
-    "@sentry/core": "npm:10.6.0"
-  checksum: 10/6dca9c3723888a78b3b8b20e9d197ec986a73a30f8184317489da4ad7f361287aff724cd179a3f6b67d989e603caf5330d2a36fe9d6d7a15bf9240205688f236
+    "@sentry-internal/browser-utils": "npm:10.8.0"
+    "@sentry/core": "npm:10.8.0"
+  checksum: 10/6fde65512aa01dc6ce619af2e88656e55f1c158b079ca9cdfaf21854911f8ff5232bd50c48621822092ef85805a9a7a9da7bc0b8576686d7b7586824fe501939
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry/browser@npm:10.6.0"
+"@sentry/browser@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry/browser@npm:10.8.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.6.0"
-    "@sentry-internal/feedback": "npm:10.6.0"
-    "@sentry-internal/replay": "npm:10.6.0"
-    "@sentry-internal/replay-canvas": "npm:10.6.0"
-    "@sentry/core": "npm:10.6.0"
-  checksum: 10/5926a8252e7a2a4082b198022f472904739256e641e0d1618342b77d14279122a998b8fe7a1fbbe208e76e4ccf8b16fe54943de5fa9129c44f9e1284c85d7cdc
+    "@sentry-internal/browser-utils": "npm:10.8.0"
+    "@sentry-internal/feedback": "npm:10.8.0"
+    "@sentry-internal/replay": "npm:10.8.0"
+    "@sentry-internal/replay-canvas": "npm:10.8.0"
+    "@sentry/core": "npm:10.8.0"
+  checksum: 10/2600a7133aaa889a79889f80fffa1abbbf4aa56b75edfc3e9075ef8d2eefe8467198f9b2e97a14cffed5f2990c2cf6899263e36d89eeacb9649744d71ea1886b
   languageName: node
   linkType: hard
 
@@ -4811,23 +4811,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry/core@npm:10.6.0"
-  checksum: 10/5d77f2844353de5e61eae5b2e711815b248a18cfb9cba21efb5957955e152f3b8a509ad9e63427f4f9c4e815c62ae9ccc4a991a08fc4063b38ff6f384cd1c918
+"@sentry/core@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry/core@npm:10.8.0"
+  checksum: 10/a6c14b3d92b723a0daa0f07267d4f7db628931bc80941eacc68ac90cf4f574eddbbe8b5085bd8b695fa203b085dc47a5599ba15944490311891c8100e31f6ce8
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:10.6.0":
-  version: 10.6.0
-  resolution: "@sentry/react@npm:10.6.0"
+"@sentry/react@npm:10.8.0":
+  version: 10.8.0
+  resolution: "@sentry/react@npm:10.8.0"
   dependencies:
-    "@sentry/browser": "npm:10.6.0"
-    "@sentry/core": "npm:10.6.0"
+    "@sentry/browser": "npm:10.8.0"
+    "@sentry/core": "npm:10.8.0"
     hoist-non-react-statics: "npm:^3.3.2"
   peerDependencies:
     react: ^16.14.0 || 17.x || 18.x || 19.x
-  checksum: 10/601d213ddf9e4c7277feef8bd1af1c92581676e2aab0b983bcb8604da1fdf56e68463fc99c9984068c86588fed443410186c1ff8988bece5c13c2a0f1917bccf
+  checksum: 10/fd98fab9db84d090f3fc02963705b6c42f2928d8f8cd4ce30d4f941c7598b9c63e3dd2b42ce0f5f81d4282871ef40a176dbee0dab1a83fdc3a29457d22859198
   languageName: node
   linkType: hard
 
@@ -6034,19 +6034,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@vitejs/plugin-react@npm:5.0.1"
+"@vitejs/plugin-react@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@vitejs/plugin-react@npm:5.0.2"
   dependencies:
     "@babel/core": "npm:^7.28.3"
     "@babel/plugin-transform-react-jsx-self": "npm:^7.27.1"
     "@babel/plugin-transform-react-jsx-source": "npm:^7.27.1"
-    "@rolldown/pluginutils": "npm:1.0.0-beta.32"
+    "@rolldown/pluginutils": "npm:1.0.0-beta.34"
     "@types/babel__core": "npm:^7.20.5"
     react-refresh: "npm:^0.17.0"
   peerDependencies:
     vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: 10/4dcfd4931795b9db10a3098e8254768f501d6d0e7ba9eca75a7eb3282013696fe4f9dada98cfe8363165a5f4fb53d8dd316642a28acceedb0652547f5d1cbf71
+  checksum: 10/530788cc96814c03195e2eb55b1f24c2c3f88e30c186aba2a17fd4816f0b22b032e7deb5f260129296426d47c2d0f6915728ed40c54ab700253397123980f866
   languageName: node
   linkType: hard
 
@@ -8035,10 +8035,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.14, dayjs@npm:^1.11.14":
-  version: 1.11.14
-  resolution: "dayjs@npm:1.11.14"
-  checksum: 10/54641b57829f841a7a40580429713b8be5ef661d584471a2a3bf45b4f5382b7e633852a0ffafea5ab35375fd87bf173711f669b73b684d7109b9db022e353968
+"dayjs@npm:1.11.15, dayjs@npm:^1.11.15":
+  version: 1.11.15
+  resolution: "dayjs@npm:1.11.15"
+  checksum: 10/09e411cf71db962465563fa968276cf9162721bd5cff514bf94e6ed087b5e7d58135cbb5739ad380e44fa8148858378f3c36e2992e263dac64c06ba133a2ae8d
   languageName: node
   linkType: hard
 
@@ -12099,9 +12099,9 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:^10.1.3"
     "@playwright/test": "npm:^1.55.0"
     "@popperjs/core": "npm:2.11.8"
-    "@sentry/browser": "npm:10.6.0"
+    "@sentry/browser": "npm:10.8.0"
     "@sentry/cli": "npm:2.52.0"
-    "@sentry/react": "npm:10.6.0"
+    "@sentry/react": "npm:10.8.0"
     "@storybook/addon-a11y": "npm:9.1.3"
     "@storybook/addon-docs": "npm:9.1.3"
     "@storybook/cli": "npm:9.1.3"
@@ -12118,7 +12118,7 @@ __metadata:
     "@types/react": "npm:19.1.11"
     "@types/react-collapse": "npm:5.0.4"
     "@types/redux-form": "npm:8.3.11"
-    "@vitejs/plugin-react": "npm:^5.0.1"
+    "@vitejs/plugin-react": "npm:^5.0.2"
     autoprefixer: "npm:^10.4.21"
     axios: "npm:1.11.0"
     axios-mock-adapter: "npm:2.1.0"
