@@ -29,7 +29,7 @@
 
 .uttakDetaljerDetailSum {
   padding: var(--ax-space-24) 0 var(--ax-space-4);
-  border-bottom: 3px solid var(--ax-text-info-icon);
+  border-bottom: 3px solid var(--ax-text-info-decoration);
   display: inline-block;
   vertical-align: middle;
 }
