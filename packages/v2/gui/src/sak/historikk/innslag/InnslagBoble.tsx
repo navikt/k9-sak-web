@@ -3,7 +3,11 @@ import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, Chat, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
-import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from '../historikkTypeBerikning.js';
+import type {
+  KlageHistorikkInnslagV2,
+  SakHistorikkInnslagV2,
+  TilbakeHistorikkInnslagV2,
+} from '../historikkTypeBerikning.js';
 import { Avatar } from '../snakkeboble/Avatar.jsx';
 import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
 import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
@@ -11,7 +15,7 @@ import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
 
 export interface InnslagBobleProps {
-  readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2;
+  readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2 | TilbakeHistorikkInnslagV2;
   readonly kjønn: Kjønn;
   readonly behandlingLocation: InnslagLinjeProps['behandlingLocation'];
   readonly createLocationForSkjermlenke: InnslagLinjeProps['createLocationForSkjermlenke'];

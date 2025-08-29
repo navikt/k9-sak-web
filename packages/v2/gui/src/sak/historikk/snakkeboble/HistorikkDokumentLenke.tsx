@@ -2,10 +2,10 @@ import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { FileIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack } from '@navikt/ds-react';
 import { DOCUMENT_SERVER_URL_K9, DOCUMENT_SERVER_URL_UNG } from '../documentServerUrl.js';
-import type { HistorikkInnslagDokumentLink } from '../tilbake/historikkinnslagTsTypeV2.js';
+import type { DokumentLink } from '@k9-sak-web/backend/combined/sak/historikk/DokumentLink.js';
 
 interface Props {
-  dokumentLenke: HistorikkInnslagDokumentLink;
+  dokumentLenke: DokumentLink;
   saksnummer: string;
 }
 

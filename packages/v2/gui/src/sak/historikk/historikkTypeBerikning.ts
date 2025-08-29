@@ -1,8 +1,9 @@
 import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2 as HistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as K9KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type { HistorikkinnslagV2 as TilbakeHistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/tilbake/historikkinnslagTsTypeV2.js';
+import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as K9TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_Linje as GeneratedK9SakLinje } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2_Linje as GeneratedK9KlageLinje } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto_Linje as GeneratedK9TilbakeLinje } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type {
   k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_behandling_aksjonspunkt_SkjermlenkeType as K9SakKodeverdiSomObjektSkjermlenkeType,
   k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_historikk_HistorikkAktør as K9SakKodeverdiSomObjektHistorikkAktør,
@@ -11,6 +12,12 @@ import type {
   k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_behandling_aksjonspunkt_SkjermlenkeType as K9KlageKodeverdiSomObjektSkjermlenkeType,
   k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_historikk_HistorikkAktør as K9KlageKodeverdiSomObjektHistorikkAktør,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import {
+  type foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektForeldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType as K9TilbakeKodeverdiSomObjektSkjermlenkeType,
+  type foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektForeldrepenger_tilbakekreving_behandlingslager_historikk_HistorikkAktør as K9TilbakeKodeverdiSomObjektHistorikkAktør,
+  foreldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType as K9TilbakeSkjermlenkeType,
+  type foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto_HistorikkAktørDto,
+} from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 
 // Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend.
@@ -44,7 +51,7 @@ export type K9KlageHistorikkLinje = Omit<GeneratedK9KlageLinje, 'skjermlenkeType
     readonly skjermlenkeType?: K9KlageKodeverdiSomObjektSkjermlenkeType;
   };
 
-export type NyHistorikkLinje = K9SakHistorikkLinje | K9KlageHistorikkLinje;
+export type NyHistorikkLinje = K9SakHistorikkLinje | K9KlageHistorikkLinje | GeneratedK9TilbakeLinje;
 
 // Erstatter aktør.type enum med kodeverkoppslag
 type K9SakHistorikkAktør = Omit<HistorikkinnslagDtoV2['aktør'], 'type'> & {
@@ -55,20 +62,29 @@ type K9KlageHistorikkAktør = Omit<K9KlageHistorikkinnslagDtoV2['aktør'], 'type
   readonly type: K9KlageKodeverdiSomObjektHistorikkAktør;
 };
 
+type K9TilbakeHistorikkAktør = Omit<
+  foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto_HistorikkAktørDto,
+  'type'
+> & {
+  readonly type: K9TilbakeKodeverdiSomObjektHistorikkAktør;
+};
+
 // Erstatter linjer og aktør med berika typer
 export type SakHistorikkInnslagV2 = Omit<HistorikkinnslagDtoV2, 'linjer' | 'aktør'> &
   ErSak & {
     readonly linjer: K9SakHistorikkLinje[];
     readonly aktør: K9SakHistorikkAktør;
   };
-// Erstatter linjer og aktør med berika typer
 export type KlageHistorikkInnslagV2 = Omit<K9KlageHistorikkinnslagDtoV2, 'linjer' | 'aktør'> &
   ErKlage & {
     readonly linjer: K9KlageHistorikkLinje[];
     readonly aktør: K9KlageHistorikkAktør;
   };
-
-export type TilbakeHistorikkInnslagV2 = TilbakeHistorikkinnslagV2 & ErTilbakekreving;
+export type TilbakeHistorikkInnslagV2 = Omit<K9TilbakeHistorikkinnslagDto, 'aktør' | 'skjermlenke'> &
+  ErTilbakekreving & {
+    readonly aktør: K9TilbakeHistorikkAktør;
+    readonly skjermlenke: K9TilbakeKodeverdiSomObjektSkjermlenkeType;
+  };
 
 export type NyeUlikeHistorikkinnslagTyper = SakHistorikkInnslagV2 | KlageHistorikkInnslagV2 | TilbakeHistorikkInnslagV2;
 
@@ -110,6 +126,23 @@ export class HistorikkInnslagTypeBeriker {
       erKlage: true,
       linjer,
       aktør,
+    };
+  }
+
+  // for k9-tilbake historikk innslag: Utled kodeverk for skjermlenketype, sett på backend flagg
+  tilbakeHistorikkInnslagV2(innslag: K9TilbakeHistorikkinnslagDto): TilbakeHistorikkInnslagV2 {
+    const aktør: K9TilbakeHistorikkAktør = {
+      ...innslag.aktør,
+      type: this.kodeverkoppslag.k9tilbake.historikkAktører(innslag.aktør.type),
+    };
+    const skjermlenke = this.kodeverkoppslag.k9tilbake.skjermlenkeTyper(
+      innslag.skjermlenke ?? K9TilbakeSkjermlenkeType.UDEFINERT,
+    );
+    return {
+      ...innslag,
+      erTilbakekreving: true,
+      aktør,
+      skjermlenke,
     };
   }
 }

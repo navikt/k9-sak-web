@@ -4,10 +4,12 @@ import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import {
   type KlageHistorikkInnslagV2,
   type SakHistorikkInnslagV2,
+  type TilbakeHistorikkInnslagV2,
 } from '../../sak/historikk/historikkTypeBerikning.js';
 import { HistorikkInnslagTypeBeriker } from '../../sak/historikk/historikkTypeBerikning.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 
 // Kopi av respons frå k9-sak backend i dev
 const fakeK9SakResponse: HentAlleInnslagV2Response = [
@@ -349,6 +351,74 @@ const fakeK9KlageResponse: KlageHistorikkinnslagDtoV2[] = [
   },
 ];
 
+// Kopiert ut frå verdikjede (og redusert litt), frå sak oppretta av test
+// TrekkAvKravMedTilbakekrevingTest.psb_trekk_av_krav_etter_at_perioden_er_godkjent_utbetalt
+const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:48.434',
+    dokumenter: [
+      {
+        tag: 'Varselbrev Tilbakekreving',
+        journalpostId: '227173608',
+        dokumentId: '227173611',
+        utgått: false,
+      },
+    ],
+    tittel: 'Brev er sendt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:48.883',
+    dokumenter: [],
+    tittel: 'Behandlingen er gjenopptatt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-03-31T13:28:16.269',
+    dokumenter: [],
+    tittel: 'Behandlingen er satt på vent 22.04.2025',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: 'Venter på tilbakemelding fra bruker.',
+      },
+    ],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-08-29T10:41:30.155',
+    dokumenter: [],
+    tittel: 'Behandling er gjenopptatt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:42.779',
+    dokumenter: [],
+    tittel: 'Tilbakekreving opprettet',
+    linjer: [],
+  },
+];
+
 export class FakeHistorikkBackend implements HistorikkBackendApi {
   #beriker: HistorikkInnslagTypeBeriker;
   constructor(kodeverkoppslag: K9Kodeverkoppslag) {
@@ -363,5 +433,10 @@ export class FakeHistorikkBackend implements HistorikkBackendApi {
   async hentAlleInnslagK9klage(saksnummer: string): Promise<KlageHistorikkInnslagV2[]> {
     ignoreUnusedDeclared(saksnummer);
     return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.klageHistorikkInnslagV2(innslag)));
+  }
+
+  async hentAlleInnslagK9tilbake(saksnummer: string): Promise<TilbakeHistorikkInnslagV2[]> {
+    ignoreUnusedDeclared(saksnummer);
+    return Promise.resolve(fakeK9TilbakeResponse.map(innslag => this.#beriker.tilbakeHistorikkInnslagV2(innslag)));
   }
 }
