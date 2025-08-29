@@ -1,7 +1,6 @@
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { FeilutbetalingPerioderFormImpl } from './FeilutbetalingPerioderForm';
 
@@ -9,6 +8,10 @@ const periode = {
   belop: 51000,
   fom: '2016-03-16',
   tom: '2016-05-26',
+  feilutbetalingÅrsakDto: {
+    hendelseType: { kode: 'MEDLEMSKAP_VILKAARET_TYPE', kodeverk: '', navn: '' },
+    hendelseUndertype: { kode: 'UNDER_TYPE', kodeverk: '', navn: '' },
+  },
 };
 
 const mockProps = {
@@ -19,6 +22,7 @@ const mockProps = {
   readOnly: false,
   onChangeÅrsak: vi.fn(),
   onChangeUnderÅrsak: vi.fn(),
+  årsak: '',
 };
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {
