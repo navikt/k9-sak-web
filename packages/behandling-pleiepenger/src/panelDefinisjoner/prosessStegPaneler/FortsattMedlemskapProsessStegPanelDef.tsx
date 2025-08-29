@@ -7,12 +7,9 @@ class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getKomponent = props => {
-    if (props.featureToggles.BRUK_V2_VILKAR_OVERSTYRING) {
-      const deepCopyProps = JSON.parse(JSON.stringify(props));
-      konverterKodeverkTilKode(deepCopyProps, false);
-      return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, usev2Panel: true });
-    }
-    return this.overstyringDef.getKomponent(props);
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps });
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR];

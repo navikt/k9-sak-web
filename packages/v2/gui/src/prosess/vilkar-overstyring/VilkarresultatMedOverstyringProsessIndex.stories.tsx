@@ -12,6 +12,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { action } from 'storybook/actions';
 import { expect } from 'storybook/test';
+import { asyncAction } from '../../storybook/asyncAction';
 import VilkarresultatMedOverstyringProsessIndex, {
   type VilkarresultatMedOverstyringProsessIndexProps,
 } from './VilkarresultatMedOverstyringProsessIndex';
@@ -87,7 +88,7 @@ const defaultArgs = {
     fom: '2019-01-01',
   },
   aksjonspunkter: [],
-  submitCallback: action('button-click'),
+  submitCallback: asyncAction('Send inn skjema'),
   lovReferanse: '§§ Dette er en lovreferanse',
   visPeriodisering: true,
   overrideReadOnly: false,

@@ -1,7 +1,8 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../../data/pleiepengerSluttfaseBehandlingApi';
 
 class MedlemskapPanelDef extends ProsessStegPanelDef {
@@ -9,9 +10,13 @@ class MedlemskapPanelDef extends ProsessStegPanelDef {
 
   getId = () => 'MEDLEMSKAP';
 
-  getTekstKode = () => 'Inngangsvilkar.Medlemskapsvilkaret';
+  getTekstKode = () => 'Medlemskap';
 
-  getKomponent = props => this.overstyringDef.getKomponent(props);
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps });
+  };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR];
 

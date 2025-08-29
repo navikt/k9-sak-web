@@ -59,6 +59,7 @@ export enum OpplaeringspengerBehandlingApiKeys {
   GJENNOMGÅTT_OPPLÆRING = 'GJENNOMGÅTT_OPPLÆRING',
   NØDVENDIG_OPPLÆRING = 'NØDVENDIG_OPPLÆRING',
   REISETID = 'REISETID',
+  INNTEKTSGRADERING = 'INNTEKTSGRADERING',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -110,6 +111,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('gjennomgått-opplæring', OpplaeringspengerBehandlingApiKeys.GJENNOMGÅTT_OPPLÆRING)
   .withRel('nødvendig-opplæring', OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING)
   .withRel('reisetid', OpplaeringspengerBehandlingApiKeys.REISETID)
+  .withRel('pleiepenger-inntektsgradering', OpplaeringspengerBehandlingApiKeys.INNTEKTSGRADERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OpplaeringspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

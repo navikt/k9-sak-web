@@ -32,7 +32,7 @@ export interface InstitusjonAksjonspunktPayload {
   redigertInstitusjonNavn?: string;
   organisasjonsnummer: string | null;
   journalpostId: {
-    journalpostId: string;
+    journalpostId: string | null;
   };
 }
 

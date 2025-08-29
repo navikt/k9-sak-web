@@ -30,9 +30,9 @@ const InstitusjonAlerts = ({ valgtVurdering, vurderinger }: FaktaInstitusjonAler
     løsAksjonspunkt9300({
       godkjent: utledGodkjentInstitusjon(vurderinger[0]?.resultat) === 'ja' ? true : false,
       journalpostId: {
-        journalpostId: vurderinger[0]?.journalpostId.journalpostId ?? '',
+        journalpostId: vurderinger[0]?.journalpostId.journalpostId ?? null,
       },
-      begrunnelse: vurderinger[0]?.begrunnelse ?? '',
+      begrunnelse: vurderinger[0]?.begrunnelse ?? null,
       organisasjonsnummer: vurderinger[0]?.organisasjonsnummer ?? null,
     });
   };

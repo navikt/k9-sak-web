@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import { VilkarresultatMedOverstyringProsessIndex as VilkarresultatMedOverstyringProsessIndexV2 } from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { ProsessStegPanelDef } from './ProsessStegDef';
 
@@ -34,12 +33,7 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
   getOverstyrVisningAvKomponent = ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }): boolean =>
     vilkarForSteg.length > 0 && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg);
 
-  getKomponent = (props): ReactNode => {
-    if (props.usev2Panel) {
-      return <VilkarresultatMedOverstyringProsessIndexV2 {...props} />;
-    }
-    return <VilkarresultatMedOverstyringProsessIndex {...props} />;
-  };
+  getKomponent = (props): ReactNode => <VilkarresultatMedOverstyringProsessIndexV2 {...props} />;
 
   getData = ({
     vilkarForSteg,
