@@ -52,7 +52,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                 )}
               </BodyShort>
               <BodyShort size="small">
-                Inntekt: {bruttoInntekt && løpendeInntekt && formatNOK(bruttoInntekt - løpendeInntekt)}
+                Inntekt: {formatNOK(inntForhold.bruttoInntekt)}
               </BodyShort>
             </Box.New>
           );
