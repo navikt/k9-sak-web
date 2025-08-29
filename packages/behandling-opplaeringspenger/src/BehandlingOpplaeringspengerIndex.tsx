@@ -35,6 +35,7 @@ const opplaeringspengerData = [
   { key: OpplaeringspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OpplaeringspengerBehandlingApiKeys.UTTAK },
   { key: OpplaeringspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
+  { key: OpplaeringspengerBehandlingApiKeys.INNTEKTSGRADERING },
 ];
 
 interface OwnProps {
