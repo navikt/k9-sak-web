@@ -3,9 +3,7 @@ import { useLocation } from 'react-router';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
-import ApplicationContextPath from '../../app/ApplicationContextPath';
 import { createLocationForSkjermlenke, pathToBehandling } from '../../app/paths';
-import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
 import {
   KlageHistorikkInnslagV2,
   NyeUlikeHistorikkinnslagTyper,
@@ -44,7 +42,6 @@ interface OwnProps {
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
   const historikkBackendApi: HistorikkBackendApi | null = useContext(HistorikkBackendApiContext);
-  const enabledApplicationContexts = useGetEnabledApplikasjonContext();
 
   if (historikkBackendApi == null) {
     throw new Error('HistorikkBackendApiContext ikke satt');
@@ -59,17 +56,13 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   const historikkK9KlageV2Query = useQuery({
     queryKey: ['historikk/k9klage/v2', saksnummer, behandlingId, behandlingVersjon],
     queryFn: () => historikkBackendApi.hentAlleInnslagK9klage(saksnummer),
-    enabled:
-      saksnummer != null && saksnummer.length > 0 && enabledApplicationContexts.includes(ApplicationContextPath.KLAGE),
+    enabled: saksnummer != null && saksnummer.length > 0,
   });
 
   const historikkK9TilbakeV2Query = useQuery({
     queryKey: ['historikk/k9tilbake/v2', saksnummer, behandlingId, behandlingVersjon],
     queryFn: () => historikkBackendApi.hentAlleInnslagK9tilbake(saksnummer),
-    enabled:
-      saksnummer != null &&
-      saksnummer.length > 0 &&
-      enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE),
+    enabled: saksnummer != null && saksnummer.length > 0,
   });
 
   const location = useLocation();
