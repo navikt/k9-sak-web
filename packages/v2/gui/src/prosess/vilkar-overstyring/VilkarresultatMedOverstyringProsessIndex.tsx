@@ -65,6 +65,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   visPeriodisering: boolean;
   vilkar: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
+  skjulOverstyring?: boolean;
 }
 
 export const VilkarresultatMedOverstyringProsessIndex = ({
@@ -83,6 +84,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
   visPeriodisering,
   vilkar,
   visAllePerioder,
+  skjulOverstyring = false,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -139,6 +141,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           panelTittelKode={panelTittelKode}
           periode={activePeriode}
           toggleOverstyring={toggleOverstyring}
+          skjulOverstyring={skjulOverstyring}
         />
         <VilkarresultatMedOverstyringFormPeriodisert
           key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}

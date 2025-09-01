@@ -13,7 +13,7 @@ class LangvarigSykdomPanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps });
+    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, skjulOverstyring: true });
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_LANGVARIG_SYK];
