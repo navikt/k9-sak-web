@@ -1,16 +1,27 @@
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FeilutbetalingAarsak } from './feilutbetalingAarsak';
+import { BehandlingFaktaPeriode } from './feilutbetalingFakta';
 import styles from './feilutbetalingPerioderTable.module.css';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.hendelseType.kode === årsakNavn);
   return årsak && årsak.hendelseUndertyper.length > 0 ? årsak.hendelseUndertyper : null;
 };
+
+interface FeilutbetalingPerioderFormImplProps {
+  periode: BehandlingFaktaPeriode;
+  årsaker: FeilutbetalingAarsak['hendelseTyper'];
+  årsak: string | null;
+  elementId: number;
+  readOnly: boolean;
+  onChangeÅrsak: (event: React.ChangeEvent<HTMLSelectElement>, elementId: number, årsak: string) => void;
+  onChangeUnderÅrsak: (event: React.ChangeEvent<HTMLSelectElement>, elementId: number, årsak: string) => void;
+}
 
 export const FeilutbetalingPerioderFormImpl = ({
   periode,
@@ -20,7 +31,7 @@ export const FeilutbetalingPerioderFormImpl = ({
   readOnly,
   onChangeÅrsak,
   onChangeUnderÅrsak,
-}) => {
+}: FeilutbetalingPerioderFormImplProps) => {
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
     <Table.Row shadeOnHover={false}>
@@ -62,17 +73,14 @@ export const FeilutbetalingPerioderFormImpl = ({
   );
 };
 
-FeilutbetalingPerioderFormImpl.propTypes = {
-  periode: PropTypes.shape().isRequired,
-  elementId: PropTypes.number.isRequired,
-  årsak: PropTypes.string,
-  årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  onChangeÅrsak: PropTypes.func.isRequired,
-  onChangeUnderÅrsak: PropTypes.func.isRequired,
-};
+interface OwnProps {
+  formName: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+  elementId: number;
+}
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: OwnProps) => ({
   årsak: behandlingFormValueSelector(
     ownProps.formName,
     ownProps.behandlingId,
