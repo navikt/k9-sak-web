@@ -35,8 +35,9 @@ const isHidden = (
   aksjonspunktCodes: AksjonspunktCodes[],
   aksjonspunktCode: string,
   vurderesIBehandlingen: boolean,
-  visOverstyring: boolean,
-) => (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen || !visOverstyring;
+  skjulOverstyring: boolean,
+) =>
+  (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen || skjulOverstyring;
 
 const vilkårResultatText = (originalErVilkarOk?: boolean, periode?: VilkårPeriodeDto) => {
   let text = 'Ikke behandlet';
@@ -68,7 +69,7 @@ interface VilkarresultatMedOverstyringHeaderProps {
   panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   periode?: VilkårPeriodeDto;
-  visOverstyring: boolean;
+  skjulOverstyring: boolean;
 }
 
 const VilkarresultatMedOverstyringHeader = ({
@@ -81,7 +82,7 @@ const VilkarresultatMedOverstyringHeader = ({
   toggleOverstyring,
   aksjonspunkter,
   periode,
-  visOverstyring = true,
+  skjulOverstyring = false,
 }: VilkarresultatMedOverstyringHeaderProps) => {
   const aksjonspunktCodes = aksjonspunkter
     .filter((a): a is { definisjon: AksjonspunktCodes } => a.definisjon !== undefined)
@@ -122,7 +123,7 @@ const VilkarresultatMedOverstyringHeader = ({
               aksjonspunktCodes,
               overstyringApKode,
               !!periode?.vurderesIBehandlingen,
-              visOverstyring,
+              skjulOverstyring,
             ) && (
               <Box.New marginBlock={'1 0'}>
                 <Button
