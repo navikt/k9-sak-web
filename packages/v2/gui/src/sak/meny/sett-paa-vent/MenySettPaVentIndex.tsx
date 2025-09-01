@@ -13,6 +13,7 @@ interface OwnProps {
   }) => Promise<any>;
   lukkModal: () => void;
   erTilbakekreving: boolean;
+  erKlage: boolean;
 }
 
 export const MenySettPaVentIndexV2 = ({
@@ -21,6 +22,7 @@ export const MenySettPaVentIndexV2 = ({
   settBehandlingPaVent,
   lukkModal,
   erTilbakekreving,
+  erKlage,
 }: OwnProps) => {
   const submit = useCallback(
     async (formValues: FormState) => {
@@ -43,6 +45,7 @@ export const MenySettPaVentIndexV2 = ({
       submitCallback={submit}
       cancelEvent={lukkModal}
       erTilbakekreving={erTilbakekreving}
+      erKlage={erKlage}
       hasManualPaVent
     />
   );

@@ -58,6 +58,7 @@ const BehandlingPaVent = ({ behandling, aksjonspunkter, settPaVent }: Behandling
       ventearsak={behandling.venteÅrsakKode}
       hasManualPaVent={erManueltSattPaVent}
       erTilbakekreving
+      erKlage={false}
       showModal
     />
   );
