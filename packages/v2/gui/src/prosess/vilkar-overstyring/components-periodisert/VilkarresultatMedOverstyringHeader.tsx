@@ -69,7 +69,7 @@ interface VilkarresultatMedOverstyringHeaderProps {
   panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   periode?: VilkårPeriodeDto;
-  skjulOverstyring: boolean;
+  skjulOverstyring?: boolean;
 }
 
 const VilkarresultatMedOverstyringHeader = ({

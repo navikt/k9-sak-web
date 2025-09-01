@@ -65,7 +65,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   visPeriodisering: boolean;
   vilkar: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
-  skjulOverstyring: boolean;
+  skjulOverstyring?: boolean;
 }
 
 export const VilkarresultatMedOverstyringProsessIndex = ({
