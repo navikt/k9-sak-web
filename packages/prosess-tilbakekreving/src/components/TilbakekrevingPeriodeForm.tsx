@@ -21,7 +21,7 @@ import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
 import { sif_tilbakekreving_behandlingslager_vilkår_kodeverk_VilkårResultat as VilkårResultat } from '@navikt/ung-tilbake-typescript-client/types';
 import moment from 'moment';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -118,29 +118,37 @@ interface DispatchProps {
   change: (form: string, field: string, value: any, touch?: boolean, persistentSubmitErrors?: boolean) => void;
 }
 
-interface OwnState {
-  showModal: boolean;
-}
+export const TilbakekrevingPeriodeFormImpl = (
+  props: OwnProps & DispatchProps & WrappedComponentProps & InjectedFormProps,
+) => {
+  const [showModal, setShowModal] = useState(false);
+  const {
+    valgtVilkarResultatType,
+    handletUaktsomhetGrad,
+    harGrunnerTilReduksjon,
+    skjulPeriode,
+    readOnly,
+    erBelopetIBehold,
+    erSerligGrunnAnnetValgt,
+    vilkarResultatTyper,
+    aktsomhetTyper,
+    sarligGrunnTyper,
+    reduserteBelop,
+    setNestePeriode,
+    setForrigePeriode,
+    oppdaterSplittedePerioder,
+    data,
+    andelSomTilbakekreves,
+    behandlingId,
+    behandlingVersjon,
+    beregnBelop,
+    intl,
+    vilkarsVurdertePerioder,
+    ...formProps
+  } = props;
 
-export class TilbakekrevingPeriodeFormImpl extends Component<
-  OwnProps & DispatchProps & WrappedComponentProps & InjectedFormProps,
-  OwnState
-> {
-  state = { showModal: false };
-
-  static defaultProps = {
-    erBelopetIBehold: undefined,
-    tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: undefined,
-    andelSomTilbakekreves: undefined,
-  };
-
-  resetFields = (valgtVerdi: string) => {
-    const {
-      behandlingFormPrefix,
-      clearFields: clearFormFields,
-      change: changeValue,
-      valgtVilkarResultatType,
-    } = this.props;
+  const resetFields = (valgtVerdi: string) => {
+    const { behandlingFormPrefix, clearFields: clearFormFields, change: changeValue, valgtVilkarResultatType } = props;
     const fields = [valgtVilkarResultatType];
 
     clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
@@ -158,33 +166,30 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     }
   };
 
-  saveOrToggleModal = () => {
-    const { showModal } = this.state;
-    const { data, tilbakekrevSelvOmBeloepErUnder4Rettsgebyr, antallPerioderMedAksjonspunkt, ...formProps } = this.props;
+  const saveOrToggleModal = () => {
+    const { data, tilbakekrevSelvOmBeloepErUnder4Rettsgebyr, antallPerioderMedAksjonspunkt, ...formProps } = props;
 
     if (
       antallPerioderMedAksjonspunkt > 1 &&
       data.erTotalBelopUnder4Rettsgebyr &&
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false
     ) {
-      this.setState((state: any) => ({ ...state, showModal: !showModal }));
+      setShowModal(show => !show);
     } else {
       // @ts-expect-error Kva med parametere?
       formProps.handleSubmit();
     }
   };
 
-  saveForm = () => {
-    const { showModal } = this.state;
-    const { ...formProps } = this.props;
-
-    this.setState((state: any) => ({ ...state, showModal: !showModal }));
+  const saveForm = () => {
+    const { ...formProps } = props;
+    setShowModal(show => !show);
     // @ts-expect-error Kva med parametere?
     formProps.handleSubmit();
   };
 
-  onEndrePeriodeForKopi = (event: any, vurdertePerioder: CustomVilkarsVurdertePeriode[]) => {
-    const { change: changeValue, periode } = this.props;
+  const onEndrePeriodeForKopi = (event: any, vurdertePerioder: CustomVilkarsVurdertePeriode[]) => {
+    const { change: changeValue, periode } = props;
 
     const fomTom = event.target.value.split('_');
     const kopierDenne = vurdertePerioder.find(
@@ -211,220 +216,193 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     event.preventDefault();
   };
 
-  render() {
-    const {
-      valgtVilkarResultatType,
-      handletUaktsomhetGrad,
-      harGrunnerTilReduksjon,
-      skjulPeriode,
-      readOnly,
-      erBelopetIBehold,
-      erSerligGrunnAnnetValgt,
-      vilkarResultatTyper,
-      aktsomhetTyper,
-      sarligGrunnTyper,
-      reduserteBelop,
-      setNestePeriode,
-      setForrigePeriode,
-      oppdaterSplittedePerioder,
-      data,
-      andelSomTilbakekreves,
-      behandlingId,
-      behandlingVersjon,
-      beregnBelop,
-      intl,
-      vilkarsVurdertePerioder,
-      ...formProps
-    } = this.props;
-    const { showModal } = this.state;
-    const vurdertePerioder = vilkarsVurdertePerioder.filter(
-      per => !per.erForeldet && per.valgtVilkarResultatType != null,
-    );
-    return (
-      <div className={styles.container}>
-        <TilbakekrevingTimelineData
-          periode={data}
-          callbackForward={setNestePeriode}
-          callbackBackward={setForrigePeriode}
-          oppdaterSplittedePerioder={oppdaterSplittedePerioder}
-          readOnly={readOnly}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          beregnBelop={beregnBelop}
-        />
-        <VerticalSpacer twentyPx />
-        {reduserteBelop?.map(belop => (
-          <React.Fragment key={belop.belop}>
-            <BodyShort size="small">
-              <FormattedMessage
-                id={
-                  belop.erTrekk
-                    ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk'
-                    : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling'
-                }
-                values={{ belop: formatCurrencyNoKr(belop.belop), b: (chunks: any) => <b>{chunks}</b> }}
+  const vurdertePerioder = vilkarsVurdertePerioder.filter(
+    per => !per.erForeldet && per.valgtVilkarResultatType != null,
+  );
+  return (
+    <div className={styles.container}>
+      <TilbakekrevingTimelineData
+        periode={data}
+        callbackForward={setNestePeriode}
+        callbackBackward={setForrigePeriode}
+        oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+        readOnly={readOnly}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        beregnBelop={beregnBelop}
+      />
+      <VerticalSpacer twentyPx />
+      {reduserteBelop?.map(belop => (
+        <React.Fragment key={belop.belop}>
+          <BodyShort size="small">
+            <FormattedMessage
+              id={
+                belop.erTrekk
+                  ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk'
+                  : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling'
+              }
+              values={{ belop: formatCurrencyNoKr(belop.belop), b: (chunks: any) => <b>{chunks}</b> }}
+            />
+          </BodyShort>
+          <VerticalSpacer eightPx />
+        </React.Fragment>
+      ))}
+      <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
+      <VerticalSpacer twentyPx />
+      {!readOnly && !data.erForeldet && vurdertePerioder.length > 0 && (
+        <>
+          <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
+            <div>
+              <DSLabel size="small" as="p">
+                <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
+              </DSLabel>
+              <SelectField
+                name="perioderForKopi"
+                selectValues={vurdertePerioder.map(per => {
+                  const perId = `${per.fom}_${per.tom}`;
+                  const perValue = `${moment(per.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(per.tom).format(
+                    DDMMYYYY_DATE_FORMAT,
+                  )}`;
+                  return (
+                    <option key={perId} value={perId}>
+                      {perValue}
+                    </option>
+                  );
+                })}
+                onChange={event => onEndrePeriodeForKopi(event, vurdertePerioder)}
+                bredde="m"
+                label=""
               />
-            </BodyShort>
-            <VerticalSpacer eightPx />
-          </React.Fragment>
-        ))}
-        <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
-        <VerticalSpacer twentyPx />
-        {!readOnly && !data.erForeldet && vurdertePerioder.length > 0 && (
-          <>
+            </div>
+          </HGrid>
+          <VerticalSpacer twentyPx />
+        </>
+      )}
+      <HGrid gap="space-4" columns={{ xs: data.erForeldet ? '12fr' : '6fr 6fr' }}>
+        <div>
+          {data.erForeldet && <ForeldetFormPanel />}
+          {!data.erForeldet && (
             <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
               <div>
                 <DSLabel size="small" as="p">
-                  <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
+                  <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
                 </DSLabel>
-                <SelectField
-                  name="perioderForKopi"
-                  selectValues={vurdertePerioder.map(per => {
-                    const perId = `${per.fom}_${per.tom}`;
-                    const perValue = `${moment(per.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(per.tom).format(
-                      DDMMYYYY_DATE_FORMAT,
-                    )}`;
-                    return (
-                      <option key={perId} value={perId}>
-                        {perValue}
-                      </option>
-                    );
-                  })}
-                  onChange={event => this.onEndrePeriodeForKopi(event, vurdertePerioder)}
-                  bredde="m"
-                  label=""
+                <VerticalSpacer eightPx />
+                <TextAreaField
+                  name="begrunnelse"
+                  label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
+                  validate={[required, minLength3, maxLength1500, hasValidText]}
+                  maxLength={1500}
+                  readOnly={readOnly}
+                  placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
+                />
+                <VerticalSpacer twentyPx />
+                <Detail>
+                  <FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" />
+                </Detail>
+                <VerticalSpacer eightPx />
+                <RadioGroupField
+                  validate={[required]}
+                  name="valgtVilkarResultatType"
+                  isVertical
+                  readOnly={readOnly}
+                  radios={vilkarResultatTyper.map(vrt => ({
+                    value: vrt.kode,
+                    label: <Label input={vrt.navn} textOnly />,
+                  }))}
+                  // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+                  onChange={resetFields}
                 />
               </div>
             </HGrid>
-            <VerticalSpacer twentyPx />
-          </>
-        )}
-        <HGrid gap="space-4" columns={{ xs: data.erForeldet ? '12fr' : '6fr 6fr' }}>
-          <div>
-            {data.erForeldet && <ForeldetFormPanel />}
-            {!data.erForeldet && (
-              <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
-                <div>
+          )}
+        </div>
+        <div>
+          <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
+            <div>
+              {valgtVilkarResultatType && (
+                <>
                   <DSLabel size="small" as="p">
-                    <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
+                    <FormattedMessage
+                      id={
+                        valgtVilkarResultatType === VilkarResultat.GOD_TRO
+                          ? 'TilbakekrevingPeriodeForm.BelopetMottattIGodTro'
+                          : 'TilbakekrevingPeriodeForm.Aktsomhet'
+                      }
+                    />
                   </DSLabel>
                   <VerticalSpacer eightPx />
                   <TextAreaField
-                    name="begrunnelse"
-                    label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
+                    name="vurderingBegrunnelse"
+                    label={{
+                      id:
+                        valgtVilkarResultatType === VilkarResultat.GOD_TRO
+                          ? 'TilbakekrevingPeriodeForm.VurderingMottattIGodTro'
+                          : 'TilbakekrevingPeriodeForm.VurderingAktsomhet',
+                    }}
                     validate={[required, minLength3, maxLength1500, hasValidText]}
                     maxLength={1500}
                     readOnly={readOnly}
-                    placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
-                  <VerticalSpacer twentyPx />
-                  <Detail>
-                    <FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" />
-                  </Detail>
                   <VerticalSpacer eightPx />
-                  <RadioGroupField
-                    validate={[required]}
-                    name="valgtVilkarResultatType"
-                    isVertical
-                    readOnly={readOnly}
-                    radios={vilkarResultatTyper.map(vrt => ({
-                      value: vrt.kode,
-                      label: <Label input={vrt.navn} textOnly />,
-                    }))}
-                    // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
-                    onChange={this.resetFields}
-                  />
-                </div>
-              </HGrid>
-            )}
-          </div>
-          <div>
-            <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
-              <div>
-                {valgtVilkarResultatType && (
-                  <>
-                    <DSLabel size="small" as="p">
-                      <FormattedMessage
-                        id={
-                          valgtVilkarResultatType === VilkarResultat.GOD_TRO
-                            ? 'TilbakekrevingPeriodeForm.BelopetMottattIGodTro'
-                            : 'TilbakekrevingPeriodeForm.Aktsomhet'
+                  <FormSection name={valgtVilkarResultatType}>
+                    {valgtVilkarResultatType === VilkarResultat.GOD_TRO && (
+                      <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />
+                    )}
+                    {valgtVilkarResultatType !== VilkarResultat.GOD_TRO && (
+                      <AktsomhetFormPanel
+                        harGrunnerTilReduksjon={harGrunnerTilReduksjon}
+                        readOnly={readOnly}
+                        handletUaktsomhetGrad={handletUaktsomhetGrad}
+                        resetFields={resetFields}
+                        erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
+                        erValgtResultatTypeForstoBurdeForstaatt={
+                          valgtVilkarResultatType === VilkarResultat.FORSTO_BURDE_FORSTAATT
                         }
+                        aktsomhetTyper={aktsomhetTyper}
+                        sarligGrunnTyper={sarligGrunnTyper}
+                        antallYtelser={data.ytelser.length}
+                        feilutbetalingBelop={data.feilutbetaling}
+                        erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
+                        andelSomTilbakekreves={andelSomTilbakekreves}
                       />
-                    </DSLabel>
-                    <VerticalSpacer eightPx />
-                    <TextAreaField
-                      name="vurderingBegrunnelse"
-                      label={{
-                        id:
-                          valgtVilkarResultatType === VilkarResultat.GOD_TRO
-                            ? 'TilbakekrevingPeriodeForm.VurderingMottattIGodTro'
-                            : 'TilbakekrevingPeriodeForm.VurderingAktsomhet',
-                      }}
-                      validate={[required, minLength3, maxLength1500, hasValidText]}
-                      maxLength={1500}
-                      readOnly={readOnly}
-                    />
-                    <VerticalSpacer eightPx />
-                    <FormSection name={valgtVilkarResultatType}>
-                      {valgtVilkarResultatType === VilkarResultat.GOD_TRO && (
-                        <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />
-                      )}
-                      {valgtVilkarResultatType !== VilkarResultat.GOD_TRO && (
-                        <AktsomhetFormPanel
-                          harGrunnerTilReduksjon={harGrunnerTilReduksjon}
-                          readOnly={readOnly}
-                          handletUaktsomhetGrad={handletUaktsomhetGrad}
-                          resetFields={this.resetFields}
-                          erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
-                          erValgtResultatTypeForstoBurdeForstaatt={
-                            valgtVilkarResultatType === VilkarResultat.FORSTO_BURDE_FORSTAATT
-                          }
-                          aktsomhetTyper={aktsomhetTyper}
-                          sarligGrunnTyper={sarligGrunnTyper}
-                          antallYtelser={data.ytelser.length}
-                          feilutbetalingBelop={data.feilutbetaling}
-                          erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
-                          andelSomTilbakekreves={andelSomTilbakekreves}
-                        />
-                      )}
-                    </FormSection>
-                  </>
-                )}
-              </div>
-            </HGrid>
-          </div>
-        </HGrid>
-        <VerticalSpacer twentyPx />
-        <FlexRow>
-          <FlexColumn>
-            <Button
-              variant="primary"
-              size="small"
-              type="button"
-              onClick={this.saveOrToggleModal}
-              disabled={formProps.pristine || readOnly}
-            >
-              <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
-            </Button>
-          </FlexColumn>
-          <FlexColumn>
-            <Button variant="secondary" size="small" type="button" onClick={skjulPeriode}>
-              <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
-            </Button>
-          </FlexColumn>
-        </FlexRow>
-        {showModal && (
-          <AdvarselModal
-            bodyText={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr' })}
-            showModal
-            submit={this.saveForm}
-          />
-        )}
-      </div>
-    );
-  }
-}
+                    )}
+                  </FormSection>
+                </>
+              )}
+            </div>
+          </HGrid>
+        </div>
+      </HGrid>
+      <VerticalSpacer twentyPx />
+      <FlexRow>
+        <FlexColumn>
+          <Button
+            variant="primary"
+            size="small"
+            type="button"
+            onClick={saveOrToggleModal}
+            disabled={formProps.pristine || readOnly}
+          >
+            <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
+          </Button>
+        </FlexColumn>
+        <FlexColumn>
+          <Button variant="secondary" size="small" type="button" onClick={skjulPeriode}>
+            <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
+          </Button>
+        </FlexColumn>
+      </FlexRow>
+      {showModal && (
+        <AdvarselModal
+          bodyText={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr' })}
+          showModal
+          submit={saveForm}
+        />
+      )}
+    </div>
+  );
+};
 
 const mapDispatchToProps = (dispatch: any): DispatchProps => ({
   ...bindActionCreators(
