@@ -27,6 +27,7 @@ describe('<MenySettPaVentIndex>', () => {
           settBehandlingPaVent={settBehandlingPaVent}
           lukkModal={lukkModalCallback}
           erTilbakekreving={false}
+          erKlage={false}
         />
       </KodeverkProvider>,
     );

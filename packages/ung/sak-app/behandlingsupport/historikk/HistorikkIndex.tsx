@@ -28,17 +28,18 @@ type KlageHistorikkInnslagV1 = Historikkinnslag & {
   erSak?: never;
 };
 
-type TilbakeHistorikkInnslagV1 = Historikkinnslag & {
+type TilbakeHistorikkInnslagV2 = HistorikkinnslagV2 & {
+  historikkinnslagUuid?: string;
   erKlage?: never;
   erTilbakekreving: boolean;
   erSak?: never;
 };
 
-type UlikeHistorikkinnslagTyper = UngSakHistorikkinnslagV2 | KlageHistorikkInnslagV1 | TilbakeHistorikkInnslagV1;
+type UlikeHistorikkinnslagTyper = UngSakHistorikkinnslagV2 | KlageHistorikkInnslagV1 | TilbakeHistorikkInnslagV2;
 
 const sortAndTagUlikeHistorikkinnslagTyper = (
   historikkUngsak: HistorikkinnslagV2[] = [],
-  historikkTilbake: Historikkinnslag[] = [],
+  historikkTilbake: HistorikkinnslagV2[] = [],
   historikkKlage: Historikkinnslag[] = [],
 ): UlikeHistorikkinnslagTyper[] => {
   return [
@@ -64,12 +65,6 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
 
-  const alleKodeverkUngSak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
-    UngSakApiKeys.KODEVERK,
-  );
-  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
-    UngSakApiKeys.KODEVERK_TILBAKE,
-  );
   const alleKodeverkKlage = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     UngSakApiKeys.KODEVERK_KLAGE,
   );
@@ -99,7 +94,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     },
   );
 
-  const { data: historikkTilbake, state: historikkTilbakeState } = restApiHooks.useRestApi<Historikkinnslag[]>(
+  const { data: historikkTilbake, state: historikkTilbakeState } = restApiHooks.useRestApi<HistorikkinnslagV2[]>(
     UngSakApiKeys.HISTORY_TILBAKE,
     { saksnummer },
     {
@@ -122,17 +117,11 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     [historikkUngSak, historikkTilbake, historikkKlage],
   );
 
+  const getUngSakKodeverknavn = getKodeverkNavnFraKodeFn();
   const getTilbakeKodeverknavn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
 
   const v2HistorikkElementer = historikkInnslagV1V2.map((innslag, idx) => {
-    let alleKodeverk = alleKodeverkUngSak;
-    if (innslag.erTilbakekreving) {
-      alleKodeverk = alleKodeverkTilbake;
-    }
-    if (innslag.erKlage) {
-      alleKodeverk = alleKodeverkKlage;
-    }
-    if (innslag.erSak) {
+    if (innslag.erSak || innslag.erTilbakekreving) {
       const key = innslag.historikkinnslagUuid ?? `${innslag.opprettetTidspunkt}-${innslag.aktør.ident}-${idx}`;
       return (
         <Snakkeboble
@@ -141,17 +130,17 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
           historikkInnslag={innslag}
           kjønn={kjønn}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
-          getKodeverknavn={getTilbakeKodeverknavn}
+          getKodeverknavn={innslag.erSak ? getUngSakKodeverknavn : getTilbakeKodeverknavn}
           behandlingLocation={getBehandlingLocation(behandlingId)}
         />
       );
-    } else if (innslag.erKlage || innslag.erTilbakekreving) {
+    } else if (innslag.erKlage) {
       return (
         <HistorikkSakIndex
           key={`${innslag.opprettetTidspunkt}-${innslag.aktoer.kode}-${idx}`}
           historikkinnslag={innslag}
           saksnummer={saksnummer}
-          alleKodeverk={alleKodeverk}
+          alleKodeverk={alleKodeverkKlage}
           erTilbakekreving={!!innslag.erTilbakekreving}
           getBehandlingLocation={getBehandlingLocation}
           createLocationForSkjermlenke={createLocationForSkjermlenke}

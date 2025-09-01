@@ -1,5 +1,5 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -215,10 +215,8 @@ export const BehandlingMenuIndex = ({
               behandlingVersjon={behandlingVersjon}
               settBehandlingPaVent={setBehandlingOnHold}
               lukkModal={lukkModal}
-              erTilbakekreving={
-                behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
-                behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
-              }
+              erTilbakekreving={erTilbakekrevingType(behandlingTypeKode)}
+              erKlage={behandlingTypeKode === BehandlingType.KLAGE}
             />
           ),
         ),
