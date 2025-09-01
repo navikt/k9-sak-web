@@ -1,4 +1,3 @@
-import type { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, Chat, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
@@ -8,7 +7,7 @@ import type {
   SakHistorikkInnslagV2,
   TilbakeHistorikkInnslagV2,
 } from '../historikkTypeBerikning.js';
-import { Avatar } from '../snakkeboble/Avatar.jsx';
+import { Avatar } from './Avatar.jsx';
 import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
 import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
 import { Tittel } from '../snakkeboble/Tittel.jsx';
@@ -16,7 +15,6 @@ import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
 
 export interface InnslagBobleProps {
   readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2 | TilbakeHistorikkInnslagV2;
-  readonly kjønn: Kjønn;
   readonly behandlingLocation: InnslagLinjeProps['behandlingLocation'];
   readonly createLocationForSkjermlenke: InnslagLinjeProps['createLocationForSkjermlenke'];
   readonly saksnummer: string;
@@ -24,7 +22,6 @@ export interface InnslagBobleProps {
 
 export const InnslagBoble = ({
   innslag,
-  kjønn,
   behandlingLocation,
   createLocationForSkjermlenke,
   saksnummer,
@@ -38,7 +35,7 @@ export const InnslagBoble = ({
   return (
     <Chat
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
-      avatar={<Avatar aktørType={innslag.aktør.type.kilde} kjønn={kjønn} />}
+      avatar={<Avatar aktørType={innslag.aktør.type.kilde} />}
       timestamp={`${formatDate(innslag.opprettetTidspunkt)}`}
       name={`${rolleNavn} ${hentSaksbehandlerNavn(innslag.aktør.ident ?? '')}`}
       position={position}

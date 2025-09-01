@@ -1,4 +1,3 @@
-import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
@@ -291,7 +290,6 @@ const BehandlingSupportIndex = ({
                   saksnummer={fagsak.saksnummer}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
-                  kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
                 />
               </HistorikkBackendApiContext>
             )}

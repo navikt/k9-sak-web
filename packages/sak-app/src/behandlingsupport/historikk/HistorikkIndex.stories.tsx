@@ -1,4 +1,3 @@
-import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeHistorikkBackend.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
@@ -31,7 +30,6 @@ export const HistorikkinnslagV2: Story = {
     saksnummer: '12345',
     behandlingId: 1,
     behandlingVersjon: 2,
-    kjønn: kjønn.MANN,
   },
   play: async ({ canvas }) => {
     const boble1El = await canvas.findByTestId(/snakkeboble-2025-08-29T10:41:30.155/);

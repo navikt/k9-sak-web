@@ -11,7 +11,6 @@ import {
   TilbakeHistorikkInnslagV2,
 } from '@k9-sak-web/gui/sak/historikk/historikkTypeBerikning.js';
 import dayjs from 'dayjs';
-import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { Alert } from '@navikt/ds-react';
 import { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
@@ -32,7 +31,6 @@ interface OwnProps {
   saksnummer: string;
   behandlingId: number;
   behandlingVersjon?: number;
-  kjønn: Kjønn;
 }
 
 /**
@@ -40,7 +38,7 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
-const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
+const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
   const historikkBackendApi: HistorikkBackendApi | null = useContext(HistorikkBackendApiContext);
 
   if (historikkBackendApi == null) {
@@ -89,7 +87,6 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
         key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
         saksnummer={saksnummer}
         innslag={innslag}
-        kjønn={kjønn}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
         behandlingLocation={getBehandlingLocation(behandlingId)}
       />
