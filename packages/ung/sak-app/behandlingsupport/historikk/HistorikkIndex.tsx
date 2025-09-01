@@ -1,5 +1,6 @@
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
 import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkeboble.js';

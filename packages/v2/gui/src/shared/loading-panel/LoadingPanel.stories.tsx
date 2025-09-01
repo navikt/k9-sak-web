@@ -1,4 +1,4 @@
-import LoadingPanel from './LoadingPanel.jsx';
+import { LoadingPanel } from './LoadingPanel.jsx';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from 'storybook/test';
 

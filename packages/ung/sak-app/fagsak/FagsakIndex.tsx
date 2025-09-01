@@ -1,4 +1,5 @@
-import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,

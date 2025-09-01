@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { useLocation } from 'react-router';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 
 import { createLocationForSkjermlenke, pathToBehandling } from '../../app/paths';
 import {

@@ -1,6 +1,7 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,

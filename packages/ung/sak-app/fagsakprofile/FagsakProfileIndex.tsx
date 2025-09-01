@@ -1,4 +1,5 @@
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { requireProps } from '@fpsak-frontend/shared-components';
 import { k9_klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';

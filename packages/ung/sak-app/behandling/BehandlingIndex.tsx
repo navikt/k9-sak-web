@@ -2,7 +2,7 @@ import { Location } from 'history';
 import { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
 import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
