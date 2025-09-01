@@ -1,5 +1,5 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import { Alert, BodyLong, Heading } from '@navikt/ds-react';
+import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
 import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import { ErrorIdEncouragementMsg } from './ErrorIdEncouragementMsg.js';
@@ -32,9 +32,9 @@ const GeneralAsyncErrorMsg = ({ error }: { readonly error: GeneralAsyncError }) 
     <BodyLong>{error.message}</BodyLong>
     <BodyLong>
       Det hjelper kanskje å{' '}
-      <a href="#" onClick={() => window.location.reload()}>
+      <Link inlineText href="#" onClick={() => window.location.reload()}>
         laste siden på nytt{' '}
-      </a>
+      </Link>
       og prøve igjen.
     </BodyLong>
     <ErrorIdEncouragementMsg errorId={error.errorId} errorName={error.name} />

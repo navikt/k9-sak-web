@@ -1,6 +1,6 @@
+import SettPåVentModal, { type FormState } from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useCallback } from 'react';
-import SettPaVentModal, { type FormState } from './settPaVentModal/SettPaVentModal';
 
 interface OwnProps {
   behandlingId: number;
@@ -13,6 +13,7 @@ interface OwnProps {
   }) => Promise<any>;
   lukkModal: () => void;
   erTilbakekreving: boolean;
+  erKlage: boolean;
 }
 
 export const MenySettPaVentIndexV2 = ({
@@ -21,6 +22,7 @@ export const MenySettPaVentIndexV2 = ({
   settBehandlingPaVent,
   lukkModal,
   erTilbakekreving,
+  erKlage,
 }: OwnProps) => {
   const submit = useCallback(
     async (formValues: FormState) => {
@@ -38,11 +40,12 @@ export const MenySettPaVentIndexV2 = ({
   );
 
   return (
-    <SettPaVentModal
+    <SettPåVentModal
       showModal
       submitCallback={submit}
       cancelEvent={lukkModal}
       erTilbakekreving={erTilbakekreving}
+      erKlage={erKlage}
       hasManualPaVent
     />
   );

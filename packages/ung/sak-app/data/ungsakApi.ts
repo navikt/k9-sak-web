@@ -27,9 +27,11 @@ export enum UngSakApiKeys {
   BEHANDLINGER_UNGSAK = 'BEHANDLINGER_UNGSAK',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
   NEW_BEHANDLING_UNGSAK = 'NEW_BEHANDLING_UNGSAK',
+  NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   HISTORY_UNGSAK = 'HISTORY_UNGSAK',
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
+  BEHANDLINGER_TILBAKE = 'BEHANDLINGER_TILBAKE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
   TOTRINNS_KLAGE_VURDERING = 'TOTRINNS_KLAGE_VURDERING',
   TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
@@ -38,6 +40,7 @@ export enum UngSakApiKeys {
   HAR_REVURDERING_SAMME_RESULTAT = 'HAR_REVURDERING_SAMME_RESULTAT',
   SAVE_TOTRINNSAKSJONSPUNKT = 'SAVE_TOTRINNSAKSJONSPUNKT',
   SAK_RETTIGHETER = 'SAK_RETTIGHETER',
+  SAK_RETTIGHETER_TILBAKE = 'SAK_RETTIGHETER_TILBAKE',
   BEHANDLING_RETTIGHETER = 'BEHANDLING_RETTIGHETER',
   KAN_TILBAKEKREVING_OPPRETTES = 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES = 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
@@ -48,6 +51,7 @@ export enum UngSakApiKeys {
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
   LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
   UNGDOMSPROGRAM_INFORMASJON = 'UNGDOMSPROGRAM_INFORMASJON',
+  PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -68,11 +72,13 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('fagsak', UngSakApiKeys.FETCH_FAGSAK)
   .withRel('sak-bruker', UngSakApiKeys.SAK_BRUKER)
   .withRel('sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER)
+  .withRel('tilbake-sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER_TILBAKE)
   .withRel('sak-historikk', UngSakApiKeys.HISTORY_UNGSAK)
-  .withRel('tilbake-historikk', UngSakApiKeys.HISTORY_TILBAKE)
+  .withRel('tilbake-historikkinnslag', UngSakApiKeys.HISTORY_TILBAKE)
   .withRel('klage-historikk', UngSakApiKeys.HISTORY_KLAGE)
   .withRel('sak-dokumentliste', UngSakApiKeys.ALL_DOCUMENTS)
   .withRel('sak-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_UNGSAK)
+  .withRel('tilbake-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_TILBAKE)
   .withRel('tilbake-kan-opprette-behandling', UngSakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withRel('tilbake-kan-opprette-revurdering', UngSakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
 
@@ -95,6 +101,7 @@ const endpoints = new RestApiConfigBuilder()
     UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE,
     { isResponseBlob: true },
   )
+  .withAsyncPost('/ung/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
 
   .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_UNGSAK)
 
@@ -106,6 +113,8 @@ const endpoints = new RestApiConfigBuilder()
 
   // Kun brukt for søk på localhost
   .withPost('/ung/sak/api/fagsak/sok', UngSakApiKeys.SEARCH_FAGSAK)
+
+  .withRel('parter-klagerett', UngSakApiKeys.PARTER_MED_KLAGERETT)
 
   .build();
 

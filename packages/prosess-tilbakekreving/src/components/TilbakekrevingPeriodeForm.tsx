@@ -19,6 +19,7 @@ import {
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
+import { sif_tilbakekreving_behandlingslager_vilkår_kodeverk_VilkårResultat as VilkårResultat } from '@navikt/ung-tilbake-typescript-client/types';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -498,7 +499,9 @@ interface PureOwnProps {
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   const sarligGrunnTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.SARLIG_GRUNN];
-  const vilkarResultatTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.VILKAR_RESULTAT];
+  const vilkarResultatTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.VILKAR_RESULTAT].filter(
+    (type: KodeverkMedNavn) => type.kode !== VilkårResultat.UDEFINERT,
+  );
   const aktsomhetTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.AKTSOMHET];
   const sorterteAktsomhetTyper = AKTSOMHET_REKKEFØLGE.map((a: Aktsomhet) =>
     aktsomhetTyper.find((el: KodeverkMedNavn) => el.kode === a),

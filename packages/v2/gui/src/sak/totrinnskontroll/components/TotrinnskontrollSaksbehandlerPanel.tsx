@@ -1,7 +1,7 @@
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Link } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type { Location } from 'history';
 import React from 'react';
@@ -44,13 +44,14 @@ const TotrinnskontrollSaksbehandlerPanel = ({
       if (aksjonspunkter.length > 0) {
         return (
           <React.Fragment key={context.skjermlenkeType}>
-            <NavLink
+            <Link
+              as={NavLink}
               to={lagLenke(context.skjermlenkeType)}
               onClick={() => window.scroll(0, 0)}
               className={styles.lenke}
             >
               {skjermlenkeTypeKodeverk?.navn}
-            </NavLink>
+            </Link>
             {aksjonspunkter.map(aksjonspunkt => {
               const aksjonspunktTexts = getAksjonspunkttekst(
                 behandlingStatus,

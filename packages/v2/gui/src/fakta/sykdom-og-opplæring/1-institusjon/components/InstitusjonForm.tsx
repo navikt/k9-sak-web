@@ -31,7 +31,7 @@ export interface InstitusjonAksjonspunktPayload {
   begrunnelse: string | null;
   redigertInstitusjonNavn?: string;
   journalpostId: {
-    journalpostId: string;
+    journalpostId: string | null;
   };
 }
 

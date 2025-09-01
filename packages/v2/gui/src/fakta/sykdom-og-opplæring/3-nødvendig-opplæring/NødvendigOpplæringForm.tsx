@@ -168,7 +168,9 @@ const NødvendigOpplæringForm = ({
     });
   }, [formMethods, vurdering]);
 
-  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('harLegeerklæring') === 'NEI';
+  const harNødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
+  const harLegeerklæring = formMethods.watch('harLegeerklæring');
+  const opplæringIkkeDokumentertMedLegeerklæring = harLegeerklæring === 'NEI';
 
   useEffect(() => {
     if (opplæringIkkeDokumentertMedLegeerklæring) {
@@ -176,6 +178,11 @@ const NødvendigOpplæringForm = ({
       formMethods.setValue('harNødvendigOpplæring', '');
     }
   }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
+
+  useEffect(() => {
+    formMethods.setValue('perioderUtenNødvendigOpplæring', []);
+    formMethods.resetField('perioder', { keepTouched: true });
+  }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;

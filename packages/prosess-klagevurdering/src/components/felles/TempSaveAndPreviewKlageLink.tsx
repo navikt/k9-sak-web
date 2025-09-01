@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
+import { Link } from '@navikt/ds-react';
 import styles from './tempsaveAndPreviewKlageLink.module.css';
 
 const transformValues = (values: any, aksjonspunktCode: string) => ({
@@ -53,7 +53,7 @@ export const TempSaveAndPreviewKlageLink = ({
   return (
     <div>
       {!readOnly && (
-        <a
+        <Link
           href=""
           onClick={tempSave}
           onKeyDown={e => (e.keyCode === 13 ? tempSave(e) : null)}
@@ -61,7 +61,7 @@ export const TempSaveAndPreviewKlageLink = ({
           data-testid="previewLink"
         >
           <FormattedMessage id="Klage.ResolveKlage.TempSaveAndPreviewButton" />
-        </a>
+        </Link>
       )}
     </div>
   );
