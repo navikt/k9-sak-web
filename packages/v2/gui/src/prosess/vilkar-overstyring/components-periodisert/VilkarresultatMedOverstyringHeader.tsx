@@ -35,7 +35,7 @@ const isHidden = (
   aksjonspunktCodes: AksjonspunktCodes[],
   aksjonspunktCode: string,
   vurderesIBehandlingen: boolean,
-  skjulOverstyring: boolean,
+  skjulOverstyring?: boolean,
 ) =>
   (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen || skjulOverstyring;
 
