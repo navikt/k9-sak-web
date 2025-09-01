@@ -80,11 +80,22 @@ const automatiskeVentearsakerForTilbakekreving = [
 const inkluderVentearsak = (ventearsak: KodeverkObject, valgtVentearsak?: string): boolean =>
   automatiskeVentearsakerForTilbakekreving.includes(ventearsak.kode) ? ventearsak.kode === valgtVentearsak : true;
 
+const getKodeverkKilde = (erTilbakekreving: boolean, erKlage: boolean) => {
+  if (erTilbakekreving) {
+    return 'kodeverkTilbake';
+  }
+  if (erKlage) {
+    return 'kodeverkKlage';
+  }
+  return 'kodeverk';
+};
+
 interface PureOwnProps {
   submitCallback: (formData: FormState) => void;
   cancelEvent: () => void;
   showModal: boolean;
   erTilbakekreving: boolean;
+  erKlage: boolean;
   visBrevErBestilt?: boolean;
   hasManualPaVent: boolean;
   frist?: string;
@@ -108,6 +119,7 @@ export const SettPåVentModal = ({
   cancelEvent,
   showModal,
   erTilbakekreving,
+  erKlage,
   frist: originalFrist,
   ventearsak: originalVentearsak,
   visBrevErBestilt = false,
@@ -121,7 +133,10 @@ export const SettPåVentModal = ({
   const ventearsak = useWatch({ control: formMethods.control, name: 'ventearsak' });
   const ventearsakVariant = useWatch({ control: formMethods.control, name: 'ventearsakVariant' });
   const { hentKodeverkForKode } = useKodeverkContext();
-  const ventearsaker = hentKodeverkForKode(KodeverkType.VENT_AARSAK) as UtvidetKodeverkObject[];
+  const ventearsaker = hentKodeverkForKode(
+    KodeverkType.VENT_AARSAK,
+    getKodeverkKilde(erTilbakekreving, erKlage),
+  ) as UtvidetKodeverkObject[];
 
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =
