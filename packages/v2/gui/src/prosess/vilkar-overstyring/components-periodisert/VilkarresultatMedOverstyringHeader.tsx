@@ -82,7 +82,7 @@ const VilkarresultatMedOverstyringHeader = ({
   toggleOverstyring,
   aksjonspunkter,
   periode,
-  skjulOverstyring = false,
+  skjulOverstyring,
 }: VilkarresultatMedOverstyringHeaderProps) => {
   const aksjonspunktCodes = aksjonspunkter
     .filter((a): a is { definisjon: AksjonspunktCodes } => a.definisjon !== undefined)
