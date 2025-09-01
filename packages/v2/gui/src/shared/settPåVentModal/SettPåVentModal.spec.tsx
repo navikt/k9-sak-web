@@ -13,6 +13,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         hasManualPaVent
         erTilbakekreving={false}
+        erKlage={false}
         showModal
       />,
     );
@@ -32,6 +33,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         hasManualPaVent
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
 
@@ -49,6 +51,7 @@ describe('<SettPaVentModal>', () => {
         submitCallback={vi.fn()}
         hasManualPaVent
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
 
@@ -66,6 +69,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         hasManualPaVent
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
 
@@ -83,6 +87,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         hasManualPaVent
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
 
@@ -98,6 +103,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         hasManualPaVent={false}
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
     expect(screen.queryByPlaceholderText('dd.mm.åååå')).not.toBeInTheDocument();
@@ -112,6 +118,7 @@ describe('<SettPaVentModal>', () => {
         frist="2015-10-10"
         hasManualPaVent={false}
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
 
@@ -127,6 +134,7 @@ describe('<SettPaVentModal>', () => {
         frist="2015-10-10"
         hasManualPaVent={false}
         erTilbakekreving={false}
+        erKlage={false}
       />,
     );
 
@@ -143,6 +151,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="VENT_PÅ_TILBAKEKREVINGSGRUNNLAG"
         hasManualPaVent={false}
         erTilbakekreving
+        erKlage={false}
       />,
     );
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
