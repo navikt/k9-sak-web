@@ -52,16 +52,6 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
-const erOmsorgspenger = (fagsak: Fagsak) =>
-  [
-    fagsakYtelsesType.OMSORGSPENGER,
-    fagsakYtelsesType.OMSORGSPENGER_KS,
-    fagsakYtelsesType.OMSORGSPENGER_AO,
-    fagsakYtelsesType.OMSORGSPENGER_MA,
-  ].some(sakstype => sakstype === fagsak.sakstype);
-
 /**
  * FagsakIndex
  *
@@ -226,11 +216,6 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showPunsjStripe =
-    erPleiepengerSyktBarn(fagsak) ||
-    erPleiepengerLivetsSluttfase(fagsak) ||
-    (erOmsorgspenger(fagsak) && featureToggles?.OMS_PUNSJSTRIPE);
-  const showFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
 
   return (
     <>
@@ -317,21 +302,18 @@ const FagsakIndex = () => {
 
                   {behandling && (
                     <>
-                      {showPunsjStripe && (
-                        <Punsjstripe
-                          api={k9StatusBackendClient}
-                          saksnummer={fagsak.saksnummer}
-                          pathToLos={getPathToK9Los()}
-                        />
-                      )}
-                      {showFagsakPåSøkerStripe && (
-                        <AndreSakerPåSøkerStripe
-                          api={k9StatusBackendClient}
-                          søkerIdent={fagsakPerson.personnummer}
-                          saksnummer={fagsak.saksnummer}
-                          fagsakYtelseType={fagsak.sakstype}
-                        />
-                      )}
+                      <Punsjstripe
+                        api={k9StatusBackendClient}
+                        saksnummer={fagsak.saksnummer}
+                        pathToLos={getPathToK9Los()}
+                      />
+
+                      <AndreSakerPåSøkerStripe
+                        api={k9StatusBackendClient}
+                        søkerIdent={fagsakPerson.personnummer}
+                        saksnummer={fagsak.saksnummer}
+                        fagsakYtelseType={fagsak.sakstype}
+                      />
                     </>
                   )}
                 </div>
