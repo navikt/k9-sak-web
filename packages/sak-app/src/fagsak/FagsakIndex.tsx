@@ -226,6 +226,11 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
+  const showPunsjStripe =
+    erPleiepengerSyktBarn(fagsak) ||
+    erPleiepengerLivetsSluttfase(fagsak) ||
+    (erOmsorgspenger(fagsak) && featureToggles?.OMS_PUNSJSTRIPE);
+  const showFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
 
   return (
     <>
@@ -312,18 +317,21 @@ const FagsakIndex = () => {
 
                   {behandling && (
                     <>
-                      <Punsjstripe
-                        api={k9StatusBackendClient}
-                        saksnummer={fagsak.saksnummer}
-                        pathToLos={getPathToK9Los()}
-                      />
-
-                      <AndreSakerPåSøkerStripe
-                        api={k9StatusBackendClient}
-                        søkerIdent={fagsakPerson.personnummer}
-                        saksnummer={fagsak.saksnummer}
-                        fagsakYtelseType={fagsak.sakstype}
-                      />
+                      {showPunsjStripe && (
+                        <Punsjstripe
+                          api={k9StatusBackendClient}
+                          saksnummer={fagsak.saksnummer}
+                          pathToLos={getPathToK9Los()}
+                        />
+                      )}
+                      {showFagsakPåSøkerStripe && (
+                        <AndreSakerPåSøkerStripe
+                          api={k9StatusBackendClient}
+                          søkerIdent={fagsakPerson.personnummer}
+                          saksnummer={fagsak.saksnummer}
+                          fagsakYtelseType={fagsak.sakstype}
+                        />
+                      )}
                     </>
                   )}
                 </div>
