@@ -80,6 +80,16 @@ export interface UttakDetaljerProps {
   ytelsetype: FagsakYtelsesType;
 }
 
+const graderingBenevnelse = (ytelse: FagsakYtelsesType) => {
+  switch (ytelse) {
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
+      return 'pleiepengegrad';
+    default:
+      return 'gradering';
+  }
+};
+
 const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
@@ -144,7 +154,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               <Box.New className={styles.uttakDetaljerTag}>
                 <Tag size="medium" variant="alt3-moderate">
                   <CheckmarkIcon />
-                  Gir lavest pleiepengegrad
+                  Gir lavest {graderingBenevnelse(ytelsetype)}
                 </Tag>
               </Box.New>
             )}
@@ -169,7 +179,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
             <Box.New className={styles.uttakDetaljerTag}>
               <Tag size="medium" variant="alt3-moderate">
                 <CheckmarkIcon />
-                Gir lavest pleiepengegrad
+                Gir lavest {graderingBenevnelse(ytelsetype)}
               </Tag>
             </Box.New>
           )}
@@ -193,7 +203,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               <Box.New className={styles.uttakDetaljerTag}>
                 <Tag size="medium" variant="alt3-moderate">
                   <CheckmarkIcon />
-                  Gir lavest pleiepengegrad
+                  Gir lavest {graderingBenevnelse(ytelsetype)}
                 </Tag>
               </Box.New>
             )}
