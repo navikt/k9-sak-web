@@ -43,8 +43,9 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
               className={styles.uttakDetaljerBeregningFirma}
             >
               <BodyShort size="small" weight="semibold" className="leading-6">
-                {arbeidsforholdData?.navn || 'Mangler navn'} (
-                {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator}){' '}
+                {inntForhold.type !== InntektsforholdDtoType.FRILANSER
+                  ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
+                  : 'Frilanser'}{' '}
                 {inntForhold.erNytt && (
                   <Tag size="small" variant="info">
                     Ny
