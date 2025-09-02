@@ -9,6 +9,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({
     behandling,
     uttaksperioder,
+    inntektsgraderinger,
     utsattePerioder,
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
@@ -20,6 +21,7 @@ class PanelDef extends ProsessStegPanelDef {
     <Uttak
       behandling={behandling}
       uttaksperioder={uttaksperioder}
+      inntektsgraderinger={inntektsgraderinger}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
@@ -59,8 +61,9 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, inntektsgradering }) => ({
     uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
+    inntektsgraderinger: inntektsgradering?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,

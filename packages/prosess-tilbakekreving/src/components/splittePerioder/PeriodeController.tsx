@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
@@ -25,51 +25,28 @@ interface OwnProps {
   readOnly: boolean;
 }
 
-interface StateProps {
-  showDelPeriodeModal: boolean;
-  finnesBelopMed0Verdi: boolean;
-}
+export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
+  const [showDelPeriodeModal, setShowDelPeriodeModal] = useState(false);
+  const [finnesBelopMed0Verdi, setFinnesBelopMed0Verdi] = useState(false);
 
-export class PeriodeController extends Component<OwnProps & WrappedComponentProps, StateProps> {
-  constructor(props: any) {
-    super(props);
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
-    this.splitPeriod = this.splitPeriod.bind(this);
-
-    this.state = {
-      showDelPeriodeModal: false,
-      finnesBelopMed0Verdi: false,
-    };
-  }
-
-  showModal(event: any) {
-    this.setState((state: any) => ({
-      ...state,
-      showDelPeriodeModal: true,
-    }));
+  const showModal = (event: any) => {
+    setShowDelPeriodeModal(true);
     event.preventDefault();
-  }
+  };
 
-  hideModal() {
-    this.setState((state: any) => ({
-      ...state,
-      showDelPeriodeModal: false,
-    }));
-  }
+  const hideModal = () => {
+    setShowDelPeriodeModal(false);
+  };
 
-  splitPeriod(formValues: any) {
-    this.setState((state: any) => ({
-      ...state,
-      finnesBelopMed0Verdi: false,
-    }));
+  const splitPeriod = (formValues: any) => {
+    setFinnesBelopMed0Verdi(false);
 
     const {
       periode,
       beregnBelop: callBeregnBelop,
       behandlingId: selectedBehandlingId,
       oppdaterSplittedePerioder,
-    } = this.props;
+    } = props;
 
     const forstePeriode = {
       belop: periode.feilutbetaling,
@@ -93,10 +70,7 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
       const { perioder } = response;
       const harPeriodeMedBelop0 = perioder.some(p => p.belop === 0);
       if (harPeriodeMedBelop0) {
-        this.setState((state: any) => ({
-          ...state,
-          finnesBelopMed0Verdi: true,
-        }));
+        setFinnesBelopMed0Verdi(true);
       } else {
         const forstePeriodeMedBeløp = {
           fom: forstePeriode.fom,
@@ -108,72 +82,68 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
           tom: andrePeriode.tom,
           feilutbetaling: perioder[1].belop,
         };
-        this.hideModal();
+        hideModal();
         oppdaterSplittedePerioder([forstePeriodeMedBeløp, andrePeriodeMedBeløp]);
       }
     });
-  }
+  };
 
-  render() {
-    const { intl, callbackForward, callbackBackward, periode, readOnly, behandlingId, behandlingVersjon } = this.props;
+  const { intl, callbackForward, callbackBackward, periode, readOnly, behandlingId, behandlingVersjon } = props;
 
-    const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
-
-    return (
-      <HGrid gap="space-4" columns={{ xs: '2fr 8fr 2fr' }}>
-        <div>
-          <Label size="small" as="p">
-            <FormattedMessage id="PeriodeController.Detaljer" />
-            {isEdited && <EditedIcon />}
-          </Label>
-        </div>
-        <div>
-          {!readOnly && (
-            <Button
-              size="small"
-              variant="tertiary"
-              icon={
-                <Image
-                  src={splitPeriodImageUrl}
-                  srcHover={splitPeriodImageHoverUrl}
-                  alt={intl.formatMessage({ id: 'PeriodeController.DelOppPerioden' })}
-                />
-              }
-              className={styles.splitPeriodPosition}
-              onClick={this.showModal}
-            >
-              <FormattedMessage id="PeriodeController.DelOppPerioden" />
-            </Button>
-          )}
-          {showDelPeriodeModal && (
-            <DelOppPeriodeModal
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              cancelEvent={this.hideModal}
-              showModal={showDelPeriodeModal}
-              periodeData={periode}
-              splitPeriod={this.splitPeriod}
-              finnesBelopMed0Verdi={finnesBelopMed0Verdi}
-            />
-          )}
-        </div>
-        <div>
-          <FloatRight>
-            <TimeLineButton
-              text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
-              type="prev"
-              callback={callbackBackward}
-            />
-            <TimeLineButton
-              text={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })}
-              type="next"
-              callback={callbackForward}
-            />
-          </FloatRight>
-        </div>
-      </HGrid>
-    );
-  }
-}
+  return (
+    <HGrid gap="space-4" columns={{ xs: '2fr 8fr 2fr' }}>
+      <div>
+        <Label size="small" as="p">
+          <FormattedMessage id="PeriodeController.Detaljer" />
+          {isEdited && <EditedIcon />}
+        </Label>
+      </div>
+      <div>
+        {!readOnly && (
+          <Button
+            size="small"
+            variant="tertiary"
+            icon={
+              <Image
+                src={splitPeriodImageUrl}
+                srcHover={splitPeriodImageHoverUrl}
+                alt={intl.formatMessage({ id: 'PeriodeController.DelOppPerioden' })}
+              />
+            }
+            className={styles.splitPeriodPosition}
+            onClick={showModal}
+          >
+            <FormattedMessage id="PeriodeController.DelOppPerioden" />
+          </Button>
+        )}
+        {showDelPeriodeModal && (
+          <DelOppPeriodeModal
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            cancelEvent={hideModal}
+            showModal={showDelPeriodeModal}
+            periodeData={periode}
+            splitPeriod={splitPeriod}
+            finnesBelopMed0Verdi={finnesBelopMed0Verdi}
+          />
+        )}
+      </div>
+      <div>
+        <FloatRight>
+          <TimeLineButton
+            text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
+            type="prev"
+            callback={callbackBackward}
+          />
+          <TimeLineButton
+            text={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })}
+            type="next"
+            callback={callbackForward}
+          />
+        </FloatRight>
+      </div>
+    </HGrid>
+  );
+};
 
 export default injectIntl(PeriodeController);
