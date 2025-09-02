@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
 import { booleanTilTekst, tekstTilBoolean, utledTilgjengeligeÅr } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
@@ -19,9 +18,6 @@ import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemod
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import tekst from './vilkar-midlertidig-alene-tekst';
 import styles from './vilkarMidlertidigAlene.module.css';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 type FormData = {
   begrunnelse: string;
@@ -64,9 +60,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       fraDato: harAksjonspunktOgVilkarLostTidligere
         ? informasjonTilLesemodus.dato.fra
         : soknadsopplysninger.soknadsdato,
-      tilDato: harAksjonspunktOgVilkarLostTidligere
-        ? dayjs.tz(informasjonTilLesemodus.dato.til, 'YYYY-MM-DD', 'Europe/Oslo').format('DD.MM.YYYY')
-        : '0',
+      tilDato:
+        informasjonTilLesemodus && informasjonTilLesemodus.dato.til
+          ? initializeDate(informasjonTilLesemodus.dato.til, 'YYYY-MM-DD').format('DD.MM.YYYY')
+          : 'Dato for opphør',
       erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
@@ -120,7 +117,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
         fra: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen)
-          ? dayjs.tz(tilDato, 'DD.MM.YYYY', 'Europe/Oslo').format('YYYY-MM-DD')
+          ? initializeDate(dayjs(tilDato, 'DD.MM.YYYY')).format('YYYY-MM-DD')
           : '',
         avslagsårsakKode,
       });
