@@ -266,7 +266,6 @@
   "packages/prosess-omsorgsdager/src/ui/components/tester/__tests__/alene-om-omsorgen.spec.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/tester/__tests__/korrigere-perioder.spec.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/tester/__tests__/kronisk-syk.spec.tsx",
-  "packages/prosess-omsorgsdager/src/ui/components/tester/__tests__/vilkar-midlertidig-alene.spec.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn.tsx",
   "packages/prosess-omsorgsdager/src/util/dateUtils.ts",
   "packages/prosess-tilbakekreving/src/components/TilbakekrevingForm.spec.tsx",
