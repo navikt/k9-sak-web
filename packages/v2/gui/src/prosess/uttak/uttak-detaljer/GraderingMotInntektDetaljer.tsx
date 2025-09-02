@@ -32,30 +32,33 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
-        {inntektsforhold.map(inntForhold => {
-          const { arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-            : undefined;
-          return (
-            <Box.New
-              key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
-              className={styles.uttakDetaljerBeregningFirma}
-            >
-              <BodyShort size="small" weight="semibold" className="leading-6">
-                {inntForhold.type !== InntektsforholdDtoType.FRILANSER
-                  ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
-                  : 'Frilanser'}{' '}
-                {inntForhold.erNytt && (
-                  <Tag size="small" variant="info">
-                    Ny
-                  </Tag>
-                )}
-              </BodyShort>
-              <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
-            </Box.New>
-          );
-        })}
+        {inntektsforhold
+          // Ikke vise tilkommende inntekstforhold i beregningsgrunnlag
+          .filter(inntForhold => !inntForhold.erNytt)
+          .map(inntForhold => {
+            const { arbeidsgiverIdentifikator } = inntForhold;
+            const arbeidsforholdData = arbeidsgiverIdentifikator
+              ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
+              : undefined;
+            return (
+              <Box.New
+                key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
+                className={styles.uttakDetaljerBeregningFirma}
+              >
+                <BodyShort size="small" weight="semibold" className="leading-6">
+                  {inntForhold.type !== InntektsforholdDtoType.FRILANSER
+                    ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
+                    : 'Frilanser'}{' '}
+                  {inntForhold.erNytt && (
+                    <Tag size="small" variant="info">
+                      Ny
+                    </Tag>
+                  )}
+                </BodyShort>
+                <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
+              </Box.New>
+            );
+          })}
       </UttakDetaljerEkspanderbar>
       <UttakDetaljerEkspanderbar title={`Utbetalt lønn: ${løpendeInntekt}`}>
         {inntektsforhold.map(inntForhold => {
