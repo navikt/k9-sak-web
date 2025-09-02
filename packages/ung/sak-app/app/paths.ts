@@ -1,74 +1,54 @@
-import { Location, Search } from 'history';
+import { Location } from 'history';
 
-import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import {
+  pathToFagsak as v2PathToFagsak,
+  pathToBehandlinger as v2PathToBehandlinger,
+  pathToBehandling as v2PathToBehandling,
+} from '@k9-sak-web/gui/utils/paths.js';
+import { getPathToK9Los as v2GetPathToK9Los, goToLos as v2GoToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
+import { isSkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import { createPathForSkjermlenke } from '@k9-sak-web/gui/utils/skjermlenke/createPathForSkjermlenke.js';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';
 
-type QueryParams = {
-  punkt?: string;
-  fakta?: string;
-  stotte?: string;
-  risiko?: boolean;
-};
+export const aktoerRoutePath = '/aktoer/:aktoerId';
 
 export const fagsakRoutePath = '/fagsak/:saksnummer//*';
 export const behandlingerRoutePath = `behandling//*`;
 export const behandlingRoutePath = `/:behandlingId/`;
 
-export const fagsakPath = '/fagsak/:saksnummer/';
-export const behandlingerPath = `${fagsakPath}behandling/`;
-export const behandlingPath = `${behandlingerPath}:behandlingId(\\d+)/`;
-
-export const pathToFagsak = (saksnummer: string): string => buildPath(fagsakPath, { saksnummer });
-export const pathToBehandlinger = (saksnummer: string): string => buildPath(behandlingerPath, { saksnummer });
-export const pathToBehandling = (saksnummer: string, behandlingId: number): string =>
-  buildPath(behandlingPath, { saksnummer, behandlingId });
+export const pathToFagsak = v2PathToFagsak;
+export const pathToBehandlinger = v2PathToBehandlinger;
+export const pathToBehandling = v2PathToBehandling;
 export const pathToMissingPage = (): string => '/404';
-
-const emptyQueryString = (queryString: string): boolean => queryString === '?' || !queryString;
-
-const updateQueryParams = (queryString: string, nextParams: QueryParams): Search => {
-  const prevParams = emptyQueryString(queryString) ? {} : parseQueryString(queryString);
-  return formatQueryString({
-    ...prevParams,
-    ...nextParams,
-  });
-};
-
-export const getLocationWithQueryParams = (location: Location, queryParams: QueryParams): Location => ({
-  ...location,
-  search: updateQueryParams(location.search, queryParams),
-});
 
 export const getSupportPanelLocationCreator =
   (location: Location) =>
   (supportPanel: string): Location =>
-    getLocationWithQueryParams(location, { stotte: supportPanel });
+    pathWithQueryParams(location, { stotte: supportPanel });
 export const getProsessStegLocation =
   (location: Location) =>
   (prosessSteg: string): Location =>
-    getLocationWithQueryParams(location, { punkt: prosessSteg });
+    pathWithQueryParams(location, { punkt: prosessSteg });
 export const getFaktaLocation =
   (location: Location) =>
   (fakta: string): Location =>
-    getLocationWithQueryParams(location, { fakta });
+    pathWithQueryParams(location, { fakta });
+export const getRiskPanelLocationCreator =
+  (location: Location) =>
+  (isRiskPanelOpen): Location =>
+    pathWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 // eslint-disable-next-line
 export const getLocationWithDefaultProsessStegAndFakta = (location: Location): Location =>
-  getLocationWithQueryParams(location, { punkt: DEFAULT_PROSESS_STEG, fakta: DEFAULT_FAKTA });
+  pathWithQueryParams(location, { punkt: DEFAULT_PROSESS_STEG, fakta: DEFAULT_FAKTA });
 
-export const getPathToK9Los = (): string | null => {
-  const { host } = window.location;
-  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
-    return 'https://k9-los-web.intern.dev.nav.no';
-  }
-  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
-    return 'https://k9-los-web.intern.nav.no';
-  }
-  return null;
-};
+/**
+ * @deprecated Bruk v2 versjon direkte
+ */
+export const getPathToK9Los = v2GetPathToK9Los;
 
 export const getPathToK9Punsj = (): string | null => {
   const { host } = window.location;
@@ -81,9 +61,14 @@ export const getPathToK9Punsj = (): string | null => {
   return null;
 };
 
+/**
+ * @deprecated Bruk createPathForSkjermlenke for ny kode der ein skjermlenkeType med korrekt Kodeverdi type tilgjengeleg.
+ */
 export const createLocationForSkjermlenke = (behandlingLocation: Location, skjermlenkeCode: string): Location => {
-  const skjermlenke = skjermlenkeCodes[skjermlenkeCode] || { punktNavn: 'default', faktaNavn: 'default' };
-  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
+  if (isSkjermlenkeType(skjermlenkeCode)) {
+    return createPathForSkjermlenke(behandlingLocation, skjermlenkeCode);
+  }
+  return pathWithQueryParams(behandlingLocation, { punkt: 'default', fakta: 'default' });
 };
 
 // Kan gå inn på url som ser sånn ut "http://localhost:9000/k9/web/fagsak/", men
@@ -92,3 +77,8 @@ export const erUrlUnderBehandling = (location: Location): boolean => !location.p
 
 export const erBehandlingValgt = (location: Location): boolean =>
   location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');
+
+/**
+ * @deprecated Bruk v2 versjon direkte
+ */
+export const goToLos = v2GoToLos;

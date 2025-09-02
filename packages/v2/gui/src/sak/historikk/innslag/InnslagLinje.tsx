@@ -4,14 +4,12 @@ import type { Location } from 'history';
 import { NavLink } from 'react-router';
 import type { NyHistorikkLinje } from '../historikkTypeBerikning.js';
 import { parseBoldText, scrollUp } from '../snakkeboble/snakkebobleUtils.jsx';
+import type { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 export interface InnslagLinjeProps {
   readonly linje: NyHistorikkLinje;
   readonly behandlingLocation: Location;
-  readonly createLocationForSkjermlenke: (
-    behandlingLocation: Location,
-    skjermlenkeKode: string,
-  ) => Location | undefined;
+  readonly createLocationForSkjermlenke: typeof createPathForSkjermlenke;
 }
 
 export const InnslagLinje = ({ linje, behandlingLocation, createLocationForSkjermlenke }: InnslagLinjeProps) => {
@@ -20,7 +18,7 @@ export const InnslagLinje = ({ linje, behandlingLocation, createLocationForSkjer
       if (linje.skjermlenkeType == null) {
         throw new Error(`historikk innslag linje med skjermlenke mangler skjermlenkeType.`);
       }
-      const location = createLocationForSkjermlenke(behandlingLocation, linje.skjermlenkeType.kode);
+      const location = createLocationForSkjermlenke(behandlingLocation, linje.skjermlenkeType.kilde);
       if (location == null) {
         return null;
       }

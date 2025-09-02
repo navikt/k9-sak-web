@@ -1,10 +1,9 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { useLocation } from 'react-router';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 
-import { createLocationForSkjermlenke, pathToBehandling } from '../../app/paths';
-import {
+import type {
   KlageHistorikkInnslagV2,
   NyeUlikeHistorikkinnslagTyper,
   SakHistorikkInnslagV2,
@@ -12,10 +11,12 @@ import {
 } from '@k9-sak-web/gui/sak/historikk/historikkTypeBerikning.js';
 import dayjs from 'dayjs';
 import { Alert } from '@navikt/ds-react';
-import { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
+import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.jsx';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
+import { pathToBehandling } from '../../utils/paths.js';
+import { createPathForSkjermlenke } from '../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 const sortHistorikkinnslag = (
   historikkK9sak: SakHistorikkInnslagV2[] = [],
@@ -87,7 +88,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
         key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
         saksnummer={saksnummer}
         innslag={innslag}
-        createLocationForSkjermlenke={createLocationForSkjermlenke}
+        createLocationForSkjermlenke={createPathForSkjermlenke}
         behandlingLocation={getBehandlingLocation(behandlingId)}
       />
     );

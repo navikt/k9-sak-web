@@ -1,3 +1,8 @@
+import { buildPath as v2BuildPath } from '@k9-sak-web/gui/utils/urlUtils.js';
+
+/**
+ * @deprecated Bruk URLSearchParams istaden
+ */
 export const parseQueryString = (queryString: string = '') =>
   queryString
     .replace(/^\?/, '') // Remove leading question mark
@@ -7,6 +12,9 @@ export const parseQueryString = (queryString: string = '') =>
     .map(([key, value]) => ({ [key]: decodeURIComponent(value) })) // URL-decode value
     .reduce((a, b) => ({ ...a, ...b }), {});
 
+/**
+ * @deprecated Bruk URLSearchParams istaden
+ */
 export const formatQueryString = (queryParams: { [key: string]: string | boolean } = {}) =>
   `?${
     // Add leading question mark
@@ -19,24 +27,4 @@ export const formatQueryString = (queryParams: { [key: string]: string | boolean
       .replace(/%20/g, '+') // Replace URL-encoded spaces with plus
   }`;
 
-const paramSegmentPattern = /^:(\w+)(\(.+\))?(\?)?$/;
-
-const resolveParam = (params: { [key: string]: string | number }) => (segment: string) => {
-  if (!paramSegmentPattern.test(segment)) {
-    return segment;
-  }
-  const [paramName, paramPattern, optional] = paramSegmentPattern.exec(segment).slice(1, 4);
-  const paramMatch = new RegExp(paramPattern || '(.+)').exec(`${params[paramName]}`);
-  const paramValue = paramMatch ? paramMatch[1].replace(/^undefined$/, '') : '';
-  return paramValue || (optional ? '' : segment);
-};
-
-export const buildPath = (path: string, params: { [key: string]: string | number } = {}) =>
-  path
-    .replace(/^\//, ' /') // Add whitespace before leading slash to keep it from being consumed by split
-    .replace(/\/$/, '/ ') // Add whitespace after trailing slash to keep it from being consumed by split
-    .split('/') // Split on delimiter '/'
-    .map(resolveParam(params))
-    .filter(segment => segment !== '')
-    .join('/')
-    .trim();
+export const buildPath = v2BuildPath;

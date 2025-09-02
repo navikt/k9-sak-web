@@ -2,10 +2,8 @@ import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/w
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from 'storybook/test';
-import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setBaseRequestApiMocks.js';
-import { requestApi } from '../../data/k9sakApi.js';
 import HistorikkIndex from './HistorikkIndex.js';
 
 const meta = {
@@ -17,10 +15,6 @@ const meta = {
     withFakeHistorikkBackend(),
     withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
   ],
-  beforeEach: () => {
-    requestApi.clearAllMockData();
-    setBaseRequestApiMocks(requestApi);
-  },
 } satisfies Meta<typeof HistorikkIndex>;
 
 type Story = StoryObj<typeof meta>;

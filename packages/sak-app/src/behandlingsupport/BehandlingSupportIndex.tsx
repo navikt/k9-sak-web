@@ -30,7 +30,7 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import HistorikkIndex from './historikk/HistorikkIndex';
+import HistorikkIndex from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
