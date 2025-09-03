@@ -11,6 +11,7 @@ import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
+import { CogIcon } from '@navikt/aksel-icons';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -42,7 +43,12 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           ? 'Søker er folkeregistrert forelder'
           : 'Søker er ikke folkeregistrert forelder';
       }
-      label = <Label size="small">Automatisk vurdert</Label>;
+      label = (
+        <div className="flex items-center gap-2">
+          <Label size="small">Automatisk vurdert</Label>
+          <CogIcon />
+        </div>
+      );
     }
     return (
       <>
@@ -73,10 +79,6 @@ const OmsorgsperiodeVurderingsdetaljer = ({
 
   const skalViseRelasjonsbeskrivelse =
     omsorgsperiode.relasjon?.toUpperCase() === Relasjon.ANNET.toUpperCase() && omsorgsperiode.relasjonsbeskrivelse;
-
-  const harSøkerOmsorgenLabel = erOMP
-    ? 'Er vilkåret oppfylt for denne perioden?'
-    : 'Har søker omsorgen for barnet i denne perioden?';
 
   return (
     <DetailView
@@ -130,7 +132,11 @@ const OmsorgsperiodeVurderingsdetaljer = ({
       )}
       <Box.New marginBlock="8 0">{begrunnelseRenderer()}</Box.New>
       <Box.New marginBlock="8 0">
-        <LabelledContent size="small" label={harSøkerOmsorgenLabel} content={resultatRenderer()} />
+        <LabelledContent
+          size="small"
+          label={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
+          content={resultatRenderer()}
+        />
       </Box.New>
     </DetailView>
   );
