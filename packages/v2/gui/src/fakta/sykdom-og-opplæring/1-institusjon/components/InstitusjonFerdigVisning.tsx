@@ -1,10 +1,11 @@
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
 import { useAlleInstitusjoner } from '../../SykdomOgOpplæringQueries.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
+import { Lovreferanse } from '../../../../shared/lovreferanse/Lovreferanse.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -28,7 +29,12 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
       </Box.New>
       <div className="flex flex-col gap-6 mt-6">
         <LabelledContent
-          label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
+          label={
+            <BodyLong size="small">
+              Er institusjonen en godkjent helseinstitusjon eller kompetansesenter, jf{' '}
+              <Lovreferanse>§ 9-14</Lovreferanse>?
+            </BodyLong>
+          }
           size="small"
           content={
             ((vurdering.resultat === InstitusjonResultat.GODKJENT_AUTOMATISK ||
@@ -40,7 +46,12 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
         {vurdering.begrunnelse && (
           <div>
             <LabelledContent
-              label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
+              label={
+                <BodyLong size="small">
+                  Skriv din vurdering av om institusjonen er en godkjent helseinstitusjon eller kompetansesenter etter
+                  reglene i <Lovreferanse>§ 9-14, første ledd</Lovreferanse>
+                </BodyLong>
+              }
               indentContent
               size="small"
               content={
