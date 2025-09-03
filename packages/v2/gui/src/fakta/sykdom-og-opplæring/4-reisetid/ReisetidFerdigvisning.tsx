@@ -27,7 +27,7 @@ const ReisetidFerdigvisning = ({ vurdering }: { vurdering: ReisetidVurderingDto 
                 lovtekst
               </Link>{' '}
               og{' '}
-              <Link target="_blank" href="https://lovdata.no/pro/#document/NAV/rundskriv/r09-00/KAPITTEL_4-5">
+              <Link target="_blank" href="https://lovdata.no/pro/NAV/rundskriv/r09-00/KAPITTEL_4-5">
                 rundskriv
               </Link>{' '}
               til §9-14
