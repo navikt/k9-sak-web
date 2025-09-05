@@ -4,7 +4,7 @@ export const omsorgspenger = {
   ...felles,
   'vurdering.tittel': 'Vurdering',
   'vurdering.harOmsorgenFor': 'Er vilkåret oppfylt for denne perioden?',
-  'vurdering.hjemmel': 'Vurder om søker har omsorg for barn etter',
+  'vurdering.hjemmel': 'Vurder om søker har omsorg for barn, jf',
   'vurdering.paragraf': '§ 9-5',
   'vurdering.hjemmel.hjelpetekst':
     'Hvis søker ikke oppfyller vilkåret etter § 9-5, så skal vilkåret likevel settes oppfylt dersom søker kan ha fått fordelt eller overført dager etter § 9-6, femte og sjette ledd',
@@ -14,8 +14,8 @@ export const omsorgspenger = {
 export const opplaeringspenger = {
   ...felles,
   'vurdering.tittel': 'Vurdering av omsorg',
-  'vurdering.harOmsorgenFor': 'Har søker omsorgen for barnet i denne perioden?',
-  'vurdering.hjemmel': 'Vurder om søker har omsorgen for barnet etter',
+  'vurdering.harOmsorgenFor': 'Har søker omsorgen for barnet?',
+  'vurdering.hjemmel': 'Vurder om søker har omsorgen for barnet, jf',
   'vurdering.paragraf': '§ 9-14',
   'vurdering.advarsel': 'Vurder om søker har omsorgen for barnet i perioden.',
 };
@@ -23,8 +23,8 @@ export const opplaeringspenger = {
 export const pleiepenger = {
   ...felles,
   'vurdering.tittel': 'Vurdering av omsorg',
-  'vurdering.harOmsorgenFor': 'Har søker omsorgen for barnet i denne perioden?',
-  'vurdering.hjemmel': 'Vurder om søker har omsorgen for barnet etter',
+  'vurdering.harOmsorgenFor': 'Har søker omsorgen for barnet?',
+  'vurdering.hjemmel': 'Vurder om søker har omsorgen for barnet, jf',
   'vurdering.advarsel': 'Vurder om søker har omsorgen for barnet i {perioder}.',
   'vurdering.paragraf': '§ 9-10, første ledd',
 };

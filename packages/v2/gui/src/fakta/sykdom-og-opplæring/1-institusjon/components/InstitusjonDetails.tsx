@@ -22,6 +22,7 @@ const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
   const [redigerer, setRedigerer] = useState(false);
   const visRediger =
     !readOnly &&
+    !redigerer &&
     vurdering.resultat !== InstitusjonVurderingDtoResultat.MÅ_VURDERES &&
     vurdering.erTilVurdering &&
     harAksjonspunkt9300;

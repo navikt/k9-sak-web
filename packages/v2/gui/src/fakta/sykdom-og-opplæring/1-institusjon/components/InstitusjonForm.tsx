@@ -1,6 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import { Box, Button, Checkbox } from '@navikt/ds-react';
+import { BodyLong, Box, Button, Checkbox } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -14,6 +14,7 @@ import {
   utledRedigertInstitusjonNavn,
 } from '../utils.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
@@ -119,7 +120,12 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
-          label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
+          label={
+            <BodyLong size="small">
+              Er institusjonen en godkjent helseinstitusjon eller kompetansesenter, jf{' '}
+              <Lovreferanse>§ 9-14</Lovreferanse>?
+            </BodyLong>
+          }
           radios={[
             { label: 'Ja', value: 'ja' },
             { label: 'Nei', value: 'nei' },
@@ -152,7 +158,12 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
             control={control}
             name={InstitusjonFormFields.BEGRUNNELSE}
             size="small"
-            label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
+            label={
+              <BodyLong size="small">
+                Skriv din vurdering av om institusjonen er en godkjent helseinstitusjon eller kompetansesenter etter
+                reglene i <Lovreferanse>§ 9-14, første ledd</Lovreferanse>
+              </BodyLong>
+            }
             validate={[required, minLength(3), maxLength(10000)]}
             readOnly={readOnly}
             data-testid="begrunnelse"

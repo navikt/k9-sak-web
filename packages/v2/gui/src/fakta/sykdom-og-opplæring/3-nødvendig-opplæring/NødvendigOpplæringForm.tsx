@@ -256,11 +256,11 @@ const NødvendigOpplæringForm = ({
                 <ReadMore header="Hva skal vurderingen inneholde?" size="small">
                   <BodyShort size="small">
                     Du skal ta utgangspunkt i{' '}
-                    <Link href="https://lovdata.no/dokument/NL/lov/1997-02-28-19/KAPITTEL_4-5-3#%C2%A79-14">
+                    <Link target="_blank" href="https://lovdata.no/pro/lov/1997-02-28-19/§9-14">
                       lovteksten
                     </Link>{' '}
                     og{' '}
-                    <Link href="https://lovdata.no/nav/rundskriv/r09-00#ref/lov/1997-02-28-19/%C2%A79-14">
+                    <Link target="_blank" href="https://lovdata.no/pro/NAV/rundskriv/r09-00/KAPITTEL_4-5">
                       rundskrivet
                     </Link>{' '}
                     når du skriver vurderingen.
@@ -273,6 +273,9 @@ const NødvendigOpplæringForm = ({
                       <ListItem className="!mb-0">Om kursinnholdet tilsier at det er opplæring</ListItem>
                       <ListItem className="!mb-0">
                         Om det er årsakssammenheng mellom opplæringen og sykdom til barnet
+                      </ListItem>
+                      <ListItem className="!mb-0">
+                        Om opplæringen er nødvendig på grunn av barnets sykdom og behov for pleie og omsorg
                       </ListItem>
                     </List>
                   </div>

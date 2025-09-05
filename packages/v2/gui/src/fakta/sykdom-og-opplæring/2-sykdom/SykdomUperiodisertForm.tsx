@@ -91,8 +91,8 @@ const SykdomUperiodisertForm = ({
       <div className="flex flex-col gap-6">
         <div>
           <Label htmlFor="begrunnelse" size="small">
-            Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge
-            av <Lovreferanse>§ 9-14</Lovreferanse>
+            Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år, jf{' '}
+            <Lovreferanse>§ 9-14</Lovreferanse>
           </Label>
           <Textarea
             {...formMethods.register('begrunnelse', {
@@ -111,7 +111,7 @@ const SykdomUperiodisertForm = ({
           render={({ field }) => (
             <RadioGroup
               {...field}
-              legend="Har barnet en langvarig funksjonshemming eller langvarig sykdom?"
+              legend="Har barnet en funksjonshemming eller langvarig sykdom?"
               size="small"
               error={formMethods.formState.errors.godkjent?.message as string | undefined}
             >

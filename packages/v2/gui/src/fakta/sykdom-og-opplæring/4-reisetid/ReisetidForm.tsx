@@ -1,5 +1,5 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Button, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
+import { Button, Link, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
@@ -57,8 +57,14 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
       begrunnelse: data.begrunnelse,
       godkjent: data.godkjent === 'ja',
       periode: {
-        fom: data.godkjent === 'ja' ? dayjs(data.periode.fom).format('YYYY-MM-DD') : vurdering.perioder[0]?.fom as string,
-        tom: data.godkjent === 'ja' ? dayjs(data.periode.tom).format('YYYY-MM-DD') : vurdering.perioder[0]?.tom as string,
+        fom:
+          data.godkjent === 'ja'
+            ? dayjs(data.periode.fom).format('YYYY-MM-DD')
+            : (vurdering.perioder[0]?.fom as string),
+        tom:
+          data.godkjent === 'ja'
+            ? dayjs(data.periode.tom).format('YYYY-MM-DD')
+            : (vurdering.perioder[0]?.tom as string),
       },
     });
   });
@@ -69,12 +75,25 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
         <div className="flex flex-col gap-6">
           <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} size="small" />
           <Textarea
-            label="Vurdering"
+            label="Vurder om det er nødvendig å reise en annen dag enn kursdagene"
             {...formMethods.register('begrunnelse', {
               validate: value => (value?.length > 0 ? undefined : 'Vurdering er påkrevd'),
             })}
             size="small"
             disabled={lesemodus}
+            description={
+              <div>
+                Ta utgangspunkt i{' '}
+                <Link target="_blank" href="https://lovdata.no/pro/lov/1997-02-28-19/§9-14">
+                  lovtekst
+                </Link>{' '}
+                og{' '}
+                <Link target="_blank" href="https://lovdata.no/pro/NAV/rundskriv/r09-00/KAPITTEL_4-5">
+                  rundskriv
+                </Link>{' '}
+                til §9-14
+              </div>
+            }
             error={formMethods.formState.errors.begrunnelse?.message as string | undefined}
           />
           <Controller

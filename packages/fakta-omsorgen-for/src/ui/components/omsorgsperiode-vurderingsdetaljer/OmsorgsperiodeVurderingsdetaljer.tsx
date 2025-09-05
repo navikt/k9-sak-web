@@ -4,13 +4,14 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
-import { BodyShort, Box, Button, Label, Tag } from '@navikt/ds-react';
+import { BodyShort, Box, Button, HStack, Label, Tag } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
+import { CogIcon } from '@navikt/aksel-icons';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -42,7 +43,12 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           ? 'Søker er folkeregistrert forelder'
           : 'Søker er ikke folkeregistrert forelder';
       }
-      label = <Label size="small">Automatisk vurdert</Label>;
+      label = (
+        <HStack align="center" gap="space-8">
+          <Label size="small">Automatisk vurdert</Label>
+          <CogIcon />
+        </HStack>
+      );
     }
     return (
       <>
@@ -74,10 +80,6 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   const skalViseRelasjonsbeskrivelse =
     omsorgsperiode.relasjon?.toUpperCase() === Relasjon.ANNET.toUpperCase() && omsorgsperiode.relasjonsbeskrivelse;
 
-  const harSøkerOmsorgenLabel = erOMP
-    ? 'Er vilkåret oppfylt for denne perioden?'
-    : 'Har søker omsorgen for barnet i denne perioden?';
-
   return (
     <DetailView
       title={erOMP ? 'Vurdering' : 'Vurdering av omsorg'}
@@ -101,14 +103,14 @@ const OmsorgsperiodeVurderingsdetaljer = ({
                 size="small"
                 label="Hvilken relasjon har søker til barnet?"
                 content={
-                  <div className="flex gap-2 items-center">
+                  <HStack align="center" gap="space-8">
                     <BodyShort size="small" className="whitespace-pre-wrap">
                       {omsorgsperiode.relasjon}
                     </BodyShort>
                     <Tag size="small" variant="info">
                       Fra søknad
                     </Tag>
-                  </div>
+                  </HStack>
                 }
               />
             </Box.New>
@@ -130,7 +132,11 @@ const OmsorgsperiodeVurderingsdetaljer = ({
       )}
       <Box.New marginBlock="8 0">{begrunnelseRenderer()}</Box.New>
       <Box.New marginBlock="8 0">
-        <LabelledContent size="small" label={harSøkerOmsorgenLabel} content={resultatRenderer()} />
+        <LabelledContent
+          size="small"
+          label={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
+          content={resultatRenderer()}
+        />
       </Box.New>
     </DetailView>
   );

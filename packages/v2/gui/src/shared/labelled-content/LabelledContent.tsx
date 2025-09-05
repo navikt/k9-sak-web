@@ -10,7 +10,7 @@ export interface LabelledContentProps {
   indentContent?: boolean;
   size?: 'medium' | 'small';
   hideLabel?: boolean;
-  description?: string;
+  description?: string | React.ReactNode;
 }
 
 export const LabelledContent = ({
@@ -33,7 +33,8 @@ export const LabelledContent = ({
           {label}
         </Label>
       )}
-      {description && <Detail className="mt-1">{description}</Detail>}
+      {description && typeof description === 'string' && <Detail className="mt-1">{description}</Detail>}
+      {description && typeof description !== 'string' && description}
       <div className={cl}>{content}</div>
     </div>
   );

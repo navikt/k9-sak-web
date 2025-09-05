@@ -27,8 +27,8 @@ export const Lovreferanse = ({ children, isUng }: LovreferanseProps) => {
 
 const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
   const grunnUrlen = isUng
-    ? 'https://lovdata.no/LTI/forskrift/2025-06-20-1182/'
-    : 'https://lovdata.no/lov/1997-02-28-19/';
+    ? 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/'
+    : 'https://lovdata.no/pro/NL/lov/1997-02-28-19/';
 
   const seksjonsRegex = /(\d+(-\d+)?)/;
 
