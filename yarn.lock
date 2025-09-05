@@ -3156,7 +3156,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-kodeverk": "npm:^3.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:^8.1.5"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:^8.1.12"
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -3178,7 +3178,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-kodeverk": "npm:^3.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:^8.1.5"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:^8.1.12"
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
   languageName: unknown
@@ -4082,9 +4082,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:^8.1.5":
-  version: 8.1.5
-  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:8.1.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F8.1.5%2Fdef5bdf44daebdc10925a81aceef6c8693af2de4"
+"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:^8.1.12":
+  version: 8.1.12
+  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:8.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F8.1.12%2F6a1360d2cc8d480cfb47e2cdd1b08a4e4cd93dc3"
   dependencies:
     "@navikt/aksel-icons": "npm:7.28.1"
     "@navikt/ds-css": "npm:7.28.1"
@@ -4111,7 +4111,7 @@ __metadata:
     react: 19.1.0
     react-hook-form: 7.x
     react-intl: 6.x
-  checksum: 10/50e85465757ffed6a0101f67d1f7e0ae86b7108561d7249141c394a0ed3fdc5a5165ade97ea57e0dbac1fd65e334f7ccd1cef2ba4f180ef2f44b46630a6eb56a
+  checksum: 10/4d5277c9dcd701d297fab6cfcaab410af0ff8af07a5d58cc3e570afe4577be4ffb52b984424a808162fb05f5b4ed2fce6c45cbd86f9a25b58244da2ed2ba63be
   languageName: node
   linkType: hard
 
