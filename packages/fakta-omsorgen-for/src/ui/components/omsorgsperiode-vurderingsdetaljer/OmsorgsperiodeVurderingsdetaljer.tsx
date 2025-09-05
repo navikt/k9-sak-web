@@ -4,7 +4,7 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
-import { BodyShort, Box, Button, Label, Tag } from '@navikt/ds-react';
+import { BodyShort, Box, Button, HStack, Label, Tag } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
@@ -44,10 +44,10 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           : 'Søker er ikke folkeregistrert forelder';
       }
       label = (
-        <div className="flex items-center gap-2">
+        <HStack align="center" gap="space-8">
           <Label size="small">Automatisk vurdert</Label>
           <CogIcon />
-        </div>
+        </HStack>
       );
     }
     return (
@@ -103,14 +103,14 @@ const OmsorgsperiodeVurderingsdetaljer = ({
                 size="small"
                 label="Hvilken relasjon har søker til barnet?"
                 content={
-                  <div className="flex gap-2 items-center">
+                  <HStack align="center" gap="space-8">
                     <BodyShort size="small" className="whitespace-pre-wrap">
                       {omsorgsperiode.relasjon}
                     </BodyShort>
                     <Tag size="small" variant="info">
                       Fra søknad
                     </Tag>
-                  </div>
+                  </HStack>
                 }
               />
             </Box.New>
