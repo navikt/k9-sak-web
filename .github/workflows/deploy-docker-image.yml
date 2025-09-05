@@ -121,7 +121,7 @@ jobs:
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           TAG: prod_${{ needs.build-docker-image.outputs.tag }}
         with:
@@ -158,7 +158,7 @@ jobs:
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {
