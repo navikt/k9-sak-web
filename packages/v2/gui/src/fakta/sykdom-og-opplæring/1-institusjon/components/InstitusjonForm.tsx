@@ -14,7 +14,7 @@ import {
   utledRedigertInstitusjonNavn,
 } from '../utils.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { Lovreferanse } from '../../../../shared/lovreferanse/Lovreferanse.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
