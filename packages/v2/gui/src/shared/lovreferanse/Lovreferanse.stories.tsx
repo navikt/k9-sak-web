@@ -43,7 +43,7 @@ export const UngdomsprogramFårRiktigLenke: Story = {
     await step('Enkeltparagrafer blir riktig lenket', async () => {
       await expect(linkEls()).toHaveLength(1);
       await expect(linkEls()[0]).toHaveTextContent('8');
-      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/LTI/forskrift/2025-06-20-1182/§8');
+      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/§8');
     });
   },
 };
