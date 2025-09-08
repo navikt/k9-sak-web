@@ -13,10 +13,10 @@ import dayjs from 'dayjs';
 import { Alert } from '@navikt/ds-react';
 import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
-import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.jsx';
-import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
-import { pathToBehandling } from '../../utils/paths.js';
-import { createPathForSkjermlenke } from '../../utils/skjermlenke/createPathForSkjermlenke.js';
+import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
+import HistorikkBackendApiContext from './HistorikkBackendApiContext.js';
+import { pathToBehandling } from '../../../../utils/paths.js';
+import { createPathForSkjermlenke } from '../../../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 const sortHistorikkinnslag = (
   historikkK9sak: SakHistorikkInnslagV2[] = [],

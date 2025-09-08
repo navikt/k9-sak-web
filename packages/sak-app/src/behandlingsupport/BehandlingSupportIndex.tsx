@@ -30,14 +30,14 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import HistorikkIndex from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
+import HistorikkIndex from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendClient.js';
+import { HistorikkBackendClient } from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
+import HistorikkBackendApiContext from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendApiContext.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
