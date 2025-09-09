@@ -93,7 +93,6 @@
   "packages/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner.ts",
   "packages/fakta-arbeidsforhold/src/ArbeidsforholdFaktaIndex.tsx",
   "packages/fakta-arbeidsforhold/src/components/ArbeidsforholdInfoPanel.spec.tsx",
-  "packages/fakta-arbeidsforhold/src/components/PersonArbeidsforholdPanel.spec.tsx",
   "packages/fakta-arbeidsforhold/src/components/PersonArbeidsforholdPanel.tsx",
   "packages/fakta-arbeidsforhold/src/components/arbeidsforholdDetaljer/ArbeidsforholdBegrunnelse.tsx",
   "packages/fakta-arbeidsforhold/src/components/arbeidsforholdDetaljer/ArbeidsforholdRadioknapper.tsx",

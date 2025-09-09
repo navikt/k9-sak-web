@@ -51,7 +51,13 @@ const Wrapper = ({
       title="Dokumentasjon"
       border
       contentAfterTitleRenderer={() => {
-        if (vurdering.resultat === 'MÅ_VURDERES' || redigerer || readOnly || !harAksjonspunkt9302) {
+        if (
+          !vurdering.erTilVurdering ||
+          vurdering.resultat === 'MÅ_VURDERES' ||
+          redigerer ||
+          readOnly ||
+          !harAksjonspunkt9302
+        ) {
           return null;
         }
         return (

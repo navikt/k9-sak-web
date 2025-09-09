@@ -1,4 +1,4 @@
-import { Tag } from '@navikt/ds-react';
+import { HStack, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent';
 
 const Institusjonsnavn = ({ institusjon }: { institusjon: string }) => {
@@ -6,12 +6,12 @@ const Institusjonsnavn = ({ institusjon }: { institusjon: string }) => {
     <LabelledContent
       label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
       content={
-        <div className="flex items-center gap-2">
+        <HStack align="center" gap="space-8">
           {institusjon}
           <Tag variant="info" size="small">
             Fra søknad
           </Tag>
-        </div>
+        </HStack>
       }
     />
   );
