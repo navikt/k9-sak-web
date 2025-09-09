@@ -9,7 +9,7 @@ import {
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
+import { BriefcaseClockIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import {
@@ -17,6 +17,7 @@ import {
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
 import type { UttaksperiodeMedInntektsgradering } from '../types/UttaksperiodeMedInntektsgradering';
+import { FremhevingTag } from './FremhevingTag';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
 import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
 import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
@@ -152,10 +153,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
           >
             {shouldHighlightTilsyn && (
               <Box.New className={styles.uttakDetaljerTag}>
-                <Tag size="medium" variant="alt3-moderate">
-                  <CheckmarkIcon />
-                  Gir lavest {graderingBenevnelse(ytelsetype)}
-                </Tag>
+                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
               </Box.New>
             )}
             <HStack>
@@ -177,10 +175,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
         >
           {shouldHighlightArbeidstid && (
             <Box.New className={styles.uttakDetaljerTag}>
-              <Tag size="medium" variant="alt3-moderate">
-                <CheckmarkIcon />
-                Gir lavest {graderingBenevnelse(ytelsetype)}
-              </Tag>
+              <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
             </Box.New>
           )}
           <HStack>
@@ -201,10 +196,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
           >
             {shouldHighlightInntekt && (
               <Box.New className={styles.uttakDetaljerTag}>
-                <Tag size="medium" variant="alt3-moderate">
-                  <CheckmarkIcon />
-                  Gir lavest {graderingBenevnelse(ytelsetype)}
-                </Tag>
+                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
               </Box.New>
             )}
             <HStack>
