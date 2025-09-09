@@ -1,12 +1,12 @@
 import { behandlingType as behandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import {
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import {
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
 
@@ -91,6 +91,9 @@ const getInfoTextCode = (
   if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Opplæringspenger er innvilget og vedtaket blir iverksatt.';
   }
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
+    return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
+  }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
 };
 
@@ -123,6 +126,9 @@ const getModalDescriptionTextCode = (
   }
   if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Opplæringspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+  }
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
+    return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
 };
@@ -163,6 +169,8 @@ const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
       return 'Pleiepenger er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
+    case fagsakYtelsesType.UNGDOMSYTELSE:
+      return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
     default:
       return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
