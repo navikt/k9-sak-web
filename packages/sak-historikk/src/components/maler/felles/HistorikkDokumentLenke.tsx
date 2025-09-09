@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
-import type { DokumentLink } from '@k9-sak-web/backend/combined/sak/historikk/DokumentLink.js';
+import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
 
 import { DOCUMENT_SERVER_URL_K9, DOCUMENT_SERVER_URL_UNG } from '@k9-sak-web/gui/sak/historikk/documentServerUrl.js';
 import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';

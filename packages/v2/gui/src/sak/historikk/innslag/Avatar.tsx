@@ -1,4 +1,4 @@
-import { HistorikkAktørType } from '@k9-sak-web/backend/combined/sak/historikk/HistorikkAktørType.js';
+import { HistorikkAktørType } from '@k9-sak-web/backend/combined/behandling/historikk/HistorikkAktørType.js';
 import type { FC } from 'react';
 import {
   PersonFillIcon,
