@@ -27,6 +27,7 @@ describe('<MenyTaAvVentIndex>', () => {
     expect(kall[0]).toHaveLength(1);
     expect(kall?.[0]?.[0]).toEqual({
       behandlingId: 3,
+      behandlingUuid: '123',
       behandlingVersjon: 1,
     });
   });
