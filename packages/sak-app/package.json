@@ -26,7 +26,7 @@
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ds-react": "7.28.1",
-    "@navikt/ft-fakta-beregning": "^12.1.6",
+    "@navikt/ft-fakta-beregning": "^12.1.7",
     "@navikt/ft-form-hooks": "^9.1.4",
     "@navikt/ft-plattform-komponenter": "^10.1.4",
     "@navikt/ft-prosess-beregningsgrunnlag": "^11.1.5",
