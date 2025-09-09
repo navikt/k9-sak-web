@@ -11,6 +11,7 @@ describe('<MenyTaAvVentIndex>', () => {
     render(
       <MenyTaAvVentIndexV2
         behandlingId={3}
+        behandlingUuid="123"
         behandlingVersjon={1}
         taBehandlingAvVent={resumeBehandlingCallback}
         lukkModal={lukkModalCallback}
