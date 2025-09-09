@@ -14,7 +14,8 @@
     "./storybook/*": "./src/storybook/*",
     "./prosess/*": "./src/prosess/*",
     "./fakta/*": "./src/fakta/*",
-    "./tokens/*": "./src/tokens/*"
+    "./tokens/*": "./src/tokens/*",
+    "./context/*": "./src/context/*"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
