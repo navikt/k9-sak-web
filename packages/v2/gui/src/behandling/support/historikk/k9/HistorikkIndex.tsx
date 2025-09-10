@@ -75,22 +75,11 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   const isLoading =
     historikkK9SakV2Query.isPending || historikkK9KlageV2Query.isPending || historikkK9TilbakeV2Query.isPending;
 
-  const nyeHistorikkInnslag = useMemo(
+  const historikkInnslag = useMemo(
     () =>
       sortHistorikkinnslag(historikkK9SakV2Query.data, historikkK9TilbakeV2Query.data, historikkK9KlageV2Query.data),
     [historikkK9SakV2Query.data, historikkK9TilbakeV2Query.data, historikkK9KlageV2Query.data],
   );
-
-  const nyeHistorikkElementer = nyeHistorikkInnslag.map((innslag, idx) => {
-    return (
-      <InnslagBoble
-        key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
-        saksnummer={saksnummer}
-        innslag={innslag}
-        behandlingLocation={getBehandlingLocation(behandlingId)}
-      />
-    );
-  });
 
   if (isLoading) {
     return <LoadingPanel />;
@@ -118,7 +107,16 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
       {sakHentFeilAlert}
       {klageHentFeilAlert}
       {tilbakeHentFeilAlert}
-      {nyeHistorikkElementer}
+      {historikkInnslag.map((innslag, idx) => {
+        return (
+          <InnslagBoble
+            key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
+            saksnummer={saksnummer}
+            innslag={innslag}
+            behandlingLocation={getBehandlingLocation(behandlingId)}
+          />
+        );
+      })}
     </div>
   );
 };
