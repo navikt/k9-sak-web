@@ -16,7 +16,6 @@ import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import HistorikkBackendApiContext from './HistorikkBackendApiContext.js';
 import { pathToBehandling } from '../../../../utils/paths.js';
-import { createPathForSkjermlenke } from '../../../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 const sortHistorikkinnslag = (
   historikkK9sak: SakHistorikkInnslagV2[] = [],
@@ -88,7 +87,6 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
         key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
         saksnummer={saksnummer}
         innslag={innslag}
-        createLocationForSkjermlenke={createPathForSkjermlenke}
         behandlingLocation={getBehandlingLocation(behandlingId)}
       />
     );

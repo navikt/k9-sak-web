@@ -15,41 +15,20 @@ import type {
 import {
   type foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektForeldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType as K9TilbakeKodeverdiSomObjektSkjermlenkeType,
   type foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektForeldrepenger_tilbakekreving_behandlingslager_historikk_HistorikkAktør as K9TilbakeKodeverdiSomObjektHistorikkAktør,
-  foreldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType as K9TilbakeSkjermlenkeType,
   type foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto_HistorikkAktørDto,
 } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 
 // Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend.
 
-type ErSak = {
-  erKlage?: never;
-  erTilbakekreving?: never;
-  erSak: boolean;
-};
-
-type ErKlage = {
-  erKlage: boolean;
-  erTilbakekreving?: never;
-  erSak?: never;
-};
-
-type ErTilbakekreving = {
-  erKlage?: never;
-  erTilbakekreving: boolean;
-  erSak?: never;
-};
-
 // Erstatter linje.skjermlenkeType enum med kodeverkoppslag
-export type K9SakHistorikkLinje = Omit<GeneratedK9SakLinje, 'skjermlenkeType'> &
-  ErSak & {
-    readonly skjermlenkeType?: K9SakKodeverdiSomObjektSkjermlenkeType;
-  };
+export type K9SakHistorikkLinje = Omit<GeneratedK9SakLinje, 'skjermlenkeType'> & {
+  readonly skjermlenkeType?: K9SakKodeverdiSomObjektSkjermlenkeType;
+};
 // Erstatter linje.skjermlenkeType enum med kodeverkoppslag
-export type K9KlageHistorikkLinje = Omit<GeneratedK9KlageLinje, 'skjermlenkeType'> &
-  ErKlage & {
-    readonly skjermlenkeType?: K9KlageKodeverdiSomObjektSkjermlenkeType;
-  };
+export type K9KlageHistorikkLinje = Omit<GeneratedK9KlageLinje, 'skjermlenkeType'> & {
+  readonly skjermlenkeType?: K9KlageKodeverdiSomObjektSkjermlenkeType;
+};
 
 export type NyHistorikkLinje = K9SakHistorikkLinje | K9KlageHistorikkLinje | GeneratedK9TilbakeLinje;
 
@@ -69,22 +48,19 @@ type K9TilbakeHistorikkAktør = Omit<
   readonly type: K9TilbakeKodeverdiSomObjektHistorikkAktør;
 };
 
-// Erstatter linjer og aktør med berika typer
-export type SakHistorikkInnslagV2 = Omit<HistorikkinnslagDtoV2, 'linjer' | 'aktør'> &
-  ErSak & {
-    readonly linjer: K9SakHistorikkLinje[];
-    readonly aktør: K9SakHistorikkAktør;
-  };
-export type KlageHistorikkInnslagV2 = Omit<K9KlageHistorikkinnslagDtoV2, 'linjer' | 'aktør'> &
-  ErKlage & {
-    readonly linjer: K9KlageHistorikkLinje[];
-    readonly aktør: K9KlageHistorikkAktør;
-  };
-export type TilbakeHistorikkInnslagV2 = Omit<K9TilbakeHistorikkinnslagDto, 'aktør' | 'skjermlenke'> &
-  ErTilbakekreving & {
-    readonly aktør: K9TilbakeHistorikkAktør;
-    readonly skjermlenke: K9TilbakeKodeverdiSomObjektSkjermlenkeType;
-  };
+// Erstatter linjer og aktør med berika typer der det trengs
+export type SakHistorikkInnslagV2 = Omit<HistorikkinnslagDtoV2, 'linjer' | 'aktør'> & {
+  readonly linjer: K9SakHistorikkLinje[];
+  readonly aktør: K9SakHistorikkAktør;
+};
+export type KlageHistorikkInnslagV2 = Omit<K9KlageHistorikkinnslagDtoV2, 'linjer' | 'aktør'> & {
+  readonly linjer: K9KlageHistorikkLinje[];
+  readonly aktør: K9KlageHistorikkAktør;
+};
+export type TilbakeHistorikkInnslagV2 = Omit<K9TilbakeHistorikkinnslagDto, 'aktør' | 'skjermlenke'> & {
+  readonly aktør: K9TilbakeHistorikkAktør;
+  readonly skjermlenke?: K9TilbakeKodeverdiSomObjektSkjermlenkeType;
+};
 
 export type NyeUlikeHistorikkinnslagTyper = SakHistorikkInnslagV2 | KlageHistorikkInnslagV2 | TilbakeHistorikkInnslagV2;
 
@@ -96,7 +72,7 @@ export class HistorikkInnslagTypeBeriker {
     const linjer: K9SakHistorikkLinje[] = innslag.linjer.map(l => {
       const skjermlenkeType =
         l.skjermlenkeType != null ? this.kodeverkoppslag.k9sak.skjermlenkeTyper(l.skjermlenkeType) : undefined;
-      return { ...l, skjermlenkeType, erSak: true };
+      return { ...l, skjermlenkeType };
     });
     const aktør = {
       ...innslag.aktør,
@@ -104,7 +80,6 @@ export class HistorikkInnslagTypeBeriker {
     };
     return {
       ...innslag,
-      erSak: true,
       linjer,
       aktør,
     };
@@ -115,7 +90,7 @@ export class HistorikkInnslagTypeBeriker {
     const linjer = innslag.linjer.map(l => {
       const skjermlenkeType =
         l.skjermlenkeType != null ? this.kodeverkoppslag.k9klage.skjermlenkeTyper(l.skjermlenkeType) : undefined;
-      return { ...l, skjermlenkeType, erKlage: true };
+      return { ...l, skjermlenkeType };
     });
     const aktør = {
       ...innslag.aktør,
@@ -123,7 +98,6 @@ export class HistorikkInnslagTypeBeriker {
     };
     return {
       ...innslag,
-      erKlage: true,
       linjer,
       aktør,
     };
@@ -135,12 +109,10 @@ export class HistorikkInnslagTypeBeriker {
       ...innslag.aktør,
       type: this.kodeverkoppslag.k9tilbake.historikkAktører(innslag.aktør.type),
     };
-    const skjermlenke = this.kodeverkoppslag.k9tilbake.skjermlenkeTyper(
-      innslag.skjermlenke ?? K9TilbakeSkjermlenkeType.UDEFINERT,
-    );
+    const skjermlenke =
+      innslag.skjermlenke != null ? this.kodeverkoppslag.k9tilbake.skjermlenkeTyper(innslag.skjermlenke) : undefined;
     return {
       ...innslag,
-      erTilbakekreving: true,
       aktør,
       skjermlenke,
     };

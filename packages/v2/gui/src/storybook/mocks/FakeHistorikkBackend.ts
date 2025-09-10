@@ -416,6 +416,7 @@ const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
     dokumenter: [],
     tittel: 'Tilbakekreving opprettet',
     linjer: [],
+    skjermlenke: 'TILBAKEKREVING',
   },
 ];
 

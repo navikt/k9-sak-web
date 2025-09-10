@@ -7,7 +7,7 @@ import { expect, userEvent, within } from 'storybook/test';
 import HistorikkIndex from './HistorikkIndex.js';
 
 const meta = {
-  title: 'sak/sak-app/behandlingsupport/historikk/HistorikkIndex',
+  title: 'gui/behandling/support/historikk/k9/HistorikkIndex',
   component: HistorikkIndex,
   decorators: [
     withMaxWidth(600),
@@ -40,6 +40,8 @@ export const HistorikkinnslagV2: Story = {
     const boble4El = canvas.getByTestId('snakkeboble-2025-02-27T17:40:42.779');
     await expect(boble4El).toHaveTextContent('Vedtaksløsningen');
     await expect(boble4El).toHaveTextContent('Tilbakekreving opprettet');
+    // Test at skjermlenke på historikkinnslag har blitt rendra:
+    await expect(boble4El.querySelector('a')).toHaveTextContent('Tilbakekreving');
 
     const boble5El = await canvas.findByTestId('snakkeboble-2025-01-20T07:07:51.914');
     await expect(boble5El).toHaveTextContent('Simulering');
@@ -55,6 +57,10 @@ export const HistorikkinnslagV2: Story = {
     await expect(boble6El).toHaveTextContent(
       'Oppgave til INTERESSANT INTUITIV KATT DIAMETER om å sende inntektsmelding for skjæringstidspunkt 2024-10-01',
     );
+
+    // Test at skjermlenke på historikk-linje har blitt rendra:
+    const boble7El = canvas.getByTestId('snakkeboble-2025-01-16T07:05:25.69');
+    await expect(boble7El.querySelector('a')).toHaveTextContent('Medisinsk');
   },
 };
 

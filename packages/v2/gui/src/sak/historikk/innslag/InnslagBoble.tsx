@@ -12,20 +12,15 @@ import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.js
 import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
 import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
+import { Skjermlenke } from './Skjermlenke.js';
 
 export interface InnslagBobleProps {
   readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2 | TilbakeHistorikkInnslagV2;
   readonly behandlingLocation: InnslagLinjeProps['behandlingLocation'];
-  readonly createLocationForSkjermlenke: InnslagLinjeProps['createLocationForSkjermlenke'];
   readonly saksnummer: string;
 }
 
-export const InnslagBoble = ({
-  innslag,
-  behandlingLocation,
-  createLocationForSkjermlenke,
-  saksnummer,
-}: InnslagBobleProps) => {
+export const InnslagBoble = ({ innslag, behandlingLocation, saksnummer }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
   const rolleNavn = innslag.aktør.type.navn;
   const position = utledPlassering(innslag.aktør.type.kilde);
@@ -46,14 +41,12 @@ export const InnslagBoble = ({
     >
       <Chat.Bubble>
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
-
+        {'skjermlenke' in innslag && innslag.skjermlenke != null ? (
+          <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
+        ) : null}
         {innslag.linjer.map((linje, idx) => (
           <div key={idx} hidden={doCutOff && !expanded && idx > 0}>
-            <InnslagLinje
-              linje={linje}
-              behandlingLocation={behandlingLocation}
-              createLocationForSkjermlenke={createLocationForSkjermlenke}
-            />
+            <InnslagLinje linje={linje} behandlingLocation={behandlingLocation} />
           </div>
         ))}
 
