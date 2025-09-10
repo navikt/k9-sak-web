@@ -1,8 +1,7 @@
-import { FagsakPerson } from '@k9-sak-web/types';
-import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
 import {
   ForeldelseProsessIndex,
   ForeldelsesresultatActivity,
+  RelasjonsRolleType,
   VurderForeldelseAp,
 } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
 import React, { useState } from 'react';
@@ -21,7 +20,6 @@ interface ForeldelseProsessIndexWrapperProps {
   aksjonspunkter: any[];
   submitCallback: (aksjonspunktData: VurderForeldelseAp[]) => Promise<void>;
   isReadOnly: boolean;
-  fagsakPerson: FagsakPerson;
 }
 
 const ForeldelseProsessIndexWrapper: React.FC = (props: ForeldelseProsessIndexWrapperProps) => {
@@ -34,11 +32,8 @@ const ForeldelseProsessIndexWrapper: React.FC = (props: ForeldelseProsessIndexWr
     aksjonspunkter,
     beregnBelop,
     alleMerknaderFraBeslutter,
-    fagsakPerson,
     kodeverkSamling,
   } = props;
-
-  const relasjonsRolleType = fagsakPerson.erKvinne ? RelasjonsRolleType.MOR : RelasjonsRolleType.FAR;
 
   const submitForeldelse = (values: VurderForeldelseAp) => submitCallback([values]);
 
@@ -52,7 +47,7 @@ const ForeldelseProsessIndexWrapper: React.FC = (props: ForeldelseProsessIndexWr
       beregnBelop={beregnBelop}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       kodeverkSamlingFpTilbake={kodeverkSamling}
-      relasjonsRolleType={relasjonsRolleType}
+      relasjonsRolleType={RelasjonsRolleType.DELTAKER}
       relasjonsRolleTypeKodeverk={relasjonsRolleTypeKodeverk}
       setFormData={setFormData}
       formData={formData}

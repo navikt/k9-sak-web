@@ -202,6 +202,7 @@ export const BehandlingMenuIndex = ({
       data={[
         new MenyData(behandlingRettigheter?.behandlingKanGjenopptas, 'Fortsett behandlingen').medModal(lukkModal => (
           <MenyTaAvVentIndexV2
+            behandlingUuid={behandling?.uuid ?? ''}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             taBehandlingAvVent={resumeBehandling}

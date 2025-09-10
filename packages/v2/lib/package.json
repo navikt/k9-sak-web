@@ -11,6 +11,6 @@
     "./paths/*": "./src/paths/*"
   },
   "dependencies": {
-    "dayjs": "1.11.14"
+    "dayjs": "1.11.18"
   }
 }
