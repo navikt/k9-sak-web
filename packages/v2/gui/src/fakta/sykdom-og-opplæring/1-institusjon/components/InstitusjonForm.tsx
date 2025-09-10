@@ -86,9 +86,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     const skalSendeBegrunnelse =
       values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'nei' ||
       values[InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING] === 'ja';
-    const skalSendeOrgnaisasjonsnummer =
-      values[InstitusjonFormFields.HAR_ORGANISASJONSNUMMER] === 'ja' &&
-      values[InstitusjonFormFields.ORGANISASJONSNUMMER].length === 9;
+    const skalSendeOrgnaisasjonsnummer = (values[InstitusjonFormFields.ORGANISASJONSNUMMER] || '').length === 9;
     løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
