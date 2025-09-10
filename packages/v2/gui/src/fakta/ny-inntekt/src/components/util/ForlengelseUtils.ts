@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { Inntektskategori } from '@navikt/ft-kodeverk';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import type { ForlengelsePeriodeProp } from '../../types/Beregningsgrunnlag';
 import type { FordelBeregningsgrunnlagPeriode } from '../../types/BeregningsgrunnlagFordeling';
 
@@ -21,7 +21,7 @@ export function erPeriodeTilVurdering(
   forlengelseperioder?: ForlengelsePeriodeProp[],
 ): boolean {
   const finnesAndelUtenInntektskategori = periode?.fordelBeregningsgrunnlagAndeler?.some(
-    andel => !andel.inntektskategori || andel.inntektskategori === Inntektskategori.UDEFINERT,
+    andel => !andel.inntektskategori || andel.inntektskategori === inntektskategorier.UDEFINERT,
   ); // Quickfix: Grunnet feil i kopiering av grunnlag mangler noen andeler inntektskategori, disse må kunne fastsettes uansett forlengelse
   if (finnesAndelUtenInntektskategori) {
     return true;

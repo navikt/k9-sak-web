@@ -4,12 +4,14 @@ import CustomNavSelect from './CustomNavSelect';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
+import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 interface SelectFieldProps {
   name: string;
   selectValues: any[];
   label: LabelType;
   validate?: (
+    | ((value: string) => ValidationReturnType)
     | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
     | ((value: any) => { id: string }[])
     | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
@@ -45,7 +47,7 @@ const SelectField = ({
   name,
   label,
   selectValues,
-  validate = null,
+  validate = undefined,
   readOnly = false,
   hideValueOnDisable = false,
   disabled,

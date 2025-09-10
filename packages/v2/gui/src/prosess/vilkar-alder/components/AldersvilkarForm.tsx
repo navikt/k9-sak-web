@@ -1,7 +1,7 @@
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
-import { Box, Button } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { Box, Button, HStack, Radio } from '@navikt/ds-react';
+import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import AksjonspunktHelpText from '../../../shared/aksjonspunktHelpText/AksjonspunktHelpText';
@@ -72,18 +72,17 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
         </div>
       </Box.New>
       <Box.New marginBlock={'4 0'}>
-        <RhfRadioGroup
+        <RhfRadioGroupNew
           control={formMethods.control}
-          isHorizontal
           label="Er aldersvilkåret oppfylt?"
           name="erVilkarOk"
           validate={[required]}
-          isTrueOrFalseSelection
-          radios={[
-            { value: 'true', label: 'Ja' },
-            { value: 'false', label: 'Nei' },
-          ]}
-        />
+        >
+          <HStack gap="space-16">
+            <Radio value={true} size="small">Ja</Radio>
+            <Radio value={false} size="small">Nei</Radio>
+          </HStack>
+        </RhfRadioGroupNew>
       </Box.New>
       <Box.New marginBlock={'4 0'}>
         <Button size="small" variant="primary" type="submit">

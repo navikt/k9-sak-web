@@ -72,7 +72,7 @@ const getBegrunnelse = (aksjonspunkter: Aksjonspunkt[]): string =>
   aksjonspunkter.length > 0 && aksjonspunkter[0].begrunnelse ? aksjonspunkter[0].begrunnelse : '';
 
 ProsessStegBegrunnelseTextField.buildInitialValues = (aksjonspunkter: Aksjonspunkt[]): FormValues => ({
-  begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkter)),
+  begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkter)) ?? undefined,
 });
 
 ProsessStegBegrunnelseTextField.transformValues = (values: FormValues): any => ({

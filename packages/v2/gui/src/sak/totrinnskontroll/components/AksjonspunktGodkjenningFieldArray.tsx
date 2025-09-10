@@ -3,8 +3,8 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Detail, Fieldset, HStack, Link, VStack } from '@navikt/ds-react';
-import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
+import { RhfCheckbox, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import * as Sentry from '@sentry/browser';
@@ -145,23 +145,20 @@ export const AksjonspunktGodkjenningFieldArray = ({
                   </div>
                 ))}
               <Fieldset legend="" hideLegend>
-                <RhfRadioGroup
+                <RhfRadioGroupNew
                   control={control}
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
                   isReadOnly={readOnly}
-                  isTrueOrFalseSelection
-                  isHorizontal
-                  radios={[
-                    {
-                      value: 'true',
-                      label: 'Godkjent',
-                    },
-                    {
-                      value: 'false',
-                      label: 'Vurder på nytt',
-                    },
-                  ]}
-                />
+                >
+                  <HStack>
+                    <Radio value={true} size="small">
+                      Godkjent
+                    </Radio>
+                    <Radio value={false} size="small">
+                      Vurder på nytt
+                    </Radio>
+                  </HStack>
+                </RhfRadioGroupNew>
                 {visArsaker && (
                   <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                     {!visKunBegrunnelse && (

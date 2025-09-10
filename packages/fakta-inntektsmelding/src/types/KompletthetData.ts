@@ -19,8 +19,8 @@ export interface Tilstand {
 export interface TilstandBeriket extends Tilstand {
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
-  beslutningFieldName?: string;
-  begrunnelseFieldName?: string;
+  begrunnelseFieldName: `begrunnelse${string}`
+  beslutningFieldName: `beslutning${string}`
 }
 
 export interface Status {

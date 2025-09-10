@@ -23,6 +23,7 @@ import {
   maxValueMessage,
   minLengthMessage,
   minValueMessage,
+  ErrorMessage,
 } from './messages';
 import {
   dateRangesAreSequential,
@@ -38,91 +39,106 @@ import {
   yesterday,
 } from './validatorsHelper';
 
-export const required = (value: string) => (isEmpty(value) ? isRequiredMessage() : undefined);
-export const atLeastOneRequired = (value: string, otherValue: string) =>
+export type ValidationReturnType = ErrorMessage | null | undefined | string;
+export const required = (value: string): ValidationReturnType => (isEmpty(value) ? isRequiredMessage() : undefined);
+export const atLeastOneRequired = (value: string, otherValue: string): ValidationReturnType =>
   isEmpty(value) && isEmpty(otherValue) ? isRequiredMessage() : undefined;
-export const requiredIfNotPristine = (value: string, allValues, props: { pristine: boolean }) =>
+export const requiredIfNotPristine = (value: string, allValues, props: { pristine: boolean }): ValidationReturnType =>
   props.pristine || !isEmpty(value) ? undefined : isRequiredMessage();
-export const requiredIfCustomFunctionIsTrue = isRequiredFunction => (value: string, allValues, props) =>
-  isEmpty(value) && isRequiredFunction(allValues, props) ? isRequiredMessage() : undefined;
+export const requiredIfCustomFunctionIsTrue =
+  isRequiredFunction =>
+  (value: string, allValues, props): ValidationReturnType =>
+    isEmpty(value) && isRequiredFunction(allValues, props) ? isRequiredMessage() : undefined;
 
-export const minLength = (length: number) => (text: string) =>
-  isEmpty(text) || text.toString().trim().length >= length ? null : minLengthMessage(length);
-export const maxLength = (length: number) => (text: string) =>
-  isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthMessage(length);
+export const minLength =
+  (length: number) =>
+  (text: string): ValidationReturnType =>
+    isEmpty(text) || text.toString().trim().length >= length ? null : minLengthMessage(length);
+export const maxLength =
+  (length: number) =>
+  (text: string): ValidationReturnType =>
+    isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthMessage(length);
 
-export const minValue = (length: number) => (number: number | string) =>
-  +number >= length ? null : minValueMessage(length);
-export const maxValue = (length: number) => (number: number | string) =>
-  +number <= length ? null : maxValueMessage(length);
+export const minValue =
+  (length: number) =>
+  (number: number | string): ValidationReturnType =>
+    +number >= length ? null : minValueMessage(length);
+export const maxValue =
+  (length: number) =>
+  (number: number | string): ValidationReturnType =>
+    +number <= length ? null : maxValueMessage(length);
 
-export const hasValidOrgNumber = (number: number | string) =>
+export const hasValidOrgNumber = (number: number | string): ValidationReturnType =>
   number.toString().trim().length === 9 ? null : invalidOrgNumberMessage();
 
-const hasValidNumber = (text: string | number) =>
+const hasValidNumber = (text: string | number): ValidationReturnType =>
   isEmpty(text) || numberRegex.test(`${text}`) ? null : invalidNumberMessage(text);
-const hasValidInt = (text: string | number) =>
+const hasValidInt = (text: string | number): ValidationReturnType =>
   isEmpty(text) || integerRegex.test(`${text}`) ? null : invalidIntegerMessage(text);
-const hasValidDec = (text: string | number, maxNumberOfDecimals: number = 2) =>
+const hasValidDec = (text: string | number, maxNumberOfDecimals: number = 2): ValidationReturnType =>
   isEmpty(text) || decimalRegexWithMax(maxNumberOfDecimals).test(`${text}`)
     ? null
     : invalidDecimalMessage(text, maxNumberOfDecimals);
-export const hasValidInteger = (text: string | number) => hasValidNumber(text) || hasValidInt(text);
-export const hasValidDecimalMaxNumberOfDecimals = (maxNumberOfDecimals: number) => (text: string) =>
-  hasValidNumber(text) || hasValidDec(text, maxNumberOfDecimals);
-export const hasValidDecimal = (text: string | number) => hasValidNumber(text) || hasValidDec(text);
+export const hasValidInteger = (text: string | number): ValidationReturnType =>
+  hasValidNumber(text) || hasValidInt(text);
+export const hasValidDecimalMaxNumberOfDecimals =
+  (maxNumberOfDecimals: number) =>
+  (text: string): ValidationReturnType =>
+    hasValidNumber(text) || hasValidDec(text, maxNumberOfDecimals);
+export const hasValidDecimal = (text: string | number): ValidationReturnType =>
+  hasValidNumber(text) || hasValidDec(text);
 
-export const hasValidSaksnummerOrFodselsnummerFormat = (text: string) =>
+export const hasValidSaksnummerOrFodselsnummerFormat = (text: string): ValidationReturnType =>
   isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text) ? null : invalidSaksnummerOrFodselsnummerFormatMessage();
 
-export const hasValidDate = (text: string) => (isEmpty(text) || isoDateRegex.test(text) ? null : invalidDateMessage());
-const getBeforeErrorMessage = (latest: string | Moment | Date, customErrorMessage: (date: string) => string) => {
+export const hasValidDate = (text: string): ValidationReturnType =>
+  isEmpty(text) || isoDateRegex.test(text) ? null : invalidDateMessage();
+const getBeforeErrorMessage = (
+  latest: string | Moment | Date,
+  customErrorMessage: ((date: string) => string) | undefined,
+) => {
   const date = moment(latest).format(DDMMYYYY_DATE_FORMAT);
   return customErrorMessage ? customErrorMessage(date) : dateNotBeforeOrEqualMessage(date);
 };
 export const dateBeforeOrEqual =
-  (latest: string | Moment | Date, customErrorMessageFunction: (date: string) => string = undefined) =>
-  (text: string) =>
+  (latest: string | Moment | Date, customErrorMessageFunction?: (date: string) => string) =>
+  (text: string): ValidationReturnType =>
     isEmpty(text) || moment(text).isSameOrBefore(moment(latest).startOf('day'))
       ? null
       : getBeforeErrorMessage(latest, customErrorMessageFunction);
-const getAfterErrorMessage = (earliest: string | Moment | Date, customErrorMessage: (date: string) => any) => {
+const getAfterErrorMessage = (earliest: string | Moment | Date, customErrorMessage?: (date: string) => string) => {
   const date = moment(earliest).format(DDMMYYYY_DATE_FORMAT);
   return customErrorMessage ? customErrorMessage(date) : dateNotAfterOrEqualMessage(date);
 };
 export const dateAfterOrEqual =
   (earliest: string | Moment | Date, customErrorMessageFunction?: (date: string) => string) =>
-  (text: string | Moment) =>
+  (text: string | Moment): ValidationReturnType =>
     isEmpty(text) || moment(text).isSameOrAfter(moment(earliest).startOf('day'))
       ? null
       : getAfterErrorMessage(earliest, customErrorMessageFunction);
-export const dateIsBefore =
-  (dateToCheckAgainst: string, errorMessageFunction: (date: string) => { id?: string; dato?: string }[]) =>
-  (inputDate: string) =>
-    isEmpty(inputDate) || moment(inputDate).isBefore(moment(dateToCheckAgainst).startOf('day'))
-      ? null
-      : errorMessageFunction(moment(dateToCheckAgainst).format(DDMMYYYY_DATE_FORMAT));
 
-export const dateRangesNotOverlapping = (ranges: Array<string[]>) =>
+export const dateRangesNotOverlapping = (ranges: Array<string[]>): ValidationReturnType =>
   dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage();
 
-export const dateBeforeToday = (text: string) => dateBeforeOrEqual(yesterday())(text);
-export const dateBeforeOrEqualToToday = (text: string) => dateBeforeOrEqual(moment().startOf('day'))(text);
-export const dateAfterToday = (text: string) => dateAfterOrEqual(tomorrow())(text);
-export const dateAfterOrEqualToToday = (text: string) => dateAfterOrEqual(moment().startOf('day'))(text);
+export const dateBeforeToday = (text: string): ValidationReturnType => dateBeforeOrEqual(yesterday())(text);
+export const dateBeforeOrEqualToToday = (text: string): ValidationReturnType =>
+  dateBeforeOrEqual(moment().startOf('day'))(text);
+export const dateAfterToday = (text: string): ValidationReturnType => dateAfterOrEqual(tomorrow())(text);
+export const dateAfterOrEqualToToday = (text: string): ValidationReturnType =>
+  dateAfterOrEqual(moment().startOf('day'))(text);
 
-export const hasValidFodselsnummerFormat = (text: string) =>
+export const hasValidFodselsnummerFormat = (text: string): ValidationReturnType =>
   !fodselsnummerPattern.test(text) ? invalidFodselsnummerFormatMessage() : null;
-export const hasValidFodselsnummer = (text: string) =>
+export const hasValidFodselsnummer = (text: string): ValidationReturnType =>
   !isValidFodselsnummer(text) ? invalidFodselsnummerMessage() : null;
 
-export const hasValidText = (text: string) => {
+export const hasValidText = (text: string): ValidationReturnType => {
   if (text === undefined || text === null) {
     return null;
   }
   const { invalidCharacters } = validateTextCharacters(text);
-  if (invalidCharacters?.length > 0) {
-    const invalidCharacterString: string = invalidCharacters
+  if (invalidCharacters && invalidCharacters?.length > 0) {
+    const invalidCharacterString = invalidCharacters
       .map(invalidChar => invalidChar.replace(/[\t]/, 'Tabulatortegn'))
       .join('');
     return invalidTextMessage(invalidCharacterString);
@@ -130,7 +146,7 @@ export const hasValidText = (text: string) => {
   return null;
 };
 
-export const hasValidName = (text: string) => {
+export const hasValidName = (text: string): ValidationReturnType => {
   if (!nameRegex.test(text)) {
     const illegalChars = text.replace(nameGyldigRegex, '');
     return invalidTextMessage(illegalChars.replace(/[\t]/g, 'Tabulatortegn'));

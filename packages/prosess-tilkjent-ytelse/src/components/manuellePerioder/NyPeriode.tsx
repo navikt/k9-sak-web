@@ -68,7 +68,7 @@ export const TilkjentYtelseNyPeriode = ({
 
   const perioder = formMethods.watch('perioder');
 
-  const feilmelding = validateForm(perioder, formState.fom, formState.fom);
+  const feilmelding = validateForm(perioder, formState.fom, formState.tom);
 
   const handleSubmit = async () => {
     const valid = await formMethods.trigger(['nyPeriodeForm']);
