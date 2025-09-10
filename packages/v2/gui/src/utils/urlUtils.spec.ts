@@ -2,7 +2,7 @@ import { buildPath, pathWithQueryParams, resolveParam } from './urlUtils.js';
 import type { Path } from 'react-router';
 
 describe('pathWithQueryParams', () => {
-  it('should add given queryParams to given location', () => {
+  it('should add given queryParams to given path', () => {
     const qp = {
       punkt: 'punkt1',
       fakta: 'fakta1',
