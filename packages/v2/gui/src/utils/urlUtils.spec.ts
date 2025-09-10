@@ -1,7 +1,7 @@
 import { buildPath, pathWithQueryParams, resolveParam } from './urlUtils.js';
 import type { Path } from 'react-router';
 
-describe('locationWithQueryParams', () => {
+describe('pathWithQueryParams', () => {
   it('should add given queryParams to given location', () => {
     const qp = {
       punkt: 'punkt1',
