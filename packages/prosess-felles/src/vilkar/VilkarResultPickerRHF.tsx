@@ -6,22 +6,22 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
-import { BodyShort } from '@navikt/ds-react';
-import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
+import { BodyShort, Radio } from '@navikt/ds-react';
+import { RhfDatepicker, RhfRadioGroupNew, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { FunctionComponent, ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 import styles from './vilkarResultPicker.module.css';
 
 export type VilkarResultPickerFormState = {
-  erVilkarOk: boolean;
+  erVilkarOk?: boolean;
   avslagCode?: string;
   avslagDato?: string;
-  innvilgelseMerknadCode?: string;
+  innvilgelseMerknadKode?: string;
 };
 
 type TransformedValues = {
-  erVilkarOk: boolean;
+  erVilkarOk?: boolean;
   avslagskode?: string;
   avslagDato?: string;
 };
@@ -63,6 +63,7 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   relevanteInnvilgetMerknader,
 }) => {
   const { control } = useFormContext();
+
   return (
     <div className={styles.container}>
       <VerticalSpacer sixteenPx />
@@ -81,23 +82,19 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
         </FlexContainer>
       )}
       {(!readOnly || erVilkarOk === undefined) && (
-        <RhfRadioGroup
+        <RhfRadioGroupNew
           control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           isReadOnly={readOnly}
-          isTrueOrFalseSelection
-          radios={[
-            {
-              value: 'true',
-              label: <Label input={customVilkarOppfyltText} textOnly />,
-            },
-            {
-              value: 'false',
-              label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
-            },
-          ]}
-        />
+        >
+          <Radio value={true}>
+            <Label input={customVilkarOppfyltText} textOnly />
+          </Radio>
+          <Radio value={false}>
+            <Label input={customVilkarIkkeOppfyltText} textOnly />
+          </Radio>
+        </RhfRadioGroupNew>
       )}
       {erVilkarOk !== undefined &&
         erVilkarOk &&
@@ -107,7 +104,7 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
             <VerticalSpacer sixteenPx />
             <RhfSelect
               control={control}
-              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadCode`}
+              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadKode`}
               label="Vilkårsmerknad"
               selectValues={relevanteInnvilgetMerknader.map(iu => (
                 <option key={iu.merknad.kode} value={iu.merknad.kode}>
@@ -170,7 +167,7 @@ VilkarResultPickerRHF.buildInitialValues = (
 
 VilkarResultPickerRHF.transformValues = (values: VilkarResultPickerFormState) =>
   values.erVilkarOk
-    ? { erVilkarOk: values.erVilkarOk, innvilgelseMerknadKode: values.innvilgelseMerknadCode }
+    ? { erVilkarOk: values.erVilkarOk, innvilgelseMerknadKode: values.innvilgelseMerknadKode }
     : {
         erVilkarOk: values.erVilkarOk,
         avslagskode: values.avslagCode,

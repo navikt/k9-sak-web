@@ -2,8 +2,8 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { Box, Detail } from '@navikt/ds-react';
-import { RhfRadioGroup } from '@navikt/ft-form-hooks';
+import { Box, Detail, HStack, Radio } from '@navikt/ds-react';
+import { RhfRadioGroupNew } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -32,51 +32,34 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
   } = getValues();
   return (
     <FaktaGruppe merknaderFraBeslutter={apKode ? alleMerknaderFraBeslutter[apKode] : undefined}>
-      <RhfRadioGroup
+      <RhfRadioGroupNew
         control={control}
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
         isReadOnly={readOnly}
-        isTrueOrFalseSelection
-        radios={[
-          {
-            value: 'true',
-            label: 'EØS borger',
-          },
-          {
-            value: 'false',
-            label: 'Utenlandsk borger utenfor EØS',
-          },
-        ]}
-        isHorizontal
-      />
+      >
+        <HStack gap="space-16">
+          <Radio value={true}>EØS borger</Radio>
+          <Radio value={false}>Utenlandsk borger utenfor EØS</Radio>
+        </HStack>
+      </RhfRadioGroupNew>
 
       {erEosBorger && (
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
           <Box.New marginBlock="1 0">
-            <RhfRadioGroup
+            <RhfRadioGroupNew
               control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
               validate={[required]}
               isReadOnly={readOnly}
               isEdited={isBorgerAksjonspunktClosed}
-              isTrueOrFalseSelection
-              radios={[
-                {
-                  value: 'true',
-                  label: 'Søker har oppholdsrett',
-                },
-                {
-                  value: 'false',
-                  label: (
-                    <>
-                      Søker har <b>ikke</b> oppholdsrett
-                    </>
-                  ),
-                },
-              ]}
-            />
+            >
+              <Radio value={true}>Søker har oppholdsrett</Radio>
+              <Radio value={false}>
+                Søker har <b>ikke</b> oppholdsrett
+              </Radio>
+            </RhfRadioGroupNew>
           </Box.New>
         </ArrowBox>
       )}
@@ -84,28 +67,18 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         <ArrowBox alignOffset={117}>
           <Detail>Lovlig opphold</Detail>
           <Box.New marginBlock="1 0">
-            <RhfRadioGroup
+            <RhfRadioGroupNew
               control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
               validate={[required]}
               isReadOnly={readOnly}
               isEdited={isBorgerAksjonspunktClosed}
-              isTrueOrFalseSelection
-              radios={[
-                {
-                  value: 'true',
-                  label: 'Søker har lovlig opphold',
-                },
-                {
-                  value: 'false',
-                  label: (
-                    <>
-                      Søker har <b>ikke</b> lovlig opphold
-                    </>
-                  ),
-                },
-              ]}
-            />
+            >
+              <Radio value={true}>Søker har lovlig opphold</Radio>
+              <Radio value={false}>
+                Søker har <b>ikke</b> lovlig opphold
+              </Radio>
+            </RhfRadioGroupNew>
           </Box.New>
         </ArrowBox>
       )}

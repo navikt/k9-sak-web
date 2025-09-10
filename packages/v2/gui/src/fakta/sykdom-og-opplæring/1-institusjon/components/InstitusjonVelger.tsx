@@ -1,7 +1,7 @@
 import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
-import { RhfCheckbox, RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
+import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Radio, Select, Skeleton, Tag } from '@navikt/ds-react';
+import { RhfCheckbox, RhfRadioGroupNew, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -177,16 +177,15 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
 
   return (
     <div className="flex flex-col gap-4">
-      <RhfRadioGroup
+      <RhfRadioGroupNew
         control={control}
         name={InstitusjonFormFields.HAR_ORGANISASJONSNUMMER}
         label="Har institusjonen/kompetansesenteret et organisasjonsnummer?"
-        radios={[
-          { value: 'ja', label: 'Ja' },
-          { value: 'nei', label: 'Nei' },
-        ]}
         validate={[required]}
-      />
+      >
+        <Radio value="ja">Ja</Radio>
+        <Radio value="nei">Nei</Radio>
+      </RhfRadioGroupNew>
       {visOrganisasjonsnummer && (
         <>
           <div className="flex flex-row flex-wrap gap-x-5 items-start">

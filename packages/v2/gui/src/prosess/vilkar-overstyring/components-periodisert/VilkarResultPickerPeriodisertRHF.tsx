@@ -6,8 +6,8 @@ import type {
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, BodyShort, Box, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
+import { Alert, BodyShort, Box, Radio, VStack } from '@navikt/ds-react';
+import { RhfDatepicker, RhfRadioGroupNew, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
 import type { FunctionComponent, ReactElement } from 'react';
@@ -94,6 +94,33 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
     (date: Date) => isAfter(date, parse(periodeTom, 'yyyy-MM-dd', new Date())),
   ];
 
+  const radios = [
+    {
+      value: vilkårStatusPeriodisert.OPPFYLT,
+      label: customVilkarOppfyltText,
+    },
+    ...(visPeriodisering
+      ? [
+          {
+            value: periodeVilkarStatus
+              ? vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT
+              : vilkårStatusPeriodisert.DELVIS_OPPFYLT,
+            label: periodeVilkarStatus ? (
+              <>
+                Vilkåret er <b>delvis ikke</b> oppfylt
+              </>
+            ) : (
+              'Vilkåret er delvis oppfylt'
+            ),
+          },
+        ]
+      : []),
+    {
+      value: vilkårStatusPeriodisert.IKKE_OPPFYLT,
+      label: customVilkarIkkeOppfyltText,
+    },
+  ];
+
   return (
     <Box.New paddingBlock={'4 0'} paddingInline={'4 0'}>
       {readOnly && erVilkarOk !== undefined && (
@@ -108,38 +135,18 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
       )}
 
       {(!readOnly || erVilkarOk === undefined) && (
-        <RhfRadioGroup
+        <RhfRadioGroupNew
           control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           isReadOnly={readOnly}
-          radios={[
-            {
-              value: vilkårStatusPeriodisert.OPPFYLT,
-              label: customVilkarOppfyltText,
-            },
-            ...(visPeriodisering
-              ? [
-                  {
-                    value: periodeVilkarStatus
-                      ? vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT
-                      : vilkårStatusPeriodisert.DELVIS_OPPFYLT,
-                    label: periodeVilkarStatus ? (
-                      <>
-                        Vilkåret er <b>delvis ikke</b> oppfylt
-                      </>
-                    ) : (
-                      'Vilkåret er delvis oppfylt'
-                    ),
-                  },
-                ]
-              : []),
-            {
-              value: vilkårStatusPeriodisert.IKKE_OPPFYLT,
-              label: customVilkarIkkeOppfyltText,
-            },
-          ]}
-        />
+        >
+          {radios.map(radio => (
+            <Radio key={radio.value} value={radio.value}>
+              {radio.label}
+            </Radio>
+          ))}
+        </RhfRadioGroupNew>
       )}
 
       {erVilkarOk !== undefined && (

@@ -1,8 +1,8 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
-import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import { RhfRadioGroup } from '@navikt/ft-form-hooks';
+import { BodyShort, Detail, HGrid, HStack, Radio } from '@navikt/ds-react';
+import { RhfRadioGroupNew } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
@@ -89,29 +89,20 @@ const OppholdINorgeOgAdresser = ({
           </FaktaGruppe>
           {hasBosattAksjonspunkt && (
             <div className={styles.ieFlex}>
-              <RhfRadioGroup
+              <RhfRadioGroupNew
                 control={control}
                 name="oppholdInntektOgPeriodeForm.bosattVurdering"
                 validate={[required]}
                 isReadOnly={readOnly}
                 isEdited={isBosattAksjonspunktClosed}
-                isHorizontal
-                isTrueOrFalseSelection
-                radios={[
-                  {
-                    value: 'true',
-                    label: 'Søker er bosatt i Norge',
-                  },
-                  {
-                    value: 'false',
-                    label: (
-                      <>
-                        Søker er <b>ikke</b> bosatt i Norge
-                      </>
-                    ),
-                  },
-                ]}
-              />
+              >
+                <HStack gap="space-16">
+                  <Radio value={true}>Søker er bosatt i Norge</Radio>
+                  <Radio value={false}>
+                    Søker er <b>ikke</b> bosatt i Norge
+                  </Radio>
+                </HStack>
+              </RhfRadioGroupNew>
             </div>
           )}
         </div>

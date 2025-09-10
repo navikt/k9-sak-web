@@ -3,8 +3,8 @@ import {
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
-import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
+import { Bleed, BodyLong, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
+import { RhfRadioGroupNew, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
@@ -31,6 +31,21 @@ export const AksjonspunktArbeidOgInntekt = ({
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
   const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
+  const radios = [
+    ...(harBrukerrapportertInntekt
+      ? [
+          {
+            value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
+            label: 'Rapportert inntekt fra deltaker',
+          },
+        ]
+      : []),
+    {
+      value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
+      label: 'Rapportert inntekt fra A-ordningen',
+    },
+    { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
+  ];
   return (
     <Bleed marginBlock="4 0">
       <Box.New
@@ -72,28 +87,19 @@ export const AksjonspunktArbeidOgInntekt = ({
               />
             </Box.New>
             <VStack gap="space-8">
-              <RhfRadioGroup
+              <RhfRadioGroupNew
                 control={formMethods.control}
                 name={`perioder.${fieldIndex}.valg`}
                 label="Hvilken inntekt skal benyttes?"
                 validate={[required]}
                 isReadOnly={isReadOnly}
-                radios={[
-                  ...(harBrukerrapportertInntekt
-                    ? [
-                        {
-                          value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                          label: 'Rapportert inntekt fra deltaker',
-                        },
-                      ]
-                    : []),
-                  {
-                    value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
-                    label: 'Rapportert inntekt fra A-ordningen',
-                  },
-                  { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
-                ]}
-              />
+              >
+                {radios.map(radio => (
+                  <Radio key={radio.value} value={radio.value}>
+                    {radio.label}
+                  </Radio>
+                ))}
+              </RhfRadioGroupNew>
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
                 <VStack gap="space-16">
                   <RhfTextField
