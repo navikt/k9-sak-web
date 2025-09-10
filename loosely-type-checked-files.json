@@ -256,7 +256,6 @@
   "packages/prosess-felles/src/vilkar/VilkarResultPicker.tsx",
   "packages/prosess-felles/src/vilkar/VilkarResultPickerPeriodisert.tsx",
   "packages/prosess-felles/src/vilkar/VilkarResultPickerPeriodisertRHF.tsx",
-  "packages/prosess-felles/src/vilkar/VilkarResultPickerRHF.tsx",
   "packages/prosess-formkrav/src/utils/lagVisningsnavnForKlagepart.spec.ts",
   "packages/prosess-klagevurdering/src/components/felles/TempSaveAndPreviewKlageLink.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/alene-om-omsorgen/AleneOmOmsorgen.tsx",
