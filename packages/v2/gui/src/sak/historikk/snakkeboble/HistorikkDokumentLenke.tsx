@@ -24,6 +24,8 @@ export const HistorikkDokumentLenke = ({
   }
   return (
     <Link
+      target="_blank"
+      rel="noopener noreferrer"
       href={`${isUng ? DOCUMENT_SERVER_URL_UNG : DOCUMENT_SERVER_URL_K9}?saksnummer=${saksnummer}&journalpostId=${journalpostId}&dokumentId=${dokumentId}`}
     >
       <HStack align="center" gap="space-4">
