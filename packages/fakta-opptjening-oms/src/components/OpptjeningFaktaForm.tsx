@@ -44,7 +44,7 @@ const sortByFomDate = (opptjeningPeriods: Opptjening[]) =>
   });
 
 const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
-  const texts :ReactElement[] = [];
+  const texts: ReactElement[] = [];
   if (activities.some(a => a.stillingsandel === 0)) {
     texts.push(
       <FormattedMessage id="OpptjeningFaktaForm.AktivitetenErTimeAvslonnet" key="AktivitetenErTimeAvslonnet" />,

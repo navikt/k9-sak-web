@@ -118,8 +118,12 @@ export const Tilbaketrekkpanel = ({
             isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status)}
           >
             <HStack gap="space-16">
-              <Radio value={false} size="small">Tilbakekrev fra søker</Radio>
-              <Radio value={true} size="small">Ikke tilbakekrev fra søker</Radio>
+              <Radio value={false} size="small">
+                Tilbakekrev fra søker
+              </Radio>
+              <Radio value={true} size="small">
+                Ikke tilbakekrev fra søker
+              </Radio>
             </HStack>
           </RhfRadioGroupNew>
         </HGrid>
