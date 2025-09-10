@@ -57,8 +57,12 @@ interface NyBehandlingModalProps {
   behandlingUuid?: string;
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; ytelsesbehandlingUuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: {
+    saksnummer: string;
+    ytelsesbehandlingUuid: string;
+    uuid: string;
+  }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string; uuid: string }) => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
   sisteDagISøknadsperiode?: Date | null;
@@ -93,10 +97,14 @@ export const NyBehandlingModal = ({
   useEffect(() => {
     if (erTilbakekrevingAktivert) {
       if (uuidForSistLukkede !== undefined) {
-        sjekkOmTilbakekrevingKanOpprettes({ saksnummer, ytelsesbehandlingUuid: uuidForSistLukkede });
+        sjekkOmTilbakekrevingKanOpprettes({
+          saksnummer,
+          ytelsesbehandlingUuid: uuidForSistLukkede,
+          uuid: uuidForSistLukkede,
+        });
       }
       if (erTilbakekreving(behandlingType) && behandlingUuid) {
-        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingUuid });
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingUuid, uuid: behandlingUuid });
       }
     }
   }, [

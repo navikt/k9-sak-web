@@ -32,8 +32,12 @@ interface OwnProps {
   };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; ytelsesbehandlingUuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: {
+    saksnummer: string;
+    ytelsesbehandlingUuid: string;
+    uuid: string;
+  }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string; uuid: string }) => void;
   lukkModal: () => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;

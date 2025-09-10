@@ -5,7 +5,7 @@ import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { isDevOrQ } from '@k9-sak-web/lib/paths/paths.js';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
 import {
@@ -111,7 +111,7 @@ export const FagsakProfileIndex = ({
                 behandlendeEnheter={behandlendeEnheter}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                showAsDisabled={!isDevOrQ()}
+                showAsDisabled={isProd()}
               />
             );
           }}

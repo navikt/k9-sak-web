@@ -1,8 +1,8 @@
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
 import { useIntl } from 'react-intl';
+import { FeilutbetalingAarsak } from './feilutbetalingAarsak';
+import { BehandlingFaktaPeriode } from './feilutbetalingFakta';
 import FeilutbetalingPerioderForm from './FeilutbetalingPerioderForm';
 import styles from './feilutbetalingPerioderTable.module.css';
 
@@ -11,6 +11,17 @@ const headerTextCodes = [
   'FeilutbetalingInfoPanel.Hendelse',
   'FeilutbetalingInfoPanel.Beløp',
 ];
+
+interface FeilutbetalingPerioderTableProps {
+  perioder: BehandlingFaktaPeriode[];
+  behandlingId: number;
+  behandlingVersjon: number;
+  formName: string;
+  readOnly: boolean;
+  onChangeÅrsak: (event: React.ChangeEvent<HTMLSelectElement>, elementId: number, årsak: string) => void;
+  onChangeUnderÅrsak: (event: React.ChangeEvent<HTMLSelectElement>, elementId: number, årsak: string) => void;
+  årsaker: FeilutbetalingAarsak['hendelseTyper'];
+}
 
 const FeilutbetalingPerioderTable = ({
   perioder,
@@ -21,7 +32,7 @@ const FeilutbetalingPerioderTable = ({
   onChangeUnderÅrsak,
   behandlingId,
   behandlingVersjon,
-}) => {
+}: FeilutbetalingPerioderTableProps) => {
   const intl = useIntl();
   return (
     <div className={styles.feilutbetalingTable}>
@@ -37,7 +48,7 @@ const FeilutbetalingPerioderTable = ({
         </Table.Header>
         <Table.Body>
           {perioder
-            .sort((a, b) => moment(a.fom) - moment(b.fom))
+            .sort((a, b) => moment(a.fom).diff(moment(b.fom)))
             .map((periode, index) => (
               <FeilutbetalingPerioderForm
                 behandlingId={behandlingId}
@@ -56,17 +67,6 @@ const FeilutbetalingPerioderTable = ({
       </Table>
     </div>
   );
-};
-
-FeilutbetalingPerioderTable.propTypes = {
-  perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  formName: PropTypes.string.isRequired,
-  årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  onChangeÅrsak: PropTypes.func.isRequired,
-  onChangeUnderÅrsak: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 export default FeilutbetalingPerioderTable;
