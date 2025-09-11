@@ -136,7 +136,6 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           <Radio value="ja">Ja</Radio>
           <Radio value="nei">Nei</Radio>
         </RhfRadioGroupNew>
-
         {visValgfriSkriftligVurderingCheckbox() && (
           <Controller
             control={formMethods.control}

@@ -2,8 +2,8 @@ import { useFormContext } from 'react-hook-form';
 
 import { Alert, Box, Label, Radio, ReadMore } from '@navikt/ds-react';
 
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 
 import type {

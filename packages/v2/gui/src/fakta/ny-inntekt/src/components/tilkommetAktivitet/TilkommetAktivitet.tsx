@@ -4,7 +4,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
-import { isAksjonspunktOpen } from '@navikt/ft-kodeverk';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ErrorBoundary } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@navikt/ft-utils';
@@ -101,7 +101,7 @@ const buildInitialValues = (
   beregningsgrunnlagListe: Beregningsgrunnlag[],
   vilkarperioder: Vilkårperiode[],
 ): TilkommetAktivitetFormValues => ({
-  [`${FORM_NAME}`]: beregningsgrunnlagListe
+  [FORM_NAME]: beregningsgrunnlagListe
     .filter(bg =>
       bg.avklaringsbehov.some(v => v.definisjon === FaktaFordelBeregningAvklaringsbehovCode.VURDER_NYTT_INNTKTSFRHLD),
     )

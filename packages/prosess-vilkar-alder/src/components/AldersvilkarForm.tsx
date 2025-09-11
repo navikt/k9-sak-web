@@ -50,7 +50,7 @@ const AldersvilkarForm = ({
   const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
 
   return (
-    <RhfForm<Inputs> formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
+    <RhfForm formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
       <AksjonspunktHelpText isAksjonspunktOpen>
         {[<FormattedMessage key={1} id="AlderVilkar.Hjelpetekst" />]}
       </AksjonspunktHelpText>
