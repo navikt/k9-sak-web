@@ -1,20 +1,20 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import { BodyLong, Box, Button, Checkbox } from '@navikt/ds-react';
+import { BodyLong, Box, Button, Checkbox, Radio } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
-import InstitusjonVelger from './InstitusjonVelger.js';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import {
   utledGodkjentInstitusjon,
   utledOmDetErValgfriSkriftligVurdering,
   utledRedigertInstitusjonNavn,
 } from '../utils.js';
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import InstitusjonVelger from './InstitusjonVelger.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
@@ -119,7 +119,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           institusjonFraSøknad={vurdering.institusjon}
           redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
         />
-        <RhfRadioGroup
+        <RhfRadioGroupNew
           control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
@@ -129,15 +129,13 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
               <Lovreferanse>§ 9-14</Lovreferanse>?
             </BodyLong>
           }
-          radios={[
-            { label: 'Ja', value: 'ja' },
-            { label: 'Nei', value: 'nei' },
-          ]}
           validate={[required]}
           isReadOnly={readOnly}
           data-testid="godkjent-institusjon"
-        />
-
+        >
+          <Radio value="ja">Ja</Radio>
+          <Radio value="nei">Nei</Radio>
+        </RhfRadioGroupNew>
         {visValgfriSkriftligVurderingCheckbox() && (
           <Controller
             control={formMethods.control}

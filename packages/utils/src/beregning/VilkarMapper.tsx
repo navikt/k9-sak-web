@@ -1,5 +1,4 @@
 import { BeregningReferanse } from '@k9-sak-web/types';
-import { Vilkar as FTVilkarType } from '@navikt/ft-types';
 import { k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 type Periode = { fom: string; tom: string };
@@ -12,7 +11,7 @@ const erForlengelse = (beregningreferanserTilVurdering: BeregningReferanse[], pe
   return undefined;
 };
 
-const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurdering: BeregningReferanse[]): FTVilkarType =>
+const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurdering: BeregningReferanse[]) =>
   ({
     vilkarType: vilkar?.vilkarType,
     overstyrbar: vilkar?.overstyrbar,
@@ -26,6 +25,6 @@ const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurderin
       vilkarStatus: p.vilkarStatus,
       erForlengelse: erForlengelse(beregningreferanserTilVurdering, p.periode),
     })),
-  }) as FTVilkarType;
+  });
 
 export default mapVilkar;

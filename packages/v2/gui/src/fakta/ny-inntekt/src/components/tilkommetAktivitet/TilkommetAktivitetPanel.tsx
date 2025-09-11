@@ -5,7 +5,7 @@ import { ScissorsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';

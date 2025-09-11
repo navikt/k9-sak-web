@@ -52,7 +52,7 @@ export const TilkommetAktivitetField = ({
   const { control, formState } = useFormContext<TilkommetAktivitetFormValues>();
   const { fields } = useFieldArray({
     control,
-    name: `VURDER_TILKOMMET_AKTIVITET_FORM.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold`,
+    name: `${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold`,
   });
 
   const harInntektsforholdMedÅrsinntekt = vurderInntektsforholdPeriode.inntektsforholdListe.some(
