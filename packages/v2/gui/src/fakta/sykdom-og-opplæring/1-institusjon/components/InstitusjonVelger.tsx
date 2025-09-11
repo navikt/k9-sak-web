@@ -98,7 +98,7 @@ const InstitusjonFraSøknadForm = ({
           </Tag>
         ) : (
           <PersonPencilFillIcon
-            className="ml-1 align-middle text-2xl text-ax-border-warning"
+            className="ml-1 align-middle text-2xl text-ax-warning-500"
             title="Endret av saksbehandler"
           />
         )}
