@@ -1,6 +1,6 @@
 import { k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box } from '@navikt/ds-react';
+import { BodyShort, Box, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useContext } from 'react';
@@ -73,6 +73,44 @@ export const VilkarField = ({
     return erIkkeOppfyltText;
   };
 
+  const radios = [
+    /*          TSFF-804: Fjerner mulighet for å velge at vilkåret er oppfylt.
+            dersom søker har 28 dager med opptjening blir dette aksjonspunktet automatisk løst.
+            Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
+            Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
+            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9.
+            */
+    {
+      value: 'OPPFYLT',
+      label: erOppfyltText,
+    },
+    {
+      value: 'IKKE_OPPFYLT',
+      label: erIkkeOppfyltText,
+    },
+    ...(!erOmsorgspenger
+      ? [
+          {
+            value: opptjeningMidlertidigInaktivKoder.TYPE_A,
+            label: 'Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav A',
+          },
+        ]
+      : []),
+    ...(skalValgMidlertidigInaktivTypeBVises
+      ? [
+          {
+            value: opptjeningMidlertidigInaktivKoder.TYPE_B,
+            label: 'Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav B',
+          },
+        ]
+      : []),
+  ].filter(v => {
+    if (featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']) {
+      return v.value !== 'OPPFYLT';
+    }
+    return true;
+  });
+
   return (
     <div className="mt-4">
       <RhfTextarea
@@ -97,49 +135,13 @@ export const VilkarField = ({
           </div>
         )}
         {!readOnly && (
-          <RhfRadioGroup
-            control={control}
-            name={`${fieldPrefix}.kode`}
-            validate={[required]}
-            isReadOnly={readOnly}
-            radios={[
-              /*          TSFF-804: Fjerner mulighet for å velge at vilkåret er oppfylt.
-            dersom søker har 28 dager med opptjening blir dette aksjonspunktet automatisk løst.
-            Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
-            Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
-            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9.
-            */
-              {
-                value: 'OPPFYLT',
-                label: erOppfyltText,
-              },
-              {
-                value: 'IKKE_OPPFYLT',
-                label: erIkkeOppfyltText,
-              },
-              ...(!erOmsorgspenger
-                ? [
-                    {
-                      value: opptjeningMidlertidigInaktivKoder.TYPE_A,
-                      label: 'Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav A',
-                    },
-                  ]
-                : []),
-              ...(skalValgMidlertidigInaktivTypeBVises
-                ? [
-                    {
-                      value: opptjeningMidlertidigInaktivKoder.TYPE_B,
-                      label: 'Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav B',
-                    },
-                  ]
-                : []),
-            ].filter(v => {
-              if (featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']) {
-                return v.value !== 'OPPFYLT';
-              }
-              return true;
-            })}
-          />
+          <RhfRadioGroup control={control} name={`${fieldPrefix}.kode`} validate={[required]} isReadOnly={readOnly}>
+            {radios.map(radio => (
+              <Radio key={radio.value} value={radio.value}>
+                {radio.label}
+              </Radio>
+            ))}
+          </RhfRadioGroup>
         )}
       </Box.New>
     </div>

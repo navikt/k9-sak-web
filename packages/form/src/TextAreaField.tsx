@@ -25,9 +25,9 @@ interface TextAreaFieldProps {
   name: string;
   label: LabelType;
   validate?: (
-    |((value: string) => ValidationReturnType)
-    |((value: string, allValues, props: { pristine: boolean })=> ValidationReturnType)
-    )[];
+    | ((value: string) => ValidationReturnType)
+    | ((value: string, allValues, props: { pristine: boolean }) => ValidationReturnType)
+  )[];
   readOnly?: boolean;
   dataId?: string;
   maxLength?: number;

@@ -1,4 +1,4 @@
-type ErrorMessageNoArgument = [{ id: string }]
+type ErrorMessageNoArgument = [{ id: string }];
 type ErrorMessageWithArgument = [{ id: string }, { [key: string]: number | string }];
 
 export type ErrorMessage = ErrorMessageNoArgument | ErrorMessageWithArgument;
@@ -37,15 +37,11 @@ export const dateNotAfterOrEqualMessage = (limit: string): ErrorMessageWithArgum
   { id: 'ValidationMessage.DateNotAfterOrEqual' },
   { limit },
 ];
-export const dateRangesOverlappingMessage = (): ErrorMessage => [
-  { id: 'ValidationMessage.DateRangesOverlapping' },
-];
+export const dateRangesOverlappingMessage = (): ErrorMessage => [{ id: 'ValidationMessage.DateRangesOverlapping' }];
 export const invalidFodselsnummerFormatMessage = (): ErrorMessage => [
   { id: 'ValidationMessage.InvalidFodselsnummerFormat' },
 ];
-export const invalidFodselsnummerMessage = (): ErrorMessage => [
-  { id: 'ValidationMessage.InvalidFodselsnummer' },
-];
+export const invalidFodselsnummerMessage = (): ErrorMessage => [{ id: 'ValidationMessage.InvalidFodselsnummer' }];
 export const invalidSaksnummerOrFodselsnummerFormatMessage = (): ErrorMessage => [
   { id: 'ValidationMessage.InvalidSaksnummerOrFodselsnummerFormat' },
 ];
@@ -53,15 +49,11 @@ export const invalidTextMessage = (text: string): ErrorMessageWithArgument => [
   { id: 'ValidationMessage.InvalidText' },
   { text },
 ];
-export const invalidDatesInPeriodMessage = (): ErrorMessage => [
-  { id: 'ValidationMessage.InvalidDatesInPeriod' },
-];
+export const invalidDatesInPeriodMessage = (): ErrorMessage => [{ id: 'ValidationMessage.InvalidDatesInPeriod' }];
 export const invalidPeriodMessage = (): ErrorMessage => [{ id: 'ValidationMessage.InvalidPeriod' }];
 export const invalidPeriodRangeMessage = (): ErrorMessage => [{ id: 'ValidationMessage.InvalidPeriodRange' }];
 export const invalidNumberMessage = (text: string | number): ErrorMessageWithArgument => [
   { id: 'ValidationMessage.InvalidNumber' },
   { text },
 ];
-export const invalidOrgNumberMessage = (): ErrorMessage => [
-  { id: 'ValidationMessage.InvalidOrganisasjonsnummer' },
-];
+export const invalidOrgNumberMessage = (): ErrorMessage => [{ id: 'ValidationMessage.InvalidOrganisasjonsnummer' }];
