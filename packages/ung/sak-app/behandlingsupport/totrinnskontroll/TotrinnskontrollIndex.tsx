@@ -26,6 +26,7 @@ const getLagreFunksjon =
   (
     saksnummer: string,
     behandlingId: number,
+    behandlingUuid: string | undefined,
     behandlingVersjon: number,
     setAlleAksjonspunktTilGodkjent: (erGodkjent: boolean) => void,
     setVisBeslutterModal: (visModal: boolean) => void,
@@ -35,6 +36,7 @@ const getLagreFunksjon =
     const params = {
       saksnummer,
       behandlingId,
+      behandlingUuid,
       behandlingVersjon,
       bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
     };
@@ -111,6 +113,7 @@ const TotrinnskontrollIndex = ({
     getLagreFunksjon(
       fagsak.saksnummer,
       behandlingId,
+      behandling?.uuid,
       behandlingVersjon,
       setAlleAksjonspunktTilGodkjent,
       setVisBeslutterModal,
