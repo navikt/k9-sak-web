@@ -2,7 +2,7 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
@@ -175,7 +175,7 @@ const FortsettUtenInntektsmeldingForm = ({
           </ul>
         </Alert>
         <div className={styles.fortsettUtenInntektsmelding__radiogroup}>
-          <RhfRadioGroupNew
+          <RhfRadioGroup
             control={control}
             name={beslutningFieldName}
             label="Kan du gå videre uten inntektsmelding?"
@@ -187,7 +187,7 @@ const FortsettUtenInntektsmeldingForm = ({
                 {radio.label}
               </Radio>
             ))}
-          </RhfRadioGroupNew>
+          </RhfRadioGroup>
         </div>
         <>
           {skalViseBegrunnelse && (

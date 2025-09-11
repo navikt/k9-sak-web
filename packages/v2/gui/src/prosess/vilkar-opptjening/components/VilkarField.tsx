@@ -1,7 +1,7 @@
 import { k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Radio } from '@navikt/ds-react';
-import { RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -135,13 +135,13 @@ export const VilkarField = ({
           </div>
         )}
         {!readOnly && (
-          <RhfRadioGroupNew control={control} name={`${fieldPrefix}.kode`} validate={[required]} isReadOnly={readOnly}>
+          <RhfRadioGroup control={control} name={`${fieldPrefix}.kode`} validate={[required]} isReadOnly={readOnly}>
             {radios.map(radio => (
               <Radio key={radio.value} value={radio.value}>
                 {radio.label}
               </Radio>
             ))}
-          </RhfRadioGroupNew>
+          </RhfRadioGroup>
         )}
       </Box.New>
     </div>

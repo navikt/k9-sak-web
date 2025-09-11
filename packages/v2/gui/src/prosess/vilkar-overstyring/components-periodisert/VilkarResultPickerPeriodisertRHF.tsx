@@ -7,7 +7,7 @@ import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/beh
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Alert, BodyShort, Box, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfRadioGroupNew, RhfSelect } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
 import type { FunctionComponent, ReactElement } from 'react';
@@ -135,7 +135,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
       )}
 
       {(!readOnly || erVilkarOk === undefined) && (
-        <RhfRadioGroupNew
+        <RhfRadioGroup
           control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
@@ -146,7 +146,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
               {radio.label}
             </Radio>
           ))}
-        </RhfRadioGroupNew>
+        </RhfRadioGroup>
       )}
 
       {erVilkarOk !== undefined && (

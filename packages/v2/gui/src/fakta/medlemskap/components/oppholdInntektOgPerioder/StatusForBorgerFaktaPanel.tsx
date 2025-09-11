@@ -3,7 +3,7 @@ import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Box, Detail, HStack, Radio } from '@navikt/ds-react';
-import { RhfRadioGroupNew } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -32,7 +32,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
   } = getValues();
   return (
     <FaktaGruppe merknaderFraBeslutter={apKode ? alleMerknaderFraBeslutter[apKode] : undefined}>
-      <RhfRadioGroupNew
+      <RhfRadioGroup
         control={control}
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
@@ -42,13 +42,13 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           <Radio value={true}>EØS borger</Radio>
           <Radio value={false}>Utenlandsk borger utenfor EØS</Radio>
         </HStack>
-      </RhfRadioGroupNew>
+      </RhfRadioGroup>
 
       {erEosBorger && (
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
           <Box.New marginBlock="1 0">
-            <RhfRadioGroupNew
+            <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
               validate={[required]}
@@ -59,7 +59,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
               <Radio value={false}>
                 Søker har <b>ikke</b> oppholdsrett
               </Radio>
-            </RhfRadioGroupNew>
+            </RhfRadioGroup>
           </Box.New>
         </ArrowBox>
       )}
@@ -67,7 +67,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         <ArrowBox alignOffset={117}>
           <Detail>Lovlig opphold</Detail>
           <Box.New marginBlock="1 0">
-            <RhfRadioGroupNew
+            <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
               validate={[required]}
@@ -78,7 +78,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
               <Radio value={false}>
                 Søker har <b>ikke</b> lovlig opphold
               </Radio>
-            </RhfRadioGroupNew>
+            </RhfRadioGroup>
           </Box.New>
         </ArrowBox>
       )}

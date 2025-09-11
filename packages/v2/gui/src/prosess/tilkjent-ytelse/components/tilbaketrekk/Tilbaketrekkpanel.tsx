@@ -2,7 +2,7 @@ import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } 
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { Alert, Button, HGrid, HStack, Radio } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../../types/BeregningsresultatMedUtbetaltePeriode';
@@ -89,7 +89,7 @@ export const Tilbaketrekkpanel = ({
       </Alert>
       <RhfForm formMethods={formMethods} onSubmit={handleSubmit} className="mt-5">
         <HGrid gap="space-4" columns={{ xs: '9fr 3fr' }}>
-          <RhfRadioGroupNew
+          <RhfRadioGroup
             control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
@@ -100,7 +100,7 @@ export const Tilbaketrekkpanel = ({
               <Radio value={false}>Tilbakekrev fra søker</Radio>
               <Radio value={true}>Ikke tilbakekrev fra søker</Radio>
             </HStack>
-          </RhfRadioGroupNew>
+          </RhfRadioGroup>
         </HGrid>
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <RhfTextarea

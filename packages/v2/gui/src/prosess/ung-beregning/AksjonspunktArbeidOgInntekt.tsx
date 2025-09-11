@@ -4,7 +4,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
-import { RhfRadioGroupNew, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
@@ -87,7 +87,7 @@ export const AksjonspunktArbeidOgInntekt = ({
               />
             </Box.New>
             <VStack gap="space-8">
-              <RhfRadioGroupNew
+              <RhfRadioGroup
                 control={formMethods.control}
                 name={`perioder.${fieldIndex}.valg`}
                 label="Hvilken inntekt skal benyttes?"
@@ -99,7 +99,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                     {radio.label}
                   </Radio>
                 ))}
-              </RhfRadioGroupNew>
+              </RhfRadioGroup>
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
                 <VStack gap="space-16">
                   <RhfTextField

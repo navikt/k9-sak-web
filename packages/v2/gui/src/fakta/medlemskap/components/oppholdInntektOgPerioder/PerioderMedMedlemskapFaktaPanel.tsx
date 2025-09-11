@@ -6,7 +6,7 @@ import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, HStack, Radio, Table, VStack } from '@navikt/ds-react';
-import { RhfRadioGroupNew } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -103,7 +103,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
         </Table>
         <VStack gap="space-16">
           {hasPeriodeAksjonspunkt && (
-            <RhfRadioGroupNew
+            <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType"
               validate={[required]}
@@ -117,7 +117,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
                   </Radio>
                 ))}
               </HStack>
-            </RhfRadioGroupNew>
+            </RhfRadioGroup>
           )}
         </VStack>
       </VStack>

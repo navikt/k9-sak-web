@@ -2,7 +2,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
 import { BodyShort, Detail, HGrid, HStack, Radio } from '@navikt/ds-react';
-import { RhfRadioGroupNew } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
@@ -89,7 +89,7 @@ const OppholdINorgeOgAdresser = ({
           </FaktaGruppe>
           {hasBosattAksjonspunkt && (
             <div className={styles.ieFlex}>
-              <RhfRadioGroupNew
+              <RhfRadioGroup
                 control={control}
                 name="oppholdInntektOgPeriodeForm.bosattVurdering"
                 validate={[required]}
@@ -102,7 +102,7 @@ const OppholdINorgeOgAdresser = ({
                     Søker er <b>ikke</b> bosatt i Norge
                   </Radio>
                 </HStack>
-              </RhfRadioGroupNew>
+              </RhfRadioGroup>
             </div>
           )}
         </div>

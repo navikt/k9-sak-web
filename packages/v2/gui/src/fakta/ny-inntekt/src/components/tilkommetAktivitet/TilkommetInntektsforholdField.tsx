@@ -12,7 +12,7 @@ import type {
 } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
-import { RhfRadioGroupNew, RhfTextField } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
 import type { ReactElement } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
@@ -143,7 +143,7 @@ export const TilkommetInntektsforholdField = ({
 
   return (
     <>
-      <RhfRadioGroupNew
+      <RhfRadioGroup
         control={formMethods.control}
         label={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
@@ -152,7 +152,7 @@ export const TilkommetInntektsforholdField = ({
       >
         <Radio value={true}>Ja</Radio>
         <Radio value={false}>Nei</Radio>
-      </RhfRadioGroupNew>
+      </RhfRadioGroup>
       {skalRedusereValg === false && (
         <Box.New marginBlock="4 0">
           <Alert size="small" variant="info">

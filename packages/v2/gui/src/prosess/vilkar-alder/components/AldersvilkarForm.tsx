@@ -1,7 +1,7 @@
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { Box, Button, HStack, Radio } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import AksjonspunktHelpText from '../../../shared/aksjonspunktHelpText/AksjonspunktHelpText';
@@ -72,7 +72,7 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
         </div>
       </Box.New>
       <Box.New marginBlock={'4 0'}>
-        <RhfRadioGroupNew
+        <RhfRadioGroup
           control={formMethods.control}
           label="Er aldersvilkåret oppfylt?"
           name="erVilkarOk"
@@ -82,7 +82,7 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
             <Radio value={true}>Ja</Radio>
             <Radio value={false}>Nei</Radio>
           </HStack>
-        </RhfRadioGroupNew>
+        </RhfRadioGroup>
       </Box.New>
       <Box.New marginBlock={'4 0'}>
         <Button size="small" variant="primary" type="submit">
