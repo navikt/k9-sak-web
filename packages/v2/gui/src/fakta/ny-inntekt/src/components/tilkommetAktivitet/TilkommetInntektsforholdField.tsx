@@ -1,9 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, Box, HStack, Label, Radio, ReadMore } from '@navikt/ds-react';
+import { Alert, Box, Label, Radio, ReadMore } from '@navikt/ds-react';
 
-import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 
 import type {
@@ -150,14 +150,8 @@ export const TilkommetInntektsforholdField = ({
         isReadOnly={readOnly}
         validate={[required]}
       >
-        <HStack gap="space-16">
-          <Radio value={true} size="small">
-            Ja
-          </Radio>
-          <Radio value={false} size="small">
-            Nei
-          </Radio>
-        </HStack>
+        <Radio value={true}>Ja</Radio>
+        <Radio value={false}>Nei</Radio>
       </RhfRadioGroupNew>
       {skalRedusereValg === false && (
         <Box.New marginBlock="4 0">

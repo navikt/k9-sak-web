@@ -3,18 +3,18 @@ import { Controller, useForm } from 'react-hook-form';
 import { BodyLong, Box, Button, Checkbox, Radio } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
-import InstitusjonVelger from './InstitusjonVelger.js';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import {
   utledGodkjentInstitusjon,
   utledOmDetErValgfriSkriftligVurdering,
   utledRedigertInstitusjonNavn,
 } from '../utils.js';
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import InstitusjonVelger from './InstitusjonVelger.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
@@ -120,7 +120,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
         />
         <RhfRadioGroupNew
-          control={formMethods.control}
+          control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
           label={
@@ -133,8 +133,8 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           isReadOnly={readOnly}
           data-testid="godkjent-institusjon"
         >
-          <Radio value="ja" size="small">Ja</Radio>
-          <Radio value="nei" size="small">Nei</Radio>
+          <Radio value="ja">Ja</Radio>
+          <Radio value="nei">Nei</Radio>
         </RhfRadioGroupNew>
         {visValgfriSkriftligVurderingCheckbox() && (
           <Controller

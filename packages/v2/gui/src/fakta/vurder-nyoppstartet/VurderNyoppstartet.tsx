@@ -67,14 +67,8 @@ export const VurderNyoppstartet = ({
             validate={[required]}
             isReadOnly={readOnly}
           >
-            <HStack gap="space-16">
-              <Radio value={true} size="small">
-                Ja
-              </Radio>
-              <Radio value={false} size="small">
-                Nei
-              </Radio>
-            </HStack>
+            <Radio value={true}>Ja</Radio>
+            <Radio value={false}>Nei</Radio>
           </RhfRadioGroupNew>
           {erNyoppstartet && (
             <RhfDatepicker

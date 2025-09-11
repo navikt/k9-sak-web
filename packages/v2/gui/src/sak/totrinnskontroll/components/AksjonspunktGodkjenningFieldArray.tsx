@@ -150,13 +150,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
                   isReadOnly={readOnly}
                 >
-                  <HStack>
-                    <Radio value={true} size="small">
-                      Godkjent
-                    </Radio>
-                    <Radio value={false} size="small">
-                      Vurder på nytt
-                    </Radio>
+                  <HStack gap="space-16">
+                    <Radio value={true}>Godkjent</Radio>
+                    <Radio value={false}>Vurder på nytt</Radio>
                   </HStack>
                 </RhfRadioGroupNew>
                 {visArsaker && (
