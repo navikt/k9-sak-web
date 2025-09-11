@@ -1,9 +1,9 @@
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { Alert, Button, HGrid } from '@navikt/ds-react';
+import { Alert, Button, HGrid, HStack, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useForm } from 'react-hook-form';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../../types/BeregningsresultatMedUtbetaltePeriode';
 
@@ -93,21 +93,14 @@ export const Tilbaketrekkpanel = ({
             control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
-            isHorizontal
             isReadOnly={readOnly}
             isEdited={vurderTilbaketrekkAP?.status ? !isAksjonspunktOpen(vurderTilbaketrekkAP.status) : false}
-            isTrueOrFalseSelection
-            radios={[
-              {
-                value: 'false',
-                label: 'Tilbakekrev fra søker',
-              },
-              {
-                value: 'true',
-                label: 'Ikke tilbakekrev fra søker',
-              },
-            ]}
-          />
+          >
+            <HStack gap="space-16">
+              <Radio value={false}>Tilbakekrev fra søker</Radio>
+              <Radio value={true}>Ikke tilbakekrev fra søker</Radio>
+            </HStack>
+          </RhfRadioGroup>
         </HGrid>
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <RhfTextarea

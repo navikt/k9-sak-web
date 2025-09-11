@@ -1,6 +1,6 @@
 import type { HentAlleV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ExternalLinkIcon, PencilIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Select, Skeleton, Tag } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, ErrorMessage, Label, Link, Radio, Select, Skeleton, Tag } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { useEffect, useState } from 'react';
@@ -98,7 +98,7 @@ const InstitusjonFraSøknadForm = ({
           </Tag>
         ) : (
           <PersonPencilFillIcon
-            className="ml-1 align-middle text-2xl text-ax-border-warning"
+            className="ml-1 align-middle text-2xl text-ax-warning-500"
             title="Endret av saksbehandler"
           />
         )}
@@ -181,12 +181,11 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
         control={control}
         name={InstitusjonFormFields.HAR_ORGANISASJONSNUMMER}
         label="Har institusjonen/kompetansesenteret et organisasjonsnummer?"
-        radios={[
-          { value: 'ja', label: 'Ja' },
-          { value: 'nei', label: 'Nei' },
-        ]}
         validate={[required]}
-      />
+      >
+        <Radio value="ja">Ja</Radio>
+        <Radio value="nei">Nei</Radio>
+      </RhfRadioGroup>
       {visOrganisasjonsnummer && (
         <>
           <div className="flex flex-row flex-wrap gap-x-5 items-start">

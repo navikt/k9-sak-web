@@ -1,5 +1,5 @@
 import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import React from 'react';
 import { connect } from 'react-redux';
 

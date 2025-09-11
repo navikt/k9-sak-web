@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Alert, Box, Button, Heading } from '@navikt/ds-react';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
+import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { type JSX } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -10,8 +12,6 @@ import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -150,6 +150,12 @@ const FortsettUtenInntektsmeldingForm = ({
     return <></>;
   }
 
+  const radiosForAksjonspunkt: {
+    value: Kode;
+    label: string;
+    id: string;
+  }[] = radios[aksjonspunktKode];
+
   return (
     <RhfForm formMethods={formMethods} onSubmit={submit}>
       <AksjonspunktBox erAksjonspunktApent={true}>
@@ -173,10 +179,15 @@ const FortsettUtenInntektsmeldingForm = ({
             control={control}
             name={beslutningFieldName}
             label="Kan du gå videre uten inntektsmelding?"
-            radios={radios[aksjonspunktKode]}
             disabled={readOnly && !redigeringsmodus}
             validate={[v => (!v ? 'Du må oppgi en verdi ' : null)]}
-          />
+          >
+            {radiosForAksjonspunkt.map(radio => (
+              <Radio key={radio.id} value={radio.value}>
+                {radio.label}
+              </Radio>
+            ))}
+          </RhfRadioGroup>
         </div>
         <>
           {skalViseBegrunnelse && (

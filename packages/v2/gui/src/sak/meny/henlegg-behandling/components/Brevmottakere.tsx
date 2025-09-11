@@ -5,6 +5,8 @@ import { useFormContext } from 'react-hook-form';
 import type { Klagepart } from '../types/Klagepart';
 import type { Personopplysninger } from '../types/Personopplysninger';
 
+import type { HenleggBehandlingFormvalues } from './formValues';
+
 interface OwnProps {
   brevmottakere: Klagepart[] | undefined;
   personopplysninger?: Personopplysninger;
@@ -32,7 +34,7 @@ function lagVisningsnavnForMottakere(
 }
 
 const Brevmottakere = ({ brevmottakere, personopplysninger, arbeidsgiverOpplysninger }: OwnProps) => {
-  const { control } = useFormContext();
+  const { control } = useFormContext<HenleggBehandlingFormvalues>();
   return brevmottakere && brevmottakere.length ? (
     <RhfSelect
       control={control}

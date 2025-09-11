@@ -1,5 +1,5 @@
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { Alert, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, minLength, required } from '@navikt/ft-form-validators';
 import { useForm, useWatch } from 'react-hook-form';
@@ -64,20 +64,12 @@ export const VurderNyoppstartet = ({
             control={formMethods.control}
             name="erNyoppstartet"
             label="Er søker nyoppstartet?"
-            isTrueOrFalseSelection
-            radios={[
-              {
-                label: 'Ja',
-                value: 'true',
-              },
-              {
-                label: 'Nei',
-                value: 'false',
-              },
-            ]}
             validate={[required]}
             isReadOnly={readOnly}
-          />
+          >
+            <Radio value={true}>Ja</Radio>
+            <Radio value={false}>Nei</Radio>
+          </RhfRadioGroup>
           {erNyoppstartet && (
             <RhfDatepicker
               control={formMethods.control}

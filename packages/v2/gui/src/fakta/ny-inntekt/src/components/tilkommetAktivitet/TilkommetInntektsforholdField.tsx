@@ -1,9 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, Box, Label, ReadMore } from '@navikt/ds-react';
+import { Alert, Box, Label, Radio, ReadMore } from '@navikt/ds-react';
 
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 
 import type {
@@ -147,14 +147,12 @@ export const TilkommetInntektsforholdField = ({
         control={formMethods.control}
         label={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
-        radios={[
-          { value: 'true', label: 'Ja' },
-          { value: 'false', label: 'Nei' },
-        ]}
         isReadOnly={readOnly}
         validate={[required]}
-        isTrueOrFalseSelection
-      />
+      >
+        <Radio value={true}>Ja</Radio>
+        <Radio value={false}>Nei</Radio>
+      </RhfRadioGroup>
       {skalRedusereValg === false && (
         <Box.New marginBlock="4 0">
           <Alert size="small" variant="info">
