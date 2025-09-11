@@ -13,7 +13,7 @@ export type HistorikkAktørType =
 
 export const HistorikkAktørType = {
   ...k9_klage_kodeverk_historikk_HistorikkAktør,
-  ...k9_klage_kodeverk_historikk_HistorikkAktør,
+  ...k9_kodeverk_historikk_HistorikkAktør,
   ...foreldrepenger_tilbakekreving_behandlingslager_historikk_HistorikkAktør,
   ...ung_kodeverk_historikk_HistorikkAktør,
   ...sif_tilbakekreving_behandlingslager_historikk_HistorikkAktør,
