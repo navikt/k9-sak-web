@@ -4,7 +4,7 @@ import { BodyLong, Box, Button, Checkbox, Radio } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
@@ -120,7 +120,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           institusjonFraSøknad={vurdering.institusjon}
           redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
         />
-        <RhfRadioGroupNew
+        <RhfRadioGroup
           control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
@@ -136,7 +136,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         >
           <Radio value="ja">Ja</Radio>
           <Radio value="nei">Nei</Radio>
-        </RhfRadioGroupNew>
+        </RhfRadioGroup>
         {visValgfriSkriftligVurderingCheckbox() && (
           <Controller
             control={formMethods.control}

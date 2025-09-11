@@ -7,7 +7,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
 import { Button, HStack, Radio } from '@navikt/ds-react';
-import { RhfForm, RhfTextarea, RhfRadioGroupNew } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
@@ -82,21 +82,17 @@ const AldersvilkarForm = ({
       </div>
       <VerticalSpacer sixteenPx />
 
-      <RhfRadioGroupNew
+      <RhfRadioGroup
         control={formMethods.control}
         label={<FormattedMessage id="AlderVilkar.KroniskSyk" />}
         name="erVilkarOk"
         validate={[required]}
       >
         <HStack gap="space-16">
-          <Radio value={true} size="small">
-            <FormattedMessage id="AlderVilkar.KroniskSyk.Ja" />
-          </Radio>
-          <Radio value={false} size="small">
-            <FormattedMessage id="AlderVilkar.KroniskSyk.Nei" />
-          </Radio>
+          <Radio value={true}>{intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' })}</Radio>
+          <Radio value={false}>{intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' })}</Radio>
         </HStack>
-      </RhfRadioGroupNew>
+      </RhfRadioGroup>
       <VerticalSpacer sixteenPx />
 
       <Button size="small" variant="primary" type="submit">

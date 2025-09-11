@@ -18,9 +18,9 @@ import UttakDetaljerV2Wrapper from '../uttak-detaljer/UttakDetaljerV2Wrapper';
 
 import styles from './uttak.module.css';
 
-import type { JSX } from 'react';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import type { JSX } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -85,7 +85,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
             {manueltOverstyrt && (
               <>
                 <PersonPencilFillIcon
-                  className="ml-1 align-middle text-2xl text-ax-border-warning"
+                  className="ml-1 align-middle text-2xl text-ax-warning-500"
                   title="Manuelt overstyrt"
                 />
                 <HelpText
