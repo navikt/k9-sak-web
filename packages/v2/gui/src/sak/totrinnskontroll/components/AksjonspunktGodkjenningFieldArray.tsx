@@ -4,7 +4,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
-import { RhfCheckbox, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import * as Sentry from '@sentry/browser';
@@ -145,7 +145,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                   </div>
                 ))}
               <Fieldset legend="" hideLegend>
-                <RhfRadioGroupNew
+                <RhfRadioGroup
                   control={control}
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
                   isReadOnly={readOnly}
@@ -154,7 +154,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                     <Radio value={true}>Godkjent</Radio>
                     <Radio value={false}>Vurder på nytt</Radio>
                   </HStack>
-                </RhfRadioGroupNew>
+                </RhfRadioGroup>
                 {visArsaker && (
                   <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                     {!visKunBegrunnelse && (

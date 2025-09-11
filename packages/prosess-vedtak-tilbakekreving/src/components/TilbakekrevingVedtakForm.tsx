@@ -45,6 +45,7 @@ const fetchPreview =
     e.preventDefault();
     await fetchPreviewVedtaksbrev({
       uuid,
+      behandlingUuid: uuid,
       ...formatVedtakData(formVerdier),
     });
   };

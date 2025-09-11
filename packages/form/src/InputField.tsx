@@ -12,10 +12,7 @@ interface InputFieldProps {
   name: string;
   type?: string;
   label?: LabelType;
-  validate?: (
-    | ((value: string) => ValidationReturnType)
-    | ((value: string, allValues) => ValidationReturnType)
-  )[];
+  validate?: (((value: string) => ValidationReturnType) | ((value: string, allValues) => ValidationReturnType))[];
   readOnly?: boolean;
   isEdited?: boolean;
   renderReadOnlyValue?: (value: any) => any;
