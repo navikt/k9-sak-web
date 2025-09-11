@@ -1,20 +1,20 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import { BodyLong, Box, Button, Checkbox } from '@navikt/ds-react';
+import { BodyLong, Box, Button, Checkbox, Radio } from '@navikt/ds-react';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { RhfForm, RhfRadioGroupNew, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
-import InstitusjonVelger from './InstitusjonVelger.js';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 import {
   utledGodkjentInstitusjon,
   utledOmDetErValgfriSkriftligVurdering,
   utledRedigertInstitusjonNavn,
 } from '../utils.js';
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import InstitusjonVelger from './InstitusjonVelger.js';
 
 interface InstitusjonFormValues {
   [InstitusjonFormFields.BEGRUNNELSE]: string;
@@ -31,6 +31,7 @@ export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
   begrunnelse: string | null;
   redigertInstitusjonNavn?: string;
+  organisasjonsnummer: string | null;
   journalpostId: {
     journalpostId: string | null;
   };
@@ -54,7 +55,7 @@ const defaultValues = (vurdering: InstitusjonVurderingDtoMedPerioder) => {
     [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
     [InstitusjonFormFields.ANNEN_INSTITUSJON]: false,
     [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: '',
-    [InstitusjonFormFields.ORGANISASJONSNUMMER]: '',
+    [InstitusjonFormFields.ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer,
     [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: '',
   };
 };
@@ -85,6 +86,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     const skalSendeBegrunnelse =
       values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'nei' ||
       values[InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING] === 'ja';
+    const skalSendeOrgnaisasjonsnummer = (values[InstitusjonFormFields.ORGANISASJONSNUMMER] || '').length === 9;
     løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
@@ -95,6 +97,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         values[InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN],
         values[InstitusjonFormFields.ANNEN_INSTITUSJON],
       ),
+      organisasjonsnummer: skalSendeOrgnaisasjonsnummer ? values[InstitusjonFormFields.ORGANISASJONSNUMMER] : null,
     });
   };
 
@@ -116,7 +119,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           institusjonFraSøknad={vurdering.institusjon}
           redigertInstitusjonNavn={vurdering.redigertInstitusjonNavn}
         />
-        <RhfRadioGroup
+        <RhfRadioGroupNew
           control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
@@ -126,15 +129,13 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
               <Lovreferanse>§ 9-14</Lovreferanse>?
             </BodyLong>
           }
-          radios={[
-            { label: 'Ja', value: 'ja' },
-            { label: 'Nei', value: 'nei' },
-          ]}
           validate={[required]}
           isReadOnly={readOnly}
           data-testid="godkjent-institusjon"
-        />
-
+        >
+          <Radio value="ja">Ja</Radio>
+          <Radio value="nei">Nei</Radio>
+        </RhfRadioGroupNew>
         {visValgfriSkriftligVurderingCheckbox() && (
           <Controller
             control={formMethods.control}

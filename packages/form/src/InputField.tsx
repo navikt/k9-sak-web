@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField, { ReadOnlyFieldProps } from './ReadOnlyField';
 import renderNavField from './renderNavField';
+import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 const renderNavInput = renderNavField(TextField);
 
@@ -12,10 +13,8 @@ interface InputFieldProps {
   type?: string;
   label?: LabelType;
   validate?: (
-    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
-    | ((value: any, allValues: any, props: any) => { id: string }[])
-    | ((value: any) => { id: string }[])
-    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
+    | ((value: string) => ValidationReturnType)
+    | ((value: string, allValues) => ValidationReturnType)
   )[];
   readOnly?: boolean;
   isEdited?: boolean;
@@ -29,7 +28,7 @@ const InputField = ({
   name,
   type = 'text',
   label = '',
-  validate = null,
+  validate = undefined,
   readOnly = false,
   isEdited = false,
   size = 'small',
