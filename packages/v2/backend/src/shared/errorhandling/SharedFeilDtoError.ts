@@ -17,7 +17,7 @@ export abstract class SharedFeilDtoError extends ExtendedApiError {
   }
 
   public get erValideringsfeil(): boolean {
-    return this.errorData?.type === feilTypeUnion.GENERELL_FEIL;
+    return this.errorData?.type === feilTypeUnion.VALIDERINGS_FEIL;
   }
 
   public get erManglerTilgangFeil(): boolean {
