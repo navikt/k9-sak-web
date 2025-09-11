@@ -157,10 +157,10 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
               label="Avslagsårsak"
               selectValues={avslagsårsakerForVilkar
-                .filter((avslagsårsak): avslagsårsak is string => typeof avslagsårsak === 'string')
+                .filter(avslagsårsak => typeof avslagsårsak === 'object' && 'kode' in avslagsårsak)
                 .map(avslagsårsak => (
-                  <option key={avslagsårsak} value={avslagsårsak}>
-                    {avslagsårsak}
+                  <option key={avslagsårsak.kode} value={avslagsårsak.kode}>
+                    {avslagsårsak.navn}
                   </option>
                 ))}
               readOnly={readOnly}
@@ -215,10 +215,10 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
                 label="Avslagsårsak"
                 selectValues={avslagsårsakerForVilkar
-                  .filter((avslagsårsak): avslagsårsak is string => typeof avslagsårsak === 'string')
+                  .filter(avslagsårsak => typeof avslagsårsak === 'object' && 'kode' in avslagsårsak)
                   .map(avslagsårsak => (
-                    <option key={avslagsårsak} value={avslagsårsak}>
-                      {avslagsårsak}
+                    <option key={avslagsårsak.kode} value={avslagsårsak.kode}>
+                      {avslagsårsak.navn}
                     </option>
                   ))}
                 readOnly={readOnly}
