@@ -78,7 +78,6 @@ export const Default: StoryObj<typeof meta> = {
   args: {
     getBehandlingLocation: () => locationMock,
     fagsak,
-    createLocationForSkjermlenke: () => locationMock,
     behandlinger,
     noExistingBehandlinger: false,
     behandlingId: 1,
@@ -97,7 +96,6 @@ export const IngenBehandlinger: StoryObj<typeof meta> = {
   args: {
     getBehandlingLocation: () => locationMock,
     fagsak,
-    createLocationForSkjermlenke: () => locationMock,
     behandlinger: [],
     noExistingBehandlinger: true,
     api,

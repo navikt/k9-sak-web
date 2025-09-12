@@ -1,7 +1,7 @@
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { lookupSkjermlenkeCode } from '@k9-sak-web/gui/utils/skjermlenke/skjermlenkeCodes.js';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -123,7 +123,12 @@ export const AksjonspunktGodkjenningFieldArray = ({
 
         const lenke = () => {
           if (isNyInntektEgetPanel) {
-            return lagLenke(skjermlenkeCodes.FAKTA_OM_NY_INNTEKT.kode);
+            const skjermlenkeData = lookupSkjermlenkeCode('FAKTA_OM_NY_INNTEKT');
+            if (skjermlenkeData != null) {
+              return lagLenke(skjermlenkeData.kode);
+            } else {
+              throw new Error(`Fant ikke skjermlenke data for kode "FAKTA_OM_NY_INNTEKT"`);
+            }
           }
           return context ? lagLenke(context.skjermlenkeType) : '';
         };

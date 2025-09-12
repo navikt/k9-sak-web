@@ -3,14 +3,36 @@ import { prosessStegCodes } from './prosessStegCodes.js';
 import tabCodes from '../../fakta/sykdom-og-opplæring/tabCodes.js';
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
+// Pga midlertidig workaround for manglande SkjermlenkeType definisjon i backend legger vi til denne her.
+// Skal fjernast igjen når backend implementerer disse koder.
+const extraSkjermlenkeType = {
+  FAKTA_OM_NY_INNTEKT: 'FAKTA_OM_NY_INNTEKT',
+  FAKTA_OM_SOKNADSPERIODER: 'FAKTA_OM_SOKNADSPERIODER',
+} as const;
+
+export type SkjermlenkeTypeWithExtraCodes =
+  | SkjermlenkeType
+  | (typeof extraSkjermlenkeType)[keyof typeof extraSkjermlenkeType];
+
 type SkjermlenkeCode = Readonly<{
-  kode: SkjermlenkeType;
+  kode: SkjermlenkeTypeWithExtraCodes;
   faktaNavn: (typeof faktaPanelCodes)[keyof typeof faktaPanelCodes];
   punktNavn: (typeof prosessStegCodes)[keyof typeof prosessStegCodes];
   tabNavn?: (typeof tabCodes)[keyof typeof tabCodes];
 }>;
 
 const skjermlenkeCodes: SkjermlenkeCode[] = [
+  {
+    kode: extraSkjermlenkeType.FAKTA_OM_NY_INNTEKT,
+    faktaNavn: faktaPanelCodes.NY_INNTEKT,
+    punktNavn: '',
+  },
+  {
+    kode: extraSkjermlenkeType.FAKTA_OM_SOKNADSPERIODER,
+    faktaNavn: faktaPanelCodes.SOKNADSPERIODER,
+    punktNavn: '',
+  },
+
   {
     kode: SkjermlenkeType.BEREGNING,
     faktaNavn: faktaPanelCodes.DEFAULT,
@@ -117,6 +139,16 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     punktNavn: prosessStegCodes.UTVIDET_RETT,
   },
   {
+    kode: SkjermlenkeType.FAKTA_OM_OMSORGENFOR,
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  {
+    kode: SkjermlenkeType.PUNKT_FOR_ALDERSVILKÅR_BARN,
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.ALDER,
+  },
+  {
     kode: 'FAKTA_OM_VERGE',
     faktaNavn: faktaPanelCodes.VERGE,
     punktNavn: '',
@@ -126,7 +158,6 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.TILKJENT_YTELSE,
   },
-
   {
     kode: 'FAKTA_OM_SIMULERING',
     faktaNavn: faktaPanelCodes.DEFAULT,
@@ -233,9 +264,9 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
   },
 ];
 
-let skjermlenkeCodeMap: Map<SkjermlenkeType, SkjermlenkeCode[]>;
+let skjermlenkeCodeMap: Map<SkjermlenkeTypeWithExtraCodes, SkjermlenkeCode[]>;
 
-export const lookupSkjermlenkeCode = (skjermlenkeType: SkjermlenkeType) => {
+export const lookupSkjermlenkeCode = (skjermlenkeType: SkjermlenkeTypeWithExtraCodes) => {
   if (skjermlenkeCodeMap == null) {
     skjermlenkeCodeMap = Map.groupBy(skjermlenkeCodes, ({ kode }: SkjermlenkeCode) => kode);
   }

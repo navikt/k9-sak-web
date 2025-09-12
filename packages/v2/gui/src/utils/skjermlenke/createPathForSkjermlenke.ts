@@ -1,11 +1,10 @@
-import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
-import { lookupSkjermlenkeCode } from './skjermlenkeCodes.js';
+import { lookupSkjermlenkeCode, type SkjermlenkeTypeWithExtraCodes } from './skjermlenkeCodes.js';
 import { pathWithQueryParams } from '../urlUtils.js';
 import type { Path } from 'react-router';
 
 export const createPathForSkjermlenke = <T extends Partial<Path>>(
   behandlingLocation: T,
-  skjermlenkeType: SkjermlenkeType,
+  skjermlenkeType: SkjermlenkeTypeWithExtraCodes,
 ): T => {
   const skjermlenkeCode = lookupSkjermlenkeCode(skjermlenkeType);
   const qp = skjermlenkeCode
