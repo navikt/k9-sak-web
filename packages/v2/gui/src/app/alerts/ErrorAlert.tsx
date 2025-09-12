@@ -1,11 +1,11 @@
-import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
-import type { PropsWithChildren } from 'react';
+import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import { ErrorIdEncouragementMsg } from './ErrorIdEncouragementMsg.js';
 import GeneralAsyncError from './GeneralAsyncError.js';
-import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
+import type { PropsWithChildren } from 'react';
+import { SharedFeilDtoError } from '@k9-sak-web/backend/shared/errorhandling/SharedFeilDtoError.js';
 
 export interface ErrorAlertProps {
   readonly error: ErrorWithAlertInfo;
@@ -52,7 +52,7 @@ const ApiErrorMsg = ({ error }: { readonly error: ExtendedApiError }) => (
   </>
 );
 
-const K9SakErrorMsg = ({ error }: { readonly error: K9SakApiError }) => {
+const SharedFeilDtoErrorMsg = ({ error }: { readonly error: SharedFeilDtoError }) => {
   if (error.erValideringsfeil) {
     return (
       <>
@@ -70,8 +70,8 @@ const K9SakErrorMsg = ({ error }: { readonly error: K9SakApiError }) => {
 };
 
 const ErrorMsg = ({ error }: Pick<ErrorAlertProps, 'error'>) => {
-  if (error instanceof K9SakApiError) {
-    return <K9SakErrorMsg error={error} />;
+  if (error instanceof SharedFeilDtoError) {
+    return <SharedFeilDtoErrorMsg error={error} />;
   }
   // XXX Legg til handtering av evt andre spesifikke ExtendedApiError subklasser her
   if (error instanceof ExtendedApiError) {

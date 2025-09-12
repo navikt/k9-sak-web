@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -46,7 +46,8 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const klageAktivert = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
-  const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert);
+  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert, tilbakeAktivert);
 
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 

@@ -276,11 +276,11 @@ const unntakVurderingsArsaker = [
 ];
 
 const tilbakekrevingRevurderingArsaker = [
-  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FORELDELSE,
-  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_VILKÅR,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_FORELDELSE,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_VILKÅR,
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_KA,
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_NFP,
-  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FEILUTBETALT_BELØP_HELT_ELLER_DELVIS_BORTFALT,
 ];
 
 export const getBehandlingAarsaker = (

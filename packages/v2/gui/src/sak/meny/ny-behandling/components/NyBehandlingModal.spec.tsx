@@ -24,17 +24,17 @@ describe('<NyBehandlingModal>', () => {
         kodeverk: '',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_VILKÅR,
+        kode: tilbakekrevingBehandlingÅrsakType.RE_OPPLYSNINGER_OM_VILKÅR,
         navn: 'Nye opplysninger om vilkårsvurdering',
         kodeverk: '',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_FORELDELSE,
+        kode: tilbakekrevingBehandlingÅrsakType.RE_OPPLYSNINGER_OM_FORELDELSE,
         navn: 'Nye opplysninger om foreldelse',
         kodeverk: '',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
+        kode: tilbakekrevingBehandlingÅrsakType.RE_FEILUTBETALT_BELØP_HELT_ELLER_DELVIS_BORTFALT,
         navn: 'Feilutbetalt beløp helt eller delvis bortfalt',
         kodeverk: '',
       },

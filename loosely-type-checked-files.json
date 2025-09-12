@@ -406,6 +406,5 @@
   "packages/utils/src/period-utils/getPeriodDifference.ts",
   "packages/utils/src/stringUtils.spec.tsx",
   "packages/utils/src/urlUtils.spec.ts",
-  "packages/utils/src/urlUtils.ts",
   "packages/utils/src/validation/validators.spec.ts"
 ]

@@ -20,6 +20,9 @@ interface Props {
   saksnummer: string;
 }
 
+/**
+ * @deprecated Bruk ../innslag/InnslagBoble.tsx med genererte typer istaden
+ */
 export const Snakkeboble = ({
   behandlingLocation,
   createLocationForSkjermlenke,
