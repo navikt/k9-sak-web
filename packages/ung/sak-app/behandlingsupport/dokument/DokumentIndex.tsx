@@ -1,4 +1,5 @@
-import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
+import { requireProps, usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';

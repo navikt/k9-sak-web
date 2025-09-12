@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {

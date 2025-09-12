@@ -1,4 +1,3 @@
-import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
@@ -31,14 +30,14 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import HistorikkIndex from './historikk/HistorikkIndex';
+import HistorikkIndex from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendClient.js';
+import { HistorikkBackendClient } from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
+import HistorikkBackendApiContext from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendApiContext.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -291,7 +290,6 @@ const BehandlingSupportIndex = ({
                   saksnummer={fagsak.saksnummer}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
-                  kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
                 />
               </HistorikkBackendApiContext>
             )}

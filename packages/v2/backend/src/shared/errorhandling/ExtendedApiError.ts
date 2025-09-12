@@ -1,5 +1,5 @@
-import { isObject } from '../../../typecheck/isObject.js';
-import { isString } from '../../../typecheck/isString.js';
+import { isObject } from '../../typecheck/isObject.js';
+import { isString } from '../../typecheck/isString.js';
 
 export type NavCallid = `CallId_${string}`;
 

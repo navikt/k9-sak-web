@@ -10,15 +10,16 @@
     "./k9sak/*": "./src/k9sak/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/*": "./src/k9klage/*",
-    "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*",
+    "./k9tilbake/*": "./src/k9tilbake/*",
     "./ungsak/*": "./src/ungsak/*",
     "./ungtilbake/*": "./src/ungtilbake/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "3.1.20250814094714",
     "@navikt/k9-sak-typescript-client": "3.0.20250905125521",
-    "@navikt/ung-sak-typescript-client": "2.0.20250822131842",
-    "@navikt/ung-tilbake-typescript-client": "3.0.20250819155526"
+    "@navikt/k9-tilbake-typescript-client": "^1.1.20250905111255",
+    "@navikt/ung-sak-typescript-client": "2.0.20250905111314",
+    "@navikt/ung-tilbake-typescript-client": "3.0.20250902124409"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.86.0"

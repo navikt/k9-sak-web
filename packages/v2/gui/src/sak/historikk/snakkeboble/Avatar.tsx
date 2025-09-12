@@ -21,6 +21,9 @@ interface Props {
   kjønn?: string;
 }
 
+/**
+ * @deprecated Bruk ny versjon i ../innslag/
+ */
 export const Avatar = ({ aktørType, kjønn }: Props) => {
   const kode = isLegacyTilbakeHistorikkAktor(aktørType) ? aktørType.kode : aktørType;
   switch (kode) {
