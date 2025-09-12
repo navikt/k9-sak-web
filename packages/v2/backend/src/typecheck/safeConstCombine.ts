@@ -6,7 +6,7 @@ const incompatibleObjectMerge: unique symbol = Symbol('Incompatible object merge
 const x: boolean = incompatibleObjectMerge; // Deliberately set to wrong type to get ts error also in legacy ts-check.
 // If compilation fails and reports that returned type from safeObjectMerge was this type, it means that the input
 // to safeObjectMerge had invalid values.
-type IncompatibleMerge = typeof incompatibleObjectMerge;
+type IncompatibleMerge = Readonly<typeof incompatibleObjectMerge>;
 
 // Represents a constant object input
 type T = Readonly<Record<string, string | number | boolean>>;
@@ -46,25 +46,45 @@ type HoisIncompatibleMerge<R extends TI> = R extends T ? R : IncompatibleMerge;
  */
 type AssertSamePropValuesForSameKeys<T1 extends TI, TArr extends readonly T[]> = TArr extends readonly [
   infer T2 extends T,
-  ...infer TRest extends T[],
+  ...infer TRest extends readonly T[],
 ]
   ? AssertSamePropValuesForSameKeys<AssertSameValues<T1, T2>, TRest> // Fortsett rekursivt med rest
   : TArr extends readonly [infer T2 extends T]
     ? AssertSameValues<T1, T2>
     : T1;
 
+// A type to check if an object's properties are literal types (as with 'as const')
+// If not, it resolves to an error message type, causing a compile-time error.
+type RequireConst<T> = T extends object
+  ? {
+      [K in keyof T]: T[K] extends string | number | boolean | symbol
+        ? string extends T[K]
+          ? 'Error: properties must be literal types. Use "as const".'
+          : number extends T[K]
+            ? 'Error: properties must be literal types. Use "as const".'
+            : boolean extends T[K]
+              ? 'Error: properties must be literal types. Use "as const".'
+              : symbol extends T[K]
+                ? 'Error: properties must be literal types. Use "as const".'
+                : T[K]
+        : T[K];
+    }
+  : T;
+
 /**
- * Use safeObjectMerge to merge a variable number of constant objects (e.g. generated enums) together, and get a compile
+ * Use safeConstCombine to merge a variable number of constant objects (e.g. generated enums) together, and get a compile
  * time check that all the merged objects, for the same property keys has the exact same values.
  * <p>
  *   This is used when combining generated enum constants from various backends into one shared constant that has all values,
  *   but ensures that for the same property key, all the combined enums has the same value.
  * <p>
  *   Without this one risks that the last object overwrites a previous property value without it being detected.
+ * <p>
+ *   This is a compile time check only. At runtime, it just merges together given objects without checking any actual values.
  */
-export function safeObjectMerge<T1 extends T, TArr extends readonly T[]>(
-  t1: T1,
-  ...objects: TArr
+export function safeConstCombine<const T1 extends TI, const TArr extends readonly T[]>(
+  t1: RequireConst<T1>,
+  ...objects: { [I in keyof TArr]: RequireConst<TArr[I]> } & TArr
 ): HoisIncompatibleMerge<AssertSamePropValuesForSameKeys<T1, TArr>> {
   return objects.reduce((acc, obj) => ({ ...acc, ...obj }), t1) as HoisIncompatibleMerge<
     AssertSamePropValuesForSameKeys<T1, TArr>
