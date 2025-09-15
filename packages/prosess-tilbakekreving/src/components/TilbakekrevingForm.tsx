@@ -434,14 +434,14 @@ const settOppPeriodeDataForDetailForm = createSelector(
         ? periode.foreldelseVurderingType.kode === foreldelseVurderingType.FORELDET
         : !!periode?.foreldet;
       return {
-        redusertBeloper: periode.redusertBeloper,
-        ytelser: periode.ytelser,
-        feilutbetaling: periodeFormState.feilutbetaling ? periodeFormState.feilutbetaling : periode.feilutbetaling,
-        erTotalBelopUnder4Rettsgebyr: periode.erTotalBelopUnder4Rettsgebyr,
+        redusertBeloper: periode?.redusertBeloper,
+        ytelser: periode?.ytelser,
+        feilutbetaling: periodeFormState.feilutbetaling ? periodeFormState.feilutbetaling : periode?.feilutbetaling,
+        erTotalBelopUnder4Rettsgebyr: periode?.erTotalBelopUnder4Rettsgebyr,
         fom: periodeFormState.fom,
         tom: periodeFormState.tom,
-        årsak: periode.årsak,
-        begrunnelse: periode.begrunnelse,
+        årsak: periode?.årsak,
+        begrunnelse: periode?.begrunnelse,
         erForeldet,
       };
     });
