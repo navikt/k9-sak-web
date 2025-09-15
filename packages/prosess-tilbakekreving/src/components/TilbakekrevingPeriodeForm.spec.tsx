@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
@@ -46,6 +45,11 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     const periode = {
       erForeldet: true,
       ytelser: [],
+      årsak: {
+        hendelseType: {
+          kode: '',
+        },
+      },
     } as DataForPeriode;
     renderWithIntlAndReduxForm(
       <TilbakekrevingPeriodeFormImpl
@@ -85,6 +89,11 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       fom: '2020-04-01',
       tom: '2020-04-15',
       ytelser: [],
+      årsak: {
+        hendelseType: {
+          kode: '',
+        },
+      },
     } as DataForPeriode;
 
     const vilkårsPerioder = [
