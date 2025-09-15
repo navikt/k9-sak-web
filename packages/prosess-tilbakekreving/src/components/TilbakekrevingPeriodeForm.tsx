@@ -19,7 +19,10 @@ import {
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
-import { sif_tilbakekreving_behandlingslager_vilkår_kodeverk_VilkårResultat as VilkårResultat } from '@navikt/ung-tilbake-typescript-client/types';
+import {
+  sif_tilbakekreving_behandlingslager_feilutbetalingårsak_kodeverk_HendelseType as HendelseType,
+  sif_tilbakekreving_behandlingslager_vilkår_kodeverk_VilkårResultat as VilkårResultat,
+} from '@navikt/ung-tilbake-typescript-client/types';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -219,6 +222,22 @@ export const TilbakekrevingPeriodeFormImpl = (
   const vurdertePerioder = vilkarsVurdertePerioder.filter(
     per => !per.erForeldet && per.valgtVilkarResultatType != null,
   );
+
+  const formatYtelser = () => {
+    const hasUngHendelse = data.årsak?.hendelseType.kode === HendelseType.UNG_ANNET_TYPE;
+    if (!hasUngHendelse) {
+      return data.ytelser;
+    }
+    return data.ytelser.map(ytelse => {
+      if (ytelse.aktivitet === 'Ikke Definert') {
+        return {
+          aktivitet: 'Ungdomsprogramytelsen',
+          belop: ytelse.belop,
+        };
+      }
+      return ytelse;
+    });
+  };
   return (
     <div className={styles.container}>
       <TilbakekrevingTimelineData
@@ -247,7 +266,7 @@ export const TilbakekrevingPeriodeFormImpl = (
           <VerticalSpacer eightPx />
         </React.Fragment>
       ))}
-      <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
+      <TilbakekrevingAktivitetTabell ytelser={formatYtelser()} />
       <VerticalSpacer twentyPx />
       {!readOnly && !data.erForeldet && vurdertePerioder.length > 0 && (
         <>
