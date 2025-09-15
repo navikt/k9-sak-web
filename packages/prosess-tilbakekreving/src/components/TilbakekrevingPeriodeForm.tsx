@@ -224,7 +224,7 @@ export const TilbakekrevingPeriodeFormImpl = (
   );
 
   const formatYtelser = () => {
-    const hasUngHendelse = data.årsak.hendelseType.kode === HendelseType.UNG_ANNET_TYPE;
+    const hasUngHendelse = data.årsak?.hendelseType.kode === HendelseType.UNG_ANNET_TYPE;
     if (!hasUngHendelse) {
       return data.ytelser;
     }
