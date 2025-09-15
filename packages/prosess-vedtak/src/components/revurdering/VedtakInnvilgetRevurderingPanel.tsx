@@ -68,39 +68,33 @@ interface VedtakInnvilgetRevurderingPanelProps {
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
-  ytelseTypeKode,
   konsekvenserForYtelsen,
   tilbakekrevingText,
   bgPeriodeMedAvslagsårsak,
 }: VedtakInnvilgetRevurderingPanelProps & WrappedComponentProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {(ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER ||
-        ytelseTypeKode === fagsakYtelsesType.FRISINN ||
-        ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) && (
-        <div data-testid="innvilgetRevurdering">
-          <Label size="small" as="p">
-            {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-          </Label>
-          <BodyShort size="small">
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
-              tilbakekrevingText &&
-              '. '}
-            {tilbakekrevingText &&
-              intl.formatMessage({
-                id: tilbakekrevingText,
-              })}
-            {bgPeriodeMedAvslagsårsak && (
-              <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
-            )}
-          </BodyShort>
-          <VerticalSpacer sixteenPx />
-        </div>
-      )}
+      <div data-testid="innvilgetRevurdering">
+        <Label size="small" as="p">
+          {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+        </Label>
+        <BodyShort size="small">
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
+            tilbakekrevingText &&
+            '. '}
+          {tilbakekrevingText &&
+            intl.formatMessage({
+              id: tilbakekrevingText,
+            })}
+          {bgPeriodeMedAvslagsårsak && (
+            <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
+          )}
+        </BodyShort>
+        <VerticalSpacer sixteenPx />
+      </div>
     </>
   );
 };
