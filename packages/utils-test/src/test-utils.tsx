@@ -8,9 +8,16 @@ import { reducer, reduxForm } from 'redux-form';
 import defaultMessages from '../../../public/sprak/nb_NO.json';
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
+const intlErrorHandler = error => {
+  if (error.code === 'MISSING_TRANSLATION') {
+    return;
+  }
+  console.warn(error);
+};
+
 export function renderWithIntl(ui: ReactElement<any>, { locale, messages, ...renderOptions }: any = {}) {
   const Wrapper = ({ children }) => (
-    <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages}>
+    <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={intlErrorHandler}>
       {children}
     </IntlProvider>
   );
@@ -25,7 +32,7 @@ export function renderWithIntlAndReduxForm(
   const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const Wrapper = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
-      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
+      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={intlErrorHandler}>
         <MockForm initialValues={initialValues}>{children}</MockForm>
       </IntlProvider>
     </Provider>
@@ -47,7 +54,7 @@ export function renderWithIntlAndReactQueryClient(ui: React.ReactElement<any>, {
   const testQueryClient = createTestReactQueryClient();
   const { rerender, ...result } = rtlRender(
     <QueryClientProvider client={testQueryClient}>
-      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
+      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={intlErrorHandler}>
         {ui}
       </IntlProvider>
     </QueryClientProvider>,
@@ -57,7 +64,7 @@ export function renderWithIntlAndReactQueryClient(ui: React.ReactElement<any>, {
     rerender: (rerenderUi: React.ReactElement<any>) =>
       rerender(
         <QueryClientProvider client={testQueryClient}>
-          <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
+          <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={intlErrorHandler}>
             {rerenderUi}
           </IntlProvider>
         </QueryClientProvider>,
