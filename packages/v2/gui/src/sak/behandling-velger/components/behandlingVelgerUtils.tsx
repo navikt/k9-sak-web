@@ -2,12 +2,13 @@ import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlin
 import {
   ung_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
   ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  ung_sak_kontrakt_krav_ÅrsakTilVurdering as UngÅrsakTilVurdering,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import type { Behandling } from '../types/Behandling';
-import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
+import type { K9UngPeriode, PerioderMedBehandlingsId } from '../types/PerioderMedBehandlingsId';
 
 const isValidPeriode = (periode: K9UngPeriode): periode is K9UngPeriode & { fom: string; tom: string } =>
   periode.fom !== null && periode.tom !== null;
@@ -91,3 +92,13 @@ export const erUngdomsytelse = (sakstype: string) => sakstype === BehandlingDtoS
 
 export const erFørstegangsbehandlingIUngdomsytelsen = (sakstype: string, behandlingType: string) =>
   erUngdomsytelse(sakstype) && behandlingType === BehandlingDtoType.FØRSTEGANGSSØKNAD;
+
+export const filterPerioderForKontrollAvInntekt = (søknadsperioderData: PerioderMedBehandlingsId | undefined) => {
+  return (
+    søknadsperioderData?.perioderMedÅrsak
+      ?.filter(periodeMedÅrsak =>
+        periodeMedÅrsak.årsaker?.some(årsak => årsak === UngÅrsakTilVurdering.KONTROLL_AV_INNTEKT),
+      )
+      .map(periode => periode.periode) ?? []
+  );
+};
