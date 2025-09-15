@@ -1321,10 +1321,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/editorjs@npm:2.30.8":
-  version: 2.30.8
-  resolution: "@editorjs/editorjs@npm:2.30.8"
-  checksum: 10/83fd2d536201071c1daca5202241e1f479ce79fa89b03a3467e08432bba6b779f4d5b3ce32cfb269106dbef088649618689aad8670f7203739d3c54d472c4643
+"@editorjs/caret@npm:^1.0.1":
+  version: 1.0.3
+  resolution: "@editorjs/caret@npm:1.0.3"
+  dependencies:
+    "@editorjs/dom": "npm:^1.0.1"
+  checksum: 10/ab523e78fdbf7a2c6d9895b9184713bedff961f4a1870f87b02ee0224735f7059fc6cde3b2bf2e5293eb17197d49bdf9f2955af791eea76a3cae6bff05091940
+  languageName: node
+  linkType: hard
+
+"@editorjs/dom@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@editorjs/dom@npm:1.0.1"
+  dependencies:
+    "@editorjs/helpers": "npm:^1.0.1"
+  checksum: 10/b153f0961af413238483e8d955fc65a68a9ec70ea6d52eeb82f0940a2b411681e366ac3894b147de369932cbf3ff3604f3d893e1ebb8df46273cf973f804f5a7
+  languageName: node
+  linkType: hard
+
+"@editorjs/editorjs@npm:2.31.0":
+  version: 2.31.0
+  resolution: "@editorjs/editorjs@npm:2.31.0"
+  dependencies:
+    "@editorjs/caret": "npm:^1.0.1"
+    codex-notifier: "npm:^1.1.2"
+    codex-tooltip: "npm:^1.0.5"
+  checksum: 10/3e37033607b5066a1bae84bc78e5ef721427dafd02119f96eec1de82bd24eb92ede0f828695ce82a16a6dc6d0123c86bf14e5c4857be064562c56fc5afaf1151
   languageName: node
   linkType: hard
 
@@ -1342,6 +1364,13 @@ __metadata:
     "@codexteam/icons": "npm:^0.0.5"
     "@editorjs/editorjs": "npm:^2.29.1"
   checksum: 10/8d313e8e8846347347639add8e8d971eea3e07fad9aaa842a8efb09b0eb099f0c68966fa8b5b34e1b9c4a9836ed04488985070abc60bef656b533db8441b3b47
+  languageName: node
+  linkType: hard
+
+"@editorjs/helpers@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@editorjs/helpers@npm:1.0.1"
+  checksum: 10/e682fd55538ba1820900635ec6d23cf8f4e8b2a6d12a2dee1a687b73f347911f73c0d433da61f87ac332e09736b21eb24efd3ded745c5356deef01b4782d6a25
   languageName: node
   linkType: hard
 
@@ -2258,7 +2287,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
-    "@editorjs/editorjs": "npm:2.30.8"
+    "@editorjs/editorjs": "npm:2.31.0"
     "@editorjs/header": "npm:2.8.8"
     "@editorjs/list": "npm:1.9.0"
     "@editorjs/paragraph": "npm:2.11.7"
@@ -7440,6 +7469,20 @@ __metadata:
   version: 4.6.0
   resolution: "co@npm:4.6.0"
   checksum: 10/a5d9f37091c70398a269e625cedff5622f200ed0aa0cff22ee7b55ed74a123834b58711776eb0f1dc58eb6ebbc1185aa7567b57bd5979a948c6e4f85073e2c05
+  languageName: node
+  linkType: hard
+
+"codex-notifier@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "codex-notifier@npm:1.1.2"
+  checksum: 10/919616af9a6893560126afa6978e3f3c563691fff984c169aa4c7ca7512577f812ad041040e685c2a971b5f6545a36565257c0738adfba3b3aa90a232d2869ad
+  languageName: node
+  linkType: hard
+
+"codex-tooltip@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "codex-tooltip@npm:1.0.5"
+  checksum: 10/adb4cc8a9a26de3eb39d22b9a2c0ca57ef387d5d4a52c0a978a0a13ba0ea53dc6603604702f005fa42fd074db936742e1a1094d59debb7f987dc096849e818dd
   languageName: node
   linkType: hard
 

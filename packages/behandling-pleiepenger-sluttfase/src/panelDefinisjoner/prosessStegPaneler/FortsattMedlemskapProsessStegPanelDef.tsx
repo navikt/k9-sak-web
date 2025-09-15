@@ -1,16 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps, false);
-    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps });
-  };
+  getKomponent = props => this.overstyringDef.getKomponent(props);
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR];
 

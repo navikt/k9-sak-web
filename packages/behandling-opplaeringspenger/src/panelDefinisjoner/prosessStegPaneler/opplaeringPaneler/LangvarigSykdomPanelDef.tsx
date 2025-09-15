@@ -1,7 +1,6 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class LangvarigSykdomPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
@@ -11,9 +10,7 @@ class LangvarigSykdomPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Langvarig sykdom';
 
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps, false);
-    return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, skjulOverstyring: true });
+    return this.overstyringDef.getKomponent({ ...props, skjulOverstyring: true });
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_LANGVARIG_SYK];
