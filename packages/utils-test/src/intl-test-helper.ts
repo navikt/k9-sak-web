@@ -22,6 +22,12 @@ const getIntlObject = (messages?: any) => {
       locale: 'nb-NO',
       defaultLocale: 'nb-NO',
       messages: selectedMessages,
+      onError: error => {
+        if (error.code === 'MISSING_TRANSLATION') {
+          return;
+        }
+        console.warn(error);
+      },
     },
     cache,
   );
