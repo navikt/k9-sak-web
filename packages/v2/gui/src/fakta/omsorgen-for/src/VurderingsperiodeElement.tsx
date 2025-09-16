@@ -1,10 +1,10 @@
-import { Period } from '@fpsak-frontend/utils';
 import {
   k9_kodeverk_sykdom_Resultat as Resultat,
   type k9_sak_typer_Periode as Periode,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React, { type JSX } from 'react';
+import { prettifyPeriode } from './util/utils';
 import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
@@ -40,7 +40,6 @@ const VurderingsperiodeElement = ({
   resultat,
   renderAfterElement,
 }: VurderingsperiodeElementProps): JSX.Element => {
-  const period = new Period(periode.fom, periode.tom);
   return (
     <div className={styles.vurderingsperiodeElement}>
       <span className={styles.visuallyHidden}>Type</span>
@@ -48,7 +47,7 @@ const VurderingsperiodeElement = ({
       <div className={styles.vurderingsperiodeElementTexts}>
         <p className={styles.vurderingsperiodeElementTextsPeriod}>
           <span className={styles.visuallyHidden}>Periode</span>
-          {period.prettifyPeriod()}
+          {prettifyPeriode(periode)}
         </p>
       </div>
       {renderAfterElement && renderAfterElement()}

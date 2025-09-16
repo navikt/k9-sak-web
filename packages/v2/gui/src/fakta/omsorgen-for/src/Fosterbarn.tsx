@@ -3,16 +3,15 @@ import { Delete } from '@navikt/ds-icons';
 import { Box, Button, Heading, Table } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
 import { RhfTextField } from '@navikt/ft-form-hooks';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
-import ContainerContext from './ui/context/ContainerContext';
 
 interface FosterbarnProps {
   setFosterbarn: React.Dispatch<React.SetStateAction<string[]>>;
+  readOnly: boolean;
 }
 
-const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
-  const { readOnly } = useContext(ContainerContext) || {};
+const Fosterbarn = ({ setFosterbarn, readOnly }: FosterbarnProps) => {
   const { control } = useForm({ mode: 'onBlur' });
   const { fields, append, remove } = useFieldArray({
     control,
