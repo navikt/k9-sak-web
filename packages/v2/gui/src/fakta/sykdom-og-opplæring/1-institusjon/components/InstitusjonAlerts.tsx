@@ -34,6 +34,7 @@ const InstitusjonAlerts = ({ valgtVurdering, vurderinger }: FaktaInstitusjonAler
       },
       begrunnelse: vurderinger[0]?.begrunnelse ?? null,
       organisasjonsnummer: vurderinger[0]?.organisasjonsnummer ?? null,
+      redigertInstitusjonNavn: vurderinger[0]?.redigertInstitusjonNavn ?? null,
     });
   };
 
