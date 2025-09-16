@@ -28,9 +28,10 @@ export const utledRedigertInstitusjonNavn = (
   institusjonFraOrganisasjonsnummer: string,
   redigertInstitusjonNavn: string,
   annenInstitusjon: boolean,
+  harOrganisasjonsnummer: boolean,
 ) => {
   // Har søkt opp institusjon fra organisasjonsnummer
-  if (institusjonFraOrganisasjonsnummer) {
+  if (harOrganisasjonsnummer && institusjonFraOrganisasjonsnummer) {
     return institusjonFraOrganisasjonsnummer;
   }
 
