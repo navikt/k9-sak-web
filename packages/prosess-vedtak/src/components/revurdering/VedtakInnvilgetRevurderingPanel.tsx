@@ -1,6 +1,5 @@
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -68,39 +67,33 @@ interface VedtakInnvilgetRevurderingPanelProps {
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
-  ytelseTypeKode,
   konsekvenserForYtelsen,
   tilbakekrevingText,
   bgPeriodeMedAvslagsårsak,
 }: VedtakInnvilgetRevurderingPanelProps & WrappedComponentProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {(ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER ||
-        ytelseTypeKode === fagsakYtelsesType.FRISINN ||
-        ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) && (
-        <div data-testid="innvilgetRevurdering">
-          <Label size="small" as="p">
-            {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-          </Label>
-          <BodyShort size="small">
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
-              tilbakekrevingText &&
-              '. '}
-            {tilbakekrevingText &&
-              intl.formatMessage({
-                id: tilbakekrevingText,
-              })}
-            {bgPeriodeMedAvslagsårsak && (
-              <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
-            )}
-          </BodyShort>
-          <VerticalSpacer sixteenPx />
-        </div>
-      )}
+      <div data-testid="innvilgetRevurdering">
+        <Label size="small" as="p">
+          {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+        </Label>
+        <BodyShort size="small">
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
+            tilbakekrevingText &&
+            '. '}
+          {tilbakekrevingText &&
+            intl.formatMessage({
+              id: tilbakekrevingText,
+            })}
+          {bgPeriodeMedAvslagsårsak && (
+            <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
+          )}
+        </BodyShort>
+        <VerticalSpacer sixteenPx />
+      </div>
     </>
   );
 };
