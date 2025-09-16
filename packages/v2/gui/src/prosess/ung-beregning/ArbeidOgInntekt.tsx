@@ -1,6 +1,6 @@
 import {
-  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
+  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
   type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -40,6 +40,7 @@ const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeri
           valg: periode.valg ?? '',
           begrunnelse: periode.begrunnelse ?? '',
           periode: periode.periode,
+          harAvvik: periode.status === PeriodeStatus.AVVIK,
         };
       }) || [],
   };
@@ -51,6 +52,7 @@ type Formvalues = {
     valg: BrukKontrollertInntektValg | '';
     begrunnelse: string;
     periode: KontrollerInntektPeriodeDto['periode'];
+    harAvvik: boolean;
   }[];
 };
 
@@ -68,12 +70,13 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
 
   const onSubmit = async (values: Formvalues) => {
     setIsSubmitting(true);
+    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik);
     try {
       await submitCallback([
         {
           kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-          begrunnelse: values.perioder.map(periode => periode.begrunnelse).join(', '),
-          perioder: values.perioder.map(periode => ({
+          begrunnelse: perioderMedAvvik.map(periode => periode.begrunnelse).join(', '),
+          perioder: perioderMedAvvik.map(periode => ({
             periode: periode.periode,
             fastsattInnntekt:
               periode.valg === BrukKontrollertInntektValg.MANUELT_FASTSATT
