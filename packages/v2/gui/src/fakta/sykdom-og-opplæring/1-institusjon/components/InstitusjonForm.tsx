@@ -30,7 +30,7 @@ interface InstitusjonFormValues {
 export interface InstitusjonAksjonspunktPayload {
   godkjent: boolean;
   begrunnelse: string | null;
-  redigertInstitusjonNavn?: string;
+  redigertInstitusjonNavn?: string | null;
   organisasjonsnummer: string | null;
   journalpostId: {
     journalpostId: string | null;
