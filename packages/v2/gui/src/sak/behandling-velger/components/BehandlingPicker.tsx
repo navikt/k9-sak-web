@@ -4,6 +4,7 @@ import {
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
@@ -340,7 +341,11 @@ const BehandlingPicker = ({
           avsluttetDato={valgtBehandling.avsluttet}
           behandlingsresultatTypeNavn={
             valgtBehandling.behandlingsresultat
-              ? kodeverkNavnFraKode(valgtBehandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
+              ? kodeverkNavnFraKode(
+                  valgtBehandling.behandlingsresultat.type,
+                  KodeverkType.BEHANDLING_RESULTAT_TYPE,
+                  erTilbakekreving(valgtBehandling.type) ? 'kodeverkTilbake' : 'kodeverk',
+                )
               : undefined
           }
           behandlingsresultatTypeKode={
