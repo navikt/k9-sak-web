@@ -23,6 +23,7 @@ interface InstitusjonFormValues {
   [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: string;
   [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: string;
   [InstitusjonFormFields.ANNEN_INSTITUSJON]: boolean;
+  [InstitusjonFormFields.HAR_ORGANISASJONSNUMMER]: string;
   [InstitusjonFormFields.ORGANISASJONSNUMMER]: string;
   [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: string;
 }
@@ -87,7 +88,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
     const skalSendeBegrunnelse =
       values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'nei' ||
       values[InstitusjonFormFields.SKAL_LEGGE_TIL_VALGFRI_SKRIFTLIG_VURDERING] === 'ja';
-    const skalSendeOrgnaisasjonsnummer = (values[InstitusjonFormFields.ORGANISASJONSNUMMER] || '').length === 9;
+    const skalSendeOrganisasjonsnummer = values[InstitusjonFormFields.HAR_ORGANISASJONSNUMMER] === 'ja' && (values[InstitusjonFormFields.ORGANISASJONSNUMMER] || '').length === 9;
     løsAksjonspunkt9300({
       godkjent: values[InstitusjonFormFields.GODKJENT_INSTITUSJON] === 'ja',
       begrunnelse: skalSendeBegrunnelse ? values[InstitusjonFormFields.BEGRUNNELSE] : null,
@@ -98,7 +99,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         values[InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN],
         values[InstitusjonFormFields.ANNEN_INSTITUSJON],
       ),
-      organisasjonsnummer: skalSendeOrgnaisasjonsnummer ? values[InstitusjonFormFields.ORGANISASJONSNUMMER] : null,
+      organisasjonsnummer: skalSendeOrganisasjonsnummer ? values[InstitusjonFormFields.ORGANISASJONSNUMMER] : null,
     });
   };
 
