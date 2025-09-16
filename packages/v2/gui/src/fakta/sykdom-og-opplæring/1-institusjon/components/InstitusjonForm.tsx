@@ -98,6 +98,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
         values[InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER],
         values[InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN],
         values[InstitusjonFormFields.ANNEN_INSTITUSJON],
+        values[InstitusjonFormFields.HAR_ORGANISASJONSNUMMER] === 'ja',
       ),
       organisasjonsnummer: skalSendeOrganisasjonsnummer ? values[InstitusjonFormFields.ORGANISASJONSNUMMER] : null,
     });
