@@ -54,7 +54,6 @@
   "packages/behandling-pleiepenger-sluttfase/src/components/PleiepengerSluttfaseProsess.tsx",
   "packages/behandling-pleiepenger-sluttfase/src/panelDefinisjoner/prosessStegPaneler/MedisinskVilkarProsessStegPanelDef.tsx",
   "packages/behandling-pleiepenger/src/BehandlingPleiepengerIndex.tsx",
-  "packages/behandling-pleiepenger/src/components/OmsorgenFor.tsx",
   "packages/behandling-pleiepenger/src/components/PleiepengerFakta.spec.tsx",
   "packages/behandling-pleiepenger/src/components/PleiepengerFakta.tsx",
   "packages/behandling-pleiepenger/src/components/PleiepengerPaneler.tsx",
