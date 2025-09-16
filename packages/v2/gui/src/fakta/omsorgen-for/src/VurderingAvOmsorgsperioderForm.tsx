@@ -5,10 +5,10 @@ import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { Alert, BodyShort, Box, Label, Radio, Tag } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Radio, Tag } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { type JSX } from 'react';
+import { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { PeriodpickerList } from '../../../shared/periodPickerList/PeriodpickerList';
@@ -48,7 +48,7 @@ interface VurderingAvOmsorgsperioderFormProps {
   omsorgsperiode: OmsorgenForDto;
   onAvbryt?: () => void;
   fosterbarn: string[];
-  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => void;
+  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => Promise<void>;
   sakstype?: FagsakYtelsesType;
   readOnly: boolean;
 }
@@ -67,6 +67,7 @@ const VurderingAvOmsorgsperioderForm = ({
   sakstype,
   readOnly,
 }: VurderingAvOmsorgsperioderFormProps): JSX.Element => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const erOLP = sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER;
   const intl = useIntl();
@@ -78,9 +79,9 @@ const VurderingAvOmsorgsperioderForm = ({
     },
   });
 
-  const handleSubmit = (formState: VurderingAvOmsorgsperioderFormState) => {
+  const handleSubmit = async (formState: VurderingAvOmsorgsperioderFormState) => {
     const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
-
+    setIsSubmitting(true);
     let vurdertePerioder: VurderingSubmitValues[];
     const fosterbarnForOmsorgspenger = erOMP ? fosterbarn : undefined;
     if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
@@ -109,13 +110,14 @@ const VurderingAvOmsorgsperioderForm = ({
         },
       ];
     }
-    onFinished(vurdertePerioder, fosterbarnForOmsorgspenger);
+    try {
+      await onFinished(vurdertePerioder, fosterbarnForOmsorgspenger);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // TODO: Sjekk at dette blir riktig ettersom det er lagt på .filter her
-  const perioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER }).filter(
-    (p): p is Periode => p !== undefined,
-  );
+  const perioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
   const harSøkerOmsorgenFor = useWatch({
     control: formMethods.control,
     name: FieldName.HAR_SØKER_OMSORGEN_FOR_I_PERIODE,
@@ -164,13 +166,9 @@ const VurderingAvOmsorgsperioderForm = ({
             onAvbryt={onAvbryt}
             shouldShowSubmitButton={!readOnly}
             smallButtons
+            submitButtonDisabled={isSubmitting}
           >
             <Box.New marginBlock="8 0">
-              <Label size="small" htmlFor={FieldName.BEGRUNNELSE}>
-                {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
-                <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
-              </Label>
-              {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
               <RhfTextarea
                 name={FieldName.BEGRUNNELSE}
                 validate={[required]}

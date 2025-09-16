@@ -18,7 +18,7 @@ interface OmsorgsperiodeoversiktProps {
   omsorgsperiodeoversikt: OmsorgenForOversiktDto;
   sakstype?: FagsakYtelsesType;
   readOnly: boolean;
-  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => void;
+  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => Promise<void>;
 }
 
 const Omsorgsperiodeoversikt = ({
