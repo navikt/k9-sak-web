@@ -155,7 +155,7 @@ export const NyBehandlingModal = ({
         : {};
     submitCallback({
       ...formValues,
-      behandlingUuid: uuidForSistLukkede,
+      behandlingUuid: behandlingUuid,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
       ...klageOnlyValues,
