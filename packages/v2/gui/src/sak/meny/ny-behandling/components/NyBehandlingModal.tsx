@@ -40,6 +40,7 @@ interface NyBehandlingModalProps {
   cancelEvent: () => void;
   submitCallback: (
     data: {
+      behandlingUuid?: string;
       eksternUuid?: string;
       fagsakYtelseType: FagsakYtelsesType;
     } & FormValues,
@@ -154,6 +155,7 @@ export const NyBehandlingModal = ({
         : {};
     submitCallback({
       ...formValues,
+      behandlingUuid: uuidForSistLukkede,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
       ...klageOnlyValues,
