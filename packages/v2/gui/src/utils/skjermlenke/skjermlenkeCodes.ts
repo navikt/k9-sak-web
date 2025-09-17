@@ -226,6 +226,11 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
     tabNavn: tabCodes.REISETID,
   },
+  {
+    kode: 'FAKTA_OM_NY_INNTEKT',
+    faktaNavn: faktaPanelCodes.NY_INNTEKT,
+    punktNavn: '',
+  },
 ];
 
 let skjermlenkeCodeMap: Map<SkjermlenkeType, SkjermlenkeCode[]>;
