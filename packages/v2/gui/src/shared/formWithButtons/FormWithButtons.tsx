@@ -4,7 +4,7 @@ import React from 'react';
 export interface FormProps {
   children: React.ReactNode;
   buttonLabel?: string;
-  onSubmit: (e?: any) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
   shouldShowSubmitButton?: boolean;
   onAvbryt?: () => void;
   submitButtonDisabled?: boolean;
