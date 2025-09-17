@@ -2,6 +2,7 @@ import Uttak from './Uttak';
 import ArbeidsforholdDto from './ArbeidsforholdDto';
 import Aktivitet from './Aktivitet';
 
+/** @deprecated bruk genererte typer */
 export interface TotrinnskontrollAksjonspunkter {
   aksjonspunktKode: string;
   opptjeningAktiviteter: Aktivitet[];
