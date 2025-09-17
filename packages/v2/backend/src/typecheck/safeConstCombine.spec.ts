@@ -112,4 +112,10 @@ describe('safeConstCombine', () => {
     safeConstCombine('a', 'b');
     expect(true).toBe(true);
   });
+
+  it('should give compile error if only given one object', () => {
+    // @ts-expect-error Expects compilation error because only one object is provided
+    safeConstCombine(o1);
+    expect(true).toBe(true);
+  });
 });

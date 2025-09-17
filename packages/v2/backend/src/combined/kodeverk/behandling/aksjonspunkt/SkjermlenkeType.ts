@@ -12,13 +12,13 @@ export type SkjermlenkeType =
   | ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType
   | sif_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType;
 
-export const SkjermlenkeType = safeConstCombine({
-  ...k9_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
-  ...k9_klage_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
-  ...foreldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType,
-  ...ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
-  ...sif_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType,
-});
+export const SkjermlenkeType = safeConstCombine(
+  k9_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
+  k9_klage_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
+  foreldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType,
+  ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
+  sif_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType,
+);
 
 export const isSkjermlenkeType = (v: string): v is SkjermlenkeType =>
   Object.values(SkjermlenkeType).some(skjerlenkeTypeVerdi => v === skjerlenkeTypeVerdi);
