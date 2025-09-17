@@ -7,15 +7,14 @@ import type { Location } from 'history';
 import React from 'react';
 import { NavLink } from 'react-router';
 import type { Behandling } from '../types/Behandling';
-import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 
 interface OwnProps {
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   behandlingKlageVurdering?: KlagebehandlingDto;
   behandlingStatus: Behandling['status'];
-  erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkObject[];
   skjermlenkeTyper: KodeverkObject[];
   vurderArsaker: KodeverkObject[];
@@ -46,7 +45,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
           <React.Fragment key={context.skjermlenkeType}>
             <Link
               as={NavLink}
-              to={lagLenke(context.skjermlenkeType)}
+              to={lagLenke(context.skjermlenkeTypeEnum)}
               onClick={() => window.scroll(0, 0)}
               className={styles.lenke}
             >

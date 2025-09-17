@@ -1,23 +1,22 @@
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { lookupSkjermlenkeCode } from '@k9-sak-web/gui/utils/skjermlenke/skjermlenkeCodes.js';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import * as Sentry from '@sentry/browser';
-import { type Location } from 'history';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
 import aksjonspunktCodesTilbakekreving from '../aksjonspunktCodesTilbakekreving';
 import { type Behandling } from '../types/Behandling';
-import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
@@ -33,7 +32,7 @@ export type AksjonspunktGodkjenningData = {
 };
 
 interface OwnProps {
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   readOnly: boolean;
   showBegrunnelse?: boolean;
   klageKA?: boolean;
@@ -41,7 +40,6 @@ interface OwnProps {
   behandlingStatus: Behandling['status'];
   arbeidsforholdHandlingTyper: KodeverkObject[];
   skjermlenkeTyper: KodeverkObject[];
-  lagLenke: (skjermlenkeCode: string) => Location;
 }
 
 export const AksjonspunktGodkjenningFieldArray = ({
@@ -53,8 +51,8 @@ export const AksjonspunktGodkjenningFieldArray = ({
   behandlingStatus,
   arbeidsforholdHandlingTyper,
   skjermlenkeTyper,
-  lagLenke,
 }: OwnProps) => {
+  const location = useLocation();
   const featureToggles = useContext(FeatureTogglesContext);
   const { control, formState } = useFormContext<FormState>();
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
@@ -121,21 +119,15 @@ export const AksjonspunktGodkjenningFieldArray = ({
             ? 'Feltet må fylles ut'
             : '';
 
-        const lenke = () => {
-          if (isNyInntektEgetPanel) {
-            const skjermlenkeData = lookupSkjermlenkeCode('FAKTA_OM_NY_INNTEKT');
-            if (skjermlenkeData != null) {
-              return lagLenke(skjermlenkeData.kode);
-            } else {
-              throw new Error(`Fant ikke skjermlenke data for kode "FAKTA_OM_NY_INNTEKT"`);
-            }
-          }
-          return context ? lagLenke(context.skjermlenkeType) : '';
-        };
+        const lenke = isNyInntektEgetPanel
+          ? createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT')
+          : context != null
+            ? createPathForSkjermlenke(location, context.skjermlenkeTypeEnum)
+            : '';
 
         return (
           <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
-            <Link as={NavLink} to={lenke()} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
+            <Link as={NavLink} to={lenke} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
               {hentSkjermlenkeTypeKodeverkNavn()}
             </Link>
             <div className={styles.approvalItemContainer}>

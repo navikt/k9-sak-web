@@ -1,8 +1,5 @@
-import {
-  k9_klage_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  type k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { type k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -17,10 +14,10 @@ import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
 import { type AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import { type FormState } from './components/FormState';
-import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
+import { TotrinnskontrollBeslutterForm } from './components/TotrinnskontrollBeslutterForm';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
 import { type Behandling } from './types/Behandling';
-import { type TotrinnskontrollSkjermlenkeContext } from './types/TotrinnskontrollSkjermlenkeContext';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 
 const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
@@ -50,7 +47,7 @@ const getBehandlingTypeForKodeverk = (behandling: Behandling, erTilbakekreving: 
   if (erTilbakekreving) {
     return 'kodeverkTilbake';
   }
-  if (behandling.type === BehandlingDtoType.KLAGE) {
+  if (behandling.type === BehandlingType.KLAGE) {
     return 'kodeverkKlage';
   }
   return 'kodeverk';
@@ -58,7 +55,7 @@ const getBehandlingTypeForKodeverk = (behandling: Behandling, erTilbakekreving: 
 
 interface TotrinnskontrollSakIndexProps {
   behandling: Behandling;
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   location: Location;
   behandlingKlageVurdering?: KlagebehandlingDto;
   readOnly: boolean;
@@ -81,7 +78,7 @@ const TotrinnskontrollSakIndex = ({
 }: TotrinnskontrollSakIndexProps) => {
   const { hentKodeverkForKode } = useKodeverkContext();
   const erTilbakekreving =
-    behandlingType.TILBAKEKREVING === behandling.type || behandlingType.REVURDERING_TILBAKEKREVING === behandling.type;
+    BehandlingType.TILBAKEKREVING === behandling.type || BehandlingType.REVURDERING_TILBAKEKREVING === behandling.type;
 
   const submitHandler = useCallback(
     (values: FormState) => {
@@ -110,7 +107,7 @@ const TotrinnskontrollSakIndex = ({
     [erTilbakekreving, onSubmit],
   );
 
-  const sorterteTotrinnskontrollSkjermlenkeContext = useMemo(
+  const sorterteTotrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[] = useMemo(
     () =>
       erTilbakekreving
         ? sorterteSkjermlenkeCodesForTilbakekreving
@@ -150,7 +147,6 @@ const TotrinnskontrollSakIndex = ({
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkV2[]}
           skjermlenkeTyper={skjermlenkeTyper as KodeverkV2[]}
-          lagLenke={lagLenke}
           toTrinnFormState={toTrinnFormState}
           setToTrinnFormState={setToTrinnFormState}
         />
@@ -160,7 +156,6 @@ const TotrinnskontrollSakIndex = ({
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           behandlingKlageVurdering={behandlingKlageVurdering}
           behandlingStatus={behandling.status}
-          erTilbakekreving={erTilbakekreving}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
           skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
           lagLenke={lagLenke}
@@ -172,14 +167,12 @@ const TotrinnskontrollSakIndex = ({
 };
 
 // TODO: Dette kan fjernes når overgang til kodeverk som strings er ferdig
-const TotrinnskontrollSakIndexPropsTransformer = (
-  props: TotrinnskontrollSakIndexProps & { behandlingType?: BehandlingDtoType },
-) => {
+const TotrinnskontrollSakIndexPropsTransformer = (props: TotrinnskontrollSakIndexProps) => {
   const v2Props = JSON.parse(JSON.stringify(props));
   konverterKodeverkTilKode(
     v2Props,
-    props.behandlingType === BehandlingDtoType.TILBAKEKREVING ||
-      props.behandlingType === BehandlingDtoType.REVURDERING_TILBAKEKREVING,
+    props.behandling.type == BehandlingType.TILBAKEKREVING ||
+      props.behandling.type == BehandlingType.REVURDERING_TILBAKEKREVING,
   );
   return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
 };

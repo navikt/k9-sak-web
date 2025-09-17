@@ -1,21 +1,16 @@
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
 import TotrinnskontrollSakIndexPropsTransformer from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import {
-  BehandlingAppKontekst,
-  Fagsak,
-  KlageVurdering,
-  NavAnsatt,
-  TotrinnskontrollSkjermlenkeContext,
-} from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import React, { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
-import { useKodeverk } from '../../data/useKodeverk';
+import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
+import { useQuery } from '@tanstack/react-query';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { Behandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/Behandling.js';
 
 type Values = {
   fatterVedtakAksjonspunktDto: any;
@@ -50,6 +45,7 @@ interface OwnProps {
   behandlingVersjon: number;
   toTrinnFormState?: FormState;
   setToTrinnFormState?: React.Dispatch<FormState>;
+  api: TotrinnskontrollApi;
 }
 
 /**
@@ -64,44 +60,41 @@ const TotrinnskontrollIndex = ({
   behandlingVersjon,
   toTrinnFormState,
   setToTrinnFormState,
+  api,
 }: OwnProps) => {
   const [visBeslutterModal, setVisBeslutterModal] = useState(false);
   const [erAlleAksjonspunktGodkjent, setAlleAksjonspunktTilGodkjent] = useState(false);
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+  // TODO Er dette ok å gjere, eller finnast det situasjoner der behandling kan vere undefined uten at det skal føre til uhandtert feil?
+  if (behandling == null) {
+    throw new Error(`Kunne ikke finne behandling med id ${behandlingId}`);
+  }
 
   const location = useLocation();
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
-  const alleKodeverk = useKodeverk(behandling.type);
+  const totrinnsÅrsakerQuery = useQuery({
+    queryKey: ['totrinnskontroll/årsaker', behandling.uuid, behandling.status.kode, api],
+    queryFn: () => api.hentTotrinnskontrollSkjermlenkeContext(behandling.uuid),
+    enabled: behandling.status.kode == BehandlingStatus.FATTER_VEDTAK,
+    throwOnError: true,
+  });
 
-  const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
-    K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
-    undefined,
-    {
-      updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: behandling.status.kode !== BehandlingStatus.FATTER_VEDTAK,
-    },
-  );
-  const { data: totrinnArsakerReadOnly } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
-    K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY,
-    undefined,
-    {
-      updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: behandling.status.kode !== BehandlingStatus.BEHANDLING_UTREDES,
-    },
-  );
+  const totrinnArsakerReadOnlyQuery = useQuery({
+    queryKey: ['totrinnskontroll/årsaker/readonly', behandling.uuid, behandling.status.kode, api],
+    queryFn: () => api.hentTotrinnskontrollvurderingSkjermlenkeContext(behandling.uuid),
+    enabled: behandling.status.kode == BehandlingStatus.UTREDES,
+    throwOnError: true,
+  });
 
-  const { data: totrinnsKlageVurdering, state: totrinnsKlageVurderingState } = restApiHooks.useRestApi<KlageVurdering>(
-    K9sakApiKeys.TOTRINNS_KLAGE_VURDERING,
-    undefined,
-    {
-      keepData: true,
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !requestApi.hasPath(K9sakApiKeys.TOTRINNS_KLAGE_VURDERING),
-    },
-  );
+  const totrinnsKlageVurderingQuery = useQuery({
+    queryKey: ['totrinnskontroll/klagevurdering', behandling.uuid, behandling.versjon],
+    queryFn: () => api.hentTotrinnsKlageVurdering?.(behandling.uuid) ?? Promise.resolve(null),
+    enabled: api.hentTotrinnsKlageVurdering != undefined,
+    throwOnError: true,
+  });
 
   const { startRequest: godkjennTotrinnsaksjonspunkter } = restApiHooks.useRestApiRunner(
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
@@ -119,25 +112,26 @@ const TotrinnskontrollIndex = ({
     [behandlingId, behandlingVersjon],
   );
 
-  if (!totrinnArsaker && !totrinnArsakerReadOnly) {
-    return null;
-  }
-
-  if (totrinnsKlageVurderingState === RestApiState.LOADING) {
+  if (
+    (totrinnsÅrsakerQuery.isEnabled && totrinnsÅrsakerQuery.isPending) ||
+    (totrinnArsakerReadOnlyQuery.isEnabled && totrinnArsakerReadOnlyQuery.isPending) ||
+    (totrinnsKlageVurderingQuery.isEnabled && totrinnsKlageVurderingQuery.isPending)
+  ) {
     return <LoadingPanel />;
+  }
+  if (totrinnsÅrsakerQuery.data == null && totrinnArsakerReadOnlyQuery.data == null) {
+    return null;
   }
 
   return (
     <>
       <TotrinnskontrollSakIndexPropsTransformer
-        behandling={behandling}
-        behandlingType={behandling?.type?.kode}
-        totrinnskontrollSkjermlenkeContext={totrinnArsaker || totrinnArsakerReadOnly}
+        behandling={behandling as unknown as Behandling} // TODO Usikker cast her fordi propstransformer konverterer kodeverk objekt til string uten typesikkerhet
+        totrinnskontrollSkjermlenkeContext={totrinnsÅrsakerQuery.data ?? totrinnArsakerReadOnlyQuery.data ?? []}
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
         onSubmit={onSubmit}
-        alleKodeverk={alleKodeverk}
-        behandlingKlageVurdering={totrinnsKlageVurdering}
+        behandlingKlageVurdering={totrinnsKlageVurderingQuery.data ?? undefined}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
         toTrinnFormState={toTrinnFormState}
         setToTrinnFormState={setToTrinnFormState}
@@ -147,7 +141,7 @@ const TotrinnskontrollIndex = ({
           behandling={behandling}
           fagsakYtelseType={fagsak.sakstype}
           allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
-          erKlageWithKA={totrinnsKlageVurdering ? !!totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
+          erKlageWithKA={totrinnsKlageVurderingQuery.data?.klageVurderingResultatNK != null}
         />
       )}
     </>

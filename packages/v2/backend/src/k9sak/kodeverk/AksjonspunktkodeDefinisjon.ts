@@ -1,7 +1,9 @@
 import { type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '../generated/types.js';
 
+/** @deprecated Bruk combined/kodeverk/aksjonspunkt/AksjonspunktDefinisjon istaden (?) */
 export type AksjonspunktkodeDefinisjonType = Exclude<AksjonspunktDto['definisjon'], null | undefined>;
 
+/** @deprecated Bruk combined/kodeverk/aksjonspunkt/AksjonspunktDefinisjon istaden (?) */
 type AksjonspunktkodeDefinisjonKeys =
   | 'FORESLA_VEDTAK'
   | 'FATTER_VEDTAK'

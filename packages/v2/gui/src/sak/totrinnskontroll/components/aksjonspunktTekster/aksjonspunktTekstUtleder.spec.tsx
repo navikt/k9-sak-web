@@ -2,14 +2,14 @@ import { k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as Kla
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   folketrygdloven_kalkulus_kodeverk_FaktaOmBeregningTilfelle as FaktaOmBeregningTilfeller,
   k9_kodeverk_arbeidsforhold_ArbeidsforholdHandlingType as ArbeidsforholdHandlingType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
-import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 const medholdIKlage = {
   klageVurdering: Klagevurdering.MEDHOLD_I_KLAGE,
@@ -29,22 +29,17 @@ const arbeidsforholdHandlingTyper = [
   { kode: 'BASERT_PÅ_INNTEKTSMELDING', navn: 'fff', kodeverk: '' },
 ];
 
-const fakeAksjonspunkt: (a: Partial<TotrinnskontrollAksjonspunkt>) => TotrinnskontrollAksjonspunkt = a => {
+const fakeAksjonspunkt = <A extends Omit<TotrinnskontrollAksjonspunkterDto, 'aksjonspunktKode'>>(inp: A) => {
   return {
-    aksjonspunktKode: '',
-    arbeidsforholdDtos: undefined,
-    beregningDtoer: undefined,
-    besluttersBegrunnelse: 'begrunnelse',
-    totrinnskontrollGodkjent: false,
-    vurderPaNyttArsaker: undefined,
-    ...a,
+    ...inp,
+    aksjonspunktKode: inp.aksjonspunktDefinisjon,
   };
 };
 
 describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 6004', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_MEDISINSKESVILKÅRET_UNDER_18,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.OVERSTYRING_AV_MEDISINSKESVILKÅRET_UNDER_18,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
@@ -52,7 +47,9 @@ describe('aksjonspunktTekstUtleder', () => {
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6003', () => {
-    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR });
+    const aksjonspunkt = fakeAksjonspunkt({
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR,
+    });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Vilkåret omsorgen for er overstyrt.')).toBeInTheDocument();
@@ -60,7 +57,7 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 5038', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
@@ -68,21 +65,21 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5042', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_SELVSTENDIG_NÆRINGSDRIVENDE,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_SELVSTENDIG_NÆRINGSDRIVENDE,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 6007', () => {
-    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING });
+    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktDefinisjon: AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Beregningsvilkåret er overstyrt.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5047', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
@@ -91,7 +88,7 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 6006', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
@@ -100,33 +97,33 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 5021', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker har gyldig medlemskap i perioden.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5019', () => {
-    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_LOVLIG_OPPHOLD });
+    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktDefinisjon: AksjonspunktDefinisjon.AVKLAR_LOVLIG_OPPHOLD });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker har lovlig opphold.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5020', () => {
-    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_OM_ER_BOSATT });
+    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktDefinisjon: AksjonspunktDefinisjon.AVKLAR_OM_ER_BOSATT });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker er bosatt i Norge.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5023', () => {
-    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_OPPHOLDSRETT });
+    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktDefinisjon: AksjonspunktDefinisjon.AVKLAR_OPPHOLDSRETT });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker har oppholdsrett.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 6005', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
     render(<div>{message}</div>);
@@ -135,7 +132,7 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 5039 varig endring', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode:
+      aksjonspunktDefinisjon:
         AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE,
       beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: '2022-01-01' }],
     });
@@ -145,7 +142,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5039 ikkje varig endring', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode:
+      aksjonspunktDefinisjon:
         AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE,
       beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: '2022-01-01' }],
     });
@@ -196,7 +193,7 @@ describe('aksjonspunktTekstUtleder', () => {
   // Klage medhold
   it('skal vise korrekt tekst for aksjonspunkt 5035 medhold', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: medholdIKlage,
@@ -207,7 +204,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: medholdIKlage,
@@ -223,7 +220,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: oppheveYtelsesVedtak,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
@@ -234,7 +231,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: oppheveYtelsesVedtak,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
@@ -246,7 +243,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: avvistKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
@@ -257,7 +254,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: avvistKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
@@ -269,7 +266,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: stadfesteKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
@@ -280,7 +277,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: stadfesteKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktDefinisjon: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
@@ -293,7 +290,7 @@ describe('aksjonspunktTekstUtleder', () => {
       skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
       beregningDtoer: [beregningDto],
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
@@ -309,7 +306,7 @@ describe('aksjonspunktTekstUtleder', () => {
       skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
       beregningDtoer: [beregningDto],
     });
     const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
@@ -325,7 +322,7 @@ describe('aksjonspunktTekstUtleder', () => {
       skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
       beregningDtoer: [beregningDto],
     });
 
@@ -354,7 +351,7 @@ describe('aksjonspunktTekstUtleder', () => {
     ];
 
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: AksjonspunktDefinisjon.VURDER_ARBEIDSFORHOLD,
+      aksjonspunktDefinisjon: AksjonspunktDefinisjon.VURDER_ARBEIDSFORHOLD,
       arbeidsforholdDtos,
       beregningDtoer: [],
       vurderPaNyttArsaker: [],

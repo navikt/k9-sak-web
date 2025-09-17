@@ -20,8 +20,7 @@ import React, { type JSX, type ReactNode } from 'react';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes';
 import { type Behandling } from '../../types/Behandling';
-import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
-import OpptjeningTotrinnText from './OpptjeningTotrinnText';
+import { type TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnsBeregningDto) =>
   beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring
@@ -56,10 +55,14 @@ export const getFaktaOmArbeidsforholdMessages = (
 };
 
 const buildArbeidsforholdText = (
-  aksjonspunkt: TotrinnskontrollAksjonspunkt,
+  aksjonspunkt: TotrinnskontrollAksjonspunkterDto,
   arbeidsforholdHandlingTyper: KodeverkObject[],
-) =>
-  aksjonspunkt.arbeidsforholdDtos?.map(arbeidforholdDto => {
+) => {
+  const arbeidsforholdDtos =
+    'arbeidsforholdDtos' in aksjonspunkt && aksjonspunkt.arbeidsforholdDtos != null
+      ? aksjonspunkt.arbeidsforholdDtos
+      : [];
+  return arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
       <React.Fragment key={arbeidforholdDto.arbeidsforholdId}>
@@ -72,16 +75,12 @@ const buildArbeidsforholdText = (
         ))}
       </React.Fragment>
     );
-  }) ?? [];
+  });
+};
 
-const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[] =>
-  aksjonspunkt.opptjeningAktiviteter?.map(aktivitet => (
-    <OpptjeningTotrinnText key={hash(aktivitet)} aktivitet={aktivitet} />
-  )) ?? [];
-
-const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
-  const aksjonspunktText = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
-  return aksjonspunktText ? aksjonspunktText : null;
+const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkterDto): ReactNode => {
+  const aksjonspunktText = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktDefinisjon];
+  return aksjonspunktText ?? null;
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
@@ -160,7 +159,7 @@ const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingDto, behandlin
   return null;
 };
 
-const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
+const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkterDto) =>
   aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.BEHANDLE_KLAGE_NFP ||
   aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.BEHANDLE_KLAGE_NK ||
   aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
@@ -169,13 +168,10 @@ const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
 const getAksjonspunkttekst = (
   behandlingStatus: Behandling['status'],
   arbeidsforholdHandlingTyper: KodeverkObject[],
-  aksjonspunkt: TotrinnskontrollAksjonspunkt,
+  aksjonspunkt: TotrinnskontrollAksjonspunkterDto,
   klagebehandlingVurdering?: KlagebehandlingDto,
 ): ReactNode[] | null => {
-  if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
-    return buildOpptjeningText(aksjonspunkt);
-  }
-  if (aksjonspunkt.beregningDtoer) {
+  if ('beregningDtoer' in aksjonspunkt && aksjonspunkt.beregningDtoer) {
     if (
       aksjonspunkt.aksjonspunktKode ===
       AksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE

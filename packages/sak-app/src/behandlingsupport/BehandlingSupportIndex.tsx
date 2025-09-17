@@ -38,6 +38,12 @@ import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
 import { HistorikkBackendClient } from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import HistorikkBackendApiContext from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendApiContext.js';
+import { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9KlageTotrinnskontrollBackendClient.js';
+import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9SakTotrinnskontrollBackendClient.js';
+import type { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -130,8 +136,8 @@ const TABS = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId?: number;
-  behandlingVersjon?: number;
+  behandlingId: number;
+  behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -163,7 +169,7 @@ const BehandlingSupportIndex = ({
   const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
   const historikkBackendClient = new HistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient('k9Sak');
-  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
+  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState<FormState | undefined>(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
   const prevResetValue = useRef(currentResetValue);
@@ -235,6 +241,20 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
 
+  const behandlingTypeKode = behandling?.type.kode;
+  const totrinnskontrollApi: TotrinnskontrollApi = useMemo(() => {
+    const erTilbakekreving =
+      behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
+      behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
+    const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
+    if (erTilbakekreving) {
+      return new K9TilbakeTotrinnskontrollBackendClient();
+    }
+    if (erKlage) {
+      return new K9KlageTotrinnskontrollBackendClient();
+    }
+    return new K9SakTotrinnskontrollBackendClient();
+  }, [behandlingTypeKode]);
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
   return (
@@ -273,6 +293,7 @@ const BehandlingSupportIndex = ({
               behandlingVersjon={behandlingVersjon}
               toTrinnFormState={toTrinnskontrollFormState}
               setToTrinnFormState={setToTrinnskontrollFormState}
+              api={totrinnskontrollApi}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
@@ -281,6 +302,7 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              api={totrinnskontrollApi}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>

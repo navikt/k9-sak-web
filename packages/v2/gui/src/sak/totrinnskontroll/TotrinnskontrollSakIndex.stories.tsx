@@ -5,34 +5,34 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from 'storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
 import type { Behandling } from './types/Behandling';
-import type { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 
-const data = [
+const data: TotrinnskontrollSkjermlenkeContextDto[] = [
   {
     skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+    skjermlenkeTypeEnum: 'FORMKRAV_KLAGE_NFP',
     totrinnskontrollAksjonspunkter: [
       {
         aksjonspunktKode: '5082',
-        opptjeningAktiviteter: [],
-        beregningDtoer: [],
+        aksjonspunktDefinisjon: '5082',
         besluttersBegrunnelse: undefined,
         totrinnskontrollGodkjent: undefined,
         vurderPaNyttArsaker: [],
-        uttakPerioder: [],
         arbeidsforholdDtos: [],
-      } as TotrinnskontrollAksjonspunkt,
+      },
     ],
   },
   {
     skjermlenkeType: 'BEREGNING',
+    skjermlenkeTypeEnum: 'BEREGNING',
     totrinnskontrollAksjonspunkter: [
       {
         aksjonspunktKode: '5038',
-        opptjeningAktiviteter: [],
+        aksjonspunktDefinisjon: '5038',
         beregningDtoer: [
           {
             fastsattVarigEndringNaering: false,
-            faktaOmBeregningTilfeller: null,
+            faktaOmBeregningTilfeller: undefined,
             skjæringstidspunkt: '2020-01-01',
           },
         ],
@@ -43,7 +43,7 @@ const data = [
       },
       {
         aksjonspunktKode: '5039',
-        opptjeningAktiviteter: [],
+        aksjonspunktDefinisjon: '5039',
         beregningDtoer: [
           {
             fastsattVarigEndringNaering: true,
@@ -54,7 +54,7 @@ const data = [
           {
             fastsattVarigEndringNaering: false,
             fastsattVarigEndring: false,
-            faktaOmBeregningTilfeller: null,
+            faktaOmBeregningTilfeller: undefined,
             skjæringstidspunkt: '2020-02-01',
           },
         ],
@@ -63,15 +63,16 @@ const data = [
         vurderPaNyttArsaker: [],
         arbeidsforholdDtos: [],
       },
-    ] as TotrinnskontrollAksjonspunkt[],
+    ],
   },
 
   {
     skjermlenkeType: 'FAKTA_OM_BEREGNING',
+    skjermlenkeTypeEnum: 'FAKTA_OM_BEREGNING',
     totrinnskontrollAksjonspunkter: [
       {
         aksjonspunktKode: '5058',
-        opptjeningAktiviteter: [],
+        aksjonspunktDefinisjon: '5058',
         beregningDtoer: [
           {
             fastsattVarigEndringNaering: undefined,
@@ -84,7 +85,7 @@ const data = [
         vurderPaNyttArsaker: [],
         arbeidsforholdDtos: [],
       },
-    ] as TotrinnskontrollAksjonspunkt[],
+    ],
   },
 ];
 
@@ -276,7 +277,6 @@ export const Tilbakekreving: Story = {
         type: 'IKKE_FASTSATT',
       },
     },
-    behandlingType: behandlingType.TILBAKEKREVING,
     location,
     onSubmit: fn(),
     behandlingKlageVurdering: undefined,
@@ -285,53 +285,53 @@ export const Tilbakekreving: Story = {
     totrinnskontrollSkjermlenkeContext: [
       {
         skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
+        skjermlenkeTypeEnum: 'FAKTA_OM_FEILUTBETALING',
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '7003',
+            aksjonspunktDefinisjon: '7003',
             besluttersBegrunnelse: undefined,
             totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
           },
         ],
       },
       {
         skjermlenkeType: 'VEDTAK',
+        skjermlenkeTypeEnum: 'VEDTAK',
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '5004',
+            aksjonspunktDefinisjon: '5004',
             besluttersBegrunnelse: undefined,
             totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
           },
         ],
       },
       {
         skjermlenkeType: 'TILBAKEKREVING',
+        skjermlenkeTypeEnum: 'TILBAKEKREVING',
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '5002',
+            aksjonspunktDefinisjon: '5002',
             besluttersBegrunnelse: undefined,
             totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
           },
         ],
       },
       {
         skjermlenkeType: 'FORELDELSE',
+        skjermlenkeTypeEnum: 'FORELDELSE',
         totrinnskontrollAksjonspunkter: [
           {
             aksjonspunktKode: '5003',
+            aksjonspunktDefinisjon: '5003',
             besluttersBegrunnelse: undefined,
             totrinnskontrollGodkjent: undefined,
             vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
           },
         ],
       },

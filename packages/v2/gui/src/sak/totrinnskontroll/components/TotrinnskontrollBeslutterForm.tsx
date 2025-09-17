@@ -5,15 +5,14 @@ import type { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.
 import { Button } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import type { Location } from 'history';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { Behandling } from '../types/Behandling';
-import type { TotrinnskontrollAksjonspunkt } from '../types/TotrinnskontrollAksjonspunkt';
-import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
 import type { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 
 const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
   aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
@@ -21,7 +20,7 @@ const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenn
 const erAlleGodkjentEllerAvvist = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
   aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent !== null);
 
-const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenkeContext[]): FormState => ({
+const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[]): FormState => ({
   aksjonspunktGodkjenning: totrinnskontrollContext
     .map(context => context.totrinnskontrollAksjonspunkter)
     .flat()
@@ -35,12 +34,11 @@ const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenke
 
 interface PureOwnProps {
   behandling: Behandling;
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   behandlingKlageVurdering?: KlagebehandlingDto;
   readOnly: boolean;
   arbeidsforholdHandlingTyper: KodeverkV2[];
   skjermlenkeTyper: KodeverkV2[];
-  lagLenke: (skjermlenkeCode: string) => Location;
   handleSubmit: (formValues: FormState) => void;
   toTrinnFormState?: FormState;
   setToTrinnFormState?: React.Dispatch<FormState>;
@@ -59,7 +57,6 @@ export const TotrinnskontrollBeslutterForm = ({
   arbeidsforholdHandlingTyper,
   skjermlenkeTyper,
   totrinnskontrollSkjermlenkeContext,
-  lagLenke,
   toTrinnFormState,
   setToTrinnFormState,
 }: PureOwnProps) => {
@@ -114,7 +111,6 @@ export const TotrinnskontrollBeslutterForm = ({
         klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
         skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
-        lagLenke={lagLenke}
       />
       <div className={styles.buttonRow}>
         <Button
@@ -146,7 +142,7 @@ export const TotrinnskontrollBeslutterForm = ({
   );
 };
 
-const finnArsaker = (vurderPaNyttArsaker?: TotrinnskontrollAksjonspunkt['vurderPaNyttArsaker']) =>
+const finnArsaker = (vurderPaNyttArsaker?: TotrinnskontrollAksjonspunkterDto['vurderPaNyttArsaker']) =>
   vurderPaNyttArsaker?.reduce((acc, arsak) => {
     if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_FAKTA) {
       return { ...acc, feilFakta: true };
@@ -162,5 +158,3 @@ const finnArsaker = (vurderPaNyttArsaker?: TotrinnskontrollAksjonspunkt['vurderP
     }
     return {};
   }, {});
-
-export default TotrinnskontrollBeslutterForm;
