@@ -15,7 +15,7 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "axios": "1.12.0",
+    "axios": "1.12.2",
     "react": "19.1.1",
     "react-intl": "7.1.11"
   }
