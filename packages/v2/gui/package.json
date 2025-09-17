@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
-    "@hookform/resolvers": "5.2.1",
+    "@hookform/resolvers": "5.2.2",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
     "@navikt/diagnosekoder": "^1.2025.0",
@@ -29,7 +29,7 @@
     "@navikt/ft-utils": "^3.8.4",
     "@tanstack/react-query": "^5.89.0",
     "@types/object-hash": "^3.0.6",
-    "axios": "1.12.0",
+    "axios": "1.12.2",
     "dayjs": "^1.11.18",
     "object-hash": "^3.0.0",
     "react": "19.1.1",
