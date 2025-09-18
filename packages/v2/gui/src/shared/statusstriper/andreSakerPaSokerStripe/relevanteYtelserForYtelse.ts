@@ -1,6 +1,7 @@
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 export const finnRelevanteYtelserForYtelse = (fagsakYtelseType: FagsakYtelsesType) => {
+  // Legger til ytelsen som ble gitt som parameter, i tilfelle den ikke er i en gruppe
   const ytelser: FagsakYtelsesType[] = [fagsakYtelseType];
 
   const ytelseGruppe = ytelsesGrupper[fagsakYtelseType];
