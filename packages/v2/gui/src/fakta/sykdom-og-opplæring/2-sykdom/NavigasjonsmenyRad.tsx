@@ -26,10 +26,12 @@ export const NavigasjonsmenyRad = ({
         onClick={onClick}
       >
         <div className="flex justify-between w-full">
-          <div className="flex items-center">
-            <RadStatus resultat={periode.resultat} />
+          <div className="flex gap-2 items-center">
+            <div className="ml-2">
+              <RadStatus resultat={periode.resultat} />
+            </div>
 
-            <div className="flex ml-1 items-center">
+            <div className="flex items-center">
               <BodyShort>{periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}</BodyShort>
             </div>
             {erFraTidligereBehandling && (
@@ -39,7 +41,7 @@ export const NavigasjonsmenyRad = ({
             )}
           </div>
           {erBruktIAksjonspunkt ? (
-            <div className="flex gap-1 ml-[-4px]">
+            <div className="flex gap-1 ml-[-8px]">
               <CheckmarkIcon fontSize={24} className="text-ax-success-600" />
               <BodyShort className="mt-[2px]">Valgt</BodyShort>
             </div>
