@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import styles from './andreSakerPåSøkerStripe.module.css';
+import { finnRelevanteYtelserForYtelse } from './relevanteYtelserForYtelse';
 interface Props {
   søkerIdent: string;
   saksnummer: string;
@@ -19,7 +20,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
     isSuccess,
   } = useQuery({
     queryKey: ['andreFagsaker', { fagsakYtelseType, søkerIdent }],
-    queryFn: () => api.getAndreSakerPåSøker(fagsakYtelseType, søkerIdent),
+    queryFn: () => api.getAndreSakerPåSøker(finnRelevanteYtelserForYtelse(fagsakYtelseType), søkerIdent),
     initialData: [],
   });
 
