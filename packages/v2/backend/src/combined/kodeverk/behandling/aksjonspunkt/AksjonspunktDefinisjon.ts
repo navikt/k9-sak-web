@@ -14,6 +14,6 @@ export const AksjonspunktDefinisjon = safeConstCombine(
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  // k9-tilbake AksjonspunktDefinisjon er ikkje med i combined objekt her, den har ulike verdi for FORESLÅ_VEDTAK (5004 istadenfor 5015 som dei andre har)
+  // k9-tilbake AksjonspunktDefinisjon er ikkje med i combined objekt her, den har ulike verdi for bla FORESLÅ_VEDTAK (5004 istadenfor 5015 som dei andre har)
   // foreldrepenger_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon,
 ) satisfies Record<string, AksjonspunktDefinisjon>;

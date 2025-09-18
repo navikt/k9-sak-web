@@ -1,5 +1,6 @@
 import type { Aksjonspunkt } from '@k9-sak-web/types';
 
+/** @deprecated Bruk v2/backend/combined AksjonspunktDefinisjon istaden */
 const aksjonspunktCodes = {
   FORESLA_VEDTAK: '5015',
   FATTER_VEDTAK: '5016',

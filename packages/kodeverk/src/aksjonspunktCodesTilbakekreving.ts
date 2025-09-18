@@ -1,3 +1,4 @@
+/** @deprecated Bruk v2 backend combined AksjonspunktDefinisjon istaden */
 const aksjonspunktCodesTilbakekreving = {
   VURDER_TILBAKEKREVING: '5002',
   VURDER_FORELDELSE: '5003',

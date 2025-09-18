@@ -2,12 +2,9 @@ import {
   type k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseTypeEnumUnion,
   k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseType,
 } from '../generated/types.js';
-import type { Kodeverk } from '../../shared/Kodeverk.js';
 
 export type FagsakYtelsesType = generatedFagsakYtelseTypeEnumUnion;
 
-// Oppretter Kodeverk type med verdier frå openapi generert union type
-export type FagsakYtelsesTypeKodeverk = Kodeverk<FagsakYtelsesType, 'FAGSAK_YTELSE'>;
-
 // Eksporter generert enum konstant
+// NB: Vurder å bruke combined versjonen av denne istadenfor.
 export const fagsakYtelsesType = generatedFagsakYtelseType;

@@ -1,4 +1,4 @@
-/** @deprecated Bruk combined/kodeverk/aksjonspunkt/AksjonspunktDefinisjon istaden (?) */
+/** @deprecated Bruk combined/kodeverk/aksjonspunkt/AksjonspunktDefinisjon istaden */
 const AksjonspunktCodes = {
   FORESLA_VEDTAK: '5015',
   FATTER_VEDTAK: '5016',

@@ -5,7 +5,7 @@ import {
   type KlagevurderingOmgjørType,
 } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Label } from '@navikt/ds-react';
 
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
@@ -160,10 +160,10 @@ const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingDto, behandlin
 };
 
 const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkterDto) =>
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.BEHANDLE_KLAGE_NFP ||
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.BEHANDLE_KLAGE_NK ||
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
-  aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
+  aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP ||
+  aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK ||
+  aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP ||
+  aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 const getAksjonspunkttekst = (
   behandlingStatus: Behandling['status'],
@@ -174,14 +174,14 @@ const getAksjonspunkttekst = (
   if ('beregningDtoer' in aksjonspunkt && aksjonspunkt.beregningDtoer) {
     if (
       aksjonspunkt.aksjonspunktKode ===
-      AksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+      AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE
     ) {
       return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndringBeregningText(dto));
     }
-    if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON) {
+    if (aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON) {
       return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndretArbeidssituasjonBeregningText(dto));
     }
-    if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
+    if (aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN) {
       return getFaktaOmBeregningTextFlereGrunnlag(aksjonspunkt.beregningDtoer);
     }
   }
@@ -189,7 +189,7 @@ const getAksjonspunkttekst = (
   if (erKlageAksjonspunkt(aksjonspunkt) && klagebehandlingVurdering) {
     return [getTextForKlage(klagebehandlingVurdering, behandlingStatus)];
   }
-  if (aksjonspunkt.aksjonspunktKode === AksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
+  if (aksjonspunkt.aksjonspunktKode === AksjonspunktDefinisjon.VURDER_ARBEIDSFORHOLD) {
     return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
   }
 

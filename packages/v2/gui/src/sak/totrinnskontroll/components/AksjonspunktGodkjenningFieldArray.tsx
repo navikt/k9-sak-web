@@ -1,5 +1,5 @@
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
@@ -10,7 +10,6 @@ import * as Sentry from '@sentry/browser';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { NavLink, useLocation } from 'react-router';
-import aksjonspunktCodesTilbakekreving from '../aksjonspunktCodesTilbakekreving';
 import { type Behandling } from '../types/Behandling';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
@@ -70,10 +69,13 @@ export const AksjonspunktGodkjenningFieldArray = ({
           c => c.aksjonspunktKode === aksjonspunktKode,
         );
 
+        // TODO 5093 finnast ikkje som aksjonspunktkode i backend enum (AksjonspunktDefinisjon).
+        // Den er definert som ein konstant string i AksjonspunktKodeDefinisjon k9-klage, men ikkje med i
+        // AksjonspunktDefinisjon enum, så vil nok aldri inntreffe at den vil komme ut her.
+        // Bør sannsynlegvis ryddast vekk her.
+        const manuellVurderingAvAnkeKode = '5093';
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
-        const erAnke =
-          aksjonspunktKode === aksjonspunktCodesTilbakekreving.MANUELL_VURDERING_AV_ANKE &&
-          totrinnskontrollGodkjent === true;
+        const erAnke = aksjonspunktKode === manuellVurderingAvAnkeKode && totrinnskontrollGodkjent === true;
         const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
         const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
 
@@ -93,7 +95,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const isNyInntektEgetPanel =
           featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
           skjermlenkeTypeKodeverk?.navn === 'Fordeling' &&
-          aksjonspunktKode === aksjonspunktCodes.VURDER_NYTT_INNTEKTSFORHOLD;
+          aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
 
         const hentSkjermlenkeTypeKodeverkNavn = () => {
           try {

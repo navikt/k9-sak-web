@@ -11,7 +11,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';
-import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
+import { foreldrepenger_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon as aksjonspunktCodesTilbakekreving } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import { type AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import { type FormState } from './components/FormState';
 import { TotrinnskontrollBeslutterForm } from './components/TotrinnskontrollBeslutterForm';
@@ -90,9 +90,7 @@ const TotrinnskontrollSakIndex = ({
       }));
 
       const fatterVedtakAksjonspunktDto = {
-        '@type': erTilbakekreving
-          ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK
-          : AksjonspunktDefinisjon.FATTER_VEDTAK,
+        '@type': erTilbakekreving ? aksjonspunktCodesTilbakekreving.FATTE_VEDTAK : AksjonspunktDefinisjon.FATTER_VEDTAK,
         begrunnelse: null,
         aksjonspunktGodkjenningDtos,
       };
