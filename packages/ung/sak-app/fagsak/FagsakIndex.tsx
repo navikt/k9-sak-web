@@ -1,5 +1,17 @@
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import {
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  GetUngdomsprogramInformasjonResponse,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
@@ -11,18 +23,6 @@ import {
 } from '@k9-sak-web/types';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-import {
-  ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
-  GetUngdomsprogramInformasjonResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
-import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
@@ -185,6 +185,7 @@ const FagsakIndex = () => {
         behandlingType={behandling ? behandling?.type?.kode : undefined}
         kodeverk={alleKodeverkUngSak}
         tilbakeKodeverk={alleKodeverkTilbake}
+        klageKodeverk={alleKodeverkUngSak}
       >
         <SaksbehandlernavnContext.Provider
           value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}

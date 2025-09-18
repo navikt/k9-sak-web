@@ -39,7 +39,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.LANGUAGE_FILE, NO_PARAMS);
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
-
+  // const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  // const klageAktivert = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
+  // const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert);
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
   const erFerdig =
@@ -47,11 +49,14 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
     sprakFilState === RestApiState.SUCCESS &&
+    // !k9KodeverkOppslag.isPending &&
     !!featureToggles;
 
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
+      {/* <K9KodeverkoppslagContext value={k9KodeverkOppslag}> */}
       {harFeilet || erFerdig ? children : <LoadingPanel />}
+      {/* </K9KodeverkoppslagContext> */}
     </FeatureTogglesContext.Provider>
   );
 };

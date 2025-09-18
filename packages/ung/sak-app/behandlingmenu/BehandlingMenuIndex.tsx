@@ -43,6 +43,7 @@ import {
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,
+  BehandlingType.KLAGE,
   BehandlingType.REVURDERING,
   BehandlingType.TILBAKEKREVING,
   BehandlingType.TILBAKEKREVING_REVURDERING,
@@ -151,6 +152,9 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagNyBehandlingTilbake } = restApiHooks.useRestApiRunner<boolean>(
     UngSakApiKeys.NEW_BEHANDLING_TILBAKE,
   );
+  const { startRequest: lagNyBehandlingKlage } = restApiHooks.useRestApiRunner<boolean>(
+    UngSakApiKeys.NEW_BEHANDLING_KLAGE,
+  );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
@@ -164,6 +168,9 @@ export const BehandlingMenuIndex = ({
       let lagNy = lagNyBehandlingUngSak;
       if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
         lagNy = lagNyBehandlingTilbake;
+      }
+      if (bTypeKode === BehandlingType.KLAGE) {
+        lagNy = lagNyBehandlingKlage;
       }
       await lagNy(params);
       oppfriskBehandlinger();

@@ -9,6 +9,8 @@ const NO_PARAMS = {};
 const useHentKodeverk = (skalHenteKodeverk: boolean): boolean => {
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const skalHenteFraTilbake = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const skalHenteFraKlage = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
+
   const { state: kodeverkUngSakStatus } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.KODEVERK, NO_PARAMS, {
     suspendRequest: !skalHenteKodeverk,
     updateTriggers: [skalHenteKodeverk],
@@ -23,13 +25,21 @@ const useHentKodeverk = (skalHenteKodeverk: boolean): boolean => {
     },
   );
 
+  const { state: kodeverkKlageStatus } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.KODEVERK_KLAGE, NO_PARAMS, {
+    suspendRequest: !skalHenteFraKlage || !skalHenteKodeverk,
+    updateTriggers: [skalHenteKodeverk],
+  });
+
   const harHentetUngSak =
     kodeverkUngSakStatus !== RestApiState.NOT_STARTED && kodeverkUngSakStatus !== RestApiState.LOADING;
   const harHentetTilbake =
     !skalHenteFraTilbake ||
     (kodeverkTilbakeStatus !== RestApiState.NOT_STARTED && kodeverkTilbakeStatus !== RestApiState.LOADING);
+  const harHentetKlage =
+    !skalHenteFraKlage ||
+    (kodeverkKlageStatus !== RestApiState.NOT_STARTED && kodeverkKlageStatus !== RestApiState.LOADING);
 
-  return harHentetUngSak && harHentetTilbake;
+  return harHentetUngSak && harHentetTilbake && harHentetKlage;
 };
 
 export default useHentKodeverk;
