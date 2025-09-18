@@ -18,7 +18,7 @@
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ds-react": "7.29.1",
-    "@navikt/ft-form-hooks": "^9.1.9",
+    "@navikt/ft-form-hooks": "^9.1.10",
     "@navikt/ft-plattform-komponenter": "^10.1.8",
     "@navikt/ft-ui-komponenter": "^6.2.4",
     "@sentry/browser": "10.10.0",
