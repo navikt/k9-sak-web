@@ -1,9 +1,9 @@
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { requireProps } from '@fpsak-frontend/shared-components';
-import { k9_klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { k9SakOrUngSak } from '@k9-sak-web/gui/utils/multibackend.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import {
@@ -90,7 +90,7 @@ export const FagsakProfileIndex = ({
     const fagsakCopy = JSON.parse(JSON.stringify(fagsak));
 
     behandlingerCopy.forEach(behandling => {
-      const erTilbakekreving = behandling.type.kode === KlageBehandlingType.TILBAKEKREVING;
+      const erTilbakekreving = erTilbakekrevingType(behandling.type.kode);
       konverterKodeverkTilKode(behandling, erTilbakekreving);
     });
     konverterKodeverkTilKode(fagsakCopy, false);
