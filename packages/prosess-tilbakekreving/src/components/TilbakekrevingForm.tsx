@@ -110,6 +110,7 @@ interface OwnProps {
   antallPerioderMedAksjonspunkt: number;
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid: string;
   merknaderFraBeslutter: {
     notAccepted: boolean;
   };
@@ -140,6 +141,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
     dataForDetailForm,
     navBrukerKjonn,
     behandlingId,
+    behandlingUuid,
     behandlingVersjon,
     alleKodeverk,
     beregnBelop,
@@ -285,6 +287,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
                   alleKodeverk={alleKodeverk}
                   beregnBelop={beregnBelop}
                   vilkarsVurdertePerioder={vilkarsVurdertePerioder}
+                  behandlingUuid={behandlingUuid}
                 />
               )}
             </>

@@ -108,6 +108,7 @@ interface OwnProps {
   }[];
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid: string;
   beregnBelop: (...args: any[]) => any;
   vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[];
   valgtVilkarResultatType?: string;
@@ -144,6 +145,7 @@ export const TilbakekrevingPeriodeFormImpl = (
     andelSomTilbakekreves,
     behandlingId,
     behandlingVersjon,
+    behandlingUuid,
     beregnBelop,
     intl,
     vilkarsVurdertePerioder,
@@ -249,6 +251,7 @@ export const TilbakekrevingPeriodeFormImpl = (
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         beregnBelop={beregnBelop}
+        behandlingUuid={behandlingUuid}
       />
       <VerticalSpacer twentyPx />
       {reduserteBelop?.map(belop => (
