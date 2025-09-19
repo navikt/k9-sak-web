@@ -70,7 +70,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
         );
 
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
+        // visKunBegrunnelse settast true for å ikkje vise checkboxes for årsak når visArsaker er true.
         const visKunBegrunnelse = erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
+        // Årsaker (checkboxes og tekstfelt for begrunnelse) skal visast visst det er klage, eller aksjonspunktet ikkje er godkjendt
         const visArsaker = erKlageKA || totrinnskontrollGodkjent === false;
 
         const aksjonspunktText =
