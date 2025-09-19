@@ -74,6 +74,7 @@ describe('<PeriodeController>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
+        behandlingUuid="123"
         beregnBelop={beregnBelop}
         oppdaterSplittedePerioder={oppdaterSplittedePerioder}
         callbackForward={vi.fn()}
