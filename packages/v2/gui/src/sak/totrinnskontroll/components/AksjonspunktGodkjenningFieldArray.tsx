@@ -69,15 +69,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
           c => c.aksjonspunktKode === aksjonspunktKode,
         );
 
-        // TODO 5093 finnast ikkje som aksjonspunktkode i backend enum (AksjonspunktDefinisjon).
-        // Den er definert som ein konstant string i AksjonspunktKodeDefinisjon k9-klage, men ikkje med i
-        // AksjonspunktDefinisjon enum, så vil nok aldri inntreffe at den vil komme ut her.
-        // Bør sannsynlegvis ryddast vekk her.
-        const manuellVurderingAvAnkeKode = '5093';
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
-        const erAnke = aksjonspunktKode === manuellVurderingAvAnkeKode && totrinnskontrollGodkjent === true;
-        const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
-        const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
+        const visKunBegrunnelse = erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
+        const visArsaker = erKlageKA || totrinnskontrollGodkjent === false;
 
         const aksjonspunktText =
           totrinnskontrollAksjonspunkt &&
