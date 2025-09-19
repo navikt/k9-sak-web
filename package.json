@@ -126,7 +126,8 @@
   "resolutions": {
     "postcss": "8.5.6",
     "parse-url": "8.1.0",
-    "@types/react": "19.0.3"
+    "@types/react": "19.0.3",
+    "@navikt/ung-sak-typescript-client": "portal:/Users/hallvardandreasstark/dev/ung-sak/web/target/ts-client"
   },
   "msw": {
     "workerDirectory": "public"

@@ -6,7 +6,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from 'storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import { KlagevurderingProsessIndex } from './KlagevurderingProsessIndex';
 
@@ -16,7 +16,7 @@ const meta = {
   args: {
     fagsak: {
       saksnummer: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+      sakstype: ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     },
     saveKlage: asyncAction('saveKlage'),
     submitCallback: asyncAction('submitCallback'),
@@ -56,6 +56,7 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
       await expect(canvas.getByRole('radio', { name: 'Omgjør vedtaket' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Hjemsend vedtaket' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Opphev og hjemsend vedtaket' })).toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('radio', { name: 'Omgjør vedtaket' }));
       await expect(canvas.getByRole('combobox', { name: 'Årsak' })).toBeInTheDocument();
     });
   },
@@ -69,7 +70,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
       },
     ],
     klageVurdering: {
-      klageVurderingResultatNK: {
+      klageVurderingResultatNFP: {
         klageVurdertAv: 'NK',
         klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
         fritekstTilBrev: 'test',
@@ -85,6 +86,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
     await step('skal vise to options når klage opprettholdt', async () => {
       await expect(canvas.getByRole('radio', { name: 'Omgjør vedtaket' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Oppretthold vedtaket' })).toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('radio', { name: 'Oppretthold vedtaket' }));
       await expect(canvas.getByRole('combobox', { name: 'Hjemmel' })).toBeInTheDocument();
     });
 
@@ -99,7 +101,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageMedhold: Story = {
     ...KlagevurderingMedAksjonspunktNfpKlageOpprettholdt.args,
     klageVurdering: {
       ...KlagevurderingMedAksjonspunktNfpKlageOpprettholdt.args.klageVurdering,
-      klageVurderingResultatNK: {
+      klageVurderingResultatNFP: {
         ...KlagevurderingMedAksjonspunktNfpKlageOpprettholdt.args.klageVurdering.klageVurderingResultatNK,
         klageVurdering: ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE,
       },
@@ -111,6 +113,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageMedhold: Story = {
       await expect(canvas.getByRole('radio', { name: 'Oppretthold vedtaket' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Til gunst' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Til ugunst' })).toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('radio', { name: 'Omgjør vedtaket' }));
       await expect(canvas.getByRole('radio', { name: 'Delvis omgjør, til gunst' })).toBeInTheDocument();
     });
   },

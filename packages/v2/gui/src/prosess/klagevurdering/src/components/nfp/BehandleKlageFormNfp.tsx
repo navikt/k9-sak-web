@@ -6,10 +6,11 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
+import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { Box, Button, Heading, HGrid, VStack } from '@navikt/ds-react';
+import { Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
@@ -80,58 +81,54 @@ export const BehandleKlageFormNfp = ({
         />
       </Box.New>
       <div className={styles.confirmVilkarForm}>
-        <RhfTextarea
-          control={formMethods.control}
-          name="begrunnelse"
-          label="Vurdering"
-          validate={[required, minLength(3), maxLength(100000), hasValidText]}
-          maxLength={100000}
-          readOnly={isReadOnly}
-          placeholder="Begrunn vurderingen din"
-        />
-        <VStack gap="space-16">
-          <RhfTextarea
-            control={formMethods.control}
-            name="fritekstTilBrev"
-            label="Fritekst til brev"
-            validate={[required, hasValidText]}
-            readOnly={isReadOnly}
-            maxLength={100000}
-            badges={[
-              {
-                type: 'warning',
-                titleText: 'Foretrukket språk',
-              },
-            ]}
-          />
-          <HGrid gap="space-4" columns={{ xs: '8fr 2fr 2fr' }}>
-            <div>
-              <Button variant="primary" size="small" loading={isSubmitting} type="submit">
-                Bekreft og fortsett
-              </Button>
-              {!isReadOnly &&
-                formValues.klageVurdering &&
-                formValues.fritekstTilBrev &&
-                formValues.fritekstTilBrev.length > 2 && (
-                  <TempSaveAndPreviewKlageLink
-                    formValues={formValues}
-                    saveKlage={saveKlage}
-                    readOnly={isReadOnly}
-                    aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-                    previewCallback={previewCallback}
-                  />
-                )}
-            </div>
-            <div>
-              <TempsaveKlageButton
-                formValues={formValues}
-                saveKlage={saveKlage}
-                readOnly={isReadOnly}
-                aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-              />
-            </div>
-          </HGrid>
-        </VStack>
+        <ContentMaxWidth>
+          <VStack gap="space-16">
+            <RhfTextarea
+              control={formMethods.control}
+              name="begrunnelse"
+              label="Vurdering"
+              validate={[required, minLength(3), maxLength(100000), hasValidText]}
+              maxLength={100000}
+              readOnly={isReadOnly}
+              placeholder="Begrunn vurderingen din"
+            />
+            <RhfTextarea
+              control={formMethods.control}
+              name="fritekstTilBrev"
+              label="Fritekst til brev"
+              validate={[required, hasValidText]}
+              readOnly={isReadOnly}
+              maxLength={100000}
+            />
+          </VStack>
+        </ContentMaxWidth>
+        <HStack gap="space-8" marginBlock="space-16">
+          <div>
+            <Button variant="primary" size="small" loading={isSubmitting} type="submit">
+              Bekreft og fortsett
+            </Button>
+            {!isReadOnly &&
+              formValues.klageVurdering &&
+              formValues.fritekstTilBrev &&
+              formValues.fritekstTilBrev.length > 2 && (
+                <TempSaveAndPreviewKlageLink
+                  formValues={formValues}
+                  saveKlage={saveKlage}
+                  readOnly={isReadOnly}
+                  aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+                  previewCallback={previewCallback}
+                />
+              )}
+          </div>
+          <div>
+            <TempsaveKlageButton
+              formValues={formValues}
+              saveKlage={saveKlage}
+              readOnly={isReadOnly}
+              aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+            />
+          </div>
+        </HStack>
       </div>
     </RhfForm>
   );
@@ -177,7 +174,7 @@ export const transformValues = (
   fagsak: ung_sak_kontrakt_fagsak_FagsakDto,
   erPåklagdBehandlingTilbakekreving: boolean,
 ): TransformValues => {
-  let klageHjemmel = null;
+  let klageHjemmel: string | null = null;
 
   if (
     fagsak.sakstype !== fagsakYtelsesType.FRISINN &&

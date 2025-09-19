@@ -161,7 +161,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
 
@@ -201,7 +200,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
 

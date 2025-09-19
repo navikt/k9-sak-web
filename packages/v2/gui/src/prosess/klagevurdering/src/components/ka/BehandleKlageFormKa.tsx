@@ -4,6 +4,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
+import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Box, Button, HGrid, Heading, VStack } from '@navikt/ds-react';
@@ -73,20 +74,16 @@ export const BehandleKlageFormKa = ({
       </Box.New>
       <div className={styles.confirmVilkarForm}>
         <VStack gap="space-16">
-          <RhfTextarea
-            control={formMethods.control}
-            name="fritekstTilBrev"
-            label="Fritekst til brev"
-            validate={[required, hasValidText]}
-            readOnly={isReadOnly}
-            maxLength={100000}
-            badges={[
-              {
-                type: 'warning',
-                titleText: 'Foretrukket språk',
-              },
-            ]}
-          />
+          <ContentMaxWidth>
+            <RhfTextarea
+              control={formMethods.control}
+              name="fritekstTilBrev"
+              label="Fritekst til brev"
+              validate={[required, hasValidText]}
+              readOnly={isReadOnly}
+              maxLength={100000}
+            />
+          </ContentMaxWidth>
           <HGrid gap="space-4" columns={{ xs: '8fr 2fr 2fr' }}>
             <div className="relative">
               <Button variant="primary" size="small" loading={isSubmitting} type="submit">

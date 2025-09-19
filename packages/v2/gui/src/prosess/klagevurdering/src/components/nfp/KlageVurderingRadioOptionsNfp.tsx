@@ -3,6 +3,7 @@ import {
   type ung_sak_kontrakt_fagsak_FagsakDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
+import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Box, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
@@ -88,44 +89,50 @@ export const KlageVurderingRadioOptionsNfp = ({
 
   return (
     <div>
-      <RhfRadioGroup control={control} name="klageVurdering" validate={[required]} isReadOnly={readOnly}>
-        <Radio value={klageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
-        <Radio value={klageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
-      </RhfRadioGroup>
+      <ContentMaxWidth>
+        <RhfRadioGroup control={control} name="klageVurdering" validate={[required]} isReadOnly={readOnly}>
+          <Radio value={klageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
+          <Radio value={klageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
+        </RhfRadioGroup>
+      </ContentMaxWidth>
       {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
-        <ArrowBox>
-          <RhfSelect
-            control={control}
-            readOnly={readOnly}
-            name="klageMedholdArsak"
-            selectValues={medholdOptions}
-            label="Årsak"
-            validate={[required]}
-          />
-          <Box.New marginBlock="space-16 0">
-            <RhfRadioGroup control={control} name="klageVurderingOmgjoer" validate={[required]} isReadOnly={readOnly}>
-              <Radio value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
-              <Radio value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
-              <Radio value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}>Delvis omgjør, til gunst</Radio>
-            </RhfRadioGroup>
-          </Box.New>
-        </ArrowBox>
+        <ContentMaxWidth>
+          <ArrowBox>
+            <RhfSelect
+              control={control}
+              readOnly={readOnly}
+              name="klageMedholdArsak"
+              selectValues={medholdOptions}
+              label="Årsak"
+              validate={[required]}
+            />
+            <Box.New marginBlock="space-16 0">
+              <RhfRadioGroup control={control} name="klageVurderingOmgjoer" validate={[required]} isReadOnly={readOnly}>
+                <Radio value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
+                <Radio value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
+                <Radio value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}>Delvis omgjør, til gunst</Radio>
+              </RhfRadioGroup>
+            </Box.New>
+          </ArrowBox>
+        </ContentMaxWidth>
       )}
       {skalViseHjemler && !erPåklagdBehandlingTilbakekreving && (
-        <ArrowBox>
-          <RhfSelect
-            control={control}
-            readOnly={readOnly}
-            name="klageHjemmel"
-            selectValues={hjemler.map(h => (
-              <option key={h.kode} value={h.kode}>
-                {h.navn}
-              </option>
-            ))}
-            label="Hjemmel"
-            validate={[required]}
-          />
-        </ArrowBox>
+        <ContentMaxWidth>
+          <ArrowBox>
+            <RhfSelect
+              control={control}
+              readOnly={readOnly}
+              name="klageHjemmel"
+              selectValues={hjemler.map(h => (
+                <option key={h.kode} value={h.kode}>
+                  {h.navn}
+                </option>
+              ))}
+              label="Hjemmel"
+              validate={[required]}
+            />
+          </ArrowBox>
+        </ContentMaxWidth>
       )}
     </div>
   );

@@ -4224,12 +4224,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:2.0.20250905111314":
-  version: 2.0.20250905111314
-  resolution: "@navikt/ung-sak-typescript-client@npm:2.0.20250905111314::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F2.0.20250905111314%2F4d543dba43c166d21ce1131d5ef24bdaf4773921"
-  checksum: 10/744b3ea7c5e03653f0f5944079ff2927084307f87bd6faf5204317c820a10630a6a94412e19f421b738d5ea3fdae1bf940b3e70c56ddd1723a23cdc646b1dacf
+"@navikt/ung-sak-typescript-client@portal:/Users/hallvardandreasstark/dev/ung-sak/web/target/ts-client::locator=k9-sak-web%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@navikt/ung-sak-typescript-client@portal:/Users/hallvardandreasstark/dev/ung-sak/web/target/ts-client::locator=k9-sak-web%40workspace%3A."
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@navikt/ung-tilbake-typescript-client@npm:3.0.20250902124409":
   version: 3.0.20250902124409

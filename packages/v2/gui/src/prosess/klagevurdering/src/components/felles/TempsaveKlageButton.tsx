@@ -37,13 +37,13 @@ const TempsaveKlageButton = ({
   };
 
   return (
-    <div>
+    <>
       {!readOnly && (
         <Button variant="primary" size="small" type="button" onClick={event => tempSave(event)}>
           Lagre
         </Button>
       )}
-    </div>
+    </>
   );
 };
 
