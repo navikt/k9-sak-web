@@ -70,6 +70,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
         reduserteBelop={[]}
         behandlingId={1}
         behandlingVersjon={1}
+        behandlingUuid="123"
         beregnBelop={() => undefined}
         intl={intlMock}
         vilkarsVurdertePerioder={[]}
@@ -156,6 +157,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
         reduserteBelop={[]}
         behandlingId={1}
         behandlingVersjon={1}
+        behandlingUuid="123"
         beregnBelop={() => undefined}
         intl={intlMock}
         vilkarsVurdertePerioder={vilkårsPerioder}
