@@ -39,3 +39,7 @@ yarn unlink @navikt/k9-sak-typescript-client
 ```
 
 **NB2:** Etter _yarn link_ eller _yarn unlink_ må kanskje vite restartast for å få med seg endringa i avhengighet.
+
+#### Storybook problem
+Når ein har linka inn lokal kopi av generert typescript klient ser det ut til at det kan føre til feil i storybook.
+Uvisst kvifor, men viss ein opplever rare problem i storybook, forsøk å fjerne link, og køyr `yarn cache clean && yarn install`
