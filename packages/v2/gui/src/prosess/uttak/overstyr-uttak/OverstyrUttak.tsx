@@ -5,21 +5,11 @@ import AktivitetRad from './AktivitetRad';
 import OverstyringUttakForm from './OverstyringUttakForm';
 import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import styles from './overstyrUttakForm.module.css';
 import type { OverstyringUttakHandling, OverstyrUttakAksjonspunktDto } from '../types/OverstyringUttakTypes';
-
-interface ownProps {
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
-  overstyringAktiv: boolean;
-  erOverstyrer: boolean;
-  harAksjonspunktForOverstyringAvUttak: boolean;
-  perioderTilVurdering: string[] | undefined;
-  api: BehandlingUttakBackendClient;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Pick<BehandlingDto, 'uuid' | 'versjon'>>;
-}
+import { useUttakContext } from '../context/UttakContext';
+import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 
 export enum OverstyrUttakHandling {
   SLETT = 'SLETT',
@@ -27,15 +17,10 @@ export enum OverstyrUttakHandling {
   LAGRE = 'LAGRE',
 }
 
-const OverstyrUttak: React.FC<ownProps> = ({
-  overstyringAktiv,
-  erOverstyrer,
-  perioderTilVurdering,
-  harAksjonspunktForOverstyringAvUttak,
-  behandling,
-  api,
-  hentBehandling,
-}) => {
+const OverstyrUttak: React.FC = () => {
+  const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer } =
+    useUttakContext();
+
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
@@ -44,7 +29,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
 
   const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery({
     queryKey: ['overstyrte', behandling.uuid],
-    queryFn: () => api.hentOverstyringUttak(behandling.uuid),
+    queryFn: () => uttakApi.hentOverstyringUttak(behandling.uuid),
   });
 
   const { mutate: handleOverstyring } = useMutation({
@@ -71,7 +56,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
         overstyrteAksjonspunktDto.erVilkarOk = true;
       }
 
-      return api.overstyringUttak({
+      return uttakApi.overstyringUttak({
         behandlingId: behandling.uuid,
         behandlingVersjon: behandling.versjon,
         bekreftedeAksjonspunktDtoer: [],
@@ -109,9 +94,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
 
   const bekreftSletting = (id: number) => setBekreftSlettId(id);
 
-  const harNoeÅVise =
-    (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0 && leseModus) ||
-    (overstyringAktiv && erOverstyrer);
+  const harNoeÅVise = (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0 && leseModus) || erOverstyrer;
 
   const arbeidsgivere = overstyrte?.arbeidsgiverOversikt?.arbeidsgivere;
 
@@ -137,7 +120,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
   if (harNoeÅVise) {
     return (
       <div className="mt-4 mb-8">
-        {harAksjonspunktForOverstyringAvUttak && (
+        {harAksjonspunkt(AksjonspunktDtoDefinisjon.OVERSTYRING_AV_UTTAK) && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad
@@ -186,7 +169,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
           </>
         )}
 
-        {erOverstyrer && overstyringAktiv && (
+        {erOverstyrer && (
           <>
             {bekreftSlettId && (
               <Modal
@@ -231,7 +214,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
               </div>
             )}
 
-            {!visOverstyringSkjema && harAksjonspunktForOverstyringAvUttak && (
+            {!visOverstyringSkjema && harAksjonspunkt(AksjonspunktDtoDefinisjon.OVERSTYRING_AV_UTTAK) && (
               <div className={styles.overstyrUttakFormFooter}>
                 <Button
                   variant="primary"
@@ -246,7 +229,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
             )}
             {visOverstyringSkjema && redigerOverstyring === false && (
               <OverstyringUttakForm
-                api={api}
+                api={uttakApi}
                 behandling={behandling}
                 handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
                 loading={loading}
@@ -257,7 +240,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
             )}
             {visOverstyringSkjema && typeof redigerOverstyring === 'number' && (
               <OverstyringUttakForm
-                api={api}
+                api={uttakApi}
                 behandling={behandling}
                 handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
                 overstyring={overstyrte?.overstyringer[redigerOverstyring]}

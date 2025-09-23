@@ -1,23 +1,14 @@
-import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
 import { useEffect } from 'react';
-import styles from './VurderDato.module.css';
+import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
+import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
+import { useUttakContext } from '../context/UttakContext';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import styles from './VurderDato.module.css';
 
 interface Props {
-  avbryt?: () => void;
-  initialValues?: {
-    virkningsdato: string;
-    begrunnelse: string;
-  };
-  readOnly: boolean;
-  api: BehandlingUttakBackendClient;
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
   oppdaterBehandling: () => void;
 }
 
-// eslint-disable-next-line consistent-return
 const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');
   if (vurderDatoContainer) {
@@ -34,13 +25,28 @@ const scrollToVurderDatoContainer = () => {
   }
   return undefined;
 };
-const VurderDato = ({ avbryt, initialValues, readOnly, api, behandling, oppdaterBehandling }: Props) => {
+const VurderDato = ({ oppdaterBehandling }: Props) => {
+  const { virkningsdatoUttakNyeRegler, harAksjonspunkt, readOnly, aksjonspunktVurderDatoNyRegelUttak } =
+    useUttakContext();
+
   useEffect(() => {
-    // avbryt er kun definert når vi skal redigere et løst aksjonspunkt
-    if (typeof avbryt === 'function') {
+    if (virkningsdatoUttakNyeRegler) {
       scrollToVurderDatoContainer();
     }
-  }, []);
+  }, [virkningsdatoUttakNyeRegler]);
+
+  if (
+    !harAksjonspunkt(AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK) &&
+    !(readOnly && harAksjonspunkt(AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK))
+  ) {
+    return false;
+  }
+
+  const initialValues = {
+    begrunnelse: aksjonspunktVurderDatoNyRegelUttak?.begrunnelse ?? '',
+    virkningsdato: virkningsdatoUttakNyeRegler ?? '',
+  };
+
   return (
     <div className={styles['vurderDatoContainer']}>
       <Alert variant="warning" size="small" className="mt-4">
@@ -58,7 +64,7 @@ const VurderDato = ({ avbryt, initialValues, readOnly, api, behandling, oppdater
               <Label size="small">Hva innebærer endringene i uttak?</Label>
             </Accordion.Header>
             <Accordion.Content>
-              <BodyLong size="small">
+              <BodyLong as="div" size="small">
                 Før endring:
                 <ol>
                   <li>Nye aktiviteter blir tatt med ved utregning av utbetalingsgrad og søkers uttaksgrad.</li>
@@ -80,14 +86,7 @@ const VurderDato = ({ avbryt, initialValues, readOnly, api, behandling, oppdater
           </Accordion.Item>
         </Accordion>
       </Alert>
-      <VurderDatoAksjonspunkt
-        avbryt={avbryt}
-        initialValues={initialValues}
-        readOnly={readOnly}
-        api={api}
-        behandling={behandling}
-        oppdaterBehandling={oppdaterBehandling}
-      />
+      <VurderDatoAksjonspunkt initialValues={initialValues} oppdaterBehandling={oppdaterBehandling} />
     </div>
   );
 };

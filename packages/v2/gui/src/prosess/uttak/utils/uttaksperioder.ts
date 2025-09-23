@@ -1,10 +1,10 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import Period from '../types/Period';
-import { Inntektsgradering, Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../types/Uttaksperiode';
-import Uttaksperioder from '../types/Uttaksperioder';
+import type { InntektgraderingPeriodeDto, Periode, Uttaksplan } from '@k9-sak-web/backend/k9sak/generated';
+import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import type { UttaksperiodeBeriket } from '../Uttak';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
 
-const sjekkOmPerioderErKantIKant = (periode: Period, nestePeriode: Period) => {
+const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) => {
   const sisteUkeIFørstePeriode = initializeDate(periode.tom).week();
   const førsteUkeINestePeriode = initializeDate(nestePeriode.fom).week();
   return (
@@ -15,19 +15,22 @@ const sjekkOmPerioderErKantIKant = (periode: Period, nestePeriode: Period) => {
 };
 
 const lagUttaksperiodeliste = (
-  uttaksperioder: Uttaksperioder,
-  inntektsgraderinger: Inntektsgradering[],
-): Uttaksperiode[] | UttaksperiodeMedInntektsgradering[] => {
-  const perioder = Object.keys(uttaksperioder).map(periodenøkkel => {
-    const uttaksperiode = new Period(periodenøkkel);
-    const andreUttaksperiodeData = uttaksperioder[periodenøkkel];
+  uttaksperioder: Uttaksplan['perioder'],
+  inntektsgraderinger: InntektgraderingPeriodeDto[],
+): UttaksperiodeBeriket[] => {
+  const perioder = Object.keys(uttaksperioder ?? {}).map(periodenøkkel => {
+    const andreUttaksperiodeData = (uttaksperioder ?? {})[periodenøkkel];
+    const uttaksperiodeDato: Periode = {
+      fom: initializeDate(periodenøkkel.split('/')[0] ?? '').format(YYYYMMDD_DATE_FORMAT),
+      tom: initializeDate(periodenøkkel.split('/')[1] ?? '').format(YYYYMMDD_DATE_FORMAT),
+    };
     return {
-      periode: uttaksperiode,
+      periode: uttaksperiodeDato,
       ...andreUttaksperiodeData,
     };
   });
   const kronologiskSortertePerioder = perioder.sort((p1, p2) => sortPeriodsChronological(p1.periode, p2.periode));
-  const perioderMedOppholdFlagg: Uttaksperiode[] = [];
+  const perioderMedOppholdFlagg: UttaksperiodeBeriket[] = [];
 
   kronologiskSortertePerioder.forEach((uttaksperiode, index, array) => {
     const nestePeriode = array[index + 1];

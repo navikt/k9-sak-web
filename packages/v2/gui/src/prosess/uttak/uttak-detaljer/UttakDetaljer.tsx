@@ -5,7 +5,7 @@ import {
   UttaksperiodeInfoÅrsaker,
   type UttaksperiodeInfoÅrsaker as UttaksperiodeInfoÅrsakerType,
   type Utenlandsopphold,
-  type ArbeidsgiverOversiktDto,
+  BehandlingDtoSakstype,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
@@ -14,13 +14,13 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
 import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
-import type { UttaksperiodeMedInntektsgradering } from '../types/UttaksperiodeMedInntektsgradering';
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
 import styles from './uttakDetaljer.module.css';
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { useUttakContext } from '../context/UttakContext';
+import type { UttaksperiodeBeriket } from '../Uttak';
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
@@ -74,24 +74,23 @@ const shouldHighlight = (aktuellÅrsak: UttaksperiodeInfoÅrsakerType, årsaker:
   årsaker.some(årsak => årsak === aktuellÅrsak);
 
 export interface UttakDetaljerProps {
-  uttak: UttaksperiodeMedInntektsgradering;
-  arbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
+  uttak: UttaksperiodeBeriket;
   manueltOverstyrt: boolean;
-  ytelsetype: FagsakYtelsesType;
+  // ytelsetype: FagsakYtelsesType;
 }
 
-const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: UttakDetaljerProps): JSX.Element => {
+const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-
+  const { erSakstype } = useUttakContext();
   const {
     utbetalingsgrader,
     graderingMotTilsyn,
-    årsaker,
+    årsaker = [],
     søkersTapteArbeidstid,
     pleiebehov,
     utenlandsopphold,
     utfall,
-    inntektsgradering,
+    inntektgradering,
   } = uttak;
 
   /*
@@ -101,7 +100,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
    * henholdsvis GRADERT_MOT_TILSYN og AVKORTET_MOT_INNTEKT
    * AVKORTET_MOT_INNTEKT er årsaken som definerer om det er Gradert mot arbeidstid.
    */
-  const shouldHighlightInntekt = !manueltOverstyrt && !!inntektsgradering;
+  const shouldHighlightInntekt = !manueltOverstyrt && !!inntektgradering;
   const shouldHighlightTilsyn =
     !manueltOverstyrt &&
     !shouldHighlightInntekt &&
@@ -113,13 +112,13 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
     årsaker &&
     shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
-  const skalViseGraderingMotTilsyn = ![
-    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
-    fagsakYtelsesType.OPPLÆRINGSPENGER,
-  ].some(ytelse => ytelse === ytelsetype);
+  const skalViseGraderingMotTilsyn = !erSakstype([
+    BehandlingDtoSakstype.OPPLÆRINGSPENGER,
+    BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE,
+  ]);
 
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
-  const harBarnetsDødsfallÅrsak = årsaker?.some(årsak =>
+  const harBarnetsDødsfallÅrsak = årsaker?.some((årsak: UttaksperiodeInfoÅrsakerType) =>
     BarnetsDødsfallÅrsakerMedTekst.some(barnetsDødsfallÅrsak => årsak === barnetsDødsfallÅrsak.årsak),
   );
 
@@ -178,13 +177,12 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
             <Heading size="xsmall">Gradering mot arbeidstid</Heading>
           </HStack>
           <GraderingMotArbeidstidDetaljer
-            alleArbeidsforhold={arbeidsforhold || {}}
             utbetalingsgrader={utbetalingsgrader || []}
             søkersTapteArbeidstid={søkersTapteArbeidstid}
           />
         </Box>
 
-        {inntektsgradering && (
+        {inntektgradering && (
           <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
@@ -201,10 +199,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               <SackKronerIcon className="!ml-[-4px]" />
               <Heading size="xsmall">Gradering mot arbeidsinntekt</Heading>
             </HStack>
-            <GraderingMotInntektDetaljer
-              alleArbeidsforhold={arbeidsforhold || {}}
-              inntektsgradering={inntektsgradering}
-            />
+            <GraderingMotInntektDetaljer inntektsgradering={inntektgradering} />
           </Box>
         )}
       </HGrid>

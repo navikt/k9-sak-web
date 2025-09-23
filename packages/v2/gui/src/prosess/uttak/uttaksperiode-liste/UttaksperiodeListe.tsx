@@ -1,29 +1,29 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import React, { type JSX } from 'react';
-import { Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
-import ContainerContext from '../../context/ContainerContext';
-import UttakRad from '../uttak/UttakRad';
-import UttakRadOpplæringspenger from '../uttak/UttakRadOpplæringspenger';
+import React, { type FC } from 'react';
+import UttakRad from './UttakRad';
+import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { UttaksperiodeBeriket } from '../Uttak';
+import { useUttakContext } from '../context/UttakContext';
+import { BehandlingDtoSakstype } from '@k9-sak-web/backend/k9sak/generated';
+import { prettifyPeriod } from '../utils/periodUtils';
 
 interface UttaksperiodeListeProps {
-  uttaksperioder: UttaksperiodeMedInntektsgradering[];
+  uttaksperioder: UttaksperiodeBeriket[]; // extends UttaksperiodeInfo fra ts-client
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
   readOnly: boolean;
 }
 
 const splitUttakByDate = (
-  uttaksperioder: Uttaksperiode[],
+  uttaksperioder: UttaksperiodeBeriket[],
   virkningsdatoUttakNyeRegler: string | undefined,
-): [Uttaksperiode[], Uttaksperiode[]] => {
+): { before: UttaksperiodeBeriket[]; afterOrCovering: UttaksperiodeBeriket[] } => {
   // If virkningsdatoUttakNyeRegler is null, consider all periods as before the date.
   if (!virkningsdatoUttakNyeRegler) {
-    return [uttaksperioder, []];
+    return { before: uttaksperioder, afterOrCovering: [] };
   }
 
   const virkningsdato =
@@ -31,14 +31,14 @@ const splitUttakByDate = (
       ? new Date(virkningsdatoUttakNyeRegler)
       : new Date();
 
-  const beforeVirkningsdato = uttaksperioder.filter(uttak => {
+  const before = uttaksperioder.filter(uttak => {
     const uttakToDate = new Date(uttak.periode.tom);
 
     // Check if the entire period is before the virkningsdato.
     return uttakToDate < virkningsdato;
   });
 
-  const afterOrCoveringVirkningsdato = uttaksperioder.filter(uttak => {
+  const afterOrCovering = uttaksperioder.filter(uttak => {
     const uttakFromDate = new Date(uttak.periode.fom);
     const uttakToDate = new Date(uttak.periode.tom);
 
@@ -46,30 +46,30 @@ const splitUttakByDate = (
     return uttakFromDate >= virkningsdato || (uttakFromDate < virkningsdato && uttakToDate >= virkningsdato);
   });
 
-  return [beforeVirkningsdato, afterOrCoveringVirkningsdato];
+  return { before, afterOrCovering };
 };
 
-const tableHeaders = (ytelsetype: FagsakYtelsesType) => {
-  if (ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+const tableHeaders = (sakstype: BehandlingDtoSakstype | undefined) => {
+  if (sakstype === BehandlingDtoSakstype.OPPLÆRINGSPENGER) {
     return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Sykdom og opplæring', 'Søkers uttaksgrad'];
   }
-  if (ytelsetype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+  if (sakstype === BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) {
     return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleie i hjemmet', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
   }
   return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 };
 
-const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
+const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
+  uttaksperioder,
+  redigerVirkningsdatoFunc,
+  redigerVirkningsdato,
+  readOnly,
+}) => {
+  const { sakstype, virkningsdatoUttakNyeRegler } = useUttakContext();
   const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
-  const containerContext = React.useContext(ContainerContext);
-  const ytelsetype = containerContext?.ytelsetype ?? fagsakYtelsesType.PLEIEPENGER_SYKT_BARN; // TODO: usikker på fallback til pleiepenger sykt barn
-  const virkningsdatoUttakNyeRegler = containerContext?.virkningsdatoUttakNyeRegler;
-  const status = containerContext?.status ?? false;
-  const { uttaksperioder, redigerVirkningsdatoFunc, redigerVirkningsdato, readOnly } = props;
+  const { before, afterOrCovering } = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);
+  const headers = tableHeaders(sakstype);
 
-  const [before, afterOrCovering] = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);
-
-  const headers = tableHeaders(ytelsetype);
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
       velgPeriodeIndex(undefined);
@@ -77,8 +77,9 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
       velgPeriodeIndex(index);
     }
   };
+
   return (
-    <div className={styles.tableContainer}>
+    <div className={styles['tableContainer']}>
       <Table size="small">
         <Table.Header>
           <Table.Row>
@@ -86,7 +87,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
               <Table.HeaderCell
                 scope="col"
                 key={header}
-                className={styles.headerColumn}
+                className={styles['headerColumn']}
                 colSpan={headers.length - 1 === index ? 2 : 1}
               >
                 {header}
@@ -96,15 +97,15 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
         </Table.Header>
         <Table.Body>
           {afterOrCovering.map((uttak, index) => (
-            <React.Fragment key={uttak.periode.prettifyPeriod()}>
+            <React.Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
               {uttak.harOppholdTilNestePeriode && (
                 <Table.Row>
                   <td colSpan={12}>
-                    <div className={styles.oppholdRow} />
+                    <div className={styles['oppholdRow']} />
                   </td>
                 </Table.Row>
               )}
-              {ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER ? (
+              {sakstype === BehandlingDtoSakstype.OPPLÆRINGSPENGER ? (
                 <UttakRadOpplæringspenger
                   uttak={uttak}
                   erValgt={valgtPeriodeIndex === index}
@@ -118,7 +119,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
           {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
             <Table.Row>
               <Table.DataCell colSpan={12}>
-                <div className={styles.alertRow}>
+                <div className={styles['alertRow']}>
                   <Alert variant="info">
                     <div className="flex">
                       <Label size="small">
@@ -127,7 +128,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                       <Button
                         variant="secondary"
                         size="small"
-                        className={styles.redigerDato}
+                        className={styles['redigerDato']}
                         onClick={redigerVirkningsdatoFunc}
                         disabled={status === behandlingStatus.AVSLUTTET || readOnly}
                       >
@@ -144,15 +145,15 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
             </Table.Row>
           )}
           {before.map((uttak, index) => (
-            <React.Fragment key={uttak.periode.prettifyPeriod()}>
+            <React.Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
               {uttak.harOppholdTilNestePeriode && (
                 <Table.Row>
                   <td colSpan={12}>
-                    <div className={styles.oppholdRow} />
+                    <div className={styles['oppholdRow']} />
                   </td>
                 </Table.Row>
               )}
-              {ytelsetype === fagsakYtelsesType.OPPLÆRINGSPENGER ? (
+              {sakstype === BehandlingDtoSakstype.OPPLÆRINGSPENGER ? (
                 <UttakRadOpplæringspenger
                   uttak={uttak}
                   erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}

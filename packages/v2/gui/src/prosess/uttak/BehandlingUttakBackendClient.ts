@@ -41,6 +41,10 @@ export default class BehandlingUttakBackendClient {
     });
   }
 
+  async getArbeidsgivere(behandlingUuid: string) {
+    return this.#k9sak.arbeidsgiver.getArbeidsgiverOpplysninger(behandlingUuid);
+  }
+
   async overstyringUttak(requestBody: OverstyringUttakRequest): Promise<BekreftResponse> {
     return this.#k9sak.aksjonspunkt.overstyr(requestBody);
   }

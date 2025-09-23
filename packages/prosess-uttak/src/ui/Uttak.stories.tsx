@@ -1,20 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from 'storybook/test';
-import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
-import { Endringsstatus } from '../types';
-import UttakContainer from './UttakContainer';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { Årsaker } from '../constants';
+import {
+  OverstyrUttakArbeidsforholdDtoType,
+  UttaksperiodeInfoAnnenPart,
+  UttaksperiodeInfoUtfall,
+} from '@k9-sak-web/backend/k9sak/generated';
 
-const meta: Meta<typeof UttakContainer> = {
+const meta: Meta<typeof Uttak> = {
   title: 'prosess/prosess-uttak',
-  component: UttakContainer,
+  component: Uttak,
 };
 
 export default meta;
-type Story = StoryObj<typeof UttakContainer>;
+type Story = StoryObj<typeof Uttak>;
 
 function oppdaterBehandling(): void {}
 
-export const Uttak: Story = {
+export const UttakStory: Story = {
   args: {
     containerData: {
       behandling: {
@@ -25,12 +29,12 @@ export const Uttak: Story = {
       aktivBehandlingUuid: '123456',
       uttaksperioder: {
         '2021-03-01/2021-03-08': {
-          utfall: Utfall.OPPFYLT,
+          utfall: UttaksperiodeInfoUtfall.OPPFYLT,
           uttaksgrad: 50.0,
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -44,14 +48,14 @@ export const Uttak: Story = {
           søkersTapteArbeidstid: 65.11,
           årsaker: [Årsaker.GRADERT_MOT_TILSYN],
           inngangsvilkår: {
-            FP_VK_2: Utfall.OPPFYLT,
-            FP_VK_3: Utfall.OPPFYLT,
-            K9_VK_1: Utfall.OPPFYLT,
-            K9_VK_3: Utfall.OPPFYLT,
-            FP_VK_21: Utfall.OPPFYLT,
-            FP_VK_23: Utfall.OPPFYLT,
-            FP_VK_34: Utfall.OPPFYLT,
-            K9_VK_2_a: Utfall.OPPFYLT,
+            FP_VK_2: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_1: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_21: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_23: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_34: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_2_a: UttaksperiodeInfoUtfall.OPPFYLT,
           },
           pleiebehov: 100.0,
           graderingMotTilsyn: {
@@ -62,17 +66,17 @@ export const Uttak: Story = {
           },
           knekkpunktTyper: [],
           kildeBehandlingUUID: '123456',
-          endringsstatus: 'NY' as Endringsstatus,
-          annenPart: AnnenPart.MED_ANDRE,
+          endringsstatus: 'NY', // as Endringsstatus,
+          annenPart: UttaksperiodeInfoAnnenPart.MED_ANDRE,
           manueltOverstyrt: false,
         },
         '2021-03-10/2021-03-22': {
-          utfall: Utfall.OPPFYLT,
+          utfall: UttaksperiodeInfoUtfall.OPPFYLT,
           uttaksgrad: 65.0,
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -86,14 +90,14 @@ export const Uttak: Story = {
           søkersTapteArbeidstid: 65.11,
           årsaker: [Årsaker.AVKORTET_MOT_INNTEKT],
           inngangsvilkår: {
-            FP_VK_2: Utfall.OPPFYLT,
-            FP_VK_3: Utfall.OPPFYLT,
-            K9_VK_1: Utfall.OPPFYLT,
-            K9_VK_3: Utfall.OPPFYLT,
-            FP_VK_21: Utfall.OPPFYLT,
-            FP_VK_23: Utfall.OPPFYLT,
-            FP_VK_34: Utfall.OPPFYLT,
-            K9_VK_2_a: Utfall.OPPFYLT,
+            FP_VK_2: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_1: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_21: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_23: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_34: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_2_a: UttaksperiodeInfoUtfall.OPPFYLT,
           },
           pleiebehov: 100.0,
           graderingMotTilsyn: {
@@ -104,17 +108,17 @@ export const Uttak: Story = {
           },
           knekkpunktTyper: ['ANNEN_PARTS_UTTAK'],
           kildeBehandlingUUID: '123456',
-          annenPart: AnnenPart.ALENE,
-          endringsstatus: 'ENDRET' as Endringsstatus,
+          annenPart: UttaksperiodeInfoAnnenPart.ALENE,
+          endringsstatus: 'ENDRET', // as Endringsstatus,
           manueltOverstyrt: false,
         },
         '2021-03-23/2021-03-31': {
-          utfall: Utfall.IKKE_OPPFYLT,
+          utfall: UttaksperiodeInfoUtfall.IKKE_OPPFYLT,
           uttaksgrad: 0.0,
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -128,30 +132,30 @@ export const Uttak: Story = {
           søkersTapteArbeidstid: 65.11,
           årsaker: [Årsaker.FOR_LAV_ØNSKET_UTTAKSGRAD, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT],
           inngangsvilkår: {
-            FP_VK_2: Utfall.OPPFYLT,
-            FP_VK_3: Utfall.OPPFYLT,
-            K9_VK_1: Utfall.OPPFYLT,
-            K9_VK_3: Utfall.OPPFYLT,
-            FP_VK_34: Utfall.OPPFYLT,
-            K9_VK_2_a: Utfall.IKKE_OPPFYLT,
-            FP_VK_21: Utfall.OPPFYLT,
-            FP_VK_23: Utfall.OPPFYLT,
+            FP_VK_2: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_1: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_34: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_2_a: UttaksperiodeInfoUtfall.IKKE_OPPFYLT,
+            FP_VK_21: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_23: UttaksperiodeInfoUtfall.OPPFYLT,
           },
           pleiebehov: 0.0,
           graderingMotTilsyn: null,
           knekkpunktTyper: [],
           kildeBehandlingUUID: '123456',
-          annenPart: AnnenPart.ALENE,
-          endringsstatus: 'UENDRET' as Endringsstatus,
+          annenPart: UttaksperiodeInfoAnnenPart.ALENE,
+          endringsstatus: 'UENDRET', // as Endringsstatus,
           manueltOverstyrt: false,
         },
         '2021-04-02/2021-04-14': {
-          utfall: Utfall.IKKE_OPPFYLT,
+          utfall: UttaksperiodeInfoUtfall.IKKE_OPPFYLT,
           uttaksgrad: 0.0,
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -165,21 +169,21 @@ export const Uttak: Story = {
           søkersTapteArbeidstid: 65.11,
           årsaker: [Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD],
           inngangsvilkår: {
-            FP_VK_2: Utfall.OPPFYLT,
-            FP_VK_3: Utfall.OPPFYLT,
-            K9_VK_1: Utfall.OPPFYLT,
-            K9_VK_3: Utfall.OPPFYLT,
-            FP_VK_34: Utfall.OPPFYLT,
-            K9_VK_2_a: Utfall.OPPFYLT,
-            FP_VK_21: Utfall.OPPFYLT,
-            FP_VK_23: Utfall.OPPFYLT,
+            FP_VK_2: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_1: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_34: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_2_a: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_21: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_23: UttaksperiodeInfoUtfall.OPPFYLT,
           },
           pleiebehov: 0.0,
           graderingMotTilsyn: null,
           knekkpunktTyper: [],
           kildeBehandlingUUID: '123456',
-          annenPart: AnnenPart.ALENE,
-          endringsstatus: 'UENDRET' as Endringsstatus,
+          annenPart: UttaksperiodeInfoAnnenPart.ALENE,
+          endringsstatus: 'UENDRET', // as Endringsstatus,
           utenlandsoppholdUtenÅrsak: true,
           manueltOverstyrt: false,
         },
@@ -229,14 +233,14 @@ export const UttakMedInntektsgradering: Story = {
       aktivBehandlingUuid: '123456',
       uttaksperioder: {
         '2023-01-02/2023-01-31': {
-          utfall: Utfall.OPPFYLT,
+          utfall: UttaksperiodeInfoUtfall.OPPFYLT,
           uttaksgrad: 100,
           uttaksgradMedReduksjonGrunnetInntektsgradering: null,
           uttaksgradUtenReduksjonGrunnetInntektsgradering: 100,
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '111111111',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -248,7 +252,7 @@ export const UttakMedInntektsgradering: Story = {
             },
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '222222222',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -263,14 +267,14 @@ export const UttakMedInntektsgradering: Story = {
           oppgittTilsyn: 'PT7H30M',
           årsaker: [Årsaker.FULL_DEKNING],
           inngangsvilkår: {
-            FP_VK_2: Utfall.OPPFYLT,
-            FP_VK_3: Utfall.OPPFYLT,
-            K9_VK_1: Utfall.OPPFYLT,
-            K9_VK_3: Utfall.OPPFYLT,
-            FP_VK_21: Utfall.OPPFYLT,
-            FP_VK_23: Utfall.OPPFYLT,
-            FP_VK_41: Utfall.OPPFYLT,
-            K9_VK_2_a: Utfall.OPPFYLT,
+            FP_VK_2: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_1: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_21: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_23: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_41: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_2_a: UttaksperiodeInfoUtfall.OPPFYLT,
           },
           pleiebehov: 200,
           graderingMotTilsyn: {
@@ -282,7 +286,7 @@ export const UttakMedInntektsgradering: Story = {
           },
           knekkpunktTyper: [],
           kildeBehandlingUUID: '630c98e1-f995-4e98-8699-8932d9a2c998',
-          annenPart: AnnenPart.ALENE,
+          annenPart: UttaksperiodeInfoAnnenPart.ALENE,
           nattevåk: null,
           beredskap: null,
           endringsstatus: 'NY',
@@ -296,14 +300,14 @@ export const UttakMedInntektsgradering: Story = {
           søkersTapteTimer: 'PT8H',
         },
         '2023-02-01/2023-04-28': {
-          utfall: Utfall.OPPFYLT,
+          utfall: UttaksperiodeInfoUtfall.OPPFYLT,
           uttaksgrad: 20,
           uttaksgradMedReduksjonGrunnetInntektsgradering: 20,
           uttaksgradUtenReduksjonGrunnetInntektsgradering: 100,
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '111111111',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -315,7 +319,7 @@ export const UttakMedInntektsgradering: Story = {
             },
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '222222222',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -327,7 +331,7 @@ export const UttakMedInntektsgradering: Story = {
             },
             {
               arbeidsforhold: {
-                type: Arbeidstype.ARBEIDSTAKER,
+                type: OverstyrUttakArbeidsforholdDtoType.ARBEIDSTAKER,
                 organisasjonsnummer: '333333333',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -342,14 +346,14 @@ export const UttakMedInntektsgradering: Story = {
           oppgittTilsyn: 'PT7H30M',
           årsaker: [Årsaker.AVKORTET_MOT_INNTEKT],
           inngangsvilkår: {
-            FP_VK_2: Utfall.OPPFYLT,
-            FP_VK_3: Utfall.OPPFYLT,
-            K9_VK_1: Utfall.OPPFYLT,
-            K9_VK_3: Utfall.OPPFYLT,
-            FP_VK_21: Utfall.OPPFYLT,
-            FP_VK_23: Utfall.OPPFYLT,
-            FP_VK_41: Utfall.OPPFYLT,
-            K9_VK_2_a: Utfall.OPPFYLT,
+            FP_VK_2: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_1: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_3: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_21: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_23: UttaksperiodeInfoUtfall.OPPFYLT,
+            FP_VK_41: UttaksperiodeInfoUtfall.OPPFYLT,
+            K9_VK_2_a: UttaksperiodeInfoUtfall.OPPFYLT,
           },
           pleiebehov: 200,
           graderingMotTilsyn: {
@@ -361,7 +365,7 @@ export const UttakMedInntektsgradering: Story = {
           },
           knekkpunktTyper: [],
           kildeBehandlingUUID: '630c98e1-f995-4e98-8699-8932d9a2c998',
-          annenPart: AnnenPart.ALENE,
+          annenPart: UttaksperiodeInfoAnnenPart.ALENE,
           nattevåk: null,
           beredskap: null,
           endringsstatus: 'NY',

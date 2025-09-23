@@ -2,43 +2,27 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import Uttak from '../../components/Uttak';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({
-    behandling,
-    uttaksperioder,
-    inntektsgraderinger,
-    perioderTilVurdering,
-    utsattePerioder,
-    arbeidsgiverOpplysningerPerId,
-    aksjonspunkter,
-    alleKodeverk,
-    submitCallback,
-    hentBehandling,
-    virkningsdatoUttakNyeRegler,
-    relevanteAksjonspunkter,
-    erOverstyrer,
-    isReadOnly,
-  }) => (
-    <Uttak
-      behandling={behandling}
-      uttaksperioder={uttaksperioder}
-      inntektsgraderinger={inntektsgraderinger}
-      perioderTilVurdering={perioderTilVurdering}
-      utsattePerioder={utsattePerioder}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      aksjonspunkter={aksjonspunkter}
-      alleKodeverk={alleKodeverk}
-      submitCallback={submitCallback}
-      hentBehandling={hentBehandling}
-      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
-      relevanteAksjonspunkter={relevanteAksjonspunkter}
-      erOverstyrer={erOverstyrer}
-      readOnly={isReadOnly}
-    />
-  );
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return (
+      <Uttak
+        uttak={deepCopyProps.uttak}
+        behandling={deepCopyProps.behandling}
+        inntektsgraderinger={deepCopyProps.inntektsgraderinger}
+        perioderTilVurdering={deepCopyProps.perioderTilVurdering}
+        aksjonspunkter={deepCopyProps.aksjonspunkter}
+        hentBehandling={props.hentBehandling}
+        erOverstyrer={props.erOverstyrer}
+        readOnly={props.isReadOnly}
+      />
+    );
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
@@ -72,14 +56,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, pleiepengerInntektsgradering }) => {
     return {
-      uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
       inntektsgraderinger: pleiepengerInntektsgradering?.perioder,
-      perioderTilVurdering: uttak?.perioderTilVurdering,
-      utsattePerioder: uttak?.utsattePerioder,
-      virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
       arbeidsgiverOpplysningerPerId,
       alleKodeverk,
       relevanteAksjonspunkter: this.getAksjonspunktKoder(),
+      uttak,
     };
   };
 }

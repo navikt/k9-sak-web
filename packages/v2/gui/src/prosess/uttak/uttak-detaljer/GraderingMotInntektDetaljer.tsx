@@ -1,21 +1,19 @@
 import React, { type FC } from 'react';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
-import {
-  InntektsforholdDtoType,
-  type ArbeidsgiverOversiktDto,
-  type InntektgraderingPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+import { BodyShort, Box, HStack, Loader, Tag, VStack } from '@navikt/ds-react';
+import { InntektsforholdDtoType, type InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 
 import styles from './uttakDetaljer.module.css';
+import { useUttakContext } from '../context/UttakContext';
 
 interface ownProps {
-  alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
   inntektsgradering: InntektgraderingPeriodeDto;
 }
 
-const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntektsgradering }) => {
+const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
+  const { arbeidsgivere, lasterArbeidsgivere } = useUttakContext();
+
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
   const beregningsgrunnlag = inntektsgradering.beregningsgrunnlag
     ? tilNOK.format(inntektsgradering.beregningsgrunnlag)
@@ -23,14 +21,23 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
   const løpendeInntekt = inntektsgradering.løpendeInntekt ? tilNOK.format(inntektsgradering.løpendeInntekt) : '-';
   const bortfaltInntekt = inntektsgradering.bortfaltInntekt ? tilNOK.format(inntektsgradering.bortfaltInntekt) : '-';
 
+  if (lasterArbeidsgivere) {
+    return (
+      <HStack justify="center">
+        <Loader title="Henter data..." size="2xlarge" />
+      </HStack>
+    );
+  }
+
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
         {inntektsforhold.map(inntForhold => {
           const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-            : undefined;
+          const arbeidsforholdData =
+            arbeidsgiverIdentifikator && arbeidsgivere && !Array.isArray(arbeidsgivere)
+              ? arbeidsgivere[arbeidsgiverIdentifikator]
+              : undefined;
           return (
             <Box
               key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
@@ -55,9 +62,10 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
       <UttakDetaljerEkspanderbar title={`Utbetalt lønn: ${løpendeInntekt}`}>
         {inntektsforhold.map(inntForhold => {
           const { arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-            : undefined;
+          const arbeidsforholdData =
+            arbeidsgiverIdentifikator && arbeidsgivere && !Array.isArray(arbeidsgivere)
+              ? arbeidsgivere[arbeidsgiverIdentifikator]
+              : undefined;
           return (
             <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
               <Box className={styles.uttakDetaljerBeregningFirma}>

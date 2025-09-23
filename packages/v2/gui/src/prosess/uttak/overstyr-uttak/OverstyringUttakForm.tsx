@@ -53,7 +53,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   api,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>(undefined);
+  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>({});
 
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
   const resolver: Resolver<OverstyrUttakPeriodeDto, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<

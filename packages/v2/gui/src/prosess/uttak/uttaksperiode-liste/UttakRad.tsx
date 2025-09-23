@@ -9,61 +9,69 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
 import classNames from 'classnames/bind';
-import * as React from 'react';
 import { Collapse } from 'react-collapse';
-import AnnenPart from '../../../constants/AnnenPart';
-import Årsaker from '../../../constants/Årsaker';
-import { UttaksperiodeMedInntektsgradering } from '../../../types';
-import { harÅrsak } from '../../../util/årsakUtils';
-import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
-import ContainerContext from '../../context/ContainerContext';
-import Endringsstatus from '../icons/Endringsstatus';
-import UttakDetaljerV2Wrapper from '../uttak-detaljer/UttakDetaljerV2Wrapper';
-
-import styles from './uttak.module.css';
-
 import type { JSX } from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import {
+  BehandlingDtoSakstype,
+  UttaksperiodeInfoAnnenPart,
+  UttaksperiodeInfoÅrsaker,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { harÅrsak } from '../utils/årsakUtils';
+import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
+import Endringsstatus from '../components/icons/Endringsstatus';
+import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
+import { useUttakContext } from '../context/UttakContext';
+import type { UttaksperiodeBeriket } from '../Uttak';
+import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
 
 interface UttakProps {
-  uttak: UttaksperiodeMedInntektsgradering;
+  uttak: UttaksperiodeBeriket;
   erValgt: boolean;
   velgPeriode: () => void;
   withBorderTop?: boolean;
 }
 
 const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { periode, uttaksgrad, inngangsvilkår: vilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
-  const containerContext = React.useContext(ContainerContext);
-  const erFagytelsetypeLivetsSluttfase = fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE === containerContext?.ytelsetype;
-
-  const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
-
-  const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
+  const { erSakstype } = useUttakContext();
+  const {
+    periode,
+    uttaksgrad,
+    inngangsvilkår,
+    pleiebehov,
+    årsaker = [],
+    endringsstatus,
+    manueltOverstyrt = false,
+    inntektgradering,
+  } = uttak;
+  const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, UttaksperiodeInfoÅrsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
-  const visPleiebehovProsent = !erFagytelsetypeLivetsSluttfase;
-  const erGradertMotInntekt = uttak.inntektsgradering !== undefined;
+  const visPleiebehovProsent = !erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE);
+  const erGradertMotInntekt = inntektgradering !== undefined;
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,
-    uttak__indikator__innvilget: uttaksgrad > 0,
+    uttak__indikator__innvilget: (uttaksgrad ?? 0) > 0,
     'uttak__indikator__innvilget--delvis--inntekt': erGradertMotInntekt,
     'uttak__indikator__innvilget--delvis':
-      !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
+      !erGradertMotInntekt && årsaker.some(årsak => årsak === UttaksperiodeInfoÅrsaker.GRADERT_MOT_TILSYN),
   });
 
-  const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
+  const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, UttaksperiodeInfoÅrsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
   return (
     <>
-      <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
-          {periode.getFirstAndLastWeek()}
+      <Table.Row
+        className={`${erValgt ? styles['uttak__expandedRow'] : ''} ${styles['uttak__row']}`}
+        onClick={velgPeriode}
+      >
+        <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''} `}>
+          {getFirstAndLastWeek(periode.fom, periode.tom)}
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
+        <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''}`}>
           <BodyShort as="div">
-            {periode.prettifyPeriod()}
+            {prettifyPeriod(periode.fom, periode.tom)}
             {manueltOverstyrt && (
               <>
                 <PersonPencilFillIcon
@@ -82,14 +90,16 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             )}
           </BodyShort>
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.uttak__vilkarIconContainer}`}>
+        <Table.DataCell
+          className={`${withBorderTop ? styles['borderTop'] : ''} ${styles['uttak__vilkarIconContainer']}`}
+        >
           {harOppfyltAlleInngangsvilkår ? (
             <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
           ) : (
             <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
           )}
         </Table.DataCell>
-        {erFagytelsetypeLivetsSluttfase && (
+        {erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) && (
           <Table.DataCell>
             {uttaksgrad === 0 ? (
               <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
@@ -98,8 +108,8 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             )}
           </Table.DataCell>
         )}
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <div className={styles.uttak__iconContainer}>
+        <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''}`}>
+          <div className={styles['uttak__iconContainer']}>
             {harPleiebehov ? (
               <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
             ) : (
@@ -108,22 +118,22 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           </div>
           {harPleiebehov && visPleiebehovProsent ? `${pleiebehov}%` : null}
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
-          {uttak.annenPart === AnnenPart.MED_ANDRE && (
+        <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''}`}>
+          {uttak.annenPart === UttaksperiodeInfoAnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
+          {uttak.annenPart === UttaksperiodeInfoAnnenPart.MED_ANDRE && (
             <Tooltip content="Søker/Annen part">
               <PersonGroupFillIcon fontSize="1.5rem" />
             </Tooltip>
           )}
         </Table.DataCell>
 
-        <Table.DataCell className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
-          <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
+        <Table.DataCell className={`${styles['uttak__uttaksgrad']} ${withBorderTop ? styles['borderTop'] : ''}`}>
+          <p className={styles['uttak__uttaksgrad__tekst']}>{`${uttaksgrad} %`}</p>
           <div className={uttakGradIndikatorCls} />
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
-          <div className={styles.uttak__lastColumn}>
-            <div className={styles.uttak__behandlerIcon}>
+        <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''} `}>
+          <div className={styles['uttak__lastColumn']}>
+            <div className={styles['uttak__behandlerIcon']}>
               <Endringsstatus status={endringsstatus} />
             </div>
             <Button
@@ -137,18 +147,14 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           </div>
         </Table.DataCell>
       </Table.Row>
-      <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
-        <td colSpan={erFagytelsetypeLivetsSluttfase ? 8 : 7}>
+      <tr className={`${erValgt ? '' : styles['collapseRow']} ${styles['expandedRow']}`}>
+        <td colSpan={erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) ? 8 : 7}>
           <Collapse isOpened={erValgt}>
-            <div className={styles.expanded}>
+            <div className={styles['expanded']}>
               {harOppfyltAlleInngangsvilkår ? (
-                <UttakDetaljerV2Wrapper
-                  uttak={uttak}
-                  manueltOverstyrt={manueltOverstyrt}
-                  arbeidsforhold={arbeidsforhold}
-                />
+                <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
               ) : (
-                <Vilkårsliste vilkår={vilkår} />
+                <Vilkårsliste inngangsvilkår={inngangsvilkår} />
               )}
             </div>
           </Collapse>

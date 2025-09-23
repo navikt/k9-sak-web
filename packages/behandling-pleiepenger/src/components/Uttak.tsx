@@ -2,16 +2,15 @@ import { useContext } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
-import { Inntektsgradering, Uttak } from '@k9-sak-web/prosess-uttak';
+import { Inntektsgradering } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
-import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSakIndex.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { VStack } from '@navikt/ds-react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 
 interface UttakProps {
+  uttak: any; // TODO: Replace with actual type
   behandling: Behandling;
   uttaksperioder: any;
   inntektsgraderinger: Inntektsgradering[];
@@ -29,10 +28,10 @@ interface UttakProps {
 }
 
 export default ({
+  uttak,
   behandling,
   uttaksperioder,
   inntektsgraderinger,
-  perioderTilVurdering = [],
   utsattePerioder,
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
@@ -70,38 +69,10 @@ export default ({
     window.location.reload();
   };
 
-  const VurderOverlappendeSakComponent = () => {
-    const aksjonspunkt = aksjonspunkter.find(
-      aksjonspunkt => aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE === aksjonspunkt.definisjon.kode,
-    );
-
-    if (featureToggles.AKSJONSPUNKT_OVERLAPPENDE_SAKER && aksjonspunkt) {
-      const deepCopyProps = JSON.parse(
-        JSON.stringify({
-          behandling: behandling,
-          aksjonspunkt: aksjonspunkt,
-        }),
-      );
-      konverterKodeverkTilKode(deepCopyProps, false);
-
-      return (
-        <VStack>
-          <VurderOverlappendeSakIndex
-            behandling={deepCopyProps.behandling}
-            aksjonspunkt={deepCopyProps.aksjonspunkt}
-            readOnly={readOnly}
-            oppdaterBehandling={oppdaterBehandling}
-          />
-        </VStack>
-      );
-    }
-
-    return <></>;
-  };
-
   return (
     <Uttak
       containerData={{
+        uttak,
         behandling,
         httpErrorHandler: httpErrorHandlerCaller,
         endpoints: findEndpointsFromRels(links ?? [], [
@@ -125,7 +96,6 @@ export default ({
         erOverstyrer,
         status: behandlingStatus.kode,
         readOnly,
-        vurderOverlappendeSakComponent: VurderOverlappendeSakComponent(),
         oppdaterBehandling,
       }}
     />
