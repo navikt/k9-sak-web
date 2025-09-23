@@ -49,7 +49,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
     Object.entries(vilkår ?? {}).filter(([key]) => !opplæringspengerVilkår.includes(key)),
   );
 
-  const erGradertMotInntekt = uttak.inntektgradering !== undefined;
+  const erGradertMotInntekt = (årsaker ?? []).includes(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT);
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,

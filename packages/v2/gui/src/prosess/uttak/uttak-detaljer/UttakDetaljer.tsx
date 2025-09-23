@@ -8,7 +8,7 @@ import {
   BehandlingDtoSakstype,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
+import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag, Skeleton } from '@navikt/ds-react';
 import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
@@ -20,6 +20,7 @@ import {
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
 import styles from './uttakDetaljer.module.css';
 import { useUttakContext } from '../context/UttakContext';
+import { useQuery } from '@tanstack/react-query';
 import type { UttaksperiodeBeriket } from '../Uttak';
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
@@ -76,12 +77,11 @@ const shouldHighlight = (aktuellÅrsak: UttaksperiodeInfoÅrsakerType, årsaker:
 export interface UttakDetaljerProps {
   uttak: UttaksperiodeBeriket;
   manueltOverstyrt: boolean;
-  // ytelsetype: FagsakYtelsesType;
 }
 
 const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-  const { erSakstype } = useUttakContext();
+  const { erSakstype, behandling, uttakApi } = useUttakContext();
   const {
     utbetalingsgrader,
     graderingMotTilsyn,
@@ -90,8 +90,19 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
     pleiebehov,
     utenlandsopphold,
     utfall,
-    inntektgradering,
   } = uttak;
+
+  const { data: inntektsgraderinger, isLoading: lasterInntektsgradering } = useQuery({
+    queryKey: ['uttak-inntektsgraderinger', behandling.uuid],
+    queryFn: async () => {
+      return uttakApi.hentInntektsgraderinger(behandling.uuid);
+    },
+    enabled: !!behandling.uuid,
+  });
+
+  const inntektgradering = inntektsgraderinger?.perioder?.find(
+    p => p.periode.fom === uttak.periode.fom && p.periode.tom === uttak.periode.tom,
+  );
 
   /*
    * Hvis det returneres data for inntektsgradering fra backend, er det Gradering mot arbeidsinntekt som skal "highlightes".
@@ -108,6 +119,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
     shouldHighlight(UttaksperiodeInfoÅrsaker.GRADERT_MOT_TILSYN, årsaker || []);
   const shouldHighlightArbeidstid =
     !manueltOverstyrt &&
+    !lasterInntektsgradering &&
     !shouldHighlightInntekt &&
     årsaker &&
     shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
@@ -183,6 +195,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
         </Box>
 
         {inntektgradering && (
+        {(lasterInntektsgradering || inntektgradering) && (
           <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
@@ -199,7 +212,18 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
               <SackKronerIcon className="!ml-[-4px]" />
               <Heading size="xsmall">Gradering mot arbeidsinntekt</Heading>
             </HStack>
-            <GraderingMotInntektDetaljer inntektsgradering={inntektgradering} />
+            {!lasterInntektsgradering && inntektgradering && (
+              <>
+                <GraderingMotInntektDetaljer inntektsgradering={inntektgradering} />
+              </>
+            )}
+            {lasterInntektsgradering && (
+              <>
+                <Skeleton variant="text" width={200} className="mt-2" />
+                <Skeleton variant="text" width={160} />
+                <Skeleton variant="text" width={180} />
+              </>
+            )}
           </Box>
         )}
       </HGrid>

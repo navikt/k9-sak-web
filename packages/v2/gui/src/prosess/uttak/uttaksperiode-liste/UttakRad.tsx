@@ -44,12 +44,11 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
     årsaker = [],
     endringsstatus,
     manueltOverstyrt = false,
-    inntektgradering,
   } = uttak;
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, UttaksperiodeInfoÅrsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
   const visPleiebehovProsent = !erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE);
-  const erGradertMotInntekt = inntektgradering !== undefined;
+  const erGradertMotInntekt = årsaker.some(årsak => årsak === UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT);
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,

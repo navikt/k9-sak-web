@@ -6,6 +6,7 @@ import type {
   GetOverstyrtUttakResponse,
   OverstyrbareUttakAktiviterDto,
   OverstyrbareAktiviteterForUttakRequest,
+  InntektgraderingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import type { OverstyringUttakRequest } from './types/OverstyringUttakTypes';
 
@@ -47,5 +48,9 @@ export default class BehandlingUttakBackendClient {
 
   async overstyringUttak(requestBody: OverstyringUttakRequest): Promise<BekreftResponse> {
     return this.#k9sak.aksjonspunkt.overstyr(requestBody);
+  }
+
+  async hentInntektsgraderinger(behandlingUuid: string): Promise<InntektgraderingDto> {
+    return this.#k9sak.behandlingPleiepengerInntektsgradering.getInntektsgradering(behandlingUuid);
   }
 }

@@ -1,6 +1,6 @@
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
 export const DDMMYYYY_DATE_FORMAT = 'DD.MM.YYYY';
-export const YYYYMMDD_DATE_FORMAT = 'YYYY.MM.DD';
+export const YYYYMMDD_DATE_FORMAT = 'YYYY-MM-DD';
 export const DDMMYY_DATE_FORMAT = 'DD.MM.YY';
 export const HHMM_TIME_FORMAT = 'HH:mm';
 export const YYYY_MM_FORMAT = 'YYYY-MM';

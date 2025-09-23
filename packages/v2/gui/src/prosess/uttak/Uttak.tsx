@@ -8,8 +8,6 @@ import {
   AksjonspunktDtoStatus,
   type AksjonspunktDto,
   type BehandlingDto,
-  type InntektgraderingDto,
-  type InntektgraderingPeriodeDto,
   type Periode,
   type UttaksperiodeInfo,
   type UttaksplanMedUtsattePerioder,
@@ -17,7 +15,6 @@ import {
 import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
-import styles from '../ung-beregning/aksjonspunktArbeidOgInntekt.module.css';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
 import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
@@ -28,12 +25,11 @@ import Infostripe from './components/infostripe/Infostripe';
 import VurderDato from './vurder-dato/VurderDato';
 
 /*
- * Utvider UttaksperiodeInfo med inntektgradering og flagg for opphold til neste periode
+ * Utvider UttaksperiodeInfo med flagg for opphold til neste periode
  */
 export interface UttaksperiodeBeriket extends UttaksperiodeInfo {
   harOppholdTilNestePeriode?: boolean;
   periode: Periode;
-  inntektgradering?: InntektgraderingPeriodeDto;
 }
 
 interface UttakProps {
@@ -43,7 +39,6 @@ interface UttakProps {
   aksjonspunkter: AksjonspunktDto[];
   hentBehandling?: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
   readOnly: boolean;
-  inntektsgraderinger?: InntektgraderingDto;
 }
 
 const Uttak = ({
@@ -53,14 +48,11 @@ const Uttak = ({
   aksjonspunkter,
   hentBehandling,
   readOnly,
-  inntektsgraderinger,
 }: UttakProps): JSX.Element => {
   const k9SakClient = useContext(K9SakClientContext);
   const uttakApi = new BehandlingUttakBackendClient(k9SakClient);
   const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
-
-  if (!uttak) return <></>;
 
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
 
@@ -83,9 +75,10 @@ const Uttak = ({
   const harOpprettetAksjonspunktVurderDato =
     aksjonspunktVurderDatoNyRegelUttak?.status === AksjonspunktDtoStatus.OPPRETTET;
 
-  const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(
-    aksjonspunktForOverstyringAvUttak !== undefined,
-  );
+  const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    setOverstyringAktiv(aksjonspunktForOverstyringAvUttak !== undefined);
+  }, [aksjonspunktForOverstyringAvUttak]);
   const toggleOverstyring = () => setOverstyringAktiv(!overstyringAktiv);
 
   const relevanteAksjonspunkter: AksjonspunktDtoDefinisjon[] = [
@@ -123,10 +116,14 @@ const Uttak = ({
     arbeidsgivere: {},
   };
 
+  if (!uttak) {
+    return <></>;
+  }
+
   return (
     <UttakContext.Provider value={uttakValues}>
       <VStack gap="4">
-        <HStack justify="start" className={styles.overstyringsHeader}>
+        <HStack justify="start">
           <Heading size="small" level="1">
             Uttak
           </Heading>
@@ -155,7 +152,7 @@ const Uttak = ({
 
         {!aksjonspunktVentAnnenPSBSak && (
           <UttaksperiodeListe
-            uttaksperioder={lagUttaksperiodeliste(uttaksperioder, inntektsgraderinger?.perioder ?? [])}
+            uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
             redigerVirkningsdato={redigerVirkningsdato}
             readOnly={readOnly}

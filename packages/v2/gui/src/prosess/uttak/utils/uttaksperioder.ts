@@ -1,5 +1,5 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { InntektgraderingPeriodeDto, Periode, Uttaksplan } from '@k9-sak-web/backend/k9sak/generated';
+import type { Periode, Uttaksplan } from '@k9-sak-web/backend/k9sak/generated';
 import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import type { UttaksperiodeBeriket } from '../Uttak';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
@@ -14,10 +14,7 @@ const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) => 
   );
 };
 
-const lagUttaksperiodeliste = (
-  uttaksperioder: Uttaksplan['perioder'],
-  inntektsgraderinger: InntektgraderingPeriodeDto[],
-): UttaksperiodeBeriket[] => {
+const lagUttaksperiodeliste = (uttaksperioder: Uttaksplan['perioder']): UttaksperiodeBeriket[] => {
   const perioder = Object.keys(uttaksperioder ?? {}).map(periodenøkkel => {
     const andreUttaksperiodeData = (uttaksperioder ?? {})[periodenøkkel];
     const uttaksperiodeDato: Periode = {
@@ -43,22 +40,7 @@ const lagUttaksperiodeliste = (
   const reversertKronologiskSortertePerioder = perioderMedOppholdFlagg.sort((p1, p2) =>
     sortPeriodsByNewest(p1.periode, p2.periode),
   );
-
-  /*
-   * Injiserer data fra endepunktet for inntektsgradering inn i uttaksperiodene.
-   */
-  return reversertKronologiskSortertePerioder.map(uttaksperiode => {
-    return {
-      ...uttaksperiode,
-      inntektsgradering: !inntektsgraderinger
-        ? undefined
-        : inntektsgraderinger.find(
-            gradering =>
-              uttaksperiode.periode.fom === gradering.periode.fom &&
-              uttaksperiode.periode.tom === gradering.periode.tom,
-          ),
-    };
-  });
+  return reversertKronologiskSortertePerioder;
 };
 
 export default lagUttaksperiodeliste;
