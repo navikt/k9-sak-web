@@ -1,6 +1,7 @@
 import faktaPanelCodes from './faktaPanelCodes';
 import prosessStegCodes from './prosessStegCodes';
 
+/** @deprecated Bruk v2/gui/src/utils/skjermlenke/skjermlenkeCodes.ts istaden */
 const skjermlenkeCodes = {
   BEREGNING: {
     kode: 'BEREGNING',

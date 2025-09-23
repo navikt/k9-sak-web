@@ -1,4 +1,5 @@
 // Definerer alle behandlingspunktene. Desse verdien blir også vist i URL og brukt i historikk-elementene.
+/** @deprecated Bruk v2/gui/src/utils/skjermlenke/prosessStegCodes.ts istaden */
 const prosessStegCodes = {
   DEFAULT: 'default',
   INNGANGSVILKAR: 'inngangsvilkar',

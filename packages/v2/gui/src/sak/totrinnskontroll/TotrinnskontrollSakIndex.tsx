@@ -1,7 +1,7 @@
 import { type k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { type KodeverkObject, KodeverkType, type KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import {
@@ -20,10 +20,10 @@ import { type Behandling } from './types/Behandling';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 
 const sorterteSkjermlenkeCodesForTilbakekreving = [
-  skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
-  skjermlenkeCodes.FORELDELSE,
-  skjermlenkeCodes.TILBAKEKREVING,
-  skjermlenkeCodes.VEDTAK,
+  SkjermlenkeType.FAKTA_OM_FEILUTBETALING,
+  SkjermlenkeType.FORELDELSE,
+  SkjermlenkeType.TILBAKEKREVING,
+  SkjermlenkeType.VEDTAK,
 ];
 
 const getArsaker = (apData: AksjonspunktGodkjenningData): string[] => {
@@ -109,7 +109,11 @@ const TotrinnskontrollSakIndex = ({
     () =>
       erTilbakekreving
         ? sorterteSkjermlenkeCodesForTilbakekreving
-            .map(s => totrinnskontrollSkjermlenkeContext.find(el => el.skjermlenkeType === s.kode))
+            .map(sortertSkjermlenkeCodeForTilbakekreving =>
+              totrinnskontrollSkjermlenkeContext.find(
+                el => el.skjermlenkeType === sortertSkjermlenkeCodeForTilbakekreving,
+              ),
+            )
             .filter(s => s != undefined)
         : totrinnskontrollSkjermlenkeContext,
     [erTilbakekreving, totrinnskontrollSkjermlenkeContext],

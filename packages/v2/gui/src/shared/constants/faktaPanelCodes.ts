@@ -1,4 +1,5 @@
 // Definerer koder for alle fakta-penelene.
+/** @deprecated Bruk v2/gui/src/utils/skjermlenke/faktaPanelCodes.ts istaden */
 const faktaPanelCodes = {
   ADOPSJONSVILKARET: 'adopsjonsvilkaaret',
   ARBEIDSFORHOLD: 'arbeidsforhold',

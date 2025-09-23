@@ -172,6 +172,8 @@ const getAksjonspunkttekst = (
   klagebehandlingVurdering?: KlagebehandlingDto,
 ): ReactNode[] | null => {
   if ('beregningDtoer' in aksjonspunkt && aksjonspunkt.beregningDtoer) {
+    // beregningDtoer finnast kun i k9_sak sin TotrinnskontrollAksjonspunkterDto, så funksjonane inni her blir berre kalla
+    // for aksjonspunkt derifrå, med den typen.
     if (
       aksjonspunkt.aksjonspunktKode ===
       AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE
