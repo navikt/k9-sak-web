@@ -94,9 +94,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
 
   const { data: inntektsgraderinger, isLoading: lasterInntektsgradering } = useQuery({
     queryKey: ['uttak-inntektsgraderinger', behandling.uuid],
-    queryFn: async () => {
-      return uttakApi.hentInntektsgraderinger(behandling.uuid);
-    },
+    queryFn: async () => uttakApi.hentInntektsgraderinger(behandling.uuid),
     enabled: !!behandling.uuid,
   });
 
@@ -194,7 +192,6 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
           />
         </Box>
 
-        {inntektgradering && (
         {(lasterInntektsgradering || inntektgradering) && (
           <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
