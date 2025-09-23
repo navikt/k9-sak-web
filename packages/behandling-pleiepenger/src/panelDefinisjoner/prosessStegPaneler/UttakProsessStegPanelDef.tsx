@@ -14,9 +14,8 @@ class PanelDef extends ProsessStegPanelDef {
       <Uttak
         uttak={deepCopyProps.uttak}
         behandling={deepCopyProps.behandling}
-        inntektsgraderinger={deepCopyProps.inntektsgraderinger}
-        perioderTilVurdering={deepCopyProps.perioderTilVurdering}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
+        relevanteAksjonspunkter={deepCopyProps.relevanteAksjonspunkter}
         hentBehandling={props.hentBehandling}
         erOverstyrer={props.erOverstyrer}
         readOnly={props.isReadOnly}
@@ -54,15 +53,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, pleiepengerInntektsgradering }) => {
-    return {
-      inntektsgraderinger: pleiepengerInntektsgradering?.perioder,
-      arbeidsgiverOpplysningerPerId,
-      alleKodeverk,
-      relevanteAksjonspunkter: this.getAksjonspunktKoder(),
-      uttak,
-    };
-  };
+  getData = ({ uttak }) => ({ uttak, relevanteAksjonspunkter: this.getAksjonspunktKoder() });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

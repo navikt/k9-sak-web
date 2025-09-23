@@ -39,6 +39,7 @@ interface UttakProps {
   aksjonspunkter: AksjonspunktDto[];
   hentBehandling?: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
   readOnly: boolean;
+  relevanteAksjonspunkter: AksjonspunktDtoDefinisjon[];
 }
 
 const Uttak = ({
@@ -47,6 +48,7 @@ const Uttak = ({
   erOverstyrer = false,
   aksjonspunkter,
   hentBehandling,
+  relevanteAksjonspunkter,
   readOnly,
 }: UttakProps): JSX.Element => {
   const k9SakClient = useContext(K9SakClientContext);
@@ -80,12 +82,6 @@ const Uttak = ({
     setOverstyringAktiv(aksjonspunktForOverstyringAvUttak !== undefined);
   }, [aksjonspunktForOverstyringAvUttak]);
   const toggleOverstyring = () => setOverstyringAktiv(!overstyringAktiv);
-
-  const relevanteAksjonspunkter: AksjonspunktDtoDefinisjon[] = [
-    AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-    AksjonspunktDtoDefinisjon.VENT_ANNEN_PSB_SAK,
-    AksjonspunktDtoDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
-  ];
 
   const harEtUløstAksjonspunktIUttak = aksjonspunkter?.some(
     ap =>
