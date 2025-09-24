@@ -7,7 +7,6 @@ import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Label, Modal, Select } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import {
-  ariaCheck,
   dateAfterOrEqualToToday,
   dateBeforeToday,
   hasValidDate,
@@ -179,9 +178,7 @@ export const SettPåVentModal = ({
   const getHovedknappOnClick = () => {
     if (erVenterEtterlysInntektsmelding && showEndreFrist) {
       toggleEndreFrist();
-    } else if (showAvbryt) {
-      ariaCheck();
-    } else {
+    } else if (!showAvbryt) {
       goToLos();
     }
   };

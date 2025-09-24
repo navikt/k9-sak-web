@@ -72,7 +72,7 @@ export const RadStatus = ({ resultat }: { resultat?: ResultatType }) => {
 
 export const RadDato = ({ perioder, active }: { perioder: Period[]; active: boolean }) => {
   return (
-    <div className="flex ml-3 items-center">
+    <div className="flex items-center">
       <div className={`min-w-[10.125rem] ${active ? '' : 'text-ax-accent-600 underline'}`}>
         {perioder.map(v => (
           <div key={v.prettifyPeriod()}>
@@ -86,7 +86,7 @@ export const RadDato = ({ perioder, active }: { perioder: Period[]; active: bool
 
 export const RadChevron = ({ active }: { active: boolean }) => {
   return (
-    <div className="mr-4 float-right">
+    <div className="mr-4 float-right flex items-center">
       {active ? <ChevronRightIcon fontSize={24} /> : <ChevronRightIcon fontSize={24} className="opacity-50" />}
     </div>
   );
@@ -99,8 +99,12 @@ export const PeriodeRad = ({ perioder, resultat, active = false, handleClick }: 
     <button className="flex border-none cursor-pointer outline-none text-left w-full p-4" onClick={handleClick}>
       <div className="flex justify-between w-full">
         <div className="flex items-center">
-          <RadStatus resultat={resultat} />
-          <RadDato perioder={perioder} active={active} />
+          <div className="ml-2">
+            <RadStatus resultat={resultat} />
+          </div>
+          <div className="ml-2">
+            <RadDato perioder={perioder} active={active} />
+          </div>
         </div>
         <RadChevron active={active} />
       </div>

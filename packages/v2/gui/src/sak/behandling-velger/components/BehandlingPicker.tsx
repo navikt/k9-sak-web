@@ -31,6 +31,7 @@ const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: Kodeverk
       return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
 
     case k9KlageBehandlingType.TILBAKEKREVING:
+    case k9KlageBehandlingType.REVURDERING_TILBAKEKREVING:
       return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
 
     default:
