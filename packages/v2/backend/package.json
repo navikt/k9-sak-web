@@ -19,7 +19,7 @@
     "@navikt/k9-sak-typescript-client": "3.0.20250923095633",
     "@navikt/k9-tilbake-typescript-client": "^1.1.20250905111255",
     "@navikt/ung-sak-typescript-client": "2.0.20250905111314",
-    "@navikt/ung-tilbake-typescript-client": "3.0.20250902124409"
+    "@navikt/ung-tilbake-typescript-client": "3.0.20250924144500"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.86.0"
