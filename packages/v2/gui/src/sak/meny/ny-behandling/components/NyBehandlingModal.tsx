@@ -24,11 +24,11 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
   return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
 };
 
-export type BehandlingOppretting = {
+export type BehandlingOppretting = Readonly<{
   behandlingType: string;
   kanOppretteBehandling: boolean;
   perioderGyldigeForInntektsavkorting: Periode[];
-};
+}>;
 
 export type FormValues = {
   behandlingType: string;
@@ -272,19 +272,21 @@ export const NyBehandlingModal = ({
                   control={formMethods.control}
                   label="Velg måned for kontroll av inntekt"
                   name="fomForPeriodeForInntektskontroll"
-                  selectValues={getUngPerioderTilRevurdering().map(b => {
-                    const fomDato = new Date(b.fom!);
-                    const månedsnavn = new Intl.DateTimeFormat('nb-NO', {
-                      month: 'long',
-                      year: 'numeric',
-                    }).format(fomDato);
-                    const formatertMånedsnavn = månedsnavn.charAt(0).toUpperCase() + månedsnavn.slice(1);
-                    return (
-                      <option key={månedsnavn} value={b.fom}>
-                        {formatertMånedsnavn}
-                      </option>
-                    );
-                  })}
+                  selectValues={getUngPerioderTilRevurdering()
+                    .filter((p): p is { fom: string } => typeof p.fom === 'string')
+                    .map(p => {
+                      const fomDato = new Date(p.fom);
+                      const månedsnavn = new Intl.DateTimeFormat('nb-NO', {
+                        month: 'long',
+                        year: 'numeric',
+                      }).format(fomDato);
+                      const formatertMånedsnavn = månedsnavn.charAt(0).toUpperCase() + månedsnavn.slice(1);
+                      return (
+                        <option key={månedsnavn} value={p.fom}>
+                          {formatertMånedsnavn}
+                        </option>
+                      );
+                    })}
                 />
               )}
           </VStack>
