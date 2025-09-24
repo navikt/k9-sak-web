@@ -212,6 +212,7 @@ export const BehandlingMenuIndex = ({
         new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Sett behandlingen på vent').medModal(
           lukkModal => (
             <MenySettPaVentIndexV2
+              behandlingUuid={behandling?.uuid}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               settBehandlingPaVent={setBehandlingOnHold}

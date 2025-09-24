@@ -33,8 +33,9 @@ const BehandlingPaVent = ({ behandling, aksjonspunkter, settPaVent }: Behandling
         ...formData,
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
+        behandlingUuid: behandling.uuid,
       }).then(() => goToLos()),
-    [behandling.id, behandling.versjon, settPaVent],
+    [behandling.id, behandling.uuid, behandling.versjon, settPaVent],
   );
 
   const erManueltSattPaVent = useMemo(
