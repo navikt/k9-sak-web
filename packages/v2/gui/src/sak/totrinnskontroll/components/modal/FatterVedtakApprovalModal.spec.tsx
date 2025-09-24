@@ -2,7 +2,8 @@ import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
-import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
+import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = vi.fn();
@@ -13,6 +14,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
         behandlingTypeKode={behandlingType.KLAGE}
+        behandlingsresultatType={BehandlingResultatType.IKKE_FASTSATT}
         fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
         erKlageWithKA
       />,
@@ -29,6 +31,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
         behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
+        behandlingsresultatType={BehandlingResultatType.IKKE_FASTSATT}
         fagsakYtelseType={fagsakYtelsesType.ENGANGSTØNAD}
         erKlageWithKA
       />,
@@ -47,6 +50,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
         behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
+        behandlingsresultatType={BehandlingResultatType.IKKE_FASTSATT}
         fagsakYtelseType={fagsakYtelsesType.OMSORGSPENGER_KS}
         erKlageWithKA
       />,

@@ -1,18 +1,15 @@
 import { behandlingType as behandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 
 const getInfoTextCode = (
   behandlingtypeKode: string,
-  behandlingsresultat: Behandling['behandlingsresultat'],
+  behandlingsresultatType: BehandlingResultatType,
   harSammeResultatSomOriginalBehandling: boolean,
   ytelseType: FagsakYtelsesType,
   erKlageWithKA: boolean,
@@ -37,7 +34,7 @@ const getInfoTextCode = (
     return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type === BehandlingsresultatType.AVSLÅTT) {
+  if (behandlingsresultatType === BehandlingResultatType.AVSLÅTT) {
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
@@ -140,7 +137,7 @@ const utledInfoTextCode = (
   allAksjonspunktApproved: boolean,
   behandlingStatusKode: string,
   behandlingTypeKode: string,
-  behandlingsresultat: Behandling['behandlingsresultat'],
+  behandlingsresultatType: BehandlingResultatType,
   harSammeResultatSomOriginalBehandling: boolean,
   fagsakYtelseType: FagsakYtelsesType,
   erKlageWithKA: boolean,
@@ -150,7 +147,7 @@ const utledInfoTextCode = (
     return isStatusFatterVedtak(behandlingStatusKode)
       ? getInfoTextCode(
           behandlingTypeKode,
-          behandlingsresultat,
+          behandlingsresultatType,
           harSammeResultatSomOriginalBehandling,
           fagsakYtelseType,
           erKlageWithKA,
@@ -195,7 +192,7 @@ interface OwnProps {
   allAksjonspunktApproved: boolean;
   fagsakYtelseType: FagsakYtelsesType;
   erKlageWithKA?: boolean;
-  behandlingsresultat?: Behandling['behandlingsresultat'];
+  behandlingsresultatType: BehandlingResultatType;
   behandlingStatusKode: string;
   behandlingTypeKode: string;
   harSammeResultatSomOriginalBehandling?: boolean;
@@ -212,18 +209,18 @@ const FatterVedtakApprovalModal = ({
   allAksjonspunktApproved,
   behandlingStatusKode,
   behandlingTypeKode,
-  behandlingsresultat,
+  behandlingsresultatType,
   harSammeResultatSomOriginalBehandling,
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps) => {
   const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatType.OPPHØR;
+    behandlingsresultatType && behandlingsresultatType === BehandlingResultatType.OPPHØR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
     behandlingTypeKode,
-    behandlingsresultat,
+    behandlingsresultatType,
     !!harSammeResultatSomOriginalBehandling,
     fagsakYtelseType,
     !!erKlageWithKA,

@@ -1,31 +1,20 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
+import { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
 
 describe('<BeslutterModalIndex>', () => {
-  const behandling = {
+  const behandling: TotrinnskontrollBehandling = {
     id: 1,
     versjon: 2,
-    behandlingsresultat: {
-      type: {
-        kode: 'IKKE_FASTSATT',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
-    },
-    type: {
-      kode: behandlingType.FØRSTEGANGSSØKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: '',
-    },
-  } as Behandling;
+    behandlingsresultatType: 'IKKE_FASTSATT',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    status: BehandlingStatus.OPPRETTET,
+  };
 
   it('skal vise modal når beslutter godkjenner', () => {
     requestApi.mock(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {

@@ -27,6 +27,12 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import type { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngSakTotrinnskontrollBackendClient.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngTilbakeTotrinnskontrollBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -119,8 +125,8 @@ const TABS = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId?: number;
-  behandlingVersjon?: number;
+  behandlingId: number;
+  behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   navAnsatt: NavAnsatt;
@@ -145,9 +151,9 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
-  const kodeverkoppslag = useContext(UngKodeverkoppslagContext)
+  const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const notatBackendClient = new NotatBackendClient('ungSak');
-  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
+  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState<FormState | undefined>(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
   const prevResetValue = useRef(currentResetValue);
@@ -219,21 +225,21 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
 
-  const behandlingTypeKode = behandling?.type.kode
+  const behandlingTypeKode = behandling?.type.kode;
   const totrinnskontrollApi: TotrinnskontrollApi = useMemo(() => {
     const erTilbakekreving =
       behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
       behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
     const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
-    if(erTilbakekreving) {
-      return new UngTilbakeTotrinnskontrollBackendClient(kodeverkoppslag.ungTilbake)
+    if (erTilbakekreving) {
+      return new UngTilbakeTotrinnskontrollBackendClient(kodeverkoppslag.ungTilbake);
     }
-    if(erKlage) {
+    if (erKlage) {
       // TODO Initialiser UngKlageTotrinnskontrollBackendClient (klientkonfigurasjon, kodeverkoppslag, etc må på plass først)
-      throw new Error(`totrinnskontroll api for ungdomsytelse klage ikke implementert enda.`)
+      throw new Error(`totrinnskontroll api for ungdomsytelse klage ikke implementert enda.`);
     }
-    return new UngSakTotrinnskontrollBackendClient(kodeverkoppslag.ungSak)
-  }, [behandlingTypeKode, kodeverkoppslag])
+    return new UngSakTotrinnskontrollBackendClient(kodeverkoppslag.ungSak);
+  }, [behandlingTypeKode, kodeverkoppslag]);
 
   const isPanelDisabled = () =>
     valgtSupportPanel
@@ -276,6 +282,7 @@ const BehandlingSupportIndex = ({
               behandlingVersjon={behandlingVersjon}
               toTrinnFormState={toTrinnskontrollFormState}
               setToTrinnFormState={setToTrinnskontrollFormState}
+              api={totrinnskontrollApi}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
@@ -284,6 +291,7 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              api={totrinnskontrollApi}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>

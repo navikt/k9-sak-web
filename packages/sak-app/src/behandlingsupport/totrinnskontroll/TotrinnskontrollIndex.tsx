@@ -1,16 +1,19 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
-import TotrinnskontrollSakIndexPropsTransformer from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
+import TotrinnskontrollSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
 import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
-import React, { useCallback, useState } from 'react';
-import { useLocation } from 'react-router';
-import { createLocationForSkjermlenke } from '../../app/paths';
+import React, { useCallback, useMemo, useState } from 'react';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
 import { useQuery } from '@tanstack/react-query';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
-import type { Behandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/Behandling.js';
+import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
+import {
+  BehandlingResultatType,
+  isBehandlingResultatType,
+} from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
 
 type Values = {
   fatterVedtakAksjonspunktDto: any;
@@ -66,12 +69,27 @@ const TotrinnskontrollIndex = ({
   const [erAlleAksjonspunktGodkjent, setAlleAksjonspunktTilGodkjent] = useState(false);
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  // TODO Er dette ok å gjere, eller finnast det situasjoner der behandling kan vere undefined uten at det skal føre til uhandtert feil?
   if (behandling == null) {
     throw new Error(`Kunne ikke finne behandling med id ${behandlingId}`);
   }
 
-  const location = useLocation();
+  // Map legacy BehandlingDto til TotrinnskontrollBehandling type som v2 komponenter forventer.
+  // Dette kan fjernast i framtida viss vi får v2 BehandlingDto inn her.
+  // useMemo for å unngå re-rendering viss ikkje behandling er endra.
+  const totrinnskontrollBehandling: TotrinnskontrollBehandling = useMemo(
+    () => ({
+      id: behandling.id,
+      versjon: behandling.versjon,
+      type: behandling.type.kode,
+      status: behandling.status.kode as BehandlingStatus,
+      toTrinnsBehandling: behandling.toTrinnsBehandling,
+      behandlingsresultatType:
+        behandling.behandlingsresultat != null && isBehandlingResultatType(behandling.behandlingsresultat.type.kode)
+          ? behandling.behandlingsresultat.type.kode
+          : BehandlingResultatType.IKKE_FASTSATT,
+    }),
+    [behandling],
+  );
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
@@ -119,33 +137,33 @@ const TotrinnskontrollIndex = ({
   ) {
     return <LoadingPanel />;
   }
-  if (totrinnsÅrsakerQuery.data == null && totrinnArsakerReadOnlyQuery.data == null) {
+
+  const totrinnskontrollData = totrinnsÅrsakerQuery.data ?? totrinnArsakerReadOnlyQuery.data;
+  if (totrinnskontrollData != null) {
+    return (
+      <>
+        <TotrinnskontrollSakIndex
+          behandling={totrinnskontrollBehandling}
+          totrinnskontrollData={totrinnskontrollData}
+          readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
+          onSubmit={onSubmit}
+          behandlingKlageVurdering={totrinnsKlageVurderingQuery.data ?? undefined}
+          toTrinnFormState={toTrinnFormState}
+          setToTrinnFormState={setToTrinnFormState}
+        />
+        {visBeslutterModal && (
+          <BeslutterModalIndex
+            behandling={totrinnskontrollBehandling}
+            fagsakYtelseType={ensureKodeVerdiString(fagsak.sakstype)}
+            allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
+            erKlageWithKA={totrinnsKlageVurderingQuery.data?.klageVurderingResultatNK != null}
+          />
+        )}
+      </>
+    );
+  } else {
     return null;
   }
-
-  return (
-    <>
-      <TotrinnskontrollSakIndexPropsTransformer
-        behandling={behandling as unknown as Behandling} // TODO Usikker cast her fordi propstransformer konverterer kodeverk objekt til string uten typesikkerhet
-        totrinnskontrollSkjermlenkeContext={totrinnsÅrsakerQuery.data ?? totrinnArsakerReadOnlyQuery.data ?? []}
-        location={location}
-        readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
-        onSubmit={onSubmit}
-        behandlingKlageVurdering={totrinnsKlageVurderingQuery.data ?? undefined}
-        createLocationForSkjermlenke={createLocationForSkjermlenke}
-        toTrinnFormState={toTrinnFormState}
-        setToTrinnFormState={setToTrinnFormState}
-      />
-      {visBeslutterModal && (
-        <BeslutterModalIndex
-          behandling={behandling}
-          fagsakYtelseType={fagsak.sakstype}
-          allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
-          erKlageWithKA={totrinnsKlageVurderingQuery.data?.klageVurderingResultatNK != null}
-        />
-      )}
-    </>
-  );
 };
 
 export default TotrinnskontrollIndex;

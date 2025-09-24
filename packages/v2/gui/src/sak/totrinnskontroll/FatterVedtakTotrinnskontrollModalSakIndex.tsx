@@ -1,9 +1,10 @@
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
-import type { Behandling } from './types/Behandling';
+import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal.js';
+import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.ts';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 
 interface FatterVedtakTotrinnskontrollModalSakIndexProps {
-  behandling: Behandling;
+  behandling: TotrinnskontrollBehandling;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
   fagsakYtelseType: FagsakYtelsesType;
@@ -24,7 +25,7 @@ const FatterVedtakTotrinnskontrollModalSakIndex = ({
     allAksjonspunktApproved={allAksjonspunktApproved}
     fagsakYtelseType={fagsakYtelseType}
     erKlageWithKA={erKlageWithKA}
-    behandlingsresultat={behandling.behandlingsresultat}
+    behandlingsresultatType={behandling.behandlingsresultatType ?? BehandlingResultatType.IKKE_FASTSATT}
     behandlingStatusKode={behandling.status}
     behandlingTypeKode={behandling.type}
     harSammeResultatSomOriginalBehandling={harSammeResultatSomOriginalBehandling}

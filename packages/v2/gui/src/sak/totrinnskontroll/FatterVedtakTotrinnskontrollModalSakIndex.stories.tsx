@@ -7,6 +7,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
 import FatterVedtakTotrinnskontrollModalSakIndex from './FatterVedtakTotrinnskontrollModalSakIndex';
+import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
 
 const meta: Meta<typeof FatterVedtakTotrinnskontrollModalSakIndex> = {
   title: 'gui/sak/totrinnskontroll/fatter-vedtak-modal',
@@ -17,13 +18,12 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const behandling = {
+const behandling: TotrinnskontrollBehandling = {
   id: 1,
+  versjon: 2,
   status: BehandlingDtoStatus.FATTER_VEDTAK,
   type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
-  behandlingsresultat: {
-    type: BehandlingsresultatDtoType.OPPHØR,
-  },
+  behandlingsresultatType: BehandlingsresultatDtoType.OPPHØR,
   toTrinnsBehandling: false,
 };
 

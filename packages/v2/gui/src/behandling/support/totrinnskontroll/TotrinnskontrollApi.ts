@@ -1,10 +1,27 @@
-import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import type { SkjermlenkeObjekt } from '@k9-sak-web/backend/combined/behandling/historikk/SkjermlenkeObjekt.js';
+import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+
+export interface TotrinnskontrollDataPrSkjermlenke {
+  readonly skjermlenke: SkjermlenkeObjekt;
+  readonly aksjonspunkter: TotrinnskontrollAksjonspunkterDto[];
+}
+
+export interface TotrinnskontrollDataForAksjonspunkt {
+  readonly skjermlenke: SkjermlenkeObjekt;
+  readonly aksjonspunkt: TotrinnskontrollAksjonspunkterDto;
+}
+
+export interface TotrinnskontrollData {
+  forAksjonspunkt(aksjonspunktKode: AksjonspunktDefinisjon): TotrinnskontrollDataForAksjonspunkt | undefined;
+  readonly alleAksjonspunkt: ReadonlyArray<TotrinnskontrollAksjonspunkterDto>;
+  readonly prSkjermlenke: ReadonlyArray<TotrinnskontrollDataPrSkjermlenke>;
+  vurderPåNyttÅrsakNavn(årsak: Required<TotrinnskontrollAksjonspunkterDto>['vurderPaNyttArsaker'][number]): string;
+}
 
 export interface TotrinnskontrollApi {
-  hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollSkjermlenkeContextDto[]>;
-  hentTotrinnskontrollvurderingSkjermlenkeContext(
-    behandlingUuid: string,
-  ): Promise<TotrinnskontrollSkjermlenkeContextDto[]>;
+  hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
+  hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnsKlageVurdering?(behandlingUuid: string): Promise<k9_klage_kontrakt_klage_KlagebehandlingDto>;
 }

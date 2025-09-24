@@ -3,25 +3,25 @@ import type {
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
 } from '../TotrinnskontrollApi.ts';
+import type { UngSakKodeverkoppslag } from '../../../../kodeverk/oppslag/UngSakKodeverkoppslag.ts';
+import type { UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.ts';
+import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.ts';
+import type { UngSakTotrinnskontrollAksjonspunkterDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
-} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-//import type { k9_sak_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { K9SakKodeverkoppslag } from '../../../../kodeverk/oppslag/K9SakKodeverkoppslag.ts';
-import type { K9SakTotrinnskontrollAksjonspunkterDtoAdjusted as K9TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
-import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 
-export class K9SakTotrinnskontrollData implements TotrinnskontrollData {
-  #kodeverkoppslag: K9SakKodeverkoppslag;
-  #totrinnskontrollSkjermlenkeContextDtos: K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted[];
+export class UngSakTotrinnskontrollData implements TotrinnskontrollData {
+  #kodeverkoppslag: UngSakKodeverkoppslag;
+  #totrinnskontrollSkjermlenkeContextDtos: UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted[];
+
   constructor(
-    totrinnskontrollSkjermlenkeContextDtos: K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
-    kodeverkoppslag: K9SakKodeverkoppslag,
+    totrinnskontrollSkjermlenkeContextDtos: UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
+    kodeverkoppslag: UngSakKodeverkoppslag,
   ) {
-    this.#totrinnskontrollSkjermlenkeContextDtos = totrinnskontrollSkjermlenkeContextDtos;
     this.#kodeverkoppslag = kodeverkoppslag;
+    this.#totrinnskontrollSkjermlenkeContextDtos = totrinnskontrollSkjermlenkeContextDtos;
   }
 
   // Finn data for gitt aksjonspunktKode i data returnert frå server, tilpass til gui sine behov
@@ -53,33 +53,35 @@ export class K9SakTotrinnskontrollData implements TotrinnskontrollData {
     });
   }
 
-  vurderPåNyttÅrsakNavn(årsak: Required<K9TotrinnskontrollAksjonspunkterDto>['vurderPaNyttArsaker'][number]): string {
+  vurderPåNyttÅrsakNavn(
+    årsak: Required<UngSakTotrinnskontrollAksjonspunkterDtoAdjusted>['vurderPaNyttArsaker'][number],
+  ): string {
     return this.#kodeverkoppslag.vurderingsÅrsaker(årsak, 'or undefined')?.navn ?? '';
   }
 }
 
-export class K9SakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
-  #kodeverkoppslag: K9SakKodeverkoppslag;
+export class UngSakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
+  #kodeverkoppslag: UngSakKodeverkoppslag;
 
-  constructor(kodeverkoppslag: K9SakKodeverkoppslag) {
+  constructor(kodeverkoppslag: UngSakKodeverkoppslag) {
     this.#kodeverkoppslag = kodeverkoppslag;
   }
 
-  async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
+  async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string) {
     const data = (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({ query: { behandlingUuid } })).data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
-    return new K9SakTotrinnskontrollData(
-      data as K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
+    return new UngSakTotrinnskontrollData(
+      data as UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
       this.#kodeverkoppslag,
     );
   }
 
-  async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
+  async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string) {
     const data = (await totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext({ query: { behandlingUuid } }))
       .data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
-    return new K9SakTotrinnskontrollData(
-      data as K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
+    return new UngSakTotrinnskontrollData(
+      data as UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
       this.#kodeverkoppslag,
     );
   }

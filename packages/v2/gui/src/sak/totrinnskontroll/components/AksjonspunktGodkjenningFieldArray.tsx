@@ -1,27 +1,26 @@
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
-import * as Sentry from '@sentry/browser';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { NavLink, useLocation } from 'react-router';
-import { type Behandling } from '../types/Behandling';
+import { type TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
-import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
 
 export type AksjonspunktGodkjenningData = {
-  aksjonspunktKode: string;
+  aksjonspunktKode: AksjonspunktDefinisjon;
   annet?: boolean;
   besluttersBegrunnelse?: string;
   feilFakta?: boolean;
@@ -31,43 +30,35 @@ export type AksjonspunktGodkjenningData = {
 };
 
 interface OwnProps {
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
+  totrinnskontrollData: TotrinnskontrollData;
   readOnly: boolean;
   showBegrunnelse?: boolean;
   klageKA?: boolean;
   klagebehandlingVurdering?: KlagebehandlingDto;
-  behandlingStatus: Behandling['status'];
-  arbeidsforholdHandlingTyper: KodeverkObject[];
-  skjermlenkeTyper: KodeverkObject[];
+  behandlingStatus: TotrinnskontrollBehandling['status'];
 }
 
 export const AksjonspunktGodkjenningFieldArray = ({
-  totrinnskontrollSkjermlenkeContext,
+  totrinnskontrollData,
   readOnly,
   showBegrunnelse = false,
   klageKA = false,
   klagebehandlingVurdering,
   behandlingStatus,
-  arbeidsforholdHandlingTyper,
-  skjermlenkeTyper,
 }: OwnProps) => {
   const location = useLocation();
   const featureToggles = useContext(FeatureTogglesContext);
   const { control, formState } = useFormContext<FormState>();
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
   const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
+  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
   return (
     <>
       {fields.map((field, index) => {
         const { aksjonspunktKode, totrinnskontrollGodkjent, annet, feilFakta, feilLov, feilRegel } =
           aksjonspunktGodkjenning[index] || {};
-        const context = totrinnskontrollSkjermlenkeContext.find(c =>
-          c.totrinnskontrollAksjonspunkter.some(ta => ta.aksjonspunktKode === aksjonspunktKode),
-        );
-        const totrinnskontrollAksjonspunkt = context?.totrinnskontrollAksjonspunkter.find(
-          c => c.aksjonspunktKode === aksjonspunktKode,
-        );
+        const data = aksjonspunktKode != null ? totrinnskontrollData.forAksjonspunkt(aksjonspunktKode) : undefined;
 
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
         // visKunBegrunnelse settast true for å ikkje vise checkboxes for årsak når visArsaker er true.
@@ -76,40 +67,24 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const visArsaker = erKlageKA || totrinnskontrollGodkjent === false;
 
         const aksjonspunktText =
-          totrinnskontrollAksjonspunkt &&
-          getAksjonspunkttekst(
-            behandlingStatus,
-            arbeidsforholdHandlingTyper,
-            totrinnskontrollAksjonspunkt,
-            klagebehandlingVurdering,
-          );
-
-        const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
-          skjermlenkeType => skjermlenkeType.kode === context?.skjermlenkeType,
-        );
+          data != null
+            ? getAksjonspunkttekst(behandlingStatus, data.aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag)
+            : undefined;
 
         const isNyInntektEgetPanel =
           featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
-          skjermlenkeTypeKodeverk?.navn === 'Fordeling' &&
+          data?.skjermlenke?.navn === 'Fordeling' &&
           aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
 
         const hentSkjermlenkeTypeKodeverkNavn = () => {
-          try {
-            if (skjermlenkeTypeKodeverk?.navn === 'Vedtak') {
-              return 'Brev';
-            }
-
-            if (isNyInntektEgetPanel) {
-              return 'Ny inntekt';
-            }
-            return skjermlenkeTypeKodeverk?.navn;
-          } catch {
-            Sentry.captureEvent({
-              message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
-              extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context?.skjermlenkeType },
-            });
-            return '';
+          if (data?.skjermlenke?.navn === 'Vedtak') {
+            return 'Brev';
           }
+
+          if (isNyInntektEgetPanel) {
+            return 'Ny inntekt';
+          }
+          return data?.skjermlenke?.navn;
         };
 
         const checkboxRequiredError =
@@ -119,8 +94,8 @@ export const AksjonspunktGodkjenningFieldArray = ({
 
         const lenke = isNyInntektEgetPanel
           ? createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT')
-          : context != null
-            ? createPathForSkjermlenke(location, context.skjermlenkeTypeEnum)
+          : data != null
+            ? createPathForSkjermlenke(location, data.skjermlenke.kilde)
             : '';
 
         return (

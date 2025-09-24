@@ -248,13 +248,13 @@ const BehandlingSupportIndex = ({
       behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
     const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
     if (erTilbakekreving) {
-      return new K9TilbakeTotrinnskontrollBackendClient();
+      return new K9TilbakeTotrinnskontrollBackendClient(kodeverkoppslag.k9tilbake);
     }
     if (erKlage) {
-      return new K9KlageTotrinnskontrollBackendClient();
+      return new K9KlageTotrinnskontrollBackendClient(kodeverkoppslag.k9klage);
     }
-    return new K9SakTotrinnskontrollBackendClient();
-  }, [behandlingTypeKode]);
+    return new K9SakTotrinnskontrollBackendClient(kodeverkoppslag.k9sak);
+  }, [behandlingTypeKode, kodeverkoppslag]);
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
   return (

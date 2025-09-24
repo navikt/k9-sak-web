@@ -1,20 +1,21 @@
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import userEvent from '@testing-library/user-event';
+import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType.js';
-import {
+import { Meta, StoryObj } from '@storybook/react';
+import type {
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
 } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
-import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import { K9sakApiKeys, requestApi } from '../../data/k9sakApi.js';
-import { expect, userEvent } from 'storybook/test';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import { expect } from 'storybook/test';
 
 const navAnsatt = {
   brukernavn: 'Test',
@@ -29,13 +30,16 @@ const navAnsatt = {
 };
 
 const meta = {
-  title: 'sak/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex',
+  title: 'ung/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex',
   component: TotrinnskontrollIndex,
   beforeEach: () => {
-    requestApi.clearMockData(K9sakApiKeys.NAV_ANSATT);
-    requestApi.clearMockData(K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT);
-    requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
-    requestApi.mock(K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {});
+    requestApi.clearMockData(UngSakApiKeys.NAV_ANSATT);
+    requestApi.clearMockData(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT);
+    requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
+    // requestApi.mock(UngSakApiKeys.TOTRINNS_KLAGE_VURDERING, {});
+    // requestApi.mock(UngSakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
+    // requestApi.mock(UngSakApiKeys.TILGJENGELIGE_VEDTAKSBREV, {});
+    requestApi.mock(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {});
   },
   decorators: [withKodeverkContext(), withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TotrinnskontrollIndex>;
@@ -44,7 +48,7 @@ type Story = StoryObj<typeof meta>;
 
 const fagsak = {
   saksnummer: '1',
-  sakstype: fagsakYtelsesType.FORELDREPENGER,
+  sakstype: fagsakYtelsesType.UNGDOMSYTELSE,
   person: {
     aktørId: '123',
   },
@@ -93,7 +97,6 @@ const api: TotrinnskontrollApi = {
 };
 
 export const Default: Story = {
-  // TODO: Forbedre args data til å vere fullstendig korrekte typer
   args: {
     fagsak: fagsak as Fagsak,
     alleBehandlinger: alleBehandlinger as unknown as BehandlingAppKontekst[],
@@ -107,7 +110,7 @@ export const Default: Story = {
     await expect(godkjennBtn).toBeVisible();
     await userEvent.click(godkjennBtn);
     const dlg = await canvas.findByRole('dialog', {
-      name: 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+      name: 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
     });
     await expect(dlg).toBeVisible();
   },

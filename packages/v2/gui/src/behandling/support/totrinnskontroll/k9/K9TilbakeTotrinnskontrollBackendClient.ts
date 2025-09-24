@@ -1,4 +1,8 @@
-import type { TotrinnskontrollApi } from '../TotrinnskontrollApi.ts';
+import type {
+  TotrinnskontrollApi,
+  TotrinnskontrollData,
+  TotrinnskontrollDataForAksjonspunkt,
+} from '../TotrinnskontrollApi.ts';
 import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
@@ -7,11 +11,92 @@ import {
   type K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted,
   mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted,
 } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { K9TilbakeTotrinnskontrollAksjonspunkterDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import type { K9TilbakeKodeverkoppslag } from '../../../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
+import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+
+export class K9TilbakeTotrinnskontrollData implements TotrinnskontrollData {
+  #kodeverkoppslag: K9TilbakeKodeverkoppslag;
+  #totrinnskontrollSkjermlenkeContextDtos: ReadonlyArray<K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted>;
+
+  // Denne var implementert i TotrinnskontrollSakIndex
+  static readonly sorterteSkjermlenkeCodesForTilbakekreving = [
+    SkjermlenkeType.FAKTA_OM_FEILUTBETALING,
+    SkjermlenkeType.FORELDELSE,
+    SkjermlenkeType.TILBAKEKREVING,
+    SkjermlenkeType.VEDTAK,
+  ] as const;
+
+  // Denne sortering og filtrering var implementert i TotrinnskontrollSakIndex. Vart berre utført når BehandlingType var
+  // TILBAKEKREVING eller REVURDERING_TILBAKEKREVING, altså når data kom frå tilbakekreving. Implementerer derfor denne
+  // logikk her istadenfor.
+  private static sorterOgFiltrerSkjermlenkeContextsForTilbakekreving(
+    dtos: K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
+  ): K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[] {
+    return K9TilbakeTotrinnskontrollData.sorterteSkjermlenkeCodesForTilbakekreving
+      .map(skjermlenkeType => dtos.find(dto => dto.skjermlenkeType == skjermlenkeType))
+      .filter(s => s != null);
+  }
+
+  constructor(
+    totrinnskontrollSkjermlenkeContextDtos: K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
+    kodeverkoppslag: K9TilbakeKodeverkoppslag,
+  ) {
+    this.#kodeverkoppslag = kodeverkoppslag;
+    this.#totrinnskontrollSkjermlenkeContextDtos =
+      K9TilbakeTotrinnskontrollData.sorterOgFiltrerSkjermlenkeContextsForTilbakekreving(
+        totrinnskontrollSkjermlenkeContextDtos,
+      );
+  }
+
+  forAksjonspunkt(aksjonspunktKode: AksjonspunktDefinisjon): TotrinnskontrollDataForAksjonspunkt | undefined {
+    const dto = this.#totrinnskontrollSkjermlenkeContextDtos.find(dto =>
+      dto.totrinnskontrollAksjonspunkter.some(ap => ap.aksjonspunktKode == aksjonspunktKode),
+    );
+    if (dto != null) {
+      const aksjonspunkt = dto.totrinnskontrollAksjonspunkter.find(ap => ap.aksjonspunktKode == aksjonspunktKode);
+      if (aksjonspunkt != null) {
+        const skjermlenke = this.#kodeverkoppslag.skjermlenkeTyper(dto.skjermlenkeType);
+        return { skjermlenke, aksjonspunkt };
+      }
+    }
+    return undefined;
+  }
+
+  get dtos() {
+    return this.#totrinnskontrollSkjermlenkeContextDtos;
+  }
+
+  get alleAksjonspunkt() {
+    return this.#totrinnskontrollSkjermlenkeContextDtos.flatMap(dto => dto.totrinnskontrollAksjonspunkter);
+  }
+
+  get prSkjermlenke() {
+    return this.#totrinnskontrollSkjermlenkeContextDtos.map(dto => {
+      const skjermlenke = this.#kodeverkoppslag.skjermlenkeTyper(dto.skjermlenkeType);
+      return {
+        skjermlenke,
+        aksjonspunkter: dto.totrinnskontrollAksjonspunkter,
+      };
+    });
+  }
+
+  vurderPåNyttÅrsakNavn(
+    årsak: Required<K9TilbakeTotrinnskontrollAksjonspunkterDtoAdjusted>['vurderPaNyttArsaker'][number],
+  ): string {
+    return this.#kodeverkoppslag.vurderÅrsaker(årsak, 'or undefined')?.navn ?? '';
+  }
+}
 
 export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollApi {
-  async hentTotrinnskontrollSkjermlenkeContext(
-    behandlingUuid: string,
-  ): Promise<K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[]> {
+  #kodeverkoppslag: K9TilbakeKodeverkoppslag;
+
+  constructor(kodeverkoppslag: K9TilbakeKodeverkoppslag) {
+    this.#kodeverkoppslag = kodeverkoppslag;
+  }
+
+  async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
     const resp = await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({
       query: {
         uuid: {
@@ -20,12 +105,13 @@ export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollA
         },
       },
     });
-    return resp.data.map(mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted);
+    return new K9TilbakeTotrinnskontrollData(
+      resp.data.map(mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted),
+      this.#kodeverkoppslag,
+    );
   }
 
-  async hentTotrinnskontrollvurderingSkjermlenkeContext(
-    behandlingUuid: string,
-  ): Promise<K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[]> {
+  async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
     const resp = await totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext({
       query: {
         uuid: {
@@ -34,6 +120,9 @@ export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollA
         },
       },
     });
-    return resp.data.map(mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted);
+    return new K9TilbakeTotrinnskontrollData(
+      resp.data.map(mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted),
+      this.#kodeverkoppslag,
+    );
   }
 }

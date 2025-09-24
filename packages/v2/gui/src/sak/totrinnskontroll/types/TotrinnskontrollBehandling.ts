@@ -7,4 +7,11 @@ type AdjustedTilbakeBehandlingDto = TilbakeBehandlingDto & Pick<Required<Tilbake
 
 type CombinedBehandling = KlageBehandlingDto | BehandlingDto | AdjustedTilbakeBehandlingDto;
 
-export type Behandling = Pick<CombinedBehandling, 'behandlingsresultat' | 'status' | 'toTrinnsBehandling' | 'type'>;
+type BehandlingsresultatType = Required<CombinedBehandling>['behandlingsresultat']['type'];
+
+export type TotrinnskontrollBehandling = Pick<
+  CombinedBehandling,
+  'status' | 'toTrinnsBehandling' | 'type' | 'id' | 'versjon'
+> & {
+  behandlingsresultatType: BehandlingsresultatType;
+};
