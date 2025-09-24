@@ -1,13 +1,12 @@
-import { oppslagKodeverkSomObjektK9Klage } from '../mocks/oppslagKodeverkSomObjektK9Klage.js';
 import {
   k9_klage_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   type k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_behandling_BehandlingStatus as KodeverdiSomObjektBehandlingStatus,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { K9KlageKodeverkoppslag } from './K9KlageKodeverkoppslag.js';
 import { OrUndefined } from './GeneriskKodeverkoppslag.js';
+import { fakeK9Kodeverkoppslag } from "../mocks/fakeK9Kodeverkoppslag.js";
 
 describe('Kodeverkoppslag', () => {
-  const oppslag = new K9KlageKodeverkoppslag(oppslagKodeverkSomObjektK9Klage);
+  const oppslag = fakeK9Kodeverkoppslag().k9klage
   const behandlingStatusOppslagResultat: KodeverdiSomObjektBehandlingStatus = {
     kode: BehandlingStatus.OPPRETTET,
     kodeverk: 'BEHANDLING_STATUS',

@@ -16,7 +16,7 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -145,6 +145,7 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
+  const kodeverkoppslag = useContext(UngKodeverkoppslagContext)
   const notatBackendClient = new NotatBackendClient('ungSak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
@@ -217,6 +218,22 @@ const BehandlingSupportIndex = ({
     () => lagTabs(synligeSupportPaneler, valgtIndex),
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
+
+  const behandlingTypeKode = behandling?.type.kode
+  const totrinnskontrollApi: TotrinnskontrollApi = useMemo(() => {
+    const erTilbakekreving =
+      behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
+      behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
+    const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
+    if(erTilbakekreving) {
+      return new UngTilbakeTotrinnskontrollBackendClient(kodeverkoppslag.ungTilbake)
+    }
+    if(erKlage) {
+      // TODO Initialiser UngKlageTotrinnskontrollBackendClient (klientkonfigurasjon, kodeverkoppslag, etc må på plass først)
+      throw new Error(`totrinnskontroll api for ungdomsytelse klage ikke implementert enda.`)
+    }
+    return new UngSakTotrinnskontrollBackendClient(kodeverkoppslag.ungSak)
+  }, [behandlingTypeKode, kodeverkoppslag])
 
   const isPanelDisabled = () =>
     valgtSupportPanel

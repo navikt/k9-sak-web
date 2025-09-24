@@ -6,9 +6,13 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/qFeatureToggles.js';
 import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
-import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
+import { requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import useGetEnabledApplikasjonContext from "./useGetEnabledApplikasjonContext";
+import ApplicationContextPath from "@k9-sak-web/sak-app/src/app/ApplicationContextPath";
+import { useUngKodeverkoppslag } from "@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js";
+import { UngKodeverkoppslagContext } from "@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js";
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -40,6 +44,10 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
+  const enabledApplicationContexts = useGetEnabledApplikasjonContext()
+  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE)
+  const ungKodeverkOppslag = useUngKodeverkoppslag(tilbakeAktivert) // Legg til klage her når det er klart
+
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
   const erFerdig =
@@ -47,11 +55,14 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
     sprakFilState === RestApiState.SUCCESS &&
+    !ungKodeverkOppslag.isPending &&
     !!featureToggles;
 
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
-      {harFeilet || erFerdig ? children : <LoadingPanel />}
+      <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
+        {harFeilet || erFerdig ? children : <LoadingPanel />}
+      </UngKodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
   );
 };
