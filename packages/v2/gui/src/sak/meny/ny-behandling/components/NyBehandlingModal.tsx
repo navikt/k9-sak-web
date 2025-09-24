@@ -8,7 +8,7 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
-import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
 import { RhfCheckbox, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
@@ -24,10 +24,11 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
   return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
 };
 
-export type BehandlingOppretting = Readonly<{
+export type BehandlingOppretting = {
   behandlingType: string;
   kanOppretteBehandling: boolean;
-}>;
+  perioderGyldigeForInntektsavkorting: Periode[];
+};
 
 export type FormValues = {
   behandlingType: string;
@@ -36,7 +37,7 @@ export type FormValues = {
   steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
   fom: string;
   tom: string;
-  periodeForInntektskontroll: string;
+  fomForPeriodeForInntektskontroll?: string;
 };
 
 interface NyBehandlingModalProps {
@@ -48,6 +49,7 @@ interface NyBehandlingModalProps {
       behandlingUuid?: string;
       eksternUuid?: string;
       fagsakYtelseType: FagsakYtelsesType;
+      periodeForInntektskontroll?: Periode;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -131,7 +133,7 @@ export const NyBehandlingModal = ({
       steg: undefined,
       fom: '',
       tom: '',
-      periodeForInntektskontroll: '',
+      fomForPeriodeForInntektskontroll: '',
     },
   });
   const [valgtBehandlingTypeKode, steg, fom, behandlingArsakType] = formMethods.watch([
@@ -159,6 +161,15 @@ export const NyBehandlingModal = ({
     (erRevurdering && steg === 'inngangsvilkår') ||
     (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0) ||
     (erRevurdering && erUngdomsprogramytelse);
+  const getUngPerioderTilRevurdering = () => {
+    const rettigheterForBehandling = behandlingOppretting.find(
+      b => b.behandlingType === BehandlingTypeK9Klage.REVURDERING,
+    );
+    if (!rettigheterForBehandling) {
+      return [];
+    }
+    return rettigheterForBehandling.perioderGyldigeForInntektsavkorting;
+  };
   const handleSubmit = (formValues: FormValues) => {
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
@@ -172,9 +183,13 @@ export const NyBehandlingModal = ({
       behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
+      periodeForInntektskontroll: erUngdomsprogramytelse
+        ? getUngPerioderTilRevurdering().find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+        : undefined,
       ...klageOnlyValues,
     });
   };
+
   return (
     <Modal
       className={styles.modal}
@@ -256,8 +271,20 @@ export const NyBehandlingModal = ({
                 <RhfSelect
                   control={formMethods.control}
                   label="Velg måned for kontroll av inntekt"
-                  name="periodeForInntektskontroll"
-                  selectValues={[<option>Januar</option>, <option>Februar</option>]}
+                  name="fomForPeriodeForInntektskontroll"
+                  selectValues={getUngPerioderTilRevurdering().map(b => {
+                    const fomDato = new Date(b.fom!);
+                    const månedsnavn = new Intl.DateTimeFormat('nb-NO', {
+                      month: 'long',
+                      year: 'numeric',
+                    }).format(fomDato);
+                    const formatertMånedsnavn = månedsnavn.charAt(0).toUpperCase() + månedsnavn.slice(1);
+                    return (
+                      <option key={månedsnavn} value={b.fom}>
+                        {formatertMånedsnavn}
+                      </option>
+                    );
+                  })}
                 />
               )}
           </VStack>
