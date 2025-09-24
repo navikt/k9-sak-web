@@ -44,6 +44,7 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   onPeriodeClick: (periode: T | null) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
+  customLabelRow?: React.ReactNode;
   title?: string;
   nyesteFørst?: boolean;
 }
@@ -73,6 +74,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   onPeriodeClick,
   customPeriodeRad,
   customPeriodeLabel,
+  customLabelRow,
   title = 'Alle perioder',
   nyesteFørst = true,
 }: VurderingslisteProps<T>) => {
@@ -125,10 +127,14 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
       {allePerioder.length > 0 && (
         <>
-          <div className="flex w-[120px]">
-            <div className="mx-4 min-w-[50px]">Status</div>
-            <div>{customPeriodeLabel || 'Periode'}</div>
-          </div>
+          {customLabelRow ? (
+            customLabelRow
+          ) : (
+            <div className="flex w-[120px]">
+              <div className="ml-6 min-w-[50px]">Status</div>
+              <div className="ml-2">{customPeriodeLabel || 'Periode'}</div>
+            </div>
+          )}
           <ul className={styles.interactiveList}>
             {allePerioder.map((element, currentIndex) => (
               <li key={element.id || element.perioder[0]?.fom}>
