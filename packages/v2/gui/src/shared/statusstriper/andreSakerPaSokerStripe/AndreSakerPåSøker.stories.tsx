@@ -27,18 +27,16 @@ const createMockApi = (responseData: MatchFagsakerResponse = [], shouldFail = fa
 
 export const IngenAndreSaker: Story = {
   args: {
-    søkerIdent: '12345678910',
+    behandlingUuid: '12345678910',
     saksnummer: '1',
-    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([{ saksnummer: '1', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }]),
   },
 };
 
 export const EnAnnenSak: Story = {
   args: {
-    søkerIdent: '12345678910',
+    behandlingUuid: '12345678910',
     saksnummer: '12',
-    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([{ saksnummer: '22', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }]),
   },
   play: async ({ canvas }) => {
@@ -50,9 +48,8 @@ export const EnAnnenSak: Story = {
 
 export const FlereAndreSaker: Story = {
   args: {
-    søkerIdent: '12345678910',
+    behandlingUuid: '12345678910',
     saksnummer: '11',
-    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([
       { saksnummer: '23', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
       { saksnummer: '34', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
@@ -70,9 +67,8 @@ export const FlereAndreSaker: Story = {
 
 export const MedFeil: Story = {
   args: {
-    søkerIdent: '12345678910',
+    behandlingUuid: '12345678910',
     saksnummer: '1',
-    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([], true),
   },
   play: async ({ canvas }) => {
@@ -83,9 +79,8 @@ export const MedFeil: Story = {
 
 export const SaksnummerFiltrering: Story = {
   args: {
-    søkerIdent: '12345678910',
+    behandlingUuid: '12345678910',
     saksnummer: '24', // Dette saksnummeret filtreres bort fra resultatet
-    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     api: createMockApi([
       { saksnummer: '1124', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
       { saksnummer: '24', ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },

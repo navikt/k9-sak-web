@@ -16,6 +16,7 @@ interface OwnProps {
   resultat?: ResultatType;
   active?: boolean;
   handleClick: () => void;
+  annenPartIkon?: React.ReactNode;
 }
 
 const renderStatusIcon = (resultat?: ResultatType) => {

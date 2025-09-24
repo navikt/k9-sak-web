@@ -41,6 +41,7 @@ const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeri
           begrunnelse: periode.begrunnelse ?? '',
           periode: periode.periode,
           harAvvik: periode.status === PeriodeStatus.AVVIK,
+          erTilVurdering: !!periode.erTilVurdering,
         };
       }) || [],
   };
@@ -53,6 +54,7 @@ type Formvalues = {
     begrunnelse: string;
     periode: KontrollerInntektPeriodeDto['periode'];
     harAvvik: boolean;
+    erTilVurdering: boolean;
   }[];
 };
 
@@ -70,7 +72,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
 
   const onSubmit = async (values: Formvalues) => {
     setIsSubmitting(true);
-    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik);
+    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik && periode.erTilVurdering);
     try {
       await submitCallback([
         {
