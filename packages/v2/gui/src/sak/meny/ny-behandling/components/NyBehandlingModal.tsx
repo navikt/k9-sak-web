@@ -282,7 +282,7 @@ export const NyBehandlingModal = ({
                       }).format(fomDato);
                       const formatertMånedsnavn = månedsnavn.charAt(0).toUpperCase() + månedsnavn.slice(1);
                       return (
-                        <option key={månedsnavn} value={p.fom}>
+                        <option key={p.fom} value={p.fom}>
                           {formatertMånedsnavn}
                         </option>
                       );
