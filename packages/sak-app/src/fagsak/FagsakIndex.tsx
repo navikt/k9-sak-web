@@ -311,9 +311,8 @@ const FagsakIndex = () => {
 
                       <AndreSakerPåSøkerStripe
                         api={k9StatusBackendClient}
-                        søkerIdent={fagsakPerson.personnummer}
+                        behandlingUuid={behandling?.uuid}
                         saksnummer={fagsak.saksnummer}
-                        fagsakYtelseType={fagsak.sakstype}
                       />
                     </>
                   )}
