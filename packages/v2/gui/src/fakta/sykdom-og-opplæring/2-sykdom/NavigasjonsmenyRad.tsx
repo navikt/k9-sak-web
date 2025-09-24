@@ -35,7 +35,7 @@ export const NavigasjonsmenyRad = ({
               <BodyShort>{periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}</BodyShort>
             </div>
             {erFraAnnenPart && (
-              <div className="ml-9">
+              <div className="ml-5">
                 <PersonGroupFillIcon title="Denne vurderingen er fra en annen part" className="text-2xl" />
               </div>
             )}

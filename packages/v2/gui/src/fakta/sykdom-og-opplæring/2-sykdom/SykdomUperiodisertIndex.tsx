@@ -95,7 +95,9 @@ const SykdomUperiodisertIndex = () => {
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
-              customLabelRow={<CustomLabelRow />}
+              customLabelRow={
+                <CustomLabelRow harAnnenPart={vurderingsliste?.some(vurdering => vurdering.vurderingFraAnnenpart)} />
+              }
               customPeriodeRad={(periode, onPeriodeClick) => (
                 <NavigasjonsmenyRad
                   periode={periode}
@@ -131,12 +133,12 @@ const SykdomUperiodisertIndex = () => {
   );
 };
 
-const CustomLabelRow = () => {
+const CustomLabelRow = ({ harAnnenPart }: { harAnnenPart?: boolean }) => {
   return (
     <div className="flex items-center w-full">
       <div className="ml-6 min-w-[50px]">Status</div>
       <div className="ml-2">Periode</div>
-      <div className="ml-[74px]">Annen part</div>
+      {harAnnenPart && <div className="ml-14">Annen part</div>}
     </div>
   );
 };
