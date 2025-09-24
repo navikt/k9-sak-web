@@ -5,9 +5,11 @@ import { useCallback } from 'react';
 interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid: string | undefined;
   settBehandlingPaVent: (params: {
     behandlingVersjon: number;
     behandlingId: number;
+    behandlingUuid: string | undefined;
     frist: string;
     ventearsak: string;
   }) => Promise<any>;
@@ -23,12 +25,14 @@ export const MenySettPaVentIndexV2 = ({
   lukkModal,
   erTilbakekreving,
   erKlage,
+  behandlingUuid,
 }: OwnProps) => {
   const submit = useCallback(
     async (formValues: FormState) => {
       const values = {
         behandlingVersjon,
         behandlingId,
+        behandlingUuid,
         frist: formValues.frist,
         ventearsak: formValues.ventearsak,
         ventearsakVariant: formValues.ventearsakVariant,
