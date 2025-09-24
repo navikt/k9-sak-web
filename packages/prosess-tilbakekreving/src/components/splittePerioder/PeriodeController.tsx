@@ -17,6 +17,7 @@ const isEdited = false;
 interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid: string;
   beregnBelop: (data: any) => Promise<any>;
   oppdaterSplittedePerioder: (...args: any[]) => any;
   callbackForward: (...args: any[]) => any;
@@ -45,6 +46,7 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
       periode,
       beregnBelop: callBeregnBelop,
       behandlingId: selectedBehandlingId,
+      behandlingUuid,
       oppdaterSplittedePerioder,
     } = props;
 
@@ -63,6 +65,7 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
 
     const params = {
       behandlingId: selectedBehandlingId,
+      behandlingUuid,
       perioder: [forstePeriode, andrePeriode],
     };
 

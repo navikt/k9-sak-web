@@ -9,13 +9,13 @@ export const NavigasjonsmenyRad = ({
   active,
   erBruktIAksjonspunkt,
   onClick,
-  erFraTidligereBehandling,
+  erFraAnnenPart,
 }: {
   periode: Vurderingselement;
   active: boolean;
   erBruktIAksjonspunkt: boolean;
   onClick: () => void;
-  erFraTidligereBehandling: boolean;
+  erFraAnnenPart?: boolean;
 }) => {
   return (
     <div
@@ -34,9 +34,9 @@ export const NavigasjonsmenyRad = ({
             <div className="flex items-center">
               <BodyShort>{periode.perioder[0]?.prettifyPeriod().split(' - ')[0]}</BodyShort>
             </div>
-            {erFraTidligereBehandling && (
-              <div className="ml-9">
-                <PersonGroupFillIcon title="Denne vurderingen er fra en tidligere behandling" className="text-2xl" />
+            {erFraAnnenPart && (
+              <div className="ml-5">
+                <PersonGroupFillIcon title="Denne vurderingen er fra en annen part" className="text-2xl" />
               </div>
             )}
           </div>

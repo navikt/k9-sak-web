@@ -1,10 +1,9 @@
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import TilbakekrevingForm from './components/TilbakekrevingForm';
-import FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
 import DetaljerteFeilutbetalingsperioder from './types/detaljerteFeilutbetalingsperioderTsType';
+import FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
 import VilkarsVurdertePerioderWrapper from './types/vilkarsVurdertePerioderTsType';
 
 import messages from '../i18n/nb_NO.json';
@@ -52,6 +51,7 @@ const TilbakekrevingProsessIndex = ({
     <TilbakekrevingForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
+      behandlingUuid={behandling.uuid}
       perioderForeldelse={perioderForeldelse}
       perioder={vilkarvurderingsperioder.perioder}
       rettsgebyr={vilkarvurderingsperioder.rettsgebyr}

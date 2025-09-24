@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
 
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
-import { getPathToK9Los } from '../../app/paths';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 
@@ -28,7 +27,7 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
   );
 
   const goToSearchPage = useCallback(() => {
-    window.location.assign(getPathToK9Los() || '/');
+    window.location.assign('/');
   }, []);
 
   if (state === RestApiState.LOADING) {

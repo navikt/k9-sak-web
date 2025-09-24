@@ -1,7 +1,18 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
+import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
+import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import { BehandlingAppKontekst, Fagsak, FeatureToggles, NavAnsatt, Personopplysninger } from '@k9-sak-web/types';
+import {
+  ArbeidsgiverOpplysningerWrapper,
+  BehandlingAppKontekst,
+  Fagsak,
+  FeatureToggles,
+  NavAnsatt,
+  Personopplysninger,
+} from '@k9-sak-web/types';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
@@ -24,6 +35,7 @@ import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
+import MeldingTilbakeIndex from './melding/MeldingTilbakeIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
@@ -131,6 +143,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   navAnsatt: NavAnsatt;
   featureToggles?: FeatureToggles;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 /**
@@ -148,9 +161,12 @@ const BehandlingSupportIndex = ({
   personopplysninger,
   navAnsatt,
   featureToggles,
+  arbeidsgiverOpplysninger,
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
+  const formidlingClient = useContext(FormidlingClientContext);
+  const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
   const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const notatBackendClient = new NotatBackendClient('ungSak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState<FormState | undefined>(undefined);
@@ -246,6 +262,10 @@ const BehandlingSupportIndex = ({
       ? !valgbareSupportPaneler.includes(valgtSupportPanel) && valgtSupportPanel !== SupportTabs.MELDINGER
       : false;
 
+  if (!behandlingRettigheter) {
+    return <LoadingPanel />;
+  }
+
   return (
     <Tabs defaultValue={aktivtSupportPanel} className={styles.tablistWrapper}>
       <div className={styles.meny}>
@@ -305,7 +325,22 @@ const BehandlingSupportIndex = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
-            {behandlingId && <MeldingIndex alleBehandlinger={alleBehandlinger} behandlingId={behandlingId} />}
+            {behandlingId ? (
+              erTilbakekreving(behandling?.type.kode) ? (
+                <MeldingTilbakeIndex
+                  fagsak={fagsak}
+                  alleBehandlinger={alleBehandlinger}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                  personopplysninger={personopplysninger}
+                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                  featureToggles={featureToggles}
+                  backendApi={meldingerBackendClient}
+                />
+              ) : (
+                <MeldingIndex alleBehandlinger={alleBehandlinger} behandlingId={behandlingId} />
+              )
+            ) : null}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.DOKUMENTER}>
             <DokumentIndex
