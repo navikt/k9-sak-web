@@ -5,11 +5,11 @@ import { useCallback } from 'react';
 interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingUuid: string | undefined;
+  behandlingUuid?: string;
   settBehandlingPaVent: (params: {
     behandlingVersjon: number;
     behandlingId: number;
-    behandlingUuid: string | undefined;
+    behandlingUuid?: string;
     frist: string;
     ventearsak: string;
   }) => Promise<any>;
