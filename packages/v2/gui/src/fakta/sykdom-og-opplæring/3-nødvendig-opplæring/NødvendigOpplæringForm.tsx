@@ -209,10 +209,6 @@ const NødvendigOpplæringForm = ({
     formMethods.resetField('perioder', { keepTouched: true });
   }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
-  useEffect(() => {
-    if (!brukVurderingIAndrePerioder) formMethods.setValue('tilleggsPerioder', []);
-  }, [brukVurderingIAndrePerioder]);
-
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
   return (
@@ -353,7 +349,14 @@ const NødvendigOpplæringForm = ({
             <Checkbox
               size="small"
               checked={brukVurderingIAndrePerioder}
-              onChange={() => setBrukVurderingIAndrePerioder(!brukVurderingIAndrePerioder)}
+              onChange={() => {
+                if (brukVurderingIAndrePerioder) {
+                  setBrukVurderingIAndrePerioder(false);
+                  formMethods.setValue('tilleggsPerioder', []);
+                } else {
+                  setBrukVurderingIAndrePerioder(true);
+                }
+              }}
             >
               Bruk denne vurderingen for andre perioder
             </Checkbox>
