@@ -309,11 +309,7 @@ const FagsakIndex = () => {
                         pathToLos={getPathToK9Los()}
                       />
 
-                      <AndreSakerPåSøkerStripe
-                        api={k9StatusBackendClient}
-                        behandlingUuid={behandling?.uuid}
-                        saksnummer={fagsak.saksnummer}
-                      />
+                      <AndreSakerPåSøkerStripe api={k9StatusBackendClient} saksnummer={fagsak.saksnummer} />
                     </>
                   )}
                 </div>
