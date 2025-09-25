@@ -24,10 +24,15 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
   return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
 };
 
+export type ÅrsakOgPerioder = Readonly<{
+  aarsak: string;
+  perioder: Periode[];
+}>;
+
 export type BehandlingOppretting = Readonly<{
   behandlingType: string;
   kanOppretteBehandling: boolean;
-  perioderGyldigeForInntektsavkorting: Periode[];
+  gyldigePerioderPerAarsak: ÅrsakOgPerioder[];
 }>;
 
 export type FormValues = {
@@ -49,7 +54,7 @@ interface NyBehandlingModalProps {
       behandlingUuid?: string;
       eksternUuid?: string;
       fagsakYtelseType: FagsakYtelsesType;
-      periodeForInntektskontroll?: Periode;
+      periode?: Periode;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -168,7 +173,7 @@ export const NyBehandlingModal = ({
     if (!rettigheterForBehandling) {
       return [];
     }
-    return rettigheterForBehandling.perioderGyldigeForInntektsavkorting;
+    return rettigheterForBehandling.gyldigePerioderPerAarsak.find(it => it.aarsak === behandlingArsakType)?.perioder;
   };
   const handleSubmit = (formValues: FormValues) => {
     const klageOnlyValues =
@@ -183,8 +188,8 @@ export const NyBehandlingModal = ({
       behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
-      periodeForInntektskontroll: erUngdomsprogramytelse
-        ? getUngPerioderTilRevurdering().find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+      periode: erUngdomsprogramytelse
+        ? getUngPerioderTilRevurdering()!.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
         : undefined,
       ...klageOnlyValues,
     });
@@ -267,12 +272,13 @@ export const NyBehandlingModal = ({
               </Fieldset>
             )}
             {erRevurdering &&
-              behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT && (
+              behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT &&
+              !!getUngPerioderTilRevurdering() && (
                 <RhfSelect
                   control={formMethods.control}
                   label="Velg måned for kontroll av inntekt"
                   name="fomForPeriodeForInntektskontroll"
-                  selectValues={getUngPerioderTilRevurdering()
+                  selectValues={getUngPerioderTilRevurdering()!
                     .filter((p): p is { fom: string } => typeof p.fom === 'string')
                     .map(p => {
                       const fomDato = new Date(p.fom);
