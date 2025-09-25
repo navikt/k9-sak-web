@@ -15,6 +15,7 @@ import { type FormState } from './FormState';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
@@ -73,35 +74,31 @@ export const AksjonspunktGodkjenningFieldArray = ({
 
         const isNyInntektEgetPanel =
           featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
-          data?.skjermlenke?.navn === 'Fordeling' &&
+          data?.skjermlenke?.kilde === SkjermlenkeType.FAKTA_OM_FORDELING &&
           aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
-
-        const hentSkjermlenkeTypeKodeverkNavn = () => {
-          if (data?.skjermlenke?.navn === 'Vedtak') {
-            return 'Brev';
-          }
-
-          if (isNyInntektEgetPanel) {
-            return 'Ny inntekt';
-          }
-          return data?.skjermlenke?.navn;
-        };
 
         const checkboxRequiredError =
           formState.isSubmitted && !totrinnskontrollGodkjent && !annet && !feilFakta && !feilLov && !feilRegel
             ? 'Feltet må fylles ut'
             : '';
 
-        const lenke = isNyInntektEgetPanel
+        const skjermlenkePath = isNyInntektEgetPanel
           ? createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT')
           : data != null
             ? createPathForSkjermlenke(location, data.skjermlenke.kilde)
             : '';
 
+        const skjermlenkeTekst =
+          data?.skjermlenke?.kilde === SkjermlenkeType.VEDTAK
+            ? 'Brev'
+            : isNyInntektEgetPanel
+              ? 'Ny inntekt'
+              : data?.skjermlenke?.navn;
+
         return (
           <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
-            <Link as={NavLink} to={lenke} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
-              {hentSkjermlenkeTypeKodeverkNavn()}
+            <Link as={NavLink} to={skjermlenkePath} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
+              {skjermlenkeTekst}
             </Link>
             <div className={styles.approvalItemContainer}>
               {aksjonspunktText
