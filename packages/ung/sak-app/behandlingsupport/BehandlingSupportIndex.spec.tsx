@@ -58,6 +58,17 @@ describe('<BehandlingSupportIndex>', () => {
           behandlingId={1}
           behandlingVersjon={2}
           navAnsatt={navAnsatt}
+          behandlingRettigheter={{
+            behandlingKanBytteEnhet: false,
+            behandlingKanHenlegges: false,
+            behandlingKanGjenopptas: false,
+            behandlingKanOpnesForEndringer: false,
+            behandlingKanSettesPaVent: false,
+            behandlingKanSendeMelding: false,
+            behandlingFraBeslutter: false,
+            behandlingTilGodkjenning: false,
+            vergeBehandlingsmeny: VergeBehandlingmenyValg.SKJUL,
+          }}
         />
       </MemoryRouter>,
     );
