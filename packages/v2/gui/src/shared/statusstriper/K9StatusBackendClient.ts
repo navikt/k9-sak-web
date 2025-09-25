@@ -10,8 +10,8 @@ import {
 export default class K9StatusBackendClient {
   constructor() {}
 
-  async getAndreSakerPåSøker(behandlingUuid: string): Promise<MatchFagsakerResponse> {
-    return (await fagsak_hentSøkersRelaterteSaker({ query: { behandlingUuid: behandlingUuid } })).data;
+  async getAndreSakerPåSøker(saksnummer: string): Promise<MatchFagsakerResponse> {
+    return (await fagsak_hentSøkersRelaterteSaker({ query: { saksnummer: { saksnummer } } })).data;
   }
 
   async getUferdigePunsjoppgaver(saksnummer: string): Promise<GetUferdigJournalpostIderPrAktoer1Response> {

@@ -5,5 +5,5 @@ import type {
 
 export type K9StatusBackendApi = {
   getUferdigePunsjoppgaver: (saksnummer: string) => Promise<GetUferdigJournalpostIderPrAktoer1Response>;
-  getAndreSakerPåSøker: (behandlingUuid: string) => Promise<MatchFagsakerResponse>;
+  getAndreSakerPåSøker: (saksnummer: string) => Promise<MatchFagsakerResponse>;
 };
