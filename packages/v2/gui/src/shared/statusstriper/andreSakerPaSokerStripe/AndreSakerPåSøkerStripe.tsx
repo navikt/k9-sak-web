@@ -6,18 +6,17 @@ import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import styles from './andreSakerPåSøkerStripe.module.css';
 interface Props {
   saksnummer: string;
-  behandlingUuid: string;
   api: K9StatusBackendApi;
 }
 
-const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api, behandlingUuid }) => {
+const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
   const {
     data: fagsaker,
     error,
     isSuccess,
   } = useQuery({
-    queryKey: ['andreFagsaker', { behandlingUuid }],
-    queryFn: () => api.getAndreSakerPåSøker(behandlingUuid),
+    queryKey: ['andreFagsaker', { saksnummer }],
+    queryFn: () => api.getAndreSakerPåSøker(saksnummer),
     initialData: [],
   });
 

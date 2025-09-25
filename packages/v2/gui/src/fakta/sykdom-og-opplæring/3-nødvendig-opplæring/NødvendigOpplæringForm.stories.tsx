@@ -63,6 +63,7 @@ export const Avslagsårsaker: Story = {
     },
     setRedigerer: action('setRedigerer'),
     redigerer: true,
+    andrePerioderTilVurdering: [],
   },
   play: async ({ canvas }) => {
     const harViFåttLegeerklæringGroup = canvas.getByRole('group', {
