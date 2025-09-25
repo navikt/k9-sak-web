@@ -349,13 +349,15 @@ const NødvendigOpplæringForm = ({
               dokumentasjon fra bruker.
             </Alert>
           )}
-          <Checkbox
-            size="small"
-            checked={brukVurderingIAndrePerioder}
-            onChange={() => setBrukVurderingIAndrePerioder(!brukVurderingIAndrePerioder)}
-          >
-            Bruk denne vurderingen for andre perioder
-          </Checkbox>
+          {andrePerioderTilVurdering.length > 0 && (
+            <Checkbox
+              size="small"
+              checked={brukVurderingIAndrePerioder}
+              onChange={() => setBrukVurderingIAndrePerioder(!brukVurderingIAndrePerioder)}
+            >
+              Bruk denne vurderingen for andre perioder
+            </Checkbox>
+          )}
           {brukVurderingIAndrePerioder && (
             <div>
               <Label size="small">I hvilke perioder vil du gjenbruke vurderingen?</Label>
