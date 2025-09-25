@@ -1,4 +1,5 @@
-import AksjonspunktGodkjenningFieldArray, {
+import {
+  AksjonspunktGodkjenningFieldArray,
   type AksjonspunktGodkjenningData,
 } from './AksjonspunktGodkjenningFieldArray.js';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -178,7 +179,6 @@ export const klageKA: Story = {
         begrunnelse: 'klage resultat begrunnelse',
       },
     },
-    klageKA: true, // Settast true når klagebehandlingVurdering.klageVurderingResultatNK ikkje er undefined (i TotrinnskontrollBeslutterForm.tsx)
   },
   play: async ({ canvas }) => {
     const godkjentRadio = canvas.getByRole('radio', { name: 'Godkjent' });

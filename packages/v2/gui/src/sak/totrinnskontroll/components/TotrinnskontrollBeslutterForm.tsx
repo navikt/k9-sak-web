@@ -6,12 +6,12 @@ import { RhfForm } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.ts';
+import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import type { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
-import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray.js';
-import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.ts';
+import { AksjonspunktGodkjenningFieldArray } from './AksjonspunktGodkjenningFieldArray.js';
+import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 
 const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
   aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
@@ -99,7 +99,6 @@ export const TotrinnskontrollBeslutterForm = ({
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
         readOnly={readOnly}
-        klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
         totrinnskontrollData={totrinnskontrollData}
       />
       <div className={styles.buttonRow}>
