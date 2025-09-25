@@ -52,10 +52,13 @@ const behandlingOppretting = [
   {
     behandlingType: BehandlingTypeK9Sak.REVURDERING,
     kanOppretteBehandling: true,
-    perioderGyldigeForInntektsavkorting: [
-      { fom: '2025-01-01', tom: '2025-01-31' },
-      { fom: '2025-02-01', tom: '2025-02-28' },
-    ],
+    gyldigePerioderPerÅrsak: [{
+      årsak: ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
+      perioder: [
+        { fom: '2025-01-01', tom: '2025-01-31' },
+        { fom: '2025-02-01', tom: '2025-02-28' },
+      ]
+    }],
   },
 ];
 
