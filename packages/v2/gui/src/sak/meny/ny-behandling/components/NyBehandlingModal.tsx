@@ -25,14 +25,14 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
 };
 
 export type ÅrsakOgPerioder = Readonly<{
-  aarsak: string;
+  årsak: string;
   perioder: Periode[];
 }>;
 
 export type BehandlingOppretting = Readonly<{
   behandlingType: string;
   kanOppretteBehandling: boolean;
-  gyldigePerioderPerAarsak: ÅrsakOgPerioder[];
+  gyldigePerioderPerÅrsak?: ÅrsakOgPerioder[];
 }>;
 
 export type FormValues = {
@@ -173,7 +173,7 @@ export const NyBehandlingModal = ({
     if (!rettigheterForBehandling) {
       return [];
     }
-    return rettigheterForBehandling.gyldigePerioderPerAarsak.find(it => it.aarsak === behandlingArsakType)?.perioder;
+    return rettigheterForBehandling.gyldigePerioderPerÅrsak?.find(it => it.årsak === behandlingArsakType)?.perioder;
   };
   const handleSubmit = (formValues: FormValues) => {
     const klageOnlyValues =
