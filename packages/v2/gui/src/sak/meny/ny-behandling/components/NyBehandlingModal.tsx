@@ -1,10 +1,14 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
+  k9_kodeverk_behandling_FagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
-import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
 import { RhfCheckbox, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
@@ -20,9 +24,15 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
   return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
 };
 
+export type ÅrsakOgPerioder = Readonly<{
+  årsak: string;
+  perioder: Periode[];
+}>;
+
 export type BehandlingOppretting = Readonly<{
   behandlingType: string;
   kanOppretteBehandling: boolean;
+  gyldigePerioderPerÅrsak?: ÅrsakOgPerioder[];
 }>;
 
 export type FormValues = {
@@ -32,6 +42,7 @@ export type FormValues = {
   steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
   fom: string;
   tom: string;
+  fomForPeriodeForInntektskontroll?: string;
 };
 
 interface NyBehandlingModalProps {
@@ -43,6 +54,7 @@ interface NyBehandlingModalProps {
       behandlingUuid?: string;
       eksternUuid?: string;
       fagsakYtelseType: FagsakYtelsesType;
+      periode?: Periode;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -126,9 +138,15 @@ export const NyBehandlingModal = ({
       steg: undefined,
       fom: '',
       tom: '',
+      fomForPeriodeForInntektskontroll: '',
     },
   });
-  const [valgtBehandlingTypeKode, steg, fom] = formMethods.watch(['behandlingType', 'steg', 'fom']);
+  const [valgtBehandlingTypeKode, steg, fom, behandlingArsakType] = formMethods.watch([
+    'behandlingType',
+    'steg',
+    'fom',
+    'behandlingArsakType',
+  ]);
   const behandlingTyper = getBehandlingTyper(behandlingstyper);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(
     behandlingstyper,
@@ -136,15 +154,27 @@ export const NyBehandlingModal = ({
     kanTilbakekrevingOpprettes,
   );
   const erFørstegangsbehandling = valgtBehandlingTypeKode === BehandlingTypeK9Klage.FØRSTEGANGSSØKNAD;
+  const erUngdomsprogramytelse = ytelseType === k9_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
   const erRevurdering = valgtBehandlingTypeKode === BehandlingTypeK9Klage.REVURDERING;
   const BehandlingÅrsakDtoBehandlingArsakTyper = getBehandlingAarsaker(
     revurderingArsaker,
     tilbakekrevingRevurderingArsaker,
     valgtBehandlingTypeKode,
+    erUngdomsprogramytelse,
   );
   const visÅrsak =
     (erRevurdering && steg === 'inngangsvilkår') ||
-    (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0);
+    (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0) ||
+    (erRevurdering && erUngdomsprogramytelse);
+  const getUngPerioderTilRevurdering = () => {
+    const rettigheterForBehandling = behandlingOppretting.find(
+      b => b.behandlingType === BehandlingTypeK9Klage.REVURDERING,
+    );
+    if (!rettigheterForBehandling) {
+      return [];
+    }
+    return rettigheterForBehandling.gyldigePerioderPerÅrsak?.find(it => it.årsak === behandlingArsakType)?.perioder;
+  };
   const handleSubmit = (formValues: FormValues) => {
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
@@ -158,9 +188,13 @@ export const NyBehandlingModal = ({
       behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
+      periode: erUngdomsprogramytelse
+        ? getUngPerioderTilRevurdering()!.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+        : undefined,
       ...klageOnlyValues,
     });
   };
+
   return (
     <Modal
       className={styles.modal}
@@ -182,22 +216,23 @@ export const NyBehandlingModal = ({
               validate={[required]}
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
-            {erRevurdering && (
-              <RhfSelect
-                control={formMethods.control}
-                name="steg"
-                label="Hvor i prosessen vil du starte revurderingen?"
-                validate={[required]}
-                selectValues={[
-                  <option key="inngangsvilkår" value="inngangsvilkår">
-                    Fra inngangsvilkår (full revurdering)
-                  </option>,
-                  <option key="uttak" value="RE-ENDRET-FORDELING">
-                    Fra uttak, refusjon og fordeling-steget (delvis revurdering)
-                  </option>,
-                ]}
-              />
-            )}
+            {erRevurdering &&
+              !erUngdomsprogramytelse && ( // ungdomsprogramytelsen skal alltid ha full revurdering
+                <RhfSelect
+                  control={formMethods.control}
+                  name="steg"
+                  label="Hvor i prosessen vil du starte revurderingen?"
+                  validate={[required]}
+                  selectValues={[
+                    <option key="inngangsvilkår" value="inngangsvilkår">
+                      Fra inngangsvilkår (full revurdering)
+                    </option>,
+                    <option key="uttak" value="RE-ENDRET-FORDELING">
+                      Fra uttak, refusjon og fordeling-steget (delvis revurdering)
+                    </option>,
+                  ]}
+                />
+              )}
             {erFørstegangsbehandling && (
               <RhfCheckbox
                 control={formMethods.control}
@@ -236,6 +271,30 @@ export const NyBehandlingModal = ({
                 />
               </Fieldset>
             )}
+            {erRevurdering &&
+              behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT &&
+              !!getUngPerioderTilRevurdering() && (
+                <RhfSelect
+                  control={formMethods.control}
+                  label="Velg måned for kontroll av inntekt"
+                  name="fomForPeriodeForInntektskontroll"
+                  selectValues={getUngPerioderTilRevurdering()!
+                    .filter((p): p is { fom: string } => typeof p.fom === 'string')
+                    .map(p => {
+                      const fomDato = new Date(p.fom);
+                      const månedsnavn = new Intl.DateTimeFormat('nb-NO', {
+                        month: 'long',
+                        year: 'numeric',
+                      }).format(fomDato);
+                      const formatertMånedsnavn = månedsnavn.charAt(0).toUpperCase() + månedsnavn.slice(1);
+                      return (
+                        <option key={p.fom} value={p.fom}>
+                          {formatertMånedsnavn}
+                        </option>
+                      );
+                    })}
+                />
+              )}
           </VStack>
         </ModalBody>
         <ModalFooter>
@@ -272,6 +331,10 @@ const manuelleRevurderingsArsaker = [
   BehandlingÅrsakDtoBehandlingArsakType.ETTER_KLAGE,
 ];
 
+const ungdomsprogramytelseRevurderingsårsaker = [
+  ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
+];
+
 const unntakVurderingsArsaker = [
   BehandlingÅrsakDtoBehandlingArsakType.UNNT_GENERELL,
   BehandlingÅrsakDtoBehandlingArsakType.RE_ANNET,
@@ -289,6 +352,7 @@ export const getBehandlingAarsaker = (
   revurderingArsaker: KodeverkObject[],
   alleTilbakekrevingRevurderingArsaker: KodeverkObject[],
   valgtBehandlingType: string,
+  erUngdomsprogramytelse: boolean,
 ) => {
   if (valgtBehandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING) {
     return tilbakekrevingRevurderingArsaker
@@ -296,8 +360,12 @@ export const getBehandlingAarsaker = (
       .filter(ar => ar);
   }
   if (valgtBehandlingType === BehandlingTypeK9Klage.REVURDERING) {
+    let årsaker: string[] = manuelleRevurderingsArsaker;
+    if (erUngdomsprogramytelse) {
+      årsaker = ungdomsprogramytelseRevurderingsårsaker;
+    }
     return revurderingArsaker
-      .filter(bat => manuelleRevurderingsArsaker.some(m => m === bat.kode))
+      .filter(bat => årsaker.some(m => m === bat.kode))
       .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
   }
 

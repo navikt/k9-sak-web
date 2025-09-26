@@ -279,7 +279,7 @@ export const BehandlingMenuIndex = ({
             uuidForSistLukkede={uuidForSistLukkede}
             behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
               behandlingType: b.behandlingType.kode,
-              kanOppretteBehandling: b.kanOppretteBehandling,
+              kanOppretteBehandling: b.kanOppretteBehandling
             }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,
