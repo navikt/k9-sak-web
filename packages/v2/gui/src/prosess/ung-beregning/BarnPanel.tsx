@@ -9,7 +9,7 @@ interface Props {
 export const BarnPanel = ({ barn }: Props) => {
   const harBarnMedDødsdato = barn.some(b => !!b.dødsdato);
   return (
-    <Box marginBlock="4 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
+    <Box.New marginBlock="4 0" borderRadius="large" borderWidth="1">
       <Table>
         <Table.Header>
           <Table.Row>
@@ -47,6 +47,6 @@ export const BarnPanel = ({ barn }: Props) => {
           })}
         </Table.Body>
       </Table>
-    </Box>
+    </Box.New>
   );
 };

@@ -1,4 +1,4 @@
-import { type AksjonspunktDto } from '../generated';
+import { type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '../generated/types.js';
 
 export type AksjonspunktkodeDefinisjonType = Exclude<AksjonspunktDto['definisjon'], null | undefined>;
 

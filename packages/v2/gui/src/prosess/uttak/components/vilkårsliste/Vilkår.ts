@@ -1,4 +1,4 @@
-import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const vilkår = [
   {
@@ -45,6 +45,6 @@ const vilkår = [
     name: 'Institusjon',
     kode: 'K9_VK_21', // Godkjent opplæringsinstitusjon
   },
-] as { name: string; kode: VilkårMedPerioderDtoVilkarType }[];
+] as { name: string; kode: VilkårType }[];
 
 export default vilkår;

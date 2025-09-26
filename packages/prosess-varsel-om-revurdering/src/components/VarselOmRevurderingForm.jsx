@@ -6,7 +6,7 @@ import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/
 import { getLanguageCodeFromspråkkode, hasValidText, minLength, required } from '@fpsak-frontend/utils';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, Heading, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -139,7 +139,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                   label={intl.formatMessage({ id: 'VarselOmRevurderingForm.FritekstIBrev' })}
                   validate={[required, minLength3, hasValidText]}
                 />
-                <a
+                <Link
                   href=""
                   onClick={e => {
                     this.previewMessage(e, previewCallback);
@@ -148,7 +148,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                   data-testid="previewLink"
                 >
                   <FormattedMessage id="VarselOmRevurderingForm.Preview" />
-                </a>
+                </Link>
               </ArrowBox>
             )}
 

@@ -139,14 +139,14 @@ const Innleggelsesperiodeoversikt = ({
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box marginBlock="6 0">
+        <Box.New marginBlock="6 0">
           {innleggelsesperioder.length === 0 && <p>Ingen innleggelsesperioder registrert</p>}
           {innleggelsesperioder.length > 0 && (
-            <Box marginBlock="2 0">
+            <Box.New marginBlock="2 0">
               <Innleggelsesperiodeliste innleggelsesperioder={innleggelsesperioder} />
-            </Box>
+            </Box.New>
           )}
-        </Box>
+        </Box.New>
       )}
       {modalIsOpen && (
         <InnleggelsesperiodeFormModal

@@ -1,3 +1,11 @@
+import type { JSX } from 'react';
+import classNames from 'classnames/bind';
+import { Collapse } from 'react-collapse';
+import {
+  BehandlingDtoSakstype,
+  UttaksperiodeInfoAnnenPart,
+  UttaksperiodeInfoÅrsaker,
+} from '@k9-sak-web/backend/k9sak/generated';
 import {
   CheckmarkCircleFillIcon,
   ChevronDownIcon,
@@ -8,14 +16,6 @@ import {
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
-import classNames from 'classnames/bind';
-import { Collapse } from 'react-collapse';
-import type { JSX } from 'react';
-import {
-  BehandlingDtoSakstype,
-  UttaksperiodeInfoAnnenPart,
-  UttaksperiodeInfoÅrsaker,
-} from '@k9-sak-web/backend/k9sak/generated';
 import { harÅrsak } from '../utils/årsakUtils';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
@@ -74,7 +74,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             {manueltOverstyrt && (
               <>
                 <PersonPencilFillIcon
-                  className="ml-1 align-middle text-2xl text-border-warning"
+                  className="ml-1 align-middle text-2xl text-ax-warning-500"
                   title="Manuelt overstyrt"
                 />
                 <HelpText
@@ -93,26 +93,26 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           className={`${withBorderTop ? styles['borderTop'] : ''} ${styles['uttak__vilkarIconContainer']}`}
         >
           {harOppfyltAlleInngangsvilkår ? (
-            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
           ) : (
-            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
           )}
         </Table.DataCell>
         {erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) && (
           <Table.DataCell>
             {uttaksgrad === 0 ? (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             ) : (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             )}
           </Table.DataCell>
         )}
         <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''}`}>
           <div className={styles['uttak__iconContainer']}>
             {harPleiebehov ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )}
           </div>
           {harPleiebehov && visPleiebehovProsent ? `${pleiebehov}%` : null}

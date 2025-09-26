@@ -1,12 +1,13 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
-import { CheckboxField, Datepicker, Form, SelectField } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -39,6 +40,7 @@ interface NyBehandlingModalProps {
   cancelEvent: () => void;
   submitCallback: (
     data: {
+      behandlingUuid?: string;
       eksternUuid?: string;
       fagsakYtelseType: FagsakYtelsesType;
     } & FormValues,
@@ -56,8 +58,12 @@ interface NyBehandlingModalProps {
   behandlingUuid?: string;
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
-  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: {
+    saksnummer: string;
+    ytelsesbehandlingUuid: string;
+    uuid: string;
+  }) => void;
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { behandlingUuid: string; uuid: string }) => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
   sisteDagISøknadsperiode?: Date | null;
@@ -90,15 +96,16 @@ export const NyBehandlingModal = ({
   sisteDagISøknadsperiode,
 }: NyBehandlingModalProps) => {
   useEffect(() => {
-    const erTilbakekreving =
-      behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
-      behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
     if (erTilbakekrevingAktivert) {
       if (uuidForSistLukkede !== undefined) {
-        sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid: uuidForSistLukkede });
+        sjekkOmTilbakekrevingKanOpprettes({
+          saksnummer,
+          ytelsesbehandlingUuid: uuidForSistLukkede,
+          uuid: uuidForSistLukkede,
+        });
       }
-      if (erTilbakekreving && behandlingUuid) {
-        sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
+      if (erTilbakekreving(behandlingType) && behandlingUuid) {
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingUuid, uuid: behandlingUuid });
       }
     }
   }, [
@@ -148,6 +155,7 @@ export const NyBehandlingModal = ({
         : {};
     submitCallback({
       ...formValues,
+      behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
       ...klageOnlyValues,
@@ -164,17 +172,19 @@ export const NyBehandlingModal = ({
         size: 'small',
       }}
     >
-      <Form<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
+      <RhfForm<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>
         <ModalBody>
-          <VStack gap="5">
-            <SelectField
+          <VStack gap="space-20">
+            <RhfSelect
+              control={formMethods.control}
               name="behandlingType"
               label="Hva slags behandling ønsker du å opprette?"
               validate={[required]}
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
             {erRevurdering && (
-              <SelectField
+              <RhfSelect
+                control={formMethods.control}
                 name="steg"
                 label="Hvor i prosessen vil du starte revurderingen?"
                 validate={[required]}
@@ -189,13 +199,15 @@ export const NyBehandlingModal = ({
               />
             )}
             {erFørstegangsbehandling && (
-              <CheckboxField
+              <RhfCheckbox
+                control={formMethods.control}
                 name="nyBehandlingEtterKlage"
                 label="Behandlingen opprettes som et resultat av klagebehandling"
               />
             )}
             {visÅrsak && (
-              <SelectField
+              <RhfSelect
+                control={formMethods.control}
                 name="behandlingArsakType"
                 label="Hva er årsaken til den nye behandlingen?"
                 validate={[required]}
@@ -208,13 +220,15 @@ export const NyBehandlingModal = ({
             )}
             {erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
-                <Datepicker
+                <RhfDatepicker
+                  control={formMethods.control}
                   name="fom"
                   disabledDays={[{ before: undefined, after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Fra og med"
                   validate={[required]}
                 />
-                <Datepicker
+                <RhfDatepicker
+                  control={formMethods.control}
                   name="tom"
                   disabledDays={[{ before: new Date(fom), after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Til og med"
@@ -225,7 +239,7 @@ export const NyBehandlingModal = ({
           </VStack>
         </ModalBody>
         <ModalFooter>
-          <HStack gap="2" justify="end">
+          <HStack gap="space-8" justify="end">
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>
@@ -234,7 +248,7 @@ export const NyBehandlingModal = ({
             </Button>
           </HStack>
         </ModalFooter>
-      </Form>
+      </RhfForm>
     </Modal>
   );
 };
@@ -264,11 +278,11 @@ const unntakVurderingsArsaker = [
 ];
 
 const tilbakekrevingRevurderingArsaker = [
-  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FORELDELSE,
-  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_VILKÅR,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_FORELDELSE,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_VILKÅR,
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_KA,
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_NFP,
-  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FEILUTBETALT_BELØP_HELT_ELLER_DELVIS_BORTFALT,
 ];
 
 export const getBehandlingAarsaker = (

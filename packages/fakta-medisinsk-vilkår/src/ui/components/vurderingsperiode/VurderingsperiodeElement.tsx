@@ -47,14 +47,14 @@ const renderResultatIcon = (resultat: Vurderingsresultat, manglerLegeerklæring:
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
       <Tooltip content="Vilkåret er oppfylt">
-        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
       </Tooltip>
     );
   }
   if (resultat === Vurderingsresultat.IKKE_OPPFYLT || manglerLegeerklæring === true) {
     return (
       <Tooltip content="Vilkåret er ikke oppfylt">
-        <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+        <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
       </Tooltip>
     );
   }

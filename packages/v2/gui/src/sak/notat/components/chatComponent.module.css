@@ -25,11 +25,11 @@
   display: flex;
 }
 
-:global(.navds-button).redigerSkjulKnapp {
+:global(.aksel-button).redigerSkjulKnapp {
   margin-left: 0.625rem;
 }
 
-:global(.navds-tag).navnTag {
+:global(.aksel-tag).navnTag {
   margin-left: 0.5rem;
 }
 

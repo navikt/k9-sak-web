@@ -1,13 +1,12 @@
 import { behandlingType as behandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import {
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import {
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoStatus,
-  BehandlingsresultatDtoType,
-} from '@navikt/k9-sak-typescript-client';
 import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
 
@@ -38,7 +37,7 @@ const getInfoTextCode = (
     return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT) {
+  if (behandlingsresultat?.type === BehandlingsresultatType.AVSLÅTT) {
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
@@ -92,6 +91,9 @@ const getInfoTextCode = (
   if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Opplæringspenger er innvilget og vedtaket blir iverksatt.';
   }
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
+    return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
+  }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
 };
 
@@ -124,6 +126,9 @@ const getModalDescriptionTextCode = (
   }
   if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Opplæringspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+  }
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
+    return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
 };
@@ -164,6 +169,8 @@ const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
       return 'Pleiepenger er innvilget og vedtaket blir iverksatt.';
     case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
+    case fagsakYtelsesType.UNGDOMSYTELSE:
+      return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
     default:
       return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
@@ -211,7 +218,7 @@ const FatterVedtakApprovalModal = ({
   erKlageWithKA,
 }: OwnProps) => {
   const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatDtoType.OPPHØR;
+    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatType.OPPHØR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
@@ -236,12 +243,12 @@ const FatterVedtakApprovalModal = ({
   return (
     <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
       <Modal.Body>
-        <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <CheckmarkCircleFillIcon
               title={altImgText}
               fontSize={30}
-              style={{ color: 'var(--a-surface-success)', marginTop: '6px' }}
+              style={{ color: 'var(--ax-bg-success-strong)', marginTop: '6px' }}
             />
             <div className={styles.divider} />
           </div>

@@ -6,7 +6,7 @@ import styles from './kompletthetsoversikt.module.css';
 
 const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
-    <Box marginBlock="0 6">
+    <Box.New marginBlock="0 6">
       <Alert variant="warning" size="small" className={styles.alert}>
         <Heading spacing size="xsmall" level="3">
           Vurder om du kan fortsette behandlingen uten inntektsmelding.
@@ -16,8 +16,8 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
           arbeidsgiver.
         </BodyLong>
       </Alert>
-    </Box>
-    <Box marginBlock="0 6">
+    </Box.New>
+    <Box.New marginBlock="0 6">
       <Alert variant="info" size="small">
         <Accordion className={styles.alertAccordion}>
           <Accordion.Item>
@@ -40,7 +40,7 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
                   lavere risiko for at arbeidsgiver vil kreve refusjon.
                 </li>
               </ul>
-              <Box marginBlock="6 0">
+              <Box.New marginBlock="6 0">
                 Du bør ikke gå videre uten inntektsmelding hvis:
                 <ul className={styles.kompletthet__list}>
                   <li>
@@ -54,12 +54,12 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
                     ikke utbetale til bruker, men vente på inntektsmelding.
                   </li>
                 </ul>
-              </Box>
+              </Box.New>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
       </Alert>
-    </Box>
+    </Box.New>
   </>
 );
 

@@ -9,14 +9,16 @@ import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import { NavAnsatt } from '@k9-sak-web/types';
 
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import AppConfigResolver from './AppConfigResolver';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
+import '@navikt/ds-css/darkside';
+import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-fakta-beregning/dist/style.css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
@@ -81,23 +83,25 @@ const AppIndex = () => {
     // Ytterste feilgrense viser alltid separat feil-side, fordi viss feil har skjedd i AppConfigResolver eller lenger ute
     // er det sannsynlegvis så grunnleggande at ingenting vil fungere.
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AppConfigResolver>
-          <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-            <LanguageProvider>
-              <Dekorator
-                hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-                queryStrings={queryStrings}
-                setSiteHeight={setSiteHeight}
-                pathname={location.pathname}
-              />
-              {shouldRenderHome && <Home headerHeight={headerHeight} />}
-              {forbiddenErrors.length > 0 && <ForbiddenPage />}
-              {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-            </LanguageProvider>
-          </ErrorBoundary>
-        </AppConfigResolver>
-      </QueryClientProvider>
+      <Theme theme="light">
+        <QueryClientProvider client={queryClient}>
+          <AppConfigResolver>
+            <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+              <LanguageProvider>
+                <Dekorator
+                  hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+                  queryStrings={queryStrings}
+                  setSiteHeight={setSiteHeight}
+                  pathname={location.pathname}
+                />
+                {shouldRenderHome && <Home headerHeight={headerHeight} />}
+                {forbiddenErrors.length > 0 && <ForbiddenPage />}
+                {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
+              </LanguageProvider>
+            </ErrorBoundary>
+          </AppConfigResolver>
+        </QueryClientProvider>
+      </Theme>
     </ErrorBoundary>
   );
 };

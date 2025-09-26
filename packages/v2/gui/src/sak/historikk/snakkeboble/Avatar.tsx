@@ -10,10 +10,10 @@ import {
 import { historikkAktor, type HistorikkAktor } from '../tilbake/historikkinnslagTsTypeV2.js';
 import { kjønn as kjønnKode } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import {
-  type HistorikkAktørDtoType,
-  HistorikkAktørDtoType as historikkAktør,
-} from '@k9-sak-web/backend/k9sak/generated';
-import { type klage_kodeverk_historikk_HistorikkAktør as KlageHistorikkAktørDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+  type k9_kodeverk_historikk_HistorikkAktør as HistorikkAktørDtoType,
+  k9_kodeverk_historikk_HistorikkAktør as historikkAktør,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type k9_klage_kodeverk_historikk_HistorikkAktør as KlageHistorikkAktørDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { isLegacyTilbakeHistorikkAktor } from './snakkebobleUtils.jsx';
 
 interface Props {
@@ -21,6 +21,9 @@ interface Props {
   kjønn?: string;
 }
 
+/**
+ * @deprecated Bruk ny versjon i ../innslag/
+ */
 export const Avatar = ({ aktørType, kjønn }: Props) => {
   const kode = isLegacyTilbakeHistorikkAktor(aktørType) ? aktørType.kode : aktørType;
   switch (kode) {

@@ -1,7 +1,7 @@
-import { OpenAPI } from '@navikt/k9-sak-typescript-client/core/OpenAPI.js';
+import packageJson from '@navikt/k9-sak-typescript-client/package.json';
 
-const version = OpenAPI.VERSION;
+const { version } = packageJson;
 
-const [major, minor] = version.split('.');
+const [major, minor, patch] = version.split('.');
 
-export const clientVersion = { major, minor };
+export const clientVersion = { major, minor, patch };

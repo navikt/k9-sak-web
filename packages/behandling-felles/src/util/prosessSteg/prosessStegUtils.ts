@@ -140,6 +140,7 @@ export const getBekreftAksjonspunktCallback =
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
+      behandlingUuid: behandling.uuid,
     };
 
     const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);

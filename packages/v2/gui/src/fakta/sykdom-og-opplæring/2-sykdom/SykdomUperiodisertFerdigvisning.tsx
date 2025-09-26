@@ -31,7 +31,7 @@ const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: Uperiodiser
           label={
             <>
               Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som
-              følge av <Lovreferanse>§ 9-14</Lovreferanse>.
+              følge av <Lovreferanse>§ 9-14</Lovreferanse>
             </>
           }
           indentContent

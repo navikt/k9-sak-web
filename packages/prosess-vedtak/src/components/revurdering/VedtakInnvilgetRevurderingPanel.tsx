@@ -1,16 +1,15 @@
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import {
-  AvslagsårsakPrPeriodeDto,
-  BehandlingsresultatDto,
-  TilbakekrevingValgDto,
-} from '@navikt/k9-sak-typescript-client';
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -68,39 +67,33 @@ interface VedtakInnvilgetRevurderingPanelProps {
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
-  ytelseTypeKode,
   konsekvenserForYtelsen,
   tilbakekrevingText,
   bgPeriodeMedAvslagsårsak,
 }: VedtakInnvilgetRevurderingPanelProps & WrappedComponentProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {(ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER ||
-        ytelseTypeKode === fagsakYtelsesType.FRISINN ||
-        ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) && (
-        <div data-testid="innvilgetRevurdering">
-          <Label size="small" as="p">
-            {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-          </Label>
-          <BodyShort size="small">
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
-              tilbakekrevingText &&
-              '. '}
-            {tilbakekrevingText &&
-              intl.formatMessage({
-                id: tilbakekrevingText,
-              })}
-            {bgPeriodeMedAvslagsårsak && (
-              <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
-            )}
-          </BodyShort>
-          <VerticalSpacer sixteenPx />
-        </div>
-      )}
+      <div data-testid="innvilgetRevurdering">
+        <Label size="small" as="p">
+          {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+        </Label>
+        <BodyShort size="small">
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
+          {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
+            tilbakekrevingText &&
+            '. '}
+          {tilbakekrevingText &&
+            intl.formatMessage({
+              id: tilbakekrevingText,
+            })}
+          {bgPeriodeMedAvslagsårsak && (
+            <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
+          )}
+        </BodyShort>
+        <VerticalSpacer sixteenPx />
+      </div>
     </>
   );
 };

@@ -1,10 +1,11 @@
-import { BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
-import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { BodyLong, BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
-import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { useAlleInstitusjoner } from '../../SykdomOgOpplæringQueries.js';
+import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -13,7 +14,7 @@ interface OwnProps {
 const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
   return (
     <>
-      <Box className="mt-8">
+      <Box.New className="mt-8">
         <LabelledContent
           label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
           size="small"
@@ -25,14 +26,19 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
             />
           }
         />
-      </Box>
+      </Box.New>
       <div className="flex flex-col gap-6 mt-6">
         <LabelledContent
-          label="Er opplæringen ved en godkjent helseinstitusjon eller kompetansesenter?"
+          label={
+            <BodyLong size="small">
+              Er institusjonen en godkjent helseinstitusjon eller kompetansesenter, jf{' '}
+              <Lovreferanse>§ 9-14</Lovreferanse>?
+            </BodyLong>
+          }
           size="small"
           content={
-            ((vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK ||
-              vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_MANUELT) && (
+            ((vurdering.resultat === InstitusjonResultat.GODKJENT_AUTOMATISK ||
+              vurdering.resultat === InstitusjonResultat.GODKJENT_MANUELT) && (
               <BodyShort size="small">Ja</BodyShort>
             )) || <BodyShort size="small">Nei</BodyShort>
           }
@@ -40,7 +46,12 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
         {vurdering.begrunnelse && (
           <div>
             <LabelledContent
-              label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
+              label={
+                <BodyLong size="small">
+                  Skriv din vurdering av om institusjonen er en godkjent helseinstitusjon eller kompetansesenter etter
+                  reglene i <Lovreferanse>§ 9-14, første ledd</Lovreferanse>
+                </BodyLong>
+              }
               indentContent
               size="small"
               content={
@@ -52,7 +63,7 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
             <VurdertAv ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
           </div>
         )}
-        {vurdering.resultat === InstitusjonVurderingDtoResultat.GODKJENT_AUTOMATISK && (
+        {vurdering.resultat === InstitusjonResultat.GODKJENT_AUTOMATISK && (
           <div className="flex gap-2 items-center">
             <CogIcon fontSize="20" />
             <BodyShort size="small">Automatisk vurdering</BodyShort>
@@ -92,7 +103,7 @@ const InstitusjonsnavnFerdigVisning = ({
           </Tag>
         ) : (
           <PersonPencilFillIcon
-            className="ml-1 align-middle text-2xl text-border-warning"
+            className="ml-1 align-middle text-2xl text-ax-warning-500"
             title="Endret av saksbehandler"
           />
         )}

@@ -6,7 +6,10 @@ import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { KontrollerInntektDto, PersonopplysningDto } from '@navikt/ung-sak-typescript-client';
+import {
+  ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
+  ung_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {

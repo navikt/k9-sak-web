@@ -1,29 +1,29 @@
 @import url('@navikt/ds-tokens');
 
 .overstyringSkjemaWrapper {
-  border: 1px solid var(--a-border-divider);
-  background-color: var(--a-deepblue-50);
-  padding: var(--a-spacing-6);
+  border: 1px solid var(--ax-border-neutral-subtle);
+  background-color: var(--ax-brand-blue-100);
+  padding: var(--ax-space-24);
   border-radius: 3px;
   max-width: 800px;
-  margin-top: var(--a-spacing-8);
-  margin-bottom: var(--a-spacing-8);
+  margin-top: var(--ax-space-32);
+  margin-bottom: var(--ax-space-32);
 }
 
 .overstyringDatoOgUttaksgrad {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  gap: var(--a-spacing-4);
-  margin-bottom: var(--a-spacing-4);
-  margin-top: var(--a-spacing-4);
+  gap: var(--ax-space-16);
+  margin-bottom: var(--ax-space-16);
+  margin-top: var(--ax-space-16);
 }
 
 .overstyringDatoVelger {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  gap: var(--a-spacing-4);
+  gap: var(--ax-space-16);
 }
 
 .overstyringDatoVelger > div {
@@ -32,17 +32,17 @@
 }
 
 .overstyringKnapperad {
-  margin-top: var(--a-spacing-4);
+  margin-top: var(--ax-space-16);
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  gap: var(--a-spacing-4);
+  gap: var(--ax-space-16);
 }
 
 .overstyringBegrunnelse > div {
-  margin-top: var(--a-spacing-4);
+  margin-top: var(--ax-space-16);
 }
 
 .overstyringAktivitetListe {
-  margin-top: var(--a-spacing-4);
+  margin-top: var(--ax-space-16);
 }

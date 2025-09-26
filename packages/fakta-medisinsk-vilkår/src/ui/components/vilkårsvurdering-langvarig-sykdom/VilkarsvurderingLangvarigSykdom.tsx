@@ -156,7 +156,7 @@ const VilkårsvurderingLangvarigSykdom = ({
     <PageContainer isLoading={isLoading} hasError={vurderingsoversiktFeilet} key={StepId.LangvarigSykdom}>
       <VurderingsoversiktLangvarigSykdomMessages vurderingsoversikt={vurderingsoversikt} />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box marginBlock={setMargin()}>
+        <Box.New marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon
@@ -181,7 +181,7 @@ const VilkårsvurderingLangvarigSykdom = ({
               />
             )}
           />
-        </Box>
+        </Box.New>
       )}
     </PageContainer>
   );

@@ -1,8 +1,12 @@
-import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
+import { requireProps, usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { DokumentDto, FagsakDto } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_dokument_DokumentDto as DokumentDto,
+  k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { UngSakApiKeys, restApiHooks } from '../../data/ungsakApi';

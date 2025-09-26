@@ -8,13 +8,13 @@ import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Label } from '@navikt/ds-react';
 
-import type { klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
-  ArbeidsforholdOverstyringDtoHandling,
-  BehandlingDtoStatus,
-  type TotrinnsArbeidsforholdDto,
-  type TotrinnsBeregningDto,
-} from '@navikt/k9-sak-typescript-client';
+  folketrygdloven_kalkulus_kodeverk_ArbeidsforholdHandlingType as HandlingType,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+  type k9_sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
+  type k9_sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import hash from 'object-hash';
 import React, { type JSX, type ReactNode } from 'react';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
@@ -45,7 +45,7 @@ export const getFaktaOmArbeidsforholdMessages = (
   }
   if (arbeidforholdDto.brukPermisjon === false) {
     formattedMessages.push(<b> Søker er ikke i permisjon.</b>);
-    if (arbeidforholdDto.arbeidsforholdHandlingType === ArbeidsforholdOverstyringDtoHandling.BRUK) {
+    if (arbeidforholdDto.arbeidsforholdHandlingType === HandlingType.BRUK) {
       return formattedMessages;
     }
   }
@@ -80,18 +80,12 @@ const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactN
   )) ?? [];
 
 const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
-  const aksjonspunktText =
-    totrinnskontrollaksjonspunktTextCodes[
-      aksjonspunkt.aksjonspunktKode as keyof typeof totrinnskontrollaksjonspunktTextCodes
-    ];
+  const aksjonspunktText = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
   return aksjonspunktText ? aksjonspunktText : null;
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTexts =
-    bg.faktaOmBeregningTilfeller?.map(
-      kode => vurderFaktaOmBeregningTotrinnText[kode as keyof typeof vurderFaktaOmBeregningTotrinnText],
-    ) ?? [];
+  const aksjonspunktTexts = bg.faktaOmBeregningTilfeller?.map(kode => vurderFaktaOmBeregningTotrinnText[kode]) ?? [];
   return (
     <React.Fragment key={hash(aksjonspunktTexts)}>
       <Label size="small" as="p">
@@ -155,7 +149,7 @@ const getTextForKlageHelper = (
 };
 
 const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingDto, behandlingStaus: Behandling['status']) => {
-  if (behandlingStaus === BehandlingDtoStatus.FATTER_VEDTAK) {
+  if (behandlingStaus === BehandlingStatus.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
     }

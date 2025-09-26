@@ -7,6 +7,6 @@
   margin-top: 2rem;
 }
 
-.errorMessage:global(.navds-error-message) {
+.errorMessage:global(.aksel-error-message) {
   margin-top: 1rem;
 }

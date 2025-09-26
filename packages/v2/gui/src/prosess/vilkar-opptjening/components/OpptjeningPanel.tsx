@@ -45,13 +45,13 @@ const OpptjeningPanel = ({
   const formMethods = useFormContext<VilkårFieldFormValues>();
   return (
     <>
-      <VStack gap="4">
-        <HStack gap="4">
+      <VStack gap="space-16">
+        <HStack gap="space-16">
           {aksjonspunktErLøst ? (
             originalErVilkarOk ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )
           ) : null}
           <Heading size="small" level="2">

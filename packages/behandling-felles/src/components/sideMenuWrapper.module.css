@@ -1,5 +1,5 @@
 .container {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
 }
 
 @media screen and (width >= 1350px) {

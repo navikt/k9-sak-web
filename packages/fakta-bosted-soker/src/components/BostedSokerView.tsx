@@ -43,7 +43,7 @@ export const BostedSokerView = ({
   personstatusTypes,
 }: OwnProps) => (
   <div className={styles.defaultBostedSoker}>
-    <HGrid gap="4" columns={{ xs: '8fr 4fr' }}>
+    <HGrid gap="space-16" columns={{ xs: '8fr 4fr' }}>
       <div>
         <Detail>{sokerTypeText}</Detail>
         <Label size="small" as="p">

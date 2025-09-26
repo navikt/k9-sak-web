@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import axiosEtag from './axiosEtag';
 
-import initRestMethods from './initRestMethods';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
-import { konverterKodeverkTilKodeSelektivt } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKodeSelektivt.js';
 import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerOption.js';
+import { konverterKodeverkTilKodeSelektivt } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKodeSelektivt.js';
 import { xJsonSerializerOptions } from '../xJsonSerializerOptions';
+import initRestMethods from './initRestMethods';
 
 /**
  * getAxiosHttpClientApi
@@ -37,7 +37,8 @@ const getAxiosHttpClientApi = () => {
       response.config.url.includes('/api/') &&
       !response.config.url.includes('/api/kodeverk')
     ) {
-      const erTilbakekreving = response.config.url.includes('/k9/tilbake/api/');
+      const erTilbakekreving =
+        response.config.url.includes('/k9/tilbake/api/') || response.config.url.includes('/ung/tilbake/api/');
       konverterKodeverkTilKodeSelektivt(response.data, erTilbakekreving);
     }
     return response;

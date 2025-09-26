@@ -13,7 +13,7 @@ const AksjonspunktFerdigStripe = (): JSX.Element => {
   const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   return (
-    <Box marginBlock="0 4">
+    <Box.New marginBlock="0 4">
       <Alert size="small" variant="info">
         {erPleiepengerSluttfaseFagsak && <>Vilkåret er ferdig vurdert og du kan gå videre i behandlingen.</>}
         {!erPleiepengerSluttfaseFagsak && <>Sykdom er ferdig vurdert og du kan gå videre i behandlingen.</>}
@@ -31,7 +31,7 @@ const AksjonspunktFerdigStripe = (): JSX.Element => {
           Fortsett
         </Button>
       </Alert>
-    </Box>
+    </Box.New>
   );
 };
 

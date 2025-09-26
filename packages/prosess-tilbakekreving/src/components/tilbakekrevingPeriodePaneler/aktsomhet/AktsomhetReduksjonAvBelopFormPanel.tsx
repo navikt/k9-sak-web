@@ -2,7 +2,6 @@ import { DecimalField, InputField, RadioGroupField, SelectField } from '@fpsak-f
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
@@ -38,7 +37,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
   andelSomTilbakekreves,
 }: OwnProps) => (
   <>
-    <HGrid gap="1" columns={{ xs: '12fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '12fr' }}>
       <div>
         <VerticalSpacer eightPx />
         <Detail>
@@ -64,7 +63,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
     </HGrid>
     {harGrunnerTilReduksjon && (
       <ArrowBox alignOffset={24}>
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <div>
             {!harMerEnnEnYtelse && andelSomTilbakekreves !== EGENDEFINERT && (
               <>
@@ -141,7 +140,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
     )}
     {harGrunnerTilReduksjon === false && (
       <ArrowBox alignOffset={90}>
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <div>
             <Detail>
               <FormattedMessage

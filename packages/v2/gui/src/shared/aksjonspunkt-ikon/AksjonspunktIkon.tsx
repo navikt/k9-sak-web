@@ -19,7 +19,7 @@ const getFontSizeForSize = (size: 'small' | 'medium' | 'large') => {
 
 const AksjonspunktIkon = ({ size = 'medium' }: OwnProps) => {
   const fontSize = getFontSizeForSize(size);
-  return <ExclamationmarkTriangleFillIcon style={{ color: 'var(--a-icon-warning)' }} fontSize={fontSize} />;
+  return <ExclamationmarkTriangleFillIcon style={{ color: 'var(--ax-text-warning-decoration)' }} fontSize={fontSize} />;
 };
 
 export default AksjonspunktIkon;

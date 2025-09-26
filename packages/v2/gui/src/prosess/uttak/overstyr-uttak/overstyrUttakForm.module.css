@@ -1,16 +1,16 @@
 @import url('@navikt/ds-tokens');
 
 .leggTilOverstyringKnapp {
-  margin-top: var(--a-spacing-5);
-  margin-bottom: var(--a-spacing-5);
+  margin-top: var(--ax-space-20);
+  margin-bottom: var(--ax-space-20);
 }
 
 .overstyrUttakFormFooter {
-  margin-top: var(--a-spacing-5);
-  margin-bottom: var(--a-spacing-5);
+  margin-top: var(--ax-space-20);
+  margin-bottom: var(--ax-space-20);
 }
 
 .overstyringUttakTabell {
   width: auto;
-  margin-top: var(--a-spacing-4);
+  margin-top: var(--ax-space-16);
 }

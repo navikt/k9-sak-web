@@ -169,9 +169,9 @@ const NyVurderingController = ({
   return (
     <PageContainer isLoading={hentDataTilVurderingPågår} hasError={hentDataTilVurderingHarFeilet} preventUnmount>
       {lagreVurderingHarFeilet && (
-        <Box marginBlock="0 4">
+        <Box.New marginBlock="0 4">
           <LagreVurderingFeiletMelding />
-        </Box>
+        </Box.New>
       )}
       {formRenderer(dokumenter, beOmBekreftelseFørLagringHvisNødvendig, isSubmitting)}
       <OverlappendePeriodeModal

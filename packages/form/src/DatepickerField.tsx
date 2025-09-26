@@ -9,6 +9,7 @@ import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
+import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 interface DatepickerFieldProps {
   name: string;
@@ -17,12 +18,7 @@ interface DatepickerFieldProps {
   format?: (value: string) => string;
   parse?: (value: string) => string;
   isEdited?: boolean;
-  validate?: (
-    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
-    | ((text: any) => ({ id?: string; limit?: any } | { limit: any; id?: string })[])
-    | ((value: any) => { id: string }[])
-    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
-  )[];
+  validate?: ((value: string) => ValidationReturnType)[];
   disabledDays?: {
     before: Date | undefined;
     after: Date | undefined;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import userEvent from '@testing-library/user-event';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
@@ -85,6 +83,7 @@ test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av ved
   expect(fetchPreview.mock.calls.length).toBe(1);
   expect(fetchPreview.mock.calls[0][0]).toEqual({
     uuid: 'uuid',
+    behandlingUuid: 'uuid',
     oppsummeringstekst: 'Dette er oppsummeringen',
     perioderMedTekst: [
       {

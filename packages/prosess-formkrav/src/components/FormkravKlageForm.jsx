@@ -82,7 +82,7 @@ export const FormkravKlageForm = ({
         {[<FormattedMessage id="Klage.Formkrav.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
         <div>
           {Array.isArray(parterMedKlagerett) && parterMedKlagerett.length ? (
             <>
@@ -119,7 +119,7 @@ export const FormkravKlageForm = ({
             bredde="l"
           />
           <VerticalSpacer sixteenPx />
-          <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }}>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Detail>
               <RadioGroupField
@@ -158,7 +158,7 @@ export const FormkravKlageForm = ({
             </div>
           </HGrid>
           <VerticalSpacer sixteenPx />
-          <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }}>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Detail>
               <RadioGroupField

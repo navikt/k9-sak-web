@@ -1,6 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -23,7 +22,7 @@ export const RegistrereVergeFaktaForm = ({
 }) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
-      <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>
         <SelectField
           name="vergeType"
           label={intl.formatMessage({ id: 'Verge.TypeVerge' })}
@@ -39,7 +38,7 @@ export const RegistrereVergeFaktaForm = ({
       </HGrid>
       {valgtVergeType && (
         <>
-          <HGrid gap="1" columns={{ xs: '3fr 3fr 6fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '3fr 3fr 6fr' }}>
             <InputField
               bredde="XXL"
               name="navn"
@@ -69,7 +68,7 @@ export const RegistrereVergeFaktaForm = ({
             </div>
           </HGrid>
           <VerticalSpacer eightPx />
-          <HGrid gap="1" columns={{ xs: '2fr 2fr 8fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '2fr 2fr 8fr' }}>
             <DatepickerField
               name="gyldigFom"
               label={{ id: 'Verge.PeriodeFOM' }}

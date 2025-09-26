@@ -5,10 +5,11 @@ import { useVurdertOpplæring } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { Period } from '@navikt/ft-utils';
-import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated';
+import { type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import NødvendigOpplæringContainer from './NødvendigOpplæringContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import { CenteredLoader } from '../CenteredLoader';
+import NødvendigOpplæringAlert from './NødvendigOpplæringAlerts';
 
 interface OpplæringVurderingselement extends Omit<Vurderingselement, 'resultat'>, OpplæringVurderingDto {
   perioder: Period[];
@@ -28,6 +29,7 @@ const NødvendigOpplæring = () => {
   }
   return (
     <div>
+      <NødvendigOpplæringAlert valgtVurdering={valgtVurdering} vurderingsliste={vurderingsliste} />
       <NavigationWithDetailView
         navigationSection={() => (
           <>

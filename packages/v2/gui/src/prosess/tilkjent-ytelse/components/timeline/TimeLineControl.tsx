@@ -32,9 +32,9 @@ const TimeLineControl = ({
   zoomOutCallback,
 }: TimeLineControlProps) => {
   return (
-    <HGrid gap="1" columns={{ xs: '12fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '12fr' }}>
       <div>
-        <HStack gap="1" className="float-right mt-2 mb-2">
+        <HStack gap="space-4" className="float-right mt-2 mb-2">
           <Button
             variant="secondary"
             size="xsmall"

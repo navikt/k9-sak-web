@@ -1,3 +1,4 @@
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
@@ -14,7 +15,6 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './vilkarKronisSyktBarn.module.css';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
@@ -223,7 +223,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                   size="small"
                   name="harDokumentasjonOgFravaerRisiko"
                 >
-                  <HStack gap="1">
+                  <HStack gap="space-4">
                     <RadioButtonWithBooleanValue label="Ja" value="true" name="harDokumentasjonOgFravaerRisiko" />
                     <RadioButtonWithBooleanValue label="Nei" value="false" name="harDokumentasjonOgFravaerRisiko" />
                   </HStack>
@@ -241,7 +241,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                     size="small"
                     name="avslagsårsakKode"
                   >
-                    <HStack gap="1">
+                    <HStack gap="space-4">
                       <RadioButtonWithBooleanValue
                         label={tekst.arsakIkkeSyk}
                         value={AvslagskoderKroniskSyk.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET}

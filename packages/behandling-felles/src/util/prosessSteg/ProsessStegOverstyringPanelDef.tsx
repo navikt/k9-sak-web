@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import { VilkarresultatMedOverstyringProsessIndex as VilkarresultatMedOverstyringProsessIndexV2 } from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { ProsessStegPanelDef } from './ProsessStegDef';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
@@ -35,10 +35,9 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     vilkarForSteg.length > 0 && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg);
 
   getKomponent = (props): ReactNode => {
-    if (props.usev2Panel) {
-      return <VilkarresultatMedOverstyringProsessIndexV2 {...props} />;
-    }
-    return <VilkarresultatMedOverstyringProsessIndex {...props} />;
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <VilkarresultatMedOverstyringProsessIndexV2 {...props} {...deepCopyProps} />;
   };
 
   getData = ({

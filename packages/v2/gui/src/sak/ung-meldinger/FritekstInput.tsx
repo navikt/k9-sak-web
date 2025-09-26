@@ -1,6 +1,7 @@
 import { Tag, type TagProps } from '@navikt/ds-react';
-import { InputField, TextAreaField } from '@navikt/ft-form-hooks';
+import { RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
+import { useFormContext } from 'react-hook-form';
 
 const resolveLanguageName = (språk: string): string => {
   switch (språk.toUpperCase()) {
@@ -26,12 +27,14 @@ interface FritekstInputProps {
 }
 
 export const FritekstInput = (props: FritekstInputProps) => {
+  const { control } = useFormContext();
   const { malStøtterTittel, språkkode } = props;
   const fritekstMaxLength = malStøtterTittel ? 100000 : 4000;
   return (
     <>
       {malStøtterTittel ? (
-        <InputField
+        <RhfTextField
+          control={control}
           name="overskrift"
           size="small"
           label="Tittel"
@@ -39,7 +42,8 @@ export const FritekstInput = (props: FritekstInputProps) => {
           validate={[hasValidText, maxLength(200), required]}
         />
       ) : null}
-      <TextAreaField
+      <RhfTextarea
+        control={control}
         name="brødtekst"
         size="small"
         label={

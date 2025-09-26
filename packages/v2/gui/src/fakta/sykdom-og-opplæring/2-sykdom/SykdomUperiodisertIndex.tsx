@@ -1,7 +1,7 @@
 import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
-import { Alert, Button } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
@@ -12,14 +12,12 @@ import { Period } from '@navikt/ft-utils';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
-import {
-  type LangvarigSykdomVurderingDto,
-  type LangvarigSykdomVurderingDtoAvslagsårsak,
-  type SaksnummerDto,
-  type ValgtLangvarigSykdomVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+import { type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
+import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;
@@ -27,16 +25,10 @@ export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: () => {},
 });
 
-interface SykdomVurderingselement extends Vurderingselement {
+interface SykdomVurderingselement
+  extends Vurderingselement,
+    k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
   id: string;
-  uuid: string;
-  begrunnelse: string;
-  behandlingUuid: string;
-  godkjent: boolean;
-  saksnummer: SaksnummerDto;
-  vurdertAv: string;
-  vurdertTidspunkt: string;
-  avslagsårsak?: LangvarigSykdomVurderingDtoAvslagsårsak;
 }
 
 const defaultVurdering = {
@@ -47,7 +39,7 @@ const defaultVurdering = {
 
 const SykdomUperiodisertIndex = () => {
   const { behandlingUuid, readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const aksjonspunkt9301 = aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
+  const aksjonspunkt9301 = finnAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
 
   const { data: langvarigSykVurderinger, isLoading: isLoadingLangvarigSykVurderinger } =
     useLangvarigSykVurderingerFagsak(behandlingUuid);
@@ -92,7 +84,10 @@ const SykdomUperiodisertIndex = () => {
   return (
     <>
       <SykdomUperiodisertContext.Provider value={{ setNyVurdering }}>
-        <Warning vurderinger={langvarigSykVurderinger} vurderingBruktIAksjonspunkt={vurderingBruktIAksjonspunkt} />
+        <SykdomUperiodisertAlert
+          vurderinger={langvarigSykVurderinger}
+          vurderingBruktIAksjonspunkt={vurderingBruktIAksjonspunkt}
+        />
         <NavigationWithDetailView
           navigationSection={() => (
             <Vurderingsnavigasjon<SykdomVurderingselement>
@@ -100,13 +95,15 @@ const SykdomUperiodisertIndex = () => {
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
-              customPeriodeLabel="Vurdert"
+              customLabelRow={
+                <CustomLabelRow harAnnenPart={vurderingsliste?.some(vurdering => vurdering.vurderingFraAnnenpart)} />
+              }
               customPeriodeRad={(periode, onPeriodeClick) => (
                 <NavigasjonsmenyRad
                   periode={periode}
                   active={periode.id === valgtPeriode?.id}
                   erBruktIAksjonspunkt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
-                  erFraTidligereBehandling={periode.behandlingUuid !== behandlingUuid}
+                  erFraAnnenPart={periode.vurderingFraAnnenpart}
                   onClick={() => onPeriodeClick(periode)}
                 />
               )}
@@ -136,34 +133,13 @@ const SykdomUperiodisertIndex = () => {
   );
 };
 
-const Warning = ({
-  vurderinger = [],
-  vurderingBruktIAksjonspunkt,
-}: {
-  vurderinger: LangvarigSykdomVurderingDto[] | undefined;
-  vurderingBruktIAksjonspunkt: ValgtLangvarigSykdomVurderingDto | undefined;
-}) => {
-  const { readOnly, behandlingUuid, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
-  const harAksjonspunkt9301 = !!aksjonspunkter.find(akspunkt => akspunkt.definisjon.kode === '9301');
-
-  const harVurderingFraTidligereBehandling = vurderinger.some(v => v.behandlingUuid !== behandlingUuid);
-  if (vurderingBruktIAksjonspunkt?.resultat !== 'MÅ_VURDERES' || readOnly || !harAksjonspunkt9301) {
-    return null;
-  }
-
-  if (harVurderingFraTidligereBehandling) {
-    return (
-      <Alert className="my-5" variant="warning">
-        Det er tidligere vurdert om barnet har en funksjonshemning eller en langvarig sykdom. Bekreft om tidligere
-        sykdomsvurdering gjelder for ny periode eller legg til en ny sykdomsvurdering.
-      </Alert>
-    );
-  }
-
+const CustomLabelRow = ({ harAnnenPart }: { harAnnenPart?: boolean }) => {
   return (
-    <Alert className="my-5" variant="warning">
-      Vurder om barnet har en funksjonshemning eller en langvarig sykdom.
-    </Alert>
+    <div className="flex items-center w-full">
+      <div className="ml-6 min-w-[50px]">Status</div>
+      <div className="ml-2">Periode</div>
+      {harAnnenPart && <div className="ml-14">Annen part</div>}
+    </div>
   );
 };
 

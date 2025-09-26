@@ -1,10 +1,6 @@
 import { useState, useMemo, useContext } from 'react';
 import { Period } from '@navikt/ft-utils';
-import {
-  InstitusjonVurderingDtoResultat,
-  type InstitusjonPeriodeDto,
-  type InstitusjonVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView.js';
@@ -14,11 +10,7 @@ import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
 import { CenteredLoader } from '../CenteredLoader.js';
-export interface FaktaInstitusjonProps {
-  perioder: InstitusjonPeriodeDto[];
-  vurderinger: InstitusjonVurderingDto[];
-  readOnly: boolean;
-}
+import InstitusjonAlerts from './components/InstitusjonAlerts.js';
 
 const FaktaInstitusjonIndex = () => {
   const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);
@@ -46,9 +38,8 @@ const FaktaInstitusjonIndex = () => {
       } else {
         grouped.set(id, {
           ...periode,
-          periode: periodObj,
           perioder: [periodObj],
-          resultat: vurdering?.resultat ?? InstitusjonVurderingDtoResultat.MÅ_VURDERES,
+          resultat: vurdering?.resultat ?? InstitusjonResultat.MÅ_VURDERES,
         });
       }
     });
@@ -73,6 +64,7 @@ const FaktaInstitusjonIndex = () => {
 
   return (
     <div>
+      <InstitusjonAlerts valgtVurdering={valgtVurdering} vurderinger={vurderinger} />
       <NavigationWithDetailView
         navigationSection={() => (
           <VurderingsperiodeNavigasjon<InstitusjonPerioderDtoMedResultat>

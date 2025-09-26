@@ -1,6 +1,7 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Label, Link, Tooltip } from '@navikt/ds-react';
@@ -25,7 +26,6 @@ import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
-import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -181,7 +181,7 @@ const VurderingLangvarigSykdomForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginBlock="6 0">
+            <Box.New marginBlock="6 0">
               <Label size="small" aria-hidden="true">
                 Hvilke dokumenter er brukt i vurderingen av sykdom?
               </Label>
@@ -245,9 +245,9 @@ const VurderingLangvarigSykdomForm = ({
                   {visAlleDokumenter ? `Vis færre dokumenter` : `Vis alle dokumenter (${dokumenter.length})`}
                 </button>
               )}
-            </Box>
+            </Box.New>
           )}
-          <Box marginBlock="8 0">
+          <Box.New marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly}
@@ -279,8 +279,8 @@ const VurderingLangvarigSykdomForm = ({
               }
               validators={{ required, hasValidText }}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <RadioGroupPanelRHF
               question="Har den pleietrengende en langvarig sykdom?"
               name={FieldName.HAR_LANGVARIG_SYKDOM}
@@ -291,9 +291,9 @@ const VurderingLangvarigSykdomForm = ({
               validators={{ required }}
               disabled={readOnly}
             />
-          </Box>
+          </Box.New>
 
-          <Box marginBlock="8 0">
+          <Box.New marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -342,23 +342,23 @@ const VurderingLangvarigSykdomForm = ({
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginBlock="6 0">
+                <Box.New marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                     id="leggTilPeriodeKnapp"
                   />
-                </Box>
+                </Box.New>
               )}
             />
-          </Box>
+          </Box.New>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
-            </Box>
+            </Box.New>
           )}
         </FormWithButtons>
       </FormProvider>

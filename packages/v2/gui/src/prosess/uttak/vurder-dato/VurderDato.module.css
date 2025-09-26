@@ -8,12 +8,14 @@
   margin-bottom: 1rem;
 }
 
-.alertAccordion :global(.navds-accordion__header) {
-  --a-spacing-3: 0;
+.alertAccordion :global(.aksel-accordion__header) {
+  /* stylelint-disable-next-line */
+  --aksel-legacy__a-spacing-3: 0;
 
   box-shadow: none !important;
 }
 
-.alertAccordion :global(.navds-accordion__content) {
-  --a-spacing-5: 0;
+.alertAccordion :global(.aksel-accordion__content) {
+  /* stylelint-disable-next-line */
+  --aksel-legacy__a-spacing-5: 0;
 }

@@ -36,7 +36,7 @@ export const ValideringsFeil: Story = {
   args: {
     errors: [
       makeFakeK9SakValidationError({
-        body: {
+        error: {
           feilmelding:
             'Det oppstod en valideringsfeil på felt [fritekst]. Vennligst kontroller at alle feltverdier er korrekte.',
           type: 'VALIDERINGS_FEIL',
@@ -50,8 +50,10 @@ export const ValideringsFeil: Story = {
 export const FleireApiFeil: Story = {
   args: {
     errors: [
-      makeFakeK9SakValidationError({ body: { feilmelding: 'Her feila det i felt [test1]', type: 'VALIDERINGS_FEIL' } }),
-      makeFakeExtendedApiError({ status: 500, body: { feilmelding: 'Noko feila på server' } }),
+      makeFakeK9SakValidationError({
+        error: { feilmelding: 'Her feila det i felt [test1]', type: 'VALIDERINGS_FEIL' },
+      }),
+      makeFakeExtendedApiError({ status: 500, error: { feilmelding: 'Noko feila på server' } }),
     ],
   },
   decorators: [withParentErrorStateMaintainer],

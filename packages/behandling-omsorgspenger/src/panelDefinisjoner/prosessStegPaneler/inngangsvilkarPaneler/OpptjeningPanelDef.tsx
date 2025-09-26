@@ -10,7 +10,7 @@ import { OmsorgspengerBehandlingApiKeys } from '../../../data/omsorgspengerBehan
 class OpptjeningPanelDef extends ProsessStegPanelDef {
   getId = () => 'OPPTJENING';
 
-  getTekstKode = () => 'Behandlingspunkt.Opptjening';
+  getTekstKode = () => 'Opptjening';
 
   getKomponent = props => {
     if (props.featureToggles.BRUK_V2_VILKAR_OPPTJENING) {

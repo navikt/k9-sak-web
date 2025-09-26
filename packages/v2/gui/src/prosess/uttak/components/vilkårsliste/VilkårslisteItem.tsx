@@ -14,12 +14,12 @@ const VilkårslisteItem = ({ vilkår, erOppfylt }: VilkårslisteItemProps): JSX.
     <div>
       {erOppfylt ? (
         <>
-          <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+          <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
           Oppfylt
         </>
       ) : (
         <>
-          <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+          <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
           Ikke oppfylt
         </>
       )}

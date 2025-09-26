@@ -1,6 +1,6 @@
 .container {
   background-color: #ba3a26;
-  color: var(--a-white);
+  color: var(--ax-bg-default);
   display: block;
   max-height: 120px;
   min-height: 53px;
@@ -14,8 +14,8 @@
 .link {
   background: none;
   border: 0;
-  border-bottom: solid 1px var(--a-white);
-  color: var(--a-white);
+  border-bottom: solid 1px var(--ax-bg-default);
+  color: var(--ax-bg-default);
   cursor: pointer;
   padding: 0;
   text-decoration: none;
@@ -36,9 +36,4 @@
 
 .wordWrap {
   white-space: pre-line;
-}
-
-.closeButton {
-  --ac-button-secondary-border: white;
-  --ac-button-secondary-text: white;
 }

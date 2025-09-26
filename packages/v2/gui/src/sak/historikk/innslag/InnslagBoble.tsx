@@ -1,30 +1,26 @@
-import { Chat, VStack, Button } from '@navikt/ds-react';
-import { Avatar } from '../snakkeboble/Avatar.jsx';
-import type { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
-import { formatDate, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button, Chat, VStack } from '@navikt/ds-react';
+import { useState } from 'react';
+import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
+import type {
+  KlageHistorikkInnslagV2,
+  SakHistorikkInnslagV2,
+  TilbakeHistorikkInnslagV2,
+} from '../historikkTypeBerikning.js';
+import { Avatar } from './Avatar.jsx';
+import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
+import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
 import { Tittel } from '../snakkeboble/Tittel.jsx';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
-import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
-import { useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
-import type { KlageHistorikkInnslagV2, SakHistorikkInnslagV2 } from '../historikkTypeBerikning.js';
-import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
+import { Skjermlenke } from './Skjermlenke.js';
 
 export interface InnslagBobleProps {
-  readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2;
-  readonly kjønn: Kjønn;
+  readonly innslag: SakHistorikkInnslagV2 | KlageHistorikkInnslagV2 | TilbakeHistorikkInnslagV2;
   readonly behandlingLocation: InnslagLinjeProps['behandlingLocation'];
-  readonly createLocationForSkjermlenke: InnslagLinjeProps['createLocationForSkjermlenke'];
   readonly saksnummer: string;
 }
 
-export const InnslagBoble = ({
-  innslag,
-  kjønn,
-  behandlingLocation,
-  createLocationForSkjermlenke,
-  saksnummer,
-}: InnslagBobleProps) => {
+export const InnslagBoble = ({ innslag, behandlingLocation, saksnummer }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
   const rolleNavn = innslag.aktør.type.navn;
   const position = utledPlassering(innslag.aktør.type.kilde);
@@ -34,28 +30,28 @@ export const InnslagBoble = ({
   return (
     <Chat
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
-      avatar={<Avatar aktørType={innslag.aktør.type.kilde} kjønn={kjønn} />}
+      avatar={<Avatar aktørType={innslag.aktør.type.kilde} />}
       timestamp={`${formatDate(innslag.opprettetTidspunkt)}`}
       name={`${rolleNavn} ${hentSaksbehandlerNavn(innslag.aktør.ident ?? '')}`}
       position={position}
       toptextPosition="left"
-      className={getStyle(innslag.aktør.type.kilde, kjønn)}
+      className={getStyle(innslag.aktør.type.kilde)}
+      data-color={getColor(innslag.aktør.type.kilde)}
+      variant="neutral"
     >
       <Chat.Bubble>
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
-
+        {'skjermlenke' in innslag && innslag.skjermlenke != null ? (
+          <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
+        ) : null}
         {innslag.linjer.map((linje, idx) => (
           <div key={idx} hidden={doCutOff && !expanded && idx > 0}>
-            <InnslagLinje
-              linje={linje}
-              behandlingLocation={behandlingLocation}
-              createLocationForSkjermlenke={createLocationForSkjermlenke}
-            />
+            <InnslagLinje linje={linje} behandlingLocation={behandlingLocation} />
           </div>
         ))}
 
         {innslag.dokumenter != null ? (
-          <VStack gap="1">
+          <VStack gap="space-4">
             {innslag.dokumenter.map(dokument => (
               <HistorikkDokumentLenke
                 key={`${dokument.dokumentId}-${dokument.journalpostId}`}

@@ -1,6 +1,7 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
@@ -16,7 +17,6 @@ import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -26,7 +26,10 @@ import K9StatusBackendClient from '@k9-sak-web/gui/shared/statusstriper/K9Status
 import Punsjstripe from '@k9-sak-web/gui/shared/statusstriper/punsjstripe/Punsjstripe.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import { DirekteOvergangDto, MerknadResponse } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
+  k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -50,24 +53,13 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
-const erOmsorgspenger = (fagsak: Fagsak) =>
-  [
-    fagsakYtelsesType.OMSORGSPENGER,
-    fagsakYtelsesType.OMSORGSPENGER_KS,
-    fagsakYtelsesType.OMSORGSPENGER_AO,
-    fagsakYtelsesType.OMSORGSPENGER_MA,
-  ].some(sakstype => sakstype === fagsak.sakstype);
-
 /**
  * FagsakIndex
  *
  * Container komponent. Er rot for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 const FagsakIndex = () => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const k9StatusBackendClient = new K9StatusBackendClient(k9SakClient);
+  const k9StatusBackendClient = new K9StatusBackendClient();
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
@@ -225,11 +217,6 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showPunsjStripe =
-    erPleiepengerSyktBarn(fagsak) ||
-    erPleiepengerLivetsSluttfase(fagsak) ||
-    (erOmsorgspenger(fagsak) && featureToggles?.OMS_PUNSJSTRIPE);
-  const showFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
 
   return (
     <>
@@ -316,21 +303,13 @@ const FagsakIndex = () => {
 
                   {behandling && (
                     <>
-                      {showPunsjStripe && (
-                        <Punsjstripe
-                          api={k9StatusBackendClient}
-                          saksnummer={fagsak.saksnummer}
-                          pathToLos={getPathToK9Los()}
-                        />
-                      )}
-                      {showFagsakPåSøkerStripe && (
-                        <AndreSakerPåSøkerStripe
-                          api={k9StatusBackendClient}
-                          søkerIdent={fagsakPerson.personnummer}
-                          saksnummer={fagsak.saksnummer}
-                          fagsakYtelseType={fagsak.sakstype}
-                        />
-                      )}
+                      <Punsjstripe
+                        api={k9StatusBackendClient}
+                        saksnummer={fagsak.saksnummer}
+                        pathToLos={getPathToK9Los()}
+                      />
+
+                      <AndreSakerPåSøkerStripe api={k9StatusBackendClient} saksnummer={fagsak.saksnummer} />
                     </>
                   )}
                 </div>

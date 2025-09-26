@@ -1,23 +1,14 @@
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
-import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import {
-  FaktaGruppe,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
 import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import AksjonspunktIkon from '@k9-sak-web/gui/shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
+import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
-import { BodyShort } from '@navikt/ds-react';
-import React, { Component } from 'react';
+import { BriefcaseIcon } from '@navikt/aksel-icons';
+import { ExpansionCard, HStack, VStack } from '@navikt/ds-react';
+import { Component } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
@@ -26,7 +17,6 @@ import { FormAction } from 'redux-form/lib/actions';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
-
 import styles from './personArbeidsforholdPanel.module.css';
 
 // -------------------------------------------------------------------------------------------------------------
@@ -72,7 +62,7 @@ interface DispatchProps {
 
 interface OwnState {
   selectedArbeidsforhold?: ArbeidsforholdV2;
-  selectedArbeidsgiver?: Arbeidsgiver;
+  selectedArbeidsgiver?: string;
 }
 
 interface StaticFunctions {
@@ -133,10 +123,10 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     this.initializeActivityForm(selectedArbeidsforhold);
   }
 
-  setSelectedArbeidsgiver(selected) {
+  setSelectedArbeidsgiver(selected?: string) {
     const { selectedArbeidsgiver } = this.state;
 
-    if (selectedArbeidsgiver && selectedArbeidsgiver.arbeidsgiverOrgnr === selected.identifikator) {
+    if (selectedArbeidsgiver && selectedArbeidsgiver === selected) {
       this.setState({ selectedArbeidsgiver: undefined });
       return;
     }
@@ -235,11 +225,12 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     const unikeArbeidsgivere = [...new Set(arbeidsforhold.map(af => af.arbeidsgiver.arbeidsgiverOrgnr))];
 
     return (
-      <>
-        <FaktaGruppe
-          className={styles.container}
-          merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]}
-        >
+      <FaktaGruppe
+        className={styles.container}
+        merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]}
+        withoutBorder
+      >
+        <VStack gap="space-20">
           {unikeArbeidsgivere.map(a => {
             const arbeidsforholdPerArbeidsgiver = arbeidsforhold.filter(af => af.arbeidsgiver.arbeidsgiverOrgnr === a);
 
@@ -253,39 +244,22 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
             const harAksjonspunktForArbeidsgiver =
               harAksjonspunktAvklarArbeidsforhold &&
               arbeidsforholdPerArbeidsgiver.some(arbeidsforholdHarAksjonspunktÅrsak);
-
             return (
-              <FlexContainer key={this.utledNøkkel(a, arbeidsgiverOpplysningerPerId)}>
-                <FlexRow>
-                  <FlexColumn className={styles.arbeidsgiverColumn}>
-                    <div className={styles.overskrift}>
-                      <Image src={briefcaseImg} />
-                      <BodyShort size="small">{navn}</BodyShort>
-                    </div>
-                  </FlexColumn>
-                  <FlexColumn className={styles.aksjonspunktColumn}>
-                    {harAksjonspunktForArbeidsgiver && <Image src={advarselImageUrl} alt="" />}
-                    <button
-                      className={styles.knappContainer}
-                      type="button"
-                      onClick={() => this.setSelectedArbeidsgiver(a)}
-                    >
-                      <BodyShort size="small" className={styles.visLukkArbeidsforhold}>
-                        {intl.formatMessage(
-                          erValgt
-                            ? {
-                                id: 'PersonArbeidsforholdPanel.LukkArbeidsforhold',
-                              }
-                            : {
-                                id: 'PersonArbeidsforholdPanel.VisArbeidsforhold',
-                              },
-                        )}
-                      </BodyShort>
-                      <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
-                    </button>
-                  </FlexColumn>
-                </FlexRow>
-                {erValgt && (
+              <ExpansionCard
+                size="small"
+                aria-label={navn}
+                key={this.utledNøkkel(a, arbeidsgiverOpplysningerPerId)}
+                open={erValgt}
+                onToggle={() => this.setSelectedArbeidsgiver(a)}
+              >
+                <ExpansionCard.Header>
+                  <HStack wrap={false} gap="space-16" align="center">
+                    <BriefcaseIcon aria-hidden fontSize="2rem" />
+                    <ExpansionCard.Title size="small">{navn}</ExpansionCard.Title>
+                    {harAksjonspunktForArbeidsgiver && <AksjonspunktIkon size="large" />}
+                  </HStack>
+                </ExpansionCard.Header>
+                <ExpansionCard.Content>
                   <PersonArbeidsforholdTable
                     intl={intl}
                     harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
@@ -296,13 +270,12 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                     behandlingVersjon={behandlingVersjon}
                     updateArbeidsforhold={this.updateArbeidsforhold}
                   />
-                )}
-              </FlexContainer>
+                </ExpansionCard.Content>
+              </ExpansionCard>
             );
           })}
-        </FaktaGruppe>
-        <VerticalSpacer twentyPx />
-      </>
+        </VStack>
+      </FaktaGruppe>
     );
   }
 }

@@ -1,5 +1,8 @@
 import { ArbeidsgiverOpplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { BeregningsresultatPeriodeAndelDto, BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export interface BeriketBeregningsresultatPeriode extends Omit<BeregningsresultatPeriodeDto, 'andeler'> {
   id: string;

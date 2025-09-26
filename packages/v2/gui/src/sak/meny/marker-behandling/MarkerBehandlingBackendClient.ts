@@ -1,21 +1,12 @@
 import type {
-  DeleteMerknadResponse,
-  EndreMerknadRequestMerknadKode,
+  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadType,
   GetMerknadResponse,
-  K9SakClient,
-  PostMerknadResponse,
-  SlettMerknadRequestMerknadKode,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { los_deleteMerknad, los_getMerknad, los_postMerknad } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export default class MarkerBehandlingBackendClient {
-  #backendClient: K9SakClient;
-
-  constructor(backendClient: K9SakClient) {
-    this.#backendClient = backendClient;
-  }
-
   async getMerknader(behandlingUuid: string): Promise<GetMerknadResponse> {
-    return this.#backendClient.los.getMerknad(behandlingUuid);
+    return (await los_getMerknad({ query: { behandlingUuid } })).data;
   }
 
   async markerBehandling({
@@ -25,12 +16,14 @@ export default class MarkerBehandlingBackendClient {
   }: {
     behandlingUuid: string;
     fritekst: string;
-    merknadKode: EndreMerknadRequestMerknadKode;
-  }): Promise<PostMerknadResponse> {
-    return this.#backendClient.los.postMerknad({
-      behandlingUuid,
-      fritekst,
-      merknadKode,
+    merknadKode: BehandlingMerknadType;
+  }): Promise<void> {
+    await los_postMerknad({
+      body: {
+        behandlingUuid,
+        fritekst,
+        merknadKode,
+      },
     });
   }
 
@@ -39,11 +32,13 @@ export default class MarkerBehandlingBackendClient {
     merknadKode,
   }: {
     behandlingUuid: string;
-    merknadKode: SlettMerknadRequestMerknadKode;
-  }): Promise<DeleteMerknadResponse> {
-    return this.#backendClient.los.deleteMerknad({
-      behandlingUuid,
-      merknadKode,
+    merknadKode: BehandlingMerknadType;
+  }): Promise<void> {
+    await los_deleteMerknad({
+      body: {
+        behandlingUuid,
+        merknadKode,
+      },
     });
   }
 }

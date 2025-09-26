@@ -1,6 +1,6 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
-const totrinnskontrollaksjonspunktTextCodes = {
+const totrinnskontrollaksjonspunktTextCodes: Record<string, string> = {
   [aksjonspunktCodes.OVERSTYRING_AV_OMSORGEN_FOR]: 'Vilkåret omsorgen for er overstyrt.',
   [aksjonspunktCodes.OVERSTYRING_AV_MEDISINSKESVILKÅRET_UNDER_18]: 'Vilkåret sykdom er overstyrt.',
   [aksjonspunktCodes.AVKLAR_AKTIVITETER]: 'Det er vurdert hvilke aktiviteter som skal benyttes i beregningsgrunnlaget.',

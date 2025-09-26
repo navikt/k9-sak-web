@@ -1,4 +1,3 @@
-import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { Button, HGrid } from '@navikt/ds-react';
@@ -33,7 +32,7 @@ const VedtakKlageNkkSubmitPanel = ({
   readOnly,
   behandlingPåVent,
 }: Props & WrappedComponentProps) => (
-  <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+  <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
     <div>
       {!readOnly && (
         <Button

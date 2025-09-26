@@ -4,7 +4,7 @@ import { type JSX } from 'react';
 
 const InnleggelsesperiodeIkonOverOppfylt = (): JSX.Element => (
   <OverlayedIcons
-    indicatorRenderer={() => <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />}
+    indicatorRenderer={() => <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />}
     overlayRenderer={() => <Buildings3Icon fontSize={24} />}
   />
 );

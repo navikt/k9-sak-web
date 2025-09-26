@@ -1,6 +1,6 @@
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
 class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
@@ -17,7 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
 class FortsattMedlemskapProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.FORTSATTMEDLEMSKAP;
 
-  getTekstKode = () => 'Behandlingspunkt.FortsattMedlemskap';
+  getTekstKode = () => 'Fortsatt medlem';
 
   getPanelDefinisjoner = () => [new PanelDef()];
 }

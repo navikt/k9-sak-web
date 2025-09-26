@@ -1,8 +1,10 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useMemo } from 'react';
 
+import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
+import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const useHentFagsakRettigheter = (
@@ -11,8 +13,9 @@ const useHentFagsakRettigheter = (
   behandlingVersjon: number,
 ): [rettigheter: SakRettigheter, harHentet: boolean] => {
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
-
-  const { data: sakRettigheterK9Sak, state: sakRettigheterStateK9Sak } = restApiHooks.useRestApi<SakRettigheter>(
+  const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  const skalHenteFraTilbake = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const { data: sakRettigheterUngSak, state: sakRettigheterStateUngSak } = restApiHooks.useRestApi<SakRettigheter>(
     UngSakApiKeys.SAK_RETTIGHETER,
     { saksnummer },
     {
@@ -22,21 +25,37 @@ const useHentFagsakRettigheter = (
     },
   );
 
-  const harHentetK9Sak =
-    !!sakRettigheterK9Sak ||
-    (sakRettigheterStateK9Sak !== RestApiState.NOT_STARTED && sakRettigheterStateK9Sak !== RestApiState.LOADING);
+  const { data: sakRettigheterTilbake, state: sakRettigheterStateTilbake } = restApiHooks.useRestApi<SakRettigheter>(
+    UngSakApiKeys.SAK_RETTIGHETER_TILBAKE,
+    { saksnummer },
+    {
+      updateTriggers: [saksnummer, behandlingId, behandlingVersjon],
+      suspendRequest: !skalHenteFraTilbake || !saksnummer || erBehandlingEndretFraUndefined,
+      keepData: true,
+    },
+  );
+
+  const harHentetUngSak =
+    !!sakRettigheterUngSak ||
+    (sakRettigheterStateUngSak !== RestApiState.NOT_STARTED && sakRettigheterStateUngSak !== RestApiState.LOADING);
+  const harHentetTilbake =
+    !skalHenteFraTilbake ||
+    !!sakRettigheterTilbake ||
+    (sakRettigheterStateTilbake !== RestApiState.NOT_STARTED && sakRettigheterStateTilbake !== RestApiState.LOADING);
 
   const sakRettigheter = useMemo(() => {
-    if (sakRettigheterK9Sak) {
+    if (sakRettigheterUngSak && sakRettigheterTilbake) {
       return {
-        sakSkalTilInfotrygd: sakRettigheterK9Sak.sakSkalTilInfotrygd,
-        behandlingTypeKanOpprettes: sakRettigheterK9Sak.behandlingTypeKanOpprettes,
+        sakSkalTilInfotrygd: sakRettigheterUngSak.sakSkalTilInfotrygd,
+        behandlingTypeKanOpprettes: sakRettigheterUngSak.behandlingTypeKanOpprettes.concat(
+          sakRettigheterTilbake?.behandlingTypeKanOpprettes || [],
+        ),
       };
     }
-    return sakRettigheterK9Sak;
-  }, [sakRettigheterK9Sak]);
+    return sakRettigheterUngSak;
+  }, [sakRettigheterUngSak, sakRettigheterTilbake]);
 
-  return [sakRettigheter, harHentetK9Sak];
+  return [sakRettigheter, harHentetUngSak && harHentetTilbake];
 };
 
 export default useHentFagsakRettigheter;

@@ -69,25 +69,3 @@ export function isValidDate(date: any) {
 export function isValidPeriod({ fom, tom }: Period) {
   return isValidDate(fom) && isValidDate(tom);
 }
-
-export function hanteringAvDatoForDatoVelger(soknadsdato) {
-  const antallÅrFramITid = 10;
-  const maxDato = new Date(soknadsdato);
-  maxDato.setFullYear(maxDato.getFullYear() + antallÅrFramITid);
-
-  const startDato = new Date(maxDato.getFullYear() - antallÅrFramITid, 12, 1);
-  const invalidDateRanges = [];
-
-  for (let i = 0; i < antallÅrFramITid; i += 1) {
-    invalidDateRanges.push({
-      from: `${(startDato.getFullYear() + i).toString()}-01-01`,
-      to: `${(startDato.getFullYear() + i).toString()}-12-30`,
-    });
-  }
-
-  return {
-    invalidDateRanges,
-    minDate: startDato.toISOString().substring(0, 10),
-    maxDate: maxDato.toISOString().substring(0, 10),
-  };
-}

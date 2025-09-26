@@ -1,11 +1,11 @@
 import { Button } from '@navikt/ds-react';
-import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import styles from './VurderDatoAksjonspunkt.module.css';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 import { useUttakContext } from '../context/UttakContext';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 
 interface FormData {
   virkningsdato: string;
@@ -17,7 +17,6 @@ interface Props {
     virkningsdato: string;
     begrunnelse: string;
   };
-  oppdaterBehandling: () => void;
 }
 
 const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
@@ -54,9 +53,10 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={onSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
       <div className={styles['vurderDatoAksjonspunktContainer']}>
-        <Datepicker
+        <RhfDatepicker
+          control={formMethods.control}
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
@@ -65,7 +65,8 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
           validate={[required, hasValidDate]}
           isReadOnly={readOnly}
         />
-        <TextAreaField
+        <RhfTextarea
+          control={formMethods.control}
           name="begrunnelse"
           label="Begrunnelse"
           size="small"
@@ -78,6 +79,7 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
             <Button size="small" type="submit" className={styles['bekreft']}>
               Bekreft og fortsett
             </Button>
+
             {virkningsdatoUttakNyeRegler && (
               <Button variant="secondary" type="button" size="small" onClick={() => setRedigervirkningsdato(false)}>
                 Avbryt
@@ -86,7 +88,7 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
           </div>
         )}
       </div>
-    </Form>
+    </RhfForm>
   );
 };
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
@@ -12,6 +10,7 @@ type OwnProps = {
   readOnly: boolean;
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid: string;
   beregnBelop: (data: any) => Promise<any>;
 };
 
@@ -24,6 +23,7 @@ export const TilbakekrevingTimelineData = ({
   behandlingId,
   behandlingVersjon,
   beregnBelop,
+  behandlingUuid,
 }: OwnProps) => (
   <div>
     <PeriodeController
@@ -34,6 +34,7 @@ export const TilbakekrevingTimelineData = ({
       oppdaterSplittedePerioder={oppdaterSplittedePerioder}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      behandlingUuid={behandlingUuid}
       beregnBelop={beregnBelop}
     />
     <PeriodeInformasjon
