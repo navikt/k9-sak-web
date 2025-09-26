@@ -150,7 +150,7 @@ const VurderOverlappendeSak: FC = () => {
   }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
-    if (aksjonspunkt.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
+    if (aksjonspunkt?.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
       setLoading(true);
       const bekreftetAksjonspunkt: DTOWithDiscriminatorType<
         k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
@@ -179,7 +179,7 @@ const VurderOverlappendeSak: FC = () => {
       oppdaterBehandling();
     } else {
       throw new Error(
-        `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
+        `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt?.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
       );
     }
   };

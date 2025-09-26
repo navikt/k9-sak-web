@@ -1,16 +1,17 @@
 import type {
-  k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  GetOverstyrtUttakResponse,
-  InntektgraderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
   k9_sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
   k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest as OverstyrbareAktiviteterForUttakRequest,
   k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrtUttakDto as OverstyrtUttakDto,
+  k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingDto as InntektgraderingDto,
+  k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_overstyr,
+  arbeidsgiver_getArbeidsgiverOpplysninger,
+  behandlingPleiepengerInntektsgradering_getInntektsgradering,
   behandlingUttak_getOverstyrtUttak,
   behandlingUttak_hentEgneOverlappendeSaker,
   behandlingUttak_hentOverstyrbareAktiviterForUttak,
@@ -27,7 +28,7 @@ export default class BehandlingUttakBackendClient {
     await aksjonspunkt_bekreft({ body: requestBody });
   }
 
-  async hentOverstyringUttak(behandlingUuid: string): Promise<GetOverstyrtUttakResponse> {
+  async hentOverstyringUttak(behandlingUuid: string): Promise<OverstyrtUttakDto> {
     const result = await behandlingUttak_getOverstyrtUttak({ query: { behandlingUuid } });
     return result.data ?? { overstyringer: [] };
   }
@@ -47,9 +48,9 @@ export default class BehandlingUttakBackendClient {
       })
     ).data;
   }
-  
+
   async getArbeidsgivere(behandlingUuid: string) {
-    return this.#k9sak.arbeidsgiver.getArbeidsgiverOpplysninger(behandlingUuid);
+    return (await arbeidsgiver_getArbeidsgiverOpplysninger({ query: { behandlingUuid } })).data ?? [];
   }
   async overstyringUttak(
     requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
@@ -58,6 +59,8 @@ export default class BehandlingUttakBackendClient {
   }
 
   async hentInntektsgraderinger(behandlingUuid: string): Promise<InntektgraderingDto> {
-    return this.#k9sak.behandlingPleiepengerInntektsgradering.getInntektsgradering(behandlingUuid);
+    return (
+      (await behandlingPleiepengerInntektsgradering_getInntektsgradering({ query: { behandlingUuid } })).data ?? null
+    );
   }
 }

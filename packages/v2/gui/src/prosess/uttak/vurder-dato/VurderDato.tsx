@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
 import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
 import { useUttakContext } from '../context/UttakContext';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
 import styles from './VurderDato.module.css';
-
-interface Props {
-  oppdaterBehandling: () => void;
-}
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');
@@ -25,7 +21,7 @@ const scrollToVurderDatoContainer = () => {
   }
   return undefined;
 };
-const VurderDato = ({ oppdaterBehandling }: Props) => {
+const VurderDato = () => {
   const { virkningsdatoUttakNyeRegler, harAksjonspunkt, readOnly, aksjonspunktVurderDatoNyRegelUttak } =
     useUttakContext();
 
@@ -36,8 +32,8 @@ const VurderDato = ({ oppdaterBehandling }: Props) => {
   }, [virkningsdatoUttakNyeRegler]);
 
   if (
-    !harAksjonspunkt(AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK) &&
-    !(readOnly && harAksjonspunkt(AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK))
+    !harAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK) &&
+    !(readOnly && harAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK))
   ) {
     return false;
   }
@@ -86,7 +82,7 @@ const VurderDato = ({ oppdaterBehandling }: Props) => {
           </Accordion.Item>
         </Accordion>
       </Alert>
-      <VurderDatoAksjonspunkt initialValues={initialValues} oppdaterBehandling={oppdaterBehandling} />
+      <VurderDatoAksjonspunkt initialValues={initialValues} />
     </div>
   );
 };

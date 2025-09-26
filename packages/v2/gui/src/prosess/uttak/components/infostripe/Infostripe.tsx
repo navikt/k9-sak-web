@@ -2,7 +2,7 @@ import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import styles from './infostripe.module.css';
 import { useUttakContext } from '../../context/UttakContext';
-import { BehandlingDtoSakstype } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const Infostripe: React.FC = () => {
   const { erSakstype } = useUttakContext();
@@ -14,7 +14,7 @@ const Infostripe: React.FC = () => {
         <ol className={styles['infostripe__punktliste']}>
           <li>
             Åpne alle behandlinger tilknyttet
-            {erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) ? 'pleietrengende' : 'barnet'} og behandle de til
+            {erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) ? 'pleietrengende' : 'barnet'} og behandle de til
             uttakssteget.
           </li>
           <li>

@@ -7,8 +7,11 @@ import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
 import type { UttaksperiodeBeriket } from '../Uttak';
 import { useUttakContext } from '../context/UttakContext';
-import { BehandlingDtoSakstype } from '@k9-sak-web/backend/k9sak/generated';
 import { prettifyPeriod } from '../utils/periodUtils';
+import {
+  type k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 interface UttaksperiodeListeProps {
   uttaksperioder: UttaksperiodeBeriket[]; // extends UttaksperiodeInfo fra ts-client
@@ -49,11 +52,11 @@ const splitUttakByDate = (
   return { before, afterOrCovering };
 };
 
-const tableHeaders = (sakstype: BehandlingDtoSakstype | undefined) => {
-  if (sakstype === BehandlingDtoSakstype.OPPLÆRINGSPENGER) {
+const tableHeaders = (sakstype: FagsakYtelseType | undefined) => {
+  if (sakstype === fagsakYtelseType.OPPLÆRINGSPENGER) {
     return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Sykdom og opplæring', 'Søkers uttaksgrad'];
   }
-  if (sakstype === BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) {
+  if (sakstype === fagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) {
     return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleie i hjemmet', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
   }
   return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
@@ -65,10 +68,10 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   redigerVirkningsdato,
   readOnly,
 }) => {
-  const { sakstype, virkningsdatoUttakNyeRegler } = useUttakContext();
+  const { fagsakYtelseType: ytelseType, virkningsdatoUttakNyeRegler, erSakstype } = useUttakContext();
   const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
   const { before, afterOrCovering } = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);
-  const headers = tableHeaders(sakstype);
+  const headers = tableHeaders(ytelseType);
 
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
@@ -105,7 +108,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
                   </td>
                 </Table.Row>
               )}
-              {sakstype === BehandlingDtoSakstype.OPPLÆRINGSPENGER ? (
+              {erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ? (
                 <UttakRadOpplæringspenger
                   uttak={uttak}
                   erValgt={valgtPeriodeIndex === index}
@@ -153,7 +156,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
                   </td>
                 </Table.Row>
               )}
-              {sakstype === BehandlingDtoSakstype.OPPLÆRINGSPENGER ? (
+              {erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ? (
                 <UttakRadOpplæringspenger
                   uttak={uttak}
                   erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}

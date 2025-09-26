@@ -1,4 +1,5 @@
-import type {
+import {
+  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
   pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
   pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
   type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
@@ -92,7 +93,7 @@ const graderingBenevnelse = (ytelse: FagsakYtelsesType) => {
 
 const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-  const { erSakstype, behandling, uttakApi } = useUttakContext();
+  const { erSakstype, behandling, uttakApi, fagsakYtelseType } = useUttakContext();
   const {
     utbetalingsgrader,
     graderingMotTilsyn,
@@ -134,8 +135,8 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
     shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
   const skalViseGraderingMotTilsyn = !erSakstype([
-    BehandlingDtoSakstype.OPPLÆRINGSPENGER,
-    BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE,
+    FagsakYtelseType.OPPLÆRINGSPENGER,
+    FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE,
   ]);
 
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
@@ -162,7 +163,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
           >
             {shouldHighlightTilsyn && (
               <Box.New className={styles.uttakDetaljerTag}>
-                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
+                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(fagsakYtelseType)}`} />
               </Box.New>
             )}
             <HStack>
@@ -184,7 +185,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
         >
           {shouldHighlightArbeidstid && (
             <Box.New className={styles.uttakDetaljerTag}>
-              <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
+              <FremhevingTag text={`Gir lavest ${graderingBenevnelse(fagsakYtelseType)}`} />
             </Box.New>
           )}
           <HStack>
@@ -204,7 +205,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
           >
             {shouldHighlightInntekt && (
               <Box.New className={styles.uttakDetaljerTag}>
-                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
+                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(fagsakYtelseType)}`} />
               </Box.New>
             )}
             <HStack>

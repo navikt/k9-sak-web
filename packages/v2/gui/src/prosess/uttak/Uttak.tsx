@@ -1,17 +1,17 @@
 import React from 'react';
 import { useContext, type JSX } from 'react';
 import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
-import { K9SakClientContext } from '../../app/K9SakClientContext';
 import { UttakContext, type UttakContextType } from './context/UttakContext';
+
 import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  type AksjonspunktDto,
-  type BehandlingDto,
-  type Periode,
-  type UttaksperiodeInfo,
-  type UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
+  type pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
+  type k9_sak_typer_Periode as Periode,
+  type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
@@ -34,12 +34,12 @@ export interface UttaksperiodeBeriket extends UttaksperiodeInfo {
 
 interface UttakProps {
   uttak: UttaksplanMedUtsattePerioder;
-  behandling: Pick<BehandlingDto, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
+  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   erOverstyrer?: boolean;
-  aksjonspunkter: AksjonspunktDto[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<BehandlingDto>;
+  aksjonspunkter: Aksjonspunkt[];
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
   readOnly: boolean;
-  relevanteAksjonspunkter: AksjonspunktDtoDefinisjon[];
+  relevanteAksjonspunkter: AksjonspunktDefinisjon[];
 }
 
 const Uttak = ({
@@ -51,31 +51,30 @@ const Uttak = ({
   relevanteAksjonspunkter,
   readOnly,
 }: UttakProps): JSX.Element => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const uttakApi = new BehandlingUttakBackendClient(k9SakClient);
+  const uttakApi = new BehandlingUttakBackendClient();
   const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
 
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
 
   const aksjonspunktVurderOverlappendeSaker = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDtoDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER === aksjonspunkt.definisjon, // AP: 9292
+    aksjonspunkt => AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER === aksjonspunkt.definisjon, // AP: 9292
   );
 
   const aksjonspunktForOverstyringAvUttak = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDtoDefinisjon.OVERSTYRING_AV_UTTAK === aksjonspunkt.definisjon, // AP: 6017
+    aksjonspunkt => AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK === aksjonspunkt.definisjon, // AP: 6017
   );
 
   const aksjonspunktVentAnnenPSBSak = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDtoDefinisjon.VENT_ANNEN_PSB_SAK === aksjonspunkt.definisjon, // AP: 9290
+    aksjonspunkt => AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK === aksjonspunkt.definisjon, // AP: 9290
   );
 
   const aksjonspunktVurderDatoNyRegelUttak = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK === aksjonspunkt.definisjon, // AP: 9291
+    aksjonspunkt => AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK === aksjonspunkt.definisjon, // AP: 9291
   );
 
   const harOpprettetAksjonspunktVurderDato =
-    aksjonspunktVurderDatoNyRegelUttak?.status === AksjonspunktDtoStatus.OPPRETTET;
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET;
 
   const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(false);
   React.useEffect(() => {
@@ -85,8 +84,9 @@ const Uttak = ({
 
   const harEtUløstAksjonspunktIUttak = aksjonspunkter?.some(
     ap =>
-      ap.status === AksjonspunktDtoStatus.OPPRETTET &&
+      ap.status === aksjonspunktStatus.OPPRETTET &&
       ap.definisjon !== undefined &&
+      ap.definisjon !== AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK &&
       relevanteAksjonspunkter.includes(ap.definisjon),
   );
 
@@ -142,9 +142,7 @@ const Uttak = ({
 
         <UtsattePerioderStripe />
 
-        {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && (
-          <VurderDato oppdaterBehandling={oppdaterBehandling} />
-        )}
+        {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && <VurderDato />}
 
         {!aksjonspunktVentAnnenPSBSak && (
           <UttaksperiodeListe

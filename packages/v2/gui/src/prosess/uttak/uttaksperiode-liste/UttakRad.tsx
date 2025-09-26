@@ -2,11 +2,6 @@ import type { JSX } from 'react';
 import classNames from 'classnames/bind';
 import { Collapse } from 'react-collapse';
 import {
-  BehandlingDtoSakstype,
-  UttaksperiodeInfoAnnenPart,
-  UttaksperiodeInfoÅrsaker,
-} from '@k9-sak-web/backend/k9sak/generated';
-import {
   CheckmarkCircleFillIcon,
   ChevronDownIcon,
   ChevronUpIcon,
@@ -15,6 +10,11 @@ import {
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
+import {
+  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
+  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
+  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
 import { harÅrsak } from '../utils/årsakUtils';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
@@ -45,20 +45,21 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
     endringsstatus,
     manueltOverstyrt = false,
   } = uttak;
-  const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, UttaksperiodeInfoÅrsaker.UTENOM_PLEIEBEHOV);
+
+  const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsak.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
-  const visPleiebehovProsent = !erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE);
-  const erGradertMotInntekt = årsaker.some(årsak => årsak === UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT);
+  const visPleiebehovProsent = !erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE);
+  const erGradertMotInntekt = årsaker.some(årsak => årsak === Årsak.AVKORTET_MOT_INNTEKT);
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,
     uttak__indikator__innvilget: (uttaksgrad ?? 0) > 0,
     'uttak__indikator__innvilget--delvis--inntekt': erGradertMotInntekt,
     'uttak__indikator__innvilget--delvis':
-      !erGradertMotInntekt && årsaker.some(årsak => årsak === UttaksperiodeInfoÅrsaker.GRADERT_MOT_TILSYN),
+      !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN),
   });
 
-  const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, UttaksperiodeInfoÅrsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
+  const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
   return (
     <>
       <Table.Row
@@ -98,7 +99,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
           )}
         </Table.DataCell>
-        {erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) && (
+        {erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) && (
           <Table.DataCell>
             {uttaksgrad === 0 ? (
               <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
@@ -118,8 +119,8 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           {harPleiebehov && visPleiebehovProsent ? `${pleiebehov}%` : null}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''}`}>
-          {uttak.annenPart === UttaksperiodeInfoAnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
-          {uttak.annenPart === UttaksperiodeInfoAnnenPart.MED_ANDRE && (
+          {uttak.annenPart === AnnenPart.ALENE && <PersonFillIcon title="Søker" fontSize="1.5rem" />}
+          {uttak.annenPart === AnnenPart.MED_ANDRE && (
             <Tooltip content="Søker/Annen part">
               <PersonGroupFillIcon fontSize="1.5rem" />
             </Tooltip>
@@ -147,13 +148,13 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
         </Table.DataCell>
       </Table.Row>
       <tr className={`${erValgt ? '' : styles['collapseRow']} ${styles['expandedRow']}`}>
-        <td colSpan={erSakstype(BehandlingDtoSakstype.PLEIEPENGER_NÆRSTÅENDE) ? 8 : 7}>
+        <td colSpan={erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) ? 8 : 7}>
           <Collapse isOpened={erValgt}>
             <div className={styles['expanded']}>
               {harOppfyltAlleInngangsvilkår ? (
                 <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
               ) : (
-                <Vilkårsliste inngangsvilkår={inngangsvilkår} />
+                <Vilkårsliste vilkår={inngangsvilkår ?? {}} />
               )}
             </div>
           </Collapse>

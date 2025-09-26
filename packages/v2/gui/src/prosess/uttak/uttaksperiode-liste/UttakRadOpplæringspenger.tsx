@@ -8,16 +8,17 @@ import {
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { UttaksperiodeInfoÅrsaker } from '@k9-sak-web/backend/k9sak/generated';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { BodyShort, Button, HelpText, Table } from '@navikt/ds-react';
-import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
 import type { UttaksperiodeBeriket } from '../Uttak';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
-
 import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
@@ -50,14 +51,14 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
     Object.entries(vilkår ?? {}).filter(([key]) => !opplæringspengerVilkår.includes(key)),
   );
 
-  const erGradertMotInntekt = (årsaker ?? []).includes(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT);
+  const erGradertMotInntekt = (årsaker ?? []).includes(Årsak.AVKORTET_MOT_INNTEKT);
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,
     uttak__indikator__innvilget: (uttaksgrad ?? 0) > 0,
     'uttak__indikator__innvilget--delvis--inntekt': erGradertMotInntekt,
     'uttak__indikator__innvilget--delvis':
-      !erGradertMotInntekt && årsaker?.some(årsak => årsak === UttaksperiodeInfoÅrsaker.GRADERT_MOT_TILSYN),
+      !erGradertMotInntekt && årsaker?.some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN),
   });
 
   const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === VilkårUtfall.OPPFYLT);
@@ -144,7 +145,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
               {alleVilkårErOppfylt ? (
                 <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt || false} />
               ) : (
-                <Vilkårsliste inngangsvilkår={vilkår} />
+                <Vilkårsliste vilkår={vilkår ?? {}} />
               )}
             </div>
           </Collapse>

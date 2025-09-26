@@ -28,9 +28,9 @@ export const sortPeriodsByNewest = (period1: Periode, period2: Periode): number 
 };
 
 export function prettifyPeriod(fom: string, tom: string): string {
-  return `${initializeDate(fom).format(DDMMYYYY_DATE_FORMAT)}-${initializeDate(tom).format(DDMMYYYY_DATE_FORMAT)}`;
+  return `${initializeDate(fom).format(DDMMYYYY_DATE_FORMAT)} - ${initializeDate(tom).format(DDMMYYYY_DATE_FORMAT)}`;
 }
 
 export function getFirstAndLastWeek(fom: string, tom: string): string {
-  return `${initializeDate(fom).startOf('week').week()}-${initializeDate(tom).endOf('week').week()}`;
+  return `${initializeDate(fom).startOf('week').week()} - ${initializeDate(tom).endOf('week').week()}`;
 }

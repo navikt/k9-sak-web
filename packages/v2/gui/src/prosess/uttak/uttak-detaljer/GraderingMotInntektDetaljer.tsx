@@ -1,6 +1,5 @@
 import {
   k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';

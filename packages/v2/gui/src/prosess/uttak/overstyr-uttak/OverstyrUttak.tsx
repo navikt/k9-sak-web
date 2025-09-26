@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import AktivitetRad from './AktivitetRad';
@@ -8,10 +8,13 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
 import { useUttakContext } from '../context/UttakContext';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
-import type { k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import styles from './overstyrUttakForm.module.css';
+import { BehandlingContext } from '../../../context/BehandlingContext';
 
 export enum OverstyrUttakHandling {
   SLETT = 'SLETT',
@@ -22,7 +25,7 @@ export enum OverstyrUttakHandling {
 const OverstyrUttak: React.FC = () => {
   const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer } =
     useUttakContext();
-
+  const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
@@ -67,7 +70,7 @@ const OverstyrUttak: React.FC = () => {
       });
     },
     onMutate: () => setLoading(true),
-    onSuccess: () => {
+    onSuccess: async () => {
       void hentBehandling?.({ behandlingId: behandling.uuid }, false);
       window.scroll(0, 0);
     },
@@ -123,7 +126,7 @@ const OverstyrUttak: React.FC = () => {
   if (harNoeÅVise) {
     return (
       <div className="mt-4 mb-8">
-        {harAksjonspunkt(AksjonspunktDtoDefinisjon.OVERSTYRING_AV_UTTAK) && (
+        {harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad
@@ -217,7 +220,7 @@ const OverstyrUttak: React.FC = () => {
               </div>
             )}
 
-            {!visOverstyringSkjema && harAksjonspunkt(AksjonspunktDtoDefinisjon.OVERSTYRING_AV_UTTAK) && (
+            {!visOverstyringSkjema && harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
               <div className={styles.overstyrUttakFormFooter}>
                 <Button
                   variant="primary"
