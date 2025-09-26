@@ -9,7 +9,7 @@ import {
   type k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   type folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikState } from 'formik';
 import { BeregningResultat } from '../../types/BeregningResultat';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';

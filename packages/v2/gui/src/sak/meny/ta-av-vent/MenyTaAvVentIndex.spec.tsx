@@ -11,6 +11,7 @@ describe('<MenyTaAvVentIndex>', () => {
     render(
       <MenyTaAvVentIndexV2
         behandlingId={3}
+        behandlingUuid="123"
         behandlingVersjon={1}
         taBehandlingAvVent={resumeBehandlingCallback}
         lukkModal={lukkModalCallback}
@@ -26,6 +27,7 @@ describe('<MenyTaAvVentIndex>', () => {
     expect(kall[0]).toHaveLength(1);
     expect(kall?.[0]?.[0]).toEqual({
       behandlingId: 3,
+      behandlingUuid: '123',
       behandlingVersjon: 1,
     });
   });

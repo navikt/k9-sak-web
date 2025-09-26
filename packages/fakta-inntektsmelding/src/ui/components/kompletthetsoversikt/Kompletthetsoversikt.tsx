@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
 import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import FieldName from '../../../types/FieldName';
-import { Kode, Kompletthet, Tilstand } from '../../../types/KompletthetData';
+import { Kode, Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -35,7 +35,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
   const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon?.kode;
   const aksjonspunktKode = aktivtAksjonspunktKode || forrigeAksjonspunktKode;
 
-  const tilstanderBeriket = tilstander.map(tilstand => {
+  const tilstanderBeriket = tilstander.map<TilstandBeriket>(tilstand => {
     const [redigeringsmodus, setRedigeringsmodus] = useState(false);
 
     return {

@@ -1,6 +1,6 @@
 import {
-  klage_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  type klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto,
+  k9_klage_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  type k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -11,7 +11,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as Årsak,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';

@@ -6,9 +6,11 @@ import {
   k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  type BekreftData,
   type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
@@ -18,6 +20,7 @@ import {
   Button,
   Heading,
   HStack,
+  Link,
   List,
   Loader,
   ReadMore,
@@ -56,18 +59,7 @@ export interface VurderOverlappendeSakFormData {
   }[];
 }
 
-export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['requestBody'] & {
-  bekreftedeAksjonspunktDtoer: Array<{
-    '@type': string;
-    kode: string | null | undefined;
-    perioder: Array<{
-      valg: PeriodeMedOverlappValg;
-      begrunnelse: string;
-      periode: { fom: string; tom: string };
-      søkersUttaksgrad?: number;
-    }>;
-  }>;
-};
+const gyldigAksjonspunktType = '9292' as const;
 
 const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -159,31 +151,38 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
   }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
-    setLoading(true);
-    const requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
-      behandlingId: `${id}`,
-      behandlingVersjon: versjon,
-      bekreftedeAksjonspunktDtoer: [
-        {
-          '@type': aksjonspunkt.definisjon || '',
-          kode: aksjonspunkt.definisjon,
+    if (aksjonspunkt.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
+      setLoading(true);
+      const bekreftetAksjonspunkt: DTOWithDiscriminatorType<
+        k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+        typeof gyldigAksjonspunktType
+      > = {
+        '@type': aksjonspunkt.definisjon,
+        begrunnelse: data.begrunnelse,
+        perioder: data.perioder.map(periode => ({
+          valg: periode.valg,
           begrunnelse: data.begrunnelse,
-          perioder: data.perioder.map(periode => ({
-            valg: periode.valg,
-            begrunnelse: data.begrunnelse,
-            periode: {
-              fom: format(new Date(periode.periode.fom), 'yyyy-MM-dd') || '',
-              tom: format(new Date(periode.periode.tom), 'yyyy-MM-dd') || '',
-            },
-            søkersUttaksgrad:
-              periode.valg === PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN ? 0 : periode.søkersUttaksgrad,
-          })),
-        },
-      ],
-    };
-    await api.bekreftAksjonspunkt(requestBody);
-    setLoading(false);
-    oppdaterBehandling();
+          periode: {
+            fom: format(new Date(periode.periode.fom), 'yyyy-MM-dd') || '',
+            tom: format(new Date(periode.periode.tom), 'yyyy-MM-dd') || '',
+          },
+          søkersUttaksgrad:
+            periode.valg === PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN ? 0 : periode.søkersUttaksgrad,
+        })),
+      };
+      const requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+        behandlingId: `${id}`,
+        behandlingVersjon: versjon,
+        bekreftedeAksjonspunktDtoer: [bekreftetAksjonspunkt],
+      };
+      await api.bekreftAksjonspunkt(requestBody);
+      setLoading(false);
+      oppdaterBehandling();
+    } else {
+      throw new Error(
+        `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
+      );
+    }
   };
 
   if (overlappendeIsError) {
@@ -256,9 +255,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                                 saksnummer.map((sakNr, index) => (
                                   <React.Fragment key={`${fom}-${tom}-${sakNr}-link`}>
                                     {index > 0 && ', '}
-                                    <a href={`/k9/web/fagsak/${sakNr}`} target="_blank">
+                                    <Link href={`/k9/web/fagsak/${sakNr}`} target="_blank">
                                       {sakNr}
-                                    </a>
+                                    </Link>
                                   </React.Fragment>
                                 ))}
                               )

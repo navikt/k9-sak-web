@@ -4,6 +4,6 @@ export const EditedIcon = () => (
   <PersonPencilFillIcon
     title="Saksbehandler har endret feltets verdi"
     fontSize="1.5rem"
-    color="var(--ax-warning-600)"
+    className="text-ax-warning-500"
   />
 );

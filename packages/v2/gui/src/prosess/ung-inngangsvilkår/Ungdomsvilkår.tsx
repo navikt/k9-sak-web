@@ -2,7 +2,7 @@ import {
   ung_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   ung_kodeverk_vilkår_Avslagsårsak as VilkårResultatDtoAvslagsårsak,
   type ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Detail, Heading, HStack, VStack } from '@navikt/ds-react';
@@ -49,7 +49,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
             <InformationSquareFillIcon
               title="Deltagelse er opphørt"
               fontSize="1.75rem"
-              style={{ color: 'var(--ax-text-info-icon)' }}
+              style={{ color: 'var(--ax-text-info-decoration)' }}
             />
             <VStack gap="space-8">
               <VilkårHeadingSection lovreferanse={vilkår?.lovReferanse} />
@@ -62,7 +62,7 @@ export const Ungdomsvilkår = ({ vilkår }: UngdomsvilkårProps) => {
             <InformationSquareFillIcon
               title="Startdato er endret"
               fontSize="1.75rem"
-              style={{ color: 'var(--ax-text-info-icon)' }}
+              style={{ color: 'var(--ax-text-info-decoration)' }}
             />
             <VStack gap="space-8">
               <VilkårHeadingSection lovreferanse={vilkår?.lovReferanse} />

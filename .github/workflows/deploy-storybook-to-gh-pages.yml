@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup yarnrc
         uses: ./.github/actions/setup-yarnrc
@@ -25,7 +25,7 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'yarn'
 
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3

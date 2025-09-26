@@ -1,32 +1,33 @@
 import type {
-  K9SakClient,
   k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  BekreftResponse,
-  BekreftData,
   GetOverstyrtUttakResponse,
   k9_sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
   k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest as OverstyrbareAktiviteterForUttakRequest,
-} from '@k9-sak-web/backend/k9sak/generated';
-import type { OverstyringUttakRequest } from './types/OverstyringUttakTypes';
+  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  aksjonspunkt_bekreft,
+  aksjonspunkt_overstyr,
+  behandlingUttak_getOverstyrtUttak,
+  behandlingUttak_hentEgneOverlappendeSaker,
+  behandlingUttak_hentOverstyrbareAktiviterForUttak,
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export default class BehandlingUttakBackendClient {
-  #k9sak: K9SakClient;
-
-  constructor(k9sakClient: K9SakClient) {
-    this.#k9sak = k9sakClient;
-  }
+  constructor() {}
 
   async getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto> {
-    return (await this.#k9sak.behandlingUttak.hentEgneOverlappendeSaker(behandlingUuid)) ?? null;
+    return (await behandlingUttak_hentEgneOverlappendeSaker({ body: behandlingUuid })).data ?? null;
   }
 
-  async bekreftAksjonspunkt(requestBody: BekreftData['requestBody']): Promise<BekreftResponse> {
-    return this.#k9sak.aksjonspunkt.bekreft(requestBody);
+  async bekreftAksjonspunkt(requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto): Promise<void> {
+    await aksjonspunkt_bekreft({ body: requestBody });
   }
 
   async hentOverstyringUttak(behandlingUuid: string): Promise<GetOverstyrtUttakResponse> {
-    const result = await this.#k9sak.behandlingUttak.getOverstyrtUttak(behandlingUuid);
-    return result ?? { overstyringer: [] };
+    const result = await behandlingUttak_getOverstyrtUttak({ query: { behandlingUuid } });
+    return result.data ?? { overstyringer: [] };
   }
 
   async hentAktuelleAktiviteter(
@@ -34,14 +35,20 @@ export default class BehandlingUttakBackendClient {
     fom: OverstyrbareAktiviteterForUttakRequest['fom'],
     tom: OverstyrbareAktiviteterForUttakRequest['tom'],
   ): Promise<OverstyrbareUttakAktiviterDto> {
-    return this.#k9sak.behandlingUttak.hentOverstyrbareAktiviterForUttak({
-      behandlingIdDto: behandlingUuid,
-      fom,
-      tom,
-    });
+    return (
+      await behandlingUttak_hentOverstyrbareAktiviterForUttak({
+        body: {
+          behandlingIdDto: behandlingUuid,
+          fom,
+          tom,
+        },
+      })
+    ).data;
   }
 
-  async overstyringUttak(requestBody: OverstyringUttakRequest): Promise<BekreftResponse> {
-    return this.#k9sak.aksjonspunkt.overstyr(requestBody);
+  async overstyringUttak(
+    requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+  ): Promise<void> {
+    await aksjonspunkt_overstyr({ body: requestBody });
   }
 }

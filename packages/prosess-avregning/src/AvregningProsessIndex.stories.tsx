@@ -4,7 +4,7 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AvregningProsessIndex from './AvregningProsessIndex';

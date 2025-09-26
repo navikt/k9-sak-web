@@ -1,4 +1,4 @@
-import { pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsaker } from '@k9-sak-web/backend/k9sak/generated';
+import { pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsaker } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 /*
  * Disse tekstene lå hardkodet som constants i pakken for prosess-uttak før. Det virker ikke som disse er tilgjengelige via kodeverk

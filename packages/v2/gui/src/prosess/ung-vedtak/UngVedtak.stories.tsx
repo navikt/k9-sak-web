@@ -1,7 +1,7 @@
 import {
   ung_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { KodeverkProvider } from '../../kodeverk';

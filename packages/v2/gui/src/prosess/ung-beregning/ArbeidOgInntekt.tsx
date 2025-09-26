@@ -1,9 +1,9 @@
 import {
-  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
+  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
   type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
@@ -40,6 +40,8 @@ const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeri
           valg: periode.valg ?? '',
           begrunnelse: periode.begrunnelse ?? '',
           periode: periode.periode,
+          harAvvik: periode.status === PeriodeStatus.AVVIK,
+          erTilVurdering: !!periode.erTilVurdering,
         };
       }) || [],
   };
@@ -51,6 +53,8 @@ type Formvalues = {
     valg: BrukKontrollertInntektValg | '';
     begrunnelse: string;
     periode: KontrollerInntektPeriodeDto['periode'];
+    harAvvik: boolean;
+    erTilVurdering: boolean;
   }[];
 };
 
@@ -68,12 +72,13 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
 
   const onSubmit = async (values: Formvalues) => {
     setIsSubmitting(true);
+    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik && periode.erTilVurdering);
     try {
       await submitCallback([
         {
           kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-          begrunnelse: values.perioder.map(periode => periode.begrunnelse).join(', '),
-          perioder: values.perioder.map(periode => ({
+          begrunnelse: perioderMedAvvik.map(periode => periode.begrunnelse).join(', '),
+          perioder: perioderMedAvvik.map(periode => ({
             periode: periode.periode,
             fastsattInnntekt:
               periode.valg === BrukKontrollertInntektValg.MANUELT_FASTSATT

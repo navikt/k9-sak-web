@@ -15,7 +15,7 @@ import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAkti
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import { Alert, BodyShort, Button, Detail, Heading, Tabs } from '@navikt/ds-react';
 import moment from 'moment';
-import { Component, KeyboardEvent, MouseEvent } from 'react';
+import { Component, KeyboardEvent, MouseEvent, ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -44,7 +44,7 @@ const sortByFomDate = (opptjeningPeriods: Opptjening[]) =>
   });
 
 const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
-  const texts = [];
+  const texts: ReactElement[] = [];
   if (activities.some(a => a.stillingsandel === 0)) {
     texts.push(
       <FormattedMessage id="OpptjeningFaktaForm.AktivitetenErTimeAvslonnet" key="AktivitetenErTimeAvslonnet" />,

@@ -8,7 +8,7 @@ import {
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VedtakPanels from './components/VedtakPanels';

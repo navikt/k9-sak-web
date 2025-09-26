@@ -1,6 +1,4 @@
-import { HistorikkinnslagV2 } from '@k9-sak-web/gui/sak/historikk/tilbake/historikkinnslagTsTypeV2.js';
-
-export const historikkTilbakeV2: HistorikkinnslagV2[] = [
+export const historikkTilbakeV2 = [
   {
     behandlingUuid: 'ad2dc9bb-5c07-4bbd-864d-d833da6fafee',
     aktør: {

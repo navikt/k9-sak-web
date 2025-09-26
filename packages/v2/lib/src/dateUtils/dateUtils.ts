@@ -305,6 +305,33 @@ export const getRangeOfMonths = (fom: string, tom: string) => {
 
 export const isValidDate = (date: string) => initializeDate(date, ISO_DATE_FORMAT, true).isValid();
 
+/**
+ * Checks if a period overlaps with any other periods in the array
+ * @param currentIndex - The index of the current period being checked
+ * @param currentPeriod - The period to check for overlaps
+ * @param allPeriods - Array of all periods to check against
+ * @returns true if there is an overlap, false otherwise
+ */
+export const checkForOverlap = (
+  currentIndex: number,
+  currentPeriod: { fom: string; tom: string },
+  allPeriods: { fom: string; tom: string }[],
+): boolean => {
+  if (!currentPeriod.fom || !currentPeriod.tom) return false;
+
+  return allPeriods.some((period, index) => {
+    if (index === currentIndex || !period.fom || !period.tom) return false;
+
+    const currentStart = initializeDate(currentPeriod.fom);
+    const currentEnd = initializeDate(currentPeriod.tom);
+    const otherStart = initializeDate(period.fom);
+    const otherEnd = initializeDate(period.tom);
+
+    // Check if periods overlap: current period starts before other ends AND current period ends after other starts
+    return currentStart.isSameOrBefore(otherEnd) && currentEnd.isSameOrAfter(otherStart);
+  });
+};
+
 // Eksempel på lukket periode fra Årskvantum: 2022-02-07/2022-02-08
 export const formatereLukketPeriode = (periode: string): string => {
   const [fom, tom] = periode.split('/');

@@ -26,5 +26,6 @@ export const visMenyForÅSetteBehandlingPåVent: Story = {
     settBehandlingPaVent: asyncAction('sett behandling på vent'),
     lukkModal: action('lukkModal'),
     erTilbakekreving: false,
+    erKlage: false,
   },
 };

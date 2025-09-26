@@ -1,0 +1,17 @@
+.datoRad {
+  background-color: var(--ax-neutral-400);
+  border-radius: 5px;
+  padding: 16px;
+}
+
+.boks {
+  width: 50%;
+}
+
+.datoVelger {
+  padding-top: 3px;
+}
+
+.periodeHeader {
+  padding-left: 20px;
+}

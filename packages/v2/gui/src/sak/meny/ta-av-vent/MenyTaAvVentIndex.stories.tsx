@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     behandlingId: 1,
+    behandlingUuid: '123',
     behandlingVersjon: 2,
     taBehandlingAvVent: asyncAction('ta behandling av vent'),
     lukkModal: action('lukk modal'),

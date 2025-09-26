@@ -1,6 +1,6 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { UnntakBehandlingApiKeys } from '../../../data/unntakBehandlingApi';
 
@@ -9,7 +9,7 @@ class MedlemskapPanelDef extends ProsessStegPanelDef {
 
   getId = () => 'MEDLEMSKAP';
 
-  getTekstKode = () => 'Inngangsvilkar.Medlemskapsvilkaret';
+  getTekstKode = () => 'Medlemskap';
 
   getKomponent = props => this.overstyringDef.getKomponent(props);
 

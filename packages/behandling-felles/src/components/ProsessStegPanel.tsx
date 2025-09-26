@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
+import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
-import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated';
+import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';

@@ -1,9 +1,7 @@
-import { useContext } from 'react';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
-import { K9SakClientContext } from '../../../app/K9SakClientContext';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import VurderOverlappendeSak from './VurderOverlappendeSak';
 
@@ -15,8 +13,7 @@ interface Props {
 }
 
 const VurderOverlappendeSakIndex = ({ behandling, aksjonspunkt, readOnly, oppdaterBehandling }: Props) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const behandlingUttakBakcendClient = new BehandlingUttakBackendClient(k9SakClient);
+  const behandlingUttakBakcendClient = new BehandlingUttakBackendClient();
 
   return (
     <VurderOverlappendeSak

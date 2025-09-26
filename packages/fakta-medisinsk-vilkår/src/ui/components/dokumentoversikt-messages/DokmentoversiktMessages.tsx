@@ -75,11 +75,7 @@ const DokumentoversiktMessages = ({
       )}
       {kanNavigereVidere && !readOnly && (
         <Box.New marginBlock="0 6">
-          <Alert
-            size="small"
-            data-testid="dokumentasjon-ferdig"
-            variant={erPleiepengerSluttfaseFagsak ? 'success' : 'info'}
-          >
+          <Alert size="small" data-testid="dokumentasjon-ferdig" variant="info">
             <div style={{ display: 'flex' }}>
               {erPleiepengerSluttfaseFagsak ? (
                 <>Dokumentasjon av livets sluttfase er ferdig vurdert og du kan gå videre i vurderingen.</>

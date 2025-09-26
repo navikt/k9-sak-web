@@ -1,4 +1,4 @@
-import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
+import { RelasjonsRolleType } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
 
 const relasjonsRolleTypeKodeverk = [
   { kode: RelasjonsRolleType.MOR, navn: 'Mor', kodeverk: 'RELASJON_ROLLE_TYPE' },

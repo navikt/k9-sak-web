@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ung_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/ungsak/generated';
+import { ung_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';

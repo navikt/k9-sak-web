@@ -9,7 +9,7 @@ import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
 const fagsak = {
