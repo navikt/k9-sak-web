@@ -235,6 +235,7 @@ const FagsakIndex = () => {
                   behandlingRettigheter={behandlingRettigheter}
                   personopplysninger={behandlingPersonopplysninger}
                   navAnsatt={navAnsatt}
+                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   featureToggles={featureToggles}
                 />
               );

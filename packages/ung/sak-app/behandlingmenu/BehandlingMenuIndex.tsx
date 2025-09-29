@@ -28,7 +28,7 @@ import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
@@ -143,7 +143,7 @@ export const BehandlingMenuIndex = ({
     .medTilbakeKodeverk(alleTilbakeKodeverk);
 
   const gaaTilSokeside = useCallback(() => {
-    window.location.assign(getPathToK9Los() || '/');
+    window.location.assign('/');
   }, []);
 
   const { startRequest: lagNyBehandlingUngSak } = restApiHooks.useRestApiRunner<boolean>(
@@ -219,12 +219,14 @@ export const BehandlingMenuIndex = ({
         new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Sett behandlingen på vent').medModal(
           lukkModal => (
             <MenySettPaVentIndexV2
+              behandlingUuid={behandling?.uuid}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               settBehandlingPaVent={setBehandlingOnHold}
               lukkModal={lukkModal}
               erTilbakekreving={erTilbakekrevingType(behandlingTypeKode)}
               erKlage={behandlingTypeKode === BehandlingType.KLAGE}
+              navigerEtterSattPåVent={gaaTilSokeside}
             />
           ),
         ),
@@ -273,6 +275,10 @@ export const BehandlingMenuIndex = ({
             behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
               behandlingType: b.behandlingType.kode,
               kanOppretteBehandling: b.kanOppretteBehandling,
+              gyldigePerioderPerÅrsak: b.gyldigePerioderPerÅrsak?.map(gpa => ({
+                årsak: gpa.årsak.kode,
+                perioder: gpa.perioder,
+              })),
             }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,

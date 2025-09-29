@@ -54,6 +54,9 @@ export enum UngSakApiKeys {
   LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
   UNGDOMSPROGRAM_INFORMASJON = 'UNGDOMSPROGRAM_INFORMASJON',
   PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
+  BREVMALER = 'BREVMALER',
+  HAR_APENT_KONTROLLER_REVURDERING_AP = 'HAR_APENT_KONTROLLER_REVURDERING_AP',
+  SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -95,6 +98,9 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilgjengelige-vedtaksbrev', UngSakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('los-hente-merknad', UngSakApiKeys.LOS_HENTE_MERKNAD)
   .withRel('ungdomsprogram-informasjon', UngSakApiKeys.UNGDOMSPROGRAM_INFORMASJON)
+  .withRel('brev-maler', UngSakApiKeys.BREVMALER)
+  .withRel('har-apent-kontroller-revurdering-aksjonspunkt', UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
+  .withRel('brev-bestill', UngSakApiKeys.SUBMIT_MESSAGE)
 
   .withPost('/ung/tilbake/api/brev/forhandsvis', UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(
