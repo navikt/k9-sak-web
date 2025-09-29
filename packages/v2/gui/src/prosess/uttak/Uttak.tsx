@@ -91,11 +91,15 @@ const Uttak = ({
   );
 
   const uttaksperioder = uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder;
+  const [uttaksperiodeListe, setUttaksperiodeListe] = React.useState(lagUttaksperiodeliste(uttaksperioder));
+  React.useEffect(() => {
+    const perioder = uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder;
+    setUttaksperiodeListe(lagUttaksperiodeliste(perioder));
+  }, [uttak]);
 
   const uttakValues: UttakContextType = {
     behandling,
     uttak,
-    uttaksperioder,
     uttakApi,
     hentBehandling,
     erOverstyrer,
@@ -110,6 +114,8 @@ const Uttak = ({
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     setRedigervirkningsdato,
     arbeidsgivere: {},
+    uttaksperiodeListe,
+    setUttaksperiodeListe,
   };
 
   if (!uttak) {
@@ -146,10 +152,8 @@ const Uttak = ({
 
         {!aksjonspunktVentAnnenPSBSak && (
           <UttaksperiodeListe
-            uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
             redigerVirkningsdato={redigerVirkningsdato}
-            readOnly={readOnly}
           />
         )}
       </VStack>

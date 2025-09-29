@@ -1,5 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Label, Table, Loader, HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import React, { type FC } from 'react';
 import UttakRad from './UttakRad';
@@ -14,10 +14,8 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 interface UttaksperiodeListeProps {
-  uttaksperioder: UttaksperiodeBeriket[]; // extends UttaksperiodeInfo fra ts-client
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
-  readOnly: boolean;
 }
 
 const splitUttakByDate = (
@@ -62,15 +60,17 @@ const tableHeaders = (sakstype: FagsakYtelseType | undefined) => {
   return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 };
 
-const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
-  uttaksperioder,
-  redigerVirkningsdatoFunc,
-  redigerVirkningsdato,
-  readOnly,
-}) => {
-  const { fagsakYtelseType: ytelseType, virkningsdatoUttakNyeRegler, erSakstype } = useUttakContext();
+const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoFunc, redigerVirkningsdato }) => {
+  const {
+    fagsakYtelseType: ytelseType,
+    virkningsdatoUttakNyeRegler,
+    erSakstype,
+    uttaksperiodeListe,
+    lasterUttak,
+    readOnly,
+  } = useUttakContext();
   const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
-  const { before, afterOrCovering } = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);
+  const { before, afterOrCovering } = splitUttakByDate(uttaksperiodeListe, virkningsdatoUttakNyeRegler);
   const headers = tableHeaders(ytelseType);
 
   const velgPeriode = (index: number) => {
@@ -83,6 +83,11 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
 
   return (
     <div className={styles['tableContainer']}>
+      {lasterUttak && (
+        <HStack justify="center">
+          <Loader variant="inverted" size="2xlarge" title="Laster uttaksperioder..." />
+        </HStack>
+      )}
       <Table size="small">
         <Table.Header>
           <Table.Row>

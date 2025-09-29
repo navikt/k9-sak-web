@@ -5,18 +5,18 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
   k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversikt,
-  pleiepengerbarn_uttak_kontrakter_Uttaksplan as Uttaksplan,
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import lagUttaksperiodeliste from '../utils/uttaksperioder';
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   uttak: UttaksplanMedUtsattePerioder;
-  uttaksperioder: Uttaksplan | undefined;
   uttakApi: BehandlingUttakBackendClient;
   perioderTilVurdering: string[];
   hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
+  hentUttak?: () => Promise<any>;
   harEtUløstAksjonspunktIUttak: boolean;
   erOverstyrer: boolean;
   aksjonspunktForOverstyringAvUttak: Aksjonspunkt | undefined;
@@ -28,6 +28,9 @@ export type UttakContextType = {
   virkningsdatoUttakNyeRegler: string | undefined;
   setRedigervirkningsdato: React.Dispatch<React.SetStateAction<boolean>>;
   arbeidsgivere: ArbeidsgiverOversikt['arbeidsgivere'] | undefined;
+  uttaksperiodeListe: ReturnType<typeof lagUttaksperiodeliste>;
+  setUttaksperiodeListe: React.Dispatch<React.SetStateAction<ReturnType<typeof lagUttaksperiodeliste>>>;
+  lasterUttak?: boolean;
 };
 
 export const UttakContext = createContext<UttakContextType | undefined>(undefined);
@@ -48,14 +51,37 @@ export const useUttakContext = () => {
     uttakApi,
   } = uttakContext;
 
+  const { uttaksperiodeListe, setUttaksperiodeListe } = uttakContext;
+
   const { data: arbeidsgivere, isLoading: lasterArbeidsgivere } = useQuery<ArbeidsgiverOversikt['arbeidsgivere']>({
     queryKey: ['arbeidsgivere', behandling.uuid],
     queryFn: async () => {
-      // await new Promise(resolve => setTimeout(resolve, 10000)); // bare for testing
       const arbeidsgivere = await uttakApi.getArbeidsgivere(behandling.uuid);
       return arbeidsgivere.arbeidsgivere ?? {};
     },
     enabled: !!behandling.uuid,
+  });
+
+  /**
+   * Etter overstyring av uttak må uttaksperiodene hentes på nytt for å få oppdatert uttaksplanen
+   * De initielle uttaksdataene lastes fortsatt fra tidligere api-kall, denne er derfor deaktivert
+   * og må trigges manuelt ved behov. Når uthentingen av uttak senere er flyttet over til ny api-client
+   * kan denne endres til å være aktivert ved mount.
+   */
+  const { refetch: hentUttak, isFetching: lasterUttak } = useQuery<UttaksplanMedUtsattePerioder>({
+    queryKey: ['uttak', behandling.uuid],
+    queryFn: async () => {
+      const hentetUttak = await uttakApi.hentUttak(behandling.uuid);
+      const perioder =
+        hentetUttak?.uttaksplan != null ? hentetUttak?.uttaksplan?.perioder : hentetUttak?.simulertUttaksplan?.perioder;
+      setUttaksperiodeListe(lagUttaksperiodeliste(perioder));
+      return hentetUttak;
+    },
+    enabled: false,
+    initialData: uttakContext.uttak,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const fagsakYtelseType = uttakContext?.behandling.sakstype;
@@ -75,5 +101,15 @@ export const useUttakContext = () => {
     return false;
   }
 
-  return { ...uttakContext, fagsakYtelseType, erSakstype, arbeidsgivere, harAksjonspunkt, lasterArbeidsgivere };
+  return {
+    ...uttakContext,
+    fagsakYtelseType,
+    erSakstype,
+    arbeidsgivere,
+    harAksjonspunkt,
+    lasterArbeidsgivere,
+    hentUttak,
+    uttaksperiodeListe,
+    lasterUttak,
+  };
 };

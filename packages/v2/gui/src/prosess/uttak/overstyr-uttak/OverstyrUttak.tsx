@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import AktivitetRad from './AktivitetRad';
@@ -14,7 +14,6 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import styles from './overstyrUttakForm.module.css';
-import { BehandlingContext } from '../../../context/BehandlingContext';
 
 export enum OverstyrUttakHandling {
   SLETT = 'SLETT',
@@ -23,9 +22,8 @@ export enum OverstyrUttakHandling {
 }
 
 const OverstyrUttak: React.FC = () => {
-  const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer } =
+  const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } =
     useUttakContext();
-  const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
@@ -71,6 +69,7 @@ const OverstyrUttak: React.FC = () => {
     },
     onMutate: () => setLoading(true),
     onSuccess: async () => {
+      void hentUttak();
       void hentBehandling?.({ behandlingId: behandling.uuid }, false);
       window.scroll(0, 0);
     },
