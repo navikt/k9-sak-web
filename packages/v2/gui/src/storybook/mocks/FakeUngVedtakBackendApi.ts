@@ -18,6 +18,6 @@ export class FakeUngVedtakBackendApi {
   }
 
   async lagreVedtaksbrev(): Promise<LagreVedtaksbrevValgResponses> {
-    return { vedtaksbrevValg: {} };
+    return { 200: {} };
   }
 }

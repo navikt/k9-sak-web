@@ -4,7 +4,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/internal/test';
 import { KodeverkProvider } from '../../kodeverk';
 import { asyncAction } from '../../storybook/asyncAction';
 import { FakeUngVedtakBackendApi } from '../../storybook/mocks/FakeUngVedtakBackendApi';

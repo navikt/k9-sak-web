@@ -2,7 +2,7 @@ import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   ung_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg as VedtaksbrevValg,
+  type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValg,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
