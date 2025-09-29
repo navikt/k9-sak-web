@@ -324,6 +324,7 @@
   "HistorikkEndretFelt.uttakOverstyrtUtbetalingsgrad": "Utbetalingsgrad for {value}",
   "HistorikkEndretFelt.Institusjon": "Institusjon godkjent",
   "HistorikkEndretFelt.LangvarigSyk": "Langvarig syk",
+  "HistorikkEndretFelt.OpplæringResultat": "Vurdert opplæring",
   "HistorikkEndretFelt.OpplæringDokumentert": "Opplæring dokumentert",
   "HistorikkEndretFelt.OpplæringNødvendig": "Opplæring nødvendig",
   "HistorikkEndretFelt.GODKJENT_REISETID": "Godkjent reisetid",
