@@ -4,7 +4,6 @@ import { type AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjo
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { harÅpentAksjonspunkt, aksjonspunktErUtført } from '../../utils/aksjonspunktUtils.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import { DelvisOppfyltIkon } from '../../shared/DelvisOppfyltIkon.js';
 import { SykdomOgOpplæringContext } from './FaktaSykdomOgOpplæringIndex.js';
 import {
   useInstitusjonInfo,
@@ -109,12 +108,8 @@ const Icon = ({ aksjonspunktKode, godkjent }: { aksjonspunktKode: AksjonspunktCo
     return null;
   }
 
-  if (aksjonspunktUtført && godkjent.every(g => g)) {
-    return <CheckmarkIcon className="text-ax-brand-blue-500" />;
-  }
-
-  if (aksjonspunktUtført && godkjent.some(g => g) && godkjent.some(g => !g)) {
-    return <DelvisOppfyltIkon />;
+  if (aksjonspunktUtført && godkjent.length > 0) {
+    return <CheckmarkIcon className="text-ax-bg-success-strong" />;
   }
 
   if (aksjonspunktUtført && godkjent.every(g => !g)) {
