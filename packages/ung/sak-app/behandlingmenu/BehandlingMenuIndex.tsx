@@ -219,6 +219,7 @@ export const BehandlingMenuIndex = ({
               lukkModal={lukkModal}
               erTilbakekreving={erTilbakekrevingType(behandlingTypeKode)}
               erKlage={behandlingTypeKode === BehandlingType.KLAGE}
+              navigerEtterSattPåVent={gaaTilSokeside}
             />
           ),
         ),
@@ -269,8 +270,9 @@ export const BehandlingMenuIndex = ({
               kanOppretteBehandling: b.kanOppretteBehandling,
               gyldigePerioderPerÅrsak: b.gyldigePerioderPerÅrsak?.map(gpa => ({
                 årsak: gpa.årsak.kode,
-                perioder: gpa.perioder
-            }))}))}
+                perioder: gpa.perioder,
+              })),
+            }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,
               kanRevurderingOpprettes,

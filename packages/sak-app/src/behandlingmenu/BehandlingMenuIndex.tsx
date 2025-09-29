@@ -12,6 +12,7 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyVergeIndexV2 from '@k9-sak-web/gui/sak/meny/verge/MenyVergeIndex.js';
+import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -232,6 +233,7 @@ export const BehandlingMenuIndex = ({
                 behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
                 behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
               }
+              navigerEtterSattPåVent={goToLos}
             />
           ),
         ),
@@ -279,7 +281,7 @@ export const BehandlingMenuIndex = ({
             uuidForSistLukkede={uuidForSistLukkede}
             behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
               behandlingType: b.behandlingType.kode,
-              kanOppretteBehandling: b.kanOppretteBehandling
+              kanOppretteBehandling: b.kanOppretteBehandling,
             }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,
