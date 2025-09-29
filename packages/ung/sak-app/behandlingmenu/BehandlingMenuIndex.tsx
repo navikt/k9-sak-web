@@ -140,7 +140,8 @@ export const BehandlingMenuIndex = ({
 
   const menyKodeverk = new MenyKodeverk(behandling?.type)
     .medK9SakKodeverk(alleUngSakKodeverk)
-    .medTilbakeKodeverk(alleTilbakeKodeverk);
+    .medTilbakeKodeverk(alleTilbakeKodeverk)
+    .medKlageKodeverk(alleUngSakKodeverk);
 
   const gaaTilSokeside = useCallback(() => {
     window.location.assign('/');
