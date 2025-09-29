@@ -4,13 +4,19 @@ import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 import DetailView from '../../../shared/detailView/DetailView';
 import { PencilIcon } from '@navikt/aksel-icons';
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from '@navikt/ds-react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
-const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
+const NødvendigOpplæringContainer = ({
+  vurdering,
+  andrePerioderTilVurdering,
+}: {
+  vurdering: OpplæringVurderingDto & { perioder: Period[] };
+  andrePerioderTilVurdering: { fom: string; tom: string }[];
+}) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   const [redigerer, setRedigerer] = useState(false);
@@ -21,7 +27,12 @@ const NødvendigOpplæringContainer = ({ vurdering }: { vurdering: OpplæringVur
   if (!readOnly && harAksjonspunkt9302 && (vurdering.resultat === 'MÅ_VURDERES' || redigerer)) {
     return (
       <Wrapper vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer}>
-        <NødvendigOpplæringForm vurdering={vurdering} setRedigerer={setRedigerer} redigerer={redigerer} />
+        <NødvendigOpplæringForm
+          vurdering={vurdering}
+          setRedigerer={setRedigerer}
+          redigerer={redigerer}
+          andrePerioderTilVurdering={andrePerioderTilVurdering}
+        />
       </Wrapper>
     );
   }
