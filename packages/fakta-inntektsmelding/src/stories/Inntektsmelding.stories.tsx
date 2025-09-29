@@ -1,6 +1,6 @@
-import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { HttpResponse, http } from 'msw';
+import { action } from 'storybook/actions';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
   aksjonspunkt9071Props,

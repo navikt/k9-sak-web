@@ -1,8 +1,6 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useContext } from 'react';
-import { UngSakClientContext } from '../../app/UngSakClientContext';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -23,8 +21,7 @@ export const UngVedtakIndex = ({
   vilkar,
   isReadOnly,
 }: UngVedtakIndexProps) => {
-  const ungSakClient = useContext(UngSakClientContext);
-  const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
+  const ungVedtakBackendClient = new UngVedtakBackendClient();
   const {
     data: vedtaksbrevValg,
     isLoading,
@@ -37,7 +34,7 @@ export const UngVedtakIndex = ({
     },
   });
   return (
-    <Box paddingInline="4 8" paddingBlock="2">
+    <Box.New paddingInline="4 8" paddingBlock="2">
       <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
@@ -53,6 +50,6 @@ export const UngVedtakIndex = ({
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
         />
       )}
-    </Box>
+    </Box.New>
   );
 };

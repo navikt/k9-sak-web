@@ -8,7 +8,7 @@ import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/
 import ManglerGyldigSignaturMelding from '../mangler-gyldig-signatur-melding/ManglerGyldigSignaturMelding';
 
 interface VurderingsoversiktMessagesProps {
-  vurderingsoversikt: Vurderingsoversikt;
+  vurderingsoversikt: Vurderingsoversikt | null;
   harGyldigSignatur: boolean;
 }
 
@@ -22,45 +22,45 @@ const VurderingsoversiktMessages = ({
 
   if (!harGyldigSignatur) {
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <ManglerGyldigSignaturMelding>
           Du kan ikke vurdere behov for
           {` ${vurderingsnavn} `}
           før søker har sendt inn legeerklæring fra sykehus/spesialisthelsetjenesten.
         </ManglerGyldigSignaturMelding>
-      </Box>
+      </Box.New>
     );
   }
 
-  if (vurderingsoversikt.harIngenPerioderÅVise()) {
+  if (vurderingsoversikt && vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
-      </Box>
+      </Box.New>
     );
   }
 
-  if (vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
+  if (vurderingsoversikt && vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
     const barnetsAttenårsdag = vurderingsoversikt.harPerioderDerPleietrengendeErOver18år
       ? addYearsToDate(vurderingsoversikt.pleietrengendesFødselsdato, 18)
       : null;
 
     return (
       <>
-        <Box marginBlock="0 6">
+        <Box.New marginBlock="0 6">
           <Alert size="small" variant="warning">
             {`Vurder behov for ${vurderingsnavn} for ${getHumanReadablePeriodString(
               vurderingsoversikt.resterendeVurderingsperioder,
             )}.`}
           </Alert>
-        </Box>
+        </Box.New>
         {vurderingsoversikt.harPerioderDerPleietrengendeErOver18år && (
-          <Box marginBlock="0 6">
+          <Box.New marginBlock="0 6">
             <Alert size="small" variant="warning">
               Barnet er 18 år {barnetsAttenårsdag}. Du må gjøre en egen vurdering etter § 9-10, tredje ledd fra datoen
               barnet fyller 18 år.
             </Alert>
-          </Box>
+          </Box.New>
         )}
       </>
     );
@@ -68,15 +68,15 @@ const VurderingsoversiktMessages = ({
         Please note:
         So long as this doesnt actually do anything upon the click-event, it should be commented out.
         overlappendeVurderingsperioder && overlappendeVurderingsperioder.length > 0 && (
-            <Box marginBlock="4 0">
+            <Box.New marginBlock="4 0">
             <OverlappendeSøknadsperiodePanel
             onProgressButtonClick={() => console.log('does something')}
             overlappendeVurderingsperioder={overlappendeVurderingsperioder}
             />
-            </Box>)
+            </Box.New>)
             */
   }
-  return null;
+  return <></>;
 };
 
 export default VurderingsoversiktMessages;

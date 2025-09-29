@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react';
 
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import { delay } from '../../../utils/delay';
 import Punsjstripe from './Punsjstripe';
 

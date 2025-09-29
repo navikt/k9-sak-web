@@ -5,7 +5,6 @@ import { omit } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Box } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -74,7 +73,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   return (
     <>
       {aksjonspunkter.length > 0 && (
-        <Box background="surface-default" padding="4" className={styles.begrunnelseSaksbehandler}>
+        <Box.New padding="4" className={styles.begrunnelseSaksbehandler}>
           <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
             {[
               <FormattedMessage
@@ -83,7 +82,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
               />,
             ]}
           </AksjonspunktHelpText>
-        </Box>
+        </Box.New>
       )}
       <h3>
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />

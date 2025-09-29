@@ -84,7 +84,7 @@ const Dekorator = ({
 
   const resolvedErrorMessages = useMemo(
     () => lagFeilmeldinger(intl, formaterteFeilmeldinger, queryStrings),
-    [formaterteFeilmeldinger, queryStrings],
+    [formaterteFeilmeldinger, queryStrings, intl],
   );
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
@@ -100,7 +100,7 @@ const Dekorator = ({
       getPathToK9Punsj={getPathToK9Punsj}
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}
-      ytelse="Ungdomsytelse"
+      ytelse="Ungdomsprogramytelse"
       headerTitleHref="/ung/web"
       showEndringslogg={false}
     />

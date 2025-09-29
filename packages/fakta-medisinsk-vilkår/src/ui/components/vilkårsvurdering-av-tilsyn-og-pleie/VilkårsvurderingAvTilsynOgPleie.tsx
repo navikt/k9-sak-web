@@ -18,7 +18,7 @@ import vilkårsvurderingReducer from './reducer';
 interface VilkårsvurderingAvTilsynOgPleieProps {
   navigerTilNesteSteg: (steg: Step, ikkeMarkerSteg?: boolean) => void;
   hentSykdomsstegStatus: () => Promise<SykdomsstegStatusResponse>;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
+  sykdomsstegStatus: SykdomsstegStatusResponse | null;
 }
 
 const VilkårsvurderingAvTilsynOgPleie = ({
@@ -47,7 +47,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     vurderingsoversiktFeilet,
   } = state;
 
-  const { manglerGodkjentLegeerklæring } = sykdomsstegStatus;
+  const manglerGodkjentLegeerklæring = sykdomsstegStatus?.manglerGodkjentLegeerklæring;
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
@@ -133,7 +133,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
   };
 
   const setMargin = () => {
-    if (vurderingsoversikt.harPerioderSomSkalVurderes() || !harGyldigSignatur) {
+    if ((vurderingsoversikt && vurderingsoversikt.harPerioderSomSkalVurderes()) || !harGyldigSignatur) {
       return '4 0';
     }
     return undefined;
@@ -148,7 +148,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     <PageContainer isLoading={isLoading} hasError={vurderingsoversiktFeilet} key={StepId.TilsynOgPleie}>
       <VurderingsoversiktMessages vurderingsoversikt={vurderingsoversikt} harGyldigSignatur={harGyldigSignatur} />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box marginBlock={setMargin()}>
+        <Box.New marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon
@@ -173,7 +173,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
               />
             )}
           />
-        </Box>
+        </Box.New>
       )}
     </PageContainer>
   );

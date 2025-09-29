@@ -1,35 +1,34 @@
-import React, { useEffect, useMemo } from 'react';
-import { Box, Heading } from '@navikt/ds-react';
-import { PeriodeRad } from './PeriodeRad';
-import type { Period } from '@navikt/ft-utils';
 import {
-  type InstitusjonVurderingDtoResultat,
-  OpplæringVurderingDtoResultat,
-  type SykdomVurderingOversiktElementResultat,
-  InstitusjonVurderingDtoResultat as instEnumObject,
-  SykdomVurderingOversiktElementResultat as sykdomEnumObject,
-  OpplæringVurderingDtoResultat as opplæringEnumObject,
-  ReisetidPeriodeVurderingDtoResultat,
-  ReisetidPeriodeVurderingDtoResultat as reisetidEnumObject,
-} from '@k9-sak-web/backend/k9sak/generated';
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
+  type k9_kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
+  k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Box, Heading } from '@navikt/ds-react';
+import type { Period } from '@navikt/ft-utils';
+import React, { useEffect, useMemo, useState } from 'react';
+import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat
   | SykdomVurderingOversiktElementResultat
   | OpplæringVurderingDtoResultat
-  | ReisetidPeriodeVurderingDtoResultat;
+  | ReisetidResultat;
 
 type ResultatKeys =
   | keyof typeof instEnumObject
   | keyof typeof sykdomEnumObject
-  | keyof typeof opplæringEnumObject
+  | keyof typeof OpplæringVurderingDtoResultat
   | keyof typeof reisetidEnumObject;
 
 export const Resultat = {
   ...instEnumObject,
   ...sykdomEnumObject,
-  ...opplæringEnumObject,
+  ...OpplæringVurderingDtoResultat,
   ...reisetidEnumObject,
 } satisfies Record<ResultatKeys, ResultatType>;
 
@@ -45,8 +44,27 @@ export interface VurderingslisteProps<T extends Vurderingselement = Vurderingsel
   onPeriodeClick: (periode: T | null) => void;
   customPeriodeRad?: (periode: T, onPeriodeClick: (periode: T) => void) => React.ReactNode;
   customPeriodeLabel?: string;
+  customLabelRow?: React.ReactNode;
+  title?: string;
+  nyesteFørst?: boolean;
 }
+const sortNyestFørst = (a: Vurderingselement, b: Vurderingselement) => {
+  const periodeA = a.perioder[0]?.fom;
+  const periodeB = b.perioder[0]?.fom;
+  if (periodeA && periodeB) {
+    return new Date(periodeB).getTime() - new Date(periodeA).getTime();
+  }
+  return 0;
+};
 
+const sortEldestFørst = (a: Vurderingselement, b: Vurderingselement) => {
+  const periodeA = a.perioder[0]?.fom;
+  const periodeB = b.perioder[0]?.fom;
+  if (periodeA && periodeB) {
+    return new Date(periodeA).getTime() - new Date(periodeB).getTime();
+  }
+  return 0;
+};
 /**
  * Navigasjon for perioder som må vurderes og er vurdert
  */
@@ -56,16 +74,12 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   onPeriodeClick,
   customPeriodeRad,
   customPeriodeLabel,
+  customLabelRow,
+  title = 'Alle perioder',
+  nyesteFørst = true,
 }: VurderingslisteProps<T>) => {
   // nyeste først
-  const sortedPerioder = perioder.sort((a, b) => {
-    const periodeA = a.perioder[0]?.fom;
-    const periodeB = b.perioder[0]?.fom;
-    if (periodeA && periodeB) {
-      return new Date(periodeB).getTime() - new Date(periodeA).getTime();
-    }
-    return 0;
-  });
+  const sortedPerioder = perioder.sort(nyesteFørst ? sortNyestFørst : sortEldestFørst);
   const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
   const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
   const allePerioder = useMemo(
@@ -73,22 +87,30 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
     [perioderSomSkalVurderes, perioderSomErVurdert],
   );
 
-  // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
+  const [harAutomatiskValgtPeriode, setHarAutomatiskValgtPeriode] = useState(false);
   useEffect(() => {
+    // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {
       onPeriodeClick(null);
+      setHarAutomatiskValgtPeriode(false);
+      return;
     }
-  }, [valgtPeriode, allePerioder, onPeriodeClick]);
-
-  // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
-  useEffect(() => {
+    // Hvis vi ikke har valgt en periode, og det finnes en periode som må vurderes, så velger vi den første periode som må vurderes
+    // Hvis ikke vi har en periode som må vurderes, og det finnes en periode som er vurdert, så velger vi den første periode som er vurdert
     const periodeSomMåVurderes = allePerioder.find(
       periode => periode.resultat === Resultat.MÅ_VURDERES || periode.resultat === Resultat.IKKE_VURDERT,
     );
-    if (!valgtPeriode && periodeSomMåVurderes) {
-      onPeriodeClick(periodeSomMåVurderes);
+    const periodeSomErVurdert = allePerioder.find(periode => periode.resultat !== Resultat.MÅ_VURDERES);
+    if (!valgtPeriode && !harAutomatiskValgtPeriode) {
+      if (periodeSomMåVurderes) {
+        onPeriodeClick(periodeSomMåVurderes);
+        setHarAutomatiskValgtPeriode(true);
+      } else if (periodeSomErVurdert) {
+        onPeriodeClick(periodeSomErVurdert);
+        setHarAutomatiskValgtPeriode(true);
+      }
     }
-  }, [valgtPeriode, allePerioder, onPeriodeClick]);
+  }, [valgtPeriode, allePerioder, onPeriodeClick, harAutomatiskValgtPeriode]);
 
   const handlePeriodeClick = (index: number) => {
     if (allePerioder[index]) {
@@ -97,18 +119,22 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   };
 
   return (
-    <Box className="min-w-[400px]">
+    <Box.New className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
-        Alle perioder
+        {title}
       </Heading>
 
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
       {allePerioder.length > 0 && (
         <>
-          <div className="flex w-[120px]">
-            <div className="mx-4 min-w-[50px]">Status</div>
-            <div>{customPeriodeLabel || 'Periode'}</div>
-          </div>
+          {customLabelRow ? (
+            customLabelRow
+          ) : (
+            <div className="flex w-[120px]">
+              <div className="ml-6 min-w-[50px]">Status</div>
+              <div className="ml-2">{customPeriodeLabel || 'Periode'}</div>
+            </div>
+          )}
           <ul className={styles.interactiveList}>
             {allePerioder.map((element, currentIndex) => (
               <li key={element.id || element.perioder[0]?.fom}>
@@ -127,7 +153,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </ul>
         </>
       )}
-    </Box>
+    </Box.New>
   );
 };
 

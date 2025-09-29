@@ -1,6 +1,7 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
@@ -39,7 +40,7 @@ const lagToOmsorgspersonerVurdering = (
   const resultat = formState[FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]
     ? Vurderingsresultat.OPPFYLT
     : Vurderingsresultat.IKKE_OPPFYLT;
-  const perioder = formState[FieldName.PERIODER].map(
+  const perioder = (formState[FieldName.PERIODER] ?? []).map(
     periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_TO_OMSORGSPERSONER];
@@ -63,7 +64,7 @@ interface VurderingAvToOmsorgspersonerFormProps {
   defaultValues: VurderingAvToOmsorgspersonerFormState;
   onSubmit: (nyVurdering: Partial<Vurderingsversjon>) => void;
   resterendeVurderingsperioder?: Period[];
-  perioderSomKanVurderes?: Period[];
+  perioderSomKanVurderes: Period[];
   dokumenter: Dokument[];
   onAvbryt: () => void;
   isSubmitting: boolean;
@@ -84,7 +85,10 @@ const VurderingAvToOmsorgspersonerForm = ({
     defaultValues,
   });
 
-  const perioderSomBlirVurdert: Period[] = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
+  const perioderSomBlirVurdert: Period[] | undefined = useWatch({
+    control: formMethods.control,
+    name: FieldName.PERIODER,
+  });
 
   const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
     const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap(period => period.asListOfDays());
@@ -119,7 +123,7 @@ const VurderingAvToOmsorgspersonerForm = ({
   );
 
   return (
-    <DetailViewVurdering title="Vurdering av to omsorgspersoner" perioder={defaultValues[FieldName.PERIODER]}>
+    <DetailViewVurdering title="Vurdering av to omsorgspersoner" perioder={defaultValues[FieldName.PERIODER] || []}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <FormProvider {...formMethods}>
         <FormWithButtons
@@ -132,7 +136,7 @@ const VurderingAvToOmsorgspersonerForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box marginBlock="6 0">
+            <Box.New marginBlock="6 0">
               <CheckboxGroupRHF
                 question="Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?"
                 name={FieldName.DOKUMENTER}
@@ -152,9 +156,9 @@ const VurderingAvToOmsorgspersonerForm = ({
                 }}
                 disabled={readOnly}
               />
-            </Box>
+            </Box.New>
           )}
-          <Box marginBlock="8 0">
+          <Box.New marginBlock="8 0">
             <TextAreaRHF
               textareaClass={styles.begrunnelsesfelt}
               name={FieldName.VURDERING_AV_TO_OMSORGSPERSONER}
@@ -181,20 +185,20 @@ const VurderingAvToOmsorgspersonerForm = ({
                   </ul>
                 </>
               }
-              validators={{ required }}
+              validators={{ required, hasValidText }}
               disabled={readOnly}
               id="begrunnelsesfelt"
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <YesOrNoQuestionRHF
               question="Er det behov for to omsorgspersoner samtidig?"
               name={FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER}
               validators={{ required }}
               disabled={readOnly}
             />
-          </Box>
-          <Box marginBlock="8 0">
+          </Box.New>
+          <Box.New marginBlock="8 0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -234,32 +238,34 @@ const VurderingAvToOmsorgspersonerForm = ({
                 },
               }}
               renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                numberOfItems > 1 && (
+                numberOfItems > 1 ? (
                   <DeleteButton
                     onClick={() => {
                       fieldArrayMethods.remove(index);
                     }}
                   />
+                ) : (
+                  <></>
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box marginBlock="6 0">
+                <Box.New marginBlock="6 0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                     id="leggTilPeriodeKnapp"
                   />
-                </Box>
+                </Box.New>
               )}
             />
-          </Box>
+          </Box.New>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
-            </Box>
+            </Box.New>
           )}
         </FormWithButtons>
       </FormProvider>

@@ -1,6 +1,6 @@
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 
 export const getAktivitet = (

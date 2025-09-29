@@ -5,6 +5,7 @@ import { Field, WrappedFieldInputProps } from 'redux-form';
 import { RadioOptionProps } from './RadioOption';
 import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
+import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 type Direction = 'horizontal' | 'vertical';
 
@@ -35,10 +36,7 @@ interface RadioGroupFieldProps {
   rows?: number;
   direction?: Direction;
   DOMName?: string;
-  validate?:
-    | ((value: any) => { id: string }[])[]
-    | ((value: string) => boolean | undefined)[]
-    | ((value: string) => boolean | undefined);
+  validate?: ((value: string) => ValidationReturnType)[];
   readOnly?: boolean;
   isEdited?: boolean;
   dataId?: string;
@@ -83,7 +81,7 @@ const renderRadioGroupField = renderNavField(
         ))}
       {!isVertical && (
         <>
-          <HStack gap="4">
+          <HStack gap="space-16">
             {radios.map(radio => (
               <Radio key={`${radio.value}`} value={parse(radio.value)} disabled={radio.disabled || readOnly}>
                 {radio.label}

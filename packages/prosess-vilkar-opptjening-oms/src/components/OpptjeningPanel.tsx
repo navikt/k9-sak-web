@@ -108,10 +108,7 @@ const OpptjeningPanel = ({
         </FlexRow>
       </FlexContainer>
       {isAksjonspunktOpen && <VerticalSpacer eightPx />}
-      <AksjonspunktBox
-        className={styles.aksjonspunktMargin}
-        erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}
-      >
+      <AksjonspunktBox erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}>
         {children}
         {!readOnly && <VerticalSpacer sixteenPx />}
         {!skjulAksjonspunktVisning && (

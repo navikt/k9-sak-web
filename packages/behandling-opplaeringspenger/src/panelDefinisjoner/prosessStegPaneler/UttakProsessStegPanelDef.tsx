@@ -9,6 +9,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({
     behandling,
     uttaksperioder,
+    inntektsgraderinger,
     utsattePerioder,
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
@@ -18,8 +19,9 @@ class PanelDef extends ProsessStegPanelDef {
     isReadOnly,
   }) => (
     <Uttak
-      uuid={behandling.uuid}
+      behandling={behandling}
       uttaksperioder={uttaksperioder}
+      inntektsgraderinger={inntektsgraderinger}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
@@ -30,7 +32,11 @@ class PanelDef extends ProsessStegPanelDef {
     />
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
+    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+    aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -55,8 +61,9 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, inntektsgradering }) => ({
     uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
+    inntektsgraderinger: inntektsgradering?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,

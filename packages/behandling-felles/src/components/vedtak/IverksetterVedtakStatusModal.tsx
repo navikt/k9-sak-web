@@ -3,7 +3,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { Image } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './iverksetterVedtakStatusModal.module.css';
 
@@ -35,7 +34,7 @@ const IverksetterVedtakStatusModal = ({
   return (
     <Modal className={styles.modal} open={visModal} aria-label={imageAltText} onClose={lukkModal}>
       <Modal.Body>
-        <HGrid gap="4" columns={{ xs: '1fr 9fr 2fr' }}>
+        <HGrid gap="space-16" columns={{ xs: '1fr 9fr 2fr' }}>
           <div className="relative">
             <Image className={styles.image} alt={imageAltText} src={innvilgetImageUrl} />
             <div className={styles.divider} />

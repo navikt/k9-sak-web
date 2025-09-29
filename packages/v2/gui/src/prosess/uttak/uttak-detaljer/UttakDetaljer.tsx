@@ -1,29 +1,27 @@
-import { type JSX } from 'react';
-import classNames from 'classnames/bind';
 import {
-  UttaksperiodeInfoUtfall,
-  type UttaksperiodeInfoUtfall as UttaksperiodeInfoUtfallType,
-  UttaksperiodeInfoÅrsaker,
-  type UttaksperiodeInfoÅrsaker as UttaksperiodeInfoÅrsakerType,
-  type Utenlandsopphold,
-  type ArbeidsgiverOversiktDto,
-} from '@k9-sak-web/backend/k9sak/generated';
-import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
-import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
+  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
+  pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
+  type pleiepengerbarn_uttak_kontrakter_Utfall as UttaksperiodeInfoUtfallType,
+  type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
-import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
-import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
-import type { UttaksperiodeMedInntektsgradering } from '../types/UttaksperiodeMedInntektsgradering';
+import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BriefcaseClockIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
+import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
+import { type JSX } from 'react';
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
+import type { UttaksperiodeMedInntektsgradering } from '../types/UttaksperiodeMedInntektsgradering';
+import { FremhevingTag } from './FremhevingTag';
+import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
+import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
+import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
 import styles from './uttakDetaljer.module.css';
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-
-const cx = classNames.bind(styles);
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
@@ -62,7 +60,7 @@ const utenlandsoppholdInfo = (
     return null;
   }
 
-  if (utfall === UttaksperiodeInfoUtfall.IKKE_OPPFYLT) {
+  if (utfall === Utfall.IKKE_OPPFYLT) {
     return null;
   }
 
@@ -82,6 +80,16 @@ export interface UttakDetaljerProps {
   manueltOverstyrt: boolean;
   ytelsetype: FagsakYtelsesType;
 }
+
+const graderingBenevnelse = (ytelse: FagsakYtelsesType) => {
+  switch (ytelse) {
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
+      return 'pleiepengegrad';
+    default:
+      return 'gradering';
+  }
+};
 
 const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: UttakDetaljerProps): JSX.Element => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
@@ -109,12 +117,12 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
     !manueltOverstyrt &&
     !shouldHighlightInntekt &&
     årsaker &&
-    shouldHighlight(UttaksperiodeInfoÅrsaker.GRADERT_MOT_TILSYN, årsaker || []);
+    shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker || []);
   const shouldHighlightArbeidstid =
     !manueltOverstyrt &&
     !shouldHighlightInntekt &&
     årsaker &&
-    shouldHighlight(UttaksperiodeInfoÅrsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
+    shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
   const skalViseGraderingMotTilsyn = ![
     fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
@@ -137,23 +145,16 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
           Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
         </Alert>
       )}
-      <HGrid gap="8" columns={3} align="start" className={styles['uttakDetaljer']}>
+      <HGrid gap="space-32" columns={3} align="start" className={styles['uttakDetaljer']}>
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
-          <Box
-            className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightTilsyn,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightTilsyn,
-            })}
+          <Box.New
+            className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
-              <Box className={styles.uttakDetaljerTag}>
-                <Tag size="medium" variant="alt3-moderate">
-                  <CheckmarkIcon />
-                  Gir lavest pleiepengegrad
-                </Tag>
-              </Box>
+              <Box.New className={styles.uttakDetaljerTag}>
+                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
+              </Box.New>
             )}
             <HStack>
               <HandHeartIcon className="!ml-[-4px]" />
@@ -165,24 +166,17 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               )}
             </HStack>
             <GraderingMotTilsynDetaljer graderingMotTilsyn={graderingMotTilsyn} pleiebehov={pleiebehov || 0} />
-          </Box>
+          </Box.New>
         )}
 
-        <Box
-          className={cx({
-            uttakDetaljer__graderingDetaljer: true,
-            uttakDetaljer__graderingDetaljer__highlight: shouldHighlightArbeidstid,
-            uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightArbeidstid,
-          })}
+        <Box.New
+          className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightArbeidstid ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
           title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
-            <Box className={styles.uttakDetaljerTag}>
-              <Tag size="medium" variant="alt3-moderate">
-                <CheckmarkIcon />
-                Gir lavest pleiepengegrad
-              </Tag>
-            </Box>
+            <Box.New className={styles.uttakDetaljerTag}>
+              <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
+            </Box.New>
           )}
           <HStack>
             <BriefcaseClockIcon className="!ml-[-4px]" />
@@ -193,24 +187,17 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
             utbetalingsgrader={utbetalingsgrader || []}
             søkersTapteArbeidstid={søkersTapteArbeidstid}
           />
-        </Box>
+        </Box.New>
 
         {inntektsgradering && (
-          <Box
-            className={cx({
-              uttakDetaljer__graderingDetaljer: true,
-              uttakDetaljer__graderingDetaljer__highlight: shouldHighlightInntekt,
-              uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightInntekt,
-            })}
+          <Box.New
+            className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (
-              <Box className={styles.uttakDetaljerTag}>
-                <Tag size="medium" variant="alt3-moderate">
-                  <CheckmarkIcon />
-                  Gir lavest pleiepengegrad
-                </Tag>
-              </Box>
+              <Box.New className={styles.uttakDetaljerTag}>
+                <FremhevingTag text={`Gir lavest ${graderingBenevnelse(ytelsetype)}`} />
+              </Box.New>
             )}
             <HStack>
               <SackKronerIcon className="!ml-[-4px]" />
@@ -220,7 +207,7 @@ const UttakDetaljer = ({ uttak, arbeidsforhold, manueltOverstyrt, ytelsetype }: 
               alleArbeidsforhold={arbeidsforhold || {}}
               inntektsgradering={inntektsgradering}
             />
-          </Box>
+          </Box.New>
         )}
       </HGrid>
     </>

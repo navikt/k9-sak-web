@@ -67,7 +67,7 @@
 
 .behandlingPicker .åpneText {
   align-items: center;
-  color: var(--a-blue-500);
+  color: var(--ax-accent-600);
   display: flex;
   margin-right: 0.875rem;
 }

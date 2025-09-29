@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
+dayjs.extend(customParseFormat);
 
 export const tilNOK = Intl.NumberFormat('no-NO', { style: 'currency', currency: 'NOK', maximumFractionDigits: 0 });
 
@@ -30,3 +32,18 @@ export const formatCurrencyWithoutKr = (value: number) => {
 };
 
 export const beregnDagerTimer = (dur: string): number => Math.round(dayjs.duration(dur).asHours() * 100) / 100;
+
+export const formatFødselsdato = (fnrOrDate?: string): string => {
+  if (!fnrOrDate) return '';
+  // If input is a date string (YYYY-MM-DD)
+  if (/^\d{4}-\d{2}-\d{2}$/.test(fnrOrDate)) {
+    const date = dayjs(fnrOrDate, 'YYYY-MM-DD', true);
+    return date.isValid() ? date.format('DD.MM.YY') : '';
+  }
+  // If input is a fødselsnummer
+  if (/^\d{6}/.test(fnrOrDate)) {
+    const date = dayjs(fnrOrDate.slice(0, 6), 'DDMMYY', true);
+    return date.isValid() ? date.format('DD.MM.YY') : '';
+  }
+  return '';
+};

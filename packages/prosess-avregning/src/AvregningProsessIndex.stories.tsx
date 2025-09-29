@@ -1,11 +1,12 @@
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { BehandlingDtoStatus as behandlingStatus } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {
@@ -184,13 +185,13 @@ visAksjonspunktVurderFeilutbetaling.args = {
   aksjonspunkter: [
     {
       definisjon: {
-        kode: AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
+        kode: AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
       },
       begrunnelse: undefined,
     },
     {
       definisjon: {
-        kode: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+        kode: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
       },
       begrunnelse: undefined,
       erAktivt: true,
@@ -218,7 +219,7 @@ visAksjonspunktHøyEtterbetaling.args = {
   aksjonspunkter: [
     {
       definisjon: {
-        kode: AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+        kode: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
       },
       begrunnelse: undefined,
       erAktivt: true,

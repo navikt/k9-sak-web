@@ -2,6 +2,9 @@ import faktaPanelCodes from './faktaPanelCodes';
 import prosessStegCodes from './prosessStegCodes';
 import tabCodes from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/tabCodes.js';
 
+/**
+ * @deprecated Fjern - Flytta til v2
+ */
 const skjermlenkeCodes = {
   BEREGNING: {
     kode: 'BEREGNING',

@@ -18,7 +18,7 @@ const renderStatusIcon = (resultat: Vurderingsresultat) => {
       <CheckmarkCircleFillIcon
         title="Vilkåret er oppfylt"
         fontSize="1.75rem"
-        style={{ color: 'var(--a-surface-success)' }}
+        style={{ color: 'var(--ax-bg-success-strong)' }}
       />
     );
   }
@@ -27,7 +27,7 @@ const renderStatusIcon = (resultat: Vurderingsresultat) => {
       <XMarkOctagonFillIcon
         title="Vilkåret er ikke oppfylt"
         fontSize="1.75rem"
-        style={{ color: 'var(--a-surface-danger)' }}
+        style={{ color: 'var(--ax-bg-danger-strong)' }}
       />
     );
   }

@@ -1,6 +1,9 @@
-import { VilkårPeriodeDtoVilkarStatus, type OpptjeningDto } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
+  type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState } from 'react';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
@@ -11,6 +14,7 @@ import type { Behandling } from './types/Behandling';
 import type { Fagsak } from './types/Fagsak';
 import type { SubmitCallback } from './types/SubmitCallback';
 import type { Vilkår } from './types/Vilkår';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
@@ -25,6 +29,19 @@ interface OpptjeningVilkarProsessIndexProps {
   readOnlySubmitButton: boolean;
   visAllePerioder: boolean;
 }
+
+const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus, isAksjonspunktOpen: boolean) => {
+  if (isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
+  }
+  if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
+  }
+  return null;
+};
 
 const OpptjeningVilkarProsessIndexV2 = ({
   fagsak,
@@ -62,25 +79,18 @@ const OpptjeningVilkarProsessIndexV2 = ({
   return (
     <>
       <div className={styles.mainContainerWithSideMenu}>
-        <div className={styles.sideMenuContainer}>
+        <div className="flex-shrink-0">
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-              icon:
-                isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT ? (
-                  <ExclamationmarkTriangleFillIcon
-                    title="Aksjonspunkt"
-                    fontSize="1.5rem"
-                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl ml-2"
-                  />
-                ) : null,
+              icon: getIconForOpptjeningStatus(vilkarStatus, isAksjonspunktOpen),
             }))}
             onClick={setActiveTab}
             heading="Perioder"
           />
         </div>
-        <div className={styles.contentContainer}>
+        <div>
           <OpptjeningVilkarAksjonspunktPanel
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}

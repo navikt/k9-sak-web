@@ -869,6 +869,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'IKKE_VURDERT',
     verdiId: 'HistorikkEndretFeltVerdiType.IkkeVurdert',
   },
+  UAVKLART: {
+    kode: 'UAVKLART',
+    verdiId: 'HistorikkEndretFeltVerdiType.Uavklart',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;

@@ -1,4 +1,4 @@
-import type { JournalpostIdDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_dokument_JournalpostIdDto as JournalpostIdDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';

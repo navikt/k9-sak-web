@@ -1,6 +1,6 @@
 import type { Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import type { AktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
-import type { ArbeidsgiverDto } from '@navikt/k9-sak-typescript-client';
+import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverDto as ArbeidsgiverDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BeregningsresultatPeriodeDto } from '../../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysninger, ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 

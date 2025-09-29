@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
 import { format } from 'date-fns';
+import { expect } from 'storybook/test';
 import DateLabel from './DateLabel';
 
 export default {

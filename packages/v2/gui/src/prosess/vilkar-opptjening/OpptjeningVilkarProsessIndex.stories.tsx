@@ -1,14 +1,14 @@
 import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoStatus,
-  FastsattOpptjeningAktivitetDtoKlasse,
-  FastsattOpptjeningAktivitetDtoType,
-  VilkårPeriodeDtoMerknad,
-  VilkårPeriodeDtoVilkarStatus,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
+  k9_kodeverk_opptjening_OpptjeningAktivitetKlassifisering as FastsattOpptjeningAktivitetDtoKlasse,
+  k9_kodeverk_opptjening_OpptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
+  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent } from '@storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles';
 import OpptjeningVilkarProsessIndexV2 from './OpptjeningVilkarProsessIndexV2';
@@ -172,7 +172,7 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
     ],
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
         status: AksjonspunktDtoStatus.OPPRETTET,
       },
     ],
@@ -254,7 +254,7 @@ export const VisPanelForPSBÅpentAksjonspunktUten847B: Story = {
     ],
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
         status: AksjonspunktDtoStatus.OPPRETTET,
       },
     ],
@@ -295,7 +295,7 @@ export const VisPanelForPSBÅpentAksjonspunktMed847B: Story = {
     ],
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktDtoDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
         status: AksjonspunktDtoStatus.OPPRETTET,
       },
     ],

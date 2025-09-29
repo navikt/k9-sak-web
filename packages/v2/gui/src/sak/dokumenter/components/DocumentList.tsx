@@ -1,5 +1,6 @@
+import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/Kommunikasjonsretning.js';
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
@@ -88,16 +89,20 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     fagsakYtelsesType.OMSORGSPENGER,
     fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
   ].some(t => t === sakstype);
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
-      .get<Kompletthet>(`/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`, {
-        signal,
-        params: {
-          behandlingUuid,
-        },
-      })
+      .get<Kompletthet>(
+        `/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`,
+        addLegacySerializerOption({
+          signal,
+          params: {
+            behandlingUuid,
+          },
+        }),
+      )
       .then(({ data }) => {
         const inntektsmeldingerIBruk = data?.vurderinger?.flatMap(kompletthetvurdering =>
           kompletthetvurdering.vurderinger.filter(vurdering => vurdering.vurdering === 'I_BRUK'),
@@ -182,7 +187,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
                 >
                   <Table.DataCell>
                     <Tooltip content={directionText}>
-                      <a
+                      <Link
                         className={styles.documentAnchorPlain}
                         href={makeDocumentURL(document)}
                         target="_blank"
@@ -190,11 +195,11 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
                         tabIndex={-1}
                       >
                         <img className="h-5 w-[25px]" src={directionImage} alt={directionText} />
-                      </a>
+                      </Link>
                     </Tooltip>
                   </Table.DataCell>
                   <Table.DataCell>
-                    <a
+                    <Link
                       onClick={event => {
                         event.stopPropagation();
                       }}
@@ -215,10 +220,10 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
                       {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
                         <StarFillIcon className={styles.starIcon} title="Brukes i behandlingen" />
                       )}
-                    </a>
+                    </Link>
                   </Table.DataCell>
                   <Table.DataCell>
-                    <a
+                    <Link
                       className={styles.documentAnchorPlain}
                       href={makeDocumentURL(document)}
                       target="_blank"
@@ -231,10 +236,10 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
                         </Tooltip>
                       )}
                       {!isTextMoreThan25char(document?.gjelderFor) && document.gjelderFor}
-                    </a>
+                    </Link>
                   </Table.DataCell>
                   <Table.DataCell>
-                    <a
+                    <Link
                       className={styles.documentAnchorPlain}
                       href={makeDocumentURL(document)}
                       target="_blank"
@@ -248,7 +253,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
                           I bestilling
                         </BodyShort>
                       )}
-                    </a>
+                    </Link>
                   </Table.DataCell>
                 </Table.Row>
               );

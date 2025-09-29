@@ -117,7 +117,7 @@ export const kodeverkK9Sak = {
     {
       kode: 'UNG',
       kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Ungdomsytelse',
+      navn: 'Ungdomsprogramytelse',
     },
     {
       kode: 'SP',

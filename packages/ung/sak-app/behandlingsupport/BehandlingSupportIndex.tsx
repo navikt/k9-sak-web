@@ -1,9 +1,9 @@
 import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import { UngSakClientContext } from '@k9-sak-web/gui/app/UngSakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -35,6 +35,7 @@ import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
+import MeldingTilbakeIndex from './melding/MeldingTilbakeIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
@@ -134,9 +135,9 @@ interface OwnProps {
   behandlingVersjon?: number;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   navAnsatt: NavAnsatt;
   featureToggles?: FeatureToggles;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 /**
@@ -152,17 +153,15 @@ const BehandlingSupportIndex = ({
   behandlingVersjon,
   behandlingRettigheter,
   personopplysninger,
-  arbeidsgiverOpplysninger,
   navAnsatt,
   featureToggles,
+  arbeidsgiverOpplysninger,
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
-  const k9SakClient = useContext(K9SakClientContext);
   const formidlingClient = useContext(FormidlingClientContext);
-  const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
-  const ungClient = useContext(UngSakClientContext);
-  const notatBackendClient = new NotatBackendClient(ungClient);
+  const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
+  const notatBackendClient = new NotatBackendClient('ungSak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
   const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
@@ -235,7 +234,14 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
 
-  const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
+  const isPanelDisabled = () =>
+    valgtSupportPanel
+      ? !valgbareSupportPaneler.includes(valgtSupportPanel) && valgtSupportPanel !== SupportTabs.MELDINGER
+      : false;
+
+  if (!behandlingRettigheter) {
+    return <LoadingPanel />;
+  }
 
   return (
     <Tabs defaultValue={aktivtSupportPanel} className={styles.tablistWrapper}>
@@ -294,18 +300,22 @@ const BehandlingSupportIndex = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
-            {behandlingId && (
-              <MeldingIndex
-                fagsak={fagsak}
-                alleBehandlinger={alleBehandlinger}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                personopplysninger={personopplysninger}
-                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                featureToggles={featureToggles}
-                backendApi={meldingerBackendClient}
-              />
-            )}
+            {behandlingId ? (
+              erTilbakekreving(behandling?.type.kode) ? (
+                <MeldingTilbakeIndex
+                  fagsak={fagsak}
+                  alleBehandlinger={alleBehandlinger}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                  personopplysninger={personopplysninger}
+                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                  featureToggles={featureToggles}
+                  backendApi={meldingerBackendClient}
+                />
+              ) : (
+                <MeldingIndex alleBehandlinger={alleBehandlinger} behandlingId={behandlingId} />
+              )
+            ) : null}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.DOKUMENTER}>
             <DokumentIndex

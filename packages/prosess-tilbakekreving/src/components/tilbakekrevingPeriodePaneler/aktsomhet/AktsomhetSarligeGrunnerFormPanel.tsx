@@ -44,7 +44,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
       </React.Fragment>
     ))}
     {erSerligGrunnAnnetValgt && (
-      <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '1fr 10fr 1fr' }}>
         <div />
         <div>
           <TextAreaField

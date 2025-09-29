@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -11,6 +11,8 @@ import useHentKodeverk from './useHentKodeverk';
 import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/prodFeatureToggles.js';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
+import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
+import ApplicationContextPath from './ApplicationContextPath';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -38,11 +40,14 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { featureToggles } = useFeatureToggles();
 
-  const k9KodeverkOppslag = useK9Kodeverkoppslag();
-
   const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(K9sakApiKeys.LANGUAGE_FILE, NO_PARAMS);
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
+
+  const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  const klageAktivert = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
+  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert, tilbakeAktivert);
 
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 

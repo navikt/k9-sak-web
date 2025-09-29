@@ -19,8 +19,8 @@ export interface Tilstand {
 export interface TilstandBeriket extends Tilstand {
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
-  beslutningFieldName?: string;
-  begrunnelseFieldName?: string;
+  begrunnelseFieldName: `begrunnelse${string}`;
+  beslutningFieldName: `beslutning${string}`;
 }
 
 export interface Status {
@@ -41,5 +41,6 @@ export interface Vurdering {
 export enum Kode {
   FORTSETT = 'FORTSETT',
   MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
+  IKKE_INNTEKTSTAP = 'IKKE_INNTEKTSTAP',
   TOM = '-',
 }

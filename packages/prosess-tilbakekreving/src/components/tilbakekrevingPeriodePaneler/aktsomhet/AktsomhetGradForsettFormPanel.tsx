@@ -2,7 +2,6 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
@@ -15,7 +14,7 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
   <div>
     <ArrowBox alignOffset={erValgtResultatTypeForstoBurdeForstaatt ? 328 : 368}>
       {erValgtResultatTypeForstoBurdeForstaatt && (
-        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <div>
             <Detail>
               <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />

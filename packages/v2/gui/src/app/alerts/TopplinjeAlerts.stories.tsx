@@ -1,10 +1,10 @@
-import { TopplinjeAlerts } from './TopplinjeAlerts.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { makeFakeExtendedApiError, makeFakeK9SakValidationError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
+import { makeFakeExtendedApiError, makeFakeK9SakValidationError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import GeneralAsyncError from './GeneralAsyncError.js';
+import { TopplinjeAlerts } from './TopplinjeAlerts.js';
 
 const meta = {
   title: 'gui/app/alerts/TopplinjeAlerts.tsx',
@@ -36,7 +36,7 @@ export const ValideringsFeil: Story = {
   args: {
     errors: [
       makeFakeK9SakValidationError({
-        body: {
+        error: {
           feilmelding:
             'Det oppstod en valideringsfeil på felt [fritekst]. Vennligst kontroller at alle feltverdier er korrekte.',
           type: 'VALIDERINGS_FEIL',
@@ -50,8 +50,10 @@ export const ValideringsFeil: Story = {
 export const FleireApiFeil: Story = {
   args: {
     errors: [
-      makeFakeK9SakValidationError({ body: { feilmelding: 'Her feila det i felt [test1]', type: 'VALIDERINGS_FEIL' } }),
-      makeFakeExtendedApiError({ status: 500, body: { feilmelding: 'Noko feila på server' } }),
+      makeFakeK9SakValidationError({
+        error: { feilmelding: 'Her feila det i felt [test1]', type: 'VALIDERINGS_FEIL' },
+      }),
+      makeFakeExtendedApiError({ status: 500, error: { feilmelding: 'Noko feila på server' } }),
     ],
   },
   decorators: [withParentErrorStateMaintainer],

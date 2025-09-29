@@ -7,6 +7,7 @@ import { initDiagnosekodeSearcher } from './diagnosekodeSearcher.js';
 interface DiagnosekodeVelgerProps extends Pick<ComboboxProps, 'size' | 'className' | 'disabled'> {
   label?: string;
   name: string;
+  description?: string;
 }
 
 const MIN_SEARCH_CHARS = 0;
@@ -24,6 +25,7 @@ const diagnosekodeToComboBoxOption = (diagnosekode: ICD10Diagnosekode): ComboBox
 const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
   name,
   size,
+  description,
   className,
   disabled,
   label = 'Diagnosekoder',
@@ -88,6 +90,7 @@ const DiagnosekodeVelger: React.FC<DiagnosekodeVelgerProps> = ({
     <div>
       <UNSAFE_Combobox
         label={label}
+        description={description}
         name={name}
         isMultiSelect
         size={size}

@@ -1,5 +1,4 @@
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

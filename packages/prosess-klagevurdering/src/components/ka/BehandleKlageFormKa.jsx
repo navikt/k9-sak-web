@@ -12,7 +12,6 @@ import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-fronte
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { HGrid, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
@@ -66,7 +65,7 @@ export const BehandleKlageFormKaImpl = ({
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
-        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+        <HGrid gap="space-4" columns={{ xs: '8fr 2fr 2fr' }}>
           <div className="relative">
             <ProsessStegSubmitButton
               formName={formProps.form}

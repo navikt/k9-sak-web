@@ -43,18 +43,18 @@ const renderInnleggelsesperiodeIcon = (resultat: Vurderingsresultat) => {
   );
 };
 
-const renderResultatIcon = (resultat: Vurderingsresultat) => {
+const renderResultatIcon = (resultat: Vurderingsresultat, manglerLegeerklæring: boolean | undefined) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
       <Tooltip content="Vilkåret er oppfylt">
-        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+        <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
       </Tooltip>
     );
   }
-  if (resultat === Vurderingsresultat.IKKE_OPPFYLT) {
+  if (resultat === Vurderingsresultat.IKKE_OPPFYLT || manglerLegeerklæring === true) {
     return (
       <Tooltip content="Vilkåret er ikke oppfylt">
-        <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+        <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
       </Tooltip>
     );
   }
@@ -62,11 +62,11 @@ const renderResultatIcon = (resultat: Vurderingsresultat) => {
 };
 
 const renderStatusIndicator = (vurderingselement: Vurderingselement) => {
-  const { erInnleggelsesperiode, resultat } = vurderingselement as ManuellVurdering;
+  const { erInnleggelsesperiode, resultat, manglerLegeerklæring } = vurderingselement as ManuellVurdering;
   if (erInnleggelsesperiode) {
     return renderInnleggelsesperiodeIcon(resultat);
   }
-  return renderResultatIcon(resultat);
+  return renderResultatIcon(resultat, manglerLegeerklæring);
 };
 
 const renderPersonIcon = ({ gjelderForAnnenPart, gjelderForSøker }: ManuellVurdering) => {

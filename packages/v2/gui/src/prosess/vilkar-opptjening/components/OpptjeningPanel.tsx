@@ -21,6 +21,8 @@ interface OwnProps {
   isPeriodisertFormComplete?: boolean;
   skjulAksjonspunktVisning?: boolean;
   aksjonspunktErLøst?: boolean;
+  redigererOpptjening: boolean;
+  setRedigererOpptjening: (redigererOpptjening: boolean) => void;
 }
 
 /*
@@ -37,17 +39,19 @@ const OpptjeningPanel = ({
   children,
   skjulAksjonspunktVisning,
   aksjonspunktErLøst,
+  redigererOpptjening,
+  setRedigererOpptjening,
 }: OwnProps) => {
   const formMethods = useFormContext<VilkårFieldFormValues>();
   return (
     <>
-      <VStack gap="4">
-        <HStack gap="4">
+      <VStack gap="space-16">
+        <HStack gap="space-16">
           {aksjonspunktErLøst ? (
             originalErVilkarOk ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
             )
           ) : null}
           <Heading size="small" level="2">
@@ -81,16 +85,25 @@ const OpptjeningPanel = ({
         </div>
       </VStack>
       {isAksjonspunktOpen && <div className="mt-2" />}
-      <AksjonspunktBox
-        className={styles.aksjonspunktMargin}
-        erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}
-      >
+      <AksjonspunktBox erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}>
         {children}
         {!readOnly && <div className="mt-4" />}
         {!skjulAksjonspunktVisning && !readOnly && (
-          <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} type="submit">
-            Bekreft og fortsett
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} type="submit">
+              Bekreft og fortsett
+            </Button>
+            {redigererOpptjening && (
+              <Button
+                variant="tertiary"
+                size="small"
+                type="button"
+                onClick={() => setRedigererOpptjening(!redigererOpptjening)}
+              >
+                Avbryt
+              </Button>
+            )}
+          </div>
         )}
       </AksjonspunktBox>
     </>

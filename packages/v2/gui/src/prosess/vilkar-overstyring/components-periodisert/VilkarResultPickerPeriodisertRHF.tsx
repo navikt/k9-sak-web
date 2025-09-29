@@ -1,12 +1,17 @@
-import type { AksjonspunktDto, VilkårPeriodeDto, InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, BodyShort, Box } from '@navikt/ds-react';
-import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
+import { Alert, BodyShort, Box, Radio, VStack } from '@navikt/ds-react';
+import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
-import type { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactElement } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils';
 
 export type VilkarResultPickerFormState = {
@@ -29,8 +34,8 @@ type TransformedValues = {
 interface OwnProps {
   erVilkarOk?: string;
   periodeVilkarStatus?: boolean;
-  customVilkarIkkeOppfyltText: string | ReactNode;
-  customVilkarOppfyltText: string | ReactNode;
+  customVilkarIkkeOppfyltText: string | ReactElement;
+  customVilkarOppfyltText: string | ReactElement;
   readOnly: boolean;
   erMedlemskapsPanel?: boolean;
   visPeriodisering: boolean;
@@ -75,6 +80,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   vilkarType,
   relevanteInnvilgetMerknader,
 }) => {
+  const { control } = useFormContext();
   const { hentKodeverkForKode } = useKodeverkContext();
   const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkMedUndertype;
   const avslagsårsakerForVilkar = avslagsarsaker[vilkarType];
@@ -88,8 +94,35 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
     (date: Date) => isAfter(date, parse(periodeTom, 'yyyy-MM-dd', new Date())),
   ];
 
+  const radios = [
+    {
+      value: vilkårStatusPeriodisert.OPPFYLT,
+      label: customVilkarOppfyltText,
+    },
+    ...(visPeriodisering
+      ? [
+          {
+            value: periodeVilkarStatus
+              ? vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT
+              : vilkårStatusPeriodisert.DELVIS_OPPFYLT,
+            label: periodeVilkarStatus ? (
+              <>
+                Vilkåret er <b>delvis ikke</b> oppfylt
+              </>
+            ) : (
+              'Vilkåret er delvis oppfylt'
+            ),
+          },
+        ]
+      : []),
+    {
+      value: vilkårStatusPeriodisert.IKKE_OPPFYLT,
+      label: customVilkarIkkeOppfyltText,
+    },
+  ];
+
   return (
-    <Box paddingBlock={'4 0'} paddingInline={'4 0'}>
+    <Box.New paddingBlock={'4 0'} paddingInline={'4 0'}>
       {readOnly && erVilkarOk !== undefined && (
         <Alert variant={erVilkarOk === vilkårStatusPeriodisert.OPPFYLT ? 'success' : 'error'} inline>
           {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && (
@@ -102,50 +135,32 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
       )}
 
       {(!readOnly || erVilkarOk === undefined) && (
-        <RadioGroupPanel
+        <RhfRadioGroup
+          control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           isReadOnly={readOnly}
-          radios={[
-            {
-              value: vilkårStatusPeriodisert.OPPFYLT,
-              label: customVilkarOppfyltText,
-            },
-            ...(visPeriodisering
-              ? [
-                  {
-                    value: periodeVilkarStatus
-                      ? vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT
-                      : vilkårStatusPeriodisert.DELVIS_OPPFYLT,
-                    label: periodeVilkarStatus ? (
-                      <>
-                        Vilkåret er <b>delvis ikke</b> oppfylt
-                      </>
-                    ) : (
-                      'Vilkåret er delvis oppfylt'
-                    ),
-                  },
-                ]
-              : []),
-            {
-              value: vilkårStatusPeriodisert.IKKE_OPPFYLT,
-              label: customVilkarIkkeOppfyltText,
-            },
-          ]}
-        />
+        >
+          {radios.map(radio => (
+            <Radio key={radio.value} value={radio.value}>
+              {radio.label}
+            </Radio>
+          ))}
+        </RhfRadioGroup>
       )}
 
       {erVilkarOk !== undefined && (
         <>
           {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsårsakerForVilkar && (
-            <SelectField
+            <RhfSelect
+              control={control}
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
               label="Avslagsårsak"
               selectValues={avslagsårsakerForVilkar
-                .filter((avslagsårsak): avslagsårsak is string => typeof avslagsårsak === 'string')
+                .filter(avslagsårsak => typeof avslagsårsak === 'object' && 'kode' in avslagsårsak)
                 .map(avslagsårsak => (
-                  <option key={avslagsårsak} value={avslagsårsak}>
-                    {avslagsårsak}
+                  <option key={avslagsårsak.kode} value={avslagsårsak.kode}>
+                    {avslagsårsak.navn}
                   </option>
                 ))}
               readOnly={readOnly}
@@ -154,27 +169,32 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           )}
           {(erVilkarOk === vilkårStatusPeriodisert.DELVIS_OPPFYLT ||
             erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT) && (
-            <Box marginBlock={'2 0'}>
-              <Datepicker
-                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
-                label="Fra dato"
-                isReadOnly={readOnly}
-                validate={[required, hasValidDate]}
-                disabledDays={ugyldigeFomDatoer()}
-              />
-              <Datepicker
-                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
-                label="Til dato"
-                disabledDays={ugyldigeTomDatoer()}
-                isReadOnly={readOnly}
-                validate={[required, hasValidDate]}
-              />
-            </Box>
+            <Box.New marginBlock={'2 0'}>
+              <VStack gap="space-16">
+                <RhfDatepicker
+                  control={control}
+                  name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
+                  label="Fra dato"
+                  isReadOnly={readOnly}
+                  validate={[required, hasValidDate]}
+                  disabledDays={ugyldigeFomDatoer()}
+                />
+                <RhfDatepicker
+                  control={control}
+                  name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
+                  label="Til dato"
+                  disabledDays={ugyldigeTomDatoer()}
+                  isReadOnly={readOnly}
+                  validate={[required, hasValidDate]}
+                />
+              </VStack>
+            </Box.New>
           )}
 
           {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && relevanteInnvilgetMerknader && (
-            <Box marginBlock={'2 0'}>
-              <SelectField
+            <Box.New marginBlock={'2 0'}>
+              <RhfSelect
+                control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgetMerknadCode`}
                 label="Hjemmel for innvilgelse"
                 selectValues={relevanteInnvilgetMerknader.map(innvilgetMerknad => (
@@ -185,37 +205,39 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 readOnly={readOnly}
                 validate={[required]}
               />
-            </Box>
+            </Box.New>
           )}
 
           {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsårsakerForVilkar && (
-            <Box marginBlock={'2 0'}>
-              <SelectField
+            <Box.New marginBlock={'2 0'}>
+              <RhfSelect
+                control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
                 label="Avslagsårsak"
                 selectValues={avslagsårsakerForVilkar
-                  .filter((avslagsårsak): avslagsårsak is string => typeof avslagsårsak === 'string')
+                  .filter(avslagsårsak => typeof avslagsårsak === 'object' && 'kode' in avslagsårsak)
                   .map(avslagsårsak => (
-                    <option key={avslagsårsak} value={avslagsårsak}>
-                      {avslagsårsak}
+                    <option key={avslagsårsak.kode} value={avslagsårsak.kode}>
+                      {avslagsårsak.navn}
                     </option>
                   ))}
                 readOnly={readOnly}
                 validate={[required]}
               />
               {erMedlemskapsPanel && (
-                <Datepicker
+                <RhfDatepicker
+                  control={control}
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
                   label="Dato"
                   isReadOnly={readOnly}
                   validate={[required, hasValidDate]}
                 />
               )}
-            </Box>
+            </Box.New>
           )}
         </>
       )}
-    </Box>
+    </Box.New>
   );
 };
 

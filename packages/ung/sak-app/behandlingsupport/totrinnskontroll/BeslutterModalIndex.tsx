@@ -1,14 +1,13 @@
 import { useCallback } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
-import { BehandlingDtoType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { k9_klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { getPathToK9Los } from '../../app/paths';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 
 interface OwnProps {
@@ -30,7 +29,7 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
   );
 
   const goToSearchPage = useCallback(() => {
-    window.location.assign(getPathToK9Los() || '/');
+    window.location.assign('/');
   }, []);
 
   if (state === RestApiState.LOADING) {
@@ -38,7 +37,7 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
   }
 
   const v2Behandling = JSON.parse(JSON.stringify(behandling));
-  konverterKodeverkTilKode(v2Behandling, behandling.type.kode === BehandlingDtoType.TILBAKEKREVING);
+  konverterKodeverkTilKode(v2Behandling, behandling.type.kode === KlageBehandlingType.TILBAKEKREVING);
 
   return (
     <FatterVedtakTotrinnskontrollModalSakIndex

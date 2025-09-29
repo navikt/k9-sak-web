@@ -1,4 +1,4 @@
-import { formatCurrencyWithKr, formatCurrencyWithoutKr } from './formatters';
+import { formatCurrencyWithKr, formatCurrencyWithoutKr, formatFødselsdato } from './formatters';
 
 describe('formatCurrencyWithKr', () => {
   it('should format integers correctly', () => {
@@ -49,5 +49,28 @@ describe('formatCurrencyWithoutKr', () => {
 
   it('should return undefined for NaN values', () => {
     expect(formatCurrencyWithoutKr(NaN)).toBeUndefined();
+  });
+});
+
+describe('formatFødselsdato', () => {
+  it('returns empty string for undefined', () => {
+    expect(formatFødselsdato(undefined)).toBe('');
+  });
+
+  it('returns empty string for short fnr', () => {
+    expect(formatFødselsdato('12345')).toBe('');
+  });
+
+  it('works for exactly 6 digits', () => {
+    expect(formatFødselsdato('010203')).toBe('01.02.03');
+  });
+
+  it('ignores extra digits after 6', () => {
+    expect(formatFødselsdato('31129912345')).toBe('31.12.99');
+  });
+
+  it('formats YYYY-MM-DD to DD.MM.YY', () => {
+    expect(formatFødselsdato('1993-10-27')).toBe('27.10.93');
+    expect(formatFødselsdato('2000-01-01')).toBe('01.01.00');
   });
 });

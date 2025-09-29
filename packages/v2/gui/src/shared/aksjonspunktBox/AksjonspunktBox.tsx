@@ -1,11 +1,8 @@
-import classnames from 'classnames/bind';
-import { type ReactNode } from 'react';
-import { Box } from '@navikt/ds-react';
 import { K9MaxTextWidth } from '@k9-sak-web/gui/tokens/tokens.js';
+import { Box } from '@navikt/ds-react';
+import { type ReactNode } from 'react';
 
 import styles from './aksjonspunktBox.module.css';
-
-const classNames = classnames.bind(styles);
 
 interface OwnProps {
   children: ReactNode | ReactNode[];
@@ -15,15 +12,15 @@ interface OwnProps {
 }
 
 const AksjonspunktBox = ({ erAksjonspunktApent, className, children, maxWidth = false }: OwnProps) => (
-  <Box
-    className={classNames('aksjonspunkt', className, { erAksjonspunktApent })}
+  <Box.New
+    className={`${styles.aksjonspunkt} ${className} ${erAksjonspunktApent ? styles.erAksjonspunktApent : ''}`}
     borderWidth={erAksjonspunktApent ? '3' : undefined}
     borderRadius={erAksjonspunktApent ? 'large' : undefined}
     padding={erAksjonspunktApent ? '4' : undefined}
     maxWidth={maxWidth ? K9MaxTextWidth : undefined}
   >
     {children}
-  </Box>
+  </Box.New>
 );
 
 export default AksjonspunktBox;

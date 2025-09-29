@@ -1,6 +1,6 @@
-import { BigError } from './BigError.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
+import { BigError } from './BigError.js';
 
 const meta = {
   title: 'gui/app/feilmeldinger/BigError',

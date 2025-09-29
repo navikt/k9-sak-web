@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Period } from '@fpsak-frontend/utils';
-import { Box, ErrorMessage } from '@navikt/ds-react';
+import { Box, ErrorMessage, Fieldset } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { DatepickerLimitations } from '../DatepickerLimitations';
@@ -60,8 +60,7 @@ const PeriodpickerList = ({
   return (
     <div className={styles.periodpickerList}>
       {renderBeforeFieldArray && renderBeforeFieldArray(fieldArrayMethods)}
-      <fieldset>
-        <legend>{legend}</legend>
+      <Fieldset disabled={disabled} legend={legend}>
         {fields.map((item, index) => {
           const errorMessage = errors[name] && errors[name][index]?.period.message;
           const defaultValue =
@@ -69,7 +68,7 @@ const PeriodpickerList = ({
               ? new Period(defaultValues[index].fom, defaultValues[index].tom)
               : new Period('', '');
           return (
-            <Box key={item.id} marginBlock="4 0">
+            <Box.New key={item.id} marginBlock="4 0">
               <div className={styles.periodpickerList__flexContainer}>
                 <Controller
                   name={`${name}[${index}].period`}
@@ -81,7 +80,7 @@ const PeriodpickerList = ({
                       <>
                         <PureDatepicker
                           {...fromDatepickerProps}
-                          label={fromDatepickerProps.label}
+                          label={fromDatepickerProps.label ?? ''}
                           ariaLabel={fromDatepickerProps.ariaLabel}
                           value={value?.fom || ''}
                           onChange={fomValue => {
@@ -95,7 +94,7 @@ const PeriodpickerList = ({
                           <PureDatepicker
                             {...toDatepickerProps}
                             initialMonth={value?.fom}
-                            label={toDatepickerProps.label}
+                            label={toDatepickerProps.label ?? ''}
                             ariaLabel={toDatepickerProps.ariaLabel}
                             value={value?.tom || ''}
                             onChange={tomValue => {
@@ -113,11 +112,11 @@ const PeriodpickerList = ({
                 {renderContentAfterElement && renderContentAfterElement(index, fields.length, fieldArrayMethods)}
               </div>
               {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-            </Box>
+            </Box.New>
           );
         })}
-      </fieldset>
-      {renderAfterFieldArray && renderAfterFieldArray(fieldArrayMethods)}
+        <Box.New>{renderAfterFieldArray && renderAfterFieldArray(fieldArrayMethods)}</Box.New>
+      </Fieldset>
     </div>
   );
 };

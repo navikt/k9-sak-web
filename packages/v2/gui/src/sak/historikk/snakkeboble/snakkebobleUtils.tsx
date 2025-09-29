@@ -1,12 +1,13 @@
 import { dateFormat, timeFormat } from '@navikt/ft-utils';
 
-import { kjønn as kjønnKode } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
-import styles from './snakkeboble.module.css';
-import { historikkAktor, type HistorikkAktor } from '../tilbake/historikkinnslagTsTypeV2.js';
 import {
-  type HistorikkAktørDtoType,
-  HistorikkAktørDtoType as historikkAktør,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_historikk_HistorikkAktør as historikkAktør,
+  type k9_kodeverk_historikk_HistorikkAktør as HistorikkAktørDtoType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { ChatProps } from '@navikt/ds-react';
+import type { AkselColor } from '@navikt/ds-react/types/theme';
+import { historikkAktor, type HistorikkAktor } from '../tilbake/historikkinnslagTsTypeV2.js';
+import styles from './snakkeboble.module.css';
 
 export const isLegacyTilbakeHistorikkAktor = (
   aktørType: HistorikkAktor | HistorikkAktørDtoType,
@@ -26,35 +27,9 @@ export const utledPlassering = (aktørType: HistorikkAktor | HistorikkAktørDtoT
   return historikkAktørTypeMedHøgrePlassering.some(v => v === kode) ? 'right' : 'left';
 };
 
-export const getStyle = (aktørType: HistorikkAktor | HistorikkAktørDtoType, kjønn?: string) => {
+export const getStyle = (aktørType: HistorikkAktor | HistorikkAktørDtoType) => {
   const pos = utledPlassering(aktørType) === 'right' ? styles.chatRight : '';
-  const kode = isLegacyTilbakeHistorikkAktor(aktørType) ? aktørType.kode : aktørType;
-  switch (kode) {
-    case historikkAktor.ARBEIDSGIVER:
-    case historikkAktør.ARBEIDSGIVER:
-      return `${styles.bubbleArbeidsgiver} ${pos}`;
-    case historikkAktor.BESLUTTER:
-    case historikkAktør.BESLUTTER:
-      return `${styles.bubbleBeslutter} ${pos}`;
-    case historikkAktor.VEDTAKSLOSNINGEN:
-    case historikkAktør.VEDTAKSLØSNINGEN:
-      return `${styles.bubbleVedtakslosningen} ${pos}`;
-    case historikkAktor.SAKSBEHANDLER:
-    case historikkAktør.SAKSBEHANDLER:
-      return `${styles.bubbleSaksbehandler} ${pos}`;
-    case historikkAktor.SOKER:
-    case historikkAktør.SØKER: {
-      const style =
-        kjønn === kjønnKode.KVINNE
-          ? styles.bubbleSokerKvinne
-          : kjønn === kjønnKode.MANN
-            ? styles.bubbleSokerMann
-            : styles.bubbleSoker;
-      return `${style} ${pos}`;
-    }
-    case historikkAktør.UDEFINERT:
-      return `${styles.bubbleUdefinert} ${pos}`;
-  }
+  return pos;
 };
 
 export const formatDate = (date: string) => `${dateFormat(date)} - ${timeFormat(date)}`;
@@ -70,4 +45,31 @@ export const scrollUp = (): void => {
   if (window.innerWidth < 1305) {
     window.scroll(0, 0);
   }
+};
+
+export const getColor = (aktørType: HistorikkAktor | HistorikkAktørDtoType): ChatProps['data-color'] => {
+  let color: AkselColor;
+  const kode = isLegacyTilbakeHistorikkAktor(aktørType) ? aktørType.kode : aktørType;
+  switch (kode) {
+    case historikkAktor.SAKSBEHANDLER:
+      color = 'meta-purple';
+      break;
+    case historikkAktor.BESLUTTER:
+      color = 'success';
+      break;
+    case historikkAktor.VEDTAKSLOSNINGEN:
+      color = 'neutral';
+      break;
+    case historikkAktor.ARBEIDSGIVER:
+      color = 'info';
+      break;
+    case historikkAktor.SOKER:
+      color = 'warning';
+      break;
+    default:
+      color = 'warning';
+      break;
+  }
+
+  return color;
 };

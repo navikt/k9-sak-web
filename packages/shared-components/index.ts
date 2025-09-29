@@ -14,7 +14,6 @@ export { default as FlexRow } from './src/flexGrid/FlexRow';
 export { default as FloatRight } from './src/FloatRight';
 export { default as usePrevious } from './src/hooks/componentHooks';
 export { default as Image } from './src/Image';
-export { default as LoadingPanel } from './src/LoadingPanel';
 export { default as NestedIntlProvider } from './src/NestedIntlProvider';
 export { default as OkAvbrytModal } from './src/OkAvbrytModal';
 export { default as PeriodLabel } from './src/PeriodLabel';

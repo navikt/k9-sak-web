@@ -1,4 +1,10 @@
 import { tekstTilBoolean } from './stringUtils';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export function valideringsFunksjoner(getValues, prop: string) {
   const erDatoFyltUt = dato => {
@@ -6,9 +12,13 @@ export function valideringsFunksjoner(getValues, prop: string) {
     return dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '';
   };
 
-  const erDatoSisteDagenIÅret = dato => {
-    if (!tekstTilBoolean(getValues()[prop])) return true;
-    return dato.substr(5, 5) === '12-31';
+  /**
+   * @param datoSting DD.MM.YYYY
+   * @returns boolean
+   */
+  const erDatoSisteDagenIÅret = (datoSting: string) => {
+    const dato = dayjs.tz(datoSting, 'DD.MM.YYYY', 'Europe/Oslo');
+    return dato.isSame(dato.endOf('year'), 'day');
   };
 
   const erDatoGyldig = dato => {

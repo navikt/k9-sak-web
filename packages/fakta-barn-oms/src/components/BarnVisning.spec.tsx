@@ -1,19 +1,22 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { screen } from '@testing-library/react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnVisning from './BarnVisning';
 
 it('<BarnVisning>', () => {
+  // Calculate birth date to ensure the test person is always 12 years old
+  const fødselsdato = dayjs().subtract(12, 'years').format('YYYY-MM-DD');
+
   const barn: KombinertBarnOgRammevedtak = {
     personIdent: '150915',
     barnRelevantIBehandling: {
       personIdent: '150915',
-      fødselsdato: '2013-08-31',
-      dødsdato: null,
+      fødselsdato: fødselsdato,
+      dødsdato: undefined,
       harSammeBosted: true,
       barnType: BarnType.VANLIG,
     },
@@ -32,15 +35,12 @@ it('<BarnVisning>', () => {
     },
   };
 
-  const barnetsAlderVedValgtDato = moment('2014-09-01')
-    .diff(barn.barnRelevantIBehandling.fødselsdato, 'years')
-    .toString();
-  expect(barnetsAlderVedValgtDato).toBe('1');
-
-  const barnetsAlderIdag = moment().diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
+  // The child should now always be 12 years old
+  const barnetsAlderIdag = dayjs().diff(barn.barnRelevantIBehandling?.fødselsdato, 'years').toString();
+  expect(barnetsAlderIdag).toBe('12');
 
   renderWithIntl(<BarnVisning barnet={barn} index={0} />, { messages });
   expect(screen.getByText('Barn #1')).toBeInTheDocument();
-  expect(screen.getByText(barnetsAlderIdag, { exact: false })).toBeInTheDocument();
+  expect(screen.getByText(`${barnetsAlderIdag} år`, { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Rammevedtak')).toBeInTheDocument();
 });

@@ -1,6 +1,6 @@
-import ForbiddenPage from './ForbiddenPage.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
+import ForbiddenPage from './ForbiddenPage.js';
 
 const meta = {
   title: 'gui/app/feilmeldinger',

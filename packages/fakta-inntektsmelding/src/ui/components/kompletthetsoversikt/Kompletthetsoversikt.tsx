@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
 import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import FieldName from '../../../types/FieldName';
-import { Kode, Kompletthet, Tilstand } from '../../../types/KompletthetData';
+import { Kode, Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -35,7 +35,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
   const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon?.kode;
   const aksjonspunktKode = aktivtAksjonspunktKode || forrigeAksjonspunktKode;
 
-  const tilstanderBeriket = tilstander.map(tilstand => {
+  const tilstanderBeriket = tilstander.map<TilstandBeriket>(tilstand => {
     const [redigeringsmodus, setRedigeringsmodus] = useState(false);
 
     return {
@@ -81,7 +81,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
       <h1 className={styles.kompletthet__mainHeading}>Inntektsmelding</h1>
       <h2 className={styles.kompletthet__subHeading}>Opplysninger til beregning</h2>
       <InntektsmeldingManglerInfo />
-      <Box marginBlock="6 0">
+      <Box.New marginBlock="6 0">
         <PeriodList
           tilstander={tilstanderBeriket}
           listHeadingRenderer={listHeadingRenderer}
@@ -91,9 +91,9 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />
-      </Box>
+      </Box.New>
       {kanSendeInn() && (
-        <Box marginBlock="6 0">
+        <Box.New marginBlock="6 0">
           <form
             onSubmit={handleSubmit((data: any) => {
               const perioder = tilstanderTilVurdering.map(tilstand => {
@@ -119,7 +119,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
               Send inn
             </Button>
           </form>
-        </Box>
+        </Box.New>
       )}
     </div>
   );

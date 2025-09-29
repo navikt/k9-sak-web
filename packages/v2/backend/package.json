@@ -7,25 +7,21 @@
   "exports": {
     "./shared/*": "./src/shared/*",
     "./combined/*": "./src/combined/*",
-    "./k9sak/generated": "./src/k9sak/generated/index.js",
-    "./k9sak/generated/metadata": "./src/k9sak/generated/metadata.js",
-    "./k9sak/kodeverk/*": "./src/k9sak/kodeverk/*",
-    "./k9sak/errorhandling/*": "./src/k9sak/errorhandling/*",
-    "./k9sak/client": "./src/k9sak/client.js",
+    "./k9sak/*": "./src/k9sak/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/*": "./src/k9klage/*",
-    "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*",
-    "./ungsak/generated": "./src/ungsak/generated/index.js",
-    "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
-    "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*",
-    "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
+    "./k9tilbake/*": "./src/k9tilbake/*",
+    "./ungsak/*": "./src/ungsak/*",
+    "./ungtilbake/*": "./src/ungtilbake/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "3.0.20250512080735",
-    "@navikt/k9-sak-typescript-client": "2.0.20250522095735",
-    "@navikt/ung-sak-typescript-client": "0.2.20250522102547"
+    "@navikt/k9-klage-typescript-client": "3.1.20250814094714",
+    "@navikt/k9-sak-typescript-client": "3.0.20250925112318",
+    "@navikt/k9-tilbake-typescript-client": "^1.1.20250922195504",
+    "@navikt/ung-sak-typescript-client": "2.0.20250925100452",
+    "@navikt/ung-tilbake-typescript-client": "3.0.20250924144500"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.74.7"
+    "@tanstack/eslint-plugin-query": "^5.86.0"
   }
 }

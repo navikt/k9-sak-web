@@ -16,7 +16,7 @@ export interface IVurdertAvProps {
 /* For å få opp saksbehandlerens navn må sette saksbehandlernavn i SaksbehandlernavnContext.Provider
  */
 
-export const VurdertAv = ({ ident, date, size = 'medium' }: IVurdertAvProps) => {
+export const VurdertAv = ({ ident, date, size = 'small' }: IVurdertAvProps) => {
   const saksbehandlernavn = useContext(SaksbehandlernavnContext);
   if (!ident) {
     return null;

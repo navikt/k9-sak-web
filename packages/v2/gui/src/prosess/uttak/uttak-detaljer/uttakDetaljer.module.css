@@ -1,114 +1,114 @@
 .uttakDetaljer {
-  padding: var(--a-spacing-4);
+  padding: var(--ax-space-16);
 }
 
-.uttakDetaljer__graderingDetaljer {
-  background-color: var(--a-gray-50);
-  padding: var(--a-spacing-5);
-  color: var(--a-text-default);
+.uttakDetaljerGraderingDetaljer {
+  background-color: var(--ax-neutral-100);
+  padding: var(--ax-space-20);
+  color: var(--ax-text-neutral);
   border-radius: 5px;
 }
 
-.uttakDetaljer__graderingDetaljer__highlight {
-  background-color: var(--a-deepblue-50);
+.uttakDetaljerGraderingDetaljerHighlighted {
+  background-color: var(--ax-brand-blue-100);
 }
 
-.uttakDetaljer__graderingDetaljer__notHighlighted {
-  padding-top: var(--a-spacing-10);
+.uttakDetaljerGraderingDetaljerNotHighlighted {
+  padding-top: var(--ax-space-40);
 }
 
-.uttakDetaljer__graderingDetaljer svg {
-  color: var(--a-lightblue-800);
+.uttakDetaljerGraderingDetaljer svg {
+  color: var(--ax-border-brand-blue-strong);
   font-size: x-large;
-  margin: 0 var(--a-spacing-1) 0;
+  margin: 0 var(--ax-space-4) 0;
 }
 
-.uttakDetaljer__detailItem {
-  padding: var(--a-spacing-1) 0;
+.uttakDetaljerDetailItem {
+  padding: var(--ax-space-4) 0;
 }
 
-.uttakDetaljer__detailSum {
-  padding: var(--a-spacing-6) 0 var(--a-spacing-1);
-  border-bottom: 3px solid var(--a-lightblue-700);
+.uttakDetaljerDetailSum {
+  padding: var(--ax-space-24) 0 var(--ax-space-4);
+  border-bottom: 3px solid var(--ax-text-info-decoration);
   display: inline-block;
   vertical-align: middle;
 }
 
-.uttakDetaljer__data__questionMark svg {
-  height: var(--a-font-size-large);
+.uttakDetaljerDataQuestionMark svg {
+  height: var(--ax-font-size-large);
 }
 
-.uttakDetaljer__expandableDetailItem {
-  padding: var(--a-spacing-1) 0;
-  border-bottom: 1px solid var(--a-border-subtle);
+.uttakDetaljerExpandableDetailItem {
+  padding: var(--ax-space-4) 0;
+  border-bottom: 1px solid var(--ax-border-neutral-subtle);
 }
 
-.uttakDetaljer__expandableDetailItem__header a {
-  color: var(--a-text-default);
+.uttakDetaljerExpandableDetailItemHeader a {
+  color: var(--ax-text-neutral);
   text-decoration: none;
 }
 
-.uttakDetaljer__expandableDetailItem a > div {
+.uttakDetaljerExpandableDetailItem a > div {
   display: flex;
 }
 
-.uttakDetaljer__expandableDetailItem span {
+.uttakDetaljerExpandableDetailItem span {
   flex-grow: 1;
 }
 
-.uttakDetaljer__expandableDetailItem svg {
+.uttakDetaljerExpandableDetailItem svg {
   justify-self: right;
 }
 
-.uttakDetaljer__expandableDetailItem__contentCollapsed {
+.uttakDetaljerExpandableDetailItemContentCollapsed {
   display: none;
 }
 
-.uttakDetaljer__nyGradering {
-  margin-top: var(--a-spacing-8);
+.uttakDetaljerNyGradering {
+  margin-top: var(--ax-space-32);
   display: inline-block;
 }
 
-.uttakDetaljer__tag {
+.uttakDetaljerTag {
   margin-top: -2rem;
   margin-bottom: 1rem;
 }
 
-.uttakDetaljer__beregningFirma {
-  margin: var(--a-spacing-5) 0;
+.uttakDetaljerBeregningFirma {
+  margin: var(--ax-space-20) 0;
 }
 
-.uttakDetaljer__taptInntektBeregning {
-  margin: var(--a-spacing-4) 0;
+.uttakDetaljerTaptInntektBeregning {
+  margin: var(--ax-space-16) 0;
   display: inline-block;
 }
 
-.uttakDetaljer__taptInntektAnnotasjon {
+.uttakDetaljerTaptInntektAnnotasjon {
   display: inline-block;
   width: 0.75rem;
 }
 
-.uttakDetaljer__beregningStrek {
-  border-bottom: 1px solid var(--a-border-subtle);
-  padding-bottom: var(--a-spacing-1);
+.uttakDetaljerBeregningStrek {
+  border-bottom: 1px solid var(--ax-border-neutral-subtle);
+  padding-bottom: var(--ax-space-4);
 }
 
-.uttakDetaljer__beregningSum {
-  padding-top: var(--a-spacing-1);
+.uttakDetaljerBeregningSum {
+  padding-top: var(--ax-space-4);
 }
 
-.uttakDetaljer__utnullet {
+.uttakDetaljerUtnullet {
   text-decoration: line-through;
-  color: var(--a-gray-500);
+  color: var(--ax-neutral-600);
 }
 
-.uttakDetaljer__nyTag {
-  margin-left: var(--a-spacing-1);
+.uttakDetaljerNyTag {
+  margin-left: var(--ax-space-4);
   display: inline-block;
 }
 
-.uttakDetaljer__detailtext {
-  color: var(--a-text-subtle);
-  padding-top: var(--a-spacing-3);
+.uttakDetaljerDetailtext {
+  color: var(--ax-text-neutral-subtle);
+  padding-top: var(--ax-space-12);
   display: inline-block;
 }

@@ -1,4 +1,4 @@
-import { UttaksperiodeInfoÅrsaker } from '@k9-sak-web/backend/k9sak/generated';
+import { pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsaker } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 /*
  * Disse tekstene lå hardkodet som constants i pakken for prosess-uttak før. Det virker ikke som disse er tilgjengelige via kodeverk
@@ -59,7 +59,7 @@ export const IkkeOppfylteÅrsakerMedTekst: UttaksperiodeInfoÅrsakerTekstType[] 
   },
   {
     årsak: UttaksperiodeInfoÅrsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
-    tekst: 'Årsak for avslag: Søker har mottatt pleiepenger i utlandet i 8 uker.',
+    tekst: 'Årsak for avslag: Søker har mottatt pleie- og/eller opplæringspenger i utlandet i 8 uker.',
   },
   {
     årsak: UttaksperiodeInfoÅrsaker.BARNETS_DØDSFALL,

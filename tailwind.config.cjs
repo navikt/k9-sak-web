@@ -2,7 +2,7 @@
 module.exports = {
   content: ['./packages/**/*.{js,jsx,ts,tsx}', './public/client/index.html'],
   // eslint-disable-next-line global-require
-  presets: [require('@navikt/ds-tailwind')],
+  presets: [require("@navikt/ds-tailwind/darkside-tw3")],
   theme: {
     extend: {
       colors: { 'warning-yellow': '#ff9100' },

@@ -1,0 +1,34 @@
+.overstyringSkjemaAktiviteter {
+  display: table;
+  margin-top: var(--ax-space-16);
+}
+
+.overstyringSkjemaAktivitet {
+  display: table-row;
+}
+
+.overstyringSkjemaAktivitet > div {
+  display: table-cell;
+  padding: var(--ax-space-8) var(--ax-space-32);
+}
+
+.overstyringSkjemaAktivitet > div:first-child {
+  padding-left: 0;
+}
+
+.overstyringSkjemaAktivitet > div:last-child {
+  padding-right: 0;
+}
+
+.overstyringSkjemaAktivitet > div > div {
+  display: inline-block;
+  margin-right: var(--ax-space-8);
+}
+
+.aktiviteterTable {
+  width: auto;
+}
+
+.aktiviteterTable > td {
+  border: none;
+}

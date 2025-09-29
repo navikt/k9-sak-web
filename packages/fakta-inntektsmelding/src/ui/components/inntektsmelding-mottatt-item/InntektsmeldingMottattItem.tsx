@@ -14,7 +14,7 @@ interface MottattContentProps {
 
 const MottattContent = ({ dokumentLink }: MottattContentProps) => (
   <div className={styles.mottattLabel}>
-    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
     <div>
       <span className={styles.mottattLabel__text}>Mottatt</span>
       <Link className={styles.mottattLabel__link} href={dokumentLink} target="_blank">

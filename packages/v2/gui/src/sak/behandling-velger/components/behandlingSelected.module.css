@@ -117,7 +117,7 @@
 
 .behandlingSelectedContainer .årsakerList li:before {
   align-items: center;
-  background-color: var(--a-blue-500);
+  background-color: var(--ax-accent-600);
   border-radius: 50%;
   content: '';
   display: flex;

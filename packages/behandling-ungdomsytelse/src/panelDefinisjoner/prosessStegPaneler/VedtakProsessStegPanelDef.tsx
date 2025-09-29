@@ -28,16 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.SJEKK_TILBAKEKREVING,
   ];
 
-  getEndepunkter = () => [
-    UngdomsytelseBehandlingApiKeys.TILBAKEKREVINGVALG,
-    UngdomsytelseBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-    UngdomsytelseBehandlingApiKeys.MEDLEMSKAP,
-    UngdomsytelseBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    UngdomsytelseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV,
-    UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_HENTE,
-    UngdomsytelseBehandlingApiKeys.FRITEKSTDOKUMENTER,
-    UngdomsytelseBehandlingApiKeys.OVERLAPPENDE_YTELSER,
-  ];
+  getEndepunkter = () => [UngdomsytelseBehandlingApiKeys.TILBAKEKREVINGVALG];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -51,7 +42,6 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     vilkar,
     simuleringResultat,
-    beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
   }) => ({
@@ -60,7 +50,6 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     vilkar,
     simuleringResultat,
-    beregningsgrunnlag,
     ytelseTypeKode: fagsakYtelsesType.UNGDOMSYTELSE,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,

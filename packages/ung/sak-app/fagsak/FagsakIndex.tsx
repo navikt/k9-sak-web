@@ -1,4 +1,17 @@
-import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import {
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
+  GetUngdomsprogramInformasjonResponse,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
@@ -10,15 +23,6 @@ import {
 } from '@k9-sak-web/types';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
-import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
@@ -52,6 +56,10 @@ const FagsakIndex = () => {
 
   const alleKodeverkUngSak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     UngSakApiKeys.KODEVERK,
+  );
+
+  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    UngSakApiKeys.KODEVERK_TILBAKE,
   );
 
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
@@ -112,6 +120,23 @@ const FagsakIndex = () => {
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
+  const { data: ungdomsprogramInformasjon } = restApiHooks.useRestApi<GetUngdomsprogramInformasjonResponse>(
+    UngSakApiKeys.UNGDOMSPROGRAM_INFORMASJON,
+    {},
+    {
+      updateTriggers: [behandlingId],
+      suspendRequest: !behandling,
+    },
+  );
+
+  const ungdomsytelseDeltakerStatus = useMemo(() => {
+    const erUtmeldt = !!ungdomsprogramInformasjon?.opphørsdato;
+    const erIProgrammet =
+      !erUtmeldt && alleBehandlinger.some(b => b.behandlingsresultat?.type.kode === BehandlingsresultatType.INNVILGET);
+
+    return { deltakerErUtmeldt: erUtmeldt, deltakerErIProgrammet: erIProgrammet };
+  }, [alleBehandlinger, ungdomsprogramInformasjon]);
+
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     UngSakApiKeys.ARBEIDSGIVERE,
     {},
@@ -156,7 +181,11 @@ const FagsakIndex = () => {
 
   return (
     <>
-      <KodeverkProvider behandlingType={behandling ? behandling?.type?.kode : undefined} kodeverk={alleKodeverkUngSak}>
+      <KodeverkProvider
+        behandlingType={behandling ? behandling?.type?.kode : undefined}
+        kodeverk={alleKodeverkUngSak}
+        tilbakeKodeverk={alleKodeverkTilbake}
+      >
         <SaksbehandlernavnContext.Provider
           value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
         >
@@ -204,8 +233,8 @@ const FagsakIndex = () => {
                   behandlingVersjon={behandlingVersjon}
                   behandlingRettigheter={behandlingRettigheter}
                   personopplysninger={behandlingPersonopplysninger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   navAnsatt={navAnsatt}
+                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   featureToggles={featureToggles}
                 />
               );
@@ -228,6 +257,7 @@ const FagsakIndex = () => {
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
+                    ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
                   />
                 </div>
               );

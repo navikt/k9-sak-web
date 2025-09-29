@@ -1,4 +1,4 @@
-import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
@@ -169,7 +169,7 @@ export const TilkjentYtelse = ({
   return (
     <div className={styles['timelineContainer']}>
       <div className="mt-8">
-        <VStack gap="2">
+        <VStack gap="space-8">
           <Timeline startDate={startDato.toDate()} endDate={endDato.add(1, 'days').toDate()}>
             <Timeline.Row label={finnRolle(personopplysninger)}>
               {timelineData.map(periode => (

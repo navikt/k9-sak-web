@@ -28,7 +28,7 @@ export const FagsakProfile = ({
 
   return (
     <>
-      <VStack gap="2">
+      <VStack gap="space-8">
         <HStack justify="space-between" align="baseline">
           <Heading level="2" size="medium">
             {kodeverkNavnFraKode(fagsakYtelseType, KodeverkTypeV2.FAGSAK_YTELSE)}

@@ -76,10 +76,6 @@
   align-items: center;
 }
 
-.uttak__row {
-  --ac-table-row-border: #bbb;
-}
-
 .borderLeft {
   border-left: 1px solid #bbb;
 }

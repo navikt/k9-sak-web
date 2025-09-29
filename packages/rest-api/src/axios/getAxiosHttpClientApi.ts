@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios';
 import axiosEtag from './axiosEtag';
 
-import initRestMethods from './initRestMethods';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
+import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerOption.js';
 import { konverterKodeverkTilKodeSelektivt } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKodeSelektivt.js';
+import { xJsonSerializerOptions } from '../xJsonSerializerOptions';
+import initRestMethods from './initRestMethods';
 
 /**
  * getAxiosHttpClientApi
@@ -16,6 +18,10 @@ const getAxiosHttpClientApi = () => {
     const { headerName, headerValue } = generateNavCallidHeader();
     const config = { ...c };
     config.headers[headerName] = headerValue;
+    // Legg til X-Json-Serializer-Option header for å instruere server om å bruke legacy "kodeverk-objekt" ObjectMapper
+    // for alle requests som går gjennom denne klient. Kan vurdere å gjere denne meir konfigurerbar pr backend/request
+    // seinare viss det er behov.
+    config.headers[jsonSerializerOption.xJsonSerializerOptionHeader] = xJsonSerializerOptions.kodeverdiObjekt;
     return config;
   });
 
@@ -31,7 +37,8 @@ const getAxiosHttpClientApi = () => {
       response.config.url.includes('/api/') &&
       !response.config.url.includes('/api/kodeverk')
     ) {
-      const erTilbakekreving = response.config.url.includes('/k9/tilbake/api/');
+      const erTilbakekreving =
+        response.config.url.includes('/k9/tilbake/api/') || response.config.url.includes('/ung/tilbake/api/');
       konverterKodeverkTilKodeSelektivt(response.data, erTilbakekreving);
     }
     return response;

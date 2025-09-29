@@ -9,7 +9,7 @@
 }
 
 .legendBoxIcon {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   border: 0 solid;
   height: 26px;
   margin-left: 8px;
@@ -24,7 +24,7 @@
 }
 
 .popUnderContent {
-  background-color: var(--a-white);
+  background-color: var(--ax-bg-default);
   border: 1px solid lightgrey;
   left: -40px;
   min-width: 560px;
@@ -50,7 +50,7 @@
 }
 
 .popUnderContent:after {
-  border-color: transparent transparent var(--a-white);
+  border-color: transparent transparent var(--ax-bg-default);
   border-style: solid;
   border-width: 0 19px 9px;
   content: '';

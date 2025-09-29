@@ -9,11 +9,9 @@ interface Props {
 }
 
 const TagContainer: React.FC<Props> = ({ children, tagVariant, size = 'small' }) => (
-  <div className={styles.flexContainer}>
-    <Tag className={styles.tag} variant={tagVariant} size={size}>
-      {children}
-    </Tag>
-  </div>
+  <Tag className={styles.tag} variant={tagVariant} size={size}>
+    {children}
+  </Tag>
 );
 
 export default TagContainer;

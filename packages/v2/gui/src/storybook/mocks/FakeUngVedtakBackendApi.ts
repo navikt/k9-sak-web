@@ -1,8 +1,8 @@
 import type {
   ForhåndsvisVedtaksbrevResponse,
-  LagreVedtaksbrevValgResponse,
+  LagreVedtaksbrevValgResponses,
   VedtaksbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 import { fakePdf } from './fakePdf.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
@@ -17,7 +17,7 @@ export class FakeUngVedtakBackendApi {
     return { harBrev: true };
   }
 
-  async lagreVedtaksbrev(): Promise<LagreVedtaksbrevValgResponse> {
+  async lagreVedtaksbrev(): Promise<LagreVedtaksbrevValgResponses> {
     return { vedtaksbrevValg: {} };
   }
 }

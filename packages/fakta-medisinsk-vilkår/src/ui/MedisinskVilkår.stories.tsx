@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import withStoryReload from '@k9-sak-web/gui/storybook/decorators/withStoryReload.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, waitFor, within } from '@storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { mockUrlPrepend } from '../../mock/constants';
 import { handlers } from '../../mock/handlers';
 import BehandlingType from '../constants/BehandlingType';
 import MedisinskVilkårContainer from './MedisinskVilkårContainer';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const meta: Meta<typeof MedisinskVilkårContainer> = {
   title: 'fakta/fakta-medisinsk-vilkår',

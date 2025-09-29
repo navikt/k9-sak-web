@@ -4,6 +4,7 @@ import { Dropdown, InternalHeader, Spacer } from '@navikt/ds-react';
 import Endringslogg from '@navikt/familie-endringslogg';
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
+import { isUngWeb } from '../../utils/urlUtils';
 import ErrorMessagePanel from './ErrorMessagePanel';
 import type { Feilmelding } from './feilmeldingTsType';
 import styles from './headerWithErrorPanel.module.css';
@@ -66,11 +67,16 @@ const HeaderWithErrorPanel = ({
   }, [errorMessages.length]);
 
   const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn && showEndringslogg;
-
+  const skalBrukeLos = !isUngWeb();
   return (
     <div>
       <InternalHeader className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}>
-        <InternalHeader.Title href={getHeaderTitleHref(getPathToLos, headerTitleHref)}>{ytelse}</InternalHeader.Title>
+        <InternalHeader.Title
+          className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}
+          href={skalBrukeLos ? getHeaderTitleHref(getPathToLos, headerTitleHref) : headerTitleHref}
+        >
+          {ytelse}
+        </InternalHeader.Title>
         <Spacer />
         {/*
             Går mot en backend som BAKS styrer.
@@ -91,7 +97,10 @@ const HeaderWithErrorPanel = ({
           </div>
         )}
         <Dropdown>
-          <InternalHeader.Button as={Dropdown.Toggle}>
+          <InternalHeader.Button
+            as={Dropdown.Toggle}
+            className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}
+          >
             <MenuGridIcon style={{ fontSize: '1.5rem' }} title="Systemer og oppslagsverk" />
           </InternalHeader.Button>
           <Dropdown.Menu>

@@ -1,5 +1,5 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
-import { Form, InputField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfTextField } from '@navikt/ft-form-hooks';
 import { useForm } from 'react-hook-form';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '../../../utils/validation/validators';
 import styles from './searchForm.module.css';
@@ -35,12 +35,13 @@ export const SearchForm = ({ searchStarted, searchResultAccessDenied, onSubmit }
     onSubmit(formValues);
   };
   return (
-    <Form<FormState> formMethods={formMethods} className={styles.container} onSubmit={handleSubmit}>
+    <RhfForm<FormState> formMethods={formMethods} className={styles.container} onSubmit={handleSubmit}>
       <Heading size="small" level="2">
         Søk på sak eller person
       </Heading>
       <div className="flex gap-3 mt-2">
-        <InputField
+        <RhfTextField
+          control={formMethods.control}
           name="searchString"
           validate={[hasValidSaksnummerOrFodselsnummerFormat]}
           parse={(s = '') => (typeof s === 'string' ? s.trim() : s)}
@@ -62,7 +63,7 @@ export const SearchForm = ({ searchStarted, searchResultAccessDenied, onSubmit }
           {searchResultAccessDenied.feilmelding}
         </Alert>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

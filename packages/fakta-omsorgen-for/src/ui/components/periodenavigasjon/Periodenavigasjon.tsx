@@ -53,11 +53,11 @@ const Periodenavigasjon = ({
 
   return (
     <div className={styles.vurderingsnavigasjon}>
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <Heading size="small" level="2" className={styles.vurderingsnavigasjon__heading}>
           Alle perioder
         </Heading>
-      </Box>
+      </Box.New>
       {antallPerioder === 0 && <p>Ingen vurderinger å vise</p>}
       {antallPerioder > 0 && (
         <div className={styles.vurderingsvelgerContainer}>

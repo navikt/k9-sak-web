@@ -5,8 +5,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
@@ -66,40 +65,42 @@ const feilutbetalingFakta = {
   },
 };
 
-const feilutbetalingAarsak = {
-  hendelseTyper: [
-    {
-      hendelseType: {
-        kode: 'OPPTJENING',
-        navn: '§14-6 Opptjening',
-      },
-      hendelseUndertyper: [],
-    },
-    {
-      hendelseType: {
-        kode: 'ANNET',
-        navn: 'Annet',
-      },
-      hendelseUndertyper: [],
-    },
-    {
-      hendelseType: {
-        kode: 'MEDLEM',
-        navn: '§14-2 Medlemskap',
-      },
-      hendelseUndertyper: [
-        {
-          kode: 'IKKE_EØS',
-          navn: 'Ikke oppholdsrett EØS',
+const feilutbetalingAarsak = [
+  {
+    hendelseTyper: [
+      {
+        hendelseType: {
+          kode: 'OPPTJENING',
+          navn: '§14-6 Opptjening',
         },
-        {
-          kode: 'IKKE_BOSATT',
-          navn: 'Ikke bosatt',
+        hendelseUndertyper: [],
+      },
+      {
+        hendelseType: {
+          kode: 'ANNET',
+          navn: 'Annet',
         },
-      ],
-    },
-  ],
-};
+        hendelseUndertyper: [],
+      },
+      {
+        hendelseType: {
+          kode: 'MEDLEM',
+          navn: '§14-2 Medlemskap',
+        },
+        hendelseUndertyper: [
+          {
+            kode: 'IKKE_EØS',
+            navn: 'Ikke oppholdsrett EØS',
+          },
+          {
+            kode: 'IKKE_BOSATT',
+            navn: 'Ikke bosatt',
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const alleKodeverk = {
   [kodeverkTyper.BEHANDLING_AARSAK]: [

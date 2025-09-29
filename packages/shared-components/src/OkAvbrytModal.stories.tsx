@@ -1,6 +1,5 @@
-import { action } from '@storybook/addon-actions';
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { action } from 'storybook/actions';
 import OkAvbrytModal from './OkAvbrytModal';
 
 const intl = createIntl(

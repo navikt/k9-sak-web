@@ -1,5 +1,5 @@
-import { Heading, HStack, VStack } from '@navikt/ds-react';
 import { XMarkOctagonIcon } from '@navikt/aksel-icons';
+import { Heading, HStack, Link, VStack } from '@navikt/ds-react';
 
 export interface BigErrorProps {
   readonly title?: string;
@@ -9,17 +9,17 @@ export interface BigErrorProps {
 export const DefaultErrorMsg = () => (
   <p>
     Forsøk gjerne å{' '}
-    <a href="#" onClick={() => window.location.reload()}>
+    <Link inlineText href="#" onClick={() => window.location.reload()}>
       laste siden på nytt{' '}
-    </a>
+    </Link>
     . Meld fra i porten hvis problemet vedvarer.
   </p>
 );
 
 export const BigError = ({ title = 'Uventet feil', children = <DefaultErrorMsg /> }: BigErrorProps) => {
   return (
-    <HStack justify="center" align="center" gap="4" marginBlock="24">
-      <XMarkOctagonIcon fontSize="4rem" style={{ color: 'var(--a-text-danger)' }} />
+    <HStack justify="center" align="center" gap="space-16" marginBlock="24">
+      <XMarkOctagonIcon fontSize="4rem" style={{ color: 'var(--ax-text-danger-subtle)' }} />
       <VStack>
         {title && <Heading size="large">{title}</Heading>}
         {children && <div>{children}</div>}

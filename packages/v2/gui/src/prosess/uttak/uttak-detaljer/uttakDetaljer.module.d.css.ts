@@ -11,7 +11,7 @@ declare const styles: {
   readonly "uttakDetaljerExpandableDetailItemContentCollapsed": string;
   readonly "uttakDetaljerExpandableDetailItemHeader": string;
   readonly "uttakDetaljerGraderingDetaljer": string;
-  readonly "uttakDetaljerGraderingDetaljerHighlight": string;
+  readonly "uttakDetaljerGraderingDetaljerHighlighted": string;
   readonly "uttakDetaljerGraderingDetaljerNotHighlighted": string;
   readonly "uttakDetaljerNyGradering": string;
   readonly "uttakDetaljerNyTag": string;

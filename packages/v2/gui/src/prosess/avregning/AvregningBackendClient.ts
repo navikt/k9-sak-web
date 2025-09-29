@@ -1,13 +1,23 @@
-import type { K9SakClient, BekreftResponse, BekreftData } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export default class BehandlingAvregningBackendClient {
-  #k9sak: K9SakClient;
-
-  constructor(k9sakClient: K9SakClient) {
-    this.#k9sak = k9sakClient;
-  }
-
-  async bekreftAksjonspunkt(requestBody: BekreftData['requestBody']): Promise<BekreftResponse> {
-    return this.#k9sak.aksjonspunkt.bekreft(requestBody);
+  async bekreftAksjonspunktSjekkHøyEtterbetaling(
+    behandlingId: number,
+    behandlingVersjon: number,
+    begrunnelse: string,
+  ): Promise<void> {
+    const body: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+      behandlingId: `${behandlingId}`,
+      behandlingVersjon,
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+          begrunnelse,
+        },
+      ],
+    };
+    await aksjonspunkt_bekreft({ body });
   }
 }

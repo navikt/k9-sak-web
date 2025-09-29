@@ -4,17 +4,17 @@
   padding: 1.125rem 0;
 }
 
-.uttakUtregning--highlighted {
+.uttakUtregningHighlighted {
   padding: 1.125rem;
   background: #e7f4ff;
   margin: 0.625rem 0 2.5rem;
 }
 
-.uttakUtregning__headingContainer {
+.uttakUtregningHeadingContainer {
   display: flex;
 }
 
-.uttakUtregning__headingIcon svg {
+.uttakUtregningHeadingIcon svg {
   vertical-align: middle;
   margin-right: 0.5rem;
 }

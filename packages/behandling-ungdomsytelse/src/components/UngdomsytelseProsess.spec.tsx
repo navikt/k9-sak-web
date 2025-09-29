@@ -9,7 +9,7 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/generated';
+import { ung_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
@@ -129,7 +129,6 @@ describe('<UngdomsytelseProsess>', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Inngangsvilkår' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Tilkjent ytelse/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Simulering/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Vedtak/i })).toBeInTheDocument();
   });

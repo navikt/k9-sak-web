@@ -1,4 +1,5 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
 import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
@@ -9,7 +10,6 @@ import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
 import Innleggelsesperiodeliste from '../innleggelsesperiodeliste/Innleggelsesperiodeliste';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './innleggelsesperiodeoversikt.module.css';
 
 interface InnleggelsesperiodeoversiktProps {
@@ -19,7 +19,7 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, pleietrengendePart } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
@@ -125,26 +125,28 @@ const Innleggelsesperiodeoversikt = ({
               Rediger liste
             </Button>
           )}
+          readOnly={readOnly}
         />
         <WriteAccessBoundContent
           otherRequirementsAreMet={innleggelsesperioder.length === 0}
           contentRenderer={() => (
             <AddButton label="Legg til periode" onClick={() => setModalIsOpen(true)} id="leggTilPeriodeKnapp" />
           )}
+          readOnly={readOnly}
         />
       </HStack>
       <hr style={{ color: '#B7B1A9' }} />
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box marginBlock="6 0">
+        <Box.New marginBlock="6 0">
           {innleggelsesperioder.length === 0 && <p>Ingen innleggelsesperioder registrert</p>}
           {innleggelsesperioder.length > 0 && (
-            <Box marginBlock="2 0">
+            <Box.New marginBlock="2 0">
               <Innleggelsesperiodeliste innleggelsesperioder={innleggelsesperioder} />
-            </Box>
+            </Box.New>
           )}
-        </Box>
+        </Box.New>
       )}
       {modalIsOpen && (
         <InnleggelsesperiodeFormModal

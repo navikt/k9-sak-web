@@ -1,12 +1,12 @@
 import {
-  BehandlingDtoBehandlingResultatType,
-  BehandlingDtoStatus,
-  type AksjonspunktDto,
-  type VedtaksbrevValgDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
+  ung_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
+  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg as VedtaksbrevValg,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
-import { CheckboxField, Form } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm } from '@navikt/ft-form-hooks';
 import { useMutation, useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -25,11 +25,11 @@ interface UngVedtakProps {
   submitCallback: (data: any) => Promise<any>;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
-  vedtaksbrevValg: VedtaksbrevValgDto | undefined;
-  refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValgDto, Error>>;
+  vedtaksbrevValg: VedtaksbrevValg | undefined;
+  refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValg, Error>>;
 }
 
-const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgDto | undefined): FormData => ({
+const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValg | undefined): FormData => ({
   redigerAutomatiskBrev: vedtaksbrevValg?.redigert || false,
   hindreUtsendingAvBrev: vedtaksbrevValg?.hindret || false,
   redigertHtml: vedtaksbrevValg?.redigertBrevHtml || '',
@@ -51,7 +51,8 @@ export const UngVedtak = ({
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
-  const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
+  const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
+  const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -107,16 +108,16 @@ export const UngVedtak = ({
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box marginBlock="4">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
+      <Box.New marginBlock="4">
         <HStack justify="space-between">
-          <VStack gap="4">
+          <VStack gap="space-16">
             <div>
               <Label size="small" as="p">
                 Resultat
               </Label>
               <BodyShort size="small">
-                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er opphørt'}
+                {behandlingErInnvilget ? 'Ungdomsprogramytelse er innvilget' : 'Ungdomsprogramytelse er opphørt'}
               </BodyShort>
             </div>
             {behandlingErAvslått && (
@@ -154,7 +155,7 @@ export const UngVedtak = ({
             {harAksjonspunkt && !readOnly && (
               <div>
                 <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
-                  Fatt vedtak
+                  {harAksjonspunktMedTotrinnsbehandling ? 'Send til beslutter' : 'Fatt vedtak'}
                 </Button>
               </div>
             )}
@@ -164,14 +165,16 @@ export const UngVedtak = ({
               <Fieldset legend="Valg for brev" size="small">
                 <div>
                   {vedtaksbrevValg?.enableRediger && (
-                    <CheckboxField
+                    <RhfCheckbox
+                      control={formMethods.control}
                       name="redigerAutomatiskBrev"
                       label="Rediger automatisk brev"
                       disabled={!vedtaksbrevValg.kanOverstyreRediger || hindreUtsendingAvBrev || readOnly}
                     />
                   )}
                   {vedtaksbrevValg?.enableHindre && (
-                    <CheckboxField
+                    <RhfCheckbox
+                      control={formMethods.control}
                       name="hindreUtsendingAvBrev"
                       label="Hindre utsending av brev"
                       disabled={!vedtaksbrevValg.kanOverstyreHindre || redigerAutomatiskBrev || readOnly}
@@ -182,7 +185,7 @@ export const UngVedtak = ({
             </div>
           )}
         </HStack>
-      </Box>
-    </Form>
+      </Box.New>
+    </RhfForm>
   );
 };

@@ -1,10 +1,11 @@
-import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
-import { hanteringAvDatoForDatoVelger } from '../../../util/dateUtils';
-import { booleanTilTekst, tekstTilBoolean } from '../../../util/stringUtils';
+import { booleanTilTekst, tekstTilBoolean, utledTilgjengeligeÅr } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
@@ -30,7 +31,7 @@ type FormData = {
 export enum AvslagskoderMidlertidigAlene {
   REGNES_IKKE_SOM_Å_HA_ALENEOMSORG = '1076',
   VARIGHET_UNDER_SEKS_MÅN = '1075',
-  ANNET = '1093'
+  ANNET = '1093',
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
@@ -47,6 +48,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const formStateKey = `${behandlingsID}-utvidetrett-ma`;
   const harAksjonspunktOgVilkarLostTidligere =
+    informasjonTilLesemodus &&
     informasjonTilLesemodus.begrunnelse.length > 0 &&
     informasjonTilLesemodus.dato.til.length > 0 &&
     informasjonTilLesemodus.dato.fra.length > 0;
@@ -58,13 +60,14 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       fraDato: harAksjonspunktOgVilkarLostTidligere
         ? informasjonTilLesemodus.dato.fra
         : soknadsopplysninger.soknadsdato,
-      tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
+      tilDato:
+        informasjonTilLesemodus && informasjonTilLesemodus.dato.til
+          ? initializeDate(informasjonTilLesemodus.dato.til, 'YYYY-MM-DD').format('DD.MM.YYYY')
+          : 'Dato for opphør',
       erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
-      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere
-        ? informasjonTilLesemodus.avslagsårsakKode
-        : '',
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       åpenForRedigering: false,
     },
   });
@@ -75,12 +78,15 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     handleSubmit,
     watch,
     setValue,
+    register,
   } = methods;
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
 
-  const { erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret } =
-    valideringsFunksjoner(getValues, 'erSokerenMidlertidigAleneOmOmsorgen');
+  const { erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret } = valideringsFunksjoner(
+    getValues,
+    'erSokerenMidlertidigAleneOmOmsorgen',
+  );
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,
@@ -110,14 +116,15 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
         fra: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
-        til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : '',
+        til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen)
+          ? initializeDate(dayjs(tilDato, 'DD.MM.YYYY')).format('YYYY-MM-DD')
+          : '',
         avslagsårsakKode,
       });
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
   };
-
   return (
     <div
       className={classNames(
@@ -125,7 +132,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks,
       )}
     >
-      {vedtakFattetVilkarOppfylt && (
+      {vedtakFattetVilkarOppfylt && informasjonOmVilkar && (
         <VilkarStatus
           vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
           aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -135,7 +142,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         />
       )}
 
-      {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && (
+      {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && informasjonTilLesemodus && (
         <VilkarMidlertidigAleneLesemodus
           soknadsopplysninger={soknadsopplysninger}
           informasjonTilLesemodus={informasjonTilLesemodus}
@@ -163,7 +170,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                   size="small"
                   name="erSokerenMidlertidigAleneOmOmsorgen"
                 >
-                  <HStack gap="1">
+                  <HStack gap="space-4">
                     <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenMidlertidigAleneOmOmsorgen" />
                     <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenMidlertidigAleneOmOmsorgen" />
                   </HStack>
@@ -178,15 +185,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && (
                   <div>
                     <RadioGroup
-                      className={classNames(
-                        styleRadioknapper.horisontalPlassering,
-                        styles.avslagsårsakKode,
-                      )}
+                      className={classNames(styleRadioknapper.horisontalPlassering, styles.avslagsårsakKode)}
                       legend={tekst.velgArsak}
                       size="small"
                       name="avslagsårsakKode"
                     >
-                      <HStack gap="1">
+                      <HStack gap="space-4">
                         <RadioButtonWithBooleanValue
                           label={tekst.arsakIkkeAleneOmsorg}
                           value={AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG}
@@ -221,12 +225,20 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 >
                   <DatePicker titel="Fra" navn="fraDato" valideringsFunksjoner={{ erDatoFyltUt, erDatoGyldig }} />
 
-                  <DatePicker
-                    titel="Til"
-                    navn="tilDato"
-                    valideringsFunksjoner={{ erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret }}
-                    begrensningerIKalender={hanteringAvDatoForDatoVelger(soknadsopplysninger.soknadsdato)}
-                  />
+                  <Select
+                    {...register('tilDato', {
+                      validate: { erDatoFyltUt, erDatoSisteDagenIÅret },
+                    })}
+                    label="Til"
+                    size="small"
+                    onChange={e => setValue('tilDato', e.target.value)}
+                  >
+                    {utledTilgjengeligeÅr(dayjs().toString(), 1, 5).map(år => (
+                      <option key={år.value} value={år.title} disabled={år.disabled}>
+                        {år.title}
+                      </option>
+                    ))}
+                  </Select>
                 </Fieldset>
               )}
 

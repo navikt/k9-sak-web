@@ -4,10 +4,10 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { kravDokumentStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/KravDokumentStatus.js';
-import { action } from '@storybook/addon-actions';
+import { k9_sak_kontrakt_krav_KravDokumentType as kravDokumentType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
@@ -47,7 +47,7 @@ const vilkarSoknadsfrist = [
 const soknadsStatus = {
   dokumentStatus: [
     {
-      type: kravDokumentStatusType.SØKNAD, // kodeverk: 'test'
+      type: kravDokumentType.SØKNAD, // kodeverk: 'test'
       status: [
         {
           periode: { fom: '2020-02-20', tom: '2020-02-25' },
@@ -58,7 +58,7 @@ const soknadsStatus = {
       journalpostId: '12345',
     },
     {
-      type: kravDokumentStatusType.SØKNAD, // kodeverk: 'test'
+      type: kravDokumentType.SØKNAD, // kodeverk: 'test'
       status: [
         {
           periode: { fom: '2020-02-26', tom: '2020-02-27' },

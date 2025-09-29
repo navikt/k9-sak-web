@@ -11,7 +11,7 @@ interface DokumentnavigasjonProps {
   tittel: string;
   dokumenter: Dokument[];
   onDokumentValgt: (dokument: Dokument) => void;
-  valgtDokument: Dokument;
+  valgtDokument: Dokument | null;
   expandedByDefault?: boolean;
   displayFilterOption?: boolean;
 }
