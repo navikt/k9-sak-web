@@ -31,15 +31,15 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('valgt-part', KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT)
 
   // operasjoner
-  .withPost('/ung/klage/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/ung/klage/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/ung/klage/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING)
-  .withPost('/ung/klage/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/ung/klage/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/ung/klage/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/ung/klage/api/klage-v2/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
+  .withPost('/ung/sak/api/behandlinger/bytt-enhet', KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/ung/sak/api/behandlinger/henlegg', KlageBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/ung/sak/api/behandlinger/gjenoppta', KlageBehandlingApiKeys.RESUME_BEHANDLING)
+  .withPost('/ung/sak/api/behandlinger/sett-pa-vent', KlageBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/ung/sak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/ung/sak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/ung/sak/api/klage-v2/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
   .withAsyncPost(
-    '/ung/klage/api/klage-v2/mellomlagre-gjennapne-klage',
+    '/ung/sak/api/klage-v2/mellomlagre-gjennapne-klage',
     KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING,
   )
 

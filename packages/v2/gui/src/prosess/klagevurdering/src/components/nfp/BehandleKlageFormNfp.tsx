@@ -163,7 +163,7 @@ interface TransformValues {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
   klageHjemmel: string | null;
-  klageVurdering: string | null;
+  klageVurderingType: string | null;
   fritekstTilBrev: string | null;
   begrunnelse: string | null;
   kode: string;
@@ -194,7 +194,7 @@ export const transformValues = (
         ? values.klageVurderingOmgjoer
         : null,
     klageHjemmel,
-    klageVurdering: values.klageVurdering,
+    klageVurderingType: values.klageVurdering,
     fritekstTilBrev: values.fritekstTilBrev,
     begrunnelse: values.begrunnelse,
     kode: AksjonspunktCodes.BEHANDLE_KLAGE_NFP,
