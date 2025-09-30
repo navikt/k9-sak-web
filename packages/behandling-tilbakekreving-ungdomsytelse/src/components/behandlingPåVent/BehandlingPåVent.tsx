@@ -1,7 +1,7 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungtilbake/kodeverk/AksjonspunktCodes.js';
 import SettPåVentModal from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 interface SettPaVentParams {
@@ -34,7 +34,7 @@ const BehandlingPaVent = ({ behandling, aksjonspunkter, settPaVent }: Behandling
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
         behandlingUuid: behandling.uuid,
-      }).then(() => goToLos()),
+      }).then(() => goToSearch()),
     [behandling.id, behandling.uuid, behandling.versjon, settPaVent],
   );
 
@@ -61,6 +61,7 @@ const BehandlingPaVent = ({ behandling, aksjonspunkter, settPaVent }: Behandling
       erTilbakekreving
       erKlage={false}
       showModal
+      navigerEtterEndreFrist={goToSearch}
     />
   );
 };
