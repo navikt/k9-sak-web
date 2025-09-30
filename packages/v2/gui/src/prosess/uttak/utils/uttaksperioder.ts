@@ -1,5 +1,4 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-// import type { Periode } from '@k9-sak-web/backend/k9sak/generated';
 import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import type { UttaksperiodeBeriket } from '../Uttak';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';

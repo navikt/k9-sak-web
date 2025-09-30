@@ -11,6 +11,7 @@ import {
   type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakUtbetalingsgradDto as OverstyrUttakUtbetalingsgradDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(weekOfYear);
@@ -63,12 +64,12 @@ export const erOverstyringInnenforPerioderTilVurdering = (
 };
 
 export const finnTidligsteStartDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
-  const startDatoer = perioderTilVurdering.map(periodeString => dayjs(periodeString.split('/')[0]));
+  const startDatoer = perioderTilVurdering.map(periodeString => initializeDate(periodeString.split('/')[0] || ''));
   return new Date(Math.min(...startDatoer.map(date => date.valueOf())));
 };
 
 export const finnSisteSluttDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
-  const sluttDatoer = perioderTilVurdering.map(periodeString => dayjs(periodeString.split('/')[1]));
+  const sluttDatoer = perioderTilVurdering.map(periodeString => initializeDate(periodeString.split('/')[1] || ''));
   return new Date(Math.max(...sluttDatoer.map(date => date.valueOf())));
 };
 
