@@ -1,6 +1,6 @@
 import type { ung_kodeverk_dokument_DokumentMalType as DokumentMalType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Alert, Box, Button, Heading, Modal } from '@navikt/ds-react';
-import type { QueryObserverResult, UseMutateFunction } from '@tanstack/react-query';
+import type { UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { type FormData } from '../FormData';
@@ -16,7 +16,7 @@ import {
 interface FriktekstBrevpanelProps {
   readOnly: boolean;
   redigertBrevHtml: string | undefined;
-  hentFritekstbrevHtml: () => Promise<QueryObserverResult<any, Error>>;
+  hentOriginalHtml: () => Promise<any>;
   lagreVedtaksbrev: UseMutateFunction<
     unknown,
     Error,
@@ -33,7 +33,7 @@ interface FriktekstBrevpanelProps {
 
 export const FritekstBrevpanel = ({
   readOnly,
-  hentFritekstbrevHtml,
+  hentOriginalHtml,
   lagreVedtaksbrev,
   handleForhåndsvis,
   fieldIndex,
@@ -67,7 +67,7 @@ export const FritekstBrevpanel = ({
   const lukkEditor = () => setVisRedigering(false);
 
   const hentFritekstbrevMal = useCallback(async () => {
-    const { data: responseHtml } = await hentFritekstbrevHtml();
+    const responseHtml = await hentOriginalHtml();
 
     setBrevStiler(utledStiler(responseHtml));
     const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
@@ -89,7 +89,7 @@ export const FritekstBrevpanel = ({
 
     setRedigerbartInnholdKlart(true);
     // setForhaandsvisningKlart(true);
-  }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtml, redigertBrevHtml, fieldIndex]);
+  }, [setRedigerbartInnholdKlart, formMethods, hentOriginalHtml, redigertBrevHtml, fieldIndex]);
 
   const handleLagre = useCallback(
     async (html: string, nullstill?: boolean) => {

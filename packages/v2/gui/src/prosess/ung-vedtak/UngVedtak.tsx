@@ -74,14 +74,10 @@ export const UngVedtak = ({
     enabled: false,
   });
 
-  const { refetch: hentFritekstbrevHtml } = useQuery({
-    queryKey: ['hentFritekstbrevHtml', behandling.id],
-    queryFn: async () => {
-      const response = await api.forhåndsvisVedtaksbrev(behandling.id, true);
-      return response;
-    },
-    enabled: false,
-  });
+  const hentOriginalHtml = async () => {
+    const response = await api.forhåndsvisVedtaksbrev(behandling.id, true, false);
+    return response;
+  };
 
   const resetForm = async () => {
     const resetValues = await refetchVedtaksbrevValg();
@@ -159,7 +155,7 @@ export const UngVedtak = ({
                         <FritekstBrevpanel
                           readOnly={readOnly}
                           redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
-                          hentFritekstbrevHtml={hentFritekstbrevHtml}
+                          hentOriginalHtml={hentOriginalHtml}
                           lagreVedtaksbrev={lagreVedtaksbrev}
                           handleForhåndsvis={() => forhåndsvisVedtaksbrev()}
                           fieldIndex={index}

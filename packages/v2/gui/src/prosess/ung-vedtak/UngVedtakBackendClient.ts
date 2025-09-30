@@ -16,8 +16,12 @@ export default class UngVedtakBackendClient {
   ): Promise<LagreVedtaksbrevValgResponses> {
     return (await formidling_lagreVedtaksbrevValg({ body: data })).data;
   }
-  async forhåndsvisVedtaksbrev(behandlingId: number, htmlVersjon?: boolean): Promise<ForhåndsvisVedtaksbrevResponse> {
-    return (await formidling_forhåndsvisVedtaksbrev({ body: { behandlingId, htmlVersjon } })).data;
+  async forhåndsvisVedtaksbrev(
+    behandlingId: number,
+    htmlVersjon?: boolean,
+    redigertVersjon?: boolean,
+  ): Promise<ForhåndsvisVedtaksbrevResponse> {
+    return (await formidling_forhåndsvisVedtaksbrev({ body: { behandlingId, htmlVersjon, redigertVersjon } })).data;
   }
 
   async vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse> {
