@@ -23,7 +23,7 @@ export const UngVedtakIndex = ({
 }: UngVedtakIndexProps) => {
   const ungVedtakBackendClient = new UngVedtakBackendClient();
   const {
-    data: vedtaksbrevValg,
+    data: vedtaksbrevValgResponse,
     isLoading,
     refetch: refetchVedtaksbrevValg,
   } = useQuery({
@@ -46,7 +46,7 @@ export const UngVedtakIndex = ({
           submitCallback={submitCallback}
           vilkår={vilkar}
           readOnly={isReadOnly}
-          vedtaksbrevValg={vedtaksbrevValg}
+          vedtaksbrevValgResponse={vedtaksbrevValgResponse}
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
         />
       )}

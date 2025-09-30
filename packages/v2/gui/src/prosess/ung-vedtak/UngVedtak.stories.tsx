@@ -17,7 +17,7 @@ const meta = {
     aksjonspunkter: [],
     api,
     submitCallback: asyncAction('button-click'),
-    vedtaksbrevValg: {},
+    vedtaksbrevValgResponse: {},
     refetchVedtaksbrevValg: fn(),
   },
   component: UngVedtak,

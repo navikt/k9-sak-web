@@ -1,3 +1,4 @@
+import type { ung_kodeverk_dokument_DokumentMalType as DokumentMalType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Alert, Box, Button, Heading, Modal } from '@navikt/ds-react';
 import type { QueryObserverResult, UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -22,10 +23,12 @@ interface FriktekstBrevpanelProps {
     {
       redigertHtml: string;
       nullstill?: boolean;
+      dokumentMalType: DokumentMalType | undefined;
     },
     unknown
   >;
   handleForhåndsvis: () => void;
+  fieldIndex: number;
 }
 
 export const FritekstBrevpanel = ({
@@ -33,6 +36,7 @@ export const FritekstBrevpanel = ({
   hentFritekstbrevHtml,
   lagreVedtaksbrev,
   handleForhåndsvis,
+  fieldIndex,
 }: FriktekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
@@ -43,14 +47,21 @@ export const FritekstBrevpanel = ({
   const [redigerbartInnhold, setRedigerbartInnhold] = useState<string>('');
   const [originalHtml, setOriginalHtml] = useState<string>('');
   const formMethods = useFormContext<FormData>();
-  const redigertBrevHtml = useWatch({ control: formMethods.control, name: 'redigertHtml' });
+  const redigertBrevHtml = useWatch({
+    control: formMethods.control,
+    name: `vedtaksbrevValg.${fieldIndex}.redigertHtml`,
+  });
+  const dokumentMalType = useWatch({
+    control: formMethods.control,
+    name: `vedtaksbrevValg.${fieldIndex}.dokumentMalType`,
+  });
 
   const handleFritekstSubmit = useCallback(
     async (html: string, nullstill?: boolean) => {
-      formMethods.setValue('redigertHtml', html);
-      lagreVedtaksbrev({ redigertHtml: html, nullstill });
+      formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.redigertHtml`, html);
+      lagreVedtaksbrev({ redigertHtml: html, nullstill, dokumentMalType });
     },
-    [formMethods, lagreVedtaksbrev],
+    [formMethods, lagreVedtaksbrev, dokumentMalType, fieldIndex],
   );
 
   const lukkEditor = () => setVisRedigering(false);
@@ -66,19 +77,19 @@ export const FritekstBrevpanel = ({
     const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
     if (originalHtmlStreng) {
       setOriginalHtml(originalHtmlStreng);
-      formMethods.setValue('originalHtml', originalHtmlStreng);
+      formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.originalHtml`, originalHtmlStreng);
     }
 
     if (redigertBrevHtml) {
       setRedigerbartInnhold(redigertBrevHtml);
     } else {
-      formMethods.setValue('redigertHtml', originalHtmlStreng ?? '');
+      formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.redigertHtml`, originalHtmlStreng ?? '');
       setRedigerbartInnhold(originalHtmlStreng ?? '');
     }
 
     setRedigerbartInnholdKlart(true);
     // setForhaandsvisningKlart(true);
-  }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtml, redigertBrevHtml]);
+  }, [setRedigerbartInnholdKlart, formMethods, hentFritekstbrevHtml, redigertBrevHtml, fieldIndex]);
 
   const handleLagre = useCallback(
     async (html: string, nullstill?: boolean) => {
@@ -125,7 +136,7 @@ export const FritekstBrevpanel = ({
           </Alert>
         </Box.New>
       )}
-      <Box.New padding="5" borderRadius="medium">
+      <Box.New paddingBlock="5" borderRadius="medium">
         <Heading size="small" level="4">
           Rediger brev til søker
         </Heading>
