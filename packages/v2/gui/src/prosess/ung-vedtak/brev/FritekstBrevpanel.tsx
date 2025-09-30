@@ -114,22 +114,22 @@ export const FritekstBrevpanel = ({
   };
 
   return (
-    <Box marginBlock="0 4">
+    <Box.New marginBlock="0 4">
       <Heading size="small" level="3">
         Brev
       </Heading>
       {!readOnly && (
-        <Box marginBlock="3">
+        <Box.New marginBlock="3">
           <Alert variant="info" size="small">
             Innhold fra det automatiske brevet kan nå redigeres
           </Alert>
-        </Box>
+        </Box.New>
       )}
-      <Box padding="5" background="surface-subtle" borderRadius="medium">
+      <Box.New padding="5" borderRadius="medium">
         <Heading size="small" level="4">
           Rediger brev til søker
         </Heading>
-        <Box marginBlock="4 0">
+        <Box.New marginBlock="4 0">
           <Button
             variant="secondary"
             type="button"
@@ -141,7 +141,7 @@ export const FritekstBrevpanel = ({
           >
             Rediger brev
           </Button>
-        </Box>
+        </Box.New>
         <Modal open={visRedigering} onClose={handleModalClose} width="53.75rem" aria-label="Rediger brev">
           {visRedigering && (
             <FritekstEditor
@@ -161,7 +161,7 @@ export const FritekstBrevpanel = ({
             />
           )}
         </Modal>
-      </Box>
-    </Box>
+      </Box.New>
+    </Box.New>
   );
 };

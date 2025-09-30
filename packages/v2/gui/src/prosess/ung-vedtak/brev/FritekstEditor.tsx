@@ -157,14 +157,14 @@ const FritekstEditor = ({
           <Heading level="3" size="small">
             Rediger brev
           </Heading>
-          <Box marginBlock="4 0">
+          <Box.New marginBlock="4 0">
             <Alert variant="info" size="small">
               Gjør nødvendige endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje. Vil du
               se saken samtidig som du redigerer kan du åpne en kopi av saken i ny fane:
               {/* <ÅpneSakINyttVinduKnapp /> */}
             </Alert>
             {/* <FritekstFeilmeldinger /> */}
-          </Box>
+          </Box.New>
         </Modal.Header>
       )}
       <Modal.Body>
@@ -209,22 +209,22 @@ const FritekstEditor = ({
             </div>
           </div>
           <footer className={visAdvarsel ? styles.skjulEditor : ''}>
-            <Box marginBlock="8 0">
+            <Box.New marginBlock="8 0">
               {/* {kanInkludereKalender && (
-                <Box marginBlock="0 4">
+                <Box.New marginBlock="0 4">
                   <CheckboxField
                     name="inkluderKalenderVedOverstyring"
                     label="Inkluder kalender i brev"
                     disabled={readOnly}
                   />
-                </Box>
+                </Box.New>
               )} */}
               <div>
                 <div className={styles.knapper}>
                   {visValideringsFeil && (
-                    <Box marginBlock="0 4">
+                    <Box.New marginBlock="0 4">
                       <Alert variant="error">Brevet må redigeres før det kan forhåndsvises</Alert>
-                    </Box>
+                    </Box.New>
                   )}
                   <Button
                     variant="tertiary"
@@ -239,7 +239,7 @@ const FritekstEditor = ({
                 </div>
                 {/* <FritekstFeilmeldinger /> */}
               </div>
-              <Box marginBlock="8 0">
+              <Box.New marginBlock="8 0">
                 <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
                   <div>
                     <Button
@@ -265,8 +265,8 @@ const FritekstEditor = ({
                     </Button>
                   </div>
                 </HGrid>
-              </Box>
-            </Box>
+              </Box.New>
+            </Box.New>
           </footer>
         </div>
       </Modal.Body>
