@@ -248,8 +248,7 @@ const SykdomOgOpplæring = () => {
   };
 
   useEffect(() => {
-    // Første render, da skal vi bruke initActiveTab. I hovedsak for å vise aktivt aksjonspunkt
-    if (tabParam && tabParam !== activeTab) {
+    if (tabParam) {
       onChangeTab(tabParam);
     }
   }, [tabParam]);
