@@ -108,7 +108,7 @@ const Icon = ({ aksjonspunktKode, godkjent }: { aksjonspunktKode: AksjonspunktCo
     return null;
   }
 
-  if (aksjonspunktUtført && godkjent.length > 0) {
+  if (aksjonspunktUtført && godkjent.some(g => g)) {
     return <CheckmarkIcon className="text-ax-bg-success-strong" />;
   }
 
