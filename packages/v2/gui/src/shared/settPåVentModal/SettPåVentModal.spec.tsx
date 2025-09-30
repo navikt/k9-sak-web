@@ -15,6 +15,7 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         erKlage={false}
         showModal
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -34,6 +35,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -52,6 +54,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -70,6 +73,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -88,6 +92,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -104,6 +109,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent={false}
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
     expect(screen.queryByPlaceholderText('dd.mm.åååå')).not.toBeInTheDocument();
@@ -119,6 +125,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent={false}
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -135,6 +142,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent={false}
         erTilbakekreving={false}
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
 
@@ -152,6 +160,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent={false}
         erTilbakekreving
         erKlage={false}
+        navigerEtterEndreFrist={vi.fn}
       />,
     );
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument();

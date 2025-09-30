@@ -52,6 +52,7 @@ export const MenySettPaVentIndexV2 = ({
       erTilbakekreving={erTilbakekreving}
       erKlage={erKlage}
       hasManualPaVent
+      navigerEtterEndreFrist={navigerEtterSattPåVent}
     />
   );
 };
