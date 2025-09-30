@@ -87,7 +87,7 @@
     "@types/history": "5.0.0",
     "@types/object-hash": "^3.0.6",
     "@types/prop-types": "15.7.15",
-    "@types/react": "19.1.15",
+    "@types/react": "19.1.16",
     "@types/react-collapse": "5.0.4",
     "@types/redux-form": "8.3.11",
     "@vitejs/plugin-react": "^5.0.4",
