@@ -82,12 +82,16 @@ const Uttak = ({
   }, [aksjonspunktForOverstyringAvUttak]);
   const toggleOverstyring = () => setOverstyringAktiv(!overstyringAktiv);
 
-  const harEtUløstAksjonspunktIUttak = aksjonspunkter?.some(
-    ap =>
-      ap.status === aksjonspunktStatus.OPPRETTET &&
-      ap.definisjon !== undefined &&
-      ap.definisjon !== AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK &&
-      relevanteAksjonspunkter.includes(ap.definisjon),
+  const harEtUløstAksjonspunktIUttak = React.useMemo(
+    () =>
+      (aksjonspunkter ?? []).some(
+        ap =>
+          ap.status === aksjonspunktStatus.OPPRETTET &&
+          ap.definisjon !== undefined &&
+          ap.definisjon !== AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK &&
+          relevanteAksjonspunkter.includes(ap.definisjon),
+      ),
+    [aksjonspunkter, relevanteAksjonspunkter],
   );
 
   const uttaksperioder = uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder;
@@ -113,7 +117,7 @@ const Uttak = ({
     virkningsdatoUttakNyeRegler,
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     setRedigervirkningsdato,
-    arbeidsgivere: {},
+    arbeidsgivere: undefined,
     uttaksperiodeListe,
     setUttaksperiodeListe,
   };
