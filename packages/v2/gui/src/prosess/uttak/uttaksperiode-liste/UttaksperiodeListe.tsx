@@ -11,44 +11,12 @@ import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
 import { useUttakContext } from '../context/UttakContext';
 import { prettifyPeriod } from '../utils/periodUtils';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import splitUttakByDate from '../utils/splitUttakByDate';
 
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
 }
-
-const splitUttakByDate = (
-  uttaksperioder: UttaksperiodeBeriket[],
-  virkningsdatoUttakNyeRegler: string | undefined,
-): { before: UttaksperiodeBeriket[]; afterOrCovering: UttaksperiodeBeriket[] } => {
-  // If virkningsdatoUttakNyeRegler is null, consider all periods as before the date.
-  if (!virkningsdatoUttakNyeRegler) {
-    return { before: uttaksperioder, afterOrCovering: [] };
-  }
-
-  const virkningsdato =
-    virkningsdatoUttakNyeRegler && !Number.isNaN(new Date(virkningsdatoUttakNyeRegler).getTime())
-      ? new Date(virkningsdatoUttakNyeRegler)
-      : new Date();
-
-  const before = uttaksperioder.filter(uttak => {
-    const uttakToDate = new Date(uttak.periode.tom);
-
-    // Check if the entire period is before the virkningsdato.
-    return uttakToDate < virkningsdato;
-  });
-
-  const afterOrCovering = uttaksperioder.filter(uttak => {
-    const uttakFromDate = new Date(uttak.periode.fom);
-    const uttakToDate = new Date(uttak.periode.tom);
-
-    // Check if the period starts before and ends after virkningsdato, or if it entirely starts after the virkningsdato.
-    return uttakFromDate >= virkningsdato || (uttakFromDate < virkningsdato && uttakToDate >= virkningsdato);
-  });
-
-  return { before, afterOrCovering };
-};
 
 const tableHeaders = (sakstype: FagsakYtelseType | undefined) => {
   if (sakstype === fagsakYtelseType.OPPLÆRINGSPENGER) {
@@ -105,7 +73,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
         </Table.Header>
         <Table.Body>
           {afterOrCovering.map((uttak, index) => (
-            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
+            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}`}>
               {uttak.harOppholdTilNestePeriode && (
                 <Table.Row>
                   <td colSpan={12}>
@@ -153,7 +121,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
             </Table.Row>
           )}
           {before.map((uttak, index) => (
-            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
+            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}`}>
               {uttak.harOppholdTilNestePeriode && (
                 <Table.Row>
                   <td colSpan={12}>

@@ -64,12 +64,26 @@ export const erOverstyringInnenforPerioderTilVurdering = (
 };
 
 export const finnTidligsteStartDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
-  const startDatoer = perioderTilVurdering.map(periodeString => initializeDate(periodeString.split('/')[0] || ''));
+  if (!perioderTilVurdering || perioderTilVurdering.length === 0) {
+    return new Date();
+  }
+  const startDatoer = perioderTilVurdering
+    .map(periodeString => periodeString.split('/')[0])
+    .filter(Boolean)
+    .map(d => initializeDate(d || ''));
+  if (startDatoer.length === 0) return new Date();
   return new Date(Math.min(...startDatoer.map(date => date.valueOf())));
 };
 
 export const finnSisteSluttDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
-  const sluttDatoer = perioderTilVurdering.map(periodeString => initializeDate(periodeString.split('/')[1] || ''));
+  if (!perioderTilVurdering || perioderTilVurdering.length === 0) {
+    return new Date();
+  }
+  const sluttDatoer = perioderTilVurdering
+    .map(periodeString => periodeString.split('/')[1])
+    .filter(Boolean)
+    .map(d => initializeDate(d || ''));
+  if (sluttDatoer.length === 0) return new Date();
   return new Date(Math.max(...sluttDatoer.map(date => date.valueOf())));
 };
 
