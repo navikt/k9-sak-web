@@ -1,6 +1,5 @@
 import type {
   ForhåndsvisVedtaksbrevResponse,
-  LagreVedtaksbrevValgResponses,
   ung_kodeverk_dokument_DokumentMalType,
   ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest,
   VedtaksbrevValgResponse,
@@ -14,7 +13,5 @@ export type UngVedtakBackendApiType = {
     redigertVersjon?: boolean,
   ): Promise<ForhåndsvisVedtaksbrevResponse>;
   vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse>;
-  lagreVedtaksbrev(
-    data: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest,
-  ): Promise<LagreVedtaksbrevValgResponses>;
+  lagreVedtaksbrev(data: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest): Promise<unknown>;
 };
