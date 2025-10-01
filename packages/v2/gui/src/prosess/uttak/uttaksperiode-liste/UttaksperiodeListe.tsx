@@ -1,17 +1,17 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Alert, BodyShort, Button, Label, Table, Loader, HStack } from '@navikt/ds-react';
+import { Fragment, useState, type FC } from 'react';
 import dayjs from 'dayjs';
-import React, { type FC } from 'react';
-import UttakRad from './UttakRad';
-import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
-import styles from './uttaksperiodeListe.module.css';
-import type { UttaksperiodeBeriket } from '../Uttak';
-import { useUttakContext } from '../context/UttakContext';
-import { prettifyPeriod } from '../utils/periodUtils';
+import { Alert, BodyShort, Button, Label, Table, Loader, HStack } from '@navikt/ds-react';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
   type k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
   k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import UttakRad from './UttakRad';
+import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
+import styles from './uttaksperiodeListe.module.css';
+import { useUttakContext } from '../context/UttakContext';
+import { prettifyPeriod } from '../utils/periodUtils';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;
@@ -69,7 +69,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
     lasterUttak,
     readOnly,
   } = useUttakContext();
-  const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
+  const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const { before, afterOrCovering } = splitUttakByDate(uttaksperiodeListe, virkningsdatoUttakNyeRegler);
   const headers = tableHeaders(ytelseType);
 
@@ -105,7 +105,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
         </Table.Header>
         <Table.Body>
           {afterOrCovering.map((uttak, index) => (
-            <React.Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
+            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
               {uttak.harOppholdTilNestePeriode && (
                 <Table.Row>
                   <td colSpan={12}>
@@ -122,7 +122,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
               ) : (
                 <UttakRad uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
           {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
             <Table.Row>
@@ -153,7 +153,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
             </Table.Row>
           )}
           {before.map((uttak, index) => (
-            <React.Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
+            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}}`}>
               {uttak.harOppholdTilNestePeriode && (
                 <Table.Row>
                   <td colSpan={12}>
@@ -174,7 +174,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
                   velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
                 />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </Table.Body>
       </Table>

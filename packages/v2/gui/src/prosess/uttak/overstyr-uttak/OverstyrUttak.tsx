@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import AktivitetRad from './AktivitetRad';
@@ -21,13 +21,13 @@ export enum OverstyrUttakHandling {
   LAGRE = 'LAGRE',
 }
 
-const OverstyrUttak: React.FC = () => {
+const OverstyrUttak: FC = () => {
   const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } =
     useUttakContext();
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
-  const [redigerOverstyring, setRedigerOverstyring] = React.useState<number | boolean>(false);
+  const [visOverstyringSkjema, setVisOverstyringSkjema] = useState<boolean>(false);
+  const [redigerOverstyring, setRedigerOverstyring] = useState<number | boolean>(false);
   const leseModus = !erOverstyrer;
 
   const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery({

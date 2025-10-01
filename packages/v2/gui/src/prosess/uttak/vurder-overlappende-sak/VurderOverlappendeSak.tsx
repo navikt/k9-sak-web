@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type FC } from 'react';
+import { Fragment, useEffect, useState, type FC } from 'react';
 import { format } from 'date-fns';
 import type { ObjectSchema } from 'yup';
 import * as yup from 'yup';
@@ -96,7 +96,6 @@ const VurderOverlappendeSak: FC = () => {
             )
             // Vi vil ha undefined istadenfor NaN
             .transform(v => (Number.isNaN(v) ? undefined : v))
-
             .when('valg', (valg, schema) => {
               return valg.includes(PeriodeMedOverlappValg.JUSTERT_GRAD)
                 ? schema
@@ -246,7 +245,7 @@ const VurderOverlappendeSak: FC = () => {
                       saksnummer,
                     } = periodeMedOverlapp;
                     return (
-                      <React.Fragment key={`${fom}-${tom}-${saksnummer.toString()}`}>
+                      <Fragment key={`${fom}-${tom}-${saksnummer.toString()}`}>
                         <List as="ul" size="small">
                           <List.Item>
                             <BodyShort as="span">
@@ -254,18 +253,18 @@ const VurderOverlappendeSak: FC = () => {
                               {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
                               {saksnummer.length > 0 &&
                                 saksnummer.map((sakNr, index) => (
-                                  <React.Fragment key={`${fom}-${tom}-${sakNr}-link`}>
+                                  <Fragment key={`${fom}-${tom}-${sakNr}-link`}>
                                     {index > 0 && ', '}
                                     <Link href={`/k9/web/fagsak/${sakNr}`} target="_blank">
                                       {sakNr}
                                     </Link>
-                                  </React.Fragment>
+                                  </Fragment>
                                 ))}
                               )
                             </BodyShort>
                           </List.Item>
                         </List>
-                      </React.Fragment>
+                      </Fragment>
                     );
                   })}
                 </Alert>

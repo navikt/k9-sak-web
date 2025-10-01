@@ -1,15 +1,13 @@
+import type { JSX, ReactNode } from 'react';
 import { Label } from '@navikt/ds-react';
-import * as React from 'react';
-import styles from './uttakUtregning.module.css';
-
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
-import type { JSX } from 'react';
+import styles from './uttakUtregning.module.css';
 
 interface UttakUtregningProps {
   heading: string;
-  children: React.ReactNode;
+  children: ReactNode;
   highlight?: boolean;
-  headingPostContent?: React.ReactNode;
+  headingPostContent?: ReactNode;
 }
 
 const UttakUtregning = ({ heading, children, highlight, headingPostContent }: UttakUtregningProps): JSX.Element => {

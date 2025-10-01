@@ -1,14 +1,13 @@
+import { Fragment, type FC } from 'react';
+import { BodyShort, Box, HStack, Loader, Tag, VStack } from '@navikt/ds-react';
 import {
   k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
   type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, HStack, Loader, Tag, VStack } from '@navikt/ds-react';
-import React, { type FC } from 'react';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
-
-import styles from './uttakDetaljer.module.css';
 import { useUttakContext } from '../context/UttakContext';
+import styles from './uttakDetaljer.module.css';
 
 interface ownProps {
   inntektsgradering: InntektgraderingPeriodeDto;
@@ -78,7 +77,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
               ? arbeidsgivere[arbeidsgiverIdentifikator]
               : undefined;
           return (
-            <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
+            <Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
               <Box.New className={styles.uttakDetaljerBeregningFirma}>
                 <BodyShort size="small" weight="semibold">
                   {inntForhold.type !== InntektsforholdDtoType.FRILANSER
@@ -100,7 +99,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
                   = {formatNOK(inntForhold.løpendeInntekt)} i utbetalt lønn
                 </BodyShort>
               </Box.New>
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </UttakDetaljerEkspanderbar>
