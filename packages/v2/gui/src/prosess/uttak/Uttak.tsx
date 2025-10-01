@@ -51,7 +51,7 @@ const Uttak = ({
   relevanteAksjonspunkter,
   readOnly,
 }: UttakProps): JSX.Element => {
-  const uttakApi = new BehandlingUttakBackendClient();
+  const uttakApi = React.useMemo(() => new BehandlingUttakBackendClient(), []);
   const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
 
