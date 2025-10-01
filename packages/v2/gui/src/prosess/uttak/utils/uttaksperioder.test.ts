@@ -48,4 +48,27 @@ describe('lagUttaksperiodeliste', () => {
     const earlier = liste.find(p => p.periode.fom === lastWeek.format(YYYYMMDD_DATE_FORMAT));
     expect(earlier?.harOppholdTilNestePeriode).toBe(false);
   });
+
+  it('håndterer uke 53 til uke 1 (2020->2021) uten opphold', () => {
+    // 2020-12-28 er mandag i ISO uke 53
+    const sisteUke = dayjs('2020-12-28');
+    const førsteNesteÅr = dayjs('2021-01-04'); // mandag uke 1 2021
+    const perioder = {
+      [key(sisteUke.format(YYYYMMDD_DATE_FORMAT), sisteUke.add(6, 'day').format(YYYYMMDD_DATE_FORMAT))]: {},
+      [key(førsteNesteÅr.format(YYYYMMDD_DATE_FORMAT), førsteNesteÅr.add(6, 'day').format(YYYYMMDD_DATE_FORMAT))]: {},
+    } as any;
+    const liste = lagUttaksperiodeliste(perioder);
+    const earlier = liste.find(p => p.periode.fom === sisteUke.format(YYYYMMDD_DATE_FORMAT));
+    expect(earlier?.harOppholdTilNestePeriode).toBe(false);
+  });
+
+  it('ignorerer ugyldig nøkkel-format', () => {
+    const perioder = {
+      ugyldigNøkkel: { some: 'x' },
+      [key('2024-05-01', '2024-05-07')]: { some: 'y' },
+    } as any;
+    const liste = lagUttaksperiodeliste(perioder);
+    expect(liste.length).toBe(1);
+    expect(liste[0]!.periode.fom).toBe('2024-05-01');
+  });
 });

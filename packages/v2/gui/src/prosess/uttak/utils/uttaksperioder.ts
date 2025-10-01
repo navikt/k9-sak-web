@@ -18,17 +18,25 @@ const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) => 
 };
 
 const lagUttaksperiodeliste = (uttaksperioder: Uttaksplan['perioder']): UttaksperiodeBeriket[] => {
-  const perioder = Object.keys(uttaksperioder ?? {}).map(periodenøkkel => {
-    const andreUttaksperiodeData = (uttaksperioder ?? {})[periodenøkkel];
-    const uttaksperiodeDato: Periode = {
-      fom: initializeDate(periodenøkkel.split('/')[0] ?? '').format(YYYYMMDD_DATE_FORMAT),
-      tom: initializeDate(periodenøkkel.split('/')[1] ?? '').format(YYYYMMDD_DATE_FORMAT),
-    };
-    return {
-      periode: uttaksperiodeDato,
-      ...andreUttaksperiodeData,
-    };
-  });
+  const perioder = Object.keys(uttaksperioder ?? {})
+    .map(periodenøkkel => {
+      const match = periodenøkkel.match(/^(\d{4}-\d{2}-\d{2})\/(\d{4}-\d{2}-\d{2})$/);
+      if (!match) {
+        return undefined; // ugyldig nøkkel
+      }
+      const [, fom, tom] = match as RegExpMatchArray;
+      const andreUttaksperiodeData = (uttaksperioder ?? {})[periodenøkkel];
+      const uttaksperiodeDato: Periode = {
+        fom: initializeDate(fom as string).format(YYYYMMDD_DATE_FORMAT),
+        tom: initializeDate(tom as string).format(YYYYMMDD_DATE_FORMAT),
+      };
+      return {
+        periode: uttaksperiodeDato,
+        ...andreUttaksperiodeData,
+      } as UttaksperiodeBeriket;
+    })
+    .filter((p): p is UttaksperiodeBeriket => p !== undefined);
+
   const kronologiskSortertePerioder = perioder.sort((p1, p2) => sortPeriodsChronological(p1.periode, p2.periode));
   const perioderMedOppholdFlagg: UttaksperiodeBeriket[] = [];
 
