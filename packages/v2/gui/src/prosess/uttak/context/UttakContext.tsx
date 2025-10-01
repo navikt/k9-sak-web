@@ -1,4 +1,15 @@
-import React, { createContext, useContext } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type Dispatch,
+  type ReactElement,
+  type ReactNode,
+  type SetStateAction,
+} from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import type {
@@ -7,8 +18,8 @@ import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversikt,
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import lagUttaksperiodeliste from '../utils/uttaksperioder';
 
 export type UttakContextType = {
@@ -20,48 +31,111 @@ export type UttakContextType = {
   hentUttak?: () => Promise<any>;
   harEtUløstAksjonspunktIUttak: boolean;
   erOverstyrer: boolean;
+  readOnly: boolean;
+  oppdaterBehandling: () => void;
+  virkningsdatoUttakNyeRegler: string | undefined;
+  redigerVirkningsdato: boolean;
+  setRedigervirkningsdato: Dispatch<SetStateAction<boolean>>;
+  arbeidsgivere: ArbeidsgiverOversikt['arbeidsgivere'] | undefined;
+  uttaksperiodeListe: ReturnType<typeof lagUttaksperiodeliste>;
+  setUttaksperiodeListe: Dispatch<SetStateAction<ReturnType<typeof lagUttaksperiodeliste>>>;
+  lasterUttak?: boolean;
+  aksjonspunkterMap: Map<AksjonspunktDefinisjon, Aksjonspunkt>;
+  harAksjonspunkt: (kode: AksjonspunktDefinisjon) => boolean;
+  harNoenAksjonspunkter: (koder: AksjonspunktDefinisjon[]) => boolean;
+  harAlleAksjonspunkter: (koder: AksjonspunktDefinisjon[]) => boolean;
   aksjonspunktForOverstyringAvUttak: Aksjonspunkt | undefined;
   aksjonspunktVurderOverlappendeSaker: Aksjonspunkt | undefined;
   aksjonspunktVentAnnenPSBSak: Aksjonspunkt | undefined;
   aksjonspunktVurderDatoNyRegelUttak: Aksjonspunkt | undefined;
-  readOnly: boolean;
-  oppdaterBehandling: () => void;
-  virkningsdatoUttakNyeRegler: string | undefined;
-  setRedigervirkningsdato: React.Dispatch<React.SetStateAction<boolean>>;
-  arbeidsgivere: ArbeidsgiverOversikt['arbeidsgivere'] | undefined;
-  uttaksperiodeListe: ReturnType<typeof lagUttaksperiodeliste>;
-  setUttaksperiodeListe: React.Dispatch<React.SetStateAction<ReturnType<typeof lagUttaksperiodeliste>>>;
-  lasterUttak?: boolean;
 };
 
 export interface UttakProviderProps {
-  value: Omit<
+  value: Pick<
     UttakContextType,
-    'uttaksperiodeListe' | 'setUttaksperiodeListe' | 'lasterUttak' | 'hentUttak' | 'arbeidsgivere'
-  >;
-  children: React.ReactNode;
+    | 'behandling'
+    | 'uttak'
+    | 'uttakApi'
+    | 'perioderTilVurdering'
+    | 'hentBehandling'
+    | 'harEtUløstAksjonspunktIUttak'
+    | 'erOverstyrer'
+    | 'readOnly'
+    | 'oppdaterBehandling'
+    | 'virkningsdatoUttakNyeRegler'
+  > & { aksjonspunkter: Aksjonspunkt[] };
+  children: ReactNode;
 }
 
 export const UttakContext = createContext<UttakContextType | undefined>(undefined);
 
-export const UttakProvider = ({ value, value: { uttak }, children }: UttakProviderProps): React.ReactElement => {
-  const initialPerioder = React.useMemo(
+export const UttakProvider = ({
+  value,
+  value: { uttak, aksjonspunkter },
+  children,
+}: UttakProviderProps): ReactElement => {
+  const initialPerioder = useMemo(
     () => (uttak?.uttaksplan ? uttak.uttaksplan.perioder : uttak?.simulertUttaksplan?.perioder),
     [uttak],
   );
 
-  const [uttaksperiodeListe, setUttaksperiodeListe] = React.useState(lagUttaksperiodeliste(initialPerioder));
+  const [uttaksperiodeListe, setUttaksperiodeListe] = useState(lagUttaksperiodeliste(initialPerioder));
+  const [redigerVirkningsdato, setRedigervirkningsdato] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const nyePerioder = uttak?.uttaksplan ? uttak.uttaksplan.perioder : uttak?.simulertUttaksplan?.perioder;
     setUttaksperiodeListe(lagUttaksperiodeliste(nyePerioder));
   }, [uttak]);
 
+  const alleAksjonspunkter: Aksjonspunkt[] = useMemo(() => aksjonspunkter ?? [], [aksjonspunkter]);
+
+  const aksjonspunkterMap = useMemo(() => {
+    const m = new Map<AksjonspunktDefinisjon, Aksjonspunkt>();
+    for (const ap of alleAksjonspunkter) {
+      if (ap.definisjon) {
+        m.set(ap.definisjon, ap);
+      }
+    }
+    return m;
+  }, [alleAksjonspunkter]);
+
+  const harAksjonspunkt = useCallback(
+    (kode: AksjonspunktDefinisjon) => aksjonspunkterMap.has(kode),
+    [aksjonspunkterMap],
+  );
+  const harNoenAksjonspunkter = useCallback(
+    (koder: AksjonspunktDefinisjon[]) => koder.some(k => aksjonspunkterMap.has(k)),
+    [aksjonspunkterMap],
+  );
+  const harAlleAksjonspunkter = useCallback(
+    (koder: AksjonspunktDefinisjon[]) => koder.every(k => aksjonspunkterMap.has(k)),
+    [aksjonspunkterMap],
+  );
+
   const contextValue: UttakContextType = {
-    ...value,
+    behandling: value.behandling,
+    uttak: value.uttak,
+    uttakApi: value.uttakApi,
+    perioderTilVurdering: value.perioderTilVurdering,
+    hentBehandling: value.hentBehandling,
+    harEtUløstAksjonspunktIUttak: value.harEtUløstAksjonspunktIUttak,
+    erOverstyrer: value.erOverstyrer,
+    readOnly: value.readOnly,
+    oppdaterBehandling: value.oppdaterBehandling,
+    virkningsdatoUttakNyeRegler: value.virkningsdatoUttakNyeRegler,
+    redigerVirkningsdato,
+    setRedigervirkningsdato,
     arbeidsgivere: undefined,
     uttaksperiodeListe,
     setUttaksperiodeListe,
+    aksjonspunkterMap,
+    harAksjonspunkt,
+    harNoenAksjonspunkter,
+    harAlleAksjonspunkter,
+    aksjonspunktForOverstyringAvUttak: aksjonspunkterMap.get(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK),
+    aksjonspunktVurderOverlappendeSaker: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER),
+    aksjonspunktVentAnnenPSBSak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK),
+    aksjonspunktVurderDatoNyRegelUttak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK),
   };
 
   return <UttakContext.Provider value={contextValue}>{children}</UttakContext.Provider>;
@@ -74,14 +148,7 @@ export const useUttakContext = () => {
     throw new Error('useUttakContext must be used within a UttakProvider');
   }
 
-  const {
-    aksjonspunktForOverstyringAvUttak,
-    aksjonspunktVurderOverlappendeSaker,
-    aksjonspunktVentAnnenPSBSak,
-    aksjonspunktVurderDatoNyRegelUttak,
-    behandling,
-    uttakApi,
-  } = uttakContext;
+  const { behandling, uttakApi } = uttakContext;
 
   const { uttaksperiodeListe, setUttaksperiodeListe } = uttakContext;
 
@@ -125,20 +192,14 @@ export const useUttakContext = () => {
     return fagsakYtelseType === type;
   }
 
-  function harAksjonspunkt(kode: AksjonspunktDefinisjon): boolean {
-    if (aksjonspunktForOverstyringAvUttak?.definisjon === kode) return true;
-    if (aksjonspunktVurderOverlappendeSaker?.definisjon === kode) return true;
-    if (aksjonspunktVentAnnenPSBSak?.definisjon === kode) return true;
-    if (aksjonspunktVurderDatoNyRegelUttak?.definisjon === kode) return true;
-    return false;
-  }
-
   return {
     ...uttakContext,
     fagsakYtelseType,
     erSakstype,
     arbeidsgivere,
-    harAksjonspunkt,
+    harAksjonspunkt: uttakContext.harAksjonspunkt,
+    harNoenAksjonspunkter: uttakContext.harNoenAksjonspunkter,
+    harAlleAksjonspunkter: uttakContext.harAlleAksjonspunkter,
     lasterArbeidsgivere,
     hentUttak,
     uttaksperiodeListe,
