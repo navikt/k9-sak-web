@@ -176,7 +176,7 @@ export const UngVedtak = ({
                   <Box.New
                     // borderWidth={index === 0 ? '1 0 0 0' : index === fields.length - 1 ? '1 0 1 0' : '1 0 0 0'}
                     borderWidth={index === 0 ? '0 0 1 0' : '0'}
-                    paddingBlock="0 space-20"
+                    paddingBlock={readOnly ? '0' : '0 space-20'}
                     // paddingBlock={calculatePadding()}
                     width="450px"
                   >
