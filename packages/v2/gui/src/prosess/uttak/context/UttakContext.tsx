@@ -37,7 +37,7 @@ export type UttakContextType = {
   redigerVirkningsdato: boolean;
   setRedigervirkningsdato: Dispatch<SetStateAction<boolean>>;
   arbeidsgivere: ArbeidsgiverOversikt['arbeidsgivere'] | undefined;
-  uttaksperiodeListe: ReturnType<typeof lagUttaksperiodeliste>;
+  uttaksperiodeListe: Readonly<ReturnType<typeof lagUttaksperiodeliste>>;
   lasterUttak?: boolean;
   aksjonspunkterMap: Map<AksjonspunktDefinisjon, Aksjonspunkt>;
   harAksjonspunkt: (kode: AksjonspunktDefinisjon) => boolean;
@@ -75,21 +75,21 @@ export const UttakProvider = ({
 }: UttakProviderProps): ReactElement => {
   const [redigerVirkningsdato, setRedigervirkningsdato] = useState(false);
 
-  const uttaksperiodeListe = useMemo(() => {
+  const uttaksperiodeListe: Readonly<ReturnType<typeof lagUttaksperiodeliste>> = useMemo(() => {
     const perioder = hentPerioderFraUttak(uttak);
-    return lagUttaksperiodeliste(perioder);
+    return Object.freeze(lagUttaksperiodeliste(perioder));
   }, [uttak]);
 
   const alleAksjonspunkter: Aksjonspunkt[] = useMemo(() => aksjonspunkter ?? [], [aksjonspunkter]);
 
   const aksjonspunkterMap = useMemo(() => {
-    const m = new Map<AksjonspunktDefinisjon, Aksjonspunkt>();
+    const apMap = new Map<AksjonspunktDefinisjon, Aksjonspunkt>();
     for (const ap of alleAksjonspunkter) {
       if (ap.definisjon) {
-        m.set(ap.definisjon, ap);
+        apMap.set(ap.definisjon, ap);
       }
     }
-    return m;
+    return apMap;
   }, [alleAksjonspunkter]);
 
   const harAksjonspunkt = useCallback(
