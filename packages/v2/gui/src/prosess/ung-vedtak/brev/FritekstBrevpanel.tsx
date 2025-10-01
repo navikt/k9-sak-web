@@ -1,8 +1,9 @@
 import type {
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
+  ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { Alert, Box, Button, Heading, Modal } from '@navikt/ds-react';
+import { FileSearchIcon } from '@navikt/aksel-icons';
+import { Button, Heading, Modal, VStack } from '@navikt/ds-react';
 import type { UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -32,7 +33,8 @@ interface FriktekstBrevpanelProps {
   >;
   handleForhåndsvis: () => void;
   fieldIndex: number;
-  dokumentMalType?: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType | undefined;
+  vedtaksbrevValg?: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg | undefined;
+  forhåndsvisningIsLoading: boolean;
 }
 
 export const FritekstBrevpanel = ({
@@ -41,7 +43,8 @@ export const FritekstBrevpanel = ({
   lagreVedtaksbrev,
   handleForhåndsvis,
   fieldIndex,
-  dokumentMalType,
+  vedtaksbrevValg,
+  forhåndsvisningIsLoading,
 }: FriktekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
@@ -56,15 +59,19 @@ export const FritekstBrevpanel = ({
     control: formMethods.control,
     name: `vedtaksbrevValg.${fieldIndex}.redigertHtml`,
   });
+  const redigerAutomatiskBrev = useWatch({
+    control: formMethods.control,
+    name: `vedtaksbrevValg.${fieldIndex}.redigerAutomatiskBrev`,
+  });
 
   const handleFritekstSubmit = useCallback(
     async (html: string, nullstill?: boolean) => {
-      if (dokumentMalType) {
+      if (vedtaksbrevValg?.dokumentMalType) {
         formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.redigertHtml`, html);
-        lagreVedtaksbrev({ redigertHtml: html, nullstill, dokumentMalType: dokumentMalType.kilde });
+        lagreVedtaksbrev({ redigertHtml: html, nullstill, dokumentMalType: vedtaksbrevValg.dokumentMalType.kilde });
       }
     },
-    [formMethods, lagreVedtaksbrev, dokumentMalType, fieldIndex],
+    [formMethods, lagreVedtaksbrev, vedtaksbrevValg, fieldIndex],
   );
 
   const lukkEditor = () => setVisRedigering(false);
@@ -128,54 +135,57 @@ export const FritekstBrevpanel = ({
   };
 
   return (
-    <Box.New marginBlock="0 4">
+    <VStack gap="space-8">
       <Heading size="small" level="3">
-        {dokumentMalType?.navn}
+        {`Brev om ${vedtaksbrevValg?.dokumentMalType?.navn}`}
       </Heading>
-      {!readOnly && (
-        <Box.New marginBlock="3">
-          <Alert variant="info" size="small">
-            Innhold fra det automatiske brevet kan nå redigeres
-          </Alert>
-        </Box.New>
-      )}
-      <Box.New paddingBlock="5" borderRadius="medium">
-        <Heading size="small" level="4">
-          Rediger brev til søker
-        </Heading>
-        <Box.New marginBlock="4 0">
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={() => setVisRedigering(true)}
-            // disabled={readOnly || !redigerbartInnholdKlart}
-            // loading={!redigerbartInnholdKlart}
-            // icon={<Edit aria-hidden />}
-            size="small"
-          >
-            Rediger brev
-          </Button>
-        </Box.New>
-        <Modal open={visRedigering} onClose={handleModalClose} width="53.75rem" aria-label="Rediger brev">
-          {visRedigering && (
-            <FritekstEditor
-              handleSubmit={handleLagre}
-              lukkEditor={lukkEditor}
-              handleForhåndsvis={handleForhåndsvis}
-              //   setFieldValue={setFieldValue}
-              // kanInkludereKalender={kanInkludereKalender}
-              //   skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              readOnly={readOnly}
-              redigerbartInnholdKlart={redigerbartInnholdKlart}
-              redigerbartInnhold={redigerbartInnhold ?? ''}
-              originalHtml={originalHtml}
-              brevStiler={brevStiler}
-              prefiksInnhold={prefiksInnhold}
-              suffiksInnhold={suffiksInnhold}
-            />
+      <div>
+        <Button
+          variant="tertiary"
+          onClick={handleForhåndsvis}
+          size="small"
+          icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
+          loading={forhåndsvisningIsLoading}
+          type="button"
+        >
+          Forhåndsvis brev
+        </Button>
+      </div>
+
+      {redigerAutomatiskBrev && (
+        <div>
+          {!readOnly && (
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={() => setVisRedigering(true)}
+              // disabled={readOnly || !redigerbartInnholdKlart}
+              // loading={!redigerbartInnholdKlart}
+              // icon={<Edit aria-hidden />}
+              size="small"
+            >
+              Rediger automatisk brev
+            </Button>
           )}
-        </Modal>
-      </Box.New>
-    </Box.New>
+
+          <Modal open={visRedigering} onClose={handleModalClose} width="53.75rem" aria-label="Rediger brev">
+            {visRedigering && (
+              <FritekstEditor
+                handleSubmit={handleLagre}
+                lukkEditor={lukkEditor}
+                handleForhåndsvis={handleForhåndsvis}
+                readOnly={readOnly}
+                redigerbartInnholdKlart={redigerbartInnholdKlart}
+                redigerbartInnhold={redigerbartInnhold ?? ''}
+                originalHtml={originalHtml}
+                brevStiler={brevStiler}
+                prefiksInnhold={prefiksInnhold}
+                suffiksInnhold={suffiksInnhold}
+              />
+            )}
+          </Modal>
+        </div>
+      )}
+    </VStack>
   );
 };
