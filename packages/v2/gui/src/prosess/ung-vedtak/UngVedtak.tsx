@@ -32,8 +32,6 @@ interface UngVedtakProps {
 const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgResponse | undefined) =>
   vedtaksbrevValg?.vedtaksbrevValg?.map(v => ({
     dokumentMalType: v.dokumentMalType?.kilde,
-    // redigerAutomatiskBrev: redigert ? redigert : !!v.redigert || false,
-    redigerAutomatiskBrev: true,
     hindreUtsendingAvBrev: !!v.hindret || false,
     redigertHtml: v.redigertBrevHtml ?? '',
     originalHtml: '',
@@ -56,8 +54,6 @@ export const UngVedtak = ({
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
   const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
   const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
-  // const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
-  // const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [forhåndsvisningIsLoading, setForhåndsvisningIsLoading] = useState(false);
 
@@ -159,25 +155,12 @@ export const UngVedtak = ({
           <VStack gap="space-16">
             {fields.map((field, index) => {
               const vedtaksbrevValg = vedtaksbrevValgResponse?.vedtaksbrevValg?.[index];
-              // const calculatePadding = () => {
-              //   if (!vedtaksbrevValg?.kanOverstyreRediger) {
-              //     if (index === fields.length - 1) {
-              //       return 'space-20 0';
-              //     }
-              //     return 'space-16 0';
-              //   }
-              //   if (index === fields.length - 1) {
-              //     return 'space-20 space-24';
-              //   }
-              //   return 'space-16 space-12';
-              // };
+
               return (
                 <div key={field.id}>
                   <Box.New
-                    // borderWidth={index === 0 ? '1 0 0 0' : index === fields.length - 1 ? '1 0 1 0' : '1 0 0 0'}
                     borderWidth={index === 0 ? '0 0 1 0' : '0'}
                     paddingBlock={readOnly ? '0' : '0 space-20'}
-                    // paddingBlock={calculatePadding()}
                     width="450px"
                   >
                     {vedtaksbrevValgResponse?.harBrev && (

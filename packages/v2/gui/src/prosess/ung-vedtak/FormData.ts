@@ -2,7 +2,6 @@ import type { ung_kodeverk_dokument_DokumentMalType } from '@k9-sak-web/backend/
 
 export interface FormData {
   vedtaksbrevValg: {
-    redigerAutomatiskBrev: boolean;
     hindreUtsendingAvBrev: boolean;
     redigertHtml: string;
     originalHtml: string;

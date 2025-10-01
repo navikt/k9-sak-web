@@ -59,10 +59,6 @@ export const FritekstBrevpanel = ({
     control: formMethods.control,
     name: `vedtaksbrevValg.${fieldIndex}.redigertHtml`,
   });
-  const redigerAutomatiskBrev = useWatch({
-    control: formMethods.control,
-    name: `vedtaksbrevValg.${fieldIndex}.redigerAutomatiskBrev`,
-  });
 
   const handleFritekstSubmit = useCallback(
     async (html: string, nullstill?: boolean) => {
@@ -98,7 +94,6 @@ export const FritekstBrevpanel = ({
     }
 
     setRedigerbartInnholdKlart(true);
-    // setForhaandsvisningKlart(true);
   }, [setRedigerbartInnholdKlart, formMethods, hentOriginalHtml, redigertBrevHtml, fieldIndex]);
 
   const handleLagre = useCallback(
@@ -108,17 +103,9 @@ export const FritekstBrevpanel = ({
     [handleFritekstSubmit],
   );
 
-  // useEffect(() => {
-  //   if (!firstRender.current) {
-  //     void hentFritekstbrevMal();
-  //   }
-  // }, [firstRender, hentFritekstbrevMal]);
-
   useEffect(() => {
     const asyncEffect = async () => {
-      if (!firstRender.current && redigerbartInnholdKlart) {
-        // await handleLagre(redigertBrevHtml);
-      } else {
+      if (firstRender.current || !redigerbartInnholdKlart) {
         await hentFritekstbrevMal();
         firstRender.current = false;
       }
@@ -152,40 +139,30 @@ export const FritekstBrevpanel = ({
         </Button>
       </div>
 
-      {redigerAutomatiskBrev && (
-        <div>
-          {!readOnly && (
-            <Button
-              variant="secondary"
-              type="button"
-              onClick={() => setVisRedigering(true)}
-              // disabled={readOnly || !redigerbartInnholdKlart}
-              // loading={!redigerbartInnholdKlart}
-              // icon={<Edit aria-hidden />}
-              size="small"
-            >
-              Rediger automatisk brev
-            </Button>
-          )}
+      <div>
+        {!readOnly && (
+          <Button variant="secondary" type="button" onClick={() => setVisRedigering(true)} size="small">
+            Rediger automatisk brev
+          </Button>
+        )}
 
-          <Modal open={visRedigering} onClose={handleModalClose} width="53.75rem" aria-label="Rediger brev">
-            {visRedigering && (
-              <FritekstEditor
-                handleSubmit={handleLagre}
-                lukkEditor={lukkEditor}
-                handleForhåndsvis={handleForhåndsvis}
-                readOnly={readOnly}
-                redigerbartInnholdKlart={redigerbartInnholdKlart}
-                redigerbartInnhold={redigerbartInnhold ?? ''}
-                originalHtml={originalHtml}
-                brevStiler={brevStiler}
-                prefiksInnhold={prefiksInnhold}
-                suffiksInnhold={suffiksInnhold}
-              />
-            )}
-          </Modal>
-        </div>
-      )}
+        <Modal open={visRedigering} onClose={handleModalClose} width="53.75rem" aria-label="Rediger brev">
+          {visRedigering && (
+            <FritekstEditor
+              handleSubmit={handleLagre}
+              lukkEditor={lukkEditor}
+              handleForhåndsvis={handleForhåndsvis}
+              readOnly={readOnly}
+              redigerbartInnholdKlart={redigerbartInnholdKlart}
+              redigerbartInnhold={redigerbartInnhold ?? ''}
+              originalHtml={originalHtml}
+              brevStiler={brevStiler}
+              prefiksInnhold={prefiksInnhold}
+              suffiksInnhold={suffiksInnhold}
+            />
+          )}
+        </Modal>
+      </div>
     </VStack>
   );
 };
