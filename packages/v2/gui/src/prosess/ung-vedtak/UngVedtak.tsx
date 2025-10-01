@@ -55,23 +55,22 @@ export const UngVedtak = ({
   const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
   const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [forhåndsvisningIsLoading, setForhåndsvisningIsLoading] = useState(false);
 
-  const forhåndsvisVedtaksbrev = async (
-    dokumentMalType?: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
-  ) => {
-    if (dokumentMalType) {
-      setForhåndsvisningIsLoading(true);
-      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType?.kilde, false);
-      setForhåndsvisningIsLoading(false);
+  const {
+    mutate: forhåndsvisVedtaksbrev,
+    isPending: forhåndsvisningIsLoading,
+    isError: forhåndsvisningHasError,
+    error: forhåndsvisningError,
+  } = useMutation({
+    mutationFn: async (dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType) => {
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);
       // Open the PDF in a new tab
       window.open(fileURL, '_blank');
       return response;
-    }
-    return;
-  };
+    },
+  });
 
   const hentOriginalHtml = async (
     dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType | undefined,
@@ -90,7 +89,7 @@ export const UngVedtak = ({
     });
   };
 
-  const { mutate: lagreVedtaksbrev } = useMutation({
+  const { mutate: lagreVedtaksbrev, isError: lagreVedtaksbrevError } = useMutation({
     mutationFn: async ({
       redigertHtml,
       nullstill,
@@ -169,7 +168,9 @@ export const UngVedtak = ({
                         redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
                         hentOriginalHtml={() => hentOriginalHtml(vedtaksbrevValg?.dokumentMalType)}
                         lagreVedtaksbrev={lagreVedtaksbrev}
-                        handleForhåndsvis={() => forhåndsvisVedtaksbrev(vedtaksbrevValg?.dokumentMalType)}
+                        handleForhåndsvis={() =>
+                          vedtaksbrevValg?.dokumentMalType && forhåndsvisVedtaksbrev(vedtaksbrevValg.dokumentMalType)
+                        }
                         fieldIndex={index}
                         vedtaksbrevValg={vedtaksbrevValg}
                         forhåndsvisningIsLoading={forhåndsvisningIsLoading}
@@ -179,6 +180,21 @@ export const UngVedtak = ({
                 </div>
               );
             })}
+            {lagreVedtaksbrevError && (
+              <ContentMaxWidth>
+                <Alert variant="error" size="small">
+                  Det har oppstått en feil under kommunikasjon med serveren, endringene vil ikke bli lagret. Kopier
+                  innholdet i brevet og prøv å last siden på nytt.
+                </Alert>
+              </ContentMaxWidth>
+            )}
+            {forhåndsvisningHasError && (
+              <ContentMaxWidth>
+                <Alert variant="error" size="small">
+                  {forhåndsvisningError.message}
+                </Alert>
+              </ContentMaxWidth>
+            )}
           </VStack>
         </VStack>
         {harAksjonspunkt && !readOnly && (

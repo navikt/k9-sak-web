@@ -11,10 +11,6 @@ import { validerRedigertHtml } from './RedigeringUtils';
 interface ownProps {
   handleSubmit: (value: string, nullstill?: boolean) => void;
   lukkEditor: () => void;
-  // handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
-  // setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
-  // kanInkludereKalender: boolean;
-  // skalBrukeOverstyrendeFritekstBrev: boolean;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
   redigerbartInnhold: string;
@@ -45,9 +41,6 @@ const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
   handleForhåndsvis,
-  // setFieldValue,
-  // kanInkludereKalender,
-  // skalBrukeOverstyrendeFritekstBrev,
   readOnly,
   redigerbartInnholdKlart,
   redigerbartInnhold,
@@ -161,9 +154,7 @@ const FritekstEditor = ({
             <Alert variant="info" size="small">
               Gjør nødvendige endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje. Vil du
               se saken samtidig som du redigerer kan du åpne en kopi av saken i ny fane:
-              {/* <ÅpneSakINyttVinduKnapp /> */}
             </Alert>
-            {/* <FritekstFeilmeldinger /> */}
           </Box.New>
         </Modal.Header>
       )}
@@ -210,15 +201,6 @@ const FritekstEditor = ({
           </div>
           <footer className={visAdvarsel ? styles.skjulEditor : ''}>
             <Box.New marginBlock="8 0">
-              {/* {kanInkludereKalender && (
-                <Box.New marginBlock="0 4">
-                  <CheckboxField
-                    name="inkluderKalenderVedOverstyring"
-                    label="Inkluder kalender i brev"
-                    disabled={readOnly}
-                  />
-                </Box.New>
-              )} */}
               <div>
                 <div className={styles.knapper}>
                   {visValideringsFeil && (
@@ -237,7 +219,6 @@ const FritekstEditor = ({
                     Forhåndsvis brev
                   </Button>
                 </div>
-                {/* <FritekstFeilmeldinger /> */}
               </div>
               <Box.New marginBlock="8 0">
                 <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
