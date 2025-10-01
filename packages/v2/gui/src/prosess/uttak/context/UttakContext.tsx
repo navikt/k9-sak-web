@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import type {
@@ -10,6 +10,7 @@ import type {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import lagUttaksperiodeliste from '../utils/uttaksperioder';
+
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   uttak: UttaksplanMedUtsattePerioder;
@@ -33,7 +34,38 @@ export type UttakContextType = {
   lasterUttak?: boolean;
 };
 
+export interface UttakProviderProps {
+  value: Omit<
+    UttakContextType,
+    'uttaksperiodeListe' | 'setUttaksperiodeListe' | 'lasterUttak' | 'hentUttak' | 'arbeidsgivere'
+  >;
+  children: React.ReactNode;
+}
+
 export const UttakContext = createContext<UttakContextType | undefined>(undefined);
+
+export const UttakProvider = ({ value, value: { uttak }, children }: UttakProviderProps): React.ReactElement => {
+  const initialPerioder = React.useMemo(
+    () => (uttak?.uttaksplan ? uttak.uttaksplan.perioder : uttak?.simulertUttaksplan?.perioder),
+    [uttak],
+  );
+
+  const [uttaksperiodeListe, setUttaksperiodeListe] = React.useState(lagUttaksperiodeliste(initialPerioder));
+
+  React.useEffect(() => {
+    const nyePerioder = uttak?.uttaksplan ? uttak.uttaksplan.perioder : uttak?.simulertUttaksplan?.perioder;
+    setUttaksperiodeListe(lagUttaksperiodeliste(nyePerioder));
+  }, [uttak]);
+
+  const contextValue: UttakContextType = {
+    ...value,
+    arbeidsgivere: undefined,
+    uttaksperiodeListe,
+    setUttaksperiodeListe,
+  };
+
+  return <UttakContext.Provider value={contextValue}>{children}</UttakContext.Provider>;
+};
 
 export const useUttakContext = () => {
   const uttakContext = useContext(UttakContext);

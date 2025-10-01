@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext, type JSX } from 'react';
 import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
-import { UttakContext, type UttakContextType } from './context/UttakContext';
+import { UttakProvider, type UttakProviderProps } from './context/UttakContext';
 
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
@@ -20,7 +20,6 @@ import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
 import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
-import lagUttaksperiodeliste from './utils/uttaksperioder';
 import Infostripe from './components/infostripe/Infostripe';
 import VurderDato from './vurder-dato/VurderDato';
 
@@ -95,14 +94,7 @@ const Uttak = ({
     [aksjonspunkter, relevanteAksjonspunkter],
   );
 
-  const uttaksperioder = uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder;
-  const [uttaksperiodeListe, setUttaksperiodeListe] = React.useState(lagUttaksperiodeliste(uttaksperioder));
-  React.useEffect(() => {
-    const perioder = uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder;
-    setUttaksperiodeListe(lagUttaksperiodeliste(perioder));
-  }, [uttak]);
-
-  const uttakValues: UttakContextType = {
+  const uttakValues: UttakProviderProps['value'] = {
     behandling,
     uttak,
     uttakApi,
@@ -118,9 +110,6 @@ const Uttak = ({
     virkningsdatoUttakNyeRegler,
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     setRedigervirkningsdato,
-    arbeidsgivere: undefined,
-    uttaksperiodeListe,
-    setUttaksperiodeListe,
   };
 
   if (!uttak) {
@@ -128,7 +117,7 @@ const Uttak = ({
   }
 
   return (
-    <UttakContext.Provider value={uttakValues}>
+    <UttakProvider value={uttakValues}>
       <VStack gap="4">
         <HStack justify="start">
           <Heading size="small" level="1">
@@ -162,7 +151,7 @@ const Uttak = ({
           />
         )}
       </VStack>
-    </UttakContext.Provider>
+    </UttakProvider>
   );
 };
 
