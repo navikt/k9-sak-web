@@ -3,12 +3,13 @@ import {
   ung_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
   type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
   type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm } from '@navikt/ft-form-hooks';
-import { useMutation, useQuery, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
+import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import AvslagsårsakListe from './AvslagsårsakListe';
@@ -32,7 +33,7 @@ interface UngVedtakProps {
 
 const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgResponse | undefined, redigert?: boolean) =>
   vedtaksbrevValg?.vedtaksbrevValg?.map(v => ({
-    dokumentMalType: v.dokumentMalType,
+    dokumentMalType: v.dokumentMalType?.kilde,
     redigerAutomatiskBrev: redigert ? redigert : !!v.redigert || false,
     hindreUtsendingAvBrev: !!v.hindret || false,
     redigertHtml: v.redigertBrevHtml ?? '',
@@ -59,24 +60,33 @@ export const UngVedtak = ({
   // const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   // const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [forhåndsvisningIsLoading, setForhåndsvisningIsLoading] = useState(false);
   const behandlingErAvsluttet = behandling.status === BehandlingDtoStatus.AVSLUTTET;
 
-  const { refetch: forhåndsvisVedtaksbrev, isLoading: forhåndsvisningIsLoading } = useQuery({
-    queryKey: ['forhandsvisVedtaksbrev', behandling.id],
-    queryFn: async () => {
-      const response = await api.forhåndsvisVedtaksbrev(behandling.id);
+  const forhåndsvisVedtaksbrev = async (
+    dokumentMalType?: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
+  ) => {
+    if (dokumentMalType) {
+      setForhåndsvisningIsLoading(true);
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType?.kilde, false);
+      setForhåndsvisningIsLoading(false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);
       // Open the PDF in a new tab
       window.open(fileURL, '_blank');
       return response;
-    },
-    enabled: false,
-  });
+    }
+    return;
+  };
 
-  const hentOriginalHtml = async () => {
-    const response = await api.forhåndsvisVedtaksbrev(behandling.id, true, false);
-    return response;
+  const hentOriginalHtml = async (
+    dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType | undefined,
+  ) => {
+    if (dokumentMalType) {
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, true, false);
+      return response;
+    }
+    return {};
   };
 
   const resetForm = async () => {
@@ -94,7 +104,7 @@ export const UngVedtak = ({
     }: {
       redigertHtml: string;
       nullstill?: boolean;
-      dokumentMalType: DokumentMalType | undefined;
+      dokumentMalType: DokumentMalType;
     }) => {
       const requestData = {
         behandlingId: behandling.id,
@@ -155,21 +165,21 @@ export const UngVedtak = ({
                         <FritekstBrevpanel
                           readOnly={readOnly}
                           redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
-                          hentOriginalHtml={hentOriginalHtml}
+                          hentOriginalHtml={() => hentOriginalHtml(vedtaksbrevValg?.dokumentMalType)}
                           lagreVedtaksbrev={lagreVedtaksbrev}
-                          handleForhåndsvis={() => forhåndsvisVedtaksbrev()}
+                          handleForhåndsvis={() => forhåndsvisVedtaksbrev(vedtaksbrevValg?.dokumentMalType)}
                           fieldIndex={index}
+                          dokumentMalType={vedtaksbrevValg?.dokumentMalType}
                         />
                       )}
                       {vedtaksbrevValgResponse?.harBrev && (
                         <Button
                           variant="tertiary"
-                          onClick={() => forhåndsvisVedtaksbrev()}
+                          onClick={() => forhåndsvisVedtaksbrev(vedtaksbrevValg?.dokumentMalType)}
                           size="small"
                           icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                           loading={forhåndsvisningIsLoading}
                           type="button"
-                          disabled={!vedtaksbrevValgResponse?.harBrev}
                         >
                           Forhåndsvis brev
                         </Button>

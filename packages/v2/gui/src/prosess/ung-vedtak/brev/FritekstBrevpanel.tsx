@@ -1,4 +1,7 @@
-import type { ung_kodeverk_dokument_DokumentMalType as DokumentMalType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type {
+  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Alert, Box, Button, Heading, Modal } from '@navikt/ds-react';
 import type { UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -23,12 +26,13 @@ interface FriktekstBrevpanelProps {
     {
       redigertHtml: string;
       nullstill?: boolean;
-      dokumentMalType: DokumentMalType | undefined;
+      dokumentMalType: DokumentMalType;
     },
     unknown
   >;
   handleForhåndsvis: () => void;
   fieldIndex: number;
+  dokumentMalType?: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType | undefined;
 }
 
 export const FritekstBrevpanel = ({
@@ -37,6 +41,7 @@ export const FritekstBrevpanel = ({
   lagreVedtaksbrev,
   handleForhåndsvis,
   fieldIndex,
+  dokumentMalType,
 }: FriktekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
@@ -51,15 +56,13 @@ export const FritekstBrevpanel = ({
     control: formMethods.control,
     name: `vedtaksbrevValg.${fieldIndex}.redigertHtml`,
   });
-  const dokumentMalType = useWatch({
-    control: formMethods.control,
-    name: `vedtaksbrevValg.${fieldIndex}.dokumentMalType`,
-  });
 
   const handleFritekstSubmit = useCallback(
     async (html: string, nullstill?: boolean) => {
-      formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.redigertHtml`, html);
-      lagreVedtaksbrev({ redigertHtml: html, nullstill, dokumentMalType });
+      if (dokumentMalType) {
+        formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.redigertHtml`, html);
+        lagreVedtaksbrev({ redigertHtml: html, nullstill, dokumentMalType: dokumentMalType.kilde });
+      }
     },
     [formMethods, lagreVedtaksbrev, dokumentMalType, fieldIndex],
   );
@@ -127,7 +130,7 @@ export const FritekstBrevpanel = ({
   return (
     <Box.New marginBlock="0 4">
       <Heading size="small" level="3">
-        Brev
+        {dokumentMalType?.navn}
       </Heading>
       {!readOnly && (
         <Box.New marginBlock="3">

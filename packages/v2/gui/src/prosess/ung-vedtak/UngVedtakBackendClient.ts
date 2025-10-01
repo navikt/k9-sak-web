@@ -6,6 +6,7 @@ import {
 import type {
   ForhåndsvisVedtaksbrevResponse,
   LagreVedtaksbrevValgResponses,
+  ung_kodeverk_dokument_DokumentMalType,
   ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest,
   VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -18,10 +19,13 @@ export default class UngVedtakBackendClient {
   }
   async forhåndsvisVedtaksbrev(
     behandlingId: number,
-    htmlVersjon?: boolean,
+    dokumentMalType: ung_kodeverk_dokument_DokumentMalType,
+    htmlVersjon: boolean,
     redigertVersjon?: boolean,
   ): Promise<ForhåndsvisVedtaksbrevResponse> {
-    return (await formidling_forhåndsvisVedtaksbrev({ body: { behandlingId, htmlVersjon, redigertVersjon } })).data;
+    return (
+      await formidling_forhåndsvisVedtaksbrev({ body: { behandlingId, htmlVersjon, redigertVersjon, dokumentMalType } })
+    ).data;
   }
 
   async vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse> {
