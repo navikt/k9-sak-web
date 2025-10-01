@@ -57,21 +57,22 @@ const Uttak = ({
 
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
 
-  const aksjonspunktVurderOverlappendeSaker = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER === aksjonspunkt.definisjon, // AP: 9292
-  );
+  const aksjonspunkterMap = React.useMemo(() => {
+    const map = new Map<AksjonspunktDefinisjon, Aksjonspunkt>();
+    for (const ap of aksjonspunkter ?? []) {
+      if (ap.definisjon) {
+        map.set(ap.definisjon, ap);
+      }
+    }
+    return map;
+  }, [aksjonspunkter]);
 
-  const aksjonspunktForOverstyringAvUttak = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK === aksjonspunkt.definisjon, // AP: 6017
-  );
-
-  const aksjonspunktVentAnnenPSBSak = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK === aksjonspunkt.definisjon, // AP: 9290
-  );
-
-  const aksjonspunktVurderDatoNyRegelUttak = aksjonspunkter?.find(
-    aksjonspunkt => AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK === aksjonspunkt.definisjon, // AP: 9291
-  );
+  const aksjonspunktForOverstyringAvUttak = aksjonspunkterMap.get(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK); // AP: 6017
+  const aksjonspunktVurderOverlappendeSaker = aksjonspunkterMap.get(
+    AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
+  ); // AP: 9292
+  const aksjonspunktVentAnnenPSBSak = aksjonspunkterMap.get(AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK); // AP: 9290
+  const aksjonspunktVurderDatoNyRegelUttak = aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK); // AP: 9291
 
   const harOpprettetAksjonspunktVurderDato =
     aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET;
