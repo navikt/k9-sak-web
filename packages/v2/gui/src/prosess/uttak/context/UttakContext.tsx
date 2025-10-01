@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type Dispatch,
@@ -21,6 +20,7 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import lagUttaksperiodeliste from '../utils/uttaksperioder';
+import hentPerioderFraUttak from '../utils/hentPerioderFraUttak';
 
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
@@ -38,7 +38,6 @@ export type UttakContextType = {
   setRedigervirkningsdato: Dispatch<SetStateAction<boolean>>;
   arbeidsgivere: ArbeidsgiverOversikt['arbeidsgivere'] | undefined;
   uttaksperiodeListe: ReturnType<typeof lagUttaksperiodeliste>;
-  setUttaksperiodeListe: Dispatch<SetStateAction<ReturnType<typeof lagUttaksperiodeliste>>>;
   lasterUttak?: boolean;
   aksjonspunkterMap: Map<AksjonspunktDefinisjon, Aksjonspunkt>;
   harAksjonspunkt: (kode: AksjonspunktDefinisjon) => boolean;
@@ -74,17 +73,11 @@ export const UttakProvider = ({
   value: { uttak, aksjonspunkter },
   children,
 }: UttakProviderProps): ReactElement => {
-  const initialPerioder = useMemo(
-    () => (uttak?.uttaksplan ? uttak.uttaksplan.perioder : uttak?.simulertUttaksplan?.perioder),
-    [uttak],
-  );
-
-  const [uttaksperiodeListe, setUttaksperiodeListe] = useState(lagUttaksperiodeliste(initialPerioder));
   const [redigerVirkningsdato, setRedigervirkningsdato] = useState(false);
 
-  useEffect(() => {
-    const nyePerioder = uttak?.uttaksplan ? uttak.uttaksplan.perioder : uttak?.simulertUttaksplan?.perioder;
-    setUttaksperiodeListe(lagUttaksperiodeliste(nyePerioder));
+  const uttaksperiodeListe = useMemo(() => {
+    const perioder = hentPerioderFraUttak(uttak);
+    return lagUttaksperiodeliste(perioder);
   }, [uttak]);
 
   const alleAksjonspunkter: Aksjonspunkt[] = useMemo(() => aksjonspunkter ?? [], [aksjonspunkter]);
@@ -127,7 +120,6 @@ export const UttakProvider = ({
     setRedigervirkningsdato,
     arbeidsgivere: undefined,
     uttaksperiodeListe,
-    setUttaksperiodeListe,
     aksjonspunkterMap,
     harAksjonspunkt,
     harNoenAksjonspunkter,
@@ -150,7 +142,7 @@ export const useUttakContext = () => {
 
   const { behandling, uttakApi } = uttakContext;
 
-  const { uttaksperiodeListe, setUttaksperiodeListe } = uttakContext;
+  const { uttaksperiodeListe } = uttakContext;
 
   const { data: arbeidsgivere, isLoading: lasterArbeidsgivere } = useQuery<ArbeidsgiverOversikt['arbeidsgivere']>({
     queryKey: ['arbeidsgivere', behandling.uuid],
@@ -171,9 +163,6 @@ export const useUttakContext = () => {
     queryKey: ['uttak', behandling.uuid],
     queryFn: async () => {
       const hentetUttak = await uttakApi.hentUttak(behandling.uuid);
-      const perioder =
-        hentetUttak?.uttaksplan != null ? hentetUttak?.uttaksplan?.perioder : hentetUttak?.simulertUttaksplan?.perioder;
-      setUttaksperiodeListe(lagUttaksperiodeliste(perioder));
       return hentetUttak;
     },
     enabled: false,
