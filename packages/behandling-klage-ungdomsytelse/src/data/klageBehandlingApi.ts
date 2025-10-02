@@ -44,7 +44,9 @@ const endpoints = new RestApiConfigBuilder()
   )
 
   /* K9FORMIDLING */
-  .withPost('/ung/formidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/ung/sak/api/formidling/vedtaksbrev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE, {
+    isResponseBlob: true,
+  })
   .withPost('/ung/formidling/api/brev/html', KlageBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
   .build();
 
