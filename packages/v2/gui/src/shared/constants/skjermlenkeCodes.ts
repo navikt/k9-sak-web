@@ -1,5 +1,5 @@
-import faktaPanelCodes from './faktaPanelCodes';
-import prosessStegCodes from './prosessStegCodes';
+import { faktaPanelCodes } from '@k9-sak-web/gui/utils/skjermlenke/faktaPanelCodes.js';
+import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 
 const skjermlenkeCodes = {
   BEREGNING: {
@@ -262,6 +262,11 @@ const skjermlenkeCodes = {
     kode: 'OVERSTYR_INPUT_BEREGNING',
     faktaNavn: faktaPanelCodes.OVERSTYRING,
     punktNavn: '',
+  },
+  INNTEKTSKONTROLL: {
+    kode: 'INNTEKTSKONTROLL',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNTEKTSKONTROLL,
   },
 };
 
