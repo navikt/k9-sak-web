@@ -125,6 +125,8 @@ export const UngVedtak = ({
     });
   };
 
+  const harFlereBrev = vedtaksbrevValgResponse?.vedtaksbrevValg && vedtaksbrevValgResponse?.vedtaksbrevValg?.length > 1;
+
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
       <Box.New marginBlock="4">
@@ -146,11 +148,13 @@ export const UngVedtak = ({
             </div>
           )}
 
-          <ContentMaxWidth>
-            <Alert variant="info" size="small">
-              Du har flere brev
-            </Alert>
-          </ContentMaxWidth>
+          {harFlereBrev && (
+            <ContentMaxWidth>
+              <Alert variant="info" size="small">
+                Du har flere brev
+              </Alert>
+            </ContentMaxWidth>
+          )}
           <VStack gap="space-16">
             {fields.map((field, index) => {
               const vedtaksbrevValg = vedtaksbrevValgResponse?.vedtaksbrevValg?.[index];
