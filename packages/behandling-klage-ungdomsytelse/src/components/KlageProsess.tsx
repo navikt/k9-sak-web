@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -26,7 +26,7 @@ import { KlageBehandlingApiKeys, restApiKlageHooks } from '../data/klageBehandli
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import KlagePart from '../types/klagePartTsType';
-import KlageBehandlingModal from './KlageBehandlingModal';
+import KlageVurderingModal from './KlageVurderingModal';
 
 interface OwnProps {
   data: FetchedData;
@@ -228,7 +228,7 @@ const KlageProsess = ({
 
   return (
     <>
-      <KlageBehandlingModal
+      <KlageVurderingModal
         visModal={visModalKlageBehandling}
         lukkModal={useCallback(() => {
           toggleKlageModal(false);
