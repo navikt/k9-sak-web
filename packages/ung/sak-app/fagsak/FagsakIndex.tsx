@@ -185,6 +185,7 @@ const FagsakIndex = () => {
         behandlingType={behandling ? behandling?.type?.kode : undefined}
         kodeverk={alleKodeverkUngSak}
         tilbakeKodeverk={alleKodeverkTilbake}
+        klageKodeverk={alleKodeverkUngSak}
       >
         <SaksbehandlernavnContext.Provider
           value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
