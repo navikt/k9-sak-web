@@ -16,7 +16,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
-import type { UttaksperiodeBeriket } from '../Uttak';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
 import styles from './uttak.module.css';

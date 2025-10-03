@@ -1,9 +1,10 @@
 import { Tooltip } from '@navikt/ds-react';
 import { type JSX } from 'react';
-import type { UttaksperiodeInfoEndringsstatus } from '@k9-sak-web/backend/k9sak/generated';
+// import type { UttaksperiodeInfoEndringsstatus } from '@k9-sak-web/backend/k9sak/generated';
 import PillIcon from './PillIcon';
+import type { pleiepengerbarn_uttak_kontrakter_Endringsstatus as EndringsStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
-const Endringsstatus = ({ status }: { status?: UttaksperiodeInfoEndringsstatus }): JSX.Element | null => {
+const Endringsstatus = ({ status }: { status?: EndringsStatus }): JSX.Element | null => {
   if (status === 'NY') {
     return (
       <Tooltip content="Ny denne behandlingen">

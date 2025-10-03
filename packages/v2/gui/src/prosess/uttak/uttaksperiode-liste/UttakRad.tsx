@@ -21,7 +21,7 @@ import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import { useUttakContext } from '../context/UttakContext';
-import type { UttaksperiodeBeriket } from '../Uttak';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
 import styles from './uttak.module.css';
 

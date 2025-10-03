@@ -1,3 +1,5 @@
+import { type JSX } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
   k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
   pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
@@ -11,7 +13,6 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BriefcaseClockIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag, Skeleton } from '@navikt/ds-react';
-import { type JSX } from 'react';
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
@@ -20,10 +21,9 @@ import { FremhevingTag } from './FremhevingTag';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
 import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
 import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
-import styles from './uttakDetaljer.module.css';
 import { useUttakContext } from '../context/UttakContext';
-import { useQuery } from '@tanstack/react-query';
-import type { UttaksperiodeBeriket } from '../Uttak';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import styles from './uttakDetaljer.module.css';
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
