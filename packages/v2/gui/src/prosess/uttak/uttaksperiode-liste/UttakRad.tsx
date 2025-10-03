@@ -51,21 +51,17 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   const visPleiebehovProsent = !erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE);
   const erGradertMotInntekt = årsaker.some(årsak => årsak === Årsak.AVKORTET_MOT_INNTEKT);
 
-  const uttakGradIndikatorCls = cx('uttak__indikator', {
-    uttak__indikator__avslått: uttaksgrad === 0,
-    uttak__indikator__innvilget: (uttaksgrad ?? 0) > 0,
-    'uttak__indikator__innvilget--delvis--inntekt': erGradertMotInntekt,
-    'uttak__indikator__innvilget--delvis':
-      !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN),
+  const uttakGradIndikatorCls = cx('uttakIndikator', {
+    uttakIndikatorAvslått: uttaksgrad === 0,
+    uttakIndikatorInnvilget: (uttaksgrad ?? 0) > 0,
+    uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt,
+    uttakIndikatorInnvilgetDelvis: !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN),
   });
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
   return (
     <>
-      <Table.Row
-        className={`${erValgt ? styles['uttak__expandedRow'] : ''} ${styles['uttak__row']}`}
-        onClick={velgPeriode}
-      >
+      <Table.Row className={`${erValgt ? styles.uttakExpandedRow : ''}`} onClick={velgPeriode}>
         <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''} `}>
           {getFirstAndLastWeek(periode.fom, periode.tom)}
         </Table.DataCell>
@@ -90,9 +86,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             )}
           </BodyShort>
         </Table.DataCell>
-        <Table.DataCell
-          className={`${withBorderTop ? styles['borderTop'] : ''} ${styles['uttak__vilkarIconContainer']}`}
-        >
+        <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''} ${styles['uttakVilkarIconContainer']}`}>
           {harOppfyltAlleInngangsvilkår ? (
             <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
           ) : (
@@ -109,7 +103,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           </Table.DataCell>
         )}
         <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''}`}>
-          <div className={styles['uttak__iconContainer']}>
+          <div className={styles['uttakIconContainer']}>
             {harPleiebehov ? (
               <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
             ) : (
@@ -127,13 +121,13 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
           )}
         </Table.DataCell>
 
-        <Table.DataCell className={`${styles['uttak__uttaksgrad']} ${withBorderTop ? styles['borderTop'] : ''}`}>
-          <p className={styles['uttak__uttaksgrad__tekst']}>{`${uttaksgrad} %`}</p>
+        <Table.DataCell className={`${styles['uttakUttaksgrad']} ${withBorderTop ? styles['borderTop'] : ''}`}>
+          <p className={styles['uttakUttaksgradTekst']}>{`${uttaksgrad} %`}</p>
           <div className={uttakGradIndikatorCls} />
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles['borderTop'] : ''} `}>
-          <div className={styles['uttak__lastColumn']}>
-            <div className={styles['uttak__behandlerIcon']}>
+          <div className={styles['uttakLastColumn']}>
+            <div className={styles['uttakBehandlerIcon']}>
               <Endringsstatus status={endringsstatus} />
             </div>
             <Button

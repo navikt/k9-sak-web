@@ -11,7 +11,7 @@ const Infostripe: FC = () => {
     <div className={styles['infostripe']}>
       <Alert size="small" variant="warning">
         Det er nødvendig med mer informasjon fra andre saker før dette steget kan fullføres.
-        <ol className={styles['infostripe__punktliste']}>
+        <ol className={styles.infostripePunktliste}>
           <li>
             Åpne alle behandlinger tilknyttet
             {erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) ? 'pleietrengende' : 'barnet'} og behandle de til

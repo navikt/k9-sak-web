@@ -1,7 +1,7 @@
-.PillIcon,
-.PillIcon--success,
-.PillIcon--warning,
-.PillIcon--info {
+.pillIcon,
+.pillIconSuccess,
+.pillIconWarning,
+.pillIconInfo {
   padding: 0 10px;
   background: #e0f5fb;
   border-radius: 20px;
@@ -11,17 +11,17 @@
   display: inline-flex;
 }
 
-.PillIcon--success {
+.pillIconSuccess {
   background: #ccf1d6;
   border: 1px solid #006a23;
 }
 
-.PillIcon--warning {
+.pillIconWarning {
   background: #ffeccc;
   border: 1px solid #d47b00;
 }
 
-.PillIcon--info {
+.pillIconInfo {
   background: #f1f1f1;
   border: 1px solid #4cadcd;
 }

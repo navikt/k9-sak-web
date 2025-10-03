@@ -3,7 +3,7 @@
   margin-top: -1px;
 }
 
-.uttak__expandButton {
+.uttakExpandButton {
   border: none;
   background: none;
   cursor: pointer;
@@ -11,11 +11,11 @@
   float: right;
 }
 
-.uttak__expandButton--expanded {
+.uttakExpandButtonExpanded {
   transform: rotate(180deg);
 }
 
-.uttak__indikator {
+.uttakIndikator {
   height: 0.75rem;
   border-radius: 0.3125rem 0.3125rem 0 0;
   position: absolute;
@@ -23,53 +23,53 @@
   width: 100%;
 }
 
-.uttak__indikator__avslått {
+.uttakIndikatorAvslått {
   background: #f1d8d4;
   border: 1px solid #a13a28;
 }
 
-.uttak__indikator__innvilget {
+.uttakIndikatorInnvilget {
   background: #cde7d8;
   border: 1px solid #06893a;
 }
 
-.uttak__indikator__innvilget--delvis {
+.uttakIndikatorInnvilgetDelvis {
   background: repeating-linear-gradient(-45deg, #9bd0b0, #9bd0b0 10px, #fff 10px, #fff 20px);
 }
 
-.uttak__indikator__innvilget--delvis--inntekt {
+.uttakIndikatorInnvilgetDelvisInntekt {
   background: repeating-linear-gradient(-90deg, #9bd0b0, #9bd0b0 5px, #fff 5px, #fff 10px);
 }
 
-.uttak__uttaksgrad {
+.uttakUttaksgrad {
   position: relative;
   padding-top: 0.125rem;
   width: 9rem;
 }
 
-.uttak__uttaksgrad__tekst {
+.uttakUttaksgradTekst {
   margin: 0;
 }
 
-.uttak__iconContainer {
+.uttakIconContainer {
   display: inline-flex;
   vertical-align: bottom;
   margin-right: 0.625rem;
 }
 
-.uttak__icon--wide svg {
+.uttakIconWide svg {
   width: 2.25rem;
 }
 
-.uttak__expandedRow {
+.uttakExpandedRow {
   background: #f1f1f1;
 }
 
-.uttak__behandlerIcon {
+.uttakBehandlerIcon {
   margin: 0 0.5rem 0 1.375rem;
 }
 
-.uttak__lastColumn {
+.uttakLastColumn {
   display: grid;
   grid-template-columns: 6rem 30px;
   grid-column-gap: 1.75rem;
@@ -103,6 +103,6 @@
   border-right: 1px solid #bbb;
 }
 
-.uttak__vilkarIconContainer svg {
+.uttakVilkarIconContainer svg {
   vertical-align: middle;
 }

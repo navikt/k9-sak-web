@@ -7,9 +7,9 @@ interface PillIconProps {
 
 const PillIcon = ({ text, type }: PillIconProps) => {
   const style = {
-    success: styles['PillIcon--success'],
-    warning: styles['PillIcon--warning'],
-    info: styles['PillIcon--info'],
+    success: styles.pillIconSuccess,
+    warning: styles.pillIconWarning,
+    info: styles.pillIconInfo,
   };
 
   return <div className={style[type]}>{text}</div>;
