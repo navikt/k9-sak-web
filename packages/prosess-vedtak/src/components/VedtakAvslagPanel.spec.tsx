@@ -4,7 +4,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import {
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
   k9_kodeverk_vilkår_Utfall as VilkårUtfall,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { screen } from '@testing-library/react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';

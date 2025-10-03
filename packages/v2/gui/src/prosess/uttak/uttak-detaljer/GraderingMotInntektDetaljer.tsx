@@ -2,7 +2,7 @@ import {
   k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
   type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import React, { type FC } from 'react';
@@ -17,40 +17,48 @@ interface ownProps {
 
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntektsgradering }) => {
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
-  const beregningsgrunnlag = inntektsgradering.beregningsgrunnlag
-    ? tilNOK.format(inntektsgradering.beregningsgrunnlag)
-    : '-';
-  const løpendeInntekt = inntektsgradering.løpendeInntekt ? tilNOK.format(inntektsgradering.løpendeInntekt) : '-';
-  const bortfaltInntekt = inntektsgradering.bortfaltInntekt ? tilNOK.format(inntektsgradering.bortfaltInntekt) : '-';
+
+  const formatNOK = (value: number | null | undefined): string => {
+    if (value === null || value === undefined) {
+      return '-';
+    }
+    return tilNOK.format(value);
+  };
+
+  const beregningsgrunnlag = formatNOK(inntektsgradering.beregningsgrunnlag);
+  const løpendeInntekt = formatNOK(inntektsgradering.løpendeInntekt);
+  const bortfaltInntekt = formatNOK(inntektsgradering.bortfaltInntekt);
 
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
-        {inntektsforhold.map(inntForhold => {
-          const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-            : undefined;
-          return (
-            <Box.New
-              key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
-              className={styles.uttakDetaljerBeregningFirma}
-            >
-              <BodyShort size="small" weight="semibold" className="leading-6">
-                {arbeidsforholdData?.navn || 'Mangler navn'} (
-                {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator}){' '}
-                {inntForhold.erNytt && (
-                  <Tag size="small" variant="info">
-                    Ny
-                  </Tag>
-                )}
-              </BodyShort>
-              <BodyShort size="small">
-                Inntekt: {bruttoInntekt && løpendeInntekt ? tilNOK.format(bruttoInntekt - løpendeInntekt) : '-'}
-              </BodyShort>
-            </Box.New>
-          );
-        })}
+        {inntektsforhold
+          // Ikke vise tilkommende inntekstforhold i beregningsgrunnlag
+          .filter(inntForhold => !inntForhold.erNytt)
+          .map(inntForhold => {
+            const { arbeidsgiverIdentifikator } = inntForhold;
+            const arbeidsforholdData = arbeidsgiverIdentifikator
+              ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
+              : undefined;
+            return (
+              <Box.New
+                key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
+                className={styles.uttakDetaljerBeregningFirma}
+              >
+                <BodyShort size="small" weight="semibold" className="leading-6">
+                  {inntForhold.type !== InntektsforholdDtoType.FRILANSER
+                    ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
+                    : 'Frilanser'}{' '}
+                  {inntForhold.erNytt && (
+                    <Tag size="small" variant="info">
+                      Ny
+                    </Tag>
+                  )}
+                </BodyShort>
+                <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
+              </Box.New>
+            );
+          })}
       </UttakDetaljerEkspanderbar>
       <UttakDetaljerEkspanderbar title={`Utbetalt lønn: ${løpendeInntekt}`}>
         {inntektsforhold.map(inntForhold => {
@@ -72,13 +80,13 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                   )}
                 </BodyShort>
                 <BodyShort className="leading-6" size="small">
-                  Inntekt: {inntForhold.bruttoInntekt ? tilNOK.format(inntForhold.bruttoInntekt) : '-'}
+                  Inntekt: {formatNOK(inntForhold.bruttoInntekt)}
                 </BodyShort>
                 <BodyShort className="leading-6" size="small">
                   Jobber: {inntForhold.arbeidstidprosent} %
                 </BodyShort>
                 <BodyShort className="leading-6" size="small">
-                  = {inntForhold.løpendeInntekt ? tilNOK.format(inntForhold.løpendeInntekt) : '-'} i utbetalt lønn
+                  = {formatNOK(inntForhold.løpendeInntekt)} i utbetalt lønn
                 </BodyShort>
               </Box.New>
             </React.Fragment>

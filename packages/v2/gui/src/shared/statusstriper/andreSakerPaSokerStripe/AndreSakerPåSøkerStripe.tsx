@@ -1,4 +1,3 @@
-import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
@@ -6,20 +5,18 @@ import React from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import styles from './andreSakerPåSøkerStripe.module.css';
 interface Props {
-  søkerIdent: string;
   saksnummer: string;
-  fagsakYtelseType: FagsakYtelsesType;
   api: K9StatusBackendApi;
 }
 
-const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, fagsakYtelseType, api }) => {
+const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
   const {
     data: fagsaker,
     error,
     isSuccess,
   } = useQuery({
-    queryKey: ['andreFagsaker', { fagsakYtelseType, søkerIdent }],
-    queryFn: () => api.getAndreSakerPåSøker(fagsakYtelseType, søkerIdent),
+    queryKey: ['andreFagsaker', { saksnummer }],
+    queryFn: () => api.getAndreSakerPåSøker(saksnummer),
     initialData: [],
   });
 

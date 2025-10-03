@@ -27,7 +27,7 @@ vi.mock('react-router', async () => {
 describe('<TotrinnskontrollIndex>', () => {
   const fagsak = {
     saksnummer: '1',
-    sakstype: fagsakYtelsesType.FORELDREPENGER,
+    sakstype: fagsakYtelsesType.UNGDOMSYTELSE,
     person: {
       aktørId: '123',
     },
@@ -95,7 +95,7 @@ describe('<TotrinnskontrollIndex>', () => {
     });
     expect(
       screen.getByRole('dialog', {
-        name: 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+        name: 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
       }),
     ).toBeInTheDocument();
   });

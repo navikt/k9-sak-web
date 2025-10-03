@@ -1,48 +1,53 @@
-import { type K9SakClient, type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated';
+import { type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  brev_getBrevMottakerinfoEreg,
+  opplæringsinstitusjonSaksbehandling_hentAlleV2,
+  opplæringspenger_hentLangvarigSykVurderingerFagsak,
+  opplæringspenger_hentVurdertInstitusjon,
+  opplæringspenger_hentVurdertLangvarigSykdom,
+  opplæringspenger_hentVurdertOpplæring,
+  opplæringspenger_hentVurdertReisetid,
+  opplæringspenger_opprettLangvarigSykdomsVurdering,
+  vilkår_getVilkårV3,
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export default class SykdomOgOpplæringBackendClient {
-  #k9sak: K9SakClient;
-
-  constructor(k9sakClient: K9SakClient) {
-    this.#k9sak = k9sakClient;
-  }
-
   async getVilkår(behandlingUuid: string) {
-    return this.#k9sak.vilkår.getVilkårV3(behandlingUuid);
+    return (await vilkår_getVilkårV3({ query: { behandlingUuid } })).data;
   }
 
-  async opprettSykdomsvurdering(payload: OpprettLangvarigSykdomsVurderingData['requestBody']) {
-    return this.#k9sak.opplæringspenger.opprettLangvarigSykdomsVurdering(payload);
+  async opprettSykdomsvurdering(payload: OpprettLangvarigSykdomsVurderingData['body']) {
+    return (await opplæringspenger_opprettLangvarigSykdomsVurdering({ body: payload })).data;
   }
 
   async hentLangvarigSykVurderingerFagsak(behandlingUuid: string) {
-    return this.#k9sak.opplæringspenger.hentLangvarigSykVurderingerFagsak(behandlingUuid);
+    return (await opplæringspenger_hentLangvarigSykVurderingerFagsak({ query: { behandlingUuid } })).data;
   }
 
   async hentVurdertLangvarigSykdom(behandlingUuid: string) {
-    return this.#k9sak.opplæringspenger.hentVurdertLangvarigSykdom(behandlingUuid);
+    return (await opplæringspenger_hentVurdertLangvarigSykdom({ query: { behandlingUuid } })).data;
   }
 
   // Institusjon
   async getInstitusjonInfo(behandlingUuid: string) {
-    return this.#k9sak.opplæringspenger.hentVurdertInstitusjon(behandlingUuid);
+    return (await opplæringspenger_hentVurdertInstitusjon({ query: { behandlingUuid } })).data;
   }
 
   async hentAlleInstitusjoner() {
-    return this.#k9sak.opplæringsinstitusjonSaksbehandling.hentAlleV2();
+    return (await opplæringsinstitusjonSaksbehandling_hentAlleV2()).data;
   }
 
   async hentOrganisasjonsnummer(organisasjonsnummer: string) {
-    return this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr: organisasjonsnummer });
+    return (await brev_getBrevMottakerinfoEreg({ body: { organisasjonsnr: organisasjonsnummer } })).data;
   }
 
   // Nødvendig opplæring
   async getVurdertOpplæring(behandlingUuid: string) {
-    return this.#k9sak.opplæringspenger.hentVurdertOpplæring(behandlingUuid);
+    return (await opplæringspenger_hentVurdertOpplæring({ query: { behandlingUuid } })).data;
   }
 
   // Reisetid
   async getVurdertReisetid(behandlingUuid: string) {
-    return this.#k9sak.opplæringspenger.hentVurdertReisetid(behandlingUuid);
+    return (await opplæringspenger_hentVurdertReisetid({ query: { behandlingUuid } })).data;
   }
 }

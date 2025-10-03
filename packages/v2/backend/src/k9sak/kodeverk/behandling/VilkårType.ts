@@ -1,7 +1,7 @@
 import {
   type k9_kodeverk_vilkår_VilkårType as generatedVilkarTypeEnumUnion,
   k9_kodeverk_vilkår_VilkårType as enumObj,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '../../generated/types.js';
 
 export type VilkårType = generatedVilkarTypeEnumUnion;
 

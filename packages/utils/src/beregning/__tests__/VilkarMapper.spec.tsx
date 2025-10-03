@@ -4,7 +4,7 @@ import {
   k9_kodeverk_vilkår_VilkårType as VilkårType,
   k9_kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
   k9_kodeverk_vilkår_Utfall as VilkårUtfall,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { describe, expect, it } from 'vitest';
 import mapVilkar from '../VilkarMapper';
 

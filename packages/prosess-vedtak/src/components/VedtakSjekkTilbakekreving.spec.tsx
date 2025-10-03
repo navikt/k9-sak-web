@@ -14,7 +14,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const behandling = {
   id: 1,

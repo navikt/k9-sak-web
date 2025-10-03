@@ -8,7 +8,7 @@ import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon,
   type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 interface FormData {
   virkningsdato: string;

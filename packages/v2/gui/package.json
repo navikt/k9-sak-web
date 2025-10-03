@@ -6,6 +6,7 @@
   "version": "1.0.0",
   "exports": {
     "./app/*": "./src/app/*",
+    "./behandling/*": "./src/behandling/*",
     "./featuretoggles/*": "./src/featuretoggles/*",
     "./sak/*": "./src/sak/*",
     "./shared/*": "./src/shared/*",
@@ -14,25 +15,33 @@
     "./storybook/*": "./src/storybook/*",
     "./prosess/*": "./src/prosess/*",
     "./fakta/*": "./src/fakta/*",
-    "./tokens/*": "./src/tokens/*"
+    "./tokens/*": "./src/tokens/*",
+    "./context/*": "./src/context/*"
   },
   "dependencies": {
+    "@editorjs/editorjs": "2.30.8",
+    "@editorjs/header": "2.8.8",
+    "@editorjs/list": "2.0.8",
+    "@editorjs/paragraph": "2.11.7",
     "@hookform/error-message": "^2.0.1",
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "5.2.2",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
     "@navikt/diagnosekoder": "^1.2025.0",
-    "@navikt/ft-form-hooks": "^9.0.2",
-    "@navikt/ft-form-validators": "^4.1.2",
-    "@navikt/ft-utils": "^3.7.2",
-    "@tanstack/react-query": "^5.83.0",
+    "@navikt/ft-form-hooks": "^9.2.2",
+    "@navikt/ft-form-validators": "^4.2.11",
+    "@navikt/ft-utils": "^3.8.10",
+    "@tanstack/react-query": "^5.90.2",
+    "@types/css-tree": "^2.3.10",
     "@types/object-hash": "^3.0.6",
-    "axios": "1.11.0",
-    "dayjs": "^1.11.13",
+    "axios": "1.12.2",
+    "css-tree": "3.1.0",
+    "dayjs": "^1.11.18",
+    "editorjs-html": "3.4.3",
     "object-hash": "^3.0.0",
     "react": "19.1.1",
-    "react-hook-form": "7.62.0",
-    "react-router": "7.7.1",
-    "yup": "^1.6.1"
+    "react-hook-form": "7.63.0",
+    "react-router": "7.9.3",
+    "yup": "1.7.1"
   }
 }

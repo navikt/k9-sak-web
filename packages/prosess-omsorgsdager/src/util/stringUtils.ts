@@ -22,12 +22,26 @@ export const formatereDato = (dato: string): string => dato.replaceAll('-', '.')
 
 export const formatereDatoTilLesemodus = (dato: string): string => dayjs(dato).format('DD.MM.YYYY');
 
-export const utledTilgjengeligeÅr = (fraDato: string): TilgjengeligÅrOption[] => {
+/**
+ * Utleder tilgjengelige år basert på fraDato og eventuelle relative år
+ * @param {number} fraDato: Datoen som angir startpunktet for tilgjengelige år.
+ * @param {number | undefined} relativtFraÅr: Antall år før fraDato som skal inkluderes (valgfritt).
+ * @param {number | undefined} relativtTilÅr: Antall år etter fraDato som skal inkluderes (valgfritt).
+ * @returns En liste av objekter med tilgjengelige år.
+ */
+export const utledTilgjengeligeÅr = (
+  fraDato: string,
+  relativtFraÅr?: number | undefined,
+  relativtTilÅr: number | undefined = 19,
+): TilgjengeligÅrOption[] => {
   const nåværendeÅr = dayjs().year();
   const årFraDato = dayjs(fraDato).year();
-  const tidligsteMuligeÅr = årFraDato > nåværendeÅr ? årFraDato : nåværendeÅr - 1;
+  let tidligsteMuligeÅr = årFraDato > nåværendeÅr ? årFraDato : nåværendeÅr - 1;
+  if (relativtFraÅr !== undefined) {
+    tidligsteMuligeÅr = årFraDato - relativtFraÅr;
+  }
   const år: TilgjengeligÅrOption[] = [{ value: '0', title: 'Dato for opphør', disabled: true }];
-  for (let i = tidligsteMuligeÅr; i <= dayjs().year() + 19; i += 1) {
+  for (let i = tidligsteMuligeÅr; i <= dayjs().year() + relativtTilÅr; i += 1) {
     år.push({ value: i.toString(), title: `31.12.${i.toString()}`, disabled: false });
   }
   return år;

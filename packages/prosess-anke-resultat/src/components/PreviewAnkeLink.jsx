@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
+import { Link } from '@navikt/ds-react';
 import styles from './previewAnkeLink.module.css';
 
 const getBrevKode = ankeVurdering => {
@@ -43,7 +43,7 @@ const PreviewAnkeLink = ({
     );
   }
   return (
-    <a
+    <Link
       href=""
       onClick={e => {
         previewMessage(e);
@@ -52,7 +52,7 @@ const PreviewAnkeLink = ({
       className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
     >
       <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
-    </a>
+    </Link>
   );
 };
 

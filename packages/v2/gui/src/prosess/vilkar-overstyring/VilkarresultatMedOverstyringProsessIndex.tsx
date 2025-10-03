@@ -3,7 +3,7 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { dateStringSorter, formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -65,6 +65,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   visPeriodisering: boolean;
   vilkar: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
+  skjulOverstyring?: boolean;
 }
 
 export const VilkarresultatMedOverstyringProsessIndex = ({
@@ -83,6 +84,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
   visPeriodisering,
   vilkar,
   visAllePerioder,
+  skjulOverstyring = false,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -139,6 +141,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           panelTittelKode={panelTittelKode}
           periode={activePeriode}
           toggleOverstyring={toggleOverstyring}
+          skjulOverstyring={skjulOverstyring}
         />
         <VilkarresultatMedOverstyringFormPeriodisert
           key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}

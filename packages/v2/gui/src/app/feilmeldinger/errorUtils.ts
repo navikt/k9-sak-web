@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_FeilDto as FeilDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_FeilDto as FeilDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 /**
  * Henter feilmelding fra FeilDto.

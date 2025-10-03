@@ -1,10 +1,8 @@
 import {
   k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
   k9_kodeverk_produksjonsstyring_BehandlingMerknadType as SlettMerknadRequestMerknadKode,
-  type DeleteMerknadResponse,
   type GetMerknadResponse,
-  type PostMerknadResponse,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export type MarkerBehandlingBackendApi = {
   getMerknader(behandlingUuid: string): Promise<GetMerknadResponse>;
@@ -16,7 +14,7 @@ export type MarkerBehandlingBackendApi = {
     behandlingUuid: string;
     fritekst: string;
     merknadKode: EndreMerknadRequestMerknadKode;
-  }) => Promise<PostMerknadResponse>;
+  }) => Promise<void>;
 
   fjernMerknad({
     behandlingUuid,
@@ -24,5 +22,5 @@ export type MarkerBehandlingBackendApi = {
   }: {
     behandlingUuid: string;
     merknadKode: SlettMerknadRequestMerknadKode;
-  }): Promise<DeleteMerknadResponse>;
+  }): Promise<void>;
 };

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
-import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
-import { ForeldelseProsessIndex, ForeldelsesresultatActivity } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
+import {
+  ForeldelseProsessIndex,
+  ForeldelsesresultatActivity,
+  RelasjonsRolleType,
+} from '@navikt/ft-prosess-tilbakekreving-foreldelse';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
 const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {

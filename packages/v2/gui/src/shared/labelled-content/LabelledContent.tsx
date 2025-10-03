@@ -10,13 +10,12 @@ export interface LabelledContentProps {
   indentContent?: boolean;
   size?: 'medium' | 'small';
   hideLabel?: boolean;
-  description?: string;
+  description?: string | React.ReactNode;
 }
 
 export const LabelledContent = ({
   label,
   content,
-  labelTag,
   indentContent,
   size = 'small',
   hideLabel = false,
@@ -29,11 +28,12 @@ export const LabelledContent = ({
   return (
     <div>
       {!hideLabel && (
-        <Label className="font-bold" as={labelTag || 'p'} size={size}>
+        <Label className="font-bold" size={size}>
           {label}
         </Label>
       )}
-      {description && <Detail className="mt-1">{description}</Detail>}
+      {description && typeof description === 'string' && <Detail className="mt-1">{description}</Detail>}
+      {description && typeof description !== 'string' && description}
       <div className={cl}>{content}</div>
     </div>
   );

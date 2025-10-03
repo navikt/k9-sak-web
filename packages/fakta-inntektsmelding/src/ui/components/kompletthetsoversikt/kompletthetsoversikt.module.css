@@ -11,7 +11,11 @@
   border: none;
   padding: 0;
   box-shadow: none;
-  margin-top: 0.25rem;
+}
+
+.alertAccordion :global(button.aksel-accordion__header:before),
+.alertAccordion :global(button.aksel-accordion__header:after) {
+  height: 0;
 }
 
 .alertAccordion :global(.aksel-accordion__content) {

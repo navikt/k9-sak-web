@@ -1,5 +1,3 @@
-import React from 'react';
-
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -41,6 +39,7 @@ const feilutbetalingFakta = {
       fom: '2018-01-01',
       tom: '2019-01-01',
       belop: 1000,
+      feilutbetalingÅrsakDto: {},
     },
   ],
   behandlingÅrsaker: [
@@ -133,8 +132,8 @@ describe('<FeilutbetalingInfoPanel>', () => {
         }}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={alleKodeverk}
-        fpsakKodeverk={fpsakKodeverk}
+        tilbakeKodeverk={alleKodeverk}
+        sakKodeverk={fpsakKodeverk}
       />,
       { messages },
     );

@@ -1,8 +1,8 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import { Alert, HStack, Heading, VStack } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import React, { useContext, type JSX } from 'react';
+import React, { type JSX } from 'react';
 import {
   aksjonspunktVurderDatoKode,
   aksjonspunktVurderOverlappendeYtelsekode,
@@ -11,7 +11,6 @@ import {
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
 
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
 import UtsattePerioderStripe from '@k9-sak-web/gui/prosess/uttak/components/utsattePerioderStripe/UtsattePerioderStripe.js';
 import OverstyrUttak from '@k9-sak-web/gui/prosess/uttak/overstyr-uttak/OverstyrUttak.js';
@@ -65,8 +64,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
       ].includes(ap.definisjon.kode),
   );
 
-  const k9SakClient = useContext(K9SakClientContext);
-  const uttakApi = new BehandlingUttakBackendClient(k9SakClient);
+  const uttakApi = new BehandlingUttakBackendClient();
 
   return (
     <ContainerContext.Provider value={containerData}>

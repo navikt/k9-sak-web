@@ -22,7 +22,7 @@ import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.
 import {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';

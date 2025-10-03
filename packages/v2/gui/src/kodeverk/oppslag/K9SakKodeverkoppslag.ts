@@ -1,4 +1,4 @@
-import { type AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated';
+import { type AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   GeneriskKodeverkoppslag,
   type Kilde,

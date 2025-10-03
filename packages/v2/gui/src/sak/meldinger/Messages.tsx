@@ -7,7 +7,7 @@ import type {
   k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
   k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
   k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';

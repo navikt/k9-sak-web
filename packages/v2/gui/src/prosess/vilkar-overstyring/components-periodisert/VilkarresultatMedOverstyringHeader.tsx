@@ -1,7 +1,7 @@
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
@@ -35,7 +35,9 @@ const isHidden = (
   aksjonspunktCodes: AksjonspunktCodes[],
   aksjonspunktCode: string,
   vurderesIBehandlingen: boolean,
-) => (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen;
+  skjulOverstyring?: boolean,
+) =>
+  (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen || skjulOverstyring;
 
 const vilkårResultatText = (originalErVilkarOk?: boolean, periode?: VilkårPeriodeDto) => {
   let text = 'Ikke behandlet';
@@ -67,6 +69,7 @@ interface VilkarresultatMedOverstyringHeaderProps {
   panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   periode?: VilkårPeriodeDto;
+  skjulOverstyring?: boolean;
 }
 
 const VilkarresultatMedOverstyringHeader = ({
@@ -79,6 +82,7 @@ const VilkarresultatMedOverstyringHeader = ({
   toggleOverstyring,
   aksjonspunkter,
   periode,
+  skjulOverstyring,
 }: VilkarresultatMedOverstyringHeaderProps) => {
   const aksjonspunktCodes = aksjonspunkter
     .filter((a): a is { definisjon: AksjonspunktCodes } => a.definisjon !== undefined)
@@ -119,6 +123,7 @@ const VilkarresultatMedOverstyringHeader = ({
               aksjonspunktCodes,
               overstyringApKode,
               !!periode?.vurderesIBehandlingen,
+              skjulOverstyring,
             ) && (
               <Box.New marginBlock={'1 0'}>
                 <Button
