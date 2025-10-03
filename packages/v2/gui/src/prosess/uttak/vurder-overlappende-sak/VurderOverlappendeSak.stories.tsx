@@ -290,8 +290,7 @@ export const Aksjonspunkt: Story = {
 
 export const LøsAksjonspunkt: Story = {
   args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false, api, oppdaterBehandling },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
 
@@ -355,8 +354,7 @@ export const LøsAksjonspunkt: Story = {
 
 export const LøsAksjonspunktMedSplitt: Story = {
   args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false, api, oppdaterBehandling },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
 
