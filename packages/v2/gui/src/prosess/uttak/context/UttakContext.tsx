@@ -140,9 +140,7 @@ export const useUttakContext = () => {
     throw new Error('useUttakContext must be used within a UttakProvider');
   }
 
-  const { behandling, uttakApi } = uttakContext;
-
-  const { uttaksperiodeListe } = uttakContext;
+  const { behandling, uttakApi, uttaksperiodeListe } = uttakContext;
 
   const { data: arbeidsgivere, isLoading: lasterArbeidsgivere } = useQuery<ArbeidsgiverOversikt['arbeidsgivere']>({
     queryKey: ['arbeidsgivere', behandling.uuid],
