@@ -140,7 +140,7 @@ export const FritekstBrevpanel = ({
       </div>
 
       <div>
-        {!readOnly && (
+        {!readOnly && vedtaksbrevValg?.enableRediger && (
           <Button variant="secondary" type="button" onClick={() => setVisRedigering(true)} size="small">
             Rediger automatisk brev
           </Button>
