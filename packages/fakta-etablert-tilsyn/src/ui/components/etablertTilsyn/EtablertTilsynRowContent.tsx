@@ -1,12 +1,11 @@
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
 import { Period } from '@fpsak-frontend/utils';
-import dayjs from 'dayjs';
-import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import PartIkon from './PartIkon';
 import styles from './etablertTilsynRowContent.module.css';
 import EtablertTilsynDag from './EtablertTilsynDag';
 import Kilde from '../../../types/Kilde';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
 interface TilsynMappet {
   date: string;
@@ -35,17 +34,17 @@ const EtablertTilsynRowContent = ({
     v.periode.asListOfDays().map(date => ({ date, tidPerDag: v.tidPerDag })),
   );
 
-  const mandag = etablertTilsynDager.find(v => dayjs(v.date).day() === 1);
-  const tirsdag = etablertTilsynDager.find(v => dayjs(v.date).day() === 2);
-  const onsdag = etablertTilsynDager.find(v => dayjs(v.date).day() === 3);
-  const torsdag = etablertTilsynDager.find(v => dayjs(v.date).day() === 4);
-  const fredag = etablertTilsynDager.find(v => dayjs(v.date).day() === 5);
+  const mandag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 1);
+  const tirsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 2);
+  const onsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 3);
+  const torsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 4);
+  const fredag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 5);
 
-  const mandagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 1);
-  const tirsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 2);
-  const onsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 3);
-  const torsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 4);
-  const fredagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 5);
+  const mandagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 1);
+  const tirsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 2);
+  const onsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 3);
+  const torsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 4);
+  const fredagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 5);
 
   const dagOverstyres = (tilsyn: TilsynMappet) => dagerSomOverstyrerTilsyn.some(dag => dag.fom === tilsyn?.date);
 

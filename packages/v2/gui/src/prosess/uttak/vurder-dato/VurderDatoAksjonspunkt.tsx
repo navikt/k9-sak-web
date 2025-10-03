@@ -1,14 +1,11 @@
 import { Button } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import styles from './VurderDatoAksjonspunkt.module.css';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useUttakContext } from '../context/UttakContext';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 
 interface FormData {
   virkningsdato: string;
@@ -16,18 +13,16 @@ interface FormData {
 }
 
 interface Props {
-  avbryt?: () => void;
   initialValues?: {
     virkningsdato: string;
     begrunnelse: string;
   };
-  readOnly: boolean;
-  api: BehandlingUttakBackendClient;
-  behandling: Pick<BehandlingDto, 'id' | 'versjon'>;
-  oppdaterBehandling: () => void;
 }
 
-const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly, api, behandling, oppdaterBehandling }: Props) => {
+const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
+  const { readOnly, behandling, uttakApi, oppdaterBehandling, setRedigervirkningsdato, virkningsdatoUttakNyeRegler } =
+    useUttakContext();
+
   const formMethods = useForm<FormData>({
     defaultValues: initialValues,
   });
@@ -46,7 +41,7 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly, api, behandli
           },
         ],
       };
-      return api.bekreftAksjonspunkt(payload);
+      return uttakApi.bekreftAksjonspunkt(payload);
     },
     onSuccess: () => {
       oppdaterBehandling();
@@ -84,8 +79,9 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly, api, behandli
             <Button size="small" type="submit" className={styles['bekreft']}>
               Bekreft og fortsett
             </Button>
-            {avbryt && (
-              <Button variant="secondary" type="button" size="small" onClick={avbryt}>
+
+            {virkningsdatoUttakNyeRegler && (
+              <Button variant="secondary" type="button" size="small" onClick={() => setRedigervirkningsdato(false)}>
                 Avbryt
               </Button>
             )}

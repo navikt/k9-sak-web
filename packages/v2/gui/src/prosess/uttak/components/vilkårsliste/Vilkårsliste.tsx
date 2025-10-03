@@ -1,0 +1,33 @@
+import type { JSX } from 'react';
+import { Label } from '@navikt/ds-react';
+import {
+  k9_kodeverk_vilkår_VilkårType as VilkårType,
+  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import VilkårslisteItem from './VilkårslisteItem';
+import vilkårListe from './Vilkår';
+import styles from './vilkårsliste.module.css';
+
+type VilkårTypeMap = { [key in VilkårType]?: VilkårUtfall };
+
+const erVilkårOppfylt = (vilkårkode: VilkårType, vilkår: VilkårTypeMap) => vilkår[vilkårkode] === VilkårUtfall.OPPFYLT;
+
+const Vilkårsliste = ({ vilkår }: { vilkår: VilkårTypeMap }): JSX.Element => {
+  return (
+    <div className={styles['vilkårsliste']}>
+      <Label size="small" as="p">
+        Vilkår
+      </Label>
+      <ul>
+        {vilkårListe.map(
+          v =>
+            vilkår[v.kode] && (
+              <VilkårslisteItem key={v.kode} vilkår={v.name} erOppfylt={erVilkårOppfylt(v.kode, vilkår)} />
+            ),
+        )}
+      </ul>
+    </div>
+  );
+};
+
+export default Vilkårsliste;

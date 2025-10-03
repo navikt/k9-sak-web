@@ -1,4 +1,4 @@
-import React from 'react';
+import { type FC } from 'react';
 import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
 import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
 import type {
@@ -15,7 +15,7 @@ type ownProps = {
   arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
 };
 
-const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading, arbeidsgivere }) => {
+const OverstyrAktivitetListe: FC<ownProps> = ({ fields, loading, arbeidsgivere }) => {
   const {
     register,
     formState: { errors },

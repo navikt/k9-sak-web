@@ -1,18 +1,10 @@
-import React, { useEffect, useState, type FC } from 'react';
-
+import { Fragment, useEffect, useState, type FC } from 'react';
+import { format } from 'date-fns';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-import {
-  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { useQuery } from '@tanstack/react-query';
 import {
   Alert,
   BodyShort,
@@ -27,26 +19,22 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
+import {
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
-import { useFieldArray, useForm } from 'react-hook-form';
-import type { ObjectSchema } from 'yup';
-import * as yup from 'yup';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
+import { useUttakContext } from '../context/UttakContext';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
 import styles from './VurderOverlappendeSak.module.css';
 
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
-
-interface Props {
-  behandling: Pick<BehandlingDto, 'uuid' | 'id' | 'versjon' | 'status'>;
-  aksjonspunkt: AksjonspunktDto;
-  readOnly: boolean;
-  api: BehandlingUttakBackendApiType;
-  oppdaterBehandling: () => void;
-}
 
 export interface VurderOverlappendeSakFormData {
   begrunnelse: string;
@@ -61,12 +49,21 @@ export interface VurderOverlappendeSakFormData {
 
 const gyldigAksjonspunktType = '9292' as const;
 
-const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
+const VurderOverlappendeSak: FC = () => {
+  const {
+    behandling,
+    aksjonspunktVurderOverlappendeSaker: aksjonspunkt,
+    uttakApi,
+    readOnly,
+    oppdaterBehandling,
+  } = useUttakContext();
+
+  const { status, uuid, id, versjon } = behandling;
+  const [rediger, setRediger] = useState<boolean>(aksjonspunkt ? skalAksjonspunktUtredes(aksjonspunkt, status) : false);
   const [loading, setLoading] = useState<boolean>(false);
-  const { uuid, id, versjon, status } = behandling;
-  const [rediger, setRediger] = useState<boolean>(skalAksjonspunktUtredes(aksjonspunkt, status));
+
   const sakAvsluttet = status === 'AVSLU';
-  const kanRedigeres = kanAksjonspunktRedigeres(aksjonspunkt, status);
+  const kanRedigeres = aksjonspunkt ? kanAksjonspunktRedigeres(aksjonspunkt, status) : false;
 
   const {
     data: egneOverlappendeSaker,
@@ -75,7 +72,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
     isError: overlappendeIsError,
   } = useQuery<EgneOverlappendeSakerDto>({
     queryKey: ['overlappende', uuid],
-    queryFn: async () => await api.getEgneOverlappendeSaker(uuid),
+    queryFn: async () => {
+      return await uttakApi.getEgneOverlappendeSaker(uuid);
+    },
   });
 
   const vurderOverlappendeSakFormSchema: ObjectSchema<VurderOverlappendeSakFormData> = yup.object({
@@ -97,7 +96,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
             )
             // Vi vil ha undefined istadenfor NaN
             .transform(v => (Number.isNaN(v) ? undefined : v))
-
             .when('valg', (valg, schema) => {
               return valg.includes(PeriodeMedOverlappValg.JUSTERT_GRAD)
                 ? schema
@@ -151,7 +149,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
   }, [overlappendeSuccess, egneOverlappendeSaker, reset, aksjonspunkt?.begrunnelse]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
-    if (aksjonspunkt.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
+    if (aksjonspunkt?.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
       setLoading(true);
       const bekreftetAksjonspunkt: DTOWithDiscriminatorType<
         k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
@@ -175,12 +173,12 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
         behandlingVersjon: versjon,
         bekreftedeAksjonspunktDtoer: [bekreftetAksjonspunkt],
       };
-      await api.bekreftAksjonspunkt(requestBody);
+      await uttakApi.bekreftAksjonspunkt(requestBody);
       setLoading(false);
       oppdaterBehandling();
     } else {
       throw new Error(
-        `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
+        `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt?.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
       );
     }
   };
@@ -196,6 +194,8 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
 
   const vurdertTidspunkt =
     egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.vurdertTidspunkt)?.vurdertTidspunkt || undefined;
+
+  if (!behandling) return null;
 
   return (
     <VStack gap="space-16" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
@@ -245,7 +245,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                       saksnummer,
                     } = periodeMedOverlapp;
                     return (
-                      <React.Fragment key={`${fom}-${tom}-${saksnummer.toString()}`}>
+                      <Fragment key={`${fom}-${tom}-${saksnummer.toString()}`}>
                         <List as="ul" size="small">
                           <List.Item>
                             <BodyShort as="span">
@@ -253,18 +253,18 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, readOnly, 
                               {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
                               {saksnummer.length > 0 &&
                                 saksnummer.map((sakNr, index) => (
-                                  <React.Fragment key={`${fom}-${tom}-${sakNr}-link`}>
+                                  <Fragment key={`${fom}-${tom}-${sakNr}-link`}>
                                     {index > 0 && ', '}
                                     <Link href={`/k9/web/fagsak/${sakNr}`} target="_blank">
                                       {sakNr}
                                     </Link>
-                                  </React.Fragment>
+                                  </Fragment>
                                 ))}
                               )
                             </BodyShort>
                           </List.Item>
                         </List>
-                      </React.Fragment>
+                      </Fragment>
                     );
                   })}
                 </Alert>

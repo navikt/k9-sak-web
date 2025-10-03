@@ -10,7 +10,7 @@ import {
   type DatePickerProps,
 } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
@@ -43,7 +43,7 @@ type OwnProps = {
   handleOverstyring: HandleOverstyringType;
 };
 
-const OverstyringUttakForm: React.FC<OwnProps> = ({
+const OverstyringUttakForm: FC<OwnProps> = ({
   behandling,
   handleAvbrytOverstyringForm,
   overstyring,
@@ -53,7 +53,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   api,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>(undefined);
+  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>({});
 
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
   const resolver: Resolver<OverstyrUttakPeriodeDto, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
