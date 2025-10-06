@@ -4,17 +4,25 @@ import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '
 import { render, screen } from '@testing-library/react';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
 import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = vi.fn();
+  const behandling: TotrinnskontrollBehandling = {
+    id: 1,
+    uuid: '1-1',
+    versjon: 2,
+    status: BehandlingDtoStatus.FATTER_VEDTAK,
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    behandlingsresultatType: BehandlingResultatType.IKKE_FASTSATT,
+    toTrinnsBehandling: false,
+  };
   it('skal rendre modal for fatter vedtak', () => {
     render(
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.KLAGE}
-        behandlingsresultatType={BehandlingResultatType.IKKE_FASTSATT}
+        behandling={{ ...behandling, type: behandlingType.KLAGE }}
         fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
         erKlageWithKA
       />,
@@ -29,9 +37,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
-        behandlingsresultatType={BehandlingResultatType.IKKE_FASTSATT}
+        behandling={behandling}
         fagsakYtelseType={fagsakYtelsesType.ENGANGSTØNAD}
         erKlageWithKA
       />,
@@ -48,9 +54,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
-        behandlingsresultatType={BehandlingResultatType.IKKE_FASTSATT}
+        behandling={behandling}
         fagsakYtelseType={fagsakYtelsesType.OMSORGSPENGER_KS}
         erKlageWithKA
       />,

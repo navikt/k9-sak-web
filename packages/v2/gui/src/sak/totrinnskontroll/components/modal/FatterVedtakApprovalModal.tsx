@@ -6,6 +6,7 @@ import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import styles from './fatterVedtakApprovalModal.module.css';
 import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.ts';
 
 const getInfoTextCode = (
   behandlingtypeKode: string,
@@ -188,13 +189,11 @@ const utledModalDescriptionTextCode = (
     : 'Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.';
 
 interface OwnProps {
+  behandling: TotrinnskontrollBehandling;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
   fagsakYtelseType: FagsakYtelsesType;
   erKlageWithKA?: boolean;
-  behandlingsresultatType: BehandlingResultatType;
-  behandlingStatusKode: string;
-  behandlingTypeKode: string;
   harSammeResultatSomOriginalBehandling?: boolean;
 }
 
@@ -207,13 +206,14 @@ interface OwnProps {
 const FatterVedtakApprovalModal = ({
   closeEvent,
   allAksjonspunktApproved,
-  behandlingStatusKode,
-  behandlingTypeKode,
-  behandlingsresultatType,
+  behandling,
   harSammeResultatSomOriginalBehandling,
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps) => {
+  const behandlingsresultatType = behandling.behandlingsresultatType ?? BehandlingResultatType.IKKE_FASTSATT;
+  const behandlingStatusKode = behandling.status;
+  const behandlingTypeKode = behandling.type;
   const isBehandlingsresultatOpphor =
     behandlingsresultatType && behandlingsresultatType === BehandlingResultatType.OPPHØR;
   const infoTextCode = utledInfoTextCode(

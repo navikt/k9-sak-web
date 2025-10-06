@@ -6,13 +6,13 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
-import FatterVedtakTotrinnskontrollModalSakIndex from './FatterVedtakTotrinnskontrollModalSakIndex';
-import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
 
-const meta: Meta<typeof FatterVedtakTotrinnskontrollModalSakIndex> = {
-  title: 'gui/sak/totrinnskontroll/fatter-vedtak-modal',
-  component: FatterVedtakTotrinnskontrollModalSakIndex,
-} satisfies Meta<typeof FatterVedtakTotrinnskontrollModalSakIndex>;
+const meta: Meta<typeof FatterVedtakApprovalModal> = {
+  title: 'gui/sak/totrinnskontroll/modal',
+  component: FatterVedtakApprovalModal,
+} satisfies Meta<typeof FatterVedtakApprovalModal>;
 
 export default meta;
 

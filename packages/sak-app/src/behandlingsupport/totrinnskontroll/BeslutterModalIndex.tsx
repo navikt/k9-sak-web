@@ -4,7 +4,7 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
-import FatterVedtakTotrinnskontrollModalSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/FatterVedtakTotrinnskontrollModalSakIndex.js';
+import FatterVedtakApprovalModal from '@k9-sak-web/gui/sak/totrinnskontroll/components/modal/FatterVedtakApprovalModal.js';
 import { getPathToK9Los } from '../../app/paths';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
@@ -36,7 +36,7 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
   }
 
   return (
-    <FatterVedtakTotrinnskontrollModalSakIndex
+    <FatterVedtakApprovalModal
       behandling={behandling}
       closeEvent={goToSearchPage}
       allAksjonspunktApproved={allAksjonspunktApproved}
