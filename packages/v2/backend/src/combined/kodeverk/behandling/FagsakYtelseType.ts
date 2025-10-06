@@ -16,5 +16,6 @@ export const FagsakYtelseType = safeConstCombine(
   k9_kodeverk_behandling_FagsakYtelseType,
   k9_klage_kodeverk_behandling_FagsakYtelseType,
   foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType,
+  ung_kodeverk_behandling_FagsakYtelseType,
   sif_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType,
 );
