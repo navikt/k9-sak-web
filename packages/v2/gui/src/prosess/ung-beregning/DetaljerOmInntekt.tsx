@@ -79,7 +79,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
       <Bleed marginBlock="0 2" asChild>
         <HStack justify="space-between" align="baseline">
           <Heading size="small" level="2">
-            Detaljer om rapportert inntekt
+            Kontroll av inntekt
           </Heading>
           <Button
             as="a"
