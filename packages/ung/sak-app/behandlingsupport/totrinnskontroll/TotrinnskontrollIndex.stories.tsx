@@ -7,7 +7,8 @@ import TotrinnskontrollIndex from './TotrinnskontrollIndex.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { Meta, StoryObj } from '@storybook/react';
-import type {
+import {
+  AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
@@ -16,6 +17,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
 import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import { expect } from 'storybook/test';
+import { action } from 'storybook/actions';
 
 const navAnsatt = {
   brukernavn: 'Test',
@@ -94,6 +96,14 @@ const api: TotrinnskontrollApi = {
     ignoreUnusedDeclared(behandlingUuid);
     return Promise.resolve(dummyData);
   },
+  bekreft(
+    behandlingUuid: Readonly<string>,
+    behandlingVersjon: Readonly<number>,
+    aksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos,
+  ): Promise<void> {
+    action('api.bekreft')(behandlingUuid, behandlingVersjon, aksjonspunktGodkjenningDtos);
+    return Promise.resolve();
+  },
 };
 
 export const Default: Story = {
@@ -101,7 +111,6 @@ export const Default: Story = {
     fagsak: fagsak as Fagsak,
     alleBehandlinger: alleBehandlinger as unknown as BehandlingAppKontekst[],
     behandlingId: alleBehandlinger[0].id,
-    behandlingVersjon: alleBehandlinger[0].versjon,
     api,
   },
   play: async ({ canvas }) => {

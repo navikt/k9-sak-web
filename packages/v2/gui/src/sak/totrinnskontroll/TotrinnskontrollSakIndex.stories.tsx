@@ -2,9 +2,13 @@ import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from 'storybook/test';
-import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex.js';
+import { TotrinnskontrollSakIndex } from './TotrinnskontrollSakIndex.js';
 import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
-import type { TotrinnskontrollData } from '../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type {
+  AksjonspunktGodkjenningDtos,
+  TotrinnskontrollApi,
+  TotrinnskontrollData,
+} from '../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import { K9KlageTotrinnskontrollData } from '../../behandling/support/totrinnskontroll/k9/K9KlageTotrinnskontrollBackendClient.js';
 import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.jsx';
 import { K9KlageKodeverkoppslag } from '../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
@@ -18,6 +22,7 @@ import type {
 import { K9TilbakeKodeverkoppslag } from '../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
 import { oppslagKodeverkSomObjektK9Tilbake } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Tilbake.js';
 import { K9TilbakeTotrinnskontrollData } from '../../behandling/support/totrinnskontroll/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { action } from 'storybook/actions';
 
 const klageTotrinnskontrollData = (): TotrinnskontrollData => {
   const klageKodeverkoppslag = new K9KlageKodeverkoppslag(oppslagKodeverkSomObjektK9Klage);
@@ -73,6 +78,7 @@ const klageTotrinnskontrollData = (): TotrinnskontrollData => {
 
 const behandling: TotrinnskontrollBehandling = {
   id: 1,
+  uuid: '1-1',
   versjon: 2,
   status: BehandlingDtoStatus.FATTER_VEDTAK,
   type: BehandlingType.FØRSTEGANGSSØKNAD,
@@ -81,7 +87,7 @@ const behandling: TotrinnskontrollBehandling = {
 };
 
 const meta = {
-  title: 'gui/sak/totrinnskontroll',
+  title: 'gui/sak/totrinnskontroll2',
   component: TotrinnskontrollSakIndex,
   decorators: [withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TotrinnskontrollSakIndex>;
@@ -90,17 +96,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const api: Pick<TotrinnskontrollApi, 'bekreft'> = {
+  bekreft: fn(),
+};
+
 export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
   args: {
     behandling,
     totrinnskontrollData: klageTotrinnskontrollData(),
-    onSubmit: fn(),
     behandlingKlageVurdering: {
       klageVurderingResultatNFP: {
         klageVurdering: 'STADFESTE_YTELSESVEDTAK',
       },
     },
     readOnly: false,
+    api,
+    onBekreftet: action('onBekreftet'),
   },
   play: async ({ args, canvas }) => {
     const godkjentTexts = canvas.getAllByLabelText('Godkjent');
@@ -124,39 +135,38 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeDisabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeEnabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
-    await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
-      fatterVedtakAksjonspunktDto: {
-        '@type': '5016',
-        begrunnelse: null,
-        aksjonspunktGodkjenningDtos: [
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
-            godkjent: false,
-            begrunnelse: 'Dette er en begrunnelse',
-            arsaker: ['FEIL_FAKTA', 'FEIL_LOV', 'FEIL_REGEL'],
-          },
-        ],
+    const expectedAksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos = [
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
       },
-      erAlleAksjonspunktGodkjent: false,
-    });
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+        godkjent: false,
+        begrunnelse: 'Dette er en begrunnelse',
+        arsaker: ['FEIL_FAKTA', 'FEIL_LOV', 'FEIL_REGEL'],
+      },
+    ];
+    await expect(args.api.bekreft).toHaveBeenNthCalledWith(
+      1,
+      behandling.uuid,
+      behandling.versjon,
+      expectedAksjonspunktGodkjenningDtos,
+    );
   },
 };
 
@@ -181,39 +191,38 @@ export const GodkjennerVedtak: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
-    await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
-      fatterVedtakAksjonspunktDto: {
-        '@type': '5016',
-        begrunnelse: null,
-        aksjonspunktGodkjenningDtos: [
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-        ],
+    const expectedAksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos = [
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
       },
-      erAlleAksjonspunktGodkjent: true,
-    });
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+    ];
+    await expect(args.api.bekreft).toHaveBeenNthCalledWith(
+      1,
+      behandling.uuid,
+      behandling.versjon,
+      expectedAksjonspunktGodkjenningDtos,
+    );
   },
 };
 
@@ -221,7 +230,7 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
   args: {
     ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
-  play: async ({ canvas }) => {
+  play: async ({ canvas, step }) => {
     const godkjentTexts = canvas.getAllByLabelText('Godkjent');
     if (godkjentTexts[0]) {
       await userEvent.click(godkjentTexts[0]);
@@ -238,7 +247,12 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     }
     await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
-    await expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
+    await expect(canvas.getByText('Minst en årsak må velges')).toBeInTheDocument();
+    await step('Fjern feilmelding når årsak velges', async () => {
+      const feilFaktaCheckBox = canvas.getByLabelText('Feil fakta');
+      await userEvent.click(feilFaktaCheckBox);
+      await expect(canvas.queryByText('Minst en årsak må velges')).not.toBeInTheDocument();
+    });
   },
 };
 
@@ -297,14 +311,18 @@ const tilbakeTotrinnskontrollData = (): TotrinnskontrollData => {
 export const Tilbakekreving: Story = {
   args: {
     behandling: {
+      id: 2,
+      uuid: '2-2',
+      versjon: 3,
       type: 'BT-007',
       status: 'FVED',
       toTrinnsBehandling: true,
       behandlingsresultatType: 'IKKE_FASTSATT',
     },
-    onSubmit: fn(),
+    onBekreftet: action('onBekreftet'),
     behandlingKlageVurdering: undefined,
     readOnly: false,
     totrinnskontrollData: tilbakeTotrinnskontrollData(),
+    api,
   },
 };

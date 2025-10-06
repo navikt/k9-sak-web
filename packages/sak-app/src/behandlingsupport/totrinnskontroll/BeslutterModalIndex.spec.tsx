@@ -10,6 +10,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingS
 describe('<BeslutterModalIndex>', () => {
   const behandling: TotrinnskontrollBehandling = {
     id: 1,
+    uuid: '1-1',
     versjon: 2,
     behandlingsresultatType: 'IKKE_FASTSATT',
     type: behandlingType.FØRSTEGANGSSØKNAD,

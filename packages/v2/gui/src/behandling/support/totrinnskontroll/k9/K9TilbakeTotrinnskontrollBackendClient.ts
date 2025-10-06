@@ -6,6 +6,7 @@ import type {
 import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
+  aksjonspunkt_beslutt,
 } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
 import {
   type K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted,
@@ -14,7 +15,10 @@ import {
 import type { K9TilbakeTotrinnskontrollAksjonspunkterDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import type { K9TilbakeKodeverkoppslag } from '../../../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
 import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktDefinisjon as K9TilbakeAksjonspunktDefinisjon } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
 
 export class K9TilbakeTotrinnskontrollData implements TotrinnskontrollData {
   #kodeverkoppslag: K9TilbakeKodeverkoppslag;
@@ -124,5 +128,23 @@ export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollA
       resp.data.map(mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted),
       this.#kodeverkoppslag,
     );
+  }
+
+  async bekreft(
+    behandlingUuid: string,
+    behandlingVersjon: number,
+    aksjonspunktGodkjenningDtos: Required<FatterVedtakAksjonspunktDto['aksjonspunktGodkjenningDtos']>,
+  ) {
+    const fatterVedtakAksjonspunktDto: BekreftetAksjonspunktDto = {
+      '@type': K9TilbakeAksjonspunktDefinisjon.FATTE_VEDTAK,
+      aksjonspunktGodkjenningDtos,
+    };
+    await aksjonspunkt_beslutt({
+      body: {
+        behandlingUuid: { behandlingId: behandlingUuid, behandlingUuid },
+        behandlingVersjon,
+        bekreftedeAksjonspunktDtoer: [fatterVedtakAksjonspunktDto],
+      },
+    });
   }
 }

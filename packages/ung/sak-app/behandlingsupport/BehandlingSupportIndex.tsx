@@ -27,7 +27,7 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -39,7 +39,6 @@ import MeldingTilbakeIndex from './melding/MeldingTilbakeIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import type { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngSakTotrinnskontrollBackendClient.js';
@@ -169,17 +168,6 @@ const BehandlingSupportIndex = ({
   const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
   const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const notatBackendClient = new NotatBackendClient('ungSak');
-  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState<FormState | undefined>(undefined);
-
-  const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
-  const prevResetValue = useRef(currentResetValue);
-
-  useEffect(() => {
-    if (currentResetValue !== prevResetValue.current) {
-      setToTrinnskontrollFormState(undefined);
-    }
-    prevResetValue.current = currentResetValue;
-  }, [currentResetValue]);
 
   const notaterQueryKey = ['notater', fagsak?.saksnummer];
   const { data: notater } = useQuery({
@@ -299,9 +287,6 @@ const BehandlingSupportIndex = ({
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              toTrinnFormState={toTrinnskontrollFormState}
-              setToTrinnFormState={setToTrinnskontrollFormState}
               api={totrinnskontrollApi}
             />
           </Tabs.Panel>
@@ -310,7 +295,6 @@ const BehandlingSupportIndex = ({
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
               api={totrinnskontrollApi}
             />
           </Tabs.Panel>

@@ -1,8 +1,7 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
-import TotrinnskontrollSakIndex from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
+import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
 import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { UngSakApiKeys, restApiHooks } from '../../data/ungsakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
@@ -15,41 +14,10 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import { useQuery } from '@tanstack/react-query';
 import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
 
-type Values = {
-  fatterVedtakAksjonspunktDto: any;
-  erAlleAksjonspunktGodkjent: boolean;
-};
-
-const getLagreFunksjon =
-  (
-    saksnummer: string,
-    behandlingId: number,
-    behandlingUuid: string | undefined,
-    behandlingVersjon: number,
-    setAlleAksjonspunktTilGodkjent: (erGodkjent: boolean) => void,
-    setVisBeslutterModal: (visModal: boolean) => void,
-    godkjennTotrinnsaksjonspunkter: (params: any) => Promise<any>,
-  ) =>
-  (totrinnskontrollData: Values) => {
-    const params = {
-      saksnummer,
-      behandlingId,
-      behandlingUuid,
-      behandlingVersjon,
-      bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
-    };
-    setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
-    setVisBeslutterModal(true);
-    return godkjennTotrinnsaksjonspunkter(params);
-  };
-
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
-  behandlingVersjon: number;
-  toTrinnFormState?: FormState;
-  setToTrinnFormState?: React.Dispatch<FormState>;
   api: TotrinnskontrollApi;
 }
 
@@ -58,15 +26,7 @@ interface OwnProps {
  *
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
-const TotrinnskontrollIndex = ({
-  fagsak,
-  alleBehandlinger,
-  behandlingId,
-  behandlingVersjon,
-  toTrinnFormState,
-  setToTrinnFormState,
-  api,
-}: OwnProps) => {
+const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: OwnProps) => {
   const [visBeslutterModal, setVisBeslutterModal] = useState(false);
   const [erAlleAksjonspunktGodkjent, setAlleAksjonspunktTilGodkjent] = useState(false);
 
@@ -81,6 +41,7 @@ const TotrinnskontrollIndex = ({
   const totrinnskontrollBehandling: TotrinnskontrollBehandling = useMemo(
     () => ({
       id: behandling.id,
+      uuid: behandling.uuid,
       versjon: behandling.versjon,
       type: behandling.type.kode,
       status: behandling.status.kode as BehandlingStatus,
@@ -96,42 +57,30 @@ const TotrinnskontrollIndex = ({
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
 
   const totrinnsÅrsakerQuery = useQuery({
-    queryKey: ['totrinnskontroll/årsaker', behandling.uuid, behandling.status.kode, api],
+    queryKey: ['totrinnskontroll', 'årsaker', behandling.uuid, behandling.status.kode, api],
     queryFn: () => api.hentTotrinnskontrollSkjermlenkeContext(behandling.uuid),
     enabled: behandling.status.kode == BehandlingStatus.FATTER_VEDTAK,
     throwOnError: true,
   });
 
   const totrinnArsakerReadOnlyQuery = useQuery({
-    queryKey: ['totrinnskontroll/årsaker/readonly', behandling.uuid, behandling.status.kode, api],
+    queryKey: ['totrinnskontroll', 'årsaker', 'readonly', behandling.uuid, behandling.status.kode, api],
     queryFn: () => api.hentTotrinnskontrollvurderingSkjermlenkeContext(behandling.uuid),
     enabled: behandling.status.kode == BehandlingStatus.UTREDES,
     throwOnError: true,
   });
 
   const totrinnsKlageVurderingQuery = useQuery({
-    queryKey: ['totrinnskontroll/klagevurdering', behandling.uuid, behandling.versjon],
+    queryKey: ['totrinnskontroll', 'klagevurdering', behandling.uuid, behandling.versjon],
     queryFn: () => api.hentTotrinnsKlageVurdering?.(behandling.uuid) ?? Promise.resolve(null),
     enabled: api.hentTotrinnsKlageVurdering != undefined,
     throwOnError: true,
   });
 
-  const { startRequest: godkjennTotrinnsaksjonspunkter } = restApiHooks.useRestApiRunner(
-    UngSakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
-  );
-
-  const onSubmit = useCallback(
-    getLagreFunksjon(
-      fagsak.saksnummer,
-      behandlingId,
-      behandling?.uuid,
-      behandlingVersjon,
-      setAlleAksjonspunktTilGodkjent,
-      setVisBeslutterModal,
-      godkjennTotrinnsaksjonspunkter,
-    ),
-    [behandlingId, behandlingVersjon],
-  );
+  const onBekreftet = (alleGodkjent: boolean) => {
+    setAlleAksjonspunktTilGodkjent(alleGodkjent);
+    setVisBeslutterModal(true);
+  };
 
   if (
     (totrinnsÅrsakerQuery.isEnabled && totrinnsÅrsakerQuery.isPending) ||
@@ -149,10 +98,9 @@ const TotrinnskontrollIndex = ({
           behandling={totrinnskontrollBehandling}
           totrinnskontrollData={totrinnskontrollData}
           readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
-          onSubmit={onSubmit}
           behandlingKlageVurdering={totrinnsKlageVurderingQuery.data ?? undefined}
-          toTrinnFormState={toTrinnFormState}
-          setToTrinnFormState={setToTrinnFormState}
+          onBekreftet={onBekreftet}
+          api={api}
         />
         {visBeslutterModal && (
           <BeslutterModalIndex

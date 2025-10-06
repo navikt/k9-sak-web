@@ -2,6 +2,7 @@ import type { k9_klage_kontrakt_klage_KlagebehandlingDto } from '@k9-sak-web/bac
 import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import type { SkjermlenkeObjekt } from '@k9-sak-web/backend/combined/behandling/historikk/SkjermlenkeObjekt.js';
 import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
 
 export interface TotrinnskontrollDataPrSkjermlenke {
   readonly skjermlenke: SkjermlenkeObjekt;
@@ -20,8 +21,15 @@ export interface TotrinnskontrollData {
   vurderPåNyttÅrsakNavn(årsak: Required<TotrinnskontrollAksjonspunkterDto>['vurderPaNyttArsaker'][number]): string;
 }
 
+export type AksjonspunktGodkjenningDtos = Required<FatterVedtakAksjonspunktDto['aksjonspunktGodkjenningDtos']>;
+
 export interface TotrinnskontrollApi {
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnsKlageVurdering?(behandlingUuid: string): Promise<k9_klage_kontrakt_klage_KlagebehandlingDto>;
+  bekreft(
+    behandlingUuid: Readonly<string>,
+    behandlingVersjon: Readonly<number>,
+    aksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos,
+  ): Promise<void>;
 }

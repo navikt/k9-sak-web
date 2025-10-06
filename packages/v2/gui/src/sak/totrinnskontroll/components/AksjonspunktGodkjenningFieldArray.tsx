@@ -1,9 +1,8 @@
 import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
+import { BodyShort, Detail, ErrorMessage, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
@@ -16,9 +15,6 @@ import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathF
 import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
-
-const minLength3 = minLength(3);
-const maxLength2000 = maxLength(2000);
 
 export type AksjonspunktGodkjenningData = {
   aksjonspunktKode: AksjonspunktDefinisjon;
@@ -47,16 +43,14 @@ export const AksjonspunktGodkjenningFieldArray = ({
 }: OwnProps) => {
   const location = useLocation();
   const featureToggles = useContext(FeatureTogglesContext);
-  const { control, formState } = useFormContext<FormState>();
+  const { control, getFieldState, trigger } = useFormContext<FormState>();
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
   const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
-
   return (
     <>
       {fields.map((field, index) => {
-        const { aksjonspunktKode, totrinnskontrollGodkjent, annet, feilFakta, feilLov, feilRegel } =
-          aksjonspunktGodkjenning[index] || {};
+        const { aksjonspunktKode, totrinnskontrollGodkjent } = aksjonspunktGodkjenning[index] || {};
         const data = aksjonspunktKode != null ? totrinnskontrollData.forAksjonspunkt(aksjonspunktKode) : undefined;
 
         const erKlageKA: boolean =
@@ -76,10 +70,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
           data?.skjermlenke?.kilde === SkjermlenkeType.FAKTA_OM_FORDELING &&
           aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
 
-        const checkboxRequiredError =
-          formState.isSubmitted && !totrinnskontrollGodkjent && !annet && !feilFakta && !feilLov && !feilRegel
-            ? 'Feltet må fylles ut'
-            : '';
+        const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
+        const checkboxValidationError = error?.message; // formState.errors.aksjonspunktGodkjenning?.[index]?.message
+        const reValidateAksjonspunktGodkjenning = () => trigger(`aksjonspunktGodkjenning.${index}`);
 
         const skjermlenkePath = isNyInntektEgetPanel
           ? createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT')
@@ -134,12 +127,14 @@ export const AksjonspunktGodkjenningFieldArray = ({
                                 name={`aksjonspunktGodkjenning.${index}.feilFakta`}
                                 label="Feil fakta"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                               <RhfCheckbox
                                 control={control}
                                 name={`aksjonspunktGodkjenning.${index}.feilRegel`}
                                 label="Feil regelforståelse"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                             </div>
                             <div>
@@ -148,20 +143,18 @@ export const AksjonspunktGodkjenningFieldArray = ({
                                 name={`aksjonspunktGodkjenning.${index}.feilLov`}
                                 label="Feil lovanvendelse"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                               <RhfCheckbox
                                 control={control}
                                 name={`aksjonspunktGodkjenning.${index}.annet`}
                                 label="Annet"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                             </div>
                           </HStack>
-                          {checkboxRequiredError && (
-                            <div className="navds-error-message navds-label navds-label--small">
-                              {checkboxRequiredError}
-                            </div>
-                          )}
+                          {checkboxValidationError && <ErrorMessage>{checkboxValidationError}</ErrorMessage>}
                         </Fieldset>
                       </VStack>
                     )}
@@ -170,9 +163,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                         control={control}
                         name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                         label="Begrunnelse"
-                        validate={[required, minLength3, maxLength2000, hasValidText]}
                         readOnly={readOnly}
-                        maxLength={2000}
                       />
                     </div>
                   </ArrowBox>

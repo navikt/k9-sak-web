@@ -2,16 +2,18 @@ import type {
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
-} from '../TotrinnskontrollApi.ts';
+} from '../TotrinnskontrollApi.js';
 import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
+  aksjonspunkt_bekreft,
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-//import type { k9_sak_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { K9SakKodeverkoppslag } from '../../../../kodeverk/oppslag/K9SakKodeverkoppslag.ts';
+import type { K9SakKodeverkoppslag } from '../../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
 import type { K9SakTotrinnskontrollAksjonspunkterDtoAdjusted as K9TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
-import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
 
 export class K9SakTotrinnskontrollData implements TotrinnskontrollData {
   #kodeverkoppslag: K9SakKodeverkoppslag;
@@ -82,5 +84,23 @@ export class K9SakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
       data as K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
       this.#kodeverkoppslag,
     );
+  }
+
+  async bekreft(
+    behandlingUuid: string,
+    behandlingVersjon: number,
+    aksjonspunktGodkjenningDtos: Required<FatterVedtakAksjonspunktDto['aksjonspunktGodkjenningDtos']>,
+  ) {
+    const fatterVedtakAksjonspunktDto: BekreftetAksjonspunktDto = {
+      '@type': AksjonspunktDefinisjon.FATTER_VEDTAK,
+      aksjonspunktGodkjenningDtos,
+    };
+    await aksjonspunkt_bekreft({
+      body: {
+        behandlingId: behandlingUuid,
+        behandlingVersjon,
+        bekreftedeAksjonspunktDtoer: [fatterVedtakAksjonspunktDto],
+      },
+    });
   }
 }

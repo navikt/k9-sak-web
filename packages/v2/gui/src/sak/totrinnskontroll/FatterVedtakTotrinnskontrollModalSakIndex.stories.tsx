@@ -20,6 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 const behandling: TotrinnskontrollBehandling = {
   id: 1,
+  uuid: '1-1',
   versjon: 2,
   status: BehandlingDtoStatus.FATTER_VEDTAK,
   type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
