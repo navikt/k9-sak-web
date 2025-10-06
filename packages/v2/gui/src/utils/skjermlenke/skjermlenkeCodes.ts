@@ -232,9 +232,9 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     punktNavn: '',
   },
   {
-    kode: 'INNTEKTSKONTROLL',
+    kode: 'KONTROLL_AV_INNTEKT',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.INNTEKTSKONTROLL,
+    punktNavn: prosessStegCodes.KONTROLL_AV_INNTEKT,
   },
 ];
 

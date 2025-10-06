@@ -263,10 +263,10 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.OVERSTYRING,
     punktNavn: '',
   },
-  INNTEKTSKONTROLL: {
-    kode: 'INNTEKTSKONTROLL',
+  KONTROLL_AV_INNTEKT: {
+    kode: 'KONTROLL_AV_INNTEKT',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.INNTEKTSKONTROLL,
+    punktNavn: prosessStegCodes.KONTROLL_AV_INNTEKT,
   },
 };
 
