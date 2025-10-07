@@ -11,7 +11,6 @@ import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBeh
 const getInfoTextCode = (
   behandlingtypeKode: string,
   behandlingsresultatType: BehandlingResultatType,
-  harSammeResultatSomOriginalBehandling: boolean,
   ytelseType: FagsakYtelseType,
   erKlageWithKA: boolean,
   isOpphor: boolean,
@@ -29,10 +28,6 @@ const getInfoTextCode = (
       return 'Klagen returneres til saksbehandler for iverksettelse.';
     }
     return 'Resultatet av klagebehandlingen blir iverksatt.';
-  }
-  // HVIS INGEN ENDRING
-  if (harSammeResultatSomOriginalBehandling) {
-    return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
   if (behandlingsresultatType === BehandlingResultatType.AVSLÅTT) {
@@ -139,7 +134,6 @@ const utledInfoTextCode = (
   behandlingStatusKode: string,
   behandlingTypeKode: string,
   behandlingsresultatType: BehandlingResultatType,
-  harSammeResultatSomOriginalBehandling: boolean,
   fagsakYtelseType: FagsakYtelseType,
   erKlageWithKA: boolean,
   isBehandlingsresultatOpphor: boolean,
@@ -149,7 +143,6 @@ const utledInfoTextCode = (
       ? getInfoTextCode(
           behandlingTypeKode,
           behandlingsresultatType,
-          harSammeResultatSomOriginalBehandling,
           fagsakYtelseType,
           erKlageWithKA,
           isBehandlingsresultatOpphor,
@@ -194,7 +187,6 @@ interface OwnProps {
   allAksjonspunktApproved: boolean;
   fagsakYtelseType: FagsakYtelseType;
   erKlageWithKA?: boolean;
-  harSammeResultatSomOriginalBehandling?: boolean;
 }
 
 /**
@@ -207,7 +199,6 @@ const FatterVedtakApprovalModal = ({
   closeEvent,
   allAksjonspunktApproved,
   behandling,
-  harSammeResultatSomOriginalBehandling,
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps) => {
@@ -221,7 +212,6 @@ const FatterVedtakApprovalModal = ({
     behandlingStatusKode,
     behandlingTypeKode,
     behandlingsresultatType,
-    !!harSammeResultatSomOriginalBehandling,
     fagsakYtelseType,
     !!erKlageWithKA,
     !!isBehandlingsresultatOpphor,

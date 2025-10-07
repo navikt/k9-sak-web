@@ -3,7 +3,7 @@ import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/T
 import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import React, { useMemo, useState } from 'react';
 import { UngSakApiKeys, restApiHooks } from '../../data/ungsakApi';
-import BeslutterModalIndex from './BeslutterModalIndex';
+import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 import {
@@ -106,8 +106,9 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: 
           <BeslutterModalIndex
             behandling={totrinnskontrollBehandling}
             fagsakYtelseType={ensureKodeVerdiString(fagsak.sakstype)}
-            allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
+            erAlleAksjonspunktGodkjent={erAlleAksjonspunktGodkjent}
             erKlageWithKA={totrinnsKlageVurderingQuery.data?.klageVurderingResultatNK != null}
+            urlEtterpå="/"
           />
         )}
       </>

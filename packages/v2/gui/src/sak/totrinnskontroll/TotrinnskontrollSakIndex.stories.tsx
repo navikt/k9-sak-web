@@ -87,7 +87,7 @@ const behandling: TotrinnskontrollBehandling = {
 };
 
 const meta = {
-  title: 'gui/sak/totrinnskontroll2',
+  title: 'gui/sak/totrinnskontroll',
   component: TotrinnskontrollSakIndex,
   decorators: [withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TotrinnskontrollSakIndex>;

@@ -1,13 +1,13 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
 import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 
 const meta: Meta<typeof FatterVedtakApprovalModal> = {
   title: 'gui/sak/totrinnskontroll/modal',
@@ -23,7 +23,7 @@ const behandling: TotrinnskontrollBehandling = {
   uuid: '1-1',
   versjon: 2,
   status: BehandlingDtoStatus.FATTER_VEDTAK,
-  type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
+  type: BehandlingType.FØRSTEGANGSSØKNAD,
   behandlingsresultatType: BehandlingsresultatDtoType.OPPHØR,
   toTrinnsBehandling: false,
 };
@@ -33,9 +33,8 @@ export const VisModalEtterGodkjenning: Story = {
     behandling,
     closeEvent: action('button-click'),
     allAksjonspunktApproved: true,
-    fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     erKlageWithKA: false,
-    harSammeResultatSomOriginalBehandling: false,
   },
 };
 
@@ -43,13 +42,12 @@ export const VisModalEtterGodkjenningAvKlage: Story = {
   args: {
     behandling: {
       ...behandling,
-      type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
+      type: BehandlingType.KLAGE,
     },
     closeEvent: action('button-click'),
     allAksjonspunktApproved: true,
-    fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
+    fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     erKlageWithKA: false,
-    harSammeResultatSomOriginalBehandling: false,
   },
 };
 
@@ -58,8 +56,7 @@ export const VisModalEtterTilbakesendingTilSaksbehandler: Story = {
     behandling,
     closeEvent: action('button-click'),
     allAksjonspunktApproved: false,
-    fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
+    fagsakYtelseType: fagsakYtelsesType.OPPLÆRINGSPENGER,
     erKlageWithKA: false,
-    harSammeResultatSomOriginalBehandling: false,
   },
 };

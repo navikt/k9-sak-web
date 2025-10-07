@@ -3,7 +3,7 @@ import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/T
 import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import React, { useMemo, useState } from 'react';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
-import BeslutterModalIndex from './BeslutterModalIndex';
+import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
 import { useQuery } from '@tanstack/react-query';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
@@ -13,6 +13,7 @@ import {
   isBehandlingResultatType,
 } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
+import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -90,6 +91,8 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: 
     return <LoadingPanel />;
   }
 
+  const urlTilLos = getPathToK9Los() ?? '/';
+
   const totrinnskontrollData = totrinnsÅrsakerQuery.data ?? totrinnArsakerReadOnlyQuery.data;
   if (totrinnskontrollData != null) {
     return (
@@ -106,8 +109,9 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: 
           <BeslutterModalIndex
             behandling={totrinnskontrollBehandling}
             fagsakYtelseType={ensureKodeVerdiString(fagsak.sakstype)}
-            allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
+            erAlleAksjonspunktGodkjent={erAlleAksjonspunktGodkjent}
             erKlageWithKA={totrinnsKlageVurderingQuery.data?.klageVurderingResultatNK != null}
+            urlEtterpå={urlTilLos}
           />
         )}
       </>
