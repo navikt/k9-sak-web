@@ -1,3 +1,4 @@
+import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   type GetSatsOgUtbetalingPerioderResponse,
   type GetUngdomsprogramInformasjonResponse,
@@ -125,6 +126,12 @@ export class FakeUngBeregningBackendApi {
       opphørsdato: '2025-02-15',
       startdato: '2025-01-01',
       antallDagerTidligereUtbetalt: 33,
+    };
+  }
+
+  async getArbeidsgiverOpplysninger(): Promise<k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto> {
+    return {
+      arbeidsgivere: {},
     };
   }
 }
