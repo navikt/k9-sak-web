@@ -7,6 +7,7 @@ import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
 import BeredskapsperiodeoversiktController from '../beredskapsperiodeoversikt-controller/BeredskapsperiodeoversiktController';
 import BeredskapsperiodeoversiktMessages from '../beredskapsperiodeoversikt-messages/BeredskapsperiodeoversiktMessages';
+import ContainerContext from '../../../context/ContainerContext';
 
 interface BeredskapsperiodeoversiktProps {
   beredskapData: BeredskapType;
@@ -16,6 +17,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = beredskapData;
+  const { lagreBeredskapvurdering } = React.useContext(ContainerContext);
 
   const perioderTilVurdering = beredskapData.finnPerioderTilVurdering();
   const vurderteBeredskapsperioder = beredskapData.finnVurdertePerioder();
@@ -33,7 +35,10 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
 
   return (
     <>
-      <BeredskapsperiodeoversiktMessages beredskapData={beredskapData} />
+      <BeredskapsperiodeoversiktMessages
+        beredskapData={beredskapData}
+        fortsettUtenEndring={() => lagreBeredskapvurdering(beredskapData.vurderinger)}
+      />
       <NavigationWithDetailView
         navigationSection={() => (
           <Periodenavigasjon
