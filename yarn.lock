@@ -2957,7 +2957,7 @@ __metadata:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20250926082531"
     "@navikt/k9-sak-typescript-client": "npm:3.0.20250925112318"
     "@navikt/k9-tilbake-typescript-client": "npm:^1.1.20250922195504"
-    "@navikt/ung-sak-typescript-client": "npm:2.0.20251006112116"
+    "@navikt/ung-sak-typescript-client": "npm:2.0.20251007123934"
     "@navikt/ung-tilbake-typescript-client": "npm:3.0.20250924144500"
     "@tanstack/eslint-plugin-query": "npm:^5.91.0"
   languageName: unknown
@@ -4235,10 +4235,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:2.0.20251006112116":
-  version: 2.0.20251006112116
-  resolution: "@navikt/ung-sak-typescript-client@npm:2.0.20251006112116::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F2.0.20251006112116%2F5e6a533a541aba97bd27e84a92d651aa3d54c216"
-  checksum: 10/1fc4aecb70d39254298a20bc0056ec86f83d11ec7af9775d0a0d9b11237c60bcc8d55fbc04cb59ead14917023dacf872c98aca6235daae1e3fdcd90185c7b109
+"@navikt/ung-sak-typescript-client@npm:2.0.20251007123934":
+  version: 2.0.20251007123934
+  resolution: "@navikt/ung-sak-typescript-client@npm:2.0.20251007123934::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F2.0.20251007123934%2F9674e6a5e4c7da7e223f42abba09c1e4a01aaf09"
+  checksum: 10/a6583232bd54e436b09cfc6ea04707144fedca52e7a6375647a9a48de9b7586984b22612b02c441f96f4c03388a4aaea2256d37cda2ccf09b7880e4b2080d790
   languageName: node
   linkType: hard
 

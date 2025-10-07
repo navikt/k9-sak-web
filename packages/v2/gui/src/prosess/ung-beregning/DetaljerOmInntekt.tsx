@@ -1,4 +1,6 @@
 import type {
+  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  ung_sak_kontrakt_kontroll_InntektspostFraRegisterDto as InntektspostFraRegisterDto,
   ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
   ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -68,12 +70,25 @@ const formaterInntekt = (inntekt: number | undefined) => {
 
 interface DetaljerOmInntektProps {
   inntektKontrollPeriode: KontrollerInntektPeriodeDto | undefined;
+  arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
-export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektProps) => {
+export const DetaljerOmInntekt = ({ inntektKontrollPeriode, arbeidsgivere }: DetaljerOmInntektProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const location = useLocation();
   const { rapporterteInntekter } = inntektKontrollPeriode || {};
+
+  const getInntektLabel = (inntekt: InntektspostFraRegisterDto) => {
+    if (inntekt.ytelseType) {
+      return kodeverkNavnFraKode(inntekt.ytelseType, KodeverkType.FAGSAK_YTELSE);
+    }
+
+    const arbeidsgiverId = inntekt.arbeidsgiverIdentifikator ?? '';
+    const arbeidsgivernavn = arbeidsgivere?.arbeidsgivere?.[arbeidsgiverId]?.navn;
+
+    return arbeidsgivernavn ?? arbeidsgiverId;
+  };
+
   return (
     <VStack gap="space-32">
       <Bleed marginBlock="0 2" asChild>
@@ -109,9 +124,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode }: DetaljerOmInntektP
         <Inntekt
           title="Inntekt rapportert i A-ordningen"
           details={rapporterteInntekter?.register?.inntekter?.map(inntekt => ({
-            label: inntekt.ytelseType
-              ? kodeverkNavnFraKode(inntekt.ytelseType, KodeverkType.FAGSAK_YTELSE)
-              : inntekt.arbeidsgiverIdentifikator,
+            label: getInntektLabel(inntekt),
             value: formaterInntekt(inntekt.inntekt),
           }))}
           sumLabel="Sum inntekt fra A-ordningen"
