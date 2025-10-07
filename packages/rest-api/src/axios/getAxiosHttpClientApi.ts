@@ -1,5 +1,5 @@
-import Axios, { AxiosResponse } from 'axios';
-import { setupCache } from 'axios-cache-interceptor';
+import { AxiosResponse } from 'axios';
+import axiosEtag from './axiosEtag';
 
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerOption.js';
@@ -12,10 +12,9 @@ import initRestMethods from './initRestMethods';
  * Oppretter nytt http-klient api basert på Axios.
  */
 const getAxiosHttpClientApi = () => {
-  const instance = Axios.create();
-  const axiosInstance = setupCache(instance);
+  const axiosInstance = axiosEtag();
 
-  axiosInstance.interceptors.request.use(c => {
+  axiosInstance.interceptors.request.use((c): any => {
     const { headerName, headerValue } = generateNavCallidHeader();
     const config = { ...c };
     config.headers[headerName] = headerValue;
