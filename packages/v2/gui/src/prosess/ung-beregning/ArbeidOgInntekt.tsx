@@ -1,3 +1,4 @@
+import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
   ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
@@ -62,9 +63,15 @@ interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   isReadOnly: boolean;
+  arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
-export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isReadOnly }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({
+  submitCallback,
+  inntektKontrollperioder,
+  isReadOnly,
+  arbeidsgivere,
+}: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
     defaultValues: buildInitialValues(inntektKontrollperioder),
@@ -143,11 +150,15 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                         periode={field.periode}
                         fieldIndex={index}
                         inntektKontrollPeriode={inntektKontrollPeriode}
+                        arbeidsgivere={arbeidsgivere}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
                         <Box.New marginInline="2 0" padding="6">
-                          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
+                          <DetaljerOmInntekt
+                            inntektKontrollPeriode={inntektKontrollPeriode}
+                            arbeidsgivere={arbeidsgivere}
+                          />
                         </Box.New>
                       </Bleed>
                     )
