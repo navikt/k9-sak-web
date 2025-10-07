@@ -1,6 +1,6 @@
-import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';

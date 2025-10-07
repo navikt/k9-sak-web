@@ -5,6 +5,7 @@ import {
   ung_getUngdomsprogramInformasjon,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 import type {
+  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   GetSatsOgUtbetalingPerioderResponse,
   GetUngdomsprogramInformasjonResponse,
   ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
@@ -22,7 +23,7 @@ export default class UngBeregningBackendClient {
   async getUngdomsprogramInformasjon(behandlingUuid: string): Promise<GetUngdomsprogramInformasjonResponse> {
     return (await ung_getUngdomsprogramInformasjon({ query: { behandlingUuid } })).data;
   }
-  async getArbeidsgiverOpplysninger(behandlingUuid: string) {
+  async getArbeidsgiverOpplysninger(behandlingUuid: string): Promise<ArbeidsgiverOversiktDto> {
     return (await arbeidsgiver_getArbeidsgiverOpplysninger({ query: { behandlingUuid } })).data;
   }
 }

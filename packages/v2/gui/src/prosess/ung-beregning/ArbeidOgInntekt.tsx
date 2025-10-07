@@ -1,7 +1,7 @@
-import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
   ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
   type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';

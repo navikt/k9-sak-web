@@ -1,4 +1,3 @@
-import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   type GetSatsOgUtbetalingPerioderResponse,
   type GetUngdomsprogramInformasjonResponse,
@@ -129,7 +128,7 @@ export class FakeUngBeregningBackendApi {
     };
   }
 
-  async getArbeidsgiverOpplysninger(): Promise<k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto> {
+  async getArbeidsgiverOpplysninger() {
     return {
       arbeidsgivere: {},
     };
