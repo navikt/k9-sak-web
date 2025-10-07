@@ -327,7 +327,6 @@
   "packages/rest-api-hooks/src/global-data/useGlobalStateRestApi.tsx",
   "packages/rest-api-hooks/src/local-data/useMultipleRestApi.tsx",
   "packages/rest-api-hooks/src/local-data/useRestApiRunner.tsx",
-  "packages/rest-api/src/axios/axiosEtag.ts",
   "packages/rest-api/src/axios/initRestMethods.ts",
   "packages/rest-api/src/requestApi/NotificationMapper.ts",
   "packages/rest-api/src/requestApi/RequestApi.ts",
