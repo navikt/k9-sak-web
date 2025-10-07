@@ -86,7 +86,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode, arbeidsgivere }: Det
     const arbeidsgiverId = inntekt.arbeidsgiverIdentifikator ?? '';
     const arbeidsgivernavn = arbeidsgivere?.arbeidsgivere?.[arbeidsgiverId]?.navn;
 
-    return arbeidsgivernavn ?? arbeidsgiverId;
+    return arbeidsgivernavn ? `${arbeidsgivernavn} (${arbeidsgiverId})` : arbeidsgiverId;
   };
 
   return (
