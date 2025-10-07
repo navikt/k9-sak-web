@@ -28,8 +28,6 @@ SOFTWARE.
 
 import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-// -------- Lightweight ETag cache (Map-based, browser & node compatible) --------
-
 const byLowerCase = (toFind: string) => (value: string) => value.toLowerCase() === toFind;
 const getKeys = (headers: Record<string, unknown>) => Object.keys(headers || {});
 const getHeaderCaseInsensitive = (headerName: string, headers: Record<string, unknown> = {}) => {
@@ -96,12 +94,6 @@ class EtagCache {
   static reset() {
     this.getInstance().cache.clear();
   }
-
-  // Optional stats for debugging
-  static stats() {
-    const inst = this.getInstance();
-    return { size: inst.cache.size, ttlMs: inst.ttlMs, maxEntries: inst.maxEntries };
-  }
 }
 
 function isCacheableMethod(config: AxiosRequestConfig) {
@@ -126,7 +118,6 @@ function requestInterceptor(config: InternalAxiosRequestConfig) {
     if (cached) {
       const merged = new AxiosHeaders(config.headers || {});
       merged.set('If-None-Match', cached.etag);
-      // eslint-disable-next-line no-param-reassign
       config.headers = merged;
     }
   }
