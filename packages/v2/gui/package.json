@@ -9,6 +9,7 @@
     "./behandling/*": "./src/behandling/*",
     "./featuretoggles/*": "./src/featuretoggles/*",
     "./sak/*": "./src/sak/*",
+    "./saksbehandler/*": "./src/saksbehandler/*",
     "./shared/*": "./src/shared/*",
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",

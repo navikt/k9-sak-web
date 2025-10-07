@@ -20,6 +20,7 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RootSuspense } from '@k9-sak-web/gui/app/suspense/RootSuspense.js';
 
 const EMPTY_ARRAY = [];
 const queryClient = new QueryClient({
@@ -65,21 +66,23 @@ const AppIndex = () => {
     <ErrorBoundary>
       <Theme theme="light">
         <QueryClientProvider client={queryClient}>
-          <AppConfigResolver>
-            <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-              <LanguageProvider>
-                <Dekorator
-                  hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-                  queryStrings={queryStrings}
-                  setSiteHeight={setSiteHeight}
-                  pathname={location.pathname}
-                />
-                {shouldRenderHome && <Home headerHeight={headerHeight} />}
-                {forbiddenErrors.length > 0 && <ForbiddenPage />}
-                {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-              </LanguageProvider>
-            </ErrorBoundary>
-          </AppConfigResolver>
+          <RootSuspense>
+            <AppConfigResolver>
+              <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+                <LanguageProvider>
+                  <Dekorator
+                    hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+                    queryStrings={queryStrings}
+                    setSiteHeight={setSiteHeight}
+                    pathname={location.pathname}
+                  />
+                  {shouldRenderHome && <Home headerHeight={headerHeight} />}
+                  {forbiddenErrors.length > 0 && <ForbiddenPage />}
+                  {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
+                </LanguageProvider>
+              </ErrorBoundary>
+            </AppConfigResolver>
+          </RootSuspense>
         </QueryClientProvider>
       </Theme>
     </ErrorBoundary>
