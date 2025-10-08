@@ -17,7 +17,11 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = beredskapData;
-  const { lagreBeredskapvurdering } = React.useContext(ContainerContext) || {};
+  const {
+    lagreBeredskapvurdering = () => {},
+    readOnly = false,
+    harAksjonspunktForBeredskap = false,
+  } = React.useContext(ContainerContext) || {};
 
   const perioderTilVurdering = beredskapData.finnPerioderTilVurdering();
   const vurderteBeredskapsperioder = beredskapData.finnVurdertePerioder();
@@ -37,6 +41,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
     <>
       <BeredskapsperiodeoversiktMessages
         beredskapData={beredskapData}
+        skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForBeredskap}
         fortsettUtenEndring={() => lagreBeredskapvurdering(beredskapData.vurderinger)}
       />
       <NavigationWithDetailView

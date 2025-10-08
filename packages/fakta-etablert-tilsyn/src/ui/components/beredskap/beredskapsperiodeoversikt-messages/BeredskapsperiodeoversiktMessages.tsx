@@ -2,19 +2,18 @@ import { Alert, Box, Button } from '@navikt/ds-react';
 import BeredskapType from '../../../../types/BeredskapType';
 import { getStringMedPerioder } from '../../../../util/periodUtils';
 import React from 'react';
-import ContainerContext from '../../../context/ContainerContext';
 
 interface BeredskapsperiodeoversiktMessagesProps {
   beredskapData: BeredskapType;
+  skalViseFortsettUtenEndring: boolean;
   fortsettUtenEndring: () => void;
 }
 
 const BeredskapsperiodeoversiktMessages = ({
   beredskapData,
+  skalViseFortsettUtenEndring,
   fortsettUtenEndring,
 }: BeredskapsperiodeoversiktMessagesProps) => {
-  const { readOnly, harAksjonspunktForBeredskap } = React.useContext(ContainerContext) || {};
-
   if (!beredskapData.harPerioder()) {
     return <p>Søker har ikke oppgitt at det er behov for beredskap.</p>;
   }
@@ -27,7 +26,7 @@ const BeredskapsperiodeoversiktMessages = ({
         </Alert>
       </Box.New>
     );
-  } else if (!readOnly && harAksjonspunktForBeredskap) {
+  } else if (skalViseFortsettUtenEndring) {
     return (
       <Box.New marginBlock="0 6">
         <Alert size="small" data-testid="nattevåk-ferdig" variant="info">

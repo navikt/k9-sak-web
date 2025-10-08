@@ -16,7 +16,11 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
   const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = nattevåkData;
-  const { lagreNattevåkvurdering } = React.useContext(ContainerContext) || {};
+  const {
+    lagreNattevåkvurdering = () => {},
+    readOnly = false,
+    harAksjonspunktForNattevåk = false,
+  } = React.useContext(ContainerContext) || {};
 
   const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering();
   const vurderteNattevåksperioder = nattevåkData.finnVurdertePerioder();
@@ -36,6 +40,7 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
     <>
       <NattevåksperiodeoversiktMessages
         nattevåkData={nattevåkData}
+        skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForNattevåk}
         fortsettUtenEndring={() => lagreNattevåkvurdering(nattevåkData.vurderinger)}
       />
       <NavigationWithDetailView

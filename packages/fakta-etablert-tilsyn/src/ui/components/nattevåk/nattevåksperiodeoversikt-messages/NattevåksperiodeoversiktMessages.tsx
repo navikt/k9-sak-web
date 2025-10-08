@@ -2,19 +2,18 @@ import { Alert, Box, Button } from '@navikt/ds-react';
 import NattevåkType from '../../../../types/NattevåkType';
 import { getStringMedPerioder } from '../../../../util/periodUtils';
 import React from 'react';
-import ContainerContext from '../../../context/ContainerContext';
 
 interface NattevåksperiodeoversiktMessagesProps {
   nattevåkData: NattevåkType;
+  skalViseFortsettUtenEndring: boolean;
   fortsettUtenEndring: () => void;
 }
 
 const NattevåksperiodeoversiktMessages = ({
   nattevåkData,
+  skalViseFortsettUtenEndring,
   fortsettUtenEndring,
 }: NattevåksperiodeoversiktMessagesProps) => {
-  const { readOnly, harAksjonspunktForNattevåk } = React.useContext(ContainerContext) || {};
-
   if (!nattevåkData.harPerioder()) {
     return <p>Søker har ikke oppgitt at det er behov for nattevåk.</p>;
   }
@@ -27,7 +26,7 @@ const NattevåksperiodeoversiktMessages = ({
         </Alert>
       </Box.New>
     );
-  } else if (!readOnly && harAksjonspunktForNattevåk) {
+  } else if (skalViseFortsettUtenEndring) {
     return (
       <Box.New marginBlock="0 6">
         <Alert size="small" data-testid="nattevåk-ferdig" variant="info">
