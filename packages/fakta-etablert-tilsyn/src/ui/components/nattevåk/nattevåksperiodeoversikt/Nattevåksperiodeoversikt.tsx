@@ -16,7 +16,7 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
   const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = nattevåkData;
-  const { lagreNattevåkvurdering } = React.useContext(ContainerContext);
+  const { lagreNattevåkvurdering } = React.useContext(ContainerContext) || {};
 
   const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering();
   const vurderteNattevåksperioder = nattevåkData.finnVurdertePerioder();

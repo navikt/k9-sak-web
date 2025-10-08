@@ -13,7 +13,7 @@ const NattevåksperiodeoversiktMessages = ({
   nattevåkData,
   fortsettUtenEndring,
 }: NattevåksperiodeoversiktMessagesProps) => {
-  const { readOnly, harAksjonspunktForNattevåk } = React.useContext(ContainerContext);
+  const { readOnly, harAksjonspunktForNattevåk } = React.useContext(ContainerContext) || {};
 
   if (!nattevåkData.harPerioder()) {
     return <p>Søker har ikke oppgitt at det er behov for nattevåk.</p>;

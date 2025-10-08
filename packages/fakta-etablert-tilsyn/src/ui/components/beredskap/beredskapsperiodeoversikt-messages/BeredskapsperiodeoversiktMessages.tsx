@@ -13,7 +13,7 @@ const BeredskapsperiodeoversiktMessages = ({
   beredskapData,
   fortsettUtenEndring,
 }: BeredskapsperiodeoversiktMessagesProps) => {
-  const { readOnly, harAksjonspunktForBeredskap } = React.useContext(ContainerContext);
+  const { readOnly, harAksjonspunktForBeredskap } = React.useContext(ContainerContext) || {};
 
   if (!beredskapData.harPerioder()) {
     return <p>Søker har ikke oppgitt at det er behov for beredskap.</p>;
