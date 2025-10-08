@@ -1,7 +1,7 @@
 import DateLabel from '@k9-sak-web/gui/shared/dateLabel/DateLabel.js';
 import { K9AksjonspunktBorderColor } from '@k9-sak-web/gui/tokens/tokens.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Table } from '@navikt/ds-react';
+import { HStack, Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';
 import type { Periode } from '../../types/Periode';
@@ -44,15 +44,15 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
             }
           >
             <Table.DataCell>
-              <div className="flex">
+              <HStack gap="2">
                 {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
                   <ExclamationmarkTriangleFillIcon
                     fontSize="1.5rem"
-                    className="text-[var(--ax-text-warning-decoration))] text-2xl mr-2"
+                    style={{ color: 'var(--ax-text-warning-decoration)' }}
                   />
                 )}
                 <DateLabel dateString={periode.vurderingsdato} />
-              </div>
+              </HStack>
             </Table.DataCell>
             <Table.DataCell>{periode.årsaker.join()}</Table.DataCell>
           </Table.Row>
