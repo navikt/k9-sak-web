@@ -1,4 +1,4 @@
-import { Alert, Box, Button } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack } from '@navikt/ds-react';
 import BeredskapType from '../../../../types/BeredskapType';
 import { getStringMedPerioder } from '../../../../util/periodUtils';
 import React from 'react';
@@ -20,7 +20,7 @@ const BeredskapsperiodeoversiktMessages = ({
   if (beredskapData.harPerioderTilVurdering()) {
     const perioderTilVurdering = beredskapData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box.New marginBlock="0 6">
+      <Box.New>
         <Alert size="small" variant="warning">
           {`Vurder behov for beredskap i ${getStringMedPerioder(perioderTilVurdering)}.`}
         </Alert>
@@ -28,21 +28,19 @@ const BeredskapsperiodeoversiktMessages = ({
     );
   } else if (skalViseFortsettUtenEndring) {
     return (
-      <Box.New marginBlock="0 6">
-        <Alert size="small" data-testid="nattevåk-ferdig" variant="info">
-          <div style={{ display: 'flex' }}>
-            <>Behov for beredskap er ferdig vurdert og du kan gå videre i vurderingen.</>
-            <Button
-              style={{ marginLeft: '2rem' }}
-              onClick={fortsettUtenEndring}
-              size="small"
-              id="gåVidereFraNattevåkKnapp"
-            >
-              Fortsett
-            </Button>
-          </div>
-        </Alert>
-      </Box.New>
+      <Alert size="small" data-testid="nattevåk-ferdig" variant="info">
+        <HStack gap="space-32" align="center">
+          Behov for beredskap er ferdig vurdert og du kan gå videre i vurderingen.
+          <Button
+            onClick={fortsettUtenEndring}
+            size="small"
+            id="gåVidereFraNattevåkKnapp"
+          >
+            Fortsett
+          </Button>
+        </HStack>
+      </Alert>
+
     );
   }
   return null;
