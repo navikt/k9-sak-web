@@ -212,6 +212,9 @@ export const visVedtakspanel = args => (
       {
         id: 1,
         versjon: 1,
+        status: {
+          kode: '',
+        },
       } as Behandling
     }
     beregningsresultat={beregningsresultat}
