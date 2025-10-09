@@ -1,4 +1,4 @@
-import { Alert, Box, Button } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack } from '@navikt/ds-react';
 import NattevåkType from '../../../../types/NattevåkType';
 import { getStringMedPerioder } from '../../../../util/periodUtils';
 import React from 'react';
@@ -20,7 +20,7 @@ const NattevåksperiodeoversiktMessages = ({
   if (nattevåkData.harPerioderTilVurdering()) {
     const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box.New marginBlock="0 6">
+      <Box.New>
         <Alert size="small" variant="warning">
           {`Vurder behov for nattevåk i ${getStringMedPerioder(perioderTilVurdering)}.`}
         </Alert>
@@ -28,21 +28,19 @@ const NattevåksperiodeoversiktMessages = ({
     );
   } else if (skalViseFortsettUtenEndring) {
     return (
-      <Box.New marginBlock="0 6">
-        <Alert size="small" data-testid="nattevåk-ferdig" variant="info">
-          <div style={{ display: 'flex' }}>
-            <>Behov for nattevåk er ferdig vurdert og du kan gå videre i vurderingen.</>
-            <Button
-              style={{ marginLeft: '2rem' }}
-              onClick={fortsettUtenEndring}
-              size="small"
-              id="gåVidereFraNattevåkKnapp"
-            >
-              Fortsett
-            </Button>
-          </div>
-        </Alert>
-      </Box.New>
+      <Alert size="small" data-testid="nattevåk-ferdig" variant="info">
+        <HStack gap="space-32" align="center">
+          Behov for nattevåk er ferdig vurdert og du kan gå videre i vurderingen.
+          <Button
+            style={{ marginLeft: '2rem' }}
+            onClick={fortsettUtenEndring}
+            size="small"
+            id="gåVidereFraNattevåkKnapp"
+          >
+            Fortsett
+          </Button>
+        </HStack>
+      </Alert>
     );
   }
   return null;
