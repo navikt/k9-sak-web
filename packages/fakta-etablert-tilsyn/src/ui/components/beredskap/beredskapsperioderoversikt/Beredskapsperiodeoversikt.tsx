@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-
+import { VStack } from '@navikt/ds-react';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import BeredskapType from '../../../../types/BeredskapType';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
@@ -14,11 +14,11 @@ interface BeredskapsperiodeoversiktProps {
 }
 
 const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktProps) => {
-  const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
+  const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode | null>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = beredskapData;
   const {
-    lagreBeredskapvurdering = () => {},
+    lagreBeredskapvurdering = () => { },
     readOnly = false,
     harAksjonspunktForBeredskap = false,
   } = React.useContext(ContainerContext) || {};
@@ -26,7 +26,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   const perioderTilVurdering = beredskapData.finnPerioderTilVurdering();
   const vurderteBeredskapsperioder = beredskapData.finnVurdertePerioder();
 
-  const velgPeriode = (periode: Vurderingsperiode) => {
+  const velgPeriode = (periode: Vurderingsperiode | null) => {
     setValgtPeriode(periode);
     setEditMode(false);
   };
@@ -38,7 +38,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   }, []);
 
   return (
-    <>
+    <VStack gap="6">
       <BeredskapsperiodeoversiktMessages
         beredskapData={beredskapData}
         skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForBeredskap}
@@ -56,7 +56,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
         showDetailSection={!!valgtPeriode}
         detailSection={() => (
           <BeredskapsperiodeoversiktController
-            valgtPeriode={valgtPeriode}
+            valgtPeriode={valgtPeriode!}
             editMode={editMode}
             onEditClick={() => setEditMode(true)}
             onCancelClick={() => velgPeriode(null)}
@@ -64,7 +64,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
           />
         )}
       />
-    </>
+    </VStack>
   );
 };
 
