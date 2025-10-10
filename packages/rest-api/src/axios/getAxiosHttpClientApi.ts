@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import axiosEtag from './axiosEtag';
+import axios, { AxiosHeaders, AxiosResponse } from 'axios';
 
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerOption.js';
@@ -12,16 +11,18 @@ import initRestMethods from './initRestMethods';
  * Oppretter nytt http-klient api basert på Axios.
  */
 const getAxiosHttpClientApi = () => {
-  const axiosInstance = axiosEtag();
+  const axiosInstance = axios.create();
 
-  axiosInstance.interceptors.request.use((c): any => {
+  axiosInstance.interceptors.request.use(config => {
     const { headerName, headerValue } = generateNavCallidHeader();
-    const config = { ...c };
-    config.headers[headerName] = headerValue;
+    if (!config.headers) {
+      config.headers = new AxiosHeaders();
+    }
     // Legg til X-Json-Serializer-Option header for å instruere server om å bruke legacy "kodeverk-objekt" ObjectMapper
     // for alle requests som går gjennom denne klient. Kan vurdere å gjere denne meir konfigurerbar pr backend/request
     // seinare viss det er behov.
-    config.headers[jsonSerializerOption.xJsonSerializerOptionHeader] = xJsonSerializerOptions.kodeverdiObjekt;
+    config.headers.set(headerName, headerValue);
+    config.headers.set(jsonSerializerOption.xJsonSerializerOptionHeader, xJsonSerializerOptions.kodeverdiObjekt);
     return config;
   });
 
