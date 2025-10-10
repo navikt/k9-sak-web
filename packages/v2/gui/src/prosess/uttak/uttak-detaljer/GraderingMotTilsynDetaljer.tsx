@@ -3,7 +3,7 @@ import {
   pleiepengerbarn_uttak_kontrakter_OverseEtablertTilsynÅrsak as GraderingMotTilsynOverseEtablertTilsynÅrsak,
   type pleiepengerbarn_uttak_kontrakter_OverseEtablertTilsynÅrsak as GraderingMotTilsynOverseEtablertTilsynÅrsakType,
   type pleiepengerbarn_uttak_kontrakter_GraderingMotTilsyn as GraderingMotTilsyn,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BodyShort, HelpText, HStack } from '@navikt/ds-react';
 
 import styles from './uttakDetaljer.module.css';

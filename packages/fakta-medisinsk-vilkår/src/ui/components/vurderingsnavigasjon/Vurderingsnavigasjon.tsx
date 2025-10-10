@@ -66,7 +66,7 @@ const Vurderingsnavigasjon = ({
           <div className={styles.vurderingsperiode__postElementContainer}>
             {(vurderingsperiode as ManuellVurdering).endretIDenneBehandlingen && (
               <Tooltip content="Vurderingen er opprettet i denne behandlingen">
-                <PersonPencilFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-warning-600' }} />
+                <PersonPencilFillIcon fontSize="1.5rem" className="text-ax-warning-500" />
               </Tooltip>
             )}
 
@@ -103,7 +103,7 @@ const Vurderingsnavigasjon = ({
           <InformationSquareFillIcon
             title="Perioden kan vurderes"
             fontSize="1.5rem"
-            style={{ color: 'var(--ax-text-info-icon)' }}
+            style={{ color: 'var(--ax-text-info-decoration)' }}
           />
         )}
         visParterLabel={visParterLabel}

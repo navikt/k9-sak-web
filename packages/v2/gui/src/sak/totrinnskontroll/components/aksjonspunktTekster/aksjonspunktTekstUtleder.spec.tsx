@@ -1,4 +1,4 @@
-import { klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import {
@@ -6,7 +6,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   folketrygdloven_kalkulus_kodeverk_FaktaOmBeregningTilfelle as FaktaOmBeregningTilfeller,
   k9_kodeverk_arbeidsforhold_ArbeidsforholdHandlingType as ArbeidsforholdHandlingType,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
 import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';

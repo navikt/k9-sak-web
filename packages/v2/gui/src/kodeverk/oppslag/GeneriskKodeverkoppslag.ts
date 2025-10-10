@@ -2,7 +2,7 @@
 type KodeverkObjektMedEnumKilde<Kilde extends string = string> = Readonly<{
   kilde: Kilde;
   kode: string;
-  navn: string;
+  navn?: string;
   kodeverk: string;
 }>;
 

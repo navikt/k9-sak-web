@@ -6,7 +6,7 @@ import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-fro
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { Alert, BodyShort, Box, Label, Tag } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, HStack, Label, Tag } from '@navikt/ds-react';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
@@ -132,12 +132,12 @@ const VurderingAvOmsorgsperioderForm = ({
               <LabelledContent
                 label="Hvilken relasjon har søker til barnet?"
                 content={
-                  <div className="flex gap-2 items-center">
+                  <HStack align="center" gap="space-8">
                     <BodyShort size="small">{omsorgsperiode.relasjon}</BodyShort>
                     <Tag size="small" variant="info">
                       Fra søknad
                     </Tag>
-                  </div>
+                  </HStack>
                 }
               />
             </Box.New>

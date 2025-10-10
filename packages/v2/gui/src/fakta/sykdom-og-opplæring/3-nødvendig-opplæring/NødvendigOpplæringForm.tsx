@@ -2,11 +2,12 @@ import {
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   Alert,
   BodyShort,
   Button,
+  Checkbox,
   Detail,
   Heading,
   Label,
@@ -21,8 +22,8 @@ import { ListItem } from '@navikt/ds-react/List';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
-import { useContext, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useContext, useEffect, useState } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { Periodevisning } from '../../../shared/detailView/DetailView.js';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -45,6 +46,10 @@ type NødvendigOpplæringFormFields = {
   perioder: {
     resultat: OpplæringVurderingDtoResultat | '';
     avslagsårsak: OpplæringVurderingDtoAvslagsårsak | '';
+    fom: string;
+    tom: string;
+  }[];
+  tilleggsPerioder: {
     fom: string;
     tom: string;
   }[];
@@ -114,14 +119,29 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
         tom: vurdering.perioder[0]!.tom,
       },
     ],
+    tilleggsPerioder: [],
     perioderUtenNødvendigOpplæring: [],
   };
 };
 
 const onSubmit = (data: NødvendigOpplæringFormFields) => {
+  const resultat =
+    data.harLegeerklæring === 'NEI'
+      ? OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT
+      : nødvendigOpplæringTilResultat(data.harNødvendigOpplæring);
   const perioder = data.perioder.map(periode => ({
-    begrunnelse: data.begrunnelse,
-    resultat: nødvendigOpplæringTilResultat(data.harNødvendigOpplæring),
+    begrunnelse: data.begrunnelse || null,
+    resultat: resultat,
+    avslagsårsak: data.avslagsårsak || null,
+    periode: {
+      fom: dayjs(periode.fom).format('YYYY-MM-DD'),
+      tom: dayjs(periode.tom).format('YYYY-MM-DD'),
+    },
+  }));
+
+  const tilleggsPerioder = data.tilleggsPerioder.map(periode => ({
+    begrunnelse: data.begrunnelse || null,
+    resultat: resultat,
     avslagsårsak: data.avslagsårsak || null,
     periode: {
       fom: dayjs(periode.fom).format('YYYY-MM-DD'),
@@ -130,7 +150,7 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
   }));
 
   const perioderUtenNødvendigOpplæring = data.perioderUtenNødvendigOpplæring.map(periode => ({
-    begrunnelse: data.begrunnelse,
+    begrunnelse: data.begrunnelse || null,
     resultat: periode.resultat,
     avslagsårsak: periode.avslagsårsak || null,
     periode: {
@@ -140,23 +160,26 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
   }));
 
   return {
-    perioder: [...perioder, ...perioderUtenNødvendigOpplæring],
+    perioder: [...perioder, ...tilleggsPerioder, ...perioderUtenNødvendigOpplæring],
   };
 };
 
 const NødvendigOpplæringForm = ({
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
+  andrePerioderTilVurdering,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
-  setRedigering: (redigering: boolean) => void;
-  redigering: boolean;
+  setRedigerer: (redigerer: boolean) => void;
+  redigerer: boolean;
+  andrePerioderTilVurdering: { fom: string; tom: string }[];
 }) => {
   const { readOnly, løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<NødvendigOpplæringFormFields>({
     defaultValues: defaultValues(vurdering),
   });
+  const [brukVurderingIAndrePerioder, setBrukVurderingIAndrePerioder] = useState(false);
 
   useEffect(() => {
     formMethods.reset({
@@ -164,7 +187,15 @@ const NødvendigOpplæringForm = ({
     });
   }, [formMethods, vurdering]);
 
-  const opplæringIkkeDokumentertMedLegeerklæring = formMethods.watch('harLegeerklæring') === 'NEI';
+  const harNødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
+  const harLegeerklæring = formMethods.watch('harLegeerklæring');
+  const opplæringIkkeDokumentertMedLegeerklæring = harLegeerklæring === 'NEI';
+
+  const { control } = formMethods;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'tilleggsPerioder',
+  });
 
   useEffect(() => {
     if (opplæringIkkeDokumentertMedLegeerklæring) {
@@ -172,6 +203,11 @@ const NødvendigOpplæringForm = ({
       formMethods.setValue('harNødvendigOpplæring', '');
     }
   }, [opplæringIkkeDokumentertMedLegeerklæring, formMethods]);
+
+  useEffect(() => {
+    formMethods.setValue('perioderUtenNødvendigOpplæring', []);
+    formMethods.resetField('perioder', { keepTouched: true });
+  }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
@@ -219,7 +255,7 @@ const NødvendigOpplæringForm = ({
               </Heading>
               <Periodevisning perioder={vurdering.perioder} />
             </div>
-            <div className="border-none bg-border-subtle h-[2px]" />
+            <div className="border-none bg-ax-border-neutral-subtle h-[2px]" />
             <InstitusjonOgSykdomInfo perioder={vurdering.perioder} />
           </div>
           <div>
@@ -245,11 +281,11 @@ const NødvendigOpplæringForm = ({
                 <ReadMore header="Hva skal vurderingen inneholde?" size="small">
                   <BodyShort size="small">
                     Du skal ta utgangspunkt i{' '}
-                    <Link href="https://lovdata.no/dokument/NL/lov/1997-02-28-19/KAPITTEL_4-5-3#%C2%A79-14">
+                    <Link target="_blank" href="https://lovdata.no/pro/lov/1997-02-28-19/§9-14">
                       lovteksten
                     </Link>{' '}
                     og{' '}
-                    <Link href="https://lovdata.no/nav/rundskriv/r09-00#ref/lov/1997-02-28-19/%C2%A79-14">
+                    <Link target="_blank" href="https://lovdata.no/pro/NAV/rundskriv/r09-00/KAPITTEL_4-5">
                       rundskrivet
                     </Link>{' '}
                     når du skriver vurderingen.
@@ -262,6 +298,9 @@ const NødvendigOpplæringForm = ({
                       <ListItem className="!mb-0">Om kursinnholdet tilsier at det er opplæring</ListItem>
                       <ListItem className="!mb-0">
                         Om det er årsakssammenheng mellom opplæringen og sykdom til barnet
+                      </ListItem>
+                      <ListItem className="!mb-0">
+                        Om opplæringen er nødvendig på grunn av barnets sykdom og behov for pleie og omsorg
                       </ListItem>
                     </List>
                   </div>
@@ -306,13 +345,53 @@ const NødvendigOpplæringForm = ({
               dokumentasjon fra bruker.
             </Alert>
           )}
+          {andrePerioderTilVurdering.length > 0 && (
+            <Checkbox
+              size="small"
+              checked={brukVurderingIAndrePerioder}
+              onChange={() => {
+                if (brukVurderingIAndrePerioder) {
+                  setBrukVurderingIAndrePerioder(false);
+                  formMethods.setValue('tilleggsPerioder', []);
+                } else {
+                  setBrukVurderingIAndrePerioder(true);
+                }
+              }}
+            >
+              Bruk denne vurderingen for andre perioder
+            </Checkbox>
+          )}
+          {brukVurderingIAndrePerioder && (
+            <div>
+              <Label size="small">I hvilke perioder vil du gjenbruke vurderingen?</Label>
+              {andrePerioderTilVurdering.map((periode, index) => {
+                const fieldIdx = fields.findIndex(f => f.fom === periode.fom && f.tom === periode.tom);
+                return (
+                  <Checkbox
+                    key={index}
+                    size="small"
+                    checked={fieldIdx !== -1}
+                    onChange={() => {
+                      if (fieldIdx === -1) {
+                        append({ fom: periode.fom, tom: periode.tom });
+                      } else {
+                        remove(fieldIdx);
+                      }
+                    }}
+                  >
+                    {`${dayjs(periode.fom).format('DD.MM.YYYY')} - ${dayjs(periode.tom).format('DD.MM.YYYY')}`}
+                  </Checkbox>
+                );
+              })}
+            </div>
+          )}
           {!readOnly && (
             <div className="flex gap-4">
               <Button variant="primary" type="submit" size="small">
                 Bekreft og fortsett
               </Button>
-              {redigering && (
-                <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              {redigerer && (
+                <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                   Avbryt redigering
                 </Button>
               )}

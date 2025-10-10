@@ -2,7 +2,7 @@ import {
   type GetSatsOgUtbetalingPerioderResponse,
   type GetUngdomsprogramInformasjonResponse,
   type ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 export class FakeUngBeregningBackendApi {
   async getSatsOgUtbetalingPerioder(): Promise<GetSatsOgUtbetalingPerioderResponse> {
@@ -125,6 +125,12 @@ export class FakeUngBeregningBackendApi {
       opphørsdato: '2025-02-15',
       startdato: '2025-01-01',
       antallDagerTidligereUtbetalt: 33,
+    };
+  }
+
+  async getArbeidsgiverOpplysninger() {
+    return {
+      arbeidsgivere: {},
     };
   }
 }

@@ -1,4 +1,3 @@
-import { getUngSakClient } from '@k9-sak-web/backend/ungsak/client';
 import UngMeldingerBackendClient from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendClient.js';
 import { UngMessagesFormState } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesFormState.js';
 import { UngMessagesIndex } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesIndex.js';
@@ -17,7 +16,7 @@ interface OwnProps {
  */
 const MeldingIndex = ({ alleBehandlinger, behandlingId }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  const ungMeldingerBackendClient = new UngMeldingerBackendClient(getUngSakClient());
+  const ungMeldingerBackendClient = new UngMeldingerBackendClient();
   const [ungMessagesFormValues, setUngMessagesFormValues] = useState<UngMessagesFormState | undefined>(undefined);
   /*
     Før var det kode for å vise to ulike modaler etter at melding vart sendt i denne komponenten.

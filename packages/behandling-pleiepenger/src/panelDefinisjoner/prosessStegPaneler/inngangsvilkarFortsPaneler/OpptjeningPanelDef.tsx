@@ -18,7 +18,7 @@ class OpptjeningPanelDef extends ProsessStegPanelDef {
     return <OpptjeningVilkarProsessIndex {...props} />;
   };
 
-  getTekstKode = () => 'Behandlingspunkt.Opptjening';
+  getTekstKode = () => 'Opptjening';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET];
 

@@ -2,15 +2,15 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktHelpText,
   FadingPanel,
-  LoadingPanel,
   NestedIntlProvider,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 import { Behandling, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
-import { HGrid, Tabs } from '@navikt/ds-react';
+import { HGrid, Link, Tabs } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -97,9 +97,9 @@ const InngangsvilkarPanel = ({
                 ? [
                     <>
                       <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
-                      <a href="" onClick={oppdaterUrl}>
+                      <Link href="" onClick={oppdaterUrl}>
                         <FormattedMessage id={apentFaktaPanelInfo.textCode} />
-                      </a>
+                      </Link>
                     </>,
                   ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}

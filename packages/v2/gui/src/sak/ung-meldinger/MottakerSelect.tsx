@@ -2,7 +2,7 @@ import { type UtilgjengeligÅrsak } from '@k9-sak-web/backend/k9formidling/model
 import {
   type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevMottakerValgResponse as InformasjonsbrevMottakerValgResponse,
   type ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { RhfSelect } from '@navikt/ft-form-hooks';
 import { useFormContext } from 'react-hook-form';
 import { formatFødselsdato } from '../../utils/formatters';

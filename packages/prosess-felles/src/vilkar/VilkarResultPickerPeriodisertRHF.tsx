@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, KodeverkMedNavn, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { InnvilgetMerknad } from '@k9-sak-web/types/src/vilkarTsType';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Radio } from '@navikt/ds-react';
 import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
@@ -92,6 +92,33 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
     (date: Date) => isAfter(date, parse(periodeTom, 'yyyy-MM-dd', new Date())),
   ];
 
+  const radios = [
+    {
+      value: vilkarUtfallPeriodisert.OPPFYLT,
+      label: <Label input={customVilkarOppfyltText} textOnly />,
+    },
+    ...(visPeriodisering
+      ? [
+          {
+            value: periodeVilkarStatus
+              ? vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT
+              : vilkarUtfallPeriodisert.DELVIS_OPPFYLT,
+            label: periodeVilkarStatus ? (
+              <>
+                Vilkåret er <b>delvis ikke</b> oppfylt
+              </>
+            ) : (
+              'Vilkåret er delvis oppfylt'
+            ),
+          },
+        ]
+      : []),
+    {
+      value: vilkarUtfallPeriodisert.IKKE_OPPFYLT,
+      label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
+    },
+  ];
+
   return (
     <div className={styles.container}>
       <VerticalSpacer sixteenPx />
@@ -123,33 +150,13 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           isReadOnly={readOnly}
-          radios={[
-            {
-              value: vilkarUtfallPeriodisert.OPPFYLT,
-              label: <Label input={customVilkarOppfyltText} textOnly />,
-            },
-            ...(visPeriodisering
-              ? [
-                  {
-                    value: periodeVilkarStatus
-                      ? vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT
-                      : vilkarUtfallPeriodisert.DELVIS_OPPFYLT,
-                    label: periodeVilkarStatus ? (
-                      <>
-                        Vilkåret er <b>delvis ikke</b> oppfylt
-                      </>
-                    ) : (
-                      'Vilkåret er delvis oppfylt'
-                    ),
-                  },
-                ]
-              : []),
-            {
-              value: vilkarUtfallPeriodisert.IKKE_OPPFYLT,
-              label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
-            },
-          ]}
-        />
+        >
+          {radios.map(radio => (
+            <Radio key={radio.value} value={radio.value}>
+              {radio.label}
+            </Radio>
+          ))}
+        </RhfRadioGroup>
       )}
 
       {erVilkarOk !== undefined && (

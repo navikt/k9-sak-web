@@ -88,6 +88,7 @@ visAksjonspunktForAvklaringAvArbeidsforhold.args = {
     },
     {
       ...arbeidsforhold,
+      arbeidsgiver: { ...arbeidsforhold.arbeidsgiver, arbeidsgiverOrgnr: '12356' },
       navn: 'NSB',
       id: '2',
       tilVurdering: true,

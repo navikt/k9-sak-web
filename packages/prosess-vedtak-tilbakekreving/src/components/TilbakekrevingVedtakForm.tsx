@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -21,6 +20,7 @@ import underavsnittType from '../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
+import { Link } from '@navikt/ds-react';
 import styles from './tilbakekrevingVedtakForm.module.css';
 
 const formName = 'TilbakekrevingVedtakForm';
@@ -45,6 +45,7 @@ const fetchPreview =
     e.preventDefault();
     await fetchPreviewVedtaksbrev({
       uuid,
+      behandlingUuid: uuid,
       ...formatVedtakData(formVerdier),
     });
   };
@@ -62,6 +63,7 @@ interface OwnProps {
   erRevurderingTilbakekrevingFeilBeløpBortfalt?: boolean;
   fritekstOppsummeringPakrevdMenIkkeUtfylt?: boolean;
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
+  erBehandlingBehandlet: boolean;
 }
 
 export const TilbakekrevingVedtakFormImpl = ({
@@ -77,6 +79,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   erRevurderingTilbakekrevingKlage,
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
+  erBehandlingBehandlet,
   ...formProps
 }: OwnProps & InjectedFormProps & WrappedComponentProps) => (
   <form aria-label="form" onSubmit={formProps.handleSubmit} data-testid="tilbakekrevingvedtakform">
@@ -109,10 +112,10 @@ export const TilbakekrevingVedtakFormImpl = ({
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
         </FlexColumn>
-        {perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && (
+        {(perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 || erBehandlingBehandlet) && (
           <FlexColumn>
             <div className={styles.padding}>
-              <a
+              <Link
                 href=""
                 onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)}
                 onKeyDown={e =>
@@ -122,7 +125,7 @@ export const TilbakekrevingVedtakFormImpl = ({
                 data-testid="previewLink"
               >
                 <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
-              </a>
+              </Link>
             </div>
           </FlexColumn>
         )}

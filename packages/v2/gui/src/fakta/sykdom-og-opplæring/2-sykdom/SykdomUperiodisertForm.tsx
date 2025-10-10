@@ -1,7 +1,7 @@
 import {
   type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
-} from '@k9-sak-web/backend/k9sak/generated';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
@@ -38,12 +38,12 @@ const defaultValues = (vurdering: UperiodisertSykdom) => {
 
 const SykdomUperiodisertForm = ({
   vurdering,
-  setRedigering,
-  redigering,
+  setRedigerer,
+  redigerer,
 }: {
   vurdering: UperiodisertSykdom;
-  setRedigering: (redigering: boolean) => void;
-  redigering: boolean;
+  setRedigerer: (redigerer: boolean) => void;
+  redigerer: boolean;
 }) => {
   const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm({
@@ -91,8 +91,8 @@ const SykdomUperiodisertForm = ({
       <div className="flex flex-col gap-6">
         <div>
           <Label htmlFor="begrunnelse" size="small">
-            Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år som følge
-            av <Lovreferanse>§ 9-14</Lovreferanse>
+            Vurder om barnet har en funksjonshemning eller en langvarig sykdom antatt å vare i mer enn ett år, jf{' '}
+            <Lovreferanse>§ 9-14</Lovreferanse>
           </Label>
           <Textarea
             {...formMethods.register('begrunnelse', {
@@ -111,7 +111,7 @@ const SykdomUperiodisertForm = ({
           render={({ field }) => (
             <RadioGroup
               {...field}
-              legend="Har barnet en langvarig funksjonshemming eller langvarig sykdom?"
+              legend="Har barnet en funksjonshemming eller langvarig sykdom?"
               size="small"
               error={formMethods.formState.errors.godkjent?.message as string | undefined}
             >
@@ -139,9 +139,9 @@ const SykdomUperiodisertForm = ({
           <Button variant="primary" type="submit" size="small">
             Bekreft og fortsett
           </Button>
-          {redigering && (
+          {redigerer && (
             <div>
-              <Button variant="secondary" type="button" onClick={() => setRedigering(false)} size="small">
+              <Button variant="secondary" type="button" onClick={() => setRedigerer(false)} size="small">
                 Avbryt redigering
               </Button>
             </div>

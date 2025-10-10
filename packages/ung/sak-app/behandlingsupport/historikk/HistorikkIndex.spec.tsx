@@ -19,9 +19,11 @@ vi.mock('react-router', async () => {
 
 describe('<HistorikkIndex>', () => {
   it('skal slå sammen og sortere historikk for k9sak, tilbake og klage', () => {
+    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
+    requestApi.mock(UngSakApiKeys.HISTORY_TILBAKE, []);
     requestApi.mock(UngSakApiKeys.HISTORY_UNGSAK, [
       {
         historikkinnslagUuid: '801e6e32-e3c4-4ec2-b4c5-3f3c7d1fd47f',

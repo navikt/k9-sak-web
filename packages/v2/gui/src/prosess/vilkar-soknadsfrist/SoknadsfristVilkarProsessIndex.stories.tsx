@@ -4,7 +4,7 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { k9_sak_kontrakt_krav_KravDokumentType as kravDokumentType } from '@k9-sak-web/backend/k9sak/generated';
+import { k9_sak_kontrakt_krav_KravDokumentType as kravDokumentType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';

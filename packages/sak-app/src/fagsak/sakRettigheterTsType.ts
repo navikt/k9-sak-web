@@ -1,8 +1,14 @@
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, Periode } from '@k9-sak-web/types';
+
+export type ÅrsakOgPerioder = Readonly<{
+  årsak: Kodeverk;
+  perioder: Periode[];
+}>;
 
 type BehandlingOppretting = Readonly<{
   behandlingType: Kodeverk;
   kanOppretteBehandling: boolean;
+  gyldigePerioderPerÅrsak?: ÅrsakOgPerioder[];
 }>;
 
 type SakRettigheter = Readonly<{

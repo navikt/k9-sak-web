@@ -1,7 +1,7 @@
 import {
   ung_sak_kontrakt_ungdomsytelse_ytelse_UtbetalingStatus as UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
-} from '@k9-sak-web/backend/ungsak/generated';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';

@@ -8,7 +8,7 @@ import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/P
 import {
   k9_kodeverk_behandling_BehandlingType as BehandlingType,
   k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
-} from '@navikt/k9-sak-typescript-client';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import VedtakForm from '../VedtakForm';
 
 const createBehandling = behandlingResultatType => ({

@@ -12,6 +12,7 @@ interface PeriodePickerProps {
   toLabel?: string;
   readOnly?: boolean;
   size?: 'medium' | 'small';
+  shouldUnregister?: boolean;
 }
 
 interface Field {
@@ -39,6 +40,7 @@ const PeriodePicker = ({
   toLabel = 'Til',
   readOnly = false,
   size = 'medium',
+  shouldUnregister = false,
 }: PeriodePickerProps) => {
   const formMethods = useFormContext();
 
@@ -57,8 +59,10 @@ const PeriodePicker = ({
 
   useEffect(() => {
     return () => {
-      formMethods.unregister(fromField.name);
-      formMethods.unregister(toField.name);
+      if (shouldUnregister) {
+        formMethods.unregister(fromField.name);
+        formMethods.unregister(toField.name);
+      }
     };
   }, []);
 

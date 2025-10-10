@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -15,7 +16,7 @@ import {
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { BehandlingProvider } from '../../v2/gui/src/BehandlingContext';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import OpplaeringspengerPaneler from './components/OpplaeringspengerPaneler';
 import {
   OpplaeringspengerBehandlingApiKeys,
@@ -35,6 +36,7 @@ const opplaeringspengerData = [
   { key: OpplaeringspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OpplaeringspengerBehandlingApiKeys.UTTAK },
   { key: OpplaeringspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
+  { key: OpplaeringspengerBehandlingApiKeys.INNTEKTSGRADERING },
 ];
 
 interface OwnProps {

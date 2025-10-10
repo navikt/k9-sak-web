@@ -1,4 +1,4 @@
-import { ung_kodeverk_ungdomsytelse_sats_UngdomsytelseSatsType as UngdomsytelseSatsPeriodeDtoSatsType } from '@k9-sak-web/backend/ungsak/generated';
+import { ung_kodeverk_ungdomsytelse_sats_UngdomsytelseSatsType as UngdomsytelseSatsPeriodeDtoSatsType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Tooltip } from '@navikt/ds-react';
 import styles from './dagsatsOgUtbetaling.module.css';
 

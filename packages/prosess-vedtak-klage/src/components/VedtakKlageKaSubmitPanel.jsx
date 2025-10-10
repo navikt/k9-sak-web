@@ -1,4 +1,4 @@
-import { Button, HGrid } from '@navikt/ds-react';
+import { Button, HGrid, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -85,14 +85,14 @@ export const VedtakKlageKaSubmitPanelImpl = ({
             {intl.formatMessage({ id: 'VedtakKlageForm.FerdigstillKlageKa' })}
           </Button>
         )}
-        <a
+        <Link
           href=""
           onClick={previewBrev}
           onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
           className={classNames('lenke lenke--frittstaende')}
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
-        </a>
+        </Link>
       </div>
     </HGrid>
   );

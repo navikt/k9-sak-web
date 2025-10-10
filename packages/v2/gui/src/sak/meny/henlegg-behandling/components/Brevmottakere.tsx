@@ -1,9 +1,11 @@
-import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
 import type { Klagepart } from '../types/Klagepart';
 import type { Personopplysninger } from '../types/Personopplysninger';
+
+import type { HenleggBehandlingFormvalues } from './formValues';
 
 interface OwnProps {
   brevmottakere: Klagepart[] | undefined;
@@ -32,7 +34,7 @@ function lagVisningsnavnForMottakere(
 }
 
 const Brevmottakere = ({ brevmottakere, personopplysninger, arbeidsgiverOpplysninger }: OwnProps) => {
-  const { control } = useFormContext();
+  const { control } = useFormContext<HenleggBehandlingFormvalues>();
   return brevmottakere && brevmottakere.length ? (
     <RhfSelect
       control={control}
