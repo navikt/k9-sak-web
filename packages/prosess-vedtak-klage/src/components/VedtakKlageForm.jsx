@@ -7,7 +7,6 @@ import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-fronte
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
@@ -118,7 +117,9 @@ export const VedtakKlageFormImpl = ({
           />
         )}
 
-        {(klageresultat.klageVurdertAv === 'NAY' || klageresultat.klageVurdertAv === 'NFP') && (
+        {(klageresultat.klageVurdertAv === 'NAY' ||
+          klageresultat.klageVurdertAv === 'NFP' ||
+          klageresultat.klageVurdertAv === 'VI') && (
           <VedtakKlageSubmitPanel
             begrunnelse={fritekstTilBrev}
             klageResultat={klageresultat}
