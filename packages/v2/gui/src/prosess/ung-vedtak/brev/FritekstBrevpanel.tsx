@@ -124,7 +124,7 @@ export const FritekstBrevpanel = ({
   return (
     <VStack gap="space-8">
       <Heading size="small" level="3">
-        {`Brev om ${vedtaksbrevValg?.dokumentMalType?.navn}`}
+        {vedtaksbrevValg?.dokumentMalType?.navn}
       </Heading>
       <div>
         <Button
