@@ -58,7 +58,6 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
     sprakFilState === RestApiState.SUCCESS &&
-    !k9KodeverkOppslag.isPending &&
     !!featureToggles; // <- sjekker at feature toggles er lasta
 
   return (
