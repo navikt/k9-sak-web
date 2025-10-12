@@ -39,7 +39,7 @@ export class ClientConfigHelper {
       request.headers.set(xJsonSerializerOptionHeader, xJsonSerializerOptionValue);
       request.headers.set('Accept', 'application/json,*/*;q=0.1'); // Required to get server to return 401 (and not 302) for auth failures.
       // Viss autentisering trengs, vent med å sende nye kall til server sidan dei og berre vil feile.
-      if (authFixer.needsAuthentication) {
+      if (authFixer.shouldWaitForAuthentication) {
         await authFixer.authenticationDone(request.signal);
       }
       return request;

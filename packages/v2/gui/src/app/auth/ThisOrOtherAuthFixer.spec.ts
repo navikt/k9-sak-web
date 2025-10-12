@@ -21,7 +21,7 @@ class FakeAuthFixer implements AuthFixApi {
     return this.#fakeAuthProcess.promise;
   }
 
-  get needsAuthentication() {
+  get shouldWaitForAuthentication() {
     return this.isAuthenticating;
   }
 

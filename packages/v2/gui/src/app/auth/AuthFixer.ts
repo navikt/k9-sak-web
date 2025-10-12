@@ -1,15 +1,15 @@
 import {
-  type AuthFixApi,
   type AuthResult,
   authAbortedResult,
   authSuccessResult,
   authSuccessExceptPopupResult,
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
 import { resolveLoginURL, withRedirectTo } from './resolveLoginURL.js';
+import type { AuthFixConnectedApi } from './AuthFixConnectedApi.ts';
 
 const intentionalAbortReason = 'promise cleanup';
 
-export class AuthFixer implements AuthFixApi {
+export class AuthFixer implements AuthFixConnectedApi {
   readonly #authDoneRedirectPath: string;
   readonly #popupClosedCheckInterval: number;
   readonly #id: string;
@@ -146,7 +146,7 @@ export class AuthFixer implements AuthFixApi {
     }
   }
 
-  get needsAuthentication() {
+  get shouldWaitForAuthentication() {
     return this.isAuthenticating;
   }
 

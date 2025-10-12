@@ -1,14 +1,15 @@
-import { authAbortedResult, type AuthFixApi, type AuthResult } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
+import { authAbortedResult, type AuthResult } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
+import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
 
 /**
  * Når fleire backends har ugyldig autentisering samtidig skal kun ein av dei ha aktiv autentiseringsflyt samtidig.
  * ThisOrOtherAuthFixer brukast som eit lag over fleire AuthFixer, slik at kun ein av dei starter samtidig.
  */
-export class ThisOrOtherAuthFixer implements AuthFixApi {
-  readonly #thisFixer: AuthFixApi;
-  readonly #otherFixer: AuthFixApi;
+export class ThisOrOtherAuthFixer implements AuthFixConnectedApi {
+  readonly #thisFixer: AuthFixConnectedApi;
+  readonly #otherFixer: AuthFixConnectedApi;
 
-  constructor(thisFixer: AuthFixApi, otherFixer: AuthFixApi) {
+  constructor(thisFixer: AuthFixConnectedApi, otherFixer: AuthFixConnectedApi) {
     this.#thisFixer = thisFixer;
     this.#otherFixer = otherFixer;
   }
@@ -44,8 +45,8 @@ export class ThisOrOtherAuthFixer implements AuthFixApi {
     }
   }
 
-  get needsAuthentication() {
-    return this.#thisFixer.needsAuthentication;
+  get shouldWaitForAuthentication() {
+    return this.#thisFixer.shouldWaitForAuthentication;
   }
 
   get isAuthenticating(): boolean {
@@ -56,7 +57,11 @@ export class ThisOrOtherAuthFixer implements AuthFixApi {
 /**
  * Recursively create tree of ThisOrOtherAuthFixerPairs with thisFixer as the top thisFixer
  */
-const authPairing = (thisFixer: AuthFixApi, otherFixer: AuthFixApi, more: AuthFixApi[]): ThisOrOtherAuthFixer => {
+const authPairing = (
+  thisFixer: AuthFixConnectedApi,
+  otherFixer: AuthFixConnectedApi,
+  more: AuthFixConnectedApi[],
+): ThisOrOtherAuthFixer => {
   const [nextOtherFixer, ...nextMore] = more;
   if (nextOtherFixer == null) {
     return new ThisOrOtherAuthFixer(thisFixer, otherFixer);
@@ -65,9 +70,9 @@ const authPairing = (thisFixer: AuthFixApi, otherFixer: AuthFixApi, more: AuthFi
   }
 };
 
-export function sequentialAuthFixerSetup<Fixers extends readonly [AuthFixApi, AuthFixApi, ...AuthFixApi[]]>(
-  ...fixers: Fixers
-): { [K in keyof Fixers]: ThisOrOtherAuthFixer } {
+export function sequentialAuthFixerSetup<
+  Fixers extends readonly [AuthFixConnectedApi, AuthFixConnectedApi, ...AuthFixConnectedApi[]],
+>(...fixers: Fixers): { [K in keyof Fixers]: ThisOrOtherAuthFixer } {
   const ret: ThisOrOtherAuthFixer[] = [];
   for (const thisFixer of fixers) {
     const [otherFixer, ...more] = fixers.filter(fixer => fixer !== thisFixer);

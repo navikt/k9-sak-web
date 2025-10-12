@@ -50,12 +50,7 @@ export interface AuthFixApi {
   /**
    * Kalles frå request interceptor for å sjekke om den bør vente på autentisering før den fortsetter.
    */
-  get needsAuthentication(): boolean;
-
-  /**
-   * @returns true Viss autentiseringsflyt pågår
-   */
-  get isAuthenticating(): boolean;
+  get shouldWaitForAuthentication(): boolean;
 
   /**
    * Venter til evt pågåande autentiseringsprosess er fullført.
