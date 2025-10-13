@@ -32,7 +32,7 @@ interface BehandleKlageFormNfpProps {
 }
 
 /**
- * BehandleklageformNfp
+ * BehandleKlageFormNfp
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (NFP).
  */

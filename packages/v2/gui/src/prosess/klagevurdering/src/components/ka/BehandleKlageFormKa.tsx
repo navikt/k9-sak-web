@@ -28,7 +28,7 @@ interface BehandleKlageFormKaProps {
 }
 
 /**
- * BehandleklageformNfp
+ * BehandleKlageFormKa
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (KA).
  */
