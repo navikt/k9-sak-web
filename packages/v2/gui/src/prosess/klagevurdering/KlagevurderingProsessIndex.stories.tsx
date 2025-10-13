@@ -1,7 +1,6 @@
 import {
   type ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   ung_kodeverk_behandling_FagsakYtelseType,
-  ung_kodeverk_klage_KlageAvvistÅrsak,
   ung_kodeverk_klage_KlageVurderingType,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
@@ -45,9 +44,6 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
       },
-      klageFormkravResultatKA: {
-        avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_SIGNERT],
-      },
     },
   },
   play: async ({ canvas, step }) => {
@@ -76,9 +72,6 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_SIGNERT],
       },
     },
   },
