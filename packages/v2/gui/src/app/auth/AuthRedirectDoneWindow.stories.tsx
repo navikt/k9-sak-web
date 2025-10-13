@@ -1,7 +1,7 @@
 import { AuthRedirectDoneWindow } from './AuthRedirectDoneWindow.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent } from 'storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 
 const meta = {
   title: 'gui/app/auth/AuthRedirectDoneWindow',
@@ -22,7 +22,7 @@ export const Default: Story = {
   },
   play: async ({ canvas, args }) => {
     await expect(canvas.getByText('Vellykket innlogging')).toBeVisible();
-    await expect(args.sendAuthDoneMessage).toHaveBeenCalled();
+    await waitFor(() => expect(args.sendAuthDoneMessage).toHaveBeenCalled());
   },
 };
 
@@ -36,8 +36,11 @@ export const NårSendMessageFeiler: Story = {
   },
   play: async ({ canvas, args }) => {
     await expect(canvas.getByText('Vellykket innlogging')).toBeVisible();
-    await expect(canvas.getByText('Innlogging fullført, men', { exact: false })).toBeVisible();
-    const btn = await canvas.getByRole('button', { name: 'Lukk dette vinduet' });
+    const info = await canvas.findByText('Innlogging fullført, men', { exact: false });
+    await waitFor(() => expect(args.sendAuthDoneMessage).toHaveBeenCalled());
+    // Info er synleg etter at første sendAuthDoneMessage har returnert false
+    await expect(info).toBeVisible();
+    const btn = await canvas.findByRole('button', { name: 'Lukk dette vinduet' });
     await expect(btn).toBeVisible();
     await userEvent.click(btn);
     await expect(args.sendAuthDoneMessage).toHaveBeenCalledTimes(2);
