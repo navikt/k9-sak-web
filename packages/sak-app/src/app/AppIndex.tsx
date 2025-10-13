@@ -26,6 +26,8 @@ import '@navikt/ft-ui-komponenter/dist/style.css';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 import { usePrefetchQuery } from '@tanstack/react-query';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
+import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
 
 const EMPTY_ARRAY = [];
 
@@ -76,6 +78,8 @@ const AppIndex = () => {
   usePrefetchQuery(kodeverkOppslagQueryOptions.k9sak);
   usePrefetchQuery(kodeverkOppslagQueryOptions.k9tilbake(true));
   usePrefetchQuery(kodeverkOppslagQueryOptions.k9klage(true));
+  // Start forhåndslasting av nav ansatt data
+  usePrefetchQuery(innloggetAnsattQueryOptions(new K9SakInnloggetAnsattBackendClient()));
 
   // Sjå bootstrap for å sjå kva som er lenger oppe i hierarkiet.
   return (

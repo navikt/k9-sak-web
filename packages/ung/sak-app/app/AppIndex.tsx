@@ -18,6 +18,9 @@ import '@navikt/ds-css/darkside';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
+import { usePrefetchQuery } from '@tanstack/react-query';
+import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
 
 const EMPTY_ARRAY = [];
 
@@ -49,6 +52,9 @@ const AppIndex = () => {
   const unauthorizedErrors = errorMessages.filter(o => o.type === EventType.REQUEST_UNAUTHORIZED);
   const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
   const shouldRenderHome = !hasCrashed && !hasForbiddenOrUnauthorizedErrors;
+
+  // Start forhåndslasting av nav ansatt data
+  usePrefetchQuery(innloggetAnsattQueryOptions(new UngSakInnloggetAnsattBackendClient()));
 
   // Sjå bootstrapUng for å sjå kva som er lenger oppe i hierarkiet.
   return (
