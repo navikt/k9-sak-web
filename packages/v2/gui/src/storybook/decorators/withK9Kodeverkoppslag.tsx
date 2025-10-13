@@ -10,7 +10,6 @@ import { oppslagKodeverkSomObjektK9Tilbake } from '../../kodeverk/mocks/oppslagK
 
 const withK9Kodeverkoppslag = (): Decorator => Story => {
   const k9Kodeverkoppslag: K9Kodeverkoppslag = {
-    isPending: false,
     k9sak: new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak),
     k9klage: new K9KlageKodeverkoppslag(oppslagKodeverkSomObjektK9Klage),
     k9tilbake: new K9TilbakeKodeverkoppslag(oppslagKodeverkSomObjektK9Tilbake),

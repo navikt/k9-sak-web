@@ -12,6 +12,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const FeilmeldingIkkeInnlogget: Story = {
+  args: {
+    loginUrl: '/',
+  },
   play: async ({ canvas }) => {
     await expect(
       canvas.getByRole('heading', { name: 'Du må logge inn for å få tilgang til systemet' }),

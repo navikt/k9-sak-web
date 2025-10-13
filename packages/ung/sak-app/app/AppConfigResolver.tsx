@@ -9,6 +9,8 @@ import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureTogg
 import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -51,7 +53,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
-      {harFeilet || erFerdig ? children : <LoadingPanel />}
+      <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+        {harFeilet || erFerdig ? children : <LoadingPanel />}
+      </InnloggetAnsattProvider>
     </FeatureTogglesContext.Provider>
   );
 };

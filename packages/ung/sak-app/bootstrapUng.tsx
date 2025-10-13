@@ -1,11 +1,17 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router';
+import {
+  BrowserRouter,
+  createRoutesFromChildren,
+  matchRoutes,
+  Route,
+  Routes,
+  useLocation,
+  useNavigationType,
+} from 'react-router';
 
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 
@@ -16,8 +22,11 @@ import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import { AxiosError } from 'axios';
 import AppIndex from './app/AppIndex';
 import { configureUngSakClient } from '@k9-sak-web/backend/ungsak/configureUngSakClient.js';
+import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
+import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
+import { RestApiProviderLayout } from '@k9-sak-web/sak-app/src/app/RestApiProviderLayout.js';
+import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
 
-/* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
 
@@ -76,17 +85,21 @@ init({
   },
 });
 
-configureUngSakClient();
+const basePath = '/ung/web';
+const authFixer = new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`);
+configureUngSakClient(authFixer);
 
 const store = configureStore();
 
-const renderFunc = Component => {
+const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+
+const renderFunc = () => {
   /**
    * Redirecte til riktig basename om man kommer hit uten
    * Vil kunne forekomme lokalt og i tester
    */
   if (window.location.pathname === '/') {
-    window.location.assign('/ung/web');
+    window.location.assign(basePath);
   }
 
   const app = document.getElementById('app');
@@ -102,20 +115,29 @@ const renderFunc = Component => {
     }
   };
 
-  void prepare().then(() => {
+  const run = () => {
     const root = createRoot(app);
     root.render(
       <Provider store={store}>
-        <BrowserRouter basename="/ung/web">
-          <RestApiProvider>
-            <RestApiErrorProvider>
-              <Component />
-            </RestApiErrorProvider>
-          </RestApiProvider>
+        <BrowserRouter basename={basePath}>
+          <SentryRoutes>
+            <Route element={<RootLayout />}>
+              <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
+              <Route element={<RestApiProviderLayout />}>
+                <Route path="*" element={<AppIndex />} />
+              </Route>
+            </Route>
+          </SentryRoutes>
         </BrowserRouter>
       </Provider>,
     );
-  });
+  };
+  prepare()
+    .then(run)
+    .catch(err => {
+      console.error(`bootstrap prepare failed, will start running anyways`, err);
+      run();
+    });
 };
 
-renderFunc(AppIndex);
+renderFunc();

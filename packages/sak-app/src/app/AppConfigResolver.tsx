@@ -13,6 +13,8 @@ import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kode
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import ApplicationContextPath from './ApplicationContextPath';
+import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -56,13 +58,14 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
     sprakFilState === RestApiState.SUCCESS &&
-    !k9KodeverkOppslag.isPending &&
     !!featureToggles; // <- sjekker at feature toggles er lasta
 
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? prodFeatureToggles}>
       <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
-        {harFeilet || erFerdig ? children : <LoadingPanel />}
+        <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
+          {harFeilet || erFerdig ? children : <LoadingPanel />}
+        </InnloggetAnsattProvider>
       </K9KodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
   );
