@@ -190,7 +190,7 @@ export const NyBehandlingModal = ({
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
       periode: erUngdomsprogramytelse
-        ? getUngPerioderTilRevurdering()!.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+        ? getUngPerioderTilRevurdering()?.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
         : undefined,
       ...klageOnlyValues,
     });

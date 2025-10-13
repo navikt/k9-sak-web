@@ -3,7 +3,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
@@ -24,6 +23,7 @@ interface OwnProps {
   aksjonspunktKodeForeslaVedtak: string;
   erRevurderingTilbakekrevingKlage?: boolean;
   erRevurderingTilbakekrevingFeilBeløpBortfalt?: boolean;
+  erBehandlingBehandlet: boolean;
 }
 
 const TilbakekrevingVedtak = ({
@@ -40,6 +40,7 @@ const TilbakekrevingVedtak = ({
   aksjonspunktKodeForeslaVedtak,
   erRevurderingTilbakekrevingKlage,
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
+  erBehandlingBehandlet,
 }: OwnProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -66,6 +67,7 @@ const TilbakekrevingVedtak = ({
         aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
         erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}
         erRevurderingTilbakekrevingFeilBeløpBortfalt={erRevurderingTilbakekrevingFeilBeløpBortfalt}
+        erBehandlingBehandlet={erBehandlingBehandlet}
       />
     </>
   );
