@@ -5,8 +5,8 @@ import { CheckmarkIcon } from '@navikt/aksel-icons';
 
 type HasPostMessage = Pick<WindowProxy, 'postMessage'>;
 
-const hasPostMessage = (v: any): v is HasPostMessage =>
-  v != null && 'postMessage' in v && typeof v.postMessage === 'function';
+const hasPostMessage = (v: unknown): v is HasPostMessage =>
+  v != null && typeof v === 'object' && 'postMessage' in v && typeof v.postMessage === 'function';
 
 interface AuthRedirectDoneWindowProps {
   readonly sendAuthDoneMessage?: () => boolean;
