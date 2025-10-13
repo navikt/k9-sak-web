@@ -36,7 +36,7 @@ export class ThisOrOtherAuthFixer implements AuthFixConnectedApi {
     await Promise.all([
       this.#thisFixer.authenticationDone(abortSignal),
       this.#otherFixer.authenticationDone(abortSignal),
-    ]).then(res => res.every(res => res));
+    ]);
     // A new authentication might have started in this or other while we waited, if so, restart
     if (this.isAuthenticating) {
       return await this.authenticationDone(abortSignal);
