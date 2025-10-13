@@ -39,7 +39,6 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.LANGUAGE_FILE, NO_PARAMS);
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
-
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
   const erFerdig =

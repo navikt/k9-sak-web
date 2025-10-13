@@ -83,6 +83,7 @@ const previewCallback =
   parametre => {
     const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
       ...parametre,
+      behandlingId: behandling.id,
       overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
     });
     return forhandsvisMelding(request).then(response => forhandsvis(response));
