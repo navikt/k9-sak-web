@@ -14,7 +14,7 @@ export class AuthFixer implements AuthFixConnectedApi {
   readonly #popupClosedCheckInterval: number;
   readonly #id: string;
 
-  constructor(authDoneRedirectPath: string, popupClosedCheckInterval: number = 583) {
+  constructor(authDoneRedirectPath: string, popupClosedCheckInterval: number = 1483) {
     this.#authDoneRedirectPath = authDoneRedirectPath;
     this.#popupClosedCheckInterval = popupClosedCheckInterval;
     this.#id = `${Math.floor(Math.random() * 10000)}`;
@@ -83,6 +83,7 @@ export class AuthFixer implements AuthFixConnectedApi {
           // Poll to check if the window has been closed without auth being completed
           const intervalId = setInterval(() => {
             if (windowProxy.closed) {
+              console.info(`autentisering popup vindu ble lukket før autentisering var fullført.`);
               clearInterval(intervalId);
               internalCanceller.abort(intentionalAbortReason);
             }
