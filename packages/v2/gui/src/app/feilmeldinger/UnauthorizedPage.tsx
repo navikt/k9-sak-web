@@ -7,7 +7,7 @@ interface UnauthorizedPageProps {
 }
 
 export const k9LoginResourcePath = '/k9/sak/resource/login';
-export const ungLoginResourcePath = 'ung/sak/resource/login';
+export const ungLoginResourcePath = '/ung/sak/resource/login';
 
 /**
  * UnauthorizedPage
