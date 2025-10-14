@@ -182,6 +182,7 @@ export const NyBehandlingModal = ({
         ? {
             aktørId: aktorId,
             behandlendeEnhetId: gjeldendeVedtakBehandlendeEnhetId,
+            behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
           }
         : {};
     submitCallback({
