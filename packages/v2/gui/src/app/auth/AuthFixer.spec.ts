@@ -282,6 +282,7 @@ describe('AuthFixer api behaviour', () => {
           const secondAuthenticationDonePromise = fakeFixer
             .authenticationDone(fourthAborter.signal)
             .finally(secondAuthenticationDoneCallSettledCheck);
+          let thirdAuthenticateCallPromise: Promise<AuthResult> | null = null;
 
           firstAborter.abort('test abort');
           it('should abort the original authenticate call', async () => {
@@ -294,6 +295,12 @@ describe('AuthFixer api behaviour', () => {
             expect(secondAuthenticateCallSettledCheck).not.toHaveBeenCalled();
             expect(firstAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
             expect(secondAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
+          });
+          it('authFixer should still be authenticating', () => {
+            expect(fakeFixer.isAuthenticating).toEqual(true);
+            // Start a third authenticate call after first is aborted
+            const fiftAborter = new AbortController();
+            thirdAuthenticateCallPromise = fakeFixer.authenticate(fakeResponse1, fiftAborter.signal);
           });
           it('aborting second authenticateDone call should not affect others', async () => {
             fourthAborter.abort('test abort');
@@ -310,6 +317,9 @@ describe('AuthFixer api behaviour', () => {
             await expect(secondAuthenticationDonePromise).resolves.toEqual(undefined);
             await expect(firstAuthenticationDonePromise).resolves.toEqual(undefined);
             await expect(fakeFixer.fakeAuthPromise).resolves.toEqual(authenticatedAuthResult);
+          });
+          it('third authenticate call should also then succeed', async () => {
+            await expect(thirdAuthenticateCallPromise).resolves.toEqual(authenticatedAuthResult);
           });
         });
 

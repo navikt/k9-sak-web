@@ -132,14 +132,11 @@ export class AuthFixer implements AuthFixConnectedApi {
         this.#authPromise = this.startNewAuthenticationProcess(response, this.#activeAuthenticateAborter.signal);
       }
 
-      try {
-        return await Promise.race([this.#authPromise, this.aborted(abortSignal)]);
-      } finally {
-        this.#authPromise = null;
-      }
+      return await Promise.race([this.#authPromise, this.aborted(abortSignal)]);
     } finally {
       this.#activeAuthenticateCallers = this.#activeAuthenticateCallers - 1;
       if (this.#activeAuthenticateCallers === 0) {
+        this.#authPromise = null;
         // Dette er siste aktive kallet til authenticate, så vi kan avbryte pågåande autentiseringsprosess
         this.#activeAuthenticateAborter?.abort();
       }
