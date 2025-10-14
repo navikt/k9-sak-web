@@ -38,7 +38,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
     readOnly,
   } = useUttakContext();
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
-  const { before, afterOrCovering } = splitUttakByDate(uttaksperiodeListe, virkningsdatoUttakNyeRegler);
+  const { before, afterOrCovering } = splitUttakByDate([...uttaksperiodeListe], virkningsdatoUttakNyeRegler);
   const headers = tableHeaders(ytelseType);
 
   const velgPeriode = (index: number) => {

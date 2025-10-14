@@ -105,9 +105,11 @@ const OverstyringUttakForm: FC<OwnProps> = ({
 
   const watchFraDato = watch('periode.fom', undefined);
   const watchTilDato = watch('periode.tom', undefined);
+  const beggeDatoerValgt = Boolean(watchFraDato) && Boolean(watchTilDato);
 
   const { isLoading: lasterAktiviteter } = useQuery({
     queryKey: ['overstyrte', behandling.uuid, watchFraDato, watchTilDato],
+    enabled: beggeDatoerValgt, // Hent aktiviteter først når begge datoer er valgt
     queryFn: async () => {
       const aktuelleAktiviteter = await api.hentAktuelleAktiviteter(
         behandling.uuid,
@@ -115,12 +117,38 @@ const OverstyringUttakForm: FC<OwnProps> = ({
         dayjs(watchTilDato).format('YYYY-MM-DD'),
       );
       if (aktuelleAktiviteter.arbeidsforholdsperioder) {
-        replaceAktiviteter(formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder));
+        const nyeAktiviteter = formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder);
+        
+        // Hvis vi redigerer en eksisterende overstyring, bevar utbetalingsgradene
+        if (overstyring?.utbetalingsgrader) {
+          nyeAktiviteter.forEach(nyAktivitet => {
+            const eksisterende = overstyring.utbetalingsgrader?.find(
+              existing =>
+                existing.arbeidsforhold.orgnr === nyAktivitet.arbeidsforhold.orgnr &&
+                existing.arbeidsforhold.aktørId === nyAktivitet.arbeidsforhold.aktørId &&
+                existing.arbeidsforhold.arbeidsforholdId === nyAktivitet.arbeidsforhold.arbeidsforholdId
+            );
+            if (eksisterende) {
+              nyAktivitet.utbetalingsgrad = eksisterende.utbetalingsgrad;
+            }
+          });
+        }
+        
+        replaceAktiviteter(nyeAktiviteter);
+      } else {
+        replaceAktiviteter([]);
       }
       setArbeidsgivere(aktuelleAktiviteter.arbeidsgiverOversikt?.arbeidsgivere ?? undefined);
       return aktuelleAktiviteter;
     },
   });
+
+  useEffect(() => {
+    if (!beggeDatoerValgt) {
+      replaceAktiviteter([]);
+      setArbeidsgivere(undefined);
+    }
+  }, [beggeDatoerValgt, replaceAktiviteter]);
 
   useEffect(
     () => setDeaktiverLeggTil(Boolean(watchFraDato && watchTilDato && !isValid)),

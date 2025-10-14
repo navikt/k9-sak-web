@@ -33,7 +33,6 @@ const UttakInnhold = (): JSX.Element => {
 
   const harOpprettetAksjonspunktVurderDato =
     aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET;
-
   return (
     <VStack gap="4">
       <HStack justify="start">
@@ -53,7 +52,7 @@ const UttakInnhold = (): JSX.Element => {
         </ContentMaxWidth>
       )}
 
-      {!harEtUløstAksjonspunktIUttak && overstyringAktiv && <OverstyrUttak />}
+      {!harEtUløstAksjonspunktIUttak && <OverstyrUttak overstyringAktiv={overstyringAktiv} />}
 
       {aksjonspunktVurderOverlappendeSaker && <VurderOverlappendeSak />}
 

@@ -9,10 +9,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
+import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
+import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
 switchOnTestMode();
+
+// Configure backend clients for Storybook
+configureK9SakClient();
+configureK9KlageClient();
+configureK9TilbakeClient();
 
 initialize({
   onUnhandledRequest: 'bypass',

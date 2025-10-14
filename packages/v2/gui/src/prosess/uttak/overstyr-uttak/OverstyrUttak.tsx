@@ -21,14 +21,18 @@ export enum OverstyrUttakHandling {
   LAGRE = 'LAGRE',
 }
 
-const OverstyrUttak: FC = () => {
+interface OverstyrUttakProps {
+  overstyringAktiv: boolean;
+}
+
+const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } =
     useUttakContext();
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = useState<boolean>(false);
   const [redigerOverstyring, setRedigerOverstyring] = useState<number | boolean>(false);
-  const leseModus = !erOverstyrer;
+  const leseModus = !erOverstyrer || !overstyringAktiv;
 
   const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery({
     queryKey: ['overstyrte', behandling.uuid],
@@ -99,7 +103,9 @@ const OverstyrUttak: FC = () => {
 
   const bekreftSletting = (id: number) => setBekreftSlettId(id);
 
-  const harNoeÅVise = (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0 && leseModus) || erOverstyrer;
+  const harNoeÅVise =
+    (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0) ||
+    (erOverstyrer && overstyringAktiv);
 
   const arbeidsgivere = overstyrte?.arbeidsgiverOversikt?.arbeidsgivere;
 
@@ -110,12 +116,14 @@ const OverstyrUttak: FC = () => {
         <Table.HeaderCell scope="col">Fra og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">Til og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">
-          Ny uttaksgrad
-          <HelpText title="Uttaksgrad">
-            Uttaksgraden viser til hvor mye av den totale pleiepengekvoten som tas ut. Eksempel: Settes uttaksgraden til
-            70% er det 30% igjen til en annen part ved behov for én omsorgsperson. I de aller fleste tilfeller vil det
-            være riktig å sette uttaksgraden lik gjennomsnittet av utbetalingsgradene for alle aktivitetene samlet.
-          </HelpText>
+          <HStack gap="2">
+            Ny uttaksgrad
+            <HelpText title="Uttaksgrad">
+              Uttaksgraden viser til hvor mye av den totale pleiepengekvoten som tas ut. Eksempel: Settes uttaksgraden til
+              70% er det 30% igjen til en annen part ved behov for én omsorgsperson. I de aller fleste tilfeller vil det
+              være riktig å sette uttaksgraden lik gjennomsnittet av utbetalingsgradene for alle aktivitetene samlet.
+            </HelpText>
+          </HStack>
         </Table.HeaderCell>
         {!leseModus && <Table.HeaderCell scope="col">Valg for overstyring</Table.HeaderCell>}
       </Table.Row>
@@ -139,7 +147,7 @@ const OverstyrUttak: FC = () => {
         {lasterOverstyrte && <Loader size="large" title="Venter..." />}
         {!lasterOverstyrte && overstyrte?.overstyringer && (
           <>
-            {overstyrte?.overstyringer.length === 0 && !visOverstyringSkjema && (
+            {overstyringAktiv && overstyrte?.overstyringer.length === 0 && !visOverstyringSkjema && (
               <>Det er ingen overstyrte aktiviteter i denne saken</>
             )}
             {overstyrte?.overstyringer.length > 0 && (
@@ -174,7 +182,7 @@ const OverstyrUttak: FC = () => {
           </>
         )}
 
-        {erOverstyrer && (
+        {erOverstyrer && overstyringAktiv && (
           <>
             {bekreftSlettId && (
               <Modal
