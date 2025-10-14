@@ -50,7 +50,13 @@ export const TempSaveAndPreviewKlageLink = ({
   return (
     <div>
       {!readOnly && (
-        <Button onClick={tempSave} className={styles.previewLink} data-testid="previewLink" variant="tertiary">
+        <Button
+          onClick={tempSave}
+          className={styles.previewLink}
+          data-testid="previewLink"
+          variant="tertiary"
+          size="small"
+        >
           Lagre og forhåndsvis brev
         </Button>
       )}
