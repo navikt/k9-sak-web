@@ -101,7 +101,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('brev-maler', UngSakApiKeys.BREVMALER)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
   .withRel('brev-bestill', UngSakApiKeys.SUBMIT_MESSAGE)
-
   .withPost('/ung/tilbake/api/brev/forhandsvis', UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(
     '/ung/tilbake/api/dokument/forhandsvis-henleggelsesbrev',
@@ -111,6 +110,7 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/ung/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
 
   .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_UNGSAK)
+  .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_KLAGE)
 
   // Formidling
   .withPost('/ung/formidling/api/brev/forhaandsvis', UngSakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
