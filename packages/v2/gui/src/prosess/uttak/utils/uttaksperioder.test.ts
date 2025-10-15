@@ -14,7 +14,7 @@ describe('lagUttaksperiodeliste', () => {
     } as any;
     const liste = lagUttaksperiodeliste(perioder);
     const fomDatoer = liste.map(p => p.periode.fom);
-    expect(fomDatoer).toEqual(['2024-03-01', '2024-02-01', '2024-01-01']);
+    await expect(fomDatoer).toEqual(['2024-03-01', '2024-02-01', '2024-01-01']);
   });
 
   it('markerer opphold mellom ikke-kontinuerlige uker', () => {
@@ -24,7 +24,7 @@ describe('lagUttaksperiodeliste', () => {
     } as any;
     const liste = lagUttaksperiodeliste(perioder);
     const første = liste.find(p => p.periode.fom === '2024-01-01');
-    expect(første?.harOppholdTilNestePeriode).toBe(true);
+    await expect(første?.harOppholdTilNestePeriode).toBe(true);
   });
 
   it('setter ikke opphold når perioder er kant i kant (sammenhengende uker)', () => {
@@ -34,7 +34,7 @@ describe('lagUttaksperiodeliste', () => {
     } as any;
     const liste = lagUttaksperiodeliste(perioder);
     const earlier = liste.find(p => p.periode.fom === '2024-01-01');
-    expect(earlier?.harOppholdTilNestePeriode).toBe(false);
+    await expect(earlier?.harOppholdTilNestePeriode).toBe(false);
   });
 
   it('håndterer årsskifte for uke-sammenheng', () => {
@@ -46,7 +46,7 @@ describe('lagUttaksperiodeliste', () => {
     } as any;
     const liste = lagUttaksperiodeliste(perioder);
     const earlier = liste.find(p => p.periode.fom === lastWeek.format(YYYYMMDD_DATE_FORMAT));
-    expect(earlier?.harOppholdTilNestePeriode).toBe(false);
+    await expect(earlier?.harOppholdTilNestePeriode).toBe(false);
   });
 
   it('håndterer uke 53 til uke 1 (2020->2021) uten opphold', () => {
@@ -59,7 +59,7 @@ describe('lagUttaksperiodeliste', () => {
     } as any;
     const liste = lagUttaksperiodeliste(perioder);
     const earlier = liste.find(p => p.periode.fom === sisteUke.format(YYYYMMDD_DATE_FORMAT));
-    expect(earlier?.harOppholdTilNestePeriode).toBe(false);
+    await expect(earlier?.harOppholdTilNestePeriode).toBe(false);
   });
 
   it('ignorerer ugyldig nøkkel-format', () => {
@@ -68,7 +68,7 @@ describe('lagUttaksperiodeliste', () => {
       [key('2024-05-01', '2024-05-07')]: { some: 'y' },
     } as any;
     const liste = lagUttaksperiodeliste(perioder);
-    expect(liste.length).toBe(1);
-    expect(liste[0]!.periode.fom).toBe('2024-05-01');
+    await expect(liste.length).toBe(1);
+    await expect(liste[0]!.periode.fom).toBe('2024-05-01');
   });
 });

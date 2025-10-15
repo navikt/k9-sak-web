@@ -142,13 +142,13 @@ export const EmptyState: Story = {
     const user = userEvent.setup();
 
     await step('Viser Uttak', async () => {
-      expect(canvas.getByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
-      expect(canvas.getByRole('cell', { name: /01.02.2024 - 28.02.2024/i })).toBeInTheDocument();
-      expect(canvas.getByRole('cell', { name: /01.01.2024 - 31.01.2024/i })).toBeInTheDocument();
+      await expect(canvas.getByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
+      await expect(canvas.getByRole('cell', { name: /01.02.2024 - 28.02.2024/i })).toBeInTheDocument();
+      await expect(canvas.getByRole('cell', { name: /01.01.2024 - 31.01.2024/i })).toBeInTheDocument();
       const expandButtons = canvas.getAllByRole('button', { name: /Åpne/i });
       if (expandButtons[0]) await user.click(expandButtons[0]);
-      expect(canvas.getByRole('heading', { name: 'Gradering mot tilsyn' }));
-      expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidstid' }));
+      await expect(canvas.getByRole('heading', { name: 'Gradering mot tilsyn' }));
+      await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidstid' }));
       if (expandButtons[0]) await user.click(expandButtons[0]);
     });
   },
@@ -215,7 +215,7 @@ export const LeggTilOverstyring: Story = {
     await step('Viser overstyringsskjema', async () => {
       await waitFor(async function sjekkTekstboks() {
         const textboxes = canvas.getAllByRole('textbox');
-        await expect(textboxes.length).toBeGreaterThan(0);
+        await await expect(textboxes.length).toBeGreaterThan(0);
       });
     });
 
@@ -241,7 +241,7 @@ export const LeggTilOverstyring: Story = {
 
       const leggTilButton = canvas.getByRole('button', { name: /Legg til overstyring/i });
       if (leggTilButton) {
-        await expect(leggTilButton).toBeEnabled();
+        await await expect(leggTilButton).toBeEnabled();
         await user.click(leggTilButton);
       }
     });
@@ -327,21 +327,21 @@ export const Overstyringer: Story = {
 
     await step('Viser Uttak med overstyringer', async () => {
       await waitFor(async function sjekkerUttaksDetaljer() {
-        await expect(canvas.getByRole('cell', { name: /15.02.2024 - 28.02.2024/i })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: /01.02.2024 - 14.02.2024/i })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: /16.01.2024 - 31.01.2024/i })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: /01.01.2024 - 15.01.2024/i })).toBeInTheDocument();
-        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
-        await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: '16.01.2024' })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: '31.01.2024' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: /15.02.2024 - 28.02.2024/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: /01.02.2024 - 14.02.2024/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: /16.01.2024 - 31.01.2024/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: /01.01.2024 - 15.01.2024/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
+        await await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: '16.01.2024' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: '31.01.2024' })).toBeInTheDocument();
       });
     });
 
     await step('Viser varsel om overstyring', async () => {
-      await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
-      await expect(
+      await await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
+      await await expect(
         canvas.getByText(
           'Aksjonspunkt for overstyring av uttaks-/utbetalingsgrad har blitt opprettet i denne, eller en tidligere, behandling og må løses av en saksbehandler med overstyrerrolle.',
         ),
@@ -424,7 +424,7 @@ export const RedigerOverstyring: Story = {
 
     await step('Eksisterende overstyringer vises', async () => {
       await waitFor(async function sjekkOverstyrtePerioder() {
-        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
       });
     });
 
@@ -436,15 +436,15 @@ export const RedigerOverstyring: Story = {
         await user.click(within(row).getByRole('button', { name: 'Endre' }));
       });
 
-      await expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toHaveValue('01.01.2024');
-      await expect(canvas.getByRole('textbox', { name: 'Til og med' })).toHaveValue('15.01.2024');
+      await await expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toHaveValue('01.01.2024');
+      await await expect(canvas.getByRole('textbox', { name: 'Til og med' })).toHaveValue('15.01.2024');
 
       await waitFor(async function oppdaterSkjemafelter() {
         const utbetalingsgradField = await canvas.getByRole('spinbutton', { name: 'Ny utbetalingsgrad (%)' });
-        await expect(utbetalingsgradField).toHaveValue(80);
+        await await expect(utbetalingsgradField).toHaveValue(80);
         await user.clear(utbetalingsgradField);
         await user.type(utbetalingsgradField, '70');
-        expect(utbetalingsgradField).toHaveValue(70);
+        await expect(utbetalingsgradField).toHaveValue(70);
       });
 
       await waitFor(async function oppdaterBegrunnelse() {
@@ -455,8 +455,8 @@ export const RedigerOverstyring: Story = {
 
       await user.click(canvas.getByRole('button', { name: 'Endre overstyring' }));
 
-      await waitFor(function sjekkOverstyrt() {
-        expect(submitSpy).toHaveBeenCalledWith({
+      await waitFor(async function sjekkOverstyrt() {
+        await expect(submitSpy).toHaveBeenCalledWith({
           behandlingId: 'behandling-1',
           behandlingVersjon: 1,
           bekreftedeAksjonspunktDtoer: [],
@@ -564,9 +564,9 @@ export const FjernOverstyring: Story = {
 
     await step('Eksisterende overstyringer vises', async () => {
       await waitFor(async function sjekkEksisterendeOverstyringer() {
-        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
-        await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
+        await await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
       });
     });
 
@@ -575,7 +575,7 @@ export const FjernOverstyring: Story = {
       waitFor(async function sjekkSlettKnapp() {
         await user.click(canvas.getByRole('button', { name: 'Slett' }));
       });
-      await expect(canvas.findByRole('heading', { name: 'Er du sikker på at du vil slette en overstyring?' }));
+      await await expect(canvas.findByRole('heading', { name: 'Er du sikker på at du vil slette en overstyring?' }));
       await waitFor(async function sjekkBekreftSlettModal() {
         const modal = canvas.getByRole('dialog');
 
@@ -584,14 +584,14 @@ export const FjernOverstyring: Story = {
         if (deleteButton) {
           await user.click(deleteButton);
         }
-        await expect(within(modal).getByText('Venter...')).toBeInTheDocument();
+        await await expect(within(modal).getByText('Venter...')).toBeInTheDocument();
       });
 
       await step('Sletting av overstyring sendt til backend', async () => {
         waitFor(async function sjekkOverstyring() {
-          await expect(submitSpy).toHaveBeenCalled();
+          await await expect(submitSpy).toHaveBeenCalled();
           const submitPayload = submitSpy.mock.calls[0]?.[0];
-          await expect(submitPayload).toEqual({
+          await await expect(submitPayload).toEqual({
             behandlingId: 'behandling-1',
             behandlingVersjon: 1,
             bekreftedeAksjonspunktDtoer: [],
@@ -660,26 +660,26 @@ export const Lesemodus: Story = {
     const user = userEvent.setup();
     await step('Varsel om overstyring vises', async () => {
       waitFor(async function sjekkVarselOmOverstyring() {
-        await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
+        await await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
       });
     });
 
     await step('Tabell med overstyringer vises', async () => {
       waitFor(async function sjekkOverstyringTabell() {
-        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
-        await expect(canvas.getByRole('cell', { name: '01.01.2024' }));
-        await expect(canvas.getByRole('cell', { name: '15.01.2024' }));
+        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
+        await await expect(canvas.getByRole('cell', { name: '01.01.2024' }));
+        await await expect(canvas.getByRole('cell', { name: '15.01.2024' }));
         await user.click(canvas.getByRole('button', { name: 'Vis mer' }));
-        await expect(canvas.getByText('Overstyring gjort av annen saksbehandler'));
+        await await expect(canvas.getByText('Overstyring gjort av annen saksbehandler'));
         await user.click(canvas.getByRole('button', { name: 'Vis mindre' }));
       });
     });
 
     await step('Kan ikke legge til ny, redigere eller slette overstyring', async () => {
-      expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
       const buttons = await canvas.queryAllByRole('button');
-      expect(buttons.filter(btn => btn.textContent?.toLowerCase().includes('rediger')).length).toBe(0);
-      expect(buttons.filter(btn => btn.textContent?.toLowerCase().includes('slett')).length).toBe(0);
+      await expect(buttons.filter(btn => btn.textContent?.toLowerCase().includes('rediger')).length).toBe(0);
+      await expect(buttons.filter(btn => btn.textContent?.toLowerCase().includes('slett')).length).toBe(0);
     });
   },
 };

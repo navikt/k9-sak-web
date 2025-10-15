@@ -79,39 +79,39 @@ export const UttakBasis: Story = {
 
     await step('Viser perioder', async () => {
       // Sjekk at periodedatoer er synlige
-      expect(canvas.getByText(/01\.01\.2024/)).toBeInTheDocument();
-      expect(canvas.getByText(/15\.01\.2024/)).toBeInTheDocument();
-      expect(canvas.getByText(/16\.01\.2024/)).toBeInTheDocument();
-      expect(canvas.getByText(/31\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/01\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/15\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/16\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/31\.01\.2024/)).toBeInTheDocument();
     });
 
     await step('Kan åpne/lukke periodedetaljer', async () => {
       // Finn ekspanderbare elementer (knapper eller overskrifter)
       const expandButtons = canvas.queryAllByRole('button');
-      expect(expandButtons.length).toEqual(3)
+      await expect(expandButtons.length).toEqual(3)
 
       if (expandButtons.length > 0 && expandButtons[0]) {
         // Klikk på første ekspanderbare element
         const expandButton = expandButtons[0];
 
         await user.click(expandButton);
-        expect(canvas.getByRole('heading', { name: "Gradering mot tilsyn" }))
-        expect(canvas.getByRole('heading', { name: "Gradering mot arbeidstid" }))
+        await expect(canvas.getByRole('heading', { name: "Gradering mot tilsyn" }))
+        await expect(canvas.getByRole('heading', { name: "Gradering mot arbeidstid" }))
 
-        expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[0]).toBeVisible()
-        expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[1]).not.toBeVisible()
-        expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[2]).not.toBeVisible()
+        await expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[0]).toBeVisible()
+        await expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[1]).not.toBeVisible()
+        await expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[2]).not.toBeVisible()
 
-        expect(canvas.getAllByText('- Andre søkeres tilsyn: 0 %')[0]).toBeVisible()
+        await expect(canvas.getAllByText('- Andre søkeres tilsyn: 0 %')[0]).toBeVisible()
 
         await waitFor(async function sjekkBedrift() {
-          expect(canvas.getAllByText('Bedrift AS (123456789)')[0]).toBeVisible()
+          await expect(canvas.getAllByText('Bedrift AS (123456789)')[0]).toBeVisible()
         });
 
         await user.click(expandButton);
 
-        expect(canvas.queryByRole('heading', { name: "Gradering mot tilsyn" })).not.toBeInTheDocument()
-        expect(canvas.queryByRole('heading', { name: "Gradering mot arbeidstid" })).not.toBeInTheDocument()
+        await expect(canvas.queryByRole('heading', { name: "Gradering mot tilsyn" })).not.toBeInTheDocument()
+        await expect(canvas.queryByRole('heading', { name: "Gradering mot arbeidstid" })).not.toBeInTheDocument()
       }
     });
   },
@@ -192,39 +192,39 @@ export const UttakMedUlikeStatuser: Story = {
     const user = userEvent.setup();
 
     await step('Viser riktige perioder', async () => {
-      expect(canvas.getByRole('row', { name: '7 - 9 15.02.2024 - 28.02.2024 100% Søker 0 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 0 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 60 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 100 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '7 - 9 15.02.2024 - 28.02.2024 100% Søker 0 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 0 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 60 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 100 % Ny denne behandlingen' }));
     })
 
     await step('Viser detaljer for uttaksperioder', async () => {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-      expect(buttons.length).toEqual(4);
+      await expect(buttons.length).toEqual(4);
 
       await waitFor(async function sjekkFørstePeriode() {
         if (buttons[0]) {
           await user.click(buttons[0]);
         }
-        await expect(canvas.getByRole('row', { name: "Vilkår Medlemskap: Oppfylt Søknadsfrist: Oppfylt Opptjening: Oppfylt Omsorgen for: Ikke oppfylt Sykdom: Oppfylt Søkers alder: Oppfylt" }))
+        await await expect(canvas.getByRole('row', { name: "Vilkår Medlemskap: Oppfylt Søknadsfrist: Oppfylt Opptjening: Oppfylt Omsorgen for: Ikke oppfylt Sykdom: Oppfylt Søkers alder: Oppfylt" }))
       });
 
       await waitFor(async function sjekkAndrePeriode() {
         if (buttons[1]) await user.click(buttons[1]);
 
-        await expect(canvas.getByRole('row', { name: "Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %. Tapt arbeidstid regnes ut fra aktive arbeidsforhold, næringsaktivitet og frilansoppdrag. Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 6.37 timer = 15.07 % fravær = 15% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %. Tapt arbeidstid regnes ut fra aktive arbeidsforhold, næringsaktivitet og frilansoppdrag. Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 6.37 timer = 15.07 % fravær = 15% tapt arbeidstid" }))
       });
 
       await waitFor(async function sjekkTredjePeriode() {
         if (buttons[2]) await user.click(buttons[2]);
 
-        await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 3 timer = 60.00 % fravær = 60% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 3 timer = 60.00 % fravær = 60% tapt arbeidstid" }))
       });
 
       await waitFor(async function sjekkFjerdePeriode() {
         if (buttons[3]) await user.click(buttons[3]);
 
-        await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[3]) await user.click(buttons[3]);
@@ -278,28 +278,28 @@ export const UttakGradertMotInntekt: Story = {
     const user = userEvent.setup();
 
     await step('Viser riktige perioder', async () => {
-      expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 40 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 50 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 70 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 40 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 50 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 70 % Ny denne behandlingen' }));
     })
 
     await step('Viser detaljer for uttaksperioder', async () => {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-      expect(buttons.length).toEqual(3);
+      await expect(buttons.length).toEqual(3);
 
       if (buttons[0]) await user.click(buttons[0]);
       await waitFor(async function sjekkFørstePeriode() {
-        await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
       });
 
       if (buttons[1]) await user.click(buttons[1]);
       await waitFor(async function sjekkAndrePeriode() {
-        await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
       });
 
       if (buttons[2]) await user.click(buttons[2]);
       await waitFor(async function sjekkTredjePeriode() {
-        await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
+        await await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
       });
     })
 
@@ -347,35 +347,35 @@ export const UttakGradertMotTilsyn: Story = {
     const user = userEvent.setup();
 
     await step('Viser riktige perioder', async () => {
-      expect(canvas.getByRole('row', { name: '7 - 9 15.02.2024 - 28.02.2024 100% Søker 25 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 50 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 60 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 70 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '7 - 9 15.02.2024 - 28.02.2024 100% Søker 25 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 50 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 60 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 70 % Ny denne behandlingen' }));
     })
 
     await step('Viser detaljer for uttaksperioder', async () => {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-      expect(buttons.length).toEqual(4);
+      await expect(buttons.length).toEqual(4);
 
       if (buttons[0]) await user.click(buttons[0]);
       await waitFor(async function sjekkFørstePeriode() {
-        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 40 % Mer informasjon - Andre søkeres tilsyn: 35 % = 25 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 40 % Mer informasjon - Andre søkeres tilsyn: 35 % = 25 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[1]) await user.click(buttons[1]);
       await waitFor(async function sjekkAndrePeriode() {
 
-        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 50 % Mer informasjon - Andre søkeres tilsyn: 0 % = 50 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 50 % Mer informasjon - Andre søkeres tilsyn: 0 % = 50 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[2]) await user.click(buttons[2]);
       await waitFor(async function sjekkTredjePeriode() {
-        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 20 % Mer informasjon - Andre søkeres tilsyn: 20 % = 60 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 20 % Mer informasjon - Andre søkeres tilsyn: 20 % = 60 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[3]) await user.click(buttons[3]);
       await waitFor(async function sjekkFjerdePeriode() {
-        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 30 % Mer informasjon - Andre søkeres tilsyn: 0 % = 70 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 30 % Mer informasjon - Andre søkeres tilsyn: 0 % = 70 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[3]) await user.click(buttons[3]);
@@ -440,9 +440,9 @@ export const UttakLesemodus: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser riktige perioder', async () => {
-      expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 60 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 80 % Ny denne behandlingen' }));
-      expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 100 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 60 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 80 % Ny denne behandlingen' }));
+      await expect(canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 100 % Ny denne behandlingen' }));
     })
   },
 };

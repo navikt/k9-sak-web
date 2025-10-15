@@ -84,27 +84,27 @@ export const ÅpentAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel', async () => {
-      await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
+      await await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
     });
 
     await step('Viser informasjon om endringene i uttak', async () => {
-      await expect(canvas.getByText('Hva innebærer endringene i uttak?')).toBeInTheDocument();
+      await await expect(canvas.getByText('Hva innebærer endringene i uttak?')).toBeInTheDocument();
 
       await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
       await waitFor(async function sjekkEkspandertInformasjonOmEndringer() {
-        await expect(canvas.getByText(/Før endring:/i)).toBeVisible();
+        await await expect(canvas.getByText(/Før endring:/i)).toBeVisible();
       });
 
       await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
       await waitFor(async function sjekkSkjultInformasjonOmEndringer() {
-        await expect(canvas.getByText(/Før endring:/i)).not.toBeVisible();
+        await await expect(canvas.getByText(/Før endring:/i)).not.toBeVisible();
       });
     });
 
     await step('Viser tomt aksjonspunkt', async () => {
-      expect(canvas.getByLabelText('Begrunnelse')).toHaveValue('');
+      await expect(canvas.getByLabelText('Begrunnelse')).toHaveValue('');
       await waitFor(async function bekreftOgFortsett() {
-        expect(canvas.getByRole('button', { name: /Bekreft og fortsett/i })).toBeVisible();
+        await expect(canvas.getByRole('button', { name: /Bekreft og fortsett/i })).toBeVisible();
       });
     });
   },
@@ -149,7 +149,7 @@ export const Skjemavalidering: Story = {
       await user.clear(begrunnelseField);
       await user.type(begrunnelseField, 'Test');
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
-      await expect(canvas.getByText(/Du må skrive minst 5 tegn/i)).toBeInTheDocument();
+      await await expect(canvas.getByText(/Du må skrive minst 5 tegn/i)).toBeInTheDocument();
     });
 
     await step('Mangler begrunnelse', async () => {
@@ -157,7 +157,7 @@ export const Skjemavalidering: Story = {
       const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
       await user.click(submitButton);
       await waitFor(async function sjekkFeilmelding() {
-        await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
+        await await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
       });
     });
 
@@ -210,7 +210,7 @@ export const LøsAksjonspunkt: Story = {
       const dateInput = canvas.getByLabelText('Endringsdato');
       await user.clear(dateInput);
       await user.type(dateInput, '20.01.2024');
-      expect(dateInput).toHaveValue('20.01.2024');
+      await expect(dateInput).toHaveValue('20.01.2024');
     });
 
     await step('Fyll inn begrunnelse', async () => {
@@ -225,7 +225,7 @@ export const LøsAksjonspunkt: Story = {
     await step('Bekreft og fortsett', async () => {
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
       await waitFor(async function sjekkOverstyring() {
-        await expect(submitSpy).toHaveBeenCalledWith(
+        await await expect(submitSpy).toHaveBeenCalledWith(
           {
             "behandlingId": "1",
             "behandlingVersjon": 1,
@@ -291,8 +291,8 @@ export const RedigerVurdering: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel for endringsdato', async () => {
-      expect(canvas.getByRole('row', { name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.' }));
-      expect(canvas.getByRole('button', { name: 'Rediger' }))
+      await expect(canvas.getByRole('row', { name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.' }));
+      await expect(canvas.getByRole('button', { name: 'Rediger' }))
     })
 
     await step('Rediger endringsdato', async () => {
@@ -311,7 +311,7 @@ export const RedigerVurdering: Story = {
     await step('Bekreft og fortsett', async () => {
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
       await waitFor(async function sjekkOverstyring() {
-        await expect(submitSpy).toHaveBeenCalledWith(
+        await await expect(submitSpy).toHaveBeenCalledWith(
           {
             "behandlingId": "1",
             "behandlingVersjon": 1,

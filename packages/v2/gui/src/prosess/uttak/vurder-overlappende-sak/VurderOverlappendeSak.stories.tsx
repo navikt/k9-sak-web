@@ -128,10 +128,10 @@ export const Aksjonspunkt: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser infoboks med overlappende perioder', async () => {
-      await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
-      await expect(canvas.findByText('Perioder som overlapper med sak:')).resolves.toBeInTheDocument();
-      await expect(canvas.findByRole('link', { name: 'ABCDE' })).resolves.toBeInTheDocument();
-      await expect(canvas.findByRole('link', { name: 'FGHIJ' })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByText('Perioder som overlapper med sak:')).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('link', { name: 'ABCDE' })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('link', { name: 'FGHIJ' })).resolves.toBeInTheDocument();
     });
 
     await step('Viser skjema for vurdering av overlappende perioder', async () => {
@@ -141,10 +141,10 @@ export const Aksjonspunkt: Story = {
       const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
       const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
 
-      await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
-      await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
-      await expect(gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' })).resolves.toBeInTheDocument();
-      await expect(canvas.findByRole('button', { name: 'Bekreft og fortsett' })).resolves.toBeInTheDocument();
+      await await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
+      await await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
+      await await expect(gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('button', { name: 'Bekreft og fortsett' })).resolves.toBeInTheDocument();
     });
   },
 };
@@ -232,20 +232,20 @@ export const LøsAksjonspunkt: Story = {
       await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
 
       await waitFor(async function sjekkFørstePeriode() {
-        expect(submitSpy).toHaveBeenCalledWith(
-          expect.objectContaining({
+        await await expect(submitSpy).toHaveBeenCalledWith(
+          await expect.objectContaining({
             behandlingId: '1',
             behandlingVersjon: 1,
-            bekreftedeAksjonspunktDtoer: expect.arrayContaining([
-              expect.objectContaining({
+            bekreftedeAksjonspunktDtoer: await expect.arrayContaining([
+              await expect.objectContaining({
                 '@type': '9292',
                 begrunnelse: 'Dette er en grundig begrunnelse',
-                perioder: expect.arrayContaining([
-                  expect.objectContaining({
+                perioder: await expect.arrayContaining([
+                  await expect.objectContaining({
                     valg: 'JUSTERT_GRAD',
                     søkersUttaksgrad: 40,
                   }),
-                  expect.objectContaining({
+                  await expect.objectContaining({
                     valg: 'JUSTERT_GRAD',
                     søkersUttaksgrad: 60,
                   }),
@@ -323,7 +323,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
         { target: { value: '40' } },
       );
       await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
-      await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
     });
 
     await step('Velg periode for splitting', async () => {
@@ -346,7 +346,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
       }
 
       // Verifiser at periodene er splittet
-      await expect(
+      await await expect(
         canvas.findByRole('group', {
           name: new RegExp(`Vurder uttak i denne saken for perioden ${visnDato(fom1)} - ${visnDato(splittFom.subtract(1, 'day'))}`),
         }),
@@ -365,7 +365,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
       await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
 
       await waitFor(async function sjekkAksjonspunkt() {
-        expect(submitSpy).toHaveBeenCalled();
+        await await expect(submitSpy).toHaveBeenCalled();
       });
     });
   },
@@ -493,16 +493,16 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser lesevisning av løst aksjonspunkt', async () => {
-      await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
 
       const radios = await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-      radios.forEach(radio => {
-        expect(radio).toBeChecked();
+      radios.forEach(async radio => {
+        await expect(radio).toBeChecked();
       });
 
-      await expect(canvas.findByDisplayValue('50')).resolves.toHaveAttribute('readonly');
-      await expect(canvas.findByDisplayValue('30')).resolves.toHaveAttribute('readonly');
-      await expect(canvas.findByRole('textbox', { name: 'Begrunnelse' })).resolves.toHaveAttribute('readonly');
+      await await expect(canvas.findByDisplayValue('50')).resolves.toHaveAttribute('readonly');
+      await await expect(canvas.findByDisplayValue('30')).resolves.toHaveAttribute('readonly');
+      await await expect(canvas.findByRole('textbox', { name: 'Begrunnelse' })).resolves.toHaveAttribute('readonly');
     });
 
     await step('Kan redigere aksjonspunkt', async () => {
@@ -524,17 +524,17 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     await step('Kan lagre aksjonspunkt', async () => {
       await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
 
-      await waitFor(() => {
-        expect(submitSpy).toHaveBeenCalledWith(
-          expect.objectContaining({
+      await waitFor( async () => {
+        await expect(submitSpy).toHaveBeenCalledWith(
+          await expect.objectContaining({
             behandlingId: '1',
             behandlingVersjon: 1,
-            bekreftedeAksjonspunktDtoer: expect.arrayContaining([
-              expect.objectContaining({
+            bekreftedeAksjonspunktDtoer: await expect.arrayContaining([
+              await expect.objectContaining({
                 '@type': '9292',
                 begrunnelse: 'Dette er en modifisert begrunnelse',
-                perioder: expect.arrayContaining([
-                  expect.objectContaining({
+                perioder: await expect.arrayContaining([
+                  await expect.objectContaining({
                     begrunnelse: 'Dette er en modifisert begrunnelse',
                     periode: {
                       fom: stdDato(fom1),
@@ -542,7 +542,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
                     },
                     valg: 'INGEN_JUSTERING',
                   }),
-                  expect.objectContaining({
+                  await expect.objectContaining({
                     begrunnelse: 'Dette er en modifisert begrunnelse',
                     periode: {
                       fom: stdDato(fom2),
@@ -617,18 +617,18 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser leseversjon i avsluttet sak', async () => {
-      await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
+      await await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
 
       const radios = await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-      radios.forEach(radio => {
-        expect(radio).toBeChecked();
+      radios.forEach( async radio => {
+        await expect(radio).toBeChecked();
       });
 
-      await expect(canvas.findByDisplayValue('60')).resolves.toHaveAttribute('readonly');
-      await expect(canvas.findByDisplayValue('70')).resolves.toHaveAttribute('readonly');
+      await await expect(canvas.findByDisplayValue('60')).resolves.toHaveAttribute('readonly');
+      await await expect(canvas.findByDisplayValue('70')).resolves.toHaveAttribute('readonly');
 
-      expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
-      expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
     });
   },
 };
