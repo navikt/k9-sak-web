@@ -14,7 +14,7 @@ export class AuthFixer implements AuthFixConnectedApi {
   readonly #popupClosedCheckInterval: number;
   readonly #id: string;
 
-  constructor(authDoneRedirectPath: string, popupClosedCheckInterval: number = 583) {
+  constructor(authDoneRedirectPath: string, popupClosedCheckInterval: number = 1483) {
     this.#authDoneRedirectPath = authDoneRedirectPath;
     this.#popupClosedCheckInterval = popupClosedCheckInterval;
     this.#id = `${Math.floor(Math.random() * 10000)}`;
@@ -83,6 +83,7 @@ export class AuthFixer implements AuthFixConnectedApi {
           // Poll to check if the window has been closed without auth being completed
           const intervalId = setInterval(() => {
             if (windowProxy.closed) {
+              console.info(`autentisering popup vindu ble lukket før autentisering var fullført.`);
               clearInterval(intervalId);
               internalCanceller.abort(intentionalAbortReason);
             }
@@ -132,14 +133,11 @@ export class AuthFixer implements AuthFixConnectedApi {
         this.#authPromise = this.startNewAuthenticationProcess(response, this.#activeAuthenticateAborter.signal);
       }
 
-      try {
-        return await Promise.race([this.#authPromise, this.aborted(abortSignal)]);
-      } finally {
-        this.#authPromise = null;
-      }
+      return await Promise.race([this.#authPromise, this.aborted(abortSignal)]);
     } finally {
       this.#activeAuthenticateCallers = this.#activeAuthenticateCallers - 1;
       if (this.#activeAuthenticateCallers === 0) {
+        this.#authPromise = null;
         // Dette er siste aktive kallet til authenticate, så vi kan avbryte pågåande autentiseringsprosess
         this.#activeAuthenticateAborter?.abort();
       }
