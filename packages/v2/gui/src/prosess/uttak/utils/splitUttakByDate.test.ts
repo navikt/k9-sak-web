@@ -10,13 +10,13 @@ const p = (fom: string, tom: string): UttaksperiodeBeriket => ({
 });
 
 describe('splitUttakByDate', () => {
-  it('returnerer alle i before når virkningsdato mangler', () => {
+  it('returnerer alle i before når virkningsdato mangler', async () => {
     const { before, afterOrCovering } = splitUttakByDate([p('2024-01-01', '2024-01-05')], undefined);
     await expect(before).toHaveLength(1);
     await expect(afterOrCovering).toHaveLength(0);
   });
 
-  it('splitt før og etter dato', () => {
+  it('splitt før og etter dato', async () => {
     const { before, afterOrCovering } = splitUttakByDate(
       [p('2024-01-01', '2024-01-05'), p('2024-01-10', '2024-01-12')],
       '2024-01-07',
@@ -25,13 +25,13 @@ describe('splitUttakByDate', () => {
     await expect(afterOrCovering).toHaveLength(1);
   });
 
-  it('periode som dekker virkningsdato havner i afterOrCovering', () => {
+  it('periode som dekker virkningsdato havner i afterOrCovering', async () => {
     const { before, afterOrCovering } = splitUttakByDate([p('2024-01-01', '2024-01-10')], '2024-01-05');
     await expect(before).toHaveLength(0);
     await expect(afterOrCovering).toHaveLength(1);
   });
 
-  it('tomhåndtering', () => {
+  it('tomhåndtering', async () => {
     const { before, afterOrCovering } = splitUttakByDate([], '2024-01-01');
     await expect(before).toHaveLength(0);
     await expect(afterOrCovering).toHaveLength(0);
