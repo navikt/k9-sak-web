@@ -1,29 +1,19 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import AktivitetRad from './AktivitetRad';
 import OverstyringUttakForm from './OverstyringUttakForm';
 import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type {
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import styles from './overstyrUttakForm.module.css';
 import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
+import { useUttakContext } from '../context/UttakContext';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
-
-interface ownProps {
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
-  overstyringAktiv: boolean;
-  erOverstyrer: boolean;
-  harAksjonspunktForOverstyringAvUttak: boolean;
-  perioderTilVurdering: string[] | undefined;
-  api: BehandlingUttakBackendClient;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Pick<BehandlingDto, 'uuid' | 'versjon'>>;
-}
+import styles from './overstyrUttakForm.module.css';
 
 export enum OverstyrUttakHandling {
   SLETT = 'SLETT',
@@ -31,24 +21,22 @@ export enum OverstyrUttakHandling {
   LAGRE = 'LAGRE',
 }
 
-const OverstyrUttak: React.FC<ownProps> = ({
-  overstyringAktiv,
-  erOverstyrer,
-  perioderTilVurdering,
-  harAksjonspunktForOverstyringAvUttak,
-  behandling,
-  api,
-  hentBehandling,
-}) => {
+interface OverstyrUttakProps {
+  overstyringAktiv: boolean;
+}
+
+const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
+  const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } =
+    useUttakContext();
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
-  const [redigerOverstyring, setRedigerOverstyring] = React.useState<number | boolean>(false);
-  const leseModus = !erOverstyrer;
+  const [visOverstyringSkjema, setVisOverstyringSkjema] = useState<boolean>(false);
+  const [redigerOverstyring, setRedigerOverstyring] = useState<number | boolean>(false);
+  const leseModus = !erOverstyrer || !overstyringAktiv;
 
   const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery({
     queryKey: ['overstyrte', behandling.uuid],
-    queryFn: () => api.hentOverstyringUttak(behandling.uuid),
+    queryFn: () => uttakApi.hentOverstyringUttak(behandling.uuid),
   });
 
   const { mutate: handleOverstyring } = useMutation({
@@ -76,7 +64,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
         overstyrteAksjonspunktDto.gåVidere = true;
       }
 
-      return api.overstyringUttak({
+      return uttakApi.overstyringUttak({
         behandlingId: behandling.uuid,
         behandlingVersjon: behandling.versjon,
         bekreftedeAksjonspunktDtoer: [],
@@ -84,7 +72,8 @@ const OverstyrUttak: React.FC<ownProps> = ({
       });
     },
     onMutate: () => setLoading(true),
-    onSuccess: () => {
+    onSuccess: async () => {
+      void hentUttak();
       void hentBehandling?.({ behandlingId: behandling.uuid }, false);
       window.scroll(0, 0);
     },
@@ -115,8 +104,8 @@ const OverstyrUttak: React.FC<ownProps> = ({
   const bekreftSletting = (id: number) => setBekreftSlettId(id);
 
   const harNoeÅVise =
-    (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0 && leseModus) ||
-    (overstyringAktiv && erOverstyrer);
+    (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0) ||
+    (erOverstyrer && overstyringAktiv);
 
   const arbeidsgivere = overstyrte?.arbeidsgiverOversikt?.arbeidsgivere;
 
@@ -127,12 +116,14 @@ const OverstyrUttak: React.FC<ownProps> = ({
         <Table.HeaderCell scope="col">Fra og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">Til og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">
-          Ny uttaksgrad
-          <HelpText title="Uttaksgrad">
-            Uttaksgraden viser til hvor mye av den totale pleiepengekvoten som tas ut. Eksempel: Settes uttaksgraden til
-            70% er det 30% igjen til en annen part ved behov for én omsorgsperson. I de aller fleste tilfeller vil det
-            være riktig å sette uttaksgraden lik gjennomsnittet av utbetalingsgradene for alle aktivitetene samlet.
-          </HelpText>
+          <HStack gap="2">
+            Ny uttaksgrad
+            <HelpText title="Uttaksgrad">
+              Uttaksgraden viser til hvor mye av den totale pleiepengekvoten som tas ut. Eksempel: Settes uttaksgraden til
+              70% er det 30% igjen til en annen part ved behov for én omsorgsperson. I de aller fleste tilfeller vil det
+              være riktig å sette uttaksgraden lik gjennomsnittet av utbetalingsgradene for alle aktivitetene samlet.
+            </HelpText>
+          </HStack>
         </Table.HeaderCell>
         {!leseModus && <Table.HeaderCell scope="col">Valg for overstyring</Table.HeaderCell>}
       </Table.Row>
@@ -142,7 +133,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
   if (harNoeÅVise) {
     return (
       <div className="mt-4 mb-8">
-        {harAksjonspunktForOverstyringAvUttak && (
+        {harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad
@@ -156,7 +147,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
         {lasterOverstyrte && <Loader size="large" title="Venter..." />}
         {!lasterOverstyrte && overstyrte?.overstyringer && (
           <>
-            {overstyrte?.overstyringer.length === 0 && !visOverstyringSkjema && (
+            {overstyringAktiv && overstyrte?.overstyringer.length === 0 && !visOverstyringSkjema && (
               <>Det er ingen overstyrte aktiviteter i denne saken</>
             )}
             {overstyrte?.overstyringer.length > 0 && (
@@ -236,7 +227,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
               </div>
             )}
 
-            {!visOverstyringSkjema && harAksjonspunktForOverstyringAvUttak && (
+            {!visOverstyringSkjema && harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
               <div className={styles.overstyrUttakFormFooter}>
                 <Button
                   variant="primary"
@@ -251,7 +242,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
             )}
             {visOverstyringSkjema && redigerOverstyring === false && (
               <OverstyringUttakForm
-                api={api}
+                api={uttakApi}
                 behandling={behandling}
                 handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
                 loading={loading}
@@ -262,7 +253,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
             )}
             {visOverstyringSkjema && typeof redigerOverstyring === 'number' && (
               <OverstyringUttakForm
-                api={api}
+                api={uttakApi}
                 behandling={behandling}
                 handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
                 overstyring={overstyrte?.overstyringer[redigerOverstyring]}
@@ -270,6 +261,7 @@ const OverstyrUttak: React.FC<ownProps> = ({
                 setLoading={setLoading}
                 perioderTilVurdering={perioderTilVurdering}
                 handleOverstyring={handleOverstyring}
+                arbeidsgivereFromParent={arbeidsgivere}
               />
             )}
           </>
