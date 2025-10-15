@@ -8,6 +8,7 @@ import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './uttakDetaljer.module.css';
+import { LoadingPanel } from '../../../shared/loading-panel/LoadingPanel';
 
 interface ownProps {
   inntektsgradering: InntektgraderingPeriodeDto;
@@ -30,11 +31,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
   const bortfaltInntekt = formatNOK(inntektsgradering.bortfaltInntekt);
 
   if (lasterArbeidsgivere) {
-    return (
-      <HStack justify="center">
-        <Loader title="Henter data..." size="2xlarge" />
-      </HStack>
-    );
+    return <LoadingPanel />;
   }
 
   return (
