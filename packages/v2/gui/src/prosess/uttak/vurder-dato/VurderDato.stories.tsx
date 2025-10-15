@@ -329,6 +329,6 @@ export const RedigerVurdering: Story = {
     });
 
     // Avbryter etter innsendt endring for å tilbakestille visningen i Storybook
-    user.click(canvas.getByRole('button', { name: 'Avbryt' }))
+    await user.click(canvas.getByRole('button', { name: 'Avbryt' }))
   },
 };
