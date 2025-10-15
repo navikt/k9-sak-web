@@ -90,13 +90,13 @@ export const ÅpentAksjonspunkt: Story = {
     await step('Viser informasjon om endringene i uttak', async () => {
       await expect(canvas.getByText('Hva innebærer endringene i uttak?')).toBeInTheDocument();
 
-      await waitFor(async function ekspanderInformasjonOmEndringer() {
-        await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
+      await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
+      await waitFor(async function sjekkEkspandertInformasjonOmEndringer() {
         await expect(canvas.getByText(/Før endring:/i)).toBeVisible();
       });
 
-      await waitFor(async function skjulInformasjonOmEndringer() {
-        await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
+      await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
+      await waitFor(async function sjekkSkjultInformasjonOmEndringer() {
         await expect(canvas.getByText(/Før endring:/i)).not.toBeVisible();
       });
     });
