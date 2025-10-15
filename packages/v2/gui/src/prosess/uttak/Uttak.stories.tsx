@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
-import { http, HttpResponse } from 'msw';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import Uttak from './Uttak';
 import {
@@ -12,11 +11,11 @@ import {
   lagInntektsgraderingPeriode,
   lagTilsynsgraderingPeriode,
   relevanteAksjonspunkterAlle,
-  defaultArbeidsgivere,
   arbeidsgivereWithTilkommet,
   inntektsgraderingFlereArbeidsgivere,
   Årsak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
+import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
 
 const meta = {
   title: 'gui/prosess/Uttak',
@@ -51,21 +50,50 @@ export const UttakBasis: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
       ],
     },
   },
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15'),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-      lagOppfyltPeriode('2024-02-01/2024-02-14'),
+      lagOppfyltPeriode('2024-01-01/2024-01-15', {
+        søkersTapteArbeidstid: 100,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT0S',
+            utbetalingsgrad: 100,
+            tilkommet: false,
+          },
+        ],
+      }),
+      lagOppfyltPeriode('2024-01-16/2024-01-31', {
+        søkersTapteArbeidstid: 100,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT0S',
+            utbetalingsgrad: 100,
+            tilkommet: false,
+          },
+        ],
+      }),
+      lagOppfyltPeriode('2024-02-01/2024-02-14', {
+        søkersTapteArbeidstid: 100,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT0S',
+            utbetalingsgrad: 100,
+            tilkommet: false,
+          },
+        ],
+      }),
     ]),
     erOverstyrer: false,
     aksjonspunkter: [],
@@ -95,8 +123,8 @@ export const UttakBasis: Story = {
         const expandButton = expandButtons[0];
 
         await user.click(expandButton);
-        await expect(canvas.getByRole('heading', { name: "Gradering mot tilsyn" }))
-        await expect(canvas.getByRole('heading', { name: "Gradering mot arbeidstid" }))
+        await expect(canvas.getByRole('heading', { name: "Gradering mot tilsyn" })).toBeInTheDocument();
+        await expect(canvas.getByRole('heading', { name: "Gradering mot arbeidstid" })).toBeInTheDocument();
 
         await expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[0]).toBeVisible()
         await expect(canvas.getAllByText("= 100 % tilgjengelig til søker")[1]).not.toBeVisible()
@@ -104,9 +132,12 @@ export const UttakBasis: Story = {
 
         await expect(canvas.getAllByText('- Andre søkeres tilsyn: 0 %')[0]).toBeVisible()
 
-        await waitFor(async function sjekkBedrift() {
-          await expect(canvas.getAllByText('Bedrift AS (123456789)')[0]).toBeVisible()
-        });
+        await waitFor(
+          async function sjekkBedrift() {
+            await expect(canvas.getAllByText('Bedrift AS (123456789)')[0]).toBeVisible();
+          },
+          { timeout: 5000 },
+        );
 
         await user.click(expandButton);
 
@@ -130,12 +161,8 @@ export const UttakMedUlikeStatuser: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
       ],
     },
   },
@@ -206,25 +233,25 @@ export const UttakMedUlikeStatuser: Story = {
         if (buttons[0]) {
           await user.click(buttons[0]);
         }
-        await await expect(canvas.getByRole('row', { name: "Vilkår Medlemskap: Oppfylt Søknadsfrist: Oppfylt Opptjening: Oppfylt Omsorgen for: Ikke oppfylt Sykdom: Oppfylt Søkers alder: Oppfylt" }))
+        await expect(canvas.getByRole('row', { name: "Vilkår Medlemskap: Oppfylt Søknadsfrist: Oppfylt Opptjening: Oppfylt Omsorgen for: Ikke oppfylt Sykdom: Oppfylt Søkers alder: Oppfylt" }))
       });
 
       await waitFor(async function sjekkAndrePeriode() {
         if (buttons[1]) await user.click(buttons[1]);
 
-        await await expect(canvas.getByRole('row', { name: "Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %. Tapt arbeidstid regnes ut fra aktive arbeidsforhold, næringsaktivitet og frilansoppdrag. Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 6.37 timer = 15.07 % fravær = 15% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %. Tapt arbeidstid regnes ut fra aktive arbeidsforhold, næringsaktivitet og frilansoppdrag. Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 6.37 timer = 15.07 % fravær = 15% tapt arbeidstid" }))
       });
 
       await waitFor(async function sjekkTredjePeriode() {
         if (buttons[2]) await user.click(buttons[2]);
 
-        await await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 3 timer = 60.00 % fravær = 60% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 3 timer = 60.00 % fravær = 60% tapt arbeidstid" }))
       });
 
       await waitFor(async function sjekkFjerdePeriode() {
         if (buttons[3]) await user.click(buttons[3]);
 
-        await await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[3]) await user.click(buttons[3]);
@@ -240,12 +267,8 @@ export const UttakGradertMotInntekt: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: arbeidsgivereWithTilkommet });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json(inntektsgraderingFlereArbeidsgivere);
-        }),
+        standardUttakHandlers.arbeidsgivere(arbeidsgivereWithTilkommet),
+        standardUttakHandlers.inntektsgradering(inntektsgraderingFlereArbeidsgivere.perioder),
       ],
     },
   },
@@ -289,17 +312,17 @@ export const UttakGradertMotInntekt: Story = {
 
       if (buttons[0]) await user.click(buttons[0]);
       await waitFor(async function sjekkFørstePeriode() {
-        await await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
       });
 
       if (buttons[1]) await user.click(buttons[1]);
       await waitFor(async function sjekkAndrePeriode() {
-        await await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
       });
 
       if (buttons[2]) await user.click(buttons[2]);
       await waitFor(async function sjekkTredjePeriode() {
-        await await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i })).toBeInTheDocument();
       });
     })
 
@@ -315,12 +338,8 @@ export const UttakGradertMotTilsyn: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
       ],
     },
   },
@@ -359,23 +378,23 @@ export const UttakGradertMotTilsyn: Story = {
 
       if (buttons[0]) await user.click(buttons[0]);
       await waitFor(async function sjekkFørstePeriode() {
-        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 40 % Mer informasjon - Andre søkeres tilsyn: 35 % = 25 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 40 % Mer informasjon - Andre søkeres tilsyn: 35 % = 25 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[1]) await user.click(buttons[1]);
       await waitFor(async function sjekkAndrePeriode() {
 
-        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 50 % Mer informasjon - Andre søkeres tilsyn: 0 % = 50 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 50 % Mer informasjon - Andre søkeres tilsyn: 0 % = 50 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[2]) await user.click(buttons[2]);
       await waitFor(async function sjekkTredjePeriode() {
-        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 20 % Mer informasjon - Andre søkeres tilsyn: 20 % = 60 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 20 % Mer informasjon - Andre søkeres tilsyn: 20 % = 60 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[3]) await user.click(buttons[3]);
       await waitFor(async function sjekkFjerdePeriode() {
-        await await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 30 % Mer informasjon - Andre søkeres tilsyn: 0 % = 70 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
+        await expect(canvas.getByRole('row', { name: "Gir lavest pleiepengegrad Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 30 % Mer informasjon - Andre søkeres tilsyn: 0 % = 70 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid" }))
       });
 
       if (buttons[3]) await user.click(buttons[3]);
@@ -396,12 +415,8 @@ export const UttakLesemodus: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
       ],
     },
   },

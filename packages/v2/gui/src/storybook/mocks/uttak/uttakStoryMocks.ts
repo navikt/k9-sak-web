@@ -59,20 +59,20 @@ export const lagAvsluttetBehandling = (overrides: Partial<BehandlingDto> = {}): 
   });
 
 /**
- * Configuration object for creating a mock withdrawal period.
+ * Konfigurasjonsobjekt for å opprette en mock uttaksperiode.
  * 
- * @property range - Period range in ISO format "YYYY-MM-DD/YYYY-MM-DD"
- * @property utfall - Outcome of the period (OPPFYLT, IKKE_OPPFYLT, etc.)
- * @property uttaksgrad - Withdrawal percentage (0-100)
- * @property årsaker - Reasons for the outcome (e.g., FULL_DEKNING, AVKORTET_MOT_INNTEKT)
- * @property pleiebehov - Care need percentage (0-100)
- * @property annenPart - Other party status (ALENE, MED_ANDRE, etc.)
- * @property endringsstatus - Change status (NY, ENDRET, UENDRET)
- * @property utenlandsoppholdUtenÅrsak - Whether there's foreign stay without reason
- * @property søkersTapteArbeidstid - Applicant's lost work time percentage (0-100)
- * @property utbetalingsgrader - Payment grades per employer/activity
- * @property etablertTilsyn - Established care percentage (reduces available withdrawal)
- * @property andreSøkeresTilsyn - Other applicants' care percentage (reduces available withdrawal)
+ * @property range - Periodeområde i ISO-format "YYYY-MM-DD/YYYY-MM-DD"
+ * @property utfall - Utfall av perioden (OPPFYLT, IKKE_OPPFYLT, etc.)
+ * @property uttaksgrad - Uttaksprosent (0-100)
+ * @property årsaker - Årsaker til utfallet (f.eks. FULL_DEKNING, AVKORTET_MOT_INNTEKT)
+ * @property pleiebehov - Pleiebehovsprosent (0-100)
+ * @property annenPart - Status for annen part (ALENE, MED_ANDRE, etc.)
+ * @property endringsstatus - Endringsstatus (NY, ENDRET, UENDRET)
+ * @property utenlandsoppholdUtenÅrsak - Om det er utenlandsopphold uten årsak
+ * @property søkersTapteArbeidstid - Søkers tapte arbeidstidsprosent (0-100)
+ * @property utbetalingsgrader - Utbetalingsgrader per arbeidsgiver/aktivitet
+ * @property etablertTilsyn - Etablert tilsynsprosent (reduserer tilgjengelig uttak)
+ * @property andreSøkeresTilsyn - Andre søkeres tilsynsprosent (reduserer tilgjengelig uttak)
  */
 export type PeriodeInit = {
   range: string;
@@ -383,7 +383,7 @@ export const lagVurderDatoNyRegelAksjonspunkt = (
   lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK, status, overrides);
 
 /**
- * All relevant aksjonspunkt definitions for uttak.
+ * Alle relevante aksjonspunktdefinisjoner for uttak.
  */
 export const relevanteAksjonspunkterAlle: AksjonspunktDefinisjon[] = [
   AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
@@ -422,8 +422,11 @@ export const lagArbeidsgivere = (
 };
 
 /**
- * Default mock arbeidsgivere for testing.
- * Includes two employers with different organization numbers.
+ * Standard mock arbeidsgivere for testing.
+ * Inkluderer to arbeidsgivere med forskjellige organisasjonsnummer.
+ * 
+ * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
+ * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
 export const defaultArbeidsgivere = lagArbeidsgivere([
   {
@@ -449,8 +452,11 @@ export const defaultArbeidsgivere = lagArbeidsgivere([
 ]);
 
 /**
- * Mock arbeidsgivere with a new employer (tilkommet).
- * Useful for testing income grading scenarios with new employment.
+ * Mock arbeidsgivere med en ny arbeidsgiver (tilkommet).
+ * Nyttig for testing av inntektsgraderingsscenarier med ny ansettelse.
+ * 
+ * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
+ * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
 export const arbeidsgivereWithTilkommet = lagArbeidsgivere([
   {
@@ -548,6 +554,9 @@ export const lagInntektgraderingPeriodeDto = (
 /**
  * Mock inntektsgradering data for story med én arbeidsgiver.
  * Demonstrerer 70% uttak (30% arbeid).
+ * 
+ * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
+ * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
 export const inntektsgraderingEnArbeidsgiver = {
   perioder: [
@@ -573,6 +582,9 @@ export const inntektsgraderingEnArbeidsgiver = {
  * - Periode 1: 70% uttak med én arbeidsgiver
  * - Periode 2: 50% uttak med to eksisterende arbeidsgivere + én ny (tilkommet)
  * - Periode 3: 40% uttak med to arbeidsgivere (én tilkommet)
+ * 
+ * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
+ * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
 export const inntektsgraderingFlereArbeidsgivere = {
   perioder: [
@@ -638,6 +650,157 @@ export const inntektsgraderingFlereArbeidsgivere = {
     ),
   ],
 };
+
+/**
+ * Oppretter mock-data for en overlappende periode.
+ * 
+ * Overlappende perioder oppstår når flere saker for samme barn har perioder
+ * som overlapper i tid. Disse må vurderes av saksbehandler for å sikre at
+ * total uttaksgrad ikke overstiger 100%.
+ * 
+ * Funksjonen kopierer saksnummer-arrayet for å sikre immutability og
+ * dataisolasjon mellom tester.
+ * 
+ * @example
+ * ```typescript
+ * // Uløst overlappende periode
+ * const periode = lagOverlappendePeriode(
+ *   '2024-01-01',
+ *   '2024-01-15',
+ *   ['SAK123', 'SAK456'],
+ *   { skalVurderes: true }
+ * );
+ * 
+ * // Løst overlappende periode
+ * const løstPeriode = lagOverlappendePeriode(
+ *   '2024-01-16',
+ *   '2024-01-31',
+ *   ['SAK123', 'SAK456'],
+ *   {
+ *     skalVurderes: false,
+ *     fastsattUttaksgrad: 50,
+ *     saksbehandler: 'Z123456',
+ *     vurdertTidspunkt: '2024-01-10T10:00:00',
+ *     valg: 'VELG_SAK_123'
+ *   }
+ * );
+ * ```
+ * 
+ * @param fom - Start-dato (ISO-format YYYY-MM-DD eller dayjs-objekt)
+ * @param tom - Slutt-dato (ISO-format YYYY-MM-DD eller dayjs-objekt)
+ * @param saksnummer - Array av saksnummer som overlapper (kopieres for immutability)
+ * @param options - Valgfrie tilleggsfelt
+ * @param options.skalVurderes - Om perioden skal vurderes (default: true)
+ * @param options.fastsattUttaksgrad - Fastsatt uttaksgrad etter vurdering (0-100)
+ * @param options.saksbehandler - Saksbehandler som har vurdert perioden
+ * @param options.vurdertTidspunkt - Tidspunkt for vurdering (ISO-format)
+ * @param options.valg - Valg gjort av saksbehandler
+ * @returns Overlappende periode-objekt med kopiert saksnummer-array
+ */
+export const lagOverlappendePeriode = (
+  fom: string | dayjs.Dayjs,
+  tom: string | dayjs.Dayjs,
+  saksnummer: string[],
+  options: {
+    skalVurderes?: boolean;
+    fastsattUttaksgrad?: number;
+    saksbehandler?: string;
+    vurdertTidspunkt?: string;
+    valg?: string;
+  } = {},
+) => {
+  const fomStr = typeof fom === 'string' ? fom : fom.format('YYYY-MM-DD');
+  const tomStr = typeof tom === 'string' ? tom : tom.format('YYYY-MM-DD');
+
+  return {
+    periode: { fom: fomStr, tom: tomStr },
+    skalVurderes: options.skalVurderes ?? true,
+    saksnummer: [...saksnummer], // Kopier array for immutability
+    ...(options.fastsattUttaksgrad !== undefined && {
+      fastsattUttaksgrad: options.fastsattUttaksgrad,
+    }),
+    ...(options.saksbehandler && { saksbehandler: options.saksbehandler }),
+    ...(options.vurdertTidspunkt && { vurdertTidspunkt: options.vurdertTidspunkt }),
+    ...(options.valg && { valg: options.valg }),
+  };
+};
+
+/**
+ * Oppretter mock-data for en overstyring av uttak.
+ * 
+ * Overstyringer brukes når saksbehandler manuelt justerer uttaksgrader
+ * for en periode, typisk for å korrigere automatiske beregninger eller
+ * håndtere spesielle situasjoner.
+ * 
+ * Funksjonen lager dype kopier av utbetalingsgrader for å sikre
+ * immutability og dataisolasjon mellom tester.
+ * 
+ * @example
+ * ```typescript
+ * // Overstyring med én arbeidsgiver
+ * const overstyring = lagOverstyring(
+ *   1,
+ *   '2024-01-01',
+ *   '2024-01-15',
+ *   80,
+ *   'Søker har redusert arbeidstid',
+ *   [
+ *     {
+ *       arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
+ *       utbetalingsgrad: 80
+ *     }
+ *   ]
+ * );
+ * 
+ * // Overstyring med flere arbeidsgivere
+ * const kompleksOverstyring = lagOverstyring(
+ *   2,
+ *   '2024-01-16',
+ *   '2024-01-31',
+ *   60,
+ *   'Fordeling mellom arbeidsgivere',
+ *   [
+ *     {
+ *       arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
+ *       utbetalingsgrad: 40
+ *     },
+ *     {
+ *       arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '987654321' },
+ *       utbetalingsgrad: 20
+ *     }
+ *   ]
+ * );
+ * ```
+ * 
+ * @param id - Unik ID for overstyringen
+ * @param fom - Start-dato (ISO-format YYYY-MM-DD)
+ * @param tom - Slutt-dato (ISO-format YYYY-MM-DD)
+ * @param søkersUttaksgrad - Søkers totale uttaksgrad (0-100)
+ * @param begrunnelse - Begrunnelse for overstyringen
+ * @param utbetalingsgrader - Array av utbetalingsgrader per arbeidsgiver (kopieres for immutability)
+ * @returns Overstyring-objekt med dypt kopierte utbetalingsgrader
+ */
+export const lagOverstyring = (
+  id: number,
+  fom: string,
+  tom: string,
+  søkersUttaksgrad: number,
+  begrunnelse: string,
+  utbetalingsgrader: Array<{
+    arbeidsforhold: { type: string; orgnr: string };
+    utbetalingsgrad: number;
+  }>,
+) => ({
+  id,
+  periode: { fom, tom },
+  søkersUttaksgrad,
+  begrunnelse,
+  // Deep copy av utbetalingsgrader for immutability
+  utbetalingsgrader: utbetalingsgrader.map(ug => ({
+    arbeidsforhold: { ...ug.arbeidsforhold },
+    utbetalingsgrad: ug.utbetalingsgrad,
+  })),
+});
 
 export {
   AksjonspunktDefinisjon,

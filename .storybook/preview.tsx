@@ -17,10 +17,17 @@ const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
 switchOnTestMode();
 
+// Mock AuthFixApi for Storybook
+const mockAuthFixer = {
+  authenticate: async () => ({ isAuthenticated: true, popupClosed: true, aborted: false as const }),
+  shouldWaitForAuthentication: false,
+  authenticationDone: async () => {},
+};
+
 // Configure backend clients for Storybook
-configureK9SakClient();
-configureK9KlageClient();
-configureK9TilbakeClient();
+configureK9SakClient(mockAuthFixer as any);
+configureK9KlageClient(mockAuthFixer as any);
+configureK9TilbakeClient(mockAuthFixer as any);
 
 initialize({
   onUnhandledRequest: 'bypass',

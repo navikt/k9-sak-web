@@ -41,6 +41,7 @@ type OwnProps = {
   perioderTilVurdering?: string[];
   api: BehandlingUttakBackendClient;
   handleOverstyring: HandleOverstyringType;
+  arbeidsgivereFromParent?: ArbeidsgiverOversiktDto['arbeidsgivere'];
 };
 
 const OverstyringUttakForm: FC<OwnProps> = ({
@@ -51,6 +52,7 @@ const OverstyringUttakForm: FC<OwnProps> = ({
   handleOverstyring,
   perioderTilVurdering,
   api,
+  arbeidsgivereFromParent,
 }) => {
   const erNyOverstyring = overstyring === undefined;
   const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>({});
@@ -109,7 +111,7 @@ const OverstyringUttakForm: FC<OwnProps> = ({
 
   const { isLoading: lasterAktiviteter } = useQuery({
     queryKey: ['overstyrte', behandling.uuid, watchFraDato, watchTilDato],
-    enabled: beggeDatoerValgt, // Hent aktiviteter først når begge datoer er valgt
+    enabled: beggeDatoerValgt && erNyOverstyring, // Kun hent aktiviteter for nye overstyringer
     queryFn: async () => {
       const aktuelleAktiviteter = await api.hentAktuelleAktiviteter(
         behandling.uuid,
@@ -118,22 +120,6 @@ const OverstyringUttakForm: FC<OwnProps> = ({
       );
       if (aktuelleAktiviteter.arbeidsforholdsperioder) {
         const nyeAktiviteter = formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder);
-        
-        // Hvis vi redigerer en eksisterende overstyring, bevar utbetalingsgradene
-        if (overstyring?.utbetalingsgrader) {
-          nyeAktiviteter.forEach(nyAktivitet => {
-            const eksisterende = overstyring.utbetalingsgrader?.find(
-              existing =>
-                existing.arbeidsforhold.orgnr === nyAktivitet.arbeidsforhold.orgnr &&
-                existing.arbeidsforhold.aktørId === nyAktivitet.arbeidsforhold.aktørId &&
-                existing.arbeidsforhold.arbeidsforholdId === nyAktivitet.arbeidsforhold.arbeidsforholdId
-            );
-            if (eksisterende) {
-              nyAktivitet.utbetalingsgrad = eksisterende.utbetalingsgrad;
-            }
-          });
-        }
-        
         replaceAktiviteter(nyeAktiviteter);
       } else {
         replaceAktiviteter([]);
@@ -142,6 +128,16 @@ const OverstyringUttakForm: FC<OwnProps> = ({
       return aktuelleAktiviteter;
     },
   });
+
+  // For eksisterende overstyringer, bruk aktivitetene som allerede finnes
+  useEffect(() => {
+    if (!erNyOverstyring && overstyring?.utbetalingsgrader) {
+      replaceAktiviteter(overstyring.utbetalingsgrader);
+      if (arbeidsgivereFromParent) {
+        setArbeidsgivere(arbeidsgivereFromParent);
+      }
+    }
+  }, [erNyOverstyring, overstyring, arbeidsgivereFromParent, replaceAktiviteter]);
 
   useEffect(() => {
     if (!beggeDatoerValgt) {

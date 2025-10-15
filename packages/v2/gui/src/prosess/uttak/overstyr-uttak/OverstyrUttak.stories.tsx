@@ -2,7 +2,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
 import { action } from 'storybook/actions';
-import { http, HttpResponse } from 'msw';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import Uttak from '../Uttak';
 import {
@@ -14,6 +13,10 @@ import {
   AksjonspunktStatus,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
+import {
+  standardUttakHandlers,
+  createOverstyrbareAktiviteterHandler,
+} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
 
 /**
  * OverstyrUttak-komponenten lar saksbehandlere med overstyrerrolle manuelt overstyre
@@ -52,79 +55,17 @@ export const EmptyState: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
-          action('overstyr-aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
-        }),
-        http.post('*/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter', async ({ request }) => {
-          const allowedRanges = [
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(),
+        standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
+        createOverstyrbareAktiviteterHandler(
+          [
             { fom: '2024-01-01', tom: '2024-01-31' },
             { fom: '2024-02-01', tom: '2024-02-28' },
-          ];
-
-          try {
-            const body = (await request.json().catch(() => undefined)) as any;
-            const fom = body?.fom || body?.periode?.fom || '';
-            const tom = body?.tom || body?.periode?.tom || '';
-            const isoDato = /^\d{4}-\d{2}-\d{2}$/;
-
-            // Valider format
-            if (!isoDato.test(fom) || !isoDato.test(tom)) {
-              return HttpResponse.json({
-                arbeidsforholdsperioder: [],
-                arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-              });
-            }
-
-            // Valider rekkefølge
-            if (fom > tom) {
-              return HttpResponse.json({
-                arbeidsforholdsperioder: [],
-                arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-              });
-            }
-
-            // Må være helt innenfor én av allowedRanges
-            const innenfor = allowedRanges.some(r => fom >= r.fom && tom <= r.tom);
-            if (!innenfor) {
-              return HttpResponse.json({
-                arbeidsforholdsperioder: [],
-                arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-              });
-            }
-
-            // Gyldig -> returner aktivitet
-            return HttpResponse.json({
-              arbeidsforholdsperioder: [
-                {
-                  type: 'ARBEIDSTAKER',
-                  orgnr: '123456789',
-                  arbeidsforholdId: 'aaaaa-bbbbb',
-                  periode: { fom, tom },
-                },
-              ],
-              arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            });
-          } catch {
-            return HttpResponse.json({
-              arbeidsforholdsperioder: [],
-              arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            });
-          }
-        }),
+          ],
+          defaultArbeidsgivere,
+        ),
       ],
     },
   },
@@ -158,34 +99,16 @@ export const LeggTilOverstyring: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
-          action('overstyr-aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
-        }),
-        http.post('*/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter', () => {
-          return HttpResponse.json({
-            arbeidsforholdsperioder: [
-              {
-                type: 'ARBEIDSTAKER',
-                orgnr: '123456789',
-              },
-            ],
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-          });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(),
+        standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
+        createOverstyrbareAktiviteterHandler(
+          [
+            { fom: '2024-01-01', tom: '2024-12-31' }, // Allow full year for flexibility
+          ],
+          defaultArbeidsgivere,
+        ),
       ],
     },
   },
@@ -215,7 +138,7 @@ export const LeggTilOverstyring: Story = {
     await step('Viser overstyringsskjema', async () => {
       await waitFor(async function sjekkTekstboks() {
         const textboxes = canvas.getAllByRole('textbox');
-        await await expect(textboxes.length).toBeGreaterThan(0);
+        await expect(textboxes.length).toBeGreaterThan(0);
       });
     });
 
@@ -241,7 +164,7 @@ export const LeggTilOverstyring: Story = {
 
       const leggTilButton = canvas.getByRole('button', { name: /Legg til overstyring/i });
       if (leggTilButton) {
-        await await expect(leggTilButton).toBeEnabled();
+        await expect(leggTilButton).toBeEnabled();
         await user.click(leggTilButton);
       }
     });
@@ -252,59 +175,41 @@ export const Overstyringer: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
+          {
+            id: 1,
+            periode: { fom: '2024-01-01', tom: '2024-01-15' },
+            søkersUttaksgrad: 80,
+            begrunnelse: 'Justert uttaksgrad basert på spesielle forhold',
+            utbetalingsgrader: [
               {
-                id: 1,
-                periode: { fom: '2024-01-01', tom: '2024-01-15' },
-                søkersUttaksgrad: 80,
-                begrunnelse: 'Justert uttaksgrad basert på spesielle forhold',
-                utbetalingsgrader: [
-                  {
-                    arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                    utbetalingsgrad: 80,
-                  },
-                ],
-              },
-              {
-                id: 2,
-                periode: { fom: '2024-01-16', tom: '2024-01-31' },
-                søkersUttaksgrad: 60,
-                begrunnelse: 'Redusert uttaksgrad grunnet delvis arbeid',
-                utbetalingsgrader: [
-                  {
-                    arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                    utbetalingsgrad: 60,
-                  },
-                ],
+                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
+                utbetalingsgrad: 80,
               },
             ],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
-          action('overstyr-aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
-        }),
-        http.post('*/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter', () => {
-          return HttpResponse.json({
-            arbeidsforholdsperioder: [
+          },
+          {
+            id: 2,
+            periode: { fom: '2024-01-16', tom: '2024-01-31' },
+            søkersUttaksgrad: 60,
+            begrunnelse: 'Redusert uttaksgrad grunnet delvis arbeid',
+            utbetalingsgrader: [
               {
-                type: 'ARBEIDSTAKER',
-                orgnr: '123456789',
+                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
+                utbetalingsgrad: 60,
               },
             ],
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-          });
-        }),
+          },
+        ]),
+        standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
+        createOverstyrbareAktiviteterHandler(
+          [
+            { fom: '2024-01-01', tom: '2024-12-31' },
+          ],
+          defaultArbeidsgivere,
+        ),
       ],
     },
   },
@@ -327,21 +232,21 @@ export const Overstyringer: Story = {
 
     await step('Viser Uttak med overstyringer', async () => {
       await waitFor(async function sjekkerUttaksDetaljer() {
-        await await expect(canvas.getByRole('cell', { name: /15.02.2024 - 28.02.2024/i })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: /01.02.2024 - 14.02.2024/i })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: /16.01.2024 - 31.01.2024/i })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: /01.01.2024 - 15.01.2024/i })).toBeInTheDocument();
-        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
-        await await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: '16.01.2024' })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: '31.01.2024' })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: /15.02.2024 - 28.02.2024/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: /01.02.2024 - 14.02.2024/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: /16.01.2024 - 31.01.2024/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: /01.01.2024 - 15.01.2024/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
+        await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: '16.01.2024' })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: '31.01.2024' })).toBeInTheDocument();
       });
     });
 
     await step('Viser varsel om overstyring', async () => {
-      await await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
-      await await expect(
+      await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
+      await expect(
         canvas.getByText(
           'Aksjonspunkt for overstyring av uttaks-/utbetalingsgrad har blitt opprettet i denne, eller en tidligere, behandling og må løses av en saksbehandler med overstyrerrolle.',
         ),
@@ -356,53 +261,32 @@ export const RedigerOverstyring: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json();
-          submitSpy(payload);
-          return HttpResponse.json({ status: 'OK' });
-        }),
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
+          {
+            id: 1,
+            periode: { fom: '2024-01-01', tom: '2024-01-15' },
+            søkersUttaksgrad: 80,
+            begrunnelse: 'Opprinnelig begrunnelse',
+            utbetalingsgrader: [
               {
-                id: 1,
-                periode: { fom: '2024-01-01', tom: '2024-01-15' },
-                søkersUttaksgrad: 80,
-                begrunnelse: 'Opprinnelig begrunnelse',
-                utbetalingsgrader: [
-                  {
-                    arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                    utbetalingsgrad: 80,
-                  },
-                ],
-              },
-            ],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
-          action('overstyr-aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
-        }),
-        http.post('*/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter', () => {
-          return HttpResponse.json({
-            arbeidsforholdsperioder: [
-              {
-                type: 'ARBEIDSTAKER',
-                orgnr: '123456789',
+                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
                 utbetalingsgrad: 80,
               },
             ],
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-          });
+          },
+        ]),
+        standardUttakHandlers.overstyrAksjonspunkt(payload => {
+          submitSpy(payload);
+          action('overstyr-aksjonspunkt:submit')(payload);
         }),
+        createOverstyrbareAktiviteterHandler(
+          [
+            { fom: '2024-01-01', tom: '2024-12-31' },
+          ],
+          defaultArbeidsgivere,
+        ),
       ],
     },
   },
@@ -424,7 +308,7 @@ export const RedigerOverstyring: Story = {
 
     await step('Eksisterende overstyringer vises', async () => {
       await waitFor(async function sjekkOverstyrtePerioder() {
-        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
       });
     });
 
@@ -436,16 +320,19 @@ export const RedigerOverstyring: Story = {
         await user.click(within(row).getByRole('button', { name: 'Endre' }));
       });
 
-      await await expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toHaveValue('01.01.2024');
-      await await expect(canvas.getByRole('textbox', { name: 'Til og med' })).toHaveValue('15.01.2024');
+      await expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toHaveValue('01.01.2024');
+      await expect(canvas.getByRole('textbox', { name: 'Til og med' })).toHaveValue('15.01.2024');
 
-      await waitFor(async function oppdaterSkjemafelter() {
-        const utbetalingsgradField = await canvas.getByRole('spinbutton', { name: 'Ny utbetalingsgrad (%)' });
-        await await expect(utbetalingsgradField).toHaveValue(80);
-        await user.clear(utbetalingsgradField);
-        await user.type(utbetalingsgradField, '70');
-        await expect(utbetalingsgradField).toHaveValue(70);
-      });
+      await waitFor(
+        async function oppdaterSkjemafelter() {
+          const utbetalingsgradField = await canvas.getByRole('spinbutton', { name: 'Ny utbetalingsgrad (%)' });
+          await expect(utbetalingsgradField).toHaveValue(80);
+          await user.clear(utbetalingsgradField);
+          await user.type(utbetalingsgradField, '70');
+          await expect(utbetalingsgradField).toHaveValue(70);
+        },
+        { timeout: 5000 },
+      );
 
       await waitFor(async function oppdaterBegrunnelse() {
         const begrunnelseField = await canvas.getByRole('textbox', { name: 'Begrunnelse' });
@@ -492,57 +379,32 @@ export const FjernOverstyring: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json();
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
+          {
+            id: 1,
+            periode: { fom: '2024-01-01', tom: '2024-01-15' },
+            søkersUttaksgrad: 80,
+            begrunnelse: 'Overstyring som skal slettes',
+            utbetalingsgrader: [
+              {
+                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
+                utbetalingsgrad: 80,
+              },
+            ],
+          },
+        ]),
+        standardUttakHandlers.overstyrAksjonspunkt(payload => {
           submitSpy(payload);
-          return HttpResponse.json({ status: 'OK' });
-        }),
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [
-              {
-                id: 1,
-                periode: { fom: '2024-01-01', tom: '2024-01-15' },
-                søkersUttaksgrad: 80,
-                begrunnelse: 'Overstyring som skal slettes',
-                utbetalingsgrader: [
-                  {
-                    arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                    utbetalingsgrad: 80,
-                  },
-                ],
-              },
-            ],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
           action('overstyr-aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
         }),
-        http.post('*/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter', () => {
-          return HttpResponse.json({
-            arbeidsforholdsperioder: [
-              {
-                type: 'ARBEIDSTAKER',
-                orgnr: '123456789',
-              },
-            ],
-            arbeidsgiverOversikt: defaultArbeidsgivere,
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt/overstyr', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
-          action('overstyr-aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
-        }),
+        createOverstyrbareAktiviteterHandler(
+          [
+            { fom: '2024-01-01', tom: '2024-12-31' },
+          ],
+          defaultArbeidsgivere,
+        ),
       ],
     },
   },
@@ -564,9 +426,9 @@ export const FjernOverstyring: Story = {
 
     await step('Eksisterende overstyringer vises', async () => {
       await waitFor(async function sjekkEksisterendeOverstyringer() {
-        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
-        await await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
+        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: '01.01.2024' })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: '15.01.2024' })).toBeInTheDocument();
       });
     });
 
@@ -575,7 +437,7 @@ export const FjernOverstyring: Story = {
       waitFor(async function sjekkSlettKnapp() {
         await user.click(canvas.getByRole('button', { name: 'Slett' }));
       });
-      await await expect(canvas.findByRole('heading', { name: 'Er du sikker på at du vil slette en overstyring?' }));
+      await expect(canvas.findByRole('heading', { name: 'Er du sikker på at du vil slette en overstyring?' }));
       await waitFor(async function sjekkBekreftSlettModal() {
         const modal = canvas.getByRole('dialog');
 
@@ -584,14 +446,14 @@ export const FjernOverstyring: Story = {
         if (deleteButton) {
           await user.click(deleteButton);
         }
-        await await expect(within(modal).getByText('Venter...')).toBeInTheDocument();
+        await expect(within(modal).getByText('Venter...')).toBeInTheDocument();
       });
 
       await step('Sletting av overstyring sendt til backend', async () => {
         waitFor(async function sjekkOverstyring() {
-          await await expect(submitSpy).toHaveBeenCalled();
+          await expect(submitSpy).toHaveBeenCalled();
           const submitPayload = submitSpy.mock.calls[0]?.[0];
-          await await expect(submitPayload).toEqual({
+          await expect(submitPayload).toEqual({
             behandlingId: 'behandling-1',
             behandlingVersjon: 1,
             bekreftedeAksjonspunktDtoer: [],
@@ -615,31 +477,22 @@ export const Lesemodus: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
+          {
+            id: 1,
+            periode: { fom: '2024-01-01', tom: '2024-01-15' },
+            søkersUttaksgrad: 80,
+            begrunnelse: 'Overstyring gjort av annen saksbehandler',
+            utbetalingsgrader: [
               {
-                id: 1,
-                periode: { fom: '2024-01-01', tom: '2024-01-15' },
-                søkersUttaksgrad: 80,
-                begrunnelse: 'Overstyring gjort av annen saksbehandler',
-                utbetalingsgrader: [
-                  {
-                    arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                    utbetalingsgrad: 80,
-                  },
-                ],
+                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
+                utbetalingsgrad: 80,
               },
             ],
-          });
-        }),
+          },
+        ]),
       ],
     },
   },
@@ -660,17 +513,17 @@ export const Lesemodus: Story = {
     const user = userEvent.setup();
     await step('Varsel om overstyring vises', async () => {
       waitFor(async function sjekkVarselOmOverstyring() {
-        await await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
+        await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
       });
     });
 
     await step('Tabell med overstyringer vises', async () => {
       waitFor(async function sjekkOverstyringTabell() {
-        await await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
-        await await expect(canvas.getByRole('cell', { name: '01.01.2024' }));
-        await await expect(canvas.getByRole('cell', { name: '15.01.2024' }));
+        await expect(canvas.getByRole('heading', { name: 'Overstyrte perioder' }));
+        await expect(canvas.getByRole('cell', { name: '01.01.2024' }));
+        await expect(canvas.getByRole('cell', { name: '15.01.2024' }));
         await user.click(canvas.getByRole('button', { name: 'Vis mer' }));
-        await await expect(canvas.getByText('Overstyring gjort av annen saksbehandler'));
+        await expect(canvas.getByText('Overstyring gjort av annen saksbehandler'));
         await user.click(canvas.getByRole('button', { name: 'Vis mindre' }));
       });
     });

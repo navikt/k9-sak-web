@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn, within, userEvent, expect, waitFor } from 'storybook/test';
 import { action } from 'storybook/actions';
-import { http, HttpResponse } from 'msw';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import Uttak from '../Uttak';
 import {
@@ -10,9 +9,9 @@ import {
   lagOppfyltPeriode,
   lagVurderDatoNyRegelAksjonspunkt,
   AksjonspunktStatus,
-  defaultArbeidsgivere,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
+import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
 
 /**
  * VurderDato-komponenten håndterer vurdering av virkningsdato for nye uttaksregler.
@@ -48,23 +47,10 @@ export const ÅpentAksjonspunkt: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
-          action('aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(),
+        standardUttakHandlers.aksjonspunkt(payload => action('aksjonspunkt:submit')(payload)),
       ],
     },
   },
@@ -84,20 +70,20 @@ export const ÅpentAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel', async () => {
-      await await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
+      await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
     });
 
     await step('Viser informasjon om endringene i uttak', async () => {
-      await await expect(canvas.getByText('Hva innebærer endringene i uttak?')).toBeInTheDocument();
+      await expect(canvas.getByText('Hva innebærer endringene i uttak?')).toBeInTheDocument();
 
       await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
       await waitFor(async function sjekkEkspandertInformasjonOmEndringer() {
-        await await expect(canvas.getByText(/Før endring:/i)).toBeVisible();
+        await expect(canvas.getByText(/Før endring:/i)).toBeVisible();
       });
 
       await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
       await waitFor(async function sjekkSkjultInformasjonOmEndringer() {
-        await await expect(canvas.getByText(/Før endring:/i)).not.toBeVisible();
+        await expect(canvas.getByText(/Før endring:/i)).not.toBeVisible();
       });
     });
 
@@ -114,18 +100,9 @@ export const Skjemavalidering: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [],
-          });
-        }),
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(),
       ],
     },
   },
@@ -149,7 +126,7 @@ export const Skjemavalidering: Story = {
       await user.clear(begrunnelseField);
       await user.type(begrunnelseField, 'Test');
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
-      await await expect(canvas.getByText(/Du må skrive minst 5 tegn/i)).toBeInTheDocument();
+      await expect(canvas.getByText(/Du må skrive minst 5 tegn/i)).toBeInTheDocument();
     });
 
     await step('Mangler begrunnelse', async () => {
@@ -157,7 +134,7 @@ export const Skjemavalidering: Story = {
       const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
       await user.click(submitButton);
       await waitFor(async function sjekkFeilmelding() {
-        await await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
+        await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
       });
     });
 
@@ -170,23 +147,12 @@ export const LøsAksjonspunkt: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(),
+        standardUttakHandlers.aksjonspunkt(payload => {
           submitSpy(payload);
           action('aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
         }),
       ],
     },
@@ -225,7 +191,7 @@ export const LøsAksjonspunkt: Story = {
     await step('Bekreft og fortsett', async () => {
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
       await waitFor(async function sjekkOverstyring() {
-        await await expect(submitSpy).toHaveBeenCalledWith(
+        await expect(submitSpy).toHaveBeenCalledWith(
           {
             "behandlingId": "1",
             "behandlingVersjon": 1,
@@ -248,23 +214,12 @@ export const RedigerVurdering: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('*/api/behandling/arbeidsgiver', () => {
-          return HttpResponse.json({ arbeidsgivere: defaultArbeidsgivere });
-        }),
-        http.get('*/api/behandling/pleiepenger/inntektsgradering', () => {
-          return HttpResponse.json({ perioder: [] });
-        }),
-        http.get('*/api/behandling/pleiepenger/uttak/overstyrt', () => {
-          return HttpResponse.json({
-            arbeidsgiverOversikt: { arbeidsgivere: defaultArbeidsgivere },
-            overstyringer: [],
-          });
-        }),
-        http.post('*/api/behandling/aksjonspunkt', async ({ request }) => {
-          const payload = await request.json().catch(() => undefined);
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering(),
+        standardUttakHandlers.overstyrtUttak(),
+        standardUttakHandlers.aksjonspunkt(payload => {
           submitSpy(payload);
           action('aksjonspunkt:submit')(payload);
-          return HttpResponse.json({ status: 'OK', mottatt: payload });
         }),
       ],
     },
@@ -311,7 +266,7 @@ export const RedigerVurdering: Story = {
     await step('Bekreft og fortsett', async () => {
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
       await waitFor(async function sjekkOverstyring() {
-        await await expect(submitSpy).toHaveBeenCalledWith(
+        await expect(submitSpy).toHaveBeenCalledWith(
           {
             "behandlingId": "1",
             "behandlingVersjon": 1,

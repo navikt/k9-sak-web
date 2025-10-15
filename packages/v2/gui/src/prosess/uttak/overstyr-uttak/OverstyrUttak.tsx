@@ -261,6 +261,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
                 setLoading={setLoading}
                 perioderTilVurdering={perioderTilVurdering}
                 handleOverstyring={handleOverstyring}
+                arbeidsgivereFromParent={arbeidsgivere}
               />
             )}
           </>
