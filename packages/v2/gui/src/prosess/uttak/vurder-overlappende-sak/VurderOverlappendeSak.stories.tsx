@@ -254,7 +254,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
     const canvas = within(canvasElement);
 
     await step('Åpne splitt periode dialog', async () => {
-      waitFor(async function velgGruppeEn() {
+      await waitFor(async function velgGruppeEn() {
         const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
         const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
 
