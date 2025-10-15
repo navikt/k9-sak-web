@@ -94,6 +94,9 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
     (date: Date) => isAfter(date, parse(periodeTom, 'yyyy-MM-dd', new Date())),
   ];
 
+  const harAvslagsårsakerForVilkår = avslagsårsakerForVilkar && avslagsårsakerForVilkar.length > 0;
+  const harInnvilgetMerknaderForVilkår = relevanteInnvilgetMerknader && relevanteInnvilgetMerknader.length > 0;
+
   const radios = [
     {
       value: vilkårStatusPeriodisert.OPPFYLT,
@@ -151,7 +154,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
 
       {erVilkarOk !== undefined && (
         <>
-          {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsårsakerForVilkar?.length && (
+          {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && harAvslagsårsakerForVilkår && (
             <RhfSelect
               control={control}
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
@@ -191,7 +194,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </Box.New>
           )}
 
-          {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && relevanteInnvilgetMerknader?.length && (
+          {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && harInnvilgetMerknaderForVilkår && (
             <Box.New marginBlock={'2 0'}>
               <RhfSelect
                 control={control}
@@ -208,7 +211,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </Box.New>
           )}
 
-          {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsårsakerForVilkar?.length && (
+          {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && harAvslagsårsakerForVilkår && (
             <Box.New marginBlock={'2 0'}>
               <RhfSelect
                 control={control}
