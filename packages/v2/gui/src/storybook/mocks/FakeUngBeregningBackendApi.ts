@@ -127,4 +127,10 @@ export class FakeUngBeregningBackendApi {
       antallDagerTidligereUtbetalt: 33,
     };
   }
+
+  async getArbeidsgiverOpplysninger() {
+    return {
+      arbeidsgivere: {},
+    };
+  }
 }

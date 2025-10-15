@@ -13,7 +13,6 @@ export enum LinkCategory {
 export enum UngSakApiKeys {
   INIT_FETCH = 'INIT_FETCH',
   INIT_FETCH_TILBAKE = 'INIT_FETCH_TILBAKE',
-  INIT_FETCH_KLAGE = 'INIT_FETCH_KLAGE',
   KODEVERK = 'KODEVERK',
   KODEVERK_TILBAKE = 'KODEVERK_TILBAKE',
   KODEVERK_KLAGE = 'KODEVERK_KLAGE',
@@ -25,9 +24,11 @@ export enum UngSakApiKeys {
   FETCH_FAGSAK = 'FETCH_FAGSAK',
   SAK_BRUKER = 'SAK_BRUKER',
   BEHANDLINGER_UNGSAK = 'BEHANDLINGER_UNGSAK',
+  BEHANDLINGER_KLAGE = 'BEHANDLINGER_KLAGE',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
   NEW_BEHANDLING_UNGSAK = 'NEW_BEHANDLING_UNGSAK',
   NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
+  NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
   HISTORY_UNGSAK = 'HISTORY_UNGSAK',
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
@@ -41,6 +42,7 @@ export enum UngSakApiKeys {
   SAVE_TOTRINNSAKSJONSPUNKT = 'SAVE_TOTRINNSAKSJONSPUNKT',
   SAK_RETTIGHETER = 'SAK_RETTIGHETER',
   SAK_RETTIGHETER_TILBAKE = 'SAK_RETTIGHETER_TILBAKE',
+  SAK_RETTIGHETER_KLAGE = 'SAK_RETTIGHETER_KLAGE',
   BEHANDLING_RETTIGHETER = 'BEHANDLING_RETTIGHETER',
   KAN_TILBAKEKREVING_OPPRETTES = 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES = 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
@@ -60,7 +62,6 @@ export enum UngSakApiKeys {
 const endpoints = new RestApiConfigBuilder()
   .withGet('/ung/sak/api/init-fetch', UngSakApiKeys.INIT_FETCH)
   .withGet('/ung/tilbake/api/init-fetch', UngSakApiKeys.INIT_FETCH_TILBAKE)
-  .withGet('/ung/klage/api/init-fetch', UngSakApiKeys.INIT_FETCH_KLAGE)
 
   // Generelle
   .withRel('nav-ansatt', UngSakApiKeys.NAV_ANSATT)
@@ -100,7 +101,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('brev-maler', UngSakApiKeys.BREVMALER)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
   .withRel('brev-bestill', UngSakApiKeys.SUBMIT_MESSAGE)
-
   .withPost('/ung/tilbake/api/brev/forhandsvis', UngSakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(
     '/ung/tilbake/api/dokument/forhandsvis-henleggelsesbrev',
@@ -110,6 +110,7 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/ung/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
 
   .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_UNGSAK)
+  .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_KLAGE)
 
   // Formidling
   .withPost('/ung/formidling/api/brev/forhaandsvis', UngSakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })

@@ -5,6 +5,7 @@ import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/Exten
 import UnauthorizedPage from './UnauthorizedPage.js';
 import ForbiddenPage from './ForbiddenPage.js';
 import NotFoundPage from './NotFoundPage.js';
+import { resolveLoginURL, withRedirectToCurrentLocation } from '../auth/resolveLoginURL.js';
 
 interface OwnProps {
   errorMessageCallback?: (error: string) => void;
@@ -115,7 +116,12 @@ export class ErrorBoundary extends Component<OwnProps, State> {
       const apiError = ExtendedApiError.findInError(error);
       if (apiError != null) {
         if (apiError.isUnauthorized) {
-          return <UnauthorizedPage />;
+          const loginUrl = withRedirectToCurrentLocation(resolveLoginURL(apiError.location));
+          if (loginUrl != null) {
+            return <UnauthorizedPage loginUrl={loginUrl.toString()} />;
+          } else {
+            return <UnauthorizedPage loginUrl="/" />;
+          }
         }
         if (apiError.isForbidden) {
           return <ForbiddenPage />;

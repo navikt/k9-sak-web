@@ -7,6 +7,7 @@ import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -181,6 +182,7 @@ export const NyBehandlingModal = ({
         ? {
             aktørId: aktorId,
             behandlendeEnhetId: gjeldendeVedtakBehandlendeEnhetId,
+            behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
           }
         : {};
     submitCallback({
@@ -189,7 +191,7 @@ export const NyBehandlingModal = ({
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
       periode: erUngdomsprogramytelse
-        ? getUngPerioderTilRevurdering()!.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+        ? getUngPerioderTilRevurdering()?.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
         : undefined,
       ...klageOnlyValues,
     });
@@ -346,6 +348,7 @@ const tilbakekrevingRevurderingArsaker = [
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_KA,
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_NFP,
   tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FEILUTBETALT_BELØP_HELT_ELLER_DELVIS_BORTFALT,
+  ungTilbakeBehandlingÅrsakType.RE_KLAGE_VEDTAKSINSTANS,
 ];
 
 export const getBehandlingAarsaker = (
