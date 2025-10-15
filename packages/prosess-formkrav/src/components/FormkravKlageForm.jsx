@@ -38,7 +38,7 @@ const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   return klagBareVedtak.concat(
     avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
       <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+        {`${behandling.visningsnavn ?? getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
       </option>
     )),
   );
