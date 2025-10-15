@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { BodyShort, Box, Detail, HelpText, HStack, Loader, Tag, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import {
   k9_kodeverk_uttak_UttakArbeidType as UttakArbeidsforholdType,
   type pleiepengerbarn_uttak_kontrakter_Utbetalingsgrader as Utbetalingsgrader,

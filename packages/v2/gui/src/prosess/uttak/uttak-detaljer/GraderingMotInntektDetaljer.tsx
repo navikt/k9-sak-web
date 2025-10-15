@@ -1,5 +1,5 @@
 import { Fragment, type FC } from 'react';
-import { BodyShort, Box, HStack, Loader, Tag, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import {
   k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
   type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
