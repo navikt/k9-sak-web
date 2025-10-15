@@ -1,7 +1,6 @@
 import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Button } from '@navikt/ds-react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
-import styles from './tempsaveAndPreviewKlageLink.module.css';
 
 const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode: string) => ({
   klageMedholdArsak:
@@ -50,13 +49,7 @@ export const TempSaveAndPreviewKlageLink = ({
   return (
     <div>
       {!readOnly && (
-        <Button
-          onClick={tempSave}
-          className={styles.previewLink}
-          data-testid="previewLink"
-          variant="tertiary"
-          size="small"
-        >
+        <Button onClick={tempSave} data-testid="previewLink" variant="tertiary" size="small">
           Lagre og forhåndsvis brev
         </Button>
       )}

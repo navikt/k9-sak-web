@@ -61,7 +61,7 @@ const getModiaPath = (fødselsnummer?: string) => {
   if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no') {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
-  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
+  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no') {
     return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   return '#';
