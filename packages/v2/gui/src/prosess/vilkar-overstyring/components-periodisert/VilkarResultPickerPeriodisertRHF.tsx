@@ -151,7 +151,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
 
       {erVilkarOk !== undefined && (
         <>
-          {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsårsakerForVilkar && (
+          {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsårsakerForVilkar?.length && (
             <RhfSelect
               control={control}
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
@@ -191,7 +191,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </Box.New>
           )}
 
-          {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && relevanteInnvilgetMerknader && (
+          {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && relevanteInnvilgetMerknader?.length && (
             <Box.New marginBlock={'2 0'}>
               <RhfSelect
                 control={control}
@@ -208,7 +208,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </Box.New>
           )}
 
-          {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsårsakerForVilkar && (
+          {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsårsakerForVilkar?.length && (
             <Box.New marginBlock={'2 0'}>
               <RhfSelect
                 control={control}
