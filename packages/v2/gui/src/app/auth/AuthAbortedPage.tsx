@@ -1,4 +1,4 @@
-import { Alert, BodyLong, BodyShort, Heading, HStack, Link, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading, HStack, Link, VStack } from '@navikt/ds-react';
 import { XMarkOctagonIcon } from '@navikt/aksel-icons';
 
 interface AuthAbortedPageProps {
@@ -14,14 +14,14 @@ export const AuthAbortedPage = ({ retryURL }: AuthAbortedPageProps) => {
           <Heading size="medium">Innlogging avbrutt</Heading>{' '}
         </HStack>
         <Alert variant="error">Automatisk innlogging ble avbrutt før den var fullført.</Alert>
-        <BodyLong>
-          Mulige årsaker:
+        <VStack>
+          <BodyShort>Mulige årsaker:</BodyShort>
           <ul>
             <li>Du lukket popupvinduet før innlogging var ferdig</li>
             <li>Nettleser blokkerte automatisk åpning av popup vinduet for innlogging</li>
             <li>Teknisk feil i autentiseringsflyt</li>
           </ul>
-        </BodyLong>
+        </VStack>
         <BodyShort>Hvis du ønsker å logge inn, prøv på nytt med linken under.</BodyShort>
         <BodyShort weight="semibold">
           <Link href={retryURL?.href ?? '/'}>Logg inn</Link>
