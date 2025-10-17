@@ -3,6 +3,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -42,8 +43,6 @@ const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: Kodeverk
 const erAutomatiskBehandlet = (behandling: Behandling) =>
   !behandling.ansvarligSaksbehandler && behandling.status === BehandlingDtoStatus.AVSLUTTET;
 
-const KONTROLL_AV_INNTEKT_VISNINGSNAVN = 'Kontroll av inntekt';
-
 /**
  * Henter søknadsperioder for valgt behandling.
  * For "Kontroll av inntekt" behandlinger filtreres kun perioder med KONTROLL_AV_INNTEKT som årsak.
@@ -53,8 +52,12 @@ const getSøknadsperioderForValgtBehandling = (
   valgtBehandling?: Behandling,
 ) => {
   const dataForValgtBehandling = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
-
-  if (valgtBehandling?.visningsnavn === KONTROLL_AV_INNTEKT_VISNINGSNAVN) {
+  const erKontrollAvInntekt = valgtBehandling?.behandlingÅrsaker?.every(
+    ({ behandlingArsakType }) =>
+      behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT ||
+      behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_RAPPORTERING_INNTEKT,
+  );
+  if (erKontrollAvInntekt) {
     return filterPerioderForKontrollAvInntekt(dataForValgtBehandling);
   }
   return dataForValgtBehandling?.perioder ?? [];
