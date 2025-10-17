@@ -25,7 +25,7 @@ interface BehandleKlageFormNfpProps {
   fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
   saveKlage: () => Promise<void>;
-  submitCallback: (values: TransformValues) => Promise<void>;
+  submitCallback: (values: TransformValues[]) => Promise<void>;
   isReadOnly: boolean;
   previewCallback: () => Promise<void>;
   readOnlySubmitButton: boolean;
@@ -53,7 +53,7 @@ export const BehandleKlageFormNfp = ({
   const handleSubmit = (values: BehandleKlageFormNfpFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback(transformValues(values, fagsak, erPåklagdBehandlingTilbakekreving));
+      void submitCallback([transformValues(values, fagsak, erPåklagdBehandlingTilbakekreving)]);
     } finally {
       setIsSubmitting(false);
     }
