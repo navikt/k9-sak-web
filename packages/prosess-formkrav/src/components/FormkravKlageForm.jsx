@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
+import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './formkravKlageForm.module.css';
 
@@ -38,7 +39,7 @@ const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   return klagBareVedtak.concat(
     avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
       <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${behandling.visningsnavn ?? getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+        {`${behandling.visningsnavn ? formaterVisningsnavn(behandling.visningsnavn) : getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
       </option>
     )),
   );

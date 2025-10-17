@@ -3,9 +3,10 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
@@ -52,12 +53,7 @@ const getSøknadsperioderForValgtBehandling = (
   valgtBehandling?: Behandling,
 ) => {
   const dataForValgtBehandling = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
-  const erKontrollAvInntekt = valgtBehandling?.behandlingÅrsaker?.every(
-    ({ behandlingArsakType }) =>
-      behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT ||
-      behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_RAPPORTERING_INNTEKT,
-  );
-  if (erKontrollAvInntekt) {
+  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT) {
     return filterPerioderForKontrollAvInntekt(dataForValgtBehandling);
   }
   return dataForValgtBehandling?.perioder ?? [];
@@ -100,7 +96,7 @@ const renderListItems = ({
             behandling={behandling}
             behandlingTypeNavn={
               behandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && behandling.visningsnavn
-                ? behandling.visningsnavn
+                ? formaterVisningsnavn(behandling.visningsnavn)
                 : getBehandlingNavn(behandling.type, kodeverkNavnFraKode)
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
@@ -257,7 +253,9 @@ const BehandlingPicker = ({
       if (!filterListe.some(filter => filter.value === behandling.type)) {
         filterListe.push({
           value: behandling.type,
-          label: behandling.visningsnavn || getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
+          label: behandling.visningsnavn
+            ? formaterVisningsnavn(behandling.visningsnavn)
+            : getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
         });
       }
       if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
@@ -358,7 +356,7 @@ const BehandlingPicker = ({
           behandlingsårsaker={getÅrsaksliste()}
           behandlingTypeNavn={
             valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && valgtBehandling.visningsnavn
-              ? valgtBehandling.visningsnavn
+              ? formaterVisningsnavn(valgtBehandling.visningsnavn)
               : getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
           }
           behandlingTypeKode={valgtBehandling.type}
