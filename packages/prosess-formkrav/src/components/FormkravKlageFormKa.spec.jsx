@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { FormkravKlageFormKa } from './FormkravKlageFormKa';
@@ -17,7 +16,6 @@ describe('<FormkravKlageFormKa>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         fagsakPerson={{}}
         avsluttedeBehandlinger={[]}
