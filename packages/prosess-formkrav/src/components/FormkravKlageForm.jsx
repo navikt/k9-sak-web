@@ -8,17 +8,17 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
-
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
@@ -64,7 +64,7 @@ export const FormkravKlageForm = ({
     return klagBareVedtak.concat(
       avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
         <option key={behandling.uuid} value={`${behandling.uuid}`}>
-          {`${behandling.visningsnavn ?? kodeverkNavnFraKode(behandling.type.kode, KodeverkType.BEHANDLING_TYPE, erTilbakekreving(behandling.type.kode) ? 'kodeverkTilbake' : 'kodeverk')} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+          {`${formaterVisningsnavn(behandling.visningsnavn) ? formaterVisningsnavn(behandling.visningsnavn) : kodeverkNavnFraKode(behandling.type.kode, KodeverkType.BEHANDLING_TYPE, erTilbakekreving(behandling.type.kode) ? 'kodeverkTilbake' : 'kodeverk')} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
         </option>
       )),
     );
