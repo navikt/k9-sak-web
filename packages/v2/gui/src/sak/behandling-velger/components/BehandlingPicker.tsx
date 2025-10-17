@@ -85,6 +85,7 @@ const renderListItems = ({
   });
 
   return sorterteOgFiltrerteBehandlinger.map((behandling, index) => {
+    const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
     return (
       <li data-testid="BehandlingPickerItem" key={behandling.id}>
         <NavLink
@@ -95,8 +96,8 @@ const renderListItems = ({
           <BehandlingPickerItemContent
             behandling={behandling}
             behandlingTypeNavn={
-              behandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && behandling.visningsnavn
-                ? formaterVisningsnavn(behandling.visningsnavn)
+              behandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && visningsnavn
+                ? visningsnavn
                 : getBehandlingNavn(behandling.type, kodeverkNavnFraKode)
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
@@ -251,11 +252,10 @@ const BehandlingPicker = ({
     const filterListe: { value: string; label: string }[] = [];
     behandlinger.forEach(behandling => {
       if (!filterListe.some(filter => filter.value === behandling.type)) {
+        const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
         filterListe.push({
           value: behandling.type,
-          label: behandling.visningsnavn
-            ? formaterVisningsnavn(behandling.visningsnavn)
-            : getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
+          label: visningsnavn || getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
         });
       }
       if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
@@ -356,7 +356,8 @@ const BehandlingPicker = ({
           behandlingsårsaker={getÅrsaksliste()}
           behandlingTypeNavn={
             valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && valgtBehandling.visningsnavn
-              ? formaterVisningsnavn(valgtBehandling.visningsnavn)
+              ? formaterVisningsnavn(valgtBehandling.visningsnavn) ||
+                getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
               : getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
           }
           behandlingTypeKode={valgtBehandling.type}

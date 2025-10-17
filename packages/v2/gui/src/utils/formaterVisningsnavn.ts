@@ -1,6 +1,14 @@
 import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
-export const formaterVisningsnavn = (visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn): string => {
+export const formaterVisningsnavn = (
+  visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined,
+): string | undefined => {
+  if (
+    !visningsnavn ||
+    visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.INGEN_RELEVANT_BEHANDLINGÅRSAK
+  ) {
+    return undefined;
+  }
   switch (visningsnavn) {
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT:
       return 'Kontroll av inntekt';
