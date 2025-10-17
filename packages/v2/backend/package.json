@@ -22,6 +22,6 @@
     "@navikt/ung-tilbake-typescript-client": "3.0.20251008100459"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.91.0"
+    "@tanstack/eslint-plugin-query": "^5.91.2"
   }
 }
