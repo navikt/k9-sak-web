@@ -1,9 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { FormkravKlageForm } from './FormkravKlageForm';
@@ -50,25 +48,6 @@ describe('<FormkravKlageForm>', () => {
         avsluttedeBehandlinger={behandlinger}
         intl={intlMock}
         formProps={{ form: 'lol' }}
-        alleKodeverk={{
-          [kodeverkTyper.BEHANDLING_TYPE]: [
-            {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              navn: 'Førstegangssøknad',
-              kodeverk: 'BEHANDLING_TYPE',
-            },
-            {
-              kode: behandlingType.REVURDERING,
-              navn: 'Revurdering',
-              kodeverk: 'BEHANDLING_TYPE',
-            },
-            {
-              kode: behandlingType.TILBAKEKREVING,
-              navn: 'Tilbakekreving',
-              kodeverk: 'BEHANDLING_TYPE',
-            },
-          ],
-        }}
         fagsakPerson={{}}
         arbeidsgiverOpplysningerPerId={{}}
         parterMedKlagerett={[]}

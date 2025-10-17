@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -29,7 +28,6 @@ const FormkravProsessIndex = ({
   submitCallback,
   isReadOnly,
   readOnlySubmitButton,
-  alleKodeverk,
   parterMedKlagerett,
   valgtPartMedKlagerett,
   fagsak,
@@ -45,7 +43,6 @@ const FormkravProsessIndex = ({
           submitCallback={submitCallback}
           readOnly={isReadOnly}
           readOnlySubmitButton={readOnlySubmitButton}
-          alleKodeverk={alleKodeverk}
           avsluttedeBehandlinger={avsluttedeBehandlinger}
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
@@ -62,7 +59,6 @@ const FormkravProsessIndex = ({
           submitCallback={submitCallback}
           readOnly={isReadOnly}
           readOnlySubmitButton={readOnlySubmitButton}
-          alleKodeverk={alleKodeverk}
           avsluttedeBehandlinger={avsluttedeBehandlinger}
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
@@ -81,7 +77,6 @@ FormkravProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   valgtPartMedKlagerett: PropTypes.shape(),
   fagsak: PropTypes.shape(),
