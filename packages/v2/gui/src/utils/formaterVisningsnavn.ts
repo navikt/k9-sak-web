@@ -2,14 +2,14 @@ import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/
 
 export const formaterVisningsnavn = (
   visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined,
-): string | undefined => {
-  if (
-    !visningsnavn ||
-    visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.INGEN_RELEVANT_BEHANDLINGÅRSAK
-  ) {
-    return undefined;
+): string => {
+  if (!visningsnavn) {
+    return '';
   }
+
   switch (visningsnavn) {
+    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.INGEN_RELEVANT_BEHANDLINGÅRSAK:
+      return '';
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT:
       return 'Kontroll av inntekt';
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.BEREGNING_AV_HØY_SATS:
@@ -20,7 +20,9 @@ export const formaterVisningsnavn = (
       return 'Brukers dødsfall';
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAMENDRING:
       return 'Ungdomsprogramendring';
-    default:
+    default: {
+      console.warn('Ukjent behandlingsvisningsnavn:', visningsnavn);
       return 'Flere behandlingsårsaker';
+    }
   }
 };

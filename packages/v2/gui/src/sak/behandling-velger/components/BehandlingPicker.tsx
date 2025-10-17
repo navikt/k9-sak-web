@@ -355,9 +355,9 @@ const BehandlingPicker = ({
           }
           behandlingsårsaker={getÅrsaksliste()}
           behandlingTypeNavn={
-            valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && valgtBehandling.visningsnavn
-              ? formaterVisningsnavn(valgtBehandling.visningsnavn) ||
-                getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
+            valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD &&
+            formaterVisningsnavn(valgtBehandling.visningsnavn)
+              ? formaterVisningsnavn(valgtBehandling.visningsnavn)
               : getBehandlingNavn(valgtBehandling.type, kodeverkNavnFraKode)
           }
           behandlingTypeKode={valgtBehandling.type}
