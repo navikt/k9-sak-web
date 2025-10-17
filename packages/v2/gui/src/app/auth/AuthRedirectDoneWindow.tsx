@@ -23,7 +23,7 @@ const defaultProps: Required<AuthRedirectDoneWindowProps> = {
       return false;
     }
   },
-  waitForCloseMillis: 400,
+  waitForCloseMillis: 900,
 };
 
 const intentionalCleanupReason = 'intentional cleanup';

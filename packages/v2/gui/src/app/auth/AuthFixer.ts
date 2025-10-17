@@ -4,7 +4,7 @@ import {
   authSuccessResult,
   authSuccessExceptPopupResult,
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
-import { resolveLoginURL, withRedirectTo } from './resolveLoginURL.js';
+import { resolveLoginURL, withRedirectTo } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import type { AuthFixConnectedApi } from './AuthFixConnectedApi.ts';
 
 const intentionalAbortReason = 'promise cleanup';
