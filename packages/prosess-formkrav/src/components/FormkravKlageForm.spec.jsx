@@ -1,7 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { screen } from '@testing-library/react';
+import { expect } from 'storybook/test';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { FormkravKlageForm } from './FormkravKlageForm';
@@ -39,25 +42,32 @@ describe('<FormkravKlageForm>', () => {
 
   it('skal vise tre options når to mulige klagbare vedtak', () => {
     renderWithIntlAndReduxForm(
-      <FormkravKlageForm
-        behandlingId={1}
-        behandlingVersjon={1}
-        readOnly={false}
-        readOnlySubmitButton
-        aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
-        avsluttedeBehandlinger={behandlinger}
-        intl={intlMock}
-        formProps={{ form: 'lol' }}
-        fagsakPerson={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        parterMedKlagerett={[]}
-      />,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={alleKodeverkV2}
+      >
+        <FormkravKlageForm
+          behandlingId={1}
+          behandlingVersjon={1}
+          readOnly={false}
+          readOnlySubmitButton
+          aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
+          avsluttedeBehandlinger={behandlinger}
+          intl={intlMock}
+          formProps={{ form: 'lol' }}
+          fagsakPerson={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          parterMedKlagerett={[]}
+        />
+      </KodeverkProvider>,
       { messages },
     );
 
     expect(screen.getByRole('combobox', { name: 'Vedtaket som er påklagd' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Ikke påklagd et vedtak' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Førstegangssøknad 25.10.2018' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Førstegangsbehandling 25.10.2018' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Revurdering 25.10.2018' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Tilbakekreving 06.02.2020' })).toBeInTheDocument();
   });
