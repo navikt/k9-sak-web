@@ -1,3 +1,4 @@
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { BeregningAvklaringsbehov } from './BeregningAvklaringsbehov.js';
 import type { BeregningsgrunnlagArbeidsforhold } from './BeregningsgrunnlagArbeidsforhold.js';
 import type { FaktaOmBeregning } from './BeregningsgrunnlagFakta.js';
@@ -84,7 +85,7 @@ export type ForeldrepengerGrunnlag = Readonly<{
 }>;
 
 export type YtelseGrunnlag = Readonly<{
-  ytelsetype: string;
+  ytelsetype: FagsakYtelsesType;
 }> &
   ForeldrepengerGrunnlag;
 

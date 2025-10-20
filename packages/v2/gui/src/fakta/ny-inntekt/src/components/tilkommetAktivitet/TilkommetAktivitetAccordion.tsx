@@ -140,6 +140,7 @@ export const TilkommetAktivitetAccordion = ({
                 submittable={submittable}
                 skalViseBegrunnelse={fields.length === 1}
                 avklaringsbehov={avklaringsbehovTilkommetAktivitet}
+                beregningsgrunnlag={beregningsgrunnlag}
               />
             </Accordion.Content>
           </Accordion.Item>
