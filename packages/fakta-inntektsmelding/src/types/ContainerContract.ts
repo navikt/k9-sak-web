@@ -1,7 +1,7 @@
 import Aksjonspunkt from './Aksjonspunkt';
 import AksjonspunktRequestPayload from './AksjonspunktRequestPayload';
 
-export type ArbeidsgiverOpplysninger = Readonly<{
+type ArbeidsgiverOpplysninger = Readonly<{
   navn: string;
   fødselsdato?: string;
 }>;

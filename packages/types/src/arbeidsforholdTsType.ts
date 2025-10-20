@@ -1,13 +1,13 @@
 import Kodeverk from './kodeverkTsType';
 
-export type ArbeidsforholdPermisjon = Readonly<{
+type ArbeidsforholdPermisjon = Readonly<{
   permisjonFom?: string;
   permisjonTom?: string;
   permisjonsprosent?: number;
   type?: Kodeverk;
 }>;
 
-export type Arbeidsforhold = Readonly<{
+type Arbeidsforhold = Readonly<{
   id?: string;
   arbeidsgiverReferanse: string;
   navn?: string;

@@ -10,7 +10,7 @@ export interface BeriketBeregningsresultatPeriode extends Omit<Beregningsresulta
   openForm?: boolean;
 }
 
-export interface SlettetPeriode extends BeregningsresultatPeriodeDto {
+interface SlettetPeriode extends BeregningsresultatPeriodeDto {
   begrunnelse: string;
   updated?: boolean;
 }

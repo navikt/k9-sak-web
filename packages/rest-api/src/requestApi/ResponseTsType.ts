@@ -1,4 +1,4 @@
-export interface SuccessResponse {
+interface SuccessResponse {
   data: any;
   status: number;
   headers: {
@@ -13,4 +13,4 @@ export interface ErrorResponse {
   };
 }
 
-export type Response = SuccessResponse | ErrorResponse
+export type Response = SuccessResponse | ErrorResponse;

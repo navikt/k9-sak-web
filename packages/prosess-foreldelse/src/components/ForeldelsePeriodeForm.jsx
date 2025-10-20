@@ -2,14 +2,14 @@ import { Label, RadioGroupField, TextAreaField, behandlingForm } from '@fpsak-fr
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { Button, Detail, HGrid } from '@navikt/ds-react';
-// eslint-disable-next-line import/no-duplicates
+
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
-// eslint-disable-next-line import/no-duplicates
+
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';

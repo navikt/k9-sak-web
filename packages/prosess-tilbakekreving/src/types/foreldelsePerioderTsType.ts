@@ -1,6 +1,6 @@
 import { Kodeverk } from '@k9-sak-web/types';
 
-export type ForeldelsePerioder = Readonly<{
+type ForeldelsePerioder = Readonly<{
   fom: string;
   tom: string;
   belop: number;

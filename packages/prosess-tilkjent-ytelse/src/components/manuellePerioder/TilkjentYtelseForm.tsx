@@ -22,7 +22,7 @@ interface OwnProps {
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
 }
 
-export const TilkjentYtelseForm = ({
+const TilkjentYtelseForm = ({
   readOnly,
   readOnlySubmitButton,
   aksjonspunkter,
@@ -75,7 +75,7 @@ export const TilkjentYtelseForm = ({
   );
 };
 
-export const transformValues = (values: TilkjentYtelseFormState) => [
+const transformValues = (values: TilkjentYtelseFormState) => [
   {
     kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
     tilkjentYtelse: {

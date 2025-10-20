@@ -1,6 +1,6 @@
 import { Kodeverk, Periode } from '@k9-sak-web/types';
 
-export type ÅrsakOgPerioder = Readonly<{
+type ÅrsakOgPerioder = Readonly<{
   årsak: Kodeverk;
   perioder: Periode[];
 }>;

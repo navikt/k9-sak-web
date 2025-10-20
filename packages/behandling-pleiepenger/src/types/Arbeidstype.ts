@@ -1,13 +1,5 @@
 export enum Arbeidstype {
   ARBEIDSTAKER = 'AT',
-  FRILANSER = 'FL',
-  DAGPENGER = 'DP',
-  SELVSTENDIG_NÆRINGSDRIVENDE = 'SN',
-  IKKE_YRKESAKTIV = 'IKKE_YRKESAKTIV',
-  KUN_YTELSE = 'BA',
-  INAKTIV = 'MIDL_INAKTIV',
-  SYKEPENGER_AV_DAGPENGER = 'SP_AV_DP',
-  PLEIEPENGER_AV_DAGPENGER = 'PSB_AV_DP',
 }
 
 export const arbeidstypeTilVisning = {

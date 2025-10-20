@@ -20,7 +20,7 @@ import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
 
-export enum FieldName {
+enum FieldName {
   BEGRUNNELSE = 'begrunnelse',
   HAR_SØKER_OMSORGEN_FOR_I_PERIODE = 'harSøkerOmsorgenForIPeriode',
   PERIODER = 'perioder',

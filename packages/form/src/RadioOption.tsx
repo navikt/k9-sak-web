@@ -20,7 +20,7 @@ export interface RadioOptionProps {
   wrapperClassName?: string;
 }
 
-export const RadioOption = ({
+const RadioOption = ({
   name = '',
   className = '',
   label,

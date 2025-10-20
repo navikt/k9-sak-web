@@ -18,7 +18,7 @@ import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
-export const formName = 'OpptjeningInfoPanelForm';
+const formName = 'OpptjeningInfoPanelForm';
 
 interface OpptjeningInfoPanelProps {
   behandlingId: number;
@@ -50,7 +50,7 @@ interface StateProps {
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Opptjeningsvilkåret.
  */
 
-export const OpptjeningInfoPanel = ({
+const OpptjeningInfoPanel = ({
   harApneAksjonspunkter,
   readOnly,
   aksjonspunkt,

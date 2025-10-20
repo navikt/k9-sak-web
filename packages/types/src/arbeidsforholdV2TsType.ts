@@ -4,7 +4,7 @@ import Arbeidsgiver from './arbeidsgiverTsType';
 import Periode from './periodeTsType';
 import Inntektsmelding from './inntektsmeldingTsType';
 
-export type ArbeidsforholdV2 = Readonly<{
+type ArbeidsforholdV2 = Readonly<{
   id?: string;
   arbeidsforhold?: ArbeidsforholdId;
   arbeidsgiver?: Arbeidsgiver;

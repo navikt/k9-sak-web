@@ -33,5 +33,3 @@ export type BeregningsresultatUtbetalt = Readonly<{
   skalHindreTilbaketrekk: boolean;
   utbetaltePerioder: any[];
 }>;
-
-export default BeregningsresultatUtbetalt;

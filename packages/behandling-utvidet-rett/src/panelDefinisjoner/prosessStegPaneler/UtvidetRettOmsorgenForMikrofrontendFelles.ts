@@ -27,5 +27,3 @@ export const generereInfoForVurdertVilkar = (
   }
   return vurdertVilkar;
 };
-
-export default { generereInfoForVurdertVilkar };

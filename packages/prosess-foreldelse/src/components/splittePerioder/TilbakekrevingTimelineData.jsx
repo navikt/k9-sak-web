@@ -4,7 +4,7 @@ import React from 'react';
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
 
-export const TilbakekrevingTimelineData = ({
+const TilbakekrevingTimelineData = ({
   periode,
   callbackForward,
   callbackBackward,

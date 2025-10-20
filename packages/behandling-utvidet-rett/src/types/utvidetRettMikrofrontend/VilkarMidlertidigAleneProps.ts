@@ -13,19 +13,19 @@ export interface VilkarMidlertidigAleneProps {
   formState: FormStateType;
 }
 
-export interface VilkarMidlertidigAleneDato {
+interface VilkarMidlertidigAleneDato {
   til: string;
   fra: string;
 }
 
-export interface VilkarMidlertidigSoknadsopplysninger {
+interface VilkarMidlertidigSoknadsopplysninger {
   årsak: string;
   beskrivelse?: string;
   periode: string;
   soknadsdato: string;
 }
 
-export interface VilkarMidlertidigInformasjonTilLesemodus {
+interface VilkarMidlertidigInformasjonTilLesemodus {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   dato: VilkarMidlertidigAleneDato;

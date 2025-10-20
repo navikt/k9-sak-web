@@ -65,7 +65,7 @@ interface VedtakInnvilgetRevurderingPanelProps {
   behandlingType: string | undefined;
 }
 
-export const VedtakInnvilgetRevurderingPanelImpl = ({
+const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   konsekvenserForYtelsen,
   tilbakekrevingText,

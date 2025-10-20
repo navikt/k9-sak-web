@@ -7,7 +7,7 @@ import { IntlShape, injectIntl } from 'react-intl';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import VedtakOverlappendeYtelsePanel from './VedtakOverlappendeYtelsePanel';
 
-export const getTextCode = behandlingStatus =>
+const getTextCode = behandlingStatus =>
   behandlingStatus === behandlingStatusCode.AVSLUTTET || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK
     ? 'VedtakForm.vedtak'
     : 'VedtakForm.ForslagTilVedtak';

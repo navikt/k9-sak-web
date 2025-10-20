@@ -35,7 +35,7 @@ export const submitKnappTekst = (aksjonspunkter: AksjonspunktDto[]) =>
     ? 'VedtakForm.SendTilBeslutter'
     : 'VedtakForm.FattVedtak';
 
-export const VedtakRevurderingSubmitPanelImpl = ({
+const VedtakRevurderingSubmitPanelImpl = ({
   intl,
   formikValues,
   readOnly,

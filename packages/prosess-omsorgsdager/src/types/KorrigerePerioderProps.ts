@@ -10,7 +10,7 @@ export interface KorrigerePerioderProps {
   formState: FormState;
 }
 
-export interface KorrigerePerioderLesemodus {
+interface KorrigerePerioderLesemodus {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   antallDagerDelvisInnvilget: number;

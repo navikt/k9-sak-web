@@ -1,4 +1,4 @@
-export const underavsnittType = {
+const underavsnittType = {
   OPPSUMMERING: 'OPPSUMMERING',
   FAKTA: 'FAKTA',
   VILKAR: 'VILKÅR',

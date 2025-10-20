@@ -9,7 +9,7 @@ export interface TilsynResponse {
   smortEtablertTilsynPerioder: EtablertTilsynPeriode[];
 }
 
-export interface Vurderingselementer {
+interface Vurderingselementer {
   periode: {
     fom: string;
     tom: string;

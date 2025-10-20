@@ -4,7 +4,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { screen } from '@testing-library/react';
-import { expect } from 'storybook/test';
+import { describe, expect, it } from 'vitest';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { FormkravKlageForm } from './FormkravKlageForm';
@@ -40,7 +40,7 @@ describe('<FormkravKlageForm>', () => {
     },
   ];
 
-  it('skal vise tre options når to mulige klagbare vedtak', () => {
+  it('skal vise tre options når to mulige klagbare vedtak', async () => {
     renderWithIntlAndReduxForm(
       <KodeverkProvider
         behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
@@ -65,10 +65,10 @@ describe('<FormkravKlageForm>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('combobox', { name: 'Vedtaket som er påklagd' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Ikke påklagd et vedtak' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Førstegangsbehandling 25.10.2018' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Revurdering 25.10.2018' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Tilbakekreving 06.02.2020' })).toBeInTheDocument();
+    await expect(screen.getByRole('combobox', { name: 'Vedtaket som er påklagd' })).toBeInTheDocument();
+    await expect(screen.getByRole('option', { name: 'Ikke påklagd et vedtak' })).toBeInTheDocument();
+    await expect(screen.getByRole('option', { name: 'Førstegangsbehandling 25.10.2018' })).toBeInTheDocument();
+    await expect(screen.getByRole('option', { name: 'Revurdering 25.10.2018' })).toBeInTheDocument();
+    await expect(screen.getByRole('option', { name: 'Tilbakekreving 06.02.2020' })).toBeInTheDocument();
   });
 });

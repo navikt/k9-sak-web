@@ -17,7 +17,7 @@ import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 
-export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
+const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
 const getPreviewVedtakCallback = previewVedtakCallback => () =>
   previewVedtakCallback({
@@ -221,7 +221,7 @@ export const getIsAvvist = createSelector(
   klageresultat => klageresultat.klageVurdering === klageVurderingCodes.AVVIS_KLAGE,
 );
 
-export const getIsOpphevOgHjemsend = createSelector(
+const getIsOpphevOgHjemsend = createSelector(
   [getKlageresultat],
   klageresultat => klageresultat.klageVurdering === klageVurderingCodes.OPPHEVE_YTELSESVEDTAK,
 );
@@ -234,9 +234,9 @@ const getÅpneAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspu
     : [],
 );
 
-export const getFritekstTilBrev = createSelector([getKlageresultat], klageresultat => klageresultat.fritekstTilBrev);
+const getFritekstTilBrev = createSelector([getKlageresultat], klageresultat => klageresultat.fritekstTilBrev);
 
-export const buildInitialValues = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter => {
+const buildInitialValues = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter => {
   const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
   return {
     aksjonspunktKoder: behandlingAksjonspunktCodes,

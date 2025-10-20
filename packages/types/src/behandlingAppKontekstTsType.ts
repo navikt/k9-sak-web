@@ -6,7 +6,7 @@ import Kodeverk from './kodeverkTsType';
 import Behandlingsresultat from './behandlingsresultatTsType';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-export type BehandlingAppKontekst = Implements<
+type BehandlingAppKontekst = Implements<
   BehandlingInfo,
   Readonly<{
     id: number;

@@ -1,4 +1,4 @@
-export interface OpplysningerFraSøknaden {
+interface OpplysningerFraSøknaden {
   førSøkerPerioden: SøkerPerioden;
   måneder: Måned[];
 }

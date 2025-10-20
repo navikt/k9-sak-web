@@ -116,10 +116,6 @@ function responseErrorInterceptor(error: AxiosError) {
   return Promise.reject(error);
 }
 
-export function resetCache() {
-  EtagCache.reset();
-}
-
 export default function axiosEtag(config?: AxiosRequestConfig) {
   const instance = axios.create(config);
   instance.interceptors.request.use(requestInterceptor);

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 
 const avregningFagsakPropType = PropTypes.shape({
