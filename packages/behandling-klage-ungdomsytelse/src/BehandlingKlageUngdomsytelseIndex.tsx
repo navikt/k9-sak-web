@@ -13,6 +13,7 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 
+import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
 import KlagePaneler from './components/KlagePaneler';
 import { KlageBehandlingApiKeys, requestKlageApi, restApiKlageHooks } from './data/klageBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
@@ -45,6 +46,7 @@ interface OwnProps {
     status: Kodeverk;
     opprettet: string;
     avsluttet?: string;
+    visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn;
   }[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;

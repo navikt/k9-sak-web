@@ -1,18 +1,17 @@
-import React from 'react';
-
-import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
-  Fagsak,
+  ArbeidsgiverOpplysningerPerId,
   Behandling,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
-  FeatureToggles,
 } from '@k9-sak-web/types';
 
-import KlageProsess from './KlageProsess';
+import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
 import FetchedData from '../types/fetchedDataTsType';
+import KlageProsess from './KlageProsess';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -33,6 +32,7 @@ interface OwnProps {
     status: Kodeverk;
     opprettet: string;
     avsluttet?: string;
+    visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn;
   }[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;

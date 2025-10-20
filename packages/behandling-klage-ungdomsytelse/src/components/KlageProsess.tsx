@@ -22,6 +22,7 @@ import {
 } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
 import { KlageBehandlingApiKeys, restApiKlageHooks } from '../data/klageBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -43,6 +44,7 @@ interface OwnProps {
     id: number;
     type: Kodeverk;
     avsluttet?: string;
+    visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn;
   }[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;
