@@ -11,7 +11,7 @@ export interface Nokkeltalldetalj {
   infotekstContent?: React.ReactNode;
 }
 
-export interface NøkkeltallProps {
+interface NøkkeltallProps {
   overskrift: {
     antallDager: number;
     antallTimer?: React.ReactNode;

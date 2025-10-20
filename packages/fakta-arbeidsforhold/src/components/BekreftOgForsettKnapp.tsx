@@ -21,5 +21,3 @@ export const BekreftOgForsettKnapp = ({ readOnly, isSubmitting }: PureOwnProps) 
     </Button>
   </>
 );
-
-export default BekreftOgForsettKnapp;

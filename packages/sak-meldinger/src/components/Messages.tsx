@@ -141,7 +141,7 @@ const resolveOverstyrtMottaker = (
  * Presentasjonskomponent. Gir mulighet for å forhåndsvise og sende brev. Mottaker og brevtype velges fra predefinerte lister,
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
-export const MessagesImpl = ({
+const MessagesImpl = ({
   intl,
   templates,
   previewCallback,

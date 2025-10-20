@@ -1,8 +1,7 @@
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-
-import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakKlageFormImpl, getAvvisningsAarsaker, getIsAvvist, getKlageresultat } from './VedtakKlageForm';

@@ -12,7 +12,7 @@ import { required } from '../../form/validators';
 
 import type { JSX } from 'react';
 
-export const ikkeDuplikatValue = 'ikkeDuplikat';
+const ikkeDuplikatValue = 'ikkeDuplikat';
 
 interface DuplikatRadiobuttonsProps {
   dokument: Dokument;

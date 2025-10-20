@@ -10,14 +10,6 @@ export const tekstTilBoolean = (string: string) => {
 
 export const booleanTilTekst = (bool: boolean) => (bool ? 'true' : 'false');
 
-export const safeJSONParse = str => {
-  try {
-    return JSON.parse(str);
-  } catch {
-    return null;
-  }
-};
-
 export const formatereDato = (dato: string): string => dato.replaceAll('-', '.');
 
 export const formatereDatoTilLesemodus = (dato: string): string => dayjs(dato).format('DD.MM.YYYY');

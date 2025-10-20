@@ -13,13 +13,7 @@ import vergeType from '../kodeverk/vergeType';
  *
  * Formkomponent. Registrering og oppdatering av verge.
  */
-export const RegistrereVergeFaktaForm = ({
-  intl,
-  readOnly,
-  vergetyper = [],
-  alleMerknaderFraBeslutter,
-  valgtVergeType,
-}) => (
+const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper = [], alleMerknaderFraBeslutter, valgtVergeType }) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
       <HGrid gap="space-4" columns={{ xs: '5fr 7fr' }}>

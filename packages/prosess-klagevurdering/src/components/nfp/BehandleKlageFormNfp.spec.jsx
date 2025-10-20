@@ -1,11 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { screen } from '@testing-library/react';
-
-import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';

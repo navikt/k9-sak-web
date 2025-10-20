@@ -22,7 +22,7 @@ const formatertMåned = (dato: Dayjs): string => {
 
 const formatertÅr = (dato: Dayjs): string => `${dato.year()}`;
 
-export const dagsetiketter = (
+const dagsetiketter = (
   start: Dayjs,
   slutt: Dayjs,
   totaltAntallDager: number,
@@ -47,7 +47,7 @@ export const dagsetiketter = (
     .filter(etikett => etikett !== null) as AxisLabel[];
 };
 
-export const månedsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
+const månedsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
   const startmåned = start.startOf('month');
   const sluttmåned = slutt.endOf('month');
   const antallMåneder = sluttmåned.diff(startmåned, 'month') + 1;
@@ -64,7 +64,7 @@ export const månedsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' |
   });
 };
 
-export const årsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
+const årsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
   const førsteÅr = start.startOf('year');
   const sisteÅr = slutt.endOf('year');
   const antallÅr = sisteÅr.diff(start, 'year') + 1;

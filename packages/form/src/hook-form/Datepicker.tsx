@@ -3,7 +3,7 @@ import React, { type JSX } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { getError } from './formUtils';
 
-export interface DatepickerProps {
+interface DatepickerProps {
   label?: string;
   name: string;
   validators?: { [key: string]: (v: any) => string | boolean | undefined };

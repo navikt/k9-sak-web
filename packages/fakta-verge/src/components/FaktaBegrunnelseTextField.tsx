@@ -16,7 +16,7 @@ type OwnProps = {
   name?: string;
 };
 
-export type FormValues = {
+type FormValues = {
   [key: string]: string;
 };
 

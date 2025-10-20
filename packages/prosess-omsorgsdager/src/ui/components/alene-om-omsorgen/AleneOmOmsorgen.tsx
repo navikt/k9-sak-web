@@ -34,7 +34,7 @@ type FormData = {
   åpenForRedigering: boolean;
 };
 
-export enum AvslagskoderAleneOmOmsorgen {
+enum AvslagskoderAleneOmOmsorgen {
   FORELDRE_BOR_SAMMEN = '1078',
   AVTALE_OM_DELT_BOSTED = '1079',
   ANNET = '1077',

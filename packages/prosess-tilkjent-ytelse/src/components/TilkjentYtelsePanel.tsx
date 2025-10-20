@@ -38,7 +38,7 @@ const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: AksjonspunktDto[]): Ak
     ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_TILBAKETREKK)
     : undefined;
 
-export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>
+const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 interface PureOwnProps {

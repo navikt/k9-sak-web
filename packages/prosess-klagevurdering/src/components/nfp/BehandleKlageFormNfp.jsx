@@ -127,7 +127,7 @@ BehandleKlageFormNfpImpl.propTypes = {
   ...formPropTypes,
 };
 
-export const buildInitialValues = createSelector(
+const buildInitialValues = createSelector(
   [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP, ownProps => ownProps.fagsak],
   (klageVurderingResultat, fagsak) => ({
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
@@ -142,7 +142,7 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = (values, fagsak, erPåklagdBehandlingTilbakekreving) => {
+const transformValues = (values, fagsak, erPåklagdBehandlingTilbakekreving) => {
   let klageHjemmel = null;
 
   if (

@@ -26,7 +26,7 @@ export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk): { [k
  * Hook som henter et gitt FPSAK-kodeverk fra respons som allerede er hentet fra backend. For å kunne bruke denne
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
-export function useUngSakKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[] {
+function useUngSakKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[] {
   const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(UngSakApiKeys.KODEVERK);
   return alleKodeverk[kodeverkType];
 }

@@ -49,7 +49,7 @@ export const erVilkarOk = (kode: string) => {
   return false;
 };
 
-export const hent847Text = (kode: string) => {
+const hent847Text = (kode: string) => {
   const kodeTekster: { [key: string]: string } = {
     [opptjeningMidlertidigInaktivKoder.TYPE_A]: 'Vilkåret beregnes jf § 8-47 bokstav A',
     [opptjeningMidlertidigInaktivKoder.TYPE_B]: 'Vilkåret beregnes jf § 8-47 bokstav B',
@@ -57,7 +57,7 @@ export const hent847Text = (kode: string) => {
 
   return kodeTekster[kode] || '';
 };
-export const VilkarField = ({
+const VilkarField = ({
   erOmsorgspenger,
   fieldPrefix,
   field,

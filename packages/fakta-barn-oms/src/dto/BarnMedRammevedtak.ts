@@ -1,4 +1,4 @@
-export interface Gyldighetsperiode {
+interface Gyldighetsperiode {
   fom: string;
   tom: string;
 }

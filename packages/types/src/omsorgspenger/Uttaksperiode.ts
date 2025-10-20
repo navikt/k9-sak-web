@@ -12,7 +12,7 @@ export const VilkårEnum = stringEnum({
   ANDRE_SKAL_DEKKE_DAGENE: 'ANDRE_SKAL_DEKKE_DAGENE',
 });
 
-export type Vilkår = typeof VilkårEnum[keyof typeof VilkårEnum];
+export type Vilkår = (typeof VilkårEnum)[keyof typeof VilkårEnum];
 
 export const UtfallEnum = stringEnum({
   INNVILGET: 'INNVILGET',
@@ -20,9 +20,9 @@ export const UtfallEnum = stringEnum({
   UAVKLART: 'UAVKLART',
 });
 
-export type Utfalltype = typeof UtfallEnum[keyof typeof UtfallEnum];
+export type Utfalltype = (typeof UtfallEnum)[keyof typeof UtfallEnum];
 
-export type Map<Key extends string | number, Value> = {
+type Map<Key extends string | number, Value> = {
   [key in Key]?: Value;
 };
 
@@ -44,7 +44,7 @@ export type Uttaksperiode = {
   opprinneligBehandlingUuid?: string;
 };
 
-export type Nøkkeltall = {
+type Nøkkeltall = {
   totaltAntallDager: number;
   antallKoronadager: number;
   antallDagerArbeidsgiverDekker: number;
@@ -63,5 +63,3 @@ export const FraværÅrsakEnum = stringEnum({
   ORDINÆRT_FRAVÆR: 'ORDINÆRT_FRAVÆR',
   UDEFINERT: 'UDEFINERT',
 });
-
-export default Uttaksperiode;

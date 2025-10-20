@@ -9,7 +9,7 @@ import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningType
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 
-export const HistorikkMalTypeTilbakekreving = ({
+const HistorikkMalTypeTilbakekreving = ({
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,

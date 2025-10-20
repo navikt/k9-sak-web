@@ -13,7 +13,7 @@ export interface VilkarMidlertidigAleneProps {
   formState: FormState;
 }
 
-export interface VilkarMidlertidigAleneDato {
+interface VilkarMidlertidigAleneDato {
   til: string;
   fra: string;
 }

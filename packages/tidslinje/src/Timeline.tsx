@@ -13,8 +13,8 @@ import type {
 import { Timeline as VisTimelineCtor } from 'vis-timeline';
 import 'vis-timeline/styles/vis-timeline-graph2d.min.css';
 
-export type TimelineEventsWithMissing = TimelineEvents | 'dragover' | 'markerchange' | 'markerchanged';
-export type TimelineEventHandler =
+type TimelineEventsWithMissing = TimelineEvents | 'dragover' | 'markerchange' | 'markerchanged';
+type TimelineEventHandler =
   | 'currentTimeTickHandler'
   | 'clickHandler'
   | 'contextmenuHandler'
@@ -37,13 +37,13 @@ export type TimelineEventHandler =
   | 'markerchangeHandler'
   | 'markerchangedHandler';
 
-export type TimelineEventsHandlers = Partial<Record<TimelineEventHandler, (args: any) => void>>;
+type TimelineEventsHandlers = Partial<Record<TimelineEventHandler, (args: any) => void>>;
 
-export type CustomTimes = {
+type CustomTimes = {
   [id: string]: DateType;
 };
 
-export type SelectionOptions = {
+type SelectionOptions = {
   focus?: boolean;
   animation?: TimelineAnimationOptions;
 };

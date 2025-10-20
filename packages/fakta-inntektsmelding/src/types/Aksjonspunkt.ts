@@ -1,6 +1,6 @@
 import Kodeverk from './Kodeverk';
 
-export type Aksjonspunkt = Readonly<{
+type Aksjonspunkt = Readonly<{
   definisjon: Kodeverk;
   status: Kodeverk;
   begrunnelse?: string;

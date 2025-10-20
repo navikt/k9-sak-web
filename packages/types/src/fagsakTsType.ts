@@ -5,7 +5,7 @@ import type { FagsakStatusKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/be
 import Kodeverk from './kodeverkTsType';
 import Periode from './periodeTsType';
 
-export type Fagsak = Implements<
+type Fagsak = Implements<
   V2Fagsak,
   Readonly<{
     saksnummer: string;

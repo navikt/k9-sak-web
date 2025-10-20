@@ -17,7 +17,7 @@ export interface ReadOnlyFieldProps {
 
 const hasValue = (value: string | number) => value !== undefined && value !== null && value !== '';
 
-export const ReadOnlyField = ({
+const ReadOnlyField = ({
   label,
   input,
   isEdited = false,

@@ -6,7 +6,6 @@ import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 export enum LinkCategory {
   INIT_DATA = 'INIT_DATA',
-  FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   FAGSAK = 'FAGSAK',
   BEHANDLING = 'BEHANDLING',
 }

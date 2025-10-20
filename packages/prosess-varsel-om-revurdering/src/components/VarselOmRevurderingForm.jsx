@@ -223,7 +223,7 @@ VarselOmRevurderingFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-export const buildInitialValues = createSelector([(state, ownProps) => ownProps.aksjonspunkter], aksjonspunkter => ({
+const buildInitialValues = createSelector([(state, ownProps) => ownProps.aksjonspunkter], aksjonspunkter => ({
   kode: aksjonspunkter[0].definisjon.kode,
   frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   ventearsak: null,
