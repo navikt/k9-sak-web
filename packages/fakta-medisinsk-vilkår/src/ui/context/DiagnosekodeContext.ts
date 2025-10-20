@@ -1,5 +1,7 @@
 import React from 'react';
-import { DiagnosekodeWrapper } from '../../types/Diagnosekode';
+import Diagnosekode from '../../types/Diagnosekode';
+
+type DiagnosekodeWrapper = { koder: Array<Diagnosekode>; hasLoaded: boolean };
 
 const DiagnosekodeContext = React.createContext<(diagnosekodeState: DiagnosekodeWrapper) => void | null>(null);
 export default DiagnosekodeContext;

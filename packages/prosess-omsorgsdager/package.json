@@ -15,13 +15,11 @@
     "vitest-axe": "^0.1.0"
   },
   "dependencies": {
-    "@navikt/ds-css": "7.31.0",
     "@navikt/ds-react": "7.31.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.18",
     "lodash": "4.17.21",
     "react": "19.1.1",
-    "react-dom": "19.1.1",
     "react-hook-form": "7.63.0"
   }
 }

@@ -1,9 +1,9 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import duration from 'dayjs/plugin/duration';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Period } from '@fpsak-frontend/utils';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 
@@ -16,10 +16,6 @@ function isSameOrBefore(date, otherDate) {
   const dateInQuestion = dayjs(date, dateFormats).utc(true);
   const formattedOtherDate = dayjs(otherDate, dateFormats).utc(true);
   return dateInQuestion.isBefore(formattedOtherDate) || dateInQuestion.isSame(formattedOtherDate);
-}
-
-export function dateFromString(dateString: string) {
-  return dayjs(dateString, dateFormats).utc(true);
 }
 
 function getPeriodAsListOfDays(period: Period) {

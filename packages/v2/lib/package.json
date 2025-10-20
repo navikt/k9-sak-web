@@ -9,8 +9,5 @@
     "./dateUtils/*": "./src/dateUtils/*",
     "./validationUtils/*": "./src/validationUtils/*",
     "./paths/*": "./src/paths/*"
-  },
-  "dependencies": {
-    "dayjs": "1.11.18"
   }
 }
