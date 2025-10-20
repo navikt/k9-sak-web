@@ -156,6 +156,7 @@ const BehandlingIndex = ({
           status: b.status,
           opprettet: b.opprettet,
           avsluttet: b.avsluttet,
+          visningsnavn: b.visningsnavn,
         })),
     [alleBehandlinger],
   );
