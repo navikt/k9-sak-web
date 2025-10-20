@@ -74,7 +74,7 @@
   "devDependencies": {
     "@playwright/test": "^1.55.1",
     "@sentry/cli": "2.56.0",
-    "@storybook/addon-a11y": "9.1.10",
+    "@storybook/addon-a11y": "9.1.13",
     "@storybook/addon-docs": "9.1.10",
     "@storybook/cli": "9.1.10",
     "@storybook/react": "9.1.10",
