@@ -2373,7 +2373,7 @@ __metadata:
     history: "npm:5.3.0"
     react: "npm:19.1.1"
     react-intl: "npm:7.1.11"
-    react-router: "npm:7.9.3"
+    react-router: "npm:7.9.4"
   languageName: unknown
   linkType: soft
 
@@ -3536,7 +3536,7 @@ __metadata:
     object-hash: "npm:^3.0.0"
     react: "npm:19.1.1"
     react-hook-form: "npm:7.63.0"
-    react-router: "npm:7.9.3"
+    react-router: "npm:7.9.4"
     yup: "npm:1.7.1"
   languageName: unknown
   linkType: soft
@@ -3594,7 +3594,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.9.3"
+    react-router: "npm:7.9.4"
     redux-form: "npm:8.3.10"
   languageName: unknown
   linkType: soft
@@ -3762,7 +3762,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.9.3"
+    react-router: "npm:7.9.4"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
     redux-thunk: "npm:3.1.0"
@@ -3827,7 +3827,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     react-intl: "npm:7.1.11"
     react-redux: "npm:9.2.0"
-    react-router: "npm:7.9.3"
+    react-router: "npm:7.9.4"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -12124,7 +12124,7 @@ __metadata:
     prettier: "npm:3.6.2"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
-    react-router: "npm:7.9.3"
+    react-router: "npm:7.9.4"
     rollup-plugin-sourcemaps2: "npm:^0.5.4"
     storybook: "npm:9.1.10"
     stylelint: "npm:16.25.0"
@@ -14397,9 +14397,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:7.9.3":
-  version: 7.9.3
-  resolution: "react-router@npm:7.9.3"
+"react-router@npm:7.9.4":
+  version: 7.9.4
+  resolution: "react-router@npm:7.9.4"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -14409,7 +14409,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10/62066f09214c5b026b0d400af946aa0b16ef5be7f5120a4400e1b1fc487249220c2d735d9f6a2afa505a136bc8ef4cd7657b1ff8126871068cbf7ec773febce3
+  checksum: 10/0091b79845fdfe6500ec35cbcb3fd1149288ae39e32c3c5f85eda2c9b281294e7e9807ca1b482785c92cc3809422eddade6554f5b1b5d419eee20b166b55cd4d
   languageName: node
   linkType: hard
 
