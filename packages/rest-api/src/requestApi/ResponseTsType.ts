@@ -1,4 +1,4 @@
-export interface SuccessResponse {
+interface SuccessResponse {
   data: any;
   status: number;
   headers: {

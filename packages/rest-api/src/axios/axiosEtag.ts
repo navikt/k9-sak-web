@@ -116,7 +116,7 @@ function responseErrorInterceptor(error: AxiosError) {
   return Promise.reject(error);
 }
 
-export function resetCache() {
+function resetCache() {
   EtagCache.reset();
 }
 

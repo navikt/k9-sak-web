@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { reducer, reduxForm } from 'redux-form';
 import defaultMessages from '../../../public/sprak/nb_NO.json';
-export { default as messages } from '../../../public/sprak/nb_NO.json';
+;
 
 const intlErrorHandler = error => {
   if (error.code === 'MISSING_TRANSLATION') {

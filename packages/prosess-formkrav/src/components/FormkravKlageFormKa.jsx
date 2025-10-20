@@ -55,7 +55,7 @@ FormkravKlageFormKa.propTypes = {
   ...formPropTypes,
 };
 
-export const transformValues = (values, avsluttedeBehandlinger) => ({
+const transformValues = (values, avsluttedeBehandlinger) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
   erKonkret: values.erKonkret,

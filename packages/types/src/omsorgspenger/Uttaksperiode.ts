@@ -22,7 +22,7 @@ export const UtfallEnum = stringEnum({
 
 export type Utfalltype = typeof UtfallEnum[keyof typeof UtfallEnum];
 
-export type Map<Key extends string | number, Value> = {
+type Map<Key extends string | number, Value> = {
   [key in Key]?: Value;
 };
 
@@ -44,7 +44,7 @@ export type Uttaksperiode = {
   opprinneligBehandlingUuid?: string;
 };
 
-export type Nøkkeltall = {
+type Nøkkeltall = {
   totaltAntallDager: number;
   antallKoronadager: number;
   antallDagerArbeidsgiverDekker: number;
@@ -64,4 +64,3 @@ export const FraværÅrsakEnum = stringEnum({
   UDEFINERT: 'UDEFINERT',
 });
 
-export default Uttaksperiode;

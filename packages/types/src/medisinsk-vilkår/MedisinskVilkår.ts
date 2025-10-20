@@ -4,7 +4,7 @@ export interface Periode {
 }
 
 // eslint-disable-next-line
-export enum LegeerklæringKilde {
+enum LegeerklæringKilde {
   SYKEHUSLEGE = 'SYKEHUSLEGE',
   SPESIALISTHELSETJENESTEN = 'SPESIALISTHELSETJENESTEN',
   FASTLEGE = 'FASTLEGE',
@@ -20,7 +20,7 @@ export interface Legeerklæring {
   identifikator: string;
 }
 
-export interface PeriodeMedTilsynOgPleie extends Periode {
+interface PeriodeMedTilsynOgPleie extends Periode {
   begrunnelse: string;
   behovForToOmsorgspersoner: string;
   perioderMedUtvidetKontinuerligTilsynOgPleie?: PeriodeMedUtvidetTilsynOgPleie;
@@ -37,7 +37,7 @@ export interface PeriodeMedTilsynOgPleieResponse {
   årsaksammenhengBegrunnelse: string;
 }
 
-export interface PeriodeMedUtvidetTilsynOgPleie extends Periode {
+interface PeriodeMedUtvidetTilsynOgPleie extends Periode {
   begrunnelse?: string;
 }
 
@@ -46,21 +46,21 @@ export interface PeriodeMedUtvidetTilsynOgPleieResponse {
   periode: Periode;
 }
 
-export interface Pleiebehov {
+interface Pleiebehov {
   perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleie[];
 }
 
-export interface MedisinskVilkår {
+interface MedisinskVilkår {
   legeerklæring: Legeerklæring;
   pleiebehov: Pleiebehov;
 }
 
-export interface Diagnosekode {
+interface Diagnosekode {
   key: string;
   value: string;
 }
 
-export interface TransformValues {
+interface TransformValues {
   diagnosekode?: Diagnosekode;
   innleggelsesperiode?: Periode;
   legeerklaeringkilde: string;

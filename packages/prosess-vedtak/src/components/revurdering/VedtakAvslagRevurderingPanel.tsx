@@ -14,7 +14,7 @@ import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from '../AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper';
 
-export const isNewBehandlingResult = (
+const isNewBehandlingResult = (
   beregningResultat: BeregningResultat,
   originaltBeregningResultat: BeregningResultat,
 ) => {
@@ -23,7 +23,7 @@ export const isNewBehandlingResult = (
   return vedtakResultOriginal !== vedtakResult;
 };
 
-export const isNewAmount = (beregningResultat: BeregningResultat, originaltBeregningResultat: BeregningResultat) => {
+const isNewAmount = (beregningResultat: BeregningResultat, originaltBeregningResultat: BeregningResultat) => {
   if (typeof beregningResultat === 'undefined' || beregningResultat === null) {
     return false;
   }
@@ -43,7 +43,7 @@ interface OwnState {
   tilbakekrevingText?: string;
 }
 
-export const VedtakAvslagRevurderingPanelImpl = ({
+const VedtakAvslagRevurderingPanelImpl = ({
   intl,
   vilkar,
   ytelseTypeKode,

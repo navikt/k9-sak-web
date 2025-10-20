@@ -19,7 +19,7 @@ export interface VilkarKroniskSyktBarnProps {
   formState: FormState;
 }
 
-export interface InformasjonTilLesemodusKroniskSyk {
+interface InformasjonTilLesemodusKroniskSyk {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   avslagsårsakKode: string;

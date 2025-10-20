@@ -13,7 +13,7 @@ import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
 
-export interface FortsettUtenInntektsmeldingFormState {
+interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
   beslutning: string;
 }

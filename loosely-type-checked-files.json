@@ -180,7 +180,6 @@
   "packages/fakta-medisinsk-vilkår/src/ui/components/vurderingsnavigasjon/Vurderingsnavigasjon.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/vurderingsoppsummering-for-livets-sluttfase/VurderingsoppsummeringForSluttfase.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/vurderingsoppsummering-for-to-omsorgspersoner/VurderingsoppsummeringForToOmsorgspersoner.tsx",
-  "packages/fakta-medisinsk-vilkår/src/ui/context/DiagnosekodeContext.ts",
   "packages/fakta-medisinsk-vilkår/src/ui/form/validators/__tests__/validators.spec.ts",
   "packages/fakta-medisinsk-vilkår/src/util/dokumentUtils.ts",
   "packages/fakta-medisinsk-vilkår/src/util/linkUtils.ts",

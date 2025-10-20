@@ -13,4 +13,3 @@ export const kodeverkObjektPropType = PropTypes.exact({
   kodeverk: PropTypes.string.isRequired,
 });
 
-export default kodeverkPropType;

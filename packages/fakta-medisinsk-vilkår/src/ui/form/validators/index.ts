@@ -48,7 +48,7 @@ export const detErIngenInnleggelsePåDato = (dato: string, innleggelsesperioder:
   return true;
 };
 
-export const datoErInnenforResterendeVurderingsperioder = (
+const datoErInnenforResterendeVurderingsperioder = (
   dato: string,
   resterendeVurderingsperioder: Period[],
 ): string | true => {

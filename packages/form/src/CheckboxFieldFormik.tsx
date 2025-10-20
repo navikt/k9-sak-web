@@ -21,7 +21,7 @@ interface RenderCheckboxFieldProps {
   disabled: boolean;
 }
 
-export const RenderCheckboxField = ({
+const RenderCheckboxField = ({
   label,
   disabled,
   field: { onChange, value, name },

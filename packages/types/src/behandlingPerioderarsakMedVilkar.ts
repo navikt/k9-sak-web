@@ -4,22 +4,22 @@ interface BehandlingPerioderårsakMedVilkår {
   forrigeVedtak: PeriodeMedUtfall[];
 }
 
-export interface PeriodeMedUtfall {
+interface PeriodeMedUtfall {
   periode: Periode;
   utfall: Utfall;
 }
 
-export interface Periode {
+interface Periode {
   fom: string;
   tom: string;
 }
 
-export interface Utfall {
+interface Utfall {
   kode: string;
   kodeverk: string;
 }
 
-export interface PerioderMedÅrsak {
+interface PerioderMedÅrsak {
   perioderTilVurdering: Periode[];
   perioderMedÅrsak: PerioderMedÅrsakElement[];
   årsakMedPerioder: ÅrsakMedPerioder[];
@@ -33,24 +33,24 @@ export interface DokumenterTilBehandling {
   søktePerioder: SøktePerioder[];
 }
 
-export interface SøktePerioder {
+interface SøktePerioder {
   periode: Periode;
   type: null | string;
   arbeidsgiver: null | Arbeidsgiver;
   arbeidsforholdRef: null;
 }
 
-export interface Arbeidsgiver {
+interface Arbeidsgiver {
   arbeidsgiverOrgnr: string; 
   arbeidsgiverAktørId: any; 
 }
 
-export interface PerioderMedÅrsakElement {
+interface PerioderMedÅrsakElement {
   periode: Periode;
   årsaker: string[];
 }
 
-export interface ÅrsakMedPerioder {
+interface ÅrsakMedPerioder {
   årsak: string;
   perioder: Periode[];
 }

@@ -10,10 +10,10 @@ import { createPathForSkjermlenke } from '@k9-sak-web/gui/utils/skjermlenke/crea
 import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { getPathToK9Los as v2GetPathToK9Los, goToLos as v2GoToLos } from '@k9-sak-web/lib/paths/paths.js';
 
-export const DEFAULT_FAKTA = 'default';
-export const DEFAULT_PROSESS_STEG = 'default';
+const DEFAULT_FAKTA = 'default';
+const DEFAULT_PROSESS_STEG = 'default';
 
-export const aktoerRoutePath = '/aktoer/:aktoerId';
+const aktoerRoutePath = '/aktoer/:aktoerId';
 
 export const fagsakRoutePath = '/fagsak/:saksnummer//*';
 export const behandlingerRoutePath = `behandling//*`;
@@ -36,7 +36,7 @@ export const getFaktaLocation =
   (location: Location) =>
   (fakta: string): Location =>
     pathWithQueryParams(location, { fakta });
-export const getRiskPanelLocationCreator =
+const getRiskPanelLocationCreator =
   (location: Location) =>
   (isRiskPanelOpen): Location =>
     pathWithQueryParams(location, { risiko: isRiskPanelOpen });
@@ -70,4 +70,4 @@ export const erBehandlingValgt = (location: Location): boolean =>
 /**
  * @deprecated Bruk v2 versjon direkte
  */
-export const goToLos = v2GoToLos;
+const goToLos = v2GoToLos;

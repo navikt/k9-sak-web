@@ -131,7 +131,7 @@ export const harMellomlagretRedusertUtbetalingArsak = (key, dokumentdata, vedtak
   return årsaker.some(v => v === key);
 };
 
-export const lagForhåndsvisRequest = (
+const lagForhåndsvisRequest = (
   behandling: BehandlingInfo,
   fagsak: Fagsak,
   fagsakPerson: Fagsak['person'],

@@ -1,6 +1,6 @@
 import { OverstyrInputBeregningDto } from "./OverstyrInputBeregningDto";
 
-export type BehandlingIdDto = {
+type BehandlingIdDto = {
     id: string;
 };
 

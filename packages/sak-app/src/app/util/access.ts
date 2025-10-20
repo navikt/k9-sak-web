@@ -8,7 +8,7 @@ type Aksess = {
   isEnabled: boolean;
 };
 
-export type AksessRettigheter = {
+type AksessRettigheter = {
   writeAccess: Aksess;
   kanOverstyreAccess: Aksess;
 };

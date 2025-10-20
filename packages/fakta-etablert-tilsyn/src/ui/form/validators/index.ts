@@ -10,7 +10,7 @@ export function required(v: any) {
   return true;
 }
 
-export function dateIsNotInTheFuture(dateString: string): string | boolean {
+function dateIsNotInTheFuture(dateString: string): string | boolean {
   const date: Dayjs = dateFromString(dateString);
   if (date.isSame(tomorrow) || date.isAfter(tomorrow)) {
     return 'Datoen kan ikke settes senere enn dagens dato';
@@ -18,7 +18,7 @@ export function dateIsNotInTheFuture(dateString: string): string | boolean {
   return true;
 }
 
-export const detErTilsynsbehovPåDatoen = (dato: any, perioderMedTilsynsbehov: Period[]): string | boolean => {
+const detErTilsynsbehovPåDatoen = (dato: any, perioderMedTilsynsbehov: Period[]): string | boolean => {
   const detErTilsynsbehovPåDato = perioderMedTilsynsbehov.some(periode =>
     new Period(periode.fom, periode.tom).includesDate(dato),
   );
@@ -28,7 +28,7 @@ export const detErTilsynsbehovPåDatoen = (dato: any, perioderMedTilsynsbehov: P
   return 'Dato må være innenfor en periode med tilsynsbehov';
 };
 
-export const datoenInngårISøknadsperioden = (dato: any, søknadsperiode: Period): string | boolean => {
+const datoenInngårISøknadsperioden = (dato: any, søknadsperiode: Period): string | boolean => {
   if (søknadsperiode.includesDate(dato)) {
     return true;
   }
@@ -36,7 +36,7 @@ export const datoenInngårISøknadsperioden = (dato: any, søknadsperiode: Perio
   return 'Dato må være innenfor søknadsperioden';
 };
 
-export const detErIngenInnleggelsePåDato = (dato: any, innleggelsesperioder: Period[]): string | boolean => {
+const detErIngenInnleggelsePåDato = (dato: any, innleggelsesperioder: Period[]): string | boolean => {
   const detErInnleggelsePåDato = innleggelsesperioder.some(periode =>
     new Period(periode.fom, periode.tom).includesDate(dato),
   );
@@ -46,7 +46,7 @@ export const detErIngenInnleggelsePåDato = (dato: any, innleggelsesperioder: Pe
   return true;
 };
 
-export const datoErInnenforResterendeVurderingsperioder = (
+const datoErInnenforResterendeVurderingsperioder = (
   dato: any,
   resterendeVurderingsperioder: Period[],
 ): string | true => {
@@ -61,7 +61,7 @@ export const datoErInnenforResterendeVurderingsperioder = (
   return 'Dato må være innenfor periodene som vurderes';
 };
 
-export const fomDatoErFørTomDato = (periode: Period): string | true => {
+const fomDatoErFørTomDato = (periode: Period): string | true => {
   const fom = dateFromString(periode.fom);
   const tom = dateFromString(periode.tom);
 

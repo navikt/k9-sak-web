@@ -20,12 +20,10 @@
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/fakta-etablert-tilsyn": "1.0.0",
     "@k9-sak-web/fakta-inntektsmelding": "1.0.0",
-    "@k9-sak-web/fakta-medisinsk-vilkar": "1.0.0",
     "@k9-sak-web/fakta-om-barnet": "1.0.0",
     "@k9-sak-web/fakta-omsorgen-for": "1.0.0",
     "@k9-sak-web/gui": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
-    "@k9-sak-web/prosess-vilkar-sykdom": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
@@ -33,7 +31,6 @@
     "@navikt/ft-fakta-beregning": "^12.1.19",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^13.1.18",
     "@navikt/ft-prosess-beregningsgrunnlag": "^11.1.16",
-    "axios": "1.12.2",
     "react": "19.1.1",
     "react-intl": "7.1.11"
   }

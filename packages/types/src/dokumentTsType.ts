@@ -1,4 +1,4 @@
-export type Dokument = Readonly<{
+type Dokument = Readonly<{
   journalpostId: string;
   dokumentId: string;
   behandlinger?: number[];

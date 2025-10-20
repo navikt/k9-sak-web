@@ -1,4 +1,4 @@
-export type redusertUtbetalingArsakType = {
+type redusertUtbetalingArsakType = {
   [key: string]: string;
 };
 

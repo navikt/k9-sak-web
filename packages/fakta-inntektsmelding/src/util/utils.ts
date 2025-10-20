@@ -11,10 +11,10 @@ export const skalVurderes = (tilstand: TilstandBeriket): boolean =>
   tilstand?.status.some(status => [Status.MANGLER].includes(status.status)) &&
   tilstand?.vurdering?.kode === Kode.TOM;
 
-export const ikkePaakrevd = (tilstand: TilstandBeriket): boolean =>
+const ikkePaakrevd = (tilstand: TilstandBeriket): boolean =>
   tilstand?.status.some(status => [Status.IKKE_PÅKREVD].includes(status.status));
 
-export const ingenInntektsmeldingMangler = (tilstand: TilstandBeriket): boolean =>
+const ingenInntektsmeldingMangler = (tilstand: TilstandBeriket): boolean =>
   !tilstand?.status.some(status => [Status.MANGLER].includes(status.status));
 
 export const ingenTilstanderHarMangler = (tilstander: TilstandBeriket[]) =>

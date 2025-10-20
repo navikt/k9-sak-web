@@ -13,7 +13,7 @@ import vergeType from '../kodeverk/vergeType';
  *
  * Formkomponent. Registrering og oppdatering av verge.
  */
-export const RegistrereVergeFaktaForm = ({
+const RegistrereVergeFaktaForm = ({
   intl,
   readOnly,
   vergetyper = [],

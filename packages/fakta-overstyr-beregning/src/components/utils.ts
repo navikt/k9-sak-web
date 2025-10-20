@@ -8,4 +8,3 @@ export const formaterDatoString = (dato?: string) => {
   return format(date, 'dd.MM.yyyy');
 };
 
-export default formaterDatoString;

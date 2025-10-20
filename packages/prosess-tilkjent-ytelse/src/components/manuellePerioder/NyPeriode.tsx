@@ -21,7 +21,7 @@ interface Periode {
   tom: string;
 }
 
-export const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
+const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
   index !== 0 &&
   initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom)) &&
   initializeDate(nestePeriode.tom).isSameOrAfter(initializeDate(forrigePeriode.fom));
@@ -55,7 +55,7 @@ interface OwnProps {
   newPeriodeCallback: (nyPeriode: Partial<BeriketBeregningsresultatPeriode>) => void;
 }
 
-export const TilkjentYtelseNyPeriode = ({
+const TilkjentYtelseNyPeriode = ({
   newPeriodeResetCallback,
   newArbeidsgiverCallback,
   newPeriodeCallback,

@@ -85,7 +85,7 @@ export const reduxFormPropsMock = Object.assign(metaMock, {
   initialValues: {},
 });
 
-export class MockFields implements FieldArrayFieldsProps<any> {
+class MockFields implements FieldArrayFieldsProps<any> {
   array: any[];
 
   push: () => void;
@@ -148,7 +148,7 @@ export class MockFields implements FieldArrayFieldsProps<any> {
   }
 }
 
-export class MockFieldsWithContent implements FieldArrayFieldsProps<any> {
+class MockFieldsWithContent implements FieldArrayFieldsProps<any> {
   fields: [];
 
   array: any[];

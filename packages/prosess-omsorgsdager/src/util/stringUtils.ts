@@ -10,7 +10,7 @@ export const tekstTilBoolean = (string: string) => {
 
 export const booleanTilTekst = (bool: boolean) => (bool ? 'true' : 'false');
 
-export const safeJSONParse = str => {
+const safeJSONParse = str => {
   try {
     return JSON.parse(str);
   } catch {

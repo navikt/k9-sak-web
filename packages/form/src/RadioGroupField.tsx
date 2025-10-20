@@ -99,7 +99,7 @@ const renderRadioGroupField = renderNavField(
   ),
 );
 
-export const RadioGroupField = ({
+const RadioGroupField = ({
   columns = 0,
   rows = 0,
   label = '',

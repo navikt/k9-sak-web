@@ -16,11 +16,11 @@ interface Props {
   aksjonspunkter: Aksjonspunkt[];
 }
 
-export type BehandlingIdDto = {
+type BehandlingIdDto = {
   id: string;
 };
 
-export type ManglerSøknadDto = {
+type ManglerSøknadDto = {
   begrunnelse: string;
 };
 

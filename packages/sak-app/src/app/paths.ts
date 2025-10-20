@@ -10,8 +10,8 @@ import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { isSkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import { createPathForSkjermlenke } from '@k9-sak-web/gui/utils/skjermlenke/createPathForSkjermlenke.js';
 
-export const DEFAULT_FAKTA = 'default';
-export const DEFAULT_PROSESS_STEG = 'default';
+const DEFAULT_FAKTA = 'default';
+const DEFAULT_PROSESS_STEG = 'default';
 
 export const aktoerRoutePath = '/aktoer/:aktoerId';
 
@@ -36,7 +36,7 @@ export const getFaktaLocation =
   (location: Location) =>
   (fakta: string): Location =>
     pathWithQueryParams(location, { fakta });
-export const getRiskPanelLocationCreator =
+const getRiskPanelLocationCreator =
   (location: Location) =>
   (isRiskPanelOpen): Location =>
     pathWithQueryParams(location, { risiko: isRiskPanelOpen });

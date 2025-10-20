@@ -56,7 +56,7 @@ export interface TidslinjeProps {
   tidslinjeSkala?: Tidslinjeskala;
 }
 
-export interface TimelineProps {
+interface TimelineProps {
   rows: InternalSimpleTimeline[];
   start: Dayjs;
   direction: 'left' | 'right';

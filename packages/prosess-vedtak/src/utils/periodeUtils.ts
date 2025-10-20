@@ -8,7 +8,7 @@ import { Periodeinfo } from '../types/Periodeinfo';
  * Hjelperfunksjon for å sortere periodene i radene til tidslinjen, ref. sorterOverlappendeRader
  * Sorterer periodene i kronologisk rekkefølge.
  */
-export const sorterOverlappendePerioder = (perioder: Periode<Periodeinfo>[]) =>
+const sorterOverlappendePerioder = (perioder: Periode<Periodeinfo>[]) =>
   [...perioder].sort((periode1, periode2) => {
     if (isBefore(parse(periode1.fom, 'yyyy-MM-dd', new Date()), parse(periode2.fom, 'yyyy-MM-dd', new Date())))
       return -1;

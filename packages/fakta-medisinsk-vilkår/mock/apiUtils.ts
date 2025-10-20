@@ -76,7 +76,7 @@ export const createToOmsorgspersonerVurdering = (requestBody: NyVurderingsversjo
   });
 };
 
-export const createLivetsSluttfaseVurdering = (requestBody: NyVurderingsversjon) => {
+const createLivetsSluttfaseVurdering = (requestBody: NyVurderingsversjon) => {
   const nyVurderingId = livetsSluttfaseVurderingsoversiktMock.vurderingselementer.length + 1;
   const { type, perioder, resultat, tekst } = requestBody;
 

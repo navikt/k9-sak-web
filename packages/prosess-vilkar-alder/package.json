@@ -7,7 +7,6 @@
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-form-hooks": "^9.2.2",
     "@navikt/ft-form-validators": "^4.2.11",

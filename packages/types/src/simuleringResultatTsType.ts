@@ -12,7 +12,7 @@ export type SimuleringResultatRad = Readonly<{
   }[];
 }>;
 
-export type SimuleringResultatPerFagområde = Readonly<{
+type SimuleringResultatPerFagområde = Readonly<{
   fagOmrådeKode: Kodeverk | string;
   rader: SimuleringResultatRad[];
 }>;
@@ -27,7 +27,7 @@ export type Mottaker = Readonly<{
   resultatOgMotregningRader: SimuleringResultatRad[];
 }>;
 
-export type DetaljertSimuleringResultat = Readonly<{
+type DetaljertSimuleringResultat = Readonly<{
   periodeFom: string;
   periodeTom: string;
   sumEtterbetaling: number;
@@ -37,7 +37,7 @@ export type DetaljertSimuleringResultat = Readonly<{
   perioderPerMottaker: Mottaker[];
 }>;
 
-export type SimuleringResultat = Readonly<{
+type SimuleringResultat = Readonly<{
   simuleringResultat: DetaljertSimuleringResultat;
   simuleringResultatUtenInntrekk: DetaljertSimuleringResultat;
   slåttAvInntrekk: boolean;

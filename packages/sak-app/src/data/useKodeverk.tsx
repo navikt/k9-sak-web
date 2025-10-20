@@ -36,7 +36,7 @@ export function useFpSakKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[]
  * Hook som henter et gitt FPTILBAKE-kodeverk fra respons som allerede er hentet fra backend. For å kunne bruke denne
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
-export function useFpTilbakeKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[] {
+function useFpTilbakeKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[] {
   const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK_TILBAKE);
   return alleKodeverk ? alleKodeverk[kodeverkType] : undefined;
 }
@@ -66,7 +66,7 @@ export function useFpSakKodeverkMedNavn<T = KodeverkMedNavn>(kodeverkOjekt: Kode
  * Hook som brukes når en har behov for en funksjon som slår opp kodeverknavn. For å kunne bruke denne
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
-export function useGetKodeverkFn() {
+function useGetKodeverkFn() {
   const alleK9SakKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
   );

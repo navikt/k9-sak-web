@@ -1,4 +1,4 @@
-export type SimuleringResultatRad = Readonly<{
+type SimuleringResultatRad = Readonly<{
   feltnavn: string;
   resultaterPerMåned: {
     periode: {
@@ -9,12 +9,12 @@ export type SimuleringResultatRad = Readonly<{
   }[];
 }>;
 
-export type SimuleringResultatPerFagområde = Readonly<{
+type SimuleringResultatPerFagområde = Readonly<{
   fagOmrådeKode: string;
   rader: SimuleringResultatRad[];
 }>;
 
-export type Mottaker = Readonly<{
+type Mottaker = Readonly<{
   mottakerType: string;
   mottakerNummer: string;
   mottakerNavn: string;
@@ -27,7 +27,7 @@ export type Mottaker = Readonly<{
   resultatOgMotregningRader: SimuleringResultatRad[];
 }>;
 
-export type DetaljertSimuleringResultat = Readonly<{
+type DetaljertSimuleringResultat = Readonly<{
   periodeFom?: string;
   periodeTom?: string;
   sumEtterbetaling?: number;

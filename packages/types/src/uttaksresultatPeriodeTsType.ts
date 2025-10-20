@@ -1,7 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 import Arbeidsforhold from './arbeidsforholdTsType';
 
-export type UttaksresultatPeriode = Readonly<{
+type UttaksresultatPeriode = Readonly<{
   perioderSøker: {
     fom: string;
     tom: string;

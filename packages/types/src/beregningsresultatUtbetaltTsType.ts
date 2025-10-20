@@ -34,4 +34,3 @@ export type BeregningsresultatUtbetalt = Readonly<{
   utbetaltePerioder: any[];
 }>;
 
-export default BeregningsresultatUtbetalt;

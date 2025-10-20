@@ -14,7 +14,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 import styles from './vilkarResultPicker.module.css';
 
-export type VilkarResultPickerFormState = {
+type VilkarResultPickerFormState = {
   erVilkarOk: string;
   periodeVilkarStatus: boolean;
   avslagCode?: string;

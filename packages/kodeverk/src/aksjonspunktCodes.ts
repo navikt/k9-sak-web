@@ -102,7 +102,7 @@ const aksjonspunktCodes = {
   VURDER_OVERLAPPENDE_SØSKENSAK_KODE: '9292',
 };
 
-export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
+const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 export default aksjonspunktCodes;

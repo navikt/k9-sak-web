@@ -17,4 +17,3 @@ export const httpErrorHandler = (status: number, errorDispatcher: ErrorDispatche
   }
 };
 
-export default httpErrorHandler;
