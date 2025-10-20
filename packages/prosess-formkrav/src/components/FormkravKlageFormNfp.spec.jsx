@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { FormkravKlageFormNfpImpl } from './FormkravKlageFormNfp';
@@ -18,7 +17,6 @@ describe('<FormkravKlageFormNfp>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={2}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         fagsakPerson={{}}
         avsluttedeBehandlinger={[]}

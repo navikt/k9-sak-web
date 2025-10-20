@@ -6,18 +6,19 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
-
-import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
@@ -27,22 +28,6 @@ export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) 
     Array.isArray(avsluttedeBehandlinger) &&
     avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.uuid;
   return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
-};
-
-const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
-  const sorterNyesteOpprettetFørst = (a, b) => (new Date(a.opprettet) < new Date(b.opprettet) ? 1 : -1);
-  const klagBareVedtak = [
-    <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
-      {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
-    </option>,
-  ];
-  return klagBareVedtak.concat(
-    avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
-      <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${formaterVisningsnavn(behandling.visningsnavn) ? formaterVisningsnavn(behandling.visningsnavn) : getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
-      </option>
-    )),
-  );
 };
 
 const getLovHjemmeler = aksjonspunktCode =>
@@ -62,14 +47,30 @@ export const FormkravKlageForm = ({
   avsluttedeBehandlinger,
   intl,
   formProps,
-  alleKodeverk,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
   skalKunneVelgeKlagepart = true,
 }) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const klagbareVedtakOptions = getKlagbareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+
+  const getKlagbareVedtak = (avsluttedeBehandlinger, intl) => {
+    const sorterNyesteOpprettetFørst = (a, b) => (new Date(a.opprettet) < new Date(b.opprettet) ? 1 : -1);
+    const klagbareVedtak = [
+      <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
+        {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
+      </option>,
+    ];
+    return klagbareVedtak.concat(
+      avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
+        <option key={behandling.uuid} value={`${behandling.uuid}`}>
+          {`${formaterVisningsnavn(behandling.visningsnavn) ? formaterVisningsnavn(behandling.visningsnavn) : kodeverkNavnFraKode(behandling.type.kode, KodeverkType.BEHANDLING_TYPE, erTilbakekreving(behandling.type.kode) ? 'kodeverkTilbake' : 'kodeverk')} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+        </option>
+      )),
+    );
+  };
+
+  const klagbareVedtakOptions = getKlagbareVedtak(avsluttedeBehandlinger, intl);
 
   return (
     <FadingPanel>
@@ -234,7 +235,6 @@ FormkravKlageForm.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
   fagsakPerson: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
