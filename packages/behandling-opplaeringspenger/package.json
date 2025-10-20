@@ -35,6 +35,6 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "^11.1.16",
     "axios": "1.12.2",
     "react": "19.1.1",
-    "react-intl": "7.1.11"
+    "react-intl": "7.1.14"
   }
 }
