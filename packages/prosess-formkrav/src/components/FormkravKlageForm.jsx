@@ -56,12 +56,12 @@ export const FormkravKlageForm = ({
 
   const getKlagbareVedtak = (avsluttedeBehandlinger, intl) => {
     const sorterNyesteOpprettetFørst = (a, b) => (new Date(a.opprettet) < new Date(b.opprettet) ? 1 : -1);
-    const klagBareVedtak = [
+    const klagbareVedtak = [
       <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
         {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
       </option>,
     ];
-    return klagBareVedtak.concat(
+    return klagbareVedtak.concat(
       avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
         <option key={behandling.uuid} value={`${behandling.uuid}`}>
           {`${formaterVisningsnavn(behandling.visningsnavn) ? formaterVisningsnavn(behandling.visningsnavn) : kodeverkNavnFraKode(behandling.type.kode, KodeverkType.BEHANDLING_TYPE, erTilbakekreving(behandling.type.kode) ? 'kodeverkTilbake' : 'kodeverk')} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
