@@ -2,7 +2,7 @@ interface Type {
   kode: string;
 }
 
-export interface Behandlingsresultat {
+interface Behandlingsresultat {
   type: Type;
 }
 

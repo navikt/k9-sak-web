@@ -16,7 +16,7 @@ import AddButton from '../../add-button/AddButton';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import DeleteButton from '../../delete-button/DeleteButton';
 
-export enum FieldName {
+enum FieldName {
   BEGRUNNELSE = 'begrunnelse',
   HAR_BEHOV_FOR_BEREDSKAP = 'harBehovForBeredskap',
   PERIODER = 'perioder',

@@ -1,5 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimelinePanel from './TilbakekrevingTimelinePanel';
 

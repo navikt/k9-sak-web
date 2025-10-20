@@ -1,11 +1,7 @@
-import { OverstyrInputBeregningDto } from "./OverstyrInputBeregningDto";
-
-export type BehandlingIdDto = {
-    id: string;
-};
+import { OverstyrInputBeregningDto } from './OverstyrInputBeregningDto';
 
 export type OverstyrInputForBeregningDto = {
-    kode: string;
-    begrunnelse: string;
-    perioder: OverstyrInputBeregningDto[];
-}
+  kode: string;
+  begrunnelse: string;
+  perioder: OverstyrInputBeregningDto[];
+};

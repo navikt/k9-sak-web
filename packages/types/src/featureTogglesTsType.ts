@@ -1,4 +1,4 @@
-export interface FeatureToggles {
+interface FeatureToggles {
   [index: string]: boolean;
 }
 

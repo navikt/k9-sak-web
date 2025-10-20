@@ -14,8 +14,8 @@ import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 
 import styles from './tilbakekrevingTimeline.module.css';
 
-export const GODKJENT_CLASSNAME = 'godkjentPeriode';
-export const AVVIST_CLASSNAME = 'avvistPeriode';
+const GODKJENT_CLASSNAME = 'godkjentPeriode';
+const AVVIST_CLASSNAME = 'avvistPeriode';
 
 const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
 

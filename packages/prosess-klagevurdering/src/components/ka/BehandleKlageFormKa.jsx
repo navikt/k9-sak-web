@@ -114,7 +114,7 @@ BehandleKlageFormKaImpl.propTypes = {
   ...formPropTypes,
 };
 
-export const buildInitialValues = createSelector(
+const buildInitialValues = createSelector(
   [ownProps => ownProps.klageVurdering.klageVurderingResultatNK],
   klageVurderingResultat => ({
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
@@ -125,7 +125,7 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = values => ({
+const transformValues = values => ({
   klageMedholdArsak:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
     values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK

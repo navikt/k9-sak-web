@@ -1,4 +1,4 @@
-export const behandlingStartet = {
+const behandlingStartet = {
   behandlingId: 1,
   type: {
     kode: 'BEH_STARTET',

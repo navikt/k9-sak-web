@@ -1,4 +1,4 @@
-export type Arbeidsgiver = Readonly<{
+type Arbeidsgiver = Readonly<{
   arbeidsgiverOrgnr?: string;
   arbeidsgiverAktørId?: string;
   organisasjonsnummer?: string;

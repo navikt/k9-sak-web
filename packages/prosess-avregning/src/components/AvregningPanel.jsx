@@ -109,8 +109,6 @@ export class AvregningPanelImpl extends Component {
     const {
       intl,
       simuleringResultat,
-      isApOpen,
-      apCodes,
       readOnly,
       språkkode,
       featureUtvidetVarselfelt,
@@ -290,7 +288,6 @@ export class AvregningPanelImpl extends Component {
 
 AvregningPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: avregningSimuleringResultatPropType,
   previewCallback: PropTypes.func.isRequired,
   hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,

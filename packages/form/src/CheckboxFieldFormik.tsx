@@ -21,11 +21,7 @@ interface RenderCheckboxFieldProps {
   disabled: boolean;
 }
 
-export const RenderCheckboxField = ({
-  label,
-  disabled,
-  field: { onChange, value, name },
-}: RenderCheckboxFieldProps) => (
+const RenderCheckboxField = ({ label, disabled, field: { onChange, value, name } }: RenderCheckboxFieldProps) => (
   <NavCheckbox onChange={onChange(name)} checked={value} disabled={disabled} size="small" value={value}>
     <Label input={label} textOnly />
   </NavCheckbox>

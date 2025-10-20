@@ -7,7 +7,6 @@ enum LinkRel {
   ENDRE_INNLEGGELSESPERIODER = 'sykdom-innleggelse-endring',
   ENDRE_DIAGNOSEKODER = 'sykdom-diagnosekoder-endring',
   DOKUMENT_INNHOLD = 'sykdom-dokument-innhold',
-  STATUS = 'sykdom-aksjonspunkt',
 }
 
 export default LinkRel;

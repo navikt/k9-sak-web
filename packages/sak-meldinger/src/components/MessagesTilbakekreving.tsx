@@ -42,7 +42,7 @@ const maxLength100000 = maxLength(100000);
 const maxLength200 = maxLength(200);
 const minLength3 = minLength(3);
 
-export type FormValues = {
+type FormValues = {
   overstyrtMottaker: string;
   brevmalkode: string;
   fritekst: string;

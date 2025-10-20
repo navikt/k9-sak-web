@@ -1,7 +1,7 @@
 import Fagsak from './fagsakTsType';
 import FagsakPerson from './fagsakPersonTsType';
 
-export type Aktor = Readonly<{
+type Aktor = Readonly<{
   fagsaker: Fagsak[];
   person: FagsakPerson;
 }>;

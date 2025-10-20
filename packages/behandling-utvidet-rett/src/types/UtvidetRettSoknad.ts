@@ -1,6 +1,6 @@
 import { ManglendeVedleggSoknad } from '@k9-sak-web/types';
 
-export interface UtvidetRettSoknad {
+interface UtvidetRettSoknad {
   begrunnelseForSenInnsending: string;
   manglendeVedlegg: ManglendeVedleggSoknad[];
   angittePersoner: AngittPerson[];

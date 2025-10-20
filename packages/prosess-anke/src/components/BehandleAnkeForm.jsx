@@ -370,7 +370,7 @@ BehandleAnkeFormImpl.propTypes = {
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd
-export const buildInitialValues = createSelector([ownProps => ownProps.ankeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([ownProps => ownProps.ankeVurderingResultat], resultat => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -389,7 +389,7 @@ export const buildInitialValues = createSelector([ownProps => ownProps.ankeVurde
 }));
 
 // TODO (TOR) Rydd i dette! Treng neppe senda med alt dette til backend
-export const transformValues = (values, aksjonspunktCode) => ({
+const transformValues = (values, aksjonspunktCode) => ({
   vedtak: values.vedtak === '0' ? null : values.vedtak,
   ankeVurdering: values.ankeVurdering,
   begrunnelse: values.begrunnelse,

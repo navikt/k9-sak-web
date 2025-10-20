@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import throttle from 'lodash/throttle';
 
 // Brukes for midlertidig mellomlagring av input fra saksbehandlare som ett global objekt i k9-sak-web.
-export const BrukFormSesjonslagring = (
+const BrukFormSesjonslagring = (
   formStateKey: string,
   formState,
   watch,

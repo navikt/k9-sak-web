@@ -5,9 +5,7 @@
  */
 enum AsyncPollingStatus {
   PENDING = 'PENDING',
-  COMPLETE = 'COMPLETE',
   DELAYED = 'DELAYED',
-  CANCELLED = 'CANCELLED',
   HALTED = 'HALTED',
 }
 

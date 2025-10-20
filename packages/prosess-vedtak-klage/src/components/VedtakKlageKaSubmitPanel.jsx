@@ -8,12 +8,6 @@ import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import styles from './vedtakKlageSubmitPanel.module.css';
 
-const medholdIKlage = klageVurderingResultat =>
-  klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;
-
-export const isMedholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) =>
-  medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
-
 const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   switch (klageVurdering) {
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
@@ -47,7 +41,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klage
   e.preventDefault();
 };
 
-export const VedtakKlageKaSubmitPanelImpl = ({
+const VedtakKlageKaSubmitPanelImpl = ({
   intl,
   behandlingPåVent,
   previewVedtakCallback,

@@ -2,8 +2,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-
-import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';

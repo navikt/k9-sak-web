@@ -1,6 +1,6 @@
 import TotrinnskontrollAksjonspunkt from './totrinnskontrollAksjonspunktTsType';
 
-export type TotrinnskontrollSkjermlenkeContext = Readonly<{
+type TotrinnskontrollSkjermlenkeContext = Readonly<{
   skjermlenkeType: string;
   totrinnskontrollAksjonspunkter: TotrinnskontrollAksjonspunkt[];
 }>;

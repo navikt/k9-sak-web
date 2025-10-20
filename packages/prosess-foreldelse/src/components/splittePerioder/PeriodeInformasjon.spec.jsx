@@ -1,6 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
+import { describe, expect, it } from 'vitest';
 import messages from '../../../i18n/nb_NO.json';
 import PeriodeInformasjon from './PeriodeInformasjon';
 

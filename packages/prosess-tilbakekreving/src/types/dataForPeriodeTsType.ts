@@ -1,9 +1,9 @@
 import { DetaljertFeilutbetalingPeriode } from './detaljerteFeilutbetalingsperioderTsType';
 
-export type DataForPeriode = {
+type DataForPeriode = {
   erTotalBelopUnder4Rettsgebyr: boolean;
   begrunnelse?: string;
   erForeldet: boolean;
-} & DetaljertFeilutbetalingPeriode
+} & DetaljertFeilutbetalingPeriode;
 
 export default DataForPeriode;

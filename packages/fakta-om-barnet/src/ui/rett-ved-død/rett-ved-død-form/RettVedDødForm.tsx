@@ -7,7 +7,7 @@ import RettVedDødUtfallType from '../../../types/RettVedDødType';
 import required from '../../../validators/required';
 import ContainerContext from '../../context/ContainerContext';
 
-export enum FieldName {
+enum FieldName {
   RETT_VED_DØD_TYPE = 'rettVedDødType',
   VURDERING = 'vurdering',
 }

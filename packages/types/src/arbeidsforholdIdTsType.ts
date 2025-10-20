@@ -1,4 +1,4 @@
-export type ArbeidsforholdId = Readonly<{
+type ArbeidsforholdId = Readonly<{
   eksternArbeidsforholdId?: string;
   internArbeidsforholdId?: string;
 }>;

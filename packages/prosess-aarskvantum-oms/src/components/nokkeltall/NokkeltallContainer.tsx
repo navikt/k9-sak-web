@@ -16,7 +16,7 @@ export enum Nokkeltalltype {
   RESTDAGER,
 }
 
-export type NokkeltallContainerProps = Pick<
+type NokkeltallContainerProps = Pick<
   ÅrskvantumForbrukteDager,
   | 'totaltAntallDager'
   | 'antallKoronadager'

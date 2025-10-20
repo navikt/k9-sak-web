@@ -13,11 +13,6 @@ import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
 
-export interface FortsettUtenInntektsmeldingFormState {
-  begrunnelse: string;
-  beslutning: string;
-}
-
 interface FortsettUtenInntektsmeldingFormProps {
   tilstand: TilstandBeriket;
   onSubmit: (payload: AksjonspunktRequestPayload) => void;

@@ -1,7 +1,8 @@
-import React, { type JSX } from 'react';
+import { type JSX } from 'react';
 import { Status } from '../../../types/KompletthetData';
-import InntektsmeldingMottattItem from '../inntektsmelding-mottatt-item/InntektsmeldingMottattItem';
+import TilstandStatus from '../../../types/TilstandStatus';
 import InntektsmeldingAdvarsel from '../inntektsmelding-mangler-item/InntektsmeldingAdvarselItem';
+import InntektsmeldingMottattItem from '../inntektsmelding-mottatt-item/InntektsmeldingMottattItem';
 import styles from './inntektsmeldingListe.module.css';
 
 interface PeriodListItemProps {
@@ -14,7 +15,7 @@ const RenderListItem = ({ status }: { status: Status }) => {
       {children}
     </li>
   );
-  if (status.status === 'MOTTATT') {
+  if (status.status === TilstandStatus.MOTTATT) {
     return listItem(<InntektsmeldingMottattItem status={status} />);
   }
 

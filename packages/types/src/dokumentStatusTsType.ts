@@ -1,4 +1,4 @@
-export type DokumentStatus = Readonly<{
+type DokumentStatus = Readonly<{
   type: string;
   status: Array<{
     periode: { fom: string; tom: string };

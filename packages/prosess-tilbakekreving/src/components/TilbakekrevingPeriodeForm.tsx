@@ -64,7 +64,7 @@ export type CustomPerioder = {
   perioder: CustomPeriode[];
 };
 
-export interface InitialValuesDetailForm {
+interface InitialValuesDetailForm {
   valgtVilkarResultatType: string;
   begrunnelse: string;
   erForeldet?: boolean;

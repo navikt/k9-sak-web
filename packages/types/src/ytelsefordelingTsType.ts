@@ -1,4 +1,4 @@
-export type Ytelsefordeling = Readonly<{
+type Ytelsefordeling = Readonly<{
   ikkeOmsorgPerioder?: {
     periodeFom: string;
     periodeTom: string;

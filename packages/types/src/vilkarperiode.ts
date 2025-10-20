@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-export type Vilkarperiode = Readonly<{
+type Vilkarperiode = Readonly<{
   avslagKode?: string;
   begrunnelse?: string;
   vurderesIBehandlingen?: boolean;

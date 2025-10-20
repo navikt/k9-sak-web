@@ -47,7 +47,7 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
-export const OpptjeningVilkarAksjonspunktPanelImpl = ({
+const OpptjeningVilkarAksjonspunktPanelImpl = ({
   behandlingId,
   behandlingVersjon,
   isApOpen,
@@ -169,7 +169,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   );
 };
 
-export const buildInitialValues = createSelector(
+const buildInitialValues = createSelector(
   [
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.aksjonspunkter,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårPerioder,
