@@ -1,14 +1,14 @@
 import { Location } from 'history';
 
-import {
-  pathToFagsak as v2PathToFagsak,
-  pathToBehandlinger as v2PathToBehandlinger,
-  pathToBehandling as v2PathToBehandling,
-} from '@k9-sak-web/gui/utils/paths.js';
-import { getPathToK9Los as v2GetPathToK9Los, goToLos as v2GoToLos } from '@k9-sak-web/lib/paths/paths.js';
-import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { isSkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import {
+  pathToBehandling as v2PathToBehandling,
+  pathToBehandlinger as v2PathToBehandlinger,
+  pathToFagsak as v2PathToFagsak,
+} from '@k9-sak-web/gui/utils/paths.js';
 import { createPathForSkjermlenke } from '@k9-sak-web/gui/utils/skjermlenke/createPathForSkjermlenke.js';
+import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
+import { getPathToK9Los as v2GetPathToK9Los, goToLos as v2GoToLos } from '@k9-sak-web/lib/paths/paths.js';
 
 const DEFAULT_FAKTA = 'default';
 const DEFAULT_PROSESS_STEG = 'default';
@@ -36,10 +36,6 @@ export const getFaktaLocation =
   (location: Location) =>
   (fakta: string): Location =>
     pathWithQueryParams(location, { fakta });
-const getRiskPanelLocationCreator =
-  (location: Location) =>
-  (isRiskPanelOpen): Location =>
-    pathWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 // eslint-disable-next-line
 export const getLocationWithDefaultProsessStegAndFakta = (location: Location): Location =>

@@ -4,7 +4,6 @@ import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-com
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, Textarea } from '@navikt/ds-react';
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import styles from './ManglerSøknadForm.module.css';
@@ -15,14 +14,6 @@ interface Props {
   submittable: boolean;
   aksjonspunkter: Aksjonspunkt[];
 }
-
-type BehandlingIdDto = {
-  id: string;
-};
-
-type ManglerSøknadDto = {
-  begrunnelse: string;
-};
 
 /**
  * ManglerSøknadForm

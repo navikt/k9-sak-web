@@ -8,12 +8,10 @@ import {
 } from '@k9-sak-web/gui/utils/paths.js';
 import { createPathForSkjermlenke } from '@k9-sak-web/gui/utils/skjermlenke/createPathForSkjermlenke.js';
 import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
-import { getPathToK9Los as v2GetPathToK9Los, goToLos as v2GoToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { getPathToK9Los as v2GetPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 
 const DEFAULT_FAKTA = 'default';
 const DEFAULT_PROSESS_STEG = 'default';
-
-const aktoerRoutePath = '/aktoer/:aktoerId';
 
 export const fagsakRoutePath = '/fagsak/:saksnummer//*';
 export const behandlingerRoutePath = `behandling//*`;
@@ -36,10 +34,6 @@ export const getFaktaLocation =
   (location: Location) =>
   (fakta: string): Location =>
     pathWithQueryParams(location, { fakta });
-const getRiskPanelLocationCreator =
-  (location: Location) =>
-  (isRiskPanelOpen): Location =>
-    pathWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 // eslint-disable-next-line
 export const getLocationWithDefaultProsessStegAndFakta = (location: Location): Location =>
@@ -66,8 +60,3 @@ export const erUrlUnderBehandling = (location: Location): boolean => !location.p
 
 export const erBehandlingValgt = (location: Location): boolean =>
   location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');
-
-/**
- * @deprecated Bruk v2 versjon direkte
- */
-const goToLos = v2GoToLos;
