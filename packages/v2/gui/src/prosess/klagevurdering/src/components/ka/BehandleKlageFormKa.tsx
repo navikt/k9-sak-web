@@ -21,7 +21,7 @@ import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 interface BehandleKlageFormKaProps {
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
   saveKlage: () => Promise<void>;
-  submitCallback: (values: TransformedValues) => Promise<void>;
+  submitCallback: (values: TransformedValues[]) => Promise<void>;
   isReadOnly: boolean;
   previewCallback: () => Promise<void>;
   readOnlySubmitButton: boolean;
@@ -47,7 +47,7 @@ export const BehandleKlageFormKa = ({
   const handleSubmit = (values: BehandleKlageFormKaFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback(transformValues(values));
+      void submitCallback([transformValues(values)]);
     } finally {
       setIsSubmitting(false);
     }
