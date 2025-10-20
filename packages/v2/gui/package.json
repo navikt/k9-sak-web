@@ -31,6 +31,7 @@
     "@navikt/diagnosekoder": "^1.2025.0",
     "@navikt/ft-form-hooks": "^9.2.2",
     "@navikt/ft-form-validators": "^4.2.11",
+    "@navikt/ft-ui-komponenter": "^6.2.8",
     "@navikt/ft-utils": "^3.8.10",
     "@tanstack/react-query": "^5.90.2",
     "@types/css-tree": "^2.3.10",

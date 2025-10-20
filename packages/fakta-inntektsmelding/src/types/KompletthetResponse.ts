@@ -3,7 +3,7 @@ import { Status, Vurdering } from './KompletthetData';
 export interface Kompletthet {
   tilstand: Tilstand[];
 }
-interface Tilstand {
+export interface Tilstand {
   periode: string;
   status: Status[];
   tilVurdering: boolean;

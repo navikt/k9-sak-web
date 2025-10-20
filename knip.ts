@@ -11,6 +11,15 @@ const config: KnipConfig = {
     /^@k9-sak-web\//,
     /^@fpsak-frontend\//,
   ],
+  ignoreExportsUsedInFile: true,
+
+  // Ignorer binaries som brukes i CI/CD eller er system-verktøy
+  ignoreBinaries: ['concurrently', 'http-server', 'wait-on', 'docker-compose', 'magenta', 'blue'],
+
+  // Ikke rapporter duplicate exports - bruk rules for å ekskludere issue types
+  rules: {
+    duplicates: 'off',
+  },
 };
 
 export default config;
