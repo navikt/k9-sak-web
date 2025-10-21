@@ -85,7 +85,7 @@ const Utenlandsopphold = ({
               kan motta ${ytelseTekst.ytelseNavnUbestemt}.
             </li>
             <li>
-              For opphold utenfor EØS skal perioden med pleiepenger/opplæringspenger i utgangspunktet begrenses til 8
+              For opphold utenfor EØS skal perioden med ytelse i utgangspunktet begrenses til 8
               uker i løpet av en periode på 12 måneder.
             </li>
             {erPleiepenger && (
