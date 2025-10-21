@@ -53,7 +53,7 @@ export type BehandlingAppKontekst = Implements<
       erAutomatiskRevurdering?: boolean;
     };
     sakstype: FagsakYtelsesType;
-    visningsnavn?: ung_sak_kontrakt_behandling_BehandlingVisningsnavn;
+    visningsnavn?: ung_sak_kontrakt_behandling_BehandlingVisningsnavn; // finnes bare på behandlinger fra ung-sak
   }>
 >;
 
