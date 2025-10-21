@@ -5,5 +5,3 @@ export interface Aktivitet {
   orgnr: string;
   godkjent: boolean;
 }
-
-export default Aktivitet;

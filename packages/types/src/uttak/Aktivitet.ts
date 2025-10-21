@@ -1,5 +1,5 @@
-import Arbeidsgiver from './Arbeidsgiver';
 import { KodeverkMedNavn } from '../kodeverk';
+import { Arbeidsgiver } from './Arbeidsgiver';
 
 export interface Aktivitet {
   arbeidsforholdId: string;
@@ -13,5 +13,3 @@ export interface Aktivitet {
   utbetalingsgrad: number;
   uttakArbeidType: KodeverkMedNavn;
 }
-
-export default Aktivitet;

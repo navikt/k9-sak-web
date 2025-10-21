@@ -1,6 +1,6 @@
-import Uttak from './Uttak';
-import ArbeidsforholdDto from './ArbeidsforholdDto';
-import Aktivitet from './Aktivitet';
+import { Aktivitet } from './Aktivitet';
+import { ArbeidsforholdDto } from './ArbeidsforholdDto';
+import { Uttak } from './Uttak';
 
 export interface TotrinnskontrollAksjonspunkter {
   aksjonspunktKode: string;
@@ -29,5 +29,3 @@ export interface VurderPaNyttArsaker {
   kode: string;
   navn: string;
 }
-
-export default TotrinnskontrollAksjonspunkter;

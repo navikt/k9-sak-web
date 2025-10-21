@@ -1,4 +1,4 @@
-import KlageVurderingResultat from './KlageVurderingResultat';
+import { KlageVurderingResultat } from './KlageVurderingResultat';
 
 export interface BehandlingKlageVurdering {
   klageVurdering: string;
@@ -6,5 +6,3 @@ export interface BehandlingKlageVurdering {
   klageVurderingResultatNFP: KlageVurderingResultat;
   klageVurderingResultatNK: KlageVurderingResultat;
 }
-
-export default BehandlingKlageVurdering;

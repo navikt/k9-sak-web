@@ -5,5 +5,3 @@ export interface Arbeidsgiver {
   navn: string;
   virksomhet: boolean;
 }
-
-export default Arbeidsgiver;

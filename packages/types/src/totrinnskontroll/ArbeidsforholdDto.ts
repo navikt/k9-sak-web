@@ -7,5 +7,3 @@ export interface ArbeidsforholdDto {
   arbeidsforholdHandlingType: KodeverkMedNavn;
   brukPermisjon: boolean;
 }
-
-export default ArbeidsforholdDto;

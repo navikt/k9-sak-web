@@ -20,4 +20,3 @@ export interface Type {
   navn: string;
   kodeverk: string;
 }
-export default Uttak;
