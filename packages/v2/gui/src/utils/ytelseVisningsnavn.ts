@@ -2,8 +2,8 @@
  * Utility-funksjoner for visningsnavn i forskjellige former
  */
 
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { fagsakYtelsesType as fagsakYtelse } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.ts';
+import { fagsakYtelsesType as fagsakYtelse } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.ts';
 
 export const ytelseVisningsnavn = (ytelsetype?: FagsakYtelsesType) => {
   switch (ytelsetype) {
