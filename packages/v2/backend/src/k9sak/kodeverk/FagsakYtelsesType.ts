@@ -1,8 +1,8 @@
 import {
   type k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseTypeEnumUnion,
   k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseType,
-} from '../generated/types.ts';
-import type { Kodeverk } from '../../shared/Kodeverk.ts';
+} from '../generated/types.js';
+import type { Kodeverk } from '../../shared/Kodeverk.js';
 
 export type FagsakYtelsesType = generatedFagsakYtelseTypeEnumUnion;
 
