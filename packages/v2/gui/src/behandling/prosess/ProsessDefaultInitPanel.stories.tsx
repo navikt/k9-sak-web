@@ -1,34 +1,51 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { IntlProvider } from 'react-intl';
 import { ProsessDefaultInitPanel } from './ProsessDefaultInitPanel.js';
-import { ProsessMenyProvider } from './context/ProsessMenyContext.js';
 import type { StandardProsessPanelProps } from './hooks/useStandardProsessPanelProps.js';
 
+// Mock messages for Storybook
+const messages = {
+  'MockPanel.Title': 'Mock Panel',
+  'VisiblePanel.Title': 'Synlig Panel',
+  'HiddenPanel.Title': 'Skjult Panel',
+  'ConditionalPanel.Title': 'Betinget Panel',
+  'DefaultStatus.Title': 'Default Status',
+  'WarningStatus.Title': 'Warning Status',
+  'SuccessStatus.Title': 'Success Status',
+  'DangerStatus.Title': 'Danger Status',
+  'DynamicStatus.Title': 'Dynamisk Status',
+};
+
 /**
- * Mock-komponent som simulerer et legacy prosesspanel.
+ * Mock-komponent som simulerer et prosesspanel.
  */
-function MockLegacyPanel(props: StandardProsessPanelProps) {
+function MockProsessPanel({ 
+  title, 
+  content, 
+  standardProps 
+}: { 
+  title: string; 
+  content: string;
+  standardProps?: StandardProsessPanelProps;
+}) {
   return (
     <div style={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
-      <h2>Legacy Prosesspanel</h2>
-      <div style={{ marginTop: '16px' }}>
-        <h3>Mottatte props:</h3>
-        <pre style={{ backgroundColor: '#fff', padding: '12px', borderRadius: '4px', overflow: 'auto' }}>
-          {JSON.stringify(
-            {
-              behandling: props.behandling ? 'Behandling-objekt' : 'Ikke satt',
-              fagsak: props.fagsak ? 'Fagsak-objekt' : 'Ikke satt',
-              aksjonspunkter: `${props.aksjonspunkter?.length || 0} aksjonspunkter`,
-              kodeverk: props.kodeverk ? 'Kodeverk-objekt' : 'Ikke satt',
-              isReadOnly: props.isReadOnly,
-              isAksjonspunktOpen: props.isAksjonspunktOpen,
-              status: props.status,
-            },
-            null,
-            2
-          )}
-        </pre>
-      </div>
+      <h2>{title}</h2>
+      <p>{content}</p>
+      {standardProps && (
+        <div style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
+          <h3>Standard Props:</h3>
+          <ul>
+            <li>Behandling ID: {standardProps.behandling?.id}</li>
+            <li>Fagsak: {standardProps.fagsak?.saksnummer}</li>
+            <li>Aksjonspunkter: {standardProps.aksjonspunkter?.length || 0}</li>
+            <li>Read Only: {standardProps.isReadOnly ? 'Ja' : 'Nei'}</li>
+            <li>Aksjonspunkt Open: {standardProps.isAksjonspunktOpen ? 'Ja' : 'Nei'}</li>
+            <li>Status: {standardProps.status}</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -38,14 +55,13 @@ const meta = {
   component: ProsessDefaultInitPanel,
   decorators: [
     Story => (
-      <ProsessMenyProvider>
-        <div style={{ padding: '20px' }}>
-          <Story />
-        </div>
-      </ProsessMenyProvider>
+      <IntlProvider locale="nb-NO" messages={messages}>
+        <Story />
+      </IntlProvider>
     ),
   ],
   parameters: {
+    layout: 'padded',
     docs: {
       description: {
         component: `
@@ -69,8 +85,8 @@ Brukes slik:
   urlKode="beregning"
   tekstKode="Beregning.Title"
   getMenyType={(data) => 
-    data.aksjonspunkter.some(ap => ap.status === 'OPPR') 
-      ? ProcessMenuStepType.warning 
+    data.aksjonspunkter.some(ap => ap.status === 'OPPR')
+      ? ProcessMenuStepType.warning
       : ProcessMenuStepType.default
   }
 >
@@ -90,17 +106,151 @@ type Story = StoryObj<typeof meta>;
 
 /**
  * Standard visning med mock panel.
+ * Demonstrerer hvordan wrapper-komponenten fungerer med et enkelt panel.
  */
-export const Standard: Story = {
+export const MedMockPanel: Story = {
   args: {
-    urlKode: 'beregning',
-    tekstKode: 'Beregning.Title',
-    children: (props: StandardProsessPanelProps) => <MockLegacyPanel {...props} />,
+    urlKode: 'mock-panel',
+    tekstKode: 'MockPanel.Title',
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Mock Prosesspanel"
+        content="Dette er et mock-panel som viser hvordan ProsessDefaultInitPanel wrapper fungerer."
+        standardProps={standardProps}
+      />
+    ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Standard visning av ProsessDefaultInitPanel med et mock legacy panel.',
+        story: 'Viser wrapper med et enkelt mock-panel. Panelet mottar standard props fra useStandardProsessPanelProps.',
+      },
+    },
+  },
+};
+
+/**
+ * Panel som alltid er synlig (ingen skalVisePanel funksjon).
+ */
+export const AlltiSynlig: Story = {
+  args: {
+    urlKode: 'visible-panel',
+    tekstKode: 'VisiblePanel.Title',
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Alltid Synlig Panel"
+        content="Dette panelet er alltid synlig fordi skalVisePanel ikke er oppgitt."
+        standardProps={standardProps}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Panel uten skalVisePanel-funksjon er alltid synlig.',
+      },
+    },
+  },
+};
+
+/**
+ * Panel med synlighetslogikk som returnerer true.
+ */
+export const SynligMedBetingelse: Story = {
+  args: {
+    urlKode: 'conditional-visible',
+    tekstKode: 'ConditionalPanel.Title',
+    skalVisePanel: () => true,
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Betinget Synlig Panel"
+        content="Dette panelet er synlig fordi skalVisePanel returnerer true."
+        standardProps={standardProps}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Panel med skalVisePanel som returnerer true vises normalt.',
+      },
+    },
+  },
+};
+
+/**
+ * Panel med synlighetslogikk som returnerer false.
+ * Dette panelet skal ikke vises i det hele tatt.
+ */
+export const SkjultMedBetingelse: Story = {
+  args: {
+    urlKode: 'conditional-hidden',
+    tekstKode: 'HiddenPanel.Title',
+    skalVisePanel: () => false,
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Skjult Panel"
+        content="Dette panelet skal ikke vises fordi skalVisePanel returnerer false."
+        standardProps={standardProps}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Panel med skalVisePanel som returnerer false vises ikke. Du skal ikke se noe innhold her.',
+      },
+    },
+  },
+};
+
+/**
+ * Panel med synlighetslogikk basert på aksjonspunkter.
+ */
+export const SynligBasertPaAksjonspunkter: Story = {
+  args: {
+    urlKode: 'aksjonspunkt-visible',
+    tekstKode: 'ConditionalPanel.Title',
+    skalVisePanel: (data: StandardProsessPanelProps) => {
+      // Vis kun hvis det finnes aksjonspunkter
+      return data.aksjonspunkter && data.aksjonspunkter.length > 0;
+    },
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Synlig Basert på Aksjonspunkter"
+        content={`Dette panelet vises kun hvis det finnes aksjonspunkter. Antall: ${standardProps.aksjonspunkter?.length || 0}`}
+        standardProps={standardProps}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Panel som vises kun hvis det finnes aksjonspunkter. I denne storyen er det ingen aksjonspunkter, så panelet er skjult.',
+      },
+    },
+  },
+};
+
+/**
+ * Panel med default status (ingen getMenyType funksjon).
+ */
+export const DefaultStatus: Story = {
+  args: {
+    urlKode: 'default-status',
+    tekstKode: 'DefaultStatus.Title',
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Default Status"
+        content="Dette panelet har default status fordi getMenyType ikke er oppgitt."
+        standardProps={standardProps}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Panel uten getMenyType-funksjon får automatisk ProcessMenuStepType.default.',
       },
     },
   },
@@ -109,22 +259,23 @@ export const Standard: Story = {
 /**
  * Panel med warning status.
  */
-export const MedWarningStatus: Story = {
+export const WarningStatus: Story = {
   args: {
-    urlKode: 'beregning',
-    tekstKode: 'Beregning.Title',
+    urlKode: 'warning-status',
+    tekstKode: 'WarningStatus.Title',
     getMenyType: () => ProcessMenuStepType.warning,
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#fff3cd', borderRadius: '4px', border: '1px solid #ffc107' }}>
-        <h2>⚠️ Panel med åpent aksjonspunkt</h2>
-        <p>Dette panelet har et åpent aksjonspunkt som krever oppmerksomhet.</p>
-      </div>
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Warning Status"
+        content="Dette panelet har warning status (gul/oransje) - krever oppmerksomhet."
+        standardProps={standardProps}
+      />
     ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Panel som beregner warning status via getMenyType-funksjonen.',
+        story: 'Panel med ProcessMenuStepType.warning indikerer at det krever oppmerksomhet.',
       },
     },
   },
@@ -133,22 +284,23 @@ export const MedWarningStatus: Story = {
 /**
  * Panel med success status.
  */
-export const MedSuccessStatus: Story = {
+export const SuccessStatus: Story = {
   args: {
-    urlKode: 'vilkar',
-    tekstKode: 'Vilkar.Title',
+    urlKode: 'success-status',
+    tekstKode: 'SuccessStatus.Title',
     getMenyType: () => ProcessMenuStepType.success,
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#d4edda', borderRadius: '4px', border: '1px solid #28a745' }}>
-        <h2>✓ Vilkår oppfylt</h2>
-        <p>Alle vilkår er oppfylt for dette panelet.</p>
-      </div>
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Success Status"
+        content="Dette panelet har success status (grønn) - fullført."
+        standardProps={standardProps}
+      />
     ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Panel med success status - alle vilkår er oppfylt.',
+        story: 'Panel med ProcessMenuStepType.success indikerer at det er fullført.',
       },
     },
   },
@@ -157,178 +309,127 @@ export const MedSuccessStatus: Story = {
 /**
  * Panel med danger status.
  */
-export const MedDangerStatus: Story = {
+export const DangerStatus: Story = {
   args: {
-    urlKode: 'vedtak',
-    tekstKode: 'Vedtak.Title',
+    urlKode: 'danger-status',
+    tekstKode: 'DangerStatus.Title',
     getMenyType: () => ProcessMenuStepType.danger,
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#f8d7da', borderRadius: '4px', border: '1px solid #dc3545' }}>
-        <h2>✗ Vilkår ikke oppfylt</h2>
-        <p>Dette panelet har problemer som må løses.</p>
-      </div>
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Danger Status"
+        content="Dette panelet har danger status (rød) - har problemer."
+        standardProps={standardProps}
+      />
     ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Panel med danger status - vilkår er ikke oppfylt.',
+        story: 'Panel med ProcessMenuStepType.danger indikerer at det har problemer som må løses.',
       },
     },
   },
 };
 
 /**
- * Panel med partial status.
+ * Panel med dynamisk statusberegning basert på aksjonspunkter.
+ */
+export const DynamiskStatusBeregning: Story = {
+  args: {
+    urlKode: 'dynamic-status',
+    tekstKode: 'DynamicStatus.Title',
+    getMenyType: (data: StandardProsessPanelProps) => {
+      // Beregn status basert på aksjonspunkter
+      if (data.aksjonspunkter && data.aksjonspunkter.length > 0) {
+        const harApenAksjonspunkt = data.aksjonspunkter.some(
+          (ap: any) => ap.status === 'OPPR'
+        );
+        if (harApenAksjonspunkt) {
+          return ProcessMenuStepType.warning;
+        }
+        return ProcessMenuStepType.success;
+      }
+      return ProcessMenuStepType.default;
+    },
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Dynamisk Status"
+        content={`Status beregnes dynamisk basert på aksjonspunkter. Antall: ${standardProps.aksjonspunkter?.length || 0}`}
+        standardProps={standardProps}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Panel som beregner status dynamisk basert på aksjonspunkter. I denne storyen er det ingen aksjonspunkter, så status er default.',
+      },
+    },
+  },
+};
+
+/**
+ * Panel med delvis fullføringsstatus.
  */
 export const MedPartialStatus: Story = {
   args: {
-    urlKode: 'inngangsvilkar',
-    tekstKode: 'Inngangsvilkar.Title',
+    urlKode: 'partial-status',
+    tekstKode: 'DynamicStatus.Title',
     getMenyType: () => ProcessMenuStepType.warning,
     usePartialStatus: true,
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#fff3cd', borderRadius: '4px', border: '1px solid #ffc107' }}>
-        <h2>Delvis fullført</h2>
-        <p>Noen vilkår er oppfylt, andre ikke.</p>
-        <ul>
-          <li>✓ Medlemskap: Oppfylt</li>
-          <li>✗ Opptjening: Ikke oppfylt</li>
-          <li>⏳ Sykdom: Under vurdering</li>
-        </ul>
-      </div>
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Delvis Fullført"
+        content="Dette panelet er delvis fullført (usePartialStatus=true)."
+        standardProps={standardProps}
+      />
     ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Panel med delvis fullføringsstatus (usePartialStatus=true).',
+        story: 'Panel med usePartialStatus=true viser delvis fullføringsindikator i menyen.',
       },
     },
   },
 };
 
 /**
- * Panel med synlighetslogikk - synlig.
+ * Kompleks eksempel med både synlighet og statusberegning.
  */
-export const SynligPanel: Story = {
+export const KompleksEksempel: Story = {
   args: {
-    urlKode: 'beregning',
-    tekstKode: 'Beregning.Title',
-    skalVisePanel: () => true,
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#d1ecf1', borderRadius: '4px', border: '1px solid #17a2b8' }}>
-        <h2>Synlig panel</h2>
-        <p>Dette panelet er synlig fordi skalVisePanel returnerer true.</p>
-      </div>
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel som er synlig basert på skalVisePanel-funksjonen.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med synlighetslogikk - skjult.
- */
-export const SkjultPanel: Story = {
-  args: {
-    urlKode: 'skjult',
-    tekstKode: 'Skjult.Title',
-    skalVisePanel: () => false,
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#f8d7da', borderRadius: '4px', border: '1px solid #dc3545' }}>
-        <h2>Dette skal ikke vises</h2>
-        <p>Hvis du ser dette, er noe galt med synlighetslogikken.</p>
-      </div>
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel som er skjult fordi skalVisePanel returnerer false. Du skal ikke se panelinnholdet.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med kompleks synlighetslogikk.
- */
-export const KompleksSynlighetslogikk: Story = {
-  args: {
-    urlKode: 'optional',
-    tekstKode: 'Optional.Title',
+    urlKode: 'complex-example',
+    tekstKode: 'DynamicStatus.Title',
     skalVisePanel: (data: StandardProsessPanelProps) => {
-      // Eksempel: Vis kun hvis det finnes aksjonspunkter
-      return data.aksjonspunkter && data.aksjonspunkter.length > 0;
+      // Vis kun hvis ikke read-only
+      return !data.isReadOnly;
     },
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#e2e3e5', borderRadius: '4px', border: '1px solid #6c757d' }}>
-        <h2>Betinget synlig panel</h2>
-        <p>Dette panelet vises kun hvis det finnes aksjonspunkter.</p>
-        <p>Antall aksjonspunkter: {props.aksjonspunkter?.length || 0}</p>
-      </div>
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel med kompleks synlighetslogikk basert på aksjonspunkter. I denne storyen er det ingen aksjonspunkter, så panelet er skjult.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med dynamisk statusberegning.
- */
-export const DynamiskStatusberegning: Story = {
-  args: {
-    urlKode: 'vilkar',
-    tekstKode: 'Vilkar.Title',
     getMenyType: (data: StandardProsessPanelProps) => {
-      // Eksempel på dynamisk statusberegning
-      if (data.aksjonspunkter && data.aksjonspunkter.length > 0) {
+      // Beregn status basert på flere faktorer
+      if (data.isAksjonspunktOpen) {
         return ProcessMenuStepType.warning;
       }
-      if (data.status === 'OPPFYLT') {
+      if (data.status === 'success') {
         return ProcessMenuStepType.success;
       }
-      if (data.status === 'IKKE_OPPFYLT') {
+      if (data.status === 'danger') {
         return ProcessMenuStepType.danger;
       }
       return ProcessMenuStepType.default;
     },
-    children: (props: StandardProsessPanelProps) => (
-      <div style={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
-        <h2>Panel med dynamisk status</h2>
-        <p>Status beregnes basert på aksjonspunkter og vilkårstatus.</p>
-        <ul>
-          <li>Aksjonspunkter: {props.aksjonspunkter?.length || 0}</li>
-          <li>Status: {props.status}</li>
-          <li>
-            Beregnet menytype:{' '}
-            {props.aksjonspunkter?.length > 0
-              ? 'warning'
-              : props.status === 'OPPFYLT'
-                ? 'success'
-                : props.status === 'IKKE_OPPFYLT'
-                  ? 'danger'
-                  : 'default'}
-          </li>
-        </ul>
-      </div>
+    children: (standardProps: StandardProsessPanelProps) => (
+      <MockProsessPanel
+        title="Kompleks Eksempel"
+        content="Dette panelet demonstrerer både synlighetslogikk og dynamisk statusberegning."
+        standardProps={standardProps}
+      />
     ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Panel som beregner status dynamisk basert på aksjonspunkter og vilkårstatus.',
+        story: 'Kompleks eksempel som kombinerer synlighetslogikk (vises kun hvis ikke read-only) og dynamisk statusberegning basert på flere faktorer.',
       },
     },
   },
