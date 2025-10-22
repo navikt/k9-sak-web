@@ -1,11 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import ForeldelseForm from './components/ForeldelseForm';
 import messages from '../i18n/nb_NO.json';
-import foreldelsePerioderPropType from './propTypes/foreldelsePerioderPropType';
+import ForeldelseForm from './components/ForeldelseForm';
 import foreldelseBehandlingPropType from './propTypes/foreldelseBehandlingPropType';
+import foreldelsePerioderPropType from './propTypes/foreldelsePerioderPropType';
 
 const cache = createIntlCache();
 
@@ -33,6 +32,7 @@ const ForeldelseProsessIndex = ({
     <ForeldelseForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
+      behandlingUuid={behandling.uuid}
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
