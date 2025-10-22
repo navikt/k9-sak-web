@@ -5,10 +5,10 @@ import {
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Box, Radio } from '@navikt/ds-react';
+import { Box, Radio, UNSAFE_Combobox } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { klageVurderingOmgjoerType, klageVurderingType } from '../KlageVurderingType';
 import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 
@@ -69,7 +69,10 @@ export const KlageVurderingRadioOptionsNfp = ({
   klageVurdering = null,
   erPåklagdBehandlingTilbakekreving,
 }: KlageVurderingRadioOptionsNfpProps) => {
-  const { control } = useFormContext<BehandleKlageFormNfpFormValues>();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<BehandleKlageFormNfpFormValues>();
   const hjemler = utledHjemler(fagsak);
 
   const skalViseHjemler =
@@ -119,17 +122,24 @@ export const KlageVurderingRadioOptionsNfp = ({
       {skalViseHjemler && !erPåklagdBehandlingTilbakekreving && (
         <ContentMaxWidth>
           <ArrowBox>
-            <RhfSelect
-              control={control}
-              readOnly={readOnly}
+            <Controller
               name="klageHjemmel"
-              selectValues={hjemler.map(h => (
-                <option key={h.kode} value={h.kode}>
-                  {h.navn}
-                </option>
-              ))}
-              label="Hjemmel"
-              validate={[required]}
+              control={control}
+              rules={{ required: 'Feltet må fylles ut' }}
+              render={({ field }) => (
+                <UNSAFE_Combobox
+                  label="Hjemmel"
+                  options={hjemler.map(hjemmel => ({ value: hjemmel.kode, label: hjemmel.navn }))}
+                  readOnly={readOnly}
+                  error={errors.klageHjemmel?.message}
+                  ref={field.ref}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onToggleSelected={option => {
+                    field.onChange(option);
+                  }}
+                />
+              )}
             />
           </ArrowBox>
         </ContentMaxWidth>
