@@ -38,6 +38,7 @@ export interface VisittkortPanelProps {
     deltakerErUtmeldt: boolean;
     deltakerErIProgrammet: boolean;
   };
+  erIkkeDigitalBruker?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -51,6 +52,7 @@ const VisittkortPanel = ({
   erHastesak,
   hideVisittkortDetaljerPopup,
   ungdomsytelseDeltakerStatus,
+  erIkkeDigitalBruker,
 }: VisittkortPanelProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -168,6 +170,7 @@ const VisittkortPanel = ({
               {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
               {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
               {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
+              {erIkkeDigitalBruker && <TagContainer tagVariant="warning">Ikke-digital bruker</TagContainer>}
             </HStack>
           </div>
         </div>

@@ -26,6 +26,7 @@ export class PeriodeController extends Component {
     callbackBackward: PropTypes.func.isRequired,
     periode: PropTypes.shape().isRequired,
     readOnly: PropTypes.bool.isRequired,
+    behandlingUuid: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -66,6 +67,7 @@ export class PeriodeController extends Component {
       beregnBelop: callBeregnBelop,
       behandlingId: selectedBehandlingId,
       oppdaterSplittedePerioder,
+      behandlingUuid,
     } = this.props;
 
     const forstePeriode = {
@@ -82,6 +84,7 @@ export class PeriodeController extends Component {
     };
 
     const params = {
+      behandlingUuid: behandlingUuid,
       behandlingId: selectedBehandlingId,
       perioder: [forstePeriode, andrePeriode],
     };
