@@ -70,11 +70,13 @@ export const FormkravKlageFormNfp = ({
       valgtPartMedKlagerett,
     ),
   });
-  const handleSubmit = (values: FormValuesNfp) => {
+  const handleSubmit = async (values: FormValuesNfp) => {
     setIsSubmitting(true);
-    void submitCallback([transformValues(values, avsluttedeBehandlinger)]).finally(() => {
+    try {
+      await submitCallback([transformValues(values, avsluttedeBehandlinger)]);
+    } finally {
       setIsSubmitting(false);
-    });
+    }
   };
 
   return (

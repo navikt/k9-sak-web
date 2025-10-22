@@ -68,12 +68,13 @@ export const FormkravKlageFormKa = ({
     defaultValues: buildInitialValues(klageVurdering, avsluttedeBehandlinger, valgtPartMedKlagerett),
   });
 
-  const handleSubmit = (values: FormValuesKa) => {
+  const handleSubmit = async (values: FormValuesKa) => {
     setIsSubmitting(true);
-
-    void submitCallback([transformValues(values, avsluttedeBehandlinger)]).finally(() => {
+    try {
+      await submitCallback([transformValues(values, avsluttedeBehandlinger)]);
+    } finally {
       setIsSubmitting(false);
-    });
+    }
   };
 
   return (
