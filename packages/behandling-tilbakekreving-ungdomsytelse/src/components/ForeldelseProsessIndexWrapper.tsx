@@ -1,3 +1,4 @@
+import { Behandling } from '@k9-sak-web/types';
 import {
   ForeldelseProsessIndex,
   ForeldelsesresultatActivity,
@@ -8,7 +9,7 @@ import React, { useState } from 'react';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
 interface ForeldelseProsessIndexWrapperProps {
-  behandling: any;
+  behandling: Behandling;
   perioderForeldelse: any;
   kodeverkSamling: any;
   beregnBelop: (params: any) => Promise<any>;
@@ -39,7 +40,7 @@ const ForeldelseProsessIndexWrapper: React.FC = (props: ForeldelseProsessIndexWr
 
   return (
     <ForeldelseProsessIndex
-      behandling={behandling}
+      behandlingUuid={behandling.uuid}
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitForeldelse}
       isReadOnly={isReadOnly}
