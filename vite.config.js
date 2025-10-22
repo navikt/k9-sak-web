@@ -114,6 +114,16 @@ export default ({ mode }) => {
       },
     },
     test: {
+      // Performance: Use threads for parallelization
+      pool: 'threads',
+      poolOptions: {
+        threads: {
+          singleThread: false,
+          isolate: true, // Keep isolation for React Testing Library compatibility
+        },
+      },
+      // Performance: Limit concurrent tests to avoid overwhelming the system
+      maxConcurrency: 10,
       deps: {
         inline: [
           '@navikt/k9-sak-typescript-client',
@@ -133,7 +143,8 @@ export default ({ mode }) => {
       globals: true,
       setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
-      testTimeout: 15000,
+      testTimeout: 10000,
+      // Performance: Reduce console log processing overhead
       onConsoleLog(log) {
         // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
         return !log.includes(
