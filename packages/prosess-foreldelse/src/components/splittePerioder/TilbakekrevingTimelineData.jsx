@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
@@ -13,6 +12,7 @@ export const TilbakekrevingTimelineData = ({
   behandlingId,
   behandlingVersjon,
   beregnBelop,
+  behandlingUuid,
 }) => (
   <>
     <PeriodeController
@@ -24,6 +24,7 @@ export const TilbakekrevingTimelineData = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       beregnBelop={beregnBelop}
+      behandlingUuid={behandlingUuid}
     />
     <PeriodeInformasjon
       feilutbetaling={periode.feilutbetaling}
@@ -43,6 +44,7 @@ TilbakekrevingTimelineData.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   beregnBelop: PropTypes.func.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
 };
 
 export default TilbakekrevingTimelineData;

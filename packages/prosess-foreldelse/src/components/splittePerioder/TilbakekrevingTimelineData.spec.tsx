@@ -1,6 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimelineData from './TilbakekrevingTimelineData';
 
@@ -20,6 +19,7 @@ describe('<TilbakekrevingTimelineData>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         beregnBelop={() => undefined}
+        behandlingUuid="abc"
       />,
       { messages },
     );
