@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
+    "@sentry/cli": "2.56.1",
     "@storybook/addon-a11y": "9.1.13",
     "@storybook/addon-docs": "9.1.13",
     "@storybook/react": "9.1.13",
@@ -117,6 +118,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",
     "vite": "^7.1.11",
+    "vite-plugin-html": "^3.2.2",
     "vitest": "3.2.4",
     "vitest-axe": "0.1.0"
   },
