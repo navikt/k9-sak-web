@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  gap: var(--a-spacing-4);
+  height: 100%;
+}
+
+.meny {
+  flex-shrink: 0;
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
