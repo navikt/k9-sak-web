@@ -47,7 +47,11 @@ const queryClient = new QueryClient({
 const preview: Preview = {
   parameters: {
     margin: '40px',
+    docs: {
+      autodocs: true,
+    },
   },
+  tags: ['autodocs'],
   decorators: [
     Story => {
       const store = configureStore();

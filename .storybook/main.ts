@@ -7,16 +7,13 @@ const config: StorybookConfig = {
       name: '@storybook/addon-docs',
       options: {
         configureJSX: true,
-        csfPluginOptions: null,
       },
     },
     '@storybook/addon-a11y',
+    '@storybook/addon-mcp',
   ],
   staticDirs: ['../public'],
 
-  docs: {
-    autodocs: true,
-  },
   framework: {
     name: '@storybook/react-vite',
     options: {},
