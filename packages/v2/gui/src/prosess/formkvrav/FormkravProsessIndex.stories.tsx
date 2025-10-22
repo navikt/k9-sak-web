@@ -118,7 +118,7 @@ export const VisFormkravPanelForAksjonspunktNfp: Story = {
           påklagBehandlingUuid: '456',
           påklagBehandlingVedtakDato: '2017-08-02T00:54:25.455',
         },
-        valgtKlagePart: args.parterMedKlagerett[0],
+        valgtKlagePart: args.parterMedKlagerett?.[0],
         vedtak: '456',
       },
     ];
