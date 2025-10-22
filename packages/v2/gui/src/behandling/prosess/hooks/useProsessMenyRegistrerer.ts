@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useProsessMenyContext } from '../context/ProsessMenyContext.js';
+import { useProsessMenyContextOptional } from '../context/ProsessMenyContext.js';
 import type { PanelRegistrering } from '../types/panelTypes.js';
 
 /**
- * Hook for å registrere et prosesspanel med menysystemet.
+ * Hook for å registrere et prosesspanel.
  * 
  * Panelet vil vises i menyen og kan velges av brukeren.
  * Når komponenten unmountes, avregistreres panelet automatisk.
@@ -34,9 +34,14 @@ import type { PanelRegistrering } from '../types/panelTypes.js';
  * ```
  */
 export function useProsessMenyRegistrerer(registrering: PanelRegistrering): void {
-  const context = useProsessMenyContext();
+  const context = useProsessMenyContextOptional();
 
   useEffect(() => {
+    // Hvis vi ikke er inne i en ProsessMeny, ikke gjør noe
+    if (!context) {
+      return;
+    }
+
     try {
       console.debug('Panel registrerer seg:', {
         id: registrering.id,
@@ -47,7 +52,7 @@ export function useProsessMenyRegistrerer(registrering: PanelRegistrering): void
       context.registrerPanel(registrering);
     } catch (error) {
       console.error('Kunne ikke registrere panel:', registrering.id, error);
-      // Ikke kast feilen - la andre paneler fortsette å fungere
+      // Ikke throw. La andre paneler fortsette å fungere
     }
 
     // Cleanup: Avregistrer panel når komponenten unmountes
@@ -59,6 +64,7 @@ export function useProsessMenyRegistrerer(registrering: PanelRegistrering): void
         console.error('Kunne ikke avregistrere panel:', registrering.id, error);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     // Re-kjør effect når registreringsdata endres
     registrering.id,
@@ -67,6 +73,7 @@ export function useProsessMenyRegistrerer(registrering: PanelRegistrering): void
     registrering.type,
     registrering.usePartialStatus,
     registrering.erAktiv,
-    context,
+    // NB: context er utelatt for å ungå loops
+    // Context funksjonene trenger ikke trigge omregistrering
   ]);
 }

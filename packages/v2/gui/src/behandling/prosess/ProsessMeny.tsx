@@ -69,13 +69,11 @@ function ProsessMenyContent({ children }: ProsessMenyProps) {
     }
   };
 
-  // Vis kun det valgte panelet
-  const renderValgtPanel = () => {
-    if (!valgtPanelId) return null;
-
-    // Finn og vis kun det valgte panelet fra children
-    // Vi antar at children er InitPanel-komponenter som har registrert seg
-    // Det valgte panelet vil være synlig basert på sin egen logikk
+  // Render alle children slik at de kan registrere seg,
+  // men kun det valgte panelet vil faktisk vises (via ProsessDefaultInitPanel sin logikk)
+  const renderPaneler = () => {
+    // Alltid render children slik at de kan registrere seg via useEffect
+    // ProsessDefaultInitPanel-komponenter vil selv håndtere om de skal vises eller ikke
     return children;
   };
 
@@ -85,7 +83,7 @@ function ProsessMenyContent({ children }: ProsessMenyProps) {
         <ProcessMenu steps={steg} onClick={handleStegKlikk} />
       </div>
       <div className={styles.content}>
-        {renderValgtPanel()}
+        {renderPaneler()}
       </div>
     </div>
   );

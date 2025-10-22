@@ -38,7 +38,7 @@ interface ProsessMenyProviderProps {
 /**
  * Provider-komponent for prosessmeny context.
  * Wrapper children og gir tilgang til panelregistreringsfunksjonalitet.
- * 
+ *
  * @example
  * ```tsx
  * <ProsessMenyProvider>
@@ -80,9 +80,9 @@ export function ProsessMenyProvider({ children }: ProsessMenyProviderProps) {
 /**
  * Hook for å få tilgang til prosessmeny context.
  * Må brukes innenfor en ProsessMenyProvider.
- * 
+ *
  * @throws Error hvis brukt utenfor ProsessMenyProvider
- * 
+ *
  * @example
  * ```tsx
  * function MyPanel() {
@@ -97,4 +97,14 @@ export function useProsessMenyContext(): ProsessMenyContextValue {
     throw new Error('useProsessMenyContext må brukes innenfor en ProsessMenyProvider');
   }
   return context;
+}
+
+/**
+ * Valgfri versjon av useProsessMenyContext som returnerer undefined hvis ikke inne i en provider.
+ * Brukes for komponenter som kan fungere både standalone og inne i en ProsessMeny.
+ *
+ * @returns ProsessMenyContextValue hvis inne i en provider, undefined ellers
+ */
+export function useProsessMenyContextOptional(): ProsessMenyContextValue | undefined {
+  return useContext(ProsessMenyContext);
 }

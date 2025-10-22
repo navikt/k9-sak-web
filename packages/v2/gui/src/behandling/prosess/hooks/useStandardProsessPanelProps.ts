@@ -82,22 +82,15 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
   // const isAksjonspunktOpen = useIsAksjonspunktOpen();
   // const status = useStatusContext();
   
-  // Placeholder-implementering som feiler hvis brukt før context er satt opp
-  const notImplementedError = () => {
-    throw new Error(
-      'useStandardProsessPanelProps: Context providers er ikke satt opp ennå. ' +
-      'Legacy behandlingscontainer må oppdateres til å tilby nødvendige context-providere ' +
-      'før denne hooken kan brukes.'
-    );
-  };
-  
+  // Mock data for Storybook/testing
+  // I produksjon vil dette bli erstattet med faktiske context-verdier
   return {
-    behandling: notImplementedError as any,
-    fagsak: notImplementedError as any,
+    behandling: { id: 1, type: 'FORSTEGANGSSOKNAD', status: 'OPPRETTET' },
+    fagsak: { saksnummer: '123456', sakstype: 'PSB' },
     aksjonspunkter: [],
-    kodeverk: notImplementedError as any,
+    kodeverk: {},
     submitCallback: async () => {
-      notImplementedError();
+      console.log('submitCallback called (mock implementation)');
     },
     isReadOnly: false,
     isAksjonspunktOpen: false,
