@@ -259,6 +259,7 @@ const FagsakIndex = () => {
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
                     ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
+                    erIkkeDigitalBruker={fagsak.erIkkeDigitalBruker}
                   />
                 </div>
               );
