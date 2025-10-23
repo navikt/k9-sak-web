@@ -13,6 +13,9 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
+import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
+import { LegacyPanelAdapter } from '@k9-sak-web/gui/behandling/prosess/LegacyPanelAdapter.js';
+import { StandardProsessPanelPropsProvider } from '@k9-sak-web/gui/behandling/prosess/context/StandardProsessPanelPropsContext.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -25,6 +28,7 @@ import {
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
+import { VarselProsessStegInitPanel } from '../prosess/VarselProsessStegInitPanel';
 
 interface OwnProps {
   data: FetchedData;
@@ -228,6 +232,64 @@ const PleiepengerProsess = ({
     valgtPanel,
   );
 
+  // Feature toggle for å aktivere v2 menysystem
+  const useV2Menu = true; // TODO: Fix Redux form problematikk
+
+  // previewCallback til context
+  const previewCallback = useCallback(
+    getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling),
+    [behandling.versjon],
+  );
+
+  if (useV2Menu) {
+    return (
+      <>
+        <IverksetterVedtakStatusModal
+          visModal={visIverksetterVedtakModal}
+          lukkModal={useCallback(() => {
+            toggleIverksetterVedtakModal(false);
+            opneSokeside();
+          }, [])}
+          behandlingsresultat={behandling.behandlingsresultat}
+        />
+        <FatterVedtakStatusModal
+          visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+          lukkModal={useCallback(() => {
+            toggleFatterVedtakModal(false);
+            opneSokeside();
+          }, [])}
+          tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
+        />
+        <StandardProsessPanelPropsProvider
+          value={{
+            behandling,
+            fagsak,
+            aksjonspunkter: data.aksjonspunkter,
+            alleKodeverk,
+            submitCallback: lagreAksjonspunkter,
+            previewCallback,
+            isReadOnly: !rettigheter.writeAccess.isEnabled,
+            rettigheter,
+            featureToggles,
+          }}
+        >
+          <ProsessMeny>
+            {/* Nytt v2 panel */}
+            <VarselProsessStegInitPanel />
+
+            {/* Legacy paneler wrapped med LegacyPanelAdapter */}
+            {prosessStegPanelDefinisjoner
+              .filter(panelDef => panelDef.getUrlKode() !== 'varsel') // Ekskluder Varsel siden det er migrert
+              .map(panelDef => (
+                <LegacyPanelAdapter key={panelDef.getUrlKode()} panelDef={panelDef} />
+              ))}
+          </ProsessMeny>
+        </StandardProsessPanelPropsProvider>
+      </>
+    );
+  }
+
+  // Legacy rendering (standard oppførsel)
   return (
     <>
       <IverksetterVedtakStatusModal
