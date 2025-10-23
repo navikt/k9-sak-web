@@ -97,7 +97,7 @@ export const FormkravKlageForm = ({
 
         <Detail>{getLovHjemmeler(aksjonspunktCode)}</Detail>
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-          {['Vurder om klagen oppfyller formkravene']}
+          Vurder om klagen oppfyller formkravene
         </AksjonspunktHelpText>
       </VStack>
       <HGrid gap="space-4" columns={2} marginBlock="space-16 0">
@@ -109,7 +109,7 @@ export const FormkravKlageForm = ({
                 readOnly={readOnly || !skalKunneVelgeKlagepart}
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
-                  <option value={JSON.stringify(part)} key={part.identifikasjon?.id}>
+                  <option value={part.identifikasjon?.id} key={part.identifikasjon?.id}>
                     {part.identifikasjon?.id &&
                       lagVisningsnavnForKlagepart(part.identifikasjon?.id, fagsakPerson, arbeidsgiverOpplysningerPerId)}
                   </option>
