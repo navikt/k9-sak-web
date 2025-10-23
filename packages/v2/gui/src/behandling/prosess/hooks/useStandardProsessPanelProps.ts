@@ -1,61 +1,60 @@
-/**
- * Hook som gir standard props til alle prosesspaneler.
- * 
- * Denne hooken henter data fra context-providere som leveres av legacy behandlingscontainer.
- * Bruker 'any' type for legacy-data for å unngå import av legacy-typer.
- * 
- * @returns StandardProsessPanelProps - Felles props for alle prosesspaneler
- */
+import { useStandardProsessPanelPropsContextOptional } from '../context/StandardProsessPanelPropsContext.js';
 
 /**
  * Standard props interface for prosesspaneler.
  * Alle prosesspaneler mottar disse via useStandardProsessPanelProps hook.
  */
 export interface StandardProsessPanelProps {
-  /** Behandling-objekt (legacy ) */
+  /** Behandling-objekt (legacy type) */
   behandling: any;
-  
-  /** Fagsak-objekt (legacy ) */
+
+  /** Fagsak-objekt (legacy type) */
   fagsak: any;
-  
-  /** Liste av aksjonspunkter (legacy ) */
+
+  /** Liste av aksjonspunkter (legacy type) */
   aksjonspunkter: any[];
-  
-  /** Kodeverk med navn (legacy type ) */
-  kodeverk: any;
-  
+
+  /** Alle kodeverk med navn (legacy type) */
+  alleKodeverk: any;
+
   /** Callback for å submitte aksjonspunkt */
-  submitCallback: (aksjonspunktModels: any[]) => Promise<void>;
-  
+  submitCallback: (aksjonspunktModels: any[]) => Promise<any>;
+
+  /** Callback for å forhåndsvise dokument */
+  previewCallback?: (data: any) => Promise<any>;
+
+  /** Om panelet er read-only */
   isReadOnly: boolean;
-  
+
   /** Om det finnes åpne aksjonspunkter for dette panelet */
   isAksjonspunktOpen: boolean;
-  
+
   /** Status for panelet (f.eks. vilkårstatus) */
   status: string;
+
+  /** Rettigheter-objekt (legacy type) */
+  rettigheter?: any;
+
+  /** Feature toggles (legacy type) */
+  featureToggles?: any;
 }
 
 /**
  * Hook som gir tilgang til standard props for prosesspaneler.
- * 
- * Henter data fra context-providere som settes opp av legacy behandlingscontainer.
+ *
+ * Henter data fra StandardProsessPanelPropsContext som settes opp av legacy behandlingscontainer.
  * Dette lar v2-komponenter jobbe med legacy-data uten å importere legacy-kode.
- * 
- * MERK: Denne hooken forventer at følgende context-providere er satt opp av legacy-kode:
- * - BehandlingContext (behandling, submitCallback, isReadOnly)
- * - FagsakContext (fagsak)
- * - AksjonspunkterContext (aksjonspunkter, isAksjonspunktOpen)
- * - KodeverkContext (kodeverk)
- * - StatusContext (status)
- * 
+ *
+ * MERK: Denne hooken forventer at StandardProsessPanelPropsProvider er satt opp rundt ProsessMeny.
+ * Hvis brukt utenfor provider (f.eks. i Storybook), returneres mock data.
+ *
  * @returns StandardProsessPanelProps med all nødvendig data for prosesspaneler
- * 
+ *
  * @example
  * ```typescript
  * function MyProsessStegInitPanel() {
  *   const standardProps = useStandardProsessPanelProps();
- *   
+ *
  *   return (
  *     <ProsessDefaultInitPanel
  *       urlKode="my-step"
@@ -68,32 +67,47 @@ export interface StandardProsessPanelProps {
  * ```
  */
 export function useStandardProsessPanelProps(): StandardProsessPanelProps {
-  // TODO: Implementer faktisk context-henting når legacy context-providere er satt opp
-  // Inntill videre returnerer vi en placeholder-implementering som vil bli erstattet
-  // når legacy behandlingscontainer er oppdatert til å tilby disse context-providerne.
-  
-  // Disse context-hookene må implementeres når legacy-kode er klar:
-  // const behandling = useBehandlingContext();
-  // const fagsak = useFagsakContext();
-  // const aksjonspunkter = useAksjonspunkterContext();
-  // const kodeverk = useKodeverkContext();
-  // const submitCallback = useSubmitCallback();
-  // const isReadOnly = useIsReadOnly();
-  // const isAksjonspunktOpen = useIsAksjonspunktOpen();
-  // const status = useStatusContext();
-  
-  // Mock data for Storybook/testing
-  // I produksjon vil dette bli erstattet med faktiske context-verdier
+  // Hent data fra context (optional for å støtte Storybook)
+  const context = useStandardProsessPanelPropsContextOptional();
+
+  // Hvis context finnes, bruk den
+  if (context) {
+    return {
+      behandling: context.behandling,
+      fagsak: context.fagsak,
+      aksjonspunkter: context.aksjonspunkter,
+      alleKodeverk: context.alleKodeverk,
+      submitCallback: context.submitCallback,
+      previewCallback: context.previewCallback,
+      isReadOnly: context.isReadOnly,
+      isAksjonspunktOpen: false, // TODO: Beregn basert på aksjonspunkter
+      status: 'default', // TODO: Beregn basert på vilkår/status
+      rettigheter: context.rettigheter,
+      featureToggles: context.featureToggles,
+    };
+  }
+
+  // Fallback: Mock data for Storybook/testing
+  console.warn(
+    'useStandardProsessPanelProps: Ingen StandardProsessPanelPropsProvider funnet. Bruker mock data. ' +
+      'Dette er OK i Storybook, men indikerer en feil i produksjon.',
+  );
+
   return {
-    behandling: { id: 1, type: 'FORSTEGANGSSOKNAD', status: 'OPPRETTET' },
-    fagsak: { saksnummer: '123456', sakstype: 'PSB' },
+    behandling: { id: 1, type: { kode: 'BT-004' }, status: { kode: 'OPPRETTET' }, versjon: 1 },
+    fagsak: { saksnummer: '123456', sakstype: { kode: 'PSB' } },
     aksjonspunkter: [],
-    kodeverk: {},
+    alleKodeverk: {},
     submitCallback: async () => {
       console.log('submitCallback called (mock implementation)');
+    },
+    previewCallback: async () => {
+      console.log('previewCallback called (mock implementation)');
     },
     isReadOnly: false,
     isAksjonspunktOpen: false,
     status: 'default',
+    rettigheter: {},
+    featureToggles: {},
   };
 }
