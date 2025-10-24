@@ -6,7 +6,7 @@ import * as matchers from 'vitest-axe/matchers';
 
 expect.extend(matchers);
 
-// vi.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.url');
+vi.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.url');
 vi.stubGlobal('open', vi.fn());
 
 switchOnTestMode();

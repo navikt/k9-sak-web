@@ -1,8 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs';
 import { Positioned } from '@k9-sak-web/types/src/tidslinje';
+import dayjs from 'dayjs';
 import { erSynlig, innenEtDøgn } from './filter';
 
-const enDato = ({ plussDager = 0, plussTimer = 0 } = {}): Dayjs =>
+const enDato = ({ plussDager = 0, plussTimer = 0 } = {}): dayjs.Dayjs =>
   dayjs('2020-01-01').add(plussDager, 'day').add(plussTimer, 'hour');
 
 const etPosisjonertElement = (horizontalPosition = 50): Positioned => ({
