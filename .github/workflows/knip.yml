@@ -1,0 +1,43 @@
+name: Knip
+permissions:
+    contents: read
+    packages: read
+on:
+    workflow_call:
+
+jobs:
+    knip-it:
+        name: Kjør knip
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        permissions:
+            contents: read
+            pull-requests: write
+        steps:
+            - name: Hente kode
+              uses: actions/checkout@v5
+
+            - name: Setup + Install
+              uses: ./.github/actions/setup-install
+              with:
+                  npmAuthToken: ${{ secrets.READER_TOKEN }}
+
+            - name: Run knip
+              run: |
+                  yarn knip --include files --no-config-hints --no-exit-code --reporter=markdown > knip-report.md
+                  cat knip-report.md > $GITHUB_STEP_SUMMARY
+
+            - name: Delete previous comments from knip
+              continue-on-error: true
+              run: gh pr comment ${{ github.event.pull_request.number }} --delete-last --yes
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Post knip report
+              run: |
+                  number_of_words=$(wc -w < knip-report.md)
+                  if [ $number_of_words -gt 3 ]; then        
+                      gh pr comment ${{ github.event.pull_request.number }} --body-file knip-report.md
+                  fi
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
