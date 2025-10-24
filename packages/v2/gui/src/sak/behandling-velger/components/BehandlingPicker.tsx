@@ -371,6 +371,7 @@ const BehandlingPicker = ({
           søknadsperioder={getSøknadsperioderForValgtBehandling(søknadsperioder, valgtBehandling)}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
           sakstypeKode={sakstypeKode}
+          behandlingVisningsnavn={valgtBehandling.visningsnavn}
         />
       )}
       {skalViseHentFlereBehandlingerKnapp && (
