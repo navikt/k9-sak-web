@@ -22,7 +22,11 @@ import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
-import { filterPerioderForKontrollAvInntekt, sortBehandlinger } from './behandlingVelgerUtils';
+import {
+  filterPerioderForBarnetillegg,
+  filterPerioderForKontrollAvInntekt,
+  sortBehandlinger,
+} from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
   switch (behandlingType) {
@@ -55,6 +59,9 @@ const getSøknadsperioderForValgtBehandling = (
   const dataForValgtBehandling = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
   if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT) {
     return filterPerioderForKontrollAvInntekt(dataForValgtBehandling);
+  }
+  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG) {
+    return filterPerioderForBarnetillegg(dataForValgtBehandling);
   }
   return dataForValgtBehandling?.perioder ?? [];
 };
