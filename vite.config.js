@@ -50,11 +50,6 @@ function excludeMsw() {
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir/k9`) };
   return defineConfig({
-    resolve: {
-      alias: {
-        dayjs: 'dayjs/esm',
-      },
-    },
     server: {
       port: 9000,
       proxy: {
