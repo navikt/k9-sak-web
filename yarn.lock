@@ -4799,15 +4799,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-a11y@npm:9.1.13":
-  version: 9.1.13
-  resolution: "@storybook/addon-a11y@npm:9.1.13"
+"@storybook/addon-a11y@npm:9.1.14":
+  version: 9.1.14
+  resolution: "@storybook/addon-a11y@npm:9.1.14"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
     axe-core: "npm:^4.2.0"
   peerDependencies:
-    storybook: ^9.1.13
-  checksum: 10/61fb5b4e29a4401acec424e8119797cb6036c8a4b566c74a72021066302bbd1f4f4d05caf4474a8a627de886fd7d0296d09d71ef94d5a408dc4a5b166f8f1a9b
+    storybook: ^9.1.14
+  checksum: 10/a84bc3b3c099e3ff74cadb1e3add5ad6e25dca77a7db4cd7e985c5c6a1986e4c6bb016c9ae01abb21774eb3c3d467a9788881e1b1d054aeb7d497738e093c5bf
   languageName: node
   linkType: hard
 
@@ -12048,7 +12048,7 @@ __metadata:
     "@sentry/browser": "npm:10.21.0"
     "@sentry/cli": "npm:2.57.0"
     "@sentry/react": "npm:10.21.0"
-    "@storybook/addon-a11y": "npm:9.1.13"
+    "@storybook/addon-a11y": "npm:9.1.14"
     "@storybook/addon-docs": "npm:9.1.13"
     "@storybook/cli": "npm:9.1.13"
     "@storybook/react": "npm:9.1.13"
