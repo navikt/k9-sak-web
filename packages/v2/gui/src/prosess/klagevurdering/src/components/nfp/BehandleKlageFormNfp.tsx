@@ -3,6 +3,7 @@ import {
   ung_kodeverk_klage_KlageVurderingType,
   type ung_sak_kontrakt_fagsak_FagsakDto,
   type ung_sak_kontrakt_klage_KlagebehandlingDto,
+  type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
@@ -29,6 +30,7 @@ interface BehandleKlageFormNfpProps {
   isReadOnly: boolean;
   previewCallback: () => Promise<void>;
   readOnlySubmitButton: boolean;
+  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
 }
 
 /**
@@ -44,6 +46,7 @@ export const BehandleKlageFormNfp = ({
   previewCallback,
   saveKlage,
   readOnlySubmitButton = true,
+  ungHjemler,
 }: BehandleKlageFormNfpProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<BehandleKlageFormNfpFormValues>({
@@ -78,6 +81,7 @@ export const BehandleKlageFormNfp = ({
           erPåklagdBehandlingTilbakekreving={erPåklagdBehandlingTilbakekreving}
           klageVurdering={formValues.klageVurdering}
           medholdReasons={medholdReasons}
+          ungHjemler={ungHjemler}
         />
       </Box.New>
       <div className={styles.confirmVilkarForm}>

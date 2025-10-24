@@ -1,6 +1,7 @@
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
   type ung_sak_kontrakt_fagsak_FagsakDto,
+  type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
@@ -14,7 +15,13 @@ import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormV
 
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
-const utledHjemler = (fagsak: ung_sak_kontrakt_fagsak_FagsakDto) => {
+const utledHjemler = (
+  fagsak: ung_sak_kontrakt_fagsak_FagsakDto,
+  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[],
+): {
+  kode: string;
+  navn: string;
+}[] => {
   switch (fagsak.sakstype) {
     case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
       return [
@@ -48,6 +55,10 @@ const utledHjemler = (fagsak: ung_sak_kontrakt_fagsak_FagsakDto) => {
         { kode: '9-13', navn: '§ 9-13' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
+    case ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE:
+      return ungHjemler
+        .filter(hjemmel => hjemmel.kode !== undefined && hjemmel.navn !== undefined)
+        .map(hjemmel => ({ kode: hjemmel.kode!, navn: hjemmel.navn! }));
 
     default:
       return [];
@@ -60,6 +71,7 @@ interface KlageVurderingRadioOptionsNfpProps {
   medholdReasons: KodeverkV2[] | KodeverkMedUndertype;
   klageVurdering: string | null;
   erPåklagdBehandlingTilbakekreving: boolean;
+  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
 }
 
 export const KlageVurderingRadioOptionsNfp = ({
@@ -68,12 +80,13 @@ export const KlageVurderingRadioOptionsNfp = ({
   medholdReasons,
   klageVurdering = null,
   erPåklagdBehandlingTilbakekreving,
+  ungHjemler,
 }: KlageVurderingRadioOptionsNfpProps) => {
   const {
     control,
     formState: { errors },
   } = useFormContext<BehandleKlageFormNfpFormValues>();
-  const hjemler = utledHjemler(fagsak);
+  const hjemler = utledHjemler(fagsak, ungHjemler);
 
   const skalViseHjemler =
     fagsak.sakstype !== ung_kodeverk_behandling_FagsakYtelseType.FRISINN &&
