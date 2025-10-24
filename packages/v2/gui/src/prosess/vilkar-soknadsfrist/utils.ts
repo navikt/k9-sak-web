@@ -1,6 +1,6 @@
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Dayjs } from 'dayjs';
+import type dayjs from 'dayjs';
 import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
 
 export const formatDate = (dato: string) => initializeDate(dato).format(DDMMYYYY_DATE_FORMAT);
@@ -15,7 +15,7 @@ export const utledInnsendtSoknadsfrist = (innsendtDato: string, formatDate: bool
   return dt;
 };
 
-export const dateSorter = (date1: Dayjs, date2: Dayjs) => {
+export const dateSorter = (date1: dayjs.Dayjs, date2: dayjs.Dayjs) => {
   if (date1.isBefore(date2)) {
     return -1;
   }

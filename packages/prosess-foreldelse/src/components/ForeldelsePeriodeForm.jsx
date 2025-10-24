@@ -45,6 +45,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
       behandlingId,
       behandlingVersjon,
       beregnBelop,
+      behandlingUuid,
       ...formProps
     } = this.props;
 
@@ -59,6 +60,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           beregnBelop={beregnBelop}
+          behandlingUuid={behandlingUuid}
         />
         <VerticalSpacer twentyPx />
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
@@ -127,6 +129,7 @@ ForeldelsePeriodeFormImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   beregnBelop: PropTypes.func.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
   ...formPropTypes,
 };
 

@@ -4,8 +4,9 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import { Dayjs } from 'dayjs';
+import type dayjs from 'dayjs';
 import { useEffect, useState, type SetStateAction } from 'react';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
@@ -15,7 +16,6 @@ import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
 import type { SubmitData } from './types/submitCallback';
 import type { SøknadsfristTilstand } from './types/SøknadsfristTilstand';
 import { formatDate, utledInnsendtSoknadsfrist } from './utils';
-import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 
 const lovReferanse = '§ 22-13';
 
@@ -51,10 +51,10 @@ interface SoknadsfristVilkarProsessIndexProps {
 
 // Finner ut om Statusperiode gjelder for vilkårsperiode
 const erRelevantForPeriode = (
-  vilkårPeriodeFom: Dayjs | null,
-  vilkårPeriodeTom: Dayjs | null,
-  statusPeriodeFom: Dayjs | null,
-  statusPeriodeTom: Dayjs | null,
+  vilkårPeriodeFom: dayjs.Dayjs | null,
+  vilkårPeriodeTom: dayjs.Dayjs | null,
+  statusPeriodeFom: dayjs.Dayjs | null,
+  statusPeriodeTom: dayjs.Dayjs | null,
   innsendtDato?: string | null,
 ) => {
   if (!vilkårPeriodeFom || !vilkårPeriodeTom || !statusPeriodeFom || !statusPeriodeTom || !innsendtDato) {

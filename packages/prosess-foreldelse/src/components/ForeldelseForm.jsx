@@ -177,6 +177,7 @@ export class ForeldelseForm extends Component {
       beregnBelop,
       behandlingId,
       behandlingVersjon,
+      behandlingUuid,
       ...formProps
     } = this.props;
     const { valgtPeriode } = this.state;
@@ -236,6 +237,7 @@ export class ForeldelseForm extends Component {
                     behandlingVersjon={behandlingVersjon}
                     alleKodeverk={alleKodeverk}
                     beregnBelop={beregnBelop}
+                    behandlingUuid={behandlingUuid}
                   />
                 )}
                 <VerticalSpacer twentyPx />
@@ -275,6 +277,7 @@ ForeldelseForm.propTypes = {
   beregnBelop: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
 };
 
 export const transformValues = (values, apCode) => {
