@@ -1,11 +1,11 @@
-import dayjs, { type Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 /**
  * Genererer relative perioder basert på dagens dato.
  * Nyttig for å lage testdata som alltid er relevante uavhengig av når testen kjøres.
- * 
+ *
  * @returns Objekt med to perioder, hver med fom og tom som dayjs-objekter
- * 
+ *
  * @example
  * ```typescript
  * const { periode1, periode2 } = lagRelativePerioder();
@@ -29,12 +29,12 @@ export const lagRelativePerioder = () => ({
 /**
  * Beregner splitt-datoer for en periode.
  * Nyttig for tester som skal dele opp perioder.
- * 
+ *
  * @param fom - Start-dato for perioden
  * @param daysFromStart - Antall dager fra start til splitt-start (standard: 2)
  * @param splitDuration - Varighet av splitt-perioden i dager (standard: 2)
  * @returns Objekt med splittFom og splittTom som dayjs-objekter
- * 
+ *
  * @example
  * ```typescript
  * const startDato = dayjs('2024-01-01');
@@ -45,11 +45,7 @@ export const lagRelativePerioder = () => ({
  * console.log(splittTom.format('YYYY-MM-DD')); // "2024-01-06"
  * ```
  */
-export const beregnSplittDatoer = (
-  fom: Dayjs,
-  daysFromStart: number = 2,
-  splitDuration: number = 2,
-) => ({
+export const beregnSplittDatoer = (fom: dayjs.Dayjs, daysFromStart: number = 2, splitDuration: number = 2) => ({
   splittFom: fom.add(daysFromStart, 'day'),
   splittTom: fom.add(daysFromStart + splitDuration, 'day'),
 });
@@ -57,10 +53,10 @@ export const beregnSplittDatoer = (
 /**
  * Konverterer dayjs-objekt til ISO-datostreng (YYYY-MM-DD).
  * Wrapper for dayjs.format('YYYY-MM-DD').
- * 
+ *
  * @param dato - Dayjs-objekt som skal konverteres
  * @returns ISO-formatert datostreng
- * 
+ *
  * @example
  * ```typescript
  * const dato = dayjs('2024-01-15');
@@ -68,15 +64,15 @@ export const beregnSplittDatoer = (
  * console.log(isoString); // "2024-01-15"
  * ```
  */
-export const tilIsoDato = (dato: Dayjs): string => dato.format('YYYY-MM-DD');
+export const tilIsoDato = (dato: dayjs.Dayjs): string => dato.format('YYYY-MM-DD');
 
 /**
  * Konverterer dayjs-objekt til norsk visningsformat (DD.MM.YYYY).
  * Wrapper for dayjs.format('DD.MM.YYYY').
- * 
+ *
  * @param dato - Dayjs-objekt som skal konverteres
  * @returns Norsk formatert datostreng
- * 
+ *
  * @example
  * ```typescript
  * const dato = dayjs('2024-01-15');
@@ -84,4 +80,4 @@ export const tilIsoDato = (dato: Dayjs): string => dato.format('YYYY-MM-DD');
  * console.log(visningsDato); // "15.01.2024"
  * ```
  */
-export const tilVisningsDato = (dato: Dayjs): string => dato.format('DD.MM.YYYY');
+export const tilVisningsDato = (dato: dayjs.Dayjs): string => dato.format('DD.MM.YYYY');

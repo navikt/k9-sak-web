@@ -1,8 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs';
 import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import dayjs from 'dayjs';
 import { sisteDato, sistePeriode } from './sort';
 
-const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
+const enDato = ({ plussDager = 0 } = {}): dayjs.Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
 
 const enPosisjonertPeriode = ({ horizontalPosition = 50 } = {}): PositionedPeriod => ({
   id: 'id',

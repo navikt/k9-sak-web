@@ -1,7 +1,7 @@
-import { Dayjs } from 'dayjs';
 import { Period } from '@fpsak-frontend/utils';
-import { dateFromString } from '../../../util/dateUtils';
+import dayjs from 'dayjs';
 import { tomorrow } from '../../../constants/dateConstants';
+import { dateFromString } from '../../../util/dateUtils';
 
 export function required(v: string | number): string | boolean {
   if (v === null || v === undefined || v === '') {
@@ -11,7 +11,7 @@ export function required(v: string | number): string | boolean {
 }
 
 export function dateIsNotInTheFuture(dateString: string): string | boolean {
-  const date: Dayjs = dateFromString(dateString);
+  const date: dayjs.Dayjs = dateFromString(dateString);
   if (date.isSame(tomorrow) || date.isAfter(tomorrow)) {
     return 'Datoen kan ikke settes senere enn dagens dato';
   }
