@@ -1,11 +1,11 @@
-import dayjs, { Dayjs } from 'dayjs';
 import { EnkelPeriode } from '@k9-sak-web/types/src/tidslinje';
+import dayjs from 'dayjs';
 import { horizontalPositionAndWidth } from './calc';
 
 interface UsePositionAndSizeOptions {
   periode: EnkelPeriode;
-  tidslinjestart: Dayjs;
-  tidslinjeslutt: Dayjs;
+  tidslinjestart: dayjs.Dayjs;
+  tidslinjeslutt: dayjs.Dayjs;
   direction: 'left' | 'right';
 }
 

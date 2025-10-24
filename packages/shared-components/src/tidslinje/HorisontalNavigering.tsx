@@ -1,5 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import React from 'react';
 import Rad from './Rad';
 import styles from './horisontalNavigering.module.css';
@@ -10,7 +10,7 @@ interface HorisontalNavigeringProps {
   tidslinjeSkala: number;
   rader: Rad[];
   navigasjonFomDato: Date;
-  updateHorisontalNavigering: (date: Dayjs) => void;
+  updateHorisontalNavigering: (date: dayjs.Dayjs) => void;
 }
 
 const getSenesteTom = rader => useSenesteDato({ sluttDato: undefined, rader });

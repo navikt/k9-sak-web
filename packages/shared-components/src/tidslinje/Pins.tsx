@@ -1,6 +1,6 @@
 import { Pin } from '@k9-sak-web/types/src/tidslinje';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import styles from './Pins.module.css';
 import Tooltip from './Tooltip';
 import { position } from './calc';
@@ -23,8 +23,8 @@ const PinView = ({ render, classname }: Partial<Pin>) => {
 
 interface PinsProps {
   pins: Pin[];
-  start: Dayjs;
-  slutt: Dayjs;
+  start: dayjs.Dayjs;
+  slutt: dayjs.Dayjs;
   direction: 'left' | 'right';
 }
 
