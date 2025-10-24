@@ -141,6 +141,7 @@ export const KlageVurderingRadioOptionsNfp = ({
               rules={{ required: 'Feltet må fylles ut' }}
               render={({ field }) => (
                 <UNSAFE_Combobox
+                  size="small"
                   label="Hjemmel"
                   options={hjemler.map(hjemmel => ({ value: hjemmel.kode, label: hjemmel.navn }))}
                   readOnly={readOnly}
