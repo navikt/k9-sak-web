@@ -5,6 +5,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import type { Meta, StoryObj } from '@storybook/react';
+import { delay, http, HttpResponse } from 'msw';
 import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import { KlagevurderingProsessIndex } from './KlagevurderingProsessIndex';
@@ -65,15 +66,15 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
         definisjon: AksjonspunktCodes.BEHANDLE_KLAGE_NFP as ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
       },
     ],
-    klageVurdering: {
-      klageVurderingResultatNFP: {
-        klageVurdertAv: 'NK',
-        klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-    },
+    // klageVurdering: {
+    //   klageVurderingResultatNFP: {
+    //     klageVurdertAv: 'NK',
+    //     klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
+    //     fritekstTilBrev: 'test',
+    //     klageMedholdArsakNavn: 'TEST',
+    //     godkjentAvMedunderskriver: false,
+    //   },
+    // },
   },
   play: async ({ canvas, step }) => {
     await step('skal vise to options når klage opprettholdt', async () => {
@@ -86,6 +87,27 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
     await step('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', async () => {
       await expect(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
     });
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('/ung/sak/api/klage-v2', async () => {
+          await delay(250);
+          return HttpResponse.json(
+            {
+              klageVurderingResultatNFP: {
+                klageVurdertAv: 'NK',
+                klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
+                fritekstTilBrev: 'test',
+                klageMedholdArsakNavn: 'TEST',
+                godkjentAvMedunderskriver: false,
+              },
+            },
+            { status: 200 },
+          );
+        }),
+      ],
+    },
   },
 };
 

@@ -1,6 +1,7 @@
 import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Button } from '@navikt/ds-react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
+import type { SaveKlageParams } from './SaveKlageParams';
 
 const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode: string) => ({
   klageMedholdArsak:
@@ -20,9 +21,10 @@ const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode
 
 interface TempsaveKlageButtonProps {
   formValues: BehandleKlageFormKaFormValues;
-  saveKlage: (params: any) => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<void>;
   aksjonspunktCode: string;
   readOnly: boolean;
+  isSubmitting: boolean;
 }
 
 const TempsaveKlageButton = ({
@@ -30,6 +32,7 @@ const TempsaveKlageButton = ({
   saveKlage,
   aksjonspunktCode,
   readOnly = false,
+  isSubmitting,
 }: TempsaveKlageButtonProps) => {
   const tempSave = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -39,7 +42,13 @@ const TempsaveKlageButton = ({
   return (
     <>
       {!readOnly && (
-        <Button variant="secondary" size="small" type="button" onClick={event => tempSave(event)}>
+        <Button
+          variant="secondary"
+          size="small"
+          type="button"
+          onClick={event => tempSave(event)}
+          loading={isSubmitting}
+        >
           Lagre
         </Button>
       )}

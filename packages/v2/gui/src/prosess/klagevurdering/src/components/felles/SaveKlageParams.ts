@@ -1,7 +1,9 @@
-export interface BehandleKlageFormKaFormValues {
+export interface SaveKlageParams {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
   klageVurdering: string;
-  begrunnelse: string;
   fritekstTilBrev: string;
+  begrunnelse: string;
+  kode: string;
+  klageHjemmel?: string;
 }

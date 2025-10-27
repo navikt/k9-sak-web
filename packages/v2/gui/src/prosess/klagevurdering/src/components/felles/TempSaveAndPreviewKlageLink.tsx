@@ -1,6 +1,8 @@
 import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Button } from '@navikt/ds-react';
+import { useState } from 'react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
+import type { SaveKlageParams } from './SaveKlageParams';
 
 const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode: string) => ({
   klageMedholdArsak:
@@ -25,10 +27,10 @@ const getBrevData = (tekst: string) => ({
 
 interface OwnProps {
   formValues: BehandleKlageFormKaFormValues;
-  saveKlage: (params: any) => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<void>;
   aksjonspunktCode: string;
   readOnly: boolean;
-  previewCallback: (brevData: any) => void;
+  previewCallback: (brevData: any) => Promise<void>;
 }
 
 export const TempSaveAndPreviewKlageLink = ({
@@ -38,10 +40,14 @@ export const TempSaveAndPreviewKlageLink = ({
   readOnly,
   previewCallback,
 }: OwnProps) => {
+  const [isFetchingPreview, setIsFetchingPreview] = useState(false);
   const tempSave = () => {
     void saveKlage(transformValues(formValues, aksjonspunktCode)).then(() => {
       if (formValues.fritekstTilBrev) {
-        previewCallback(getBrevData(formValues.fritekstTilBrev));
+        setIsFetchingPreview(true);
+        void previewCallback(getBrevData(formValues.fritekstTilBrev)).finally(() => {
+          setIsFetchingPreview(false);
+        });
       }
     });
   };
@@ -49,12 +55,17 @@ export const TempSaveAndPreviewKlageLink = ({
   return (
     <div>
       {!readOnly && (
-        <Button onClick={tempSave} data-testid="previewLink" variant="tertiary" size="small" type="button">
+        <Button
+          onClick={tempSave}
+          data-testid="previewLink"
+          variant="tertiary"
+          size="small"
+          type="button"
+          loading={isFetchingPreview}
+        >
           Lagre og forhåndsvis brev
         </Button>
       )}
     </div>
   );
 };
-
-export default TempSaveAndPreviewKlageLink;
