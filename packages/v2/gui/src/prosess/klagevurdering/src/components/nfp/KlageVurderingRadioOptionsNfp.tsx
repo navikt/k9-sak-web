@@ -1,5 +1,7 @@
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
+  ung_kodeverk_klage_KlageVurderingOmgjør,
+  ung_kodeverk_klage_KlageVurderingType,
   type ung_sak_kontrakt_fagsak_FagsakDto,
   type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -10,7 +12,6 @@ import { Box, Radio, UNSAFE_Combobox } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { Controller, useFormContext } from 'react-hook-form';
-import { klageVurderingOmgjoerType, klageVurderingType } from '../KlageVurderingType';
 import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 
 export const TILBAKEKREVING_HJEMMEL = '22-15';
@@ -90,7 +91,7 @@ export const KlageVurderingRadioOptionsNfp = ({
 
   const skalViseHjemler =
     fagsak.sakstype !== ung_kodeverk_behandling_FagsakYtelseType.FRISINN &&
-    klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK &&
+    klageVurdering === ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK &&
     hjemler.length > 0;
 
   const medholdOptions = Array.isArray(medholdReasons)
@@ -107,11 +108,11 @@ export const KlageVurderingRadioOptionsNfp = ({
     <div>
       <ContentMaxWidth>
         <RhfRadioGroup control={control} name="klageVurdering" validate={[required]} isReadOnly={readOnly}>
-          <Radio value={klageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
-          <Radio value={klageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
+          <Radio value={ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
+          <Radio value={ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
         </RhfRadioGroup>
       </ContentMaxWidth>
-      {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
+      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect
@@ -124,9 +125,11 @@ export const KlageVurderingRadioOptionsNfp = ({
             />
             <Box.New marginBlock="space-16 0">
               <RhfRadioGroup control={control} name="klageVurderingOmgjoer" validate={[required]} isReadOnly={readOnly}>
-                <Radio value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
-                <Radio value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
-                <Radio value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}>Delvis omgjør, til gunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
+                  Delvis omgjør, til gunst
+                </Radio>
               </RhfRadioGroup>
             </Box.New>
           </ArrowBox>

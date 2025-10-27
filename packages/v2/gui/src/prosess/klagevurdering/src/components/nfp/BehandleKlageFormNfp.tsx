@@ -169,9 +169,9 @@ interface TransformValues {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
   klageHjemmel: string | null;
-  klageVurderingType: string | null;
-  fritekstTilBrev: string | null;
-  begrunnelse: string | null;
+  klageVurderingType: string;
+  fritekstTilBrev: string;
+  begrunnelse: string;
   kode: string;
 }
 
