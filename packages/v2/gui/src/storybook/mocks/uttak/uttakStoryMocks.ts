@@ -16,7 +16,7 @@ import {
 
 /**
  * Oppretter en mock behandling (sak) med alle påkrevde felt.
- * 
+ *
  * @param overrides - Valgfrie overstyringer for spesifikke felt
  * @returns Et komplett BehandlingDto-objekt
  */
@@ -60,7 +60,7 @@ export const lagAvsluttetBehandling = (overrides: Partial<BehandlingDto> = {}): 
 
 /**
  * Konfigurasjonsobjekt for å opprette en mock uttaksperiode.
- * 
+ *
  * @property range - Periodeområde i ISO-format "YYYY-MM-DD/YYYY-MM-DD"
  * @property utfall - Utfall av perioden (OPPFYLT, IKKE_OPPFYLT, etc.)
  * @property uttaksgrad - Uttaksprosent (0-100)
@@ -98,11 +98,11 @@ export type PeriodeInit = {
 
 /**
  * Oppretter en mock uttaksplan med perioder.
- * 
+ *
  * Denne funksjonen genererer en komplett uttaksplan med alle påkrevde felt for testing.
  * Den beregner automatisk graderingMotTilsyn basert på etablertTilsyn
  * og andreSøkeresTilsyn-verdier.
- * 
+ *
  * Eksempel på bruk:
  * ```typescript
  * const uttak = lagUttak([
@@ -112,7 +112,7 @@ export type PeriodeInit = {
  *   ])
  * ]);
  * ```
- * 
+ *
  * @param perioder - Array av periodekonfigurasjoner opprettet med hjelpefunksjoner
  * @param extra - Valgfrie tilleggsfelt (f.eks. virkningsdatoUttakNyeRegler)
  * @returns Et komplett UttaksplanMedUtsattePerioder-objekt med alle påkrevde felt
@@ -128,9 +128,8 @@ export const lagUttak = (
     const tilgjengeligForSøker = 100 - (p.etablertTilsyn ?? 0) - (p.andreSøkeresTilsyn ?? 0);
 
     // Bestem inngangsvilkår basert på utfall og årsaker
-    const harInngangsvilkårIkkeOppfylt = 
-      p.utfall === Utfall.IKKE_OPPFYLT &&
-      p.årsaker?.includes(Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
+    const harInngangsvilkårIkkeOppfylt =
+      p.utfall === Utfall.IKKE_OPPFYLT && p.årsaker?.includes(Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
 
     const inngangsvilkår = harInngangsvilkårIkkeOppfylt
       ? {
@@ -183,10 +182,10 @@ export const lagUttak = (
       manueltOverstyrt: p.manueltOverstyrt ?? false,
     };
   });
-  
+
   // Generer perioderTilVurdering fra periodene
   const perioderTilVurdering = perioder.map(p => p.range);
-  
+
   return {
     uttaksplan: { perioder: perioderMap },
     simulertUttaksplan: {},
@@ -209,7 +208,11 @@ export const lagOppfyltPeriode = (range: string, overrides: Partial<PeriodeInit>
 /**
  * Oppretter en periode med IKKE_OPPFYLT-status.
  */
-export const lagIkkeOppfyltPeriode = (range: string, årsaker: Årsak[], overrides: Partial<PeriodeInit> = {}): PeriodeInit => ({
+export const lagIkkeOppfyltPeriode = (
+  range: string,
+  årsaker: Årsak[],
+  overrides: Partial<PeriodeInit> = {},
+): PeriodeInit => ({
   range,
   utfall: Utfall.IKKE_OPPFYLT,
   uttaksgrad: 0,
@@ -219,16 +222,16 @@ export const lagIkkeOppfyltPeriode = (range: string, årsaker: Årsak[], overrid
 
 /**
  * Oppretter en periode med inntektsgradering.
- * 
+ *
  * Inntektsgradering reduserer uttaksgraden når søker arbeider i perioden.
  * Uttaksgraden representerer prosentandelen av ytelser mottatt, mens den resterende
  * prosentandelen representerer arbeidsaktivitet.
- * 
+ *
  * Eksempel: 70% uttaksgrad betyr 70% ytelser + 30% arbeid
- * 
+ *
  * Funksjonen beregner automatisk faktiskArbeidstid basert på utbetalingsgraden
  * for hver arbeidsgiver, med antagelse om en normal arbeidsdag på 7,5 timer.
- * 
+ *
  * @param range - Periodeområde i ISO-format "YYYY-MM-DD/YYYY-MM-DD"
  * @param uttaksgrad - Total uttaksprosent (0-100)
  * @param arbeidsgivere - Array av arbeidsgivere med deres utbetalingsgrader
@@ -250,7 +253,7 @@ export const lagInntektsgraderingPeriode = (
     arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: ag.orgnr },
     normalArbeidstid: 'PT7H30M', // 7,5 timer normal arbeidsdag
     // Beregn faktisk arbeidstid: (7,5 timer * arbeidsprosent) konvertert til minutter
-    faktiskArbeidstid: `PT${Math.round((7.5 * (100 - ag.utbetalingsgrad)) / 100 * 60)}M`,
+    faktiskArbeidstid: `PT${Math.round(((7.5 * (100 - ag.utbetalingsgrad)) / 100) * 60)}M`,
     utbetalingsgrad: ag.utbetalingsgrad,
     tilkommet: ag.tilkommet ?? false, // tilkommet = ny ansettelse i perioden
   })),
@@ -259,16 +262,16 @@ export const lagInntektsgraderingPeriode = (
 
 /**
  * Oppretter en periode med tilsynsgradering (graderingMotTilsyn).
- * 
+ *
  * Tilsynsgradering reduserer tilgjengelig uttaksgrad når det er etablert tilsyn
  * eller når andre søkere også mottar omsorgsytelser for
  * samme barn (andreSøkeresTilsyn).
- * 
+ *
  * Beregningen er: tilgjengeligForSøker = 100% - etablertTilsyn - andreSøkeresTilsyn
- * 
+ *
  * Eksempel: Hvis det er 30% etablert tilsyn og 20% andre søkeres tilsyn,
  * er kun 50% tilgjengelig for denne søkeren.
- * 
+ *
  * @param range - Periodeområde i ISO-format "YYYY-MM-DD/YYYY-MM-DD"
  * @param etablertTilsyn - Etablert tilsynsprosent (0-100)
  * @param andreSøkeresTilsyn - Andre søkeres tilsynsprosent (0-100)
@@ -296,7 +299,7 @@ export const lagTilsynsgraderingPeriode = (
 
 /**
  * Oppretter et mock aksjonspunkt med alle påkrevde felt.
- * 
+ *
  * @param definisjon - Aksjonspunktets definisjonskode
  * @param status - Aksjonspunktets status (standard: OPPRETTET)
  * @param overrides - Valgfrie overstyringer for spesifikke felt
@@ -361,8 +364,7 @@ export const lagLøstAksjonspunkt = (
 export const lagOverstyringUttakAksjonspunkt = (
   status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
-): Aksjonspunkt =>
-  lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK, status, overrides);
+): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK, status, overrides);
 
 /**
  * Oppretter et aksjonspunkt for vurdering av overlappende søskensaker.
@@ -370,8 +372,7 @@ export const lagOverstyringUttakAksjonspunkt = (
 export const lagOverlappendeSakerAksjonspunkt = (
   status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
-): Aksjonspunkt =>
-  lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER, status, overrides);
+): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER, status, overrides);
 
 /**
  * Oppretter et aksjonspunkt for vurdering av dato for nye uttaksregler.
@@ -379,8 +380,7 @@ export const lagOverlappendeSakerAksjonspunkt = (
 export const lagVurderDatoNyRegelAksjonspunkt = (
   status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
-): Aksjonspunkt =>
-  lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK, status, overrides);
+): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK, status, overrides);
 
 /**
  * Alle relevante aksjonspunktdefinisjoner for uttak.
@@ -394,7 +394,7 @@ export const relevanteAksjonspunkterAlle: AksjonspunktDefinisjon[] = [
 
 /**
  * Oppretter mock arbeidsgivere-data.
- * 
+ *
  * @param arbeidsgivere - Array av arbeidsgiverkonfigurasjoner
  * @returns ArbeidsgiverOversiktDto arbeidsgivere-objekt
  */
@@ -424,7 +424,7 @@ export const lagArbeidsgivere = (
 /**
  * Standard mock arbeidsgivere for testing.
  * Inkluderer to arbeidsgivere med forskjellige organisasjonsnummer.
- * 
+ *
  * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
  * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
@@ -454,7 +454,7 @@ export const defaultArbeidsgivere = lagArbeidsgivere([
 /**
  * Mock arbeidsgivere med en ny arbeidsgiver (tilkommet).
  * Nyttig for testing av inntektsgraderingsscenarier med ny ansettelse.
- * 
+ *
  * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
  * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
@@ -493,7 +493,7 @@ export const arbeidsgivereWithTilkommet = lagArbeidsgivere([
 
 /**
  * Oppretter mock inntektsgradering data for en periode.
- * 
+ *
  * @param range - Periodeområde i ISO-format "YYYY-MM-DD/YYYY-MM-DD"
  * @param inntektsforhold - Array av inntektsforhold med arbeidsgivere
  * @param beregningsgrunnlag - Total beregningsgrunnlag (sum av alle bruttoInntekter)
@@ -511,28 +511,23 @@ export const lagInntektgraderingPeriodeDto = (
   beregningsgrunnlag?: number,
 ) => {
   const [fom, tom] = range.split('/');
-  
+
   // Beregn beregningsgrunnlag hvis ikke oppgitt (sum av alle bruttoInntekter som ikke er nye)
-  const calculatedBeregningsgrunnlag = beregningsgrunnlag ?? 
-    inntektsforhold
-      .filter(i => !i.erNytt)
-      .reduce((sum, i) => sum + i.bruttoInntekt, 0);
-  
+  const calculatedBeregningsgrunnlag =
+    beregningsgrunnlag ?? inntektsforhold.filter(i => !i.erNytt).reduce((sum, i) => sum + i.bruttoInntekt, 0);
+
   // Beregn løpende inntekt (bruttoInntekt * arbeidstidprosent / 100)
-  const løpendeInntekt = inntektsforhold.reduce(
-    (sum, i) => sum + (i.bruttoInntekt * i.arbeidstidprosent / 100),
-    0
-  );
-  
+  const løpendeInntekt = inntektsforhold.reduce((sum, i) => sum + (i.bruttoInntekt * i.arbeidstidprosent) / 100, 0);
+
   // Beregn bortfalt inntekt
   const bortfaltInntekt = calculatedBeregningsgrunnlag - løpendeInntekt;
-  
+
   // Beregn reduksjonsprosent (løpende / beregningsgrunnlag * 100)
   const reduksjonsProsent = Math.round((løpendeInntekt / calculatedBeregningsgrunnlag) * 100);
-  
+
   // Beregn graderingsprosent (bortfalt / beregningsgrunnlag * 100)
   const graderingsProsent = Math.round((bortfaltInntekt / calculatedBeregningsgrunnlag) * 100);
-  
+
   return {
     periode: { fom, tom },
     beregningsgrunnlag: calculatedBeregningsgrunnlag,
@@ -544,7 +539,7 @@ export const lagInntektgraderingPeriodeDto = (
       arbeidsgiverIdentifikator: i.arbeidsgiverIdentifikator,
       arbeidstidprosent: i.arbeidstidprosent,
       bruttoInntekt: i.bruttoInntekt,
-      løpendeInntekt: i.bruttoInntekt * i.arbeidstidprosent / 100,
+      løpendeInntekt: (i.bruttoInntekt * i.arbeidstidprosent) / 100,
       erNytt: i.erNytt ?? false,
       type: i.type ?? 'ARBEIDSTAKER',
     })),
@@ -554,7 +549,7 @@ export const lagInntektgraderingPeriodeDto = (
 /**
  * Mock inntektsgradering data for story med én arbeidsgiver.
  * Demonstrerer 70% uttak (30% arbeid).
- * 
+ *
  * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
  * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
@@ -582,7 +577,7 @@ export const inntektsgraderingEnArbeidsgiver = {
  * - Periode 1: 70% uttak med én arbeidsgiver
  * - Periode 2: 50% uttak med to eksisterende arbeidsgivere + én ny (tilkommet)
  * - Periode 3: 40% uttak med to arbeidsgivere (én tilkommet)
- * 
+ *
  * Merk: Når du bruker dette i handlers eller andre funksjoner, sørg for at du ikke
  * modifiserer objektet direkte. Bruk spread-operator eller lag kopier når nødvendig.
  */
@@ -653,14 +648,14 @@ export const inntektsgraderingFlereArbeidsgivere = {
 
 /**
  * Oppretter mock-data for en overlappende periode.
- * 
+ *
  * Overlappende perioder oppstår når flere saker for samme barn har perioder
  * som overlapper i tid. Disse må vurderes av saksbehandler for å sikre at
  * total uttaksgrad ikke overstiger 100%.
- * 
+ *
  * Funksjonen kopierer saksnummer-arrayet for å sikre immutability og
  * dataisolasjon mellom tester.
- * 
+ *
  * @example
  * ```typescript
  * // Uløst overlappende periode
@@ -670,7 +665,7 @@ export const inntektsgraderingFlereArbeidsgivere = {
  *   ['SAK123', 'SAK456'],
  *   { skalVurderes: true }
  * );
- * 
+ *
  * // Løst overlappende periode
  * const løstPeriode = lagOverlappendePeriode(
  *   '2024-01-16',
@@ -685,7 +680,7 @@ export const inntektsgraderingFlereArbeidsgivere = {
  *   }
  * );
  * ```
- * 
+ *
  * @param fom - Start-dato (ISO-format YYYY-MM-DD eller dayjs-objekt)
  * @param tom - Slutt-dato (ISO-format YYYY-MM-DD eller dayjs-objekt)
  * @param saksnummer - Array av saksnummer som overlapper (kopieres for immutability)
@@ -727,14 +722,14 @@ export const lagOverlappendePeriode = (
 
 /**
  * Oppretter mock-data for en overstyring av uttak.
- * 
+ *
  * Overstyringer brukes når saksbehandler manuelt justerer uttaksgrader
  * for en periode, typisk for å korrigere automatiske beregninger eller
  * håndtere spesielle situasjoner.
- * 
+ *
  * Funksjonen lager dype kopier av utbetalingsgrader for å sikre
  * immutability og dataisolasjon mellom tester.
- * 
+ *
  * @example
  * ```typescript
  * // Overstyring med én arbeidsgiver
@@ -751,7 +746,7 @@ export const lagOverlappendePeriode = (
  *     }
  *   ]
  * );
- * 
+ *
  * // Overstyring med flere arbeidsgivere
  * const kompleksOverstyring = lagOverstyring(
  *   2,
@@ -771,7 +766,7 @@ export const lagOverlappendePeriode = (
  *   ]
  * );
  * ```
- * 
+ *
  * @param id - Unik ID for overstyringen
  * @param fom - Start-dato (ISO-format YYYY-MM-DD)
  * @param tom - Slutt-dato (ISO-format YYYY-MM-DD)
