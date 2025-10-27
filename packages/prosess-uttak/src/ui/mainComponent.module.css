@@ -1,7 +1,0 @@
-.overstyringsHeader > button {
-  cursor: pointer;
-}
-
-.overlappendeSakContainer {
-  max-width: var(--ax-breakpoint-md);
-}

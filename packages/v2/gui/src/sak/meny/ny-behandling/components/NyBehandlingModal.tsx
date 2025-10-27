@@ -182,6 +182,7 @@ export const NyBehandlingModal = ({
         ? {
             aktørId: aktorId,
             behandlendeEnhetId: gjeldendeVedtakBehandlendeEnhetId,
+            behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
           }
         : {};
     submitCallback({
@@ -190,7 +191,7 @@ export const NyBehandlingModal = ({
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
       periode: erUngdomsprogramytelse
-        ? getUngPerioderTilRevurdering()!.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+        ? getUngPerioderTilRevurdering()?.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
         : undefined,
       ...klageOnlyValues,
     });

@@ -1,21 +1,25 @@
 import type { FC } from 'react';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
-import Period from '@k9-sak-web/prosess-uttak/src/types/Period';
-import { sortPeriodsChronological } from '@k9-sak-web/prosess-uttak/src/util/periodUtils';
-
+import { prettifyPeriod, sortPeriodsChronological } from '../../utils/periodUtils';
 import styles from './utsattePerioderStripe.module.css';
+import { useUttakContext } from '../../context/UttakContext';
 
-interface UtsattePerioderProps {
-  utsattePerioder: string[];
-}
+const UtsattePerioderStripe: FC = () => {
+  const { uttak } = useUttakContext();
+  const { utsattePerioder } = uttak;
 
-const UtsattePerioderStripe: FC<UtsattePerioderProps> = ({ utsattePerioder }) => {
   if (!utsattePerioder || utsattePerioder.length === 0) {
     return null;
   }
 
   const perioder = utsattePerioder
-    .map(utsattPeriode => new Period(utsattPeriode))
+    .map(utsattPeriode => {
+      const [fomValue, tomValue] = utsattPeriode.split('/');
+      return {
+        fom: fomValue ?? '',
+        tom: tomValue ?? '',
+      };
+    })
     .sort((p1, p2) => sortPeriodsChronological(p1, p2));
 
   return (
@@ -29,7 +33,7 @@ const UtsattePerioderStripe: FC<UtsattePerioderProps> = ({ utsattePerioder }) =>
         </BodyShort>
         <ul className={styles.punktliste}>
           {perioder.map(periode => (
-            <li>{periode.prettifyPeriod()}</li>
+            <li key={`${periode.fom}-${periode.tom}`}>{prettifyPeriod(periode.fom, periode.tom)}</li>
           ))}
         </ul>
       </Alert>

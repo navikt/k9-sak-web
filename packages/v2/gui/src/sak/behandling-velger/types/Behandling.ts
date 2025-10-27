@@ -5,6 +5,7 @@ export type Behandling = {
   ansvarligSaksbehandler: BehandlingDto['ansvarligSaksbehandler'];
   avsluttet: BehandlingDto['avsluttet'];
   behandlingsresultat: BehandlingDto['behandlingsresultat'];
+  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | UngBehandlingDto['behandlingÅrsaker'];
   id: number;
   links: BehandlingDto['links'];
   opprettet: BehandlingDto['opprettet'];

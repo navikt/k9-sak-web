@@ -14,6 +14,7 @@ export class ExtendedApiError extends Error {
   public readonly error: string | object;
   public readonly body: string | object;
   public readonly request: Request;
+  public readonly location: string | null;
 
   constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
     const errBody = typeof error === 'string' ? error : JSON.stringify(error);
@@ -22,6 +23,7 @@ export class ExtendedApiError extends Error {
     this.url = req.url;
     this.status = resp.status;
     this.statusText = resp.statusText;
+    this.location = resp.headers.get('Location');
     this.error = error;
     this.body = error;
     this.request = req;
@@ -48,6 +50,10 @@ export class ExtendedApiError extends Error {
 
   public get isNotFound(): boolean {
     return this.status === 404;
+  }
+
+  public get isClientError(): boolean {
+    return this.status >= 400 && this.status < 500;
   }
 
   public get bodyFeilmelding(): string | null {

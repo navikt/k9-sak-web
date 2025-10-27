@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -22,7 +21,6 @@ export const FormkravKlageFormKa = ({
   handleSubmit,
   readOnly = true,
   readOnlySubmitButton = true,
-  alleKodeverk,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
@@ -37,7 +35,6 @@ export const FormkravKlageFormKa = ({
       readOnlySubmitButton={readOnlySubmitButton}
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA}
       formProps={formProps}
-      alleKodeverk={alleKodeverk}
       fagsakPerson={fagsakPerson}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}

@@ -32,6 +32,7 @@ const behandlinger = [
     type: BehandlingDtoType.REVURDERING,
     uuid: '1',
     sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
+    behandlingÅrsaker: [],
   },
   {
     ansvarligSaksbehandler: 'saksbeh',
@@ -49,6 +50,7 @@ const behandlinger = [
     type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
     uuid: '1',
     sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
+    behandlingÅrsaker: [],
   },
 ];
 

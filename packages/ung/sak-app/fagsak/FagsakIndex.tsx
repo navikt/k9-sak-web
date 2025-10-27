@@ -185,6 +185,7 @@ const FagsakIndex = () => {
         behandlingType={behandling ? behandling?.type?.kode : undefined}
         kodeverk={alleKodeverkUngSak}
         tilbakeKodeverk={alleKodeverkTilbake}
+        klageKodeverk={alleKodeverkUngSak}
       >
         <SaksbehandlernavnContext.Provider
           value={saksbehandlereSomHarGjortEndringerIBehandlingen?.saksbehandlere || {}}
@@ -258,6 +259,7 @@ const FagsakIndex = () => {
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
                     ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
+                    erIkkeDigitalBruker={fagsak.erIkkeDigitalBruker}
                   />
                 </div>
               );

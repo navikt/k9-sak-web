@@ -114,15 +114,16 @@ export default ({ mode }) => {
       },
     },
     test: {
-      deps: {
-        inline: [
-          '@navikt/k9-sak-typescript-client',
-          '@navikt/ung-sak-typescript-client',
-          '@navikt/k9-klage-typescript-client',
-          '@navikt/k9-tilbake-typescript-client',
-          '@navikt/ung-tilbake-typescript-client',
-        ], // Without this, tests using *-*-typescript-client through backend project failed.
-        interopDefault: true,
+      server: {
+        deps: {
+          inline: [
+            '@navikt/k9-sak-typescript-client',
+            '@navikt/ung-sak-typescript-client',
+            '@navikt/k9-klage-typescript-client',
+            '@navikt/k9-tilbake-typescript-client',
+            '@navikt/ung-tilbake-typescript-client',
+          ],
+        },
       },
       environment: 'jsdom',
       css: {
