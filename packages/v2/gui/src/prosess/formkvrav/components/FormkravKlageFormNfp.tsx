@@ -29,7 +29,7 @@ interface TransformedValues {
     påklagBehandlingVedtakDato: string | undefined;
     påklagBehandlingType: k9_klage_kodeverk_behandling_BehandlingType;
   } | null;
-  valgtKlagePart: any;
+  valgtKlagePart: k9_klage_kontrakt_behandling_part_PartDto | undefined;
 }
 
 interface OwnProps {
@@ -98,7 +98,8 @@ export const FormkravKlageFormNfp = ({
 const getPåklagdBehandling = (
   avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
   påklagdVedtak: string | null,
-) => avsluttedeBehandlinger.find(behandling => behandling.uuid.toString() === påklagdVedtak);
+): k9_klage_kontrakt_behandling_BehandlingDto | undefined =>
+  avsluttedeBehandlinger.find(behandling => behandling.uuid.toString() === påklagdVedtak);
 
 export const erTilbakekreving = (
   avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
