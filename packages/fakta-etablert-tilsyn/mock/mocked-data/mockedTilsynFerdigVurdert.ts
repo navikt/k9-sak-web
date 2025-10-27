@@ -4,9 +4,7 @@ export default {
     { periode: { fom: '2022-08-17', tom: '2022-08-17' }, tidPerDag: 'PT3H', kilde: 'SØKER' },
     { periode: { fom: '2022-08-18', tom: '2022-08-19' }, tidPerDag: 'PT5H', kilde: 'SØKER' },
   ],
-  smortEtablertTilsynPerioder: [
-    { periode: { fom: '2022-08-18', tom: '2022-08-19' }, tidPerDag: 'PT5H' },
-  ],
+  smortEtablertTilsynPerioder: [{ periode: { fom: '2022-08-18', tom: '2022-08-19' }, tidPerDag: 'PT5H' }],
   nattevåk: {
     beskrivelser: [
       {

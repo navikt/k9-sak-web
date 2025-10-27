@@ -31,16 +31,11 @@ const BeredskapsperiodeoversiktMessages = ({
       <Alert size="small" data-testid="nattevåk-ferdig" variant="info">
         <HStack gap="space-32" align="center">
           Behov for beredskap er ferdig vurdert og du kan gå videre i vurderingen.
-          <Button
-            onClick={fortsettUtenEndring}
-            size="small"
-            id="gåVidereFraNattevåkKnapp"
-          >
+          <Button onClick={fortsettUtenEndring} size="small" id="gåVidereFraNattevåkKnapp">
             Fortsett
           </Button>
         </HStack>
       </Alert>
-
     );
   }
   return null;

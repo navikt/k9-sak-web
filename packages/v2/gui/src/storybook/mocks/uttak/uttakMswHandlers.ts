@@ -5,7 +5,7 @@ import { defaultArbeidsgivere } from './uttakStoryMocks.js';
 /**
  * Standard MSW handlers for uttak API endpoints.
  * Disse kan brukes direkte i stories eller tilpasses med factory-funksjoner.
- * 
+ *
  * @example
  * ```typescript
  * // I en story-fil:
@@ -23,15 +23,15 @@ export const standardUttakHandlers = {
   /**
    * Handler for arbeidsgiver-endepunktet.
    * Returnerer standard arbeidsgivere hvis ikke annet er spesifisert.
-   * 
+   *
    * @param arbeidsgivere - Valgfrie arbeidsgivere å returnere (bruker defaultArbeidsgivere hvis ikke oppgitt)
    * @returns MSW handler for arbeidsgiver-endepunktet
-   * 
+   *
    * @example
    * ```typescript
    * // Bruk standard arbeidsgivere:
    * standardUttakHandlers.arbeidsgivere()
-   * 
+   *
    * // Bruk egendefinerte arbeidsgivere:
    * standardUttakHandlers.arbeidsgivere(customArbeidsgivere)
    * ```
@@ -47,15 +47,15 @@ export const standardUttakHandlers = {
   /**
    * Handler for inntektsgradering-endepunktet.
    * Returnerer tom liste hvis ikke annet er spesifisert.
-   * 
+   *
    * @param perioder - Valgfrie inntektsgraderingperioder å returnere (tom liste hvis ikke oppgitt)
    * @returns MSW handler for inntektsgradering-endepunktet
-   * 
+   *
    * @example
    * ```typescript
    * // Ingen inntektsgradering:
    * standardUttakHandlers.inntektsgradering()
-   * 
+   *
    * // Med inntektsgradering:
    * standardUttakHandlers.inntektsgradering(inntektsgraderingEnArbeidsgiver.perioder)
    * ```
@@ -68,16 +68,16 @@ export const standardUttakHandlers = {
   /**
    * Handler for overstyrt uttak-endepunktet.
    * Returnerer tom liste av overstyringer hvis ikke annet er spesifisert.
-   * 
+   *
    * @param arbeidsgivere - Valgfrie arbeidsgivere å returnere (bruker defaultArbeidsgivere hvis ikke oppgitt)
    * @param overstyringer - Valgfrie overstyringer å returnere (tom liste hvis ikke oppgitt)
    * @returns MSW handler for overstyrt uttak-endepunktet
-   * 
+   *
    * @example
    * ```typescript
    * // Ingen overstyringer:
    * standardUttakHandlers.overstyrtUttak()
-   * 
+   *
    * // Med overstyringer:
    * standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [overstyring1, overstyring2])
    * ```
@@ -97,17 +97,17 @@ export const standardUttakHandlers = {
   /**
    * Handler for aksjonspunkt-endepunktet.
    * Logger payload og returnerer suksess-respons.
-   * 
+   *
    * @param onSubmit - Valgfri callback som kalles med payload når aksjonspunkt submittes
    * @returns MSW handler for aksjonspunkt-endepunktet
-   * 
+   *
    * @example
    * ```typescript
    * // Med logging:
    * standardUttakHandlers.aksjonspunkt((payload) => {
    *   console.log('Aksjonspunkt submitted:', payload);
    * })
-   * 
+   *
    * // Med Storybook action:
    * standardUttakHandlers.aksjonspunkt(action('aksjonspunkt:submit'))
    * ```
@@ -122,17 +122,17 @@ export const standardUttakHandlers = {
   /**
    * Handler for overstyring av aksjonspunkt.
    * Logger payload og returnerer suksess-respons.
-   * 
+   *
    * @param onSubmit - Valgfri callback som kalles med payload når overstyring submittes
    * @returns MSW handler for overstyring av aksjonspunkt
-   * 
+   *
    * @example
    * ```typescript
    * // Med logging:
    * standardUttakHandlers.overstyrAksjonspunkt((payload) => {
    *   console.log('Overstyring submitted:', payload);
    * })
-   * 
+   *
    * // Med Storybook action:
    * standardUttakHandlers.overstyrAksjonspunkt(action('overstyr-aksjonspunkt:submit'))
    * ```
@@ -147,13 +147,13 @@ export const standardUttakHandlers = {
 
 /**
  * Oppretter en handler for overlappende saker med tilpassede perioder.
- * 
+ *
  * Denne factory-funksjonen lar deg definere hvilke perioder som har overlapp
  * med andre saker, og hvordan de skal vurderes.
- * 
+ *
  * @param perioderMedOverlapp - Array av perioder med overlappende saker
  * @returns MSW handler for overlappende saker-endepunktet
- * 
+ *
  * @example
  * ```typescript
  * // Opprett handler med overlappende perioder:
@@ -192,20 +192,20 @@ export const createOverlappendeSakerHandler = (
 
 /**
  * Oppretter en handler for overstyrbare aktiviteter med validering.
- * 
+ *
  * Denne factory-funksjonen oppretter en handler som validerer at forespurte
  * perioder er innenfor tillatte områder før den returnerer aktiviteter.
  * Dette simulerer backend-validering av hvilke perioder som kan overstyres.
- * 
+ *
  * Valideringsregler:
  * - Datoer må være i ISO-format (YYYY-MM-DD)
  * - fom må være før eller lik tom
  * - Perioden må være helt innenfor én av allowedRanges
- * 
+ *
  * @param allowedRanges - Gyldige perioder som kan overstyres
  * @param arbeidsgivere - Arbeidsgivere som skal returneres i responsen
  * @returns MSW handler med valideringslogikk
- * 
+ *
  * @example
  * ```typescript
  * // Opprett handler som kun tillater overstyring i januar og februar 2024:

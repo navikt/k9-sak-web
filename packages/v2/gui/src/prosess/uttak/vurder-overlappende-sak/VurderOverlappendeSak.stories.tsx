@@ -111,7 +111,9 @@ export const Aksjonspunkt: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser infoboks med overlappende perioder', async () => {
-      await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
+      await expect(
+        canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
+      ).resolves.toBeInTheDocument();
       await expect(canvas.findByText('Perioder som overlapper med sak:')).resolves.toBeInTheDocument();
       await expect(canvas.findByRole('link', { name: 'ABCDE' })).resolves.toBeInTheDocument();
       await expect(canvas.findByRole('link', { name: 'FGHIJ' })).resolves.toBeInTheDocument();
@@ -172,21 +174,14 @@ export const LøsAksjonspunkt: Story = {
         const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
 
         await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
-        await user.type(
-          await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }),
-          '40',
-        );
+        await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
 
         await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
         const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
         if (felt2) {
           await user.type(felt2, '60');
         }
-        await user.type(
-          await canvas.findByLabelText('Begrunnelse'),
-          'Dette er en grundig begrunnelse',
-        );
-        
+        await user.type(await canvas.findByLabelText('Begrunnelse'), 'Dette er en grundig begrunnelse');
       });
     });
 
@@ -217,7 +212,6 @@ export const LøsAksjonspunkt: Story = {
           }),
         );
       });
-
     });
   },
 };
@@ -290,7 +284,10 @@ export const LøsAksjonspunktMedSplitt: Story = {
       // Verifiser at periodene er splittet - bruker RegExp for å matche uten "Splitt periode" knappen
       await expect(
         canvas.findByRole('group', {
-          name: new RegExp(`Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(splittFom.subtract(1, 'day'))}`, 'i'),
+          name: new RegExp(
+            `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(splittFom.subtract(1, 'day'))}`,
+            'i',
+          ),
         }),
       ).resolves.toBeInTheDocument();
     });
@@ -341,7 +338,9 @@ export const LøstAksjonspunkt: Story = {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
-    aksjonspunkter: [lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' })],
+    aksjonspunkter: [
+      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+    ],
     hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
@@ -395,7 +394,9 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser lesevisning av løst aksjonspunkt', async () => {
-      await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
+      await expect(
+        canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
+      ).resolves.toBeInTheDocument();
 
       const radios = await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' });
       radios.forEach(async radio => {
@@ -410,8 +411,18 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     await step('Kan redigere aksjonspunkt', async () => {
       await user.click(await canvas.findByRole('button', { name: 'Rediger' }));
 
-      const gruppeEn = canvas.getByRole('group', { name: new RegExp(`Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)}`, 'i') })
-      const gruppeTo = canvas.getByRole('group', { name: new RegExp(`Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`, 'i') })
+      const gruppeEn = canvas.getByRole('group', {
+        name: new RegExp(
+          `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)}`,
+          'i',
+        ),
+      });
+      const gruppeTo = canvas.getByRole('group', {
+        name: new RegExp(
+          `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`,
+          'i',
+        ),
+      });
 
       const begrunnelseFelt = await canvas.findByLabelText('Begrunnelse');
 
@@ -419,10 +430,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
       await user.click(within(gruppeTo).getByRole('radio', { name: 'Ingen uttak i perioden' }));
 
       await user.clear(begrunnelseFelt);
-      await user.type(
-        begrunnelseFelt,
-        'Dette er en modifisert begrunnelse',
-      );
+      await user.type(begrunnelseFelt, 'Dette er en modifisert begrunnelse');
     });
 
     await step('Kan lagre aksjonspunkt', async () => {
@@ -493,7 +501,9 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     behandling: lagAvsluttetBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
-    aksjonspunkter: [lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' })],
+    aksjonspunkter: [
+      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+    ],
     hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
@@ -502,7 +512,9 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser leseversjon i avsluttet sak', async () => {
-      await expect(canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).resolves.toBeInTheDocument();
+      await expect(
+        canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
+      ).resolves.toBeInTheDocument();
 
       const radios = await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' });
       radios.forEach(async radio => {
