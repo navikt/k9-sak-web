@@ -33,9 +33,9 @@ export default class KlageVurderingBackendClient {
     behandlingId: number;
     fritekstTilBrev: string;
     klageHjemmel?: string;
-    klageMedholdArsak: ung_kodeverk_klage_KlageMedholdÅrsak;
+    klageMedholdArsak?: ung_kodeverk_klage_KlageMedholdÅrsak;
     klageVurdering: ung_kodeverk_klage_KlageVurderingType;
-    klageVurderingOmgjoer: ung_kodeverk_klage_KlageVurderingOmgjør;
+    klageVurderingOmgjoer?: ung_kodeverk_klage_KlageVurderingOmgjør;
     kode: string;
   }) {
     return await noNavK9Klage_mellomlagreKlage({
