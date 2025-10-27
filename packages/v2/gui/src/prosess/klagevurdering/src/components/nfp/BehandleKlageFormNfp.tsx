@@ -119,17 +119,19 @@ export const BehandleKlageFormNfp = ({
                 previewCallback={previewCallback}
               />
             )}
-          <HStack gap="space-16">
-            <Button variant="primary" size="small" loading={isSubmitting} type="submit">
-              Bekreft og fortsett
-            </Button>
-            <TempsaveKlageButton
-              formValues={formValues}
-              saveKlage={saveKlage}
-              readOnly={isReadOnly}
-              aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-            />
-          </HStack>
+          {!isReadOnly && (
+            <HStack gap="space-16">
+              <Button variant="primary" size="small" loading={isSubmitting} type="submit">
+                Bekreft og fortsett
+              </Button>
+              <TempsaveKlageButton
+                formValues={formValues}
+                saveKlage={saveKlage}
+                readOnly={isReadOnly}
+                aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+              />
+            </HStack>
+          )}
         </VStack>
       </div>
     </RhfForm>

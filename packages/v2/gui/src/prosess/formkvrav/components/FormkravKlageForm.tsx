@@ -9,6 +9,7 @@ import type {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -45,7 +46,7 @@ const getKlagbareVedtak = (
   return klagBareVedtak.concat(
     avsluttedeBehandlinger.map(behandling => (
       <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE)} ${behandling.avsluttet ? initializeDate(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT) : ''}`}
+        {`${kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE, erTilbakekreving(behandling.type) ? 'kodeverkTilbake' : 'kodeverk')} ${behandling.avsluttet ? initializeDate(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT) : ''}`}
       </option>
     )),
   );

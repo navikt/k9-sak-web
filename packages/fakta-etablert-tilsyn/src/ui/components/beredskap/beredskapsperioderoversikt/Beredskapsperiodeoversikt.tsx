@@ -18,7 +18,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = beredskapData;
   const {
-    lagreBeredskapvurdering = () => { },
+    lagreBeredskapvurdering = () => {},
     readOnly = false,
     harAksjonspunktForBeredskap = false,
   } = React.useContext(ContainerContext) || {};

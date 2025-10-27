@@ -13,17 +13,16 @@ import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { safeJSONParse } from '../utils/safeJSONParse';
 import { FormkravKlageForm, getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
 import { erTilbakekreving, påklagdBehandlingInfo } from './FormkravKlageFormNfp';
 import type { FormValuesKa } from './FormValuesKa';
 
 interface TransformedValues {
-  erKlagerPart: boolean | null | undefined;
-  erFristOverholdt: boolean | null | undefined;
-  erKonkret: boolean | null | undefined;
-  erSignert: boolean | null | undefined;
-  begrunnelse: string | null | undefined;
+  erKlagerPart: boolean;
+  erFristOverholdt: boolean;
+  erKonkret: boolean;
+  erSignert: boolean;
+  begrunnelse: string;
   kode: string;
   vedtak: string | null;
   erTilbakekreving: boolean;
@@ -32,7 +31,7 @@ interface TransformedValues {
     påklagBehandlingVedtakDato: string | undefined;
     påklagBehandlingType: k9_klage_kodeverk_behandling_BehandlingType;
   } | null;
-  valgtKlagePart: string;
+  valgtKlagePart: k9_klage_kontrakt_behandling_part_PartDto | undefined;
 }
 
 interface OwnProps {
@@ -71,7 +70,7 @@ export const FormkravKlageFormKa = ({
   const handleSubmit = async (values: FormValuesKa) => {
     setIsSubmitting(true);
     try {
-      await submitCallback([transformValues(values, avsluttedeBehandlinger)]);
+      await submitCallback([transformValues(values, avsluttedeBehandlinger, parterMedKlagerett || [])]);
     } finally {
       setIsSubmitting(false);
     }
@@ -97,17 +96,20 @@ export const FormkravKlageFormKa = ({
 export const transformValues = (
   values: FormValuesKa,
   avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
+  parterMedKlagerett: k9_klage_kontrakt_behandling_part_PartDto[],
 ) => ({
-  erKlagerPart: values.erKlagerPart,
-  erFristOverholdt: values.erFristOverholdt,
-  erKonkret: values.erKonkret,
-  erSignert: values.erSignert,
-  begrunnelse: values.begrunnelse,
+  erKlagerPart: values.erKlagerPart ?? false,
+  erFristOverholdt: values.erFristOverholdt ?? false,
+  erKonkret: values.erKonkret ?? false,
+  erSignert: values.erSignert ?? false,
+  begrunnelse: values.begrunnelse ?? '',
   kode: AksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   påklagdBehandlingInfo: påklagdBehandlingInfo(avsluttedeBehandlinger, values.vedtak),
-  valgtKlagePart: values.valgtPartMedKlagerett ? safeJSONParse(values.valgtPartMedKlagerett) : undefined,
+  valgtKlagePart: values.valgtPartMedKlagerett
+    ? parterMedKlagerett?.find(part => part.identifikasjon?.id === values.valgtPartMedKlagerett)
+    : undefined,
 });
 
 const buildInitialValues = (
@@ -123,6 +125,6 @@ const buildInitialValues = (
     erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,
     erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
     erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
-    valgtPartMedKlagerett: JSON.stringify(valgtPartMedKlagerett),
+    valgtPartMedKlagerett: valgtPartMedKlagerett?.identifikasjon?.id,
   };
 };

@@ -56,9 +56,7 @@ export const ÅpentAksjonspunkt: Story = {
   },
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')],
-    ),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     hentBehandling: fn(),
@@ -76,12 +74,12 @@ export const ÅpentAksjonspunkt: Story = {
     await step('Viser informasjon om endringene i uttak', async () => {
       await expect(canvas.getByText('Hva innebærer endringene i uttak?')).toBeInTheDocument();
 
-      await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
+      await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }));
       await waitFor(async function sjekkEkspandertInformasjonOmEndringer() {
         await expect(canvas.getByText(/Før endring:/i)).toBeVisible();
       });
 
-      await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }))
+      await user.click(canvas.getByRole('button', { name: /Hva innebærer endringene i uttak/i }));
       await waitFor(async function sjekkSkjultInformasjonOmEndringer() {
         await expect(canvas.getByText(/Før endring:/i)).not.toBeVisible();
       });
@@ -108,9 +106,7 @@ export const Skjemavalidering: Story = {
   },
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')],
-    ),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     hentBehandling: fn(),
@@ -137,7 +133,6 @@ export const Skjemavalidering: Story = {
         await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
       });
     });
-
   },
 };
 
@@ -159,9 +154,7 @@ export const LøsAksjonspunkt: Story = {
   },
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')],
-    ),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     hentBehandling: fn(),
@@ -191,21 +184,20 @@ export const LøsAksjonspunkt: Story = {
     await step('Bekreft og fortsett', async () => {
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
       await waitFor(async function sjekkOverstyring() {
-        await expect(submitSpy).toHaveBeenCalledWith(
-          {
-            "behandlingId": "1",
-            "behandlingVersjon": 1,
-            "bekreftedeAksjonspunktDtoer": [
-              {
-                "@type": "9291",
-                "begrunnelse": "Endringene i uttaksreglene skal gjelde fra 20. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.",
-                "kode": "9291",
-                "virkningsdato": "2024-01-20",
-              },
-            ],
-          },
-        );
-      })
+        await expect(submitSpy).toHaveBeenCalledWith({
+          behandlingId: '1',
+          behandlingVersjon: 1,
+          bekreftedeAksjonspunktDtoer: [
+            {
+              '@type': '9291',
+              begrunnelse:
+                'Endringene i uttaksreglene skal gjelde fra 20. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
+              kode: '9291',
+              virkningsdato: '2024-01-20',
+            },
+          ],
+        });
+      });
     });
   },
 };
@@ -226,10 +218,9 @@ export const RedigerVurdering: Story = {
   },
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')],
-      { virkningsdatoUttakNyeRegler: '2024-01-15' },
-    ),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+      virkningsdatoUttakNyeRegler: '2024-01-15',
+    }),
     erOverstyrer: false,
     aksjonspunkter: [
       lagVurderDatoNyRegelAksjonspunkt(AksjonspunktStatus.UTFØRT, {
@@ -246,9 +237,13 @@ export const RedigerVurdering: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel for endringsdato', async () => {
-      await expect(canvas.getByRole('row', { name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.' }));
-      await expect(canvas.getByRole('button', { name: 'Rediger' }))
-    })
+      await expect(
+        canvas.getByRole('row', {
+          name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.',
+        }),
+      );
+      await expect(canvas.getByRole('button', { name: 'Rediger' }));
+    });
 
     await step('Rediger endringsdato', async () => {
       await user.click(canvas.getByRole('button', { name: 'Rediger' }));
@@ -266,24 +261,23 @@ export const RedigerVurdering: Story = {
     await step('Bekreft og fortsett', async () => {
       await user.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
       await waitFor(async function sjekkOverstyring() {
-        await expect(submitSpy).toHaveBeenCalledWith(
-          {
-            "behandlingId": "1",
-            "behandlingVersjon": 1,
-            "bekreftedeAksjonspunktDtoer": [
-              {
-                "@type": "9291",
-                "begrunnelse": "Endringene i uttaksreglene skal gjelde fra 20. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.",
-                "kode": "9291",
-                "virkningsdato": "2024-01-20",
-              },
-            ],
-          },
-        );
-      })
+        await expect(submitSpy).toHaveBeenCalledWith({
+          behandlingId: '1',
+          behandlingVersjon: 1,
+          bekreftedeAksjonspunktDtoer: [
+            {
+              '@type': '9291',
+              begrunnelse:
+                'Endringene i uttaksreglene skal gjelde fra 20. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
+              kode: '9291',
+              virkningsdato: '2024-01-20',
+            },
+          ],
+        });
+      });
     });
 
     // Avbryter etter innsendt endring for å tilbakestille visningen i Storybook
-    await user.click(canvas.getByRole('button', { name: 'Avbryt' }))
+    await user.click(canvas.getByRole('button', { name: 'Avbryt' }));
   },
 };

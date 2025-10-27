@@ -166,8 +166,8 @@ export const TilkommetInntektsforholdField = ({
               <Alert size="small" variant="info">
                 Utgangspunktet er at alle nye inntektskilder som kommer etter skjæringstidspunktet skal kunne medføre
                 gradering mot inntekt. Du skal derfor vanligvis velge "ja", som betyr at K9 vurderer om{' '}
-                {ytelseTekst.ytelseNavnBestemt} skal graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9 bruke
-                denne aktiviteten for å vurdere søkers inntektstap.
+                {ytelseTekst.ytelseNavnBestemt} skal graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9
+                bruke denne aktiviteten for å vurdere søkers inntektstap.
               </Alert>
             </Box.New>
           );
