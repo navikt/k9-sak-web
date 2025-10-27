@@ -50,7 +50,6 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
     msw: {
       handlers: [
         http.get('/api/klage-v2', async () => {
-          // await delay(250);
           return HttpResponse.json(
             {
               klageVurderingResultatNK: {
