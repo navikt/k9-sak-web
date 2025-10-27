@@ -152,6 +152,9 @@ export const KlageVurderingRadioOptionsNfp = ({
                   onToggleSelected={option => {
                     field.onChange(option);
                   }}
+                  value={
+                    readOnly && field.value ? hjemler.find(hjemmel => hjemmel.kode === field.value)?.navn : undefined
+                  }
                 />
               )}
             />
