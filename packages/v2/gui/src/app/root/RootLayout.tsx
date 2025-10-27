@@ -14,14 +14,14 @@ export const RootLayout = () => {
   });
 
   return (
-    <ErrorBoundary>
-      <Theme theme="light">
+    <Theme theme="light">
+      <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <RootSuspense>
             <Outlet />
           </RootSuspense>
         </QueryClientProvider>
-      </Theme>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Theme>
   );
 };

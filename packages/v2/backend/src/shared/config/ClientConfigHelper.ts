@@ -1,6 +1,8 @@
 import type { AuthFixApi } from '../auth/AuthFixApi.js';
 import { generateNavCallidHeader } from '../instrumentation/navCallid.js';
 import { jsonSerializerOption } from '../jsonSerializerOption.js';
+import { resolveLoginURL, withRedirectToCurrentLocation } from '../auth/resolveLoginURL.js';
+import { AuthAbortedError } from '../auth/AuthAbortedError.js';
 
 const { xJsonSerializerOptionHeader, xJsonSerializerOptionValue } = jsonSerializerOption;
 
@@ -59,6 +61,8 @@ export class ClientConfigHelper {
           console.warn(
             `Auth flow aborted, could not automatically authenticate and retry request. This request will fail.`,
           );
+          const retryURL = withRedirectToCurrentLocation(resolveLoginURL(response.headers.get('Location')));
+          throw new AuthAbortedError(retryURL);
         }
       }
       return response;
