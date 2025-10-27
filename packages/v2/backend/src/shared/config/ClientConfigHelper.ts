@@ -56,22 +56,7 @@ export class ClientConfigHelper {
         const authResult = await authFixer.authenticate(response, request.signal);
         if (authResult.isAuthenticated) {
           // Retry the request that failed with 401, using the fetch implementation supplied by hey-api if it is defined
-          const retryResponse = await fetcher(request);
-          if (retryResponse.status === 401 && !request.signal.aborted) {
-            console.info(`Retry after authentication still failed. Retrying authentication one more time.`);
-            const authRetryResult = await authFixer.authenticate(response, request.signal);
-            if (authRetryResult.isAuthenticated) {
-              return await fetcher(request);
-            } else if (authRetryResult.aborted) {
-              console.warn(
-                `(Retry) Auth flow aborted, could not automatically authenticate and retry request. This request will fail.`,
-              );
-              const retryURL = withRedirectToCurrentLocation(resolveLoginURL(response.headers.get('Location')));
-              throw new AuthAbortedError(retryURL);
-            }
-          } else {
-            return retryResponse;
-          }
+          return await fetcher(request);
         } else if (authResult.aborted) {
           console.warn(
             `Auth flow aborted, could not automatically authenticate and retry request. This request will fail.`,
