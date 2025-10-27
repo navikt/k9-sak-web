@@ -178,7 +178,6 @@ const KlageProsess = ({
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
     arbeidsgiverOpplysningerPerId,
-    klageVurdering: data.klageVurdering,
     saveKlageText: useCallback(
       saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data.aksjonspunkter),
       [behandling.versjon],

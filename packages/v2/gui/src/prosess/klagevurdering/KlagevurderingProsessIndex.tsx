@@ -19,10 +19,8 @@ import { BehandleKlageFormNfp } from './src/components/nfp/BehandleKlageFormNfp'
 
 interface KlagevurderingProsessIndexProps {
   fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
-  saveKlage: () => Promise<void>;
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
-  previewCallback: () => Promise<void>;
   readOnlySubmitButton: boolean;
   aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   behandling: ung_sak_kontrakt_behandling_BehandlingDto;
