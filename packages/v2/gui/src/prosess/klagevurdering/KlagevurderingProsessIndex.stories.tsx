@@ -130,6 +130,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
     });
 
     await step('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst til brev' }), 'Dette er en fritekst');
       await expect(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
     });
   },
