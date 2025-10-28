@@ -1,8 +1,5 @@
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
-  ung_kodeverk_klage_KlageMedholdÅrsak,
-  ung_kodeverk_klage_KlageVurderingOmgjør,
-  ung_kodeverk_klage_KlageVurderingType,
   type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   type ung_sak_kontrakt_behandling_BehandlingDto,
   type ung_sak_kontrakt_fagsak_FagsakDto,
@@ -61,9 +58,9 @@ export const KlagevurderingProsessIndex = ({
           behandlingId: behandling.id,
           fritekstTilBrev: params.fritekstTilBrev,
           klageHjemmel: params.klageHjemmel ?? undefined,
-          klageMedholdArsak: (params.klageMedholdArsak as ung_kodeverk_klage_KlageMedholdÅrsak) ?? undefined,
-          klageVurdering: params.klageVurdering as ung_kodeverk_klage_KlageVurderingType,
-          klageVurderingOmgjoer: (params.klageVurderingOmgjoer as ung_kodeverk_klage_KlageVurderingOmgjør) ?? undefined,
+          klageMedholdArsak: params.klageMedholdArsak,
+          klageVurdering: params.klageVurdering,
+          klageVurderingOmgjoer: params.klageVurderingOmgjoer,
           kode: params.kode,
         });
       }

@@ -1,23 +1,7 @@
-import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Button } from '@navikt/ds-react';
-import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
-import type { SaveKlageParams } from './SaveKlageParams';
-
-const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode: string) => ({
-  klageMedholdArsak:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE ||
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK
-      ? values.klageMedholdArsak
-      : null,
-  klageVurderingOmgjoer:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
-      ? values.klageVurderingOmgjoer
-      : null,
-  klageVurdering: values.klageVurdering,
-  fritekstTilBrev: values.fritekstTilBrev,
-  begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCode,
-});
+import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues.js';
+import type { SaveKlageParams } from './SaveKlageParams.js';
+import { formValuesToSaveValues } from './formValuesToSaveValues.js';
 
 interface TempsaveKlageButtonProps {
   formValues: BehandleKlageFormKaFormValues;
@@ -36,7 +20,7 @@ const TempsaveKlageButton = ({
 }: TempsaveKlageButtonProps) => {
   const tempSave = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    void saveKlage(transformValues(formValues, aksjonspunktCode));
+    void saveKlage(formValuesToSaveValues(formValues, aksjonspunktCode));
   };
 
   return (
