@@ -7,10 +7,10 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import type { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import { KlagevurderingProsessIndex } from './KlagevurderingProsessIndex';
+import { withFakeKlageVurderingApi } from '../../storybook/decorators/withFakeKlageVurderingApi.js';
 
 const meta = {
   title: 'gui/prosess/klagevurdering',
@@ -46,26 +46,17 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
       versjon: 1,
     },
   },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/api/klage-v2', async () => {
-          return HttpResponse.json(
-            {
-              klageVurderingResultatNK: {
-                klageVurdertAv: 'NK',
-                klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
-                fritekstTilBrev: 'test',
-                klageMedholdArsakNavn: 'TEST',
-                godkjentAvMedunderskriver: false,
-              },
-            },
-            { status: 200 },
-          );
-        }),
-      ],
-    },
-  },
+  decorators: [
+    withFakeKlageVurderingApi({
+      klageVurderingResultatNK: {
+        klageVurdertAv: 'NK',
+        klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
+        fritekstTilBrev: 'test',
+        klageMedholdArsakNavn: 'TEST',
+        godkjentAvMedunderskriver: false,
+      },
+    }),
+  ],
   play: async ({ canvas, step }) => {
     await step('skal vise fire options når klage stadfestet', async () => {
       await waitFor(async () => {
@@ -96,26 +87,17 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
       versjon: 1,
     },
   },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/api/klage-v2', async () => {
-          return HttpResponse.json(
-            {
-              klageVurderingResultatNFP: {
-                klageVurdertAv: 'NK',
-                klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
-                fritekstTilBrev: 'test',
-                klageMedholdArsakNavn: 'TEST',
-                godkjentAvMedunderskriver: false,
-              },
-            },
-            { status: 200 },
-          );
-        }),
-      ],
-    },
-  },
+  decorators: [
+    withFakeKlageVurderingApi({
+      klageVurderingResultatNFP: {
+        klageVurdertAv: 'NK',
+        klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
+        fritekstTilBrev: 'test',
+        klageMedholdArsakNavn: 'TEST',
+        godkjentAvMedunderskriver: false,
+      },
+    }),
+  ],
   play: async ({ canvas, step }) => {
     await step('skal vise to options når klage opprettholdt', async () => {
       await waitFor(async () => {
@@ -145,26 +127,17 @@ export const KlagevurderingMedAksjonspunktNfpKlageMedhold: Story = {
       versjon: 1,
     },
   },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('/api/klage-v2', async () => {
-          return HttpResponse.json(
-            {
-              klageVurderingResultatNFP: {
-                klageVurdertAv: 'NK',
-                fritekstTilBrev: 'test',
-                klageMedholdArsakNavn: 'TEST',
-                godkjentAvMedunderskriver: false,
-                klageVurdering: ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE,
-              },
-            },
-            { status: 200 },
-          );
-        }),
-      ],
-    },
-  },
+  decorators: [
+    withFakeKlageVurderingApi({
+      klageVurderingResultatNFP: {
+        klageVurdertAv: 'NK',
+        fritekstTilBrev: 'test',
+        klageMedholdArsakNavn: 'TEST',
+        godkjentAvMedunderskriver: false,
+        klageVurdering: ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE,
+      },
+    }),
+  ],
   play: async ({ canvas, step }) => {
     await step('skal vise to options når klage opprettholdt', async () => {
       await waitFor(async () => {

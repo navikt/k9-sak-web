@@ -7,10 +7,12 @@ import {
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
-import KlageVurderingBackendClient from './KlageVurderingBackendClient';
 import type { SaveKlageParams } from './src/components/felles/SaveKlageParams';
 import { BehandleKlageFormKa } from './src/components/ka/BehandleKlageFormKa';
 import { BehandleKlageFormNfp } from './src/components/nfp/BehandleKlageFormNfp';
+import { useContext } from 'react';
+import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
 
 // type ValidatedSaveKlageParams = z.infer<typeof SaveKlageSchema>;
 
@@ -31,14 +33,14 @@ export const KlagevurderingProsessIndex = ({
   aksjonspunkter,
   behandling,
 }: KlagevurderingProsessIndexProps) => {
-  const api = new KlageVurderingBackendClient();
+  const api = assertDefined(useContext(KlageVurderingApiContext));
   const { data: ungHjemler = [] } = useQuery({
-    queryKey: ['ung-klage-hjemler'],
+    queryKey: ['klage-hjemler', api.backend],
     queryFn: () => api.hentValgbareKlagehjemler(),
     enabled: fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
   });
   const { data: klageVurdering, isLoading } = useQuery({
-    queryKey: ['klageVurdering', behandling],
+    queryKey: ['klageVurdering', behandling, api.backend],
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
   const { mutateAsync: previewCallback } = useMutation({
