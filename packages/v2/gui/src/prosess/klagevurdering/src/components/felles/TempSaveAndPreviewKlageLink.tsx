@@ -41,15 +41,16 @@ export const TempSaveAndPreviewKlageLink = ({
   previewCallback,
 }: OwnProps) => {
   const [isFetchingPreview, setIsFetchingPreview] = useState(false);
-  const tempSave = () => {
-    void saveKlage(transformValues(formValues, aksjonspunktCode)).then(() => {
-      if (formValues.fritekstTilBrev) {
-        setIsFetchingPreview(true);
-        void previewCallback(getBrevData(formValues.fritekstTilBrev)).finally(() => {
-          setIsFetchingPreview(false);
-        });
+  const tempSave = async () => {
+    await saveKlage(transformValues(formValues, aksjonspunktCode));
+    if (formValues.fritekstTilBrev) {
+      setIsFetchingPreview(true);
+      try {
+        await previewCallback(getBrevData(formValues.fritekstTilBrev));
+      } finally {
+        setIsFetchingPreview(false);
       }
-    });
+    }
   };
 
   return (
