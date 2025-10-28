@@ -184,7 +184,10 @@ export const transformValues = (
     fagsak.sakstype !== fagsakYtelsesType.FRISINN &&
     values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK
   ) {
-    klageHjemmel = erPåklagdBehandlingTilbakekreving ? TILBAKEKREVING_HJEMMEL : values.klageHjemmel;
+    klageHjemmel =
+      erPåklagdBehandlingTilbakekreving && fagsak.sakstype !== fagsakYtelsesType.UNGDOMSYTELSE
+        ? TILBAKEKREVING_HJEMMEL
+        : values.klageHjemmel;
   }
 
   return {
