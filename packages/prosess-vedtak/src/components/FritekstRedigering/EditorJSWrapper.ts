@@ -44,7 +44,16 @@ export default class EditorJSWrapper {
 
   public async importer(html: string) {
     await this.editor.isReady;
-    const sanitizedHtml = html.replace(/\s*(<[^>]+>)\s*/g, '$1'); // Fjerne mellomrom rundt html-tags
+    // Fjerne mellomrom rundt html-tags
+    let sanitizedHtml = html.replace(/\s*(<[^>]+>)\s*/g, '$1');
+    // Erstatte alle newlines og multiple spaces med single space
+    sanitizedHtml = html.replace(/\s+/g, ' ');
+    // Fjerne space rett etter opening tags
+    sanitizedHtml = sanitizedHtml.replace(/(<[^/>][^>]*>)\s+/g, '$1');
+    // Fjerne space rett før closing tags
+    sanitizedHtml = sanitizedHtml.replace(/\s+(<\/[^>]+>)/g, '$1');
+    // Fjerne space mellom tags
+    sanitizedHtml = sanitizedHtml.replace(/>\s+</g, '><');
     await this.editor.blocks.renderFromHTML(sanitizedHtml);
     return true;
   }
