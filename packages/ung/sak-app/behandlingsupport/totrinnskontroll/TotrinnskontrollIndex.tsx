@@ -1,8 +1,7 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
-import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
-import React, { useMemo, useState } from 'react';
-import { UngSakApiKeys, restApiHooks } from '../../data/ungsakApi';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import React, { use, useMemo, useState } from 'react';
 import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
@@ -13,6 +12,7 @@ import {
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { useQuery } from '@tanstack/react-query';
 import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
+import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -54,7 +54,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: 
     [behandling],
   );
 
-  const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
+  const { brukernavn, kanVeilede = false } = use(InnloggetAnsattContext);
 
   const totrinnsÅrsakerQuery = useQuery({
     queryKey: ['totrinnskontroll', 'årsaker', behandling.uuid, behandling.status.kode, api],
