@@ -35,7 +35,7 @@
     "@tanstack/react-query": "^5.90.5",
     "@types/css-tree": "^2.3.11",
     "@types/object-hash": "^3.0.6",
-    "axios": "1.12.2",
+    "axios": "1.13.0",
     "css-tree": "3.1.0",
     "dayjs": "^1.11.18",
     "editorjs-html": "3.4.3",
