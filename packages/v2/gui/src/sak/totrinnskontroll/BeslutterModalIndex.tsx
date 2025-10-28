@@ -1,7 +1,7 @@
 import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import { type FC, useCallback } from 'react';
-import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal.tsx';
+import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal.js';
 
 export interface BeslutterModalIndex2Props {
   readonly behandling: TotrinnskontrollBehandling;

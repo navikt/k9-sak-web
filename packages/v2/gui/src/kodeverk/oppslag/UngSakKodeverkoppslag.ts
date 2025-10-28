@@ -90,7 +90,7 @@ export class UngSakKodeverkoppslag
   }
 
   språkkoder<U extends OrUndefined = undefined>(kode: Kilde<EO, 'språkkoder'>, undefinedIfNotFound?: U) {
-    return this.finnObjektFraKilde('språkkoder', kode, undefinedIfNotFound)
+    return this.finnObjektFraKilde('språkkoder', kode, undefinedIfNotFound);
   }
 
   tilbakekrevingVidereBehandlinger<U extends OrUndefined = undefined>(
@@ -124,6 +124,24 @@ export class UngSakKodeverkoppslag
     undefinedIfNotFound?: U,
   ) {
     return this.finnObjektFraKilde('årsakerTilVurdering', kode, undefinedIfNotFound);
+  }
+
+  klageMedholdÅrsak<U extends OrUndefined = undefined>(kode: Kilde<EO, 'klageMedholdÅrsak'>, undefinedIfNotFound?: U) {
+    return this.finnObjektFraKilde('klageMedholdÅrsak', kode, undefinedIfNotFound);
+  }
+
+  klageAvvistÅrsaker<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'klageAvvistÅrsaker'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('klageAvvistÅrsaker', kode, undefinedIfNotFound);
+  }
+
+  klagevurderingType<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'klagevurderingType'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('klagevurderingType', kode, undefinedIfNotFound);
   }
 }
 
