@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { action } from 'storybook/actions';
 import FormkravProsessIndex from './FormkravProsessIndex';
 
@@ -37,7 +36,6 @@ export const visFormkravPanelForAksjonspunktNfp = args => (
   <FormkravProsessIndex
     behandling={behandling}
     submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
     aksjonspunkter={[
       {
@@ -76,7 +74,6 @@ export const visFormkravPanelForAksjonspunktKa = args => (
   <FormkravProsessIndex
     behandling={behandling}
     submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
     aksjonspunkter={[
       {

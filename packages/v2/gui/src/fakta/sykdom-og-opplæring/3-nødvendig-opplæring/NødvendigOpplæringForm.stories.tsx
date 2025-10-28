@@ -50,8 +50,6 @@ export const Avslagsårsaker: Story = {
     vurdering: {
       avslagsårsak: Avslagsårsak.IKKE_NØDVENDIG_OPPLÆRING,
       begrunnelse: 'Begrunnelse for at opplæring ikke er nødvendig',
-      dokumentertOpplæring: false,
-      nødvendigOpplæring: false,
       opplæring: {
         fom: '2025-02-14',
         tom: '2025-02-23',

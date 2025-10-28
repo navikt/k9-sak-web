@@ -1,21 +1,22 @@
+import { Fragment, type FC } from 'react';
+import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import {
   k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
-import React, { type FC } from 'react';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
-
+import { useUttakContext } from '../context/UttakContext';
 import styles from './uttakDetaljer.module.css';
+import { LoadingPanel } from '../../../shared/loading-panel/LoadingPanel';
 
 interface ownProps {
-  alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
   inntektsgradering: InntektgraderingPeriodeDto;
 }
 
-const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntektsgradering }) => {
+const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
+  const { arbeidsgivere, lasterArbeidsgivere } = useUttakContext();
+
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
 
   const formatNOK = (value: number | null | undefined): string => {
@@ -29,6 +30,10 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
   const løpendeInntekt = formatNOK(inntektsgradering.løpendeInntekt);
   const bortfaltInntekt = formatNOK(inntektsgradering.bortfaltInntekt);
 
+  if (lasterArbeidsgivere) {
+    return <LoadingPanel />;
+  }
+
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
@@ -37,9 +42,10 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
           .filter(inntForhold => !inntForhold.erNytt)
           .map(inntForhold => {
             const { arbeidsgiverIdentifikator } = inntForhold;
-            const arbeidsforholdData = arbeidsgiverIdentifikator
-              ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-              : undefined;
+            const arbeidsforholdData =
+              arbeidsgiverIdentifikator && arbeidsgivere && !Array.isArray(arbeidsgivere)
+                ? arbeidsgivere[arbeidsgiverIdentifikator]
+                : undefined;
             return (
               <Box.New
                 key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
@@ -63,11 +69,12 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
       <UttakDetaljerEkspanderbar title={`Utbetalt lønn: ${løpendeInntekt}`}>
         {inntektsforhold.map(inntForhold => {
           const { arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-            : undefined;
+          const arbeidsforholdData =
+            arbeidsgiverIdentifikator && arbeidsgivere && !Array.isArray(arbeidsgivere)
+              ? arbeidsgivere[arbeidsgiverIdentifikator]
+              : undefined;
           return (
-            <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
+            <Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
               <Box.New className={styles.uttakDetaljerBeregningFirma}>
                 <BodyShort size="small" weight="semibold">
                   {inntForhold.type !== InntektsforholdDtoType.FRILANSER
@@ -89,7 +96,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                   = {formatNOK(inntForhold.løpendeInntekt)} i utbetalt lønn
                 </BodyShort>
               </Box.New>
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </UttakDetaljerEkspanderbar>

@@ -9,10 +9,12 @@ import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureTogg
 import { requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
-import useGetEnabledApplikasjonContext from "./useGetEnabledApplikasjonContext";
-import ApplicationContextPath from "@k9-sak-web/sak-app/src/app/ApplicationContextPath";
-import { useUngKodeverkoppslag } from "@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js";
-import { UngKodeverkoppslagContext } from "@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js";
+import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
+import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
+import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -44,9 +46,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
-  const enabledApplicationContexts = useGetEnabledApplikasjonContext()
-  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE)
-  const ungKodeverkOppslag = useUngKodeverkoppslag(tilbakeAktivert) // Legg til klage her når det er klart
+  const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const ungKodeverkOppslag = useUngKodeverkoppslag(tilbakeAktivert);
 
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
@@ -61,7 +63,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
       <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-        {harFeilet || erFerdig ? children : <LoadingPanel />}
+        <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+          {harFeilet || erFerdig ? children : <LoadingPanel />}
+        </InnloggetAnsattProvider>
       </UngKodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
   );

@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "3.1.20250926082531",
-    "@navikt/k9-sak-typescript-client": "3.0.20250925112318",
+    "@navikt/k9-sak-typescript-client": "3.0.20251014190337",
     "@navikt/k9-tilbake-typescript-client": "^1.1.20250922195504",
-    "@navikt/ung-sak-typescript-client": "2.0.20250925100452",
-    "@navikt/ung-tilbake-typescript-client": "3.0.20250924144500"
+    "@navikt/ung-sak-typescript-client": "2.0.20251024103947",
+    "@navikt/ung-tilbake-typescript-client": "3.0.20251008100459"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.86.0"
+    "@tanstack/eslint-plugin-query": "^5.91.2"
   }
 }

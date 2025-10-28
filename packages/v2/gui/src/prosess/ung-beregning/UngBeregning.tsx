@@ -57,6 +57,11 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
   });
 
+  const { data: arbeidsgivere } = useQuery({
+    queryKey: ['arbeidsgivere', behandling.uuid],
+    queryFn: () => api.getArbeidsgiverOpplysninger(behandling.uuid),
+  });
+
   if (kontrollInntektIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
@@ -97,6 +102,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
                     submitCallback={submitCallback}
                     inntektKontrollperioder={inntekt.kontrollperioder}
                     isReadOnly={isReadOnly}
+                    arbeidsgivere={arbeidsgivere}
                   />
                 )}
               </Tabs.Panel>

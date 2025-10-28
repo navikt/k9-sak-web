@@ -14,7 +14,7 @@ const isInDevelopmentModeOrTestEnvironment = () =>
   isRunningOnLocalhost() ||
   window.location.hostname === 'k9.dev.intern.nav.no' ||
   window.location.hostname === 'ung.intern.dev.nav.no';
-const getHeaderTitleHref = (getPathToLos: () => string, headerTitleHref: string) => {
+const getHeaderTitleHref = (getPathToLos: () => string | null, headerTitleHref: string) => {
   if (!isRunningOnLocalhost()) {
     return getPathToLos() || headerTitleHref;
   }
@@ -27,9 +27,9 @@ interface OwnProps {
   removeErrorMessage: () => void;
   errorMessages?: Feilmelding[];
   setSiteHeight: (height: number) => void;
-  getPathToLos: () => string;
-  getPathToK9Punsj: () => string;
-  ainntektPath: string;
+  getPathToLos: () => string | null;
+  getPathToK9Punsj?: () => string | null;
+  ainntektPath?: string;
   aaregPath: string;
   ytelse: string;
   headerTitleHref: string;
@@ -68,6 +68,7 @@ const HeaderWithErrorPanel = ({
 
   const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn && showEndringslogg;
   const skalBrukeLos = !isUngWeb();
+  const pathToPunsj = getPathToK9Punsj?.();
   return (
     <div>
       <InternalHeader className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}>
@@ -106,9 +107,11 @@ const HeaderWithErrorPanel = ({
           <Dropdown.Menu>
             <Dropdown.Menu.GroupedList>
               <Dropdown.Menu.GroupedList.Heading>Systemer og oppslagsverk</Dropdown.Menu.GroupedList.Heading>
-              <Dropdown.Menu.GroupedList.Item as="a" target="_blank" href={ainntektPath}>
-                A-inntekt <ExternalLinkIcon aria-hidden />
-              </Dropdown.Menu.GroupedList.Item>
+              {ainntektPath && (
+                <Dropdown.Menu.GroupedList.Item as="a" target="_blank" href={ainntektPath}>
+                  A-inntekt <ExternalLinkIcon aria-hidden />
+                </Dropdown.Menu.GroupedList.Item>
+              )}
               <Dropdown.Menu.GroupedList.Item as="a" target="_blank" href={aaregPath}>
                 Aa-registeret <ExternalLinkIcon aria-hidden />
               </Dropdown.Menu.GroupedList.Item>
@@ -118,9 +121,11 @@ const HeaderWithErrorPanel = ({
               <Dropdown.Menu.GroupedList.Item as="a" target="_blank" href={SHAREPOINT_URL}>
                 Sharepoint <ExternalLinkIcon aria-hidden />
               </Dropdown.Menu.GroupedList.Item>
-              <Dropdown.Menu.GroupedList.Item as="a" target="_blank" href={getPathToK9Punsj()}>
-                Punsj <ExternalLinkIcon aria-hidden />
-              </Dropdown.Menu.GroupedList.Item>
+              {pathToPunsj != null ? (
+                <Dropdown.Menu.GroupedList.Item as="a" target="_blank" href={pathToPunsj}>
+                  Punsj <ExternalLinkIcon aria-hidden />
+                </Dropdown.Menu.GroupedList.Item>
+              ) : null}
             </Dropdown.Menu.GroupedList>
           </Dropdown.Menu>
         </Dropdown>

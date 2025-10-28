@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
@@ -131,7 +131,11 @@ export const combineConsecutivePeriods = (datesOrPeriods: DateOrPeriod[]): FomTo
   return combinedPeriods;
 };
 
-export const calcDays = (fraDatoPeriode: Dayjs | string, tilDatoPeriode: Dayjs | string, notWeekends = true) => {
+export const calcDays = (
+  fraDatoPeriode: dayjs.Dayjs | string,
+  tilDatoPeriode: dayjs.Dayjs | string,
+  notWeekends = true,
+) => {
   if (tilDatoPeriode === TIDENES_ENDE) {
     return checkDays(undefined, undefined);
   }
@@ -192,7 +196,10 @@ export const checkDays = (weeks?: number, days?: number): string => {
   return tekst;
 };
 
-export const calcDaysAndWeeksWithWeekends = (fraDatoPeriode: Dayjs | string, tilDatoPeriode: Dayjs | string) => {
+export const calcDaysAndWeeksWithWeekends = (
+  fraDatoPeriode: dayjs.Dayjs | string,
+  tilDatoPeriode: dayjs.Dayjs | string,
+) => {
   const notWeekends = false;
 
   const numOfDays = calcDays(fraDatoPeriode, tilDatoPeriode, notWeekends);
@@ -225,7 +232,7 @@ export const calcDaysAndWeeks = (fraDatoPeriode?: string, tilDatoPeriode?: strin
 export const formatPeriod = (fomDate: string, tomDate: string): string =>
   `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
 
-export default function dateSorter(date1: Dayjs, date2: Dayjs) {
+export default function dateSorter(date1: dayjs.Dayjs, date2: dayjs.Dayjs) {
   if (date1.isBefore(date2)) {
     return -1;
   }

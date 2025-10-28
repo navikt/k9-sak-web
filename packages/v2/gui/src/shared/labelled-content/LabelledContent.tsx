@@ -16,7 +16,6 @@ export interface LabelledContentProps {
 export const LabelledContent = ({
   label,
   content,
-  labelTag,
   indentContent,
   size = 'small',
   hideLabel = false,
@@ -29,7 +28,7 @@ export const LabelledContent = ({
   return (
     <div>
       {!hideLabel && (
-        <Label className="font-bold" as={labelTag || 'p'} size={size}>
+        <Label className="font-bold" size={size}>
           {label}
         </Label>
       )}

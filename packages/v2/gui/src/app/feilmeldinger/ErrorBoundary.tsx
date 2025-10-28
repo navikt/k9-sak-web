@@ -5,6 +5,9 @@ import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/Exten
 import UnauthorizedPage from './UnauthorizedPage.js';
 import ForbiddenPage from './ForbiddenPage.js';
 import NotFoundPage from './NotFoundPage.js';
+import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
+import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
+import { AuthAbortedPage } from '../auth/AuthAbortedPage.js';
 
 interface OwnProps {
   errorMessageCallback?: (error: string) => void;
@@ -115,7 +118,12 @@ export class ErrorBoundary extends Component<OwnProps, State> {
       const apiError = ExtendedApiError.findInError(error);
       if (apiError != null) {
         if (apiError.isUnauthorized) {
-          return <UnauthorizedPage />;
+          const loginUrl = withRedirectToCurrentLocation(resolveLoginURL(apiError.location));
+          if (loginUrl != null) {
+            return <UnauthorizedPage loginUrl={loginUrl.toString()} />;
+          } else {
+            return <UnauthorizedPage loginUrl="/" />;
+          }
         }
         if (apiError.isForbidden) {
           return <ForbiddenPage />;
@@ -123,6 +131,9 @@ export class ErrorBoundary extends Component<OwnProps, State> {
         if (apiError.isNotFound) {
           return <NotFoundPage />;
         }
+      }
+      if (error instanceof AuthAbortedError) {
+        return <AuthAbortedPage retryURL={error.retryURL} />;
       }
       return <ErrorPage sentryId={sentryId} />;
     }

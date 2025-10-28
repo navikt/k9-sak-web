@@ -1,7 +1,7 @@
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import tabCodes from '../../fakta/sykdom-og-opplæring/tabCodes.js';
 import { faktaPanelCodes } from './faktaPanelCodes.js';
 import { prosessStegCodes } from './prosessStegCodes.js';
-import tabCodes from '../../fakta/sykdom-og-opplæring/tabCodes.js';
-import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
 // Pga midlertidig workaround for manglande SkjermlenkeType definisjon i backend legger vi til denne her.
 // Skal fjernast igjen når backend implementerer disse koder.
@@ -261,6 +261,11 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     kode: 'FAKTA_OM_NY_INNTEKT',
     faktaNavn: faktaPanelCodes.NY_INNTEKT,
     punktNavn: '',
+  },
+  {
+    kode: 'KONTROLL_AV_INNTEKT',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.KONTROLL_AV_INNTEKT,
   },
 ];
 
