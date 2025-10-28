@@ -14,9 +14,9 @@
     "vite": "^7.1.11"
   },
   "dependencies": {
-    "@navikt/ds-css": "7.32.1",
+    "@navikt/ds-css": "7.32.3",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "7.32.1",
+    "@navikt/ds-react": "7.32.3",
     "@navikt/ft-form-hooks": "^9.3.0",
     "@navikt/ft-plattform-komponenter": "^10.1.13",
     "@popperjs/core": "2.11.8",
