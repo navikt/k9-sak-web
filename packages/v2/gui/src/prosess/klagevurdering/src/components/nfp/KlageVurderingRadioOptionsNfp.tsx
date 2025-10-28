@@ -103,6 +103,18 @@ export const KlageVurderingRadioOptionsNfp = ({
         ))
     : [];
 
+  const skalViseValgAvHjemmel = () => {
+    if (skalViseHjemler) {
+      if (
+        fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE ||
+        !erPåklagdBehandlingTilbakekreving
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
     <div>
       <ContentMaxWidth>
@@ -132,7 +144,7 @@ export const KlageVurderingRadioOptionsNfp = ({
           </ArrowBox>
         </ContentMaxWidth>
       )}
-      {skalViseHjemler && !erPåklagdBehandlingTilbakekreving && (
+      {skalViseValgAvHjemmel() && (
         <ContentMaxWidth>
           <ArrowBox>
             <Controller
