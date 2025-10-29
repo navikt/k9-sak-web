@@ -32,6 +32,44 @@ interface AktivitetTabellProps {
   aktivitetsstatuser: KodeverkMedNavn[];
 }
 
+// Helper functions for text translations
+const getHjemmelText = (hjemmel: string): string => {
+  const hjemmelTexts: Record<string, string> = {
+    'FP_VK_2': '§ 9-2',
+    'FP_VK_3': '§ 9-3',
+    'FP_VK_5': '§ 9-5', 
+    'FP_VK_8': '§ 9-8',
+    'FP_VK_10': '§ 9-10',
+    'FP_VK_11': '§ 9-11',
+    'FP_VK_12': '§ 9-12',
+    'FP_VK_13': '§ 9-13',
+    'FP_VK_16': '§ 9-16',
+  };
+  return hjemmelTexts[hjemmel] || hjemmel;
+};
+
+const getVilkarText = (vilkar: string, vilkarsutfall?: string): string => {
+  const vilkarTexts: Record<string, string> = {
+    'ARBEIDSFORHOLD_OPPFYLT': 'Arbeidsforhold oppfylt',
+    'ARBEIDSFORHOLD_IKKE_OPPFYLT': 'Arbeidsforhold ikke oppfylt',
+    'ALDER': 'Alder',
+    'OMSORGEN_FOR': 'Omsorgen for',
+    'ALDERSVILKAR_BARN': 'Aldersvilkår barn',
+    'SYKDOM': 'Sykdom',
+  };
+  const key = vilkarsutfall ? `${vilkar}_${vilkarsutfall}` : vilkar;
+  return vilkarTexts[key] || vilkarTexts[vilkar] || vilkar;
+};
+
+const getFaneText = (faneId: string): string => {
+  const faneTexts: Record<string, string> = {
+    'Uttaksplan.Hjemmel': 'Hjemmel',
+    'Uttaksplan.Vilkar': 'Vilkår',
+    'Uttaksplan.Nokkeltall': 'Nøkkeltall',
+  };
+  return faneTexts[faneId] || faneId;
+};
+
 export const antallDager = (periode: string): string | number => {
   const [fom, tom] = periode.split('/');
   return calcDays(fom, tom, false);
@@ -213,7 +251,7 @@ const AktivitetTabell = ({
                     <Table.DataCell colSpan={antallKolonner}>
                       {hjemler.map(hjemmel => (
                         <div key={`${periode}--${hjemmel}`}>
-                          <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
+                          {getHjemmelText(hjemmel)}
                         </div>
                       ))}
                     </Table.DataCell>
@@ -249,13 +287,7 @@ const AktivitetTabell = ({
                       <Table.DataCell>
                         {sorterteVilkår.map(([vilkår, vilkårsutfall]) => (
                           <BodyShort size="small" key={`${periode}--${vilkår}`}>
-                            <FormattedMessage
-                              id={
-                                vilkår === VilkårEnum.ARBEIDSFORHOLD
-                                  ? `Uttaksplan.Vilkår.${vilkår}_${vilkårsutfall}`
-                                  : `Uttaksplan.Vilkår.${vilkår}`
-                              }
-                            />
+                            {getVilkarText(vilkår, vilkårsutfall)}
                           </BodyShort>
                         ))}
                       </Table.DataCell>
@@ -327,7 +359,7 @@ const AktivitetTabell = ({
                                 <Tabs.Tab
                                   key={id}
                                   value={id}
-                                  label={<FormattedMessage id={id} />}
+                                  label={getFaneText(id)}
                                   onClick={() => velgDetaljfane(idx)}
                                 />
                               ))}
@@ -349,9 +381,7 @@ const AktivitetTabell = ({
                               onClick={visEllerSkjulAlleNokkeltalldetaljer}
                               type="button"
                             >
-                              <FormattedMessage
-                                id={viserAlleDetaljer ? 'Nøkkeltall.SkjulUtregninger' : 'Nøkkeltall.VisUtregninger'}
-                              />
+                              {viserAlleDetaljer ? 'Skjul utregninger' : 'Vis utregninger'}
                               <Image src={viserAlleDetaljer ? hide : show} />
                             </button>
                           )}
