@@ -338,3 +338,68 @@ export const Tilbakekreving: Story = {
     ],
   },
 };
+
+export const GodkjennerKlageVedtak: Story = {
+  args: {
+    ...SenderBehandlingTilbakeTilSaksbehandler.args,
+    behandlingKlageVurdering: {
+      klageVurderingResultatNK: {
+        begrunnelse: 'klageVurderingResultatNK begrunnelse',
+        klageMedholdArsak: 'klage medhold årsak',
+        klageVurdering: 'klage vurdering',
+        klageVurdertAv: 'NK',
+      },
+    },
+  },
+  play: async ({ canvas, args }) => {
+    const godkjentTexts = canvas.getAllByLabelText('Godkjent');
+    if (godkjentTexts[0]) {
+      await userEvent.click(godkjentTexts[0]);
+    }
+    if (godkjentTexts[1]) {
+      await userEvent.click(godkjentTexts[1]);
+    }
+    if (godkjentTexts[2]) {
+      await userEvent.click(godkjentTexts[2]);
+    }
+    if (godkjentTexts[3]) {
+      await userEvent.click(godkjentTexts[3]);
+    }
+    await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
+    await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
+    await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
+    await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
+      fatterVedtakAksjonspunktDto: {
+        '@type': '5016',
+        begrunnelse: null,
+        aksjonspunktGodkjenningDtos: [
+          {
+            aksjonspunktKode: '5082',
+            godkjent: true,
+            begrunnelse: undefined,
+            arsaker: [],
+          },
+          {
+            aksjonspunktKode: '5038',
+            godkjent: true,
+            begrunnelse: undefined,
+            arsaker: [],
+          },
+          {
+            aksjonspunktKode: '5039',
+            godkjent: true,
+            begrunnelse: undefined,
+            arsaker: [],
+          },
+          {
+            aksjonspunktKode: '5058',
+            godkjent: true,
+            begrunnelse: undefined,
+            arsaker: [],
+          },
+        ],
+      },
+      erAlleAksjonspunktGodkjent: true,
+    });
+  },
+};
