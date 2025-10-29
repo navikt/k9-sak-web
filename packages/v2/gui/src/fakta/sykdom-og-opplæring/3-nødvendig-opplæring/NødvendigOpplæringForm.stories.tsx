@@ -151,23 +151,20 @@ export const ValideringAvPeriodevalg: Story = {
     await expect(brukVurderingCheckbox).toBeInTheDocument();
     await userEvent.click(brukVurderingCheckbox);
     
-    // Try to submit without selecting any periods
+    // Try to submit without selecting any period checkboxes
     const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
     await userEvent.click(bekreftKnapp);
     
-    // Expect validation error to be shown
-    const errorMessage = canvas.getByText('Du må velge minst én periode når du velger å gjenbruke vurderingen');
-    await expect(errorMessage).toBeVisible();
-    
-    // Expect submit not to have been called
+    // Expect validation error to be shown and submit to be blocked
+    await expect(canvas.getByText('Du må velge minst én periode når du velger å gjenbruke vurderingen')).toBeVisible();
     await expect(løsAksjonspunkt9302).not.toHaveBeenCalled();
     
-    // Now select a period
+    // Now select a period checkbox
     const periode1Checkbox = canvas.getByLabelText('24.02.2025 - 01.03.2025');
     await userEvent.click(periode1Checkbox);
     
-    // Error message should disappear
-    await expect(errorMessage).not.toBeVisible();
+    // Error message should be removed
+    await expect(canvas.queryByText('Du må velge minst én periode når du velger å gjenbruke vurderingen')).not.toBeInTheDocument();
     
     // Now submit should work
     await userEvent.click(bekreftKnapp);
