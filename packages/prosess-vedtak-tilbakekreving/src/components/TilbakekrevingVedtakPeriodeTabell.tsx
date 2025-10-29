@@ -22,6 +22,15 @@ interface OwnProps {
   getKodeverknavn: (kodeverk: Kodeverk) => string;
 }
 
+// Helper to get vedtak text
+const getVedtakText = (text: string): string => {
+  const texts: Record<string, string> = {
+    'TilbakekrevingVedtak.BelopSomTilbakekreves': 'Beløp som skal tilbakekreves',
+    'TilbakekrevingVedtak.BelopSomIkkeTilbakekreves': 'Beløp som ikke skal tilbakekreves',
+  };
+  return texts[text] || text;
+};
+
 const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnProps) => {
   const rader = perioder
     .map(periode => (
@@ -88,7 +97,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnPro
           <Table.Row shadeOnHover={false}>
             {headerTextCodes.map(text => (
               <Table.HeaderCell scope="col" key={text}>
-                <FormattedMessage id={text} />
+                {getVedtakText(text)}
               </Table.HeaderCell>
             ))}
           </Table.Row>
