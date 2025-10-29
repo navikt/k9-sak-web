@@ -1,22 +1,8 @@
-import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Button } from '@navikt/ds-react';
+import { useState } from 'react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
-
-const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode: string) => ({
-  klageMedholdArsak:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE ||
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK
-      ? values.klageMedholdArsak
-      : null,
-  klageVurderingOmgjoer:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
-      ? values.klageVurderingOmgjoer
-      : null,
-  klageVurdering: values.klageVurdering,
-  fritekstTilBrev: values.fritekstTilBrev,
-  begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCode,
-});
+import type { SaveKlageParams } from './SaveKlageParams';
+import { formValuesToSaveValues } from './formValuesToSaveValues.js';
 
 const getBrevData = (tekst: string) => ({
   dokumentdata: tekst && { fritekst: tekst },
@@ -25,10 +11,10 @@ const getBrevData = (tekst: string) => ({
 
 interface OwnProps {
   formValues: BehandleKlageFormKaFormValues;
-  saveKlage: (params: any) => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<void>;
   aksjonspunktCode: string;
   readOnly: boolean;
-  previewCallback: (brevData: any) => void;
+  previewCallback: (brevData: any) => Promise<void>;
 }
 
 export const TempSaveAndPreviewKlageLink = ({
@@ -38,23 +24,35 @@ export const TempSaveAndPreviewKlageLink = ({
   readOnly,
   previewCallback,
 }: OwnProps) => {
-  const tempSave = () => {
-    void saveKlage(transformValues(formValues, aksjonspunktCode)).then(() => {
+  const [isFetchingPreview, setIsFetchingPreview] = useState(false);
+  const tempSave = async () => {
+    if (isFetchingPreview) return;
+
+    setIsFetchingPreview(true);
+    try {
+      await saveKlage(formValuesToSaveValues(formValues, aksjonspunktCode));
       if (formValues.fritekstTilBrev) {
-        previewCallback(getBrevData(formValues.fritekstTilBrev));
+        await previewCallback(getBrevData(formValues.fritekstTilBrev));
       }
-    });
+    } finally {
+      setIsFetchingPreview(false);
+    }
   };
 
   return (
     <div>
       {!readOnly && (
-        <Button onClick={tempSave} data-testid="previewLink" variant="tertiary" size="small" type="button">
+        <Button
+          onClick={tempSave}
+          data-testid="previewLink"
+          variant="tertiary"
+          size="small"
+          type="button"
+          loading={isFetchingPreview}
+        >
           Lagre og forhåndsvis brev
         </Button>
       )}
     </div>
   );
 };
-
-export default TempSaveAndPreviewKlageLink;

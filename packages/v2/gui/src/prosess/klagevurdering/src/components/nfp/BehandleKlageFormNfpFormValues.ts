@@ -1,7 +1,7 @@
 export interface BehandleKlageFormNfpFormValues {
-  klageVurdering: string | null;
-  begrunnelse: string | null;
-  fritekstTilBrev: string | null;
+  klageVurdering: string;
+  begrunnelse: string;
+  fritekstTilBrev: string;
   klageHjemmel: string | null;
   klageVurderingOmgjoer: string | null;
   klageMedholdArsak: string | null;
