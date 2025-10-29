@@ -1,6 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';

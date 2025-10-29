@@ -3,7 +3,6 @@ import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './belopetMottattIGodTroFormPanel.module.css';
 
 const minValue1 = minValue(1);
@@ -27,7 +26,7 @@ interface OwnProps {
 const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps) => (
   <>
     <Detail>
-      <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" />
+      Er beløpet i behold?
     </Detail>
     <VerticalSpacer eightPx />
     <RadioGroupField
@@ -37,11 +36,11 @@ const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps
       radios={[
         {
           value: true,
-          label: <FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />,
+          label: Ja,
         },
         {
           value: false,
-          label: <FormattedMessage id="BelopetMottattIGodTroFormPanel.Nei" />,
+          label: Nei,
         },
       ]}
     />
@@ -62,7 +61,7 @@ const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps
       {erBelopetIBehold === false && (
         <ArrowBox alignOffset={90}>
           <BodyShort size="small">
-            <FormattedMessage id="BelopetMottattIGodTroFormPanel.IngenTilbakekreving" />
+            Ingen tilbakekreving
           </BodyShort>
         </ArrowBox>
       )}

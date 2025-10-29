@@ -6,7 +6,6 @@ import {
   ISO_DATE_FORMAT,
 } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment from 'moment';
-import { injectIntl, IntlShape } from 'react-intl';
 import { Fields } from 'redux-form';
 import Label from './Label';
 import LabelType from './LabelType';

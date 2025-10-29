@@ -3,7 +3,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
@@ -46,11 +45,11 @@ const TilbakekrevingVedtak = ({
   return (
     <>
       <Heading size="small" level="2">
-        <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
+        Vedtak
       </Heading>
       <VerticalSpacer twentyPx />
       <Detail>
-        <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
+        Resultat
       </Detail>
       <BodyShort size="small">{getKodeverknavn(resultat)}</BodyShort>
       <VerticalSpacer sixteenPx />

@@ -16,7 +16,6 @@ import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjening
 import { Alert, BodyShort, Button, Detail, Heading, Tabs } from '@navikt/ds-react';
 import moment from 'moment';
 import { Component, KeyboardEvent, MouseEvent, ReactElement } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
@@ -295,7 +294,7 @@ export class OpptjeningFaktaFormImpl extends Component<
         {opptjeningList.length > 1 && (
           <>
             <Heading size="small" level="2">
-              <FormattedMessage id="OpptjeningFaktaForm.Opptjeningsperioder" />
+              Opptjeningsperioder
             </Heading>
             <VerticalSpacer sixteenPx />
             <Tabs defaultValue="0">
@@ -340,7 +339,7 @@ export class OpptjeningFaktaFormImpl extends Component<
             </>
           )}
           <Detail>
-            <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
+            Skjæringstidspunkt for opptjening
           </Detail>
           <BodyShort size="small">
             <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
@@ -386,7 +385,7 @@ export class OpptjeningFaktaFormImpl extends Component<
               <FlexRow>
                 <FlexColumn>
                   <Button variant="primary" size="small" disabled={this.isConfirmButtonDisabled()} loading={submitting}>
-                    <FormattedMessage id="OpptjeningFaktaForm.Confirm" />
+                    Bekreft og fortsett
                   </Button>
                 </FlexColumn>
                 <FlexColumn>
@@ -397,7 +396,7 @@ export class OpptjeningFaktaFormImpl extends Component<
                     onClick={this.addOpptjeningActivity}
                     disabled={this.isAddButtonDisabled()}
                   >
-                    <FormattedMessage id="OpptjeningFaktaForm.AddActivity" />
+                    Legg til aktivitet
                   </Button>
                 </FlexColumn>
               </FlexRow>

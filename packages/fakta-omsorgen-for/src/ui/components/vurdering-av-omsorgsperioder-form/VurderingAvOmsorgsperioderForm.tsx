@@ -1,6 +1,5 @@
 import { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useIntl } from 'react-intl';
 
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
@@ -64,7 +63,7 @@ const VurderingAvOmsorgsperioderForm = ({
   const { onFinished, readOnly, sakstype } = useOmsorgenForContext();
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const erOLP = sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER;
-  const intl = useIntl();
+
   const formMethods = useForm({
     defaultValues: {
       [FieldName.PERIODER]: [{ period: omsorgsperiode.periode }],

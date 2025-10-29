@@ -27,15 +27,15 @@ export const getLanguageCodeFromspråkkode = (språkkode: Kodeverk) => {
 
 export const getLanguageFromspråkkode = (språkkode?: string): string => {
   if (!språkkode) {
-    return intl.formatMessage({ id: 'Malform.Bokmal' });
+    return "Bokmål";
   }
 
   switch (språkkode) {
     case 'NN':
-      return intl.formatMessage({ id: 'Malform.Nynorsk' });
+      return "Nynorsk";
     case 'EN':
-      return intl.formatMessage({ id: 'Malform.Engelsk' });
+      return "Engelsk";
     default:
-      return intl.formatMessage({ id: 'Malform.Bokmal' });
+      return "Bokmål";
   }
 };

@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field as reduxFormField } from 'redux-form';
 
 import { TextField } from '@navikt/ds-react';

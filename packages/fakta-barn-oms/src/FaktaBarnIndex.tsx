@@ -143,7 +143,7 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
       <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
 
       <Seksjon bakgrunn="hvit" title={{ id: 'FaktaBarn.Tittel' }} imgSrc={users} medMarg>
-        {barn.length === 0 && <FormattedMessage id="FaktaBarn.IngenBarn" />}
+        {barn.length === 0 && Det er ikke registrert noen barn på søkeren}
         <BarnSeksjon barn={samletBarnOgRammevedtak} startIndex={0} tekstId={vanligeBarnTekstId} />
       </Seksjon>
 

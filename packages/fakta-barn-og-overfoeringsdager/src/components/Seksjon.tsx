@@ -2,7 +2,6 @@ import { Image } from '@fpsak-frontend/shared-components/index';
 import { Heading } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './seksjon.module.css';
 
 const classNames = classnames.bind(styles);

@@ -85,8 +85,8 @@ const VilkarResultPicker = ({
           <VerticalSpacer eightPx />
           <SelectField
             name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
-            label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-            placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+            label={"Avslagsårsak"}
+            placeholder={"Velg årsak"}
             selectValues={avslagsarsaker.map(aa => (
               <option key={aa.kode} value={aa.kode}>
                 {aa.navn}

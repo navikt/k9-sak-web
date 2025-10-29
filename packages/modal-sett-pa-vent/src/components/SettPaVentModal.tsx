@@ -17,7 +17,6 @@ import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
 import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import styles from './settPaVentModal.module.css';
@@ -76,16 +75,16 @@ const getPaVentText = (
     }
 
     return hasManualPaVent || frist ? (
-      <FormattedMessage id="SettPaVentModal.ErSettPaVent" />
+      Behandlingen er satt på vent med frist:
     ) : (
-      <FormattedMessage id="SettPaVentModal.ErPaVentUtenFrist" />
+      Behandlingen er satt på vent
     );
   }
 
   return hasManualPaVent || frist ? (
-    <FormattedMessage id="SettPaVentModal.SettesPaVent" />
+    Behandlingen settes på vent med frist
   ) : (
-    <FormattedMessage id="SettPaVentModal.SettesPaVentUtenFrist" />
+    Behandlingen settes på vent
   );
 };
 
@@ -169,14 +168,14 @@ export const SettPaVentModal = ({
 
   const getHovedknappTekst = () => {
     if (erVenterEtterlysInntektsmelding && !showEndreFrist) {
-      return <FormattedMessage id="SettPaVentModal.Ok" />;
+      return OK;
     }
 
     if (erVenterEtterlysInntektsmelding && showEndreFrist) {
-      return <FormattedMessage id="SettPaVentModal.EndreFrist" />;
+      return Endre frist;
     }
 
-    return <FormattedMessage id="SettPaVentModal.SettPaVent" />;
+    return Sett på vent;
   };
 
   const getHovedknappOnClick = () => {
@@ -204,7 +203,7 @@ export const SettPaVentModal = ({
           <div className={styles.topContainer}>
             <Image
               className={styles.image}
-              alt={intl.formatMessage({ id: 'SettPaVentModal.PaVent' })}
+              alt={"På vent"}
               src={innvilgetImageUrl}
             />
             <div className={styles.divider} />
@@ -245,10 +244,10 @@ export const SettPaVentModal = ({
                     name="ventearsak"
                     label={
                       <Label size="small" as="p">
-                        {intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}
+                        {"Hva venter vi på?"}
                       </Label>
                     }
-                    placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
+                    placeholder={"Velg årsak"}
                     validate={[required]}
                     selectValues={ventearsaker
                       .filter(va => (erTilbakekreving ? inkluderVentearsak(va, ventearsak) : va.kanVelges === 'true'))
@@ -273,24 +272,26 @@ export const SettPaVentModal = ({
                 label={
                   <div className={styles.commentInputLabel}>
                     <Label size="small" as="p">
-                      {intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}
+                      {"Kommentar"}
                     </Label>
-                    <span>({intl.formatMessage({ id: 'SettPaVentModal.Valgfritt' })})</span>
+                    <span>({"valgfritt"})</span>
                   </div>
                 }
               />
             )}
             {visBrevErBestilt && (
               <BodyShort size="small">
-                <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
+                Brevet blir bestilt
               </BodyShort>
             )}
             <div className={styles.flexContainer}>
               {!hasManualPaVent && showFristenTekst && (
                 <BodyShort size="small">
-                  <FormattedMessage id="SettPaVentModal.UtløptFrist" />
+                  OBS! Fristen på denne behandlingen er utløpt!
                   <VerticalSpacer eightPx />
-                  <FormattedMessage id="SettPaVentModal.HenleggeSaken" />
+                  Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.
+ Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.
+For mer informasjon, se rutine under tilbakekreving.
                 </BodyShort>
               )}
             </div>
@@ -324,9 +325,9 @@ export const SettPaVentModal = ({
                   onClick={!showEndreFrist ? toggleEndreFrist : cancelEvent}
                 >
                   {showEndreFrist ? (
-                    <FormattedMessage id="SettPaVentModal.Lukk" />
+                    Lukk
                   ) : (
-                    <FormattedMessage id="SettPaVentModal.EndreFrist" />
+                    Endre frist
                   )}
                 </Button>
               )}

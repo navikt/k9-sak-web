@@ -2,7 +2,6 @@ import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, getLanguageFromspråkkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
 
-import { IntlShape } from 'react-intl';
 import styles from './vedtakFritekstPanel.module.css';
 
 const maxLength100000 = maxLength(100000);
@@ -39,7 +38,7 @@ const VedtakFritekstPanelImpl = ({
             {
               type: 'warning',
               text: getLanguageFromspråkkode(språkkode),
-              title: intl.formatMessage({ id: 'Malform.Beskrivelse' }),
+              title: "Foretrukket språk",
             },
           ]}
         />

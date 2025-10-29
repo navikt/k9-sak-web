@@ -1,6 +1,5 @@
 import { BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 interface OwnProps {
   headerColumnContent: React.ReactElement<any>[];
@@ -21,7 +20,7 @@ const IngenArbeidsforholdRegistrert = ({ headerColumnContent }: OwnProps) => (
       <Table.Row shadeOnHover={false}>
         <Table.DataCell>
           <BodyShort size="small">
-            <FormattedMessage id="PersonArbeidsforholdTable.IngenArbeidsforholdRegistrert" />
+            Ingen arbeidsforhold registrert
           </BodyShort>
         </Table.DataCell>
         <Table.DataCell />

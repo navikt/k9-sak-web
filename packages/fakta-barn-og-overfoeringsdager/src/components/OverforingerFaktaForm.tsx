@@ -9,7 +9,6 @@ import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { HelpText, Label } from '@navikt/ds-react';
 import isEmpty from 'just-is-empty';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import mapDtoTilFormValues from '../dto/mapping';
@@ -65,7 +64,7 @@ export const OverforingerFaktaFormImpl = ({
                   id: 'overføring.tittel.totalt',
                   content: (
                     <Label size="small" as="p">
-                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
+                      Totalt
                     </Label>
                   ),
                 },
@@ -74,7 +73,7 @@ export const OverforingerFaktaFormImpl = ({
                   id: 'overføring.tittel.type',
                   content: (
                     <Label size="small" as="p">
-                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
+                      Type
                     </Label>
                   ),
                 },
@@ -103,7 +102,7 @@ export const OverforingerFaktaFormImpl = ({
           />
         </>
       ) : (
-        <FormattedMessage id="FaktaRammevedtak.Overføringer.IngenOverføringer" />
+        Det er ikke registrert noen overføringer eller fordelinger av dager
       )}
     </Seksjon>
   );

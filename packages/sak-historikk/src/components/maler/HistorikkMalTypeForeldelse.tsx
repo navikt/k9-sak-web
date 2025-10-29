@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort } from '@navikt/ds-react';

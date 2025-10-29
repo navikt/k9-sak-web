@@ -1,5 +1,4 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 import Label from './Label';
 import LabelType from './LabelType';
@@ -15,7 +14,7 @@ interface FieldComponentProps {
 
 const renderNavField = WrappedNavFieldComponent => {
   const FieldComponent = (props: FieldComponentProps) => {
-    const intl = useIntl();
+
     const formatError = (submitFailed: boolean, error: any) => {
       if (submitFailed && error) {
         // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs

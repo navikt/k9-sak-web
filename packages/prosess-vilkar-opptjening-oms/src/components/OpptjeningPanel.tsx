@@ -7,7 +7,6 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
 import { ReactNode } from 'react';
-import { useIntl } from 'react-intl';
 import styles from './opptjeningPanel.module.css';
 
 interface OwnProps {
@@ -52,7 +51,7 @@ const OpptjeningPanel = ({
   skjulAksjonspunktVisning,
   aksjonspunktErLøst,
 }: OwnProps) => {
-  const intl = useIntl();
+
   return (
     <form onSubmit={handleSubmit}>
       <FlexContainer>
@@ -84,7 +83,7 @@ const OpptjeningPanel = ({
                   <>
                     <VerticalSpacer eightPx />
                     <Label size="small" as="p">
-                      {intl.formatMessage({ id: 'OpptjeningVilkarView.Oppfylt' })}
+                      {"Vilkåret er oppfylt"}
                     </Label>
                   </>
                 )}
@@ -92,7 +91,7 @@ const OpptjeningPanel = ({
                   <>
                     <VerticalSpacer eightPx />
                     <Label size="small" as="p">
-                      {intl.formatMessage({ id: 'OpptjeningPanel.ErIkkeOppfylt' })}
+                      {"Vilkåret er avslått"}
                     </Label>
                   </>
                 )}
@@ -101,7 +100,7 @@ const OpptjeningPanel = ({
             {!isAksjonspunktOpen && originalErVilkarOk === undefined && (
               <>
                 <VerticalSpacer eightPx />
-                <BodyShort size="small">{intl.formatMessage({ id: 'OpptjeningPanel.IkkeBehandlet' })}</BodyShort>
+                <BodyShort size="small">{"Ikke behandlet"}</BodyShort>
               </>
             )}
           </FlexColumn>

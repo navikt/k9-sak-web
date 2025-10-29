@@ -3,7 +3,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { Detail } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
@@ -78,7 +77,7 @@ const AktsomhetFormPanel = ({
 }: OwnProps) => (
   <>
     <Detail>
-      <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
+      I hvilken grad burde mottaker forstått at utbetalingen skyldtes en feil?
     </Detail>
     <VerticalSpacer eightPx />
     <RadioGroupField

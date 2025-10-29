@@ -12,7 +12,6 @@ import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/s
 import { Behandling, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Link, Tabs } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import styles from './inngangsvilkarPanel.module.css';
@@ -82,10 +81,10 @@ const InngangsvilkarPanel = ({
   const tabs =
     perioderFraTidligereBehandlinger.length > 0
       ? [
-          { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" />, key: 'Vilkarsperioder.DenneBehandling' },
-          { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" />, key: 'Vilkarsperioder.HittilIÅr' },
+          { label: Perioder i behandlingen, key: 'Vilkarsperioder.DenneBehandling' },
+          { label: Tidligere perioder, key: 'Vilkarsperioder.HittilIÅr' },
         ]
-      : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" />, key: 'Vilkarsperioder.DenneBehandling' }];
+      : [{ label: Perioder i behandlingen, key: 'Vilkarsperioder.DenneBehandling' }];
 
   return (
     <NestedIntlProvider messages={messages}>

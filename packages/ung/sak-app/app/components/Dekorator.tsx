@@ -6,7 +6,6 @@ import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api
 import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
-import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { getPathToK9Los } from '../paths';
 
 type QueryStrings = {

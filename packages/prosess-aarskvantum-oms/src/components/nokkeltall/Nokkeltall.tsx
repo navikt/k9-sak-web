@@ -1,7 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './nokkeltall.module.css';
 
 export interface Nokkeltalldetalj {
@@ -36,9 +35,9 @@ const Nokkeltall = ({ overskrift, detaljer, viserDetaljer, visDetaljer, classNam
         </span>
         <span className={styles.knapp}>
           {viserDetaljer ? (
-            <FormattedMessage id="Nøkkeltall.SkjulUtregning" />
+            Skjul utregning
           ) : (
-            <FormattedMessage id="Nøkkeltall.VisUtregning" />
+            Vis utregning
           )}
           {viserDetaljer ? <ChevronUpIcon fontSize="1.5rem" /> : <ChevronDownIcon fontSize="1.5rem" />}
         </span>

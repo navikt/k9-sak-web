@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import styleLesemodus from './AldersvilkarLese.module.css';
 
@@ -32,14 +31,14 @@ const AldersvilkarLese = ({
       <div className={styleLesemodus.aksjonspunktOgRedigerVurderingContainer}>
         <p>
           <b>
-            <FormattedMessage id="AlderVilkar.Lese.Etikett.Aksjonspunkt" />
+            Behandlet aksjonspunkt:
           </b>{' '}
-          <FormattedMessage id="AlderVilkar.Lese.KroniskSyk" />
+          Vurder om aldersvilkåret er oppfylt
         </p>
         {aksjonspunktLost && (
           <div className={styleLesemodus.redigerVurderingTekst}>
             <button type="button" onClick={e => handleKlikk(e)}>
-              <FormattedMessage id="AlderVilkar.Lese.Rediger" />
+              Rediger vurdering
             </button>
           </div>
         )}
@@ -47,25 +46,25 @@ const AldersvilkarLese = ({
 
       <div className={styleLesemodus.opplysningerFraSoknad}>
         <div>
-          <FormattedMessage id="AlderVilkar.Lese.Etikett.Opplysninger" />
+          Opplysninger fra søknaden:
         </div>
         <h4>
-          <FormattedMessage id="AlderVilkar.Lese.Etikett.Barn" />
+          Søkers barn:
         </h4>
         <p>{sokersBarn}</p>
       </div>
 
       <p className={styleLesemodus.label}>
-        <FormattedMessage id="AlderVilkar.Lese.Etikett.Vurdering" />
+        Vurdering
       </p>
       <p className={styleLesemodus.fritekst}>{begrunnelseTekst}</p>
       <p className={styleLesemodus.label}>
-        <FormattedMessage id="AlderVilkar.Lese.Etikett.KroniskSyk" />
+        Er aldersvilkåret oppfylt?
       </p>
       <p className={styleLesemodus.text}>
         {vilkarOppfylt
-          ? intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' })
-          : intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' })}
+          ? "Ja"
+          : "Nei"}
       </p>
     </div>
   );

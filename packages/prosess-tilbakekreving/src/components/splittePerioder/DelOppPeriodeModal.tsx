@@ -3,7 +3,6 @@ import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@fp
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import styles from './delOppPeriodeModal.module.css';
@@ -30,18 +29,18 @@ export const DelOppPeriodeModalImpl = ({
 }: OwnProps & WrappedComponentProps & InjectedFormProps) => (
   <Modal
     open={showModal}
-    aria-label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
+    aria-label={"Periode er splittet"}
     onClose={cancelEvent}
     className={styles.modal}
   >
     <Modal.Header closeButton={false}>
       <Label size="small" as="p">
-        <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
+        Del opp perioden
       </Label>
     </Modal.Header>
     <Modal.Body>
       <Detail>
-        <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
+        Periode
       </Detail>
       <BodyShort size="small">
         {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
@@ -50,7 +49,7 @@ export const DelOppPeriodeModalImpl = ({
       </BodyShort>
       <div className={styles.marginTop}>
         <Detail>
-          <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
+          Angi t.o.m. dato for første periode
         </Detail>
         <DatepickerField
           name="ForstePeriodeTomDato"
@@ -63,7 +62,7 @@ export const DelOppPeriodeModalImpl = ({
       </div>
       {finnesBelopMed0Verdi && (
         <Alert size="small" variant="error">
-          <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
+          Periode har 0 virkedager
         </Alert>
       )}
       <div className={styles.marginTop}>
@@ -75,10 +74,10 @@ export const DelOppPeriodeModalImpl = ({
           onClick={formProps.handleSubmit}
           disabled={formProps.pristine}
         >
-          <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
+          Ok
         </Button>
         <Button variant="secondary" type="button" size="small" onClick={cancelEvent} className={styles.cancelButton}>
-          <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
+          Avbryt
         </Button>
       </div>
     </Modal.Body>

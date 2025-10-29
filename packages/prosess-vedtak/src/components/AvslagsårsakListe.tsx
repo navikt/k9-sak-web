@@ -6,7 +6,6 @@ import {
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { FormattedMessage } from 'react-intl';
 
 const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[]) => {
   const funnedeAvslagskoder = new Set();
@@ -51,7 +50,7 @@ const AvslagsårsakListe = ({ vilkar }: AvslagsårsakListeProps) => {
       Array.isArray(v.perioder) && v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT),
   );
   if (avslatteVilkar.length === 0) {
-    return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
+    return Søker har ikke noen gyldig uttaksperiode;
   }
 
   return <>{avslatteVilkar.map(avslåttVilkår => visAvslåtteVilkårsperioder(avslåttVilkår))}</>;

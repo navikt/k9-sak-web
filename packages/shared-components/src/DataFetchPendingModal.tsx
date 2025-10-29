@@ -1,6 +1,5 @@
 import { HGrid, Label, Loader, Modal } from '@navikt/ds-react';
 import { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './dataFetchPendingModal.module.css';
 
 // Skal ikke være mulig å lukke modal
@@ -62,7 +61,7 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
             </div>
             <div>
               <Label size="small" as="p" className={styles.modalText}>
-                <FormattedMessage id="DataFetchPendingModal.LosningenJobberMedBehandlingen" />
+                Løsningen jobber med behandlingen...
               </Label>
             </div>
           </HGrid>

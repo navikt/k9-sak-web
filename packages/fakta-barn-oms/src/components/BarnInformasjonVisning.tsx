@@ -3,7 +3,6 @@ import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/Kombi
 import { formatDate, formatereLukketPeriode } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { BodyShort } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 
 interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;
@@ -28,7 +27,7 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
       {skalViseDeltBostedMedPerioder && (
         <>
           <BodyShort size="small">
-            <FormattedMessage id="FaktaBarn.DeltBostedMedPerioder" />
+            Barnet har delt bosted med søker i følgende perioder:
           </BodyShort>
           {deltBostedPerioder.map(periode => (
             <BodyShort size="small">{formatereLukketPeriode(periode)}</BodyShort>
@@ -40,7 +39,7 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
       {sammeBostedPerioder && sammeBostedPerioder.length > 0 && (
         <>
           <BodyShort size="small">
-            <FormattedMessage id="FaktaBarn.SammeBostedMedPerioder" />
+            Barnet har samme bosted med søker i følgende perioder:
           </BodyShort>
           {sammeBostedPerioder.map(periode => (
             <BodyShort size="small">{formatereLukketPeriode(periode)}</BodyShort>
@@ -56,12 +55,12 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
       )}
       {barnType === BarnType.FOSTERBARN && (
         <BodyShort size="small">
-          <FormattedMessage id="FaktaBarn.Fosterbarn" />
+          Barnet er fosterbarn
         </BodyShort>
       )}
       {barnType === BarnType.UTENLANDSK_BARN && (
         <BodyShort size="small">
-          <FormattedMessage id="FaktaBarn.UtenlandskBarn" />
+          Barnet bor i utlandet
         </BodyShort>
       )}
     </div>

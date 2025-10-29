@@ -1,6 +1,5 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
 import { type JSX } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 

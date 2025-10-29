@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import AntallTimer from './AntallTimer';
 import Nokkeltall from './Nokkeltall';
 import { DagerTimer } from './durationUtils';

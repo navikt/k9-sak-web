@@ -37,7 +37,6 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
@@ -334,7 +333,7 @@ export const VedtakForm: React.FC<Props> = ({
         then: schema =>
           schema.test(
             'validate-redigert-html',
-            intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' }),
+            "Brevet må redigeres før det kan sendes",
             value => {
               if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
                 return validerManueltRedigertBrev(value);
@@ -455,7 +454,7 @@ export const VedtakForm: React.FC<Props> = ({
             <div className={styles.knappContainer}>
               <fieldset>
                 <Label size="small" as="legend">
-                  {intl.formatMessage({ id: 'VedtakForm.ValgForBrev' })}
+                  {"Valg for brev"}
                 </Label>
                 {(kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) ||
                   kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) && (
@@ -471,7 +470,7 @@ export const VedtakForm: React.FC<Props> = ({
                     value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
                     size="small"
                   >
-                    {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
+                    {"Rediger automatisk brev"}
                   </Checkbox>
                 )}
                 {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
@@ -487,7 +486,7 @@ export const VedtakForm: React.FC<Props> = ({
                     value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
                     size="small"
                   >
-                    {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
+                    {"Hindre utsending av brev"}
                   </Checkbox>
                 )}
               </fieldset>

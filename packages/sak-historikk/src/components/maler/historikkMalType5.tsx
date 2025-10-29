@@ -2,7 +2,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
@@ -40,7 +39,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel: HistorikkinnslagDel): React
           />
         )}
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel) && (
-          <FormattedMessage id="Historikk.Template.5.IngenEndring" />
+          Ingen endring av vurdering
         )}
       </>
     );
@@ -53,7 +52,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel: HistorikkinnslagDel): React
           values={{ dato: historikkinnslagDel.gjeldendeFra.fra, b: chunks => <b>{chunks}</b> }}
         />
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel) && (
-          <FormattedMessage id="Historikk.Template.5.IngenEndring" />
+          Ingen endring av vurdering
         )}
       </>
     );

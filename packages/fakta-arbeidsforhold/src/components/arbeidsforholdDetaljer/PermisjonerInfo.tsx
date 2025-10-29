@@ -5,7 +5,6 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import styles from './permisjonPeriode.module.css';
 
@@ -29,7 +28,7 @@ const PermisjonerInfo = ({ arbeidsforhold, alleKodeverk }: OwnProps) => {
               <VerticalSpacer sixteenPx />
               <div key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
                 <BodyShort size="small">
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.PermisjonPeriode" />
+                  Permittert i perioden: 
                 </BodyShort>
                 <div className={styles.type}>
                   <PeriodLabel
@@ -38,13 +37,13 @@ const PermisjonerInfo = ({ arbeidsforhold, alleKodeverk }: OwnProps) => {
                   />
                 </div>
                 <BodyShort size="small">
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Permisjonype" />
+                  Type permisjon: 
                 </BodyShort>
                 <BodyShort size="small" className={styles.type}>
                   {permisjon.type.kode === '-' ? 'Ukjent' : getKodeverknavn(permisjon.type)}
                 </BodyShort>
                 <BodyShort size="small">
-                  <FormattedMessage id="PersonArbeidsforholdDetailForm.Prosent" />
+                  Prosent: 
                 </BodyShort>
                 <BodyShort size="small" className={styles.type}>
                   {permisjon.permisjonsprosent}

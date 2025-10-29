@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { FormattedMessage } from 'react-intl';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -60,7 +59,7 @@ export const TempSaveAndPreviewKlageLink = ({
           className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
           data-testid="previewLink"
         >
-          <FormattedMessage id="Klage.ResolveKlage.TempSaveAndPreviewButton" />
+          Lagre og forhåndsvis brev
         </Link>
       )}
     </div>

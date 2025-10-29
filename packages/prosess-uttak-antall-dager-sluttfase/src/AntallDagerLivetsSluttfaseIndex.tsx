@@ -41,7 +41,7 @@ const AntallDagerLivetsSluttfaseIndex = ({ kvoteInfo }: OwnProps) => {
     <RawIntlProvider value={intl}>
       <div className={styles.antallDagerLivetsSluttfaseIndexContainer}>
         <div className={styles.header}>
-          <h2>{intl.formatMessage({ id: 'Titel.UttakAvPleiepenger' })}</h2>
+          <h2>{"Uttak av pleiepenger"}</h2>
           {kvoteInfo.maxDato && (
             <div className={styles.sistePleiedagBoks}>
               <p>

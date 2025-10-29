@@ -25,7 +25,6 @@ import {
 } from '@navikt/ung-tilbake-typescript-client/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
@@ -276,7 +275,7 @@ export const TilbakekrevingPeriodeFormImpl = (
           <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
             <div>
               <DSLabel size="small" as="p">
-                <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
+                Kopier vilkårsvurdering fra
               </DSLabel>
               <SelectField
                 name="perioderForKopi"
@@ -307,7 +306,7 @@ export const TilbakekrevingPeriodeFormImpl = (
             <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
               <div>
                 <DSLabel size="small" as="p">
-                  <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
+                  Vilkårene for tilbakekreving
                 </DSLabel>
                 <VerticalSpacer eightPx />
                 <TextAreaField
@@ -316,11 +315,11 @@ export const TilbakekrevingPeriodeFormImpl = (
                   validate={[required, minLength3, maxLength1500, hasValidText]}
                   maxLength={1500}
                   readOnly={readOnly}
-                  placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
+                  placeholder={"Hvilke hendelser har ført til feilutbetalingen og vurder valg av hjemmel"}
                 />
                 <VerticalSpacer twentyPx />
                 <Detail>
-                  <FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" />
+                  Er vilkårene for tilbakekreving oppfylt?
                 </Detail>
                 <VerticalSpacer eightPx />
                 <RadioGroupField
@@ -406,18 +405,18 @@ export const TilbakekrevingPeriodeFormImpl = (
             onClick={saveOrToggleModal}
             disabled={formProps.pristine || readOnly}
           >
-            <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
+            Oppdater
           </Button>
         </FlexColumn>
         <FlexColumn>
           <Button variant="secondary" size="small" type="button" onClick={skjulPeriode}>
-            <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
+            Avbryt
           </Button>
         </FlexColumn>
       </FlexRow>
       {showModal && (
         <AdvarselModal
-          bodyText={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr' })}
+          bodyText={"Totalbeløpet er under 4 rettsgebyr. Dersom 6.ledd skal anvendes for å frafalle tilbakekrevingen, må denne anvendes likt på alle periodene."}
           showModal
           submit={saveForm}
         />

@@ -1,6 +1,5 @@
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
-import { useIntl } from 'react-intl';
 import { FeilutbetalingAarsak } from './feilutbetalingAarsak';
 import { BehandlingFaktaPeriode } from './feilutbetalingFakta';
 import FeilutbetalingPerioderForm from './FeilutbetalingPerioderForm';
@@ -33,7 +32,7 @@ const FeilutbetalingPerioderTable = ({
   behandlingId,
   behandlingVersjon,
 }: FeilutbetalingPerioderTableProps) => {
-  const intl = useIntl();
+
   return (
     <div className={styles.feilutbetalingTable}>
       <Table>

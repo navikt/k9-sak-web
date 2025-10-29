@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedTime } from 'react-intl';
 
 interface OwnProps {
   dateTimeString: string;

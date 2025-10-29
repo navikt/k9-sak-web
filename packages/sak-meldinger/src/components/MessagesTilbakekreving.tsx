@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -211,9 +210,9 @@ export const MessagesTilbakekrevingImpl = ({
           <SelectField
             name="brevmalkode"
             readOnly={tmpls.length === 1 && brevmalkode && brevmalkode === tmpls[0].kode}
-            label={intl.formatMessage({ id: 'Messages.Template' })}
+            label={"Mal"}
             validate={[required]}
-            placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
+            placeholder={"Velg brev"}
             selectValues={tmpls.map(template => (
               <option key={template.kode} value={template.kode}>
                 {template.navn}
@@ -228,9 +227,9 @@ export const MessagesTilbakekrevingImpl = ({
                 <VerticalSpacer eightPx />
                 <SelectField
                   name="valgtMedisinType"
-                  label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                  label={"Type dokumentasjon du vil etterspørre"}
                   validate={[]}
-                  placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                  placeholder={"Velg type"}
                   selectValues={fritekstMaler.map(alternativ => (
                     <option key={alternativ.tittel} value={alternativ.tittel}>
                       {alternativ.tittel}
@@ -249,9 +248,9 @@ export const MessagesTilbakekrevingImpl = ({
                 readOnly={
                   recipients.length === 1 && overstyrtMottaker && overstyrtMottaker === JSON.stringify(recipients[0])
                 }
-                label={intl.formatMessage({ id: 'Messages.Recipient' })}
+                label={"Mottaker"}
                 validate={[/* required, */ createValidateRecipient(recipients)]}
-                placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
+                placeholder={"Velg mottaker"}
                 selectValues={recipients.map(recipient => (
                   <option key={recipient.id} value={JSON.stringify(recipient)}>
                     {lagVisningsnavnForMottaker(recipient, personopplysninger, arbeidsgiverOpplysningerPerId)}
@@ -266,9 +265,9 @@ export const MessagesTilbakekrevingImpl = ({
               <VerticalSpacer eightPx />
               <SelectField
                 name="arsakskode"
-                label={intl.formatMessage({ id: 'Messages.Årsak' })}
+                label={"Årsak"}
                 validate={[required]}
-                placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
+                placeholder={"Velg årsak"}
                 selectValues={(causes || []).map(cause => (
                   <option key={cause.kode} value={cause.kode}>
                     {cause.navn}
@@ -284,7 +283,7 @@ export const MessagesTilbakekrevingImpl = ({
               <div className="input--xxl">
                 <TextAreaField
                   name="fritekst"
-                  label={intl.formatMessage({ id: 'Messages.Fritekst' })}
+                  label={"Fritekst"}
                   validate={[required, maxLength4000, minLength3, hasValidText]}
                   maxLength={4000}
                   badges={[{ type: 'warning', textId: languageCode, title: 'Messages.Beskrivelse' }]}
@@ -297,7 +296,7 @@ export const MessagesTilbakekrevingImpl = ({
               <VerticalSpacer eightPx />
               <InputField
                 name="fritekstbrev.overskrift"
-                label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
+                label={"Tittel"}
                 validate={[required, minLength3, maxLength200, hasValidText]}
                 maxLength={200}
               />
@@ -305,7 +304,7 @@ export const MessagesTilbakekrevingImpl = ({
               <VerticalSpacer eightPx />
               <TextAreaField
                 name="fritekstbrev.brødtekst"
-                label={intl.formatMessage({ id: 'Messages.Fritekst' })}
+                label={"Fritekst"}
                 validate={[required, minLength3, maxLength100000, hasValidText]}
                 maxLength={100000}
                 badges={[{ type: 'warning', textId: languageCode, title: 'Messages.Beskrivelse' }]}
@@ -321,7 +320,7 @@ export const MessagesTilbakekrevingImpl = ({
               disabled={formProps.submitting}
               onClick={ariaCheck}
             >
-              {intl.formatMessage({ id: 'Messages.Submit' })}
+              {"Send brev"}
             </Button>
             {brevmalkode && (
               <Link
@@ -331,13 +330,13 @@ export const MessagesTilbakekrevingImpl = ({
                 className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
                 data-testid="previewLink"
               >
-                {intl.formatMessage({ id: 'Messages.Preview' })}
+                {"Forhåndsvis"}
               </Link>
             )}
           </div>
         </>
       ) : (
-        <p>{intl.formatMessage({ id: 'Messages.SavnerMaler' })}</p>
+        <p>{"Ingen brev kan bestilles for ytelsen"}</p>
       )}
     </form>
   );

@@ -3,7 +3,6 @@ import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithError
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { use, useMemo } from 'react';
-import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';

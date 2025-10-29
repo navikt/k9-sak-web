@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
@@ -97,7 +96,7 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
     <HGrid gap="space-4" columns={{ xs: '2fr 8fr 2fr' }}>
       <div>
         <Label size="small" as="p">
-          <FormattedMessage id="PeriodeController.Detaljer" />
+          Detaljer for valgt periode
           {isEdited && <EditedIcon />}
         </Label>
       </div>
@@ -110,13 +109,13 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
               <Image
                 src={splitPeriodImageUrl}
                 srcHover={splitPeriodImageHoverUrl}
-                alt={intl.formatMessage({ id: 'PeriodeController.DelOppPerioden' })}
+                alt={"Del opp perioden"}
               />
             }
             className={styles.splitPeriodPosition}
             onClick={showModal}
           >
-            <FormattedMessage id="PeriodeController.DelOppPerioden" />
+            Del opp perioden
           </Button>
         )}
         {showDelPeriodeModal && (
@@ -134,12 +133,12 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
       <div>
         <FloatRight>
           <TimeLineButton
-            text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
+            text={"Forrige periode"}
             type="prev"
             callback={callbackBackward}
           />
           <TimeLineButton
-            text={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })}
+            text={"Neste periode"}
             type="next"
             callback={callbackForward}
           />

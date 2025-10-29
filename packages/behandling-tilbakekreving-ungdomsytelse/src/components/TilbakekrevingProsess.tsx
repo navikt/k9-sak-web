@@ -11,7 +11,6 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';

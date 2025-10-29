@@ -2,7 +2,6 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
 interface OwnProps {
@@ -17,7 +16,7 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <div>
             <Detail>
-              <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />
+              Andel som skal tilbakekreves
             </Detail>
             <BodyShort size="small" className={styles.labelPadding}>
               100 %
@@ -25,18 +24,18 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
           </div>
           <div>
             <RadioGroupField
-              label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />}
+              label={Skal det tillegges renter?}
               validate={[required]}
               name="skalDetTilleggesRenter"
               readOnly={readOnly}
               radios={[
                 {
                   value: true,
-                  label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
+                  label: Ja,
                 },
                 {
                   value: false,
-                  label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
+                  label: Nei,
                 },
               ]}
             />
@@ -46,12 +45,12 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
       {!erValgtResultatTypeForstoBurdeForstaatt && (
         <>
           <Detail>
-            <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />
+            Andel som skal tilbakekreves
           </Detail>
           <BodyShort size="small">100 %</BodyShort>
           <VerticalSpacer eightPx />
           <BodyShort size="small">
-            <FormattedMessage id="AktsomhetGradForsettFormPanel.Renter" />
+            Det legges til 10 % renter
           </BodyShort>
         </>
       )}

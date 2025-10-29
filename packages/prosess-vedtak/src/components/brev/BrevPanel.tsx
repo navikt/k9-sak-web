@@ -25,7 +25,6 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
@@ -298,7 +297,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
               </option>
             ))}
             className={readOnly ? styles.selectReadOnly : null}
-            label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
+            label={"Velg mottaker"}
             validate={[required]}
             bredde="xl"
           />
@@ -313,7 +312,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
         brevpanel
       ) : (
         <Alert variant="info" size="medium" className={styles.infoIkkeVedtaksbrev}>
-          {intl.formatMessage({ id: 'VedtakForm.IkkeVedtaksbrev' })}
+          {"I denne behandlingen er det ikke vedtaksbrev."}
         </Alert>
       )}
     </div>

@@ -1,7 +1,6 @@
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
-import { useIntl } from 'react-intl';
 import styles from './tilbakekrevingAktivitetTabell.module.css';
 
 const headerTextCodes = ['TilbakekrevingAktivitetTabell.Aktivitet', 'TilbakekrevingAktivitetTabell.FeilutbetaltBelop'];
@@ -14,7 +13,7 @@ interface OwnProps {
 }
 
 const TilbakekrevingAktivitetTabell = ({ ytelser }: OwnProps) => {
-  const intl = useIntl();
+
   if (ytelser.length === 0) {
     return null;
   }

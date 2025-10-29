@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import formaterDato from '../utils/formaterDato';
 
@@ -19,7 +18,7 @@ const MidlertidigAlene = ({ midlertidigAlene }: MidlertidigAleneProps) =>
       }}
     />
   ) : (
-    <FormattedMessage id="FaktaRammevedtak.IkkeMidlertidigAlene" />
+    Det er ikke registrert midlertidig aleneomsorg
   );
 
 export default MidlertidigAlene;

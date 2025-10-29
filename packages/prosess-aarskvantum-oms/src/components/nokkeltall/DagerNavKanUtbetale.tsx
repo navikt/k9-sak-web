@@ -1,6 +1,5 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useContext } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.module.css';
 
@@ -30,7 +29,7 @@ const DagerNavKanUtbetale = ({
         {
           antallDager: dagerRettPå,
           overskrifttekstId: 'Nøkkeltall.TotaltAntallDager',
-          infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText" />,
+          infotekstContent: Totalt antall dager søkeren har rett på, utenom eventuelle smitteverndager.,
         },
         {
           antallDager: -antallDagerArbeidsgiverDekker,
@@ -42,7 +41,7 @@ const DagerNavKanUtbetale = ({
         featureToggles?.NYE_NOKKELTALL && {
           antallDager: antallDagerFraværRapportertSomNyoppstartet,
           overskrifttekstId: 'Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet',
-          infotekstContent: <FormattedMessage id="Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet.InfoText" />,
+          infotekstContent: Trekker ikke fra dager dekket av arbeidsgiver eller bruker, dersom de de er rapportert som nyoppstartet.,
         },
       ]}
       viserDetaljer={viserDetaljer}

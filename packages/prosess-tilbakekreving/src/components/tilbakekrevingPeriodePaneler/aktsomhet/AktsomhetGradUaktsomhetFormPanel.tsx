@@ -4,7 +4,6 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Detail, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
@@ -15,7 +14,7 @@ const maxLength1500 = maxLength(1500);
 const sarligGrunnerBegrunnelseDiv = (readOnly: boolean, intl: IntlShape) => (
   <div>
     <Label size="small" as="p">
-      <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.SærligGrunner" />
+      Særlige grunner 4. ledd
     </Label>
     <VerticalSpacer eightPx />
     <TextAreaField
@@ -24,7 +23,7 @@ const sarligGrunnerBegrunnelseDiv = (readOnly: boolean, intl: IntlShape) => (
       validate={[required, minLength3, maxLength1500, hasValidText]}
       maxLength={1500}
       readOnly={readOnly}
-      placeholder={intl.formatMessage({ id: 'AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner.Hjelpetekst' })}
+      placeholder={"Begrunn om det foreligger/ ikke foreligger særlige grunner for reduksjon av beløpet som kreves tilbake. Kryss av hvilke særlige grunner som er vektlagt for resultatet"}
     />
     <VerticalSpacer twentyPx />
   </div>
@@ -62,7 +61,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
       {handletUaktsomhetGrad === Aktsomhet.SIMPEL_UAKTSOM && erTotalBelopUnder4Rettsgebyr && (
         <>
           <Detail>
-            <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Tilbakekrev" />
+            Totalbeløpet er under 4 rettsgebyr (6. ledd). Skal det tilbakekreves?
           </Detail>
           <VerticalSpacer eightPx />
           <RadioGroupField
@@ -72,7 +71,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
             radios={[
               {
                 value: true,
-                label: <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />,
+                label: Ja,
                 element: (
                   <div className="my-2">
                     {sarligGrunnerBegrunnelseDiv(readOnly, intl)}
@@ -91,10 +90,10 @@ const AktsomhetGradUaktsomhetFormPanel = ({
               },
               {
                 value: false,
-                label: <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Nei" />,
+                label: Nei,
                 element: (
                   <ArrowBox alignOffset={20}>
-                    <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt" />
+                    Når 6. ledd anvendes må alle perioder behandles likt
                   </ArrowBox>
                 ),
               },

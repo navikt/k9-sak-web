@@ -1,7 +1,6 @@
 import { ReadMore } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React, { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Overføring, {
   Overføringsretning,
   OverføringsretningEnum,

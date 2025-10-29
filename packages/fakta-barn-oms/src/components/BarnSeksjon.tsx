@@ -1,6 +1,5 @@
 import { Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnVisning from './BarnVisning';

@@ -10,7 +10,6 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import { Fragment, useState } from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';

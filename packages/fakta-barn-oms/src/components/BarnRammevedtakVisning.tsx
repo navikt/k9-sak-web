@@ -1,7 +1,6 @@
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import formaterDato from '../utils/formaterDato';
 import styles from './barnVisning.module.css';
@@ -16,40 +15,40 @@ const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
     <div className={styles.rammevedtak}>
       <div>
         <Label size="small" as="p">
-          <FormattedMessage id="FaktaRammevedtak.Barn.Rammevedtak" />
+          Rammevedtak
         </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(() => (
             <div key={uuidv4()}>
               <BodyShort size="small">
-                <FormattedMessage id="FaktaRammevedtak.Barn.UtvidetRett" />
+                Utvidet rett
               </BodyShort>
             </div>
           ))}
         {aleneomsorg && (
           <BodyShort size="small">
-            <FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />
+            Alene om omsorgen
           </BodyShort>
         )}
         {fosterbarn && (
           <BodyShort size="small">
-            <FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />
+            Fosterbarn
           </BodyShort>
         )}
         {utenlandskBarn && (
           <BodyShort size="small">
-            <FormattedMessage id="FaktaRammevedtak.Barn.UtenlandskBarn" />
+            Utenlandsk barn
           </BodyShort>
         )}
         {deltBosted && (
           <BodyShort size="small">
-            <FormattedMessage id="FaktaRammevedtak.Barn.DeltBosted" />
+            Delt bosted
           </BodyShort>
         )}
       </div>
       <div>
         <Label size="small" as="p">
-          <FormattedMessage id="FaktaRammevedtak.Barn.FOM" />
+          Gyldig fra og med
         </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(ks => (
@@ -64,7 +63,7 @@ const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
       </div>
       <div>
         <Label size="small" as="p">
-          <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
+          Gyldig til og med
         </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(ks => (

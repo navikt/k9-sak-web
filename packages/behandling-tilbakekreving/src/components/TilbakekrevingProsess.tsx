@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';

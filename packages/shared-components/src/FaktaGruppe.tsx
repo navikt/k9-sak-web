@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { Label } from '@navikt/ds-react';
 import BorderBox from './BorderBox';

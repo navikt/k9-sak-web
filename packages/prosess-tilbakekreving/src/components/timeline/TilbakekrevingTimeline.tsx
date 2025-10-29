@@ -1,6 +1,5 @@
 import moment from 'moment';
 import React, { Component, MouseEvent, RefObject } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
@@ -171,7 +170,7 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
             <Image
               className={styles.iconMedsoker}
               src={isKvinne(kjonn) ? urlKvinne : urlMann}
-              alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
+              alt={"Personinformasjon"}
               tooltip={intl.formatMessage({
                 id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man',
               })}

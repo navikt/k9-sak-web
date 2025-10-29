@@ -20,7 +20,6 @@ import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysni
 import { Button, Tabs } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
-import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FieldArray, InjectedFormProps, change as reduxFormChange, untouch as reduxFormUntouch } from 'redux-form';
@@ -112,7 +111,6 @@ interface StateProps {
 const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormProps & StateProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
-  const intl = useIntl();
 
   const {
     behandling: { id: behandlingId, versjon: behandlingVersjon },

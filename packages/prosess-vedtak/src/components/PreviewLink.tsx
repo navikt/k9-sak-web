@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React, { ReactNode, useState } from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FileSearchIcon } from '@navikt/aksel-icons';
@@ -60,7 +59,7 @@ const PreviewLink = ({
       {visValideringsFeil && (
         <>
           <Alert variant="error">
-            {intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis' })}{' '}
+            {"Brevet må redigeres før det kan forhåndsvises"}{' '}
           </Alert>
           <VerticalSpacer sixteenPx />
         </>
@@ -99,7 +98,7 @@ const PreviewLink = ({
 
 export const VedtakPreviewLink = ({ previewCallback, redigertHtml, intl, loading }) => (
   <PreviewLink previewCallback={previewCallback} redigertHtml={redigertHtml} intl={intl} loading={loading}>
-    <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+    Forhåndsvis brev
   </PreviewLink>
 );
 

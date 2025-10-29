@@ -1,7 +1,6 @@
 import { BodyShortProps, Label as DSLabel, LabelProps, OverridableComponent } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 import LabelType from './LabelType';
 import styles from './label.module.css';
 

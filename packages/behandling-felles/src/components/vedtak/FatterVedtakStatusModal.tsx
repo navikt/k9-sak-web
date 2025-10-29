@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './fatterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -39,12 +38,12 @@ const FatterVedtakStatusModal = ({
             <FormattedMessage id={tekstkode} />
           </BodyShort>
           <BodyShort size="small">
-            <FormattedMessage id="FatterVedtakStatusModal.GoToSearchPage" />
+            Du kommer nå til forsiden.
           </BodyShort>
         </div>
         <div>
           <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
-            {intl.formatMessage({ id: 'FatterVedtakStatusModal.Ok' })}
+            {"OK"}
           </Button>
         </div>
       </HGrid>

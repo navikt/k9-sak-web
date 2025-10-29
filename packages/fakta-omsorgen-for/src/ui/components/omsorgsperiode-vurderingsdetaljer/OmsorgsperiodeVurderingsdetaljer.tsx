@@ -6,7 +6,6 @@ import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { BodyShort, Box, Button, HStack, Label, Tag } from '@navikt/ds-react';
 import { type JSX } from 'react';
-import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
@@ -24,7 +23,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   onEditClick,
   registrertForeldrerelasjon,
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const intl = useIntl();
+
   const { sakstype, readOnly } = useOmsorgenForContext();
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const begrunnelseRenderer = () => {

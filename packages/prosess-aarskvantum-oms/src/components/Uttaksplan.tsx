@@ -4,7 +4,6 @@ import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading, Tabs } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 import styles from './uttaksplan.module.css';
@@ -27,7 +26,7 @@ const mapAktiviteterTilTabell = (
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteter.length) {
-    return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
+    return Fant ingen uttaksplaner;
   }
 
   return aktiviteter.map(({ arbeidsforhold, uttaksperioder }) => {
@@ -60,20 +59,20 @@ const Uttaksplan = ({
 }: UttaksplanProps) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
   const tabs = [
-    { label: <FormattedMessage id="Uttaksplan.DenneBehandling" />, key: 'Uttaksplan.DenneBehandling' },
-    { label: <FormattedMessage id="Uttaksplan.HittilIÅr" />, key: 'Uttaksplan.HittilIÅr' },
+    { label: Denne behandlingen, key: 'Uttaksplan.DenneBehandling' },
+    { label: Hittil i år, key: 'Uttaksplan.HittilIÅr' },
   ];
   return (
     <div className={styles.uttaksboks}>
       <div className={styles.overskrift}>
         {!aktiv && (
           <Alert size="small" variant="info" className={styles.alertstripe}>
-            <FormattedMessage id="Uttaksplan.Inaktiv" />
+            Uttaksoversikten er inaktiv som følge av avslag i behandlingen, og er ikke med i beregningen av forbrukte dager
           </Alert>
         )}
         <Heading size="small" level="3">
           <Image src={kalender} />
-          <FormattedMessage id="Uttaksplan.Heading" />
+          Uttaksoversikt
         </Heading>
       </div>
       <Tabs defaultValue="0">

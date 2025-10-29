@@ -1,6 +1,5 @@
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@k9-sak-web/types';
@@ -59,10 +58,10 @@ const AldersvilkarForm = ({
 
       <div className={style.opplysninger}>
         <p className="label">
-          <FormattedMessage id="AlderVilkar.Lese.Etikett.Opplysninger" />
+          Opplysninger fra søknaden:
         </p>
         <b>
-          <FormattedMessage id="AlderVilkar.Lese.Etikett.Barn" />
+          Søkers barn:
         </b>
         {angitteBarn.map(barn => (
           <p className={style.barn} key={barn.personIdent}>
@@ -74,7 +73,7 @@ const AldersvilkarForm = ({
       <div className={style.vurdering}>
         <RhfTextarea
           control={formMethods.control}
-          label={intl.formatMessage({ id: 'AlderVilkar.Lese.KroniskSyk' })}
+          label={"Vurder om aldersvilkåret er oppfylt"}
           name="begrunnelse"
           validate={[required, minLength3, maxLength2000]}
           maxLength={2000}
@@ -84,19 +83,19 @@ const AldersvilkarForm = ({
 
       <RhfRadioGroup
         control={formMethods.control}
-        label={<FormattedMessage id="AlderVilkar.KroniskSyk" />}
+        label={Er aldersvilkåret oppfylt?}
         name="erVilkarOk"
         validate={[required]}
       >
         <HStack gap="space-16">
-          <Radio value={true}>{intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' })}</Radio>
-          <Radio value={false}>{intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' })}</Radio>
+          <Radio value={true}>{"Ja"}</Radio>
+          <Radio value={false}>{"Nei"}</Radio>
         </HStack>
       </RhfRadioGroup>
       <VerticalSpacer sixteenPx />
 
       <Button size="small" variant="primary" type="submit">
-        <FormattedMessage id="AlderVilkar.Bekreft" />
+        Bekreft og fortsett
       </Button>
     </RhfForm>
   );

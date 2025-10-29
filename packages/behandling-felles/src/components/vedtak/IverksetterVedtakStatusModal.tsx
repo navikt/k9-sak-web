@@ -3,7 +3,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { Image } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './iverksetterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -55,7 +54,7 @@ const IverksetterVedtakStatusModal = ({
           </div>
           <div>
             <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
-              {intl.formatMessage({ id: 'IverksetterVedtakStatusModal.Ok' })}
+              {"Ok"}
             </Button>
           </div>
         </HGrid>

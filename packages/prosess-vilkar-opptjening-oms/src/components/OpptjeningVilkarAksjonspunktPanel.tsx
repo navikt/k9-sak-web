@@ -4,7 +4,6 @@ import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, FeatureToggles, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
 import { useMemo } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -64,7 +63,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   vilkarFields,
   opptjeninger,
 }: Partial<OpptjeningVilkarAksjonspunktPanelImplProps> & StateProps & InjectedFormProps) => {
-  const intl = useIntl();
+
   const formProps = useMemo(
     () => ({
       handleSubmit,
@@ -122,7 +121,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
 
   return (
     <OpptjeningPanel
-      title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
+      title={"Opptjening"}
       isAksjonspunktOpen={isApOpen && vilkårPerioder[periodeIndex].vurderesIBehandlingen}
       formName={formProps.form}
       handleSubmit={formProps.handleSubmit}
@@ -142,10 +141,10 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <div className={styles.titelOgHjelpetekstFlexbox}>
         <Label size="small" as="p">
           {erOmsorgspenger && (
-            <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
+            Opptjent rett til omsorgspenger
           )}
           {erPleiepenger && (
-            <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
+            Opptjent rett til pleiepenger
           )}
         </Label>
         <HelpText className="ml-2" placement="right-start">

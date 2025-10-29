@@ -2,7 +2,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { BodyShort, ExpansionCard, Heading, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import underavsnittType from '../../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
@@ -33,7 +32,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
     <Heading size="small" level="2">
-      <FormattedMessage id="TilbakekrevingVedtak.Vedtaksbrev" />
+      Vedtaksbrev
     </Heading>
     <VerticalSpacer eightPx />
     {vedtaksbrevAvsnitt.map((avsnitt: VedtaksbrevAvsnitt) => {
@@ -55,7 +54,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
                 {avsnitt.overskrift ? (
                   avsnitt.overskrift
                 ) : (
-                  <FormattedMessage id="TilbakekrevingEditerVedtaksbrevPanel.LovhjemlerOgKlagerettOverskrift" />
+                  Lovhjemler og klagerett
                 )}
               </ExpansionCard.Title>
             </ExpansionCard.Header>

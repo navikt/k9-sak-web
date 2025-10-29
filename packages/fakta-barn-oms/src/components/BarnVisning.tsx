@@ -1,7 +1,6 @@
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { Box } from '@navikt/ds-react';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 import BarnInformasjonVisning from './BarnInformasjonVisning';
 import BarnRammevedtakVisning from './BarnRammevedtakVisning';
 import styles from './barnVisning.module.css';

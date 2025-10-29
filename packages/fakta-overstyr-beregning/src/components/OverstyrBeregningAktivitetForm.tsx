@@ -3,7 +3,6 @@ import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import styles from './OverstyrBeregningFaktaForm.module.css';
 
@@ -39,7 +38,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               {...field}
               id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-inntekt`}
               type="text"
-              placeholder={intl.formatMessage({ id: 'OverstyrInputForm.InntektPrAar' })}
+              placeholder={"Inntekt pr. år"}
               onChange={async e => {
                 const tallverdi: number = parseInt(e.target.value.replace(/\D+/g, ''), 10);
                 await setFieldValue(field.name, tallverdi);
@@ -61,7 +60,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               {...field}
               id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-refusjon`}
               type="text"
-              placeholder={intl.formatMessage({ id: 'OverstyrInputForm.RefusjonPrAar' })}
+              placeholder={"Refusjon pr. år"}
               onChange={async e => {
                 const tallverdi: number = parseInt(e.target.value.replace(/\D+/g, ''), 10);
                 await setFieldValue(field.name, tallverdi);
@@ -84,7 +83,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.startdatoRefusjon`}>
           {({ field, meta }) => (
             <Datepicker
-              label={intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonPlaceholder' })}
+              label={"dd-mm-åååå"}
               hideLabel
               error={meta.touched && meta.error ? meta.error : ''}
               value={field.value}
@@ -103,7 +102,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
             const tallverdi = values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar;
             return (
               <Datepicker
-                label={intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' })}
+                label={"dd-mm-åååå"}
                 hideLabel
                 error={meta.touched && meta.error ? meta.error : ''}
                 value={field.value}

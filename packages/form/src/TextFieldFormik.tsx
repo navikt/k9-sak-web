@@ -1,7 +1,6 @@
 import { TextField } from '@navikt/ds-react';
 import { connect, Field as FormikField, FormikState, getIn } from 'formik';
 import React from 'react';
-import { useIntl } from 'react-intl';
 import { validateAll } from './formikUtils';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
@@ -35,7 +34,7 @@ const renderTextField = ({ field: { value, name }, form, label, maxLength, touch
 };
 
 const TextFieldFormik = ({ name, label, validate, readOnly, formik, ...otherProps }: TextFieldFormikProps) => {
-  const intl = useIntl();
+
   return (
     <FormikField
       name={name}

@@ -1,7 +1,6 @@
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
@@ -35,9 +34,9 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
       a => a.kode === aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE,
     )
   ) {
-    return <FormattedMessage id="HelpText.OvergangAbedsforholdsId" />;
+    return Det er mottatt inntektsmeldinger med både arbeidsforhold-Id og virksomhetsnummer for sammelfallende dager eller dager etter hverandre.;
   }
-  return <FormattedMessage id="HelpText.IngenAksjonspunkt" />;
+  return Det finnes ingen åpne aksjonspunkter;
 };
 
 const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
@@ -53,7 +52,7 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
         <FlexColumn className={styles.message}>
           <Image
             className={styles.image}
-            alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+            alt={"Aksjonspunkt"}
             src={advarselIkonUrl}
           />
           <BodyShort size="small" className={styles.info}>
@@ -70,21 +69,21 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
               <VerticalSpacer eightPx />
               <li>
                 {' '}
-                <FormattedMessage id="HelpText.Option1" />
+                arbeidsforhold i Aa-registeret
               </li>
               <li>
                 {' '}
-                <FormattedMessage id="HelpText.Option2" />
+                inntekt i A-ordningen
               </li>
               <li>
                 {' '}
-                <FormattedMessage id="HelpText.Option3" />
+                eller sende ny inntektsmelding på riktig arbeidsforhold
               </li>
             </BodyShort>
           </FlexRow>
           <FlexRow>
             {' '}
-            <FormattedMessage id="HelpText.SettPaaVent" />
+            Sett behandlingen på vent i 2 uker.
           </FlexRow>
           <FlexRow>
             <div className={styles.hl} />
@@ -92,20 +91,20 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
           <VerticalSpacer eightPx />
           <FlexRow>
             <BodyShort size="small">
-              <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
+              Dersom arbeidsgiver ikke kan rapportere arbeidsforholdet i Aa-registeret:
             </BodyShort>
           </FlexRow>
           <VerticalSpacer eightPx />
           <FlexRow>
             <BodyShort size="small" className={styles.spørsmål}>
-              <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
+              Skal arbeidsforholdet opprettes selv om det ikke finnes i Aa-registeret?
             </BodyShort>
           </FlexRow>
         </>
       )}
       {overgangArbeidsforholdsId && (
         <BodyShort size="small" className={styles.info}>
-          <FormattedMessage id="HelpText.TaKontaktOvergangArbeidsforholdId" />
+          Kontakt arbeidsgiver som må sende en ny inntekstmelding med enten riktig arbeidsforhold-Id eller virksomhetsnummer for alle dagene/timene de krever refusjon for.
         </BodyShort>
       )}
     </FlexContainer>

@@ -1,6 +1,5 @@
 import { Tag, Textarea } from '@navikt/ds-react';
 import { Field as FormikField, FormikState, connect, getIn } from 'formik';
-import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './TextAreaFormik.module.css';
@@ -55,7 +54,7 @@ const TextAreaFormik = ({
   validate = [],
   ...otherProps
 }: TextAreaFieldProps) => {
-  const intl = useIntl();
+
   return (
     <FormikField
       name={name}

@@ -3,7 +3,6 @@ import { FlexRow } from '@fpsak-frontend/shared-components/index';
 import { Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React, { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { WrappedFieldArrayProps } from 'redux-form';
 import Overføring, {
   Overføringsretning,
@@ -37,7 +36,7 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
   if (antallRader === 0) {
     return (
       <Label size="small" as="p">
-        <FormattedMessage id="FaktaRammevedtak.IngenOverføringer" />
+        Ingen registrerte overføringer
       </Label>
     );
   }
@@ -84,7 +83,7 @@ const Overføringsrader = ({ fields, type, retning }: WrappedFieldArrayProps<Ove
     return (
       <FlexRow spaceBetween alignItemsToBaseline>
         <Label size="small" as="p">
-          <FormattedMessage id="FaktaRammevedtak.IngenOverføringer" />
+          Ingen registrerte overføringer
         </Label>
       </FlexRow>
     );
@@ -113,7 +112,7 @@ const Overføringsrader = ({ fields, type, retning }: WrappedFieldArrayProps<Ove
                     </span>
                     <InputField name={`${field}.antallDager`} readOnly type="number" />
                     <span>
-                      <FormattedMessage id="FaktaRammevedtak.Overføringsdager.Dager" />
+                       dager 
                     </span>
                   </span>
                 ),

@@ -2,7 +2,6 @@ import { DatepickerField } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import React from 'react';
-import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.module.css';
 import SøknadFormValue from './types/SøknadFormValue';
 
@@ -19,7 +18,6 @@ const SelvstendigNæringsdrivendeForm = ({
   clearSelvstendigValues,
   fieldArrayId,
 }: SelvstendigNæringsdrivendeFormProps) => {
-  const intl = useIntl();
 
   React.useEffect(
     () => () => {

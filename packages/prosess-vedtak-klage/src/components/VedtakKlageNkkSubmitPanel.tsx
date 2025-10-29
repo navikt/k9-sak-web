@@ -1,4 +1,3 @@
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { Button, HGrid } from '@navikt/ds-react';
 import styles from './vedtakKlageSubmitPanel.module.css';
@@ -42,7 +41,7 @@ const VedtakKlageNkkSubmitPanel = ({
           onClick={formProps.handleSubmit}
           disabled={behandlingPåVent || klageResultat.godkjentAvMedunderskriver}
         >
-          {intl.formatMessage({ id: 'VedtakKlageForm.FattVedtak' })}
+          {"Fatt Vedtak"}
         </Button>
       )}
     </div>

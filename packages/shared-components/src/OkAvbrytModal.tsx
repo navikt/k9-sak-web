@@ -1,5 +1,4 @@
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import FlexColumn from './flexGrid/FlexColumn';
 import FlexContainer from './flexGrid/FlexContainer';
 import FlexRow from './flexGrid/FlexRow';
@@ -47,7 +46,7 @@ const OkAvbrytModal = ({
           </FlexColumn>
           <FlexColumn>
             <Button variant="secondary" size="small" type="reset" onClick={cancel}>
-              {intl.formatMessage({ id: 'OkAvbrytModal.Avbryt' })}
+              {"Avbryt"}
             </Button>
           </FlexColumn>
         </FlexRow>

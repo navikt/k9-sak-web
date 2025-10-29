@@ -2,7 +2,6 @@ import { DecimalField, InputField, RadioGroupField, SelectField } from '@fpsak-f
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
@@ -41,7 +40,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
       <div>
         <VerticalSpacer eightPx />
         <Detail>
-          <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon" />
+          Skal særlige grunner gi reduksjon av beløpet?
         </Detail>
         <VerticalSpacer eightPx />
         <RadioGroupField
@@ -51,11 +50,11 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           radios={[
             {
               value: true,
-              label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
+              label: Ja,
             },
             {
               value: false,
-              label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
+              label: Nei,
             },
           ]}
         />
@@ -68,7 +67,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
             {!harMerEnnEnYtelse && andelSomTilbakekreves !== EGENDEFINERT && (
               <>
                 <Detail>
-                  <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" />
+                  Angi andel som skal tilbakekreves
                 </Detail>
                 <FlexRow>
                   <FlexColumn>
@@ -91,7 +90,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
             {!harMerEnnEnYtelse && andelSomTilbakekreves === EGENDEFINERT && (
               <>
                 <Detail>
-                  <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" />
+                  Angi andel som skal tilbakekreves
                 </Detail>
                 <FlexRow>
                   <FlexColumn>
@@ -116,7 +115,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
             {harMerEnnEnYtelse && (
               <InputField
                 name="belopSomSkalTilbakekreves"
-                label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiBelopSomSkalTilbakekreves" />}
+                label={Angi beløp som skal tilbakekreves}
                 validate={[required, minValue1]}
                 readOnly={readOnly}
                 format={formatCurrencyNoKr}
@@ -128,10 +127,10 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           {handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM && (
             <div>
               <Detail>
-                <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />
+                Skal det tillegges renter?
               </Detail>
               <BodyShort size="small" className={styles.labelPadding}>
-                <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
+                Nei
               </BodyShort>
             </div>
           )}
@@ -158,18 +157,18 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           {handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM && (
             <div>
               <RadioGroupField
-                label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />}
+                label={Skal det tillegges renter?}
                 validate={[required]}
                 name="skalDetTilleggesRenter"
                 readOnly={readOnly}
                 radios={[
                   {
                     value: true,
-                    label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
+                    label: Ja,
                   },
                   {
                     value: false,
-                    label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
+                    label: Nei,
                   },
                 ]}
               />

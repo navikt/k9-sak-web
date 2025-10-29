@@ -1,23 +1,22 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import styles from './vedtakForm.module.css';
 
 const findHelpTexts = (intl: IntlShape, aksjonspunktKoder: string[]) => {
   const helpTexts = [];
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
-    helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderAnnenYtelse' }));
+    helpTexts.push("Vurder om den åpne oppgaven «Vurder konsekvens for ytelse» påvirker behandlingen");
   }
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT)) {
-    helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderDokument' }));
+    helpTexts.push("Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen");
   }
   if (
     aksjonspunktKoder &&
     aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)
   ) {
-    helpTexts.push(intl.formatMessage({ id: 'VedtakForm.KontrollerRevurderingsbehandling' }));
+    helpTexts.push("Vurder varsel ved vedtak til ugunst");
   }
 
   return helpTexts;
@@ -50,17 +49,17 @@ export const VedtakHelpTextPanelImpl = ({
         {aksjonspunktKoder &&
           aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
             <Label size="small" as="p" className={styles.inline}>
-              <FormattedMessage id="VedtakForm.HelpText0" />
+              Beregningsgrunnlaget er endret til ugunst for bruker i revurderingen. 
             </Label>
           )}
         <BodyShort size="small" className={styles.inline}>
-          <FormattedMessage id="VedtakForm.HelpText1" />
+          Klikk på 
         </BodyShort>
         <Label size="small" as="p" className={styles.inline}>
-          <FormattedMessage id="VedtakForm.TilGodkjenning" />
+          Til godkjenning
         </Label>
         <BodyShort size="small" className={styles.inline}>
-          <FormattedMessage id="VedtakForm.HelpText2" />
+           dersom du ønsker å fullføre behandlingen nå.
         </BodyShort>
         <VerticalSpacer twentyPx />
       </>

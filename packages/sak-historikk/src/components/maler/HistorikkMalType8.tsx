@@ -1,7 +1,6 @@
 import { HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import HistorikkMal from '../HistorikkMalTsType';
 import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';

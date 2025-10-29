@@ -4,7 +4,6 @@ import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { Inntekt } from '../InntektType';
 
 const headerTextCodes = [
@@ -21,12 +20,12 @@ interface InntektOgYtelserFaktaPanelProps {
 }
 
 const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({ inntekter }) => {
-  const intl = useIntl();
+
   if (!inntekter || inntekter.length === 0) {
     return (
       <Box.New padding="4" borderWidth="1" borderRadius="medium">
         <BodyShort size="small">
-          <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
+          Ingen inntekt i Norge de siste tre månedene
         </BodyShort>
       </Box.New>
     );

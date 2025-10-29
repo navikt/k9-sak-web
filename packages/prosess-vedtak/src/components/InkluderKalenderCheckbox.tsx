@@ -1,6 +1,5 @@
 import React, { useEffect, type JSX } from 'react';
 import { Field } from 'formik';
-import { IntlShape } from 'react-intl';
 
 import { Checkbox } from '@navikt/ds-react';
 
@@ -33,7 +32,7 @@ const InkluderKalenderCheckbox = ({
           disabled={disabled}
           size="small"
         >
-          {intl.formatMessage({ id: 'VedtakForm.InkluderKalenderVedOverstyring' })}
+          {"Inkluder kalender i brev"}
         </Checkbox>
       )}
     </Field>

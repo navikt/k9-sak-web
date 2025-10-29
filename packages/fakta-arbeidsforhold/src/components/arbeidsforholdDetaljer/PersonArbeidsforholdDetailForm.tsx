@@ -4,7 +4,6 @@ import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-compone
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
@@ -76,7 +75,7 @@ export const PersonArbeidsforholdDetailForm = ({
                 onClick={formProps.handleSubmit}
                 disabled={formProps.pristine}
               >
-                <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
+                Oppdater
               </Button>
             </FlexColumn>
           </FlexRow>

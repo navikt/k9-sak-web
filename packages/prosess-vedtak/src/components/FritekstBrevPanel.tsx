@@ -1,6 +1,5 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import React, { useCallback } from 'react';
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -68,13 +67,13 @@ const FritekstBrevPanel = ({
     <div className={styles.fritekstbrevPanel}>
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
       <Heading className={styles.brevHeading} size="small" level="2">
-        <FormattedMessage id="VedtakForm.Brev" />
+        Brev
       </Heading>
 
       {!readOnly && harAutomatiskVedtaksbrev && (
         <div className={styles.brevAlertContainer} data-testid="harAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
-            <FormattedMessage id="VedtakForm.AutomatiskBrev" />
+            Innhold fra det automatiske brevet kan nå redigeres
           </Alert>
         </div>
       )}

@@ -5,7 +5,6 @@ import { omit } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Box } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -85,7 +84,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
         </Box.New>
       )}
       <h3>
-        <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
+        Aktive arbeidsforhold
       </h3>
       <form onSubmit={formProps.handleSubmit}>
         <PersonArbeidsforholdPanel

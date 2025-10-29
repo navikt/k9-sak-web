@@ -3,7 +3,6 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
 import styles from './tilbakekrevingVedtakPeriodeTabell.module.css';
@@ -58,7 +57,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnPro
       <Table.Row key="sum" shadeOnHover={false}>
         <Table.DataCell>
           <BodyShort size="small">
-            <FormattedMessage id="TilbakekrevingVedtakPeriodeTabell.Sum" />
+            Sum
           </BodyShort>
         </Table.DataCell>
         <Table.DataCell>

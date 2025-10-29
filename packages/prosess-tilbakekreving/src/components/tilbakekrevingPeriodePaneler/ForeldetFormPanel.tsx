@@ -1,4 +1,3 @@
-import { FormattedMessage } from 'react-intl';
 
 import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import { HGrid } from '@navikt/ds-react';
@@ -12,8 +11,8 @@ const ForeldetFormPanel = () => (
       <RadioGroupField
         name="periodenErForeldet"
         readOnly
-        label={<FormattedMessage id="ForeldetPanel.VurderOmPeriodenErForeldet" />}
-        radios={[{ value: true, label: <FormattedMessage id="ForeldetPanel.PeriodenErForeldet" /> }]}
+        label={Vurder om perioden er foreldet}
+        radios={[{ value: true, label: Perioden er foreldet }]}
       />
     </div>
   </HGrid>

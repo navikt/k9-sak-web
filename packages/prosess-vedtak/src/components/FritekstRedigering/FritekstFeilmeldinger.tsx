@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
@@ -29,7 +28,7 @@ const FritekstFeilmeldinger = () => {
           ))}
           {harDokumentdataApiFeilmelding({ feilmeldinger: errorMessages }) && (
             <p>
-              <FormattedMessage id="RedigeringAvFritekstBrev.KommunikasjonsfeilLagre" />
+              Det har oppstått en feil under kommunikasjon med serveren, endringene vil ikke bli lagret. Kopier innholdet i brevet og prøv å last siden på nytt.
             </p>
           )}
         </Alert>

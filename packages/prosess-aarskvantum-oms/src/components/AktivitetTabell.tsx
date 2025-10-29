@@ -18,7 +18,6 @@ import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HelpText, Label, Table, Tabs } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { ReactNode, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Utfall from './Utfall';
 import styles from './aktivitetTabell.module.css';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
@@ -61,11 +60,11 @@ const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => 
 const formaterFraværsårsak = (fraværsårsak: string): ReactNode => {
   switch (fraværsårsak) {
     case FraværÅrsakEnum.ORDINÆRT_FRAVÆR:
-      return <FormattedMessage id="Uttaksplan.Årsak.ORDINÆRT_FRAVÆR" />;
+      return Ordinært fravær;
     case FraværÅrsakEnum.STENGT_SKOLE_ELLER_BARNEHAGE:
-      return <FormattedMessage id="Uttaksplan.Årsak.STENGT_SKOLE_ELLER_BARNEHAGE" />;
+      return Stengt skole eller barnehage;
     case FraværÅrsakEnum.SMITTEVERNHENSYN:
-      return <FormattedMessage id="Uttaksplan.Årsak.SMITTEVERNHENSYN" />;
+      return Smittevernhensyn;
     default:
       return null;
   }
@@ -165,21 +164,21 @@ const AktivitetTabell = ({
         <Table.Header>
           <Table.Row shadeOnHover={false}>
             <Table.HeaderCell scope="col">
-              <FormattedMessage id="Uttaksplan.Periode" />
+              Periode
             </Table.HeaderCell>
             <Table.HeaderCell scope="col">
-              <FormattedMessage id="Uttaksplan.Utfall" />
+              Utfall
             </Table.HeaderCell>
             <Table.HeaderCell scope="col">
-              <FormattedMessage id="Uttaksplan.Fravær" />
+              Fravær
             </Table.HeaderCell>
             {skalÅrsakVises && (
               <Table.HeaderCell scope="col">
-                <FormattedMessage id="Uttaksplan.Årsak" />
+                Årsak
               </Table.HeaderCell>
             )}
             <Table.HeaderCell scope="col">
-              <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
+              Utbetalingsgrad
             </Table.HeaderCell>
             <Table.HeaderCell scope="col" />
           </Table.Row>
@@ -337,10 +336,10 @@ const AktivitetTabell = ({
                           {!nøkkeltall && (
                             <>
                               <BodyShort size="small" className={styles.deaktivertFane}>
-                                <FormattedMessage id="Uttaksplan.Nokkeltall" />
+                                Nøkkeltall denne perioden
                               </BodyShort>
                               <HelpText>
-                                <FormattedMessage id="Nøkkeltall.Deaktivert" />
+                                Nøkkeltallene for alle periodene er samlet i den siste perioden.
                               </HelpText>
                             </>
                           )}

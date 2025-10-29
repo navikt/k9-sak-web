@@ -1,6 +1,5 @@
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { ReactNode } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
@@ -21,7 +20,7 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
       <FlexRow>
         <FlexColumn className={styles.sideMenu}>
           <SideMenu
-            heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
+            heading={"Saksopplysninger"}
             links={paneler.map(panel => ({
               label: intl.formatMessage({ id: panel.tekstKode }),
               active: panel.erAktiv,

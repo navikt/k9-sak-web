@@ -1,6 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-const PlaceholderHistorikkMal = () => <FormattedMessage id="Historikk.FinnerIngenMal" />;
+const PlaceholderHistorikkMal = () => Kan ikke finne mal for dette historikkinnslaget;
 
 export default PlaceholderHistorikkMal;

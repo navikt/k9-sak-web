@@ -20,7 +20,6 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Kodeverk } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -50,7 +49,7 @@ export const BehandleUnntakForm = ({
     <FlexContainer>
       <FlexRow>
         <Heading size="small" level="2">
-          <FormattedMessage id="Unntak.Title" />
+          Vurder Vilkår
         </Heading>
       </FlexRow>
       <VerticalSpacer twentyPx />
@@ -77,11 +76,11 @@ export const BehandleUnntakForm = ({
         radios={[
           {
             value: behandlingResultatType.INNVILGET,
-            label: <FormattedMessage id="Unntak.Innvilg" />,
+            label: Innvilget eller endring,
           },
           {
             value: behandlingResultatType.AVSLATT,
-            label: <FormattedMessage id="Unntak.Avslå" />,
+            label: Avslå eller ingen endring,
           },
         ]}
       />

@@ -2,7 +2,6 @@ import { CheckboxGroupFormik } from '@fpsak-frontend/form';
 import { Alert, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { IntlShape } from 'react-intl';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import InformasjonsbehovKode from './InformasjonsbehovKode';
 import styles from './informasjonsbehovAutomatiskVedtaksbrev.module.css';
@@ -41,9 +40,9 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
   const getAksjonspunktInfoboks = () => {
     let tekst = '';
     if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.BEREGNING_SKJONNSMESSIG)) {
-      tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig' });
+      tekst = "Suppler med fritekst i henhold til skjønnsmessig vurdering.";
     } else if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.REVURDERING_ENDRING)) {
-      tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstEndring' });
+      tekst = "Suppler med fritekst i henhold til endringsvedtaket.";
     } else {
       return null;
     }
@@ -60,7 +59,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
       {!readOnly && (
         <>
           <Heading className={styles.heading} level="3" size="small">
-            {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse' })}
+            {"Fritekstbeskrivelse"}
           </Heading>
           {getAksjonspunktInfoboks()}
         </>
@@ -81,18 +80,18 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
           <div className={styles.checkbox}>
             <CheckboxGroupFormik
               name="ikkeRelevantMedFritekst"
-              legend={intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst' })}
+              legend={"Er det relevant med fritekstbeskrivelse i brevet?"}
               hideLegend
               checkboxes={[
                 {
                   value: 'ikkeRelevantMedFritekst',
-                  label: intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst' }),
+                  label: "Det er ikke relevant med fritekstbeskrivelse i brevet",
                 },
               ]}
               validate={[
                 value => {
                   if (!harBegrunnelse && (!value || value.length === 0)) {
-                    return [intl.formatMessage({ id: 'ValidationMessage.BekreftIkkeRelevantFritekst' })];
+                    return ["Du må bekrefte at det ikke er relevant med fritekstbeskrivelse i brevet"];
                   }
                   return null;
                 },

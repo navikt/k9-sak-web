@@ -6,7 +6,6 @@ import {
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { BeregningResultat } from '../../types/BeregningResultat';
@@ -51,7 +50,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
 }: VedtakAvslagRevurderingPanelProps & OwnState & WrappedComponentProps) => (
   <div>
     <Label size="small" as="p">
-      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+      {"Resultat"}
     </Label>
     {(ytelseTypeKode === fagsakYtelsesType.FRISINN || ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER) && (
       <BodyShort size="small">
@@ -65,7 +64,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
     <div>
       <VerticalSpacer sixteenPx />
       <Label size="small" as="p">
-        {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
+        {"Årsak til avslag"}
       </Label>
       <AvslagsårsakListe vilkar={vilkar} />
       <VerticalSpacer sixteenPx />

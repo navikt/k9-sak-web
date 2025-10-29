@@ -3,7 +3,6 @@ import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 import PreviewLink from '../PreviewLink';
 import EditorJSWrapper from './EditorJSWrapper';
@@ -146,17 +145,17 @@ const FritekstEditor = ({
       {visAdvarsel ? (
         <Modal.Header>
           <Heading as="h3" size="medium">
-            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
+            Tilbakestill brev
           </Heading>
         </Modal.Header>
       ) : (
         <Modal.Header>
           <Heading level="3" size="small">
-            <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+            Rediger brev
           </Heading>
           <VerticalSpacer sixteenPx />
           <Alert variant="info" size="small">
-            <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
+            Gjør nødvendige endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje. Vil du se saken samtidig som du redigerer kan du åpne en kopi av saken i ny fane:
             <ÅpneSakINyttVinduKnapp />
           </Alert>
           <FritekstFeilmeldinger />
@@ -167,15 +166,15 @@ const FritekstEditor = ({
           {visAdvarsel && (
             <>
               <Alert variant="warning" inline>
-                <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
+                Alle endringer gjort i brevet vil nå bli slettet. Er du sikker på at du vil tilbakestille brevet?
               </Alert>
 
               <div className={styles.knapperHoyere}>
                 <Button size="small" type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
-                  <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
+                  Avbryt
                 </Button>
                 <Button size="small" type="button" variant="primary" onClick={handleTilbakestill}>
-                  <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+                  Tilbakestill
                 </Button>
               </div>
             </>
@@ -234,7 +233,7 @@ const FritekstEditor = ({
                   intl={intl}
                   loading={!redigerbartInnholdKlart}
                 >
-                  <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+                  Forhåndsvis brev
                 </PreviewLink>
               </div>
               <FritekstFeilmeldinger />
@@ -249,7 +248,7 @@ const FritekstEditor = ({
                   disabled={!redigerbartInnholdKlart || readOnly}
                   size="small"
                 >
-                  <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
+                  Lagre og lukk
                 </Button>
               </div>
               <div className={styles.hoyere}>
@@ -261,7 +260,7 @@ const FritekstEditor = ({
                   disabled={readOnly}
                   size="small"
                 >
-                  <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+                  Tilbakestill
                 </Button>
               </div>
             </HGrid>

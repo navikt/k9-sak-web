@@ -1,6 +1,5 @@
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import HistorikkMal from '../HistorikkMalTsType';
 import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';

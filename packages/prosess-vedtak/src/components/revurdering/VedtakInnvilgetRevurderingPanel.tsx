@@ -11,7 +11,6 @@ import {
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { BeregningResultat } from '../../types/BeregningResultat';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
@@ -77,7 +76,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
     <>
       <div data-testid="innvilgetRevurdering">
         <Label size="small" as="p">
-          {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+          {"Resultat"}
         </Label>
         <BodyShort size="small">
           {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}

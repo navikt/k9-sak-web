@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import Feilikon from '../icons/Feilikon';
 import Suksessikon from '../icons/Suksessikon';
@@ -25,7 +24,7 @@ const AldersVilkarStatus = ({
     <div className={styles.vilkarStatusOverskrift}>
       {vilkarOppfylt ? <Suksessikon /> : <Feilikon />}
       <h2 className={styles.aksjonspunktNavn}>
-        <FormattedMessage id="AlderVilkar.Status.Aldersvilkar" />
+        Aldersvilkår
       </h2>
       <p className={styles.vilkar}>
         <Lovreferanse>{vilkarReferanse}</Lovreferanse>
@@ -33,8 +32,8 @@ const AldersVilkarStatus = ({
     </div>
     <p className={styles.vilkarStatus}>
       {vilkarOppfylt
-        ? intl.formatMessage({ id: 'AlderVilkar.Status.VilkarOppfylt' })
-        : intl.formatMessage({ id: 'AlderVilkar.Status.VilkarIkkeOppfylt' })}
+        ? "Vilkåret er oppfylt"
+        : "Vilkåret er ikke oppfylt"}
     </p>
 
     {periode && (

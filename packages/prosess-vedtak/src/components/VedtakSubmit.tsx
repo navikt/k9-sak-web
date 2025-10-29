@@ -1,7 +1,6 @@
 import { type JSX } from 'react';
 
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { useIntl } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Button, ErrorMessage } from '@navikt/ds-react';
@@ -31,7 +30,6 @@ const VedtakSubmit = ({
   handleSubmit,
   errorOnSubmit,
 }: Props): JSX.Element => {
-  const intl = useIntl();
 
   const skalSubmitVæreDeaktivert = behandlingPåVent || isSubmitting;
 

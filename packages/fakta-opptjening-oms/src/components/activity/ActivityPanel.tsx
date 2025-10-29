@@ -31,7 +31,6 @@ import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import { KeyboardEvent, MouseEvent } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
@@ -179,12 +178,12 @@ export const ActivityPanel = ({
       </Label>
       <div>
         <TimeLineButton
-          text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+          text={"Forrige periode"}
           type="prev"
           callback={selectPrevPeriod}
         />
         <TimeLineButton
-          text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+          text={"Neste periode"}
           type="next"
           callback={selectNextPeriod}
         />
@@ -215,9 +214,9 @@ export const ActivityPanel = ({
       </FlexContainer>
       <SelectField
         name="aktivitetType.kode"
-        label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
+        label={"Aktivitet"}
         validate={[required]}
-        placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
+        placeholder={"Velg aktivitet"}
         selectValues={opptjeningAktivitetTypes.map(oat => (
           <option key={oat.kode} value={oat.kode}>
             {oat.navn}
@@ -245,7 +244,7 @@ export const ActivityPanel = ({
             radios={[
               {
                 value: true,
-                label: <FormattedMessage id="ActivityPanel.Godkjent" />,
+                label: Aktiviteten godkjennes,
               },
               {
                 value: false,
@@ -271,12 +270,12 @@ export const ActivityPanel = ({
         <FlexRow className={styles.buttonContainer}>
           <FlexColumn>
             <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={pristine}>
-              <FormattedMessage id="ActivityPanel.Oppdater" />
+              Oppdater
             </Button>
           </FlexColumn>
           <FlexColumn>
             <Button variant="secondary" size="small" type="button" onClick={cancelSelectedOpptjeningActivity}>
-              <FormattedMessage id="ActivityPanel.Avbryt" />
+              Avbryt
             </Button>
           </FlexColumn>
         </FlexRow>

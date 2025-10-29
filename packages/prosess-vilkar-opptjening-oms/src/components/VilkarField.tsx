@@ -4,7 +4,6 @@ import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { FeatureToggles, Opptjening, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import { FormattedMessage, useIntl } from 'react-intl';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
@@ -64,12 +63,12 @@ export const VilkarField = ({
   readOnly,
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
-  const intl = useIntl();
+
   const featureToggles = useContext(FeatureTogglesContext);
   const erIkkeOppfyltText = (
     <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
   );
-  const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
+  const erOppfyltText = Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.;
 
   const vilkarVurderingTekst = () => {
     if (erVilkarOk(field?.kode) && Object.values(opptjeningMidlertidigInaktivKoder).includes(field?.kode)) {
@@ -86,12 +85,12 @@ export const VilkarField = ({
       <ProsessStegBegrunnelseTextField
         text={
           erOmsorgspenger
-            ? intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.OmsorgspengerVurderLabel' })
+            ? "Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B"
             : undefined
         }
         readOnly={readOnly}
         fieldNamePrefix={fieldPrefix}
-        placeholderText={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.VurderingPlaceholderText' })}
+        placeholderText={"Begrunn vurderingen din. Se hjelpetekst for veiledning."}
       />
       <VerticalSpacer sixteenPx />
       {readOnly && (
@@ -133,7 +132,7 @@ export const VilkarField = ({
               ? [
                   {
                     value: opptjeningMidlertidigInaktivKoder.TYPE_A,
-                    label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }),
+                    label: "Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav A",
                   },
                 ]
               : []),
@@ -141,7 +140,7 @@ export const VilkarField = ({
               ? [
                   {
                     value: opptjeningMidlertidigInaktivKoder.TYPE_B,
-                    label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }),
+                    label: "Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav B",
                   },
                 ]
               : []),

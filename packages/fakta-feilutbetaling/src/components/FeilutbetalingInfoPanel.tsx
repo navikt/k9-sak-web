@@ -22,7 +22,6 @@ import { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { change, clearFields, getFormValues, InjectedFormProps } from 'redux-form';
@@ -148,13 +147,13 @@ export const FeilutbetalingInfoPanelImpl = (
           <div>
             <div className={styles.smallMarginBottom}>
               <Label size="small" as="p">
-                <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
+                Feilutbetaling
               </Label>
             </div>
             <HGrid gap="space-16" columns={{ xs: '12fr', md: '4fr 4fr 4fr' }}>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
+                  Periode med feilutbetaling
                 </Detail>
                 <BodyShort size="small" className={styles.smallPaddingRight}>
                   {`${moment(feilutbetaling.totalPeriodeFom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
@@ -164,7 +163,7 @@ export const FeilutbetalingInfoPanelImpl = (
               </div>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
+                  Feilutbetalt beløp totalt
                 </Detail>
                 <BodyShort size="small" className={styles.redText}>
                   {feilutbetaling.aktuellFeilUtbetaltBeløp}
@@ -172,13 +171,13 @@ export const FeilutbetalingInfoPanelImpl = (
               </div>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
+                  Tidligere varslet beløp
                 </Detail>
                 <BodyShort size="small" className={styles.smallPaddingRight}>
                   {feilutbetaling.tidligereVarseltBeløp ? (
                     feilutbetaling.tidligereVarseltBeløp
                   ) : (
-                    <FormattedMessage id="FeilutbetalingInfoPanel.IkkeVarslet" />
+                    Ikke varslet
                   )}
                 </BodyShort>
               </div>
@@ -210,13 +209,13 @@ export const FeilutbetalingInfoPanelImpl = (
           <div>
             <div className={styles.smallMarginBottom}>
               <Label size="small" as="p">
-                <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
+                Revurdering
               </Label>
             </div>
             <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
+                  Årsak(er) til revurdering
                 </Detail>
                 {feilutbetaling.behandlingÅrsaker && (
                   <BodyShort size="small" className={styles.smallPaddingRight}>
@@ -229,7 +228,7 @@ export const FeilutbetalingInfoPanelImpl = (
               {feilutbetaling.datoForRevurderingsvedtak && (
                 <div>
                   <Detail className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
+                    Dato for revurderingsvedtak
                   </Detail>
                   <BodyShort size="small" className={styles.smallPaddingRight}>
                     {moment(feilutbetaling.datoForRevurderingsvedtak).format(DDMMYYYY_DATE_FORMAT)}
@@ -240,7 +239,7 @@ export const FeilutbetalingInfoPanelImpl = (
             <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
+                  Resultat
                 </Detail>
                 {feilutbetaling.behandlingsresultat && (
                   <BodyShort size="small" className={styles.smallPaddingRight}>
@@ -250,7 +249,7 @@ export const FeilutbetalingInfoPanelImpl = (
               </div>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.Konsekvens" />
+                  Konsekvens
                 </Detail>
                 {feilutbetaling.behandlingsresultat && (
                   <BodyShort size="small" className={styles.smallPaddingRight}>
@@ -265,7 +264,7 @@ export const FeilutbetalingInfoPanelImpl = (
             <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
               <div>
                 <Detail className={styles.undertekstMarginBottom}>
-                  <FormattedMessage id="FeilutbetalingInfoPanel.Tilbakekrevingsvalg" />
+                  Tilbakekrevingsvalg
                 </Detail>
                 {feilutbetaling.tilbakekrevingValg && (
                   <BodyShort size="small" className={styles.smallPaddingRight}>
@@ -297,7 +296,7 @@ export const FeilutbetalingInfoPanelImpl = (
               disabled={formProps.pristine || formProps.submitting}
               loading={formProps.submitting}
             >
-              <FormattedMessage id="FeilutbetalingInfoPanel.Confirm" />
+              Bekreft og fortsett
             </Button>
           </div>
         </HGrid>

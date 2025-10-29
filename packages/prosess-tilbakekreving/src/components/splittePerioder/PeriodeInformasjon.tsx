@@ -1,6 +1,5 @@
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -42,7 +41,7 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
             <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }} className={styles.redNumbers}>
               <div>
                 <BodyShort size="small" className={styles.resultName}>
-                  <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />:
+                  Feilutbetaling:
                   <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
                     {formatCurrencyNoKr(feilutbetaling)}
                   </span>

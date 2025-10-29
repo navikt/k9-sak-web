@@ -4,7 +4,6 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Detail } from '@navikt/ds-react';
 import { useContext, useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -60,10 +59,10 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
             <Image
               className={styles.addCircleIcon}
               src={addCircleIcon}
-              alt={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst' })}
+              alt={"Legg til utdypende tekst"}
             />
             <Detail className={styles.imageText}>
-              <FormattedMessage id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
+              Legg til utdypende tekst
             </Detail>
           </button>
         </>
@@ -73,7 +72,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
           <VerticalSpacer eightPx />
           <TextAreaField
             name={type}
-            label={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst' })}
+            label={"Utdypende tekst"}
             validate={valideringsRegler}
             maxLength={maximumLength || (utvidetVarseltekst ? 12000 : 4000)}
             readOnly={readOnly}

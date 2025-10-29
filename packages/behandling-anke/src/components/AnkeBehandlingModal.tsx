@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './ankeBehandlingModal.module.css';
 
 interface OwnProps {

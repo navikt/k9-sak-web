@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';

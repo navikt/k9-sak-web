@@ -1,4 +1,3 @@
-import { FormattedMessage } from 'react-intl';
 
 import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
 

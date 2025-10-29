@@ -23,7 +23,6 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { InjectedFormProps, change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
@@ -252,7 +251,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
       <FadingPanel>
         <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
           <Heading size="small" level="2">
-            <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
+            Tilbakekreving
           </Heading>
           <VerticalSpacer twentyPx />
           <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>

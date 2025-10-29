@@ -10,7 +10,6 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Edit } from '@navikt/ds-icons';
 import { Button, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
 import {
@@ -161,7 +160,7 @@ const FritekstRedigering = ({
   return (
     <>
       <h3>
-        <FormattedMessage id="RedigeringAvFritekstBrev.RedigerBrevTittel" />
+        Rediger brev til søker
       </h3>
       <Button
         variant="secondary"
@@ -172,7 +171,7 @@ const FritekstRedigering = ({
         icon={<Edit aria-hidden />}
         size="small"
       >
-        <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+        Rediger brev
       </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
         {visRedigering && (

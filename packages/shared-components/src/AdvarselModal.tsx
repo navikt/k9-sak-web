@@ -43,7 +43,7 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
               onClick={submit}
               autoFocus
             >
-              {intl.formatMessage({ id: 'AdvarselModal.Ok' })}
+              {"OK"}
             </Button>
           </div>
         </HGrid>

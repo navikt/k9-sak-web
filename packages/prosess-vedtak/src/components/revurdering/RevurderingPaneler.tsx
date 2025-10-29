@@ -1,5 +1,4 @@
 import { type JSX } from 'react';
-import { useIntl } from 'react-intl';
 
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -50,7 +49,7 @@ const RevurderingPaneler = ({
   formikValues,
   erSendtInnUtenArsaker,
 }: OwnProps): JSX.Element => {
-  const intl = useIntl();
+
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
 
   return (

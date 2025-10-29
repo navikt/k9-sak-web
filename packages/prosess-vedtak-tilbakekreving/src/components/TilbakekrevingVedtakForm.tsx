@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -99,7 +98,7 @@ export const TilbakekrevingVedtakFormImpl = ({
       <FlexRow>
         <FlexColumn>
           <ProsessStegSubmitButton
-            text={intl.formatMessage({ id: 'TilbakekrevingVedtakForm.TilGodkjenning' })}
+            text={"Til godkjenning"}
             formName={formName}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
@@ -124,7 +123,7 @@ export const TilbakekrevingVedtakFormImpl = ({
                 className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
                 data-testid="previewLink"
               >
-                <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
+                Forhåndsvis brev
               </Link>
             </div>
           </FlexColumn>
@@ -136,7 +135,7 @@ export const TilbakekrevingVedtakFormImpl = ({
                 <Image className={styles.infoTextIcon} src={advarselIcon} />
               </FlexColumn>
               <FlexColumn className={classNames(styles.infotextColumn)}>
-                <FormattedMessage id="TilbakekrevingVedtakForm.Infotekst.Klage" />
+                Vedtaksbrev sendes ikke ut fra denne behandlingen, men må sendes av saksbehandler fra klagebehandlingen
               </FlexColumn>
             </FlexRow>
           </FlexColumn>

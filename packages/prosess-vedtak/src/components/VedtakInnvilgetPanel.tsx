@@ -6,7 +6,6 @@ import {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import { findDelvisInnvilgetResultatText, findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
@@ -30,7 +29,7 @@ export const VedtakInnvilgetPanelImpl = ({
 }: VedtakInnvilgetPanelProps) => (
   <>
     <Label size="small" as="p" data-testid="innvilget">
-      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+      {"Resultat"}
     </Label>
     <BodyShort size="small">
       {intl.formatMessage({

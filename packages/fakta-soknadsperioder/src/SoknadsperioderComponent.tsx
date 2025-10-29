@@ -10,7 +10,6 @@ import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { BodyShort } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
@@ -78,7 +77,6 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
   const [expandEndringerFraSøker, setExpandEndringerFraSøker] = useState(false);
   const [expandTrukketKrav, setExpandTrukketKrav] = useState(false);
   const [navigasjonFomDato, setNavigasjonFomDato] = useState(undefined);
-  const intl = useIntl();
 
   const getNavnFraKodeverk = (kode: string) => kodeverk.find(kv => kv.kode === kode)?.navn;
 
@@ -94,7 +92,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     emptyRowClassname?: string;
     onClick?: () => void;
   }[] => {
-    const vedtakshistorikkLabel = intl.formatMessage({ id: 'Soknadsperioder.Rad.Vedtakshistorikk' });
+    const vedtakshistorikkLabel = "Vedtakshistorikk";
     const vedtakshistorikk = {
       radLabel: vedtakshistorikkLabel,
       perioder: behandlingPerioderårsakMedVilkår.forrigeVedtak.map(periode => ({
@@ -105,7 +103,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       radClassname: styles.vedtakhistorikkRad,
     };
 
-    const perioderTilBehandlingLabel = intl.formatMessage({ id: 'Soknadsperioder.Rad.PerioderTilBehandling' });
+    const perioderTilBehandlingLabel = "Perioder til behandling";
     const perioderTilBehandling = {
       radLabel: perioderTilBehandlingLabel,
       perioder: behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderTilVurdering.map(periode => ({ periode })),
@@ -322,7 +320,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
   return (
     <div className={styles.soknadsperioder}>
       <div className={styles.flexContainer}>
-        <h1 className={styles.heading}>{intl.formatMessage({ id: 'Soknadsperioder.Søknadsperioder' })}</h1>
+        <h1 className={styles.heading}>{"Søknadsperioder"}</h1>
         <div className={styles.navigasjonContainer}>
           <HorisontalNavigering
             tidslinjeSkala={tidslinjeSkala}
@@ -350,15 +348,15 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       <div className={styles.legendContainer}>
         <BodyShort size="small">
           <CheckIcon />
-          {intl.formatMessage({ id: 'Soknadsperioder.Status.InnvilgetPeriode' })}
+          {"Innvilget periode"}
         </BodyShort>
         <BodyShort size="small">
           <RejectedIcon />
-          {intl.formatMessage({ id: 'Soknadsperioder.Status.AvslåttPeriode' })}
+          {"Avslått periode"}
         </BodyShort>
         <BodyShort size="small">
           <SaksbehandlerIcon />
-          {intl.formatMessage({ id: 'Soknadsperioder.Status.TilBehandling' })}
+          {"Til behandling"}
         </BodyShort>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import styles from './prosessStegIkkeBehandletPanel.module.css';
 
@@ -9,7 +8,7 @@ const ProsessStegIkkeBehandletPanel = () => (
   <div className={styles.container}>
     <FadingPanel>
       <BodyShort size="small">
-        <FormattedMessage id="ProsessStegIkkeBehandletPanel.IkkeBehandlet" />
+        Dette steget er ikke behandlet
       </BodyShort>
     </FadingPanel>
   </div>

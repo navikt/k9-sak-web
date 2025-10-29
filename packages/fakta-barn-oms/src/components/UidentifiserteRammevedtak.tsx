@@ -3,7 +3,6 @@ import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { Alert } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './uidentifisertRammevedtak.module.css';
 
 interface UidentifiserteRammevedtakProps {

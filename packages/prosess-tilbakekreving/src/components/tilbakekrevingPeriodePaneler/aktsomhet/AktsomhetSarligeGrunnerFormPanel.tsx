@@ -4,7 +4,6 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import AktsomhetReduksjonAvBelopFormPanel from './AktsomhetReduksjonAvBelopFormPanel';
 
@@ -34,7 +33,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
 }: OwnProps) => (
   <div>
     <Detail>
-      <FormattedMessage id="AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon" />
+      Særlige grunner som er vektlagt (4.ledd)
     </Detail>
     <VerticalSpacer eightPx />
     {sarligGrunnTyper.map((sgt: KodeverkMedNavn) => (

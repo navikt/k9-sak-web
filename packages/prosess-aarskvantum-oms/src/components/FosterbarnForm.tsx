@@ -5,7 +5,6 @@ import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-fr
 import { Delete } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
@@ -34,10 +33,10 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
               <Table.Row>
                 <Table.DataCell />
                 <Table.DataCell>
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn.Fnr" />
+                  Fødselsnummer
                 </Table.DataCell>
                 <Table.DataCell className={styles.sentrert}>
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn.Fjern" />
+                  Fjern
                 </Table.DataCell>
               </Table.Row>
             </Table.Header>
@@ -83,7 +82,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
         </>
       )}
       <Button variant="tertiary" type="button" onClick={() => fields.push('')} size="small">
-        <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn.LeggTil" />
+        Legg til fosterbarn
       </Button>
     </>
   );

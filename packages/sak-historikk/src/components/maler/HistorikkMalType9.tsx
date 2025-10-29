@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { HistorikkinnslagEndretFelt } from '@k9-sak-web/types';

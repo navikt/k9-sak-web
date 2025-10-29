@@ -1,6 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
 import { MouseEvent } from 'react';
-import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
 
 const TimeLineNavigation = ({
@@ -10,13 +9,13 @@ const TimeLineNavigation = ({
   openPeriodInfo: (event: MouseEvent) => void;
   className?: string;
 }) => {
-  const intl = useIntl();
+
   return (
     <HGrid gap="space-4" columns={{ xs: '11fr 1fr' }} className={className}>
       <div />
       <div>
         <TimeLineButton
-          text={intl.formatMessage({ id: 'Timeline.openData' })}
+          text={"Åpne info om første periode"}
           type="openData"
           callback={openPeriodInfo}
         />

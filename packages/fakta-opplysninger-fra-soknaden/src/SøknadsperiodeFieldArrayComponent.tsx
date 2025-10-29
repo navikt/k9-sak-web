@@ -7,7 +7,6 @@ import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { Label as DSLabel } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormAction, WrappedFieldArrayProps } from 'redux-form';
 import oppgittOpptjeningRevurderingFormName from './formName';
@@ -103,7 +102,7 @@ interface StateProps {
 const SøknadsperiodeFieldArrayComponent = (
   props: SøknadsperiodeFieldArrayComponentProps & StateProps & WrappedFieldArrayProps,
 ) => {
-  const intl = useIntl();
+
   const {
     kanEndrePåSøknadsopplysninger,
     formChange,
@@ -145,7 +144,7 @@ const SøknadsperiodeFieldArrayComponent = (
         >
           {harSøktSomSSN && formIsEditable && (
             <DSLabel size="small" as="p">
-              <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
+              Selvstendig næringsdrivende
             </DSLabel>
           )}
           {!formIsEditable && (
@@ -177,7 +176,7 @@ const SøknadsperiodeFieldArrayComponent = (
         >
           {harSøktSomFrilanser && formIsEditable && (
             <DSLabel size="small" as="p">
-              <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
+              Frilanser
             </DSLabel>
           )}
           {!formIsEditable && (

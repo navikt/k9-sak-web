@@ -7,7 +7,6 @@ import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 import styles from './activityDataSubPanel.module.css';
 
 const ytelseTypes = [

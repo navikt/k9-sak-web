@@ -1,6 +1,5 @@
 import { Alert, Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
-import { FormattedMessage } from 'react-intl';
 import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
 import { getStringMedPerioder } from '../../../util/periodUtils';
 import styles from './omsorgsperiodeoversiktMessages.module.css';

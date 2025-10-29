@@ -4,7 +4,6 @@ import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils
 import { DatePicker, HStack, Label, VStack, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { FunctionComponent, ReactNode, type JSX } from 'react';
-import { useIntl } from 'react-intl';
 import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 
 interface FieldComponentProps {
@@ -30,7 +29,6 @@ const Periodpicker: FunctionComponent<PeriodpickerProps> = (props): JSX.Element 
     return newDate.isValid() ? newDate.toDate() : undefined;
   };
 
-  const intl = useIntl();
   const { label, disabled = false, disabledDays, readOnly, feil } = props;
   const fomFormField = getStartDateFormField(props);
   const tomFormField = getEndDateFormField(props);

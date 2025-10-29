@@ -3,7 +3,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { VedtakVarsel } from '../../types/VedtakVarsel';
@@ -38,7 +37,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
 }: VedtakOpphorRevurderingPanelProps & OwnState & WrappedComponentProps) => (
   <div data-testid="opphorRevurdering">
     <Label size="small" as="p">
-      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+      {"Resultat"}
     </Label>
     {opphoersdato && (
       <BodyShort size="small">

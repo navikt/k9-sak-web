@@ -6,7 +6,6 @@ import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { JSX } from 'react';
-import { FormattedMessage } from 'react-intl';
 import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
 

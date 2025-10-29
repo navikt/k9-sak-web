@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedDate, FormattedMessage } from 'react-intl';
 
 interface OwnProps {
   dateStringFom: string;
@@ -23,7 +22,7 @@ const PeriodLabel = ({ dateStringFom, dateStringTom, showTodayString = false }: 
     {dateStringTom && <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateStringTom)} />}
     {showTodayString && !dateStringTom && (
       <span>
-        <FormattedMessage id="PeriodLabel.DateToday" />
+        d.d.
       </span>
     )}
   </span>

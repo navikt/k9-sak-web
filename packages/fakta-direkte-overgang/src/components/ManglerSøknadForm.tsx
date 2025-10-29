@@ -5,7 +5,6 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, Textarea } from '@navikt/ds-react';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import styles from './ManglerSøknadForm.module.css';
 
@@ -35,7 +34,7 @@ const ManglerSøknadForm = ({
   intl,
 }: Props & WrappedComponentProps) => {
   const validationSchema = Yup.object().shape({
-    begrunnelse: Yup.string().required(intl.formatMessage({ id: 'ManglerSøknadForm.BegrunnelseErPåkrevd' })),
+    begrunnelse: Yup.string().required("Begrunnelse er påkrevd."),
   });
 
   const utledBegrunnelse = () =>
@@ -120,7 +119,7 @@ const ManglerSøknadForm = ({
                 <Textarea
                   id="begrunnelse"
                   label="Begrunnelse"
-                  placeholder={intl.formatMessage({ id: 'ManglerSøknadForm.Begrunnelse' })}
+                  placeholder={"Begrunnelse"}
                   value={field.value}
                   disabled={readOnly}
                   size="small"
@@ -138,7 +137,7 @@ const ManglerSøknadForm = ({
                 variant="primary"
                 type="submit"
               >
-                <FormattedMessage id="ManglerSøknadForm.LagreAksjonspunkt" />
+                Bekreft og fortsett
               </Button>
             </div>
           </Form>

@@ -85,7 +85,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
               onClick={clickedIndex => {
                 setActivePeriode(perioder[clickedIndex]);
               }}
-              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+              heading={"Perioder"}
             />
           </div>
         )}

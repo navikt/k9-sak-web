@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';

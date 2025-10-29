@@ -1,5 +1,4 @@
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
 import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
@@ -10,15 +9,15 @@ const TilbakekrevingTidslinjeHjelpetekster = ({ intl }: WrappedComponentProps) =
   const legends = [
     {
       src: oppfyltUrl,
-      text: intl.formatMessage({ id: 'Timeline.BelopTilbakereves' }),
+      text: "Beløp tilbakekreves",
     },
     {
       src: ikkeOppfyltUrl,
-      text: intl.formatMessage({ id: 'Timeline.IngenTilbakekreving' }),
+      text: "Ingen tilbakekreving",
     },
     {
       src: uavklartUrl,
-      text: intl.formatMessage({ id: 'Timeline.IkkeAvklartPeriode' }),
+      text: "Uavklart periode",
     },
   ];
   return <LegendBox legends={legends} />;

@@ -4,7 +4,6 @@ import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
 import { Field, FieldArray, Form, Formik } from 'formik';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
@@ -35,7 +34,7 @@ const OverstyrBeregningFaktaForm = ({
 }: Props & WrappedComponentProps) => {
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
-    begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
+    begrunnelse: Yup.string().required("Du må oppgi en begrunnelse"),
     /*
      * Midlertidig deaktivere validering for dette for å teste valideringsfeil i prod
      */
@@ -53,7 +52,7 @@ const OverstyrBeregningFaktaForm = ({
     );
     return firma
       ? `${firma.navn} (${firma.identifikator})`
-      : intl.formatMessage({ id: 'OverstyrInputForm.UkjentFirma' });
+      : "Ukjent arbeidsgiver";
   };
 
   const utledBegrunnelse = () =>
@@ -130,7 +129,7 @@ const OverstyrBeregningFaktaForm = ({
                             <div>
                               <VerticalSpacer twentyPx />
                               <Tag variant="warning">
-                                <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
+                                Vurder om søknadsopplysninger for næring er korrekte. Bruk rutinen for direkte overgang fra infotrygd for å kontrollere opplysningene.
                               </Tag>
                             </div>
                           )}
@@ -138,7 +137,7 @@ const OverstyrBeregningFaktaForm = ({
                             <div>
                               <VerticalSpacer twentyPx />
                               <Tag variant="warning">
-                                <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
+                                Vurder om søknadsopplysninger for frilans er korrekte.
                               </Tag>
                             </div>
                           )}
@@ -190,7 +189,7 @@ const OverstyrBeregningFaktaForm = ({
                 <Textarea
                   id="begrunnelse"
                   label="Begrunnelse"
-                  placeholder={intl.formatMessage({ id: 'OverstyrInputForm.Begrunnelse' })}
+                  placeholder={"Begrunnelse"}
                   feil={meta.touched && meta.error ? meta.error : false}
                   value={field.value}
                   disabled={readOnly}
@@ -203,7 +202,7 @@ const OverstyrBeregningFaktaForm = ({
               <>
                 <VerticalSpacer sixteenPx />
                 <Alert size="small" variant="warning">
-                  <FormattedMessage id="OverstyrInputForm.KanIkkeBekreftes" />
+                  Aksjonspunktet kan ikke bekreftes
                 </Alert>
               </>
             )}
@@ -217,10 +216,10 @@ const OverstyrBeregningFaktaForm = ({
                 variant="primary"
                 type="submit"
               >
-                <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
+                Bekreft og fortsett
               </Button>
               <Button size="small" className={styles.button} disabled={isValid} variant="tertiary" type="submit">
-                <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
+                Kontroller skjema
               </Button>
             </div>
           </Form>

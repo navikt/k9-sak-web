@@ -9,7 +9,6 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BriefcaseIcon } from '@navikt/aksel-icons';
 import { ExpansionCard, HStack, VStack } from '@navikt/ds-react';
 import { Component } from 'react';
-import { WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';

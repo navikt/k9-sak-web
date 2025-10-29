@@ -83,12 +83,12 @@ const OpptjeningVilkarProsessIndex = ({
                   <Image
                     src={advarselIcon}
                     className={styles.warningIcon}
-                    alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                    alt={"Aksjonspunkt"}
                   />
                 ) : null,
             }))}
             onClick={setActiveTab}
-            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+            heading={"Perioder"}
           />
         </div>
         <div className={styles.contentContainer}>

@@ -1,6 +1,5 @@
 import { Tag, Textarea, TextareaProps } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';

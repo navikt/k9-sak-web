@@ -6,7 +6,6 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';
 import Aktivitet from '../dto/Aktivitet';
@@ -70,18 +69,18 @@ export const FormContent = ({
           validate={[required]}
           label={
             <Label size="small" as="p">
-              <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Valg" />
+              Valg
             </Label>
           }
           radios={[
             {
               value: valgValues.reBehandling,
-              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.ReBehandling" />,
+              label: Rammemelding eller fosterbarn skal endres eller legges til,
             },
             {
               value: valgValues.fortsett,
               disabled: harEndretFosterbarn,
-              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fortsett" />,
+              label: Fortsett uten endring,
             },
           ]}
         />
@@ -114,7 +113,7 @@ export const FormContent = ({
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
           <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Bekreft" />
+            Bekreft
           </Button>
         </div>
       )}

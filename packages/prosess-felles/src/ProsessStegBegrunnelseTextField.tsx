@@ -62,7 +62,7 @@ const ProsessStegBegrunnelseTextField = ({
         ]}
         maxLength={maxLength || 1500}
         readOnly={readOnly}
-        placeholder={placeholderText || intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
+        placeholder={placeholderText || "Begrunn vurderingen din"}
       />
     </div>
   );
