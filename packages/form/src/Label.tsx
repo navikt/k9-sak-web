@@ -3,6 +3,7 @@ import classnames from 'classnames/bind';
 import React from 'react';
 import LabelType from './LabelType';
 import styles from './label.module.css';
+import { translations } from './translations';
 
 const classNames = classnames.bind(styles);
 
@@ -11,13 +12,28 @@ interface Props {
   typographyElement?: OverridableComponent<LabelProps | BodyShortProps, HTMLLabelElement | HTMLParagraphElement>;
   readOnly?: boolean;
   textOnly?: boolean;
+  // Deprecated: intl prop is no longer used
+  intl?: any;
 }
 
-export const Label = (props: Props & WrappedComponentProps) => {
+export const Label = (props: Props) => {
   const format = label => {
     if (label && label.id) {
-      const { intl } = props;
-      return intl.formatMessage({ id: label.id }, label.args);
+      // Look up translation by id
+      const translation = translations[label.id];
+      if (translation) {
+        // Simple template replacement for args
+        if (label.args) {
+          let result = translation;
+          Object.keys(label.args).forEach(key => {
+            result = result.replace(`{${key}}`, label.args[key]);
+          });
+          return result;
+        }
+        return translation;
+      }
+      // Fallback to id if translation not found
+      return label.id;
     }
     return label;
   };
@@ -38,4 +54,4 @@ export const Label = (props: Props & WrappedComponentProps) => {
   );
 };
 
-export default injectIntl(Label);
+export default Label;
