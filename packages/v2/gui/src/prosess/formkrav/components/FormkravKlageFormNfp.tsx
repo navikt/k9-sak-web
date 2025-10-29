@@ -155,7 +155,7 @@ const buildInitialValues = (
       ? parterMedKlagerett[0]?.identifikasjon?.id
       : null;
   return {
-    vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : null,
+    vedtak: klageFormkavResultatNfp ? getPaklagdVedtak(klageFormkavResultatNfp, avsluttedeBehandlinger) : '',
     begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
     erKlagerPart: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagerPart : null,
     erKonkret: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlageKonkret : null,

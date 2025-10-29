@@ -119,7 +119,7 @@ const buildInitialValues = (
 ) => {
   const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkravResultatKA : null;
   return {
-    vedtak: klageFormkavResultatKa ? getPaklagdVedtak(klageFormkavResultatKa, avsluttedeBehandlinger) : null,
+    vedtak: klageFormkavResultatKa ? getPaklagdVedtak(klageFormkavResultatKa, avsluttedeBehandlinger) : '',
     begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
     erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : null,
     erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,

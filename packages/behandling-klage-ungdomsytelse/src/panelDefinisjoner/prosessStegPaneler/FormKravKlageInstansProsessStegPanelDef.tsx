@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { FormkravProsessIndex } from '@k9-sak-web/gui/prosess/formkvrav/FormkravProsessIndex.js';
+import { FormkravProsessIndex } from '@k9-sak-web/gui/prosess/formkrav/FormkravProsessIndex.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
