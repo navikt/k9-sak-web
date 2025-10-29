@@ -17,16 +17,16 @@ import styles from './sykdomProsessIndex.module.css';
 const cx = classNames.bind(styles);
 
 const getVilkarOkMessage = originalErVilkarOk => {
-  let messageId = 'VilkarresultatMedOverstyringForm.IkkeBehandlet';
+  let messageText = 'Ikke behandlet';
   if (originalErVilkarOk) {
-    messageId = 'VilkarresultatMedOverstyringForm.ErOppfylt';
+    messageText = 'Vilkåret er oppfylt';
   } else if (originalErVilkarOk === false) {
-    messageId = 'VilkarresultatMedOverstyringForm.ErIkkeOppfylt';
+    messageText = 'Vilkåret er ikke oppfylt';
   }
 
   return (
     <Label size="small" as="p">
-      <FormattedMessage id={messageId} />
+      {messageText}
     </Label>
   );
 };
@@ -90,7 +90,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
                 </>
               )}
               <Heading size="small" level="2">
-                <FormattedMessage id={panelTittelKode} />
+                {panelTittelKode}
               </Heading>
               <Detail className={styles.vilkar}>
                 <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
