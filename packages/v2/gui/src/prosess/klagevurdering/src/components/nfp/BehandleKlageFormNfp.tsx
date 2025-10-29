@@ -54,10 +54,10 @@ export const BehandleKlageFormNfp = ({
     defaultValues: buildInitialValues(klageVurdering, fagsak),
   });
   const erPåklagdBehandlingTilbakekreving = getErPåklagdBehandlingTilbakekreving(klageVurdering);
-  const handleSubmit = (values: BehandleKlageFormNfpFormValues) => {
+  const handleSubmit = async (values: BehandleKlageFormNfpFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback([transformValues(values, fagsak, erPåklagdBehandlingTilbakekreving)]);
+      await submitCallback([transformValues(values, fagsak, erPåklagdBehandlingTilbakekreving)]);
     } finally {
       setIsSubmitting(false);
     }
