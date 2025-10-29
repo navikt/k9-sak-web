@@ -34,7 +34,7 @@ const OkAvbrytModal = ({
     onClose={cancel}
   >
     <Modal.Header>
-      <BodyShort size="small">{text || <FormattedMessage id={textCode} />}</BodyShort>
+      <BodyShort size="small">{text || {text || textCode}}</BodyShort>
     </Modal.Header>
     <Modal.Body>
       <FlexContainer>

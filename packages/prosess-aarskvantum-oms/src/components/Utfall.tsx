@@ -11,6 +11,20 @@ type UtfallProps = {
   textId?: string;
 };
 
+// Helper function to get utfall text
+const getUtfallText = (utfall: Utfalltype, customTextId?: string): string => {
+  if (customTextId) {
+    // For custom text IDs, would need lookup - for now return ID
+    return customTextId;
+  }
+  const utfallTexts: Record<string, string> = {
+    'INNVILGET': 'Innvilget',
+    'AVSLÅTT': 'Avslått',
+    'UAVKLART': 'Ikke vurdert',
+  };
+  return utfallTexts[utfall] || utfall;
+};
+
 const utfallSymbolMap = {
   [UtfallEnum.INNVILGET]: innvilget,
   [UtfallEnum.AVSLÅTT]: avslått,
@@ -22,7 +36,7 @@ const Utfall = ({ utfall, textId }: UtfallProps) => (
     <span className={styles.utfallsikon}>
       <Image src={utfallSymbolMap[utfall]} />
     </span>
-    <FormattedMessage id={textId || `Uttaksplan.Utfall.${utfall}`} />
+    {getUtfallText(utfall, textId)}
   </div>
 );
 

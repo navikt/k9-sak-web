@@ -8,7 +8,7 @@ const BehandlingHenlagtPanel = () => (
   <div className={styles.container}>
     <FadingPanel>
       <BodyShort size="small">
-        <FormattedMessage id="BehandlingHenlagtPanel.Henlagt" />
+        Behandlingen er henlagt
       </BodyShort>
     </FadingPanel>
   </div>
