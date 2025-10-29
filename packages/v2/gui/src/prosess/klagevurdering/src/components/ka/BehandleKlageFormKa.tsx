@@ -12,7 +12,8 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
+import type { SaveKlageParams } from '../felles/SaveKlageParams';
+import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 import styles from './behandleKlageFormKa.module.css';
 import type { BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
@@ -20,7 +21,7 @@ import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 
 interface BehandleKlageFormKaProps {
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
-  saveKlage: () => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<void>;
   submitCallback: (values: TransformedValues[]) => Promise<void>;
   isReadOnly: boolean;
   previewCallback: () => Promise<void>;
@@ -44,10 +45,10 @@ export const BehandleKlageFormKa = ({
   const formMethods = useForm<BehandleKlageFormKaFormValues>({
     defaultValues: buildInitialValues(klageVurdering),
   });
-  const handleSubmit = (values: BehandleKlageFormKaFormValues) => {
+  const handleSubmit = async (values: BehandleKlageFormKaFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback([transformValues(values)]);
+      await submitCallback([transformValues(values)]);
     } finally {
       setIsSubmitting(false);
     }
@@ -106,6 +107,7 @@ export const BehandleKlageFormKa = ({
                 saveKlage={saveKlage}
                 readOnly={isReadOnly}
                 aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NK}
+                isSubmitting={isSubmitting}
               />
             </HStack>
           )}
@@ -122,21 +124,19 @@ export const buildInitialValues = (klageVurdering: ung_sak_kontrakt_klage_Klageb
   klageVurderingOmgjoer: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.klageVurderingOmgjoer
     : null,
-  klageVurdering: klageVurdering.klageVurderingResultatNK
-    ? klageVurdering.klageVurderingResultatNK.klageVurdering
-    : null,
-  begrunnelse: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.begrunnelse : null,
+  klageVurdering: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.klageVurdering : '',
+  begrunnelse: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.begrunnelse : '',
   fritekstTilBrev: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.fritekstTilBrev
-    : null,
+    : '',
 });
 
 interface TransformedValues {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
-  klageVurdering: string | null;
-  fritekstTilBrev: string | null;
-  begrunnelse: string | null;
+  klageVurdering: string;
+  fritekstTilBrev: string;
+  begrunnelse: string;
   kode: string;
 }
 

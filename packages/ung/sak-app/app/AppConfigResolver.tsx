@@ -11,6 +11,8 @@ import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
+import UngKlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/UngKlageVurderingBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -52,9 +54,11 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
-      <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
-        {harFeilet || erFerdig ? children : <LoadingPanel />}
-      </InnloggetAnsattProvider>
+      <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+        <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+          {harFeilet || erFerdig ? children : <LoadingPanel />}
+        </InnloggetAnsattProvider>
+      </KlageVurderingApiContext>
     </FeatureTogglesContext.Provider>
   );
 };

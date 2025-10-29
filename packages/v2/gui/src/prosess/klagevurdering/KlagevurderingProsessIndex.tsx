@@ -1,43 +1,79 @@
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
   type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  type ung_sak_kontrakt_behandling_BehandlingDto,
   type ung_sak_kontrakt_fagsak_FagsakDto,
-  type ung_sak_kontrakt_klage_KlagebehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { useQuery } from '@tanstack/react-query';
-import KlagevurderingProsessBackendClient from './KlagevurderingProsessBackendClient';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
+import type { SaveKlageParams } from './src/components/felles/SaveKlageParams';
 import { BehandleKlageFormKa } from './src/components/ka/BehandleKlageFormKa';
 import { BehandleKlageFormNfp } from './src/components/nfp/BehandleKlageFormNfp';
+import { useContext } from 'react';
+import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
+
+// type ValidatedSaveKlageParams = z.infer<typeof SaveKlageSchema>;
 
 interface KlagevurderingProsessIndexProps {
   fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
-  saveKlage: () => Promise<void>;
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
-  previewCallback: () => Promise<void>;
   readOnlySubmitButton: boolean;
   aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  behandling: ung_sak_kontrakt_behandling_BehandlingDto;
 }
 
 export const KlagevurderingProsessIndex = ({
   fagsak,
-  klageVurdering,
-  saveKlage,
   submitCallback,
   isReadOnly,
-  previewCallback,
   readOnlySubmitButton,
   aksjonspunkter,
+  behandling,
 }: KlagevurderingProsessIndexProps) => {
-  const api = new KlagevurderingProsessBackendClient();
+  const api = assertDefined(useContext(KlageVurderingApiContext));
   const { data: ungHjemler = [] } = useQuery({
-    queryKey: ['ung-klage-hjemler'],
+    queryKey: ['klage-hjemler', api.backend],
     queryFn: () => api.hentValgbareKlagehjemler(),
     enabled: fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
   });
-
+  const { data: klageVurdering, isLoading } = useQuery({
+    queryKey: ['klageVurdering', behandling, api.backend],
+    queryFn: () => api.getKlageVurdering(behandling.uuid),
+  });
+  const { mutateAsync: previewCallback } = useMutation({
+    mutationFn: async () => {
+      if (behandling.id) {
+        const response = await api.forhåndsvisKlageVedtaksbrev(behandling.id);
+        const fileUrl = window.URL.createObjectURL(response);
+        window.open(fileUrl, '_blank');
+      }
+    },
+  });
+  const { mutateAsync: saveKlage } = useMutation({
+    mutationFn: async (params: SaveKlageParams) => {
+      if (behandling.id) {
+        await api.mellomlagreKlage({
+          begrunnelse: params.begrunnelse,
+          behandlingId: behandling.id,
+          fritekstTilBrev: params.fritekstTilBrev,
+          klageHjemmel: params.klageHjemmel ?? undefined,
+          klageMedholdArsak: params.klageMedholdArsak,
+          klageVurdering: params.klageVurdering,
+          klageVurderingOmgjoer: params.klageVurderingOmgjoer,
+          kode: params.kode,
+        });
+      }
+    },
+  });
+  if (isLoading) {
+    return <LoadingPanel />;
+  }
+  if (!klageVurdering) {
+    return null;
+  }
   return (
     <>
       {Array.isArray(aksjonspunkter) &&
