@@ -49,7 +49,7 @@ const getHeaderCodes = (
         })}
         key={`${month.month}-${month.year}`}
       >
-        <FormattedMessage id={`Avregning.headerText.${month.month}`} /> {month.year}
+        {getAvregningText('month', month)} {month.year}
       </span>
     )),
   ];
@@ -151,6 +151,22 @@ interface AvregningTableProps {
   isUngFagsak: boolean;
 }
 
+// Helper to get avregning text
+const getAvregningText = (type: string, value?: any): string => {
+  const months: Record<string, string> = {
+    '1': 'Januar', '2': 'Februar', '3': 'Mars', '4': 'April',
+    '5': 'Mai', '6': 'Juni', '7': 'Juli', '8': 'August',
+    '9': 'September', '10': 'Oktober', '11': 'November', '12': 'Desember',
+  };
+  
+  if (type === 'month') {
+    return months[value.month] || value.month;
+  }
+  
+  // For field names like "Avregning.{fagområdeKode}.{feltnavn}"
+  return value || type;
+};
+
 const AvregningTable = ({
   simuleringResultat,
   toggleDetails,
@@ -207,7 +223,7 @@ const AvregningTable = ({
                         return (
                           <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
                             <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
-                              <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
+                              {rad.feltnavn}
                             </Table.DataCell>
                             {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
                           </Table.Row>

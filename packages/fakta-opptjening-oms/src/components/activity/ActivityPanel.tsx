@@ -147,7 +147,20 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser informasjon om valgt aktivitet
  */
-export const ActivityPanel = ({
+export // Helper to get activity panel text
+const getActivityText = (key: string, hasId: boolean, readOnly: boolean, hasAksjonspunkt: boolean): string => {
+  if (key === 'title') {
+    return hasId ? 'Aktivitetsdetaljer' : 'Ny aktivitet';
+  }
+  if (key === 'begrunnelse') {
+    if (readOnly) return 'Søkers begrunnelse for aktivitet';
+    if (hasAksjonspunkt) return 'Vurder om aktiviteten er godkjent';
+    return 'Begrunnelse';
+  }
+  return key;
+};
+
+const ActivityPanel = ({
   intl,
   initialValues,
   readOnly,
@@ -174,7 +187,7 @@ export const ActivityPanel = ({
   >
     <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
       <Label size="small" as="p">
-        <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
+        {getActivityText('title', !!initialValues.id, false, false)}
       </Label>
       <div>
         <TimeLineButton
@@ -259,7 +272,7 @@ export const ActivityPanel = ({
       <VerticalSpacer fourPx />
       <TextAreaField
         name="begrunnelse"
-        label={<FormattedMessage id={finnBegrunnelseLabel(initialValues, readOnly, hasAksjonspunkt)} />}
+        label={{getActivityText('begrunnelse', false, readOnly, hasAksjonspunkt)}}
         validate={[requiredCustom, minLength3, maxLength1500, hasValidText]}
         maxLength={1500}
         readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
