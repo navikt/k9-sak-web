@@ -51,10 +51,7 @@ export const HistorikkMalTypeTilbakekreving = ({
         return (
           <div key={periodeFom + periodeTom}>
             <BodyShort size="small">
-              <FormattedMessage
-                id="Historikk.Template.Tilbakekreving.VurderingAvPerioden"
-                values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
-              />
+              <>Vurdering av perioden <b>{periodeFom}</b> - <b>{periodeTom}</b></>
             </BodyShort>
             <VerticalSpacer eightPx />
             {endredeFelter &&
@@ -82,19 +79,10 @@ export const HistorikkMalTypeTilbakekreving = ({
                     {visAktsomhetBegrunnelse && decodeHtmlEntity(begrunnelseFritekst)}
                     {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
                     <BodyShort size="small">
-                      <FormattedMessage
-                        id={
-                          felt.fraVerdi
-                            ? 'Historikk.Template.Tilbakekreving.ChangedFromTo'
-                            : 'Historikk.Template.Tilbakekreving.FieldSetTo'
-                        }
-                        values={{
-                          navn: getKodeverknavn(endretFeltNavn),
-                          fraVerdi: formatertFraVerdi,
-                          tilVerdi: formatertTilVerdi,
-                          b: chunks => <b>{chunks}</b>,
-                        }}
-                      />
+                      {felt.fraVerdi
+                        ? <><b>{getKodeverknavn(endretFeltNavn)}</b> er endret fra {formatertFraVerdi} til {formatertTilVerdi}</>
+                        : <><b>{getKodeverknavn(endretFeltNavn)}</b> er satt til {formatertTilVerdi}</>
+                      }
                     </BodyShort>
                     <VerticalSpacer eightPx />
                     {visSarligGrunnerBegrunnelse && sarligGrunnerBegrunnelse}

@@ -37,10 +37,7 @@ export const HistorikkMalTypeForeldelse = ({
         return (
           <div key={periodeFom + periodeTom}>
             <BodyShort size="small">
-              <FormattedMessage
-                id="Historikk.Template.Foreldelse.VurderingAvPerioden"
-                values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
-              />
+              <>Vurdering av perioden <b>{periodeFom}</b> - <b>{periodeTom}</b></>
             </BodyShort>
             {endredeFelter &&
               endredeFelter.map(felt => {
@@ -49,19 +46,10 @@ export const HistorikkMalTypeForeldelse = ({
                 return (
                   <React.Fragment key={endretFeltNavn.kode}>
                     <BodyShort size="small">
-                      <FormattedMessage
-                        id={
-                          felt.fraVerdi
-                            ? 'Historikk.Template.Tilbakekreving.ChangedFromTo'
-                            : 'Historikk.Template.Tilbakekreving.FieldSetTo'
-                        }
-                        values={{
-                          navn: getKodeverknavn(endretFeltNavn),
-                          fraVerdi,
-                          tilVerdi,
-                          b: chunks => <b>{chunks}</b>,
-                        }}
-                      />
+                      {felt.fraVerdi
+                        ? <><b>{getKodeverknavn(endretFeltNavn)}</b> er endret fra {fraVerdi} til {tilVerdi}</>
+                        : <><b>{getKodeverknavn(endretFeltNavn)}</b> er satt til {tilVerdi}</>
+                      }
                     </BodyShort>
                     <VerticalSpacer eightPx />
                   </React.Fragment>
