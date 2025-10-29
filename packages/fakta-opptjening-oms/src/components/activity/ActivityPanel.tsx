@@ -261,7 +261,7 @@ const ActivityPanel = ({
               },
               {
                 value: false,
-                label: <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />,
+                label: <>Aktiviteten godkjennes <b>ikke</b></>,
               },
             ]}
           />

@@ -34,7 +34,7 @@ const Seksjon = ({ imgSrc, title, bakgrunn, children, medMarg }: SeksjonProps) =
   <section className={classNames('seksjon', { grå: bakgrunn === 'grå', medMarg })}>
     <Heading size="small" level="3" className={styles.tittel}>
       <Image src={imgSrc} />
-      <FormattedMessage id={title.id} values={title.values} />
+      {getSectionTitle(title)}
     </Heading>
     {children}
   </section>

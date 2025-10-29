@@ -163,8 +163,17 @@ const getAvregningText = (type: string, value?: any): string => {
     return months[value.month] || value.month;
   }
   
-  // For field names like "Avregning.{fagområdeKode}.{feltnavn}"
-  return value || type;
+  // For field names
+  const fieldNames: Record<string, string> = {
+    'differanse': 'Differanse',
+    'inntrekk': 'Inntrekk',
+    'feilutbetaling': 'Feilutbetaling',
+    'inntrekkNesteMåned': 'Inntrekk neste måned',
+    'oppfylt': 'Oppfylt',
+    'reduksjon': 'Reduksjon',
+  };
+  
+  return fieldNames[value] || value || type;
 };
 
 const AvregningTable = ({
@@ -252,9 +261,9 @@ const AvregningTable = ({
                       return (
                         <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
                           <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
-                            <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                            {getAvregningText('field', resultat.feltnavn)}
                           </Table.DataCell>
-                          {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
+                          <createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)
                         </Table.Row>
                       );
                     }),

@@ -64,11 +64,11 @@ const OverstyrBeregningFaktaForm = ({
     );
 
   const headerTextCodes = [
-    'OverstyrInputForm.FirmaHeader',
-    'OverstyrInputForm.InntektPrAar',
-    'OverstyrInputForm.RefusjonPrAar',
-    'OverstyrInputForm.StartdatoRefusjon',
-    'OverstyrInputForm.OpphorRefusjon',
+    'Firma',
+    'Inntekt pr. år',
+    'Refusjon pr. år',
+    'Startdato refusjon',
+    'Opphør refusjon',
   ];
 
   /**
@@ -100,7 +100,7 @@ const OverstyrBeregningFaktaForm = ({
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
       <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
-        {[<FormattedMessage id="OverstyrInputForm.Aksjonspunkt" key="aksjonspunktText" />]}
+        {['Fastsett ny beregningsgrunnlag']}
       </AksjonspunktHelpText>
       <Formik
         initialValues={initialValues}
@@ -150,7 +150,7 @@ const OverstyrBeregningFaktaForm = ({
                                     <Table.Row shadeOnHover={false}>
                                       {headerTextCodes.map(text => (
                                         <Table.HeaderCell scope="col" key={text}>
-                                          <FormattedMessage id={text} />
+                                          {text}
                                         </Table.HeaderCell>
                                       ))}
                                     </Table.Row>

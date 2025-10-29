@@ -46,14 +46,9 @@ const DagerSokerHarRettPa = ({
           {benyttetRammemelding && (
             <>
               &nbsp;
-              <FormattedMessage
-                id="Nøkkeltall.Rammemelding"
-                values={{
-                  a: (...lenketekst) => (
-                    <Link href={`/k9/web${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Link>
-                  ),
-                }}
-              />
+              <Link href={`/k9/web${pathname}${formatQueryString(faktapanelUttak)}`}>
+                Er resultatet av prioritering i rammemelding
+              </Link>
             </>
           )}
         </>

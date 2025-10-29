@@ -256,14 +256,10 @@ export const TilbakekrevingPeriodeFormImpl = (
       {reduserteBelop?.map(belop => (
         <React.Fragment key={belop.belop}>
           <BodyShort size="small">
-            <FormattedMessage
-              id={
-                belop.erTrekk
-                  ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk'
-                  : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling'
-              }
-              values={{ belop: formatCurrencyNoKr(belop.belop), b: (chunks: any) => <b>{chunks}</b> }}
-            />
+            {belop.erTrekk 
+              ? `Feilutbetalt beløp er et trekk i ny utbetaling og beløpet er ${formatCurrencyNoKr(belop.belop)}`
+              : `Feilutbetalt beløp er en etterbetaling og beløpet er ${formatCurrencyNoKr(belop.belop)}`
+            }
           </BodyShort>
           <VerticalSpacer eightPx />
         </React.Fragment>
@@ -344,13 +340,9 @@ export const TilbakekrevingPeriodeFormImpl = (
               {valgtVilkarResultatType && (
                 <>
                   <DSLabel size="small" as="p">
-                    <FormattedMessage
-                      id={
-                        valgtVilkarResultatType === VilkarResultat.GOD_TRO
-                          ? 'TilbakekrevingPeriodeForm.BelopetMottattIGodTro'
-                          : 'TilbakekrevingPeriodeForm.Aktsomhet'
-                      }
-                    />
+                    {valgtVilkarResultatType === VilkarResultat.GOD_TRO
+                      ? 'Beløpet er mottatt i god tro'
+                      : 'Aktsomhet'}
                   </DSLabel>
                   <VerticalSpacer eightPx />
                   <TextAreaField
