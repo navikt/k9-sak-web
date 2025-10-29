@@ -22,6 +22,19 @@ export interface NøkkeltallProps {
   className?: string;
 }
 
+// Helper to get nokkeltall text
+const getNokkeltallText = (textId: string): string => {
+  const texts: Record<string, string> = {
+    'Nøkkeltall.Restdager': 'Restdager',
+    'Nøkkeltall.ForbrukteDager': 'Forbrukte dager',
+    'Nøkkeltall.TotaltForbrukte': 'Totalt forbrukte dager',
+    'Nøkkeltall.DagerFraInfotrygd': 'Dager fra Infotrygd',
+    'Nøkkeltall.DagerNavKanUtbetale': 'Dager NAV kan utbetale',
+    'Nøkkeltall.DagerSøkerHarRettPå': 'Dager søker har rett på',
+  };
+  return texts[textId] || textId;
+};
+
 const Nokkeltall = ({ overskrift, detaljer, viserDetaljer, visDetaljer, className }: NøkkeltallProps) => (
   <article className={classNames(viserDetaljer && styles.viserDetaljer, className)}>
     <button className={styles.overskrift} onClick={visDetaljer} type="button">
@@ -31,7 +44,7 @@ const Nokkeltall = ({ overskrift, detaljer, viserDetaljer, visDetaljer, classNam
       </span>
       <span className={styles.banner}>
         <span className={styles.overskrifttekst}>
-          <FormattedMessage id={overskrift.overskrifttekstId} />
+          {getNokkeltallText(overskrift.overskrifttekstId)}
         </span>
         <span className={styles.knapp}>
           {viserDetaljer ? (
@@ -51,7 +64,7 @@ const Nokkeltall = ({ overskrift, detaljer, viserDetaljer, visDetaljer, classNam
             {antallTimer && <span className={styles.timer}>{antallTimer}</span>}
           </span>
           <span className={styles.detaljoverskrift}>
-            <FormattedMessage id={overskrifttekstId} />
+            {getNokkeltallText(overskrifttekstId)}
           </span>
           <span className={styles.detaljinfotekst}>{infotekstContent}</span>
         </div>

@@ -19,6 +19,15 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter en vilkarsvurdering der behandlingsstatusen
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
+// Helper to get iverksetter status text
+const getIverksetterText = (code: string): string => {
+  const texts: Record<string, string> = {
+    'IverksetterVedtakStatusModal.Opprettet': 'Vedtaket er sendt til iverksettelse',
+    'IverksetterVedtakStatusModal.VedtakIverksatt': 'Vedtaket er iverksatt',
+  };
+  return texts[code] || code;
+};
+
 const IverksetterVedtakStatusModal = ({
   intl,
   lukkModal,
