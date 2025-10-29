@@ -88,7 +88,9 @@ export const VisFormkravPanelForAksjonspunktNfp: Story = {
     await userEvent.type(canvas.getByLabelText('Vurdering'), 'test');
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Vedtaket som er påklagd' }), '456');
     await userEvent.click(
-      canvas.getByRole('group', { name: /Er klager part i saken/i }).querySelector('input[value="true"]')!,
+      canvas
+        .getByRole('group', { name: /Er klager part og\/eller har rettslig klageinteresse/i })
+        .querySelector('input[value="true"]')!,
     );
     await userEvent.click(
       canvas
@@ -162,7 +164,9 @@ export const VisFormkravPanelForAksjonspunktKa: Story = {
     await userEvent.type(canvas.getByLabelText('Vurdering'), 'test');
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Vedtaket som er påklagd' }), '456');
     await userEvent.click(
-      canvas.getByRole('group', { name: /Er klager part i saken/i }).querySelector('input[value="false"]')!,
+      canvas
+        .getByRole('group', { name: /Er klager part og\/eller har rettslig klageinteresse/i })
+        .querySelector('input[value="false"]')!,
     );
     await userEvent.click(
       canvas
