@@ -22,14 +22,14 @@ interface OverføringsraderProps {
 }
 
 const retningTilTekstIdMap = {
-  [OverføringsretningEnum.INN]: 'FaktaRammevedtak.Overføring.Fra',
-  [OverføringsretningEnum.UT]: 'FaktaRammevedtak.Overføring.Til',
+  [OverføringsretningEnum.INN]: 'Fra',
+  [OverføringsretningEnum.UT]: 'Til',
 };
 
 const typeTilTekstIdMap = {
-  [OverføringstypeEnum.OVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Rad.Overføring',
-  [OverføringstypeEnum.FORDELING]: 'FaktaRammevedtak.Overføringsdager.Rad.Fordeling',
-  [OverføringstypeEnum.KORONAOVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Rad.Koronaoverføring',
+  [OverføringstypeEnum.OVERFØRING]: 'Overføring',
+  [OverføringstypeEnum.FORDELING]: 'Fordeling',
+  [OverføringstypeEnum.KORONAOVERFØRING]: 'Koronaoverføring',
 };
 
 const renderHeaders = (antallRader: number, type: Overføringstype, retning: Overføringsretning): ReactNode => {
@@ -50,7 +50,7 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
             id: 'overføring',
             content: (
               <Label size="small" as="p">
-                <FormattedMessage id={typeTilTekstIdMap[type]} />
+                {typeTilTekstIdMap[type]}
               </Label>
             ),
           },
@@ -59,7 +59,7 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
             id: 'fra/til',
             content: (
               <Label size="small" as="p">
-                <FormattedMessage id={retningTilTekstIdMap[retning]} />
+                {retningTilTekstIdMap[retning]}
               </Label>
             ),
           },
@@ -68,7 +68,7 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
             id: 'gyldighetsperiode',
             content: (
               <Label size="small" as="p">
-                <FormattedMessage id="Gyldighetsperiode" />
+                Gyldighetsperiode
               </Label>
             ),
           },
@@ -102,13 +102,7 @@ const Overføringsrader = ({ fields, type, retning }: WrappedFieldArrayProps<Ove
                 content: (
                   <span className={styles.dagerInputContainer}>
                     <span>
-                      <FormattedMessage
-                        id={
-                          retning === OverføringsretningEnum.INN
-                            ? 'FaktaRammevedtak.Overføringsdager.Inn'
-                            : 'FaktaRammevedtak.Overføringsdager.Ut'
-                        }
-                      />
+                      {retning === OverføringsretningEnum.INN ? 'Inn' : 'Ut'}
                     </span>
                     <InputField name={`${field}.antallDager`} readOnly type="number" />
                     <span>

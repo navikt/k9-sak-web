@@ -46,15 +46,15 @@ const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
   const texts: ReactElement[] = [];
   if (activities.some(a => a.stillingsandel === 0)) {
     texts.push(
-      <FormattedMessage id="OpptjeningFaktaForm.AktivitetenErTimeAvslonnet" key="AktivitetenErTimeAvslonnet" />,
+      <span key="AktivitetenErTimeAvslonnet">Aktiviteten er timelønnsinntekt. Dersom aktiviteten skal godkjennes, bruk knappen "Godkjent fravær" i høyre meny.</span>,
     );
   }
 
   const aktivitetTypes = activities.filter(a => a.stillingsandel !== 0);
   if (aktivitetTypes.length === 1) {
-    texts.push(<FormattedMessage id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" key="EttArbeidKanGodkjennes" />);
+    texts.push(<span key="EttArbeidKanGodkjennes">Vurder om dette arbeidet kan godkjennes</span>);
   } else if (aktivitetTypes.length > 1) {
-    texts.push(<FormattedMessage id="OpptjeningFaktaForm.FlereArbeidKanGodkjennes" key="FlereArbeidKanGodkjennes" />);
+    texts.push(<span key="FlereArbeidKanGodkjennes">Vurder om disse arbeidene kan godkjennes</span>);
   }
   return texts;
 };
@@ -327,13 +327,9 @@ export class OpptjeningFaktaFormImpl extends Component<
           {dokStatus && (
             <>
               <Alert size="small" variant="info">
-                <FormattedMessage
-                  id={
-                    dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
-                      ? 'OpptjeningFaktaForm.DetErInnhentetDok'
-                      : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'
-                  }
-                />
+                {dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
+                  ? 'Det er innhentet dokumentasjon for de(n) godkjente aktiviteten(e)'
+                  : 'Det er ikke innhentet dokumentasjon for de(n) godkjente aktiviteten(e)'}
               </Alert>
               <VerticalSpacer twentyPx />
             </>

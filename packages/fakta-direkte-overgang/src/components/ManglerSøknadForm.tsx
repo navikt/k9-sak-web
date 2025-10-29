@@ -66,27 +66,27 @@ const ManglerSøknadForm = ({
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
       <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
-        {[<FormattedMessage id="HelpText.Aksjonspunkt" key="aksjonspunktText" />]}
+        {['Vurder om søker er berettiget til direkte overgang fra pleiepenger til opplæringspenger']}
       </AksjonspunktHelpText>
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadForPeriode() && (
         <Alert size="small" variant="warning">
           {' '}
-          <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknad" key="aksjonspunktText" />{' '}
+          Det mangler komplett søknad for perioden det er søkt om direkte overgang til{' '}
         </Alert>
       )}
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadAnnenPart() && (
         <Alert size="small" variant="warning">
           {' '}
-          <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknadAnnenPart" key="aksjonspunktText" />{' '}
+          Det mangler komplett søknad for perioden annen part har søkt om direkte overgang fra{' '}
         </Alert>
       )}
 
       <VerticalSpacer thirtyTwoPx />
       <BodyShort size="small">
         {' '}
-        <FormattedMessage id="ManglerSøknadForm.OppgiBegrunnelse" key="aksjonspunktText" />{' '}
+        Oppgi begrunnelse for direkte overgang{' '}
       </BodyShort>
 
       <Formik
