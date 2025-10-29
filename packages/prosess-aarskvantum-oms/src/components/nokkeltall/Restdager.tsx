@@ -38,10 +38,7 @@ const Restdager = ({
         antallTimer: <AntallTimer timer={-navHarUtbetaltDagerTimer.timer} />,
         overskrifttekstId: 'Nøkkeltall.TotaltForbrukte',
         infotekstContent: navHarUtbetaltDagerTimer.timer ? (
-          <FormattedMessage
-            id="Nøkkeltall.TotaltForbrukte.DagerOgTimer.InfoText"
-            values={{ ...navHarUtbetaltDagerTimer }}
-          />
+          `{dager} dager og {timer} timer forbrukt.`
         ) : (
           `${navHarUtbetaltDagerTimer.dager} dager forbrukt.`
         ),

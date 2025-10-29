@@ -16,11 +16,11 @@ import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import styles from './personArbeidsforholdTable.module.css';
 
 const headerColumnContent = [
-  <FormattedMessage key={1} id="PersonArbeidsforholdTable.ArbeidsforholdId" values={{ br: <br /> }} />,
-  <FormattedMessage key={2} id="PersonArbeidsforholdTable.Periode" values={{ br: <br /> }} />,
-  <FormattedMessage key={3} id="PersonArbeidsforholdTable.Kilde" values={{ br: <br /> }} />,
-  <FormattedMessage key={4} id="PersonArbeidsforholdTable.Stillingsprosent" values={{ br: <br /> }} />,
-  <FormattedMessage key={5} id="PersonArbeidsforholdTable.MottattDato" values={{ br: <br /> }} />,
+  <><br />Arbeidsforhold-ID</>,
+  <><br />Periode</>,
+  <><br />Kilde</>,
+  <><br />Stillingsprosent</>,
+  <>Inntektsmeld.<br />mottatt dato</>,
   // eslint-disable-next-line react/jsx-no-useless-fragment
   <></>,
 ];

@@ -49,7 +49,7 @@ const lagPeriodevisning = periodeMedÅrsak => {
   const fom = moment(periodeMedÅrsak.fom).format(DDMMYYYY_DATE_FORMAT);
   const tom = moment(periodeMedÅrsak.tom).format(DDMMYYYY_DATE_FORMAT);
   const årsak = mapFraAvslagskodeTilTekst(periodeMedÅrsak.avslagsårsak);
-  return <FormattedMessage id="VedtakForm.Avslagsgrunner.Beregning" values={{ fom, tom, årsak }} />;
+  return `Perioden {fom} - {tom} er avslått med årsak: {årsak}`;
 };
 
 interface VedtakInnvilgetRevurderingPanelProps {

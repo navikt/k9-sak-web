@@ -43,7 +43,7 @@ const renderTittel = (type, retning, totaltAntallDager) => (
                   : 'FaktaRammevedtak.Overføringsdager.Ut'
               }
             />
-            <FormattedMessage id="FaktaRammevedtak.Overføringsdager.AntallDager" values={{ totaltAntallDager }} />
+            `{totaltAntallDager} dager `
           </>
         ),
       },

@@ -60,7 +60,7 @@ export const FormContent = ({
   return (
     <>
       <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Uavklart" />]}
+        {[Sjekk om det finnes rammemelding eller fosterbarn.]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (

@@ -54,7 +54,7 @@ const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => 
     return `Delvis fravær (${hours}t)`;
   }
   const dager = antallDager(periode);
-  return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;
+  return `Fullt fravær ({dager}d)`;
 };
 
 const formaterFraværsårsak = (fraværsårsak: string): ReactNode => {

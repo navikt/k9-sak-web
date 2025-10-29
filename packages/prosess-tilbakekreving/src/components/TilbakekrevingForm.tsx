@@ -255,7 +255,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
           </Heading>
           <VerticalSpacer twentyPx />
           <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-            {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}
+            {[Fastsett tilbakekreving etter §22-15. Del opp perioden ved behov for ulik vurdering]}
           </AksjonspunktHelpText>
           <VerticalSpacer twentyPx />
           {vilkarsVurdertePerioder && (

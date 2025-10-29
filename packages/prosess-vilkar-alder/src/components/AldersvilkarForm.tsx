@@ -51,7 +51,7 @@ const AldersvilkarForm = ({
   return (
     <RhfForm formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
       <AksjonspunktHelpText isAksjonspunktOpen>
-        {[<FormattedMessage key={1} id="AlderVilkar.Hjelpetekst" />]}
+        {[Vurder om aldersvilkåret er oppfylt. På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.]}
       </AksjonspunktHelpText>
 
       <VerticalSpacer sixteenPx />

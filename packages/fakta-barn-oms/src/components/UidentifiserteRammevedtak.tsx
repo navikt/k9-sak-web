@@ -40,7 +40,7 @@ const UidentifiserteRammevedtak = ({ rammevedtak, type }: UidentifiserteRammeved
         <ol className={styles.ol}>
           {uidentifiserteRammevedtak.map(({ gyldigFraOgMed, gyldigTilOgMed, lengde, fritekst, vedtatt, mottaker }) => (
             <li key={joinNonNullStrings([gyldigFraOgMed, gyldigTilOgMed, lengde, fritekst, vedtatt, mottaker])}>
-              <FormattedMessage id="FaktaRammevedtak.Uidentifisert.UtolkbarTekst" values={{ fritekst }} />
+              `Utolkbar tekst: "{fritekst}"`
             </li>
           ))}
         </ol>

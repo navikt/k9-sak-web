@@ -75,10 +75,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
         <Box.New padding="4" className={styles.begrunnelseSaksbehandler}>
           <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
             {[
-              <FormattedMessage
-                key="ArbeidsforholdInfoPanelAksjonspunkt"
-                id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
-              />,
+              Avklar om arbeidsforholdene skal benyttes i behandlingen,
             ]}
           </AksjonspunktHelpText>
         </Box.New>

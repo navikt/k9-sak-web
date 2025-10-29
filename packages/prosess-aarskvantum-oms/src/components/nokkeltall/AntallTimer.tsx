@@ -1,6 +1,6 @@
 import React from 'react';
 
 const AntallTimer = ({ timer }: { timer?: number }) =>
-  timer ? <FormattedMessage id="Nøkkeltall.Timer" values={{ timer }} /> : null;
+  timer ? `{timer}t` : null;
 
 export default AntallTimer;

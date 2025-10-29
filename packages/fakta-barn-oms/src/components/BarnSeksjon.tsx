@@ -10,6 +10,16 @@ interface BarnSeksjonProps {
   tekstId: string;
 }
 
+// Helper function to get text from the legacy tekstId
+const getBarnSeksjonText = (tekstId: string): string => {
+  const textMap: Record<string, string> = {
+    'FaktaBarn.UtvidetRettKroniskSyk': 'Barnet søknaden gjelder for',
+    'FaktaBarn.UtvidetRettMidlertidigAlene': 'Disse barna er søkerens folkeregistrerte barn',
+    'FaktaBarn.Behandlingsdato': 'Disse barna er søkerens folkeregistrerte barn slik det var ved tidspunktet for beregning av dager',
+  };
+  return textMap[tekstId] || tekstId;
+};
+
 const BarnSeksjon = ({ barn, startIndex, tekstId }: BarnSeksjonProps) => {
   if (barn.length === 0) {
     return null;
@@ -18,7 +28,7 @@ const BarnSeksjon = ({ barn, startIndex, tekstId }: BarnSeksjonProps) => {
   return (
     <div style={{ marginTop: '1.5rem' }}>
       <Label size="small" as="p">
-        <FormattedMessage id={tekstId} />
+        {getBarnSeksjonText(tekstId)}
       </Label>
       {barn.map((barnet, index) => (
         <BarnVisning barnet={barnet} index={index + startIndex} key={uuidv4()} />

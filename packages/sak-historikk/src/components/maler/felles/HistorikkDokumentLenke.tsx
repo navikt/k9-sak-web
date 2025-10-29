@@ -19,7 +19,7 @@ const HistorikkDokumentLenke = ({ dokumentLenke, saksnummer }: OwnProps) => {
     return (
       <span className={styles.dokumentLenke}>
         <i className={styles.dokumentIkon} title={tag} />
-        <FormattedMessage id="Historikk.Utgått" values={{ tag }} />
+        `{tag} (utgått)`
       </span>
     );
   }

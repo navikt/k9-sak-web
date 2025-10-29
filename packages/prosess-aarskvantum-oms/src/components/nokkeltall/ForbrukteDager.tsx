@@ -30,7 +30,7 @@ const forbrukteDagerDetaljer = (
       antallTimer: <AntallTimer timer={tidFraInfotrygd.timer} />,
       overskrifttekstId: 'Nøkkeltall.DagerFraInfotrygd',
       infotekstContent: tidFraInfotrygd.timer ? (
-        <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.DagerOgTimer.InfoText" values={{ ...tidFraInfotrygd }} />
+        `{dager} dager og {timer} timer utbetalt fra Infotrygd.`
       ) : (
         `${tidFraInfotrygd.dager} dager utbetalt fra Infotrygd.`
       ),
@@ -42,7 +42,7 @@ const forbrukteDagerDetaljer = (
     antallTimer: <AntallTimer timer={forbruktDagerTimer.timer} />,
     overskrifttekstId: 'Nøkkeltall.ForbrukteDager',
     infotekstContent: forbruktDagerTimer.timer ? (
-      <FormattedMessage id="Nøkkeltall.ForbrukteDager.DagerOgTimer.InfoText" values={{ ...forbruktDagerTimer }} />
+      `{dager} dager og {timer} timer utbetalt i K9.`
     ) : (
       `${forbruktDagerTimer.dager} dager utbetalt i K9.`
     ),
@@ -63,10 +63,7 @@ const forbrukteDagerDetaljer = (
       antallTimer: <AntallTimer timer={utbetaltForMangeDagerTimer.timer} />,
       overskrifttekstId: 'Nøkkeltall.UtbetaltForMangeDager',
       infotekstContent: utbetaltForMangeDagerTimer.timer ? (
-        <FormattedMessage
-          id="Nøkkeltall.UtbetaltForMangeDager.DagerOgTimer.InfoText"
-          values={{ ...utbetaltForMangeDagerTimer }}
-        />
+        `Det er utbetalt {dager} dager og {timer} timer mer enn brukeren har rett på.`
       ) : (
         `Det er utbetalt ${utbetaltForMangeDagerTimer.dager} flere dager enn brukeren har rett på.`
       ),
