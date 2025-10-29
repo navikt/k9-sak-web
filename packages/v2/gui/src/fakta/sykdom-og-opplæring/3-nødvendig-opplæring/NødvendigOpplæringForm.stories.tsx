@@ -104,3 +104,90 @@ export const Avslagsårsaker: Story = {
     await expect(løsAksjonspunkt9302).toHaveBeenCalledWith(expectedSubmitData);
   },
 };
+
+export const ValideringAvPeriodevalg: Story = {
+  args: {
+    vurdering: {
+      avslagsårsak: null,
+      begrunnelse: 'Begrunnelse for at opplæring er nødvendig',
+      opplæring: {
+        fom: '2025-02-14',
+        tom: '2025-02-23',
+      },
+      perioder: [new Period('2025-02-14', '2025-02-23')],
+      resultat: OpplæringVurderingDtoResultat.GODKJENT,
+      vurdertAv: 'testbruker',
+      vurdertTidspunkt: '2025-02-14T10:00:00Z',
+    },
+    setRedigerer: action('setRedigerer'),
+    redigerer: true,
+    andrePerioderTilVurdering: [
+      { fom: '2025-02-24', tom: '2025-03-01' },
+      { fom: '2025-03-02', tom: '2025-03-10' },
+    ],
+  },
+  play: async ({ canvas }) => {
+    const harViFåttLegeerklæringGroup = canvas.getByRole('group', {
+      name: /Har vi fått legeerklæring/i,
+    });
+    const jaKnapp = within(harViFåttLegeerklæringGroup).getByLabelText('Ja');
+    await expect(jaKnapp).toBeInTheDocument();
+    await userEvent.click(jaKnapp);
+    
+    const vurderingTextInput = canvas.getByLabelText(
+      'Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter § 9-14, første ledd',
+      { exact: false },
+    );
+    await expect(vurderingTextInput).toBeVisible();
+    await userEvent.clear(vurderingTextInput);
+    await userEvent.type(vurderingTextInput, 'Testbegrunnelse for nødvendig opplæring');
+    
+    const harSøkerOpplæringGroup = canvas.getByRole('group', { name: /Har søker opplæring som er nødvendig/ });
+    const jaOpplæringKnapp = within(harSøkerOpplæringGroup).getByLabelText('Ja');
+    await userEvent.click(jaOpplæringKnapp);
+    
+    // Check the checkbox to reuse assessment
+    const brukVurderingCheckbox = canvas.getByLabelText('Bruk denne vurderingen for andre perioder');
+    await expect(brukVurderingCheckbox).toBeInTheDocument();
+    await userEvent.click(brukVurderingCheckbox);
+    
+    // Try to submit without selecting any periods
+    const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
+    await userEvent.click(bekreftKnapp);
+    
+    // Expect validation error to be shown
+    const errorMessage = canvas.getByText('Du må velge minst én periode når du velger å gjenbruke vurderingen');
+    await expect(errorMessage).toBeVisible();
+    
+    // Expect submit not to have been called
+    await expect(løsAksjonspunkt9302).not.toHaveBeenCalled();
+    
+    // Now select a period
+    const periode1Checkbox = canvas.getByLabelText('24.02.2025 - 01.03.2025');
+    await userEvent.click(periode1Checkbox);
+    
+    // Error message should disappear
+    await expect(errorMessage).not.toBeVisible();
+    
+    // Now submit should work
+    await userEvent.click(bekreftKnapp);
+    
+    const expectedSubmitData = {
+      perioder: [
+        {
+          periode: { fom: '2025-02-14', tom: '2025-02-23' },
+          begrunnelse: 'Testbegrunnelse for nødvendig opplæring',
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+        {
+          periode: { fom: '2025-02-24', tom: '2025-03-01' },
+          begrunnelse: 'Testbegrunnelse for nødvendig opplæring',
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+      ],
+    };
+    await expect(løsAksjonspunkt9302).toHaveBeenCalledWith(expectedSubmitData);
+  },
+};
