@@ -5,6 +5,7 @@ import type {
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type {
   ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
+  ung_sak_kontrakt_behandling_BehandlingDto,
   ung_sak_kontrakt_fagsak_FagsakDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -18,6 +19,7 @@ import { BoxNew, Button, Detail, HGrid, HStack, Heading, Radio, VStack } from '@
 import { RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
+import { formaterVisningsnavn } from '../../../utils/formaterVisningsnavn';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 import styles from './formkravKlageForm.module.css';
 import type { FormValuesNfp } from './FormValuesNfp';
@@ -35,7 +37,7 @@ export const getPaklagdVedtak = (
 };
 
 const getKlagbareVedtak = (
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
+  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[] | ung_sak_kontrakt_behandling_BehandlingDto[],
   kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ) => {
   const klagBareVedtak = [
@@ -44,11 +46,23 @@ const getKlagbareVedtak = (
     </option>,
   ];
   return klagBareVedtak.concat(
-    avsluttedeBehandlinger.map(behandling => (
-      <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE, erTilbakekreving(behandling.type) ? 'kodeverkTilbake' : 'kodeverk')} ${behandling.avsluttet ? initializeDate(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT) : ''}`}
-      </option>
-    )),
+    avsluttedeBehandlinger.map(behandling => {
+      const getVisningsnavn = () => {
+        if ('visningsnavn' in behandling && formaterVisningsnavn(behandling.visningsnavn)) {
+          return formaterVisningsnavn(behandling.visningsnavn);
+        }
+        return kodeverkNavnFraKode(
+          behandling.type,
+          KodeverkType.BEHANDLING_TYPE,
+          erTilbakekreving(behandling.type) ? 'kodeverkTilbake' : 'kodeverk',
+        );
+      };
+      return (
+        <option key={behandling.uuid} value={`${behandling.uuid}`}>
+          {`${getVisningsnavn()} ${behandling.avsluttet ? initializeDate(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT) : ''}`}
+        </option>
+      );
+    }),
   );
 };
 
@@ -142,7 +156,7 @@ export const FormkravKlageForm = ({
             <div>
               <RhfRadioGroup
                 control={control}
-                label="Er klager part i saken?"
+                label="Er klager part og eller har rettslig klageinteresse?"
                 name="erKlagerPart"
                 validate={[required]}
                 isReadOnly={readOnly}
