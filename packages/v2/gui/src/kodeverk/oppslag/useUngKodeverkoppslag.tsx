@@ -25,6 +25,11 @@ const ungTilbakeQueryOptions = (enabled: boolean) =>
     placeholderData: null,
   });
 
+export const kodeverkOppslagQueryOptions = {
+  ungSak: ungSakQueryOptions,
+  ungTilbake: ungTilbakeQueryOptions,
+};
+
 // Bruk context istadenfor denne hook. `use(UngKodeverkoppslagContext)`
 export const useUngKodeverkoppslag = (hentTilbakeKodeverk: boolean): UngKodeverkoppslag => {
   const { data: ungSak } = useSuspenseQuery(ungSakQueryOptions);
