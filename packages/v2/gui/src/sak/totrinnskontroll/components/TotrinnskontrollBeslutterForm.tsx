@@ -59,7 +59,7 @@ export const TotrinnskontrollBeslutterForm = ({
   api,
   onBekreftet,
 }: TotrinnskontrollBeslutterFormProps) => {
-  // Spesialtilfelle frå AksnonspunktGodkjenningFieldArray: For nokre klage saker skal det krevast begrunnelse også for godkjenning.
+  // Spesialtilfelle frå AksjonspunktGodkjenningFieldArray: For nokre klage saker skal det krevast begrunnelse også for godkjenning.
   const krevBegrunnelseForGodkjent: boolean = behandlingKlageVurdering?.klageVurderingResultatNK != null;
   // Alle aksjonspunktGodkjenning element skal ha totrinnskontrollGodkjent true, eller ha totrinnskontrollGodkjent false,
   // men ha eit av boolean "flagga" for feilårsak satt true

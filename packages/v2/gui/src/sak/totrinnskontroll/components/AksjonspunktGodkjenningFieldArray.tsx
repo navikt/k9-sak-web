@@ -53,6 +53,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const { aksjonspunktKode, totrinnskontrollGodkjent } = aksjonspunktGodkjenning[index] || {};
         const data = aksjonspunktKode != null ? totrinnskontrollData.forAksjonspunkt(aksjonspunktKode) : undefined;
 
+        // klageVurderingResultatNK ser ut til å vere satt viss klage på gitt behandling har blitt vurdert av "NAV Klageenhet K9" (NK) eller "NAV Klageenhet Kabal" (NKK)
         const erKlageKA: boolean =
           klagebehandlingVurdering?.klageVurderingResultatNK != null && totrinnskontrollGodkjent == true;
         // visKunBegrunnelse settast true for å ikkje vise checkboxes for årsak når visArsaker er true.
