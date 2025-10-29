@@ -1,8 +1,5 @@
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
-  ung_kodeverk_klage_KlageMedholdÅrsak,
-  ung_kodeverk_klage_KlageVurderingOmgjør,
-  ung_kodeverk_klage_KlageVurderingType,
   type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   type ung_sak_kontrakt_behandling_BehandlingDto,
   type ung_sak_kontrakt_fagsak_FagsakDto,
@@ -10,10 +7,12 @@ import {
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
-import KlageVurderingBackendClient from './KlageVurderingBackendClient';
 import type { SaveKlageParams } from './src/components/felles/SaveKlageParams';
 import { BehandleKlageFormKa } from './src/components/ka/BehandleKlageFormKa';
 import { BehandleKlageFormNfp } from './src/components/nfp/BehandleKlageFormNfp';
+import { useContext } from 'react';
+import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
 
 // type ValidatedSaveKlageParams = z.infer<typeof SaveKlageSchema>;
 
@@ -34,14 +33,14 @@ export const KlagevurderingProsessIndex = ({
   aksjonspunkter,
   behandling,
 }: KlagevurderingProsessIndexProps) => {
-  const api = new KlageVurderingBackendClient();
+  const api = assertDefined(useContext(KlageVurderingApiContext));
   const { data: ungHjemler = [] } = useQuery({
-    queryKey: ['ung-klage-hjemler'],
+    queryKey: ['klage-hjemler', api.backend],
     queryFn: () => api.hentValgbareKlagehjemler(),
     enabled: fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
   });
   const { data: klageVurdering, isLoading } = useQuery({
-    queryKey: ['klageVurdering', behandling],
+    queryKey: ['klageVurdering', behandling, api.backend],
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
   const { mutateAsync: previewCallback } = useMutation({
@@ -61,9 +60,9 @@ export const KlagevurderingProsessIndex = ({
           behandlingId: behandling.id,
           fritekstTilBrev: params.fritekstTilBrev,
           klageHjemmel: params.klageHjemmel ?? undefined,
-          klageMedholdArsak: (params.klageMedholdArsak as ung_kodeverk_klage_KlageMedholdÅrsak) ?? undefined,
-          klageVurdering: params.klageVurdering as ung_kodeverk_klage_KlageVurderingType,
-          klageVurderingOmgjoer: (params.klageVurderingOmgjoer as ung_kodeverk_klage_KlageVurderingOmgjør) ?? undefined,
+          klageMedholdArsak: params.klageMedholdArsak,
+          klageVurdering: params.klageVurdering,
+          klageVurderingOmgjoer: params.klageVurderingOmgjoer,
           kode: params.kode,
         });
       }

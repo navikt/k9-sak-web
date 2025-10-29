@@ -1,24 +1,8 @@
-import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Button } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
 import type { SaveKlageParams } from './SaveKlageParams';
-
-const transformValues = (values: BehandleKlageFormKaFormValues, aksjonspunktCode: string) => ({
-  klageMedholdArsak:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE ||
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK
-      ? values.klageMedholdArsak
-      : null,
-  klageVurderingOmgjoer:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
-      ? values.klageVurderingOmgjoer
-      : null,
-  klageVurdering: values.klageVurdering,
-  fritekstTilBrev: values.fritekstTilBrev,
-  begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCode,
-});
+import { formValuesToSaveValues } from './formValuesToSaveValues.js';
 
 const getBrevData = (tekst: string) => ({
   dokumentdata: tekst && { fritekst: tekst },
@@ -42,7 +26,7 @@ export const TempSaveAndPreviewKlageLink = ({
 }: OwnProps) => {
   const [isFetchingPreview, setIsFetchingPreview] = useState(false);
   const tempSave = async () => {
-    await saveKlage(transformValues(formValues, aksjonspunktCode));
+    await saveKlage(formValuesToSaveValues(formValues, aksjonspunktCode));
     if (formValues.fritekstTilBrev) {
       setIsFetchingPreview(true);
       try {
