@@ -75,6 +75,16 @@ interface ActivityDataSubPanelProps {
  *
  * Presentasjonskomponent. Viser informasjon om valgt aktivitet
  */
+// Helper to get oppdragsgiver text
+const getOppdragsgiverText = (activityType: string): string => {
+  const messageId = getOppdragsgiverMessageId(activityType);
+  const texts: Record<string, string> = {
+    'ActivityPanel.Arbeidsforhold.Arbeidsgiver': 'Arbeidsgiver',
+    'ActivityPanel.Virksomhet': 'Virksomhet',
+  };
+  return texts[messageId] || messageId;
+};
+
 const ActivityDataSubPanel = ({
   initialValues,
   readOnly,
@@ -89,7 +99,7 @@ const ActivityDataSubPanel = ({
           {!isManuallyAdded && (
             <>
               <Detail>
-                <FormattedMessage id={getOppdragsgiverMessageId(selectedActivityType)} />
+                {getOppdragsgiverText(selectedActivityType)}
               </Detail>
               <div className={styles.arbeidsgiver}>
                 <BodyShort size="small">{getArbeidsgiverText(initialValues, arbeidsgiverOpplysningerPerId)}</BodyShort>

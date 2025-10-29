@@ -17,6 +17,16 @@ interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2;
 }
 
+// Helper to get permisjon label text
+const getPermisjonLabel = (arbeidsforhold: any): string => {
+  const labelId = utledPermisjonLabelID(arbeidsforhold);
+  const labels: Record<string, string> = {
+    'PersonArbeidsforholdDetailForm.Permisjon': 'Permisjon',
+    'PersonArbeidsforholdDetailForm.PermisjonMedDelvisArbeid': 'Permisjon med delvis arbeid',
+  };
+  return labels[labelId] || labelId;
+};
+
 const PermisjonPeriode = ({ arbeidsforhold }: OwnProps) => (
   // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
@@ -24,7 +34,7 @@ const PermisjonPeriode = ({ arbeidsforhold }: OwnProps) => (
       <div>
         <VerticalSpacer sixteenPx />
         <BodyShort size="small">
-          <FormattedMessage id={utledPermisjonLabelID(arbeidsforhold)} />
+          {getPermisjonLabel(arbeidsforhold)}
         </BodyShort>
         {arbeidsforhold.permisjoner.map((permisjon, index) => (
           <div key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>

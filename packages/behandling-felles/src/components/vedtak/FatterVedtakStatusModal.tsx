@@ -15,6 +15,14 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen viser en lightbox etter at en saksbehandler har sendt et forslag på vedtak til beslutter
  * ved totrinnskontroll. Ved å trykke på knapp blir saksbehandler tatt tilbake til søkesiden.
  */
+// Helper to get modal text
+const getModalText = (tekstkode: string): string => {
+  const texts: Record<string, string> = {
+    'FatterVedtakStatusModal.KanIkkeSendeInformertGodkjenning': 'Vedtaket kan ikke fattes. NAV har ikke den informasjonen som er nødvendig for å behandle saken.',
+  };
+  return texts[tekstkode] || tekstkode;
+};
+
 const FatterVedtakStatusModal = ({
   intl,
   visModal = false,
@@ -35,7 +43,7 @@ const FatterVedtakStatusModal = ({
         </div>
         <div>
           <BodyShort size="small">
-            <FormattedMessage id={tekstkode} />
+            {getModalText(tekstkode)}
           </BodyShort>
           <BodyShort size="small">
             Du kommer nå til forsiden.

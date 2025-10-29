@@ -45,7 +45,7 @@ const TextAreaWithBadge = ({
       <div className={styles.etikettWrapper}>
         {badges.map(({ textId, type, title }) => (
           <Tag variant={type || 'warning'} key={textId} title={intl.formatMessage({ id: title })}>
-            <FormattedMessage id={textId} />
+            {textId}
           </Tag>
         ))}
       </div>
