@@ -27,12 +27,6 @@ interface OwnProps {
   featureToggles: FeatureToggles | undefined;
 }
 
-// Helper to get vilkår text
-const getVilkarText = (textCode: string): string => {
-  // For now return the textCode - would need full mapping
-  return textCode;
-};
-
 const InngangsvilkarPanel = ({
   behandling,
   alleKodeverk,
@@ -103,11 +97,11 @@ const InngangsvilkarPanel = ({
                     <>
                       Behandlingen avventer avklaring av{' '}
                       <Link href="" onClick={oppdaterUrl}>
-                        {getVilkarText(apentFaktaPanelInfo.textCode)}
+                        {apentFaktaPanelInfo.textCode}
                       </Link>
                     </>,
                   ]
-                : aksjonspunktTekstKoder.map(kode => <span key={kode}>{getVilkarText(kode)}</span>)}
+                : aksjonspunktTekstKoder.map(kode => <span key={kode}>{kode}</span>)}
             </AksjonspunktHelpText>
             <VerticalSpacer thirtyTwoPx />
           </>

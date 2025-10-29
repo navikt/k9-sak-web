@@ -66,7 +66,7 @@ const ManglerSøknadForm = ({
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
       <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
-        {['Vurder om søker er berettiget til direkte overgang fra pleiepenger til opplæringspenger']}
+        Vurder om søker er berettiget til direkte overgang fra pleiepenger til opplæringspenger
       </AksjonspunktHelpText>
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadForPeriode() && (

@@ -23,7 +23,8 @@ const getSectionTitle = (titleObj: any): string => {
   if (titleObj && titleObj.id) {
     const titles: Record<string, string> = {
       'FaktaBarn.Tittel': 'Barn',
-      'FaktaRammevedtak.ErMidlertidigAlene.Tittel': 'Er midlertidig alene om omsorgen',
+      'FaktaRammevedtak.ErMidlertidigAlene.Tittel': 'Midlertidig aleneomsorg',
+      'FaktaRammevedtak.Overføringer.Tittel': 'Overføringer og fordelinger',
     };
     return titles[titleObj.id] || titleObj.id;
   }

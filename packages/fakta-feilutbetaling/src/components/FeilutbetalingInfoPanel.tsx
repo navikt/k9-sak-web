@@ -139,7 +139,7 @@ export const FeilutbetalingInfoPanelImpl = (
   return (
     <>
       <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-        {[Kontroller at korrekt hendelse er satt]}
+        Kontroller at korrekt hendelse er satt
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       <form onSubmit={formProps.handleSubmit}>
