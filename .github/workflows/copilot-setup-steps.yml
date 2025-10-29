@@ -1,5 +1,9 @@
 name: Copilot Setup Steps
 
+permissions:
+  contents: read
+  packages: read
+
 on:
   workflow_dispatch:
   push:
@@ -17,16 +21,7 @@ jobs:
       - name: Hente kode
         uses: actions/checkout@v5
 
-      - name: Setup yarnrc.yml
-        uses: ./.github/actions/setup-yarnrc
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
-
-      - name: Sette opp node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: yarn
-
-      - name: Installere dependencies
-        run: HUSKY=0 yarn install --immutable
