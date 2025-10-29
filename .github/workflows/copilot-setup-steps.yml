@@ -1,3 +1,8 @@
+
+## Denne filen brukes til å sette opp utviklingsmiljø for copilot-agenter som kjører i repoet 
+## Uten denne får vi ikke autentisert mot https://npm.pkg.github.com og får ikke installert pakker
+## https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment
+
 name: Copilot Setup Steps
 
 permissions:
