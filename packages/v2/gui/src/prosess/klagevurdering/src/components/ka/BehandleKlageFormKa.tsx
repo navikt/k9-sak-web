@@ -45,10 +45,10 @@ export const BehandleKlageFormKa = ({
   const formMethods = useForm<BehandleKlageFormKaFormValues>({
     defaultValues: buildInitialValues(klageVurdering),
   });
-  const handleSubmit = (values: BehandleKlageFormKaFormValues) => {
+  const handleSubmit = async (values: BehandleKlageFormKaFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback([transformValues(values)]);
+      await submitCallback([transformValues(values)]);
     } finally {
       setIsSubmitting(false);
     }
