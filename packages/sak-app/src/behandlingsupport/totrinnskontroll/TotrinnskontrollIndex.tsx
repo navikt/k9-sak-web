@@ -4,7 +4,7 @@ import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import React, { use, useMemo, useState } from 'react';
 import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
 import { useQuery } from '@tanstack/react-query';
-import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingStatus.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 import {
@@ -12,7 +12,6 @@ import {
   isBehandlingResultatType,
 } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
-import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 
 interface OwnProps {
@@ -20,6 +19,7 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
   api: TotrinnskontrollApi;
+  urlEtterpå: string;
 }
 
 /**
@@ -27,7 +27,7 @@ interface OwnProps {
  *
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
-const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: OwnProps) => {
+const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api, urlEtterpå }: OwnProps) => {
   const [visBeslutterModal, setVisBeslutterModal] = useState(false);
   const [erAlleAksjonspunktGodkjent, setAlleAksjonspunktTilGodkjent] = useState(false);
 
@@ -91,8 +91,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: 
     return <LoadingPanel />;
   }
 
-  const urlTilLos = getPathToK9Los() ?? '/';
-
   const totrinnskontrollData = totrinnsÅrsakerQuery.data ?? totrinnArsakerReadOnlyQuery.data;
   if (totrinnskontrollData != null) {
     return (
@@ -111,7 +109,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api }: 
             fagsakYtelseType={ensureKodeVerdiString(fagsak.sakstype)}
             erAlleAksjonspunktGodkjent={erAlleAksjonspunktGodkjent}
             erKlageWithKA={totrinnsKlageVurderingQuery.data?.klageVurderingResultatNK != null}
-            urlEtterpå={urlTilLos}
+            urlEtterpå={urlEtterpå}
           />
         )}
       </>

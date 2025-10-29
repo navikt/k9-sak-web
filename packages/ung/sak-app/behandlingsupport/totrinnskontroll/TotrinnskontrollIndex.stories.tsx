@@ -112,6 +112,7 @@ export const Default: Story = {
     alleBehandlinger: alleBehandlinger as unknown as BehandlingAppKontekst[],
     behandlingId: alleBehandlinger[0].id,
     api,
+    urlEtterpå: '#',
   },
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Kontroller endrede opplysninger og faglige vurderinger')).toBeVisible();

@@ -43,6 +43,7 @@ import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling
 import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9TilbakeTotrinnskontrollBackendClient.js';
 import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9KlageTotrinnskontrollBackendClient.js';
 import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9SakTotrinnskontrollBackendClient.js';
+import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -279,6 +280,7 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               api={totrinnskontrollApi}
+              urlEtterpå={getPathToK9Los() ?? '/'}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
@@ -287,6 +289,7 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               api={totrinnskontrollApi}
+              urlEtterpå={getPathToK9Los() ?? '/'}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>

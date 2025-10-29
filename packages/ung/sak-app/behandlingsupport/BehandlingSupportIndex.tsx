@@ -288,6 +288,7 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               api={totrinnskontrollApi}
+              urlEtterpå="/"
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
@@ -296,6 +297,7 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               api={totrinnskontrollApi}
+              urlEtterpå="/"
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
