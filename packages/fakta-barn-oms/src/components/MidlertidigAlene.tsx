@@ -8,15 +8,11 @@ interface MidlertidigAleneProps {
 
 const MidlertidigAlene = ({ midlertidigAlene }: MidlertidigAleneProps) =>
   midlertidigAlene ? (
-    <FormattedMessage
-      id="FaktaRammevedtak.MidlertidigAlene"
-      values={{
-        fom: formaterDato(midlertidigAlene.gyldigFraOgMed),
-        tom: formaterDato(midlertidigAlene.gyldigTilOgMed),
-        b: chunks => <b>{chunks}</b>,
-        br: <br />,
-      }}
-    />
+    <>
+      Brukeren har midlertidig aleneomsorg for alle barn.
+      <br />
+      Gyldig fra og med <b>{formaterDato(midlertidigAlene.gyldigFraOgMed)}</b> til og med <b>{formaterDato(midlertidigAlene.gyldigTilOgMed)}</b>.
+    </>
   ) : (
     Det er ikke registrert midlertidig aleneomsorg
   );

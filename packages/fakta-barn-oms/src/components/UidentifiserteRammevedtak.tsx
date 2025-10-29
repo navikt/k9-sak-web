@@ -10,6 +10,17 @@ interface UidentifiserteRammevedtakProps {
   type: RammevedtakType;
 }
 
+// Helper function to get text for rammevedtak type
+const getTypeText = (type: RammevedtakType, antall: number): string => {
+  const texts: Record<string, string> = {
+    [RammevedtakEnum.UIDENTIFISERT]: `Det finnes ${antall} automatisk utolkbare rammevedtak fra Infotrygd. Vennligst korriger i Infotrygd.`,
+    [RammevedtakEnum.UTVIDET_RETT]: `Det finnes ${antall} rammevedtak om utvidet rett fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.`,
+    [RammevedtakEnum.ALENEOMSORG]: `Det finnes ${antall} rammevedtak om aleneomsorg fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.`,
+    [RammevedtakEnum.FOSTERBARN]: `Det finnes ${antall} rammevedtak om fosterbarn fra Infotrygd som ikke automatisk kan kobles til et barn. Vennligst korriger i Infotrygd.`,
+  };
+  return texts[type] || `Ukjent type: ${type}`;
+};
+
 const typeInfo = {
   [RammevedtakEnum.UIDENTIFISERT]: {
     text: 'FaktaRammevedtak.UidentifiserteRammevedtak',
@@ -36,7 +47,7 @@ const UidentifiserteRammevedtak = ({ rammevedtak, type }: UidentifiserteRammeved
   return uidentifiserteRammevedtak.length > 0 ? (
     <>
       <Alert variant="warning" size="small" className={styles.advarsel}>
-        <FormattedMessage id={text} values={{ antall: uidentifiserteRammevedtak.length }} />
+        {getTypeText(type, uidentifiserteRammevedtak.length)}
         <ol className={styles.ol}>
           {uidentifiserteRammevedtak.map(({ gyldigFraOgMed, gyldigTilOgMed, lengde, fritekst, vedtatt, mottaker }) => (
             <li key={joinNonNullStrings([gyldigFraOgMed, gyldigTilOgMed, lengde, fritekst, vedtatt, mottaker])}>
