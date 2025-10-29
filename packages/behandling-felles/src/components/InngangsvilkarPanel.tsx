@@ -101,13 +101,13 @@ const InngangsvilkarPanel = ({
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
                     <>
-                      <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
+                      Behandlingen avventer avklaring av{' '}
                       <Link href="" onClick={oppdaterUrl}>
                         {getVilkarText(apentFaktaPanelInfo.textCode)}
                       </Link>
                     </>,
                   ]
-                : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
+                : aksjonspunktTekstKoder.map(kode => <span key={kode}>{getVilkarText(kode)}</span>)}
             </AksjonspunktHelpText>
             <VerticalSpacer thirtyTwoPx />
           </>

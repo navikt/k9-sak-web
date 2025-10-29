@@ -49,16 +49,10 @@ const IverksetterVedtakStatusModal = ({
           </div>
           <div>
             <BodyShort size="small">
-              <FormattedMessage
-                id={
-                  erVedtakAvslatt
-                    ? 'IverksetterVedtakStatusModal.VedtakAvslatt'
-                    : 'IverksetterVedtakStatusModal.VedtakInnvilet'
-                }
-              />
+              {erVedtakAvslatt ? 'Vedtaket er avslått' : 'Vedtaket er innvilget'}
             </BodyShort>
             <BodyShort size="small">
-              <FormattedMessage id="IverksetterVedtakStatusModal.GoToSearchPage" />
+              Du kommer nå til forsiden.
             </BodyShort>
           </div>
           <div>

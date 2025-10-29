@@ -23,9 +23,9 @@ interface OverføringsdagerPanelProps {
 }
 
 const typeTilTekstIdMap = {
-  [OverføringstypeEnum.OVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Overføring',
-  [OverføringstypeEnum.FORDELING]: 'FaktaRammevedtak.Overføringsdager.Fordeling',
-  [OverføringstypeEnum.KORONAOVERFØRING]: 'FaktaRammevedtak.Overføringsdager.Koronaoverføring',
+  [OverføringstypeEnum.OVERFØRING]: 'Overføring',
+  [OverføringstypeEnum.FORDELING]: 'Fordeling',
+  [OverføringstypeEnum.KORONAOVERFØRING]: 'Koronaoverføring',
 };
 
 const renderTittel = (type, retning, totaltAntallDager) => (
@@ -36,13 +36,7 @@ const renderTittel = (type, retning, totaltAntallDager) => (
         id: 'antallDager',
         content: (
           <>
-            <FormattedMessage
-              id={
-                retning === OverføringsretningEnum.INN
-                  ? 'FaktaRammevedtak.Overføringsdager.Inn'
-                  : 'FaktaRammevedtak.Overføringsdager.Ut'
-              }
-            />
+            {retning === OverføringsretningEnum.INN ? 'Inn' : 'Ut'}
             `{totaltAntallDager} dager `
           </>
         ),
@@ -55,7 +49,7 @@ const renderTittel = (type, retning, totaltAntallDager) => (
       {
         width: '300px',
         id: 'overføring',
-        content: <FormattedMessage id={typeTilTekstIdMap[type]} />,
+        content: typeTilTekstIdMap[type],
       },
     ]}
     rad={{

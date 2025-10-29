@@ -36,12 +36,10 @@ const AnkeVurderingModal = ({
         </div>
         <div>
           <BodyShort size="small">
-            <FormattedMessage
-              id={erFerdigbehandlet ? 'AnkeVurderingModal.Ferdigbehandlet' : 'AnkeVurderingModal.VedtakOversendt'}
-            />
+            {erFerdigbehandlet ? 'Behandlingen er ferdigbehandlet' : 'Vedtaket er oversendt'}
           </BodyShort>
           <BodyShort size="small">
-            <FormattedMessage id="AnkeVurderingModal.GoToSearchPage" />
+            Du kommer nå til forsiden.
           </BodyShort>
         </div>
         <div>
