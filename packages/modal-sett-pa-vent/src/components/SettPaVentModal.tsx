@@ -67,10 +67,7 @@ const getPaVentText = (
   if (originalVentearsak) {
     if (originalVentearsak === venterEtterlysInntektsmeldingKode && originalFrist && !showEndreFrist) {
       return (
-        <FormattedMessage
-          id="SettPaVentModal.EtterlysningAvInntektsmeldingErSendt"
-          values={{ date: formatDate(originalFrist) }}
-        />
+        `Etterlysning av inntektsmelding er sendt og behandlingen er satt på vent til ${formatDate(originalFrist)}. Du kommer nå tilbake til LOS.`
       );
     }
 

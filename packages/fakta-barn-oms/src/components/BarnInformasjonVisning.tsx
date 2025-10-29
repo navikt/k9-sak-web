@@ -17,10 +17,13 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
     <div>
       {typeof harSammeBosted !== 'undefined' && (
         <BodyShort size="small">
-          <FormattedMessage
-            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
-            values={{ b: chunks => <b>{chunks}</b> }}
-          />
+          {harSammeBosted ? (
+            'Barnet bor med søker'
+          ) : (
+            <>
+              Barnet bor <b>ikke</b> med søker
+            </>
+          )}
         </BodyShort>
       )}
 
@@ -50,7 +53,7 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
 
       {dødsdato && (
         <BodyShort size="small">
-          <FormattedMessage id="FaktaBarn.Død" values={{ dødsdato: formatDate(dødsdato) }} />
+          Barnet døde den {formatDate(dødsdato)}
         </BodyShort>
       )}
       {barnType === BarnType.FOSTERBARN && (

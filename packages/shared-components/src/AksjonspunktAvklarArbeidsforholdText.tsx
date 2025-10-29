@@ -65,7 +65,7 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
         <>
           <FlexRow>
             <BodyShort size="small" className={styles.info}>
-              <FormattedMessage id="HelpText.TaKontakt" values={{ li: <li />, br: <br /> }} />
+              `Kontakt arbeidsgiver som enten må rapportere riktig:`
               <VerticalSpacer eightPx />
               <li>
                 {' '}

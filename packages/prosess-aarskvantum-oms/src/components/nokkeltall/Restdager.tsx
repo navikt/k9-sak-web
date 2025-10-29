@@ -30,7 +30,7 @@ const Restdager = ({
         antallDager: dagerNavKanUtbetale,
         overskrifttekstId: 'Nøkkeltall.KanUtbetales',
         infotekstContent: (
-          <FormattedMessage id="Nøkkeltall.KanUtbetales.InfoText" values={{ dager: dagerNavKanUtbetale }} />
+          `${dagerNavKanUtbetale} dager som Nav kan utbetale.`
         ),
       },
       {
@@ -43,10 +43,7 @@ const Restdager = ({
             values={{ ...navHarUtbetaltDagerTimer }}
           />
         ) : (
-          <FormattedMessage
-            id="Nøkkeltall.TotaltForbrukte.Dager.InfoText"
-            values={{ dager: navHarUtbetaltDagerTimer.dager }}
-          />
+          `${navHarUtbetaltDagerTimer.dager} dager forbrukt.`
         ),
       },
     ]}

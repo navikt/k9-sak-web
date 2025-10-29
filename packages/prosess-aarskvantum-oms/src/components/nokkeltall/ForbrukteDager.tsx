@@ -32,7 +32,7 @@ const forbrukteDagerDetaljer = (
       infotekstContent: tidFraInfotrygd.timer ? (
         <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.DagerOgTimer.InfoText" values={{ ...tidFraInfotrygd }} />
       ) : (
-        <FormattedMessage id="Nøkkeltall.DagerFraInfotrygd.Dager.InfoText" values={{ dager: tidFraInfotrygd.dager }} />
+        `${tidFraInfotrygd.dager} dager utbetalt fra Infotrygd.`
       ),
     });
   }
@@ -44,7 +44,7 @@ const forbrukteDagerDetaljer = (
     infotekstContent: forbruktDagerTimer.timer ? (
       <FormattedMessage id="Nøkkeltall.ForbrukteDager.DagerOgTimer.InfoText" values={{ ...forbruktDagerTimer }} />
     ) : (
-      <FormattedMessage id="Nøkkeltall.ForbrukteDager.Dager.InfoText" values={{ dager: forbruktDagerTimer.dager }} />
+      `${forbruktDagerTimer.dager} dager utbetalt i K9.`
     ),
   });
 
@@ -68,10 +68,7 @@ const forbrukteDagerDetaljer = (
           values={{ ...utbetaltForMangeDagerTimer }}
         />
       ) : (
-        <FormattedMessage
-          id="Nøkkeltall.UtbetaltForMangeDager.Dager.InfoText"
-          values={{ dager: utbetaltForMangeDagerTimer.dager }}
-        />
+        `Det er utbetalt ${utbetaltForMangeDagerTimer.dager} flere dager enn brukeren har rett på.`
       ),
     });
   }

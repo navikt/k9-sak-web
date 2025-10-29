@@ -80,7 +80,7 @@ export const OverforingerFaktaFormImpl = ({
               ]}
             />
             <HelpText>
-              <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" values={{ br: <br /> }} />
+              `Ved fordelte dager etter § 9-6 5. ledd eller overførte dager etter § 9-6 6. ledd, vil dagene ikke ${<br />}påvirke søkers opprinnelige dager dersom dagene ikke overstiger søkers egen grunnrett.`
             </HelpText>
           </FlexRow>
           <OverføringsdagerPanelgruppe

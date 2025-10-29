@@ -49,9 +49,9 @@ const formaterFravær = (periode: string, delvisFravær?: string): ReactNode => 
   if (delvisFravær) {
     const { days, hours } = dagerOgTimer(delvisFravær);
     if (days > 0) {
-      return <FormattedMessage id="Uttaksplan.DelvisFraværMedDager" values={{ dager: days, timer: hours }} />;
+      return `Delvis fravær (${days, timer: hours}d {timer}t)`;
     }
-    return <FormattedMessage id="Uttaksplan.DelvisFravær" values={{ timer: hours }} />;
+    return `Delvis fravær (${hours}t)`;
   }
   const dager = antallDager(periode);
   return <FormattedMessage id="Uttaksplan.FulltFravær" values={{ dager }} />;

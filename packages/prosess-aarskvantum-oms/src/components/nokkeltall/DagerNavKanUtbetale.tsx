@@ -35,7 +35,7 @@ const DagerNavKanUtbetale = ({
           antallDager: -antallDagerArbeidsgiverDekker,
           overskrifttekstId: 'Nøkkeltall.Ventetid',
           infotekstContent: (
-            <FormattedMessage id="Nøkkeltall.Ventetid.InfoText" values={{ dager: antallDagerArbeidsgiverDekker }} />
+            `Trekker fra ${antallDagerArbeidsgiverDekker} dager som er dekket av arbeidsgiver eller bruker.`
           ),
         },
         featureToggles?.NYE_NOKKELTALL && {

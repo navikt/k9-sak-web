@@ -72,9 +72,9 @@ const findInYearsMonthsAndDays = (opptjeningFom: string, opptjeningTom: string) 
     return <span />;
   }
   return difference.months >= 1 ? (
-    <FormattedMessage id="ActivityPanel.MonthsAndDays" values={{ months: difference.months, days: difference.days }} />
+    `(${difference.months, days: difference.days} mndr. {days} dager)`
   ) : (
-    <FormattedMessage id="ActivityPanel.Days" values={{ days: difference.days }} />
+    `(${difference.days} dager)`
   );
 };
 

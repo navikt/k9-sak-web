@@ -16,7 +16,7 @@ const BarnVisning = ({ barnet, index }: BarnInputProps) => (
   <Box.New padding="4" borderWidth="1" borderRadius="medium" className={styles.barnInput}>
     <div className={styles.header}>
       <h4>
-        <FormattedMessage id="FaktaRammevedtak.BarnVisningNummer" values={{ nummer: index + 1 }} />
+        `Barn #${index + 1}`
       </h4>
       <span className={styles.italic}>
         {barnet.personIdent} ({beregnAntallÅr(barnet.barnRelevantIBehandling.fødselsdato)} år)
