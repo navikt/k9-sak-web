@@ -151,9 +151,8 @@ const SøknadsperiodeFieldArrayComponent = (
             <CheckboxField
               label={
                 <Label
-                  input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
+                  input="Selvstendig næringsdrivende"
                   typographyElement={DSLabel}
-                  intl={intl}
                 />
               }
               name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_SSN}`}
@@ -183,9 +182,8 @@ const SøknadsperiodeFieldArrayComponent = (
             <CheckboxField
               label={
                 <Label
-                  input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
+                  input="Frilanser"
                   typographyElement={DSLabel}
-                  intl={intl}
                 />
               }
               name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_FRILANSER}`}

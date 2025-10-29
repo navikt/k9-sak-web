@@ -32,7 +32,7 @@ const SelvstendigNæringsdrivendeForm = ({
         <DatepickerField
           name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN}`}
           readOnly={readOnly}
-          label={<Label input={{ id: 'OpplysningerFraSoknaden.startdatoForSoknanden', args: {} }} intl={intl} />}
+          label={<Label input="Startdato for søknaden" />}
         />
       </div>
       <div className={styles.fieldContainer}>

@@ -28,7 +28,7 @@ const ArbeidsforholdRadioknapper = ({
     radios={[
       {
         value: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
-        label: <Label input={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }} textOnly />,
+        label: <Label input="Arbeidsforholdet er aktivt" textOnly />,
         element: (
           <BehandlingFormFieldCleaner
             formName={formName}
@@ -47,7 +47,7 @@ const ArbeidsforholdRadioknapper = ({
       },
       {
         value: arbeidsforholdHandlingType.BRUK,
-        label: <Label input={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }} textOnly />,
+        label: <Label input="Fortsett behandling" textOnly />,
       },
     ]}
   />
