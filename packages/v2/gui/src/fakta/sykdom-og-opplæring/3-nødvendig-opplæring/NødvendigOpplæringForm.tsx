@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   Detail,
+  ErrorMessage,
   Heading,
   Label,
   Link,
@@ -180,6 +181,7 @@ const NødvendigOpplæringForm = ({
     defaultValues: defaultValues(vurdering),
   });
   const [brukVurderingIAndrePerioder, setBrukVurderingIAndrePerioder] = useState(false);
+  const [periodeValideringsfeil, setPeriodeValideringsfeil] = useState<string>('');
 
   useEffect(() => {
     formMethods.reset({
@@ -209,13 +211,31 @@ const NødvendigOpplæringForm = ({
     formMethods.resetField('perioder', { keepTouched: true });
   }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
+  // Clear validation error when periods are selected
+  useEffect(() => {
+    if (fields.length > 0) {
+      setPeriodeValideringsfeil('');
+    }
+  }, [fields.length]);
+
+  const handleSubmit = (data: NødvendigOpplæringFormFields) => {
+    // Validate that if checkbox is checked, at least one period is selected
+    if (brukVurderingIAndrePerioder && fields.length === 0) {
+      setPeriodeValideringsfeil('Du må velge minst én periode når du velger å gjenbruke vurderingen');
+      return;
+    }
+    
+    setPeriodeValideringsfeil('');
+    løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload);
+  };
+
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
   return (
     <>
       <RhfForm
         formMethods={formMethods}
-        onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
+        onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-6">
           <Controller
@@ -353,6 +373,7 @@ const NødvendigOpplæringForm = ({
                 if (brukVurderingIAndrePerioder) {
                   setBrukVurderingIAndrePerioder(false);
                   formMethods.setValue('tilleggsPerioder', []);
+                  setPeriodeValideringsfeil('');
                 } else {
                   setBrukVurderingIAndrePerioder(true);
                 }
@@ -383,6 +404,7 @@ const NødvendigOpplæringForm = ({
                   </Checkbox>
                 );
               })}
+              {periodeValideringsfeil && <ErrorMessage size="small">{periodeValideringsfeil}</ErrorMessage>}
             </div>
           )}
           {!readOnly && (
