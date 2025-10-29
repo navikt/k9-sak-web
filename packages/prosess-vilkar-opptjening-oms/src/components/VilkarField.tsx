@@ -66,7 +66,7 @@ export const VilkarField = ({
 
   const featureToggles = useContext(FeatureTogglesContext);
   const erIkkeOppfyltText = (
-    <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
+    <>Søker har <b>ikke</b> oppfylt krav om 28 dagers opptjening, vilkåret er ikke oppfylt.</>
   );
   const erOppfyltText = Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.;
 

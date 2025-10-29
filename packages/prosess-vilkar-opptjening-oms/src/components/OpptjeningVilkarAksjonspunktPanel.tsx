@@ -148,13 +148,13 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
           )}
         </Label>
         <HelpText className="ml-2" placement="right-start">
-          <FormattedMessage
-            id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst"
-            values={{
-              b: (...chunks) => <b>{chunks}</b>,
-              linebreak: <br />,
-            }}
-          />
+          <>
+            Hvis barnet er under 18 år, skal du vurdere om vilkåret for opptjening er oppfylt eller ikke oppfylt for
+            søker. Hvis det er nødvendig å ha <b>mer informasjon</b>, kan du sette behandlingen på vent.
+            <br />
+            <br />
+            Hvis barnet har fylt 18 år, trykker du Ja og behandlingen går videre til Inngangsvilkår.
+          </>
         </HelpText>
       </div>
       <VilkarField

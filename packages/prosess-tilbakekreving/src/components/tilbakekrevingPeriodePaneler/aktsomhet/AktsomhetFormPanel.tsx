@@ -16,9 +16,9 @@ import { ANDELER, EGENDEFINERT } from './AktsomhetReduksjonAvBelopFormPanel';
 const uaktsomhetCodes = [Aktsomhet.GROVT_UAKTSOM, Aktsomhet.SIMPEL_UAKTSOM, Aktsomhet.FORSETT];
 
 const forstoBurdeForstattTekster = {
-  [Aktsomhet.FORSETT]: 'AktsomhetFormPanel.AktsomhetTyperLabel.Forsett',
-  [Aktsomhet.GROVT_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt',
-  [Aktsomhet.SIMPEL_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom',
+  [Aktsomhet.FORSETT]: 'Forsett',
+  [Aktsomhet.GROVT_UAKTSOM]: 'Grovt uaktsomt',
+  [Aktsomhet.SIMPEL_UAKTSOM]: 'Simpel uaktsomhet',
 };
 
 interface AktsomhetData {
@@ -86,11 +86,7 @@ const AktsomhetFormPanel = ({
       readOnly={readOnly}
       radios={aktsomhetTyper.map((vrt: KodeverkMedNavn) => ({
         value: vrt.kode,
-        label: erValgtResultatTypeForstoBurdeForstaatt ? (
-          <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} />
-        ) : (
-          vrt.navn
-        ),
+        label: erValgtResultatTypeForstoBurdeForstaatt ? forstoBurdeForstattTekster[vrt.kode] : vrt.navn,
       }))}
       // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
       onChange={resetFields}

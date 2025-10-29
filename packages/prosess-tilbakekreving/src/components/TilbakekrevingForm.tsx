@@ -295,7 +295,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
           {formProps.error && (
             <>
               <Alert size="small" variant="error">
-                <FormattedMessage id={formProps.error} />
+                {formProps.error}
               </Alert>
               <VerticalSpacer twentyPx />
             </>

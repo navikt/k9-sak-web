@@ -56,10 +56,7 @@ export const BehandleUnntakForm = ({
 
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[
-          <FormattedMessage
-            id="Unntak.AvklarAkjsonspunkt"
-            key={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
-          />,
+          'Kontroller at opplysningene om unntak er korrekte',
         ]}
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />

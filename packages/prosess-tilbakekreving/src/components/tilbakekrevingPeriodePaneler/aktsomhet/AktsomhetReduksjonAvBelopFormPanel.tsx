@@ -142,13 +142,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
         <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
           <div>
             <Detail>
-              <FormattedMessage
-                id={
-                  harMerEnnEnYtelse
-                    ? 'AktsomhetReduksjonAvBelopFormPanel.BelopSomSkalTilbakekreves'
-                    : 'AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves'
-                }
-              />
+              {harMerEnnEnYtelse
+                ? 'Beløpet som skal tilbakekreves'
+                : 'Andel som skal tilbakekreves'}
             </Detail>
             <BodyShort size="small" className={styles.labelPadding}>
               {harMerEnnEnYtelse ? formatCurrencyNoKr(feilutbetalingBelop) : '100%'}
