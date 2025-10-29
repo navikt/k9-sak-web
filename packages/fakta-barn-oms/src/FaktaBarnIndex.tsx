@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
 import users from '@fpsak-frontend/assets/images/users.svg';
@@ -14,16 +13,6 @@ import BarnSeksjon from './components/BarnSeksjon';
 import BarnMedRammevedtak from './dto/BarnMedRammevedtak';
 import KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
 import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface FaktaBarnIndexProps {
   barn: BarnDto[];
@@ -136,8 +125,7 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
   });
 
   return (
-    <RawIntlProvider value={intl}>
-      <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
+          <UidentifiserteRammevedtak type={RammevedtakEnum.UIDENTIFISERT} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.UTVIDET_RETT} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.ALENEOMSORG} rammevedtak={rammevedtak} />
       <UidentifiserteRammevedtak type={RammevedtakEnum.FOSTERBARN} rammevedtak={rammevedtak} />
@@ -149,9 +137,7 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
 
       <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.ErMidlertidigAlene.Tittel' }} imgSrc={user} medMarg>
         <MidlertidigAlene midlertidigAlene={midlertidigAleneansvar} />
-      </Seksjon>
-    </RawIntlProvider>
-  );
+      </Seksjon>  );
 };
 
 export default FaktaBarnIndex;

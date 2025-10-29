@@ -8,22 +8,11 @@ import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
 import { useEffect, useState } from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 import styles from './opptjeningVilkarProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
@@ -71,8 +60,7 @@ const OpptjeningVilkarProsessIndex = ({
     activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
 
   return (
-    <RawIntlProvider value={intl}>
-      <div className={cx('mainContainer--withSideMenu')}>
+          <div className={cx('mainContainer--withSideMenu')}>
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
@@ -108,9 +96,7 @@ const OpptjeningVilkarProsessIndex = ({
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>
-      </div>
-    </RawIntlProvider>
-  );
+      </div>  );
 };
 
 export default OpptjeningVilkarProsessIndex;

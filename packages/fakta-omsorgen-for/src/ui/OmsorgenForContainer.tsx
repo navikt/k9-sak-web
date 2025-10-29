@@ -3,7 +3,6 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
-import { IntlProvider } from 'react-intl';
 import { ContainerContract } from '../types/ContainerContract';
 import OmsorgsperiodeoversiktType from '../types/Omsorgsperiodeoversikt';
 import OmsorgsperioderResponse from '../types/OmsorgsperioderResponse';

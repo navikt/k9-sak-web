@@ -1,17 +1,8 @@
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { action } from 'storybook/actions';
 import { messages } from '../i18n';
 import OverstyrBeregningFaktaIndex from './OverstyrBeregningFaktaIndex';
 import { OverstyrInputBeregningDto } from './types/OverstyrInputBeregningDto';
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages: { ...messages },
-  },
-  createIntlCache(),
-);
 
 const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
   '910909088': {
@@ -131,53 +122,41 @@ export default {
 };
 
 export const visOverstyrBeregningForEnPeriodeMedNæring = () => (
-  <RawIntlProvider value={intl}>
-    <OverstyrBeregningFaktaIndex
+  <OverstyrBeregningFaktaIndex
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       overstyrInputBeregning={overstyrInputBeregningEnPeriodeKunNæring}
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={aksjonspunkter}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export const visOverstyrBeregningForEnPeriodeMedFrilans = () => (
-  <RawIntlProvider value={intl}>
-    <OverstyrBeregningFaktaIndex
+  <OverstyrBeregningFaktaIndex
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       overstyrInputBeregning={overstyrInputBeregningEnPeriodeKunFrilans}
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={aksjonspunkter}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export const visOverstyrBeregningForEnPeriodeMedNæringOgArbeid = () => (
-  <RawIntlProvider value={intl}>
-    <OverstyrBeregningFaktaIndex
+  <OverstyrBeregningFaktaIndex
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       overstyrInputBeregning={overstyrInputBeregningEnPeriodeNæringOgArbeid}
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={aksjonspunkter}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export const visOverstyrBeregningToPerioder = () => (
-  <RawIntlProvider value={intl}>
-    <OverstyrBeregningFaktaIndex
+  <OverstyrBeregningFaktaIndex
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       overstyrInputBeregning={overstyrInputBeregningToPerioder}
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={aksjonspunkter}
-    />
-  </RawIntlProvider>
-);
+    />);

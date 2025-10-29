@@ -5,7 +5,6 @@ import {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 
 interface OwnProps {
@@ -19,15 +18,6 @@ interface OwnProps {
   readOnlySubmitButton: boolean;
 }
 
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
-
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   aksjonspunkter,
@@ -37,8 +27,7 @@ const TilkjentYtelseProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
   fagsak,
 }: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <TilkjentYtelsePanel
+      <TilkjentYtelsePanel
       beregningsresultat={beregningsresultat}
       aksjonspunkter={aksjonspunkter}
       readOnly={isReadOnly}
@@ -46,8 +35,6 @@ const TilkjentYtelseProsessIndex = ({
       readOnlySubmitButton={readOnlySubmitButton}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default TilkjentYtelseProsessIndex;

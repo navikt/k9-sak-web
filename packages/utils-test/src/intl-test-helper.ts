@@ -6,14 +6,11 @@
  * These helper functions aim to address that.
  */
 
-import { createIntl, createIntlCache } from 'react-intl';
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
 import defaultMessages from '../../../public/sprak/nb_NO.json';
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
 // Create the IntlProvider to retrieve context for wrapping around.
-const cache = createIntlCache();
-
 const getIntlObject = (messages?: any) => {
   const selectedMessages = messages || defaultMessages;
 

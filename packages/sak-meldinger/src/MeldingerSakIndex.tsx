@@ -1,4 +1,3 @@
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import {
   ArbeidsgiverOpplysningerPerId,
@@ -21,16 +20,6 @@ import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sa
 import messages from '../i18n/nb_NO.json';
 import Messages, { type FormValues, type BackendApi as MessagesBackendApi } from './components/Messages';
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 export interface BackendApi extends MessagesBackendApi, V2MessagesBackendApi {}
 
@@ -141,8 +130,7 @@ const MeldingerSakIndex = ({
   };
 
   return (
-    <RawIntlProvider value={intl}>
-      {erTilbakekreving ? (
+          {erTilbakekreving ? (
         <MessagesTilbakekreving
           submitCallback={submitCallback}
           templates={templates}
@@ -169,9 +157,7 @@ const MeldingerSakIndex = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           backendApi={backendApi}
         />
-      )}
-    </RawIntlProvider>
-  );
+      )}  );
 };
 
 export default MeldingerSakIndex;

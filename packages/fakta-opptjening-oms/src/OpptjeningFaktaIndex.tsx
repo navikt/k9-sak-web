@@ -8,19 +8,8 @@ import {
 } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import React from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OpptjeningFaktaIndexProps {
   behandling: OpptjeningBehandling;
@@ -49,8 +38,7 @@ const OpptjeningFaktaIndex = ({
   submitCallback,
   readOnly,
 }: OpptjeningFaktaIndexProps) => (
-  <RawIntlProvider value={intl}>
-    <OpptjeningInfoPanel
+      <OpptjeningInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       opptjeningList={opptjening?.opptjeninger}
@@ -63,8 +51,6 @@ const OpptjeningFaktaIndex = ({
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       harApneAksjonspunkter={harApneAksjonspunkter}
       submittable={submittable}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default OpptjeningFaktaIndex;

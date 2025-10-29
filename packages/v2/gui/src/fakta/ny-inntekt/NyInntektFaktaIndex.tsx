@@ -1,7 +1,6 @@
 import { Tabs, VStack } from '@navikt/ds-react';
 
 import { useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel.js';
 import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues.js';
@@ -12,15 +11,6 @@ import type { Vilkår, Vilkårperiode } from './src/types/Vilkår.js';
 import { DateLabel, PeriodLabel } from '@navikt/ft-ui-komponenter';
 import type { ArbeidsgiverOpplysningerPerId } from './src/types/ArbeidsgiverOpplysninger.js';
 import type { Beregningsgrunnlag } from './src/types/Beregningsgrunnlag.js';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
 
 const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
 
@@ -70,8 +60,7 @@ export const NyInntektFaktaIndex = ({
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
 
   return (
-    <RawIntlProvider value={intl}>
-      <VStack gap="space-8">
+          <VStack gap="space-8">
         {skalBrukeTabs && (
           <Tabs
             value={aktivtBeregningsgrunnlagIndeks.toString()}
@@ -102,9 +91,7 @@ export const NyInntektFaktaIndex = ({
           formData={formData}
           setFormData={setFormData}
         />
-      </VStack>
-    </RawIntlProvider>
-  );
+      </VStack>  );
 };
 
 export default NyInntektFaktaIndex;

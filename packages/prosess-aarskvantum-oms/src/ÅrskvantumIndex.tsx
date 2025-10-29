@@ -7,7 +7,6 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import React from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -19,17 +18,7 @@ import Aktivitet from './dto/Aktivitet';
 import { fosterbarnDto } from './dto/FosterbarnDto';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 
-const cache = createIntlCache();
-
-export const årskvantumIntl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
-
-interface ÅrsakvantumIndexProps {
+export interface ÅrsakvantumIndexProps {
   fullUttaksplan: {
     aktiviteter?: Aktivitet[];
   };
@@ -77,8 +66,7 @@ const ÅrskvantumIndex = ({
   };
 
   return (
-    <RawIntlProvider value={årskvantumIntl}>
-      {aksjonspunkter.length > 0 && (
+          {aksjonspunkter.length > 0 && (
         <AksjonspunktForm9014
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
@@ -102,9 +90,7 @@ const ÅrskvantumIndex = ({
         aktiv={sisteUttaksplan?.aktiv}
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      />
-    </RawIntlProvider>
-  );
+      />  );
 };
 
 export default ÅrskvantumIndex;

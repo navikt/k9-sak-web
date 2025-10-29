@@ -11,21 +11,10 @@ import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
 import React from 'react';
-import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 const getVilkarOkMessage = originalErVilkarOk => {
   let messageId = 'VilkarresultatMedOverstyringForm.IkkeBehandlet';
@@ -71,8 +60,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
   }
 
   return (
-    <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
+          <div className={mainContainerClassnames}>
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
@@ -117,9 +105,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
           </FlexContainer>
         </div>
         <VerticalSpacer eightPx />
-      </div>
-    </RawIntlProvider>
-  );
+      </div>  );
 };
 
 export default SykdomProsessIndex;

@@ -1,20 +1,9 @@
 import { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import FeilutbetalingInfoPanel from './components/FeilutbetalingInfoPanel';
 import { FeilutbetalingAarsak } from './components/feilutbetalingAarsak';
 import { FeilutbetalingFakta } from './components/feilutbetalingFakta';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface FeilutbetalingFaktaIndexProps {
   behandling: Behandling;
@@ -47,8 +36,7 @@ const FeilutbetalingFaktaIndex = ({
   readOnly,
   harApneAksjonspunkter,
 }: FeilutbetalingFaktaIndexProps) => (
-  <RawIntlProvider value={intl}>
-    <FeilutbetalingInfoPanel
+      <FeilutbetalingInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       feilutbetalingFakta={feilutbetalingFakta.behandlingFakta}
@@ -60,8 +48,6 @@ const FeilutbetalingFaktaIndex = ({
       submitCallback={submitCallback}
       readOnly={readOnly}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default FeilutbetalingFaktaIndex;

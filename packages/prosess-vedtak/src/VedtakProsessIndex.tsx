@@ -9,7 +9,6 @@ import {
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VedtakPanels from './components/VedtakPanels';
 import { InformasjonsbehovVedtaksbrev } from './components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
@@ -18,16 +17,6 @@ import { DokumentDataType, LagreDokumentdataType } from './types/Dokumentdata';
 import { VedtakSimuleringResultat } from './types/VedtakSimuleringResultat';
 import { VedtakVarsel } from './types/VedtakVarsel';
 import { Vedtaksbrev } from './types/Vedtaksbrev';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface VedtakProsessIndexProps {
   aksjonspunkter: AksjonspunktDto[];
@@ -85,8 +74,7 @@ const VedtakProsessIndex = ({
   vilkar,
   ytelseTypeKode,
 }: VedtakProsessIndexProps) => (
-  <RawIntlProvider value={intl}>
-    <VedtakPanels
+      <VedtakPanels
       behandlingTypeKode={behandling.type}
       behandlingStatus={behandling.status}
       språkkode={behandling.språkkode}
@@ -113,8 +101,6 @@ const VedtakProsessIndex = ({
       fritekstdokumenter={fritekstdokumenter}
       lagreDokumentdata={lagreDokumentdata}
       overlappendeYtelser={overlappendeYtelser}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default VedtakProsessIndex;

@@ -1,4 +1,3 @@
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import TilbakekrevingForm from './components/TilbakekrevingForm';
@@ -7,16 +6,6 @@ import FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType'
 import VilkarsVurdertePerioderWrapper from './types/vilkarsVurdertePerioderTsType';
 
 import messages from '../i18n/nb_NO.json';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   behandling: Behandling;
@@ -47,8 +36,7 @@ const TilbakekrevingProsessIndex = ({
   beregnBelop,
   aksjonspunkter,
 }: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <TilbakekrevingForm
+      <TilbakekrevingForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       behandlingUuid={behandling.uuid}
@@ -64,8 +52,6 @@ const TilbakekrevingProsessIndex = ({
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
       beregnBelop={beregnBelop}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default TilbakekrevingProsessIndex;

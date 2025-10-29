@@ -1,31 +1,18 @@
 import { Button, Modal } from '@navikt/ds-react';
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { createIntl, IntlShape, RawIntlProvider } from 'react-intl';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import messages from '../../../i18n/nb_NO.json';
 import FritekstEditor from './FritekstEditor.js';
 
-const withRawIntlProvider =
-  (intl: IntlShape): Decorator =>
-  Story => {
-    const [visRedigering, setVisRedigering] = React.useState(true);
     return (
-      <RawIntlProvider value={intl}>
-        <Button onClick={() => setVisRedigering(true)} size="small">
+      <Button onClick={() => setVisRedigering(true)} size="small">
           Rediger brev
         </Button>
         <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
           <Story />
-        </Modal>
-      </RawIntlProvider>
-    );
+        </Modal>);
   };
-
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-});
 
 const meta = {
   title: 'prosess/prosess-vedtak/FritekstRedigering',

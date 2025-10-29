@@ -1,6 +1,5 @@
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
 
@@ -12,16 +11,6 @@ type StandardFaktaProps = Readonly<{
   alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
   submitCallback?: (aksjonspunktData: any) => Promise<any>;
 }>;
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   behandling: Behandling;
@@ -41,8 +30,7 @@ const ArbeidsforholdFaktaIndex = ({
   submitCallback,
   readOnly,
 }: OwnProps & StandardFaktaProps) => (
-  <RawIntlProvider value={intl}>
-    {arbeidsforhold && arbeidsgiverOpplysningerPerId && (
+      {arbeidsforhold && arbeidsgiverOpplysningerPerId && (
       <ArbeidsforholdInfoPanel
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
@@ -55,8 +43,6 @@ const ArbeidsforholdFaktaIndex = ({
         submitCallback={submitCallback}
         readOnly={readOnly}
       />
-    )}
-  </RawIntlProvider>
-);
+    )});
 
 export default ArbeidsforholdFaktaIndex;

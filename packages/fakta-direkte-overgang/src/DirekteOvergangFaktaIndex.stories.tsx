@@ -1,16 +1,7 @@
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { action } from 'storybook/actions';
 import { messages } from '../i18n';
 import DirekteOvergangFaktaIndex from './DirekteOvergangFaktaIndex';
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages: { ...messages },
-  },
-  createIntlCache(),
-);
 
 const manglendePeriodeAP: Aksjonspunkt = {
   aksjonspunktType: {
@@ -64,34 +55,25 @@ export default {
 };
 
 export const visDirekteOvergangForManglendePeriode = () => (
-  <RawIntlProvider value={intl}>
-    <DirekteOvergangFaktaIndex
+  <DirekteOvergangFaktaIndex
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={[manglendePeriodeAP]}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export const visDirekteOvergangForManglendePeriodeAnnenPart = () => (
-  <RawIntlProvider value={intl}>
-    <DirekteOvergangFaktaIndex
+  <DirekteOvergangFaktaIndex
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={[manglendePeriodeAnnenPartAP]}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export const visDirekteOvergangForManglendePeriodSøkerOgAnnenPart = () => (
-  <RawIntlProvider value={intl}>
-    <DirekteOvergangFaktaIndex
+  <DirekteOvergangFaktaIndex
       submitCallback={action('button-click')}
       readOnly={false}
       submittable
       aksjonspunkter={[manglendePeriodeAnnenPartAP, manglendePeriodeAP]}
-    />
-  </RawIntlProvider>
-);
+    />);

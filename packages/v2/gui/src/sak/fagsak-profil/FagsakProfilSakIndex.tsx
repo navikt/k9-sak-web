@@ -1,16 +1,6 @@
 import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { type ReactNode } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import FagsakProfile from './components/FagsakProfile';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
 
 interface OwnProps {
   saksnummer: string;
@@ -27,15 +17,12 @@ const FagsakProfilSakIndex = ({
   renderBehandlingMeny,
   renderBehandlingVelger,
 }: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <FagsakProfile
+      <FagsakProfile
       saksnummer={saksnummer}
       fagsakYtelseType={fagsakYtelseType}
       fagsakStatus={fagsakStatus}
       renderBehandlingMeny={renderBehandlingMeny}
       renderBehandlingVelger={renderBehandlingVelger}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default FagsakProfilSakIndex;

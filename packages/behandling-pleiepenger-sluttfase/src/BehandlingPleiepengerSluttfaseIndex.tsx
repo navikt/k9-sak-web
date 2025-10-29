@@ -16,7 +16,6 @@ import {
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
 import PleiepengerSluttfasePaneler from './components/PleiepengerSluttfasePaneler';
@@ -39,16 +38,6 @@ const pleiepengerData = [
   { key: PleiepengerSluttfaseBehandlingApiKeys.UTTAK },
   { key: PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER },
 ];
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   behandlingId: number;
@@ -184,8 +173,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <RawIntlProvider value={intl}>
-        <PleiepengerSluttfasePaneler
+              <PleiepengerSluttfasePaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}
           fagsak={fagsak}
@@ -203,9 +191,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
           featureToggles={featureToggles}
           dokumenter={alleDokumenter}
-        />
-      </RawIntlProvider>
-    </>
+        />    </>
   );
 };
 

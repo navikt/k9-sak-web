@@ -1,4 +1,3 @@
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -9,16 +8,6 @@ import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
 import AldersVilkarAP from './components/AldersvilkarAP';
 import AldersVilkarStatus from './components/AldersvilkarStatus';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface AldersVilkarProsessIndexProps {
   behandling: Behandling;
@@ -55,8 +44,7 @@ const AldersVilkarProsessIndex = ({
   if (!vilkaretErAutomatiskInnvilget) begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
 
   return (
-    <RawIntlProvider value={intl}>
-      {(vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises) && (
+          {(vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises) && (
         <AldersVilkarStatus
           vilkarOppfylt={vilkarOppfylt}
           vilkarReferanse={aldersVilkarBarn.lovReferanse}
@@ -77,9 +65,7 @@ const AldersVilkarProsessIndex = ({
           vilkarOppfylt={vilkarOppfylt}
           begrunnelseTekst={begrunnelseTekst}
         />
-      )}
-    </RawIntlProvider>
-  );
+      )}  );
 };
 
 export default AldersVilkarProsessIndex;

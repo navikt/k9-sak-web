@@ -1,17 +1,6 @@
 import { Venteaarsak } from '@k9-sak-web/types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import SettPaVentModal from './components/SettPaVentModal';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   cancelEvent: () => void;
@@ -40,8 +29,7 @@ const SettPaVentModalIndex = ({
   ventearsakVariant,
   isSubmitting,
 }: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <SettPaVentModal
+      <SettPaVentModal
       cancelEvent={cancelEvent}
       onSubmit={submitCallback}
       showModal={showModal}
@@ -53,8 +41,6 @@ const SettPaVentModalIndex = ({
       erTilbakekreving={erTilbakekreving}
       ventearsakVariant={ventearsakVariant}
       isSubmitting={isSubmitting}
-    />
-  </RawIntlProvider>
-);
+    />);
 
 export default SettPaVentModalIndex;
