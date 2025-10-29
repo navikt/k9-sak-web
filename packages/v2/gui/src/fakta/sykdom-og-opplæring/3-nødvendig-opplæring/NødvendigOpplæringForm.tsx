@@ -181,7 +181,6 @@ const NødvendigOpplæringForm = ({
     defaultValues: defaultValues(vurdering),
   });
   const [brukVurderingIAndrePerioder, setBrukVurderingIAndrePerioder] = useState(false);
-  const [periodeValideringsfeil, setPeriodeValideringsfeil] = useState<string>('');
 
   useEffect(() => {
     formMethods.reset({
@@ -211,31 +210,13 @@ const NødvendigOpplæringForm = ({
     formMethods.resetField('perioder', { keepTouched: true });
   }, [harNødvendigOpplæring, harLegeerklæring, formMethods]);
 
-  // Clear validation error when periods are selected
-  useEffect(() => {
-    if (fields.length > 0) {
-      setPeriodeValideringsfeil('');
-    }
-  }, [fields.length]);
-
-  const handleSubmit = (data: NødvendigOpplæringFormFields) => {
-    // Validate that if checkbox is checked, at least one period is selected
-    if (brukVurderingIAndrePerioder && fields.length === 0) {
-      setPeriodeValideringsfeil('Du må velge minst én periode når du velger å gjenbruke vurderingen');
-      return;
-    }
-    
-    setPeriodeValideringsfeil('');
-    løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload);
-  };
-
   const nødvendigOpplæring = formMethods.watch('harNødvendigOpplæring');
   const periodeErEnkeltdag = vurdering.perioder[0]!.fom === vurdering.perioder[0]!.tom;
   return (
     <>
       <RhfForm
         formMethods={formMethods}
-        onSubmit={handleSubmit}
+        onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
       >
         <div className="flex flex-col gap-6">
           <Controller
@@ -365,6 +346,20 @@ const NødvendigOpplæringForm = ({
               dokumentasjon fra bruker.
             </Alert>
           )}
+          {/* Hidden validation for tilleggsPerioder when checkbox is checked */}
+          <Controller
+            control={formMethods.control}
+            name="tilleggsPerioder"
+            rules={{
+              validate: () => {
+                if (brukVurderingIAndrePerioder && fields.length === 0) {
+                  return 'Du må velge minst én periode når du velger å gjenbruke vurderingen';
+                }
+                return undefined;
+              },
+            }}
+            render={() => null}
+          />
           {andrePerioderTilVurdering.length > 0 && (
             <Checkbox
               size="small"
@@ -373,7 +368,7 @@ const NødvendigOpplæringForm = ({
                 if (brukVurderingIAndrePerioder) {
                   setBrukVurderingIAndrePerioder(false);
                   formMethods.setValue('tilleggsPerioder', []);
-                  setPeriodeValideringsfeil('');
+                  formMethods.clearErrors('tilleggsPerioder');
                 } else {
                   setBrukVurderingIAndrePerioder(true);
                 }
@@ -398,13 +393,17 @@ const NødvendigOpplæringForm = ({
                       } else {
                         remove(fieldIdx);
                       }
+                      // Trigger validation after change
+                      formMethods.trigger('tilleggsPerioder');
                     }}
                   >
                     {`${dayjs(periode.fom).format('DD.MM.YYYY')} - ${dayjs(periode.tom).format('DD.MM.YYYY')}`}
                   </Checkbox>
                 );
               })}
-              {periodeValideringsfeil && <ErrorMessage size="small">{periodeValideringsfeil}</ErrorMessage>}
+              {formMethods.formState.errors.tilleggsPerioder && (
+                <ErrorMessage size="small">{formMethods.formState.errors.tilleggsPerioder.message}</ErrorMessage>
+              )}
             </div>
           )}
           {!readOnly && (
