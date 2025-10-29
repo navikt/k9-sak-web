@@ -21,6 +21,7 @@ import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
 import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 
 const EMPTY_ARRAY = [];
 
@@ -58,21 +59,23 @@ const AppIndex = () => {
 
   // Sjå bootstrapUng for å sjå kva som er lenger oppe i hierarkiet.
   return (
-    <AppConfigResolver>
-      <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-        <LanguageProvider>
-          <Dekorator
-            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-            queryStrings={queryStrings}
-            setSiteHeight={setSiteHeight}
-            pathname={location.pathname}
-          />
-          {shouldRenderHome && <Home headerHeight={headerHeight} />}
-          {forbiddenErrors.length > 0 && <ForbiddenPage />}
-          {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
-        </LanguageProvider>
-      </ErrorBoundary>
-    </AppConfigResolver>
+    <RootSuspense heading="Laster grunnleggende systemdata">
+      <AppConfigResolver>
+        <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+          <LanguageProvider>
+            <Dekorator
+              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+              queryStrings={queryStrings}
+              setSiteHeight={setSiteHeight}
+              pathname={location.pathname}
+            />
+            {shouldRenderHome && <Home headerHeight={headerHeight} />}
+            {forbiddenErrors.length > 0 && <ForbiddenPage />}
+            {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
+          </LanguageProvider>
+        </ErrorBoundary>
+      </AppConfigResolver>
+    </RootSuspense>
   );
 };
 
