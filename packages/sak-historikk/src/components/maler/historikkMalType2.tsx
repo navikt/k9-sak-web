@@ -1,5 +1,6 @@
 import { Label } from '@navikt/ds-react';
 import React from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import HistorikkMal from '../HistorikkMalTsType';
 import { findHendelseText, findResultatText } from './felles/historikkUtils';

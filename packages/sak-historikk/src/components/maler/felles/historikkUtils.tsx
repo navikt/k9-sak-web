@@ -6,6 +6,7 @@ import {
 } from '@k9-sak-web/types';
 import React from 'react';
 
+import { IntlShape } from 'react-intl';
 import historikkEndretFeltTypeCodes from '../../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';
 import historikkOpplysningTypeCodes from '../../../kodeverk/historikkOpplysningTypeCodes';

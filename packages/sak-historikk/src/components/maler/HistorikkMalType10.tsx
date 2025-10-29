@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
 

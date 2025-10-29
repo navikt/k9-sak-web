@@ -3,6 +3,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { HistorikkInnslagAksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import { ReactNode } from 'react';
+import { IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import HistorikkMal from '../HistorikkMalTsType';

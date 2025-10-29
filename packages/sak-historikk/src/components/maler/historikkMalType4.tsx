@@ -1,6 +1,7 @@
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
+import { WrappedComponentProps } from 'react-intl';
 import HistorikkMal from '../HistorikkMalTsType';
 import BubbleText from './felles/bubbleText';
 import { findHendelseText } from './felles/historikkUtils';

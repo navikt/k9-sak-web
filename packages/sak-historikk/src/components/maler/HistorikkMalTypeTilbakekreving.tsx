@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -51,7 +52,10 @@ export const HistorikkMalTypeTilbakekreving = ({
         return (
           <div key={periodeFom + periodeTom}>
             <BodyShort size="small">
-              <>Vurdering av perioden <b>{periodeFom}</b> - <b>{periodeTom}</b></>
+              <FormattedMessage
+                id="Historikk.Template.Tilbakekreving.VurderingAvPerioden"
+                values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
+              />
             </BodyShort>
             <VerticalSpacer eightPx />
             {endredeFelter &&
@@ -79,10 +83,19 @@ export const HistorikkMalTypeTilbakekreving = ({
                     {visAktsomhetBegrunnelse && decodeHtmlEntity(begrunnelseFritekst)}
                     {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
                     <BodyShort size="small">
-                      {felt.fraVerdi
-                        ? <><b>{getKodeverknavn(endretFeltNavn)}</b> er endret fra {formatertFraVerdi} til {formatertTilVerdi}</>
-                        : <><b>{getKodeverknavn(endretFeltNavn)}</b> er satt til {formatertTilVerdi}</>
-                      }
+                      <FormattedMessage
+                        id={
+                          felt.fraVerdi
+                            ? 'Historikk.Template.Tilbakekreving.ChangedFromTo'
+                            : 'Historikk.Template.Tilbakekreving.FieldSetTo'
+                        }
+                        values={{
+                          navn: getKodeverknavn(endretFeltNavn),
+                          fraVerdi: formatertFraVerdi,
+                          tilVerdi: formatertTilVerdi,
+                          b: chunks => <b>{chunks}</b>,
+                        }}
+                      />
                     </BodyShort>
                     <VerticalSpacer eightPx />
                     {visSarligGrunnerBegrunnelse && sarligGrunnerBegrunnelse}

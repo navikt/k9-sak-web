@@ -1,5 +1,6 @@
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import HistorikkMal from '../HistorikkMalTsType';
 import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
@@ -51,7 +52,7 @@ const HistorikkMalFelles7og8 = ({
 
           {historikkinnslagDel.opplysninger &&
             historikkinnslagDel.opplysninger.map(opplysning => (
-              {getOpplysningText(opplysning)}
+              <FormattedMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />
             ))}
 
           {historikkinnslagDel.aarsak && (

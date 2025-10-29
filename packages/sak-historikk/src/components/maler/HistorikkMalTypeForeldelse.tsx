@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort } from '@navikt/ds-react';
@@ -37,7 +38,10 @@ export const HistorikkMalTypeForeldelse = ({
         return (
           <div key={periodeFom + periodeTom}>
             <BodyShort size="small">
-              <>Vurdering av perioden <b>{periodeFom}</b> - <b>{periodeTom}</b></>
+              <FormattedMessage
+                id="Historikk.Template.Foreldelse.VurderingAvPerioden"
+                values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
+              />
             </BodyShort>
             {endredeFelter &&
               endredeFelter.map(felt => {
@@ -46,10 +50,19 @@ export const HistorikkMalTypeForeldelse = ({
                 return (
                   <React.Fragment key={endretFeltNavn.kode}>
                     <BodyShort size="small">
-                      {felt.fraVerdi
-                        ? <><b>{getKodeverknavn(endretFeltNavn)}</b> er endret fra {fraVerdi} til {tilVerdi}</>
-                        : <><b>{getKodeverknavn(endretFeltNavn)}</b> er satt til {tilVerdi}</>
-                      }
+                      <FormattedMessage
+                        id={
+                          felt.fraVerdi
+                            ? 'Historikk.Template.Tilbakekreving.ChangedFromTo'
+                            : 'Historikk.Template.Tilbakekreving.FieldSetTo'
+                        }
+                        values={{
+                          navn: getKodeverknavn(endretFeltNavn),
+                          fraVerdi,
+                          tilVerdi,
+                          b: chunks => <b>{chunks}</b>,
+                        }}
+                      />
                     </BodyShort>
                     <VerticalSpacer eightPx />
                   </React.Fragment>

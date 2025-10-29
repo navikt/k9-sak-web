@@ -1,3 +1,4 @@
+import { FormattedMessage } from 'react-intl';
 
 import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
 
@@ -19,7 +20,7 @@ const HistorikkDokumentLenke = ({ dokumentLenke, saksnummer }: OwnProps) => {
     return (
       <span className={styles.dokumentLenke}>
         <i className={styles.dokumentIkon} title={tag} />
-        `{tag} (utgått)`
+        <FormattedMessage id="Historikk.Utgått" values={{ tag }} />
       </span>
     );
   }
