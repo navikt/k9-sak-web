@@ -142,6 +142,7 @@
   "SakGårIkkeTilBeslutterModal.Avbryt": "Avbryt",
   "SakGårIkkeTilBeslutterModal.ModalAriaLabel": "Modal, sak går ikke til beslutter",
   "InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse": "Fritekstbeskrivelse",
+  "InformasjonsbehovAutomatiskVedtaksbrev.StandardLabel": "Beskriv årsaken til avslag",
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig": "Suppler med fritekst i henhold til skjønnsmessig vurdering.",
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstEndring": "Suppler med fritekst i henhold til endringsvedtaket.",
   "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet",

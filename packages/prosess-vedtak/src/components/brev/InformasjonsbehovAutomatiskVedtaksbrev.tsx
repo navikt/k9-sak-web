@@ -72,7 +72,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
             intl={intl}
             readOnly={readOnly}
             språkkode={språkkode}
-            label={behov.beskrivelse}
+            label={behov.beskrivelse || intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.StandardLabel' })}
             begrunnelse={begrunnelse}
             begrunnelseFieldName={behov.kode}
           />
