@@ -16,7 +16,7 @@ const OmsorgsperiodeoversiktMessages = ({
     return (
       <Box.New marginBlock="0 6">
         <Alert size="small" variant="warning" className={styles.alertstripe}>
-          <FormattedMessage id="vurdering.advarsel" values={{ perioder: getStringMedPerioder(perioderTilVurdering) }} />
+          {`Følgende perioder må vurderes: ${getStringMedPerioder(perioderTilVurdering)}`}
         </Alert>
       </Box.New>
     );

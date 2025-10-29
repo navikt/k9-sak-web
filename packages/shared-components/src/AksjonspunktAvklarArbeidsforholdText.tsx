@@ -16,18 +16,12 @@ interface OwnProps {
 
 const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
   if (imUtenArbeidsforhold) {
-    return (
-      <FormattedMessage
-        id="HelpText.FinnesIkkeIRegisteret"
-        values={{
-          yrkestittel: `${arbeidsforhold.yrkestittel}(${
-            arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-              ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-              : ''
-          })`,
-        }}
-      />
-    );
+    const yrkestittel = `${arbeidsforhold.yrkestittel}(${
+      arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+        ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+        : ''
+    })`;
+    return `${yrkestittel} finnes ikke i Aa-registeret.`;
   }
   if (
     arbeidsforhold.aksjonspunktÅrsaker.some(
@@ -39,7 +33,7 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
   return Det finnes ingen åpne aksjonspunkter;
 };
 
-const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
+const AksjonspunktAvklarArbeidsforholdText = ({ arbeidsforhold }: OwnProps) => {
   const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker
     .map(k => k.kode)
     .includes(aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE);
@@ -111,4 +105,4 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
   );
 };
 
-export default injectIntl(AksjonspunktAvklarArbeidsforholdText);
+export default AksjonspunktAvklarArbeidsforholdText;

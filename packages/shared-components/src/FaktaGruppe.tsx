@@ -55,7 +55,7 @@ const FaktaGruppe = ({
       {titleCode && (
         <div>
           <Label size="small" as="p">
-            {useIntl ? <FormattedMessage id={titleCode} /> : titleCode}
+            {titleCode}
           </Label>
           <VerticalSpacer twentyPx />
         </div>
