@@ -15,6 +15,11 @@ interface DagerSokerHarRettPaProps {
   ar: string;
 }
 
+// Helper to get koronadager text
+const getKoronadagerText = (år: string): string => {
+  return `Ekstra koronadager for ${år}`;
+};
+
 const DagerSokerHarRettPa = ({
   dagerRettPå,
   antallOmsorgsdager,
@@ -60,7 +65,7 @@ const DagerSokerHarRettPa = ({
     detaljer.push({
       antallDager: antallKoronadager,
       overskrifttekstId: 'Nøkkeltall.Koronadager',
-      infotekstContent: <FormattedMessage id={`Nøkkeltall.Koronadager.InfoText.${ar}`} />,
+      infotekstContent: getKoronadagerText(ar),
     });
   }
 

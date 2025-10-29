@@ -54,7 +54,7 @@ const forbrukteDagerDetaljer = (
         antallDager: smittevernDagerTimer.dager,
         antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
         overskrifttekstId: 'Nøkkeltall.Smittevern',
-        infotekstContent: <FormattedMessage id={`Nøkkeltall.Smittevern.InfoText.${ar}`} />,
+        infotekstContent: getSmittevernText(ar),
       });
     }
   } else if (utbetaltForMangeDagerTimer) {
@@ -71,6 +71,11 @@ const forbrukteDagerDetaljer = (
   }
 
   return detaljer;
+};
+
+// Helper to get smittevern text
+const getSmittevernText = (år: string): string => {
+  return `Ekstra smittevernsdager for ${år}`;
 };
 
 const ForbrukteDager = ({

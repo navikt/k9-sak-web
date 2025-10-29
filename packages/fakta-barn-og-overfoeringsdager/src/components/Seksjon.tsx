@@ -17,6 +17,19 @@ interface SeksjonProps {
   children: React.ReactNode;
 }
 
+// Helper to get section title
+const getSectionTitle = (titleObj: any): string => {
+  if (typeof titleObj === 'string') return titleObj;
+  if (titleObj && titleObj.id) {
+    const titles: Record<string, string> = {
+      'FaktaBarn.Tittel': 'Barn',
+      'FaktaRammevedtak.ErMidlertidigAlene.Tittel': 'Er midlertidig alene om omsorgen',
+    };
+    return titles[titleObj.id] || titleObj.id;
+  }
+  return '';
+};
+
 const Seksjon = ({ imgSrc, title, bakgrunn, children, medMarg }: SeksjonProps) => (
   <section className={classNames('seksjon', { grå: bakgrunn === 'grå', medMarg })}>
     <Heading size="small" level="3" className={styles.tittel}>

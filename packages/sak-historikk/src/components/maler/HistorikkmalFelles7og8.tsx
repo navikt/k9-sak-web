@@ -51,7 +51,7 @@ const HistorikkMalFelles7og8 = ({
 
           {historikkinnslagDel.opplysninger &&
             historikkinnslagDel.opplysninger.map(opplysning => (
-              <FormattedMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />
+              {getOpplysningText(opplysning)}
             ))}
 
           {historikkinnslagDel.aarsak && (
