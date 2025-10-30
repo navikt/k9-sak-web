@@ -29,7 +29,6 @@ export type AksjonspunktGodkjenningData = {
 interface OwnProps {
   totrinnskontrollData: TotrinnskontrollData;
   readOnly: boolean;
-  showBegrunnelse?: boolean;
   klagebehandlingVurdering?: KlagebehandlingDto;
   behandlingStatus: TotrinnskontrollBehandling['status'];
 }
@@ -37,7 +36,6 @@ interface OwnProps {
 export const AksjonspunktGodkjenningFieldArray = ({
   totrinnskontrollData,
   readOnly,
-  showBegrunnelse = false,
   klagebehandlingVurdering,
   behandlingStatus,
 }: OwnProps) => {
@@ -57,7 +55,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const erKlageKA: boolean =
           klagebehandlingVurdering?.klageVurderingResultatNK != null && totrinnskontrollGodkjent == true;
         // visKunBegrunnelse settast true for å ikkje vise checkboxes for årsak når visArsaker er true.
-        const visKunBegrunnelse = erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
+        const visKunBegrunnelse = erKlageKA ? totrinnskontrollGodkjent : false;
         // Årsaker (checkboxes og tekstfelt for begrunnelse) skal visast visst det er klage, eller aksjonspunktet ikkje er godkjendt
         const visArsaker = erKlageKA || totrinnskontrollGodkjent === false;
 
