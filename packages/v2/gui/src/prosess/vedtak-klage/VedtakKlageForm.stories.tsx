@@ -5,13 +5,15 @@ import {
   ung_kodeverk_behandling_BehandlingStatus,
   ung_kodeverk_behandling_BehandlingType,
   ung_kodeverk_behandling_FagsakYtelseType,
+  ung_kodeverk_klage_KlageAvvistÅrsak,
   ung_kodeverk_klage_KlageVurderingType,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import type { StoryObj } from '@storybook/react';
-import { action } from 'storybook/actions';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkKlageV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkKlageV2.json';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import type { Meta, StoryObj } from '@storybook/react';
 import { asyncAction } from '../../storybook/asyncAction';
-import { VedtakKlageProsessIndex } from './VedtakKlageProsessIndex';
+import { VedtakKlageForm } from './components/VedtakKlageForm';
 
 const behandling = {
   id: 1,
@@ -36,9 +38,19 @@ const aksjonspunkter = [
 ];
 
 const meta = {
-  title: 'gui/prosess/vedtak-klage',
-  component: VedtakKlageProsessIndex,
-};
+  title: 'gui/prosess/vedtak-klage/VedtakKlageForm',
+  component: VedtakKlageForm,
+  render: props => (
+    <KodeverkProvider
+      behandlingType={ung_kodeverk_behandling_BehandlingType.KLAGE}
+      kodeverk={alleKodeverkV2}
+      klageKodeverk={alleKodeverkKlageV2}
+      tilbakeKodeverk={{}}
+    >
+      <VedtakKlageForm {...props} />
+    </KodeverkProvider>
+  ),
+} satisfies Meta<typeof VedtakKlageForm>;
 
 export default meta;
 
@@ -46,9 +58,11 @@ type Story = StoryObj<typeof meta>;
 
 export const VisVedtakspanelDerKlageErVurdertAvNk: Story = {
   args: {
-    behandling,
+    behandlingsresultat: behandling.behandlingsresultat,
     aksjonspunkter,
     submitCallback: asyncAction('løs aksjonspunkt'),
+    previewVedtakCallback: asyncAction('forhåndsvis vedtak'),
+    behandlingPåVent: false,
     klageVurdering: {
       klageVurderingResultatNK: {
         klageVurdertAv: 'NK',
@@ -58,46 +72,9 @@ export const VisVedtakspanelDerKlageErVurdertAvNk: Story = {
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
+        avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_KONKRET],
       },
     },
-    isReadOnly: false,
+    readOnly: false,
   },
-};
-
-export const visVedtakspanelDerKlageErVurdertAvNfp = args => (
-  <VedtakKlageProsessIndex
-    behandling={behandling}
-    aksjonspunkter={aksjonspunkter}
-    submitCallback={action('button-click')}
-    previewVedtakCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
-
-visVedtakspanelDerKlageErVurdertAvNfp.args = {
-  klageVurdering: {
-    klageVurderingResultatNK: {
-      klageVurdertAv: 'NAY',
-      klageVurdering: ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE,
-      fritekstTilBrev: 'test',
-      klageMedholdArsakNavn: 'TEST',
-      godkjentAvMedunderskriver: false,
-    },
-    klageFormkravResultatKA: {
-      avvistArsaker: [
-        {
-          kode: 'IKKE_KONKRET',
-          kodeverk: 'KLAGE_AVVIST_AARSAK',
-        },
-      ],
-    },
-  },
-  isReadOnly: false,
 };
