@@ -52,12 +52,13 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const data = aksjonspunktKode != null ? totrinnskontrollData.forAksjonspunkt(aksjonspunktKode) : undefined;
 
         // klageVurderingResultatNK ser ut til å vere satt viss klage på gitt behandling har blitt vurdert av "NAV Klageenhet K9" (NK) eller "NAV Klageenhet Kabal" (NKK)
-        const erKlageKA: boolean =
+        const erGodkjentKlageMedVurderingsresultatFraKlageenhet: boolean =
           klagebehandlingVurdering?.klageVurderingResultatNK != null && totrinnskontrollGodkjent == true;
-        // visKunBegrunnelse settast true for å ikkje vise checkboxes for årsak når visArsaker er true.
-        const visKunBegrunnelse = erKlageKA ? totrinnskontrollGodkjent : false;
-        // Årsaker (checkboxes og tekstfelt for begrunnelse) skal visast visst det er klage, eller aksjonspunktet ikkje er godkjendt
-        const visArsaker = erKlageKA || totrinnskontrollGodkjent === false;
+
+        const visAvslagsårsakKryssbokser = totrinnskontrollGodkjent === false;
+        // I nokre tilfeller skal godkjenning av klage begrunnast med tekst
+        const visBegrunnelseTekstfelt =
+          totrinnskontrollGodkjent === false || erGodkjentKlageMedVurderingsresultatFraKlageenhet;
 
         const aksjonspunktText =
           data != null
@@ -113,9 +114,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
                     <Radio value={false}>Vurder på nytt</Radio>
                   </HStack>
                 </RhfRadioGroup>
-                {visArsaker && (
-                  <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
-                    {!visKunBegrunnelse && (
+                {visBegrunnelseTekstfelt && (
+                  <ArrowBox alignOffset={erGodkjentKlageMedVurderingsresultatFraKlageenhet ? 1 : 110}>
+                    {visAvslagsårsakKryssbokser && (
                       <VStack gap="space-8">
                         <Detail className="blokk-xs">Årsak</Detail>
                         <Fieldset legend="" hideLegend>
