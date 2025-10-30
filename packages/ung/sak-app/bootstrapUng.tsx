@@ -89,6 +89,7 @@ init({
 
 const basePath = '/ung/web';
 const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+  // Vi må ha ein unik AuthFixer instans pr backend
   new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
   new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
 );

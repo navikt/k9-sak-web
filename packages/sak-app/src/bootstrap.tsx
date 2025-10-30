@@ -91,6 +91,7 @@ init({
 const basePath = '/k9/web';
 
 const [sakAuthFixer, klageAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+  // Vi må ha ein unik AuthFixer instans pr backend
   new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
   new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
   new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
