@@ -17,10 +17,7 @@ type EnumKodeverdierOppslag = Omit<
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
 
-export class K9SakKodeverkoppslag
-  extends GeneriskKodeverkoppslag<EnumKodeverdierOppslag>
-  implements Kodeverkoppslag<EnumKodeverdierOppslag>
-{
+export class K9SakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
   constructor(alleKodeverdier: AlleKodeverdierSomObjektResponse) {
     super(alleKodeverdier);
   }
