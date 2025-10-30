@@ -141,3 +141,98 @@ export const Default: Story = {
     });
   },
 };
+
+export const GodkjentMedSkriftligVurdering: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first period
+    const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
+    await userEvent.click(firstPeriodButton);
+
+    // Wait for form
+    const godkjentRadioGroup = await canvas.findByRole('group', {
+      name: /Er institusjonen en godkjent helseinstitusjon/i,
+    });
+
+    // Select institution
+    const institutionSelect = canvas.getByRole('combobox', {
+      name: /På hvilken helseinstitusjon eller kompetansesenter/i,
+    });
+    await userEvent.selectOptions(institutionSelect, 'St. Olavs hospital');
+
+    // Select "Ja"
+    const jaRadio = within(godkjentRadioGroup).getByLabelText('Ja');
+    await userEvent.click(jaRadio);
+
+    // Check "Legg til skriftlig vurdering"
+    const skriftligVurderingCheckbox = canvas.getByRole('checkbox', {
+      name: /Legg til skriftlig vurdering/i,
+    });
+    await expect(skriftligVurderingCheckbox).toBeInTheDocument();
+    await userEvent.click(skriftligVurderingCheckbox);
+
+    // Fill begrunnelse
+    const begrunnelseTextarea = await canvas.findByLabelText(/Skriv din vurdering/i);
+    await expect(begrunnelseTextarea).toBeVisible();
+    await userEvent.type(begrunnelseTextarea, 'Institusjonen er godkjent og oppfyller kravene.');
+
+    // Submit
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9300).toHaveBeenCalledWith({
+      godkjent: true,
+      begrunnelse: 'Institusjonen er godkjent og oppfyller kravene.',
+      journalpostId: { journalpostId: 'jp-1' },
+      redigertInstitusjonNavn: 'St. Olavs hospital',
+      organisasjonsnummer: null,
+    });
+  },
+};
+
+export const IkkeGodkjent: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first period
+    const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
+    await userEvent.click(firstPeriodButton);
+
+    // Wait for form
+    const godkjentRadioGroup = await canvas.findByRole('group', {
+      name: /Er institusjonen en godkjent helseinstitusjon/i,
+    });
+
+    // Select institution
+    const institutionSelect = canvas.getByRole('combobox', {
+      name: /På hvilken helseinstitusjon eller kompetansesenter/i,
+    });
+    await userEvent.selectOptions(institutionSelect, 'St. Olavs hospital');
+
+    // Select "Nei"
+    const neiRadio = within(godkjentRadioGroup).getByLabelText('Nei');
+    await userEvent.click(neiRadio);
+
+    // Fill begrunnelse (should appear automatically)
+    const begrunnelseTextarea = await canvas.findByLabelText(/Skriv din vurdering/i);
+    await expect(begrunnelseTextarea).toBeVisible();
+    await userEvent.type(begrunnelseTextarea, 'Institusjonen er ikke godkjent helseinstitusjon.');
+
+    // Submit
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9300).toHaveBeenCalledWith({
+      godkjent: false,
+      begrunnelse: 'Institusjonen er ikke godkjent helseinstitusjon.',
+      journalpostId: { journalpostId: 'jp-1' },
+      redigertInstitusjonNavn: 'St. Olavs hospital',
+      organisasjonsnummer: null,
+    });
+  },
+};

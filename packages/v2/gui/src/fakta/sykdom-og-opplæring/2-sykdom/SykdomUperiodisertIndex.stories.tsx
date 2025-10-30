@@ -46,7 +46,7 @@ const withMockData: Decorator = Story => {
       godkjent: false,
       avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
       vurderingFraAnnenpart: true,
-      begrunnelse: 'vi trenger noe dokumentasjon bri. Hvor er docsa? dox plox',
+      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
     },
   ];
 
@@ -107,6 +107,124 @@ export const Default: Story = {
       begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
       godkjent: true,
       avslagsårsak: undefined,
+    });
+  },
+};
+
+export const GodkjentMedDiagnoser: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first vurdering
+    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
+    await userEvent.click(firstVurderingButton);
+
+    // Fill begrunnelse
+    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
+    await userEvent.clear(begrunnelseTextarea);
+    await userEvent.type(begrunnelseTextarea, 'Barnet har langvarig sykdom som krever spesiell opplæring av foreldre.');
+
+    // Select "Ja"
+    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const jaRadio = within(radioGroup).getByLabelText('Ja');
+    await userEvent.click(jaRadio);
+
+    // Diagnosekode field should be enabled
+    const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
+    await expect(diagnosekodeInput).toBeEnabled();
+
+    // Submit
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
+      behandlingUuid: '222-3333',
+      diagnoser: [],
+      begrunnelse: 'Barnet har langvarig sykdom som krever spesiell opplæring av foreldre.',
+      godkjent: true,
+      avslagsårsak: undefined,
+    });
+  },
+};
+
+export const IkkeGodkjent: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first vurdering
+    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
+    await userEvent.click(firstVurderingButton);
+
+    // Fill begrunnelse
+    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
+    await userEvent.clear(begrunnelseTextarea);
+    await userEvent.type(begrunnelseTextarea, 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.');
+
+    // Select "Nei"
+    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const neiRadio = within(radioGroup).getByLabelText('Nei');
+    await userEvent.click(neiRadio);
+
+    // Diagnosekode field should be disabled
+    const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
+    await expect(diagnosekodeInput).toBeDisabled();
+
+    // Submit
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
+      behandlingUuid: '222-3333',
+      diagnoser: [],
+      begrunnelse: 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.',
+      godkjent: false,
+      avslagsårsak: Avslagsårsak.IKKE_LANGVARIG_SYK,
+    });
+  },
+};
+
+export const ManglerDokumentasjon: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first vurdering
+    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
+    await userEvent.click(firstVurderingButton);
+
+    // Fill begrunnelse
+    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
+    await userEvent.clear(begrunnelseTextarea);
+    await userEvent.type(begrunnelseTextarea, 'Vi mangler dokumentasjon på langvarig sykdom.');
+
+    // Select "Mangler dokumentasjon"
+    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const manglerDokRadio = within(radioGroup).getByLabelText('Mangler dokumentasjon');
+    await userEvent.click(manglerDokRadio);
+
+    // Check that alert is visible
+    const alert = await canvas.findByText(/Behandlingen vil gå videre til avslag for manglende dokumentasjon/i);
+    await expect(alert).toBeVisible();
+
+    // Diagnosekode field should be disabled
+    const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
+    await expect(diagnosekodeInput).toBeDisabled();
+
+    // Submit
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
+      behandlingUuid: '222-3333',
+      diagnoser: [],
+      begrunnelse: 'Vi mangler dokumentasjon på langvarig sykdom.',
+      godkjent: false,
+      avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
     });
   },
 };

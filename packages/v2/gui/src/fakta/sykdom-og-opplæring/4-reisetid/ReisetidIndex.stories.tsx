@@ -1,6 +1,8 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
+import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
+import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
 import ReisetidIndex from './ReisetidIndex';
@@ -28,6 +30,9 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     </SykdomOgOpplæringContext>
   );
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const sakKodeverkOppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
 
 const withMockData: Decorator = Story => {
   const vurdertReisetidMock = {
