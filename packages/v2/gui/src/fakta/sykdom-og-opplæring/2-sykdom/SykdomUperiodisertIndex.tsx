@@ -92,6 +92,7 @@ const SykdomUperiodisertIndex = () => {
           navigationSection={() => (
             <Vurderingsnavigasjon<SykdomVurderingselement>
               title="Alle vurderinger"
+              nyesteFørst={false}
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
