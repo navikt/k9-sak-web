@@ -1,18 +1,4 @@
-import { Button, HGrid } from '@navikt/ds-react';
-
-import styles from './vedtakKlageSubmitPanel.module.css';
-
-// const getPreviewCallback = async (
-//   formState: FormState<FormValues>,
-//   previewVedtakCallback: OwnProps['previewVedtakCallback'],
-// ) => {
-//   if (formState.isValid || !formState.isDirty) {
-//     await previewVedtakCallback({ dokumentMal: dokumentMalType.UTLED });
-//   }
-//   // else {
-//   //   formProps.submit();
-//   // }
-// };
+import { Button, HGrid, HStack } from '@navikt/ds-react';
 
 interface OwnProps {
   behandlingPåVent: boolean;
@@ -29,16 +15,13 @@ export const VedtakKlageSubmitPanel = ({
   submitCallback,
   isSubmitting,
 }: OwnProps) => {
-  // const previewBrev = () => getPreviewCallback(formState, previewVedtakCallback);
-
   return (
     <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
-      <div>
+      <HStack gap="space-16" marginBlock="space-12">
         {!readOnly && (
           <Button
             variant="primary"
             size="small"
-            className={styles.mainButton}
             disabled={behandlingPåVent}
             type="submit"
             onClick={submitCallback}
@@ -50,7 +33,7 @@ export const VedtakKlageSubmitPanel = ({
         <Button variant="tertiary" size="small" type="button" onClick={previewVedtakCallback}>
           Forhåndsvis vedtaksbrev
         </Button>
-      </div>
+      </HStack>
     </HGrid>
   );
 };

@@ -29,18 +29,14 @@ export const VedtakKlageProsessIndex = ({ behandling, aksjonspunkter, submitCall
     },
   });
   return (
-    <>
-      {klageVurdering ? (
-        <VedtakKlageForm
-          behandlingsresultat={behandling.behandlingsresultat}
-          behandlingPåVent={!!behandling.behandlingPåVent}
-          klageVurdering={klageVurdering}
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          previewVedtakCallback={previewCallback}
-          readOnly={isReadOnly}
-        />
-      ) : null}
-    </>
+    <VedtakKlageForm
+      behandlingsresultat={behandling.behandlingsresultat}
+      behandlingPåVent={!!behandling.behandlingPåVent}
+      klageVurdering={klageVurdering}
+      aksjonspunkter={aksjonspunkter}
+      submitCallback={submitCallback}
+      previewVedtakCallback={previewCallback}
+      readOnly={isReadOnly}
+    />
   );
 };

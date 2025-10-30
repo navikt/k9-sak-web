@@ -1,6 +1,5 @@
 import type { k9_klage_kontrakt_klage_KlageVurderingResultatDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { Button, HGrid } from '@navikt/ds-react';
-import styles from './vedtakKlageSubmitPanel.module.css';
+import { BoxNew, Button, HGrid } from '@navikt/ds-react';
 
 interface OwnProps {
   klageResultat: k9_klage_kontrakt_klage_KlageVurderingResultatDto;
@@ -28,17 +27,18 @@ const VedtakKlageNkkSubmitPanel = ({
   <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
     <div>
       {!readOnly && (
-        <Button
-          variant="primary"
-          size="small"
-          className={styles.mainButton}
-          disabled={behandlingPåVent || klageResultat.godkjentAvMedunderskriver}
-          type="submit"
-          onClick={submitCallback}
-          loading={isSubmitting}
-        >
-          Fatt Vedtak
-        </Button>
+        <BoxNew marginBlock="space-12" marginInline="0 space-16">
+          <Button
+            variant="primary"
+            size="small"
+            disabled={behandlingPåVent || klageResultat.godkjentAvMedunderskriver}
+            type="submit"
+            onClick={submitCallback}
+            loading={isSubmitting}
+          >
+            Fatt Vedtak
+          </Button>
+        </BoxNew>
       )}
     </div>
   </HGrid>

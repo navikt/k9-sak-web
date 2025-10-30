@@ -17,11 +17,6 @@ import { VedtakKlageKaSubmitPanel } from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import { VedtakKlageSubmitPanel } from './VedtakKlageSubmitPanel';
 
-// const getPreviewVedtakCallback = previewVedtakCallback => () =>
-//   previewVedtakCallback({
-//     dokumentMal: dokumentMalType.UTLED,
-//   });
-
 export const getAvvisningsAarsaker = (
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto,
 ) => {
