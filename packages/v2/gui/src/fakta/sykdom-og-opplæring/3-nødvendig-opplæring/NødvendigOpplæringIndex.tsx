@@ -41,6 +41,7 @@ const NødvendigOpplæring = () => {
         navigationSection={() => (
           <>
             <Vurderingsnavigasjon<OpplæringVurderingselement>
+              nyesteFørst={false}
               perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
               valgtPeriode={valgtVurdering}
