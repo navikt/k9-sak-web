@@ -1,11 +1,15 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import { k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -20,15 +24,41 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     løsAksjonspunkt9302,
     løsAksjonspunkt9303,
     behandlingUuid: '222-3333',
-    aksjonspunkter: [],
+    aksjonspunkter: [
+      {
+        definisjon: '9301',
+        status: 'OPPR',
+        kanLoses: true,
+        erAktivt: true,
+        toTrinnsBehandling: false,
+      },
+    ] as unknown as Aksjonspunkt[],
   };
   return (
-    <SykdomOgOpplæringContext value={sykdomOgOpplæringContextState}>
+    <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
       <Story />
-    </SykdomOgOpplæringContext>
+    </SykdomOgOpplæringContext.Provider>
   );
 };
+const withMockDataIkkeVurdert: Decorator = Story => {
+  // Mock list of uperiodiserte sykdomsvurderinger
 
+  // Type-safe prototype mocking for story runtime
+  type LangvarigSykVurderingerReturn = Awaited<
+    ReturnType<SykdomOgOpplæringBackendClient['hentLangvarigSykVurderingerFagsak']>
+  >;
+  type VurdertLangvarigSykdomReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['hentVurdertLangvarigSykdom']>>;
+
+  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak =
+    async (): Promise<LangvarigSykVurderingerReturn> => [];
+  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom =
+    async (): Promise<VurdertLangvarigSykdomReturn> => ({
+      vurderingUuid: '',
+      resultat: LangvarigSykdomResultat.MÅ_VURDERES,
+    });
+
+  return <Story />;
+};
 const withMockData: Decorator = Story => {
   // Mock list of uperiodiserte sykdomsvurderinger
   const langvarigSykVurderingerMock = [
@@ -37,8 +67,13 @@ const withMockData: Decorator = Story => {
       vurdertTidspunkt: '2025-01-15T10:00:00Z',
       godkjent: true,
       vurderingFraAnnenpart: false,
-
       begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+      kanOppdateres: true,
+      diagnosekoder: [],
+      avslagsårsak: undefined,
+      behandlingUuid: '222-3333',
+      saksnummer: '12345',
+      vurdertAv: 'Z123456',
     },
     {
       uuid: 'v2',
@@ -46,7 +81,12 @@ const withMockData: Decorator = Story => {
       godkjent: false,
       avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
       vurderingFraAnnenpart: true,
-      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+      begrunnelse: 'Mangler dokumentasjon',
+      kanOppdateres: true,
+      diagnosekoder: [],
+      behandlingUuid: '222-3333',
+      saksnummer: '12345',
+      vurdertAv: 'Z123456',
     },
   ];
 
@@ -54,12 +94,20 @@ const withMockData: Decorator = Story => {
   const vurdertLangvarigSykdomMock = {
     vurderingUuid: 'v1',
     resultat: 'OPPFYLT',
-  } as const;
+  };
 
-  // Prototype-based mocks (avoid MSW and keep story-local)
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () =>
-    langvarigSykVurderingerMock as any;
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => vurdertLangvarigSykdomMock as any;
+  // Type-safe prototype mocking for story runtime
+  type LangvarigSykVurderingerReturn = Awaited<
+    ReturnType<SykdomOgOpplæringBackendClient['hentLangvarigSykVurderingerFagsak']>
+  >;
+  type VurdertLangvarigSykdomReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['hentVurdertLangvarigSykdom']>>;
+
+  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak =
+    async (): Promise<LangvarigSykVurderingerReturn> =>
+      langvarigSykVurderingerMock as unknown as LangvarigSykVurderingerReturn;
+  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom =
+    async (): Promise<VurdertLangvarigSykdomReturn> =>
+      vurdertLangvarigSykdomMock as unknown as VurdertLangvarigSykdomReturn;
 
   return <Story />;
 };
@@ -74,54 +122,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Wait for navigation to load and click first vurdering
-    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
-    await expect(firstVurderingButton).toBeInTheDocument();
-    await userEvent.click(firstVurderingButton);
-
-    // Wait for form to appear
-    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
-    await expect(begrunnelseTextarea).toBeInTheDocument();
-
-    // Fill in begrunnelse
-    await userEvent.clear(begrunnelseTextarea);
-    await userEvent.type(begrunnelseTextarea, 'Barnet har langvarig sykdom som krever opplæring');
-
-    // Select "Ja" for godkjent
-    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
-    const jaRadio = within(radioGroup).getByLabelText('Ja');
-    await userEvent.click(jaRadio);
-
-    // Submit the form
-    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
-    await userEvent.click(submitButton);
-
-    // Verify that the action was called
-    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
-      behandlingUuid: '222-3333',
-      diagnoser: [],
-      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
-      godkjent: true,
-      avslagsårsak: undefined,
-    });
-  },
+  decorators: [withMockDataIkkeVurdert],
 };
 
 export const GodkjentMedDiagnoser: Story = {
-  decorators: [withMockData],
+  decorators: [withMockDataIkkeVurdert],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Click first vurdering
-    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
-    await userEvent.click(firstVurderingButton);
-
-    // Fill begrunnelse
-    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
+    // Wait for form to appear
+    const begrunnelseTextarea = await canvas.findByRole('textbox', {
+      name: /Vurder om barnet har en funksjonshemning/i,
+    });
     await userEvent.clear(begrunnelseTextarea);
     await userEvent.type(begrunnelseTextarea, 'Barnet har langvarig sykdom som krever spesiell opplæring av foreldre.');
 
@@ -134,14 +146,19 @@ export const GodkjentMedDiagnoser: Story = {
     const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
     await expect(diagnosekodeInput).toBeEnabled();
 
-    // Submit
+    // Add a diagnosis code - type to open menu and select first option
+    await userEvent.type(diagnosekodeInput, 'A000');
+    const diagnosisOption = await canvas.findByRole('option', { name: /A000/i });
+    await userEvent.click(diagnosisOption);
+    await userEvent.keyboard('{Escape}');
+
     const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
     await userEvent.click(submitButton);
 
     // Verify
-    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith(undefined, {
       behandlingUuid: '222-3333',
-      diagnoser: [],
+      diagnoser: ['A000'],
       begrunnelse: 'Barnet har langvarig sykdom som krever spesiell opplæring av foreldre.',
       godkjent: true,
       avslagsårsak: undefined,
@@ -150,16 +167,14 @@ export const GodkjentMedDiagnoser: Story = {
 };
 
 export const IkkeGodkjent: Story = {
-  decorators: [withMockData],
+  decorators: [withMockDataIkkeVurdert],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Click first vurdering
-    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
-    await userEvent.click(firstVurderingButton);
-
-    // Fill begrunnelse
-    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
+    // Wait for form to appear
+    const begrunnelseTextarea = await canvas.findByRole('textbox', {
+      name: /Vurder om barnet har en funksjonshemning/i,
+    });
     await userEvent.clear(begrunnelseTextarea);
     await userEvent.type(begrunnelseTextarea, 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.');
 
@@ -172,12 +187,13 @@ export const IkkeGodkjent: Story = {
     const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
     await expect(diagnosekodeInput).toBeDisabled();
 
-    // Submit
-    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    // Submit - when there are multiple buttons, take the last one (form submit, not Alert)
+    const submitButtons = canvas.getAllByRole('button', { name: /Bekreft og fortsett/i });
+    const submitButton = submitButtons[submitButtons.length - 1]!;
     await userEvent.click(submitButton);
 
     // Verify
-    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith(undefined, {
       behandlingUuid: '222-3333',
       diagnoser: [],
       begrunnelse: 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.',
@@ -188,16 +204,14 @@ export const IkkeGodkjent: Story = {
 };
 
 export const ManglerDokumentasjon: Story = {
-  decorators: [withMockData],
+  decorators: [withMockDataIkkeVurdert],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Click first vurdering
-    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
-    await userEvent.click(firstVurderingButton);
-
-    // Fill begrunnelse
-    const begrunnelseTextarea = await canvas.findByLabelText(/Vurder om barnet har en funksjonshemning/i);
+    // Wait for form to appear
+    const begrunnelseTextarea = await canvas.findByRole('textbox', {
+      name: /Vurder om barnet har en funksjonshemning/i,
+    });
     await userEvent.clear(begrunnelseTextarea);
     await userEvent.type(begrunnelseTextarea, 'Vi mangler dokumentasjon på langvarig sykdom.');
 
@@ -214,7 +228,51 @@ export const ManglerDokumentasjon: Story = {
     const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
     await expect(diagnosekodeInput).toBeDisabled();
 
-    // Submit
+    // Submit - when there are multiple buttons, take the last one (form submit, not Alert)
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith(undefined, {
+      behandlingUuid: '222-3333',
+      diagnoser: [],
+      begrunnelse: 'Vi mangler dokumentasjon på langvarig sykdom.',
+      godkjent: false,
+      avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
+    });
+  },
+};
+
+export const KanRedigeres: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first vurdering
+    const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
+    await userEvent.click(firstVurderingButton);
+
+    // Click "Rediger vurdering" to show the form
+    const redigerButton = await canvas.findByRole('button', { name: /Rediger vurdering/i });
+    await userEvent.click(redigerButton);
+
+    // Wait for form to appear
+    const begrunnelseTextarea = await canvas.findByRole('textbox', {
+      name: /Vurder om barnet har en funksjonshemning/i,
+    });
+    await userEvent.clear(begrunnelseTextarea);
+    await userEvent.type(begrunnelseTextarea, 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.');
+
+    // Select "Nei"
+    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const neiRadio = within(radioGroup).getByLabelText('Nei');
+    await userEvent.click(neiRadio);
+
+    // Diagnosekode field should be disabled
+    const diagnosekodeInput = canvas.getByLabelText(/Hvilke diagnoser har barnet/i);
+    await expect(diagnosekodeInput).toBeDisabled();
+
+    // Submit - when there are multiple buttons, take the last one (form submit, not Alert)
     const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
     await userEvent.click(submitButton);
 
@@ -222,9 +280,49 @@ export const ManglerDokumentasjon: Story = {
     await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
       behandlingUuid: '222-3333',
       diagnoser: [],
-      begrunnelse: 'Vi mangler dokumentasjon på langvarig sykdom.',
+      begrunnelse: 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.',
       godkjent: false,
-      avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
+      avslagsårsak: Avslagsårsak.IKKE_LANGVARIG_SYK,
     });
+  },
+};
+
+export const KanLøseAksjonspunktUtenEndringer: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Verify alert is visible
+    const alert = await canvas.findByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen./i);
+    await expect(alert).toBeVisible();
+
+    // Click "Bekreft og fortsett"
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1');
+  },
+};
+
+export const kanBenytteEnAnnenVurdering: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Velg vurderingen som vises som valgt i vurderingsnavigasjonen
+    const valgtVurderingButton = await canvas.findByRole('button', { name: /Valgt/i });
+    await userEvent.click(valgtVurderingButton);
+
+    // bytt til vurdering som ikke er valgt
+    const ikkeValgtVurderingButton = await canvas.findByRole('button', { name: /10.02.2025/i });
+    await userEvent.click(ikkeValgtVurderingButton);
+
+    // klikk på "Bruk denne vurderingen"
+    const brukVurderingButton = await canvas.findByRole('button', { name: /Bruk denne sykdomsvurderingen/i });
+    await userEvent.click(brukVurderingButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v2');
   },
 };

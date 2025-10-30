@@ -1,10 +1,8 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within } from 'storybook/test';
-import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
-import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
+import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -25,14 +23,11 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     aksjonspunkter: [],
   };
   return (
-    <SykdomOgOpplæringContext value={sykdomOgOpplæringContextState}>
+    <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
       <Story />
-    </SykdomOgOpplæringContext>
+    </SykdomOgOpplæringContext.Provider>
   );
 };
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const sakKodeverkOppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
 
 const withMockData: Decorator = Story => {
   // Mock institusjon info (perioder + vurderinger)
@@ -76,7 +71,7 @@ const withMockData: Decorator = Story => {
         perioder: [{ fom: '2025-03-01', tom: '2025-03-03' }],
       },
     ],
-  } as const;
+  };
 
   // Mock list of institutions used by selector
   const alleInstitusjonerMock = [
@@ -85,9 +80,14 @@ const withMockData: Decorator = Story => {
     { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
   ];
 
-  // Monkey-patch backend client for story runtime
-  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async () => institusjonInfoMock as any;
-  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async () => alleInstitusjonerMock as any;
+  // Type-safe prototype mocking for story runtime
+  type InstitusjonInfoReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['getInstitusjonInfo']>>;
+  type AlleInstitusjoner = Awaited<ReturnType<SykdomOgOpplæringBackendClient['hentAlleInstitusjoner']>>;
+
+  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async (): Promise<InstitusjonInfoReturn> =>
+    institusjonInfoMock as InstitusjonInfoReturn;
+  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async (): Promise<AlleInstitusjoner> =>
+    alleInstitusjonerMock as AlleInstitusjoner;
 
   return <Story />;
 };
@@ -234,5 +234,69 @@ export const IkkeGodkjent: Story = {
       redigertInstitusjonNavn: 'St. Olavs hospital',
       organisasjonsnummer: null,
     });
+  },
+};
+
+export const ValideringManglerBegrunnelse: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first period
+    const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
+    await userEvent.click(firstPeriodButton);
+
+    // Wait for form
+    const godkjentRadioGroup = await canvas.findByRole('group', {
+      name: /Er institusjonen en godkjent helseinstitusjon/i,
+    });
+
+    // Select institution
+    const institutionSelect = canvas.getByRole('combobox', {
+      name: /På hvilken helseinstitusjon eller kompetansesenter/i,
+    });
+    await userEvent.selectOptions(institutionSelect, 'St. Olavs hospital');
+
+    // Select "Nei" without filling begrunnelse
+    const neiRadio = within(godkjentRadioGroup).getByLabelText('Nei');
+    await userEvent.click(neiRadio);
+
+    // Begrunnelse field should be visible but empty
+    const begrunnelseTextarea = await canvas.findByLabelText(/Skriv din vurdering/i);
+    await expect(begrunnelseTextarea).toBeVisible();
+
+    // Try to submit without filling begrunnelse
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify that the action was NOT called (form validation should prevent submission)
+    await waitFor(() => expect(løsAksjonspunkt9300).not.toHaveBeenCalled());
+  },
+};
+
+export const ValideringManglerInstutisjonValg: Story = {
+  decorators: [withMockData],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click first period
+    const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
+    await userEvent.click(firstPeriodButton);
+
+    // Wait for form
+    const godkjentRadioGroup = await canvas.findByRole('group', {
+      name: /Er institusjonen en godkjent helseinstitusjon/i,
+    });
+
+    // Select "Ja" without selecting an institution
+    const jaRadio = within(godkjentRadioGroup).getByLabelText('Ja');
+    await userEvent.click(jaRadio);
+
+    // Try to submit without selecting institution
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify that the action was NOT called
+    await waitFor(() => expect(løsAksjonspunkt9300).not.toHaveBeenCalled());
   },
 };

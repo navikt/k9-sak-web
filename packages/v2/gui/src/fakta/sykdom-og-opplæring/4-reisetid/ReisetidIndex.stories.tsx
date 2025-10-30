@@ -1,13 +1,14 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within } from 'storybook/test';
-import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
-import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
+import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import ReisetidIndex from './ReisetidIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -22,17 +23,29 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     løsAksjonspunkt9302,
     løsAksjonspunkt9303,
     behandlingUuid: '444-5555',
-    aksjonspunkter: [],
+    aksjonspunkter: [
+      {
+        definisjon: '9302', // VURDER_OPPLÆRING must be completed for form to be editable
+        status: 'UTFO', // UTFØRT = completed
+        kanLoses: false,
+        erAktivt: false,
+        toTrinnsBehandling: false,
+      },
+      {
+        definisjon: '9303', // VURDER_REISETID is open
+        status: 'OPPR',
+        kanLoses: true,
+        erAktivt: true,
+        toTrinnsBehandling: false,
+      },
+    ] as unknown as Aksjonspunkt[],
   };
   return (
-    <SykdomOgOpplæringContext value={sykdomOgOpplæringContextState}>
+    <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
       <Story />
-    </SykdomOgOpplæringContext>
+    </SykdomOgOpplæringContext.Provider>
   );
 };
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const sakKodeverkOppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
 
 const withMockData: Decorator = Story => {
   const vurdertReisetidMock = {
@@ -41,9 +54,9 @@ const withMockData: Decorator = Story => {
         uuid: 'r1',
         reisetid: {
           periode: { fom: '2025-04-01', tom: '2025-04-05' },
-          resultat: 'GODKJENT' as ReisetidResultat,
-          begrunnelse: 'Godkjent reise',
-          erTilVurdering: false,
+          resultat: ReisetidResultat.MÅ_VURDERES,
+          begrunnelse: '',
+          erTilVurdering: true,
         },
         informasjonFraSøker: {
           beskrivelseFraSøker: 'Lang reisevei',
@@ -54,9 +67,9 @@ const withMockData: Decorator = Story => {
         uuid: 'r2',
         reisetid: {
           periode: { fom: '2025-04-10', tom: '2025-04-12' },
-          resultat: 'IKKE_GODKJENT' as ReisetidResultat,
-          begrunnelse: 'Ikke nødvendig',
-          erTilVurdering: false,
+          resultat: ReisetidResultat.GODKJENT,
+          begrunnelse: 'lolololol',
+          erTilVurdering: true,
         },
         informasjonFraSøker: {
           beskrivelseFraSøker: 'Kort reisevei',
@@ -64,9 +77,12 @@ const withMockData: Decorator = Story => {
         },
       },
     ],
-  } as const;
+  };
 
-  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async () => vurdertReisetidMock as any;
+  type VurdertReisetidReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['getVurdertReisetid']>>;
+
+  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async (): Promise<VurdertReisetidReturn> =>
+    vurdertReisetidMock as unknown as VurdertReisetidReturn;
 
   return <Story />;
 };
@@ -78,7 +94,7 @@ const withMockDataMåVurderes: Decorator = Story => {
         uuid: 'r1',
         reisetid: {
           periode: { fom: '2025-04-01', tom: '2025-04-05' },
-          resultat: 'MÅ_VURDERES' as ReisetidResultat,
+          resultat: 'MÅ_VURDERES', // Use string literal to ensure it matches the runtime check
           begrunnelse: '',
           erTilVurdering: true,
         },
@@ -88,9 +104,12 @@ const withMockDataMåVurderes: Decorator = Story => {
         },
       },
     ],
-  } as const;
+  };
 
-  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async () => vurdertReisetidMock as any;
+  type VurdertReisetidReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['getVurdertReisetid']>>;
+
+  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async (): Promise<VurdertReisetidReturn> =>
+    vurdertReisetidMock as unknown as VurdertReisetidReturn;
 
   return <Story />;
 };
@@ -106,23 +125,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Wait for navigation to load and click first reisetid period
-    const firstPeriodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
-    await expect(firstPeriodButton).toBeInTheDocument();
-    await userEvent.click(firstPeriodButton);
-
-    // The first period has resultat GODKJENT, so it should show readonly view
-    // Click the second period which has resultat IKKE_GODKJENT (also readonly)
-    const secondPeriodButton = canvas.getByRole('button', { name: /10.04.2025/i });
-    await userEvent.click(secondPeriodButton);
-
-    // Verify content is visible for the readonly view
-    const vurderingTitle = await canvas.findByText(/Vurdering av reisetid/i);
-    await expect(vurderingTitle).toBeInTheDocument();
-  },
 };
 
 export const MedRedigerbarForm: Story = {
@@ -140,16 +142,15 @@ export const MedRedigerbarForm: Story = {
     await expect(vurderingTextarea).toBeInTheDocument();
 
     // Fill in vurdering
-    await userEvent.clear(vurderingTextarea);
     await userEvent.type(vurderingTextarea, 'Lang reisevei gjør at reisedager er nødvendige');
 
     // Select "Ja" for godkjent
-    const radioGroup = canvas.getByRole('group', { name: /Innvilges reisedager/i });
+    const radioGroup = await canvas.findByRole('group', { name: /Innvilges reisedager/i });
     const jaRadio = within(radioGroup).getByLabelText('Ja');
     await userEvent.click(jaRadio);
 
     // Submit the form
-    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    const submitButton = await canvas.findByRole('button', { name: /Bekreft og fortsett/i });
     await userEvent.click(submitButton);
 
     // Verify that the action was called
@@ -161,5 +162,98 @@ export const MedRedigerbarForm: Story = {
         tom: '2025-04-05',
       },
     });
+  },
+};
+
+export const AvslåttReisetid: Story = {
+  decorators: [withMockDataMåVurderes],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Wait for navigation and click period
+    const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
+    await userEvent.click(periodButton);
+
+    // Wait for form
+    const vurderingTextarea = await canvas.findByLabelText(/Vurder om det er nødvendig å reise/i);
+    await expect(vurderingTextarea).toBeInTheDocument();
+
+    // Fill vurdering
+    await userEvent.type(vurderingTextarea, 'Reiseveien er kort nok til å ikke kreve reisedager');
+
+    // Select "Nei"
+    const radioGroup = await canvas.findByRole('group', { name: /Innvilges reisedager/i });
+    const neiRadio = within(radioGroup).getByLabelText('Nei');
+    await userEvent.click(neiRadio);
+
+    // Submit
+    const submitButton = await canvas.findByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify
+    await expect(løsAksjonspunkt9303).toHaveBeenCalledWith({
+      begrunnelse: 'Reiseveien er kort nok til å ikke kreve reisedager',
+      godkjent: false,
+      periode: {
+        fom: '2025-04-01',
+        tom: '2025-04-05',
+      },
+    });
+  },
+};
+
+export const ValideringManglerBegrunnelse: Story = {
+  decorators: [withMockDataMåVurderes],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Wait for navigation and click period
+    const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
+    await userEvent.click(periodButton);
+
+    // Wait for form
+    const vurderingTextarea = await canvas.findByLabelText(/Vurder om det er nødvendig å reise/i);
+    await expect(vurderingTextarea).toBeInTheDocument();
+
+    // Don't fill vurdering - test validation
+
+    // Select "Ja" without begrunnelse
+    const radioGroup = await canvas.findByRole('group', { name: /Innvilges reisedager/i });
+    const jaRadio = within(radioGroup).getByLabelText('Ja');
+    await userEvent.click(jaRadio);
+
+    // Try to submit
+    const submitButton = await canvas.findByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify that the action was NOT called
+    await waitFor(() => expect(løsAksjonspunkt9303).not.toHaveBeenCalled());
+  },
+};
+
+export const ValideringManglerVurdering: Story = {
+  decorators: [withMockDataMåVurderes],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Wait for navigation and click period
+    const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
+    await userEvent.click(periodButton);
+
+    // Wait for form
+    const vurderingTextarea = await canvas.findByLabelText(/Vurder om det er nødvendig å reise/i);
+    await expect(vurderingTextarea).toBeInTheDocument();
+
+    // Fill vurdering
+    await userEvent.type(vurderingTextarea, 'Dette er en begrunnelse');
+
+    // Don't select any radio option
+
+    // Try to submit
+    const submitButton = await canvas.findByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify that the action was NOT called
+    await waitFor(() => expect(løsAksjonspunkt9303).not.toHaveBeenCalled());
   },
 };

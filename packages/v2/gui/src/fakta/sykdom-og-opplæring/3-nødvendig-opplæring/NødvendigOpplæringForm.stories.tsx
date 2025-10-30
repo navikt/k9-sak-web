@@ -5,12 +5,12 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
 import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
 import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag.jsx';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.jsx';
-import NødvendigOpplæringForm from './NødvendigOpplæringForm.jsx';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -28,9 +28,9 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     aksjonspunkter: [],
   };
   return (
-    <SykdomOgOpplæringContext value={sykdomOgOpplæringContextState}>
+    <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
       <Story />
-    </SykdomOgOpplæringContext>
+    </SykdomOgOpplæringContext.Provider>
   );
 };
 
@@ -102,5 +102,102 @@ export const Avslagsårsaker: Story = {
       ],
     };
     await expect(løsAksjonspunkt9302).toHaveBeenCalledWith(expectedSubmitData);
+  },
+};
+
+export const GodkjentOpplæring: Story = {
+  args: {
+    vurdering: {
+      begrunnelse: '',
+      opplæring: {
+        fom: '2025-02-14',
+        tom: '2025-02-23',
+      },
+      perioder: [new Period('2025-02-14', '2025-02-23')],
+      resultat: OpplæringVurderingDtoResultat.MÅ_VURDERES,
+      vurdertAv: 'testbruker',
+      vurdertTidspunkt: '2025-02-14T10:00:00Z',
+    },
+    setRedigerer: action('setRedigerer'),
+    redigerer: true,
+    andrePerioderTilVurdering: [],
+  },
+  play: async ({ canvas }) => {
+    // Select "Ja" for legeerklæring
+    const harViFåttLegeerklæringGroup = canvas.getByRole('group', {
+      name: /Har vi fått legeerklæring/i,
+    });
+    const jaKnapp = within(harViFåttLegeerklæringGroup).getByLabelText('Ja');
+    await userEvent.click(jaKnapp);
+
+    // Fill vurdering
+    const vurderingTextInput = canvas.getByLabelText(
+      'Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter § 9-14, første ledd',
+      { exact: false },
+    );
+    await userEvent.type(vurderingTextInput, 'Opplæringen er nødvendig og godkjent');
+
+    // Select "Ja" for nødvendig opplæring
+    const harSøkerOpplæringGroup = canvas.getByRole('group', { name: /Har søker opplæring som er nødvendig/ });
+    const nødvendigJaKnapp = within(harSøkerOpplæringGroup).getByLabelText('Ja');
+    await userEvent.click(nødvendigJaKnapp);
+
+    // Submit
+    const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
+    await userEvent.click(bekreftKnapp);
+
+    // Verify
+    const expectedSubmitData = {
+      perioder: [
+        {
+          periode: { fom: '2025-02-14', tom: '2025-02-23' },
+          begrunnelse: 'Opplæringen er nødvendig og godkjent',
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+      ],
+    };
+    await expect(løsAksjonspunkt9302).toHaveBeenCalledWith(expectedSubmitData);
+  },
+};
+
+export const ValideringManglerBegrunnelse: Story = {
+  args: {
+    vurdering: {
+      begrunnelse: '',
+      opplæring: {
+        fom: '2025-02-14',
+        tom: '2025-02-23',
+      },
+      perioder: [new Period('2025-02-14', '2025-02-23')],
+      resultat: OpplæringVurderingDtoResultat.MÅ_VURDERES,
+      vurdertAv: 'testbruker',
+      vurdertTidspunkt: '2025-02-14T10:00:00Z',
+    },
+    setRedigerer: action('setRedigerer'),
+    redigerer: true,
+    andrePerioderTilVurdering: [],
+  },
+  play: async ({ canvas }) => {
+    // Select "Ja" for legeerklæring
+    const harViFåttLegeerklæringGroup = canvas.getByRole('group', {
+      name: /Har vi fått legeerklæring/i,
+    });
+    const jaKnapp = within(harViFåttLegeerklæringGroup).getByLabelText('Ja');
+    await userEvent.click(jaKnapp);
+
+    // Don't fill vurdering
+
+    // Select "Ja" for nødvendig opplæring
+    const harSøkerOpplæringGroup = canvas.getByRole('group', { name: /Har søker opplæring som er nødvendig/ });
+    const nødvendigJaKnapp = within(harSøkerOpplæringGroup).getByLabelText('Ja');
+    await userEvent.click(nødvendigJaKnapp);
+
+    // Try to submit without begrunnelse
+    const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
+    await userEvent.click(bekreftKnapp);
+
+    // Verify that the action was NOT called
+    await waitFor(() => expect(løsAksjonspunkt9302).not.toHaveBeenCalled());
   },
 };
