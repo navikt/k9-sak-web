@@ -238,7 +238,14 @@ export const Validering: Story = {
     // Don't select any radio option, try to submit again
     await userEvent.click(submitButton);
 
-    // Verify that the action was still NOT called
-    await waitFor(() => expect(løsAksjonspunkt9303).not.toHaveBeenCalled());
+    // Verify that the action was called
+    await waitFor(() => expect(løsAksjonspunkt9303).toHaveBeenCalledWith({
+      begrunnelse: 'Dette er en begrunnelse',
+      godkjent: true,
+      periode: {
+        fom: '2025-04-01',
+        tom: '2025-04-05',
+      },
+    }));
   },
 };

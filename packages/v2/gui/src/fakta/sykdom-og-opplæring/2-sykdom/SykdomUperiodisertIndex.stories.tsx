@@ -255,8 +255,8 @@ export const KanRedigeres: Story = {
     await expect(diagnosekodeInput).toBeDisabled();
 
     // Submit - when there are multiple buttons, take the last one (form submit, not Alert)
-    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
-    await userEvent.click(submitButton);
+    const submitButton = canvas.getAllByRole('button', { name: /Bekreft og fortsett/i })[1];
+    await userEvent.click(submitButton!);
 
     // Verify
     await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v1', {
