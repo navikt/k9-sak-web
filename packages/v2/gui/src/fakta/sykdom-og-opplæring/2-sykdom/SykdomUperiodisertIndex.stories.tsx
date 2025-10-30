@@ -32,7 +32,7 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
         erAktivt: true,
         toTrinnsBehandling: false,
       },
-    ] as unknown as Aksjonspunkt[],
+    ] as Aksjonspunkt[],
   };
   return (
     <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
@@ -43,19 +43,11 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
 const withMockDataIkkeVurdert: Decorator = Story => {
   // Mock list of uperiodiserte sykdomsvurderinger
 
-  // Type-safe prototype mocking for story runtime
-  type LangvarigSykVurderingerReturn = Awaited<
-    ReturnType<SykdomOgOpplæringBackendClient['hentLangvarigSykVurderingerFagsak']>
-  >;
-  type VurdertLangvarigSykdomReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['hentVurdertLangvarigSykdom']>>;
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak =
-    async (): Promise<LangvarigSykVurderingerReturn> => [];
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom =
-    async (): Promise<VurdertLangvarigSykdomReturn> => ({
-      vurderingUuid: '',
-      resultat: LangvarigSykdomResultat.MÅ_VURDERES,
-    });
+  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => [];
+  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => ({
+    vurderingUuid: '',
+    resultat: LangvarigSykdomResultat.MÅ_VURDERES,
+  });
 
   return <Story />;
 };
@@ -72,7 +64,7 @@ const withMockData: Decorator = Story => {
       diagnosekoder: [],
       avslagsårsak: undefined,
       behandlingUuid: '222-3333',
-      saksnummer: '12345',
+      saksnummer: { saksnummer: '12345' },
       vurdertAv: 'Z123456',
     },
     {
@@ -85,7 +77,7 @@ const withMockData: Decorator = Story => {
       kanOppdateres: true,
       diagnosekoder: [],
       behandlingUuid: '222-3333',
-      saksnummer: '12345',
+      saksnummer: { saksnummer: '12345' },
       vurdertAv: 'Z123456',
     },
   ];
@@ -93,21 +85,11 @@ const withMockData: Decorator = Story => {
   // Mock which vurdering is used by the aksjonspunkt
   const vurdertLangvarigSykdomMock = {
     vurderingUuid: 'v1',
-    resultat: 'OPPFYLT',
+    resultat: LangvarigSykdomResultat.GODKJENT,
   };
 
-  // Type-safe prototype mocking for story runtime
-  type LangvarigSykVurderingerReturn = Awaited<
-    ReturnType<SykdomOgOpplæringBackendClient['hentLangvarigSykVurderingerFagsak']>
-  >;
-  type VurdertLangvarigSykdomReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['hentVurdertLangvarigSykdom']>>;
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak =
-    async (): Promise<LangvarigSykVurderingerReturn> =>
-      langvarigSykVurderingerMock as unknown as LangvarigSykVurderingerReturn;
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom =
-    async (): Promise<VurdertLangvarigSykdomReturn> =>
-      vurdertLangvarigSykdomMock as unknown as VurdertLangvarigSykdomReturn;
+  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => langvarigSykVurderingerMock;
+  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => vurdertLangvarigSykdomMock;
 
   return <Story />;
 };

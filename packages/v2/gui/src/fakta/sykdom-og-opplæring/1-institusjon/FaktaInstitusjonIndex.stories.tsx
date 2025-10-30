@@ -55,7 +55,9 @@ const withMockData: Decorator = Story => {
         journalpostId: { journalpostId: 'jp-1' },
         resultat: InstitusjonResultat.MÅ_VURDERES,
         begrunnelse: '',
-        organisasjonsnummer: null,
+        organisasjonsnummer: undefined,
+        vurdertAv: '',
+        vurdertTidspunkt: '',
         erTilVurdering: true,
         perioder: [
           { fom: '2025-02-01', tom: '2025-02-05' },
@@ -69,6 +71,8 @@ const withMockData: Decorator = Story => {
         organisasjonsnummer: '123456789',
         erTilVurdering: false,
         perioder: [{ fom: '2025-03-01', tom: '2025-03-03' }],
+        vurdertAv: 'Pål Opel',
+        vurdertTidspunkt: '2025-02-10T10:00:00Z',
       },
     ],
   };
@@ -80,14 +84,8 @@ const withMockData: Decorator = Story => {
     { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
   ];
 
-  // Type-safe prototype mocking for story runtime
-  type InstitusjonInfoReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['getInstitusjonInfo']>>;
-  type AlleInstitusjoner = Awaited<ReturnType<SykdomOgOpplæringBackendClient['hentAlleInstitusjoner']>>;
-
-  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async (): Promise<InstitusjonInfoReturn> =>
-    institusjonInfoMock as InstitusjonInfoReturn;
-  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async (): Promise<AlleInstitusjoner> =>
-    alleInstitusjonerMock as AlleInstitusjoner;
+  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async () => institusjonInfoMock;
+  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async () => alleInstitusjonerMock;
 
   return <Story />;
 };

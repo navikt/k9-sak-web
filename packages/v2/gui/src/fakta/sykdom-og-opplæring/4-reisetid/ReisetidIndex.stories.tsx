@@ -38,7 +38,7 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
         erAktivt: true,
         toTrinnsBehandling: false,
       },
-    ] as unknown as Aksjonspunkt[],
+    ] as Aksjonspunkt[],
   };
   return (
     <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
@@ -57,6 +57,8 @@ const withMockData: Decorator = Story => {
           resultat: ReisetidResultat.MÅ_VURDERES,
           begrunnelse: '',
           erTilVurdering: true,
+          vurdertAv: '',
+          vurdertTidspunkt: '',
         },
         informasjonFraSøker: {
           beskrivelseFraSøker: 'Lang reisevei',
@@ -70,6 +72,8 @@ const withMockData: Decorator = Story => {
           resultat: ReisetidResultat.GODKJENT,
           begrunnelse: 'lolololol',
           erTilVurdering: true,
+          vurdertAv: '',
+          vurdertTidspunkt: '2025-04-01T10:00:00Z',
         },
         informasjonFraSøker: {
           beskrivelseFraSøker: 'Kort reisevei',
@@ -79,10 +83,7 @@ const withMockData: Decorator = Story => {
     ],
   };
 
-  type VurdertReisetidReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['getVurdertReisetid']>>;
-
-  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async (): Promise<VurdertReisetidReturn> =>
-    vurdertReisetidMock as unknown as VurdertReisetidReturn;
+  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async () => vurdertReisetidMock;
 
   return <Story />;
 };
@@ -94,9 +95,11 @@ const withMockDataMåVurderes: Decorator = Story => {
         uuid: 'r1',
         reisetid: {
           periode: { fom: '2025-04-01', tom: '2025-04-05' },
-          resultat: 'MÅ_VURDERES', // Use string literal to ensure it matches the runtime check
+          resultat: ReisetidResultat.MÅ_VURDERES,
           begrunnelse: '',
           erTilVurdering: true,
+          vurdertAv: '',
+          vurdertTidspunkt: '',
         },
         informasjonFraSøker: {
           beskrivelseFraSøker: 'Trenger å reise dagen før på grunn av lang reisevei',
@@ -106,10 +109,7 @@ const withMockDataMåVurderes: Decorator = Story => {
     ],
   };
 
-  type VurdertReisetidReturn = Awaited<ReturnType<SykdomOgOpplæringBackendClient['getVurdertReisetid']>>;
-
-  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async (): Promise<VurdertReisetidReturn> =>
-    vurdertReisetidMock as unknown as VurdertReisetidReturn;
+  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async () => vurdertReisetidMock;
 
   return <Story />;
 };
