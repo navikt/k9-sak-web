@@ -237,7 +237,7 @@ export const IkkeGodkjent: Story = {
   },
 };
 
-export const ValideringManglerBegrunnelse: Story = {
+export const Validering: Story = {
   decorators: [withMockData],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -251,6 +251,19 @@ export const ValideringManglerBegrunnelse: Story = {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 
+    // TEST 1: Mangler institusjonvalg
+    // Select "Ja" without selecting an institution
+    const jaRadio = within(godkjentRadioGroup).getByLabelText('Ja');
+    await userEvent.click(jaRadio);
+
+    // Try to submit without selecting institution
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify that the action was NOT called
+    await waitFor(() => expect(løsAksjonspunkt9300).not.toHaveBeenCalled());
+
+    // TEST 2: Mangler begrunnelse
     // Select institution
     const institutionSelect = canvas.getByRole('combobox', {
       name: /På hvilken helseinstitusjon eller kompetansesenter/i,
@@ -266,37 +279,9 @@ export const ValideringManglerBegrunnelse: Story = {
     await expect(begrunnelseTextarea).toBeVisible();
 
     // Try to submit without filling begrunnelse
-    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
     await userEvent.click(submitButton);
 
-    // Verify that the action was NOT called (form validation should prevent submission)
-    await waitFor(() => expect(løsAksjonspunkt9300).not.toHaveBeenCalled());
-  },
-};
-
-export const ValideringManglerInstutisjonValg: Story = {
-  decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Click first period
-    const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
-    await userEvent.click(firstPeriodButton);
-
-    // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
-      name: /Er institusjonen en godkjent helseinstitusjon/i,
-    });
-
-    // Select "Ja" without selecting an institution
-    const jaRadio = within(godkjentRadioGroup).getByLabelText('Ja');
-    await userEvent.click(jaRadio);
-
-    // Try to submit without selecting institution
-    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
-    await userEvent.click(submitButton);
-
-    // Verify that the action was NOT called
+    // Verify that the action was still NOT called (form validation should prevent submission)
     await waitFor(() => expect(løsAksjonspunkt9300).not.toHaveBeenCalled());
   },
 };

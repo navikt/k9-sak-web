@@ -161,7 +161,7 @@ export const GodkjentOpplæring: Story = {
   },
 };
 
-export const ValideringManglerBegrunnelse: Story = {
+export const Validering: Story = {
   args: {
     vurdering: {
       begrunnelse: '',

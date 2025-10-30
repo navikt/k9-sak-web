@@ -1,6 +1,6 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
@@ -324,5 +324,38 @@ export const kanBenytteEnAnnenVurdering: Story = {
 
     // Verify
     await expect(løsAksjonspunkt9301).toHaveBeenCalledWith('v2');
+  },
+};
+
+export const Validering: Story = {
+  decorators: [withMockDataIkkeVurdert],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Wait for form to appear
+    const begrunnelseTextarea = await canvas.findByRole('textbox', {
+      name: /Vurder om barnet har en funksjonshemning/i,
+    });
+    await userEvent.clear(begrunnelseTextarea);
+
+    // TEST 1: Mangler radio-valg (Ja/Nei/Mangler dokumentasjon)
+    // Don't select any radio option, try to submit
+    const submitButton = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(submitButton);
+
+    // Verify that the action was NOT called
+    await waitFor(() => expect(løsAksjonspunkt9301).not.toHaveBeenCalled());
+
+    // TEST 2: Mangler begrunnelse
+    // Select "Ja" but leave begrunnelse empty
+    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const jaRadio = within(radioGroup).getByLabelText('Ja');
+    await userEvent.click(jaRadio);
+
+    // Try to submit without begrunnelse
+    await userEvent.click(submitButton);
+
+    // Verify that the action was still NOT called
+    await waitFor(() => expect(løsAksjonspunkt9301).not.toHaveBeenCalled());
   },
 };

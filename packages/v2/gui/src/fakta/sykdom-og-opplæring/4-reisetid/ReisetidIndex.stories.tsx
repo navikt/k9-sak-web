@@ -202,7 +202,7 @@ export const AvslåttReisetid: Story = {
   },
 };
 
-export const ValideringManglerBegrunnelse: Story = {
+export const Validering: Story = {
   decorators: [withMockDataMåVurderes],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -215,6 +215,7 @@ export const ValideringManglerBegrunnelse: Story = {
     const vurderingTextarea = await canvas.findByLabelText(/Vurder om det er nødvendig å reise/i);
     await expect(vurderingTextarea).toBeInTheDocument();
 
+    // TEST 1: Mangler begrunnelse
     // Don't fill vurdering - test validation
 
     // Select "Ja" without begrunnelse
@@ -228,32 +229,16 @@ export const ValideringManglerBegrunnelse: Story = {
 
     // Verify that the action was NOT called
     await waitFor(() => expect(løsAksjonspunkt9303).not.toHaveBeenCalled());
-  },
-};
 
-export const ValideringManglerVurdering: Story = {
-  decorators: [withMockDataMåVurderes],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Wait for navigation and click period
-    const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
-    await userEvent.click(periodButton);
-
-    // Wait for form
-    const vurderingTextarea = await canvas.findByLabelText(/Vurder om det er nødvendig å reise/i);
-    await expect(vurderingTextarea).toBeInTheDocument();
-
+    // TEST 2: Mangler vurdering (godkjent/ikke godkjent)
     // Fill vurdering
+    await userEvent.clear(vurderingTextarea);
     await userEvent.type(vurderingTextarea, 'Dette er en begrunnelse');
 
-    // Don't select any radio option
-
-    // Try to submit
-    const submitButton = await canvas.findByRole('button', { name: /Bekreft og fortsett/i });
+    // Don't select any radio option, try to submit again
     await userEvent.click(submitButton);
 
-    // Verify that the action was NOT called
+    // Verify that the action was still NOT called
     await waitFor(() => expect(løsAksjonspunkt9303).not.toHaveBeenCalled());
   },
 };
