@@ -10,7 +10,7 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "vite": "^7.1.11"
+    "vite": "^7.1.12"
   },
   "dependencies": {
     "@navikt/ds-css": "7.32.1",
@@ -19,7 +19,7 @@
     "@navikt/ft-plattform-komponenter": "^10.1.13",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
-    "dayjs": "1.11.18",
+    "dayjs": "1.11.19",
     "lodash": "4.17.21",
     "react": "19.2.0",
     "react-collapse": "5.1.1",
