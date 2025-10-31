@@ -129,9 +129,7 @@ export const Default: Story = {
 
 export const MedRedigerbarForm: Story = {
   decorators: [withMockDataMåVurderes],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for navigation to load and click the period
     const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
     await expect(periodButton).toBeInTheDocument();
@@ -167,9 +165,7 @@ export const MedRedigerbarForm: Story = {
 
 export const AvslåttReisetid: Story = {
   decorators: [withMockDataMåVurderes],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for navigation and click period
     const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
     await userEvent.click(periodButton);
@@ -204,9 +200,7 @@ export const AvslåttReisetid: Story = {
 
 export const Validering: Story = {
   decorators: [withMockDataMåVurderes],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for navigation and click period
     const periodButton = await canvas.findByRole('button', { name: /01.04.2025/i });
     await userEvent.click(periodButton);

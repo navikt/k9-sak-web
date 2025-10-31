@@ -101,8 +101,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
 
     // Wait for navigation items to load and click the first period (St. Olavs hospital)
     const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
@@ -142,9 +141,7 @@ export const Default: Story = {
 
 export const GodkjentMedSkriftligVurdering: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Click first period
     const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
     await userEvent.click(firstPeriodButton);
@@ -193,9 +190,7 @@ export const GodkjentMedSkriftligVurdering: Story = {
 
 export const IkkeGodkjent: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Click first period
     const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
     await userEvent.click(firstPeriodButton);
@@ -237,9 +232,7 @@ export const IkkeGodkjent: Story = {
 
 export const Validering: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Click first period
     const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
     await userEvent.click(firstPeriodButton);

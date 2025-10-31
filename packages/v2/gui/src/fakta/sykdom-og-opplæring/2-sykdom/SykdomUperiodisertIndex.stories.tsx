@@ -109,9 +109,7 @@ export const Default: Story = {
 
 export const GodkjentMedDiagnoser: Story = {
   decorators: [withMockDataIkkeVurdert],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for form to appear
     const begrunnelseTextarea = await canvas.findByRole('textbox', {
       name: /Vurder om barnet har en funksjonshemning/i,
@@ -150,9 +148,7 @@ export const GodkjentMedDiagnoser: Story = {
 
 export const IkkeGodkjent: Story = {
   decorators: [withMockDataIkkeVurdert],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for form to appear
     const begrunnelseTextarea = await canvas.findByRole('textbox', {
       name: /Vurder om barnet har en funksjonshemning/i,
@@ -187,9 +183,7 @@ export const IkkeGodkjent: Story = {
 
 export const ManglerDokumentasjon: Story = {
   decorators: [withMockDataIkkeVurdert],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for form to appear
     const begrunnelseTextarea = await canvas.findByRole('textbox', {
       name: /Vurder om barnet har en funksjonshemning/i,
@@ -227,9 +221,7 @@ export const ManglerDokumentasjon: Story = {
 
 export const KanRedigeres: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Click first vurdering
     const firstVurderingButton = await canvas.findByRole('button', { name: /15.01.2025/i });
     await userEvent.click(firstVurderingButton);
@@ -271,9 +263,7 @@ export const KanRedigeres: Story = {
 
 export const KanLøseAksjonspunktUtenEndringer: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Verify alert is visible
     const alert = await canvas.findByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen./i);
     await expect(alert).toBeVisible();
@@ -289,9 +279,7 @@ export const KanLøseAksjonspunktUtenEndringer: Story = {
 
 export const kanBenytteEnAnnenVurdering: Story = {
   decorators: [withMockData],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Velg vurderingen som vises som valgt i vurderingsnavigasjonen
     const valgtVurderingButton = await canvas.findByRole('button', { name: /Valgt/i });
     await userEvent.click(valgtVurderingButton);
@@ -311,9 +299,7 @@ export const kanBenytteEnAnnenVurdering: Story = {
 
 export const Validering: Story = {
   decorators: [withMockDataIkkeVurdert],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
+  play: async ({ canvas }) => {
     // Wait for form to appear
     const begrunnelseTextarea = await canvas.findByRole('textbox', {
       name: /Vurder om barnet har en funksjonshemning/i,
