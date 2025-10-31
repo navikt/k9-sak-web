@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   Detail,
+  ErrorMessage,
   Heading,
   Label,
   Link,
@@ -345,6 +346,20 @@ const NødvendigOpplæringForm = ({
               dokumentasjon fra bruker.
             </Alert>
           )}
+          {/* Hidden validation for tilleggsPerioder when checkbox is checked */}
+          <Controller
+            control={formMethods.control}
+            name="tilleggsPerioder"
+            rules={{
+              validate: () => {
+                if (brukVurderingIAndrePerioder && fields.length === 0) {
+                  return 'Du må velge minst én periode når du velger å gjenbruke vurderingen';
+                }
+                return undefined;
+              },
+            }}
+            render={() => <></>}
+          />
           {andrePerioderTilVurdering.length > 0 && (
             <Checkbox
               size="small"
@@ -353,6 +368,7 @@ const NødvendigOpplæringForm = ({
                 if (brukVurderingIAndrePerioder) {
                   setBrukVurderingIAndrePerioder(false);
                   formMethods.setValue('tilleggsPerioder', []);
+                  formMethods.clearErrors('tilleggsPerioder');
                 } else {
                   setBrukVurderingIAndrePerioder(true);
                 }
@@ -377,12 +393,17 @@ const NødvendigOpplæringForm = ({
                       } else {
                         remove(fieldIdx);
                       }
+                      // Trigger validation after change
+                      formMethods.trigger('tilleggsPerioder');
                     }}
                   >
                     {`${dayjs(periode.fom).format('DD.MM.YYYY')} - ${dayjs(periode.tom).format('DD.MM.YYYY')}`}
                   </Checkbox>
                 );
               })}
+              {formMethods.formState.errors.tilleggsPerioder && (
+                <ErrorMessage size="small">{formMethods.formState.errors.tilleggsPerioder.message}</ErrorMessage>
+              )}
             </div>
           )}
           {!readOnly && (
