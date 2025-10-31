@@ -1,11 +1,10 @@
-import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
-import React, { useEffect, useMemo, type JSX } from 'react';
-import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
-import LinkRel from '../../../constants/LinkRel';
+import React, { use, useEffect, useMemo, type JSX } from 'react';
+import { MedisinskVilkårApiContext } from '../../../api/MedisinskVilkårApiContext';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
-import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -19,13 +18,13 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
-
+  const { pleietrengendePart, readOnly, behandlingUuid } = React.useContext(ContainerContext);
+  const api = assertDefined(use(MedisinskVilkårApiContext));
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
-    versjon: null,
+    versjon: '',
     behandlingUuid: '',
   });
   const [isLoading, setIsLoading] = React.useState(true);
@@ -36,10 +35,7 @@ const Innleggelsesperiodeoversikt = ({
   const innleggelsesperioder = innleggelsesperioderResponse.perioder;
   const innleggelsesperioderDefault = innleggelsesperioder?.length > 0 ? innleggelsesperioder : [new Period('', '')];
 
-  const hentInnleggelsesperioder = () =>
-    httpUtils.get(`${endpoints.innleggelsesperioder}`, httpErrorHandler, {
-      signal: controller.signal,
-    });
+  const hentInnleggelsesperioder = () => api.hentSykdomInnleggelse(behandlingUuid);
 
   const initializeInnleggelsesperiodeData = (response: InnleggelsesperiodeResponse) => ({
     ...response,
@@ -67,14 +63,11 @@ const Innleggelsesperiodeoversikt = ({
         .map(periodeWrapper => new Period(periodeWrapper.period.fom, periodeWrapper.period.tom));
     }
 
-    const { href } = findLinkByRel(LinkRel.ENDRE_INNLEGGELSESPERIODER, innleggelsesperioderResponse.links);
-    const { behandlingUuid, versjon } = innleggelsesperioderResponse;
-    postInnleggelsesperioder(
-      href,
-      { behandlingUuid, versjon, perioder: nyeInnleggelsesperioder },
-      httpErrorHandler,
-      controller.signal,
-    )
+    api
+      .oppdaterSykdomInnleggelse({
+        behandlingUuid,
+        perioder: nyeInnleggelsesperioder,
+      })
       .then(() => {
         onInnleggelsesperioderUpdated();
         updateInnlegelsesperioder();
@@ -158,16 +151,11 @@ const Innleggelsesperiodeoversikt = ({
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
-            const { href, requestPayload } = findLinkByRel(
-              LinkRel.ENDRE_INNLEGGELSESPERIODER,
-              innleggelsesperioderResponse.links,
-            );
-            return postInnleggelsesperioderDryRun(
-              href,
-              { ...requestPayload, perioder: nyeInnleggelsesperioder },
-              httpErrorHandler,
-              controller.signal,
-            );
+            return api.oppdaterSykdomInnleggelse({
+              behandlingUuid,
+              perioder: nyeInnleggelsesperioder,
+              dryRun: true,
+            });
           }}
         />
       )}
