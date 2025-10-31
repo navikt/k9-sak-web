@@ -3,7 +3,6 @@ import {
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   ung_kodeverk_klage_KlageVurderingType,
   type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type ung_sak_kontrakt_behandling_BehandlingsresultatDto,
   type ung_sak_kontrakt_klage_KlagebehandlingDto,
   type ung_sak_kontrakt_klage_KlageVurderingResultatDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -16,6 +15,12 @@ import { useState } from 'react';
 import { VedtakKlageKaSubmitPanel } from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import { VedtakKlageSubmitPanel } from './VedtakKlageSubmitPanel';
+
+const omgjoerTekstMap = {
+  GUNST_MEDHOLD_I_KLAGE: 'Vedtaket er omgjort til gunst',
+  UGUNST_MEDHOLD_I_KLAGE: 'Vedtaket er omgjort til ugunst',
+  DELVIS_MEDHOLD_I_KLAGE: 'Vedtaket er delvis omgjort til gunst',
+};
 
 export const getAvvisningsAarsaker = (
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto,
@@ -76,7 +81,6 @@ interface OwnProps {
   readOnly: boolean;
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto;
   previewVedtakCallback: () => Promise<void>;
-  behandlingsresultat?: ung_sak_kontrakt_behandling_BehandlingsresultatDto;
   aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   behandlingPåVent: boolean;
   submitCallback: (data: { kode: string }[]) => Promise<void>;
@@ -193,10 +197,4 @@ export const VedtakKlageForm = ({
       </>
     </div>
   );
-};
-
-const omgjoerTekstMap = {
-  GUNST_MEDHOLD_I_KLAGE: 'Vedtaket er omgjort til gunst',
-  UGUNST_MEDHOLD_I_KLAGE: 'Vedtaket er omgjort til ugunst',
-  DELVIS_MEDHOLD_I_KLAGE: 'Vedtaket er delvis omgjort til gunst',
 };

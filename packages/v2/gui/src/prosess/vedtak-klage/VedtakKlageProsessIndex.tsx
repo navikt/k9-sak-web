@@ -32,7 +32,6 @@ export const VedtakKlageProsessIndex = ({ behandling, aksjonspunkter, submitCall
   });
   return (
     <VedtakKlageForm
-      behandlingsresultat={behandling.behandlingsresultat}
       behandlingPåVent={!!behandling.behandlingPåVent}
       klageVurdering={klageVurdering}
       aksjonspunkter={aksjonspunkter}
