@@ -1,9 +1,11 @@
 # GitHub Copilot Instructions for K9 Sak Web
 
 ## Project Context
+
 You're working on **k9-sak-web**, a monorepo containing React/TypeScript applications for NAV's K9 case handling system. This system processes various benefit types including Pleiepenger, Omsorgspenger, Opplæringspenger, and Ungdomsytelse.
 
 ## Technology Stack
+
 - **React 19.2.0** with TypeScript 5.9.3
 - **Vite 7.x** for building and dev server
 - **Yarn 4.6.0** - ALWAYS use yarn, never npm
@@ -13,10 +15,10 @@ You're working on **k9-sak-web**, a monorepo containing React/TypeScript applica
 - **react-hook-form** for form management
 - **react-router 7.x** for routing
 
-
 ## Code Style Preferences
 
 ### TypeScript
+
 - Use strict null checks (always check for `null` and `undefined`)
 - Prefer explicit types over `any`
 - Use interfaces for object shapes
@@ -24,6 +26,7 @@ You're working on **k9-sak-web**, a monorepo containing React/TypeScript applica
 - Enable strict mode for new code in `packages/v2/`
 
 ### React Patterns
+
 ```typescript
 // ✅ Preferred: Functional components with TypeScript
 interface MyComponentProps {
@@ -42,6 +45,7 @@ class MyComponent extends React.Component { }
 ```
 
 ### Hooks Usage
+
 ```typescript
 // ✅ Proper hook usage with types
 const [state, setState] = useState<string>('');
@@ -56,6 +60,7 @@ const useMyFeature = (id: string) => {
 ```
 
 ### Forms with react-hook-form
+
 ```typescript
 import { useForm } from 'react-hook-form';
 
@@ -66,7 +71,7 @@ interface FormData {
 
 const MyForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-  
+
   const onSubmit = (data: FormData) => {
     // Handle form submission
   };
@@ -81,9 +86,10 @@ const MyForm = () => {
 ```
 
 ### Styling Patterns
+
 ```typescript
 // ✅ CSS Modules
-import styles from './my-component.module.css';
+import styles from './myComponent.module.css';
 
 export const MyComponent = () => (
   <div className={styles.container}>
@@ -104,6 +110,7 @@ export const MyForm = () => (
 ```
 
 ### Text handling (no i18n, language policy)
+
 ```typescript
 // ✅ Use plain strings or centralized constants
 import { APP_TITLE } from '@k9-sak-web/konstanter';
@@ -122,16 +129,17 @@ const label = 'Kall endpoint for å hente sak';
 ```
 
 ### API Calls & Data Fetching
+
 ```typescript
 // ✅ Use existing REST API utilities
 import { useRestApi } from '@k9-sak-web/rest-api-hooks';
 
 const MyComponent = ({ saksnummer }: Props) => {
   const { data, loading, error } = useRestApi(endpoints.getSak, { saksnummer });
-  
+
   if (loading) return <Loader />;
   if (error) return <ErrorMessage error={error} />;
-  
+
   return <div>{data?.title}</div>;
 };
 ```
@@ -139,6 +147,7 @@ const MyComponent = ({ saksnummer }: Props) => {
 ## Project Structure Awareness
 
 ### Monorepo Organization
+
 ```
 packages/
 ├── v2/              # Modern code with strict TypeScript (NEW CODE GOES HERE)
@@ -153,6 +162,7 @@ packages/
 ```
 
 ### Import Path Rules
+
 ```typescript
 // ✅ Use path aliases
 import { MyUtil } from '@k9-sak-web/utils';
@@ -168,7 +178,9 @@ import { MyUtil } from '../../../utils/src/myUtil';
 ## Critical Rules
 
 ### 1. Package Manager
+
 **ALWAYS use `yarn`, NEVER use `npm`**
+
 ```bash
 ✅ yarn add package-name
 ✅ yarn install
@@ -176,7 +188,9 @@ import { MyUtil } from '../../../utils/src/myUtil';
 ```
 
 ### 2. Dependency Versions
+
 These packages MUST stay in sync (same version everywhere):
+
 - @navikt/aksel-icons
 - @navikt/ds-css
 - @navikt/ds-react
@@ -184,29 +198,33 @@ These packages MUST stay in sync (same version everywhere):
 - @navikt/ft-plattform-komponenter
 
 ### 3. V2 Package Isolation
+
 Code in `packages/v2/` cannot import from non-v2 packages. V2 is the modernization zone with stricter TypeScript.
 
 ### 4. CSS Modules
+
 - Use `.module.css` extension for CSS modules
 - Class names are camelCase in TypeScript (auto-converted from kebab-case)
 - Type definitions are auto-generated
 
 ### 5. Accessibility
+
 Always include proper ARIA labels and semantic HTML:
+
 ```typescript
 // ✅ Good accessibility
 <button aria-label="Close dialog" onClick={onClose}>
   <XMarkIcon aria-hidden="true" />
 </button>
 
-// ❌ Poor accessibility  
+// ❌ Poor accessibility
 <div onClick={onClose}>X</div>
 ```
 
 ## Common Patterns
 
-
 ### Loading States
+
 ```typescript
 // ✅ Show loading indicators
 if (isLoading) {
@@ -221,6 +239,7 @@ return <DataView data={data} />;
 ```
 
 ### Type Safety
+
 ```typescript
 // ✅ Use type guards
 const isValidData = (data: unknown): data is MyType => {
@@ -232,6 +251,7 @@ const value = data?.property?.nestedProperty ?? defaultValue;
 ```
 
 ### Testing Patterns
+
 ```typescript
 import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
@@ -244,13 +264,14 @@ test('renders component correctly', () => {
 test('handles user interaction', async () => {
   const onAction = vi.fn();
   render(<MyComponent onAction={onAction} />);
-  
+
   await userEvent.click(screen.getByRole('button'));
   expect(onAction).toHaveBeenCalled();
 });
 ```
 
 ### Mocking API calls in tests (no MSW)
+
 ```typescript
 // ✅ Prefer vi.spyOn on fetch/axios or mock API modules directly
 import axios from 'axios';
@@ -263,27 +284,34 @@ test('loads data', async () => {
 ```
 
 ## File Naming Conventions
-- **Components**: `my-component.tsx`
-- **Utilities**: `my-utility.ts`
-- **Types**: `my-types.ts` or within component files
-- **Tests**: `my-component.test.tsx`
-- **CSS Modules**: `my-component.module.css`
-- **Storybook**: `my-component.stories.tsx`
+
+- **Components (files + names)**: PascalCase (e.g., `MyComponent.tsx`, export `MyComponent`)
+- **Hooks (files + names)**: camelCase starting with `use` (e.g., `useMyHook.ts` exports `useMyHook`)
+- **Utilities (files)**: camelCase (e.g., `myUtils.ts`)
+- **Types/Interfaces (names)**: PascalCase
+- **Constants**: SCREAMING_SNAKE_CASE for true constants
+- **CSS Modules (class names)**: camelCase for class names (converted from kebab-case)
+- **CSS Modules (files)**: camelCase `myComponent.module.css`
+- **Tests**: mirror target file naming (e.g., `MyComponent.spec.tsx`, `myUtils.spec.ts`)
+- **Storybook**: match component filename (e.g., `MyComponent.stories.tsx`)
+- **Constants**: SCREAMING_SNAKE_CASE for true constants
 
 ## What to Generate
 
 ### When suggesting code:
+
 1. **Type Safety First**: Always include proper TypeScript types
 2. **Accessibility**: Include ARIA labels and semantic HTML
 3. **Error Handling**: Include loading, error, and empty states
 4. **No i18n**: Use plain strings/constants (centralize if reused)
 5. **Language**: Use Norwegian for domain language; keep technical terms in English
 6. **Story templates**: Use `packages/storybook/story-templates` and follow `packages/storybook/story-templates/README.md`.
-5. **NAV Design System**: Prefer @navikt/ds-react components
-6. **Testing**: Suggest test cases for new functionality
-7. **CSS Modules**: Use CSS modules for styling, not inline styles
+7. **NAV Design System**: Prefer @navikt/ds-react components
+8. **Testing**: Suggest test cases for new functionality
+9. **CSS Modules**: Use CSS modules for styling, not inline styles
 
 ### When refactoring:
+
 1. Move code to `packages/v2/` when possible
 2. Convert class components to functional components
 3. Add proper TypeScript types
@@ -319,6 +347,7 @@ const value = data.property; // Could be undefined
 ```
 
 ## Commands You'll See
+
 ```bash
 yarn dev              # Start development server (K9)
 yarn dev:ung          # Start development server (Ungdomsytelse)
@@ -333,6 +362,7 @@ yarn build            # Build for production
 ```
 
 ## Context Clues
+
 - **NAV**: Norwegian Labour and Welfare Administration
 - **K9**: Category 9 benefits (sickness, care benefits)
 - **Sak**: Case
@@ -345,7 +375,9 @@ yarn build            # Build for production
 - **Opplæringspenger**: Training benefits
 
 ## Summary
+
 When writing code for this project:
+
 - Use TypeScript with proper types
 - Follow React hooks patterns
 - Use NAV Design System components

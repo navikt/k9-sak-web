@@ -77,7 +77,7 @@ If updating these, ensure all `@navikt/ft-*` packages are updated to compatible 
 - Use Playwright for E2E tests
 - Storybook stories should include accessibility tests (addon-a11y)
 - Tests run with `yarn test`, watch mode with `yarn test:watch`
- - When creating new stories, start from the templates in `packages/storybook/story-templates` and follow `packages/storybook/story-templates/README.md`
+- When creating new stories, start from the templates in `packages/storybook/story-templates` and follow `packages/storybook/story-templates/README.md`
 
 ### Code Style & Linting
 
@@ -97,12 +97,15 @@ If updating these, ensure all `@navikt/ft-*` packages are updated to compatible 
 
 ### Naming Conventions
 
-- **Files**: kebab-case for files (e.g., `my-component.tsx`)
-- **Components**: PascalCase for React components
-- **Hooks**: camelCase starting with `use` (e.g., `useMyHook`)
-- **Types/Interfaces**: PascalCase
-- **Constants**: UPPER_SNAKE_CASE for true constants
-- **CSS Modules**: camelCase for class names (converted from kebab-case)
+- **Components (files + names)**: PascalCase (e.g., `MyComponent.tsx`, export `MyComponent`)
+- **Hooks (files + names)**: camelCase starting with `use` (e.g., `useMyHook.ts` exports `useMyHook`)
+- **Utilities (files)**: camelCase (e.g., `myUtils.ts`)
+- **Types/Interfaces (names)**: PascalCase
+- **Constants**: SCREAMING_SNAKE_CASE for true constants
+- **CSS Modules (class names)**: camelCase for class names (converted from kebab-case)
+- **CSS Modules (files)**: camelCase `myComponent.module.css`
+- **Tests**: mirror target naming (e.g., `MyComponent.spec.tsx`, `myUtils.spec.ts`)
+- **Storybook**: match component filename (e.g., `MyComponent.stories.tsx`)
 
 ### Package Structure
 
