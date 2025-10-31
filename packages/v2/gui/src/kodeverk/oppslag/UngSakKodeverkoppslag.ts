@@ -17,10 +17,7 @@ type EnumKodeverdierOppslag = Omit<
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
 
-export class UngSakKodeverkoppslag
-  extends GeneriskKodeverkoppslag<EnumKodeverdierOppslag>
-  implements Kodeverkoppslag<EnumKodeverdierOppslag>
-{
+export class UngSakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
   constructor(alleKodeverdier: ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse) {
     super(alleKodeverdier);
   }
@@ -153,5 +150,9 @@ export class UngSakKodeverkoppslag
 export class FailingUngSakKodeverkoppslag extends UngSakKodeverkoppslag {
   constructor() {
     super({} as ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse);
+  }
+
+  override finnObjektFraKilde(kodeverk: keyof EO, kode: string): never {
+    throw new Error(`UngSakKodeverkoppslag er ikke initialisert. Kan ikke slå opp ${kodeverk} med kode ${kode}.`);
   }
 }

@@ -23,4 +23,5 @@ export interface FeatureToggles {
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: boolean;
   MARKERING_UTENLANDSTILSNITT: boolean;
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: boolean;
+  VIS_ALLE_ASYNC_ERRORS: boolean;
 }
