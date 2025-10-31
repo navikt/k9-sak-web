@@ -358,7 +358,7 @@ const NødvendigOpplæringForm = ({
                 return undefined;
               },
             }}
-            render={() => null}
+            render={() => <></>}
           />
           {andrePerioderTilVurdering.length > 0 && (
             <Checkbox
