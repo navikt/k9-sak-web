@@ -320,7 +320,11 @@ export const Tilbakekreving: Story = {
       behandlingsresultatType: 'IKKE_FASTSATT',
     },
     onBekreftet: action('onBekreftet'),
-    behandlingKlageVurdering: undefined,
+    behandlingKlageVurdering: {
+      klageVurderingResultatNK: {
+        klageVurdering: 'STADFESTE_YTELSESVEDTAK',
+      },
+    },
     readOnly: false,
     totrinnskontrollData: tilbakeTotrinnskontrollData(),
     api,
