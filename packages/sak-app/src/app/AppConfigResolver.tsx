@@ -3,18 +3,20 @@ import { ReactElement, useEffect } from 'react';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
+import { MedisinskVilkårApiContext } from '@k9-sak-web/fakta-medisinsk-vilkar/src/api/MedisinskVilkårApiContext';
+import MedisinskVilkårBackendClient from '@k9-sak-web/fakta-medisinsk-vilkar/src/api/MedisinskVilkårBackendClient';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
-import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
-import useHentInitLenker from './useHentInitLenker';
-import useHentKodeverk from './useHentKodeverk';
 import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/prodFeatureToggles.js';
-import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
+import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
-import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
-import ApplicationContextPath from './ApplicationContextPath';
+import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
+import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
+import ApplicationContextPath from './ApplicationContextPath';
+import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
+import useHentInitLenker from './useHentInitLenker';
+import useHentKodeverk from './useHentKodeverk';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -63,9 +65,11 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? prodFeatureToggles}>
       <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
-        <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
-          {harFeilet || erFerdig ? children : <LoadingPanel />}
-        </InnloggetAnsattProvider>
+        <MedisinskVilkårApiContext value={new MedisinskVilkårBackendClient()}>
+          <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
+            {harFeilet || erFerdig ? children : <LoadingPanel />}
+          </InnloggetAnsattProvider>
+        </MedisinskVilkårApiContext>
       </K9KodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
   );

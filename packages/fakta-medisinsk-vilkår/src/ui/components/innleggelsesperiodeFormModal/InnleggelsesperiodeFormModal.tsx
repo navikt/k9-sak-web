@@ -107,7 +107,7 @@ const InnleggelsesperiodeFormModal = ({
                     const { førerTilRevurdering } = await endringerPåvirkerAndreBehandlinger(
                       initialiserteInnleggelsesperioder,
                     );
-                    setShowWarningMessage(førerTilRevurdering);
+                    setShowWarningMessage(!!førerTilRevurdering);
                   }
                 }}
                 defaultValues={defaultValues[FieldName.INNLEGGELSESPERIODER] || []}

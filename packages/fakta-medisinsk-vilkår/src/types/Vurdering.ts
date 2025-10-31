@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
+import { k9_kodeverk_sykdom_Resultat } from '@navikt/k9-sak-typescript-client/types';
 import Dokument from './Dokument';
-import Vurderingsresultat from './Vurderingsresultat';
 
 export interface AnnenInformasjon {
   resterendeVurderingsperioder: Period[];
@@ -12,7 +12,7 @@ export interface Vurderingsversjon {
   endretTidspunkt: string;
   versjon?: string;
   tekst: string;
-  resultat: Vurderingsresultat;
+  resultat: k9_kodeverk_sykdom_Resultat;
   perioder: Period[];
   dokumenter: Dokument[];
   manglerLegeerklæring?: boolean;
