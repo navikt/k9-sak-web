@@ -12,9 +12,7 @@ import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { BodyShort, BoxNew, Detail, Heading } from '@navikt/ds-react';
 import { useState } from 'react';
-import { VedtakKlageKaSubmitPanel } from './VedtakKlageKaSubmitPanel';
-import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
-import { VedtakKlageSubmitPanel } from './VedtakKlageSubmitPanel';
+import { VedtakKlageKaSubmitPanel, VedtakKlageNkkSubmitPanel, VedtakKlageSubmitPanel } from './VedtakKlageSubmitPanel';
 
 const omgjoerTekstMap = {
   GUNST_MEDHOLD_I_KLAGE: 'Vedtaket er omgjort til gunst',
@@ -86,7 +84,7 @@ interface OwnProps {
   submitCallback: (data: { kode: string }[]) => Promise<void>;
 }
 
-export const VedtakKlageForm = ({
+export const VedtakKlage = ({
   readOnly,
   previewVedtakCallback,
   behandlingPåVent,
@@ -164,7 +162,7 @@ export const VedtakKlageForm = ({
 
         {klageresultat?.klageVurdertAv === 'NKK' && (
           <VedtakKlageNkkSubmitPanel
-            klageResultat={klageresultat}
+            godkjentAvMedunderskriver={!!klageresultat.godkjentAvMedunderskriver}
             readOnly={readOnly}
             behandlingPåVent={behandlingPåVent}
             submitCallback={submitHandler}
@@ -174,7 +172,7 @@ export const VedtakKlageForm = ({
 
         {klageresultat?.klageVurdertAv === 'NK' && (
           <VedtakKlageKaSubmitPanel
-            klageResultat={klageresultat}
+            godkjentAvMedunderskriver={!!klageresultat.godkjentAvMedunderskriver}
             previewVedtakCallback={previewVedtakCallback}
             readOnly={readOnly}
             behandlingPåVent={behandlingPåVent}

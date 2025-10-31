@@ -6,7 +6,7 @@ import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { assertDefined } from '../../utils/validation/assertDefined';
 import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
-import { VedtakKlageForm } from './components/VedtakKlageForm';
+import { VedtakKlage } from './components/VedtakKlage';
 
 interface OwnProps {
   behandling: ung_sak_kontrakt_behandling_BehandlingDto;
@@ -31,7 +31,7 @@ export const VedtakKlageProsessIndex = ({ behandling, aksjonspunkter, submitCall
     },
   });
   return (
-    <VedtakKlageForm
+    <VedtakKlage
       behandlingPåVent={!!behandling.behandlingPåVent}
       klageVurdering={klageVurdering}
       aksjonspunkter={aksjonspunkter}
