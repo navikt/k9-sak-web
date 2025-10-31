@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { userEvent, within, expect } from 'storybook/test';
 import { Button, TextField } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
@@ -16,8 +16,8 @@ class ExampleApiClient {
     return { fornavn: 'Førnavn', etternavn: 'Etternavn' };
   }
 }
-const client = new ExampleApiClient();
 
+const client = new ExampleApiClient();
 const ExampleComponent = ({ label, onSubmit }: ExampleProps) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState<string | undefined>();
@@ -49,7 +49,17 @@ const ExampleComponent = ({ label, onSubmit }: ExampleProps) => {
   );
 };
 
-const meta: Meta<typeof ExampleComponent> = {
+const defaultDecorator = (): Decorator => Story => {
+  ExampleApiClient.prototype.getNavn = async () => ({ fornavn: 'Førnavn', etternavn: 'Etternavn' });
+  return <Story />;
+};
+
+const prototypeMockDecorator = (): Decorator => Story => {
+  ExampleApiClient.prototype.getNavn = async () => ({ fornavn: 'Pål', etternavn: 'Opel' });
+  return <Story />;
+};
+
+const meta = {
   title: 'Template/ExampleComponent',
   component: ExampleComponent,
   parameters: {
@@ -59,7 +69,8 @@ const meta: Meta<typeof ExampleComponent> = {
   args: {
     label: 'Skriv inn verdi',
   },
-};
+  tags: ['autodocs'],
+} satisfies Meta<typeof ExampleComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -69,6 +80,7 @@ export const Default: Story = {};
 
 // 2) Test stories med play: flere stories for å teste ulike aspekter
 export const SuccessfulSubmission: Story = {
+  decorators: [defaultDecorator()],
   args: {
     label: 'Skriv inn verdi',
   },
@@ -85,6 +97,7 @@ export const SuccessfulSubmission: Story = {
 
 // 3) Validation: samler validering i én story
 export const Validation: Story = {
+  decorators: [defaultDecorator()],
   args: {
     label: 'Skriv inn verdi',
   },
@@ -99,17 +112,16 @@ export const Validation: Story = {
 
 // 4) Prototype-mock: vis hvordan man mocker klasse-klient via prototype
 export const PrototypeMock: Story = {
+  decorators: [prototypeMockDecorator()],
   args: {
     label: 'Skriv inn verdi',
   },
-  play: async ({ canvasElement, step, args }) => {
-    // mock getSomething
+  play: async ({ canvasElement, step }) => {
+    // Mock klasse-klient via prototype
     ExampleApiClient.prototype.getNavn = async () => ({ fornavn: 'Pål', etternavn: 'Opel' });
     const canvas = within(canvasElement);
-    await step('Fyll inn og verifiser server-respons', async () => {
-      await userEvent.type(await canvas.findByLabelText(args.label as string), 'IGNORERES_AV_MOCK');
-      await userEvent.click(await canvas.findByRole('button', { name: 'Send' }));
-      await expect(canvas.findByText('Sendt: MOCK')).resolves.toBeInTheDocument();
+    await step('Verifiser at mock-et navn vises fra API-klienten', async () => {
+      await expect(canvas.findByText('Navn: Pål Opel')).resolves.toBeInTheDocument();
     });
   },
 };
