@@ -1,12 +1,15 @@
 import { Box, HGrid, Radio } from '@navikt/ds-react';
 
+import {
+  ung_kodeverk_klage_KlageVurderingOmgjør,
+  ung_kodeverk_klage_KlageVurderingType,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
-import { klageVurderingOmgjoerType, klageVurderingType } from '../KlageVurderingType';
 import { type BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
 
 interface KlageVurderingRadioOptionsKaProps {
@@ -47,15 +50,17 @@ export const KlageVurderingRadioOptionsKa = ({
         <HGrid gap="space-4" columns={{ xs: '4fr 4fr 4fr' }}>
           <ContentMaxWidth>
             <RhfRadioGroup control={control} name="klageVurdering" validate={[required]} isReadOnly={readOnly}>
-              <Radio value={klageVurderingType.STADFESTE_YTELSESVEDTAK}>Stadfest vedtaket</Radio>
-              <Radio value={klageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
-              <Radio value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE}>Hjemsend vedtaket</Radio>
-              <Radio value={klageVurderingType.OPPHEVE_YTELSESVEDTAK}>Opphev og hjemsend vedtaket</Radio>
+              <Radio value={ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK}>Stadfest vedtaket</Radio>
+              <Radio value={ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
+              <Radio value={ung_kodeverk_klage_KlageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE}>Hjemsend vedtaket</Radio>
+              <Radio value={ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK}>
+                Opphev og hjemsend vedtaket
+              </Radio>
             </RhfRadioGroup>
           </ContentMaxWidth>
         </HGrid>
       </Box.New>
-      {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
+      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect
@@ -68,15 +73,17 @@ export const KlageVurderingRadioOptionsKa = ({
             />
             <Box.New marginBlock="space-6 0">
               <RhfRadioGroup control={control} name="klageVurderingOmgjoer" validate={[required]} isReadOnly={readOnly}>
-                <Radio value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
-                <Radio value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
-                <Radio value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}>Delvis omgjør, til gunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
+                  Delvis omgjør, til gunst
+                </Radio>
               </RhfRadioGroup>
             </Box.New>
           </ArrowBox>
         </ContentMaxWidth>
       )}
-      {klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK && (
+      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect

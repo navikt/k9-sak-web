@@ -18,12 +18,8 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
     featureToggles.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
 
-  getData = ({ fagsak, saveKlageText, klageVurdering, previewCallback, hentFritekstbrevHtmlCallback }) => ({
+  getData = ({ fagsak }) => ({
     fagsak,
-    saveKlage: saveKlageText,
-    klageVurdering,
-    previewCallback,
-    hentFritekstbrevHtmlCallback,
   });
 }
 

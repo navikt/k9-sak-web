@@ -26,6 +26,8 @@ import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
 import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
 import { RestApiProviderLayout } from '@k9-sak-web/sak-app/src/app/RestApiProviderLayout.js';
 import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
+import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/ThisOrOtherAuthFixer.js';
+import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
 
 const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
@@ -86,8 +88,13 @@ init({
 });
 
 const basePath = '/ung/web';
-const authFixer = new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`);
-configureUngSakClient(authFixer);
+const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+  // Vi må ha ein unik AuthFixer instans pr backend
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
+);
+configureUngSakClient(sakAuthFixer);
+configureUngTilbakeClient(tilbakeAuthFixer);
 
 const store = configureStore();
 
