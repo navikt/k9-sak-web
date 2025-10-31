@@ -5,10 +5,9 @@ import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverko
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import ReisetidIndex from './ReisetidIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -25,20 +24,20 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     behandlingUuid: '444-5555',
     aksjonspunkter: [
       {
-        definisjon: '9302', // VURDER_OPPLÆRING must be completed for form to be editable
-        status: 'UTFO', // UTFØRT = completed
+        definisjon: aksjonspunktCodes.VURDER_OPPLÆRING, // VURDER_OPPLÆRING must be completed for form to be editable
+        status: aksjonspunktStatus.UTFØRT, // UTFØRT = completed
         kanLoses: false,
         erAktivt: false,
         toTrinnsBehandling: false,
       },
       {
-        definisjon: '9303', // VURDER_REISETID is open
-        status: 'OPPR',
+        definisjon: aksjonspunktCodes.VURDER_REISETID, // VURDER_REISETID is open
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
         toTrinnsBehandling: false,
       },
-    ] as Aksjonspunkt[],
+    ],
   };
   return (
     <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
@@ -233,13 +232,15 @@ export const Validering: Story = {
     await userEvent.click(submitButton);
 
     // Verify that the action was called
-    await waitFor(() => expect(løsAksjonspunkt9303).toHaveBeenCalledWith({
-      begrunnelse: 'Dette er en begrunnelse',
-      godkjent: true,
-      periode: {
-        fom: '2025-04-01',
-        tom: '2025-04-05',
-      },
-    }));
+    await waitFor(() =>
+      expect(løsAksjonspunkt9303).toHaveBeenCalledWith({
+        begrunnelse: 'Dette er en begrunnelse',
+        godkjent: true,
+        periode: {
+          fom: '2025-04-01',
+          tom: '2025-04-05',
+        },
+      }),
+    );
   },
 };

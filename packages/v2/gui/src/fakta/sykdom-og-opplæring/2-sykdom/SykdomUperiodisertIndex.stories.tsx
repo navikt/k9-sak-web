@@ -8,8 +8,9 @@ import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient'
 import {
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -26,13 +27,13 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     behandlingUuid: '222-3333',
     aksjonspunkter: [
       {
-        definisjon: '9301',
-        status: 'OPPR',
+        definisjon: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
         toTrinnsBehandling: false,
       },
-    ] as Aksjonspunkt[],
+    ],
   };
   return (
     <SykdomOgOpplæringContext.Provider value={sykdomOgOpplæringContextState}>
