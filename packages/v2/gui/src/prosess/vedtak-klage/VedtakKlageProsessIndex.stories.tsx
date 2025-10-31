@@ -13,7 +13,8 @@ import alleKodeverkKlageV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkKlag
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { asyncAction } from '../../storybook/asyncAction';
-import { VedtakKlageForm } from './components/VedtakKlageForm';
+import { withFakeVedtakKlageApi } from '../../storybook/decorators/withFakeVedtakKlageApi';
+import { VedtakKlageProsessIndex } from './VedtakKlageProsessIndex';
 
 const behandling = {
   id: 1,
@@ -38,8 +39,8 @@ const aksjonspunkter = [
 ];
 
 const meta = {
-  title: 'gui/prosess/vedtak-klage/VedtakKlageForm',
-  component: VedtakKlageForm,
+  title: 'gui/prosess/vedtak-klage',
+  component: VedtakKlageProsessIndex,
   render: props => (
     <KodeverkProvider
       behandlingType={ung_kodeverk_behandling_BehandlingType.KLAGE}
@@ -47,10 +48,10 @@ const meta = {
       klageKodeverk={alleKodeverkKlageV2}
       tilbakeKodeverk={{}}
     >
-      <VedtakKlageForm {...props} />
+      <VedtakKlageProsessIndex {...props} />
     </KodeverkProvider>
   ),
-} satisfies Meta<typeof VedtakKlageForm>;
+} satisfies Meta<typeof VedtakKlageProsessIndex>;
 
 export default meta;
 
@@ -58,23 +59,21 @@ type Story = StoryObj<typeof meta>;
 
 export const VisVedtakspanelDerKlageErVurdertAvNk: Story = {
   args: {
-    behandlingsresultat: behandling.behandlingsresultat,
+    behandling: behandling,
     aksjonspunkter,
     submitCallback: asyncAction('løs aksjonspunkt'),
-    previewVedtakCallback: asyncAction('forhåndsvis vedtak'),
-    behandlingPåVent: false,
-    klageVurdering: {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NK',
-        klageVurdering: ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_KONKRET],
-      },
-    },
-    readOnly: false,
+    isReadOnly: false,
   },
+  decorators: withFakeVedtakKlageApi({
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NK',
+      klageVurdering: ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_KONKRET],
+    },
+  }),
 };
