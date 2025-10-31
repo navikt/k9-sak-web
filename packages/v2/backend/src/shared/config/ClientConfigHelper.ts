@@ -71,7 +71,7 @@ export class ClientConfigHelper {
               } else {
                 // If a cloned request was not found we cannot retry. Will then return original auth failed response.
                 console.warn(
-                  'Could not retry request after authentication: no cloned request found for request with used body. Returning original 401 response.'
+                  'Could not retry request after authentication: no cloned request found for request with used body. Returning original 401 response.',
                 );
                 // It is then up to the requestor to handle it.
                 return response;

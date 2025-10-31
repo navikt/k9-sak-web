@@ -6,7 +6,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/qFeatureToggles.js';
 import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
-import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
+import { requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';

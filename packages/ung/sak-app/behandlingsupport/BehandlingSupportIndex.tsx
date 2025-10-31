@@ -27,7 +27,7 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -39,6 +39,11 @@ import MeldingTilbakeIndex from './melding/MeldingTilbakeIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngSakTotrinnskontrollBackendClient.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngTilbakeTotrinnskontrollBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -131,8 +136,8 @@ const TABS = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId?: number;
-  behandlingVersjon?: number;
+  behandlingId: number;
+  behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   navAnsatt: NavAnsatt;
@@ -161,18 +166,8 @@ const BehandlingSupportIndex = ({
 
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
+  const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const notatBackendClient = new NotatBackendClient('ungSak');
-  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
-
-  const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
-  const prevResetValue = useRef(currentResetValue);
-
-  useEffect(() => {
-    if (currentResetValue !== prevResetValue.current) {
-      setToTrinnskontrollFormState(undefined);
-    }
-    prevResetValue.current = currentResetValue;
-  }, [currentResetValue]);
 
   const notaterQueryKey = ['notater', fagsak?.saksnummer];
   const { data: notater } = useQuery({
@@ -234,6 +229,22 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
 
+  const behandlingTypeKode = behandling?.type.kode;
+  const totrinnskontrollApi: TotrinnskontrollApi = useMemo(() => {
+    const erTilbakekreving =
+      behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
+      behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
+    const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
+    if (erTilbakekreving) {
+      return new UngTilbakeTotrinnskontrollBackendClient(kodeverkoppslag.ungTilbake);
+    }
+    if (erKlage) {
+      // TODO Initialiser UngKlageTotrinnskontrollBackendClient (klientkonfigurasjon, kodeverkoppslag, etc må på plass først)
+      throw new Error(`totrinnskontroll api for ungdomsytelse klage ikke implementert enda.`);
+    }
+    return new UngSakTotrinnskontrollBackendClient(kodeverkoppslag.ungSak);
+  }, [behandlingTypeKode, kodeverkoppslag]);
+
   const isPanelDisabled = () =>
     valgtSupportPanel
       ? !valgbareSupportPaneler.includes(valgtSupportPanel) && valgtSupportPanel !== SupportTabs.MELDINGER
@@ -276,9 +287,8 @@ const BehandlingSupportIndex = ({
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              toTrinnFormState={toTrinnskontrollFormState}
-              setToTrinnFormState={setToTrinnskontrollFormState}
+              api={totrinnskontrollApi}
+              urlEtterpå="/"
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
@@ -286,7 +296,8 @@ const BehandlingSupportIndex = ({
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
+              api={totrinnskontrollApi}
+              urlEtterpå="/"
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>

@@ -102,7 +102,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [withMockData],
   play: async ({ canvas }) => {
-
     // Wait for navigation items to load and click the first period (St. Olavs hospital)
     const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
     await expect(firstPeriodButton).toBeInTheDocument();

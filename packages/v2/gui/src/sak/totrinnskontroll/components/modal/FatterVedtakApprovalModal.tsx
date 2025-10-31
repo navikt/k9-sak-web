@@ -1,20 +1,17 @@
 import { behandlingType as behandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { type Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.ts';
 
 const getInfoTextCode = (
   behandlingtypeKode: string,
-  behandlingsresultat: Behandling['behandlingsresultat'],
-  harSammeResultatSomOriginalBehandling: boolean,
-  ytelseType: FagsakYtelsesType,
+  behandlingsresultatType: BehandlingResultatType,
+  ytelseType: FagsakYtelseType,
   erKlageWithKA: boolean,
   isOpphor: boolean,
 ) => {
@@ -32,66 +29,62 @@ const getInfoTextCode = (
     }
     return 'Resultatet av klagebehandlingen blir iverksatt.';
   }
-  // HVIS INGEN ENDRING
-  if (harSammeResultatSomOriginalBehandling) {
-    return 'Resultat: Ingen endring, behandlingen avsluttes';
-  }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type === BehandlingsresultatType.AVSLÅTT) {
-    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
+  if (behandlingsresultatType === BehandlingResultatType.AVSLÅTT) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
-    if (ytelseType === fagsakYtelsesType.FRISINN) {
+    if (ytelseType === FagsakYtelseType.FRISINN) {
       return 'FRISINN er avslått';
     }
     if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'Ekstra omsorgsdager er avslått';
     }
-    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livets sluttfase er avslått';
     }
-    if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    if (ytelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
       return 'Opplæringspenger er avslått.';
     }
     return 'Omsorgspenger er avslått';
   }
   // HVIS OPPHØRT
   if (isOpphor) {
-    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er opphørt.';
     }
-    if (ytelseType === fagsakYtelsesType.FRISINN) {
+    if (ytelseType === FagsakYtelseType.FRISINN) {
       return 'FRISINN er opphørt.';
     }
     if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'Ekstra omsorgsdager er opphørt.';
     }
-    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livet sluttfase er opphørt.';
     }
-    if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    if (ytelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
       return 'Opplæringspenger er opphørt.';
     }
     return 'Omsorgspenger er opphørt.';
   }
 
   // HVIS INNVILGET
-  if (ytelseType === fagsakYtelsesType.FRISINN) {
+  if (ytelseType === FagsakYtelseType.FRISINN) {
     return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
   }
   if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+  if (ytelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
     return 'Opplæringspenger er innvilget og vedtaket blir iverksatt.';
   }
-  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
+  if (ytelseType === FagsakYtelseType.UNGDOMSYTELSE) {
     return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
@@ -99,7 +92,7 @@ const getInfoTextCode = (
 
 const getModalDescriptionTextCode = (
   isOpphor: boolean,
-  ytelseType: FagsakYtelsesType,
+  ytelseType: FagsakYtelseType,
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
 ) => {
@@ -112,22 +105,22 @@ const getModalDescriptionTextCode = (
   if (isOpphor) {
     return 'Pleiepenger er opphørt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.FRISINN) {
+  if (ytelseType === FagsakYtelseType.FRISINN) {
     return 'FRISINN er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+  if (ytelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
     return 'Opplæringspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
+  if (ytelseType === FagsakYtelseType.UNGDOMSYTELSE) {
     return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
@@ -140,9 +133,8 @@ const utledInfoTextCode = (
   allAksjonspunktApproved: boolean,
   behandlingStatusKode: string,
   behandlingTypeKode: string,
-  behandlingsresultat: Behandling['behandlingsresultat'],
-  harSammeResultatSomOriginalBehandling: boolean,
-  fagsakYtelseType: FagsakYtelsesType,
+  behandlingsresultatType: BehandlingResultatType,
+  fagsakYtelseType: FagsakYtelseType,
   erKlageWithKA: boolean,
   isBehandlingsresultatOpphor: boolean,
 ) => {
@@ -150,8 +142,7 @@ const utledInfoTextCode = (
     return isStatusFatterVedtak(behandlingStatusKode)
       ? getInfoTextCode(
           behandlingTypeKode,
-          behandlingsresultat,
-          harSammeResultatSomOriginalBehandling,
+          behandlingsresultatType,
           fagsakYtelseType,
           erKlageWithKA,
           isBehandlingsresultatOpphor,
@@ -161,27 +152,27 @@ const utledInfoTextCode = (
   return 'Vedtak returneres til saksbehandler for ny vurdering.';
 };
 
-const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
+const getAltImgTextCode = (ytelseType: FagsakYtelseType) => {
   switch (ytelseType) {
-    case fagsakYtelsesType.FRISINN:
+    case FagsakYtelseType.FRISINN:
       return 'Engangsstønad er innvilget og vedtaket blir iverksatt.';
-    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
+    case FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
       return 'Pleiepenger er innvilget og vedtaket blir iverksatt.';
-    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
+    case FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
       return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
-    case fagsakYtelsesType.UNGDOMSYTELSE:
+    case FagsakYtelseType.UNGDOMSYTELSE:
       return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
     default:
       return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
 };
 
-const utledAltImgTextCode = (behandlingStatusKode: string, fagsakYtelseType: FagsakYtelsesType) =>
+const utledAltImgTextCode = (behandlingStatusKode: string, fagsakYtelseType: FagsakYtelseType) =>
   isStatusFatterVedtak(behandlingStatusKode) ? getAltImgTextCode(fagsakYtelseType) : '';
 
 const utledModalDescriptionTextCode = (
   behandlingStatusKode: string,
-  fagsakYtelseType: FagsakYtelsesType,
+  fagsakYtelseType: FagsakYtelseType,
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
   isBehandlingsresultatOpphor: boolean,
@@ -191,14 +182,11 @@ const utledModalDescriptionTextCode = (
     : 'Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.';
 
 interface OwnProps {
+  behandling: TotrinnskontrollBehandling;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
-  fagsakYtelseType: FagsakYtelsesType;
+  fagsakYtelseType: FagsakYtelseType;
   erKlageWithKA?: boolean;
-  behandlingsresultat?: Behandling['behandlingsresultat'];
-  behandlingStatusKode: string;
-  behandlingTypeKode: string;
-  harSammeResultatSomOriginalBehandling?: boolean;
 }
 
 /**
@@ -210,21 +198,20 @@ interface OwnProps {
 const FatterVedtakApprovalModal = ({
   closeEvent,
   allAksjonspunktApproved,
-  behandlingStatusKode,
-  behandlingTypeKode,
-  behandlingsresultat,
-  harSammeResultatSomOriginalBehandling,
+  behandling,
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps) => {
+  const behandlingsresultatType = behandling.behandlingsresultatType ?? BehandlingResultatType.IKKE_FASTSATT;
+  const behandlingStatusKode = behandling.status;
+  const behandlingTypeKode = behandling.type;
   const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatType.OPPHØR;
+    behandlingsresultatType && behandlingsresultatType === BehandlingResultatType.OPPHØR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
     behandlingTypeKode,
-    behandlingsresultat,
-    !!harSammeResultatSomOriginalBehandling,
+    behandlingsresultatType,
     fagsakYtelseType,
     !!erKlageWithKA,
     !!isBehandlingsresultatOpphor,

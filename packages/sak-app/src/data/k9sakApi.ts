@@ -40,9 +40,6 @@ export enum K9sakApiKeys {
   HISTORY_KLAGE = 'HISTORY_KLAGE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT = 'RISIKO_AKSJONSPUNKT',
-  TOTRINNS_KLAGE_VURDERING = 'TOTRINNS_KLAGE_VURDERING',
-  TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
-  TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY = 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
   AKTOER_INFO = 'AKTOER_INFO',
   ALL_DOCUMENTS = 'ALL_DOCUMENTS',
   HAR_REVURDERING_SAMME_RESULTAT = 'HAR_REVURDERING_SAMME_RESULTAT',
@@ -104,9 +101,6 @@ const endpoints = new RestApiConfigBuilder()
   // Behandling
   .withRel('soeker-personopplysninger', K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('kontrollresultat', K9sakApiKeys.KONTROLLRESULTAT)
-  .withRel('klage-vurdering', K9sakApiKeys.TOTRINNS_KLAGE_VURDERING)
-  .withRel('totrinnskontroll-arsaker', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
-  .withRel('totrinnskontroll-arsaker-readOnly', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
   .withRel('har-samme-resultat', K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
   .withRel('bekreft-totrinnsaksjonspunkt', K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
