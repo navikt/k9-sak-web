@@ -133,8 +133,7 @@ export const TotrinnskontrollBeslutterForm = ({
           return {
             aksjonspunktKode: apGodkjenning.aksjonspunktKode,
             godkjent: apGodkjenning.totrinnskontrollGodkjent,
-            begrunnelse:
-              apGodkjenning.totrinnskontrollGodkjent === false ? apGodkjenning.besluttersBegrunnelse : undefined, // Kvifor skal begrunnelse ikkje settast?
+            begrunnelse: apGodkjenning.besluttersBegrunnelse,
             arsaker,
           };
         },
