@@ -19,7 +19,7 @@ Hva malen inneholder:
 
 Konvensjoner:
 
-- Unngå MSW for nye stories; bruk byggere/fixtures, `vi.spyOn` eller prototype-basert mocking.
+- Unngå MSW for nye stories; bruk byggere/fixtures eller prototype-basert mocking.
 
 Språkpolicy:
 

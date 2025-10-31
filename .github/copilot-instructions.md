@@ -205,18 +205,6 @@ Always include proper ARIA labels and semantic HTML:
 
 ## Common Patterns
 
-### Error Handling
-```typescript
-// ✅ Proper error handling
-try {
-  const result = await apiCall();
-  return result;
-} catch (error) {
-  console.error('Error occurred:', error);
-  // Show user-friendly error message
-  return null;
-}
-```
 
 ### Loading States
 ```typescript
