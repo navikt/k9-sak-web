@@ -17,7 +17,6 @@ import Step, {
   toOmsorgspersonerSteg,
 } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
-import Vurderingstype from '../../../types/Vurderingstype';
 import {
   finnNesteStegForLivetsSluttfase,
   finnNesteStegForOpplæringspenger,
@@ -32,6 +31,7 @@ import AksjonspunktFerdigStripe from '../aksjonspunkt-ferdig-stripe/Aksjonspunkt
 import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
+import { k9_sak_kontrakt_sykdom_SykdomVurderingType } from '@navikt/k9-sak-typescript-client/types';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController from '../nye-dokumenter-som-kan-påvirke-eksisterende-vurderinger/NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController';
 import StruktureringAvDokumentasjon from '../strukturering-av-dokumentasjon/StruktureringAvDokumentasjon';
 import UteståendeEndringerMelding from '../utestående-endringer-melding/UteståendeEndringerMelding';
@@ -233,16 +233,16 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const contextValue = useMemo(() => {
     if (activeStep === tilsynOgPleieSteg) {
-      return { vurderingstype: Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE };
+      return { vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType.KONTINUERLIG_TILSYN_OG_PLEIE };
     }
     if (activeStep === langvarigSykdomSteg) {
-      return { vurderingstype: Vurderingstype.LANGVARIG_SYKDOM };
+      return { vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType.LANGVARIG_SYKDOM };
     }
     if (activeStep === livetsSluttfaseSteg) {
-      return { vurderingstype: Vurderingstype.LIVETS_SLUTTFASE };
+      return { vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType.LIVETS_SLUTTFASE };
     }
     if (activeStep === toOmsorgspersonerSteg) {
-      return { vurderingstype: Vurderingstype.TO_OMSORGSPERSONER };
+      return { vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType.TO_OMSORGSPERSONER };
     }
     return {};
   }, [activeStep]);

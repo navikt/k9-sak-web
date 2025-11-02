@@ -1,26 +1,27 @@
+import { k9_sak_kontrakt_sykdom_SykdomVurderingType } from '@navikt/k9-sak-typescript-client/types';
 import { Vurderingsversjon } from '../../../types/Vurdering';
-import {
-  FieldName as KTPFieldName,
-  VurderingAvTilsynsbehovFormState,
-} from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import Vurderingstype from '../../../types/Vurderingstype';
 import {
-  FieldName as TOFieldName,
-  VurderingAvToOmsorgspersonerFormState,
-} from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
+  FieldName as LangvarigSykdomFieldName,
+  VurderingLangvarigSykdomFormState,
+} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
 import {
   FieldName as LivetsSluttfaseFieldName,
   VurderingAvLivetsSluttfaseFormState,
 } from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
 import {
-  FieldName as LangvarigSykdomFieldName,
-  VurderingLangvarigSykdomFormState,
-} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
+  FieldName as KTPFieldName,
+  VurderingAvTilsynsbehovFormState,
+} from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
+import {
+  FieldName as TOFieldName,
+  VurderingAvToOmsorgspersonerFormState,
+} from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
 
 function buildInitialFormStateForEdit(
   { tekst, resultat, perioder, dokumenter, manglerLegeerklæring }: Vurderingsversjon,
-  vurderingstype: Vurderingstype,
+  vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType,
 ):
   | VurderingAvTilsynsbehovFormState
   | VurderingAvToOmsorgspersonerFormState

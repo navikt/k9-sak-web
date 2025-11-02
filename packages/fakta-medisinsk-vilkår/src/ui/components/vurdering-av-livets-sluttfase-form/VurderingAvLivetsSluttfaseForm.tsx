@@ -5,6 +5,7 @@ import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Label, Link, Tooltip } from '@navikt/ds-react';
+import { k9_kodeverk_sykdom_Resultat } from '@navikt/k9-sak-typescript-client/types';
 import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -59,7 +60,7 @@ const lagSluttfaseVurdering = (
 
 export interface VurderingAvLivetsSluttfaseFormState {
   [FieldName.VURDERING_AV_LIVETS_SLUTTFASE]?: string;
-  [FieldName.ER_I_LIVETS_SLUTTFASE]?: Vurderingsresultat;
+  [FieldName.ER_I_LIVETS_SLUTTFASE]?: k9_kodeverk_sykdom_Resultat;
   [FieldName.SPLITT_PERIODE_DATO]?: string;
   [FieldName.DOKUMENTER]: string[];
   [FieldName.PERIODER]?: Period[];

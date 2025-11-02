@@ -2,6 +2,7 @@ import { addYearsToDate } from '@fpsak-frontend/utils';
 import React, { type JSX } from 'react';
 import Vurderingselement from '../../../types/Vurderingselement';
 // eslint-disable-next-line max-len
+import { k9_sak_kontrakt_sykdom_SykdomVurderingType } from '@navikt/k9-sak-typescript-client/types';
 import LinkRel from '../../../constants/LinkRel';
 import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
 import ManuellVurdering from '../../../types/ManuellVurdering';
@@ -32,7 +33,7 @@ interface VurderingsdetaljvisningForEksisterendeProps {
   onVurderingLagret: () => Promise<void>;
 }
 
-const getFormComponent = (vurderingstype: Vurderingstype) => {
+const getFormComponent = (vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType) => {
   if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return VurderingAvTilsynsbehovForm;
   }
@@ -48,17 +49,17 @@ const getFormComponent = (vurderingstype: Vurderingstype) => {
   return null;
 };
 
-const getSummaryComponent = (vurderingstype: Vurderingstype) => {
-  if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
+const getSummaryComponent = (vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType) => {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return VurderingsoppsummeringForKontinuerligTilsynOgPleie;
   }
-  if (vurderingstype === Vurderingstype.TO_OMSORGSPERSONER) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.TO_OMSORGSPERSONER) {
     return VurderingsoppsummeringForToOmsorgspersoner;
   }
-  if (vurderingstype === Vurderingstype.LIVETS_SLUTTFASE) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.LIVETS_SLUTTFASE) {
     return VurderingsoppsummeringForSluttfase;
   }
-  if (vurderingstype === Vurderingstype.LANGVARIG_SYKDOM) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.LANGVARIG_SYKDOM) {
     return VurderingsoppsummeringLangvarigSykdom;
   }
   return null;

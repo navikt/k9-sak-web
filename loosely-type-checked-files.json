@@ -164,7 +164,6 @@
   "packages/fakta-medisinsk-vilkår/src/ui/components/endre-vurdering-controller/EndreVurderingController.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/endre-vurdering-controller/reducer.ts",
   "packages/fakta-medisinsk-vilkår/src/ui/components/innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal.tsx",
-  "packages/fakta-medisinsk-vilkår/src/ui/components/innleggelsesperiodeoversikt/Innleggelsesperiodeoversikt.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/medisinsk-vilkår/tests/MedisinskVilkår.spec.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/period-list/PeriodList.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/strukturer-dokument-controller/StrukturerDokumentController.tsx",

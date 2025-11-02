@@ -1,4 +1,5 @@
 import { Alert, Box } from '@navikt/ds-react';
+import { k9_sak_kontrakt_sykdom_SykdomVurderingType } from '@navikt/k9-sak-typescript-client/types';
 import { type JSX } from 'react';
 import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
 import Vurderingstype from '../../../types/Vurderingstype';
@@ -6,7 +7,7 @@ import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 
 interface VurderingsoppsummeringForInnleggelsesperiodeProps {
   vurdering: InnleggelsesperiodeVurdering;
-  vurderingstype: Vurderingstype;
+  vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType;
 }
 
 const VurderingsoppsummeringForInnleggelsesperiode = ({
