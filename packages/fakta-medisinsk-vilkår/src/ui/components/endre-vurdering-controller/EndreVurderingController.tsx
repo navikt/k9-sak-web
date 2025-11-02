@@ -6,7 +6,6 @@ import { k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto } from '@navik
 import React, { use, useMemo, type JSX } from 'react';
 import { MedisinskVilkårApiContext } from '../../../api/MedisinskVilkårApiContext';
 import Dokument from '../../../types/Dokument';
-import Link from '../../../types/Link';
 import { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
 import { Vurderingsversjon } from '../../../types/Vurdering';
 import scrollUp from '../../../util/viewUtils';
@@ -17,7 +16,6 @@ import ActionType from './actionTypes';
 import vurderingControllerReducer from './reducer';
 
 interface EndreVurderingControllerProps {
-  endreVurderingLink: Link;
   dataTilVurderingUrl: string;
   onVurderingLagret: () => void;
   formRenderer: (
@@ -30,7 +28,6 @@ interface EndreVurderingControllerProps {
 }
 
 const EndreVurderingController = ({
-  endreVurderingLink,
   dataTilVurderingUrl,
   onVurderingLagret,
   formRenderer,
@@ -68,14 +65,6 @@ const EndreVurderingController = ({
 
   function endreVurdering(nyVurderingsversjon: Partial<Vurderingsversjon>) {
     dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
-    // return postEndreVurdering(
-    //   endreVurderingLink.href,
-    //   endreVurderingLink.requestPayload.behandlingUuid,
-    //   vurderingsid,
-    //   nyVurderingsversjon,
-    //   httpErrorHandler,
-    //   controller.signal,
-    // )
     api
       .oppdaterSykdomsVurdering({
         behandlingUuid,
@@ -129,10 +118,13 @@ const EndreVurderingController = ({
   const initializePerioderMedEndringer = (
     perioderMedEndringResponse: k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto,
   ) =>
-    perioderMedEndringResponse.perioderMedEndringer.map(({ periode, ...otherFields }) => ({
-      periode: new Period(periode?.fom ?? '', periode?.tom ?? ''),
-      ...otherFields,
-    }));
+    perioderMedEndringResponse.perioderMedEndringer.map(
+      ({ periode, endrerAnnenVurdering, endrerVurderingSammeBehandling }) => ({
+        periode: new Period(periode?.fom ?? '', periode?.tom ?? ''),
+        endrerAnnenVurdering: !!endrerAnnenVurdering,
+        endrerVurderingSammeBehandling: !!endrerVurderingSammeBehandling,
+      }),
+    );
 
   const beOmBekreftelseFørLagringHvisNødvendig = async (nyVurderingsversjon: Vurderingsversjon) => {
     dispatch({ type: ActionType.SJEKK_FOR_EKSISTERENDE_VURDERINGER_PÅBEGYNT });
