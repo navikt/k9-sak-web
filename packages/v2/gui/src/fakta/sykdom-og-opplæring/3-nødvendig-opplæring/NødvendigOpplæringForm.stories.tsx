@@ -212,8 +212,6 @@ export const GjenbrukValideringOgSubmit: Story = {
     const valgtPeriodeLabel = '01.02.2025 - 05.02.2025';
     await userEvent.click(canvas.getByRole('checkbox', { name: valgtPeriodeLabel }));
 
-    // Fyll begrunnelse (påkrevd)
-
     // Send inn
     await userEvent.click(bekreft);
 
