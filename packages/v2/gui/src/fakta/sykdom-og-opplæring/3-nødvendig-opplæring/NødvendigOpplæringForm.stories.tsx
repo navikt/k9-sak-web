@@ -201,3 +201,82 @@ export const Validering: Story = {
     await waitFor(() => expect(løsAksjonspunkt9302).not.toHaveBeenCalled());
   },
 };
+
+export const GjenbrukValideringOgSubmit: Story = {
+  args: {
+    vurdering: {
+      begrunnelse: '',
+      opplæring: {
+        fom: '2025-01-01',
+        tom: '2025-01-10',
+      },
+      perioder: [new Period('2025-01-01', '2025-01-10')],
+      resultat: OpplæringVurderingDtoResultat.MÅ_VURDERES,
+      vurdertAv: 'testbruker',
+      vurdertTidspunkt: '2025-01-01T10:00:00Z',
+    },
+    setRedigerer: action('setRedigerer'),
+    redigerer: true,
+    andrePerioderTilVurdering: [
+      { fom: '2025-02-01', tom: '2025-02-05' },
+      { fom: '2025-03-10', tom: '2025-03-12' },
+    ],
+  },
+  play: async ({ canvas }) => {
+    // Legeerklæring: Ja
+    const legeGroup = await canvas.findByRole('group', { name: /Har vi fått legeerklæring/i });
+    await userEvent.click(within(legeGroup).getByLabelText('Ja'));
+
+    //begrunnelse
+    const begrunnelse = canvas.getByLabelText(
+      'Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter § 9-14, første ledd',
+      { exact: false },
+    );
+    const begrunnelseTekst = 'Dette er en testbegrunnelse';
+    await userEvent.clear(begrunnelse);
+    await userEvent.type(begrunnelse, begrunnelseTekst);
+
+    // Nødvendig opplæring: Ja
+    const nodvGroup = await canvas.findByRole('group', { name: /Har søker opplæring som er nødvendig/i });
+    await userEvent.click(within(nodvGroup).getByLabelText('Ja'));
+
+    // Kryss av for gjenbruk uten å velge periode
+    const gjenbrukCheckbox = canvas.getByRole('checkbox', { name: /Bruk denne vurderingen for andre perioder/i });
+    await userEvent.click(gjenbrukCheckbox);
+
+    // Forsøk å sende inn -> forvent feilmelding for perioder
+    const bekreft = canvas.getByRole('button', { name: /Bekreft og fortsett/i });
+    await userEvent.click(bekreft);
+    await expect(await canvas.findByText('Du må velge minst én periode')).toBeInTheDocument();
+
+    // Velg en periode
+    const valgtPeriodeLabel = '01.02.2025 - 05.02.2025';
+    await userEvent.click(canvas.getByRole('checkbox', { name: valgtPeriodeLabel }));
+
+    // Fyll begrunnelse (påkrevd)
+
+    // Send inn
+    await userEvent.click(bekreft);
+
+    // Verifiser at feilmelding er borte
+    await expect(canvas.queryByText('Du må velge minst én periode')).not.toBeInTheDocument();
+
+    // Verifiser payload (to perioder: original + valgt)
+    await expect(løsAksjonspunkt9302).toHaveBeenCalledWith({
+      perioder: [
+        {
+          periode: { fom: '2025-01-01', tom: '2025-01-10' },
+          begrunnelse: begrunnelseTekst,
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+        {
+          periode: { fom: '2025-02-01', tom: '2025-02-05' },
+          begrunnelse: begrunnelseTekst,
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+      ],
+    });
+  },
+};
