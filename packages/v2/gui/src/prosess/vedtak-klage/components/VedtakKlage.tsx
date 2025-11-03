@@ -23,17 +23,15 @@ const omgjoerTekstMap = {
 export const getAvvisningsAarsaker = (
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto,
 ) => {
-  if (klageVurdering) {
-    if (
-      'klageFormkravResultatKA' in klageVurdering &&
-      klageVurdering.klageFormkravResultatKA &&
-      klageVurdering.klageVurderingResultatNK
-    ) {
-      return klageVurdering.klageFormkravResultatKA.avvistArsaker;
-    }
-    if (klageVurdering.klageFormkravResultatNFP) {
-      return klageVurdering.klageFormkravResultatNFP.avvistArsaker;
-    }
+  if (
+    'klageFormkravResultatKA' in klageVurdering &&
+    klageVurdering.klageFormkravResultatKA &&
+    klageVurdering.klageVurderingResultatNK
+  ) {
+    return klageVurdering.klageFormkravResultatKA.avvistArsaker;
+  }
+  if (klageVurdering.klageFormkravResultatNFP) {
+    return klageVurdering.klageFormkravResultatNFP.avvistArsaker;
   }
   return null;
 };
@@ -41,13 +39,11 @@ export const getAvvisningsAarsaker = (
 const getOmgjortAarsak = (
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto,
 ) => {
-  if (klageVurdering) {
-    if (klageVurdering.klageVurderingResultatNK) {
-      return klageVurdering.klageVurderingResultatNK.klageMedholdArsakNavn;
-    }
-    if (klageVurdering.klageVurderingResultatNFP) {
-      return klageVurdering.klageVurderingResultatNFP.klageMedholdArsakNavn;
-    }
+  if (klageVurdering.klageVurderingResultatNK) {
+    return klageVurdering.klageVurderingResultatNK.klageMedholdArsakNavn;
+  }
+  if (klageVurdering.klageVurderingResultatNFP) {
+    return klageVurdering.klageVurderingResultatNFP.klageMedholdArsakNavn;
   }
   return null;
 };
