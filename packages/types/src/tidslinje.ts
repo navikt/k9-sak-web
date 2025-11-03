@@ -1,5 +1,5 @@
+import dayjs from 'dayjs';
 import { ReactNode } from 'react';
-import { Dayjs } from 'dayjs';
 
 export interface EnkelPeriode {
   /**
@@ -82,8 +82,8 @@ export interface Positioned {
 }
 
 export interface PositionedPeriod extends Positioned {
-  start: Dayjs;
-  endInclusive: Dayjs;
+  start: dayjs.Dayjs;
+  endInclusive: dayjs.Dayjs;
   id: string;
   width: number;
   status: PeriodStatus;

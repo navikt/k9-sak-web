@@ -1,7 +1,7 @@
-import { Dayjs } from 'dayjs';
+import type dayjs from 'dayjs';
 import { saksnummerOrFodselsnummerPattern } from './regexes';
 import { validateTextCharacters } from './validateTextCharacters';
-export const isEmpty = (text: string | number | Dayjs | null | undefined) =>
+export const isEmpty = (text: string | number | dayjs.Dayjs | null | undefined) =>
   text === null || text === undefined || text.toString().trim().length === 0;
 
 export const hasValidSaksnummerOrFodselsnummerFormat = (text: string) =>

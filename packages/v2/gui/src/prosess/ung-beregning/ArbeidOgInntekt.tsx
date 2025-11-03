@@ -1,6 +1,7 @@
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
   ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
   type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -41,6 +42,7 @@ const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeri
           begrunnelse: periode.begrunnelse ?? '',
           periode: periode.periode,
           harAvvik: periode.status === PeriodeStatus.AVVIK,
+          erTilVurdering: !!periode.erTilVurdering,
         };
       }) || [],
   };
@@ -53,6 +55,7 @@ type Formvalues = {
     begrunnelse: string;
     periode: KontrollerInntektPeriodeDto['periode'];
     harAvvik: boolean;
+    erTilVurdering: boolean;
   }[];
 };
 
@@ -60,9 +63,15 @@ interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   isReadOnly: boolean;
+  arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
-export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isReadOnly }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({
+  submitCallback,
+  inntektKontrollperioder,
+  isReadOnly,
+  arbeidsgivere,
+}: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
     defaultValues: buildInitialValues(inntektKontrollperioder),
@@ -70,7 +79,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
 
   const onSubmit = async (values: Formvalues) => {
     setIsSubmitting(true);
-    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik);
+    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik && periode.erTilVurdering);
     try {
       await submitCallback([
         {
@@ -141,11 +150,15 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                         periode={field.periode}
                         fieldIndex={index}
                         inntektKontrollPeriode={inntektKontrollPeriode}
+                        arbeidsgivere={arbeidsgivere}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
                         <Box.New marginInline="2 0" padding="6">
-                          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
+                          <DetaljerOmInntekt
+                            inntektKontrollPeriode={inntektKontrollPeriode}
+                            arbeidsgivere={arbeidsgivere}
+                          />
                         </Box.New>
                       </Bleed>
                     )

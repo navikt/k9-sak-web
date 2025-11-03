@@ -27,5 +27,6 @@ export const visMenyForÅSetteBehandlingPåVent: Story = {
     lukkModal: action('lukkModal'),
     erTilbakekreving: false,
     erKlage: false,
+    navigerEtterSattPåVent: action('naviger'),
   },
 };

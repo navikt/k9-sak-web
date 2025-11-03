@@ -17,10 +17,7 @@ type EnumKodeverdierOppslag = Omit<
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
 
-export class K9SakKodeverkoppslag
-  extends GeneriskKodeverkoppslag<EnumKodeverdierOppslag>
-  implements Kodeverkoppslag<EnumKodeverdierOppslag>
-{
+export class K9SakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
   constructor(alleKodeverdier: AlleKodeverdierSomObjektResponse) {
     super(alleKodeverdier);
   }
@@ -285,5 +282,9 @@ export class K9SakKodeverkoppslag
 export class FailingK9SakKodeverkoppslag extends K9SakKodeverkoppslag {
   constructor() {
     super({} as AlleKodeverdierSomObjektResponse);
+  }
+
+  override finnObjektFraKilde(kodeverk: keyof EnumKodeverdierOppslag, kode: string): never {
+    throw new Error(`K9SakKodeverkoppslag er ikke initialisert. Kan ikke slå opp ${kodeverk} med kode ${kode}.`);
   }
 }

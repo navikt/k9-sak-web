@@ -93,12 +93,19 @@ export const erUngdomsytelse = (sakstype: string) => sakstype === BehandlingDtoS
 export const erFørstegangsbehandlingIUngdomsytelsen = (sakstype: string, behandlingType: string) =>
   erUngdomsytelse(sakstype) && behandlingType === BehandlingDtoType.FØRSTEGANGSSØKNAD;
 
-export const filterPerioderForKontrollAvInntekt = (søknadsperioderData: PerioderMedBehandlingsId | undefined) => {
+export const filterPerioderByÅrsak = (
+  søknadsperioderData: PerioderMedBehandlingsId | undefined,
+  årsak: UngÅrsakTilVurdering,
+) => {
   return (
     søknadsperioderData?.perioderMedÅrsak
-      ?.filter(periodeMedÅrsak =>
-        periodeMedÅrsak.årsaker?.some(årsak => årsak === UngÅrsakTilVurdering.KONTROLL_AV_INNTEKT),
-      )
+      ?.filter(periodeMedÅrsak => periodeMedÅrsak.årsaker?.some(å => å === årsak))
       .map(periode => periode.periode) ?? []
   );
 };
+
+export const filterPerioderForKontrollAvInntekt = (søknadsperioderData: PerioderMedBehandlingsId | undefined) =>
+  filterPerioderByÅrsak(søknadsperioderData, UngÅrsakTilVurdering.KONTROLL_AV_INNTEKT);
+
+export const filterPerioderForBarnetillegg = (søknadsperioderData: PerioderMedBehandlingsId | undefined) =>
+  filterPerioderByÅrsak(søknadsperioderData, UngÅrsakTilVurdering.HENDELSE_FØDSEL_BARN);

@@ -1,12 +1,12 @@
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { k9_kodeverk_behandling_BehandlingStatus } from '@navikt/k9-sak-typescript-client/types';
+import messages from '../i18n/nb_NO.json';
 import TilbakekrevingVedtak from './components/TilbakekrevingVedtak';
 import BeregningsresultatTilbakekreving from './types/beregningsresultatTilbakekrevingTsType';
 import Vedtaksbrev from './types/vedtaksbrevTsType';
-import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
@@ -48,6 +48,7 @@ const VedtakTilbakekrevingProsessIndex = ({
   const erRevurderingTilbakekrevingFeilBeløpBortfalt =
     behandling.førsteÅrsak &&
     behandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT === behandling.førsteÅrsak?.behandlingArsakType?.kode;
+  const erBehandlingBehandlet = behandling.status.kode !== k9_kodeverk_behandling_BehandlingStatus.OPPRETTET;
   return (
     <RawIntlProvider value={intl}>
       <TilbakekrevingVedtak
@@ -64,6 +65,7 @@ const VedtakTilbakekrevingProsessIndex = ({
         aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
         erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}
         erRevurderingTilbakekrevingFeilBeløpBortfalt={erRevurderingTilbakekrevingFeilBeløpBortfalt}
+        erBehandlingBehandlet={erBehandlingBehandlet}
       />
     </RawIntlProvider>
   );

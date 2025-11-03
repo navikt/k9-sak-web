@@ -1,19 +1,21 @@
 import SettPåVentModal, { type FormState } from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
-import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useCallback } from 'react';
 
 interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid?: string;
   settBehandlingPaVent: (params: {
     behandlingVersjon: number;
     behandlingId: number;
+    behandlingUuid?: string;
     frist: string;
     ventearsak: string;
   }) => Promise<any>;
   lukkModal: () => void;
   erTilbakekreving: boolean;
   erKlage: boolean;
+  navigerEtterSattPåVent: () => void;
 }
 
 export const MenySettPaVentIndexV2 = ({
@@ -23,18 +25,21 @@ export const MenySettPaVentIndexV2 = ({
   lukkModal,
   erTilbakekreving,
   erKlage,
+  behandlingUuid,
+  navigerEtterSattPåVent,
 }: OwnProps) => {
   const submit = useCallback(
     async (formValues: FormState) => {
       const values = {
         behandlingVersjon,
         behandlingId,
+        behandlingUuid,
         frist: formValues.frist,
         ventearsak: formValues.ventearsak,
         ventearsakVariant: formValues.ventearsakVariant,
       };
       await settBehandlingPaVent(values);
-      goToLos();
+      navigerEtterSattPåVent();
     },
     [behandlingId, behandlingVersjon],
   );
@@ -47,6 +52,7 @@ export const MenySettPaVentIndexV2 = ({
       erTilbakekreving={erTilbakekreving}
       erKlage={erKlage}
       hasManualPaVent
+      navigerEtterEndreFrist={navigerEtterSattPåVent}
     />
   );
 };

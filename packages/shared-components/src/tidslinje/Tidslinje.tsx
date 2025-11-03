@@ -9,8 +9,8 @@ import {
 } from '@k9-sak-web/types/src/tidslinje';
 import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { ReactNode, useCallback } from 'react';
+import dayjs from 'dayjs';
+import { ReactNode, useCallback } from 'react';
 import { AxisLabels } from './AxisLabels';
 import Pins from './Pins';
 import Rad from './Rad';
@@ -58,9 +58,9 @@ export interface TidslinjeProps {
 
 export interface TimelineProps {
   rows: InternalSimpleTimeline[];
-  start: Dayjs;
+  start: dayjs.Dayjs;
   direction: 'left' | 'right';
-  endInclusive: Dayjs;
+  endInclusive: dayjs.Dayjs;
   activeRow?: number;
   onSelectPeriod?: (periode: Periode) => void;
   axisLabelRenderer?: (etikett: AxisLabel) => ReactNode;

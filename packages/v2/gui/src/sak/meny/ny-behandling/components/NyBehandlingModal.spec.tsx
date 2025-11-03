@@ -43,7 +43,7 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingÅrsakerK9Sak = [] as KodeverkObject[];
 
-    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType);
+    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType, false);
 
     expect(res).toEqual(expect.arrayContaining([behandlingArsakerK9Tilbake[3], behandlingArsakerK9Tilbake[2]]));
   });
@@ -79,7 +79,7 @@ describe('<NyBehandlingModal>', () => {
     const bType = BehandlingTypeK9Klage.REVURDERING;
     const behandlingArsakerK9Tilbake = [] as KodeverkObject[];
 
-    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType);
+    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType, false);
 
     expect(res).toEqual(
       expect.arrayContaining([

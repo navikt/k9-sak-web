@@ -1,4 +1,5 @@
 import type {
+  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   GetSatsOgUtbetalingPerioderResponse,
   GetUngdomsprogramInformasjonResponse,
   ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
@@ -8,4 +9,5 @@ export type UngBeregningBackendApiType = {
   getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<GetSatsOgUtbetalingPerioderResponse>;
   getKontrollerInntekt(behandlingUuid: string): Promise<KontrollerInntektDto>;
   getUngdomsprogramInformasjon(behandlingUuid: string): Promise<GetUngdomsprogramInformasjonResponse>;
+  getArbeidsgiverOpplysninger(behandlingUuid: string): Promise<ArbeidsgiverOversiktDto>;
 };

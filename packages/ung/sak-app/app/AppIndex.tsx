@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
 import ForbiddenPage from '@k9-sak-web/gui/app/feilmeldinger/ForbiddenPage.js';
-import UnauthorizedPage from '@k9-sak-web/gui/app/feilmeldinger/UnauthorizedPage.js';
+import UnauthorizedPage, { ungLoginResourcePath } from '@k9-sak-web/gui/app/feilmeldinger/UnauthorizedPage.js';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
@@ -15,26 +15,22 @@ import Home from './components/Home';
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import '@navikt/ds-css/darkside';
-import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { usePrefetchQuery } from '@tanstack/react-query';
+import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
+import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 
 const EMPTY_ARRAY = [];
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
 
 /**
  * AppIndex
  *
- * Container komponent. Dette er toppkomponenten i applikasjonen. Denne vil rendre header
- * og home-komponentene. Home-komponenten vil rendre barn-komponenter via ruter.
+ * Container komponent. Dette er toppkomponenten i den ytelsesspesifikke applikasjonen (felles RootLayout er over her).
+ * Denne vil rendre header og home-komponentene. Home-komponenten vil rendre barn-komponenter via ruter.
  */
 const AppIndex = () => {
   const location = useLocation();
@@ -59,30 +55,31 @@ const AppIndex = () => {
   const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
   const shouldRenderHome = !hasCrashed && !hasForbiddenOrUnauthorizedErrors;
 
+  // Start forhåndslasting av kodeverk oppslag data
+  usePrefetchQuery(kodeverkOppslagQueryOptions.ungSak);
+  usePrefetchQuery(kodeverkOppslagQueryOptions.ungTilbake(true));
+  // Start forhåndslasting av nav ansatt data
+  usePrefetchQuery(innloggetAnsattQueryOptions(new UngSakInnloggetAnsattBackendClient()));
+
+  // Sjå bootstrapUng for å sjå kva som er lenger oppe i hierarkiet.
   return (
-    // Ytterste feilgrense viser alltid separat feil-side, fordi viss feil har skjedd i AppConfigResolver eller lenger ute
-    // er det sannsynlegvis så grunnleggande at ingenting vil fungere.
-    <ErrorBoundary>
-      <Theme theme="light">
-        <QueryClientProvider client={queryClient}>
-          <AppConfigResolver>
-            <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-              <LanguageProvider>
-                <Dekorator
-                  hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-                  queryStrings={queryStrings}
-                  setSiteHeight={setSiteHeight}
-                  pathname={location.pathname}
-                />
-                {shouldRenderHome && <Home headerHeight={headerHeight} />}
-                {forbiddenErrors.length > 0 && <ForbiddenPage />}
-                {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-              </LanguageProvider>
-            </ErrorBoundary>
-          </AppConfigResolver>
-        </QueryClientProvider>
-      </Theme>
-    </ErrorBoundary>
+    <RootSuspense heading="Laster grunnleggende systemdata">
+      <AppConfigResolver>
+        <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+          <LanguageProvider>
+            <Dekorator
+              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+              queryStrings={queryStrings}
+              setSiteHeight={setSiteHeight}
+              pathname={location.pathname}
+            />
+            {shouldRenderHome && <Home headerHeight={headerHeight} />}
+            {forbiddenErrors.length > 0 && <ForbiddenPage />}
+            {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
+          </LanguageProvider>
+        </ErrorBoundary>
+      </AppConfigResolver>
+    </RootSuspense>
   );
 };
 

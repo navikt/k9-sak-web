@@ -1,7 +1,7 @@
 import React, { Component, MouseEvent } from 'react';
 
-import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
+import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 
 interface OwnProps {
   perioder: TidslinjePeriode[];
@@ -52,6 +52,7 @@ class TilbakekrevingTimelinePanel extends Component<OwnProps, OwnState> {
 
     return (
       <TilbakekrevingTimeline
+        key={perioder.length}
         perioder={perioder}
         selectedPeriod={valgtPeriode}
         selectPeriodCallback={this.selectHandler}

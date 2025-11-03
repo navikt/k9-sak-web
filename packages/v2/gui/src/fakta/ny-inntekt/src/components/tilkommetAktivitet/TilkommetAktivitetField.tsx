@@ -15,6 +15,7 @@ import { TilkommetInntektsforholdField } from './TilkommetInntektsforholdField';
 import { RhfTextarea } from '@navikt/ft-form-hooks';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov';
+import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
 import styles from './tilkommetAktivitet.module.css';
 
@@ -29,6 +30,7 @@ type Props = {
   erAksjonspunktÅpent: boolean;
   skalViseBegrunnelse: boolean;
   avklaringsbehov?: BeregningAvklaringsbehov;
+  beregningsgrunnlag: Beregningsgrunnlag;
 };
 
 const erDefinert = (tall?: number) => !!tall && +tall > 0;
@@ -48,6 +50,7 @@ export const TilkommetAktivitetField = ({
   arbeidsgiverOpplysningerPerId,
   skalViseBegrunnelse,
   avklaringsbehov,
+  beregningsgrunnlag,
 }: Props) => {
   const { control, formState } = useFormContext<TilkommetAktivitetFormValues>();
   const { fields } = useFieldArray({
@@ -144,6 +147,7 @@ export const TilkommetAktivitetField = ({
                 field={field}
                 readOnly={readOnly}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                beregningsgrunnlag={beregningsgrunnlag}
               />
             </Box.New>
           </div>

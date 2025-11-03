@@ -1,5 +1,6 @@
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
@@ -19,6 +20,7 @@ interface AksjonspunktArbeidOgInntektProps {
   periode: KontrollerInntektPeriodeDto['periode'];
   fieldIndex: number;
   inntektKontrollPeriode: KontrollerInntektPeriodeDto;
+  arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
@@ -28,6 +30,7 @@ export const AksjonspunktArbeidOgInntekt = ({
   periode,
   fieldIndex,
   inntektKontrollPeriode,
+  arbeidsgivere,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
   const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
@@ -56,7 +59,7 @@ export const AksjonspunktArbeidOgInntekt = ({
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="space-32">
-          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
+          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} arbeidsgivere={arbeidsgivere} />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box.New borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
             <HStack gap="space-8" wrap={false}>

@@ -24,6 +24,13 @@ const NødvendigOpplæring = () => {
     perioder: [new Period(vurdering.opplæring.fom, vurdering.opplæring.tom)],
   }));
 
+  const andrePerioderTilVurdering =
+    vurderingsliste && valgtVurdering
+      ? vurderingsliste
+          .filter(v => !v.perioder.some(p => valgtVurdering.perioder.some(vp => p.fom === vp.fom && p.tom === vp.tom)))
+          .flatMap(v => v.perioder.map(p => ({ fom: p.fom, tom: p.tom })))
+      : [];
+
   if (isLoadingVurdertOpplæring) {
     return <CenteredLoader />;
   }
@@ -34,6 +41,7 @@ const NødvendigOpplæring = () => {
         navigationSection={() => (
           <>
             <Vurderingsnavigasjon<OpplæringVurderingselement>
+              nyesteFørst={false}
               perioder={vurderingsliste || []}
               onPeriodeClick={setValgtVurdering}
               valgtPeriode={valgtVurdering}
@@ -41,7 +49,14 @@ const NødvendigOpplæring = () => {
           </>
         )}
         showDetailSection
-        detailSection={() => (valgtVurdering ? <NødvendigOpplæringContainer vurdering={valgtVurdering} /> : null)}
+        detailSection={() =>
+          valgtVurdering ? (
+            <NødvendigOpplæringContainer
+              vurdering={valgtVurdering}
+              andrePerioderTilVurdering={andrePerioderTilVurdering}
+            />
+          ) : null
+        }
       />
     </div>
   );

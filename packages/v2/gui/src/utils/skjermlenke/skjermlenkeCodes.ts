@@ -1,7 +1,7 @@
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import tabCodes from '../../fakta/sykdom-og-opplæring/tabCodes.js';
 import { faktaPanelCodes } from './faktaPanelCodes.js';
 import { prosessStegCodes } from './prosessStegCodes.js';
-import tabCodes from '../../fakta/sykdom-og-opplæring/tabCodes.js';
-import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
 type SkjermlenkeCode = Readonly<{
   kode: SkjermlenkeType;
@@ -225,6 +225,16 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
     tabNavn: tabCodes.REISETID,
+  },
+  {
+    kode: 'FAKTA_OM_NY_INNTEKT',
+    faktaNavn: faktaPanelCodes.NY_INNTEKT,
+    punktNavn: '',
+  },
+  {
+    kode: 'KONTROLL_AV_INNTEKT',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.KONTROLL_AV_INNTEKT,
   },
 ];
 

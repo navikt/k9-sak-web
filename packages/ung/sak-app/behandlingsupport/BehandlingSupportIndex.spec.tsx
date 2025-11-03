@@ -42,7 +42,6 @@ describe('<BehandlingSupportIndex>', () => {
   it('skal vise godkjennings-panelet', () => {
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
@@ -58,6 +57,17 @@ describe('<BehandlingSupportIndex>', () => {
           behandlingId={1}
           behandlingVersjon={2}
           navAnsatt={navAnsatt}
+          behandlingRettigheter={{
+            behandlingKanBytteEnhet: false,
+            behandlingKanHenlegges: false,
+            behandlingKanGjenopptas: false,
+            behandlingKanOpnesForEndringer: false,
+            behandlingKanSettesPaVent: false,
+            behandlingKanSendeMelding: false,
+            behandlingFraBeslutter: false,
+            behandlingTilGodkjenning: false,
+            vergeBehandlingsmeny: VergeBehandlingmenyValg.SKJUL,
+          }}
         />
       </MemoryRouter>,
     );
