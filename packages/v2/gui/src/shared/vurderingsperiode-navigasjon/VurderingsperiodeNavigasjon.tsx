@@ -79,7 +79,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   nyesteFørst = true,
 }: VurderingslisteProps<T>) => {
   // nyeste først
-  const sortedPerioder = perioder.sort(nyesteFørst ? sortNyestFørst : sortEldestFørst);
+  const sortedPerioder = perioder.toSorted(nyesteFørst ? sortNyestFørst : sortEldestFørst);
   const perioderSomSkalVurderes = sortedPerioder.filter(periode => periode.resultat === Resultat.MÅ_VURDERES);
   const perioderSomErVurdert = sortedPerioder.filter(periode => periode.resultat !== Resultat.MÅ_VURDERES);
   const allePerioder = useMemo(
