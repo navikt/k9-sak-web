@@ -51,6 +51,7 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
 
     // Forventet rekkefølge (tekst fra RadDato/Rad som bruker Period.prettifyPeriod())
     const expectedOrder = [
+      // Må vurderes
       '02.01.2025 - 05.01.2025',
       '10.01.2025 - 11.01.2025',
       '20.01.2025 - 21.01.2025',
@@ -60,6 +61,7 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
       '15.03.2025 - 18.03.2025',
       '28.03.2025 - 30.03.2025',
       '05.04.2025 - 07.04.2025',
+      // Vurderte
       '28.11.2024 - 30.11.2024',
       '28.12.2024 - 30.12.2024',
     ];
@@ -90,12 +92,7 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
     const perioder = [...tilVurdering, ...vurderte];
 
     render(
-      <VurderingsperiodeNavigasjon
-        valgtPeriode={null}
-        perioder={perioder}
-        onPeriodeClick={() => {}}
-        nyesteFørst
-      />,
+      <VurderingsperiodeNavigasjon valgtPeriode={null} perioder={perioder} onPeriodeClick={() => {}} nyesteFørst />,
     );
 
     const list = await screen.findByRole('list');
@@ -108,6 +105,7 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
 
     // Forventet rekkefølge: MÅ_VURDERES nyeste→eldste, deretter vurderte nyeste→eldste
     const expectedOrder = [
+      // MÅ_VURDERES
       '05.04.2025 - 07.04.2025',
       '28.03.2025 - 30.03.2025',
       '15.03.2025 - 18.03.2025',
@@ -117,6 +115,7 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
       '20.01.2025 - 21.01.2025',
       '10.01.2025 - 11.01.2025',
       '02.01.2025 - 05.01.2025',
+      // Vurderte
       '28.12.2024 - 30.12.2024',
       '28.11.2024 - 30.11.2024',
     ];
