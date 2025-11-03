@@ -1,4 +1,8 @@
-import type { k9_klage_kontrakt_klage_KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type {
+  k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto,
+  k9_klage_kontrakt_klage_KlagebehandlingDto,
+  k9_klage_kontrakt_klage_KlageVurderingResultatDto,
+} from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   ung_kodeverk_klage_KlageVurderingType,
@@ -48,7 +52,12 @@ const getOmgjortAarsak = (
   return null;
 };
 
-const getResultatText = (klageresultat: ung_sak_kontrakt_klage_KlageVurderingResultatDto | undefined) => {
+const getResultatText = (
+  klageresultat:
+    | ung_sak_kontrakt_klage_KlageVurderingResultatDto
+    | k9_klage_kontrakt_klage_KlageVurderingResultatDto
+    | undefined,
+) => {
   switch (klageresultat?.klageVurdering) {
     case ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE:
       return 'Avvist fordi klagen ikke oppfyller formkravene';
@@ -75,7 +84,7 @@ interface OwnProps {
   readOnly: boolean;
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto;
   previewVedtakCallback: () => Promise<void>;
-  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] | k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto[];
   behandlingPåVent: boolean;
   submitCallback: (data: { kode: string }[]) => Promise<void>;
 }

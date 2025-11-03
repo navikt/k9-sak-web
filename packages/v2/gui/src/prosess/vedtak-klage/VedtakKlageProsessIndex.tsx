@@ -1,4 +1,8 @@
 import type {
+  k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto,
+  k9_klage_kontrakt_behandling_BehandlingDto,
+} from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -9,8 +13,8 @@ import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
 import { VedtakKlage } from './components/VedtakKlage';
 
 interface OwnProps {
-  behandling: ung_sak_kontrakt_behandling_BehandlingDto;
-  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  behandling: ung_sak_kontrakt_behandling_BehandlingDto | k9_klage_kontrakt_behandling_BehandlingDto;
+  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] | k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto[];
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
 }
