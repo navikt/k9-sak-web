@@ -63,31 +63,28 @@ const EndreVurderingController = ({
 
   const controller = useMemo(() => new AbortController(), []);
 
-  function endreVurdering(nyVurderingsversjon: Partial<Vurderingsversjon>) {
+  const endreVurdering = async (nyVurderingsversjon: Partial<Vurderingsversjon>) => {
     dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
-    api
-      .oppdaterSykdomsVurdering({
+    try {
+      const tilknyttedeDokumenter = nyVurderingsversjon.dokumenter?.map(dokument => dokument.id) || [];
+      await api.oppdaterSykdomsVurdering({
         behandlingUuid,
         id: vurderingsid,
         versjon: nyVurderingsversjon.versjon ?? '',
         tekst: nyVurderingsversjon.tekst,
         resultat: nyVurderingsversjon.resultat,
         perioder: nyVurderingsversjon.perioder ?? [],
-        tilknyttedeDokumenter: nyVurderingsversjon.dokumenter?.map(dokument => dokument.id) || [],
+        tilknyttedeDokumenter,
         manglerLegeerklæring: !!nyVurderingsversjon.manglerLegeerklæring,
-      })
-      .then(
-        () => {
-          onVurderingLagret();
-          dispatch({ type: ActionType.VURDERING_LAGRET });
-          scrollUp();
-        },
-        () => {
-          dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
-          scrollUp();
-        },
-      );
-  }
+      });
+      onVurderingLagret();
+      dispatch({ type: ActionType.VURDERING_LAGRET });
+      scrollUp();
+    } catch {
+      dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+      scrollUp();
+    }
+  };
 
   const sjekkForEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,

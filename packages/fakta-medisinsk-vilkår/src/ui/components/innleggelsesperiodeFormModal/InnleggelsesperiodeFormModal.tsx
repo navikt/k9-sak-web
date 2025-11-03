@@ -3,10 +3,10 @@ import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Personopplysninger } from '@k9-sak-web/types';
 import { Alert, Box, Button, Label, Modal } from '@navikt/ds-react';
+import { k9_sak_kontrakt_sykdom_dokument_SykdomInnleggelseOppdateringResultatDto } from '@navikt/k9-sak-typescript-client/types';
 import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './innleggelsesperiodeFormModal.module.css';
@@ -25,7 +25,9 @@ interface InnleggelsesperiodeFormModal {
   setModalIsOpen: (isOpen: boolean) => void;
   onSubmit: (formState) => void;
   isLoading: boolean;
-  endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
+  endringerPåvirkerAndreBehandlinger: (
+    innleggelsesperioder: Period[],
+  ) => Promise<k9_sak_kontrakt_sykdom_dokument_SykdomInnleggelseOppdateringResultatDto>;
   pleietrengendePart: Personopplysninger['pleietrengendePart'];
 }
 

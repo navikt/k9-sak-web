@@ -63,13 +63,13 @@ const NyVurderingController = ({
   } = state;
   const controller = useMemo(() => new AbortController(), []);
 
-  function lagreVurdering(nyVurderingsversjon: Partial<Vurderingsversjon>) {
+  const lagreVurdering = async (nyVurderingsversjon: Partial<Vurderingsversjon>) => {
     if (vurderingstype && opprettVurderingLink?.requestPayload?.behandlingUuid) {
       dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
       const vurderingsversjonMedType = { ...nyVurderingsversjon, type: vurderingstype };
       const { perioder, resultat, tekst, dokumenter, type, manglerLegeerklæring } = vurderingsversjonMedType;
-      return api
-        .opprettSykdomsVurdering({
+      try {
+        await api.opprettSykdomsVurdering({
           behandlingUuid,
           type,
           perioder,
@@ -77,27 +77,23 @@ const NyVurderingController = ({
           tekst,
           tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
           manglerLegeerklæring: !!manglerLegeerklæring,
-        })
-        .then(
-          () => {
-            onVurderingLagret();
-            dispatch({ type: ActionType.VURDERING_LAGRET });
-            scrollUp();
-          },
-          () => {
-            dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
-            scrollUp();
-          },
-        );
+        });
+        onVurderingLagret();
+        dispatch({ type: ActionType.VURDERING_LAGRET });
+        scrollUp();
+      } catch {
+        dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+        scrollUp();
+      }
     } else {
       dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
     }
-  }
+  };
 
   const sjekkForEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,
   ): Promise<k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto> => {
-    if (vurderingstype && opprettVurderingLink?.requestPayload?.behandlingUuid) {
+    if (vurderingstype && behandlingUuid) {
       const vurderingsversjonMedType = { ...nyVurderingsversjon, type: vurderingstype };
       const { perioder, resultat, tekst, dokumenter, type, manglerLegeerklæring } = vurderingsversjonMedType;
       return api.opprettSykdomsVurdering({

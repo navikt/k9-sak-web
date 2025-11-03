@@ -8,7 +8,7 @@ import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurd
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import Vurderingstype from '../../../types/Vurderingstype';
-import { findHrefByRel, findLinkByRel } from '../../../util/linkUtils';
+import { findHrefByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import VurderingContext from '../../context/VurderingContext';
 import EndreVurderingController from '../endre-vurdering-controller/EndreVurderingController';
@@ -99,13 +99,11 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
       url={url}
       contentRenderer={vurdering => {
         if (editMode) {
-          const endreLink = findLinkByRel(LinkRel.ENDRE_VURDERING, manuellVurdering.links);
           const vurderingsversjon = vurdering.versjoner[0];
 
           const FormComponent = getFormComponent(vurderingstype);
           return (
             <EndreVurderingController
-              endreVurderingLink={endreLink}
               dataTilVurderingUrl={endpoints?.dataTilVurdering}
               formRenderer={(dokumenter, onSubmit, isSubmitting) => {
                 if (Vurderingstype.LIVETS_SLUTTFASE === vurderingstype) {

@@ -2,6 +2,7 @@ import { Period } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
+import { k9_sak_kontrakt_sykdom_dokument_SykdomInnleggelseDto } from '@navikt/k9-sak-typescript-client/types';
 import React, { use, useEffect, useMemo, type JSX } from 'react';
 import { MedisinskVilkårApiContext } from '../../../api/MedisinskVilkårApiContext';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
@@ -32,29 +33,30 @@ const Innleggelsesperiodeoversikt = ({
   const [lagreInnleggelsesperioderFeilet, setLagreInnleggelsesperioderFeilet] = React.useState(false);
   const controller = useMemo(() => new AbortController(), []);
 
-  const innleggelsesperioder = innleggelsesperioderResponse.perioder;
-  const innleggelsesperioderDefault = innleggelsesperioder?.length > 0 ? innleggelsesperioder : [new Period('', '')];
+  const innleggelsesperioder = innleggelsesperioderResponse.perioder ?? [];
+  const innleggelsesperioderDefault =
+    innleggelsesperioder && innleggelsesperioder?.length > 0 ? innleggelsesperioder : [new Period('', '')];
 
   const hentInnleggelsesperioder = () => api.hentSykdomInnleggelse(behandlingUuid);
 
-  const initializeInnleggelsesperiodeData = (response: InnleggelsesperiodeResponse) => ({
+  const initializeInnleggelsesperiodeData = (response: k9_sak_kontrakt_sykdom_dokument_SykdomInnleggelseDto) => ({
     ...response,
-    perioder: response.perioder.map(({ fom, tom }) => new Period(fom, tom)),
+    perioder: response.perioder?.map(({ fom, tom }) => new Period(fom, tom)),
   });
 
-  const updateInnlegelsesperioder = () => {
-    setIsLoading(true);
-    hentInnleggelsesperioder()
-      .then((response: InnleggelsesperiodeResponse) => {
-        setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setHentInnleggelsesperioderFeilet(true);
-      });
+  const updateInnleggelsesperioder = async () => {
+    try {
+      setIsLoading(true);
+      const response = await hentInnleggelsesperioder();
+      setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
+    } catch {
+      setHentInnleggelsesperioderFeilet(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const lagreInnleggelsesperioder = formState => {
+  const lagreInnleggelsesperioder = async formState => {
     setIsLoading(true);
     let nyeInnleggelsesperioder = [];
     if (formState.innleggelsesperioder?.length > 0) {
@@ -63,19 +65,17 @@ const Innleggelsesperiodeoversikt = ({
         .map(periodeWrapper => new Period(periodeWrapper.period.fom, periodeWrapper.period.tom));
     }
 
-    api
-      .oppdaterSykdomInnleggelse({
+    try {
+      await api.oppdaterSykdomInnleggelse({
         behandlingUuid,
         perioder: nyeInnleggelsesperioder,
-      })
-      .then(() => {
-        onInnleggelsesperioderUpdated();
-        updateInnlegelsesperioder();
-      })
-      .catch(() => {
-        setLagreInnleggelsesperioderFeilet(true);
-        setIsLoading(false);
       });
+      onInnleggelsesperioderUpdated();
+      await updateInnleggelsesperioder();
+    } catch {
+      setLagreInnleggelsesperioderFeilet(true);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
