@@ -15,11 +15,11 @@ Hva malen inneholder:
 - `Default`: Interaktiv story uten `play`.
 - `SuccessfulSubmission`: Eksempel på funksjonalitetstest med `play`.
 - `Validation`: Én story som demonstrerer validering med `play`.
-- `PrototypeMock`: Eksempel på prototype-basert mock av klasse-klient i `play`.
+- `APIclient Mock`: Eksempel på klasse-klient i `play`.
 
 Konvensjoner:
 
-- Unngå MSW for nye stories; bruk byggere/fixtures eller prototype-basert mocking.
+- Unngå MSW for nye stories; bruk mock av klient
 
 Språkpolicy:
 

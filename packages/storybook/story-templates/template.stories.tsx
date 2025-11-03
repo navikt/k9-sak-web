@@ -7,25 +7,22 @@ import { useEffect, useState } from 'react';
 type ExampleProps = {
   label: string;
   onSubmit?: (value: string) => void;
+  // Valgfri injeksjon av API-klient for test/mocking i stories
+  apiClient?: {
+    getNavn: () => Promise<{ fornavn: string; etternavn: string }>;
+  };
 };
 
-// Eksempel på klasse-basert API-klient som komponenten bruker internt
-class ExampleApiClient {
-  async getNavn(): Promise<{ fornavn: string; etternavn: string }> {
-    // I ekte kode hadde dette gjort fetch/axios-kall
-    return { fornavn: 'Førnavn', etternavn: 'Etternavn' };
-  }
-}
-
-const client = new ExampleApiClient();
-const ExampleComponent = ({ label, onSubmit }: ExampleProps) => {
+const ExampleComponent = ({ label, onSubmit, apiClient }: ExampleProps) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState<string | undefined>();
   const [navn, setNavn] = useState<{ fornavn: string; etternavn: string }>({ fornavn: '', etternavn: '' });
 
   useEffect(() => {
-    void client.getNavn().then(navn => setNavn(navn));
-  }, []);
+    void (apiClient ?? { getNavn: async () => ({ fornavn: 'Fornavn', etternavn: 'Etternavn' }) })
+      ?.getNavn()
+      .then(navn => setNavn(navn));
+  }, [apiClient]);
   const handleSubmit = async () => {
     if (!value) {
       setError('Feltet må fylles ut');
@@ -49,15 +46,8 @@ const ExampleComponent = ({ label, onSubmit }: ExampleProps) => {
   );
 };
 
-const defaultDecorator = (): Decorator => Story => {
-  ExampleApiClient.prototype.getNavn = async () => ({ fornavn: 'Førnavn', etternavn: 'Etternavn' });
-  return <Story />;
-};
-
-const prototypeMockDecorator = (): Decorator => Story => {
-  ExampleApiClient.prototype.getNavn = async () => ({ fornavn: 'Pål', etternavn: 'Opel' });
-  return <Story />;
-};
+// Fornuftig standardmock for eksemplene i denne malen
+const defaultDecorator = (): Decorator => Story => <Story />;
 
 const meta = {
   title: 'Template/ExampleComponent',
@@ -108,15 +98,17 @@ export const Validation: Story = {
   },
 };
 
-// 4) Prototype-mock: vis hvordan man mocker klasse-klient via prototype
-export const PrototypeMock: Story = {
-  decorators: [prototypeMockDecorator()],
+// 4) API-client mock
+export const ApiClientMock: Story = {
+  decorators: [defaultDecorator()],
   args: {
     label: 'Skriv inn verdi',
+    apiClient: {
+      getNavn: async () => ({ fornavn: 'Pål', etternavn: 'Opel' }),
+    },
   },
   play: async ({ canvas, step }) => {
-    // Mock klasse-klient via prototype
-    await step('Verifiser at mock-et navn vises fra API-klienten', async () => {
+    await step('Verifiser at mock-et navn vises fra injisert API-klient', async () => {
       await expect(canvas.findByText('Navn: Pål Opel')).resolves.toBeInTheDocument();
     });
   },
