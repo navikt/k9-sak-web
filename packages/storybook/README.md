@@ -7,9 +7,23 @@ Retningslinjer:
 
 Konvensjoner:
 
+- For å mocke responser fra API bruker vi falske klienter som sendes inn til komponent
+
+  ```
+    export class FakeBehandlingVelgerBackendApi {
+    async getBehandlingPerioderÅrsaker(): Promise<PerioderMedBehandlingsId> {
+        return { perioderMedÅrsak: [], perioder: [], id: 1 };
+        }
+    }
+  ```
+
 - Unngå MSW for nye stories; bruk mock av klient
 
 Språkpolicy:
 
 - Domenespråk på norsk (f.eks. «Saksoversikt», «Send vedtak»).
 - Tekniske begreper på engelsk (f.eks. endpoint, mock, fetch, feature toggle).
+
+```
+
+```

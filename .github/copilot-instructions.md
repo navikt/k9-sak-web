@@ -310,7 +310,7 @@ For UI, write Storybook interaction tests. If you feel the need to mock HTTP or 
 3. **Error Handling**: Include loading, error, and empty states
 4. **No i18n**: Use plain strings/constants (centralize if reused)
 5. **Language**: Use Norwegian for domain language; keep technical terms in English
-6. **Story templates**: Use `packages/storybook/story-templates` and follow `packages/storybook/story-templates/README.md`.
+6. **Story templates**: Follow the guidelines in `packages/storybook/README.md`.
 7. **NAV Design System**: Prefer @navikt/ds-react components
 8. **CSS Modules**: Use CSS modules for styling, not inline styles
 
