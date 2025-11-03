@@ -1,5 +1,5 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react';
-import { userEvent, within, expect } from 'storybook/test';
+import { userEvent, expect } from 'storybook/test';
 import { Button, TextField } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
 
@@ -84,8 +84,7 @@ export const SuccessfulSubmission: Story = {
   args: {
     label: 'Skriv inn verdi',
   },
-  play: async ({ canvasElement, step, args }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas, step, args }) => {
     await step('Fyll inn tekst og send inn', async () => {
       await userEvent.type(await canvas.findByLabelText(args.label as string), 'ABC');
       await userEvent.click(await canvas.findByRole('button', { name: 'Send' }));
@@ -101,8 +100,7 @@ export const Validation: Story = {
   args: {
     label: 'Skriv inn verdi',
   },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas, step }) => {
     await step('Forsøk å sende uten verdi for å trigge validering', async () => {
       await userEvent.click(await canvas.findByRole('button', { name: 'Send' }));
       await expect(canvas.findByText('Feltet må fylles ut')).resolves.toBeInTheDocument();
@@ -116,10 +114,8 @@ export const PrototypeMock: Story = {
   args: {
     label: 'Skriv inn verdi',
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvas, step }) => {
     // Mock klasse-klient via prototype
-    ExampleApiClient.prototype.getNavn = async () => ({ fornavn: 'Pål', etternavn: 'Opel' });
-    const canvas = within(canvasElement);
     await step('Verifiser at mock-et navn vises fra API-klienten', async () => {
       await expect(canvas.findByText('Navn: Pål Opel')).resolves.toBeInTheDocument();
     });
