@@ -11,9 +11,9 @@ This is a monorepo for NAV's K9 case handling system (k9-sak-web), containing Re
 - **Build Tool**: Vite 7.x
 - **Package Manager**: Yarn 4.6.0 (ALWAYS use `yarn`, NEVER `npm`)
 - **Styling**: CSS Modules + Tailwind CSS + NAV Design System (@navikt/ds-\*)
-- **Testing**: Vitest, React Testing Library, Playwright
+- **Testing**: Storybook, React Testing Library, Playwright
 - **Component Development**: Storybook
-- **Mocking**: Prefer test data builders and `vi.spyOn`/axios mocks (avoid MSW)
+- **Mocking**: Prefer test data builders and module-level mocks. Avoid MSW and avoid `vi.spyOn` for HTTP.
 - **Routing**: react-router 7.x
 - **Forms**: react-hook-form
 
@@ -72,8 +72,8 @@ If updating these, ensure all `@navikt/ft-*` packages are updated to compatible 
 
 ### Testing
 
-- Use Vitest for unit/integration tests
-- Use React Testing Library for component tests
+- Prefer Storybook interaction tests for UI components (primary choice)
+- Use Vitest for pure logic, utilities and hooks (non-UI)
 - Use Playwright for E2E tests
 - Storybook stories should include accessibility tests (addon-a11y)
 - Tests run with `yarn test`, watch mode with `yarn test:watch`
@@ -188,15 +188,16 @@ yarn knip                 # Find unused files/exports
 
 ### Anti-Patterns to Avoid
 
-1. ❌ Using `npm` instead of `yarn`
-2. ❌ Importing from non-V2 code in V2 packages
-3. ❌ Inconsistent NAV Design System package versions
-4. ❌ Ignoring TypeScript errors (fix or properly type)
-5. ❌ Avoid using i18n
-6. ❌ Inline styles (use CSS modules or Tailwind)
-7. ❌ Missing accessibility attributes
-8. ❌ Not running type-check before committing
-9. ❌ Introducing MSW in new tests (prefer fixtures and direct mocks)
+1.  ❌ Using `npm` instead of `yarn`
+2.  ❌ Importing from non-V2 code in V2 packages
+3.  ❌ Inconsistent NAV Design System package versions
+4.  ❌ Ignoring TypeScript errors (fix or properly type)
+5.  ❌ Avoid using i18n
+6.  ❌ Inline styles (use CSS modules or Tailwind)
+7.  ❌ Missing accessibility attributes
+8.  ❌ Not running type-check before committing
+9.  ❌ Introducing MSW in new tests (prefer fixtures and direct mocks)
+10. ❌ Using `vi.spyOn` for HTTP in tests (If you feel the need to mock HTTP or use `vi.spyOn`, the test probably belongs in Storybook instead of Vitest)
 
 ### Git & Collaboration
 

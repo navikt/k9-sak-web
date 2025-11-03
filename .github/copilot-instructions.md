@@ -11,7 +11,8 @@ You're working on **k9-sak-web**, a monorepo containing React/TypeScript applica
 - **Yarn 4.6.0** - ALWAYS use yarn, never npm
 - **NAV Design System** (@navikt/ds-react, @navikt/ds-css, @navikt/ds-tailwind)
 - **CSS Modules + Tailwind CSS** for styling
-- **Vitest** for testing with React Testing Library
+- **Testing**: Prefer Storybook interaction tests for UI components; use Vitest for pure logic and utilities
+- **Mocking**: Prefer test data builders and module-level mocks. Avoid MSW and avoid `vi.spyOn` for HTTP.
 - **react-hook-form** for form management
 - **react-router 7.x** for routing
 
@@ -250,38 +251,42 @@ const isValidData = (data: unknown): data is MyType => {
 const value = data?.property?.nestedProperty ?? defaultValue;
 ```
 
+### Storybook testing (preferred for UI components)
+
+```typescript
+// Example: test a Storybook story using @storybook/test and React Testing Library
+import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import * as stories from './MyComponent.stories';
+
+const { Default } = stories;
+
+test('renders story and handles interaction', async () => {
+  render(<Default {...Default.args} />);
+  await userEvent.click(screen.getByRole('button'));
+  expect(screen.getByText('Lagret')).toBeInTheDocument();
+});
+```
+
 ### Testing Patterns
 
+For UI components, prefer Storybook interaction tests (see Storybook testing section above). Use Vitest for:
+
+- Pure utility functions
+- Hooks that don't render UI
+- Business logic
+
 ```typescript
-import { render, screen } from '@testing-library/react';
+// ✅ Vitest for utilities/logic
 import { expect, test } from 'vitest';
+import { formatDate } from './utils';
 
-test('renders component correctly', () => {
-  render(<MyComponent title="Test" />);
-  expect(screen.getByText('Test')).toBeInTheDocument();
-});
-
-test('handles user interaction', async () => {
-  const onAction = vi.fn();
-  render(<MyComponent onAction={onAction} />);
-
-  await userEvent.click(screen.getByRole('button'));
-  expect(onAction).toHaveBeenCalled();
+test('formats date correctly', () => {
+  expect(formatDate('2024-01-15')).toBe('15.01.2024');
 });
 ```
 
-### Mocking API calls in tests (no MSW)
-
-```typescript
-// ✅ Prefer vi.spyOn on fetch/axios or mock API modules directly
-import axios from 'axios';
-
-test('loads data', async () => {
-  vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { id: '1', title: 'Sak' } });
-  render(<MyComponent />);
-  expect(await screen.findByText('Sak')).toBeInTheDocument();
-});
-```
+For UI, write Storybook interaction tests. If you feel the need to mock HTTP or use `vi.spyOn`, the test probably belongs in Storybook instead of Vitest. For pure logic, use module-level mocks or pass in test doubles via dependency injection.
 
 ## File Naming Conventions
 
@@ -307,8 +312,7 @@ test('loads data', async () => {
 5. **Language**: Use Norwegian for domain language; keep technical terms in English
 6. **Story templates**: Use `packages/storybook/story-templates` and follow `packages/storybook/story-templates/README.md`.
 7. **NAV Design System**: Prefer @navikt/ds-react components
-8. **Testing**: Suggest test cases for new functionality
-9. **CSS Modules**: Use CSS modules for styling, not inline styles
+8. **CSS Modules**: Use CSS modules for styling, not inline styles
 
 ### When refactoring:
 
@@ -344,6 +348,9 @@ const value = data.property; // Could be undefined
 
 // ❌ Don't create inaccessible UI
 <div onClick={handleClick}>Click me</div>
+
+// ❌ Don't use MSW for mocking in tests or vi.spyOn. If vi.spyOn is used, the test should probably be in storybook instead of vitest.
+
 ```
 
 ## Commands You'll See
