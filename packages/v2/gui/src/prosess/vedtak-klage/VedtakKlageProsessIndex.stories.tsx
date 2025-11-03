@@ -1,3 +1,4 @@
+import type { k9_klage_kontrakt_klage_KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
@@ -7,14 +8,27 @@ import {
   ung_kodeverk_behandling_FagsakYtelseType,
   ung_kodeverk_klage_KlageAvvistÅrsak,
   ung_kodeverk_klage_KlageVurderingType,
+  type ung_sak_kontrakt_klage_KlagebehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { FakeVedtakKlageBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeVedtakKlageBackendApi.js';
 import alleKodeverkKlageV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkKlageV2.json';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react';
 import { asyncAction } from '../../storybook/asyncAction';
-import { withFakeVedtakKlageApi } from '../../storybook/decorators/withFakeVedtakKlageApi';
+import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
 import { VedtakKlageProsessIndex } from './VedtakKlageProsessIndex';
+
+export const withFakeVedtakKlageApi =
+  (klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto): Decorator =>
+  Story => {
+    const fakeVedtakKlageBackendApi = new FakeVedtakKlageBackendApi(klageVurdering);
+    return (
+      <VedtakKlageApiContext value={fakeVedtakKlageBackendApi}>
+        <Story />
+      </VedtakKlageApiContext>
+    );
+  };
 
 const behandling = {
   id: 1,
