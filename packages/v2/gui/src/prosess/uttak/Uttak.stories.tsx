@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import Uttak from './Uttak';

@@ -1,7 +1,7 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';

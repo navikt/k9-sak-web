@@ -5,7 +5,7 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';

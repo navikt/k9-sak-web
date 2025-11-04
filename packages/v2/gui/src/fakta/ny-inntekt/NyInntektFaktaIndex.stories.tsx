@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import OpptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 

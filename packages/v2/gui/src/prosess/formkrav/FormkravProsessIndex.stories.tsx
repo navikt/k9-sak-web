@@ -8,8 +8,8 @@ import {
   k9_klage_typer_RolleType,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import type { Meta, StoryObj } from '@storybook/react';
-import userEvent from '@testing-library/user-event';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { userEvent } from '@storybook/testing-library';
 import { expect, fn } from 'storybook/test';
 import { FormkravProsessIndex } from './FormkravProsessIndex';
 

@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import BostedSokerView from './components/BostedSokerView';
 
