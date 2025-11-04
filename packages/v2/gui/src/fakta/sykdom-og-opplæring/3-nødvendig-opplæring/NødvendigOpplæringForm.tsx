@@ -196,7 +196,6 @@ const NødvendigOpplæringForm = ({
     control,
     name: 'tilleggsPerioder',
   });
-
   useEffect(() => {
     if (opplæringIkkeDokumentertMedLegeerklæring) {
       formMethods.setValue('begrunnelse', '');
@@ -361,6 +360,23 @@ const NødvendigOpplæringForm = ({
               Bruk denne vurderingen for andre perioder
             </Checkbox>
           )}
+          {/* Skjult Controller som kobler tilleggsPerioder til RHF-validering ved submit */}
+          <Controller
+            control={formMethods.control}
+            name="tilleggsPerioder"
+            rules={{
+              validate: value => {
+                if (!brukVurderingIAndrePerioder) {
+                  return undefined;
+                }
+                if (Array.isArray(value) && value.length > 0) {
+                  return undefined;
+                }
+                return 'Du må velge minst én periode';
+              },
+            }}
+            render={() => <></>}
+          />
           {brukVurderingIAndrePerioder && (
             <div>
               <Label size="small">I hvilke perioder vil du gjenbruke vurderingen?</Label>
@@ -383,6 +399,12 @@ const NødvendigOpplæringForm = ({
                   </Checkbox>
                 );
               })}
+
+              {formMethods.formState.errors.tilleggsPerioder?.root?.message && (
+                <Alert variant="error" size="small" className="mt-2">
+                  {formMethods.formState.errors.tilleggsPerioder.root?.message}
+                </Alert>
+              )}
             </div>
           )}
           {!readOnly && (
