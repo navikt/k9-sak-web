@@ -32,6 +32,21 @@ export class AuthFixer implements AuthFixConnectedApi {
     return withRedirectTo(resolveLoginURL(response.headers.get('Location')), this.#authDoneRedirectPath);
   }
 
+  private log(level: 'info' | 'debug' | 'warn', txt: string) {
+    const prefix = `${this.toString()}: `;
+    switch (level) {
+      case 'debug':
+        console.debug(`${prefix}${txt}`);
+        break;
+      case 'info':
+        console.info(`${prefix}${txt}`);
+        break;
+      case 'warn':
+        console.warn(`${prefix}${txt}`);
+        break;
+    }
+  }
+
   protected startNewAuthenticationProcess(response: Response, abortSignal: AbortSignal): Promise<AuthResult> {
     const internalCanceller = new AbortController();
     const authResultPromise = new Promise<AuthResult>((resolve, reject) => {
@@ -51,10 +66,11 @@ export class AuthFixer implements AuthFixConnectedApi {
                 if (event.data === 'auth done') {
                   const source = event.source;
                   if (source != null && 'close' in source) {
+                    this.log('debug', 'autentisering ferdig, lukker popup');
                     source.close();
                     resolve(authSuccessResult);
                   } else {
-                    console.info('Kunne ikke lukke popup vindu. Må gjøres manuelt av bruker.');
+                    this.log('info', 'Kunne ikke lukke popup vindu. Må gjøres manuelt av bruker.');
                     resolve(authSuccessExceptPopupResult);
                   }
                 }
@@ -78,18 +94,22 @@ export class AuthFixer implements AuthFixConnectedApi {
     } else {
       const loginURL = this.resolveLoginUrl(response);
       if (loginURL != null) {
+        this.log('debug', `åpner popup`);
         const windowProxy = window.open(loginURL, this.popupTarget, 'height=600,width=800');
         if (windowProxy != null) {
           // Poll to check if the window has been closed without auth being completed
           const intervalId = setInterval(() => {
             if (windowProxy.closed) {
-              console.info(`autentisering popup vindu ble lukket før autentisering var fullført.`);
+              this.log('info', `autentisering popup vindu ble lukket før autentisering var fullført.`);
               clearInterval(intervalId);
               internalCanceller.abort(intentionalAbortReason);
             }
           }, this.#popupClosedCheckInterval);
           // Avbryt sjekk på om popup har blitt lukka prematurt.
-          void authResultPromise.catch().finally(() => clearInterval(intervalId));
+          void authResultPromise.catch().finally(() => {
+            this.log('debug', 'stopp polling for popup vindu lukket');
+            clearInterval(intervalId);
+          });
           abortSignal.addEventListener(
             'abort',
             () => {
@@ -99,7 +119,10 @@ export class AuthFixer implements AuthFixConnectedApi {
             { signal: internalCanceller.signal },
           );
         } else {
-          console.warn(`autentisering popup window proxy null. Vil ikke kunne ha kontroll med det gjennom prosessen.`);
+          this.log(
+            'warn',
+            `autentisering popup window proxy null. Vil ikke kunne ha kontroll med det gjennom prosessen.`,
+          );
         }
       } else {
         internalCanceller.abort(new Error(`loginURL ble ikke utledet, kan ikke utføre autentisering med popup`));
