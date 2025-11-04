@@ -1,0 +1,4 @@
+import type { foreldrepenger_tilbakekreving_web_app_tjenester_behandling_aksjonspunkt_dto_AksjonspunktDto } from '@navikt/k9-tilbake-typescript-client/types';
+
+export type AksjonspunktDto =
+  foreldrepenger_tilbakekreving_web_app_tjenester_behandling_aksjonspunkt_dto_AksjonspunktDto;

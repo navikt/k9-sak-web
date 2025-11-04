@@ -1,0 +1,3 @@
+import type { sif_tilbakekreving_web_app_tjenester_behandling_aksjonspunkt_dto_AksjonspunktDto } from '@navikt/ung-tilbake-typescript-client/types';
+
+export type AksjonspunktDto = sif_tilbakekreving_web_app_tjenester_behandling_aksjonspunkt_dto_AksjonspunktDto;
