@@ -1,14 +1,9 @@
-import type {
-  k9_klage_kodeverk_behandling_BehandlingType,
-  k9_klage_kontrakt_behandling_BehandlingDto,
-  k9_klage_kontrakt_behandling_part_PartDto,
-  k9_klage_kontrakt_klage_KlagebehandlingDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type {
-  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  ung_sak_kontrakt_fagsak_FagsakDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
-
+import type { Arbeidsgivere } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/Arbeidsgivere.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
+import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useState } from 'react';
@@ -29,21 +24,21 @@ interface TransformedValues {
   påklagdBehandlingInfo: {
     påklagBehandlingUuid: string;
     påklagBehandlingVedtakDato: string | undefined;
-    påklagBehandlingType: k9_klage_kodeverk_behandling_BehandlingType;
+    påklagBehandlingType: K9KlageBehandlingDto['type'] | UngSakBehandlingDto['type'];
   } | null;
-  valgtKlagePart: k9_klage_kontrakt_behandling_part_PartDto | undefined;
+  valgtKlagePart: PartDto | undefined;
 }
 
 interface OwnProps {
-  arbeidsgiverOpplysningerPerId: ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[];
-  fagsakPerson: ung_sak_kontrakt_fagsak_FagsakDto['person'];
-  klageVurdering: k9_klage_kontrakt_klage_KlagebehandlingDto;
-  parterMedKlagerett?: k9_klage_kontrakt_behandling_part_PartDto[];
+  arbeidsgiverOpplysningerPerId: Arbeidsgivere;
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[];
+  fagsakPerson: FagsakDto['person'];
+  klageVurdering: KlagebehandlingDto;
+  parterMedKlagerett?: PartDto[];
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   submitCallback: (values: TransformedValues[]) => Promise<void>;
-  valgtPartMedKlagerett?: k9_klage_kontrakt_behandling_part_PartDto;
+  valgtPartMedKlagerett?: PartDto;
 }
 
 /**
@@ -95,8 +90,8 @@ export const FormkravKlageFormKa = ({
 
 export const transformValues = (
   values: FormValuesKa,
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
-  parterMedKlagerett: k9_klage_kontrakt_behandling_part_PartDto[],
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[],
+  parterMedKlagerett: PartDto[],
 ) => ({
   erKlagerPart: values.erKlagerPart ?? false,
   erFristOverholdt: values.erFristOverholdt ?? false,
@@ -113,11 +108,12 @@ export const transformValues = (
 });
 
 const buildInitialValues = (
-  klageVurdering: k9_klage_kontrakt_klage_KlagebehandlingDto,
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
-  valgtPartMedKlagerett?: k9_klage_kontrakt_behandling_part_PartDto,
+  klageVurdering: KlagebehandlingDto,
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[],
+  valgtPartMedKlagerett?: PartDto,
 ) => {
-  const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkravResultatKA : null;
+  const klageFormkavResultatKa =
+    klageVurdering && 'klageFormkravResultatKA' in klageVurdering ? klageVurdering.klageFormkravResultatKA : null;
   return {
     vedtak: klageFormkavResultatKa ? getPaklagdVedtak(klageFormkavResultatKa, avsluttedeBehandlinger) : '',
     begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,

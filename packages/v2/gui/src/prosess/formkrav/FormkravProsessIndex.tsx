@@ -1,29 +1,26 @@
-import type {
-  k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_klage_kontrakt_behandling_BehandlingDto,
-  k9_klage_kontrakt_behandling_part_PartDto,
-  k9_klage_kontrakt_klage_KlagebehandlingDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type {
-  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  ung_sak_kontrakt_fagsak_FagsakDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { Arbeidsgivere } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/Arbeidsgivere.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
+import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { FormkravKlageFormKa } from './components/FormkravKlageFormKa';
 import { FormkravKlageFormNfp } from './components/FormkravKlageFormNfp';
 
 interface OwnProps {
-  behandling: k9_klage_kontrakt_behandling_BehandlingDto;
-  klageVurdering: k9_klage_kontrakt_klage_KlagebehandlingDto;
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[];
-  aksjonspunkter: k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  behandling: K9KlageBehandlingDto | UngSakBehandlingDto;
+  klageVurdering: KlagebehandlingDto;
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[];
+  aksjonspunkter: AksjonspunktDto[];
   submitCallback: (data: any) => Promise<void>;
   isReadOnly: boolean;
   readOnlySubmitButton: boolean;
-  parterMedKlagerett?: k9_klage_kontrakt_behandling_part_PartDto[];
-  valgtPartMedKlagerett?: k9_klage_kontrakt_behandling_part_PartDto;
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
-  arbeidsgiverOpplysningerPerId: ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
+  parterMedKlagerett?: PartDto[];
+  valgtPartMedKlagerett?: PartDto;
+  fagsak: FagsakDto;
+  arbeidsgiverOpplysningerPerId: Arbeidsgivere;
 }
 
 export const FormkravProsessIndex = ({
