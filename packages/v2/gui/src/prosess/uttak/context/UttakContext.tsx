@@ -142,7 +142,7 @@ export const useUttakContext = () => {
 
   const { behandling, uttakApi, uttaksperiodeListe } = uttakContext;
 
-  const { data: arbeidsgivere, isLoading: lasterArbeidsgivere } = useQuery<ArbeidsgiverOversikt['arbeidsgivere']>({
+  const { data: arbeidsgivere } = useQuery({
     queryKey: ['uttak-arbeidsgivere', behandling.uuid],
     queryFn: async () => {
       const arbeidsgivere = await uttakApi.getArbeidsgivere(behandling.uuid);
@@ -163,7 +163,7 @@ export const useUttakContext = () => {
    * og må trigges manuelt ved behov. Når uthentingen av uttak senere er flyttet over til ny api-client
    * kan denne endres til å være aktivert ved mount.
    */
-  const { refetch: hentUttak, isFetching: lasterUttak } = useQuery<UttaksplanMedUtsattePerioder>({
+  const { refetch: hentUttak } = useQuery({
     queryKey: ['uttak', behandling.uuid],
     queryFn: async () => {
       const hentetUttak = await uttakApi.hentUttak(behandling.uuid);
@@ -193,9 +193,8 @@ export const useUttakContext = () => {
     harAksjonspunkt: uttakContext.harAksjonspunkt,
     harNoenAksjonspunkter: uttakContext.harNoenAksjonspunkter,
     harAlleAksjonspunkter: uttakContext.harAlleAksjonspunkter,
-    lasterArbeidsgivere,
+    inntektsgraderinger,
     hentUttak,
     uttaksperiodeListe,
-    lasterUttak,
   };
 };
