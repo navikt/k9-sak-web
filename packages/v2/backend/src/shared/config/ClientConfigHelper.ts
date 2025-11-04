@@ -89,7 +89,7 @@ export class ClientConfigHelper {
               `Auth flow aborted, could not automatically authenticate and retry request. This request will fail.`,
             );
             const retryURL = withRedirectToCurrentLocation(resolveLoginURL(response.headers.get('Location')));
-            throw new AuthAbortedError(retryURL);
+            throw new AuthAbortedError(retryURL, authFixer);
           }
         }
         return response;
