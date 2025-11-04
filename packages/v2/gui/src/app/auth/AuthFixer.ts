@@ -14,10 +14,10 @@ export class AuthFixer implements AuthFixConnectedApi {
   readonly #popupClosedCheckInterval: number;
   readonly #id: string;
 
-  constructor(authDoneRedirectPath: string, popupClosedCheckInterval: number = 1483) {
+  constructor(authDoneRedirectPath: string, id: string | null = null, popupClosedCheckInterval: number = 1483) {
     this.#authDoneRedirectPath = authDoneRedirectPath;
     this.#popupClosedCheckInterval = popupClosedCheckInterval;
-    this.#id = `${Math.floor(Math.random() * 10000)}`;
+    this.#id = id ?? `${Math.floor(Math.random() * 10000)}`;
   }
 
   get popupTarget() {

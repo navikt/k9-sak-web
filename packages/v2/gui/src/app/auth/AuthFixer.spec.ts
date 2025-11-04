@@ -461,7 +461,7 @@ describe('AuthFixer process behaviour', () => {
       return new URL('https://example.com/login');
     }
   }
-  const fixer = new TstAuthFixer('/after/redir', 10);
+  const fixer = new TstAuthFixer('/after/redir', null, 10);
   const response = new Response(null, {
     status: 401,
     headers: {
