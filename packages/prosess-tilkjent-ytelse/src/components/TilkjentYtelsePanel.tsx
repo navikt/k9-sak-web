@@ -1,4 +1,4 @@
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Feriepengegrunnlag } from '@k9-sak-web/types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -13,6 +13,7 @@ import {
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import { FeriepengerPanel } from './feriepenger';
 
 const perioderMedClassName = [];
 
@@ -49,6 +50,7 @@ interface PureOwnProps {
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   isUngdomsytelseFagsak: boolean;
+  feriepengegrunnlag?: Feriepengegrunnlag | null;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -59,11 +61,13 @@ const TilkjentYtelsePanelImpl = ({
   readOnly,
   arbeidsgiverOpplysningerPerId,
   isUngdomsytelseFagsak,
+  feriepengegrunnlag,
 }: Partial<PureOwnProps>) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
   const vurderTilbaketrekkAP = finnTilbaketrekkAksjonspunkt(aksjonspunkter);
   const opphoersdato = beregningsresultat?.opphoersdato;
+
   return (
     <>
       <Heading size="small" level="2">
@@ -78,6 +82,16 @@ const TilkjentYtelsePanelImpl = ({
           kodeverkNavnFraKode={kodeverkNavnFraKode}
           isUngdomsytelseFagsak={isUngdomsytelseFagsak}
         />
+      )}
+
+      {feriepengegrunnlag && feriepengegrunnlag.andeler && feriepengegrunnlag.andeler.length > 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <FeriepengerPanel
+            feriepengegrunnlag={feriepengegrunnlag}
+            kodeverkNavnFraKode={kodeverkNavnFraKode}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          />
+        </div>
       )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (

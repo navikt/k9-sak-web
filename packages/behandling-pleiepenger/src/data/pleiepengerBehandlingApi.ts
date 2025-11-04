@@ -1,4 +1,4 @@
-import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { createRequestApi, RestApiConfigBuilder } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
@@ -54,6 +54,7 @@ export enum PleiepengerBehandlingApiKeys {
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
   PLEIEPENGER_INNTEKTSGRADERING = 'PLEIEPENGER_INNTEKTSGRADERING',
+  FERIEPENGEGRUNNLAG = 'FERIEPENGEGRUNNLAG',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -94,6 +95,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandling-perioder-årsak-med-vilkår', PleiepengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
   .withRel('beregning-koblinger-til-vurdering', PleiepengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
   .withRel('pleiepenger-inntektsgradering', PleiepengerBehandlingApiKeys.PLEIEPENGER_INNTEKTSGRADERING)
+  .withRel('feriepengegrunnlag', PleiepengerBehandlingApiKeys.FERIEPENGEGRUNNLAG)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
