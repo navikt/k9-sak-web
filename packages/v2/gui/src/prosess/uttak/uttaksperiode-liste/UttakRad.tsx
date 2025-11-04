@@ -57,7 +57,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
     p => p.periode.fom === uttak.periode.fom && p.periode.tom === uttak.periode.tom,
   );
   
-  // Skal være skravert på skrå, om perioden er gradert mot tilsyn /🟩/
+  // Skal være skravert diagonalt, om perioden er gradert mot tilsyn /🟩/
   const erGradertMotTilsyn = !erGradertMotInntekt && årsaker.some(
     årsak => årsak === Årsak.GRADERT_MOT_TILSYN
   );
@@ -68,7 +68,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
     uttakIndikatorAvslått: uttaksgrad === 0, // Rød indikator 🟥
     uttakIndikatorInnvilget: (uttaksgrad ?? 0) > 0, // Grønn indikator 🟩
     uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt, // Vertikalt skravert indikator (grønn/hvit) |🟩|
-    uttakIndikatorInnvilgetDelvis: erGradertMotTilsyn, // Skrå skravert indikator (grønn/hvit) /🟩/
+    uttakIndikatorInnvilgetDelvis: erGradertMotTilsyn, // Diagonalt skravert indikator (grønn/hvit) /🟩/
   });
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
