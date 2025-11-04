@@ -143,11 +143,17 @@ export const useUttakContext = () => {
   const { behandling, uttakApi, uttaksperiodeListe } = uttakContext;
 
   const { data: arbeidsgivere, isLoading: lasterArbeidsgivere } = useQuery<ArbeidsgiverOversikt['arbeidsgivere']>({
-    queryKey: ['arbeidsgivere', behandling.uuid],
+    queryKey: ['uttak-arbeidsgivere', behandling.uuid],
     queryFn: async () => {
       const arbeidsgivere = await uttakApi.getArbeidsgivere(behandling.uuid);
       return arbeidsgivere.arbeidsgivere ?? {};
     },
+    enabled: !!behandling.uuid,
+  });
+
+  const { data: inntektsgraderinger } = useQuery({
+    queryKey: ['uttak-inntektsgraderinger', behandling.uuid],
+    queryFn: async () => uttakApi.hentInntektsgraderinger(behandling.uuid),
     enabled: !!behandling.uuid,
   });
 

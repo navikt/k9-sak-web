@@ -35,7 +35,7 @@ interface UttakProps {
 }
 
 const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { erSakstype } = useUttakContext();
+  const { erSakstype, inntektsgraderinger } = useUttakContext();
   const {
     periode,
     uttaksgrad,
@@ -45,17 +45,30 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
     endringsstatus,
     manueltOverstyrt = false,
   } = uttak;
-
+  
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsak.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
   const visPleiebehovProsent = !erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE);
-  const erGradertMotInntekt = årsaker.some(årsak => årsak === Årsak.AVKORTET_MOT_INNTEKT);
+  
+  // Årsaken AVKORTET_MOT_INNTEKT betyr at perioden er gradert mot ARBEIDSTID (!)
+  // Perioden er gradert mot inntekt om det foreligger en inntektsgradering (for perioden)
+  // Skal skraveres vertikalt om perioden er gradert mot inntekt |🟩|
+  const erGradertMotInntekt = inntektsgraderinger?.perioder?.some(
+    p => p.periode.fom === uttak.periode.fom && p.periode.tom === uttak.periode.tom,
+  );
+  
+  // Skal være skravert på skrå, om perioden er gradert mot tilsyn /🟩/
+  const erGradertMotTilsyn = !erGradertMotInntekt && årsaker.some(
+    årsak => årsak === Årsak.GRADERT_MOT_TILSYN
+  );
 
+  // Om perioden er gradert mot arbeidstid (altså årsaken AVKORTET_MOT_INNTEKT) skal indikatoren være hel-grønn 🟩
+  
   const uttakGradIndikatorCls = cx('uttakIndikator', {
-    uttakIndikatorAvslått: uttaksgrad === 0,
-    uttakIndikatorInnvilget: (uttaksgrad ?? 0) > 0,
-    uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt,
-    uttakIndikatorInnvilgetDelvis: !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN),
+    uttakIndikatorAvslått: uttaksgrad === 0, // Rød indikator 🟥
+    uttakIndikatorInnvilget: (uttaksgrad ?? 0) > 0, // Grønn indikator 🟩
+    uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt, // Vertikalt skravert indikator (grønn/hvit) |🟩|
+    uttakIndikatorInnvilgetDelvis: erGradertMotTilsyn, // Skrå skravert indikator (grønn/hvit) /🟩/
   });
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
