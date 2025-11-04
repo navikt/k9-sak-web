@@ -48,7 +48,7 @@ class FakeAuthFixer implements AuthFixApi {
   }
 }
 
-describe('MultiSequentialAuthFixer', () => {
+describe('ThisOrOtherAuthFixer', () => {
   const response = new Response(null, { status: 401, headers: { location: 'test' } });
   const aborter = new AbortController();
   const fake1 = new FakeAuthFixer('fake1');
