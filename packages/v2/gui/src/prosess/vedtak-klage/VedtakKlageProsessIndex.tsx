@@ -1,11 +1,6 @@
-import type {
-  k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_klage_kontrakt_behandling_BehandlingDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type {
-  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { assertDefined } from '../../utils/validation/assertDefined';
@@ -13,8 +8,8 @@ import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
 import { VedtakKlage } from './components/VedtakKlage';
 
 interface OwnProps {
-  behandling: ung_sak_kontrakt_behandling_BehandlingDto | k9_klage_kontrakt_behandling_BehandlingDto;
-  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] | k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  behandling: K9KlageBehandlingDto | UngSakBehandlingDto;
+  aksjonspunkter: AksjonspunktDto[];
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
 }

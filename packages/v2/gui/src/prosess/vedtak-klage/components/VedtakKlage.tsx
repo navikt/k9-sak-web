@@ -1,14 +1,9 @@
-import type {
-  k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_klage_kontrakt_klage_KlagebehandlingDto,
-  k9_klage_kontrakt_klage_KlageVurderingResultatDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { KlageVurderingResultatDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlageVurderingResultatDto.js';
 import {
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type ung_sak_kontrakt_klage_KlagebehandlingDto,
-  type ung_sak_kontrakt_klage_KlageVurderingResultatDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
@@ -24,9 +19,7 @@ const omgjoerTekstMap = {
   DELVIS_MEDHOLD_I_KLAGE: 'Vedtaket er delvis omgjort til gunst',
 };
 
-export const getAvvisningsAarsaker = (
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto,
-) => {
+export const getAvvisningsAarsaker = (klageVurdering: KlagebehandlingDto) => {
   if (
     'klageFormkravResultatKA' in klageVurdering &&
     klageVurdering.klageFormkravResultatKA &&
@@ -40,9 +33,7 @@ export const getAvvisningsAarsaker = (
   return null;
 };
 
-const getOmgjortAarsak = (
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto,
-) => {
+const getOmgjortAarsak = (klageVurdering: KlagebehandlingDto) => {
   if (klageVurdering.klageVurderingResultatNK) {
     return klageVurdering.klageVurderingResultatNK.klageMedholdArsakNavn;
   }
@@ -52,12 +43,7 @@ const getOmgjortAarsak = (
   return null;
 };
 
-const getResultatText = (
-  klageresultat:
-    | ung_sak_kontrakt_klage_KlageVurderingResultatDto
-    | k9_klage_kontrakt_klage_KlageVurderingResultatDto
-    | undefined,
-) => {
+const getResultatText = (klageresultat: KlageVurderingResultatDto | undefined) => {
   switch (klageresultat?.klageVurdering) {
     case ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE:
       return 'Avvist fordi klagen ikke oppfyller formkravene';
@@ -82,9 +68,9 @@ const getResultatText = (
 
 interface OwnProps {
   readOnly: boolean;
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto;
+  klageVurdering: KlagebehandlingDto;
   previewVedtakCallback: () => Promise<void>;
-  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] | k9_klage_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  aksjonspunkter: AksjonspunktDto[];
   behandlingPåVent: boolean;
   submitCallback: (data: { kode: string }[]) => Promise<void>;
 }
