@@ -1,0 +1,32 @@
+
+## Denne filen brukes til å sette opp utviklingsmiljø for copilot-agenter som kjører i repoet 
+## Uten denne får vi ikke autentisert mot https://npm.pkg.github.com og får ikke installert pakker
+## https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment
+
+name: Copilot Setup Steps
+
+permissions:
+  contents: read
+  packages: read
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    name: Setup development environment for Copilot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v5
+
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
+        with:
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}

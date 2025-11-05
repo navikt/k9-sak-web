@@ -71,6 +71,7 @@ const FaktaInstitusjonIndex = () => {
             valgtPeriode={valgtPeriode}
             perioder={perioderMappet}
             onPeriodeClick={setValgtPeriode}
+            nyesteFørst={false}
           />
         )}
         detailSection={() =>

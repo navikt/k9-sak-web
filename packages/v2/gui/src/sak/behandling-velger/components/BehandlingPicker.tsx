@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
@@ -31,15 +31,14 @@ import {
 const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
   switch (behandlingType) {
     case BehandlingDtoType.FØRSTEGANGSSØKNAD:
-      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE);
-
     case k9KlageBehandlingType.KLAGE:
-      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
-
     case k9KlageBehandlingType.TILBAKEKREVING:
     case k9KlageBehandlingType.REVURDERING_TILBAKEKREVING:
-      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
-
+      return kodeverkNavnFraKode(
+        behandlingType,
+        KodeverkType.BEHANDLING_TYPE,
+        finnKodeverkTypeForBehandlingType(behandlingType),
+      );
     default:
       return 'Viderebehandling';
   }
@@ -353,7 +352,7 @@ const BehandlingPicker = ({
               ? kodeverkNavnFraKode(
                   valgtBehandling.behandlingsresultat.type,
                   KodeverkType.BEHANDLING_RESULTAT_TYPE,
-                  erTilbakekreving(valgtBehandling.type) ? 'kodeverkTilbake' : 'kodeverk',
+                  finnKodeverkTypeForBehandlingType(valgtBehandling.type),
                 )
               : undefined
           }

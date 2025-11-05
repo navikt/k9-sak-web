@@ -16,7 +16,8 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
+import type { SaveKlageParams } from '../felles/SaveKlageParams';
+import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 import styles from './behandleKlageFormNfp.module.css';
 import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
@@ -25,7 +26,7 @@ import { KlageVurderingRadioOptionsNfp, TILBAKEKREVING_HJEMMEL } from './KlageVu
 interface BehandleKlageFormNfpProps {
   fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
   klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
-  saveKlage: () => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<void>;
   submitCallback: (values: TransformValues[]) => Promise<void>;
   isReadOnly: boolean;
   previewCallback: () => Promise<void>;
@@ -53,10 +54,10 @@ export const BehandleKlageFormNfp = ({
     defaultValues: buildInitialValues(klageVurdering, fagsak),
   });
   const erPåklagdBehandlingTilbakekreving = getErPåklagdBehandlingTilbakekreving(klageVurdering);
-  const handleSubmit = (values: BehandleKlageFormNfpFormValues) => {
+  const handleSubmit = async (values: BehandleKlageFormNfpFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback([transformValues(values, fagsak, erPåklagdBehandlingTilbakekreving)]);
+      await submitCallback([transformValues(values, fagsak, erPåklagdBehandlingTilbakekreving)]);
     } finally {
       setIsSubmitting(false);
     }
@@ -129,6 +130,7 @@ export const BehandleKlageFormNfp = ({
                 saveKlage={saveKlage}
                 readOnly={isReadOnly}
                 aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+                isSubmitting={isSubmitting}
               />
             </HStack>
           )}
@@ -156,20 +158,20 @@ export const buildInitialValues = (
       : null,
   klageVurdering: klageVurdering.klageVurderingResultatNFP
     ? klageVurdering.klageVurderingResultatNFP.klageVurdering
-    : null,
-  begrunnelse: klageVurdering.klageVurderingResultatNFP ? klageVurdering.klageVurderingResultatNFP.begrunnelse : null,
+    : '',
+  begrunnelse: klageVurdering.klageVurderingResultatNFP ? klageVurdering.klageVurderingResultatNFP.begrunnelse : '',
   fritekstTilBrev: klageVurdering.klageVurderingResultatNFP
     ? klageVurdering.klageVurderingResultatNFP.fritekstTilBrev
-    : null,
+    : '',
 });
 
 interface TransformValues {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
   klageHjemmel: string | null;
-  klageVurderingType: string | null;
-  fritekstTilBrev: string | null;
-  begrunnelse: string | null;
+  klageVurderingType: string;
+  fritekstTilBrev: string;
+  begrunnelse: string;
   kode: string;
 }
 
