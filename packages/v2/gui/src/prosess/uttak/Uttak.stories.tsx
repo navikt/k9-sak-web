@@ -278,9 +278,9 @@ export const UttakGradertMotInntekt: Story = {
     const user = userEvent.setup();
 
     await step('Viser riktige perioder', async () => {
-      await waitFor(() => {
+      await waitFor(async () => {
         const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-        expect(buttons.length).toEqual(3);
+        await expect(buttons.length).toEqual(3);
       });
     });
 
@@ -288,18 +288,18 @@ export const UttakGradertMotInntekt: Story = {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
 
       if (buttons[0]) await user.click(buttons[0]);
-      await waitFor(() => {
-        expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
+      await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
 
       if (buttons[1]) await user.click(buttons[1]);
-      await waitFor(() => {
-        expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
+      await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
 
       if (buttons[2]) await user.click(buttons[2]);
-      await waitFor(() => {
-        expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
+      await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
     });
   },
