@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect } from 'storybook/test';
 import MenyEndreBehandlendeEnhetIndexV2 from './MenyEndreBehandlendeEnhetIndex';

@@ -13,7 +13,7 @@
  * - Skjemavalidering
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn, userEvent, within, expect, waitFor, fireEvent } from 'storybook/test';
 import { action } from 'storybook/actions';
 import dayjs from 'dayjs';

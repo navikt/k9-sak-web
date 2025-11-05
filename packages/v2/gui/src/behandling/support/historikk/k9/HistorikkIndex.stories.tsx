@@ -2,7 +2,7 @@ import { withFakeHistorikkBackend } from '@k9-sak-web/gui/storybook/decorators/w
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import HistorikkIndex from './HistorikkIndex.js';
 
