@@ -2589,7 +2589,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    msw: "npm:2.11.6"
+    msw: "npm:2.12.0"
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
@@ -2614,7 +2614,7 @@ __metadata:
     classnames: "npm:2.5.1"
     cors: "npm:^2.8.5"
     dayjs: "npm:1.11.19"
-    msw: "npm:2.11.6"
+    msw: "npm:2.12.0"
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
@@ -2633,7 +2633,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    msw: "npm:2.11.6"
+    msw: "npm:2.12.0"
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
@@ -2655,7 +2655,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    msw: "npm:2.11.6"
+    msw: "npm:2.12.0"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
@@ -10058,7 +10058,7 @@ __metadata:
     knip: "npm:^5.67.1"
     lint-staged: "npm:16.2.6"
     loose-ts-check: "npm:^2.0.0"
-    msw: "npm:2.11.6"
+    msw: "npm:2.12.0"
     msw-storybook-addon: "npm:^2.0.6"
     postcss: "npm:^8.5.6"
     postcss-import: "npm:^16.1.1"
@@ -10664,9 +10664,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.11.6":
-  version: 2.11.6
-  resolution: "msw@npm:2.11.6"
+"msw@npm:2.12.0":
+  version: 2.12.0
+  resolution: "msw@npm:2.12.0"
   dependencies:
     "@inquirer/confirm": "npm:^5.0.0"
     "@mswjs/interceptors": "npm:^0.40.0"
@@ -10693,7 +10693,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10/3132d42229a5d9b558e3b2a112b9f8d20798f5e0a74998e432864ff35685a09f4f14a2c3f56f6a27da4fa37625162d010bfd79f81ab53b4c520cc67f2a2a6339
+  checksum: 10/aee1906ad57097b978d8581ccb7e001103de86983048923bc86b2962c9ba37874408c327b974d77d28ed18771ac5558b21f39a09d966a070ff371175c8b4595a
   languageName: node
   linkType: hard
 
