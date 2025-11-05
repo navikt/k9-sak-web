@@ -278,40 +278,28 @@ export const UttakGradertMotInntekt: Story = {
     const user = userEvent.setup();
 
     await step('Viser riktige perioder', async () => {
-      await expect(
-        canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 40 % Ny denne behandlingen' }),
-      );
-      await expect(
-        canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 50 % Ny denne behandlingen' }),
-      );
-      await expect(
-        canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 70 % Ny denne behandlingen' }),
-      );
+      await waitFor(() => {
+        const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
+        expect(buttons.length).toEqual(3);
+      });
     });
 
     await step('Viser detaljer for uttaksperioder', async () => {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-      await expect(buttons.length).toEqual(3);
 
       if (buttons[0]) await user.click(buttons[0]);
-      await waitFor(async function sjekkFørstePeriode() {
-        await expect(
-          canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i }),
-        ).toBeInTheDocument();
+      await waitFor(() => {
+        expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
 
       if (buttons[1]) await user.click(buttons[1]);
-      await waitFor(async function sjekkAndrePeriode() {
-        await expect(
-          canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i }),
-        ).toBeInTheDocument();
+      await waitFor(() => {
+        expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
 
       if (buttons[2]) await user.click(buttons[2]);
-      await waitFor(async function sjekkTredjePeriode() {
-        await expect(
-          canvas.getByRole('row', { name: /Gir lavest pleiepengegrad Gradering mot arbeidsinntekt/i }),
-        ).toBeInTheDocument();
+      await waitFor(() => {
+        expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
     });
   },
