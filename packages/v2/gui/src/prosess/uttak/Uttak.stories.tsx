@@ -231,9 +231,9 @@ export const UttakMedUlikeStatuser: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser riktige perioder', async () => {
-      await waitFor(() => {
+      await waitFor(async () => {
         const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-        expect(buttons.length).toEqual(6);
+        await expect(buttons.length).toEqual(6);
       });
     });
   },
