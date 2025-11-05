@@ -4118,15 +4118,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-a11y@npm:10.0.3":
-  version: 10.0.3
-  resolution: "@storybook/addon-a11y@npm:10.0.3"
+"@storybook/addon-a11y@npm:10.0.4":
+  version: 10.0.4
+  resolution: "@storybook/addon-a11y@npm:10.0.4"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
     axe-core: "npm:^4.2.0"
   peerDependencies:
-    storybook: ^10.0.3
-  checksum: 10/b35e865065e2f0bfea61fa097d174c0f5780d51a5501919545919804885e4691e5ce304165ecfae0244a0e6ed00259dbc0da28d4801d3312db21a0f9a63482c2
+    storybook: ^10.0.4
+  checksum: 10/a617d8d564e45dec4b4a178ed61d78295cbb09bd1ae250ad6b203501d96cc79af15d48155d3539041f1b740eec9a3497e4df96fe2af1564356515ca0bbad797f
   languageName: node
   linkType: hard
 
@@ -10096,7 +10096,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     "@sentry/browser": "npm:10.22.0"
     "@sentry/cli": "npm:2.57.0"
-    "@storybook/addon-a11y": "npm:10.0.3"
+    "@storybook/addon-a11y": "npm:10.0.4"
     "@storybook/addon-docs": "npm:10.0.3"
     "@storybook/react-vite": "npm:10.0.3"
     "@storybook/test-runner": "npm:^0.24.1"
