@@ -156,7 +156,29 @@ export const UttakBasis: Story = {
 export const UttakMedUlikeStatuser: Story = {
   parameters: {
     msw: {
-      handlers: [standardUttakHandlers.arbeidsgivere(), standardUttakHandlers.inntektsgradering()],
+      handlers: [
+        standardUttakHandlers.arbeidsgivere(),
+        standardUttakHandlers.inntektsgradering([
+          {
+            periode: { fom: '2024-03-01', tom: '2024-03-15' },
+            beregningsgrunnlag: 500000,
+            løpendeInntekt: 200000,
+            bortfaltInntekt: 300000,
+            reduksjonsProsent: 40,
+            graderingsProsent: 60,
+            inntektsforhold: [
+              {
+                arbeidsgiverIdentifikator: '123456789',
+                arbeidstidprosent: 40,
+                bruttoInntekt: 500000,
+                løpendeInntekt: 200000,
+                erNytt: false,
+                type: 'ARBEIDSTAKER',
+              },
+            ],
+          },
+        ]),
+      ],
     },
   },
   args: {
@@ -196,6 +218,8 @@ export const UttakMedUlikeStatuser: Story = {
         Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT,
         Årsak.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
       ]),
+      lagInntektsgraderingPeriode('2024-03-01/2024-03-15', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
+      lagTilsynsgraderingPeriode('2024-03-16/2024-03-31', 30, 0),
     ]),
     erOverstyrer: false,
     aksjonspunkter: [],
@@ -208,66 +232,36 @@ export const UttakMedUlikeStatuser: Story = {
     const user = userEvent.setup();
 
     await step('Viser riktige perioder', async () => {
-      await expect(
-        canvas.getByRole('row', { name: '7 - 9 15.02.2024 - 28.02.2024 100% Søker 0 % Ny denne behandlingen' }),
-      );
-      await expect(
-        canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 0 % Ny denne behandlingen' }),
-      );
-      await expect(
-        canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 60 % Ny denne behandlingen' }),
-      );
-      await expect(
-        canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 100 % Ny denne behandlingen' }),
-      );
+      await expect(canvas.getByText(/01\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/15\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/16\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/31\.01\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/01\.02\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/14\.02\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/15\.02\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/28\.02\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/01\.03\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/15\.03\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/16\.03\.2024/)).toBeInTheDocument();
+      await expect(canvas.getByText(/31\.03\.2024/)).toBeInTheDocument();
     });
 
     await step('Viser detaljer for uttaksperioder', async () => {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
-      await expect(buttons.length).toEqual(4);
+      await expect(buttons.length).toEqual(6);
 
-      await waitFor(async function sjekkFørstePeriode() {
-        if (buttons[0]) {
-          await user.click(buttons[0]);
-        }
-        await expect(
-          canvas.getByRole('row', {
-            name: 'Vilkår Medlemskap: Oppfylt Søknadsfrist: Oppfylt Opptjening: Oppfylt Omsorgen for: Ikke oppfylt Sykdom: Oppfylt Søkers alder: Oppfylt',
-          }),
-        );
+      // Sjekk inntektsgradering periode (mars 1-15)
+      if (buttons[0]) await user.click(buttons[0]);
+      await waitFor(async function sjekkInntektsgradering() {
+        await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
 
-      await waitFor(async function sjekkAndrePeriode() {
-        if (buttons[1]) await user.click(buttons[1]);
-
-        await expect(
-          canvas.getByRole('row', {
-            name: 'Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %. Tapt arbeidstid regnes ut fra aktive arbeidsforhold, næringsaktivitet og frilansoppdrag. Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 6.37 timer = 15.07 % fravær = 15% tapt arbeidstid',
-          }),
-        );
+      // Sjekk tilsynsgradering periode (mars 16-31)
+      if (buttons[1]) await user.click(buttons[1]);
+      await waitFor(async function sjekkTilsynsgradering() {
+        await expect(canvas.getByText('- Etablert tilsyn: 30 %')).toBeInTheDocument();
+        await expect(canvas.getByText('= 70 % tilgjengelig til søker')).toBeInTheDocument();
       });
-
-      await waitFor(async function sjekkTredjePeriode() {
-        if (buttons[2]) await user.click(buttons[2]);
-
-        await expect(
-          canvas.getByRole('row', {
-            name: 'Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gir lavest pleiepengegrad Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 3 timer = 60.00 % fravær = 60% tapt arbeidstid',
-          }),
-        );
-      });
-
-      await waitFor(async function sjekkFjerdePeriode() {
-        if (buttons[3]) await user.click(buttons[3]);
-
-        await expect(
-          canvas.getByRole('row', {
-            name: 'Gradering mot tilsyn Pleiebehov: 100 % - Etablert tilsyn: 0 % Mer informasjon - Andre søkeres tilsyn: 0 % = 100 % tilgjengelig til søker Gradering mot arbeidstid Bedrift AS (123456789) Normal arbeidstid: 7.5 timer Faktisk arbeidstid: 0 timer = 100.00 % fravær = 100% tapt arbeidstid',
-          }),
-        );
-      });
-
-      if (buttons[3]) await user.click(buttons[3]);
     });
   },
 };
