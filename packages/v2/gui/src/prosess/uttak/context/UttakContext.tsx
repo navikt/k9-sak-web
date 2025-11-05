@@ -9,7 +9,7 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import type {
   k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
@@ -142,21 +142,19 @@ export const useUttakContext = () => {
 
   const { behandling, uttakApi, uttaksperiodeListe } = uttakContext;
 
-  const { data: arbeidsgivere } = useQuery({
+  const { data: arbeidsgivere } = useSuspenseQuery({
     queryKey: ['uttak-arbeidsgivere', behandling.uuid],
     queryFn: async () => {
       const arbeidsgivere = await uttakApi.getArbeidsgivere(behandling.uuid);
       return arbeidsgivere.arbeidsgivere ?? {};
     },
-    enabled: !!behandling.uuid,
     refetchOnMount: false, // Med refetchOnMount til true gjentas kallet flere ganger
     refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg 
   });
 
-  const { data: inntektsgraderinger } = useQuery({
+  const { data: inntektsgraderinger } = useSuspenseQuery({
     queryKey: ['uttak-inntektsgraderinger', behandling.uuid],
     queryFn: async () => uttakApi.hentInntektsgraderinger(behandling.uuid),
-    enabled: !!behandling.uuid,
     refetchOnMount: false,  // Med refetchOnMount til true gjentas kallet flere ganger
     refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg
   });
