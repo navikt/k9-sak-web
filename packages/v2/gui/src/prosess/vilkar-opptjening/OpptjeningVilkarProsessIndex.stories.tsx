@@ -7,7 +7,7 @@ import {
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles';

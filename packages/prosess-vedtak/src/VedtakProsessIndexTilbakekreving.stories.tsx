@@ -8,7 +8,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 import VedtakProsessIndex from './VedtakProsessIndex';
 

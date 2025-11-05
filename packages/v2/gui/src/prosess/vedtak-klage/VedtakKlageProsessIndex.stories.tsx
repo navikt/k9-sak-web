@@ -14,7 +14,7 @@ import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import { FakeVedtakKlageBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeVedtakKlageBackendApi.js';
 import alleKodeverkKlageV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkKlageV2.json';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction';
 import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
 import { VedtakKlageProsessIndex } from './VedtakKlageProsessIndex';
