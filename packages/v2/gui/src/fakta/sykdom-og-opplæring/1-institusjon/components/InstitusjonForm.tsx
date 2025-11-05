@@ -56,7 +56,7 @@ const defaultValues = (vurdering: InstitusjonVurderingDtoMedPerioder) => {
     [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
     [InstitusjonFormFields.ANNEN_INSTITUSJON]: false,
     [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: '',
-    [InstitusjonFormFields.HAR_ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer ? 'ja' : 'nei',
+    [InstitusjonFormFields.HAR_ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer ? 'ja' : '',
     [InstitusjonFormFields.ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer,
     [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: '',
   };
