@@ -9,5 +9,5 @@ export interface VedtakKlageApi {
   readonly backend: 'ung' | 'k9klage';
   forhåndsvisKlageVedtaksbrev(behandlingId: number, data?: ForhåndsvisDto): Promise<Blob>;
   getKlageVurdering(behandlingUuid: string): Promise<KlagebehandlingDto>;
-  hentAlleParterMedKlagerett?(behandlingUuid: string): Promise<k9_klage_kontrakt_behandling_part_PartDto>;
+  hentValgtKlagendePart?(behandlingUuid: string): Promise<k9_klage_kontrakt_behandling_part_PartDto>;
 }

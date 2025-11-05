@@ -1,6 +1,7 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
 import {
+  k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon,
   k9_kodeverk_behandling_FagsakYtelseType,
   type k9_sak_kontrakt_fagsak_FagsakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -33,9 +34,14 @@ export const VedtakKlageProsessIndex = ({
   });
   const isUngdomsprogramytelse = fagsak.sakstype === k9_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
   const { data: valgtPartMedKlagerett } = useQuery({
-    queryKey: ['klageParterMedKlagerett', behandling, api.backend],
-    queryFn: () => api.hentAlleParterMedKlagerett(behandling.uuid),
-    enabled: !isUngdomsprogramytelse,
+    queryKey: ['klageParterMedKlagerett', behandling, api.backend, api.hentValgtKlagendePart],
+    queryFn: () => {
+      if (!api.hentValgtKlagendePart) {
+        throw new Error('hentValgtKlagendePart er ikke implementert');
+      }
+      return api.hentValgtKlagendePart(behandling.uuid);
+    },
+    enabled: !isUngdomsprogramytelse && !!api.hentValgtKlagendePart,
   });
 
   const { mutateAsync: previewCallback } = useMutation({
@@ -49,7 +55,7 @@ export const VedtakKlageProsessIndex = ({
                 ytelseType: fagsak.sakstype,
                 saksnummer: fagsak.saksnummer,
                 aktørId: fagsak.person?.aktørId ?? '',
-                avsenderApplikasjon: 'K9KLAGE',
+                avsenderApplikasjon: k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon.K9KLAGE,
                 dokumentMal: 'UTLED',
                 dokumentdata: null,
                 overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
