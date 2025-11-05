@@ -1,9 +1,7 @@
-import React from 'react';
-
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import type { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
@@ -13,7 +11,7 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
  */
 export function VarselProsessStegInitPanel() {
   // Hent data ved bruk av eksisterende RequestApi-mønster
-  const { data, isLoading } = restApiPleiepengerHooks.useMultipleRestApi<{
+  const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     familiehendelse: any;
     familiehendelseOriginalBehandling: any;
     soknadOriginalBehandling: any;
@@ -27,16 +25,17 @@ export function VarselProsessStegInitPanel() {
   );
 
   // Beregn menytype basert på aksjonspunkter
-  const getMenuType = (standardProps: any): ProcessMenuStepType => {
+  const getMenyType = (standardProps: any): ProcessMenuStepType => {
     // Hvis det finnes åpne aksjonspunkter, vis warning
     const harApentAksjonspunkt = standardProps.aksjonspunkter?.some(
       (ap: any) => !ap.erAvbrutt && ap.status === 'OPPR',
     );
-    return harApentAksjonspunkt ? 'warning' : 'default';
+    return harApentAksjonspunkt ? ProcessMenuStepType.warning : ProcessMenuStepType.default;
   };
 
   // Ikke vis panelet hvis data ikke er lastet ennå
-  if (isLoading || !data) {
+  const data = restApiData.data;
+  if (!data) {
     return null;
   }
 
@@ -44,7 +43,7 @@ export function VarselProsessStegInitPanel() {
     <ProsessDefaultInitPanel
       urlKode={prosessStegCodes.VARSEL}
       tekstKode="Behandlingspunkt.CheckVarselRevurdering"
-      getMenuType={getMenuType}
+      getMenyType={getMenyType}
     >
       {standardProps => (
         <VarselOmRevurderingProsessIndex

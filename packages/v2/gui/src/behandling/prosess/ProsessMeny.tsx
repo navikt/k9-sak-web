@@ -1,9 +1,10 @@
-import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useIntl } from 'react-intl';
 import { useMemo, useEffect, type ReactNode } from 'react';
+import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router';
+import { Box } from '@navikt/ds-react';
+import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { ProsessMenyProvider, useProsessMenyContext } from './context/ProsessMenyContext.js';
-import styles from './prosessMeny.module.css';
+
 
 /**
  * Props for ProsessMeny.
@@ -78,14 +79,11 @@ function ProsessMenyContent({ children }: ProsessMenyProps) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.meny}>
-        <ProcessMenu steps={steg} onClick={handleStegKlikk} />
-      </div>
-      <div className={styles.content}>
-        {renderPaneler()}
-      </div>
-    </div>
+    <Box.New paddingInline="6">
+      <ProcessMenu steps={steg} onClick={handleStegKlikk} />
+      {/* Render children for registrering, men de returnerer null i hybrid-modus */}
+      {renderPaneler()}
+    </Box.New>
   );
 }
 

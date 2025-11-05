@@ -9,7 +9,7 @@ import type { PanelRegistrering } from '../types/panelTypes.js';
  * Når komponenten unmountes, avregistreres panelet automatisk.
  * Hvis registreringsdata endres, vil panelet re-registreres med oppdatert informasjon.
  * 
- * @param registrering - Panelregistreringsdata
+ * @param registrering - Panelregistreringsdata, eller null hvis panelet ikke skal vises
  * @param registrering.id - Unik panelidentifikator
  * @param registrering.urlKode - URL-parameterverdi (kebab-case)
  * @param registrering.tekstKode - i18n tekstnøkkel for menylabel
@@ -33,12 +33,17 @@ import type { PanelRegistrering } from '../types/panelTypes.js';
  * }
  * ```
  */
-export function useProsessMenyRegistrerer(registrering: PanelRegistrering): void {
+export function useProsessMenyRegistrerer(registrering: PanelRegistrering | null): void {
   const context = useProsessMenyContextOptional();
 
   useEffect(() => {
     // Hvis vi ikke er inne i en ProsessMeny, ikke gjør noe
     if (!context) {
+      return;
+    }
+
+    // Hvis registrering er null, ikke registrer panelet
+    if (!registrering) {
       return;
     }
 
@@ -67,12 +72,12 @@ export function useProsessMenyRegistrerer(registrering: PanelRegistrering): void
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     // Re-kjør effect når registreringsdata endres
-    registrering.id,
-    registrering.urlKode,
-    registrering.tekstKode,
-    registrering.type,
-    registrering.usePartialStatus,
-    registrering.erAktiv,
+    registrering?.id,
+    registrering?.urlKode,
+    registrering?.tekstKode,
+    registrering?.type,
+    registrering?.usePartialStatus,
+    registrering?.erAktiv,
     // NB: context er utelatt for å ungå loops
     // Context funksjonene trenger ikke trigge omregistrering
   ]);

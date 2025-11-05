@@ -3,6 +3,7 @@ import React, { ReactNode, useMemo, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
+import React, { ReactNode, useMemo, useState } from 'react';
 
 import styles from './prosessStegContainer.module.css';
 
@@ -11,9 +12,12 @@ interface OwnProps {
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
   noBorder?: boolean;
+interface VedtakFormContextType {
+  vedtakFormState: any;
+  setVedtakFormState: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export const VedtakFormContext = React.createContext(null);
+export const VedtakFormContext = React.createContext<VedtakFormContextType | null>(null);
 
 const ProsessStegContainer = ({
   intl,

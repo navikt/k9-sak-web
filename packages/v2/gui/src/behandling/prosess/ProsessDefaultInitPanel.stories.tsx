@@ -132,7 +132,7 @@ export const MedMockPanel: Story = {
 /**
  * Panel som alltid er synlig (ingen skalVisePanel funksjon).
  */
-export const AlltiSynlig: Story = {
+export const AlltidSynlig: Story = {
   args: {
     urlKode: 'visible-panel',
     tekstKode: 'VisiblePanel.Title',
