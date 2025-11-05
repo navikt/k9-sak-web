@@ -247,10 +247,14 @@ export class AvregningPanelImpl extends Component {
                             value: `${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`,
                             label: <FormattedMessage id={'Avregning.OpprettMenIkkeSendVarsel'} />,
                           },
-                          {
-                            value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
-                            label: <FormattedMessage id="Avregning.avvent" />,
-                          },
+                          ...(!isUngFagsak
+                            ? [
+                                {
+                                  value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
+                                  label: <FormattedMessage id="Avregning.avvent" />,
+                                },
+                              ]
+                            : []),
                         ]}
                       />
                     </div>
