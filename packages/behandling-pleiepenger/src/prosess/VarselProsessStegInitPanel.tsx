@@ -45,15 +45,21 @@ export function VarselProsessStegInitPanel() {
       tekstKode="Behandlingspunkt.CheckVarselRevurdering"
       getMenyType={getMenyType}
     >
-      {standardProps => (
-        <VarselOmRevurderingProsessIndex
-          {...standardProps}
-          familiehendelse={data.familiehendelse}
-          soknad={data.soknadOriginalBehandling}
-          soknadOriginalBehandling={data.soknadOriginalBehandling}
-          familiehendelseOriginalBehandling={data.familiehendelseOriginalBehandling}
-        />
-      )}
+      {standardProps => {
+        // Sørg for at previewCallback alltid er definert (legacy komponent krever det)
+        const previewCallback = standardProps.previewCallback || (() => Promise.resolve());
+
+        return (
+          <VarselOmRevurderingProsessIndex
+            {...standardProps}
+            previewCallback={previewCallback}
+            familiehendelse={data.familiehendelse}
+            soknad={data.soknadOriginalBehandling}
+            soknadOriginalBehandling={data.soknadOriginalBehandling}
+            familiehendelseOriginalBehandling={data.familiehendelseOriginalBehandling}
+          />
+        );
+      }}
     </ProsessDefaultInitPanel>
   );
 }
