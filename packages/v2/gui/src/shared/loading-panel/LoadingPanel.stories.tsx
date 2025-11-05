@@ -1,5 +1,5 @@
 import { LoadingPanel } from './LoadingPanel.jsx';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 
 const meta = {

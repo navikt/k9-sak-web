@@ -1,5 +1,5 @@
 import { Modal } from '@navikt/ds-react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import MenyData from './MenyData';
 import MenySakIndex from './MenySakIndex';

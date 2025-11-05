@@ -9,7 +9,6 @@ import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './uttakDetaljer.module.css';
-import { LoadingPanel } from '../../../shared/loading-panel/LoadingPanel';
 
 interface ownProps {
   utbetalingsgrader: Utbetalingsgrader[];
@@ -26,12 +25,8 @@ const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
 };
 
 const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søkersTapteArbeidstid }) => {
-  const { arbeidsgivere, lasterArbeidsgivere } = useUttakContext();
+  const { arbeidsgivere } = useUttakContext();
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
-
-  if (lasterArbeidsgivere) {
-    return <LoadingPanel />;
-  }
 
   return (
     <VStack>
