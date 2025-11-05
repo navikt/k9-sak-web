@@ -71,7 +71,7 @@ export const FormkravProsessIndex = ({
 );
 
 const FormkravProsessIndexPropsTransformer = (
-  props: OwnProps & { behandlingType?: k9_klage_kodeverk_behandling_BehandlingType },
+  props: OwnProps & { behandlingType: k9_klage_kodeverk_behandling_BehandlingType },
 ) => {
   const deepCopyProps = JSON.parse(JSON.stringify(props));
   konverterKodeverkTilKode(deepCopyProps, false);
