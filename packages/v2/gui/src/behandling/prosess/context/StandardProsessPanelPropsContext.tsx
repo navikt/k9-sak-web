@@ -14,6 +14,9 @@ export interface StandardProsessPanelPropsContextValue {
     /** Liste av aksjonspunkter (legacy type) */
     aksjonspunkter: any[];
 
+    /** Liste av vilkår (legacy type) */
+    vilkar?: any[];
+
     /** Alle kodeverk med navn (legacy type) */
     alleKodeverk: any;
 
@@ -31,6 +34,12 @@ export interface StandardProsessPanelPropsContextValue {
 
     /** Feature toggles (legacy type) */
     featureToggles?: any;
+
+    /** Form data for Redux forms (legacy type) */
+    formData?: any;
+
+    /** Callback to update form data (legacy type) */
+    setFormData?: (data: any) => void;
 }
 
 /**

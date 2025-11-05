@@ -14,6 +14,9 @@ export interface StandardProsessPanelProps {
   /** Liste av aksjonspunkter (legacy type) */
   aksjonspunkter: any[];
 
+  /** Liste av vilkår (legacy type) */
+  vilkar?: any[];
+
   /** Alle kodeverk med navn (legacy type) */
   alleKodeverk: any;
 
@@ -37,6 +40,12 @@ export interface StandardProsessPanelProps {
 
   /** Feature toggles (legacy type) */
   featureToggles?: any;
+
+  /** Form data for Redux forms (legacy type) */
+  formData?: any;
+
+  /** Callback to update form data (legacy type) */
+  setFormData?: (data: any) => void;
 }
 
 /**
@@ -76,6 +85,7 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
       behandling: context.behandling,
       fagsak: context.fagsak,
       aksjonspunkter: context.aksjonspunkter,
+      vilkar: context.vilkar,
       alleKodeverk: context.alleKodeverk,
       submitCallback: context.submitCallback,
       previewCallback: context.previewCallback,
@@ -84,6 +94,8 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
       status: 'default', // TODO: Beregn basert på vilkår/status
       rettigheter: context.rettigheter,
       featureToggles: context.featureToggles,
+      formData: context.formData,
+      setFormData: context.setFormData,
     };
   }
 
@@ -97,6 +109,7 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
     behandling: { id: 1, type: { kode: 'BT-004' }, status: { kode: 'OPPRETTET' }, versjon: 1 },
     fagsak: { saksnummer: '123456', sakstype: { kode: 'PSB' } },
     aksjonspunkter: [],
+    vilkar: [],
     alleKodeverk: {},
     submitCallback: async () => {
       console.log('submitCallback called (mock implementation)');
@@ -109,5 +122,9 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
     status: 'default',
     rettigheter: {},
     featureToggles: {},
+    formData: {},
+    setFormData: () => {
+      console.log('setFormData called (mock implementation)');
+    },
   };
 }

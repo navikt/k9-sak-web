@@ -1,85 +1,94 @@
 import { useProsessMenyRegistrerer } from './hooks/useProsessMenyRegistrerer.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useStandardProsessPanelProps } from './hooks/useStandardProsessPanelProps.js';
 
 /**
  * Props for LegacyPanelAdapter
  */
 interface LegacyPanelAdapterProps {
-  /**
-   * Legacy paneldefinisjon (ProsessStegDef).
-   * Bruker 'any' type for å unngå import av legacy-typer fra v2-kode.
-   * 
-   * Forventer at panelDef har følgende metoder:
-   * - getUrlKode(): string
-   * - getTekstKode(): string
-   * - getPanelDefinisjoner(): Array<ProsessStegPanelDef>
-   * 
-   * ProsessStegPanelDef forventes å ha:
-   * - getKomponent(props: any): React.ComponentType
-   * - getEndepunkter?(): Array<string>
-   * - getData?(data: any): any
-   */
-  panelDef: any;
-  
-  /**
-   * Alle props som trengs for å rendre legacy paneler.
-   * Sendes fra legacy behandlingskomponent.
-   */
-  [key: string]: any;
+    /**
+     * Legacy paneldefinisjon (ProsessStegDef).
+     * Bruker 'any' type for å unngå import av legacy-typer fra v2-kode.
+     *
+     * Forventer at panelDef har følgende metoder:
+     * - getUrlKode(): string
+     * - getTekstKode(): string
+     * - getPanelDefinisjoner(): Array<ProsessStegPanelDef>
+     * - skalViseProsessSteg(fagsak, behandling, aksjonspunkter, vilkar, featureToggles): boolean
+     *
+     * ProsessStegPanelDef forventes å ha:
+     * - getKomponent(props: any): React.ComponentType
+     * - getEndepunkter?(): Array<string>
+     * - getData?(data: any): any
+     */
+    panelDef: any;
+
+    /**
+     * Menytype fra legacy system (success, warning, danger, default)
+     */
+    menyType?: ProcessMenuStepType;
+
+    /**
+     * Om panelet skal vise delvis status
+     */
+    usePartialStatus?: boolean;
+
+    /**
+     * Alle props som trengs for å rendre legacy paneler.
+     * Sendes fra legacy behandlingskomponent.
+     */
+    [key: string]: any;
 }
 
 /**
- * Adapter-komponent som lar legacy klassebaserte paneldefinisjoner fungere med v2 menysystem.
- * 
+ * Adapter-komponent for hybrid-tilnærming: v2 meny + legacy panel-rendering.
+ *
  * Denne komponenten:
- * - Henter standard panelprops via useStandardProsessPanelProps
- * - Ekstraherer registreringsdata fra legacy panelDef-metoder
- * - Registrerer panelet med prosessmenyen via useProsessMenyRegistrerer
- * - Rendrer legacy panelkomponent fra panelDef.getKomponent()
- * 
- * Dette tillater gradvis migrering hvor legacy klassebaserte paneler og nye
- * komponentbaserte paneler kan eksistere side om side i samme behandling.
- * 
+ * - Registrerer legacy paneler med v2 menysystem
+ * - Sjekker om panelet skal vises basert på skalViseProsessSteg
+ * - Håndterer IKKE rendering (det gjøres av legacy ProsessStegPanel)
+ * - Beregner menystatus basert på aksjonspunkter og vilkår
+ *
+ * HYBRID-TILNÆRMING:
+ * - v2 ProsessMeny brukes for navigasjon og menyvisning
+ * - Legacy ProsessStegPanel brukes for innholdsrendering
+ * - Dette unngår Redux-form integrasjonsproblemer
+ * - Tillater gradvis migrering av individuelle paneler
+ *
  * VIKTIG: Denne komponenten er kun ment som en midlertidig bro under migrering.
  * Når alle paneler er migrert til nye InitPanel-wrappers, skal denne komponenten fjernes.
- * 
- * @example
- * ```tsx
- * // I behandlingskomponent under migrering (legacy-pakke)
- * import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
- * import { LegacyPanelAdapter } from '@k9-sak-web/gui/behandling/prosess/LegacyPanelAdapter.js';
- * import { VarselProsessStegInitPanel } from '../prosess/VarselProsessStegInitPanel';
- * 
- * function PleiepengerBehandling() {
- *   return (
- *     <ProsessMeny>
- *       <VarselProsessStegInitPanel />
- *       <LegacyPanelAdapter panelDef={new VilkarProsessStegPanelDef()} />
- *     </ProsessMeny>
- *   );
- * }
- * ```
  */
-export function LegacyPanelAdapter({ panelDef }: LegacyPanelAdapterProps) {
-  // Ekstraher registreringsdata fra legacy panelDef
-  const urlKode = panelDef.getUrlKode();
-  const tekstKode = panelDef.getTekstKode();
-  
-  // For legacy paneler bruker vi alltid 'default' type
-  // Statusberegning kan implementeres senere ved å kalle panelDef.getMenuType() hvis den finnes
-  const menyType = ProcessMenuStepType.default;
+export function LegacyPanelAdapter({ panelDef, menyType, usePartialStatus }: LegacyPanelAdapterProps) {
+    // Hent behandlingsdata fra context
+    const contextData = useStandardProsessPanelProps();
+    
+    // Sjekk om panelet skal vises basert på legacy-logikk
+    const skalVises = panelDef.skalViseProsessSteg?.(
+        contextData.fagsak,
+        contextData.behandling,
+        contextData.aksjonspunkter,
+        contextData.vilkar || [],
+        contextData.featureToggles,
+    ) ?? true; // Default til true hvis metoden ikke finnes
 
-  // Registrer panel med menyen
-  useProsessMenyRegistrerer({
-    id: urlKode,
-    urlKode,
-    tekstKode,
-    type: menyType,
-    usePartialStatus: false,
-  });
+    // Ekstraher registreringsdata fra legacy panelDef
+    const urlKode = panelDef.getUrlKode();
+    const tekstKode = panelDef.getTekstKode();
 
-  // TODO: Implementer rendering av legacy panel
-  // For nå returnerer vi null siden vi trenger å integrere med ProsessStegPanel
-  // Dette krever mer arbeid for å få legacy-systemet til å fungere med v2-menyen
-  return null;
+    // Bruk menyType fra legacy system hvis tilgjengelig, ellers default
+    const type = menyType ?? ProcessMenuStepType.default;
+
+    // Registrer panel med v2 menyen kun hvis det skal vises
+    useProsessMenyRegistrerer(skalVises ? {
+        id: urlKode,
+        urlKode,
+        tekstKode,
+        type,
+        usePartialStatus: usePartialStatus ?? false,
+    } : null);
+
+    // Hybrid-tilnærming: Render ingenting her
+    // Legacy ProsessStegPanel håndterer faktisk innholdsrendering
+    // Dette unngår Redux-form integrasjonsproblemer
+    return null;
 }
