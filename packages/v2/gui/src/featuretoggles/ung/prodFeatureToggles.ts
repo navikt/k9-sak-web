@@ -25,4 +25,6 @@ export const prodFeatureToggles = {
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: false,
   MARKERING_UTENLANDSTILSNITT: false,
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: false,
+  PROSESS_MENY_V2: false,
+  PROSESS_MENY_V2_VELGER: false,
 } satisfies FeatureToggles;

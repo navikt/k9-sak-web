@@ -23,4 +23,6 @@ export interface FeatureToggles {
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: boolean;
   MARKERING_UTENLANDSTILSNITT: boolean;
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: boolean;
+  PROSESS_MENY_V2: boolean; // Aktiverer v2 prosessmeny-system
+  PROSESS_MENY_V2_VELGER: boolean; // Viser toggle-knapp for å velge mellom legacy og v2 meny
 }
