@@ -250,17 +250,17 @@ export const UttakMedUlikeStatuser: Story = {
       const buttons = canvas.getAllByRole('button', { name: 'Åpne' });
       await expect(buttons.length).toEqual(6);
 
-      // Sjekk inntektsgradering periode (mars 1-15)
+      // Sjekk tilsynsgradering periode (mars 16-31) - første periode i listen
       if (buttons[0]) await user.click(buttons[0]);
-      await waitFor(async function sjekkInntektsgradering() {
-        await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
-      });
-
-      // Sjekk tilsynsgradering periode (mars 16-31)
-      if (buttons[1]) await user.click(buttons[1]);
       await waitFor(async function sjekkTilsynsgradering() {
         await expect(canvas.getByText('- Etablert tilsyn: 30 %')).toBeInTheDocument();
         await expect(canvas.getByText('= 70 % tilgjengelig til søker')).toBeInTheDocument();
+      });
+
+      // Sjekk inntektsgradering periode (mars 1-15) - andre periode i listen
+      if (buttons[1]) await user.click(buttons[1]);
+      await waitFor(async function sjekkInntektsgradering() {
+        await expect(canvas.getByRole('heading', { name: 'Gradering mot arbeidsinntekt' })).toBeInTheDocument();
       });
     });
   },
