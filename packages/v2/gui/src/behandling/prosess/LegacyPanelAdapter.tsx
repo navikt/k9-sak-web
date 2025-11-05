@@ -88,7 +88,7 @@ export function LegacyPanelAdapter({ panelDef, menyType, usePartialStatus }: Leg
     } : null);
 
     // Hybrid-tilnærming: Render ingenting her
-    // Legacy ProsessStegPanel håndterer faktisk innholdsrendering
+    // Legacy ProsessStegPanel håndterer innholdsrendering
     // Dette unngår Redux-form integrasjonsproblemer
     return null;
 }
