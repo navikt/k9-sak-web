@@ -5,8 +5,20 @@ import {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import messages from '../i18n/nb_NO.json';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import { useFeriepengegrunnlag } from './hooks/useFeriepengegrunnlag';
+
+const cache = createIntlCache();
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -32,16 +44,18 @@ const TilkjentYtelseProsessIndex = ({
   const { data: feriepengegrunnlag } = useFeriepengegrunnlag(behandling?.uuid);
 
   return (
-    <TilkjentYtelsePanel
-      beregningsresultat={beregningsresultat}
-      aksjonspunkter={aksjonspunkter}
-      readOnly={isReadOnly}
-      submitCallback={submitCallback}
-      readOnlySubmitButton={readOnlySubmitButton}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
-      feriepengegrunnlag={feriepengegrunnlag}
-    />
+    <RawIntlProvider value={intl}>
+      <TilkjentYtelsePanel
+        beregningsresultat={beregningsresultat}
+        aksjonspunkter={aksjonspunkter}
+        readOnly={isReadOnly}
+        submitCallback={submitCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
+        feriepengegrunnlag={feriepengegrunnlag}
+      />
+    </RawIntlProvider>
   );
 };
 
