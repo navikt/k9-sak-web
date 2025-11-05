@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import { type AuthFixApi, type AuthResult, authSuccessResult } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
 import { ignoreUnusedDeclared } from '../../storybook/mocks/ignoreUnusedDeclared.js';
-import { sequentialAuthFixerSetup } from './ThisOrOtherAuthFixer.js';
+import { sequentialAuthFixerSetup } from './WaitsForOthersAuthFixer.js';
+import { delay } from '../../utils/delay.js';
 
 class FakeAuthFixer implements AuthFixApi {
   #fakeAuthProcess: PromiseWithResolvers<AuthResult> | null = null;
@@ -48,7 +49,7 @@ class FakeAuthFixer implements AuthFixApi {
   }
 }
 
-describe('ThisOrOtherAuthFixer', () => {
+describe('WaitsForOthersAuthFixer', () => {
   const response = new Response(null, { status: 401, headers: { location: 'test' } });
   const aborter = new AbortController();
   const fake1 = new FakeAuthFixer('fake1');
@@ -61,41 +62,29 @@ describe('ThisOrOtherAuthFixer', () => {
     const backend1Promise1 = fakeMulti1.authenticate(response, aborter.signal).finally(backend1Promise1Settled);
     const backend2Promise1Settled = vi.fn();
     const backend2Promise1 = fakeMulti2.authenticate(response, aborter.signal).finally(backend2Promise1Settled);
-    const backend2Done1Settled = vi.fn();
-    const backend2Done1 = fakeMulti2.authenticationDone(aborter.signal).finally(backend2Done1Settled);
     const backend3Promise1Settled = vi.fn();
     const backend3Promise1 = fakeMulti3.authenticate(response, aborter.signal).finally(backend3Promise1Settled);
-    const backend3Done1Settled = vi.fn();
-    const backend3Done1 = fakeMulti3.authenticationDone(aborter.signal).finally(backend3Done1Settled);
 
     expect(fake1.isAuthenticating).toBe(true);
     expect(fake2.isAuthenticating).toBe(false);
     expect(fake3.isAuthenticating).toBe(false);
-    expect(backend2Done1Settled).not.toHaveBeenCalled();
-    expect(backend3Done1Settled).not.toHaveBeenCalled();
 
     fake1.resolveAuth(authSuccessResult);
     await expect(backend1Promise1).resolves.toEqual(authSuccessResult);
-    expect(backend2Done1Settled).not.toHaveBeenCalled();
-    expect(backend3Done1Settled).not.toHaveBeenCalled();
 
     expect(fake1.isAuthenticating).toBe(false);
-    expect(fake2.isAuthenticating).toBe(true);
-    expect(fake3.isAuthenticating).toBe(true);
-
-    fake3.resolveAuth(authSuccessResult);
-    await expect(backend3Promise1).resolves.toEqual(authSuccessResult);
-    expect(backend2Done1Settled).not.toHaveBeenCalled();
-    expect(backend3Done1Settled).not.toHaveBeenCalled(); // Because it depends on fake2
-    expect(fake1.isAuthenticating).toBe(false);
+    await delay(15);
     expect(fake2.isAuthenticating).toBe(true);
     expect(fake3.isAuthenticating).toBe(false);
+
     fake2.resolveAuth(authSuccessResult);
     await expect(backend2Promise1).resolves.toEqual(authSuccessResult);
-    await expect(backend2Done1).resolves.toEqual(undefined);
-    await expect(backend3Done1).resolves.toEqual(undefined);
-    expect(backend2Done1Settled).toHaveBeenCalled();
-    expect(backend3Done1Settled).toHaveBeenCalled();
+    expect(fake1.isAuthenticating).toBe(false);
+    expect(fake2.isAuthenticating).toBe(false);
+    await delay(15);
+    expect(fake3.isAuthenticating).toBe(true);
+    fake3.resolveAuth(authSuccessResult);
+    await expect(backend3Promise1).resolves.toEqual(authSuccessResult);
     expect(fake1.isAuthenticating).toBe(false);
     expect(fake2.isAuthenticating).toBe(false);
     expect(fake3.isAuthenticating).toBe(false);
@@ -103,8 +92,8 @@ describe('ThisOrOtherAuthFixer', () => {
     const settledFlag = vi.fn();
     const backend1Promise2 = fakeMulti1.authenticate(response, aborter.signal).finally(settledFlag);
     const backend1Promise3 = fakeMulti1.authenticate(response, aborter.signal).finally(settledFlag);
-    const backend3Promise2 = fakeMulti3.authenticate(response, aborter.signal).finally(settledFlag);
     const backend2Promise2 = fakeMulti2.authenticate(response, aborter.signal).finally(settledFlag);
+    const backend3Promise2 = fakeMulti3.authenticate(response, aborter.signal).finally(settledFlag);
     const backend3Promise3 = fakeMulti3.authenticate(response, aborter.signal).finally(settledFlag);
     const backend1Promise4 = fakeMulti1.authenticate(response, aborter.signal).finally(settledFlag);
 
@@ -114,17 +103,21 @@ describe('ThisOrOtherAuthFixer', () => {
     await expect(backend1Promise4).resolves.toEqual(authSuccessResult);
     expect(settledFlag).toHaveBeenCalledTimes(3);
     settledFlag.mockClear();
+    await delay(45);
     fake2.resolveAuth(authSuccessResult);
     await expect(backend2Promise2).resolves.toEqual(authSuccessResult);
     expect(settledFlag).toHaveBeenCalledTimes(1);
     settledFlag.mockClear();
+    await delay(30);
     const backend1Promise5 = fakeMulti1.authenticate(response, aborter.signal).finally(settledFlag);
     expect(settledFlag).not.toHaveBeenCalled();
+    await delay(15);
     fake3.resolveAuth(authSuccessResult);
     await expect(backend3Promise2).resolves.toEqual(authSuccessResult);
     await expect(backend3Promise3).resolves.toEqual(authSuccessResult);
     expect(settledFlag).toHaveBeenCalledTimes(2);
     settledFlag.mockClear();
+    await delay(15);
     fake1.resolveAuth(authSuccessResult);
     await expect(backend1Promise5).resolves.toEqual(authSuccessResult);
     expect(settledFlag).toHaveBeenCalledTimes(1);

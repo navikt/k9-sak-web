@@ -27,7 +27,7 @@ import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/
 import AppIndex from './app/AppIndex';
 import { RestApiProviderLayout } from './app/RestApiProviderLayout.js';
 import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
-import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/ThisOrOtherAuthFixer.js';
+import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;

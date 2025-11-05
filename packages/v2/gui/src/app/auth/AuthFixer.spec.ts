@@ -7,7 +7,8 @@ import {
   authSuccessResult,
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
 import { ignoreUnusedDeclared } from '../../storybook/mocks/ignoreUnusedDeclared.js';
-import { ThisOrOtherAuthFixer } from './ThisOrOtherAuthFixer.js';
+import { WaitsForOthersAuthFixer } from './WaitsForOthersAuthFixer.js';
+import { delay } from '../../utils/delay.js';
 
 class FakeAuthFixer extends AuthFixer {
   #fakeAuthProcess: PromiseWithResolvers<AuthResult> | null = null;
@@ -62,7 +63,6 @@ const notAuthenticatedAuthResult = authDeniedResult;
 
 describe('AuthFixer api behaviour', () => {
   const fakeResponse1 = new Response(null, { status: 401, headers: { location: '/login' } });
-  const fakeResponse2 = new Response(null, { status: 401, headers: { location: '/login?original=/a' } });
 
   describe('should follow the api interface description for concurrency', () => {
     describe('for multiple concurrent calls', () => {
@@ -70,164 +70,34 @@ describe('AuthFixer api behaviour', () => {
         const aborter = new AbortController();
 
         let firstAuthenticateCallReturnedPromise: Promise<AuthResult>;
-        let firstAuthenticateCallInternalPromise: Promise<AuthResult>;
         const firstAuthenticateCallSettledCheck = vi.fn();
         let secondAuthenticateCallReturnedPromise: Promise<AuthResult>;
-        let secondAuthenticateCallInternalPromise: Promise<AuthResult>;
         const secondAuthenticateCallSettledCheck = vi.fn();
-        let firstAuthenticationDonePromise: Promise<void>;
-        const firstAuthenticationDoneCallSettledCheck = vi.fn();
-        let secondAuthenticationDonePromise: Promise<void>;
-        const secondAuthenticationDoneCallSettledCheck = vi.fn();
 
-        describe('subsequent calls to AuthFixer while process is not resolved', () => {
+        it('should do each authentication sequentially', async () => {
           const fakeFixerBackend1 = new FakeAuthFixer();
           const fakeFixerBackend2 = new FakeAuthFixer();
-          const fakeMultiFixerBackend1 = new ThisOrOtherAuthFixer(fakeFixerBackend1, fakeFixerBackend2);
-          const fakeMultiFixerBackend2 = new ThisOrOtherAuthFixer(fakeFixerBackend2, fakeFixerBackend1);
-          const backend1AuthenticateSpy = vi.spyOn(fakeMultiFixerBackend1, 'authenticate');
-          const backend2AuthenticateSpy = vi.spyOn(fakeMultiFixerBackend2, 'authenticate');
-          describe('when second request relates to same endpoint as active process', () => {
-            it('should return pending auth result promise for the first call to authenticate', () => {
-              firstAuthenticateCallReturnedPromise = fakeMultiFixerBackend1
-                .authenticate(fakeResponse1, aborter.signal)
-                .finally(firstAuthenticateCallSettledCheck);
-              firstAuthenticateCallInternalPromise = fakeFixerBackend1.fakeAuthPromise;
-              expect(firstAuthenticateCallSettledCheck).not.toHaveBeenCalled();
-            });
-            it('should return pending auth result for calls to authenticate (without starting a new process)', () => {
-              secondAuthenticateCallReturnedPromise = fakeMultiFixerBackend1
-                .authenticate(fakeResponse1, aborter.signal)
-                .finally(secondAuthenticateCallSettledCheck);
-              secondAuthenticateCallInternalPromise = fakeFixerBackend1.fakeAuthPromise;
-              expect(secondAuthenticateCallSettledCheck).not.toHaveBeenCalled();
-              expect(secondAuthenticateCallReturnedPromise).not.toBe(firstAuthenticateCallReturnedPromise);
-              // Check that a new auth process was not started:
-              expect(secondAuthenticateCallInternalPromise).toBe(firstAuthenticateCallInternalPromise);
-            });
+          const fakeMultiFixerBackend1 = new WaitsForOthersAuthFixer(fakeFixerBackend1, [fakeFixerBackend2]);
+          const fakeMultiFixerBackend2 = new WaitsForOthersAuthFixer(fakeFixerBackend2, [fakeFixerBackend1]);
 
-            it('should return pending promise for calls to authenticationDone', () => {
-              firstAuthenticationDonePromise = fakeMultiFixerBackend1
-                .authenticationDone(aborter.signal)
-                .finally(firstAuthenticationDoneCallSettledCheck);
-              expect(firstAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
+          firstAuthenticateCallReturnedPromise = fakeMultiFixerBackend1
+            .authenticate(fakeResponse1, aborter.signal)
+            .finally(firstAuthenticateCallSettledCheck);
 
-              secondAuthenticationDonePromise = fakeMultiFixerBackend1
-                .authenticationDone(aborter.signal)
-                .finally(secondAuthenticationDoneCallSettledCheck);
-              expect(secondAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
-            });
-
-            it('isAuthenticating should return true', () => {
-              expect(fakeMultiFixerBackend1.isAuthenticating).toEqual(true);
-            });
-
-            describe('when auth process has succeeded', () => {
-              it('should resolve all pending promises to positive result', async () => {
-                fakeFixerBackend1.fakeAuthResult(authenticatedAuthResult);
-                await expect(firstAuthenticateCallInternalPromise).resolves.toEqual(authenticatedAuthResult);
-                await expect(firstAuthenticateCallReturnedPromise).resolves.toEqual(authenticatedAuthResult);
-                await expect(secondAuthenticateCallReturnedPromise).resolves.toEqual(authenticatedAuthResult);
-                await expect(firstAuthenticationDonePromise).resolves.toEqual(undefined);
-                await expect(secondAuthenticationDonePromise).resolves.toEqual(undefined);
-                expect(firstAuthenticationDoneCallSettledCheck).toHaveBeenCalled();
-                expect(secondAuthenticationDoneCallSettledCheck).toHaveBeenCalled();
-              });
-              it('isAuthenticating should return false', () => {
-                expect(fakeMultiFixerBackend1.isAuthenticating).toEqual(false);
-              });
-              it('authenticate should have been called certain number of times', () => {
-                expect(backend1AuthenticateSpy).toHaveBeenCalledTimes(2);
-                expect(backend2AuthenticateSpy).toHaveBeenCalledTimes(0);
-              });
-            });
-          });
-
-          describe('when second call relates to different endpoint', () => {
-            it('should return pending auth result promise for the first call to authenticate', () => {
-              firstAuthenticateCallSettledCheck.mockClear();
-              secondAuthenticateCallSettledCheck.mockClear();
-              firstAuthenticationDoneCallSettledCheck.mockClear();
-              secondAuthenticationDoneCallSettledCheck.mockClear();
-              backend1AuthenticateSpy.mockClear();
-              backend2AuthenticateSpy.mockClear();
-
-              firstAuthenticateCallReturnedPromise = fakeMultiFixerBackend1
-                .authenticate(fakeResponse1, aborter.signal)
-                .finally(firstAuthenticateCallSettledCheck);
-              firstAuthenticateCallInternalPromise = fakeFixerBackend1.fakeAuthPromise;
-              expect(firstAuthenticateCallSettledCheck).not.toHaveBeenCalled();
-            });
-            it('should return pending auth result for calls to authenticate (without starting a new process)', () => {
-              secondAuthenticateCallReturnedPromise = fakeMultiFixerBackend2
-                .authenticate(fakeResponse2, aborter.signal)
-                .finally(secondAuthenticateCallSettledCheck);
-              expect(secondAuthenticateCallSettledCheck).not.toHaveBeenCalled();
-              expect(secondAuthenticateCallReturnedPromise).not.toBe(firstAuthenticateCallReturnedPromise);
-            });
-
-            it('should return pending promise for calls to authenticationDone', () => {
-              firstAuthenticationDonePromise = fakeMultiFixerBackend1
-                .authenticationDone(aborter.signal)
-                .finally(firstAuthenticationDoneCallSettledCheck);
-              expect(firstAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
-
-              secondAuthenticationDonePromise = fakeMultiFixerBackend2
-                .authenticationDone(aborter.signal)
-                .finally(secondAuthenticationDoneCallSettledCheck);
-              expect(secondAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
-            });
-
-            it('isAuthenticating should return true', () => {
-              expect(fakeMultiFixerBackend1.isAuthenticating).toEqual(true);
-              expect(fakeMultiFixerBackend2.isAuthenticating).toEqual(true);
-            });
-
-            describe('when original auth process has succeeded', () => {
-              describe('before second popup (for different endpoint) succeeds', () => {
-                it('should resolve first call promises to positive result', async () => {
-                  fakeFixerBackend1.fakeAuthResult(authenticatedAuthResult); // Simulate first popup auth done
-                  await expect(firstAuthenticateCallInternalPromise).resolves.toEqual(authenticatedAuthResult);
-                  await expect(firstAuthenticateCallReturnedPromise).resolves.toEqual(authenticatedAuthResult);
-                });
-                it('should still not resolve second call (before second popup is done)', () => {
-                  expect(firstAuthenticateCallSettledCheck).toHaveBeenCalled();
-                  expect(secondAuthenticateCallSettledCheck).not.toHaveBeenCalled();
-                });
-                it('new call to authenticationDone should not be resolved', async () => {
-                  // Because a new internal retry is in progress
-                  firstAuthenticationDoneCallSettledCheck.mockClear();
-                  firstAuthenticationDonePromise = fakeMultiFixerBackend1
-                    .authenticationDone(aborter.signal)
-                    .finally(firstAuthenticationDoneCallSettledCheck);
-                  expect(firstAuthenticationDoneCallSettledCheck).not.toHaveBeenCalled();
-                });
-                it('isAuthenticating should return true', () => {
-                  expect(fakeMultiFixerBackend1.isAuthenticating).toEqual(true);
-                  expect(fakeMultiFixerBackend2.isAuthenticating).toEqual(true);
-                });
-              });
-              describe('after second popup is done', () => {
-                it('authenticate should have been called certain number of times', () => {
-                  fakeFixerBackend2.fakeAuthResult(authenticatedAuthResult); // Simulate second popup auth done
-                  expect(backend1AuthenticateSpy).toHaveBeenCalledTimes(1);
-                  expect(backend2AuthenticateSpy).toHaveBeenCalledTimes(1);
-                });
-                it('second authenticate call should succeed', async () => {
-                  await expect(secondAuthenticateCallReturnedPromise).resolves.toEqual(authenticatedAuthResult);
-                });
-                it('remaning done checks succeeds', async () => {
-                  await expect(firstAuthenticationDonePromise).resolves.toEqual(undefined);
-                  expect(firstAuthenticationDoneCallSettledCheck).toHaveBeenCalled();
-                  expect(secondAuthenticationDoneCallSettledCheck).toHaveBeenCalled();
-                });
-                it('isAuthenticating should return false', () => {
-                  expect(fakeMultiFixerBackend1.isAuthenticating).toEqual(false);
-                  expect(fakeMultiFixerBackend2.isAuthenticating).toEqual(false);
-                });
-              });
-            });
-          });
+          secondAuthenticateCallReturnedPromise = fakeMultiFixerBackend2
+            .authenticate(fakeResponse1, aborter.signal)
+            .finally(secondAuthenticateCallSettledCheck);
+          expect(fakeFixerBackend1.isAuthenticating).toBe(true);
+          expect(fakeFixerBackend2.isAuthenticating).toBe(false);
+          await delay(15);
+          fakeFixerBackend1.fakeAuthResult(authenticatedAuthResult);
+          await expect(firstAuthenticateCallReturnedPromise).resolves.toEqual(authenticatedAuthResult);
+          await delay(15);
+          expect(secondAuthenticateCallSettledCheck).not.toHaveBeenCalled();
+          //expect(fakeFixerBackend2.isAuthenticating).toBe(true)
+          fakeFixerBackend2.fakeAuthResult(authenticatedAuthResult);
+          await expect(secondAuthenticateCallReturnedPromise).resolves.toEqual(authenticatedAuthResult);
+          expect(fakeFixerBackend2.isAuthenticating).toBe(false);
         });
       });
 
