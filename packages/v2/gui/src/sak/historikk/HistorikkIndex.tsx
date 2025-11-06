@@ -5,12 +5,12 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 
 import dayjs from 'dayjs';
 import { Alert } from '@navikt/ds-react';
-import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
+import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
-import HistorikkBackendApiContext from './HistorikkBackendApiContext.js';
-import { pathToBehandling } from '../../../../utils/paths.js';
-import type { BeriketHistorikkInnslag } from '../../../../sak/historikk/historikkTypeBerikning.js';
+import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
+import type { BeriketHistorikkInnslag } from './historikkTypeBerikning.js';
+import { pathToBehandling } from '../../utils/paths.js';
 
 const sortHistorikkinnslag = (
   historikkK9sak: BeriketHistorikkInnslag[] = [],
@@ -33,7 +33,7 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
-const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
+export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
   const historikkBackendApi: HistorikkBackendApi | null = useContext(HistorikkBackendApiContext);
 
   if (historikkBackendApi == null) {
@@ -115,5 +115,3 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
     </div>
   );
 };
-
-export default HistorikkIndex;

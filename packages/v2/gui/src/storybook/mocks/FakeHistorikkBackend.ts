@@ -1,5 +1,5 @@
 import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { HistorikkBackendApi } from '../../sak/historikk/HistorikkBackendApi.js';
+import type { HistorikkBackendApi } from '../../sak/historikk/api/HistorikkBackendApi.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import { type BeriketHistorikkInnslag } from '../../sak/historikk/historikkTypeBerikning.js';
 import { K9HistorikkInnslagBeriker } from '../../sak/historikk/historikkTypeBerikning.js';

@@ -4,7 +4,7 @@ import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeve
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import HistorikkIndex from './HistorikkIndex.js';
+import { HistorikkIndex } from './HistorikkIndex.js';
 
 const meta = {
   title: 'gui/behandling/support/historikk/k9/HistorikkIndex',
