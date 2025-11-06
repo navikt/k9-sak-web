@@ -1,6 +1,6 @@
 import FritekstInput from '@k9-sak-web/gui/sak/meldinger/FritekstInput.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
 import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 import type { FritekstInputProps } from './FritekstInput.js';

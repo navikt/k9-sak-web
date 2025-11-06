@@ -1,5 +1,5 @@
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import HistorikkSakIndex from './HistorikkSakIndex';
 import behandlingStartet, { innsynOpprettet, nyeRegisteropplysninger, overlappendeSak } from './mock/historikkinnslag';

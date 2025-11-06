@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import HistorikkSakIndex from './HistorikkSakIndex';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   BehandlingStartet,
   InnsynOpprettet,

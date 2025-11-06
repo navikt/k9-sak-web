@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { userEvent } from 'storybook/internal/test';
-import { expect } from 'storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../../storybook/asyncAction';
 import withFeatureToggles from '../../../storybook/decorators/withFeatureToggles';
 import { FakeMarkerBehandlingBackendApi } from '../../../storybook/mocks/FakeMarkerBehandlingBackendApi';

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { http, HttpResponse } from 'msw';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { VurderNyoppstartetIndex } from './VurderNyoppstartetIndex';
