@@ -2,13 +2,19 @@ import { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_
 import { BodyLong } from '@navikt/ds-react';
 import type { Location } from 'history';
 import type { BeriketHistorikkInnslagLinje } from '../api/HistorikkBackendApi.js';
-import { parseBoldText } from '../snakkeboble/snakkebobleUtils.jsx';
 import { Skjermlenke } from './Skjermlenke.js';
 
 export interface InnslagLinjeProps {
   readonly linje: BeriketHistorikkInnslagLinje;
   readonly behandlingLocation: Location;
 }
+
+const parseBoldText = (input: string) =>
+  input
+    .split(/(__.*?__)/g)
+    .map((part, index) =>
+      part.startsWith('__') && part.endsWith('__') ? <b key={index}>{part.slice(2, -2)}</b> : part,
+    );
 
 export const InnslagLinje = ({ linje, behandlingLocation }: InnslagLinjeProps) => {
   switch (linje.type) {

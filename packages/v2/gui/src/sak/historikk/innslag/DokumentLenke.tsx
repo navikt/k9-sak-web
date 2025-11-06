@@ -9,10 +9,7 @@ interface Props {
   saksnummer: string;
 }
 
-export const HistorikkDokumentLenke = ({
-  dokumentLenke: { tag, journalpostId, dokumentId, utgått },
-  saksnummer,
-}: Props) => {
+export const DokumentLenke = ({ dokumentLenke: { tag, journalpostId, dokumentId, utgått }, saksnummer }: Props) => {
   const isUng = isUngWeb();
   if (utgått) {
     return (
