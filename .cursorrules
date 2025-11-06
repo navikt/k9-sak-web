@@ -1,0 +1,225 @@
+# K9 Sak Web - Cursor AI Rules
+
+## Project Overview
+
+This is a monorepo for NAV's K9 case handling system (k9-sak-web), containing React/TypeScript frontend applications for case processing. The project includes both the main K9 application and Ungdomsytelse (ung) application.
+
+## Core Technologies
+
+- **React**: 19.2.0
+- **TypeScript**: 5.9.3 with strict null checks
+- **Build Tool**: Vite 7.x
+- **Package Manager**: Yarn 4.6.0 (ALWAYS use `yarn`, NEVER `npm`)
+- **Styling**: CSS Modules + Tailwind CSS + NAV Design System (@navikt/ds-\*)
+- **Testing**: Storybook, React Testing Library, Playwright
+- **Component Development**: Storybook
+- **Mocking**: Prefer test data builders and module-level mocks. Avoid MSW and avoid `vi.spyOn` for HTTP.
+- **Routing**: react-router 7.x
+- **Forms**: react-hook-form
+
+## Critical Rules
+
+### Package Management
+
+- **ALWAYS use `yarn`** for all package operations, never npm
+- This is a yarn workspaces monorepo
+- Package manager is locked to yarn@4.6.0
+
+### Code Organization & Architecture
+
+1. **Monorepo Structure**: All packages live under `packages/`
+2. **V2 Modernization**: `packages/v2/` contains modernized code with stricter TypeScript rules
+   - V2 code can NEVER import from non-V2 packages
+   - Old code can import from V2, but not vice versa
+   - V2 has its own stricter `tsconfig.json`
+   - When refactoring, prefer moving code to V2
+
+3. **Path Aliases**:
+   - `@fpsak-frontend/*` → `./packages/*/src`
+   - `@k9-sak-web/*` → `./packages/*/src`
+
+### TypeScript Rules
+
+- Strict null checks are ENABLED
+- Strict mode is DISABLED (legacy, but strictNullChecks is on)
+- Target: esnext, Module: es2020
+- JSX mode: react-jsx (new transform)
+- Use `loose-ts-check` for gradual type checking
+- Check `loosely-type-checked-files.json` for files with relaxed checking
+
+### Dependency Management
+
+**CRITICAL**: These dependencies MUST have synchronized versions across all packages:
+
+- `@navikt/aksel-icons`
+- `@navikt/ds-css`
+- `@navikt/ds-react`
+- `@navikt/ds-tailwind`
+- `@navikt/ft-plattform-komponenter`
+- `react-hook-form`
+- `react-router-dom`
+
+If updating these, ensure all `@navikt/ft-*` packages are updated to compatible versions, or use `resolutions` in package.json.
+
+### CSS & Styling
+
+- Use CSS Modules for component-specific styles
+- CSS Modules type definitions are auto-generated: `yarn css:modules:typegen`
+- Use Tailwind utilities via `@navikt/ds-tailwind` for spacing/layout
+- Follow NAV Design System patterns (@navikt/ds-react components)
+- Import CSS modules with `.module.css` extension
+- Run `stylelint` for CSS linting: `yarn css:lint`
+
+### Testing
+
+- Prefer Storybook interaction tests for UI components (primary choice)
+- Use Vitest for pure logic, utilities and hooks (non-UI)
+- Use Playwright for E2E tests
+- Storybook stories should include accessibility tests (addon-a11y)
+- Tests run with `yarn test`, watch mode with `yarn test:watch`
+- When creating new or updating existing stories, follow `packages/storybook/README.md`
+
+### Code Style & Linting
+
+- ESLint configuration in `eslint.config.mjs` (flat config format)
+- Prettier for formatting
+- Pre-commit hooks via Husky + lint-staged
+- Run `yarn lint:fix` to auto-fix issues
+- Run `yarn ts-check` before committing
+
+### Component Patterns
+
+1. **Functional Components**: Use React function components with hooks
+2. **TypeScript**: Proper typing for props, state, and hooks
+3. **Accessibility**: Follow WCAG guidelines, use semantic HTML
+4. **Forms**: Use react-hook-form for form management
+5. **Shared Components**: Reusable components in `packages/v2/gui/shared/`
+
+### Naming Conventions
+
+- **Components (files + names)**: PascalCase (e.g., `MyComponent.tsx`, export `MyComponent`)
+- **Hooks (files + names)**: camelCase starting with `use` (e.g., `useMyHook.ts` exports `useMyHook`)
+- **Utilities (files)**: camelCase (e.g., `myUtils.ts`)
+- **Types/Interfaces (names)**: PascalCase
+- **Constants**: SCREAMING_SNAKE_CASE for true constants
+- **CSS Modules (class names)**: camelCase for class names (converted from kebab-case)
+- **CSS Modules (files)**: camelCase `myComponent.module.css`
+- **Tests**: mirror target naming (e.g., `MyComponent.spec.tsx`, `myUtils.spec.ts`)
+- **Storybook**: match component filename (e.g., `MyComponent.stories.tsx`)
+
+### Package Structure
+
+Packages follow this pattern:
+
+```
+packages/[package-name]/
+├── src/
+├── index.ts (public API)
+└── package.json
+```
+
+Package categories:
+
+- `behandling-*`: Treatment/case type packages
+- `fakta-*`: Facts/information gathering components
+- `prosess-*`: Process step components
+- `sak-*`: Case-related functionality
+- Shared utilities: `utils`, `types`, `kodeverk`, `rest-api`, etc.
+
+### Development Workflow
+
+1. **Local Development**: `yarn dev` (K9) or `yarn dev:ung` (Ungdomsytelse)
+2. **Type Checking**: `yarn ts-check`
+3. **Linting**: `yarn lint:fix`
+4. **Testing**: `yarn test` or `yarn test:watch`
+5. **Storybook**: `yarn storybook`
+6. **Full Check**: `yarn ltb` (lint, type-check, build)
+
+### Build & Deployment
+
+- Build with `yarn build` (K9) or `yarn build:ung` (Ungdomsytelse)
+- Docker-based deployment
+- Sentry integration for error tracking (release via commit SHA)
+- Environment-specific configs in `envDir/`
+
+### Feature Toggles
+
+- Configured in `feature-toggles.json` and `ung.feature-toggles.json`
+- Can be activated via `.env.development` in `envDir/` directory
+
+### Best Practices
+
+1. **Code Quality**: Write clean, maintainable, well-typed code
+2. **Accessibility**: Always consider a11y in UI components
+3. **Performance**: Use React.memo, useMemo, useCallback appropriately
+4. **Error Handling**: Proper error boundaries and error states
+5. **Documentation**: Update README when adding significant features
+6. **Testing**: Write tests for new features and bug fixes
+7. **Storybook**: Add stories for new shared components
+8. **Backwards Compatibility**: Maintain compatibility when updating shared packages
+9. **Text handling**: Use plain strings/constants; no runtime i18n layer
+10. **Language**: Domenespråk skal være på norsk; tekniske termer skal være på engelsk (f.eks. "saksnummer", "behandling" men "endpoint", "mock", "feature toggle")
+
+### Text & Language
+
+- Bruk norsk for domeneord og brukerrettede tekster (f.eks. "Saksoversikt", "Send vedtak").
+- Behold tekniske begreper på engelsk (f.eks. "endpoint", "API", "fetch", "mock", "feature toggle").
+- Unngå å oversette tekniske begreper til norsk og unngå domeneinnhold på engelsk.
+
+### Common Commands Reference
+
+```bash
+yarn install              # Install dependencies
+yarn dev                  # Start K9 dev server
+yarn dev:ung              # Start Ungdomsytelse dev server
+yarn build                # Build K9 for production
+yarn build:ung            # Build Ungdomsytelse for production
+yarn test                 # Run tests
+yarn test:watch           # Run tests in watch mode
+yarn ts-check             # Type check all code
+yarn lint                 # Lint code
+yarn lint:fix             # Fix linting issues
+yarn css:lint             # Lint CSS
+yarn css:modules:typegen  # Generate CSS module types
+yarn storybook            # Start Storybook
+yarn ltb                  # Full check (lint, type, build)
+yarn knip                 # Find unused files/exports
+```
+
+### Anti-Patterns to Avoid
+
+1.  ❌ Using `npm` instead of `yarn`
+2.  ❌ Importing from non-V2 code in V2 packages
+3.  ❌ Inconsistent NAV Design System package versions
+4.  ❌ Ignoring TypeScript errors (fix or properly type)
+5.  ❌ Avoid using i18n
+6.  ❌ Inline styles (use CSS modules or Tailwind)
+7.  ❌ Missing accessibility attributes
+8.  ❌ Not running type-check before committing
+9.  ❌ Introducing MSW in new tests (prefer fixtures and direct mocks)
+10. ❌ Using `vi.spyOn` for HTTP in tests (If you feel the need to mock HTTP or use `vi.spyOn`, the test probably belongs in Storybook instead of Vitest)
+
+### Git & Collaboration
+
+- Repository: https://github.com/navikt/k9-sak-web
+- Slack channel: #k9-frontend
+- Main branch deploys to https://k9.dev.intern.nav.no then production
+- dev-next1 branch for experimental features (10-day TTL)
+
+## When Making Changes
+
+1. Check if code should go in `packages/v2/` (for new/refactored code)
+2. Run `yarn ts-check` to verify types
+3. Run `yarn lint:fix` to fix style issues
+4. Run `yarn test` to ensure tests pass
+5. Add/update tests for changed functionality
+6. Update Storybook stories if changing shared components
+7. Check for linter errors with `yarn lint`
+8. Generate CSS types if adding/changing CSS modules
+
+## Additional Context
+
+- This is a NAV (Norwegian Labour and Welfare Administration) project
+- Handles sensitive case data - security and privacy are paramount
+- Used by case workers for processing various benefit types
+- Multiple benefit types: Pleiepenger, Omsorgspenger, Opplæringspenger, Ungdomsytelse, etc.

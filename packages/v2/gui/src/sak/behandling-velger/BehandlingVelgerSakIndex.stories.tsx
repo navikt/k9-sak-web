@@ -8,7 +8,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import withKodeverkContext from '../../storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '../../storybook/decorators/withMaxWidth.js';

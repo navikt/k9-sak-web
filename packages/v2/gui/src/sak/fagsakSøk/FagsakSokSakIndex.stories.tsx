@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect } from 'storybook/test';
 import FagsakSøkSakIndexV2 from './FagsakSøkSakIndex';

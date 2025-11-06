@@ -3,7 +3,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
 import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';

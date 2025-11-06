@@ -1,5 +1,5 @@
 import { AuthRedirectDoneWindow } from './AuthRedirectDoneWindow.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 

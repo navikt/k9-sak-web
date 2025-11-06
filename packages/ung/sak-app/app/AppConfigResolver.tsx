@@ -6,17 +6,19 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/qFeatureToggles.js';
 import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
-import { requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
-import useHentInitLenker from './useHentInitLenker';
-import useHentKodeverk from './useHentKodeverk';
-import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
-import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
 import UngKlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/UngKlageVurderingBackendClient.js';
-import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
+import UngVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/UngVedtakKlageBackendClient.js';
+import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
+import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
-import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
-import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
+import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
+import useHentInitLenker from './useHentInitLenker';
+import useHentKodeverk from './useHentKodeverk';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -65,9 +67,11 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
       <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
         <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-          <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
-            {harFeilet || erFerdig ? children : <LoadingPanel />}
-          </InnloggetAnsattProvider>
+          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+            <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+              {harFeilet || erFerdig ? children : <LoadingPanel />}
+            </InnloggetAnsattProvider>
+          </VedtakKlageApiContext>
         </KlageVurderingApiContext>
       </UngKodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
