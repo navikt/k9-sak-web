@@ -35,7 +35,7 @@ import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendClient.js';
+import { K9HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/K9HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
 
@@ -161,7 +161,7 @@ const BehandlingSupportIndex = ({
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
-  const historikkBackendClient = new HistorikkBackendClient(kodeverkoppslag);
+  const historikkBackendClient = new K9HistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient('k9Sak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext } from 'react';
 import { useLocation } from 'react-router';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
@@ -9,18 +9,7 @@ import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/api/Hist
 import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
-import type { BeriketHistorikkInnslag } from './historikkTypeBerikning.js';
 import { pathToBehandling } from '../../utils/paths.js';
-
-const sortHistorikkinnslag = (
-  historikkK9sak: BeriketHistorikkInnslag[] = [],
-  historikkTilbake: BeriketHistorikkInnslag[] = [],
-  historikkKlage: BeriketHistorikkInnslag[] = [],
-): BeriketHistorikkInnslag[] => {
-  return [...historikkTilbake, ...historikkKlage, ...historikkK9sak].toSorted((a, b) =>
-    dayjs(b.opprettetTidspunkt).diff(a.opprettetTidspunkt),
-  );
-};
 
 interface OwnProps {
   saksnummer: string;
@@ -40,22 +29,17 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
     throw new Error('HistorikkBackendApiContext ikke satt');
   }
 
-  const historikkK9SakV2Query = useQuery({
-    queryKey: ['historikk/k9sak/v2', saksnummer, behandlingId, behandlingVersjon],
-    queryFn: () => historikkBackendApi.hentAlleInnslagK9sak(saksnummer),
+  const { data: historikk, isLoading } = useQuery({
+    queryKey: ['historikk', saksnummer, behandlingId, behandlingVersjon], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
+    queryFn: () => historikkBackendApi.hentAlleInnslag(saksnummer),
     enabled: saksnummer != null && saksnummer.length > 0,
-  });
-
-  const historikkK9KlageV2Query = useQuery({
-    queryKey: ['historikk/k9klage/v2', saksnummer, behandlingId, behandlingVersjon],
-    queryFn: () => historikkBackendApi.hentAlleInnslagK9klage(saksnummer),
-    enabled: saksnummer != null && saksnummer.length > 0,
-  });
-
-  const historikkK9TilbakeV2Query = useQuery({
-    queryKey: ['historikk/k9tilbake/v2', saksnummer, behandlingId, behandlingVersjon],
-    queryFn: () => historikkBackendApi.hentAlleInnslagK9tilbake(saksnummer),
-    enabled: saksnummer != null && saksnummer.length > 0,
+    select: ({ innslag, feilet }) => {
+      // Sorterer alle innslaga frå nyaste til eldste
+      return {
+        innslag: innslag.toSorted((a, b) => dayjs(b.opprettetTidspunkt).diff(a.opprettetTidspunkt)),
+        feilet,
+      };
+    },
   });
 
   const location = useLocation();
@@ -67,42 +51,18 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
     [location, saksnummer],
   );
 
-  const isLoading =
-    historikkK9SakV2Query.isPending || historikkK9KlageV2Query.isPending || historikkK9TilbakeV2Query.isPending;
-
-  const historikkInnslag = useMemo(
-    () =>
-      sortHistorikkinnslag(historikkK9SakV2Query.data, historikkK9TilbakeV2Query.data, historikkK9KlageV2Query.data),
-    [historikkK9SakV2Query.data, historikkK9TilbakeV2Query.data, historikkK9KlageV2Query.data],
-  );
-
   if (isLoading) {
     return <LoadingPanel />;
   }
 
-  // Viss henting av data har feila, vis varsel om det.
-  const sakHentFeilAlert = historikkK9SakV2Query.isError ? (
-    <Alert variant="error" size="small">
-      Det har oppstått en feil ved henting av historikk fra k9-sak. Ingen innslag derifra vises.
-    </Alert>
-  ) : null;
-  const klageHentFeilAlert = historikkK9KlageV2Query.isError ? (
-    <Alert variant="error" size="small">
-      Det har oppstått en feil ved henting av historikk fra k9-klage. Ingen innslag derifra vises.
-    </Alert>
-  ) : null;
-  const tilbakeHentFeilAlert = historikkK9TilbakeV2Query.isError ? (
-    <Alert variant="error" size="small">
-      Det har oppstått en feil ved henting av historikk fra k9-tilbake. Ingen innslag derifra vises.
-    </Alert>
-  ) : null;
-
   return (
     <div className="grid gap-5">
-      {sakHentFeilAlert}
-      {klageHentFeilAlert}
-      {tilbakeHentFeilAlert}
-      {historikkInnslag.map((innslag, idx) => {
+      {historikk?.feilet.map(feil => (
+        <Alert variant="error" size="small">
+          Det har oppstått en feil ved henting av historikk fra {feil.backend}. Ingen innslag derifra vises.
+        </Alert>
+      ))}
+      {historikk?.innslag.map((innslag, idx) => {
         return (
           <InnslagBoble
             key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}

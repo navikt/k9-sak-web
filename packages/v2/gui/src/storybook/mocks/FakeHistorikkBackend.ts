@@ -1,5 +1,9 @@
 import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { HistorikkBackendApi } from '../../sak/historikk/api/HistorikkBackendApi.js';
+import {
+  fangFeilVedHenting,
+  type HentetHistorikk,
+  type HistorikkBackendApi,
+} from '../../sak/historikk/api/HistorikkBackendApi.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import { type BeriketHistorikkInnslag } from '../../sak/historikk/historikkTypeBerikning.js';
 import { K9HistorikkInnslagBeriker } from '../../sak/historikk/historikkTypeBerikning.js';
@@ -422,18 +426,28 @@ export class FakeHistorikkBackend implements HistorikkBackendApi {
     this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);
   }
 
-  async hentAlleInnslagK9sak(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+  async #hentAlleInnslagK9sak(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
     ignoreUnusedDeclared(saksnummer);
     return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.berikSakInnslag(innslag)));
   }
 
-  async hentAlleInnslagK9klage(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+  async #hentAlleInnslagK9klage(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
     ignoreUnusedDeclared(saksnummer);
     return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.berikKlageInnslag(innslag)));
   }
 
-  async hentAlleInnslagK9tilbake(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+  async #hentAlleInnslagK9tilbake(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
     ignoreUnusedDeclared(saksnummer);
     return Promise.resolve(fakeK9TilbakeResponse.map(innslag => this.#beriker.berikTilbakeInnslag(innslag)));
+  }
+
+  async hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk> {
+    const k9Sak = await fangFeilVedHenting('k9-sak', this.#hentAlleInnslagK9sak(saksnummer));
+    const k9Klage = await fangFeilVedHenting('k9-klage', this.#hentAlleInnslagK9klage(saksnummer));
+    const k9Tilbake = await fangFeilVedHenting('k9-tilbake', this.#hentAlleInnslagK9tilbake(saksnummer));
+    return {
+      innslag: [...k9Sak.innslag, ...k9Klage.innslag, ...k9Tilbake.innslag],
+      feilet: [...k9Sak.feilet, ...k9Klage.feilet, ...k9Tilbake.feilet],
+    };
   }
 }
