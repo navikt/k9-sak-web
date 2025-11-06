@@ -59,7 +59,7 @@ export class K9KlageTotrinnskontrollData implements TotrinnskontrollData {
   vurderPåNyttÅrsakNavn(
     årsak: Required<K9KlageTotrinnskontrollAksjonspunktDtoAdjusted>['vurderPaNyttArsaker'][number],
   ): string {
-    return this.#kodeverkoppslag.vurderingsÅrsaker(årsak, 'or undefined')?.navn ?? '';
+    return årsak.navn;
   }
 }
 

@@ -14,7 +14,6 @@ import {
   type foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollAksjonspunkterDto,
   foreldrepenger_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon,
 } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
-import type { k9_klage_kodeverk_behandling_aksjonspunkt_VurderÅrsak } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type {
   sif_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   sif_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollAksjonspunkterDto,
@@ -34,13 +33,10 @@ export type UngSakTotrinnskontrollAksjonspunkterDtoAdjusted =
   ung_sak_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto & {
     readonly aksjonspunktKode: ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon;
   };
-export type K9KlageTotrinnskontrollAksjonspunktDtoAdjusted = Omit<
-  k9_klage_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto,
-  'vurderPaNyttArsaker'
-> & {
-  readonly aksjonspunktKode: k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon;
-  readonly vurderPaNyttArsaker?: k9_klage_kodeverk_behandling_aksjonspunkt_VurderÅrsak[];
-};
+export type K9KlageTotrinnskontrollAksjonspunktDtoAdjusted =
+  k9_klage_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto & {
+    readonly aksjonspunktKode: k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon;
+  };
 export type UngTilbakeTotrinnskontrollAksjonspunkterDtoAdjusted =
   sif_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollAksjonspunkterDto & {
     readonly aksjonspunktKode: sif_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon;
