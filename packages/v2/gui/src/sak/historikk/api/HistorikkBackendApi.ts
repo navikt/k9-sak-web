@@ -1,4 +1,31 @@
-import type { BeriketHistorikkInnslag } from '../historikkTypeBerikning.js';
+import type {
+  HistorikkinnslagDto,
+  HistorikkinnslagDtoLinje,
+} from '@k9-sak-web/backend/combined/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+
+// Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend (unngår masse kodeverk oppslag der).
+// Lager "berikede" type der skjermlenke og aktør fra server får lagt til navn fra kodeverkoppslag.
+export type SkjermlenkeMedNavn = Readonly<{
+  type: SkjermlenkeType;
+  navn: string;
+}>;
+
+export type AktørMedNavn = HistorikkinnslagDto['aktør'] &
+  Readonly<{
+    navn: string;
+  }>;
+
+export type BeriketHistorikkInnslagLinje = Omit<HistorikkinnslagDtoLinje, 'skjermlenke'> &
+  Readonly<{
+    skjermlenke?: SkjermlenkeMedNavn;
+  }>;
+
+export type BeriketHistorikkInnslag = Omit<HistorikkinnslagDto, 'skjermlenke'> &
+  Readonly<{
+    aktør: AktørMedNavn;
+    skjermlenke?: SkjermlenkeMedNavn;
+  }>;
 
 export interface FeiletHistorikkKall {
   readonly backend: 'k9-sak' | 'k9-tilbake' | 'k9-klage' | 'ung-sak' | 'ung-tilbake';

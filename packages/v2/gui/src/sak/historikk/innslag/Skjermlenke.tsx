@@ -4,7 +4,7 @@ import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathF
 import { scrollUp } from '../snakkeboble/snakkebobleUtils.js';
 import { NavLink } from 'react-router';
 import { Link } from '@navikt/ds-react';
-import type { SkjermlenkeMedNavn } from '../historikkTypeBerikning.js';
+import type { SkjermlenkeMedNavn } from '../api/HistorikkBackendApi.js';
 
 type SkjermlenkeProps = Readonly<{
   skjermlenke: SkjermlenkeMedNavn;

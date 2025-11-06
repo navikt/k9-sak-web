@@ -5,8 +5,8 @@ import {
   type HistorikkBackendApi,
 } from '../../sak/historikk/api/HistorikkBackendApi.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
-import { type BeriketHistorikkInnslag } from '../../sak/historikk/historikkTypeBerikning.js';
-import { K9HistorikkInnslagBeriker } from '../../sak/historikk/historikkTypeBerikning.js';
+import { type BeriketHistorikkInnslag } from '../../sak/historikk/api/HistorikkBackendApi.js';
+import { K9HistorikkInnslagBeriker } from '../../sak/historikk/api/K9HistorikkInnslagBeriker.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';

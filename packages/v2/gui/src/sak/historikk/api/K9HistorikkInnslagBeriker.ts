@@ -1,37 +1,8 @@
-import type { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2 as K9SakHistorikkinnslagDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as K9KlageHistorikkinnslagDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as K9TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
-
-import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
-
-import type {
-  HistorikkInnslagDto,
-  HistorikkInnslagDtoLinje,
-} from '@k9-sak-web/backend/combined/kontrakt/historikk/HistorikkInnslagDto.js';
-import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
-
-// Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend (unngår masse kodeverk oppslag der).
-// Lager "berikede" type der skjermlenke og aktør fra server får lagt til navn fra kodeverkoppslag.
-export type SkjermlenkeMedNavn = Readonly<{
-  type: SkjermlenkeType;
-  navn: string;
-}>;
-
-export type AktørMedNavn = HistorikkInnslagDto['aktør'] &
-  Readonly<{
-    navn: string;
-  }>;
-
-export type BeriketHistorikkInnslagLinje = Omit<HistorikkInnslagDtoLinje, 'skjermlenke'> &
-  Readonly<{
-    skjermlenke?: SkjermlenkeMedNavn;
-  }>;
-
-export type BeriketHistorikkInnslag = Omit<HistorikkInnslagDto, 'skjermlenke'> &
-  Readonly<{
-    aktør: AktørMedNavn;
-    skjermlenke?: SkjermlenkeMedNavn;
-  }>;
+import type { K9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
+import type { HistorikkinnslagDto as K9SakHistorikkinnslagDto } from '@k9-sak-web/backend/k9sak/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { HistorikkinnslagDto as K9KlageHistorikkinnslagDto } from '@k9-sak-web/backend/k9klage/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { HistorikkinnslagDto as K9TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { AktørMedNavn, BeriketHistorikkInnslag, SkjermlenkeMedNavn } from './HistorikkBackendApi.js';
 
 export class K9HistorikkInnslagBeriker {
   constructor(private kodeverkOppslag: K9Kodeverkoppslag) {}

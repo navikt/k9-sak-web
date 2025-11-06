@@ -2,7 +2,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, Chat, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
-import type { BeriketHistorikkInnslag } from '../historikkTypeBerikning.js';
+import type { BeriketHistorikkInnslag } from '../api/HistorikkBackendApi.js';
 import { Avatar } from './Avatar.jsx';
 import { HistorikkDokumentLenke } from '../snakkeboble/HistorikkDokumentLenke.jsx';
 import { formatDate, getColor, getStyle, utledPlassering } from '../snakkeboble/snakkebobleUtils.jsx';
