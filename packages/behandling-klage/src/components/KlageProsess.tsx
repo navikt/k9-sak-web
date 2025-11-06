@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -22,9 +22,6 @@ import {
 } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
-import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import { KlageBehandlingApiKeys, restApiKlageHooks } from '../data/klageBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -229,10 +226,8 @@ const KlageProsess = ({
     data.klageVurdering.klageVurderingResultatNK &&
     data.klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
 
-  const formidlingClient = useContext(FormidlingClientContext);
-
   return (
-    <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
+    <>
       <KlageVurderingModal
         visModal={visModalKlageBehandling}
         lukkModal={useCallback(() => {
@@ -266,7 +261,7 @@ const KlageProsess = ({
           useMultipleRestApi={restApiKlageHooks.useMultipleRestApi}
         />
       </ProsessStegContainer>
-    </VedtakKlageApiContext>
+    </>
   );
 };
 
