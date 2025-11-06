@@ -5,7 +5,7 @@ import {
   k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../../storybook/asyncAction';

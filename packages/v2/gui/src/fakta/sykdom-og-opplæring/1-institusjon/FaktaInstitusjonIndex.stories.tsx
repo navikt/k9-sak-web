@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
@@ -102,7 +102,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [withMockData],
   play: async ({ canvas }) => {
-
     // Wait for navigation items to load and click the first period (St. Olavs hospital)
     const firstPeriodButton = await canvas.findByRole('button', { name: /01.02.2025/i });
     await expect(firstPeriodButton).toBeInTheDocument();
