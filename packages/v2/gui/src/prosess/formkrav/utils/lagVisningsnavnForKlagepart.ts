@@ -1,10 +1,10 @@
-import type { k9_klage_kontrakt_behandling_FagsakDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type { ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 
 function lagVisningsnavnForKlagepart(
   partId: string,
-  fagsakPerson?: k9_klage_kontrakt_behandling_FagsakDto['person'],
-  arbeidsgiverOpplysningerPerId?: ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'],
+  fagsakPerson?: FagsakDto['person'],
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ): string {
   if (
     arbeidsgiverOpplysningerPerId &&
