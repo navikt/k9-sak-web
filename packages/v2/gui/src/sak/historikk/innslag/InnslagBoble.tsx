@@ -16,7 +16,6 @@ import type { AkselColor } from '@navikt/ds-react/types/theme';
 export interface InnslagBobleProps {
   readonly innslag: BeriketHistorikkInnslag;
   readonly behandlingLocation: InnslagLinjeProps['behandlingLocation'];
-  readonly saksnummer: string;
 }
 
 const aktørIkonPlassering = (aktør: HistorikkAktør): 'right' | 'left' => {
@@ -49,7 +48,7 @@ const aktørFarge = (aktør: HistorikkAktør): AkselColor => {
 
 const formatDate = (date: string) => `${dateFormat(date)} - ${timeFormat(date)}`;
 
-export const InnslagBoble = ({ innslag, behandlingLocation, saksnummer }: InnslagBobleProps) => {
+export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
   const position = aktørIkonPlassering(innslag.aktør.type);
   // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
@@ -81,11 +80,7 @@ export const InnslagBoble = ({ innslag, behandlingLocation, saksnummer }: Innsla
         {innslag.dokumenter != null ? (
           <VStack gap="space-4">
             {innslag.dokumenter.map(dokument => (
-              <DokumentLenke
-                key={`${dokument.dokumentId}-${dokument.journalpostId}`}
-                dokumentLenke={dokument}
-                saksnummer={saksnummer}
-              />
+              <DokumentLenke key={`${dokument.dokumentId}-${dokument.journalpostId}`} dokumentLink={dokument} />
             ))}
           </VStack>
         ) : null}

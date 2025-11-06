@@ -4,7 +4,6 @@ import {
   type HentetHistorikk,
   type HistorikkBackendApi,
 } from '../../sak/historikk/api/HistorikkBackendApi.js';
-import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import { type BeriketHistorikkInnslag } from '../../sak/historikk/api/HistorikkBackendApi.js';
 import { K9HistorikkInnslagBeriker } from '../../sak/historikk/api/K9HistorikkInnslagBeriker.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
@@ -430,18 +429,17 @@ export class FakeHistorikkBackend implements HistorikkBackendApi {
   }
 
   async #hentAlleInnslagK9sak(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
-    ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.berikSakInnslag(innslag)));
+    return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.berikSakInnslag(innslag, saksnummer)));
   }
 
   async #hentAlleInnslagK9klage(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
-    ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.berikKlageInnslag(innslag)));
+    return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.berikKlageInnslag(innslag, saksnummer)));
   }
 
   async #hentAlleInnslagK9tilbake(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
-    ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeK9TilbakeResponse.map(innslag => this.#beriker.berikTilbakeInnslag(innslag)));
+    return Promise.resolve(
+      fakeK9TilbakeResponse.map(innslag => this.#beriker.berikTilbakeInnslag(innslag, saksnummer)),
+    );
   }
 
   async hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk> {

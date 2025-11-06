@@ -1,33 +1,25 @@
-import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { FileIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Link } from '@navikt/ds-react';
-import { DOCUMENT_SERVER_URL_K9, DOCUMENT_SERVER_URL_UNG } from '../documentServerUrl.js';
-import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
+import type { BeriketDokumentLink } from '../api/HistorikkBackendApi.js';
 
-interface Props {
-  dokumentLenke: DokumentLink;
-  saksnummer: string;
+interface DokumentLenkeProps {
+  readonly dokumentLink: BeriketDokumentLink;
 }
 
-export const DokumentLenke = ({ dokumentLenke: { tag, journalpostId, dokumentId, utgått }, saksnummer }: Props) => {
-  const isUng = isUngWeb();
-  if (utgått) {
+export const DokumentLenke = ({ dokumentLink }: DokumentLenkeProps) => {
+  if (dokumentLink.utgått) {
     return (
       <HStack align="center" gap="space-4">
-        <FileIcon title={tag} width={24} height={24} />
-        <BodyShort size="small">{tag} (utgått)</BodyShort>
+        <FileIcon title={dokumentLink.tag} width={24} height={24} />
+        <BodyShort size="small">{dokumentLink.tag} (utgått)</BodyShort>
       </HStack>
     );
   }
   return (
-    <Link
-      target="_blank"
-      rel="noopener noreferrer"
-      href={`${isUng ? DOCUMENT_SERVER_URL_UNG : DOCUMENT_SERVER_URL_K9}?saksnummer=${saksnummer}&journalpostId=${journalpostId}&dokumentId=${dokumentId}`}
-    >
+    <Link target="_blank" rel="noopener noreferrer" href={dokumentLink.serverUrl}>
       <HStack align="center" gap="space-4">
-        <FileIcon title={tag} width={24} height={24} />
-        {tag}
+        <FileIcon title={dokumentLink.tag} width={24} height={24} />
+        {dokumentLink.tag}
       </HStack>
     </Link>
   );

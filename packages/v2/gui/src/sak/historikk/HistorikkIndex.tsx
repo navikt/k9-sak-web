@@ -66,7 +66,6 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
         return (
           <InnslagBoble
             key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
-            saksnummer={saksnummer}
             innslag={innslag}
             behandlingLocation={getBehandlingLocation(behandlingId)}
           />

@@ -17,7 +17,7 @@ export class K9HistorikkBackendClient implements HistorikkBackendApi {
 
   async #hentAlleInnslagK9sak(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
     return (await k9sak_historikk_hentAlleInnslagV2({ query: { saksnummer: { saksnummer } } })).data.map(innslag =>
-      this.#beriker.berikSakInnslag(innslag),
+      this.#beriker.berikSakInnslag(innslag, saksnummer),
     );
   }
 
@@ -27,7 +27,7 @@ export class K9HistorikkBackendClient implements HistorikkBackendApi {
         saksnummer: { saksnummer },
       },
     });
-    return resp.data.map(innslag => this.#beriker.berikKlageInnslag(innslag));
+    return resp.data.map(innslag => this.#beriker.berikKlageInnslag(innslag, saksnummer));
   }
 
   async #hentAlleInnslagK9tilbake(saksnummer: string) {
@@ -36,7 +36,7 @@ export class K9HistorikkBackendClient implements HistorikkBackendApi {
         saksnummer: { saksnummer },
       },
     });
-    return resp.data.map(innslag => this.#beriker.berikTilbakeInnslag(innslag));
+    return resp.data.map(innslag => this.#beriker.berikTilbakeInnslag(innslag, saksnummer));
   }
 
   async hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk> {

@@ -20,13 +20,13 @@ export class UngHistorikkBackendClient implements HistorikkBackendApi {
 
   async #hentSakInnslag(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
     return (await ungsak_historikk_hentAlleInnslag({ query: { saksnummer: { saksnummer } } })).data.map(innslag =>
-      this.#beriker.berikSakInnslag(innslag),
+      this.#beriker.berikSakInnslag(innslag, saksnummer),
     );
   }
 
   async #hentTilbakeInnslag(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
     return (await ungtilbake_historikk_hentAlleInnslag({ query: { saksnummer: { saksnummer } } })).data.map(innslag =>
-      this.#beriker.berikTilbakeInnslag(innslag),
+      this.#beriker.berikTilbakeInnslag(innslag, saksnummer),
     );
   }
 

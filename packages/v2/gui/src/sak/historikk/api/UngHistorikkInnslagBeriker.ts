@@ -1,5 +1,5 @@
 import type { UngKodeverkoppslag } from '../../../kodeverk/oppslag/useUngKodeverkoppslag.js';
-import type { BeriketHistorikkInnslag } from './HistorikkBackendApi.js';
+import { type BeriketHistorikkInnslag, dokumentMedServerUrl } from './HistorikkBackendApi.js';
 import type { HistorikkinnslagDto as UngSakHistorikkinnslagDto } from '@k9-sak-web/backend/ungsak/kontrakt/historikk/HistorikkinnslagDto.js';
 import type { HistorikkinnslagDto as UngTilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/historikk/HistorikkinnslagDto.js';
 
@@ -9,7 +9,9 @@ export class UngHistorikkInnslagBeriker {
     this.#kodeverkoppslag = kodeverkOppslag;
   }
 
-  berikSakInnslag(innslag: UngSakHistorikkinnslagDto): BeriketHistorikkInnslag {
+  readonly serverDokumentEndpoint = '/ung/sak/api/dokument/hent-dokument';
+
+  berikSakInnslag(innslag: UngSakHistorikkinnslagDto, saksnummer: string): BeriketHistorikkInnslag {
     const aktør = { ...innslag.aktør, navn: this.#kodeverkoppslag.ungSak.historikkAktører(innslag.aktør.type).navn };
     const skjermlenke =
       innslag.skjermlenke != null
@@ -18,14 +20,16 @@ export class UngHistorikkInnslagBeriker {
             navn: this.#kodeverkoppslag.ungSak.skjermlenkeTyper(innslag.skjermlenke).navn,
           }
         : undefined;
+    const dokumenter = dokumentMedServerUrl(this.serverDokumentEndpoint, saksnummer, innslag);
     return {
       ...innslag,
       aktør,
       skjermlenke,
+      dokumenter,
     };
   }
 
-  berikTilbakeInnslag(innslag: UngTilbakeHistorikkinnslagDto): BeriketHistorikkInnslag {
+  berikTilbakeInnslag(innslag: UngTilbakeHistorikkinnslagDto, saksnummer: string): BeriketHistorikkInnslag {
     const aktør = {
       ...innslag.aktør,
       navn: this.#kodeverkoppslag.ungTilbake.historikkAktører(innslag.aktør.type).navn,
@@ -37,10 +41,12 @@ export class UngHistorikkInnslagBeriker {
             navn: this.#kodeverkoppslag.ungTilbake.skjermlenkeTyper(innslag.skjermlenke).navn,
           }
         : undefined;
+    const dokumenter = dokumentMedServerUrl(this.serverDokumentEndpoint, saksnummer, innslag);
     return {
       ...innslag,
       aktør,
       skjermlenke,
+      dokumenter,
     };
   }
 }

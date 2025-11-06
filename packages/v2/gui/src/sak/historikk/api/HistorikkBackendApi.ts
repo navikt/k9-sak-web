@@ -3,6 +3,7 @@ import type {
   HistorikkinnslagDtoLinje,
 } from '@k9-sak-web/backend/combined/kontrakt/historikk/HistorikkinnslagDto.js';
 import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
 
 // Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend (unngår masse kodeverk oppslag der).
 // Lager "berikede" type der skjermlenke og aktør fra server får lagt til navn fra kodeverkoppslag.
@@ -21,10 +22,16 @@ export type BeriketHistorikkInnslagLinje = Omit<HistorikkinnslagDtoLinje, 'skjer
     skjermlenke?: SkjermlenkeMedNavn;
   }>;
 
-export type BeriketHistorikkInnslag = Omit<HistorikkinnslagDto, 'skjermlenke'> &
+export type BeriketDokumentLink = DokumentLink &
+  Readonly<{
+    serverUrl: string;
+  }>;
+
+export type BeriketHistorikkInnslag = Omit<HistorikkinnslagDto, 'skjermlenke' | 'dokumenter'> &
   Readonly<{
     aktør: AktørMedNavn;
     skjermlenke?: SkjermlenkeMedNavn;
+    dokumenter: BeriketDokumentLink[];
   }>;
 
 export interface FeiletHistorikkKall {
@@ -38,7 +45,7 @@ export interface HentetHistorikk {
 }
 
 export interface HistorikkBackendApi {
-  backend: 'k9' | 'ung';
+  readonly backend: 'k9' | 'ung';
   hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk>;
 }
 
@@ -64,4 +71,23 @@ export const fangFeilVedHenting = async (
       feilet,
     };
   }
+};
+
+/**
+ * Legger på utleda serverUrl for dokument i historikk innslag
+ * @param serverDokumentEndepunkt Statisk verdi for endepunkt
+ */
+export const dokumentMedServerUrl = (
+  serverDokumentEndepunkt: string,
+  saksnummer: string,
+  innslag: HistorikkinnslagDto,
+): BeriketDokumentLink[] => {
+  return innslag.dokumenter.map(dokument => {
+    const { journalpostId, dokumentId } = dokument;
+    const serverUrl = `${serverDokumentEndepunkt}?saksnummer=${saksnummer}&journalpostId=${journalpostId}&dokumentId=${dokumentId}`;
+    return {
+      ...dokument,
+      serverUrl,
+    };
+  });
 };
