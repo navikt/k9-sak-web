@@ -3,12 +3,6 @@ import { useLocation } from 'react-router';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 
-import type {
-  KlageHistorikkInnslagV2,
-  NyeUlikeHistorikkinnslagTyper,
-  SakHistorikkInnslagV2,
-  TilbakeHistorikkInnslagV2,
-} from '@k9-sak-web/gui/sak/historikk/historikkTypeBerikning.js';
 import dayjs from 'dayjs';
 import { Alert } from '@navikt/ds-react';
 import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApi.js';
@@ -16,12 +10,13 @@ import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import HistorikkBackendApiContext from './HistorikkBackendApiContext.js';
 import { pathToBehandling } from '../../../../utils/paths.js';
+import type { BeriketHistorikkInnslag } from '../../../../sak/historikk/historikkTypeBerikning.js';
 
 const sortHistorikkinnslag = (
-  historikkK9sak: SakHistorikkInnslagV2[] = [],
-  historikkTilbake: TilbakeHistorikkInnslagV2[] = [],
-  historikkKlage: KlageHistorikkInnslagV2[] = [],
-): NyeUlikeHistorikkinnslagTyper[] => {
+  historikkK9sak: BeriketHistorikkInnslag[] = [],
+  historikkTilbake: BeriketHistorikkInnslag[] = [],
+  historikkKlage: BeriketHistorikkInnslag[] = [],
+): BeriketHistorikkInnslag[] => {
   return [...historikkTilbake, ...historikkKlage, ...historikkK9sak].toSorted((a, b) =>
     dayjs(b.opprettetTidspunkt).diff(a.opprettetTidspunkt),
   );
