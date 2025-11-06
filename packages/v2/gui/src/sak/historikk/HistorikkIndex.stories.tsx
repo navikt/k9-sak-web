@@ -7,7 +7,7 @@ import { expect, userEvent, within } from 'storybook/test';
 import { HistorikkIndex } from './HistorikkIndex.js';
 
 const meta = {
-  title: 'gui/behandling/support/historikk/k9/HistorikkIndex',
+  title: 'gui/sak/historikk/HistorikkIndex',
   component: HistorikkIndex,
   decorators: [
     withMaxWidth(600),
@@ -19,7 +19,7 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-export const HistorikkinnslagV2: Story = {
+export const K9Historikk: Story = {
   args: {
     saksnummer: '12345',
     behandlingId: 1,
