@@ -2,7 +2,7 @@ import {
   AksjonspunktGodkjenningFieldArray,
   type AksjonspunktGodkjenningData,
 } from './AksjonspunktGodkjenningFieldArray.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
 import withFeatureToggles from '../../../storybook/decorators/withFeatureToggles.js';

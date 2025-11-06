@@ -1,12 +1,12 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from 'storybook/test';
 import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,

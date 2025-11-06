@@ -1,5 +1,5 @@
 import { BeslutterModalIndex } from './BeslutterModalIndex.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
