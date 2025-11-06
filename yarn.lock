@@ -1527,22 +1527,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/sak-historikk@npm:1.0.0, @fpsak-frontend/sak-historikk@workspace:packages/sak-historikk":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-historikk@workspace:packages/sak-historikk"
-  dependencies:
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@k9-sak-web/types": "npm:1.0.0"
-    history: "npm:5.3.0"
-    react: "npm:19.2.0"
-    react-intl: "npm:7.1.14"
-    react-router: "npm:7.9.4"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/shared-components@npm:1.0.0, @fpsak-frontend/shared-components@workspace:packages/shared-components":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/shared-components@workspace:packages/shared-components"
@@ -2876,7 +2860,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/sak-historikk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
@@ -2953,7 +2936,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/sak-historikk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
