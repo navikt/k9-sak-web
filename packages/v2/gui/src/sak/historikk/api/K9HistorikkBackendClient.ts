@@ -8,6 +8,8 @@ import type { K9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverko
 export class K9HistorikkBackendClient implements HistorikkBackendApi {
   #beriker: K9HistorikkInnslagBeriker;
 
+  readonly backend = 'k9';
+
   constructor(kodeverkoppslag: K9Kodeverkoppslag) {
     this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);
   }

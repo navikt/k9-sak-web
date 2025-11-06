@@ -11,6 +11,7 @@ export interface HentetHistorikk {
 }
 
 export interface HistorikkBackendApi {
+  backend: 'k9' | 'ung';
   hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk>;
 }
 

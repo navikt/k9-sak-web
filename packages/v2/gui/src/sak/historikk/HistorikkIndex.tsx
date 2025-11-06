@@ -30,7 +30,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
   }
 
   const { data: historikk, isLoading } = useQuery({
-    queryKey: ['historikk', saksnummer, behandlingId, behandlingVersjon], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
+    queryKey: ['historikk', saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
     queryFn: () => historikkBackendApi.hentAlleInnslag(saksnummer),
     enabled: saksnummer != null && saksnummer.length > 0,
     select: ({ innslag, feilet }) => {

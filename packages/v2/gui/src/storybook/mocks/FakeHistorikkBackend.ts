@@ -422,6 +422,9 @@ const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
 
 export class FakeHistorikkBackend implements HistorikkBackendApi {
   #beriker: K9HistorikkInnslagBeriker;
+
+  readonly backend = 'k9';
+
   constructor(kodeverkoppslag: K9Kodeverkoppslag) {
     this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);
   }
