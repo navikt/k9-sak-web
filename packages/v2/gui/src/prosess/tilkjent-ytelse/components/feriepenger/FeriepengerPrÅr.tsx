@@ -1,8 +1,7 @@
-import { FormattedMessage } from 'react-intl';
-
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 
-import type { ArbeidsgiverOpplysningerPerId, FeriepengegrunnlagAndel } from '@k9-sak-web/types';
+import type { FeriepengegrunnlagAndel } from '../../types/feriepenger.js';
+import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
 
 interface Props {
   alleAndeler: FeriepengegrunnlagAndel[];
@@ -26,21 +25,13 @@ export const FeriepengerPrÅr = ({
 
   return (
     <div>
-      <Label size="small">
-        <FormattedMessage id="TilkjentYtelse.Feriepenger.Opptjeningsår" values={{ år: opptjeningsår }} />
-      </Label>
+      <Label size="small">Opptjeningsår {opptjeningsår}</Label>
       <Table>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell scope="col">
-              <FormattedMessage id="TilkjentYtelse.Feriepenger.AndelNavn" />
-            </Table.HeaderCell>
-            <Table.HeaderCell scope="col">
-              <FormattedMessage id="TilkjentYtelse.Feriepenger.GrunnlagRefusjon" />
-            </Table.HeaderCell>
-            <Table.HeaderCell scope="col">
-              <FormattedMessage id="TilkjentYtelse.Feriepenger.GrunnlagSøker" />
-            </Table.HeaderCell>
+            <Table.HeaderCell scope="col">Arbeidsgiver / Aktivitet</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Refusjon</Table.HeaderCell>
+            <Table.HeaderCell scope="col">Til søker</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

@@ -13,7 +13,7 @@ import {
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import { FeriepengerPanel } from './feriepenger';
+import { FeriepengerPanel } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/components/feriepenger/FeriepengerPanel.js';
 
 const perioderMedClassName = [];
 
@@ -88,7 +88,6 @@ const TilkjentYtelsePanelImpl = ({
         <div style={{ marginTop: '1rem' }}>
           <FeriepengerPanel
             feriepengegrunnlag={feriepengegrunnlag}
-            kodeverkNavnFraKode={kodeverkNavnFraKode}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
         </div>

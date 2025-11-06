@@ -15,6 +15,7 @@ import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysn
 import TilkjentYtelse, { type PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import { FeriepengerPanel } from './feriepenger/index.js';
 
 const perioderMedClassName: PeriodeMedId[] = [];
 
@@ -80,6 +81,17 @@ const TilkjentYtelsePanelImpl = ({
           showAndelDetails={showAndelDetails}
         />
       )}
+
+      {beregningsresultat?.feriepengegrunnlag &&
+        beregningsresultat.feriepengegrunnlag.andeler &&
+        beregningsresultat.feriepengegrunnlag.andeler.length > 0 && (
+          <div style={{ marginTop: '1rem' }}>
+            <FeriepengerPanel
+              feriepengegrunnlag={beregningsresultat.feriepengegrunnlag}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            />
+          </div>
+        )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (
         <TilkjentYtelseForm
