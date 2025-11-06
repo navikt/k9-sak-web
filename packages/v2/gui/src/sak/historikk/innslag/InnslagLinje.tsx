@@ -13,16 +13,12 @@ export interface InnslagLinjeProps {
 export const InnslagLinje = ({ linje, behandlingLocation }: InnslagLinjeProps) => {
   switch (linje.type) {
     case LinjeType.SKJERMLENKE: {
-      if (linje.skjermlenkeType == null || linje.skjermlenkeNavn == null) {
-        throw new Error(`historikk innslag linje med skjermlenke mangler skjermlenkeType/skjermlenkeNavn.`);
+      if (linje.skjermlenke == null) {
+        throw new Error(`historikk innslag linje med type skjermlenke mangler skjermlenke.`);
       }
       return (
         <>
-          <Skjermlenke
-            inlineText
-            skjermlenke={{ type: linje.skjermlenkeType, navn: linje.skjermlenkeNavn }}
-            behandlingLocation={behandlingLocation}
-          />
+          <Skjermlenke inlineText skjermlenke={linje.skjermlenke} behandlingLocation={behandlingLocation} />
           {linje.tekst != null ? parseBoldText(linje.tekst) : null}
         </>
       );

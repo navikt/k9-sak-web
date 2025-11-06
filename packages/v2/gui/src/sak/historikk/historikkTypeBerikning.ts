@@ -8,17 +8,29 @@ import type {
   HistorikkInnslagDto,
   HistorikkInnslagDtoLinje,
 } from '@k9-sak-web/backend/combined/kontrakt/historikk/HistorikkInnslagDto.js';
+import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
 // Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend (unngår masse kodeverk oppslag der).
-export type BeriketHistorikkInnslagLinje = HistorikkInnslagDtoLinje &
+// Lager "berikede" type der skjermlenke og aktør fra server får lagt til navn fra kodeverkoppslag.
+export type SkjermlenkeMedNavn = Readonly<{
+  type: SkjermlenkeType;
+  navn: string;
+}>;
+
+export type AktørMedNavn = HistorikkInnslagDto['aktør'] &
   Readonly<{
-    skjermlenkeNavn?: string;
+    navn: string;
   }>;
 
-export type BeriketHistorikkInnslag = HistorikkInnslagDto &
+export type BeriketHistorikkInnslagLinje = Omit<HistorikkInnslagDtoLinje, 'skjermlenke'> &
   Readonly<{
-    aktørNavn: string;
-    skjermlenkeNavn?: string;
+    skjermlenke?: SkjermlenkeMedNavn;
+  }>;
+
+export type BeriketHistorikkInnslag = Omit<HistorikkInnslagDto, 'skjermlenke'> &
+  Readonly<{
+    aktør: AktørMedNavn;
+    skjermlenke?: SkjermlenkeMedNavn;
   }>;
 
 export class K9HistorikkInnslagBeriker {
@@ -26,55 +38,78 @@ export class K9HistorikkInnslagBeriker {
 
   berikSakInnslag(innslag: K9SakHistorikkinnslagDto): BeriketHistorikkInnslag {
     const linjer = innslag.linjer.map(linje => {
-      const skjermlenkeNavn =
+      const skjermlenke =
         linje.skjermlenkeType != null
-          ? this.kodeverkOppslag.k9sak.skjermlenkeTyper(linje.skjermlenkeType).navn
+          ? {
+              type: linje.skjermlenkeType,
+              navn: this.kodeverkOppslag.k9sak.skjermlenkeTyper(linje.skjermlenkeType).navn,
+            }
           : undefined;
       return {
         ...linje,
-        skjermlenkeNavn,
+        skjermlenke,
       };
     });
-    const aktørNavn = this.kodeverkOppslag.k9sak.historikkAktører(innslag.aktør.type).navn;
+    const aktør = { ...innslag.aktør, navn: this.kodeverkOppslag.k9sak.historikkAktører(innslag.aktør.type).navn };
     return {
       ...innslag,
       linjer,
-      aktørNavn,
+      aktør,
     };
   }
 
   berikKlageInnslag(innslag: K9KlageHistorikkinnslagDto): BeriketHistorikkInnslag {
     const linjer = innslag.linjer.map(linje => {
-      const skjermlenkeNavn =
+      const skjermlenke =
         linje.skjermlenkeType != null
-          ? this.kodeverkOppslag.k9klage.skjermlenkeTyper(linje.skjermlenkeType).navn
+          ? {
+              type: linje.skjermlenkeType,
+              navn: this.kodeverkOppslag.k9klage.skjermlenkeTyper(linje.skjermlenkeType).navn,
+            }
           : undefined;
       return {
         ...linje,
-        skjermlenkeNavn,
+        skjermlenke,
       };
     });
-    const aktørNavn = this.kodeverkOppslag.k9klage.historikkAktører(innslag.aktør.type).navn;
+    const aktør = { ...innslag.aktør, navn: this.kodeverkOppslag.k9klage.historikkAktører(innslag.aktør.type).navn };
     return {
       ...innslag,
       linjer,
-      aktørNavn,
+      aktør,
     };
   }
 
-  berikTilbakeInnslag(innslag: K9TilbakeHistorikkinnslagDto): BeriketHistorikkInnslag {
-    const skjermlenkeNavn =
-      innslag.skjermlenke != null
-        ? this.kodeverkOppslag.k9tilbake.skjermlenkeTyper(innslag.skjermlenke).navn
-        : undefined;
-    const aktørNavn =
+  #tilbakeSkjermlenke(innslag: K9TilbakeHistorikkinnslagDto): SkjermlenkeMedNavn | undefined {
+    if (innslag.skjermlenke != null) {
+      const navn: string =
+        this.kodeverkOppslag.k9tilbake.skjermlenkeTyper(innslag.skjermlenke).navn ?? 'FEIL: ukjent skjermlenkenavn';
+      return {
+        type: innslag.skjermlenke,
+        navn,
+      };
+    }
+    return undefined;
+  }
+
+  #tilbakeAktør(innslag: K9TilbakeHistorikkinnslagDto): AktørMedNavn {
+    const navn =
       this.kodeverkOppslag.k9tilbake.historikkAktører(innslag.aktør.type).navn ??
       this.kodeverkOppslag.k9sak.historikkAktører(innslag.aktør.type, 'or undefined')?.navn ?? // Prøv å slå opp i k9sak sin viss navn ikkje blir funne i k9tilbake oppslag.
       'ukjent aktørnavn';
     return {
+      ...innslag.aktør,
+      navn,
+    };
+  }
+
+  berikTilbakeInnslag(innslag: K9TilbakeHistorikkinnslagDto): BeriketHistorikkInnslag {
+    const skjermlenke = this.#tilbakeSkjermlenke(innslag);
+    const aktør = this.#tilbakeAktør(innslag);
+    return {
       ...innslag,
-      aktørNavn,
-      skjermlenkeNavn,
+      aktør,
+      skjermlenke,
     };
   }
 }

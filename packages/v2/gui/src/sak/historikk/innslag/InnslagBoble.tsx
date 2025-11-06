@@ -18,7 +18,7 @@ export interface InnslagBobleProps {
 
 export const InnslagBoble = ({ innslag, behandlingLocation, saksnummer }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
-  const rolleNavn = innslag.aktørNavn;
+  const rolleNavn = innslag.aktør.navn;
   const position = utledPlassering(innslag.aktør.type);
   // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
@@ -37,11 +37,8 @@ export const InnslagBoble = ({ innslag, behandlingLocation, saksnummer }: Innsla
     >
       <Chat.Bubble>
         {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
-        {'skjermlenke' in innslag && innslag.skjermlenke != null && innslag.skjermlenkeNavn != null ? (
-          <Skjermlenke
-            skjermlenke={{ type: innslag.skjermlenke, navn: innslag.skjermlenkeNavn }}
-            behandlingLocation={behandlingLocation}
-          />
+        {'skjermlenke' in innslag && innslag.skjermlenke != null && innslag.skjermlenke.navn != null ? (
+          <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
         ) : null}
         {innslag.linjer.map((linje, idx) => (
           <div key={idx} hidden={doCutOff && !expanded && idx > 0}>

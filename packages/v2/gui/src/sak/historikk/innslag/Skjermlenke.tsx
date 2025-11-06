@@ -1,15 +1,10 @@
-import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import type { FC } from 'react';
 import type { Location } from 'history';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import { scrollUp } from '../snakkeboble/snakkebobleUtils.js';
 import { NavLink } from 'react-router';
 import { Link } from '@navikt/ds-react';
-
-type SkjermlenkeMedNavn = Readonly<{
-  type: SkjermlenkeType;
-  navn: string;
-}>;
+import type { SkjermlenkeMedNavn } from '../historikkTypeBerikning.js';
 
 type SkjermlenkeProps = Readonly<{
   skjermlenke: SkjermlenkeMedNavn;
