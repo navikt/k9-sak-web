@@ -63,55 +63,6 @@ export class K9KlageKodeverkoppslag
     return this.finnObjektFraKilde('historikkAktører', kode, undefinedIfNotFound);
   }
 
-  historikkAvklartSoeknadsperiodeTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkAvklartSoeknadsperiodeTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkAvklartSoeknadsperiodeTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkBegrunnelseTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkBegrunnelseTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkBegrunnelseTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkEndretFeltTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkEndretFeltTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkEndretFeltTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkEndretFeltVerdiTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkEndretFeltVerdiTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkEndretFeltVerdiTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkOpplysningTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkOpplysningTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkOpplysningTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkResultatTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkResultatTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkResultatTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkinnslagTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkinnslagTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkinnslagTyper', kode, undefinedIfNotFound);
-  }
-
   klageAvvistÅrsaker<U extends OrUndefined = undefined>(
     kode: Kilde<EO, 'klageAvvistÅrsaker'>,
     undefinedIfNotFound?: U,
