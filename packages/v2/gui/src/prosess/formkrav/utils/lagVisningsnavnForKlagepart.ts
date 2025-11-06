@@ -1,10 +1,10 @@
-import type { Arbeidsgivere } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/Arbeidsgivere.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 
 function lagVisningsnavnForKlagepart(
   partId: string,
   fagsakPerson?: FagsakDto['person'],
-  arbeidsgiverOpplysningerPerId?: Arbeidsgivere,
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ): string {
   if (
     arbeidsgiverOpplysningerPerId &&

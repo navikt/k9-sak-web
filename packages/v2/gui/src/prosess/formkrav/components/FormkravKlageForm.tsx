@@ -1,4 +1,4 @@
-import type { Arbeidsgivere } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/Arbeidsgivere.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
 import type { k9_klage_kontrakt_klage_KlageFormkravResultatDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
@@ -74,7 +74,7 @@ interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   fagsakPerson: FagsakDto['person'];
-  arbeidsgiverOpplysningerPerId: Arbeidsgivere;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'];
   avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[];
   parterMedKlagerett?: PartDto[];
   aksjonspunktCode: string;
