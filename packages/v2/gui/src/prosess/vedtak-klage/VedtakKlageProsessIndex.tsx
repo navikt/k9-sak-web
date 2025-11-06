@@ -1,12 +1,8 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
-import {
-  k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon,
-  k9_kodeverk_behandling_FagsakYtelseType,
-  type k9_sak_kontrakt_fagsak_FagsakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { assertDefined } from '../../utils/validation/assertDefined';
 import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
@@ -17,7 +13,7 @@ interface OwnProps {
   aksjonspunkter: AksjonspunktDto[];
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
-  fagsak: k9_sak_kontrakt_fagsak_FagsakDto;
+  fagsak: FagsakDto;
 }
 
 export const VedtakKlageProsessIndex = ({
@@ -32,39 +28,12 @@ export const VedtakKlageProsessIndex = ({
     queryKey: ['klageVurdering', behandling, api.backend],
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
-  const isUngdomsprogramytelse = fagsak.sakstype === k9_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
-  const { data: valgtPartMedKlagerett } = useQuery({
-    queryKey: ['klageParterMedKlagerett', behandling, api.backend, api.hentValgtKlagendePart],
-    queryFn: () => {
-      if (!api.hentValgtKlagendePart) {
-        throw new Error('hentValgtKlagendePart er ikke implementert');
-      }
-      return api.hentValgtKlagendePart(behandling.uuid);
-    },
-    enabled: !isUngdomsprogramytelse && !!api.hentValgtKlagendePart,
-  });
 
   const { mutateAsync: previewCallback } = useMutation({
     mutationFn: async () => {
-      if (behandling.id) {
-        const response = await api.forhåndsvisKlageVedtaksbrev(
-          behandling.id,
-          !isUngdomsprogramytelse
-            ? {
-                eksternReferanse: behandling.uuid,
-                ytelseType: fagsak.sakstype,
-                saksnummer: fagsak.saksnummer,
-                aktørId: fagsak.person?.aktørId ?? '',
-                avsenderApplikasjon: k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon.K9KLAGE,
-                dokumentMal: 'UTLED',
-                dokumentdata: null,
-                overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
-              }
-            : undefined,
-        );
-        const fileUrl = window.URL.createObjectURL(response);
-        window.open(fileUrl, '_blank');
-      }
+      const pdf = await api.forhåndsvisKlageVedtaksbrev(behandling, fagsak);
+      const fileUrl = window.URL.createObjectURL(pdf);
+      window.open(fileUrl, '_blank');
     },
   });
   return (
