@@ -3,11 +3,11 @@ import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontr
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
-import type { k9_klage_kodeverk_behandling_BehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { FormkravKlageFormKa } from './components/FormkravKlageFormKa';
 import { FormkravKlageFormNfp } from './components/FormkravKlageFormNfp';
@@ -70,16 +70,22 @@ export const FormkravProsessIndex = ({
   </>
 );
 
+interface BehandlingMedKodeverkType {
+  type: KodeverkObject;
+}
+
 const FormkravProsessIndexPropsTransformer = (
-  props: OwnProps & { behandlingType: k9_klage_kodeverk_behandling_BehandlingType },
+  props: Omit<OwnProps, 'avsluttedeBehandlinger'> & {
+    avsluttedeBehandlinger: BehandlingMedKodeverkType[];
+  },
 ) => {
   const deepCopyProps = JSON.parse(JSON.stringify(props));
   konverterKodeverkTilKode(deepCopyProps, false);
-  const avsluttedeBehandlingerCopy: K9KlageBehandlingDto[] | UngSakBehandlingDto[] = JSON.parse(
+  const avsluttedeBehandlingerCopy: BehandlingMedKodeverkType[] = JSON.parse(
     JSON.stringify(props.avsluttedeBehandlinger),
   );
   avsluttedeBehandlingerCopy.forEach(behandling => {
-    const erTilbakekrevingType = erTilbakekreving(props.behandlingType);
+    const erTilbakekrevingType = erTilbakekreving(behandling.type.kode);
     konverterKodeverkTilKode(behandling, erTilbakekrevingType);
   });
   return <FormkravProsessIndex {...props} {...deepCopyProps} avsluttedeBehandlinger={avsluttedeBehandlingerCopy} />;
