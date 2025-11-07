@@ -4,10 +4,11 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useQuery } from '@tanstack/react-query';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
-import { useFeriepengegrunnlag } from './hooks/useFeriepengegrunnlag';
+import TilkjentYtelseBackendClient from './TilkjentYtelseBackendClient.js';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -34,7 +35,18 @@ const TilkjentYtelseProsessIndex = ({
   showAndelDetails,
   behandling,
 }: OwnProps) => {
-  const { data: feriepengegrunnlag } = useFeriepengegrunnlag(behandling?.uuid);
+  const tilkjentYtelseBackendClient = new TilkjentYtelseBackendClient();
+
+  const { data: feriepengegrunnlag } = useQuery({
+    queryKey: ['feriepengegrunnlag', behandling?.uuid],
+    queryFn: async () => {
+      if (!behandling?.uuid) {
+        return null;
+      }
+      return await tilkjentYtelseBackendClient.hentFeriepengegrunnlag(behandling.uuid);
+    },
+    enabled: !!behandling?.uuid,
+  });
 
   return (
     <TilkjentYtelsePanel
