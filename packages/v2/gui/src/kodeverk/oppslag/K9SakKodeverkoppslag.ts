@@ -12,7 +12,17 @@ import {
 // Får lage separate mekanismer for disse viss nødvendig.
 type EnumKodeverdierOppslag = Omit<
   AlleKodeverdierSomObjektResponse,
-  'avslagårsakerPrVilkårTypeKode' | 'landkoder' | 'språkkoder'
+  | 'avslagårsakerPrVilkårTypeKode'
+  | 'landkoder'
+  | 'språkkoder'
+  // Midlertidig utelatt inntil dei er fjerna frå serverdefinisjon:
+  | 'historikkAvklartSoeknadsperiodeTyper'
+  | 'historikkBegrunnelseTyper'
+  | 'historikkEndretFeltTyper'
+  | 'historikkEndretFeltVerdiTyper'
+  | 'historikkOpplysningTyper'
+  | 'historikkResultatTyper'
+  | 'historikkinnslagTyper'
 >;
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
@@ -102,55 +112,6 @@ export class K9SakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements
 
   historikkAktører<U extends OrUndefined = undefined>(kode: Kilde<EO, 'historikkAktører'>, undefinedIfNotFound?: U) {
     return this.finnObjektFraKilde('historikkAktører', kode, undefinedIfNotFound);
-  }
-
-  historikkAvklartSoeknadsperiodeTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkAvklartSoeknadsperiodeTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkAvklartSoeknadsperiodeTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkBegrunnelseTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkBegrunnelseTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkBegrunnelseTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkEndretFeltTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkEndretFeltTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkEndretFeltTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkEndretFeltVerdiTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkEndretFeltVerdiTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkEndretFeltVerdiTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkOpplysningTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkOpplysningTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkOpplysningTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkResultatTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkResultatTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkResultatTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkinnslagTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkinnslagTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkinnslagTyper', kode, undefinedIfNotFound);
   }
 
   inntektskategorier<U extends OrUndefined = undefined>(
