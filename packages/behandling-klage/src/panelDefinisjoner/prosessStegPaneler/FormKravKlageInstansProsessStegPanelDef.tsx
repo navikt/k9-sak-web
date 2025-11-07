@@ -1,15 +1,13 @@
-import React from 'react';
-
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import FormkravProsessIndex from '@k9-sak-web/gui/prosess/formkrav/FormkravProsessIndex.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <FormkravProsessIndex {...props} />;
+  getKomponent = props => <FormkravProsessIndex {...props} behandlingType={props.behandling?.type?.kode} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA];
 

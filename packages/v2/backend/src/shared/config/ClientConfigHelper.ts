@@ -76,14 +76,20 @@ export class ClientConfigHelper {
                 // It is then up to the requestor to handle it.
                 return response;
               }
+            } else {
+              return await fetcher(request);
             }
-            return await fetcher(request);
           } else if (authResult.aborted) {
+            // Auth process was aborted.
+            // If it was because the request was aborted, throw the AbortError. This gives the caller the same behaviour
+            // as if the request was aborted during normal processing of it (without authentication process intercept).
+            request.signal.throwIfAborted();
+            // Otherwise, throw an AuthAbortedError:
             console.warn(
               `Auth flow aborted, could not automatically authenticate and retry request. This request will fail.`,
             );
             const retryURL = withRedirectToCurrentLocation(resolveLoginURL(response.headers.get('Location')));
-            throw new AuthAbortedError(retryURL);
+            throw new AuthAbortedError(retryURL, authFixer);
           }
         }
         return response;
