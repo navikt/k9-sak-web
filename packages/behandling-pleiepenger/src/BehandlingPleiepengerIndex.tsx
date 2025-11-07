@@ -37,7 +37,6 @@ const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.UTTAK },
   { key: PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
   { key: PleiepengerBehandlingApiKeys.PLEIEPENGER_INNTEKTSGRADERING },
-  { key: PleiepengerBehandlingApiKeys.FERIEPENGEGRUNNLAG },
 ];
 
 interface OwnProps {

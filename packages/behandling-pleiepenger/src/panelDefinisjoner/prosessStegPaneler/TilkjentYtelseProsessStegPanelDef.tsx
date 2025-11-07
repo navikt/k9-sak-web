@@ -34,15 +34,8 @@ class PanelDef extends ProsessStegPanelDef {
     return vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({
+  getData = ({ fagsak, beregningsresultatUtbetaling, personopplysninger, arbeidsgiverOpplysningerPerId }) => ({
     fagsak,
-    beregningsresultatUtbetaling,
-    personopplysninger,
-    arbeidsgiverOpplysningerPerId,
-    behandling,
-  }) => ({
-    fagsak,
-    behandling,
     beregningsresultat: beregningsresultatUtbetaling,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,

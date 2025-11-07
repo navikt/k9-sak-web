@@ -6,19 +6,7 @@ import {
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
-import { useFeriepengegrunnlag } from './hooks/useFeriepengegrunnlag';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -31,6 +19,15 @@ interface OwnProps {
   readOnlySubmitButton: boolean;
 }
 
+const cache = createIntlCache();
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+  },
+  cache,
+);
+
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   aksjonspunkter,
@@ -39,24 +36,18 @@ const TilkjentYtelseProsessIndex = ({
   readOnlySubmitButton,
   arbeidsgiverOpplysningerPerId,
   fagsak,
-  behandling,
-}: OwnProps) => {
-  const { data: feriepengegrunnlag } = useFeriepengegrunnlag(behandling?.uuid);
-
-  return (
-    <RawIntlProvider value={intl}>
-      <TilkjentYtelsePanel
-        beregningsresultat={beregningsresultat}
-        aksjonspunkter={aksjonspunkter}
-        readOnly={isReadOnly}
-        submitCallback={submitCallback}
-        readOnlySubmitButton={readOnlySubmitButton}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
-        feriepengegrunnlag={feriepengegrunnlag}
-      />
-    </RawIntlProvider>
-  );
-};
+}: OwnProps) => (
+  <RawIntlProvider value={intl}>
+    <TilkjentYtelsePanel
+      beregningsresultat={beregningsresultat}
+      aksjonspunkter={aksjonspunkter}
+      readOnly={isReadOnly}
+      submitCallback={submitCallback}
+      readOnlySubmitButton={readOnlySubmitButton}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
+    />
+  </RawIntlProvider>
+);
 
 export default TilkjentYtelseProsessIndex;
