@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Feriepengegrunnlag } from '@k9-sak-web/types';
+import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto as Feriepengegrunnlag } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export const useFeriepengegrunnlag = (behandlingUuid: string | undefined, enabled = true) => {
   return useQuery({
