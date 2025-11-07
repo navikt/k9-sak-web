@@ -6,7 +6,19 @@ import {
   type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
-type EnumKodeverdierOppslag = Omit<AlleKodeverdierSomObjektResponse, 'landkoder' | 'språkkoder'>;
+type EnumKodeverdierOppslag = Omit<
+  AlleKodeverdierSomObjektResponse,
+  | 'landkoder'
+  | 'språkkoder'
+  // Midlertidig utelatt inntil dei er fjerna frå server definisjon. Ikkje i bruk lenger:
+  | 'historikkAvklartSoeknadsperiodeTyper'
+  | 'historikkBegrunnelseTyper'
+  | 'historikkEndretFeltTyper'
+  | 'historikkEndretFeltVerdiTyper'
+  | 'historikkOpplysningTyper'
+  | 'historikkResultatTyper'
+  | 'historikkinnslagTyper'
+>;
 
 type EO = EnumKodeverdierOppslag;
 

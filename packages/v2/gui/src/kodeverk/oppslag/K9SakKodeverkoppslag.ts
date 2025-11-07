@@ -12,7 +12,17 @@ import {
 // Får lage separate mekanismer for disse viss nødvendig.
 type EnumKodeverdierOppslag = Omit<
   AlleKodeverdierSomObjektResponse,
-  'avslagårsakerPrVilkårTypeKode' | 'landkoder' | 'språkkoder'
+  | 'avslagårsakerPrVilkårTypeKode'
+  | 'landkoder'
+  | 'språkkoder'
+  // Midlertidig utelatt inntil dei er fjerna frå serverdefinisjon:
+  | 'historikkAvklartSoeknadsperiodeTyper'
+  | 'historikkBegrunnelseTyper'
+  | 'historikkEndretFeltTyper'
+  | 'historikkEndretFeltVerdiTyper'
+  | 'historikkOpplysningTyper'
+  | 'historikkResultatTyper'
+  | 'historikkinnslagTyper'
 >;
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
