@@ -58,7 +58,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
   return (
     <div className="grid gap-5">
       {historikk?.feilet.map(feil => (
-        <Alert variant="error" size="small">
+        <Alert variant="error" size="small" key={feil.backend}>
           Det har oppstått en feil ved henting av historikk fra {feil.backend}. Ingen innslag derifra vises.
         </Alert>
       ))}
