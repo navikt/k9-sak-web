@@ -5,7 +5,7 @@ import FormkravProsessIndex from '@k9-sak-web/gui/prosess/formkrav/FormkravProse
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <FormkravProsessIndex {...props} behandlingType={props.behandling?.type?.kode} />;
+  getKomponent = props => <FormkravProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP];
 

@@ -7,7 +7,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <FormkravProsessIndex {...props} behandlingType={props.behandling?.type?.kode} />;
+  getKomponent = props => <FormkravProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA];
 
