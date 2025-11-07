@@ -1,13 +1,10 @@
-import type {
-  k9_klage_kontrakt_behandling_BehandlingDto,
-  k9_klage_kontrakt_behandling_part_PartDto,
-  k9_klage_kontrakt_klage_KlageFormkravResultatDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type {
-  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
-  ung_sak_kontrakt_fagsak_FagsakDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
+import type { k9_klage_kontrakt_klage_KlageFormkravResultatDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { ung_sak_kontrakt_klage_KlageFormkravResultatDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
@@ -27,8 +24,10 @@ import type { FormValuesNfp } from './FormValuesNfp';
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
 export const getPaklagdVedtak = (
-  klageFormkravResultat: k9_klage_kontrakt_klage_KlageFormkravResultatDto,
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[],
+  klageFormkravResultat:
+    | k9_klage_kontrakt_klage_KlageFormkravResultatDto
+    | ung_sak_kontrakt_klage_KlageFormkravResultatDto,
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[],
 ) => {
   const behandlingid =
     Array.isArray(avsluttedeBehandlinger) &&
@@ -37,7 +36,7 @@ export const getPaklagdVedtak = (
 };
 
 const getKlagbareVedtak = (
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[] | ung_sak_kontrakt_behandling_BehandlingDto[],
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[],
   kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ) => {
   const klagBareVedtak = [
@@ -74,10 +73,10 @@ const getLovHjemmeler = (aksjonspunktCode: string) =>
 interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  fagsakPerson: ung_sak_kontrakt_fagsak_FagsakDto['person'];
-  arbeidsgiverOpplysningerPerId: ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
-  avsluttedeBehandlinger: k9_klage_kontrakt_behandling_BehandlingDto[];
-  parterMedKlagerett?: k9_klage_kontrakt_behandling_part_PartDto[];
+  fagsakPerson: FagsakDto['person'];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'];
+  avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[];
+  parterMedKlagerett?: PartDto[];
   aksjonspunktCode: string;
   skalKunneVelgeKlagepart: boolean;
   isSubmitting: boolean;
