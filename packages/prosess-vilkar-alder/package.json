@@ -12,7 +12,7 @@
     "@navikt/ft-form-hooks": "^9.3.0",
     "@navikt/ft-form-validators": "^4.2.12",
     "react": "19.2.0",
-    "react-hook-form": "7.65.0",
+    "react-hook-form": "7.66.0",
     "react-intl": "7.1.14"
   }
 }
