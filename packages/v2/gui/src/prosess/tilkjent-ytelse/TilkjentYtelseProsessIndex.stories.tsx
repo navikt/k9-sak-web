@@ -2,6 +2,8 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
@@ -67,6 +69,16 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
+const behandling = {
+  id: 1,
+  versjon: 1,
+  uuid: '',
+  opprettet: '',
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+  status: BehandlingStatus.OPPRETTET,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
+};
+
 const meta = {
   title: 'gui/prosess/prosess-tilkjent-ytelse-v2',
   component: TilkjentYtelseProsessIndex,
@@ -76,6 +88,7 @@ type Story = StoryObj<typeof meta>;
 
 export const VisUtenAksjonspunkt: Story = {
   args: {
+    behandling,
     isReadOnly: false,
     readOnlySubmitButton: true,
     beregningsresultat,
@@ -92,6 +105,7 @@ export const VisUtenAksjonspunkt: Story = {
 
 export const VisÅpentAksjonspunktTilbaketrekk: Story = {
   args: {
+    behandling,
     isReadOnly: false,
     readOnlySubmitButton: true,
     beregningsresultat,
@@ -124,6 +138,7 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
 
 export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
   args: {
+    behandling,
     isReadOnly: false,
     readOnlySubmitButton: true,
     beregningsresultat,

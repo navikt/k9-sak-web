@@ -1,14 +1,17 @@
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
+import { useFeriepengegrunnlag } from './hooks/useFeriepengegrunnlag';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  behandling: BehandlingDto;
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
@@ -29,18 +32,24 @@ const TilkjentYtelseProsessIndex = ({
   featureToggles,
   personopplysninger,
   showAndelDetails,
-}: OwnProps) => (
-  <TilkjentYtelsePanel
-    beregningsresultat={beregningsresultat}
-    aksjonspunkter={aksjonspunkter}
-    readOnly={isReadOnly}
-    submitCallback={submitCallback}
-    readOnlySubmitButton={readOnlySubmitButton}
-    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    featureToggles={featureToggles}
-    personopplysninger={personopplysninger}
-    showAndelDetails={showAndelDetails}
-  />
-);
+  behandling,
+}: OwnProps) => {
+  const { data: feriepengegrunnlag } = useFeriepengegrunnlag(behandling?.uuid);
+
+  return (
+    <TilkjentYtelsePanel
+      beregningsresultat={beregningsresultat}
+      aksjonspunkter={aksjonspunkter}
+      readOnly={isReadOnly}
+      submitCallback={submitCallback}
+      readOnlySubmitButton={readOnlySubmitButton}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      featureToggles={featureToggles}
+      personopplysninger={personopplysninger}
+      showAndelDetails={showAndelDetails}
+      feriepengegrunnlag={feriepengegrunnlag}
+    />
+  );
+};
 
 export default TilkjentYtelseProsessIndex;

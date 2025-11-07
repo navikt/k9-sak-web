@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto as Feriepengegrunnlag } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FeriepengerPanel } from './FeriepengerPanel.js';
-import type { Feriepengegrunnlag } from '../../types/feriepenger.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
 
 const mockArbeidsgiverOpplysninger: ArbeidsgiverOpplysningerPerId = {

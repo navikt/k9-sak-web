@@ -1,12 +1,13 @@
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 
-import type { FeriepengegrunnlagAndel } from '../../types/feriepenger.js';
+import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
 
 interface Props {
   alleAndeler: FeriepengegrunnlagAndel[];
   opptjeningsår: number;
-  kodeverkNavnFraKode: (kode: string, kodeverk: string) => string;
+  kodeverkNavnFraKode: KodeverkNavnFraKodeType;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -67,13 +68,13 @@ const lagIdentifikator = (andel: FeriepengegrunnlagAndel): string => {
 const lagVisningsnavn = (
   ferieAndel: FeriepengegrunnlagAndel,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  kodeverkNavnFraKode: (kode: string, kodeverk: string) => string,
+  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ) => {
   const agOpplysning = ferieAndel.arbeidsgiverId ? arbeidsgiverOpplysningerPerId[ferieAndel.arbeidsgiverId] : undefined;
   if (agOpplysning) {
     return agOpplysning.navn;
   }
-  return kodeverkNavnFraKode(ferieAndel.aktivitetStatus, 'AktivitetStatus') || ferieAndel.aktivitetStatus;
+  return kodeverkNavnFraKode(ferieAndel.aktivitetStatus, KodeverkType.AKTIVITET_STATUS) || ferieAndel.aktivitetStatus;
 };
 
 type AndelerPrId = {
@@ -86,7 +87,7 @@ type AndelerPrId = {
 const lagAndelPrId = (
   ferieAndel: FeriepengegrunnlagAndel,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  kodeverkNavnFraKode: (kode: string, kodeverk: string) => string,
+  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ): AndelerPrId => ({
   identifikator: lagIdentifikator(ferieAndel),
   visningsnavn: lagVisningsnavn(ferieAndel, arbeidsgiverOpplysningerPerId, kodeverkNavnFraKode),
@@ -97,7 +98,7 @@ const lagAndelPrId = (
 const lagAndelerPrIdMap = (
   andeler: FeriepengegrunnlagAndel[],
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  kodeverkNavnFraKode: (kode: string, kodeverk: string) => string,
+  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ): AndelerPrId[] => {
   const listeMedAndelerPrId = new Array<AndelerPrId>();
   for (const ferieAndel of andeler) {

@@ -7,6 +7,7 @@ import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.
 import { Heading } from '@navikt/ds-react';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto as Feriepengegrunnlag,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
@@ -49,6 +50,7 @@ interface PureOwnProps {
   featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
   showAndelDetails?: boolean;
+  feriepengegrunnlag?: Feriepengegrunnlag | null;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -61,6 +63,7 @@ const TilkjentYtelsePanelImpl = ({
   featureToggles,
   personopplysninger,
   showAndelDetails,
+  feriepengegrunnlag,
 }: PureOwnProps) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -82,16 +85,14 @@ const TilkjentYtelsePanelImpl = ({
         />
       )}
 
-      {beregningsresultat?.feriepengegrunnlag &&
-        beregningsresultat.feriepengegrunnlag.andeler &&
-        beregningsresultat.feriepengegrunnlag.andeler.length > 0 && (
-          <div style={{ marginTop: '1rem' }}>
-            <FeriepengerPanel
-              feriepengegrunnlag={beregningsresultat.feriepengegrunnlag}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            />
-          </div>
-        )}
+      {feriepengegrunnlag && feriepengegrunnlag.andeler && feriepengegrunnlag.andeler.length > 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <FeriepengerPanel
+            feriepengegrunnlag={feriepengegrunnlag}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          />
+        </div>
+      )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (
         <TilkjentYtelseForm
