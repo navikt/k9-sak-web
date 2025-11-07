@@ -1,8 +1,0 @@
-.rad {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.col-1-5 {
-  flex-basis: 20%;
-}
