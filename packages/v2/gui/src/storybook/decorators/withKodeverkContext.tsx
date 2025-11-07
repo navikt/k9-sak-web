@@ -18,7 +18,6 @@ const settNavnPåNull = (kodeverkNullNavn: KodeverkNullableNavn): KodeverkObject
 const kodeverkK9TilbakeFiksa: AlleKodeverk = {
   ...kodeverkK9Tilbake,
   Fagsystem: kodeverkK9Tilbake.Fagsystem.map(settNavnPåNull),
-  HistorikkOpplysningType: kodeverkK9Tilbake.HistorikkOpplysningType.map(settNavnPåNull),
 };
 
 const kodeverkK9KlageFiksa: AlleKodeverk = {
