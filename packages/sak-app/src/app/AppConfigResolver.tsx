@@ -15,6 +15,8 @@ import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import ApplicationContextPath from './ApplicationContextPath';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
+import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
+import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -64,7 +66,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     <FeatureTogglesContext.Provider value={featureToggles ?? prodFeatureToggles}>
       <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
         <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
-          {harFeilet || erFerdig ? children : <LoadingPanel />}
+          <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
+            {harFeilet || erFerdig ? children : <LoadingPanel />}
+          </TilkjentYtelseApiContext>
         </InnloggetAnsattProvider>
       </K9KodeverkoppslagContext>
     </FeatureTogglesContext.Provider>

@@ -12,6 +12,9 @@ import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
+import { withFakeTilkjentYtelseBackend } from '../../storybook/decorators/withFakeTilkjentYtelseBackend.js';
+import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
+import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.js';
 
 const beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto = {
   opphoersdato: '2021-03-27',
@@ -61,18 +64,10 @@ const beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto = {
   skalHindreTilbaketrekk: false,
 };
 
-const arbeidsgiverOpplysningerPerId = {
-  12345678: {
-    navn: 'BEDRIFT1 AS',
-    erPrivatPerson: false,
-    identifikator: '12345678',
-  },
-};
-
 const behandling = {
   id: 1,
   versjon: 1,
-  uuid: '',
+  uuid: '1-1-1',
   opprettet: '',
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   status: BehandlingStatus.OPPRETTET,
@@ -80,8 +75,12 @@ const behandling = {
 };
 
 const meta = {
-  title: 'gui/prosess/prosess-tilkjent-ytelse-v2',
+  title: 'gui/prosess/tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
+  args: {
+    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
+  },
+  decorators: [withFakeTilkjentYtelseBackend(), withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TilkjentYtelseProsessIndex>;
 
 type Story = StoryObj<typeof meta>;
@@ -94,7 +93,6 @@ export const VisUtenAksjonspunkt: Story = {
     beregningsresultat,
     aksjonspunkter: [],
     submitCallback: asyncAction('button-click'),
-    arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas }) => {
@@ -116,7 +114,6 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
       },
     ],
     submitCallback: asyncAction('button-click'),
-    arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas, step }) => {
@@ -149,7 +146,6 @@ export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
       },
     ],
     submitCallback: asyncAction('button-click'),
-    arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas }) => {
