@@ -93,7 +93,9 @@ const OppholdINorgeOgAdresser = ({
                 control={control}
                 name="oppholdInntektOgPeriodeForm.bosattVurdering"
                 validate={[required]}
-                isReadOnly={readOnly}
+                readOnly={readOnly}
+                legend=""
+                hideLegend
                 isEdited={isBosattAksjonspunktClosed}
               >
                 <HStack gap="space-16">
