@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { Accordion, Heading, VStack } from '@navikt/ds-react';
 
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
 import type {
   k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel,
   k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto as Feriepengegrunnlag,
@@ -17,7 +16,6 @@ interface Props {
 
 export const FeriepengerPanel = ({ feriepengegrunnlag, arbeidsgiverOpplysningerPerId }: Props) => {
   const [erPanelÅpent, setErPanelÅpent] = useState(false);
-  const { kodeverkNavnFraKode } = useKodeverkContext();
 
   const { andeler } = feriepengegrunnlag;
 
@@ -42,7 +40,6 @@ export const FeriepengerPanel = ({ feriepengegrunnlag, arbeidsgiverOpplysningerP
                 key={`tabell_${år}`}
                 alleAndeler={andeler}
                 opptjeningsår={år}
-                kodeverkNavnFraKode={kodeverkNavnFraKode}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               />
             ))}

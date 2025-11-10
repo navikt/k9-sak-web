@@ -1,28 +1,25 @@
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 
-import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { use } from 'react';
 import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
+import { K9KodeverkoppslagContext } from '../../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import type { K9Kodeverkoppslag } from '../../../../kodeverk/oppslag/useK9Kodeverkoppslag.tsx';
 
 interface Props {
   alleAndeler: FeriepengegrunnlagAndel[];
   opptjeningsår: number;
-  kodeverkNavnFraKode: KodeverkNavnFraKodeType;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
-export const FeriepengerPrÅr = ({
-  alleAndeler,
-  opptjeningsår,
-  kodeverkNavnFraKode,
-  arbeidsgiverOpplysningerPerId,
-}: Props) => {
+export const FeriepengerPrÅr = ({ alleAndeler, opptjeningsår, arbeidsgiverOpplysningerPerId }: Props) => {
+  const kodeverkoppslag = use(K9KodeverkoppslagContext);
   if (alleAndeler.length < 1) {
     return null;
   }
 
   const alleAndelerForÅret = finnAlleAndelerForOpptjeningsår(alleAndeler, opptjeningsår);
-  const andelerPrId = lagAndelerPrIdMap(alleAndelerForÅret, arbeidsgiverOpplysningerPerId, kodeverkNavnFraKode);
+  const andelerPrId = lagAndelerPrIdMap(alleAndelerForÅret, arbeidsgiverOpplysningerPerId, kodeverkoppslag);
 
   return (
     <div>
@@ -68,13 +65,16 @@ const lagIdentifikator = (andel: FeriepengegrunnlagAndel): string => {
 const lagVisningsnavn = (
   ferieAndel: FeriepengegrunnlagAndel,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
+  kodeverkoppslag: K9Kodeverkoppslag,
 ) => {
   const agOpplysning = ferieAndel.arbeidsgiverId ? arbeidsgiverOpplysningerPerId[ferieAndel.arbeidsgiverId] : undefined;
   if (agOpplysning) {
     return agOpplysning.navn;
   }
-  return kodeverkNavnFraKode(ferieAndel.aktivitetStatus, KodeverkType.AKTIVITET_STATUS) || ferieAndel.aktivitetStatus;
+  return (
+    kodeverkoppslag.k9sak.aktivitetStatuser(ferieAndel.aktivitetStatus, 'or undefined')?.navn ??
+    ferieAndel.aktivitetStatus
+  );
 };
 
 type AndelerPrId = {
@@ -87,10 +87,10 @@ type AndelerPrId = {
 const lagAndelPrId = (
   ferieAndel: FeriepengegrunnlagAndel,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
+  kodeverkoppslag: K9Kodeverkoppslag,
 ): AndelerPrId => ({
   identifikator: lagIdentifikator(ferieAndel),
-  visningsnavn: lagVisningsnavn(ferieAndel, arbeidsgiverOpplysningerPerId, kodeverkNavnFraKode),
+  visningsnavn: lagVisningsnavn(ferieAndel, arbeidsgiverOpplysningerPerId, kodeverkoppslag),
   utbetaltTilSøker: ferieAndel.erBrukerMottaker ? ferieAndel.årsbeløp : 0,
   utbetaltIRefusjon: !ferieAndel.erBrukerMottaker ? ferieAndel.årsbeløp : 0,
 });
@@ -98,7 +98,7 @@ const lagAndelPrId = (
 const lagAndelerPrIdMap = (
   andeler: FeriepengegrunnlagAndel[],
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
+  kodeverkoppslag: K9Kodeverkoppslag,
 ): AndelerPrId[] => {
   const listeMedAndelerPrId = new Array<AndelerPrId>();
   for (const ferieAndel of andeler) {
@@ -110,7 +110,7 @@ const lagAndelerPrIdMap = (
       eksisterendeAndelPrId.utbetaltTilSøker += andelTilSøker;
       eksisterendeAndelPrId.utbetaltIRefusjon += andelTilRefusjon;
     } else {
-      listeMedAndelerPrId.push(lagAndelPrId(ferieAndel, arbeidsgiverOpplysningerPerId, kodeverkNavnFraKode));
+      listeMedAndelerPrId.push(lagAndelPrId(ferieAndel, arbeidsgiverOpplysningerPerId, kodeverkoppslag));
     }
   }
   return listeMedAndelerPrId;
