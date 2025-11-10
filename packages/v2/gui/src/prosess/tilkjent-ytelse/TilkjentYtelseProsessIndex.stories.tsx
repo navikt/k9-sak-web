@@ -72,7 +72,7 @@ const arbeidsgiverOpplysningerPerId = {
 const behandling = {
   id: 1,
   versjon: 1,
-  uuid: '',
+  uuid: '1-1-1',
   opprettet: '',
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   status: BehandlingStatus.OPPRETTET,
@@ -80,7 +80,7 @@ const behandling = {
 };
 
 const meta = {
-  title: 'gui/prosess/prosess-tilkjent-ytelse-v2',
+  title: 'gui/prosess/tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
 } satisfies Meta<typeof TilkjentYtelseProsessIndex>;
 
