@@ -16,7 +16,7 @@ import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysn
 import TilkjentYtelse, { type PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import { FeriepengerPanel } from './feriepenger/index.js';
+import { FeriepengerPanel } from './feriepenger/FeriepengerPanel.js';
 
 const perioderMedClassName: PeriodeMedId[] = [];
 
