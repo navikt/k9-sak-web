@@ -128,14 +128,14 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
-          label={
+          legend={
             <BodyLong size="small">
               Er institusjonen en godkjent helseinstitusjon eller kompetansesenter, jf{' '}
               <Lovreferanse>§ 9-14</Lovreferanse>?
             </BodyLong>
           }
           validate={[required]}
-          isReadOnly={readOnly}
+          readOnly={readOnly}
           data-testid="godkjent-institusjon"
         >
           <Radio value="ja">Ja</Radio>

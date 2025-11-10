@@ -155,10 +155,10 @@ export const FormkravKlageForm = ({
             <div>
               <RhfRadioGroup
                 control={control}
-                label="Er klager part og/eller har rettslig klageinteresse?"
+                legend="Er klager part og/eller har rettslig klageinteresse?"
                 name="erKlagerPart"
                 validate={[required]}
-                isReadOnly={readOnly}
+                readOnly={readOnly}
               >
                 <HStack gap="space-16">
                   <Radio value={true}>Ja</Radio>
@@ -168,11 +168,11 @@ export const FormkravKlageForm = ({
             </div>
             <div>
               <RhfRadioGroup
-                label="Klages det på konkrete elementer i vedtaket?"
+                legend="Klages det på konkrete elementer i vedtaket?"
                 control={control}
                 name="erKonkret"
                 validate={[required]}
-                isReadOnly={readOnly}
+                readOnly={readOnly}
               >
                 <HStack gap="space-16">
                   <Radio value={true}>Ja</Radio>
@@ -184,11 +184,11 @@ export const FormkravKlageForm = ({
           <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }} marginBlock="space-16 0">
             <div>
               <RhfRadioGroup
-                label="Er klagefristen overholdt?"
+                legend="Er klagefristen overholdt?"
                 control={control}
                 name="erFristOverholdt"
                 validate={[required]}
-                isReadOnly={readOnly}
+                readOnly={readOnly}
               >
                 <HStack gap="space-16">
                   <Radio value={true}>Ja</Radio>
@@ -198,11 +198,11 @@ export const FormkravKlageForm = ({
             </div>
             <div>
               <RhfRadioGroup
-                label="Er klagen signert?"
+                legend="Er klagen signert?"
                 control={control}
                 name="erSignert"
                 validate={[required]}
-                isReadOnly={readOnly}
+                readOnly={readOnly}
               >
                 <HStack gap="space-16">
                   <Radio value={true}>Ja</Radio>

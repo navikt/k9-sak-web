@@ -36,7 +36,9 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         control={control}
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
-        isReadOnly={readOnly}
+        readOnly={readOnly}
+        legend=""
+        hideLegend
       >
         <HStack gap="space-16">
           <Radio value={true}>EØS borger</Radio>
@@ -52,7 +54,9 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
               control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
               validate={[required]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
+              legend=""
+              hideLegend
               isEdited={isBorgerAksjonspunktClosed}
             >
               <Radio value={true}>Søker har oppholdsrett</Radio>
@@ -71,7 +75,9 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
               control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
               validate={[required]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
+              legend=""
+              hideLegend
               isEdited={isBorgerAksjonspunktClosed}
             >
               <Radio value={true}>Søker har lovlig opphold</Radio>
