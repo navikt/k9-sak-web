@@ -1,3 +1,4 @@
+import { use } from 'react';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
@@ -8,8 +9,9 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
-import TilkjentYtelseBackendClient from './TilkjentYtelseBackendClient.js';
 import type { FeriepengerPrÅr } from './components/feriepenger/FeriepengerPanel.tsx';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
+import { TilkjentYtelseApiContext } from './api/TilkjentYtelseApiContext.js';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -38,7 +40,7 @@ const TilkjentYtelseProsessIndex = ({
   showAndelDetails,
   behandling,
 }: OwnProps) => {
-  const tilkjentYtelseBackendClient = new TilkjentYtelseBackendClient();
+  const tilkjentYtelseBackendClient = assertDefined(use(TilkjentYtelseApiContext));
 
   const { data: feriepengerPrÅr } = useSuspenseQuery({
     queryKey: ['feriepengegrunnlag', behandling?.uuid],

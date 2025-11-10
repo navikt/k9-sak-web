@@ -1,21 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FeriepengerPanel, type FeriepengerPrÅr } from './FeriepengerPanel.js';
-import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
 import withK9Kodeverkoppslag from '../../../../storybook/decorators/withK9Kodeverkoppslag.js';
 import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
-
-const mockArbeidsgiverOpplysninger: ArbeidsgiverOpplysningerPerId = {
-  '910909088': {
-    identifikator: '910909088',
-    navn: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
-    erPrivatPerson: false,
-  },
-  '973861778': {
-    identifikator: '973861778',
-    navn: 'SOPRA STERIA AS',
-    erPrivatPerson: false,
-  },
-};
+import { mockArbeidsgiverOpplysninger } from '../../../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
 
 const mockFeriepengegrunnlag2023: FeriepengegrunnlagAndel[] = [
   {
@@ -76,6 +63,9 @@ const meta = {
   parameters: {
     layout: 'padded',
   },
+  args: {
+    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
+  },
   decorators: [withK9Kodeverkoppslag()],
 } satisfies Meta<typeof FeriepengerPanel>;
 
@@ -86,20 +76,17 @@ type Story = StoryObj<typeof meta>;
 export const MedFlereOpptjeningsår: Story = {
   args: {
     feriepengerPrÅr: mockFeriepengegrunnlag,
-    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
   },
 };
 
 export const MedEttOpptjeningsår: Story = {
   args: {
-    ...MedFlereOpptjeningsår.args,
     feriepengerPrÅr: new Map([[2024, mockFeriepengegrunnlag2024]]),
   },
 };
 
 export const IngenAndeler: Story = {
   args: {
-    ...MedFlereOpptjeningsår.args,
     feriepengerPrÅr: new Map(),
   },
 };
