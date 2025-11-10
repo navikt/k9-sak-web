@@ -148,7 +148,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 <RhfRadioGroup
                   control={control}
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
-                  isReadOnly={readOnly}
+                  readOnly={readOnly}
+                  legend=""
+                  hideLegend
                 >
                   <HStack gap="space-16">
                     <Radio value={true}>Godkjent</Radio>
