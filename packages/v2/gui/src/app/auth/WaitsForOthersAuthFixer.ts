@@ -15,6 +15,10 @@ export class WaitsForOthersAuthFixer implements AuthFixConnectedApi {
     this.#others = otherFixers;
   }
 
+  toString() {
+    return `WaitsForOthersAuthFixer: ${this.#thisFixer} => [${this.#others.map(o => o.toString()).join(', ')}]`;
+  }
+
   private get othersAreAuthenticating() {
     return this.#others.some(fixer => fixer.isAuthenticating);
   }
