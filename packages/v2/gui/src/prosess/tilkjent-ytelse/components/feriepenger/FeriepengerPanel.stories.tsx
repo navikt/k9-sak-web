@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto as Feriepengegrunnlag } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { FeriepengerPanel } from './FeriepengerPanel.js';
+import { FeriepengerPanel, type FeriepengerPrÅr } from './FeriepengerPanel.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
-import withK9Kodeverkoppslag from '../../../../storybook/decorators/withK9Kodeverkoppslag.tsx';
+import withK9Kodeverkoppslag from '../../../../storybook/decorators/withK9Kodeverkoppslag.js';
+import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const mockArbeidsgiverOpplysninger: ArbeidsgiverOpplysningerPerId = {
   '910909088': {
@@ -17,54 +17,58 @@ const mockArbeidsgiverOpplysninger: ArbeidsgiverOpplysningerPerId = {
   },
 };
 
-const mockFeriepengegrunnlag: Feriepengegrunnlag = {
-  andeler: [
-    {
-      opptjeningsår: 2023,
-      aktivitetStatus: 'AT',
-      arbeidsgiverId: '910909088',
-      arbeidsforholdId: 'abc123',
-      erBrukerMottaker: false,
-      årsbeløp: 15000,
-    },
-    {
-      opptjeningsår: 2023,
-      aktivitetStatus: 'AT',
-      arbeidsgiverId: '910909088',
-      arbeidsforholdId: 'abc123',
-      erBrukerMottaker: true,
-      årsbeløp: 5000,
-    },
-    {
-      opptjeningsår: 2023,
-      aktivitetStatus: 'AT',
-      arbeidsgiverId: '973861778',
-      erBrukerMottaker: false,
-      årsbeløp: 8000,
-    },
-    {
-      opptjeningsår: 2024,
-      aktivitetStatus: 'AT',
-      arbeidsgiverId: '910909088',
-      arbeidsforholdId: 'abc123',
-      erBrukerMottaker: false,
-      årsbeløp: 18000,
-    },
-    {
-      opptjeningsår: 2024,
-      aktivitetStatus: 'AT',
-      arbeidsgiverId: '973861778',
-      erBrukerMottaker: true,
-      årsbeløp: 6000,
-    },
-    {
-      opptjeningsår: 2024,
-      aktivitetStatus: 'FL',
-      erBrukerMottaker: true,
-      årsbeløp: 3000,
-    },
-  ],
-};
+const mockFeriepengegrunnlag2023: FeriepengegrunnlagAndel[] = [
+  {
+    opptjeningsår: 2023,
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '910909088',
+    arbeidsforholdId: 'abc123',
+    erBrukerMottaker: false,
+    årsbeløp: 15000,
+  },
+  {
+    opptjeningsår: 2023,
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '910909088',
+    arbeidsforholdId: 'abc123',
+    erBrukerMottaker: true,
+    årsbeløp: 5000,
+  },
+  {
+    opptjeningsår: 2023,
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '973861778',
+    erBrukerMottaker: false,
+    årsbeløp: 8000,
+  },
+];
+const mockFeriepengegrunnlag2024: FeriepengegrunnlagAndel[] = [
+  {
+    opptjeningsår: 2024,
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '910909088',
+    arbeidsforholdId: 'abc123',
+    erBrukerMottaker: false,
+    årsbeløp: 18000,
+  },
+  {
+    opptjeningsår: 2024,
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '973861778',
+    erBrukerMottaker: true,
+    årsbeløp: 6000,
+  },
+  {
+    opptjeningsår: 2024,
+    aktivitetStatus: 'FL',
+    erBrukerMottaker: true,
+    årsbeløp: 3000,
+  },
+];
+
+const mockFeriepengegrunnlag: FeriepengerPrÅr = new Map();
+mockFeriepengegrunnlag.set(2023, mockFeriepengegrunnlag2023);
+mockFeriepengegrunnlag.set(2024, mockFeriepengegrunnlag2024);
 
 const meta = {
   title: 'gui/prosess/tilkjent-ytelse/FeriepengerPanel',
@@ -81,25 +85,21 @@ type Story = StoryObj<typeof meta>;
 
 export const MedFlereOpptjeningsår: Story = {
   args: {
-    feriepengegrunnlag: mockFeriepengegrunnlag,
+    feriepengerPrÅr: mockFeriepengegrunnlag,
     arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
   },
 };
 
 export const MedEttOpptjeningsår: Story = {
   args: {
-    feriepengegrunnlag: {
-      andeler: mockFeriepengegrunnlag.andeler.filter(andel => andel.opptjeningsår === 2024),
-    },
-    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
+    ...MedFlereOpptjeningsår.args,
+    feriepengerPrÅr: new Map([[2024, mockFeriepengegrunnlag2024]]),
   },
 };
 
 export const IngenAndeler: Story = {
   args: {
-    feriepengegrunnlag: {
-      andeler: [],
-    },
-    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
+    ...MedFlereOpptjeningsår.args,
+    feriepengerPrÅr: new Map(),
   },
 };

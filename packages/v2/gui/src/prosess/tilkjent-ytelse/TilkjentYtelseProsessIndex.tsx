@@ -23,6 +23,8 @@ interface OwnProps {
   showAndelDetails?: boolean;
 }
 
+const emptyResult = new Map();
+
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   aksjonspunkter,
@@ -37,13 +39,10 @@ const TilkjentYtelseProsessIndex = ({
 }: OwnProps) => {
   const tilkjentYtelseBackendClient = new TilkjentYtelseBackendClient();
 
-  const { data: feriepengegrunnlag } = useQuery({
+  const { data: feriepengerPrÅr } = useQuery({
     queryKey: ['feriepengegrunnlag', behandling?.uuid],
     queryFn: async () => {
-      if (!behandling?.uuid) {
-        return null;
-      }
-      return await tilkjentYtelseBackendClient.hentFeriepengegrunnlag(behandling.uuid);
+      return await tilkjentYtelseBackendClient.hentFeriepengegrunnlagPrÅr(behandling.uuid);
     },
     enabled: !!behandling?.uuid,
   });
@@ -59,7 +58,7 @@ const TilkjentYtelseProsessIndex = ({
       featureToggles={featureToggles}
       personopplysninger={personopplysninger}
       showAndelDetails={showAndelDetails}
-      feriepengegrunnlag={feriepengegrunnlag}
+      feriepengerPrÅr={feriepengerPrÅr ?? emptyResult}
     />
   );
 };

@@ -7,19 +7,18 @@ import { K9KodeverkoppslagContext } from '../../../../kodeverk/oppslag/K9Kodever
 import type { K9Kodeverkoppslag } from '../../../../kodeverk/oppslag/useK9Kodeverkoppslag.tsx';
 
 interface Props {
-  alleAndeler: FeriepengegrunnlagAndel[];
+  åretsAndeler: FeriepengegrunnlagAndel[];
   opptjeningsår: number;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
-export const FeriepengerPrÅr = ({ alleAndeler, opptjeningsår, arbeidsgiverOpplysningerPerId }: Props) => {
+export const FeriepengerPrÅr = ({ åretsAndeler, opptjeningsår, arbeidsgiverOpplysningerPerId }: Props) => {
   const kodeverkoppslag = use(K9KodeverkoppslagContext);
-  if (alleAndeler.length < 1) {
+  if (åretsAndeler.length < 1) {
     return null;
   }
 
-  const alleAndelerForÅret = finnAlleAndelerForOpptjeningsår(alleAndeler, opptjeningsår);
-  const andelerPrId = lagAndelerPrIdMap(alleAndelerForÅret, arbeidsgiverOpplysningerPerId, kodeverkoppslag);
+  const andelerPrId = lagAndelerPrIdMap(åretsAndeler, arbeidsgiverOpplysningerPerId, kodeverkoppslag);
 
   return (
     <div>
@@ -51,11 +50,6 @@ export const FeriepengerPrÅr = ({ alleAndeler, opptjeningsår, arbeidsgiverOppl
     </div>
   );
 };
-
-const finnAlleAndelerForOpptjeningsår = (
-  andeler: FeriepengegrunnlagAndel[],
-  opptjeningsår: number,
-): FeriepengegrunnlagAndel[] => andeler.filter(andel => andel.opptjeningsår === opptjeningsår);
 
 const lagIdentifikator = (andel: FeriepengegrunnlagAndel): string => {
   const parts = [andel.aktivitetStatus, andel.arbeidsgiverId || 'INGEN_AG', andel.arbeidsforholdId || 'INGEN_ARB_ID'];
