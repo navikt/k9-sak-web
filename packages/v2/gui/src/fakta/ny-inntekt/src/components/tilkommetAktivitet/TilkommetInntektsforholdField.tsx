@@ -14,10 +14,10 @@ import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
 import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
 import type { ReactElement } from 'react';
+import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
-import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
 import styles from './tilkommetAktivitet.module.css';
 
 type Props = {
@@ -149,9 +149,9 @@ export const TilkommetInntektsforholdField = ({
     <>
       <RhfRadioGroup
         control={formMethods.control}
-        label={getRadioGroupLabel()}
+        legend={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
-        isReadOnly={readOnly}
+        readOnly={readOnly}
         validate={[required]}
       >
         <Radio value={true}>Ja</Radio>

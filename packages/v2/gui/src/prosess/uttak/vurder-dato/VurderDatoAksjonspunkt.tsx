@@ -1,11 +1,11 @@
-import { Button } from '@navikt/ds-react';
-import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import styles from './VurderDatoAksjonspunkt.module.css';
-import { useUttakContext } from '../context/UttakContext';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Button } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
+import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { useUttakContext } from '../context/UttakContext';
+import styles from './VurderDatoAksjonspunkt.module.css';
 
 interface FormData {
   virkningsdato: string;
@@ -63,7 +63,7 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
           fromDate={new Date('1 Jan 2019')}
           toDate={new Date('31 Dec 2025')}
           validate={[required, hasValidDate]}
-          isReadOnly={readOnly}
+          readOnly={readOnly}
         />
         <RhfTextarea
           control={formMethods.control}

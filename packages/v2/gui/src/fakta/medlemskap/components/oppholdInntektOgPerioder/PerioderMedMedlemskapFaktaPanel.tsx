@@ -107,7 +107,9 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
               control={control}
               name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType"
               validate={[required]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
+              legend=""
+              hideLegend
               isEdited={isPeriodAksjonspunktClosed}
             >
               <HStack gap="space-16">

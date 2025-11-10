@@ -74,7 +74,7 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
       <Box.New marginBlock={'4 0'}>
         <RhfRadioGroup
           control={formMethods.control}
-          label="Er aldersvilkåret oppfylt?"
+          legend="Er aldersvilkåret oppfylt?"
           name="erVilkarOk"
           validate={[required]}
         >
