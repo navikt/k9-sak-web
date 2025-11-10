@@ -135,7 +135,14 @@ export const VilkarField = ({
           </div>
         )}
         {!readOnly && (
-          <RhfRadioGroup control={control} name={`${fieldPrefix}.kode`} validate={[required]} isReadOnly={readOnly}>
+          <RhfRadioGroup
+            control={control}
+            name={`${fieldPrefix}.kode`}
+            validate={[required]}
+            readOnly={readOnly}
+            legend=""
+            hideLegend
+          >
             {radios.map(radio => (
               <Radio key={radio.value} value={radio.value}>
                 {radio.label}

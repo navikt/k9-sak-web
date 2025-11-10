@@ -1,4 +1,3 @@
-import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
@@ -33,16 +32,18 @@ import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import HistorikkIndex from './historikk/HistorikkIndex';
+import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import MeldingTilbakeIndex from './melding/MeldingTilbakeIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import { UngHistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/UngHistorikkBackendClient.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngSakTotrinnskontrollBackendClient.js';
-import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngTilbakeTotrinnskontrollBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
@@ -164,9 +165,10 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
+  const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
-  const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
+  const historikkBackendClient = new UngHistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient('ungSak');
 
   const notaterQueryKey = ['notater', fagsak?.saksnummer];
@@ -302,12 +304,13 @@ const BehandlingSupportIndex = ({
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
             {behandlingId !== undefined && (
-              <HistorikkIndex
-                saksnummer={fagsak.saksnummer}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
-              />
+              <HistorikkBackendApiContext value={historikkBackendClient}>
+                <HistorikkIndex
+                  saksnummer={fagsak.saksnummer}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                />
+              </HistorikkBackendApiContext>
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>

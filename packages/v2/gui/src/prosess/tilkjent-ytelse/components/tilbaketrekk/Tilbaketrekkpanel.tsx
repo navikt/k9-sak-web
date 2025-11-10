@@ -93,8 +93,10 @@ export const Tilbaketrekkpanel = ({
             control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
-            isReadOnly={readOnly}
+            readOnly={readOnly}
             isEdited={vurderTilbaketrekkAP?.status ? !isAksjonspunktOpen(vurderTilbaketrekkAP.status) : false}
+            legend=""
+            hideLegend
           >
             <HStack gap="space-16">
               <Radio value={false}>Tilbakekrev fra søker</Radio>

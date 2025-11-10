@@ -149,7 +149,9 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           control={control}
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
-          isReadOnly={readOnly}
+          readOnly={readOnly}
+          legend=""
+          hideLegend
         >
           {radios.map(radio => (
             <Radio key={radio.value} value={radio.value}>
@@ -183,7 +185,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
                 label="Fra dato"
-                isReadOnly={readOnly}
+                readOnly={readOnly}
                 validate={[required, hasValidDate]}
                 disabledDays={ugyldigeFomDatoer()}
               />
@@ -192,7 +194,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
                 label="Til dato"
                 disabledDays={ugyldigeTomDatoer()}
-                isReadOnly={readOnly}
+                readOnly={readOnly}
                 validate={[required, hasValidDate]}
               />
             </>
@@ -238,7 +240,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                   control={control}
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
                   label="Dato"
-                  isReadOnly={readOnly}
+                  readOnly={readOnly}
                   validate={[required, hasValidDate]}
                 />
               )}

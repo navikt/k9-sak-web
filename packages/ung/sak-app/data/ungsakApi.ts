@@ -29,9 +29,6 @@ export enum UngSakApiKeys {
   NEW_BEHANDLING_UNGSAK = 'NEW_BEHANDLING_UNGSAK',
   NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
-  HISTORY_UNGSAK = 'HISTORY_UNGSAK',
-  HISTORY_TILBAKE = 'HISTORY_TILBAKE',
-  HISTORY_KLAGE = 'HISTORY_KLAGE',
   BEHANDLINGER_TILBAKE = 'BEHANDLINGER_TILBAKE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
   ALL_DOCUMENTS = 'ALL_DOCUMENTS',
@@ -74,9 +71,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sak-bruker', UngSakApiKeys.SAK_BRUKER)
   .withRel('sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER)
   .withRel('tilbake-sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER_TILBAKE)
-  .withRel('sak-historikk', UngSakApiKeys.HISTORY_UNGSAK)
-  .withRel('tilbake-historikkinnslag', UngSakApiKeys.HISTORY_TILBAKE)
-  .withRel('klage-historikk', UngSakApiKeys.HISTORY_KLAGE)
   .withRel('sak-dokumentliste', UngSakApiKeys.ALL_DOCUMENTS)
   .withRel('sak-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_UNGSAK)
   .withRel('tilbake-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_TILBAKE)

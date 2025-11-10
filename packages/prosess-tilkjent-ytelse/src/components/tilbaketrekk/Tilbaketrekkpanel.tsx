@@ -114,7 +114,9 @@ export const Tilbaketrekkpanel = ({
             control={formMethods.control}
             name={radioFieldName}
             validate={[required]}
-            isReadOnly={readOnly}
+            readOnly={readOnly}
+            legend=""
+            hideLegend
             isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status)}
           >
             <HStack gap="space-16">

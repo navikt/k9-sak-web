@@ -119,7 +119,14 @@ export const KlageVurderingRadioOptionsNfp = ({
   return (
     <div>
       <ContentMaxWidth>
-        <RhfRadioGroup control={control} name="klageVurdering" validate={[required]} isReadOnly={readOnly}>
+        <RhfRadioGroup
+          control={control}
+          name="klageVurdering"
+          validate={[required]}
+          readOnly={readOnly}
+          legend=""
+          hideLegend
+        >
           <Radio value={ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
           <Radio value={ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
         </RhfRadioGroup>
@@ -136,7 +143,14 @@ export const KlageVurderingRadioOptionsNfp = ({
               validate={[required]}
             />
             <Box.New marginBlock="space-16 0">
-              <RhfRadioGroup control={control} name="klageVurderingOmgjoer" validate={[required]} isReadOnly={readOnly}>
+              <RhfRadioGroup
+                control={control}
+                name="klageVurderingOmgjoer"
+                validate={[required]}
+                readOnly={readOnly}
+                hideLegend
+                legend=""
+              >
                 <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
                 <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
                 <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
