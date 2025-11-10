@@ -4,11 +4,12 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 import TilkjentYtelseBackendClient from './TilkjentYtelseBackendClient.js';
+import type { FeriepengerPrÅr } from './components/feriepenger/FeriepengerPanel.tsx';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -23,7 +24,7 @@ interface OwnProps {
   showAndelDetails?: boolean;
 }
 
-const emptyResult = new Map();
+const emptyResult: FeriepengerPrÅr = new Map();
 
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
@@ -39,12 +40,14 @@ const TilkjentYtelseProsessIndex = ({
 }: OwnProps) => {
   const tilkjentYtelseBackendClient = new TilkjentYtelseBackendClient();
 
-  const { data: feriepengerPrÅr } = useQuery({
+  const { data: feriepengerPrÅr } = useSuspenseQuery({
     queryKey: ['feriepengegrunnlag', behandling?.uuid],
     queryFn: async () => {
-      return await tilkjentYtelseBackendClient.hentFeriepengegrunnlagPrÅr(behandling.uuid);
+      return behandling?.uuid != null
+        ? await tilkjentYtelseBackendClient.hentFeriepengegrunnlagPrÅr(behandling.uuid)
+        : null;
     },
-    enabled: !!behandling?.uuid,
+    select: data => (data != null ? data : emptyResult),
   });
 
   return (
@@ -58,7 +61,7 @@ const TilkjentYtelseProsessIndex = ({
       featureToggles={featureToggles}
       personopplysninger={personopplysninger}
       showAndelDetails={showAndelDetails}
-      feriepengerPrÅr={feriepengerPrÅr ?? emptyResult}
+      feriepengerPrÅr={feriepengerPrÅr}
     />
   );
 };
