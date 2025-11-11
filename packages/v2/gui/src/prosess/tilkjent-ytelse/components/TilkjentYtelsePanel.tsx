@@ -84,7 +84,7 @@ const TilkjentYtelsePanelImpl = ({
         />
       )}
 
-      {feriepengerPrÅr.size > 0 && (
+      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr.size > 0 && (
         <div style={{ marginTop: '1rem' }}>
           <FeriepengerPanel
             feriepengerPrÅr={feriepengerPrÅr}
