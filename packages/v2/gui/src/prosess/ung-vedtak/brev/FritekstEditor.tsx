@@ -86,7 +86,7 @@ const FritekstEditor = ({
     if (!editorRef.current) editorRef.current = new EditorJSWrapper({ holder: 'rediger-brev', onChange });
   }, [onChange]);
 
-  // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blir endra utanfrå.
+  // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blitt endra utanfrå.
   useEffect(() => {
     const lastEditor = async (editor: EditorJSWrapper) => {
       if (initImportNotDone.current || lastSubmitHtml.current !== redigerbartInnhold) {
