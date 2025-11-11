@@ -178,7 +178,7 @@ const FortsettUtenInntektsmeldingForm = ({
           <RhfRadioGroup
             control={control}
             name={beslutningFieldName}
-            label="Kan du gå videre uten inntektsmelding?"
+            legend="Kan du gå videre uten inntektsmelding?"
             disabled={readOnly && !redigeringsmodus}
             validate={[v => (!v ? 'Du må oppgi en verdi ' : null)]}
           >

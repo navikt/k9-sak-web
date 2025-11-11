@@ -9,6 +9,8 @@ import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/prodFeatureTo
 import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
+import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
+import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
@@ -68,11 +70,13 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? prodFeatureToggles}>
       <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
-        <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
-          <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
-            {harFeilet || erFerdig ? children : <LoadingPanel />}
-          </InnloggetAnsattProvider>
-        </VedtakKlageApiContext>
+        <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
+          <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
+            <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
+              {harFeilet || erFerdig ? children : <LoadingPanel />}
+            </VedtakKlageApiContext>
+          </TilkjentYtelseApiContext>
+        </InnloggetAnsattProvider>
       </K9KodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
   );
