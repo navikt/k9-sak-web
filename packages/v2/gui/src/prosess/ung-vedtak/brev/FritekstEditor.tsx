@@ -185,12 +185,12 @@ const FritekstEditor = ({
                     {htmlSeksjoner.map((seksjon, index) => {
                       if (seksjon.innhold) {
                         if (seksjon.type === VedtaksbrevSeksjonType.STYLE) {
-                          return <style key={`${seksjon.type}_${index}`}>{utledStiler(seksjon.innhold)}</style>;
+                          return <style key={index}>{utledStiler(seksjon.innhold)}</style>;
                         }
                         if (seksjon.type === VedtaksbrevSeksjonType.STATISK) {
                           return (
                             <div
-                              key={`${seksjon.type}_${index}`}
+                              key={index}
                               className={styles.ikkeRedigerbartInnhold}
                               dangerouslySetInnerHTML={{ __html: seksjon.innhold }}
                             />
@@ -198,13 +198,13 @@ const FritekstEditor = ({
                         }
                         if (seksjon.type === VedtaksbrevSeksjonType.REDIGERBAR) {
                           return (
-                            <div id="content" key={`${seksjon.type}_${index}`}>
+                            <div id="content" key={index}>
                               <div id="rediger-brev" className={styles.redigerbartInnhold} style={{ width: '100%' }} />
                             </div>
                           );
                         }
                       }
-                      return <React.Fragment key={`${seksjon.type}_${index}`} />;
+                      return <React.Fragment key={index} />;
                     })}
                   </div>
                 </div>
