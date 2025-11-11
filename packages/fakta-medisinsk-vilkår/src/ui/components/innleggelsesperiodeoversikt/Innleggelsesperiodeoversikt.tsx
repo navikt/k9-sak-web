@@ -1,11 +1,11 @@
-import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
-import React, { useEffect, useMemo, type JSX } from 'react';
-import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
-import LinkRel from '../../../constants/LinkRel';
+import { k9_sak_kontrakt_sykdom_dokument_SykdomInnleggelseDto } from '@navikt/k9-sak-typescript-client/types';
+import React, { use, useEffect, useMemo, type JSX } from 'react';
+import { MedisinskVilkårApiContext } from '../../../api/MedisinskVilkårApiContext';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
-import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -19,13 +19,13 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
-
+  const { pleietrengendePart, readOnly, behandlingUuid } = React.useContext(ContainerContext);
+  const api = assertDefined(use(MedisinskVilkårApiContext));
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
-    versjon: null,
+    versjon: '',
     behandlingUuid: '',
   });
   const [isLoading, setIsLoading] = React.useState(true);
@@ -33,32 +33,30 @@ const Innleggelsesperiodeoversikt = ({
   const [lagreInnleggelsesperioderFeilet, setLagreInnleggelsesperioderFeilet] = React.useState(false);
   const controller = useMemo(() => new AbortController(), []);
 
-  const innleggelsesperioder = innleggelsesperioderResponse.perioder;
-  const innleggelsesperioderDefault = innleggelsesperioder?.length > 0 ? innleggelsesperioder : [new Period('', '')];
+  const innleggelsesperioder = innleggelsesperioderResponse.perioder ?? [];
+  const innleggelsesperioderDefault =
+    innleggelsesperioder && innleggelsesperioder?.length > 0 ? innleggelsesperioder : [new Period('', '')];
 
-  const hentInnleggelsesperioder = () =>
-    httpUtils.get(`${endpoints.innleggelsesperioder}`, httpErrorHandler, {
-      signal: controller.signal,
-    });
+  const hentInnleggelsesperioder = () => api.hentSykdomInnleggelse(behandlingUuid);
 
-  const initializeInnleggelsesperiodeData = (response: InnleggelsesperiodeResponse) => ({
+  const initializeInnleggelsesperiodeData = (response: k9_sak_kontrakt_sykdom_dokument_SykdomInnleggelseDto) => ({
     ...response,
-    perioder: response.perioder.map(({ fom, tom }) => new Period(fom, tom)),
+    perioder: response.perioder?.map(({ fom, tom }) => new Period(fom, tom)),
   });
 
-  const updateInnlegelsesperioder = () => {
-    setIsLoading(true);
-    hentInnleggelsesperioder()
-      .then((response: InnleggelsesperiodeResponse) => {
-        setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setHentInnleggelsesperioderFeilet(true);
-      });
+  const updateInnleggelsesperioder = async () => {
+    try {
+      setIsLoading(true);
+      const response = await hentInnleggelsesperioder();
+      setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
+    } catch {
+      setHentInnleggelsesperioderFeilet(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const lagreInnleggelsesperioder = formState => {
+  const lagreInnleggelsesperioder = async formState => {
     setIsLoading(true);
     let nyeInnleggelsesperioder = [];
     if (formState.innleggelsesperioder?.length > 0) {
@@ -67,22 +65,17 @@ const Innleggelsesperiodeoversikt = ({
         .map(periodeWrapper => new Period(periodeWrapper.period.fom, periodeWrapper.period.tom));
     }
 
-    const { href } = findLinkByRel(LinkRel.ENDRE_INNLEGGELSESPERIODER, innleggelsesperioderResponse.links);
-    const { behandlingUuid, versjon } = innleggelsesperioderResponse;
-    postInnleggelsesperioder(
-      href,
-      { behandlingUuid, versjon, perioder: nyeInnleggelsesperioder },
-      httpErrorHandler,
-      controller.signal,
-    )
-      .then(() => {
-        onInnleggelsesperioderUpdated();
-        updateInnlegelsesperioder();
-      })
-      .catch(() => {
-        setLagreInnleggelsesperioderFeilet(true);
-        setIsLoading(false);
+    try {
+      await api.oppdaterSykdomInnleggelse({
+        behandlingUuid,
+        perioder: nyeInnleggelsesperioder,
       });
+      onInnleggelsesperioderUpdated();
+      await updateInnleggelsesperioder();
+    } catch {
+      setLagreInnleggelsesperioderFeilet(true);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -158,16 +151,11 @@ const Innleggelsesperiodeoversikt = ({
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
-            const { href, requestPayload } = findLinkByRel(
-              LinkRel.ENDRE_INNLEGGELSESPERIODER,
-              innleggelsesperioderResponse.links,
-            );
-            return postInnleggelsesperioderDryRun(
-              href,
-              { ...requestPayload, perioder: nyeInnleggelsesperioder },
-              httpErrorHandler,
-              controller.signal,
-            );
+            return api.oppdaterSykdomInnleggelse({
+              behandlingUuid,
+              perioder: nyeInnleggelsesperioder,
+              dryRun: true,
+            });
           }}
         />
       )}

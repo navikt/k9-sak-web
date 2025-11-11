@@ -1,10 +1,21 @@
-import React, { type JSX } from 'react';
 import { addYearsToDate, Period } from '@fpsak-frontend/utils';
+import { k9_sak_kontrakt_sykdom_SykdomVurderingType } from '@navikt/k9-sak-typescript-client/types';
+import React, { type JSX } from 'react';
+import LinkRel from '../../../constants/LinkRel';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { findLinkByRel } from '../../../util/linkUtils';
-import LinkRel from '../../../constants/LinkRel';
+import { finnMaksavgrensningerForPerioder } from '../../../util/periodUtils';
 import ContainerContext from '../../context/ContainerContext';
-import Vurderingstype from '../../../types/Vurderingstype';
+import VurderingContext from '../../context/VurderingContext';
+import NyVurderingController from '../ny-vurdering-controller/NyVurderingController';
+import VurderingLangvarigSykdomForm, {
+  FieldName as LangvarigSykdomFieldName,
+  VurderingLangvarigSykdomFormState,
+} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
+import VurderingAvLivetsSluttfaseForm, {
+  FieldName as LivetsSluttfaseFieldName,
+  VurderingAvLivetsSluttfaseFormState,
+} from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
 import VurderingAvTilsynsbehovForm, {
   FieldName as KTPFieldName,
   VurderingAvTilsynsbehovFormState,
@@ -13,17 +24,6 @@ import VurderingAvToOmsorgspersonerForm, {
   FieldName as TOFieldName,
   VurderingAvToOmsorgspersonerFormState,
 } from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
-import VurderingAvLivetsSluttfaseForm, {
-  FieldName as LivetsSluttfaseFieldName,
-  VurderingAvLivetsSluttfaseFormState,
-} from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
-import NyVurderingController from '../ny-vurdering-controller/NyVurderingController';
-import VurderingContext from '../../context/VurderingContext';
-import { finnMaksavgrensningerForPerioder } from '../../../util/periodUtils';
-import VurderingLangvarigSykdomForm, {
-  FieldName as LangvarigSykdomFieldName,
-  VurderingLangvarigSykdomFormState,
-} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
 
 interface VurderingsdetaljvisningForNyVurderingProps {
   vurderingsoversikt: Vurderingsoversikt;
@@ -33,14 +33,14 @@ interface VurderingsdetaljvisningForNyVurderingProps {
 }
 
 function makeDefaultValues(
-  vurderingstype: Vurderingstype,
+  vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType,
   perioder: Period[],
 ):
   | VurderingAvToOmsorgspersonerFormState
   | VurderingAvTilsynsbehovFormState
   | VurderingAvLivetsSluttfaseFormState
   | VurderingLangvarigSykdomFormState {
-  if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return {
       [KTPFieldName.MANGLER_LEGEERKLÆRING]: false,
       [KTPFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]: '',
@@ -49,7 +49,7 @@ function makeDefaultValues(
       [KTPFieldName.DOKUMENTER]: [],
     };
   }
-  if (vurderingstype === Vurderingstype.TO_OMSORGSPERSONER) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.TO_OMSORGSPERSONER) {
     return {
       [TOFieldName.VURDERING_AV_TO_OMSORGSPERSONER]: '',
       [TOFieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]: undefined,
@@ -58,7 +58,7 @@ function makeDefaultValues(
     };
   }
 
-  if (vurderingstype === Vurderingstype.LIVETS_SLUTTFASE) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.LIVETS_SLUTTFASE) {
     return {
       [LivetsSluttfaseFieldName.VURDERING_AV_LIVETS_SLUTTFASE]: '',
       [LivetsSluttfaseFieldName.ER_I_LIVETS_SLUTTFASE]: undefined,
@@ -85,7 +85,6 @@ const VurderingsdetaljvisningForNyVurdering = ({
   radForNyVurderingVises,
 }: VurderingsdetaljvisningForNyVurderingProps): JSX.Element => {
   const { readOnly } = React.useContext(ContainerContext);
-
   const opprettLink = findLinkByRel(LinkRel.OPPRETT_VURDERING, vurderingsoversikt.links);
   const resterendeVurderingsperioderDefaultValue = vurderingsoversikt.resterendeVurderingsperioder;
 
@@ -110,7 +109,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
       dataTilVurderingUrl={endpoints.dataTilVurdering}
       onVurderingLagret={onVurderingLagret}
       formRenderer={(dokumenter, onSubmit, isSubmitting) => {
-        if (Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE === vurderingstype) {
+        if (k9_sak_kontrakt_sykdom_SykdomVurderingType.KONTINUERLIG_TILSYN_OG_PLEIE === vurderingstype) {
           return (
             <VurderingAvTilsynsbehovForm
               defaultValues={makeDefaultValues(vurderingstype, defaultPerioder())}
@@ -129,7 +128,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
             />
           );
         }
-        if (Vurderingstype.TO_OMSORGSPERSONER === vurderingstype) {
+        if (k9_sak_kontrakt_sykdom_SykdomVurderingType.TO_OMSORGSPERSONER === vurderingstype) {
           return (
             <VurderingAvToOmsorgspersonerForm
               defaultValues={makeDefaultValues(vurderingstype, defaultPerioder())}
@@ -142,7 +141,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
             />
           );
         }
-        if (Vurderingstype.LIVETS_SLUTTFASE === vurderingstype) {
+        if (k9_sak_kontrakt_sykdom_SykdomVurderingType.LIVETS_SLUTTFASE === vurderingstype) {
           return (
             <VurderingAvLivetsSluttfaseForm
               defaultValues={makeDefaultValues(vurderingstype, defaultPerioder())}
@@ -155,7 +154,7 @@ const VurderingsdetaljvisningForNyVurdering = ({
             />
           );
         }
-        if (Vurderingstype.LANGVARIG_SYKDOM === vurderingstype) {
+        if (k9_sak_kontrakt_sykdom_SykdomVurderingType.LANGVARIG_SYKDOM === vurderingstype) {
           return (
             <VurderingLangvarigSykdomForm
               defaultValues={makeDefaultValues(vurderingstype, defaultPerioder())}

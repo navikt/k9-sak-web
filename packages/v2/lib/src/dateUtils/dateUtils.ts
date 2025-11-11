@@ -347,3 +347,10 @@ export const formatereLukketPeriode = (periode: string): string => {
   }
   return `${formatDate(fom)} - ${formatDate(tom)}`;
 };
+
+export const prettifyDateString = (dateString: string) => {
+  const dateObject = initializeDate(dateString);
+  return dateObject.format(DDMMYYYY_DATE_FORMAT);
+};
+
+export const prettifyPeriode = (fom: string, tom: string) => `${prettifyDateString(fom)} - ${prettifyDateString(tom)}`;

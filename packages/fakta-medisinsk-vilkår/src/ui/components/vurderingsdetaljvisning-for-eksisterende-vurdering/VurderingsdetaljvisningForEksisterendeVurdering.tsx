@@ -1,27 +1,28 @@
-import React, { type JSX } from 'react';
 import { addYearsToDate } from '@fpsak-frontend/utils';
+import React, { type JSX } from 'react';
 import Vurderingselement from '../../../types/Vurderingselement';
 // eslint-disable-next-line max-len
-import VurderingsoppsummeringForKontinuerligTilsynOgPleie from '../vurderingsoppsummering-for-kontinuerlig-tilsyn-og-pleie/VurderingsoppsummeringForKontinuerligTilsynOgPleie';
-import VurderingsdetaljerFetcher from '../vurderingsdetaljer-fetcher/VurderingsdetaljerFetcher';
+import { k9_sak_kontrakt_sykdom_SykdomVurderingType } from '@navikt/k9-sak-typescript-client/types';
 import LinkRel from '../../../constants/LinkRel';
-import { findHrefByRel, findLinkByRel } from '../../../util/linkUtils';
+import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
 import ManuellVurdering from '../../../types/ManuellVurdering';
-import buildInitialFormStateForEdit from '../vilkårsvurdering-av-tilsyn-og-pleie/initialFormStateUtil';
-import VurderingAvTilsynsbehovForm from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
-import EndreVurderingController from '../endre-vurdering-controller/EndreVurderingController';
+import Vurderingstype from '../../../types/Vurderingstype';
+import { findHrefByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import VurderingContext from '../../context/VurderingContext';
-import Vurderingstype from '../../../types/Vurderingstype';
-import VurderingAvToOmsorgspersonerForm from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
-import VurderingsoppsummeringForToOmsorgspersoner from '../vurderingsoppsummering-for-to-omsorgspersoner/VurderingsoppsummeringForToOmsorgspersoner';
-import VurderingsoppsummeringForInnleggelsesperiode from '../vurderingsoppsummering-for-innleggelsesperiode/VurderingsoppsummeringForInnleggelsesperiode';
-import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
-import VurderingAvLivetsSluttfaseForm from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
-import VurderingsoppsummeringForSluttfase from '../vurderingsoppsummering-for-livets-sluttfase/VurderingsoppsummeringForSluttfase';
-import VurderingsoppsummeringLangvarigSykdom from '../vurderingsoppsummering-for-langvarig-sykdom/VurderingsoppsummeringLangvarigSykdom';
+import EndreVurderingController from '../endre-vurdering-controller/EndreVurderingController';
+import buildInitialFormStateForEdit from '../vilkårsvurdering-av-tilsyn-og-pleie/initialFormStateUtil';
 import VurderingLangvarigSykdomForm from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
+import VurderingAvLivetsSluttfaseForm from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
+import VurderingAvTilsynsbehovForm from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
+import VurderingAvToOmsorgspersonerForm from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
+import VurderingsdetaljerFetcher from '../vurderingsdetaljer-fetcher/VurderingsdetaljerFetcher';
+import VurderingsoppsummeringForInnleggelsesperiode from '../vurderingsoppsummering-for-innleggelsesperiode/VurderingsoppsummeringForInnleggelsesperiode';
+import VurderingsoppsummeringForKontinuerligTilsynOgPleie from '../vurderingsoppsummering-for-kontinuerlig-tilsyn-og-pleie/VurderingsoppsummeringForKontinuerligTilsynOgPleie';
+import VurderingsoppsummeringLangvarigSykdom from '../vurderingsoppsummering-for-langvarig-sykdom/VurderingsoppsummeringLangvarigSykdom';
+import VurderingsoppsummeringForSluttfase from '../vurderingsoppsummering-for-livets-sluttfase/VurderingsoppsummeringForSluttfase';
+import VurderingsoppsummeringForToOmsorgspersoner from '../vurderingsoppsummering-for-to-omsorgspersoner/VurderingsoppsummeringForToOmsorgspersoner';
 
 interface VurderingsdetaljvisningForEksisterendeProps {
   vurderingsoversikt: Vurderingsoversikt;
@@ -32,7 +33,7 @@ interface VurderingsdetaljvisningForEksisterendeProps {
   onVurderingLagret: () => Promise<void>;
 }
 
-const getFormComponent = (vurderingstype: Vurderingstype) => {
+const getFormComponent = (vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType) => {
   if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return VurderingAvTilsynsbehovForm;
   }
@@ -48,17 +49,17 @@ const getFormComponent = (vurderingstype: Vurderingstype) => {
   return null;
 };
 
-const getSummaryComponent = (vurderingstype: Vurderingstype) => {
-  if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
+const getSummaryComponent = (vurderingstype: k9_sak_kontrakt_sykdom_SykdomVurderingType) => {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.KONTINUERLIG_TILSYN_OG_PLEIE) {
     return VurderingsoppsummeringForKontinuerligTilsynOgPleie;
   }
-  if (vurderingstype === Vurderingstype.TO_OMSORGSPERSONER) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.TO_OMSORGSPERSONER) {
     return VurderingsoppsummeringForToOmsorgspersoner;
   }
-  if (vurderingstype === Vurderingstype.LIVETS_SLUTTFASE) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.LIVETS_SLUTTFASE) {
     return VurderingsoppsummeringForSluttfase;
   }
-  if (vurderingstype === Vurderingstype.LANGVARIG_SYKDOM) {
+  if (vurderingstype === k9_sak_kontrakt_sykdom_SykdomVurderingType.LANGVARIG_SYKDOM) {
     return VurderingsoppsummeringLangvarigSykdom;
   }
   return null;
@@ -98,13 +99,11 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
       url={url}
       contentRenderer={vurdering => {
         if (editMode) {
-          const endreLink = findLinkByRel(LinkRel.ENDRE_VURDERING, manuellVurdering.links);
           const vurderingsversjon = vurdering.versjoner[0];
 
           const FormComponent = getFormComponent(vurderingstype);
           return (
             <EndreVurderingController
-              endreVurderingLink={endreLink}
               dataTilVurderingUrl={endpoints?.dataTilVurdering}
               formRenderer={(dokumenter, onSubmit, isSubmitting) => {
                 if (Vurderingstype.LIVETS_SLUTTFASE === vurderingstype) {

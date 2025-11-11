@@ -1,11 +1,13 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { Box } from '@navikt/ds-react';
-import React, { useMemo, type JSX } from 'react';
-import { postNyVurdering, postNyVurderingDryRun } from '../../../api/api';
+import { k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto } from '@navikt/k9-sak-typescript-client/types';
+import React, { use, useMemo, type JSX } from 'react';
+import { MedisinskVilkårApiContext } from '../../../api/MedisinskVilkårApiContext';
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
-import { PeriodeMedEndring, PerioderMedEndringResponse } from '../../../types/PeriodeMedEndring';
+import { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
 import { Vurderingsversjon } from '../../../types/Vurdering';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';
@@ -32,8 +34,9 @@ const NyVurderingController = ({
   onVurderingLagret,
   formRenderer,
 }: NyVurderingControllerProps): JSX.Element => {
-  const { httpErrorHandler } = React.useContext(ContainerContext);
+  const { httpErrorHandler, behandlingUuid } = React.useContext(ContainerContext);
   const { vurderingstype } = React.useContext(VurderingContext);
+  const api = assertDefined(use(MedisinskVilkårApiContext));
 
   const [state, dispatch] = React.useReducer(vurderingControllerReducer, {
     sjekkForEksisterendeVurderingerPågår: false,
@@ -60,42 +63,49 @@ const NyVurderingController = ({
   } = state;
   const controller = useMemo(() => new AbortController(), []);
 
-  function lagreVurdering(nyVurderingsversjon: Partial<Vurderingsversjon>) {
+  const lagreVurdering = async (nyVurderingsversjon: Partial<Vurderingsversjon>) => {
     if (vurderingstype && opprettVurderingLink?.requestPayload?.behandlingUuid) {
       dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
-      return postNyVurdering(
-        opprettVurderingLink.href,
-        opprettVurderingLink.requestPayload.behandlingUuid,
-        { ...nyVurderingsversjon, type: vurderingstype },
-        httpErrorHandler,
-        controller.signal,
-      ).then(
-        () => {
-          onVurderingLagret();
-          dispatch({ type: ActionType.VURDERING_LAGRET });
-          scrollUp();
-        },
-        () => {
-          dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
-          scrollUp();
-        },
-      );
+      const vurderingsversjonMedType = { ...nyVurderingsversjon, type: vurderingstype };
+      const { perioder, resultat, tekst, dokumenter, type, manglerLegeerklæring } = vurderingsversjonMedType;
+      try {
+        await api.opprettSykdomsVurdering({
+          behandlingUuid,
+          type,
+          perioder,
+          resultat,
+          tekst,
+          tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
+          manglerLegeerklæring: !!manglerLegeerklæring,
+        });
+        onVurderingLagret();
+        dispatch({ type: ActionType.VURDERING_LAGRET });
+        scrollUp();
+      } catch {
+        dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+        scrollUp();
+      }
     } else {
       dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
     }
-  }
+  };
 
   const sjekkForEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,
-  ): Promise<PerioderMedEndringResponse> => {
-    if (vurderingstype && opprettVurderingLink?.requestPayload?.behandlingUuid) {
-      return postNyVurderingDryRun(
-        opprettVurderingLink.href,
-        opprettVurderingLink.requestPayload.behandlingUuid,
-        { ...nyVurderingsversjon, type: vurderingstype },
-        httpErrorHandler,
-        controller.signal,
-      );
+  ): Promise<k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto> => {
+    if (vurderingstype && behandlingUuid) {
+      const vurderingsversjonMedType = { ...nyVurderingsversjon, type: vurderingstype };
+      const { perioder, resultat, tekst, dokumenter, type, manglerLegeerklæring } = vurderingsversjonMedType;
+      return api.opprettSykdomsVurdering({
+        behandlingUuid,
+        type,
+        perioder,
+        resultat,
+        tekst,
+        tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
+        manglerLegeerklæring: !!manglerLegeerklæring,
+        dryRun: true,
+      });
     } else {
       dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
       return new Promise((_, reject) => reject(new Error('Ugyldig vurderingstype eller behandling UUID')));
@@ -113,11 +123,16 @@ const NyVurderingController = ({
     });
   };
 
-  const initializePerioderMedEndringer = (perioderMedEndringResponse: PerioderMedEndringResponse) =>
-    perioderMedEndringResponse.perioderMedEndringer.map(({ periode: { fom, tom }, ...otherFields }) => ({
-      periode: new Period(fom, tom),
-      ...otherFields,
-    }));
+  const initializePerioderMedEndringer = (
+    perioderMedEndringResponse: k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto,
+  ) =>
+    perioderMedEndringResponse.perioderMedEndringer.map(
+      ({ periode, endrerAnnenVurdering, endrerVurderingSammeBehandling }) => ({
+        periode: new Period(periode?.fom ?? '', periode?.tom ?? ''),
+        endrerAnnenVurdering: !!endrerAnnenVurdering,
+        endrerVurderingSammeBehandling: !!endrerVurderingSammeBehandling,
+      }),
+    );
 
   const beOmBekreftelseFørLagringHvisNødvendig = async (nyVurderingsversjon: Vurderingsversjon) => {
     dispatch({ type: ActionType.SJEKK_FOR_EKSISTERENDE_VURDERINGER_PÅBEGYNT });

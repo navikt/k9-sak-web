@@ -1,11 +1,12 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { Box } from '@navikt/ds-react';
-import React, { useMemo, type JSX } from 'react';
-import { postEndreVurdering, postEndreVurderingDryRun } from '../../../api/api';
+import { k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto } from '@navikt/k9-sak-typescript-client/types';
+import React, { use, useMemo, type JSX } from 'react';
+import { MedisinskVilkårApiContext } from '../../../api/MedisinskVilkårApiContext';
 import Dokument from '../../../types/Dokument';
-import Link from '../../../types/Link';
-import { PeriodeMedEndring, PerioderMedEndringResponse } from '../../../types/PeriodeMedEndring';
+import { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
 import { Vurderingsversjon } from '../../../types/Vurdering';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';
@@ -15,7 +16,6 @@ import ActionType from './actionTypes';
 import vurderingControllerReducer from './reducer';
 
 interface EndreVurderingControllerProps {
-  endreVurderingLink: Link;
   dataTilVurderingUrl: string;
   onVurderingLagret: () => void;
   formRenderer: (
@@ -28,14 +28,14 @@ interface EndreVurderingControllerProps {
 }
 
 const EndreVurderingController = ({
-  endreVurderingLink,
   dataTilVurderingUrl,
   onVurderingLagret,
   formRenderer,
   vurderingsid,
   vurderingsversjonId,
 }: EndreVurderingControllerProps): JSX.Element => {
-  const { httpErrorHandler } = React.useContext(ContainerContext);
+  const { httpErrorHandler, behandlingUuid } = React.useContext(ContainerContext);
+  const api = assertDefined(use(MedisinskVilkårApiContext));
 
   const [state, dispatch] = React.useReducer(vurderingControllerReducer, {
     sjekkForEksisterendeVurderingerPågår: false,
@@ -63,39 +63,43 @@ const EndreVurderingController = ({
 
   const controller = useMemo(() => new AbortController(), []);
 
-  function endreVurdering(nyVurderingsversjon: Partial<Vurderingsversjon>) {
+  const endreVurdering = async (nyVurderingsversjon: Partial<Vurderingsversjon>) => {
     dispatch({ type: ActionType.LAGRING_AV_VURDERING_PÅBEGYNT });
-    return postEndreVurdering(
-      endreVurderingLink.href,
-      endreVurderingLink.requestPayload.behandlingUuid,
-      vurderingsid,
-      nyVurderingsversjon,
-      httpErrorHandler,
-      controller.signal,
-    ).then(
-      () => {
-        onVurderingLagret();
-        dispatch({ type: ActionType.VURDERING_LAGRET });
-        scrollUp();
-      },
-      () => {
-        dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
-        scrollUp();
-      },
-    );
-  }
+    try {
+      const tilknyttedeDokumenter = nyVurderingsversjon.dokumenter?.map(dokument => dokument.id) || [];
+      await api.oppdaterSykdomsVurdering({
+        behandlingUuid,
+        id: vurderingsid,
+        versjon: nyVurderingsversjon.versjon ?? '',
+        tekst: nyVurderingsversjon.tekst,
+        resultat: nyVurderingsversjon.resultat,
+        perioder: nyVurderingsversjon.perioder ?? [],
+        tilknyttedeDokumenter,
+        manglerLegeerklæring: !!nyVurderingsversjon.manglerLegeerklæring,
+      });
+      onVurderingLagret();
+      dispatch({ type: ActionType.VURDERING_LAGRET });
+      scrollUp();
+    } catch {
+      dispatch({ type: ActionType.LAGRE_VURDERING_FEILET });
+      scrollUp();
+    }
+  };
 
   const sjekkForEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,
-  ): Promise<PerioderMedEndringResponse> =>
-    postEndreVurderingDryRun(
-      endreVurderingLink.href,
-      endreVurderingLink.requestPayload.behandlingUuid,
-      vurderingsid,
-      nyVurderingsversjon,
-      httpErrorHandler,
-      controller.signal,
-    );
+  ): Promise<k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto> =>
+    api.oppdaterSykdomsVurdering({
+      behandlingUuid,
+      id: vurderingsid,
+      versjon: nyVurderingsversjon.versjon ?? '',
+      tekst: nyVurderingsversjon.tekst,
+      resultat: nyVurderingsversjon.resultat,
+      perioder: nyVurderingsversjon.perioder ?? [],
+      tilknyttedeDokumenter: nyVurderingsversjon.dokumenter?.map(dokument => dokument.id) || [],
+      manglerLegeerklæring: !!nyVurderingsversjon.manglerLegeerklæring,
+      dryRun: true,
+    });
 
   const advarOmEksisterendeVurderinger = (
     nyVurderingsversjon: Vurderingsversjon,
@@ -108,11 +112,16 @@ const EndreVurderingController = ({
     });
   };
 
-  const initializePerioderMedEndringer = (perioderMedEndringResponse: PerioderMedEndringResponse) =>
-    perioderMedEndringResponse.perioderMedEndringer.map(({ periode: { fom, tom }, ...otherFields }) => ({
-      periode: new Period(fom, tom),
-      ...otherFields,
-    }));
+  const initializePerioderMedEndringer = (
+    perioderMedEndringResponse: k9_sak_kontrakt_sykdom_SykdomVurderingEndringResultatDto,
+  ) =>
+    perioderMedEndringResponse.perioderMedEndringer.map(
+      ({ periode, endrerAnnenVurdering, endrerVurderingSammeBehandling }) => ({
+        periode: new Period(periode?.fom ?? '', periode?.tom ?? ''),
+        endrerAnnenVurdering: !!endrerAnnenVurdering,
+        endrerVurderingSammeBehandling: !!endrerVurderingSammeBehandling,
+      }),
+    );
 
   const beOmBekreftelseFørLagringHvisNødvendig = async (nyVurderingsversjon: Vurderingsversjon) => {
     dispatch({ type: ActionType.SJEKK_FOR_EKSISTERENDE_VURDERINGER_PÅBEGYNT });
