@@ -26,4 +26,5 @@ export const devFeatureToggles = {
   MARKERING_UTENLANDSTILSNITT: false,
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: true,
   VIS_ALLE_ASYNC_ERRORS: true,
+  VIS_FERIEPENGER_PANEL: true,
 } satisfies FeatureToggles;
