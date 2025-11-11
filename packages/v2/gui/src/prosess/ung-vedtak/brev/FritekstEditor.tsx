@@ -4,7 +4,10 @@ import { Alert, Box, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJSWrapper from './EditorJSWrapper';
 
-import type { ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import {
+  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjonType as VedtaksbrevSeksjonType,
+  type ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import styles from './RedigerFritekstbrev.module.css';
 import { utledStiler, validerRedigertHtml } from './RedigeringUtils';
@@ -181,10 +184,10 @@ const FritekstEditor = ({
                   <div className="brev-wrapper">
                     {htmlSeksjoner.map((seksjon, index) => {
                       if (seksjon.innhold) {
-                        if (seksjon.type === 'STYLE') {
+                        if (seksjon.type === VedtaksbrevSeksjonType.STYLE) {
                           return <style key={`${seksjon.type}_${index}`}>{utledStiler(seksjon.innhold)}</style>;
                         }
-                        if (seksjon.type === 'STATISK') {
+                        if (seksjon.type === VedtaksbrevSeksjonType.STATISK) {
                           return (
                             <div
                               key={`${seksjon.type}_${index}`}
@@ -193,7 +196,7 @@ const FritekstEditor = ({
                             />
                           );
                         }
-                        if (seksjon.type === 'REDIGERBAR') {
+                        if (seksjon.type === VedtaksbrevSeksjonType.REDIGERBAR) {
                           return (
                             <div id="content" key={`${seksjon.type}_${index}`}>
                               <div id="rediger-brev" className={styles.redigerbartInnhold} style={{ width: '100%' }} />
