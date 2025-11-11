@@ -1,5 +1,5 @@
 import { Button, Modal } from '@navikt/ds-react';
-import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { createIntl, IntlShape, RawIntlProvider } from 'react-intl';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';

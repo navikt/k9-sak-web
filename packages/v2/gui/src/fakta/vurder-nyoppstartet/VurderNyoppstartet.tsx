@@ -63,9 +63,9 @@ export const VurderNyoppstartet = ({
           <RhfRadioGroup
             control={formMethods.control}
             name="erNyoppstartet"
-            label="Er søker nyoppstartet?"
+            legend="Er søker nyoppstartet?"
             validate={[required]}
-            isReadOnly={readOnly}
+            readOnly={readOnly}
           >
             <Radio value={true}>Ja</Radio>
             <Radio value={false}>Nei</Radio>
@@ -76,7 +76,7 @@ export const VurderNyoppstartet = ({
               name="fom"
               label="Dato for nyoppstartet"
               validate={[required, hasValidDate]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
             />
           )}
           <Box.New maxWidth="70ch">

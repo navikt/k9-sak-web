@@ -32,10 +32,10 @@
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/diagnosekoder": "^1.2025.0",
-    "@navikt/ft-fakta-beregning": "^12.1.23",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^13.1.23",
-    "@navikt/ft-prosess-beregningsgrunnlag": "^11.1.19",
-    "axios": "1.13.1",
+    "@navikt/ft-fakta-beregning": "^12.1.27",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "^13.2.3",
+    "@navikt/ft-prosess-beregningsgrunnlag": "^11.2.3",
+    "axios": "1.13.2",
     "react": "19.2.0",
     "react-intl": "7.1.14"
   }

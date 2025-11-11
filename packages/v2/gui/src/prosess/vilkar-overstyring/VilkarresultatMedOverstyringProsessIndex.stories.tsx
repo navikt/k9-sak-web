@@ -8,7 +8,7 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { action } from 'storybook/actions';
 import { expect } from 'storybook/test';

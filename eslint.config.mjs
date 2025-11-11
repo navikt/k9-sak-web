@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 // @ts-check
 
 import eslint from '@eslint/js';
@@ -26,6 +29,7 @@ const config = tseslint.config(
   pluginReact.configs.flat['jsx-runtime'],
   pluginJsxA11y.flatConfigs.recommended,
   pluginVitest.configs.recommended,
+  storybook.configs['flat/recommended'],
   // Viss vi ønsker jest-dom plugin aktivert: pluginJestDom.configs["flat/recommended"],
   {
     plugins: {
