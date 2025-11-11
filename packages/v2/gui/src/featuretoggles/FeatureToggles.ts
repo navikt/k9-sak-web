@@ -25,4 +25,5 @@ export interface FeatureToggles {
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: boolean;
   VIS_ALLE_ASYNC_ERRORS: boolean;
   VIS_FERIEPENGER_PANEL: boolean;
+  FLYTT_ALDERSVILKAR: boolean;
 }
