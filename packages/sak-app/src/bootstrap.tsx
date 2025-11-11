@@ -39,6 +39,7 @@ init({
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,
+  enableLogs: true,
   integrations: [
     Sentry.breadcrumbsIntegration({ console: false }),
     Sentry.reactRouterV6BrowserTracingIntegration({
