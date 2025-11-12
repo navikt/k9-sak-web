@@ -43,8 +43,8 @@ jobs:
         run: |
           yarn test --silent=true --shard=2/2 packages/prosess-* --passWithNoTests
 
-  other-tests:
-    name: Vitest øvrige pakker
+  other-tests-1:
+    name: Vitest øvrige pakker shard 1/2
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
@@ -55,12 +55,11 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjør øvrige tester
+      - name: Kjør øvrige tester (shard 1/2)
         env:
           CI: true
         run: |
           set -euo pipefail
-          # Saml alle kataloger i packages/ unntatt de som starter med prosess-
           DIRS=()
           for d in packages/*; do
             [ -d "$d" ] || continue
@@ -70,5 +69,38 @@ jobs:
             esac
             DIRS+=("$d")
           done
-          echo "Kjører tester i (uten prosess-*): ${DIRS[*]}"
-          yarn test --silent=true "${DIRS[@]}" --passWithNoTests
+          IFS=$'\n' SORTED=($(printf '%s\n' "${DIRS[@]}" | sort))
+          unset IFS
+          echo "Andre pakker (uten prosess-*): ${SORTED[*]}"
+          yarn test --silent=true --shard=1/2 "${SORTED[@]}" --passWithNoTests
+
+  other-tests-2:
+    name: Vitest øvrige pakker shard 2/2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v5
+
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
+        with:
+          npmAuthToken: ${{ secrets.READER_TOKEN }}
+
+      - name: Kjør øvrige tester (shard 2/2)
+        env:
+          CI: true
+        run: |
+          set -euo pipefail
+          DIRS=()
+          for d in packages/*; do
+            [ -d "$d" ] || continue
+            base="$(basename "$d")"
+            case "$base" in
+              prosess-*) continue ;;
+            esac
+            DIRS+=("$d")
+          done
+          IFS=$'\n' SORTED=($(printf '%s\n' "${DIRS[@]}" | sort))
+          unset IFS
+          echo "Andre pakker (uten prosess-*): ${SORTED[*]}"
+          yarn test --silent=true --shard=2/2 "${SORTED[@]}" --passWithNoTests
