@@ -16,6 +16,7 @@ import {
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { LegacyPanelAdapter } from '@k9-sak-web/gui/behandling/prosess/LegacyPanelAdapter.js';
 import { StandardProsessPanelPropsProvider } from '@k9-sak-web/gui/behandling/prosess/context/StandardProsessPanelPropsContext.js';
+import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -28,8 +29,6 @@ import {
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
-import { VarselProsessStegInitPanel } from '../prosess/VarselProsessStegInitPanel';
-import { ClockDashedIcon, SparklesIcon } from '@navikt/aksel-icons';
 
 interface OwnProps {
   data: FetchedData;
@@ -234,8 +233,9 @@ const PleiepengerProsess = ({
     valgtPanel,
   );
 
-  // Feature toggle for å aktivere v2 menysystem
-  const useV2Menu = true; // TODO: Fix Redux form problematikk
+  // Toggle for å bytte mellom gammel og ny meny (for sammenligning under migrering)
+  const { useV2Menu, ToggleComponent } = useProsessMenyToggle();
+
 
   // previewCallback til context
   const previewCallback = useCallback(
@@ -243,9 +243,20 @@ const PleiepengerProsess = ({
     [behandling.versjon],
   );
 
+  // Form data state for Redux forms (matcher legacy ProsessStegPanel oppførsel)
+  const [formData, setFormData] = useState<any>({});
+  useEffect(() => {
+    // Nullstill form data når behandlingsversjon endres
+    setFormData({});
+  }, [behandling.versjon]);
+
   if (useV2Menu) {
+    // - v2 ProsessMeny
+    // - Legacy ProsessStegPanel for innholdsrendering (unngår Redux-form problemer)
+    // - LegacyPanelAdapter registrerer paneler med v2 meny, men rendrer ikke innhold
     return (
       <>
+        {ToggleComponent}
         <IverksetterVedtakStatusModal
           visModal={visIverksetterVedtakModal}
           lukkModal={useCallback(() => {
@@ -267,33 +278,68 @@ const PleiepengerProsess = ({
             behandling,
             fagsak,
             aksjonspunkter: data.aksjonspunkter,
+            vilkar: data.vilkar,
             alleKodeverk,
             submitCallback: lagreAksjonspunkter,
             previewCallback,
             isReadOnly: !rettigheter.writeAccess.isEnabled,
             rettigheter,
             featureToggles,
+            formData,
+            setFormData,
           }}
         >
+          {/* v2 meny for navigasjon */}
           <ProsessMeny>
-            {/* Nytt v2 panel */}
-            <VarselProsessStegInitPanel />
-
-            {/* Legacy paneler wrapped med LegacyPanelAdapter */}
-            {prosessStegPanelDefinisjoner
-              .filter(panelDef => panelDef.getUrlKode() !== 'varsel') // Ekskluder Varsel siden det er migrert
-              .map(panelDef => (
-                <LegacyPanelAdapter key={panelDef.getUrlKode()} panelDef={panelDef} />
-              ))}
+            {prosessStegPanelDefinisjoner.map((panelDef) => {
+              // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
+              const urlKode = panelDef.getUrlKode();
+              const formaterPanel = formaterteProsessStegPaneler.find(
+                (panel) => panel.labelId === panelDef.getTekstKode()
+              );
+              return (
+                <LegacyPanelAdapter
+                  key={urlKode}
+                  panelDef={panelDef}
+                  menyType={formaterPanel?.type}
+                  usePartialStatus={formaterPanel?.usePartialStatus}
+                />
+              );
+            })}
           </ProsessMeny>
+
+          {/* Legacy panel-rendering for innhold (unngår Redux-form problemer) */}
+          {/* VIKTIG: Dette må være UTENFOR ProsessMeny for å vises rett under menyen */}
+          <ProsessStegContainer
+            formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+            velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+            hideMenu={true}
+          >
+            <ProsessStegPanel
+              valgtProsessSteg={valgtPanel}
+              fagsak={fagsak}
+              behandling={behandling}
+              alleKodeverk={alleKodeverk}
+              apentFaktaPanelInfo={apentFaktaPanelInfo}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              lagringSideeffekterCallback={lagringSideeffekterCallback}
+              lagreAksjonspunkter={lagreAksjonspunkter}
+              lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
+              useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
+              featureToggles={featureToggles}
+              hentBehandling={hentBehandling}
+              erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
+            />
+          </ProsessStegContainer>
         </StandardProsessPanelPropsProvider>
       </>
     );
   }
 
   // Legacy rendering (standard oppførsel)
-  return (  
+  return (
     <>
+      {ToggleComponent}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
         lukkModal={useCallback(() => {
