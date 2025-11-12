@@ -36,15 +36,15 @@ jobs:
         run: |
           case "${{ matrix.group }}" in
             fakta)
-              yarn test --silent "packages/fakta-*/**/*.spec.*" ;;
+              yarn test --silent=true "packages/fakta-*/**/*.spec.*" ;;
             prosess)
-              yarn test --silent "packages/prosess-*/**/*.spec.*" ;;
+              yarn test --silent=true "packages/prosess-*/**/*.spec.*" ;;
             behandling)
-              yarn test --silent "packages/behandling-*/**/*.spec.*" ;;
+              yarn test --silent=true "packages/behandling-*/**/*.spec.*" ;;
             v2)
-              yarn test --silent "packages/v2/**/*.spec.*" ;;
+              yarn test --silent=true "packages/v2/**/*.spec.*" ;;
             base)
-              yarn test --silent "packages/utils/**" "packages/form/**" "packages/rest-api*/**" "packages/rest-api-hooks/**" ;;
+              yarn test --silent=true "packages/utils/**" "packages/form/**" "packages/rest-api*/**" "packages/rest-api-hooks/**" ;;
             øvrig)
-              yarn test --silent "packages/shared-components/**" "packages/modal-sett-pa-vent/**" "packages/sak-app/**/!(app)/**/*.spec.*" "packages/ung/**/!(app)/**/*.spec.*" ;;
+              yarn test --silent=true "packages/shared-components/**" "packages/modal-sett-pa-vent/**" "packages/sak-app/**/!(app)/**/*.spec.*" "packages/ung/**/!(app)/**/*.spec.*" ;;
           esac
