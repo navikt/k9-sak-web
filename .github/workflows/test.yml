@@ -20,4 +20,4 @@ jobs:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
       - name: Kjører tester
-        run: yarn test --silent
+        run: yarn test --silent --pool=threads --poolOptions.threads.singleThread=false
