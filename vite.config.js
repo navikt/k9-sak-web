@@ -141,6 +141,8 @@ export default ({ mode }) => {
       testTimeout: 15000,
       // Conditionally enable thread pool only in CI. Avoids local freezing issues.
       ...(isCI ? { pool: 'threads' } : {}),
+      // Reporters: add json in CI to enable machine-readable timing analysis later.
+      reporters: isCI ? ['default', 'json'] : ['default'],
       onConsoleLog(log) {
         // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
         return !log.includes(

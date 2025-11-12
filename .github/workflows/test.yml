@@ -8,8 +8,18 @@ on:
 
 jobs:
   enhetstester:
-    name: Kjør enhetstester
+    name: Vitest matrix
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        group:
+          - fakta
+          - prosess
+          - behandling
+          - v2
+          - base
+          - øvrig
     steps:
       - name: Hente kode
         uses: actions/checkout@v5
@@ -19,6 +29,22 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjører tester
-        # Parallelisering styres nå via vite.config.js når CI=true. Ingen behov for CLI-flagg her.
-        run: yarn test --silent
+      - name: Kjører tester (${ { matrix.group } })
+        env:
+          # Ensure CI flag is true so vite.config enables thread pool + json reporter
+          CI: true
+        run: |
+          case "${{ matrix.group }}" in
+            fakta)
+              yarn test --silent "packages/fakta-*/**/*.spec.*" ;;
+            prosess)
+              yarn test --silent "packages/prosess-*/**/*.spec.*" ;;
+            behandling)
+              yarn test --silent "packages/behandling-*/**/*.spec.*" ;;
+            v2)
+              yarn test --silent "packages/v2/**/*.spec.*" ;;
+            base)
+              yarn test --silent "packages/utils/**" "packages/form/**" "packages/rest-api*/**" "packages/rest-api-hooks/**" ;;
+            øvrig)
+              yarn test --silent "packages/shared-components/**" "packages/modal-sett-pa-vent/**" "packages/sak-app/**/!(app)/**/*.spec.*" "packages/ung/**/!(app)/**/*.spec.*" ;;
+          esac
