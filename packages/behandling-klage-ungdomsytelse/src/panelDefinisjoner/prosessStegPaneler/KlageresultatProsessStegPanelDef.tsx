@@ -24,9 +24,10 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VURDERE_DOKUMENT,
   ];
 
-  getData = ({ previewCallback, klageVurdering }) => ({
+  getData = ({ previewCallback, klageVurdering, fagsak }) => ({
     previewVedtakCallback: previewCallback,
     klageVurdering,
+    fagsak,
   });
 }
 

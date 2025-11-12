@@ -1,13 +1,16 @@
-import React from 'react';
-
-import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { VedtakKlageProsessIndex } from '@k9-sak-web/gui/prosess/vedtak-klage/VedtakKlageProsessIndex.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <VedtakKlageProsessIndex {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <VedtakKlageProsessIndex {...props} {...deepCopyProps} />;
+  };
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -21,9 +24,10 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VURDERE_DOKUMENT,
   ];
 
-  getData = ({ previewCallback, klageVurdering }) => ({
+  getData = ({ previewCallback, klageVurdering, fagsak }) => ({
     previewVedtakCallback: previewCallback,
     klageVurdering,
+    fagsak,
   });
 }
 

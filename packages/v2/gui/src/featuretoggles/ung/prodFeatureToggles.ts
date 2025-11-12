@@ -26,4 +26,6 @@ export const prodFeatureToggles = {
   MARKERING_UTENLANDSTILSNITT: false,
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: false,
   VIS_ALLE_ASYNC_ERRORS: false,
+  VIS_FERIEPENGER_PANEL: false,
+  FLYTT_ALDERSVILKAR: false,
 } satisfies FeatureToggles;

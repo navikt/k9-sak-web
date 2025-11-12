@@ -24,4 +24,6 @@ export interface FeatureToggles {
   MARKERING_UTENLANDSTILSNITT: boolean;
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: boolean;
   VIS_ALLE_ASYNC_ERRORS: boolean;
+  VIS_FERIEPENGER_PANEL: boolean;
+  FLYTT_ALDERSVILKAR: boolean;
 }

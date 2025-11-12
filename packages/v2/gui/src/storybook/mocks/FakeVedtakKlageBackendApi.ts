@@ -3,6 +3,7 @@ import type { ung_sak_kontrakt_klage_KlagebehandlingDto } from '@k9-sak-web/back
 import { action } from 'storybook/actions';
 import type { VedtakKlageApi } from '../../prosess/vedtak-klage/api/VedtakKlageApi.js';
 import { fakePdf } from './fakePdf.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 
 export class FakeVedtakKlageBackendApi implements VedtakKlageApi {
   #klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto;
@@ -12,8 +13,8 @@ export class FakeVedtakKlageBackendApi implements VedtakKlageApi {
     this.#klageVurdering = klageVurdering;
   }
 
-  async forhåndsvisKlageVedtaksbrev(behandlingId: number): Promise<Blob> {
-    action('forhåndsvisKlageVedtaksbrev')({ behandlingId });
+  async forhåndsvisKlageVedtaksbrev(behandling: BehandlingDto): Promise<Blob> {
+    action('forhåndsvisKlageVedtaksbrev')({ behandlingId: behandling.id });
     return fakePdf();
   }
 
