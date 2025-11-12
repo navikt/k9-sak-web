@@ -8,7 +8,7 @@ on:
 
 jobs:
   prosess-tests:
-    name: Vitest prosess shard 1/2
+    name: Vitest prosess (aggregert)
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
@@ -19,32 +19,31 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjør prosess shard 1/2
+      - name: Kjør alle prosess tester
         env:
           CI: true
         run: |
           set -euo pipefail
-          yarn test --silent=true --shard=1/2 packages/prosess-* --passWithNoTests | tee vitest-report.json
+          yarn test --silent=true packages/prosess-* --passWithNoTests | tee vitest-report.json
 
-      - name: Analyser sloweste tester (prosess 1/2)
+      - name: Analyser sloweste tester (prosess samlet)
         if: always()
         run: |
           if [ -f vitest-report.json ]; then
-            echo "Top 15 tregeste testfiler (prosess shard 1/2):"
+            echo "Top 15 tregeste testfiler (prosess samlet):"
             jq -r '.testResults[] | select(.duration!=null) | [.duration, .name] | @tsv' vitest-report.json 2>/dev/null | sort -nr | head -15 | awk -F'\t' '{printf "%6sms  %s\n", $1, $2}' || true
           else
             echo "Ingen vitest-report.json funnet"
           fi
-      - name: Last opp rapport (prosess 1/2)
+      - name: Last opp rapport (prosess samlet)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vitest-report-prosess-1
+          name: vitest-report-prosess
           path: vitest-report.json
           if-no-files-found: ignore
-
-  prosess-tests-2:
-    name: Vitest prosess shard 2/2
+  other-tests:
+    name: Vitest øvrige pakker (aggregert)
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
@@ -55,43 +54,7 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjør prosess shard 2/2
-        env:
-          CI: true
-        run: |
-          set -euo pipefail
-          yarn test --silent=true --shard=2/2 packages/prosess-* --passWithNoTests | tee vitest-report.json
-
-      - name: Analyser sloweste tester (prosess 2/2)
-        if: always()
-        run: |
-          if [ -f vitest-report.json ]; then
-            echo "Top 15 tregeste testfiler (prosess shard 2/2):"
-            jq -r '.testResults[] | select(.duration!=null) | [.duration, .name] | @tsv' vitest-report.json 2>/dev/null | sort -nr | head -15 | awk -F'\t' '{printf "%6sms  %s\n", $1, $2}' || true
-          else
-            echo "Ingen vitest-report.json funnet"
-          fi
-      - name: Last opp rapport (prosess 2/2)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: vitest-report-prosess-2
-          path: vitest-report.json
-          if-no-files-found: ignore
-
-  other-tests-1:
-    name: Vitest øvrige pakker shard 1/3
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hente kode
-        uses: actions/checkout@v5
-
-      - name: Setup + Install
-        uses: ./.github/actions/setup-install
-        with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
-
-      - name: Kjør øvrige tester (shard 1/3)
+      - name: Kjør alle øvrige tester
         env:
           CI: true
         run: |
@@ -108,162 +71,21 @@ jobs:
           IFS=$'\n' SORTED=($(printf '%s\n' "${DIRS[@]}" | sort))
           unset IFS
           echo "Andre pakker (uten prosess-*): ${SORTED[*]}"
-          yarn test --silent=true --shard=1/3 "${SORTED[@]}" --passWithNoTests | tee vitest-report.json
+          yarn test --silent=true "${SORTED[@]}" --passWithNoTests | tee vitest-report.json
 
-      - name: Analyser sloweste tester (øvrige 1/3)
+      - name: Analyser sloweste tester (øvrige samlet)
         if: always()
         run: |
           if [ -f vitest-report.json ]; then
-            echo "Top 15 tregeste testfiler (øvrige shard 1/3):"
+            echo "Top 15 tregeste testfiler (øvrige samlet):"
             jq -r '.testResults[] | select(.duration!=null) | [.duration, .name] | @tsv' vitest-report.json 2>/dev/null | sort -nr | head -15 | awk -F'\t' '{printf "%6sms  %s\n", $1, $2}' || true
           else
             echo "Ingen vitest-report.json funnet"
           fi
-      - name: Last opp rapport (øvrige 1/3)
+      - name: Last opp rapport (øvrige samlet)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vitest-report-other-1
+          name: vitest-report-other
           path: vitest-report.json
-          if-no-files-found: ignore
-
-  other-tests-2:
-    name: Vitest øvrige pakker shard 2/3
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hente kode
-        uses: actions/checkout@v5
-
-      - name: Setup + Install
-        uses: ./.github/actions/setup-install
-        with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
-
-      - name: Kjør øvrige tester (shard 2/3)
-        env:
-          CI: true
-        run: |
-          set -euo pipefail
-          DIRS=()
-          for d in packages/*; do
-            [ -d "$d" ] || continue
-            base="$(basename "$d")"
-            case "$base" in
-              prosess-*) continue ;;
-            esac
-            DIRS+=("$d")
-          done
-          IFS=$'\n' SORTED=($(printf '%s\n' "${DIRS[@]}" | sort))
-          unset IFS
-          echo "Andre pakker (uten prosess-*): ${SORTED[*]}"
-          yarn test --silent=true --shard=2/3 "${SORTED[@]}" --passWithNoTests | tee vitest-report.json
-
-      - name: Analyser sloweste tester (øvrige 2/3)
-        if: always()
-        run: |
-          if [ -f vitest-report.json ]; then
-            echo "Top 15 tregeste testfiler (øvrige shard 2/3):"
-            jq -r '.testResults[] | select(.duration!=null) | [.duration, .name] | @tsv' vitest-report.json 2>/dev/null | sort -nr | head -15 | awk -F'\t' '{printf "%6sms  %s\n", $1, $2}' || true
-          else
-            echo "Ingen vitest-report.json funnet"
-          fi
-      - name: Last opp rapport (øvrige 2/3)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: vitest-report-other-2
-          path: vitest-report.json
-          if-no-files-found: ignore
-  other-tests-3:
-    name: Vitest øvrige pakker shard 3/3
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hente kode
-        uses: actions/checkout@v5
-
-      - name: Setup + Install
-        uses: ./.github/actions/setup-install
-        with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
-
-      - name: Kjør øvrige tester (shard 3/3)
-        env:
-          CI: true
-        run: |
-          set -euo pipefail
-          DIRS=()
-          for d in packages/*; do
-            [ -d "$d" ] || continue
-            base="$(basename "$d")"
-            case "$base" in
-              prosess-*) continue ;;
-            esac
-            DIRS+=("$d")
-          done
-          IFS=$'\n' SORTED=($(printf '%s\n' "${DIRS[@]}" | sort))
-          unset IFS
-          echo "Andre pakker (uten prosess-*): ${SORTED[*]}"
-          yarn test --silent=true --shard=3/3 "${SORTED[@]}" --passWithNoTests | tee vitest-report.json
-
-      - name: Analyser sloweste tester (øvrige 3/3)
-        if: always()
-        run: |
-          if [ -f vitest-report.json ]; then
-            echo "Top 15 tregeste testfiler (øvrige shard 3/3):"
-            jq -r '.testResults[] | select(.duration!=null) | [.duration, .name] | @tsv' vitest-report.json 2>/dev/null | sort -nr | head -15 | awk -F'\t' '{printf "%6sms  %s\n", $1, $2}' || true
-          else
-            echo "Ingen vitest-report.json funnet"
-          fi
-      - name: Last opp rapport (øvrige 3/3)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: vitest-report-other-3
-          path: vitest-report.json
-          if-no-files-found: ignore
-
-  summary:
-    name: Samlet testoppsummering
-    runs-on: ubuntu-latest
-    needs:
-      [
-        prosess-tests,
-        prosess-tests-2,
-        other-tests-1,
-        other-tests-2,
-        other-tests-3,
-      ]
-    steps:
-      - name: Hente artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: reports
-      - name: Ekstraher JSON og slå sammen
-        run: |
-          set -euo pipefail
-          cd reports
-          PURE_FILES=()
-          for f in */vitest-report.json; do
-            [ -f "$f" ] || continue
-            # Forsøk å hente siste JSON-objekt (Vitest json reporter output). Vi antar at JSON starter med '{'
-            awk 'BEGIN{capture=0} /^\{/ {capture=1} capture {print}' "$f" > "$f.pure.json" || true
-            if jq empty "$f.pure.json" 2>/dev/null; then
-              PURE_FILES+=("$f.pure.json")
-            else
-              echo "Advarsel: kunne ikke parse $f som JSON"
-            fi
-          done
-          if [ ${#PURE_FILES[@]} -eq 0 ]; then
-            echo "Ingen parsebare JSON-filer funnet" && exit 0
-          fi
-          echo "Kombinerer ${#PURE_FILES[@]} rapporter"
-          jq -s '[.[] | .testResults[] | select(.duration!=null) | {name: .name, duration: .duration}] | sort_by(-.duration) | .[0:30]' "${PURE_FILES[@]}" > combined-slowest.json || true
-          echo "Top 30 tregeste testfiler totalt:" || true
-          jq -r '.[] | [.duration, .name] | @tsv' combined-slowest.json | awk -F'\t' '{printf "%6sms  %s\n", $1, $2}' || true
-      - name: Last opp samlet slowest
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: vitest-combined-slowest
-          path: reports/combined-slowest.json
           if-no-files-found: ignore
