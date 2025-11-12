@@ -36,16 +36,15 @@ jobs:
         run: |
           case "${{ matrix.group }}" in
             fakta)
-              yarn test --silent "packages/fakta-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
+              yarn test --silent=true packages/fakta-* --passWithNoTests ;;
             prosess)
-              yarn test --silent "packages/prosess-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
+              yarn test --silent=true packages/prosess-* --passWithNoTests ;;
             behandling)
-              yarn test --silent "packages/behandling-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
+              yarn test --silent=true packages/behandling-* --passWithNoTests ;;
             v2)
-              # Vitest plukker automatisk opp .spec/.test filer under katalog, enkel glob holder
               yarn test --silent=true packages/v2 --passWithNoTests ;;
             base)
-              yarn test --silent "packages/utils/**/*.{spec,test}.{ts,tsx}" "packages/form/**/*.{spec,test}.{ts,tsx}" "packages/rest-api*/**/*.{spec,test}.{ts,tsx}" "packages/rest-api-hooks/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
+              yarn test --silent=true packages/utils packages/form packages/rest-api* packages/rest-api-hooks --passWithNoTests ;;
             øvrig)
-              yarn test --silent "packages/shared-components/**/*.{spec,test}.{ts,tsx}" "packages/modal-sett-pa-vent/**/*.{spec,test}.{ts,tsx}" "packages/sak-app/**/!(app)/**/*.{spec,test}.{ts,tsx}" "packages/ung/**/!(app)/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
+              yarn test --silent=true packages/shared-components packages/modal-sett-pa-vent packages/sak-app packages/ung --passWithNoTests ;;
           esac
