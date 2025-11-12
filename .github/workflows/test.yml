@@ -20,4 +20,5 @@ jobs:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
       - name: Kjører tester
-        run: yarn test --silent --pool=threads --poolOptions.threads.singleThread=false
+        # Parallelisering styres nå via vite.config.js når CI=true. Ingen behov for CLI-flagg her.
+        run: yarn test --silent

@@ -49,6 +49,10 @@ function excludeMsw() {
 
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir/k9`) };
+  // Vitest parallelization strategy:
+  // We only enable explicit thread pooling in CI to avoid overloading local developer machines.
+  // Local runs keep Vitest defaults (single thread per file group) for stability.
+  const isCI = process.env.CI === 'true';
   return defineConfig({
     server: {
       port: 9000,
@@ -135,6 +139,8 @@ export default ({ mode }) => {
       setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
+      // Conditionally enable thread pool only in CI. Avoids local freezing issues.
+      ...(isCI ? { pool: 'threads' } : {}),
       onConsoleLog(log) {
         // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
         return !log.includes(
