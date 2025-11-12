@@ -42,7 +42,8 @@ jobs:
             behandling)
               yarn test --silent "packages/behandling-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             v2)
-              yarn test --silent "packages/v2/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
+              # Vitest plukker automatisk opp .spec/.test filer under katalog, enkel glob holder
+              yarn test --silent=true packages/v2 --passWithNoTests ;;
             base)
               yarn test --silent "packages/utils/**/*.{spec,test}.{ts,tsx}" "packages/form/**/*.{spec,test}.{ts,tsx}" "packages/rest-api*/**/*.{spec,test}.{ts,tsx}" "packages/rest-api-hooks/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             øvrig)
