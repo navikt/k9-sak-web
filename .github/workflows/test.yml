@@ -29,22 +29,22 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjører tester (${ { matrix.group } })
+      - name: Kjører tester (${{ matrix.group }})
         env:
           # Ensure CI flag is true so vite.config enables thread pool + json reporter
           CI: true
         run: |
           case "${{ matrix.group }}" in
             fakta)
-              yarn test --silent=true "packages/fakta-*/**/*.spec.*" ;;
+              yarn test --silent "packages/fakta-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             prosess)
-              yarn test --silent=true "packages/prosess-*/**/*.spec.*" ;;
+              yarn test --silent "packages/prosess-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             behandling)
-              yarn test --silent=true "packages/behandling-*/**/*.spec.*" ;;
+              yarn test --silent "packages/behandling-*/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             v2)
-              yarn test --silent=true "packages/v2/**/*.spec.*" ;;
+              yarn test --silent "packages/v2/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             base)
-              yarn test --silent=true "packages/utils/**" "packages/form/**" "packages/rest-api*/**" "packages/rest-api-hooks/**" ;;
+              yarn test --silent "packages/utils/**/*.{spec,test}.{ts,tsx}" "packages/form/**/*.{spec,test}.{ts,tsx}" "packages/rest-api*/**/*.{spec,test}.{ts,tsx}" "packages/rest-api-hooks/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
             øvrig)
-              yarn test --silent=true "packages/shared-components/**" "packages/modal-sett-pa-vent/**" "packages/sak-app/**/!(app)/**/*.spec.*" "packages/ung/**/!(app)/**/*.spec.*" ;;
+              yarn test --silent "packages/shared-components/**/*.{spec,test}.{ts,tsx}" "packages/modal-sett-pa-vent/**/*.{spec,test}.{ts,tsx}" "packages/sak-app/**/!(app)/**/*.{spec,test}.{ts,tsx}" "packages/ung/**/!(app)/**/*.{spec,test}.{ts,tsx}" --passWithNoTests ;;
           esac
