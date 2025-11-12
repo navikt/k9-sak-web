@@ -125,7 +125,7 @@ export default ({ mode }) => {
           ],
         },
       },
-      environment: 'jsdom',
+      environment: 'happy-dom',
       css: {
         modules: {
           classNameStrategy: 'non-scoped',
