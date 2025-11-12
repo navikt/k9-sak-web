@@ -7,8 +7,8 @@ on:
   workflow_call:
 
 jobs:
-  enhetstester:
-    name: Kjør enhetstester
+  node-tests:
+    name: Vitest (node)
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
@@ -19,5 +19,26 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjører tester
-        run: yarn test --silent
+      - name: Kjør node tester
+        env:
+          CI: true
+        run: |
+          yarn vitest run --config vitest.config.node.ts --silent
+
+  dom-tests:
+    name: Vitest (jsdom)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v5
+
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
+        with:
+          npmAuthToken: ${{ secrets.READER_TOKEN }}
+
+      - name: Kjør dom tester
+        env:
+          CI: true
+        run: |
+          yarn vitest run --config vitest.config.dom.ts --silent
