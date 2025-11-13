@@ -19,7 +19,7 @@ import { asyncAction } from '../../storybook/asyncAction';
 import { VedtakKlageApiContext } from './api/VedtakKlageApiContext';
 import { VedtakKlageProsessIndex } from './VedtakKlageProsessIndex';
 
-export const withFakeVedtakKlageApi =
+const withFakeVedtakKlageApi =
   (klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto): Decorator =>
   Story => {
     const fakeVedtakKlageBackendApi = new FakeVedtakKlageBackendApi(klageVurdering);
@@ -77,6 +77,10 @@ export const VisVedtakspanelDerKlageErVurdertAvNk: Story = {
     aksjonspunkter,
     submitCallback: asyncAction('løs aksjonspunkt'),
     isReadOnly: false,
+    fagsak: {
+      saksnummer: '123',
+      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+    },
   },
   decorators: withFakeVedtakKlageApi({
     klageVurderingResultatNK: {

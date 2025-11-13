@@ -1,5 +1,6 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
@@ -12,21 +13,27 @@ interface OwnProps {
   aksjonspunkter: AksjonspunktDto[];
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
+  fagsak: FagsakDto;
 }
 
-export const VedtakKlageProsessIndex = ({ behandling, aksjonspunkter, submitCallback, isReadOnly }: OwnProps) => {
+export const VedtakKlageProsessIndex = ({
+  behandling,
+  aksjonspunkter,
+  submitCallback,
+  isReadOnly,
+  fagsak,
+}: OwnProps) => {
   const api = assertDefined(useContext(VedtakKlageApiContext));
   const { data: klageVurdering } = useSuspenseQuery({
     queryKey: ['klageVurdering', behandling, api.backend],
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
+
   const { mutateAsync: previewCallback } = useMutation({
     mutationFn: async () => {
-      if (behandling.id) {
-        const response = await api.forhåndsvisKlageVedtaksbrev(behandling.id);
-        const fileUrl = window.URL.createObjectURL(response);
-        window.open(fileUrl, '_blank');
-      }
+      const pdf = await api.forhåndsvisKlageVedtaksbrev(behandling, fagsak);
+      const fileUrl = window.URL.createObjectURL(pdf);
+      window.open(fileUrl, '_blank');
     },
   });
   return (
