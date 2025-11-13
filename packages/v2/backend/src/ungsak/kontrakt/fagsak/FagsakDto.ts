@@ -1,3 +1,1 @@
-import type { ung_sak_kontrakt_fagsak_FagsakDto } from '@navikt/ung-sak-typescript-client/types';
-
-export type FagsakDto = ung_sak_kontrakt_fagsak_FagsakDto;
+export type { ung_sak_kontrakt_fagsak_FagsakDto as FagsakDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
