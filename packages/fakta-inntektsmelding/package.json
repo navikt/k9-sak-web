@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "module": "index.ts",
   "private": true,
-  "scripts": {
-    "dev": "vite serve"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "msw": "2.12.1",
-    "vite": "^7.2.2"
+    "msw": "2.12.1"
   },
   "dependencies": {
     "@navikt/ds-css": "7.32.5",

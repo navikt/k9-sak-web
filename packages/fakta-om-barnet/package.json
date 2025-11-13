@@ -6,12 +6,9 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev": "vite serve"
-  },
+  "scripts": {},
   "devDependencies": {
-    "msw": "2.12.1",
-    "vite": "^7.2.2"
+    "msw": "2.12.1"
   },
   "dependencies": {
     "@navikt/ds-react": "7.32.5",

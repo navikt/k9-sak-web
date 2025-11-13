@@ -6,13 +6,10 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev": "vite serve"
-  },
+  "scripts": {},
   "devDependencies": {
     "cors": "^2.8.5",
-    "msw": "2.12.1",
-    "vite": "^7.2.2"
+    "msw": "2.12.1"
   },
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",
