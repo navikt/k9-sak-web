@@ -27,15 +27,15 @@ jobs:
           CI: true
         run: |
           if [ "${{ matrix.shard }}" = "1" ]; then
-            # Shard 1: behandling-*, fakta-*, prosess-* (tunge pakker)
-            yarn test --silent=true packages/behandling-* packages/fakta-* packages/prosess-*
+            # Shard 1: fakta-*, prosess-* (tunge pakker)
+            yarn test --silent=true packages/fakta-* packages/prosess-*
           else
             # Shard 2: alle andre pakker
             ALL_PACKAGES=$(find packages -maxdepth 1 -type d -name "*" | grep -v "^packages$" | sort)
             OTHER_PACKAGES=""
             for pkg in $ALL_PACKAGES; do
               skip=false
-              for heavy in packages/behandling-* packages/fakta-* packages/prosess-*; do
+              for heavy in packages/fakta-* packages/prosess-*; do
                 if [[ "$pkg" == $heavy ]]; then
                   skip=true
                   break
