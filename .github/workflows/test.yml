@@ -28,7 +28,7 @@ jobs:
         run: |
           if [ "${{ matrix.shard }}" = "1" ]; then
             # Shard 1: behandling-*, fakta-*, prosess-* (tunge pakker)
-            yarn test --silent packages/behandling-* packages/fakta-* packages/prosess-*
+            yarn test --silent=true packages/behandling-* packages/fakta-* packages/prosess-*
           else
             # Shard 2: alle andre pakker
             ALL_PACKAGES=$(find packages -maxdepth 1 -type d -name "*" | grep -v "^packages$" | sort)
@@ -46,7 +46,7 @@ jobs:
               fi
             done
             if [ -n "$OTHER_PACKAGES" ]; then
-              yarn test --silent $OTHER_PACKAGES
+              yarn test --silent=true $OTHER_PACKAGES
             else
               echo "Ingen andre pakker funnet for shard 2"
             fi
