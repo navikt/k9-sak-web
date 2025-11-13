@@ -2,7 +2,7 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeAll, describe, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, it, vi } from 'vitest';
 import ContainerContract from '../../../../types/ContainerContract';
 import ContainerContext from '../../../context/ContainerContext';
 import queryClient from '../../../context/queryClient';
@@ -41,10 +41,14 @@ const renderMedisinskVilkår = (contextValues?: Partial<ContainerContract>) =>
   contextWrapper(<MedisinskVilkår />, contextValues);
 
 describe('MedisinskVilkår', () => {
-  let httpGetSpy = null;
+  let httpGetSpy: ReturnType<typeof vi.spyOn>;
 
   beforeAll(() => {
     httpGetSpy = vi.spyOn(httpUtils, 'get');
+  });
+
+  afterEach(() => {
+    queryClient.clear();
   });
 
   const mockResolvedGetApiCall = data => {
