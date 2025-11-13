@@ -229,8 +229,8 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
     });
 
     afterEach(() => {
-      httpGetSpy.mockClear();
-      httpPostSpy.mockClear();
+      httpGetSpy.mockReset();
+      httpPostSpy.mockReset();
       navigerTilNesteStegSpy.mockClear();
     });
 
