@@ -6,7 +6,6 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {},
   "devDependencies": {
     "cors": "^2.8.5",
     "msw": "2.12.1"

@@ -6,8 +6,6 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {},
-  "devDependencies": {},
   "dependencies": {
     "@navikt/ds-css": "7.32.5",
     "@navikt/ds-icons": "3.4.3",

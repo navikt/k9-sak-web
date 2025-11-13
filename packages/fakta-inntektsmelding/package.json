@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "module": "index.ts",
   "private": true,
-  "scripts": {},
   "keywords": [],
   "author": "NAV IT",
   "license": "MIT",

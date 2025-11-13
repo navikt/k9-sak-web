@@ -6,7 +6,6 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {},
   "dependencies": {
     "@navikt/ds-css": "7.32.5",
     "@navikt/ds-react": "7.32.5",
