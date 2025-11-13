@@ -261,10 +261,10 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'BEH_SAK',
     },
     {
-      kode: 'BEH_SAK_VL',
+      kode: 'BEH_SAK',
       kodeverk: 'OPPGAVE_AARSAK',
       navn: 'Behandle sak i VL',
-      kilde: 'BEH_SAK_VL',
+      kilde: 'BEH_SAK',
     },
     {
       kode: 'FEILUTBET',
@@ -273,10 +273,10 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'FEILUTBET',
     },
     {
-      kode: 'GOD_VED_VL',
+      kode: 'GOD_VED',
       kodeverk: 'OPPGAVE_AARSAK',
       navn: 'Godkjenne vedtak i VL',
-      kilde: 'GOD_VED_VL',
+      kilde: 'GOD_VED',
     },
     {
       kode: 'INNH_DOK',
@@ -285,16 +285,16 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'INNH_DOK',
     },
     {
-      kode: 'REG_SOK_VL',
+      kode: 'REG_SOK',
       kodeverk: 'OPPGAVE_AARSAK',
       navn: 'Registrere søknad i VL',
-      kilde: 'REG_SOK_VL',
+      kilde: 'REG_SOK',
     },
     {
-      kode: 'RV_VL',
+      kode: 'RV',
       kodeverk: 'OPPGAVE_AARSAK',
       navn: 'Revurdere i VL',
-      kilde: 'RV_VL',
+      kilde: 'RV',
     },
     {
       kode: 'SETTVENT',
