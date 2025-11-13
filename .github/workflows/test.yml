@@ -7,9 +7,12 @@ on:
   workflow_call:
 
 jobs:
-  node-tests:
-    name: Vitest (node)
+  enhetstester:
+    name: Vitest (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2]
     steps:
       - name: Hente kode
         uses: actions/checkout@v5
@@ -19,26 +22,32 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjør node tester
+      - name: Kjør tester (shard ${{ matrix.shard }})
         env:
           CI: true
         run: |
-          yarn vitest run --config vitest.config.node.ts --silent
-
-  dom-tests:
-    name: Vitest (jsdom)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hente kode
-        uses: actions/checkout@v5
-
-      - name: Setup + Install
-        uses: ./.github/actions/setup-install
-        with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
-
-      - name: Kjør dom tester
-        env:
-          CI: true
-        run: |
-          yarn vitest run --config vitest.config.dom.ts --silent
+          if [ "${{ matrix.shard }}" = "1" ]; then
+            # Shard 1: behandling-*, fakta-*, prosess-* (tunge pakker)
+            yarn test --silent packages/behandling-* packages/fakta-* packages/prosess-*
+          else
+            # Shard 2: alle andre pakker
+            ALL_PACKAGES=$(find packages -maxdepth 1 -type d -name "*" | grep -v "^packages$" | sort)
+            OTHER_PACKAGES=""
+            for pkg in $ALL_PACKAGES; do
+              skip=false
+              for heavy in packages/behandling-* packages/fakta-* packages/prosess-*; do
+                if [[ "$pkg" == $heavy ]]; then
+                  skip=true
+                  break
+                fi
+              done
+              if [ "$skip" = false ]; then
+                OTHER_PACKAGES="$OTHER_PACKAGES $pkg"
+              fi
+            done
+            if [ -n "$OTHER_PACKAGES" ]; then
+              yarn test --silent $OTHER_PACKAGES
+            else
+              echo "Ingen andre pakker funnet for shard 2"
+            fi
+          fi
