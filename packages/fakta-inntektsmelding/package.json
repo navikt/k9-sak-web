@@ -6,9 +6,6 @@
   "keywords": [],
   "author": "NAV IT",
   "license": "MIT",
-  "devDependencies": {
-    "msw": "2.12.1"
-  },
   "dependencies": {
     "@navikt/ds-css": "7.32.5",
     "@navikt/ds-icons": "3.4.3",
@@ -22,8 +19,5 @@
     "react-collapse": "5.1.1",
     "react-dom": "19.2.0",
     "react-hook-form": "7.66.0"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
