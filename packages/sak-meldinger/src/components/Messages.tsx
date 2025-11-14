@@ -33,6 +33,7 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
+import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -90,11 +91,13 @@ interface MappedOwnProps {
 const formName = 'Messages';
 const RECIPIENT: MottakerDto = { id: 'Bruker', type: '' };
 
-const createValidateRecipient = recipients => value =>
-  value === JSON.stringify(RECIPIENT) ||
-  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
-    ? undefined
-    : [{ id: 'ValidationMessage.InvalidRecipient' }];
+const createValidateRecipient =
+  (recipients: Mottaker[]) =>
+  (value): ValidationReturnType =>
+    value === JSON.stringify(RECIPIENT) ||
+    (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+      ? undefined
+      : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
 const createTredjepartsmottaker = (orgnr: string): MottakerDto => ({
   id: orgnr,
@@ -253,7 +256,7 @@ export const MessagesImpl = ({
     }
   }, [brevmalkode, fritekstforslag]);
 
-  const orgnrValidator = (value: string | undefined, allVals: FormValues) =>
+  const orgnrValidator = (value: string | undefined, allVals: FormValues): ValidationReturnType =>
     value?.length !== 9
       ? [{ id: 'ValidationMessage.InvalidOrganisasjonsnummer' }]
       : allVals.tredjepartsmottakerInfo?.invalidOrgnum

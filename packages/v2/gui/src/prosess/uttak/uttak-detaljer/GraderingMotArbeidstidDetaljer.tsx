@@ -1,18 +1,16 @@
+import type { FC } from 'react';
+import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import {
   k9_kodeverk_uttak_UttakArbeidType as UttakArbeidsforholdType,
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type pleiepengerbarn_uttak_kontrakter_Utbetalingsgrader as Utbetalingsgrader,
   type pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
-import type { FC } from 'react';
-
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
+import { useUttakContext } from '../context/UttakContext';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {
-  alleArbeidsforhold: ArbeidsgiverOversiktDto['arbeidsgivere'];
   utbetalingsgrader: Utbetalingsgrader[];
   søkersTapteArbeidstid: UttaksperiodeInfo['søkersTapteArbeidstid'];
 }
@@ -26,21 +24,17 @@ const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
   return ((fravær / normalArbeidstid) * 100).toFixed(2);
 };
 
-const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
-  alleArbeidsforhold,
-  utbetalingsgrader,
-  søkersTapteArbeidstid,
-}) => {
+const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søkersTapteArbeidstid }) => {
+  const { arbeidsgivere } = useUttakContext();
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
+
   return (
     <VStack>
       <VStack gap="space-32" className={`${styles.uttakDetaljerDetailItem} mt-2`}>
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem?.arbeidsforhold?.aktørId || utbetalingsgradItem?.arbeidsforhold?.organisasjonsnummer;
-          const arbeidsforholdData = arbeidsgiverIdentifikator
-            ? alleArbeidsforhold?.[arbeidsgiverIdentifikator]
-            : undefined;
+          const arbeidsforholdData = arbeidsgiverIdentifikator ? arbeidsgivere?.[arbeidsgiverIdentifikator] : undefined;
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = normalArbeidstid ? beregnDagerTimer(normalArbeidstid) : '-';
           const beregnetFaktiskArbeidstid = faktiskArbeidstid ? beregnDagerTimer(faktiskArbeidstid) : '-';

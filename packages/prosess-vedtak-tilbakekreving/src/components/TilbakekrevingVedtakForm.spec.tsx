@@ -1,5 +1,3 @@
-import React from 'react';
-
 import userEvent from '@testing-library/user-event';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
@@ -36,6 +34,7 @@ test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenn
       behandlingUuid="uuid"
       behandlingVersjon={1}
       perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+      erBehandlingBehandlet={false}
     />,
     { messages },
   );
@@ -77,6 +76,7 @@ test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av ved
       behandlingUuid="uuid"
       behandlingVersjon={1}
       perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+      erBehandlingBehandlet={false}
     />,
     { messages },
   );
@@ -85,6 +85,7 @@ test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av ved
   expect(fetchPreview.mock.calls.length).toBe(1);
   expect(fetchPreview.mock.calls[0][0]).toEqual({
     uuid: 'uuid',
+    behandlingUuid: 'uuid',
     oppsummeringstekst: 'Dette er oppsummeringen',
     perioderMedTekst: [
       {
@@ -122,6 +123,7 @@ test('<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
       behandlingUuid="uuid"
       behandlingVersjon={1}
       perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-01-01_2019-02-02']}
+      erBehandlingBehandlet={false}
     />,
     { messages },
   );
@@ -165,6 +167,7 @@ test(`<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
       perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
       erRevurderingTilbakekrevingKlage
       fritekstOppsummeringPakrevdMenIkkeUtfylt
+      erBehandlingBehandlet={false}
     />,
     { messages },
   );

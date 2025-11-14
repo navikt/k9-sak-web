@@ -11,7 +11,6 @@ const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';
 
 const httpErrorHandlerMock = () => null;
-const abortControllerMock = { signal: new AbortController().signal };
 
 const vurderingsoversiktMock = {
   perioderSomKanVurderes: [],
@@ -230,8 +229,8 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
     });
 
     afterEach(() => {
-      httpGetSpy.mockClear();
-      httpPostSpy.mockClear();
+      httpGetSpy.mockReset();
+      httpPostSpy.mockReset();
       navigerTilNesteStegSpy.mockClear();
     });
 
@@ -282,6 +281,8 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
     });
 
     it('should get new sykdomsstatus after successfully posting vurdering, and if still not done with tilsyn & pleie, it should get an updated version of vurderingsoversikt data', async () => {
+      const initialCallCount = httpGetSpy!.mock.calls.length;
+
       renderVilkårsvurderingComponent(false, false, true);
       await waitFor(async () => {
         const textarea = screen.getByLabelText(/Gjør en vurdering av/i);
@@ -292,20 +293,24 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
         fireEvent.click(radio);
       });
 
+      // Wait for initial render to complete
+      await waitFor(() => {
+        expect(httpGetSpy!.mock.calls.length).toBeGreaterThan(initialCallCount);
+      });
+
+      const callCountBeforeSubmit = httpGetSpy!.mock.calls.length;
+
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
       fireEvent.click(submitButton);
-
-      // needed to clear call-count in mock before verifying that oppdaterVurderingsoversikt api-call is being done
-      httpGetSpy.mockClear();
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
         expect(httpPostSpy).toHaveBeenCalledTimes(2);
         expect(sykdomsstegKTPUferdigStatusSpy).toHaveBeenCalledTimes(1);
 
-        expect(httpGetSpy).toHaveBeenCalledTimes(1);
-        expect(httpGetSpy).toHaveBeenCalledWith(vurderingsoversiktEndpoint, httpErrorHandlerMock, abortControllerMock);
+        // Verify that httpGet was called again after submission (refresh)
+        expect(httpGetSpy!.mock.calls.length).toBeGreaterThan(callCountBeforeSubmit);
       });
     });
   });

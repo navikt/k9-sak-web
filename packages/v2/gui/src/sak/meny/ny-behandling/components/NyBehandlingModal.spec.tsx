@@ -24,17 +24,17 @@ describe('<NyBehandlingModal>', () => {
         kodeverk: '',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_VILKÅR,
+        kode: tilbakekrevingBehandlingÅrsakType.RE_OPPLYSNINGER_OM_VILKÅR,
         navn: 'Nye opplysninger om vilkårsvurdering',
         kodeverk: '',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_FORELDELSE,
+        kode: tilbakekrevingBehandlingÅrsakType.RE_OPPLYSNINGER_OM_FORELDELSE,
         navn: 'Nye opplysninger om foreldelse',
         kodeverk: '',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
+        kode: tilbakekrevingBehandlingÅrsakType.RE_FEILUTBETALT_BELØP_HELT_ELLER_DELVIS_BORTFALT,
         navn: 'Feilutbetalt beløp helt eller delvis bortfalt',
         kodeverk: '',
       },
@@ -43,7 +43,7 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingÅrsakerK9Sak = [] as KodeverkObject[];
 
-    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType);
+    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType, false);
 
     expect(res).toEqual(expect.arrayContaining([behandlingArsakerK9Tilbake[3], behandlingArsakerK9Tilbake[2]]));
   });
@@ -79,7 +79,7 @@ describe('<NyBehandlingModal>', () => {
     const bType = BehandlingTypeK9Klage.REVURDERING;
     const behandlingArsakerK9Tilbake = [] as KodeverkObject[];
 
-    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType);
+    const res = getBehandlingAarsaker(behandlingÅrsakerK9Sak, behandlingArsakerK9Tilbake, bType, false);
 
     expect(res).toEqual(
       expect.arrayContaining([

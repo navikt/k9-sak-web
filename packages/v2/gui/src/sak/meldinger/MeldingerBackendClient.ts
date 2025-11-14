@@ -11,7 +11,7 @@ import {
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 import { brev_bestillDokument, brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { isAbortedFetchError } from '@k9-sak-web/backend/shared/isAbortedFetchError.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/v2/ExtendedApiError.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 
 export default class MeldingerBackendClient {
   #formidling: FormidlingClient;

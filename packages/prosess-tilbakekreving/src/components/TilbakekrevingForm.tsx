@@ -110,6 +110,7 @@ interface OwnProps {
   antallPerioderMedAksjonspunkt: number;
   behandlingId: number;
   behandlingVersjon: number;
+  behandlingUuid: string;
   merknaderFraBeslutter: {
     notAccepted: boolean;
   };
@@ -140,6 +141,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
     dataForDetailForm,
     navBrukerKjonn,
     behandlingId,
+    behandlingUuid,
     behandlingVersjon,
     alleKodeverk,
     beregnBelop,
@@ -285,6 +287,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
                   alleKodeverk={alleKodeverk}
                   beregnBelop={beregnBelop}
                   vilkarsVurdertePerioder={vilkarsVurdertePerioder}
+                  behandlingUuid={behandlingUuid}
                 />
               )}
             </>
@@ -434,14 +437,14 @@ const settOppPeriodeDataForDetailForm = createSelector(
         ? periode.foreldelseVurderingType.kode === foreldelseVurderingType.FORELDET
         : !!periode?.foreldet;
       return {
-        redusertBeloper: periode.redusertBeloper,
-        ytelser: periode.ytelser,
-        feilutbetaling: periodeFormState.feilutbetaling ? periodeFormState.feilutbetaling : periode.feilutbetaling,
-        erTotalBelopUnder4Rettsgebyr: periode.erTotalBelopUnder4Rettsgebyr,
+        redusertBeloper: periode?.redusertBeloper,
+        ytelser: periode?.ytelser,
+        feilutbetaling: periodeFormState.feilutbetaling ? periodeFormState.feilutbetaling : periode?.feilutbetaling,
+        erTotalBelopUnder4Rettsgebyr: periode?.erTotalBelopUnder4Rettsgebyr,
         fom: periodeFormState.fom,
         tom: periodeFormState.tom,
-        årsak: periode.årsak,
-        begrunnelse: periode.begrunnelse,
+        årsak: periode?.årsak,
+        begrunnelse: periode?.begrunnelse,
         erForeldet,
       };
     });

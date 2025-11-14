@@ -2,7 +2,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspun
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { Box, Detail } from '@navikt/ds-react';
+import { Box, Detail, HStack, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
@@ -36,20 +36,15 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         control={control}
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
-        isReadOnly={readOnly}
-        isTrueOrFalseSelection
-        radios={[
-          {
-            value: 'true',
-            label: 'EØS borger',
-          },
-          {
-            value: 'false',
-            label: 'Utenlandsk borger utenfor EØS',
-          },
-        ]}
-        isHorizontal
-      />
+        readOnly={readOnly}
+        legend=""
+        hideLegend
+      >
+        <HStack gap="space-16">
+          <Radio value={true}>EØS borger</Radio>
+          <Radio value={false}>Utenlandsk borger utenfor EØS</Radio>
+        </HStack>
+      </RhfRadioGroup>
 
       {erEosBorger && (
         <ArrowBox>
@@ -59,24 +54,16 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
               control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
               validate={[required]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
+              legend=""
+              hideLegend
               isEdited={isBorgerAksjonspunktClosed}
-              isTrueOrFalseSelection
-              radios={[
-                {
-                  value: 'true',
-                  label: 'Søker har oppholdsrett',
-                },
-                {
-                  value: 'false',
-                  label: (
-                    <>
-                      Søker har <b>ikke</b> oppholdsrett
-                    </>
-                  ),
-                },
-              ]}
-            />
+            >
+              <Radio value={true}>Søker har oppholdsrett</Radio>
+              <Radio value={false}>
+                Søker har <b>ikke</b> oppholdsrett
+              </Radio>
+            </RhfRadioGroup>
           </Box.New>
         </ArrowBox>
       )}
@@ -88,24 +75,16 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
               control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
               validate={[required]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
+              legend=""
+              hideLegend
               isEdited={isBorgerAksjonspunktClosed}
-              isTrueOrFalseSelection
-              radios={[
-                {
-                  value: 'true',
-                  label: 'Søker har lovlig opphold',
-                },
-                {
-                  value: 'false',
-                  label: (
-                    <>
-                      Søker har <b>ikke</b> lovlig opphold
-                    </>
-                  ),
-                },
-              ]}
-            />
+            >
+              <Radio value={true}>Søker har lovlig opphold</Radio>
+              <Radio value={false}>
+                Søker har <b>ikke</b> lovlig opphold
+              </Radio>
+            </RhfRadioGroup>
           </Box.New>
         </ArrowBox>
       )}

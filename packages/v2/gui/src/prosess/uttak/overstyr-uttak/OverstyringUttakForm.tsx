@@ -10,7 +10,7 @@ import {
   type DatePickerProps,
 } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
@@ -41,9 +41,10 @@ type OwnProps = {
   perioderTilVurdering?: string[];
   api: BehandlingUttakBackendClient;
   handleOverstyring: HandleOverstyringType;
+  arbeidsgivereFromParent?: ArbeidsgiverOversiktDto['arbeidsgivere'];
 };
 
-const OverstyringUttakForm: React.FC<OwnProps> = ({
+const OverstyringUttakForm: FC<OwnProps> = ({
   behandling,
   handleAvbrytOverstyringForm,
   overstyring,
@@ -51,9 +52,10 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   handleOverstyring,
   perioderTilVurdering,
   api,
+  arbeidsgivereFromParent,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>(undefined);
+  const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>({});
 
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
   const resolver: Resolver<OverstyrUttakPeriodeDto, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
@@ -105,9 +107,11 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
 
   const watchFraDato = watch('periode.fom', undefined);
   const watchTilDato = watch('periode.tom', undefined);
+  const beggeDatoerValgt = Boolean(watchFraDato) && Boolean(watchTilDato);
 
   const { isLoading: lasterAktiviteter } = useQuery({
     queryKey: ['overstyrte', behandling.uuid, watchFraDato, watchTilDato],
+    enabled: beggeDatoerValgt && erNyOverstyring, // Kun hent aktiviteter for nye overstyringer
     queryFn: async () => {
       const aktuelleAktiviteter = await api.hentAktuelleAktiviteter(
         behandling.uuid,
@@ -115,12 +119,32 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
         dayjs(watchTilDato).format('YYYY-MM-DD'),
       );
       if (aktuelleAktiviteter.arbeidsforholdsperioder) {
-        replaceAktiviteter(formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder));
+        const nyeAktiviteter = formaterOverstyringAktiviteter(aktuelleAktiviteter.arbeidsforholdsperioder);
+        replaceAktiviteter(nyeAktiviteter);
+      } else {
+        replaceAktiviteter([]);
       }
       setArbeidsgivere(aktuelleAktiviteter.arbeidsgiverOversikt?.arbeidsgivere ?? undefined);
       return aktuelleAktiviteter;
     },
   });
+
+  // For eksisterende overstyringer, bruk aktivitetene som allerede finnes
+  useEffect(() => {
+    if (!erNyOverstyring && overstyring?.utbetalingsgrader) {
+      replaceAktiviteter(overstyring.utbetalingsgrader);
+      if (arbeidsgivereFromParent) {
+        setArbeidsgivere(arbeidsgivereFromParent);
+      }
+    }
+  }, [erNyOverstyring, overstyring, arbeidsgivereFromParent, replaceAktiviteter]);
+
+  useEffect(() => {
+    if (!beggeDatoerValgt) {
+      replaceAktiviteter([]);
+      setArbeidsgivere(undefined);
+    }
+  }, [beggeDatoerValgt, replaceAktiviteter]);
 
   useEffect(
     () => setDeaktiverLeggTil(Boolean(watchFraDato && watchTilDato && !isValid)),

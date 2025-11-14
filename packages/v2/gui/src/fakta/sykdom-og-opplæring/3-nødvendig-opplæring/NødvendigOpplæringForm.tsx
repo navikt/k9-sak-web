@@ -7,6 +7,7 @@ import {
   Alert,
   BodyShort,
   Button,
+  Checkbox,
   Detail,
   Heading,
   Label,
@@ -21,8 +22,8 @@ import { ListItem } from '@navikt/ds-react/List';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
-import { useContext, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useContext, useEffect, useState } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { Periodevisning } from '../../../shared/detailView/DetailView.js';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -45,6 +46,10 @@ type NødvendigOpplæringFormFields = {
   perioder: {
     resultat: OpplæringVurderingDtoResultat | '';
     avslagsårsak: OpplæringVurderingDtoAvslagsårsak | '';
+    fom: string;
+    tom: string;
+  }[];
+  tilleggsPerioder: {
     fom: string;
     tom: string;
   }[];
@@ -114,6 +119,7 @@ const defaultValues = (vurdering: OpplæringVurderingDto & { perioder: Period[] 
         tom: vurdering.perioder[0]!.tom,
       },
     ],
+    tilleggsPerioder: [],
     perioderUtenNødvendigOpplæring: [],
   };
 };
@@ -124,6 +130,16 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
       ? OpplæringVurderingDtoResultat.IKKE_DOKUMENTERT
       : nødvendigOpplæringTilResultat(data.harNødvendigOpplæring);
   const perioder = data.perioder.map(periode => ({
+    begrunnelse: data.begrunnelse || null,
+    resultat: resultat,
+    avslagsårsak: data.avslagsårsak || null,
+    periode: {
+      fom: dayjs(periode.fom).format('YYYY-MM-DD'),
+      tom: dayjs(periode.tom).format('YYYY-MM-DD'),
+    },
+  }));
+
+  const tilleggsPerioder = data.tilleggsPerioder.map(periode => ({
     begrunnelse: data.begrunnelse || null,
     resultat: resultat,
     avslagsårsak: data.avslagsårsak || null,
@@ -144,7 +160,7 @@ const onSubmit = (data: NødvendigOpplæringFormFields) => {
   }));
 
   return {
-    perioder: [...perioder, ...perioderUtenNødvendigOpplæring],
+    perioder: [...perioder, ...tilleggsPerioder, ...perioderUtenNødvendigOpplæring],
   };
 };
 
@@ -152,15 +168,18 @@ const NødvendigOpplæringForm = ({
   vurdering,
   setRedigerer,
   redigerer,
+  andrePerioderTilVurdering,
 }: {
   vurdering: OpplæringVurderingDto & { perioder: Period[] };
   setRedigerer: (redigerer: boolean) => void;
   redigerer: boolean;
+  andrePerioderTilVurdering: { fom: string; tom: string }[];
 }) => {
   const { readOnly, løsAksjonspunkt9302 } = useContext(SykdomOgOpplæringContext);
   const formMethods = useForm<NødvendigOpplæringFormFields>({
     defaultValues: defaultValues(vurdering),
   });
+  const [brukVurderingIAndrePerioder, setBrukVurderingIAndrePerioder] = useState(false);
 
   useEffect(() => {
     formMethods.reset({
@@ -172,6 +191,11 @@ const NødvendigOpplæringForm = ({
   const harLegeerklæring = formMethods.watch('harLegeerklæring');
   const opplæringIkkeDokumentertMedLegeerklæring = harLegeerklæring === 'NEI';
 
+  const { control } = formMethods;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'tilleggsPerioder',
+  });
   useEffect(() => {
     if (opplæringIkkeDokumentertMedLegeerklæring) {
       formMethods.setValue('begrunnelse', '');
@@ -319,6 +343,69 @@ const NødvendigOpplæringForm = ({
               <Lovreferanse>§9-14</Lovreferanse> og <Lovreferanse>§22-3</Lovreferanse>. Før du kan avslå må du etterlyse
               dokumentasjon fra bruker.
             </Alert>
+          )}
+          {andrePerioderTilVurdering.length > 0 && (
+            <Checkbox
+              size="small"
+              checked={brukVurderingIAndrePerioder}
+              onChange={() => {
+                if (brukVurderingIAndrePerioder) {
+                  setBrukVurderingIAndrePerioder(false);
+                  formMethods.setValue('tilleggsPerioder', []);
+                } else {
+                  setBrukVurderingIAndrePerioder(true);
+                }
+              }}
+            >
+              Bruk denne vurderingen for andre perioder
+            </Checkbox>
+          )}
+          {/* Skjult Controller som kobler tilleggsPerioder til RHF-validering ved submit */}
+          <Controller
+            control={formMethods.control}
+            name="tilleggsPerioder"
+            rules={{
+              validate: value => {
+                if (!brukVurderingIAndrePerioder) {
+                  return undefined;
+                }
+                if (Array.isArray(value) && value.length > 0) {
+                  return undefined;
+                }
+                return 'Du må velge minst én periode';
+              },
+            }}
+            render={() => <></>}
+          />
+          {brukVurderingIAndrePerioder && (
+            <div>
+              <Label size="small">I hvilke perioder vil du gjenbruke vurderingen?</Label>
+              {andrePerioderTilVurdering.map((periode, index) => {
+                const fieldIdx = fields.findIndex(f => f.fom === periode.fom && f.tom === periode.tom);
+                return (
+                  <Checkbox
+                    key={index}
+                    size="small"
+                    checked={fieldIdx !== -1}
+                    onChange={() => {
+                      if (fieldIdx === -1) {
+                        append({ fom: periode.fom, tom: periode.tom });
+                      } else {
+                        remove(fieldIdx);
+                      }
+                    }}
+                  >
+                    {`${dayjs(periode.fom).format('DD.MM.YYYY')} - ${dayjs(periode.tom).format('DD.MM.YYYY')}`}
+                  </Checkbox>
+                );
+              })}
+
+              {formMethods.formState.errors.tilleggsPerioder?.root?.message && (
+                <Alert variant="error" size="small" className="mt-2">
+                  {formMethods.formState.errors.tilleggsPerioder.root?.message}
+                </Alert>
+              )}
+            </div>
           )}
           {!readOnly && (
             <div className="flex gap-4">

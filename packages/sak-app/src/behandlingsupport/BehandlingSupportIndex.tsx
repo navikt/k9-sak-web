@@ -1,4 +1,3 @@
-import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
@@ -31,14 +30,14 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import HistorikkIndex from './historikk/HistorikkIndex';
+import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/HistorikkBackendClient.js';
+import { K9HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/K9HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import HistorikkBackendApiContext from '@k9-sak-web/gui/sak/historikk/HistorikkBackendApiContext.js';
+import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -162,7 +161,7 @@ const BehandlingSupportIndex = ({
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
-  const historikkBackendClient = new HistorikkBackendClient(kodeverkoppslag);
+  const historikkBackendClient = new K9HistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient('k9Sak');
   const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
 
@@ -291,7 +290,6 @@ const BehandlingSupportIndex = ({
                   saksnummer={fagsak.saksnummer}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
-                  kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
                 />
               </HistorikkBackendApiContext>
             )}

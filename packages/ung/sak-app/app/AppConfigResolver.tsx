@@ -1,12 +1,22 @@
 import { ReactElement, useEffect } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/qFeatureToggles.js';
 import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
+import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
+import UngKlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/UngKlageVurderingBackendClient.js';
+import UngVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/UngVedtakKlageBackendClient.js';
+import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
+import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
+import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 
@@ -40,6 +50,10 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
+  const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
+  const ungKodeverkOppslag = useUngKodeverkoppslag(tilbakeAktivert);
+
   const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
 
   const erFerdig =
@@ -51,7 +65,15 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   return (
     <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
-      {harFeilet || erFerdig ? children : <LoadingPanel />}
+      <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
+        <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+            <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+              {harFeilet || erFerdig ? children : <LoadingPanel />}
+            </InnloggetAnsattProvider>
+          </VedtakKlageApiContext>
+        </KlageVurderingApiContext>
+      </UngKodeverkoppslagContext>
     </FeatureTogglesContext.Provider>
   );
 };

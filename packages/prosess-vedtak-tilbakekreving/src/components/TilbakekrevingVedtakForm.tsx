@@ -45,6 +45,7 @@ const fetchPreview =
     e.preventDefault();
     await fetchPreviewVedtaksbrev({
       uuid,
+      behandlingUuid: uuid,
       ...formatVedtakData(formVerdier),
     });
   };
@@ -62,6 +63,7 @@ interface OwnProps {
   erRevurderingTilbakekrevingFeilBeløpBortfalt?: boolean;
   fritekstOppsummeringPakrevdMenIkkeUtfylt?: boolean;
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
+  erBehandlingBehandlet: boolean;
 }
 
 export const TilbakekrevingVedtakFormImpl = ({
@@ -77,6 +79,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   erRevurderingTilbakekrevingKlage,
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
+  erBehandlingBehandlet,
   ...formProps
 }: OwnProps & InjectedFormProps & WrappedComponentProps) => (
   <form aria-label="form" onSubmit={formProps.handleSubmit} data-testid="tilbakekrevingvedtakform">
@@ -109,7 +112,7 @@ export const TilbakekrevingVedtakFormImpl = ({
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
         </FlexColumn>
-        {perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && (
+        {(perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 || erBehandlingBehandlet) && (
           <FlexColumn>
             <div className={styles.padding}>
               <Link

@@ -16,6 +16,7 @@ import type { Personopplysninger } from '../types/Personopplysninger';
 import Brevmottakere from './Brevmottakere';
 import dokumentMalType from './dokumentMalType';
 import styles from './henleggBehandlingModal.module.css';
+import type { HenleggBehandlingFormvalues } from './formValues';
 
 const maxLength1500 = maxLength(1500);
 
@@ -117,13 +118,6 @@ interface HenleggBehandlingModalProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'];
   handleSubmit: (formValues: any) => void;
 }
-
-export type HenleggBehandlingFormvalues = {
-  årsakKode: string;
-  begrunnelse: string;
-  fritekst: string;
-  valgtMottaker: string;
-};
 
 /**
  * HenleggBehandlingModal

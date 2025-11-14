@@ -1,4 +1,4 @@
-import React from 'react';
+import { type FC } from 'react';
 import dayjs from 'dayjs';
 import { Delete, Edit } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
@@ -22,7 +22,7 @@ interface ownProps {
   arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
 }
 
-const AktivitetRad: React.FC<ownProps> = ({
+const AktivitetRad: FC<ownProps> = ({
   overstyring,
   index,
   handleRediger,

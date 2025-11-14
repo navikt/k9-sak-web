@@ -24,6 +24,11 @@ class MenyKodeverk {
     return this;
   }
 
+  medKlageKodeverk(klagekodeverk: { [key: string]: KodeverkMedNavn[] } = {}): this {
+    this.$$klagekodeverk = klagekodeverk;
+    return this;
+  }
+
   getKodeverkForBehandlingstype(behandlingTypeKode: string, kodeverkType: string): KodeverkMedNavn[] {
     if (
       behandlingTypeKode === BehandlingType.TILBAKEKREVING ||

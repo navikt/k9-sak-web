@@ -1,8 +1,10 @@
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import { k9_klage_kodeverk_behandling_BehandlingType as KlageBehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { k9SakOrUngSak } from '@k9-sak-web/gui/utils/multibackend.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import {
   ArbeidsgiverOpplysningerPerId,
@@ -12,7 +14,7 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
@@ -26,7 +28,6 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import { useFpSakKodeverkMedNavn } from '../data/useKodeverk';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import styles from './fagsakProfileIndex.module.css';
-import { k9SakOrUngSak } from '@k9-sak-web/gui/utils/multibackend.js';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {
   if (alleBehandlinger.length === 1) {
@@ -37,6 +38,8 @@ const findPathToBehandling = (saksnummer: string, location: Location, alleBehand
   }
   return pathToBehandlinger(saksnummer);
 };
+
+const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(k9SakOrUngSak.k9Sak);
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -63,8 +66,6 @@ export const FagsakProfileIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(k9SakOrUngSak.k9Sak);
-
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
@@ -83,6 +84,22 @@ export const FagsakProfileIndex = ({
       }),
     [fagsak.saksnummer],
   );
+
+  const { behandlingerV2, fagsakV2 } = useMemo(() => {
+    const behandlingerCopy = JSON.parse(JSON.stringify(alleBehandlinger));
+    const fagsakCopy = JSON.parse(JSON.stringify(fagsak));
+
+    behandlingerCopy.forEach(behandling => {
+      const erTilbakekreving = erTilbakekrevingType(behandling.type.kode);
+      konverterKodeverkTilKode(behandling, erTilbakekreving);
+    });
+    konverterKodeverkTilKode(fagsakCopy, false);
+
+    return {
+      behandlingerV2: behandlingerCopy,
+      fagsakV2: fagsakCopy,
+    };
+  }, [alleBehandlinger, fagsak]);
 
   return (
     <div className={styles.panelPadding}>
@@ -115,13 +132,6 @@ export const FagsakProfileIndex = ({
             );
           }}
           renderBehandlingVelger={() => {
-            const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
-            const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
-            behandlingerV2.forEach(behandling => {
-              const erTilbakekreving = behandling.type.kode === KlageBehandlingType.TILBAKEKREVING;
-              konverterKodeverkTilKode(behandling, erTilbakekreving);
-            });
-            konverterKodeverkTilKode(fagsakV2, false);
             return (
               <BehandlingVelgerSakV2
                 behandlinger={behandlingerV2}

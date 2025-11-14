@@ -28,6 +28,7 @@ describe('<MenySettPaVentIndex>', () => {
           lukkModal={lukkModalCallback}
           erTilbakekreving={false}
           erKlage={false}
+          navigerEtterSattPåVent={vi.fn}
         />
       </KodeverkProvider>,
     );

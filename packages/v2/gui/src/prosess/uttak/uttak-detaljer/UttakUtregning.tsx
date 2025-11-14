@@ -1,15 +1,13 @@
+import type { JSX, ReactNode } from 'react';
 import { Label } from '@navikt/ds-react';
-import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
-import * as React from 'react';
+import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import styles from './uttakUtregning.module.css';
-
-import type { JSX } from 'react';
 
 interface UttakUtregningProps {
   heading: string;
-  children: React.ReactNode;
+  children: ReactNode;
   highlight?: boolean;
-  headingPostContent?: React.ReactNode;
+  headingPostContent?: ReactNode;
 }
 
 const UttakUtregning = ({ heading, children, highlight, headingPostContent }: UttakUtregningProps): JSX.Element => {
@@ -17,7 +15,9 @@ const UttakUtregning = ({ heading, children, highlight, headingPostContent }: Ut
   return (
     <div className={uttakUtregningCls}>
       <div className={styles.uttakUtregningHeadingContainer}>
-        <div className={styles.uttakUtregningHeadingIcon}>{highlight && <GreenCheckIcon size={19} />}</div>
+        <div className={styles.uttakUtregningHeadingIcon}>
+          {highlight && <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />}
+        </div>
         <Label size="small" as="p">
           {heading}
         </Label>

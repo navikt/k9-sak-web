@@ -4,15 +4,30 @@ import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import '@navikt/ds-css/darkside';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
-import { Preview } from '@storybook/react';
+import { Preview } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
+import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
+import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
 switchOnTestMode();
+
+// Mock AuthFixApi for Storybook
+const mockAuthFixer = {
+  authenticate: async () => ({ isAuthenticated: true, popupClosed: true, aborted: false as const }),
+  shouldWaitForAuthentication: false,
+  authenticationDone: async () => {},
+};
+
+// Configure backend clients for Storybook
+configureK9SakClient(mockAuthFixer as any);
+configureK9KlageClient(mockAuthFixer as any);
+configureK9TilbakeClient(mockAuthFixer as any);
 
 initialize({
   onUnhandledRequest: 'bypass',
@@ -33,6 +48,7 @@ const preview: Preview = {
   parameters: {
     margin: '40px',
   },
+
   decorators: [
     Story => {
       const store = configureStore();
@@ -61,12 +77,15 @@ const preview: Preview = {
       );
     },
   ],
+
   loaders: [
     async context => {
       await mswLoader(context);
       await waitForActivatedServiceWorker();
     },
   ],
+
+  tags: ['autodocs']
 };
 
 const waitForActivatedServiceWorker = async () => {

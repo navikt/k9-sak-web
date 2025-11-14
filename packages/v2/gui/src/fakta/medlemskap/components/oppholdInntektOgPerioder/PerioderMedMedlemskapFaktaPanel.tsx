@@ -5,7 +5,7 @@ import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import PeriodLabel from '@k9-sak-web/gui/shared/periodLabel/PeriodLabel.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Table, VStack } from '@navikt/ds-react';
+import { BodyShort, HStack, Radio, Table, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { type FunctionComponent } from 'react';
@@ -107,14 +107,19 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
               control={control}
               name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType"
               validate={[required]}
-              isReadOnly={readOnly}
+              readOnly={readOnly}
+              legend=""
+              hideLegend
               isEdited={isPeriodAksjonspunktClosed}
-              radios={vurderingTypes.map(type => ({
-                value: type.kode,
-                label: type.navn,
-              }))}
-              isHorizontal
-            />
+            >
+              <HStack gap="space-16">
+                {vurderingTypes.map(type => (
+                  <Radio key={type.kode} value={type.kode}>
+                    {type.navn}
+                  </Radio>
+                ))}
+              </HStack>
+            </RhfRadioGroup>
           )}
         </VStack>
       </VStack>

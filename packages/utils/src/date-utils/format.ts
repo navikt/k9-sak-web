@@ -1,9 +1,9 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 const prettyDateFormat = 'DD.MM.YYYY';
 
-export function prettifyDate(date: Dayjs) {
+export function prettifyDate(date: dayjs.Dayjs) {
   return date.format(prettyDateFormat);
 }
 

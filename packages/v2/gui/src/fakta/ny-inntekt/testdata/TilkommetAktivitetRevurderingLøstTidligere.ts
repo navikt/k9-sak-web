@@ -1,4 +1,4 @@
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import type { Beregningsgrunnlag } from '../src/types/Beregningsgrunnlag';
 
 export const beregningsgrunnlag = [

@@ -1,11 +1,11 @@
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyLong, BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';
 import { LabelledContent } from '../../../../shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '../../../../shared/vurdert-av/VurdertAv.js';
 import { useAlleInstitusjoner } from '../../SykdomOgOpplæringQueries.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingDtoMedPerioder;
@@ -103,7 +103,7 @@ const InstitusjonsnavnFerdigVisning = ({
           </Tag>
         ) : (
           <PersonPencilFillIcon
-            className="ml-1 align-middle text-2xl text-ax-border-warning"
+            className="ml-1 align-middle text-2xl text-ax-warning-500"
             title="Endret av saksbehandler"
           />
         )}

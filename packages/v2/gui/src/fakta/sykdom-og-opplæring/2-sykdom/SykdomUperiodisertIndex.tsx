@@ -12,10 +12,7 @@ import { Period } from '@navikt/ft-utils';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
-import {
-  type k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
-  type k9_sak_kontrakt_behandling_SaksnummerDto as SaksnummerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
@@ -28,16 +25,10 @@ export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: () => {},
 });
 
-interface SykdomVurderingselement extends Vurderingselement {
+interface SykdomVurderingselement
+  extends Vurderingselement,
+    k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
   id: string;
-  uuid: string;
-  begrunnelse: string;
-  behandlingUuid: string;
-  godkjent: boolean;
-  saksnummer: SaksnummerDto;
-  vurdertAv: string;
-  vurdertTidspunkt: string;
-  avslagsårsak?: Avslagsårsak;
 }
 
 const defaultVurdering = {
@@ -101,16 +92,19 @@ const SykdomUperiodisertIndex = () => {
           navigationSection={() => (
             <Vurderingsnavigasjon<SykdomVurderingselement>
               title="Alle vurderinger"
+              nyesteFørst={false}
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}
-              customPeriodeLabel="Vurdert"
+              customLabelRow={
+                <CustomLabelRow harAnnenPart={vurderingsliste?.some(vurdering => vurdering.vurderingFraAnnenpart)} />
+              }
               customPeriodeRad={(periode, onPeriodeClick) => (
                 <NavigasjonsmenyRad
                   periode={periode}
                   active={periode.id === valgtPeriode?.id}
                   erBruktIAksjonspunkt={periode.id === vurderingBruktIAksjonspunkt?.vurderingUuid}
-                  erFraTidligereBehandling={periode.behandlingUuid !== behandlingUuid}
+                  erFraAnnenPart={periode.vurderingFraAnnenpart}
                   onClick={() => onPeriodeClick(periode)}
                 />
               )}
@@ -137,6 +131,16 @@ const SykdomUperiodisertIndex = () => {
         />
       </SykdomUperiodisertContext.Provider>
     </>
+  );
+};
+
+const CustomLabelRow = ({ harAnnenPart }: { harAnnenPart?: boolean }) => {
+  return (
+    <div className="flex items-center w-full">
+      <div className="ml-6 min-w-[50px]">Status</div>
+      <div className="ml-2">Periode</div>
+      {harAnnenPart && <div className="ml-14">Annen part</div>}
+    </div>
   );
 };
 

@@ -28,7 +28,7 @@ import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
@@ -43,6 +43,7 @@ import {
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,
+  BehandlingType.KLAGE,
   BehandlingType.REVURDERING,
   BehandlingType.TILBAKEKREVING,
   BehandlingType.TILBAKEKREVING_REVURDERING,
@@ -139,10 +140,11 @@ export const BehandlingMenuIndex = ({
 
   const menyKodeverk = new MenyKodeverk(behandling?.type)
     .medK9SakKodeverk(alleUngSakKodeverk)
-    .medTilbakeKodeverk(alleTilbakeKodeverk);
+    .medTilbakeKodeverk(alleTilbakeKodeverk)
+    .medKlageKodeverk(alleUngSakKodeverk);
 
   const gaaTilSokeside = useCallback(() => {
-    window.location.assign(getPathToK9Los() || '/');
+    window.location.assign('/');
   }, []);
 
   const { startRequest: lagNyBehandlingUngSak } = restApiHooks.useRestApiRunner<boolean>(
@@ -150,6 +152,9 @@ export const BehandlingMenuIndex = ({
   );
   const { startRequest: lagNyBehandlingTilbake } = restApiHooks.useRestApiRunner<boolean>(
     UngSakApiKeys.NEW_BEHANDLING_TILBAKE,
+  );
+  const { startRequest: lagNyBehandlingKlage } = restApiHooks.useRestApiRunner<boolean>(
+    UngSakApiKeys.NEW_BEHANDLING_KLAGE,
   );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
@@ -164,6 +169,9 @@ export const BehandlingMenuIndex = ({
       let lagNy = lagNyBehandlingUngSak;
       if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
         lagNy = lagNyBehandlingTilbake;
+      }
+      if (bTypeKode === BehandlingType.KLAGE) {
+        lagNy = lagNyBehandlingKlage;
       }
       await lagNy(params);
       oppfriskBehandlinger();
@@ -202,6 +210,7 @@ export const BehandlingMenuIndex = ({
       data={[
         new MenyData(behandlingRettigheter?.behandlingKanGjenopptas, 'Fortsett behandlingen').medModal(lukkModal => (
           <MenyTaAvVentIndexV2
+            behandlingUuid={behandling?.uuid ?? ''}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             taBehandlingAvVent={resumeBehandling}
@@ -211,12 +220,14 @@ export const BehandlingMenuIndex = ({
         new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Sett behandlingen på vent').medModal(
           lukkModal => (
             <MenySettPaVentIndexV2
+              behandlingUuid={behandling?.uuid}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               settBehandlingPaVent={setBehandlingOnHold}
               lukkModal={lukkModal}
               erTilbakekreving={erTilbakekrevingType(behandlingTypeKode)}
               erKlage={behandlingTypeKode === BehandlingType.KLAGE}
+              navigerEtterSattPåVent={gaaTilSokeside}
             />
           ),
         ),
@@ -265,6 +276,10 @@ export const BehandlingMenuIndex = ({
             behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
               behandlingType: b.behandlingType.kode,
               kanOppretteBehandling: b.kanOppretteBehandling,
+              gyldigePerioderPerÅrsak: b.gyldigePerioderPerÅrsak?.map(gpa => ({
+                årsak: gpa.årsak.kode,
+                perioder: gpa.perioder,
+              })),
             }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,

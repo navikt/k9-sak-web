@@ -5,7 +5,7 @@ import { ScissorsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
 
 import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
@@ -16,6 +16,7 @@ import { TilkommetAktivitetAccordion } from './TilkommetAktivitetAccordion';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
+import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
 import styles from './tilkommetAktivitet.module.css';
 
 const finnAktivitetStatus = (
@@ -97,13 +98,16 @@ export const TilkommetAktivitetPanel = ({
   };
 
   const getAksjonspunktText = () => {
+    const ytelsetype = beregningsgrunnlag.ytelsesspesifiktGrunnlag?.ytelsetype;
+    const ytelseTekst = ytelseVisningsnavn(ytelsetype);
+
     if (erAksjonspunktÅpent) {
       return (
         <Alert size="small" variant="warning">
           <Heading size="xsmall" level="3">
             {getAlertHeading()}
           </Heading>
-          Vurder om pleiepengene skal reduseres på grunn av den nye inntekten.
+          Vurder om {ytelseTekst.ytelseNavnBestemt} skal reduseres på grunn av den nye inntekten.
         </Alert>
       );
     }
@@ -113,7 +117,9 @@ export const TilkommetAktivitetPanel = ({
           {`Behandlet aksjonspunkt: `}
           {getAlertHeading()}
         </Label>
-        <BodyShort size="small">Vurder om pleiepengene skal reduseres på grunn av den nye inntekten.</BodyShort>
+        <BodyShort size="small">
+          Vurder om {ytelseTekst.ytelseNavnBestemt} skal reduseres på grunn av den nye inntekten.
+        </BodyShort>
       </>
     );
   };
@@ -194,15 +200,21 @@ export const TilkommetAktivitetPanel = ({
   return (
     <>
       {getAksjonspunktText()}
-      {!!vurderInntektsforholdPerioder && erAksjonspunktÅpent && (
-        <Box.New marginBlock="2 0">
-          <Alert size="small" variant="info" title="">
-            Inntekter som kommer til underveis i en løpende pleiepengeperiode er ikke en del av søkers
-            beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om pleiepengene skal
-            graderes mot den nye inntekten.
-          </Alert>
-        </Box.New>
-      )}
+      {!!vurderInntektsforholdPerioder &&
+        erAksjonspunktÅpent &&
+        (() => {
+          const ytelsetype = beregningsgrunnlag.ytelsesspesifiktGrunnlag?.ytelsetype;
+          const ytelseTekst = ytelseVisningsnavn(ytelsetype);
+          return (
+            <Box.New marginBlock="2 0">
+              <Alert size="small" variant="info" title="">
+                Inntekter som kommer til underveis i en løpende {ytelseTekst.ytelsePeriode} er ikke en del av søkers
+                beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om{' '}
+                {ytelseTekst.ytelseNavnBestemt} skal graderes mot den nye inntekten.
+              </Alert>
+            </Box.New>
+          );
+        })()}
       <Box.New marginBlock="10 0">
         <HStack gap="space-16" justify="space-between">
           <Heading size="small" level="3">

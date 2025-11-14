@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
-import { AktivitetStatus } from '@navikt/ft-kodeverk';
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import { calcDays } from '@navikt/ft-utils';
 

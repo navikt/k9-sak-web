@@ -4,6 +4,8 @@ inputs:
   readerToken:
     description: The secrets.READER_TOKEN allowing read of internal packages.
     required: true
+  gitRef:
+    description: What git ref to run compat check on (tag/branch name)
   newClientPath:
     description: The filepath to where the new client package has been put
     required: true
@@ -15,6 +17,7 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: navikt/k9-sak-web
+        ref: ${{ inputs.gitRef }}
       # Klargjer for kompilering
     - uses: ./.github/actions/setup-install
       with:

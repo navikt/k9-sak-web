@@ -1,13 +1,14 @@
 import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { HistorikkBackendApi } from '../../sak/historikk/HistorikkBackendApi.js';
-import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import {
-  type KlageHistorikkInnslagV2,
-  type SakHistorikkInnslagV2,
-} from '../../sak/historikk/historikkTypeBerikning.js';
-import { HistorikkInnslagTypeBeriker } from '../../sak/historikk/historikkTypeBerikning.js';
+  fangFeilVedHenting,
+  type HentetHistorikk,
+  type HistorikkBackendApi,
+} from '../../sak/historikk/api/HistorikkBackendApi.js';
+import { type BeriketHistorikkInnslag } from '../../sak/historikk/api/HistorikkBackendApi.js';
+import { K9HistorikkInnslagBeriker } from '../../sak/historikk/api/K9HistorikkInnslagBeriker.js';
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 
 // Kopi av respons frå k9-sak backend i dev
 const fakeK9SakResponse: HentAlleInnslagV2Response = [
@@ -349,19 +350,105 @@ const fakeK9KlageResponse: KlageHistorikkinnslagDtoV2[] = [
   },
 ];
 
+// Kopiert ut frå verdikjede (og redusert litt), frå sak oppretta av test
+// TrekkAvKravMedTilbakekrevingTest.psb_trekk_av_krav_etter_at_perioden_er_godkjent_utbetalt
+const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:48.434',
+    dokumenter: [
+      {
+        tag: 'Varselbrev Tilbakekreving',
+        journalpostId: '227173608',
+        dokumentId: '227173611',
+        utgått: false,
+      },
+    ],
+    tittel: 'Brev er sendt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:48.883',
+    dokumenter: [],
+    tittel: 'Behandlingen er gjenopptatt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-03-31T13:28:16.269',
+    dokumenter: [],
+    tittel: 'Behandlingen er satt på vent 22.04.2025',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: 'Venter på tilbakemelding fra bruker.',
+      },
+    ],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-08-29T10:41:30.155',
+    dokumenter: [],
+    tittel: 'Behandling er gjenopptatt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:42.779',
+    dokumenter: [],
+    tittel: 'Tilbakekreving opprettet',
+    linjer: [],
+    skjermlenke: 'TILBAKEKREVING',
+  },
+];
+
 export class FakeHistorikkBackend implements HistorikkBackendApi {
-  #beriker: HistorikkInnslagTypeBeriker;
+  #beriker: K9HistorikkInnslagBeriker;
+
+  readonly backend = 'k9';
+
   constructor(kodeverkoppslag: K9Kodeverkoppslag) {
-    this.#beriker = new HistorikkInnslagTypeBeriker(kodeverkoppslag);
+    this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);
   }
 
-  async hentAlleInnslagK9sak(saksnummer: string): Promise<SakHistorikkInnslagV2[]> {
-    ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.sakHistorikkInnslagV2(innslag)));
+  async #hentAlleInnslagK9sak(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+    return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.berikSakInnslag(innslag, saksnummer)));
   }
 
-  async hentAlleInnslagK9klage(saksnummer: string): Promise<KlageHistorikkInnslagV2[]> {
-    ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.klageHistorikkInnslagV2(innslag)));
+  async #hentAlleInnslagK9klage(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+    return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.berikKlageInnslag(innslag, saksnummer)));
+  }
+
+  async #hentAlleInnslagK9tilbake(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+    return Promise.resolve(
+      fakeK9TilbakeResponse.map(innslag => this.#beriker.berikTilbakeInnslag(innslag, saksnummer)),
+    );
+  }
+
+  async hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk> {
+    const k9Sak = await fangFeilVedHenting('k9-sak', this.#hentAlleInnslagK9sak(saksnummer));
+    const k9Klage = await fangFeilVedHenting('k9-klage', this.#hentAlleInnslagK9klage(saksnummer));
+    const k9Tilbake = await fangFeilVedHenting('k9-tilbake', this.#hentAlleInnslagK9tilbake(saksnummer));
+    return {
+      innslag: [...k9Sak.innslag, ...k9Klage.innslag, ...k9Tilbake.innslag],
+      feilet: [...k9Sak.feilet, ...k9Klage.feilet, ...k9Tilbake.feilet],
+    };
   }
 }

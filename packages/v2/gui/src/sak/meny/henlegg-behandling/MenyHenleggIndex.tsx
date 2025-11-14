@@ -2,9 +2,10 @@ import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as Arbeidsg
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
-import HenleggBehandlingModal, { type HenleggBehandlingFormvalues } from './components/HenleggBehandlingModal';
+import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 import type { Klagepart } from './types/Klagepart';
 import type { Personopplysninger } from './types/Personopplysninger';
+import type { HenleggBehandlingFormvalues } from './components/formValues.ts';
 
 interface OwnProps {
   behandlingId: number;

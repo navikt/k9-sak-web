@@ -1,4 +1,4 @@
-import React from 'react';
+import { type FC } from 'react';
 import { Heading, BodyShort } from '@navikt/ds-react';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
@@ -15,7 +15,7 @@ interface BegrunnelseBoksProps {
   arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
 }
 
-const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyring, arbeidsgivere }) => {
+const BegrunnelseBoks: FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyring, arbeidsgivere }) => {
   const { utbetalingsgrader, saksbehandler } = overstyring;
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   return (

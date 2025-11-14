@@ -162,6 +162,7 @@ export const transformValues = (values, fagsak, erPåklagdBehandlingTilbakekrevi
       values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
     klageHjemmel,
     klageVurdering: values.klageVurdering,
+    klageVurderingType: values.klageVurdering, // ung-klage forventer klageVurderingType
     fritekstTilBrev: values.fritekstTilBrev,
     begrunnelse: values.begrunnelse,
     kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,

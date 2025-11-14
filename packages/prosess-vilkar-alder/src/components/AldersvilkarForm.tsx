@@ -6,7 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
-import { Button } from '@navikt/ds-react';
+import { Button, HStack, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import style from './AldersvilkarForm.module.css';
 
@@ -50,7 +50,7 @@ const AldersvilkarForm = ({
   const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
 
   return (
-    <RhfForm<Inputs> formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
+    <RhfForm formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
       <AksjonspunktHelpText isAksjonspunktOpen>
         {[<FormattedMessage key={1} id="AlderVilkar.Hjelpetekst" />]}
       </AksjonspunktHelpText>
@@ -84,16 +84,15 @@ const AldersvilkarForm = ({
 
       <RhfRadioGroup
         control={formMethods.control}
-        isHorizontal
         label={<FormattedMessage id="AlderVilkar.KroniskSyk" />}
         name="erVilkarOk"
         validate={[required]}
-        isTrueOrFalseSelection
-        radios={[
-          { value: 'true', label: intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' }) },
-          { value: 'false', label: intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' }) },
-        ]}
-      />
+      >
+        <HStack gap="space-16">
+          <Radio value={true}>{intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' })}</Radio>
+          <Radio value={false}>{intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' })}</Radio>
+        </HStack>
+      </RhfRadioGroup>
       <VerticalSpacer sixteenPx />
 
       <Button size="small" variant="primary" type="submit">

@@ -37,6 +37,11 @@ export const isDevOrQ = () => {
   return IS_DEV || isQ;
 };
 
+export const isProd = () => {
+  const { host } = window.location;
+  return host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no';
+};
+
 export const getPathToAinntekt = (pathname: string) => {
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);

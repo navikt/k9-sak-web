@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Button } from '@navikt/ds-react';
 
-import { ariaCheck } from '@navikt/ft-form-validators';
-
 const isDisabled = (isDirty: boolean, isSubmitting: boolean, isSubmittable: boolean): boolean => {
   if (!isSubmittable || isSubmitting) {
     return true;
@@ -29,7 +27,7 @@ export const SubmitButton = ({ isReadOnly, isSubmittable, onClick, isSubmitting,
         size="small"
         loading={isSubmitting}
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable)}
-        onClick={onClick || ariaCheck}
+        onClick={onClick}
         type={onClick ? 'button' : 'submit'}
         variant="primary"
       >

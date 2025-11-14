@@ -1,17 +1,17 @@
 import { InternalSimpleTimeline, ExpandedPeriode as Periode, PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Rad from './Rad';
 import { horizontalPositionAndWidth } from './calc';
 import { innenEtDøgn, invisiblePeriods } from './filter';
+import Rad from './Rad';
 import { sistePeriode } from './sort';
 import { TidslinjeProps } from './Tidslinje';
 
 const spatialPeriod = (
   period: Periode,
-  timelineStart: Dayjs,
-  timelineEndInclusive: Dayjs,
+  timelineStart: dayjs.Dayjs,
+  timelineEndInclusive: dayjs.Dayjs,
   direction: 'left' | 'right' = 'left',
 ): PositionedPeriod => {
   const start = dayjs(period.fom);
@@ -75,8 +75,8 @@ const trimmedPeriods = (period: PositionedPeriod) => {
 
 export const useTidslinjerader = (
   rader: Rad[],
-  startDato: Dayjs,
-  sluttDato: Dayjs,
+  startDato: dayjs.Dayjs,
+  sluttDato: dayjs.Dayjs,
   direction: 'left' | 'right',
 ): InternalSimpleTimeline[] =>
   useMemo(
@@ -101,8 +101,8 @@ export const useTidslinjerader = (
     [rader, startDato, sluttDato],
   );
 
-const tidligsteDato = (tidligst: Date, periode: Periode) => periode.fom < tidligst ? periode.fom : tidligst;
-const senesteDato = (senest: Date, periode: Periode) => periode.tom > senest ? periode.tom : senest;
+const tidligsteDato = (tidligst: Date, periode: Periode) => (periode.fom < tidligst ? periode.fom : tidligst);
+const senesteDato = (senest: Date, periode: Periode) => (periode.tom > senest ? periode.tom : senest);
 
 const tidligsteFomDato = (rader: Periode[][]) => rader.flat().reduce(tidligsteDato, new Date());
 

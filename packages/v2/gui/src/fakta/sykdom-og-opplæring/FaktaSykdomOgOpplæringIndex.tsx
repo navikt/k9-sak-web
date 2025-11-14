@@ -4,12 +4,11 @@ import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/
 import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
 import { Alert, Tabs } from '@navikt/ds-react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useSearchParams } from 'react-router';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
@@ -20,6 +19,7 @@ import {
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { InstitusjonIcon, SykdomIcon, OpplæringIcon, ReisetidIcon } from './TabIcons.js';
+import { useSearchParams } from 'react-router';
 
 export type nødvendigOpplæringPayload = {
   perioder: {
@@ -114,7 +114,18 @@ const FaktaSykdomOgOpplæringIndex = ({
   behandlingUuid,
   aksjonspunkter,
 }: SykdomOgOpplæringProps) => {
+  const [, setSearchParams] = useSearchParams();
+  const clearTabParam = () => {
+    setSearchParams(
+      prev => {
+        prev.set('tab', 'default');
+        return prev;
+      },
+      { preventScrollReset: true },
+    );
+  };
   const løsAksjonspunkt9300 = (payload: InstitusjonAksjonspunktPayload) => {
+    clearTabParam();
     submitCallback([
       {
         kode: aksjonspunktCodes.VURDER_INSTITUSJON,
@@ -139,6 +150,7 @@ const FaktaSykdomOgOpplæringIndex = ({
       return;
     }
     if (vurderingData) {
+      clearTabParam();
       submitCallback([
         {
           kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
@@ -149,6 +161,7 @@ const FaktaSykdomOgOpplæringIndex = ({
     }
 
     if (langvarigsykdomsvurderingUuid) {
+      clearTabParam();
       submitCallback([
         {
           kode: aksjonspunktCodes.VURDER_LANGVARIG_SYK,
@@ -159,6 +172,7 @@ const FaktaSykdomOgOpplæringIndex = ({
   };
 
   const løsAksjonspunkt9302 = (payload: nødvendigOpplæringPayload) => {
+    clearTabParam();
     submitCallback([
       {
         kode: aksjonspunktCodes.VURDER_OPPLÆRING,
@@ -210,10 +224,37 @@ const FaktaSykdomOgOpplæringIndex = ({
 
 const SykdomOgOpplæring = () => {
   const { aksjonspunkter, behandlingUuid } = useContext(SykdomOgOpplæringContext);
-  const [searchParams] = useSearchParams();
-  const initActiveTab = searchParams.get('tab') || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const initActiveTab = () => {
+    if (tabParam === 'default') {
+      return finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
+    }
+    return tabParam || finnTabMedAksjonspunkt(aksjonspunkter) || tabCodes.INSTITUSJON;
+  };
+  const [activeTab, setActiveTab] = useState(initActiveTab());
+
+  const onChangeTab = (tab: string) => {
+    if (Object.values(tabCodes).includes(tab)) {
+      setActiveTab(tab);
+      setSearchParams(
+        prev => {
+          prev.set('tab', tab);
+          return prev;
+        },
+        { preventScrollReset: true },
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (tabParam) {
+      onChangeTab(tabParam);
+    }
+  }, [tabParam]);
+
   const { data: vilkår } = useVilkår(behandlingUuid);
-  const [activeTab, setActiveTab] = useState(initActiveTab);
+
   const harAksjonspunkt9300 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON);
   const harAksjonspunkt9301 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK);
   const harAksjonspunkt9302 = harAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
@@ -230,7 +271,7 @@ const SykdomOgOpplæring = () => {
   );
   return (
     <div className="max-w-[1300px]">
-      <Tabs value={activeTab} onChange={setActiveTab}>
+      <Tabs value={activeTab} onChange={onChangeTab}>
         <Tabs.List>
           <Tabs.Tab
             value={tabCodes.INSTITUSJON}

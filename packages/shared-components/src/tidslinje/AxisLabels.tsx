@@ -1,17 +1,17 @@
 import { AxisLabel } from '@k9-sak-web/types/src/tidslinje';
 import classNames from 'classnames';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './AxisLabels.module.css';
 import { horizontalPositionAndWidth } from './calc';
 import { erSynlig } from './filter';
 
 dayjs.locale('nb');
 
-const formatertDag = (dato: Dayjs): string => dato.format('DD.MM');
+const formatertDag = (dato: dayjs.Dayjs): string => dato.format('DD.MM');
 
-const formatertMåned = (dato: Dayjs): string => {
+const formatertMåned = (dato: dayjs.Dayjs): string => {
   if (dato.month() === 0) {
     const månedLabel = dato.format('MMM YYYY').replace('.', '');
     return månedLabel[0].toUpperCase().concat(månedLabel.slice(1, 8));
@@ -20,11 +20,11 @@ const formatertMåned = (dato: Dayjs): string => {
   return månedLabel[0].toUpperCase().concat(månedLabel.slice(1, 3));
 };
 
-const formatertÅr = (dato: Dayjs): string => `${dato.year()}`;
+const formatertÅr = (dato: dayjs.Dayjs): string => `${dato.year()}`;
 
 export const dagsetiketter = (
-  start: Dayjs,
-  slutt: Dayjs,
+  start: dayjs.Dayjs,
+  slutt: dayjs.Dayjs,
   totaltAntallDager: number,
   direction: 'left' | 'right',
 ): AxisLabel[] => {
@@ -34,7 +34,7 @@ export const dagsetiketter = (
     .fill(sisteDag)
     .map((denneDagen, i) => {
       if (i % inkrement !== 0) return null;
-      const dag: Dayjs = denneDagen.subtract(i, 'day');
+      const dag: dayjs.Dayjs = denneDagen.subtract(i, 'day');
       const { horizontalPosition, width } = horizontalPositionAndWidth(dag, dag.add(1, 'day'), start, slutt);
       return {
         direction,
@@ -47,12 +47,12 @@ export const dagsetiketter = (
     .filter(etikett => etikett !== null) as AxisLabel[];
 };
 
-export const månedsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
+export const månedsetiketter = (start: dayjs.Dayjs, slutt: dayjs.Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
   const startmåned = start.startOf('month');
   const sluttmåned = slutt.endOf('month');
   const antallMåneder = sluttmåned.diff(startmåned, 'month') + 1;
   return new Array(antallMåneder).fill(startmåned).map((denneMåneden, i) => {
-    const måned: Dayjs = denneMåneden.add(i, 'month');
+    const måned: dayjs.Dayjs = denneMåneden.add(i, 'month');
     const { horizontalPosition, width } = horizontalPositionAndWidth(måned, måned.add(1, 'month'), start, slutt);
     return {
       direction,
@@ -64,12 +64,12 @@ export const månedsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' |
   });
 };
 
-export const årsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
+export const årsetiketter = (start: dayjs.Dayjs, slutt: dayjs.Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
   const førsteÅr = start.startOf('year');
   const sisteÅr = slutt.endOf('year');
   const antallÅr = sisteÅr.diff(start, 'year') + 1;
   return new Array(antallÅr).fill(førsteÅr).map((detteÅret, i) => {
-    const år: Dayjs = detteÅret.add(i, 'year');
+    const år: dayjs.Dayjs = detteÅret.add(i, 'year');
     const { horizontalPosition, width } = horizontalPositionAndWidth(år, år.add(1, 'year'), start, slutt);
     return {
       direction,
@@ -81,7 +81,7 @@ export const årsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'r
   });
 };
 
-const axisLabels = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
+const axisLabels = (start: dayjs.Dayjs, slutt: dayjs.Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
   const totaltAntallDager = slutt.diff(start, 'day');
   if (totaltAntallDager < 40) {
     return dagsetiketter(start, slutt, totaltAntallDager, direction);
@@ -93,8 +93,8 @@ const axisLabels = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): Ax
 };
 
 interface AxisLabelsProps {
-  start: Dayjs;
-  slutt: Dayjs;
+  start: dayjs.Dayjs;
+  slutt: dayjs.Dayjs;
   direction?: 'left' | 'right';
   etikettRender?: (etikett: AxisLabel) => ReactNode;
 }

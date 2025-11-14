@@ -2,12 +2,10 @@ import { VenteÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/VenteÅrsakT
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Label, Modal, Select } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import {
-  ariaCheck,
   dateAfterOrEqualToToday,
   dateBeforeToday,
   hasValidDate,
@@ -101,6 +99,7 @@ interface PureOwnProps {
   frist?: string;
   ventearsak?: string;
   ventearsakVariant?: string;
+  navigerEtterEndreFrist: () => void;
 }
 
 export interface FormState {
@@ -125,6 +124,7 @@ export const SettPåVentModal = ({
   visBrevErBestilt = false,
   hasManualPaVent,
   ventearsakVariant: originalVentearsakVariant,
+  navigerEtterEndreFrist,
 }: PureOwnProps) => {
   const formMethods = useForm<FormState>({
     defaultValues: buildInitialValues(originalVentearsak, originalFrist, hasManualPaVent, originalVentearsakVariant),
@@ -179,10 +179,8 @@ export const SettPåVentModal = ({
   const getHovedknappOnClick = () => {
     if (erVenterEtterlysInntektsmelding && showEndreFrist) {
       toggleEndreFrist();
-    } else if (showAvbryt) {
-      ariaCheck();
-    } else {
-      goToLos();
+    } else if (!showAvbryt) {
+      navigerEtterEndreFrist();
     }
   };
 

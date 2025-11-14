@@ -1,9 +1,10 @@
 import {
   ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Bleed, BodyLong, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput } from '@navikt/ft-utils';
@@ -19,6 +20,7 @@ interface AksjonspunktArbeidOgInntektProps {
   periode: KontrollerInntektPeriodeDto['periode'];
   fieldIndex: number;
   inntektKontrollPeriode: KontrollerInntektPeriodeDto;
+  arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
@@ -28,9 +30,25 @@ export const AksjonspunktArbeidOgInntekt = ({
   periode,
   fieldIndex,
   inntektKontrollPeriode,
+  arbeidsgivere,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
   const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
+  const radios = [
+    ...(harBrukerrapportertInntekt
+      ? [
+          {
+            value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
+            label: 'Rapportert inntekt fra deltaker',
+          },
+        ]
+      : []),
+    {
+      value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
+      label: 'Rapportert inntekt fra A-ordningen',
+    },
+    { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
+  ];
   return (
     <Bleed marginBlock="4 0">
       <Box.New
@@ -41,7 +59,7 @@ export const AksjonspunktArbeidOgInntekt = ({
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="space-32">
-          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} />
+          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} arbeidsgivere={arbeidsgivere} />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box.New borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
             <HStack gap="space-8" wrap={false}>
@@ -75,25 +93,16 @@ export const AksjonspunktArbeidOgInntekt = ({
               <RhfRadioGroup
                 control={formMethods.control}
                 name={`perioder.${fieldIndex}.valg`}
-                label="Hvilken inntekt skal benyttes?"
+                legend="Hvilken inntekt skal benyttes?"
                 validate={[required]}
-                isReadOnly={isReadOnly}
-                radios={[
-                  ...(harBrukerrapportertInntekt
-                    ? [
-                        {
-                          value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-                          label: 'Rapportert inntekt fra deltaker',
-                        },
-                      ]
-                    : []),
-                  {
-                    value: KontrollerInntektPeriodeDtoValg.BRUK_REGISTER_INNTEKT,
-                    label: 'Rapportert inntekt fra A-ordningen',
-                  },
-                  { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
-                ]}
-              />
+                readOnly={isReadOnly}
+              >
+                {radios.map(radio => (
+                  <Radio key={radio.value} value={radio.value}>
+                    {radio.label}
+                  </Radio>
+                ))}
+              </RhfRadioGroup>
               {valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT && (
                 <VStack gap="space-16">
                   <RhfTextField

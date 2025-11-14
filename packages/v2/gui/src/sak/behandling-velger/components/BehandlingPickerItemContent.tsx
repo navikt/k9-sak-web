@@ -1,5 +1,7 @@
 import { k9_kodeverk_behandling_BehandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CalendarIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Heading, HStack } from '@navikt/ds-react';
@@ -40,16 +42,22 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   behandling,
 }) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-
   const behandlingsresultatTypeNavn = behandling.behandlingsresultat
-    ? kodeverkNavnFraKode(behandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
+    ? kodeverkNavnFraKode(
+        behandling.behandlingsresultat.type,
+        KodeverkType.BEHANDLING_RESULTAT_TYPE,
+        finnKodeverkTypeForBehandlingType(behandling.type),
+      )
     : undefined;
   const behandlingsresultatTypeKode = behandling.behandlingsresultat ? behandling.behandlingsresultat.type : undefined;
   const erFerdigstilt = !!behandling.avsluttet;
   const erUnntaksløype = behandling.type === BehandlingDtoType.UNNTAKSBEHANDLING;
   const opprettet = behandling.opprettet;
   const avsluttet = behandling.avsluttet;
-  const visKunStartdato = erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type);
+  const erEndringAvBarnetillegg =
+    behandling.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
+  const visKunStartdato =
+    erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   return (
     <Box.New
       padding="4"

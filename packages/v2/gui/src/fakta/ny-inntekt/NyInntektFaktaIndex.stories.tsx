@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
-import { AktivitetStatus, OpptjeningAktivitetType } from '@navikt/ft-kodeverk';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import OpptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
 import { type Vilkår } from './src/types/Vilkår';
