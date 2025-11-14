@@ -52,9 +52,9 @@
   ],
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
-    "@navikt/aksel-icons": "7.32.5",
-    "@navikt/ds-css": "7.32.5",
-    "@navikt/ds-react": "7.32.5",
+    "@navikt/aksel-icons": "7.33.2",
+    "@navikt/ds-css": "7.33.2",
+    "@navikt/ds-react": "7.33.2",
     "@navikt/ds-tailwind": "^7.32.5",
     "@navikt/familie-endringslogg": "14.0.3",
     "@navikt/ft-plattform-komponenter": "^10.1.15",

@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/ds-react": "7.32.5",
+    "@navikt/ds-react": "7.33.2",
     "@navikt/ft-plattform-komponenter": "^10.1.15",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",

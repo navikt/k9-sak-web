@@ -24,7 +24,7 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ds-react": "7.32.5",
+    "@navikt/ds-react": "7.33.2",
     "@navikt/ft-fakta-beregning": "^12.1.27",
     "@navikt/ft-form-hooks": "^10.0.3",
     "@navikt/ft-plattform-komponenter": "^10.1.15",
