@@ -1637,8 +1637,8 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.2.0"
     react-intl: "npm:7.1.14"
-    vis-data: "npm:7.1.10"
-    vis-timeline: "npm:7.7.4"
+    vis-data: "npm:8.0.3"
+    vis-timeline: "npm:8.4.0"
   languageName: unknown
   linkType: soft
 
@@ -14087,30 +14087,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-data@npm:7.1.10":
-  version: 7.1.10
-  resolution: "vis-data@npm:7.1.10"
+"vis-data@npm:8.0.3":
+  version: 8.0.3
+  resolution: "vis-data@npm:8.0.3"
   peerDependencies:
-    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
-    vis-util: ^5.0.1
-  checksum: 10/23fb2ef26864153013372e1d95107765be86dd9ce96f987bf99fdd93759fbe5ec1bd2603d354ca18a03f0fb607b829396ec02fe005aead63ef24599512f21402
+    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^13.0.0
+    vis-util: ">=6.0.0"
+  checksum: 10/5b011fe0d8e2b95f4826a685a0c5a8e1b532177fe7a3a2e07b66f25f87c7c0943b30b95564e3994038f2ef91d4bf835becd75fca6b31ac0813f33d245621f5da
   languageName: node
   linkType: hard
 
-"vis-timeline@npm:7.7.4":
-  version: 7.7.4
-  resolution: "vis-timeline@npm:7.7.4"
+"vis-timeline@npm:8.4.0":
+  version: 8.4.0
+  resolution: "vis-timeline@npm:8.4.0"
   peerDependencies:
     "@egjs/hammerjs": ^2.0.0
     component-emitter: ^1.3.0
     keycharm: ^0.2.0 || ^0.3.0 || ^0.4.0
     moment: ^2.24.0
-    propagating-hammerjs: ^1.4.0 || ^2.0.0
-    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
-    vis-data: ^6.3.0 || ^7.0.0
-    vis-util: ^5.0.1
+    propagating-hammerjs: ^1.4.0 || ^2.0.0 || ^3.0.0
+    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^13.0.0
+    vis-data: ">=8.0.0"
+    vis-util: ">=6.0.0"
     xss: ^1.0.0
-  checksum: 10/4585e4f53803577715f90320b13d7546bb88ab13aeb641b34cc248bd3aca25706e89e80c891cecc08cc2145a2383122e1b0db595e506b39b892d832277cb16df
+  checksum: 10/a16e55bf3e0b9dca1d23b0b566aa52fcf7e10546b7748f9a2136c7dc3e3b7c33bc0bf8a31736f69ca39bf77a77d53746ee9fede3918a637e0df37107d3441fb9
   languageName: node
   linkType: hard
 
