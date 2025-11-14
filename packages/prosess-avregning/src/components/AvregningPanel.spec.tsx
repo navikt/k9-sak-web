@@ -4,7 +4,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
 
@@ -186,9 +185,9 @@ describe('<AvregningPanelImpl>', () => {
 
     expect(screen.queryByText('Foreldrepenger nytt beløp')).not.toBeInTheDocument();
     await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Vis flere detaljer Lukket' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Vis flere detaljerLukket' }));
     });
-    expect(screen.getByRole('button', { name: 'Vis færre detaljer Ekspandert' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Vis færre detaljerEkspandert' })).toBeInTheDocument();
     expect(screen.getByText('Foreldrepenger nytt beløp')).toBeInTheDocument();
   });
 

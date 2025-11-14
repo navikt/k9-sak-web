@@ -1,6 +1,6 @@
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import '@testing-library/jest-dom/vitest';
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import 'vitest-axe/extend-expect';
 import * as matchers from 'vitest-axe/matchers';
 
