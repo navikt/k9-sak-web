@@ -29,8 +29,6 @@ const vurderingsoversiktMock = {
   ],
 } as any;
 
-// window.scroll = () => null;
-
 const onFinishedMock = {
   fn: () => null,
 };
