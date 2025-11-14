@@ -150,6 +150,8 @@ describe('<FagsakIndex>', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('heading', { name: '1. Førstegangsbehandling(automatisk behandlet)' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: '1. Førstegangsbehandling (automatisk behandlet)' }),
+    ).toBeInTheDocument();
   });
 });
