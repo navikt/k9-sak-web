@@ -8,7 +8,7 @@ import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerio
 import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
-import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon.js';
+import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon.js';
 import { CenteredLoader } from '../CenteredLoader.js';
 import InstitusjonAlerts from './components/InstitusjonAlerts.js';
 
