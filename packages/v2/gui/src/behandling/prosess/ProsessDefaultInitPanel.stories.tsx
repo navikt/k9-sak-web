@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { IntlProvider } from 'react-intl';
+import { useMemo } from 'react';
 import { ProsessDefaultInitPanel } from './ProsessDefaultInitPanel.js';
 import type { StandardProsessPanelProps } from './hooks/useStandardProsessPanelProps.js';
+import type { ProsessPanelProps } from './types/panelTypes.js';
+import { usePanelRegistrering } from './hooks/usePanelRegistrering.js';
 
 // Mock messages for Storybook
 const messages = {
@@ -15,6 +18,7 @@ const messages = {
   'SuccessStatus.Title': 'Success Status',
   'DangerStatus.Title': 'Danger Status',
   'DynamicStatus.Title': 'Dynamisk Status',
+  'PropsBased.Title': 'Props-basert Panel',
 };
 
 /**
@@ -23,26 +27,28 @@ const messages = {
 function MockProsessPanel({ 
   title, 
   content, 
-  standardProps 
+  standardProps,
+  showPropsInfo = false,
 }: { 
   title: string; 
   content: string;
   standardProps?: StandardProsessPanelProps;
+  showPropsInfo?: boolean;
 }) {
   return (
     <div style={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
       <h2>{title}</h2>
       <p>{content}</p>
-      {standardProps && (
+      {showPropsInfo && standardProps && (
         <div style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
           <h3>Standard Props:</h3>
           <ul>
-            <li>Behandling ID: {standardProps.behandling?.id}</li>
-            <li>Fagsak: {standardProps.fagsak?.saksnummer}</li>
+            <li>Behandling ID: {standardProps.behandling?.id || 'N/A'}</li>
+            <li>Fagsak: {standardProps.fagsak?.saksnummer || 'N/A'}</li>
             <li>Aksjonspunkter: {standardProps.aksjonspunkter?.length || 0}</li>
             <li>Read Only: {standardProps.isReadOnly ? 'Ja' : 'Nei'}</li>
             <li>Aksjonspunkt Open: {standardProps.isAksjonspunktOpen ? 'Ja' : 'Nei'}</li>
-            <li>Status: {standardProps.status}</li>
+            <li>Status: {standardProps.status || 'N/A'}</li>
           </ul>
         </div>
       )}
@@ -66,35 +72,70 @@ const meta = {
       description: {
         component: `
 ProsessDefaultInitPanel er en v2 wrapper-komponent for prosesspaneler.
+Komponenten bruker kun **props-basert tilnærming** hvor parent-komponenten (InitPanel) 
+håndterer registrering med menyen.
 
-Komponenten håndterer:
-- Henting av standard panelprops via useStandardProsessPanelProps
-- Evaluering av synlighetslogikk via skalVisePanel
-- Beregning av menystatus via getMenyType
-- Registrering med prosessmenyen via useProsessMenyRegistrerer
-- Rendering av legacy panelkomponent via children render prop
+### Bruksmønster
 
-Følger v2-prinsipper:
+Panel definerer sin egen identitet og bruker usePanelRegistrering:
+
+\`\`\`tsx
+export function BeregningProsessStegInitPanel(props: ProsessPanelProps) {
+  // 1. Definer panel-identitet som konstanter
+  const PANEL_ID = 'beregning';
+  const PANEL_TEKST = 'Beregning.Title';
+  
+  // 2. Beregn paneltype basert på data
+  const panelType = useMemo(() => {
+    // Logikk for å bestemme type
+    return ProcessMenuStepType.warning;
+  }, [data]);
+  
+  // 3. Registrer panel med menyen
+  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  
+  // 4. Render kun hvis valgt
+  if (!props.erValgt) return null;
+  
+  // 5. Bruk ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
+  return (
+    <ProsessDefaultInitPanel
+      urlKode={PANEL_ID}
+      tekstKode={PANEL_TEKST}
+    >
+      {(standardProps) => (
+        <BeregningProsessIndex {...standardProps} />
+      )}
+    </ProsessDefaultInitPanel>
+  );
+}
+\`\`\`
+
+## Fordeler
+
+- ✅ **Typesikkerhet**: TypeScript validerer props ved compile-time
+- ✅ **Selvdokumenterende**: Paneler definerer sin egen identitet via konstanter
+- ✅ **Ingen boilerplate**: Bare \`<BeregningPanel />\` i parent
+- ✅ **Bedre testbarhet**: Mock callbacks direkte uten context
+- ✅ **Klarere eierskap**: Panel eier sin ID, tekst og statuslogikk
+
+## Ansvar
+
+**ProsessDefaultInitPanel** er ansvarlig for:
+- Henting av standard panelprops fra context
+- Evaluering av synlighetslogikk (skalVisePanel)
+- Rendering av legacy panelkomponent
+
+**Parent-komponenten (InitPanel)** er ansvarlig for:
+- Registrering med menyen via usePanelRegistrering
+- Sjekke props.erValgt og returnere null hvis ikke valgt
+- Oppdatere menystatus via onUpdateType callback
+
+## v2-prinsipper
+
 - Ingen manuell loading/error håndtering (håndteres av Suspense/ErrorBoundary)
 - Antar at data alltid er tilgjengelig når komponenten rendres
 - Bruker 'any' type for legacy-data for å unngå import av legacy-typer
-
-Brukes slik:
-\`\`\`tsx
-<ProsessDefaultInitPanel
-  urlKode="beregning"
-  tekstKode="Beregning.Title"
-  getMenyType={(data) => 
-    data.aksjonspunkter.some(ap => ap.status === 'OPPR')
-      ? ProcessMenuStepType.warning
-      : ProcessMenuStepType.default
-  }
->
-  {(standardProps) => (
-    <BeregningProsessStegPanel {...standardProps} />
-  )}
-</ProsessDefaultInitPanel>
-\`\`\`
         `,
       },
     },
@@ -233,7 +274,9 @@ export const SynligBasertPaAksjonspunkter: Story = {
 };
 
 /**
- * Panel med default status (ingen getMenyType funksjon).
+ * Panel med default status
+ * 
+ * Parent-komponenten (InitPanel) håndterer registrering via usePanelRegistrering.
  */
 export const DefaultStatus: Story = {
   args: {
@@ -242,7 +285,7 @@ export const DefaultStatus: Story = {
     children: (standardProps: StandardProsessPanelProps) => (
       <MockProsessPanel
         title="Default Status"
-        content="Dette panelet har default status fordi getMenyType ikke er oppgitt."
+        content="Dette panelet demonstrerer rendering."
         standardProps={standardProps}
       />
     ),
@@ -250,152 +293,17 @@ export const DefaultStatus: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Panel uten getMenyType-funksjon får automatisk ProcessMenuStepType.default.',
+        story: 'Parent-komponenten (InitPanel) håndtere registrering og status.',
       },
     },
   },
 };
 
 /**
- * Panel med warning status.
- */
-export const WarningStatus: Story = {
-  args: {
-    urlKode: 'warning-status',
-    tekstKode: 'WarningStatus.Title',
-    getMenyType: () => ProcessMenuStepType.warning,
-    children: (standardProps: StandardProsessPanelProps) => (
-      <MockProsessPanel
-        title="Warning Status"
-        content="Dette panelet har warning status (gul/oransje) - krever oppmerksomhet."
-        standardProps={standardProps}
-      />
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel med ProcessMenuStepType.warning indikerer at det krever oppmerksomhet.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med success status.
- */
-export const SuccessStatus: Story = {
-  args: {
-    urlKode: 'success-status',
-    tekstKode: 'SuccessStatus.Title',
-    getMenyType: () => ProcessMenuStepType.success,
-    children: (standardProps: StandardProsessPanelProps) => (
-      <MockProsessPanel
-        title="Success Status"
-        content="Dette panelet har success status (grønn) - fullført."
-        standardProps={standardProps}
-      />
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel med ProcessMenuStepType.success indikerer at det er fullført.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med danger status.
- */
-export const DangerStatus: Story = {
-  args: {
-    urlKode: 'danger-status',
-    tekstKode: 'DangerStatus.Title',
-    getMenyType: () => ProcessMenuStepType.danger,
-    children: (standardProps: StandardProsessPanelProps) => (
-      <MockProsessPanel
-        title="Danger Status"
-        content="Dette panelet har danger status (rød) - har problemer."
-        standardProps={standardProps}
-      />
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel med ProcessMenuStepType.danger indikerer at det har problemer som må løses.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med dynamisk statusberegning basert på aksjonspunkter.
- */
-export const DynamiskStatusBeregning: Story = {
-  args: {
-    urlKode: 'dynamic-status',
-    tekstKode: 'DynamicStatus.Title',
-    getMenyType: (data: StandardProsessPanelProps) => {
-      // Beregn status basert på aksjonspunkter
-      if (data.aksjonspunkter && data.aksjonspunkter.length > 0) {
-        const harApenAksjonspunkt = data.aksjonspunkter.some(
-          (ap: any) => ap.status === 'OPPR'
-        );
-        if (harApenAksjonspunkt) {
-          return ProcessMenuStepType.warning;
-        }
-        return ProcessMenuStepType.success;
-      }
-      return ProcessMenuStepType.default;
-    },
-    children: (standardProps: StandardProsessPanelProps) => (
-      <MockProsessPanel
-        title="Dynamisk Status"
-        content={`Status beregnes dynamisk basert på aksjonspunkter. Antall: ${standardProps.aksjonspunkter?.length || 0}`}
-        standardProps={standardProps}
-      />
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel som beregner status dynamisk basert på aksjonspunkter. I denne storyen er det ingen aksjonspunkter, så status er default.',
-      },
-    },
-  },
-};
-
-/**
- * Panel med delvis fullføringsstatus.
- */
-export const MedPartialStatus: Story = {
-  args: {
-    urlKode: 'partial-status',
-    tekstKode: 'DynamicStatus.Title',
-    getMenyType: () => ProcessMenuStepType.warning,
-    usePartialStatus: true,
-    children: (standardProps: StandardProsessPanelProps) => (
-      <MockProsessPanel
-        title="Delvis Fullført"
-        content="Dette panelet er delvis fullført (usePartialStatus=true)."
-        standardProps={standardProps}
-      />
-    ),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Panel med usePartialStatus=true viser delvis fullføringsindikator i menyen.',
-      },
-    },
-  },
-};
-
-/**
- * Kompleks eksempel med både synlighet og statusberegning.
+ * Kompleks eksempel med synlighetslogikk.
+ * 
+ * Demonstrerer skalVisePanel som er den eneste logikken som fortsatt håndteres
+ * av ProsessDefaultInitPanel.
  */
 export const KompleksEksempel: Story = {
   args: {
@@ -405,31 +313,89 @@ export const KompleksEksempel: Story = {
       // Vis kun hvis ikke read-only
       return !data.isReadOnly;
     },
-    getMenyType: (data: StandardProsessPanelProps) => {
-      // Beregn status basert på flere faktorer
-      if (data.isAksjonspunktOpen) {
-        return ProcessMenuStepType.warning;
-      }
-      if (data.status === 'success') {
-        return ProcessMenuStepType.success;
-      }
-      if (data.status === 'danger') {
-        return ProcessMenuStepType.danger;
-      }
-      return ProcessMenuStepType.default;
-    },
     children: (standardProps: StandardProsessPanelProps) => (
       <MockProsessPanel
         title="Kompleks Eksempel"
-        content="Dette panelet demonstrerer både synlighetslogikk og dynamisk statusberegning."
+        content="Dette panelet demonstrerer synlighetslogikk via skalVisePanel. Parent-komponenten håndterer registrering og status."
         standardProps={standardProps}
+        showPropsInfo={true}
       />
     ),
   },
   parameters: {
     docs: {
       description: {
-        story: 'Kompleks eksempel som kombinerer synlighetslogikk (vises kun hvis ikke read-only) og dynamisk statusberegning basert på flere faktorer.',
+        story: 'Demonstrerer synlighetslogikk via skalVisePanel (vises kun hvis ikke read-only). I props-basert tilnærming er dette den eneste logikken som håndteres av ProsessDefaultInitPanel.',
+      },
+    },
+  },
+};
+
+/**
+ * Props-basert eksempel med konstanter.
+ * 
+ * Demonstrerer moderne mønster hvor panel definerer sin egen identitet.
+ */
+function PropsBasedExamplePanel(props: ProsessPanelProps) {
+  // 1. Definer panel-konstanter
+  const PANEL_ID = 'props-based-example';
+  const PANEL_TEKST = 'PropsBased.Title';
+
+  // 2. Beregn paneltype fra data (i ekte panel ville dette være basert på faktisk data)
+  const panelType = useMemo(() => {
+    // Eksempel: Sjekk aksjonspunkter, vilkår, etc.
+    return ProcessMenuStepType.success;
+  }, []);
+
+  // 3. Registrer med menyen
+  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+
+  // 4. Sjekk om panelet er valgt
+  if (!props.erValgt) {
+    return null;
+  }
+
+  // 5. Render innhold
+  return (
+    <ProsessDefaultInitPanel urlKode={PANEL_ID} tekstKode={PANEL_TEKST}>
+      {(standardProps) => (
+        <MockProsessPanel
+          title="Props-basert Panel"
+          content="Dette panelet bruker konstanter for identitet. Panelet definerer selv PANEL_ID og PANEL_TEKST, beregner sin egen type, og registrerer seg via usePanelRegistrering hook."
+          standardProps={standardProps}
+          showPropsInfo={true}
+        />
+      )}
+    </ProsessDefaultInitPanel>
+  );
+}
+
+export const PropsbasertMedKonstanter: Story = {
+  args: {
+    urlKode: 'props-based-example',
+    tekstKode: 'PropsBased.Title',
+    children: () => null, // Not used in this story
+  },
+  render: () => <PropsBasedExamplePanel />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Demonstrerer moderne props-basert tilnærming hvor:
+
+1. **Panel definerer konstanter**: \`PANEL_ID\` og \`PANEL_TEKST\`
+2. **Panel beregner sin type**: Basert på data (aksjonspunkter, vilkår, etc.)
+3. **Panel registrerer seg**: Via \`usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType)\`
+4. **Panel sjekker valg**: \`if (!props.erValgt) return null;\`
+5. **Panel rendrer innhold**: Wrapper i \`ProsessDefaultInitPanel\`
+
+Dette gir:
+- ✅ Typesikkerhet (TypeScript validerer props)
+- ✅ Selvdokumenterende (konstanter viser identitet)
+- ✅ Ingen boilerplate i parent (\`<PropsBasedPanel />\`)
+- ✅ Bedre testbarhet (mock callbacks direkte)
+- ✅ Klarere eierskap (panel eier sin identitet)
+        `,
       },
     },
   },

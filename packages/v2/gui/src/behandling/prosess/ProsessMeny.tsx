@@ -1,31 +1,92 @@
-import { useMemo, useEffect, type ReactNode } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router';
 import { Box } from '@navikt/ds-react';
 import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { ProsessMenyProvider, useProsessMenyContext } from './context/ProsessMenyContext.js';
+import type { ProsessPanelProps, PanelRegistrering } from './types/panelTypes.js';
 import styles from './prosessMeny.module.css';
 
-
 /**
- * Props for ProsessMeny.
+ * Intern type for å holde styr på registrerte paneler.
+ * Utvider PanelRegistrering med id og tekstKode som paneler sender inn.
  */
-interface ProsessMenyProps {
-  /** InitPanel-komponenter som children */
-  children: ReactNode;
+interface InternPanelRegistrering extends PanelRegistrering {
+  id: string;
+  tekstKode: string;
 }
 
 /**
- * Intern komponent som håndterer menylogikk.
- * Må være innenfor ProsessMenyProvider for å få tilgang til context.
+ * Props for ProsessMeny.
+ * 
+ * Aksepterer kun panelkomponenter som implementerer ProsessPanelProps.
+ * TypeScript vil gi compile-time feil hvis children ikke har riktige props.
  */
-function ProsessMenyContent({ children }: ProsessMenyProps) {
+interface ProsessMenyProps {
+  /** 
+   * InitPanel-komponenter som children.
+   * Må være React-elementer som aksepterer ProsessPanelProps.
+   */
+  children: React.ReactElement<ProsessPanelProps> | Array<React.ReactElement<ProsessPanelProps>>;
+}
+
+/**
+ * Prosessmeny-komponent som viser en meny med prosesspaneler.
+ * 
+ * Denne komponenten:
+ * - Aksepterer InitPanel-komponenter som children
+ * - Injiserer automatisk callbacks (onRegister, onUnregister, onUpdateType, erValgt) til alle children
+ * - Rendrer ProcessMenu-komponent fra @navikt/ft-plattform-komponenter
+ * - Håndterer panelvalg og URL-synkronisering
+ * - Gir compile-time typesikkerhet - TypeScript validerer at children har riktige props
+ * 
+ * Paneler definerer selv sin identitet via konstanter og bruker usePanelRegistrering hook.
+ * 
+ * @example
+ * ```tsx
+ * <ProsessMeny>
+ *   <VarselProsessStegInitPanel />
+ *   <BeregningProsessStegInitPanel />
+ *   <VedtakProsessStegInitPanel />
+ * </ProsessMeny>
+ * ```
+ */
+export function ProsessMeny({ children }: ProsessMenyProps) {
   const intl = useIntl();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { paneler, valgtPanelId, setValgtPanelId } = useProsessMenyContext();
+  const [paneler, setPaneler] = useState<Map<string, InternPanelRegistrering>>(new Map());
+  const [valgtPanelId, setValgtPanelId] = useState<string | null>(null);
 
   // Hent valgt panel fra URL
   const urlPanelId = searchParams.get('punkt');
+
+  // Callback for å registrere et panel
+  const handleRegister = useCallback((id: string, tekstKode: string, info: PanelRegistrering) => {
+    setPaneler(forrige => {
+      const neste = new Map(forrige);
+      neste.set(id, { ...info, id, tekstKode });
+      return neste;
+    });
+  }, []);
+
+  // Callback for å avregistrere et panel
+  const handleUnregister = useCallback((id: string) => {
+    setPaneler(forrige => {
+      const neste = new Map(forrige);
+      neste.delete(id);
+      return neste;
+    });
+  }, []);
+
+  // Callback for å oppdatere paneltype
+  const handleUpdateType = useCallback((id: string, type: ProcessMenuStepType) => {
+    setPaneler(forrige => {
+      const panel = forrige.get(id);
+      if (!panel) return forrige;
+      const neste = new Map(forrige);
+      neste.set(id, { ...panel, type });
+      return neste;
+    });
+  }, []);
 
   // Synkroniser URL med intern tilstand
   useEffect(() => {
@@ -44,7 +105,7 @@ function ProsessMenyContent({ children }: ProsessMenyProps) {
         });
       }
     }
-  }, [urlPanelId, paneler, valgtPanelId, setValgtPanelId, setSearchParams]);
+  }, [urlPanelId, paneler, valgtPanelId, setSearchParams]);
 
   // Konverter panelregistreringer til ProcessMenu steps-format
   const steg = useMemo(() => {
@@ -71,46 +132,25 @@ function ProsessMenyContent({ children }: ProsessMenyProps) {
     }
   };
 
-  // Render alle children slik at de kan registrere seg,
-  // men kun det valgte panelet vil faktisk vises (via ProsessDefaultInitPanel sin logikk)
-  const renderPaneler = () => {
-    // Alltid render children slik at de kan registrere seg via useEffect
-    // ProsessDefaultInitPanel-komponenter vil selv håndtere om de skal vises eller ikke
-    return children;
-  };
+  // Injiser callbacks til alle children via React.cloneElement
+  const childrenWithProps = React.Children.map(children, child => {
+    if (!React.isValidElement<ProsessPanelProps>(child)) {
+      return child;
+    }
+
+    return React.cloneElement(child, {
+      onRegister: handleRegister,
+      onUnregister: handleUnregister,
+      onUpdateType: handleUpdateType,
+      erValgt: valgtPanelId !== null && child.key === valgtPanelId,
+    });
+  });
 
   return (
     <Box.New paddingInline="6">
       <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
-      {/* Render children for registrering, men de returnerer null i hybrid-modus */}
-      {renderPaneler()}
+      {/* Render children med injiserte props */}
+      {childrenWithProps}
     </Box.New>
-  );
-}
-
-/**
- * Prosessmeny-komponent som viser en meny med prosesspaneler.
- * 
- * Denne komponenten:
- * - Aksepterer InitPanel-komponenter som children
- * - Samler panelregistreringer via React context
- * - Rendrer ProcessMenu-komponent fra @navikt/ft-plattform-komponenter
- * - Håndterer panelvalg og URL-synkronisering
- * - Rendrer kun det valgte panelet
- * 
- * @example
- * ```tsx
- * <ProsessMeny>
- *   <VarselProsessStegInitPanel />
- *   <BeregningProsessStegInitPanel />
- *   <VedtakProsessStegInitPanel />
- * </ProsessMeny>
- * ```
- */
-export function ProsessMeny({ children }: ProsessMenyProps) {
-  return (
-    <ProsessMenyProvider>
-      <ProsessMenyContent>{children}</ProsessMenyContent>
-    </ProsessMenyProvider>
   );
 }

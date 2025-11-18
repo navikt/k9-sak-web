@@ -1,11 +1,13 @@
-import { useProsessMenyRegistrerer } from './hooks/useProsessMenyRegistrerer.js';
+import { usePanelRegistrering } from './hooks/usePanelRegistrering.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useStandardProsessPanelProps } from './hooks/useStandardProsessPanelProps.js';
+import type { ProsessPanelProps } from './types/panelTypes.js';
 
 /**
  * Props for LegacyPanelAdapter
+ * Kombinerer ProsessPanelProps med legacy-spesifikke props.
  */
-interface LegacyPanelAdapterProps {
+interface LegacyPanelAdapterProps extends ProsessPanelProps {
     /**
      * Legacy paneldefinisjon (ProsessStegDef).
      * Bruker 'any' type for å unngå import av legacy-typer fra v2-kode.
@@ -55,10 +57,17 @@ interface LegacyPanelAdapterProps {
  * - Dette unngår Redux-form integrasjonsproblemer
  * - Tillater gradvis migrering av individuelle paneler
  *
+ * - Mottar ProsessPanelProps med injiserte callbacks fra ProsessMeny
+ * - Definerer panel ID og tekst fra legacy panelDef
+ * - Bruker usePanelRegistrering for å håndtere registreringslogikk
+ * - Følger samme mønster som moderne InitPanel-komponenter
+ *
  * VIKTIG: Denne komponenten er kun ment som en midlertidig bro under migrering.
  * Når alle paneler er migrert til nye InitPanel-wrappers, skal denne komponenten fjernes.
  */
-export function LegacyPanelAdapter({ panelDef, menyType, usePartialStatus }: LegacyPanelAdapterProps) {
+export function LegacyPanelAdapter(props: LegacyPanelAdapterProps) {
+    const { panelDef, menyType, usePartialStatus, ...restProps } = props;
+    
     // Hent behandlingsdata fra context
     const contextData = useStandardProsessPanelProps();
     
@@ -71,21 +80,22 @@ export function LegacyPanelAdapter({ panelDef, menyType, usePartialStatus }: Leg
         contextData.featureToggles,
     ) ?? true; // Default til true hvis metoden ikke finnes
 
-    // Ekstraher registreringsdata fra legacy panelDef
-    const urlKode = panelDef.getUrlKode();
-    const tekstKode = panelDef.getTekstKode();
+    // Definer panel ID og tekst fra legacy panelDef
+    const panelId = panelDef.getUrlKode();
+    const panelTekst = panelDef.getTekstKode();
 
     // Bruk menyType fra legacy system hvis tilgjengelig, ellers default
-    const type = menyType ?? ProcessMenuStepType.default;
+    const panelType = menyType ?? ProcessMenuStepType.default;
 
-    // Registrer panel med v2 menyen kun hvis det skal vises
-    useProsessMenyRegistrerer(skalVises ? {
-        id: urlKode,
-        urlKode,
-        tekstKode,
-        type,
-        usePartialStatus: usePartialStatus ?? false,
-    } : null);
+    // Registrer panel med v2 menyen
+    // Hooks må alltid kalles (Rules of Hooks), men vi kan sende null-verdier
+    // hvis panelet ikke skal vises
+    usePanelRegistrering(
+        skalVises ? restProps : { ...restProps, onRegister: undefined, onUnregister: undefined, onUpdateType: undefined },
+        panelId,
+        panelTekst,
+        panelType
+    );
 
     // Hybrid-tilnærming: Render ingenting her
     // Legacy ProsessStegPanel håndterer innholdsrendering
