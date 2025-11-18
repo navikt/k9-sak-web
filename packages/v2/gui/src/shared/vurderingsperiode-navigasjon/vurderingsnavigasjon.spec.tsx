@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import VurderingsperiodeNavigasjon, { Resultat, type Vurderingselement } from './VurderingsperiodeNavigasjon';
+import Vurderingsnavigasjon, { Resultat, type Vurderingselement } from './Vurderingsnavigasjon';
 import { Period } from '@navikt/ft-utils';
 
 const makePeriod = (fom: string, tom?: string) => new Period(fom, tom ?? fom);
@@ -31,12 +31,7 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
     const perioder = [...tilVurdering, ...vurderte];
 
     render(
-      <VurderingsperiodeNavigasjon
-        valgtPeriode={null}
-        perioder={perioder}
-        onPeriodeClick={() => {}}
-        nyesteFørst={false}
-      />,
+      <Vurderingsnavigasjon valgtPeriode={null} perioder={perioder} onPeriodeClick={() => {}} nyesteFørst={false} />,
     );
 
     // Hent liste og rader
@@ -88,12 +83,9 @@ describe('VurderingsperiodeNavigasjon - ordering', () => {
       makeElement('2024-11-28', '2024-11-30', Resultat.GODKJENT_MANUELT),
       makeElement('2024-12-28', '2024-12-30', Resultat.GODKJENT_MANUELT),
     ];
-
     const perioder = [...tilVurdering, ...vurderte];
 
-    render(
-      <VurderingsperiodeNavigasjon valgtPeriode={null} perioder={perioder} onPeriodeClick={() => {}} nyesteFørst />,
-    );
+    render(<Vurderingsnavigasjon valgtPeriode={null} perioder={perioder} onPeriodeClick={() => {}} nyesteFørst />);
 
     const list = await screen.findByRole('list');
     const items = within(list).getAllByRole('listitem');
