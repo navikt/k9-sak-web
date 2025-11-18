@@ -280,6 +280,7 @@ export const NyBehandlingModal = ({
                   control={formMethods.control}
                   label="Velg måned for kontroll av inntekt"
                   name="fomForPeriodeForInntektskontroll"
+                  validate={[required]}
                   selectValues={getUngPerioderTilRevurdering()!
                     .filter((p): p is { fom: string } => typeof p.fom === 'string')
                     .map(p => {

@@ -9,9 +9,10 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
 import type { Period } from '@navikt/ft-utils';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
+import isEqual from 'lodash/isEqual';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat
@@ -88,6 +89,16 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   );
 
   const [harAutomatiskValgtPeriode, setHarAutomatiskValgtPeriode] = useState(false);
+
+  const periodeRef = useRef<T[]>(perioder);
+  useEffect(() => {
+    if (!isEqual(periodeRef.current, perioder)) {
+      periodeRef.current = perioder;
+      onPeriodeClick(null);
+      setHarAutomatiskValgtPeriode(false);
+    }
+  }, [perioder, onPeriodeClick]);
+
   useEffect(() => {
     // Hvis valgt periode ikke lenger finnes i listen, regner vi med at det er stale data og setter valgt periode til null
     if (valgtPeriode && !allePerioder.find(periode => JSON.stringify(periode) === JSON.stringify(valgtPeriode))) {

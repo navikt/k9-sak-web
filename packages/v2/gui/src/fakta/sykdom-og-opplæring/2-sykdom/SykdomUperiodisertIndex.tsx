@@ -1,6 +1,6 @@
 import Vurderingsnavigasjon, {
   type Vurderingselement,
-} from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
+} from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon.js';
 import { Button } from '@navikt/ds-react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';

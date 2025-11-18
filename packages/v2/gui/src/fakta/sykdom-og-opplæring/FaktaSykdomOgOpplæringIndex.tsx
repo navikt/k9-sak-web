@@ -41,7 +41,7 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
     return tabCodes.OPPLÆRING;
   }
   if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)) {
-    return tabCodes.REISETID;
+    return tabCodes.REISEDAG;
   }
   if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON)) {
     return tabCodes.INSTITUSJON;
@@ -289,8 +289,8 @@ const SykdomOgOpplæring = () => {
             icon={<OpplæringIcon aksjonspunktKode={aksjonspunktCodes.VURDER_OPPLÆRING} />}
           />
           <Tabs.Tab
-            value={tabCodes.REISETID}
-            label="Reisetid"
+            value={tabCodes.REISEDAG}
+            label="Reisedag"
             icon={<ReisetidIcon aksjonspunktKode={aksjonspunktCodes.VURDER_REISETID} />}
           />
         </Tabs.List>
@@ -327,7 +327,7 @@ const SykdomOgOpplæring = () => {
             )}
           </div>
         </Tabs.Panel>
-        <Tabs.Panel value={tabCodes.REISETID} lazy={false}>
+        <Tabs.Panel value={tabCodes.REISEDAG} lazy={false}>
           <div className="mt-4">
             {harAksjonspunkt9303 ? (
               <ReisetidIndex />

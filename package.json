@@ -67,7 +67,7 @@
     "postcss-import": "^16.1.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-router": "7.9.4",
+    "react-router": "7.9.6",
     "vite-plugin-svgr": "4.5.0"
   },
   "devDependencies": {
@@ -81,6 +81,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
+    "@types/lodash": "4.17.20",
     "@types/node": "^24.9.1",
     "@types/object-hash": "^3.0.6",
     "@types/prop-types": "15.7.15",
@@ -99,8 +100,8 @@
     "eslint-plugin-storybook": "10.0.6",
     "eslint-plugin-vitest": "~0.5.4",
     "globals": "^16.5.0",
+    "happy-dom": "^20.0.10",
     "husky": "9.1.7",
-    "jsdom": "26.1.0",
     "knip": "^5.69.0",
     "lint-staged": "16.2.6",
     "loose-ts-check": "^2.0.0",

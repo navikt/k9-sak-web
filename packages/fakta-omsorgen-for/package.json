@@ -6,13 +6,6 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev": "vite serve"
-  },
-  "devDependencies": {
-    "msw": "2.12.1",
-    "vite": "^7.2.2"
-  },
   "dependencies": {
     "@navikt/ds-css": "7.32.5",
     "@navikt/ds-icons": "3.4.3",
@@ -28,8 +21,5 @@
     "react-dom": "19.2.0",
     "react-hook-form": "7.66.0",
     "react-intl": "7.1.14"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }

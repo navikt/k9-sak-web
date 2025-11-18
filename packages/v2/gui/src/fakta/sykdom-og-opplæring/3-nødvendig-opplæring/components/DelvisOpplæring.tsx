@@ -294,7 +294,7 @@ export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom
                     size="small"
                   >
                     <Radio value={OpplæringVurderingDtoResultat.IKKE_GODKJENT}>Avslag</Radio>
-                    <Radio value={OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID}>Vurder som reisetid</Radio>
+                    <Radio value={OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID}>Vurder som reisedag</Radio>
                   </RadioGroup>
                 )}
               />
