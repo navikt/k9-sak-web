@@ -89,7 +89,7 @@ const EtablertTilsyn = ({
 
     const tilsynPerUkeUtenOppdeltSmoering = tilsynPerUke
       .map(v => {
-        const smurtePerioder = [] as EtablertTilsynType[][];
+        const smurtePerioder: EtablertTilsynType[][] = [];
         v.etablertTilsynSmurt.forEach(smurtPeriode => {
           const sammenhengendePeriode = smurtePerioder.find(periodeArray =>
             periodeArray.find(
