@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor, within } from 'storybook/test';
+import { expect, fireEvent, userEvent, waitFor, within } from 'storybook/test';
 import { handlers } from '../../mock/api-mock';
 import { mockUrlPrepend } from '../../mock/constants';
 import EtablertTilsynContainer from './EtablertTilsynContainer';
@@ -90,7 +90,9 @@ export const EtablertTilsyn: Story = {
       await userEvent.click(canvas.getByText('Ja, i deler av perioden'));
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
-      await userEvent.click(canvas.getByText('Bekreft og fortsett'));
+      const submitButton = canvas.getByText('Bekreft og fortsett');
+      const form = submitButton.closest('form');
+      await fireEvent.submit(form!);
       await waitFor(() =>
         expect(args.data.lagreNattevåkvurdering).toHaveBeenCalledWith({
           vurderinger: [
