@@ -71,19 +71,19 @@ const transformEtablertTilsynResponse = (response: TilsynResponse) => {
 };
 
 const transformSykdomResponse = (response: SykdomResponse) => {
-  const result: Period[] = [];
+  const perioder: Period[] = [];
 
   response.vurderingselementer.forEach(v => {
     if (v.resultat !== k9_kodeverk_sykdom_Resultat.OPPFYLT) {
-      result.push(new Period(v.periode.fom, v.periode.tom));
+      perioder.push(new Period(v.periode.fom, v.periode.tom));
     }
   });
 
   response?.resterendeVurderingsperioder?.forEach(v => {
-    result.push(new Period(v.fom, v.tom));
+    perioder.push(new Period(v.fom, v.tom));
   });
 
-  return result;
+  return perioder;
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
@@ -136,25 +136,25 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   const isLoading = tilsynLoading || innleggelserLoading || sykdomIsLoading;
 
   const perioderSomOverstyrerTilsyn = useMemo(() => {
-    const result: Period[] = [];
+    const perioder: Period[] = [];
 
     beredskap?.vurderinger?.forEach(v => {
       if (v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT) {
-        result.push(new Period(v.periode.fom, v.periode.tom));
+        perioder.push(new Period(v.periode.fom, v.periode.tom));
       }
     });
 
     nattevåk?.vurderinger?.forEach(v => {
       if (v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT) {
-        result.push(new Period(v.periode.fom, v.periode.tom));
+        perioder.push(new Period(v.periode.fom, v.periode.tom));
       }
     });
 
     innleggelsesperioder.forEach(periode => {
-      result.push(periode);
+      perioder.push(periode);
     });
 
-    return result;
+    return perioder;
   }, [beredskap?.vurderinger, innleggelsesperioder, nattevåk?.vurderinger]);
 
   if (tilsynHarFeilet || sykdomHarFeilet || innleggelserFeilet) {
