@@ -4720,6 +4720,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:4.17.20":
+  version: 4.17.20
+  resolution: "@types/lodash@npm:4.17.20"
+  checksum: 10/8cd8ad3bd78d2e06a93ae8d6c9907981d5673655fec7cb274a4d9a59549aab5bb5b3017361280773b8990ddfccf363e14d1b37c97af8a9fe363de677f9a61524
+  languageName: node
+  linkType: hard
+
 "@types/mdx@npm:^2.0.0":
   version: 2.0.13
   resolution: "@types/mdx@npm:2.0.13"
@@ -10033,6 +10040,7 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.9.1"
     "@testing-library/react": "npm:16.3.0"
     "@testing-library/user-event": "npm:14.6.1"
+    "@types/lodash": "npm:4.17.20"
     "@types/node": "npm:^24.9.1"
     "@types/object-hash": "npm:^3.0.6"
     "@types/prop-types": "npm:15.7.15"

@@ -9,8 +9,8 @@ import {
 } from '@navikt/aksel-icons';
 import { Tooltip } from '@navikt/ds-react';
 import styles from './periodeRad.module.css';
-import type { ResultatType } from './VurderingsperiodeNavigasjon';
-import { Resultat } from './VurderingsperiodeNavigasjon';
+import type { ResultatType } from './Vurderingsnavigasjon';
+import { Resultat } from './Vurderingsnavigasjon';
 interface OwnProps {
   perioder: Period[];
   resultat?: ResultatType;

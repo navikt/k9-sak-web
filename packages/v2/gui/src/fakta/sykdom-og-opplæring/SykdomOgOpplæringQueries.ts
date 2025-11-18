@@ -1,7 +1,9 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import {
   type GetBrevMottakerinfoEregData,
   type GetBrevMottakerinfoEregResponse,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringDto,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto,
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -85,22 +87,34 @@ export const useHentOrganisasjonsnummer = (organisasjonsnummer: string) => {
 };
 
 // nødvendig opplæring
-export const useVurdertOpplæring = (behandlingUuid: string) => {
+export const useVurdertOpplæring = (
+  behandlingUuid: string,
+  options: Partial<
+    UseQueryOptions<k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringDto>
+  > = {},
+) => {
   const backendClient = useSykdomBackendClient();
 
   return useQuery({
     queryKey: ['vurdertOpplæring', behandlingUuid],
     queryFn: () => backendClient.getVurdertOpplæring(behandlingUuid),
     retry: MAX_RETRIES,
+    ...options,
   });
 };
 
-export const useVurdertReisetid = (behandlingUuid: string) => {
+export const useVurdertReisetid = (
+  behandlingUuid: string,
+  options: Partial<
+    UseQueryOptions<k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto>
+  > = {},
+) => {
   const backendClient = useSykdomBackendClient();
 
   return useQuery({
     queryKey: ['vurdertReisetid', behandlingUuid],
     queryFn: () => backendClient.getVurdertReisetid(behandlingUuid),
     retry: MAX_RETRIES,
+    ...options,
   });
 };
