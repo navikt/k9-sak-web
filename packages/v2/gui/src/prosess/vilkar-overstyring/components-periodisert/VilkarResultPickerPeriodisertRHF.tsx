@@ -78,8 +78,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   vilkarType,
   relevanteInnvilgetMerknader,
 }) => {
-  const { control, getValues } = useFormContext();
-  console.log('fieldNamePrefix', getValues());
+  const { control } = useFormContext();
   const { hentKodeverkForKode } = useKodeverkContext();
   const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkMedUndertype;
   const avslagsårsakerForVilkar = avslagsarsaker[vilkarType];
