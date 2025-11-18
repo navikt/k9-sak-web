@@ -1,6 +1,6 @@
 import Vurderingsnavigasjon, {
   type Vurderingselement,
-} from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
+} from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon';
 import { useVurdertOpplæring } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
@@ -36,7 +36,7 @@ const NødvendigOpplæring = () => {
   }
   return (
     <div>
-      <NødvendigOpplæringAlert valgtVurdering={valgtVurdering} vurderingsliste={vurderingsliste} />
+      <NødvendigOpplæringAlert vurderingsliste={vurderingsliste} />
       <NavigationWithDetailView
         navigationSection={() => (
           <>
