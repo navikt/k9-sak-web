@@ -294,7 +294,7 @@ const skjermlenkeCodes = {
     kode: 'PUNKT_FOR_REISEDAGER',
     faktaNavn: faktaPanelCodes.SYKDOM_OG_OPPLAERING,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
-    tabNavn: tabCodes.REISETID,
+    tabNavn: tabCodes.REISEDAG,
   },
 };
 

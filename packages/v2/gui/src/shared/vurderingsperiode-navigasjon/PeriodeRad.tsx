@@ -32,7 +32,7 @@ const renderStatusIcon = (resultat?: ResultatType) => {
 
   if (resultat === Resultat.VURDERES_SOM_REISETID) {
     return (
-      <Tooltip content="Perioden vurderes som reisetid">
+      <Tooltip content="Perioden vurderes som reisedag">
         <AirplaneIcon fontSize={26} />
       </Tooltip>
     );
