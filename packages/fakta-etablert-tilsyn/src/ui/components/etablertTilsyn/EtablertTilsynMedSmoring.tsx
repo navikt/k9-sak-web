@@ -1,7 +1,7 @@
 import { isDayAfter, Period } from '@fpsak-frontend/utils';
 import { Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import { type JSX } from 'react';
+import { type JSX, useMemo } from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
 import PartIkon from './PartIkon';
@@ -49,83 +49,84 @@ const EtablertTilsyn = ({
   sykdomsperioderSomIkkeErOppfylt,
   perioderSomOverstyrerTilsyn,
 }: EtablertTilsynProps): JSX.Element => {
-  const harVurderinger = etablertTilsynData.length > 0;
-  const avslaatteDager = sykdomsperioderSomIkkeErOppfylt.flatMap(periode =>
-    periode.asListOfDays().map(date => new Period(date, date)),
-  );
-  const dagerSomOverstyrerTilsyn = perioderSomOverstyrerTilsyn.flatMap(periode =>
-    periode.asListOfDays().map(date => new Period(date, date)),
-  );
+  const { harVurderinger, etablertTilsynMappet } = useMemo(() => {
+    const harVurderingerInner = etablertTilsynData.length > 0;
 
-  const avslaatteDagerFiltrert = avslaatteDager.filter(
-    v => !dagerSomOverstyrerTilsyn.some(innlagtDag => v.includesDate(innlagtDag.fom)),
-  );
+    const dagerSomOverstyrerTilsyn = new Set<string>();
+    perioderSomOverstyrerTilsyn.forEach(periode => {
+      periode.asListOfDays().forEach(date => dagerSomOverstyrerTilsyn.add(date));
+    });
 
-  const dagerSomSkalEkskluderes = [...avslaatteDagerFiltrert];
-  const etablertTilsynEnkeltdager = etablertTilsynData.flatMap(v =>
-    v.periode
-      .asListOfDays()
-      .filter(date => !erHelg(date))
-      .map(date => ({ ...v, periode: new Period(date, date) })),
-  );
-  const smurtEtablertTilsynEnkeltdager = smurtEtablertTilsynPerioder.flatMap(v =>
-    v.periode
-      .asListOfDays()
-      .filter(date => !erHelg(date))
-      .map(date => ({ ...v, periode: new Period(date, date) })),
-  );
-
-  const uker = [...new Set(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()))];
-  const tilsynPerUke = uker.map(uke => ({
-    etablertTilsyn: etablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
-    etablertTilsynSmurt: smurtEtablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
-    uke,
-  }));
-  const tilsynPerUkeOppdeltSmoering: Array<EtablertTilsynMappet> = [];
-
-  const tilsynPerUkeUtenOppdeltSmoering = tilsynPerUke
-    .map(v => ({
-      ...v,
-      etablertTilsynSmurt: v.etablertTilsynSmurt.filter(
-        smurt => !dagerSomSkalEkskluderes.some(periode => periode.includesDate(smurt.periode.fom)),
-      ),
-    }))
-    .map(v => {
-      const smurtePerioder = [] as EtablertTilsynType[][];
-      v.etablertTilsynSmurt.forEach(smurtPeriode => {
-        const sammenhengendePeriode = smurtePerioder.find(periodeArray =>
-          periodeArray.find(
-            periode =>
-              periode.tidPerDag === smurtPeriode.tidPerDag &&
-              isDayAfter(dayjs(periode.periode.tom), dayjs(smurtPeriode.periode.fom)),
-          ),
-        );
-        if (sammenhengendePeriode) {
-          sammenhengendePeriode.push(smurtPeriode);
-        } else {
-          smurtePerioder.push([smurtPeriode]);
+    const dagerSomSkalEkskluderes = new Set<string>();
+    sykdomsperioderSomIkkeErOppfylt.forEach(periode => {
+      periode.asListOfDays().forEach(date => {
+        if (!dagerSomOverstyrerTilsyn.has(date)) {
+          dagerSomSkalEkskluderes.add(date);
         }
       });
+    });
 
-      smurtePerioder.forEach((smurtPeriode, index, array) =>
-        tilsynPerUkeOppdeltSmoering.push({
-          etablertTilsyn: v.etablertTilsyn,
-          etablertTilsynSmurt: smurtPeriode,
-          uke: v.uke,
-          delAvUke: array.length > 1 ? index + 1 : undefined,
-        }),
-      );
-      return smurtePerioder.length ? null : v;
-    })
-    .filter(x => x !== null);
-  const etablertTilsynMappet: EtablertTilsynMappet[] = [
-    ...tilsynPerUkeUtenOppdeltSmoering,
-    ...tilsynPerUkeOppdeltSmoering,
-  ].sort(
-    (a: EtablertTilsynMappet, b: EtablertTilsynMappet) =>
-      new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
-      new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
-  );
+    const etablertTilsynEnkeltdager = etablertTilsynData.flatMap(v =>
+      v.periode
+        .asListOfDays()
+        .filter(date => !erHelg(date))
+        .map(date => ({ ...v, periode: new Period(date, date) })),
+    );
+    const smurtEtablertTilsynEnkeltdager = smurtEtablertTilsynPerioder.flatMap(v =>
+      v.periode
+        .asListOfDays()
+        .filter(date => !erHelg(date) && !dagerSomSkalEkskluderes.has(date))
+        .map(date => ({ ...v, periode: new Period(date, date) })),
+    );
+
+    const uker = [...new Set(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()))];
+    const tilsynPerUke = uker.map(uke => ({
+      etablertTilsyn: etablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
+      etablertTilsynSmurt: smurtEtablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
+      uke,
+    }));
+    const tilsynPerUkeOppdeltSmoering: Array<EtablertTilsynMappet> = [];
+
+    const tilsynPerUkeUtenOppdeltSmoering = tilsynPerUke
+      .map(v => {
+        const smurtePerioder = [] as EtablertTilsynType[][];
+        v.etablertTilsynSmurt.forEach(smurtPeriode => {
+          const sammenhengendePeriode = smurtePerioder.find(periodeArray =>
+            periodeArray.find(
+              periode =>
+                periode.tidPerDag === smurtPeriode.tidPerDag &&
+                isDayAfter(dayjs(periode.periode.tom), dayjs(smurtPeriode.periode.fom)),
+            ),
+          );
+          if (sammenhengendePeriode) {
+            sammenhengendePeriode.push(smurtPeriode);
+          } else {
+            smurtePerioder.push([smurtPeriode]);
+          }
+        });
+
+        smurtePerioder.forEach((smurtPeriode, index, array) =>
+          tilsynPerUkeOppdeltSmoering.push({
+            etablertTilsyn: v.etablertTilsyn,
+            etablertTilsynSmurt: smurtPeriode,
+            uke: v.uke,
+            delAvUke: array.length > 1 ? index + 1 : undefined,
+          }),
+        );
+        return smurtePerioder.length ? null : v;
+      })
+      .filter(x => x !== null);
+    const etablertTilsynMappetInner: EtablertTilsynMappet[] = [
+      ...tilsynPerUkeUtenOppdeltSmoering,
+      ...tilsynPerUkeOppdeltSmoering,
+    ].sort(
+      (a: EtablertTilsynMappet, b: EtablertTilsynMappet) =>
+        new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
+        new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
+    );
+
+    return { harVurderinger: harVurderingerInner, etablertTilsynMappet: etablertTilsynMappetInner };
+  }, [etablertTilsynData, smurtEtablertTilsynPerioder, sykdomsperioderSomIkkeErOppfylt, perioderSomOverstyrerTilsyn]);
 
   if (!harVurderinger) {
     return <p className={styles.etablertTilsyn__ingenTilsyn}>Søker har ikke oppgitt etablert tilsyn</p>;

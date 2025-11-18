@@ -71,11 +71,19 @@ const transformEtablertTilsynResponse = (response: TilsynResponse) => {
 };
 
 const transformSykdomResponse = (response: SykdomResponse) => {
-  const resterendeVurderingsperioder = response?.resterendeVurderingsperioder?.map(v => new Period(v.fom, v.tom));
-  const sykdomsperioderSomIkkeErOppfylt = response.vurderingselementer
-    .filter(v => v.resultat !== k9_kodeverk_sykdom_Resultat.OPPFYLT)
-    .map(v => new Period(v.periode.fom, v.periode.tom));
-  return [...sykdomsperioderSomIkkeErOppfylt, ...resterendeVurderingsperioder];
+  const result: Period[] = [];
+
+  response.vurderingselementer.forEach(v => {
+    if (v.resultat !== k9_kodeverk_sykdom_Resultat.OPPFYLT) {
+      result.push(new Period(v.periode.fom, v.periode.tom));
+    }
+  });
+
+  response?.resterendeVurderingsperioder?.forEach(v => {
+    result.push(new Period(v.fom, v.tom));
+  });
+
+  return result;
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
@@ -128,17 +136,25 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   const isLoading = tilsynLoading || innleggelserLoading || sykdomIsLoading;
 
   const perioderSomOverstyrerTilsyn = useMemo(() => {
-    const bedredskapVurderinger = beredskap?.vurderinger || [];
-    const nattevåkVurderinger = nattevåk?.vurderinger || [];
-    return [
-      ...bedredskapVurderinger
-        .filter(v => v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT)
-        .map(v => new Period(v.periode.fom, v.periode.tom)),
-      ...nattevåkVurderinger
-        .filter(v => v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT)
-        .map(v => new Period(v.periode.fom, v.periode.tom)),
-      ...innleggelsesperioder,
-    ];
+    const result: Period[] = [];
+
+    beredskap?.vurderinger?.forEach(v => {
+      if (v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT) {
+        result.push(new Period(v.periode.fom, v.periode.tom));
+      }
+    });
+
+    nattevåk?.vurderinger?.forEach(v => {
+      if (v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT) {
+        result.push(new Period(v.periode.fom, v.periode.tom));
+      }
+    });
+
+    innleggelsesperioder.forEach(periode => {
+      result.push(periode);
+    });
+
+    return result;
   }, [beredskap?.vurderinger, innleggelsesperioder, nattevåk?.vurderinger]);
 
   if (tilsynHarFeilet || sykdomHarFeilet || innleggelserFeilet) {
