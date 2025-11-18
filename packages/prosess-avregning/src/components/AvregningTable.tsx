@@ -5,6 +5,7 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
+import { JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
@@ -58,9 +59,9 @@ const getHeaderCodes = (
 const showCollapseButton = (mottakerResultatPerFag: ResultatPerFagområde[]) =>
   mottakerResultatPerFag.some(fag => fag.rader.length > 1);
 
-const rowToggable = (fagOmråde: ResultatPerFagområde, rowIsFeilUtbetalt: boolean) => {
+const rowToggable = (fagOmråde: ResultatPerFagområde, rowIsFeilUtbetalt: boolean): boolean => {
   const fagFeilUtbetalt = fagOmråde.rader.find(rad => rad.feltnavn === avregningCodes.DIFFERANSE);
-  return fagFeilUtbetalt && !rowIsFeilUtbetalt;
+  return !!fagFeilUtbetalt && !rowIsFeilUtbetalt;
 };
 
 const rowIsHidden = (isRowToggable: boolean, showDetails: boolean) => isRowToggable && !showDetails;
@@ -84,9 +85,10 @@ const createColumns = (
 
   return perioderData.map((måned, månedIndex) => (
     <Table.DataCell
+      textSize="small"
       key={`columnIndex${månedIndex + 1}`}
       className={classNames({
-        rodTekst: måned.beløp < 0,
+        rodTekst: måned.beløp !== null && måned.beløp < 0,
         lastColumn:
           'måned' in måned && måned.måned
             ? måned.måned === nextPeriodFormatted
@@ -94,7 +96,7 @@ const createColumns = (
         'font-bold': boldText,
       })}
     >
-      {formatCurrencyNoKr(måned.beløp)}
+      {formatCurrencyNoKr(måned.beløp ?? 0)}
     </Table.DataCell>
   ));
 };
@@ -127,13 +129,15 @@ const getPeriodeFom = (periodeFom: string, nesteUtbPeriodeFom: string) => period
 const getPeriod = (ingenPerioderMedAvvik: boolean, periodeFom: string, mottaker: SimuleringMottaker) =>
   getRangeOfMonths(
     avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
-      ? initializeDate(mottaker.nesteUtbPeriode.tom).subtract(1, 'months').format('YYYY-MM')
-      : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom),
-    mottaker.nesteUtbPeriode.tom,
+      ? initializeDate(mottaker.nesteUtbPeriode.tom ?? '')
+          .subtract(1, 'months')
+          .format('YYYY-MM')
+      : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom ?? ''),
+    mottaker.nesteUtbPeriode.tom ?? '',
   );
 
 interface ResultatPerFagområde {
-  fagOmrådeKode: Kodeverk;
+  fagOmrådeKode: Kodeverk | string;
   rader: SimuleringResultatRad[];
 }
 
@@ -145,6 +149,7 @@ interface AvregningTableProps {
     perioderPerMottaker: SimuleringMottaker[];
   };
   ingenPerioderMedAvvik: boolean;
+  isUngFagsak: boolean;
 }
 
 const AvregningTable = ({
@@ -152,11 +157,16 @@ const AvregningTable = ({
   toggleDetails,
   showDetails,
   ingenPerioderMedAvvik,
+  isUngFagsak,
 }: AvregningTableProps) => (
   <>
     {simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
-      const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periode?.fom, mottaker);
-      const nesteMåned = mottaker.nesteUtbPeriode.tom;
+      const rangeOfMonths = getPeriod(
+        ingenPerioderMedAvvik,
+        simuleringResultat.periode?.fom ?? '', // Provide a fallback empty string
+        mottaker,
+      );
+      const nesteMåned: string = mottaker.nesteUtbPeriode.tom ?? '';
       const visDetaljer = showDetails.find(d => d.id === mottakerIndex);
       return (
         <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
@@ -170,14 +180,14 @@ const AvregningTable = ({
                   rangeOfMonths,
                   nesteMåned,
                 ).map(heading => (
-                  <Table.HeaderCell key={heading.key} scope="col">
+                  <Table.HeaderCell key={heading.key} scope="col" textSize="small">
                     {heading}
                   </Table.HeaderCell>
                 ))}
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {[]
+              {([] as JSX.Element[])
                 .concat(
                   ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) =>
                     fagOmråde.rader
@@ -191,10 +201,14 @@ const AvregningTable = ({
                         const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
                         const rowClassnames = `${isRowToggable ? styles.rowBorderDashed : styles.rowBorderSolid}`;
                         const boldText = isFeilUtbetalt || ingenPerioderMedAvvik;
+                        const fagområdeKode =
+                          typeof fagOmråde.fagOmrådeKode === 'string'
+                            ? fagOmråde.fagOmrådeKode
+                            : fagOmråde.fagOmrådeKode.kode;
                         return (
                           <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
-                            <Table.DataCell className={boldText ? 'font-bold' : ''}>
-                              <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
+                            <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
+                              <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
                             </Table.DataCell>
                             {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
                           </Table.Row>
@@ -207,17 +221,28 @@ const AvregningTable = ({
                     ingenPerioderMedAvvik,
                     mottaker.resultatPerFagområde,
                     mottaker.resultatOgMotregningRader,
-                  ).map((resultat, resultatIndex) => {
-                    const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
-                    return (
-                      <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
-                        <Table.DataCell className={boldText ? 'font-bold' : ''}>
-                          <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
-                        </Table.DataCell>
-                        {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
-                      </Table.Row>
-                    );
-                  }),
+                  )
+                    .filter(resultat => {
+                      if (
+                        isUngFagsak &&
+                        (resultat.feltnavn === avregningCodes.INNTREKKNESTEMÅNED ||
+                          resultat.feltnavn === avregningCodes.INNTREKK)
+                      ) {
+                        return false;
+                      }
+                      return true;
+                    })
+                    .map((resultat, resultatIndex) => {
+                      const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
+                      return (
+                        <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
+                          <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
+                            <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                          </Table.DataCell>
+                          {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
+                        </Table.Row>
+                      );
+                    }),
                 )}
             </Table.Body>
           </Table>

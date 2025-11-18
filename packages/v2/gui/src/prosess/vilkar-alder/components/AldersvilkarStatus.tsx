@@ -13,7 +13,7 @@ interface AldersVilkarAPProps {
 
 const AldersVilkarStatus = ({ vilkarOppfylt, vilkarReferanse, periode, begrunnelse }: AldersVilkarAPProps) => (
   <>
-    <HStack gap="4">
+    <HStack gap="space-16">
       {vilkarOppfylt ? <Suksessikon /> : <Feilikon />}
       <Heading size="small" level="2">
         Aldersvilkår

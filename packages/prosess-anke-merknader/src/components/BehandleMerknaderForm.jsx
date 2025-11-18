@@ -1,6 +1,5 @@
 import { Heading, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
@@ -42,7 +41,7 @@ const AnkeMerknader = ({
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
         <div>
           <FormattedMessage id="Ankebehandling.Merknad.Merknader" />
           <RadioGroupField
@@ -65,7 +64,7 @@ const AnkeMerknader = ({
       </HGrid>
 
       <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
         <TextAreaField
           readOnly={readOnly}
           readOnlyHideEmpty={false}
@@ -74,7 +73,7 @@ const AnkeMerknader = ({
         />
       </HGrid>
       <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
         <div>
           <ProsessStegSubmitButton
             formName={formProps.form}

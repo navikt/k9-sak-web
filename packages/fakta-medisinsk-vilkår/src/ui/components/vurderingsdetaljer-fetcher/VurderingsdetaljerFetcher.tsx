@@ -1,6 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { Alert, Loader } from '@navikt/ds-react';
-import React, { useMemo, type JSX } from 'react';
+import React, { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import ContainerContext from '../../context/ContainerContext';
 
@@ -13,25 +13,17 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
   const { httpErrorHandler } = React.useContext(ContainerContext);
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [vurdering, setVurdering] = React.useState<Vurdering>(null);
+  const [vurdering, setVurdering] = React.useState<Vurdering | null>(null);
   const [hentVurderingHarFeilet, setHentVurderingHarFeilet] = React.useState<boolean>(false);
 
-  const controller = useMemo(() => new AbortController(), [url]);
-
-  function hentVurderingsdetaljer(): Promise<Vurdering> {
-    return httpUtils.get(url, httpErrorHandler, { signal: controller.signal });
-  }
-
-  const handleError = () => {
-    setIsLoading(false);
-    setHentVurderingHarFeilet(true);
-  };
-
   React.useEffect(() => {
+    const controller = new AbortController();
+
     let isMounted = true;
     setIsLoading(true);
     setHentVurderingHarFeilet(false);
-    hentVurderingsdetaljer()
+    httpUtils
+      .get(url, httpErrorHandler, { signal: controller.signal })
       .then((vurderingResponse: Vurdering) => {
         const fetchedVurdering = new Vurdering(vurderingResponse);
         if (isMounted) {
@@ -39,13 +31,16 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
           setIsLoading(false);
         }
       })
-      .catch(handleError);
+      .catch(() => {
+        setIsLoading(false);
+        setHentVurderingHarFeilet(true);
+      });
 
     return () => {
       isMounted = false;
       controller.abort();
     };
-  }, [url]);
+  }, [httpErrorHandler, url]);
 
   if (isLoading) {
     return <Loader size="large" />;
@@ -53,7 +48,9 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
   if (hentVurderingHarFeilet) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere.</Alert>;
   }
-
+  if (!vurdering) {
+    return <Alert variant="error">Kunne ikke hente vurderingsdetaljer.</Alert>;
+  }
   return contentRenderer(vurdering);
 };
 

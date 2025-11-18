@@ -1,7 +1,6 @@
 .beskrivelserForPerioden__label {
   display: flex;
-  align-items: flex-end;
-  margin-bottom: 0.75rem;
+  align-items: center;
 }
 
 .beskrivelserForPerioden__labelText {

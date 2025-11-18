@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -21,7 +22,8 @@ import {
   requestPleiepengerApi,
   restApiPleiepengerHooks,
 } from './data/pleiepengerBehandlingApi';
-import { FetchedData, OverstyringUttakRequest } from './types';
+import { FetchedData } from './types';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },
@@ -130,21 +132,6 @@ const BehandlingPleiepengerIndex = ({
     PleiepengerBehandlingApiKeys.VERGE_FJERN,
   );
 
-  const { startRequest: lagreOverstyringUttakRequest } = restApiPleiepengerHooks.useRestApiRunner(
-    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
-  );
-
-  const lagreOverstyringUttak = async (values: OverstyringUttakRequest): Promise<void> => {
-    await lagreOverstyringUttakRequest({
-      saksnummer: fagsak.saksnummer,
-      behandlingId: behandling.id,
-      behandlingVersjon: behandling.versjon,
-      overstyrteAksjonspunktDtoer: [values],
-    })
-      .then(() => hentBehandling({ behandlingId }, true))
-      .then(() => window.scroll(0, 0));
-  };
-
   useEffect(() => {
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, true)),
@@ -184,26 +171,28 @@ const BehandlingPleiepengerIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <PleiepengerPaneler
-        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        featureToggles={featureToggles}
-        dokumenter={alleDokumenter}
-        lagreOverstyringUttak={lagreOverstyringUttak}
-      />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+        <PleiepengerPaneler
+          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          alleKodeverk={kodeverk}
+          rettigheter={rettigheter}
+          valgtProsessSteg={valgtProsessSteg}
+          valgtFaktaSteg={valgtFaktaSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          opneSokeside={opneSokeside}
+          hasFetchError={behandlingState === RestApiState.ERROR}
+          setBehandling={setBehandling}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          featureToggles={featureToggles}
+          dokumenter={alleDokumenter}
+          hentBehandling={hentBehandling}
+        />
+      </BehandlingProvider>
     </>
   );
 };

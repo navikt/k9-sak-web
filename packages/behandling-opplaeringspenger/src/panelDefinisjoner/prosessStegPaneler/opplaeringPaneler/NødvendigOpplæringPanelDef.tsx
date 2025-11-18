@@ -1,18 +1,21 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 class NødvendigOpplæringPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getId = () => 'NØDVENDIG_OPPLÆRING';
 
-  getTekstKode = () => 'Opplaering.NødvendigOpplæring';
+  getTekstKode = () => 'Opplæring og reisetid';
 
-  getKomponent = props => this.overstyringDef.getKomponent(props);
+  getKomponent = props => {
+    return this.overstyringDef.getKomponent({ ...props, skjulOverstyring: true });
+  };
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPLÆRING];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPLÆRING, aksjonspunktCodes.VURDER_REISETID];
 
-  getVilkarKoder = () => [];
+  getVilkarKoder = () => [vilkarType.NØDVENDIG_OPPLÆRING];
 
   getData = ({
     overstyrteAksjonspunktKoder,

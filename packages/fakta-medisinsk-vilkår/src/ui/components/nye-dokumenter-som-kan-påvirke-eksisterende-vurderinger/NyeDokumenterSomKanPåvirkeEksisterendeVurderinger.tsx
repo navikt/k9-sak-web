@@ -1,6 +1,6 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { Box, Button, Label } from '@navikt/ds-react';
-import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
+import { FileIcon } from '@navikt/aksel-icons';
+import { Box, Button, Label, Link } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { Dokumenttype } from '../../../types/Dokument';
@@ -31,15 +31,16 @@ const NyeDokumenterListe = ({ dokumenter }: NyeDokumenterListeProps) => (
       return (
         <p key={dokument.id}>
           Nytt dokument:
-          <a
+          <Link
+            inlineText
             href={dokumentLink.href}
             className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__dokumentLink}
           >
             <span className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__ikonContainer}>
-              <DocumentIcon />
+              <FileIcon fontSize="1.5rem" />
             </span>
             {`${getDokumentLabel(dokument.type)} (datert ${prettifyDateString(dokument.datert)})`}
-          </a>
+          </Link>
         </p>
       );
     })}
@@ -58,11 +59,11 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderinger = ({
   isSubmitting,
 }: NyeDokumenterSomKanPåvirkeEksisterendeVurderingerProps): JSX.Element => (
   <div className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger}>
-    <Box marginBlock="6 0">
+    <Box.New marginBlock="6 0">
       <div className={styles.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__content}>
         <Label size="small">Vurder om nytt dokument fører til endringer i eksisterende vurderinger.</Label>
         <NyeDokumenterListe dokumenter={dokumenter} />
-        <Box marginBlock="6 0">
+        <Box.New marginBlock="6 0">
           <Button
             size="small"
             onClick={() => onEndringerRegistrertClick()}
@@ -72,9 +73,9 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderinger = ({
           >
             Eventuelle endringer er registrert
           </Button>
-        </Box>
+        </Box.New>
       </div>
-    </Box>
+    </Box.New>
   </div>
 );
 

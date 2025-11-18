@@ -1,8 +1,10 @@
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { VStack } from '@navikt/ds-react';
 import * as React from 'react';
 import { useEffect } from 'react';
 import BeredskapType from '../../../../types/BeredskapType';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import ContainerContext from '../../../context/ContainerContext';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
 import BeredskapsperiodeoversiktController from '../beredskapsperiodeoversikt-controller/BeredskapsperiodeoversiktController';
 import BeredskapsperiodeoversiktMessages from '../beredskapsperiodeoversikt-messages/BeredskapsperiodeoversiktMessages';
@@ -15,6 +17,11 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode | null>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = beredskapData;
+  const {
+    lagreBeredskapvurdering = () => {},
+    readOnly = false,
+    harAksjonspunktForBeredskap = false,
+  } = React.useContext(ContainerContext) || {};
 
   const perioderTilVurdering = beredskapData.finnPerioderTilVurdering();
   const vurderteBeredskapsperioder = beredskapData.finnVurdertePerioder();
@@ -31,8 +38,12 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   }, []);
 
   return (
-    <>
-      <BeredskapsperiodeoversiktMessages beredskapData={beredskapData} />
+    <VStack gap="6">
+      <BeredskapsperiodeoversiktMessages
+        beredskapData={beredskapData}
+        skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForBeredskap}
+        fortsettUtenEndring={() => lagreBeredskapvurdering(beredskapData.vurderinger)}
+      />
       <NavigationWithDetailView
         navigationSection={() => (
           <Periodenavigasjon
@@ -55,7 +66,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
           )
         }
       />
-    </>
+    </VStack>
   );
 };
 

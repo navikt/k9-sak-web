@@ -1,4 +1,7 @@
 name: 'Storybook Tests'
+permissions:
+  contents: read
+  packages: read
 on:
   workflow_call:
 jobs:
@@ -7,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install

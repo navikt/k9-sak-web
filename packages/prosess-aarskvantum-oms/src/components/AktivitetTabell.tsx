@@ -155,14 +155,7 @@ const AktivitetTabell = ({
   }
 
   return (
-    <Box
-      background="surface-default"
-      padding="4"
-      borderWidth="1"
-      borderColor="border-subtle"
-      borderRadius="medium"
-      className={styles.aktivitetTabell}
-    >
+    <Box.New padding="4" borderWidth="1" borderRadius="medium" className={styles.aktivitetTabell}>
       <div className={styles.header}>
         <Label size="small" as="p">
           {beskrivelse}
@@ -379,7 +372,7 @@ const AktivitetTabell = ({
           },
         )}
       </Table>
-    </Box>
+    </Box.New>
   );
 };
 

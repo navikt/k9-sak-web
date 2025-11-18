@@ -12,8 +12,7 @@ import {
 } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 import Aktivitet from './dto/Aktivitet';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import ÅrskvantumIndex from './ÅrskvantumIndex';

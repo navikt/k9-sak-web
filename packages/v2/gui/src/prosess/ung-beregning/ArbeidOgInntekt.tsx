@@ -1,14 +1,15 @@
 import {
-  KontrollerInntektPeriodeDtoStatus,
-  KontrollerInntektPeriodeDtoValg,
-  type KontrollerInntektPeriodeDto,
-  type RapportertInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
+  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
+  type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
-import { removeSpacesFromNumber } from '@navikt/ft-utils';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
@@ -24,8 +25,8 @@ const formaterInntekt = (inntekt: RapportertInntektDto) => {
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
 };
 
-const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
-  if (status === KontrollerInntektPeriodeDtoStatus.AVVIK) {
+const formaterStatus = (status?: PeriodeStatus) => {
+  if (status === PeriodeStatus.AVVIK) {
     return 'Avvik';
   }
   return 'Ingen avvik';
@@ -34,25 +35,27 @@ const formaterStatus = (status?: KontrollerInntektPeriodeDtoStatus) => {
 const buildInitialValues = (inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>): Formvalues => {
   return {
     perioder:
-      inntektKontrollperioder
-        ?.filter(periode => periode.erTilVurdering)
-        .map(periode => {
-          return {
-            fastsattInntekt: periode.fastsattInntekt != null ? `${periode.fastsattInntekt}` : '',
-            valg: periode.valg ?? '',
-            begrunnelse: periode.begrunnelse ?? '',
-            periode: periode.periode,
-          };
-        }) || [],
+      inntektKontrollperioder.map(periode => {
+        return {
+          fastsattInntekt: periode.fastsattInntekt != null ? `${parseCurrencyInput(periode.fastsattInntekt)}` : '',
+          valg: periode.valg ?? '',
+          begrunnelse: periode.begrunnelse ?? '',
+          periode: periode.periode,
+          harAvvik: periode.status === PeriodeStatus.AVVIK,
+          erTilVurdering: !!periode.erTilVurdering,
+        };
+      }) || [],
   };
 };
 
 type Formvalues = {
   perioder: {
     fastsattInntekt: string;
-    valg: KontrollerInntektPeriodeDtoValg | '';
+    valg: BrukKontrollertInntektValg | '';
     begrunnelse: string;
     periode: KontrollerInntektPeriodeDto['periode'];
+    harAvvik: boolean;
+    erTilVurdering: boolean;
   }[];
 };
 
@@ -60,9 +63,15 @@ interface ArbeidOgInntektProps {
   submitCallback: (data: unknown) => Promise<any>;
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   isReadOnly: boolean;
+  arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
-export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isReadOnly }: ArbeidOgInntektProps) => {
+export const ArbeidOgInntekt = ({
+  submitCallback,
+  inntektKontrollperioder,
+  isReadOnly,
+  arbeidsgivere,
+}: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
     defaultValues: buildInitialValues(inntektKontrollperioder),
@@ -70,15 +79,16 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
 
   const onSubmit = async (values: Formvalues) => {
     setIsSubmitting(true);
+    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik && periode.erTilVurdering);
     try {
       await submitCallback([
         {
           kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-          begrunnelse: values.perioder.map(periode => periode.begrunnelse).join(', '),
-          perioder: values.perioder.map(periode => ({
+          begrunnelse: perioderMedAvvik.map(periode => periode.begrunnelse).join(', '),
+          perioder: perioderMedAvvik.map(periode => ({
             periode: periode.periode,
             fastsattInnntekt:
-              periode.valg === KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT
+              periode.valg === BrukKontrollertInntektValg.MANUELT_FASTSATT
                 ? removeSpacesFromNumber(periode.fastsattInntekt)
                 : undefined,
             valg: periode.valg,
@@ -97,8 +107,8 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
   });
 
   return (
-    <Form<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
-      <Box marginBlock="7 0" borderRadius="large" borderWidth="1" borderColor="border-divider">
+    <RhfForm<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
+      <Box.New marginBlock="7 0" borderRadius="large" borderWidth="1">
         <Table>
           <Table.Header>
             <Table.Row>
@@ -109,10 +119,10 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                 <Label size="small">Periode</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert av deltager</Label>
+                <Label size="small">Rapportert av deltaker</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert i A-inntekt</Label>
+                <Label size="small">Rapportert i A-ordningen</Label>
               </Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
@@ -123,7 +133,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                 i => i.periode?.fom === field.periode?.fom && i.periode?.tom === field.periode?.tom,
               );
               const isLastRow = index === fields.length - 1;
-              const harAvvik = inntektKontrollPeriode?.status === KontrollerInntektPeriodeDtoStatus.AVVIK;
+              const harAvvik = inntektKontrollPeriode?.status === PeriodeStatus.AVVIK;
               const harAksjonspunkt = inntektKontrollPeriode?.erTilVurdering && harAvvik;
               const harBrukerrapportertInntekt =
                 inntektKontrollPeriode?.rapporterteInntekter?.bruker?.arbeidsinntekt != undefined;
@@ -137,15 +147,19 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                         harBrukerrapportertInntekt={harBrukerrapportertInntekt}
                         isSubmitting={isSubmitting}
                         isReadOnly={isReadOnly}
-                        uttalelseFraBruker={inntektKontrollPeriode.uttalelseFraBruker}
                         periode={field.periode}
                         fieldIndex={index}
+                        inntektKontrollPeriode={inntektKontrollPeriode}
+                        arbeidsgivere={arbeidsgivere}
                       />
                     ) : (
                       <Bleed marginBlock="4 0">
-                        <Box marginInline="2 0" padding="6" background="bg-default">
-                          <DetaljerOmInntekt />
-                        </Box>
+                        <Box.New marginInline="2 0" padding="6">
+                          <DetaljerOmInntekt
+                            inntektKontrollPeriode={inntektKontrollPeriode}
+                            arbeidsgivere={arbeidsgivere}
+                          />
+                        </Box.New>
                       </Bleed>
                     )
                   }
@@ -155,7 +169,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
                   defaultOpen={harAksjonspunkt}
                 >
                   <Table.DataCell className={styles.firstDataCell}>
-                    <HStack gap="2" align="center">
+                    <HStack gap="space-8" align="center">
                       {harAvvik ? (
                         <ExclamationmarkTriangleFillIcon fontSize="1.5rem" className={styles.exclamationmarkIcon} />
                       ) : (
@@ -191,7 +205,7 @@ export const ArbeidOgInntekt = ({ submitCallback, inntektKontrollperioder, isRea
             })}
           </Table.Body>
         </Table>
-      </Box>
-    </Form>
+      </Box.New>
+    </RhfForm>
   );
 };

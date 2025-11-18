@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -25,8 +25,6 @@ const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.VILKAR },
   { key: UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
-  { key: UngdomsytelseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
-  { key: UngdomsytelseBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT },
 ];

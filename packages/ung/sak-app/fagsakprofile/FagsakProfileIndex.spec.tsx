@@ -161,7 +161,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
 
@@ -186,7 +185,6 @@ describe('<FagsakProfileIndex>', () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
     expect(screen.queryAllByTestId('BehandlingPickerItem').length).toBe(2);
     expect(screen.getByTestId('BehandlingPicker')).toBeInTheDocument();
     expect(screen.getByText('123 - Opprettet')).toBeInTheDocument();
@@ -202,7 +200,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
 
@@ -228,7 +225,6 @@ describe('<FagsakProfileIndex>', () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
     expect(screen.queryAllByTestId('behandlingSelected').length).toBe(1);
     expect(await screen.findByText('123 - Opprettet')).toBeInTheDocument();
     expect(screen.queryByText('Førstegangsbehandling')).toBeInTheDocument();

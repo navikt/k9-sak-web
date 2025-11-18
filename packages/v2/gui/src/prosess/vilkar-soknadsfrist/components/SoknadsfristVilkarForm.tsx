@@ -1,3 +1,7 @@
+import type {
+  k9_sak_typer_Periode as Periode,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
@@ -5,15 +9,14 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
-import { Form } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import type { Periode, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
-import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import type dayjs from 'dayjs';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';
@@ -28,8 +31,8 @@ import styles from './SoknadsfristVilkarForm.module.css';
  *
  * Backend teller fra dagen etter..
  */
-const minusEnDag = (dato: string | Dayjs) => initializeDate(dato).subtract(1, 'days').format('YYYY-MM-DD');
-const plusEnDag = (dato: string | Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
+const minusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).subtract(1, 'days').format('YYYY-MM-DD');
+const plusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
 
 const buildInitialValues = (
   aksjonspunkter: SoknadsfristAksjonspunktType[],
@@ -229,7 +232,7 @@ export const SoknadsfristVilkarForm = ({
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
       {Array.isArray(dokumenterIAktivPeriode) && dokumenterIAktivPeriode.length > 0 && (
         <div
           className={`${styles.aksjonspunkt} ${erOverstyrt || harÅpentAksjonspunkt || editForm ? styles.apentAksjonspunkt : ''}`}
@@ -264,14 +267,14 @@ export const SoknadsfristVilkarForm = ({
                 <ExclamationmarkTriangleFillIcon
                   title="Aksjonspunkt"
                   fontSize="1.5rem"
-                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl"
+                  style={{ color: 'var(--ax-text-warning-decoration)' }}
                 />
                 <Label size="small" as="p">
                   Overstyring skal kun gjøres i unntakstilfeller
                 </Label>
               </div>
               <div className="mt-4" />
-              <HStack gap="4">
+              <HStack gap="space-16">
                 <OverstyrBekreftKnappPanel
                   disabled={!formMethods.formState.isValid}
                   submitting={formMethods.formState.isSubmitting}
@@ -292,7 +295,7 @@ export const SoknadsfristVilkarForm = ({
             </>
           )}
           {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
-            <HStack gap="4">
+            <HStack gap="space-16">
               <Button
                 variant="primary"
                 size="small"
@@ -319,7 +322,7 @@ export const SoknadsfristVilkarForm = ({
           )}
         </div>
       )}
-    </Form>
+    </RhfForm>
   );
 };
 

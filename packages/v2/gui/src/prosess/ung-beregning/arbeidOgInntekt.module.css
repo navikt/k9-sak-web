@@ -1,9 +1,9 @@
 .firstHeaderCell {
-  padding-left: var(--a-spacing-4);
+  padding-left: var(--ax-space-16);
 }
 
 .firstDataCell {
-  padding-left: var(--a-spacing-2);
+  padding-left: var(--ax-space-8);
 }
 
 .lastRow > td {
@@ -11,10 +11,10 @@
 }
 
 .exclamationmarkIcon {
-  color: var(--a-icon-warning);
-  font-size: var(--a-font-size-heading-medium);
+  color: var(--ax-text-warning-decoration);
+  font-size: var(--ax-font-size-heading-medium);
 }
 
 .checkmarkIcon {
-  color: var(--a-surface-success);
+  color: var(--ax-bg-success-strong);
 }

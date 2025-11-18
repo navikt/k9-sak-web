@@ -1,4 +1,4 @@
-import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
+import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export type Periodeinfo = {
   kilde: OverlappendeYtelseDto['kilde'];

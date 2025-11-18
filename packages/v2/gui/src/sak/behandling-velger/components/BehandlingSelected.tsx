@@ -1,17 +1,24 @@
-import { BehandlingDtoBehandlingResultatType, BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
+  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
-import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
-import classnames from 'classnames/bind';
+import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
 import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
 import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
-import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
+import {
+  erFørstegangsbehandlingIUngdomsytelsen,
+  getFormattedSøknadserioder,
+  getStatusIcon,
+  getStatusText,
+} from './behandlingVelgerUtils';
 
-const cx = classnames.bind(styles);
 interface BehandlingSelectedProps {
   opprettetDato: string;
   avsluttetDato?: string;
@@ -23,6 +30,7 @@ interface BehandlingSelectedProps {
   behandlingTypeKode: string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
+  behandlingVisningsnavn?: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined;
 }
 
 const BehandlingSelected = ({
@@ -36,13 +44,13 @@ const BehandlingSelected = ({
   søknadsperioder,
   createLocationForSkjermlenke,
   sakstypeKode,
+  behandlingVisningsnavn,
 }: BehandlingSelectedProps) => {
   const location = useLocation();
   const erFerdigstilt = !!avsluttetDato;
-  const containerCls = cx('behandlingSelectedContainer', {
-    aapen:
-      !behandlingsresultatTypeKode || behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
-  });
+  const erÅpen =
+    !behandlingsresultatTypeKode || behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT;
+  const containerCls = `${styles.behandlingSelectedContainer} ${erÅpen ? styles.aapen : ''}`;
 
   const getÅrsakerForBehandling = () => {
     if (behandlingTypeKode === BehandlingDtoType.FØRSTEGANGSSØKNAD || !behandlingsårsaker.length) {
@@ -81,6 +89,8 @@ const BehandlingSelected = ({
   ];
 
   const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.some(ytelse => ytelse === sakstypeKode);
+  const erEndringAvBarnetillegg =
+    behandlingVisningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>
@@ -90,12 +100,17 @@ const BehandlingSelected = ({
       <div className={styles.infoContainer}>
         <div>
           {søknadsperioder?.length > 0 && (
-            <HStack gap="2" align={'center'}>
+            <HStack gap="space-8" align={'center'}>
               <CalendarIcon title="Kalender" fontSize="1.5rem" />
-              <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
+              <BodyShort size="small">
+                {getFormattedSøknadserioder(
+                  søknadsperioder,
+                  erFørstegangsbehandlingIUngdomsytelsen(sakstypeKode, behandlingTypeKode) || erEndringAvBarnetillegg,
+                )}
+              </BodyShort>
             </HStack>
           )}
-          <HStack gap="2" align={'center'} className="mt-1">
+          <HStack gap="space-8" align={'center'} className="mt-1">
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">
               {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
@@ -125,13 +140,14 @@ const BehandlingSelected = ({
       </div>
       {getÅrsakerForBehandling()}
       {visLenkeTilFaktapanel && (
-        <NavLink
+        <Link
+          as={NavLink}
           to={createLocationForSkjermlenke(location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
           onClick={() => window.scroll(0, 0)}
           className={styles.faktapanelLenke}
         >
           <BodyShort size="small">Søknadsperioder med årsaker for behandling</BodyShort>
-        </NavLink>
+        </Link>
       )}
     </div>
   );

@@ -1,14 +1,17 @@
+import {
+  k9_klage_kodeverk_behandling_BehandlingType as BehandlingDtoType,
+  type k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto,
+} from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { type KodeverkObject, KodeverkType, type KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { type KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import {
-  AksjonspunktDtoDefinisjon,
-  AksjonspunktDtoVurderPaNyttArsaker,
-  BehandlingAksjonspunktDtoBehandlingStatus,
-} from '@navikt/k9-sak-typescript-client';
+  k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as Årsak,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
@@ -29,18 +32,28 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
 const getArsaker = (apData: AksjonspunktGodkjenningData): string[] => {
   const arsaker: string[] = [];
   if (apData.feilFakta) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_FAKTA);
+    arsaker.push(Årsak.FEIL_FAKTA);
   }
   if (apData.feilLov) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_LOV);
+    arsaker.push(Årsak.FEIL_LOV);
   }
   if (apData.feilRegel) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_REGEL);
+    arsaker.push(Årsak.FEIL_REGEL);
   }
   if (apData.annet) {
-    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.ANNET);
+    arsaker.push(Årsak.ANNET);
   }
   return arsaker;
+};
+
+const getBehandlingTypeForKodeverk = (behandling: Behandling, erTilbakekreving: boolean) => {
+  if (erTilbakekreving) {
+    return 'kodeverkTilbake';
+  }
+  if (behandling.type === BehandlingDtoType.KLAGE) {
+    return 'kodeverkKlage';
+  }
+  return 'kodeverk';
 };
 
 interface TotrinnskontrollSakIndexProps {
@@ -75,14 +88,14 @@ const TotrinnskontrollSakIndex = ({
       const aksjonspunktGodkjenningDtos = values.aksjonspunktGodkjenning.map(apData => ({
         aksjonspunktKode: apData.aksjonspunktKode,
         godkjent: apData.totrinnskontrollGodkjent,
-        begrunnelse: apData.besluttersBegrunnelse,
-        arsaker: getArsaker(apData),
+        begrunnelse: apData.totrinnskontrollGodkjent === false ? apData.besluttersBegrunnelse : undefined,
+        arsaker: apData.totrinnskontrollGodkjent === false ? getArsaker(apData) : [],
       }));
 
       const fatterVedtakAksjonspunktDto = {
         '@type': erTilbakekreving
           ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK
-          : AksjonspunktDtoDefinisjon.FATTER_VEDTAK,
+          : AksjonspunktDefinisjon.FATTER_VEDTAK,
         begrunnelse: null,
         aksjonspunktGodkjenningDtos,
       };
@@ -112,10 +125,19 @@ const TotrinnskontrollSakIndex = ({
     [location, createLocationForSkjermlenke],
   );
 
-  const erStatusFatterVedtak = behandling.status === BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;
-  const skjermlenkeTyper = hentKodeverkForKode(KodeverkType.SKJERMLENKE_TYPE);
-  const arbeidsforholdHandlingTyper = hentKodeverkForKode(KodeverkType.ARBEIDSFORHOLD_HANDLING_TYPE);
-  const vurderArsaker = hentKodeverkForKode(KodeverkType.VURDER_AARSAK);
+  const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
+  const skjermlenkeTyper = hentKodeverkForKode(
+    KodeverkType.SKJERMLENKE_TYPE,
+    getBehandlingTypeForKodeverk(behandling, erTilbakekreving),
+  );
+  const arbeidsforholdHandlingTyper = hentKodeverkForKode(
+    KodeverkType.ARBEIDSFORHOLD_HANDLING_TYPE,
+    getBehandlingTypeForKodeverk(behandling, erTilbakekreving),
+  );
+  const vurderArsaker = hentKodeverkForKode(
+    KodeverkType.VURDER_AARSAK,
+    getBehandlingTypeForKodeverk(behandling, erTilbakekreving),
+  );
 
   return (
     <>
@@ -150,9 +172,15 @@ const TotrinnskontrollSakIndex = ({
 };
 
 // TODO: Dette kan fjernes når overgang til kodeverk som strings er ferdig
-const TotrinnskontrollSakIndexPropsTransformer = (props: TotrinnskontrollSakIndexProps) => {
+const TotrinnskontrollSakIndexPropsTransformer = (
+  props: TotrinnskontrollSakIndexProps & { behandlingType?: BehandlingDtoType },
+) => {
   const v2Props = JSON.parse(JSON.stringify(props));
-  konverterKodeverkTilKode(v2Props, false);
+  konverterKodeverkTilKode(
+    v2Props,
+    props.behandlingType === BehandlingDtoType.TILBAKEKREVING ||
+      props.behandlingType === BehandlingDtoType.REVURDERING_TILBAKEKREVING,
+  );
   return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
 };
 

@@ -1,13 +1,12 @@
-import { action } from '@storybook/addon-actions';
-import React from 'react';
+import { action } from 'storybook/actions';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
 import OpptjeningVilkarProsessIndex from './OpptjeningVilkarProsessIndex';
 import opptjeningAktivitetKlassifisering from './kodeverk/opptjeningAktivitetKlassifisering';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const opptjening = {
   fastsattOpptjening: {
@@ -208,7 +207,7 @@ export const visPanelForÅpentAksjonspunkt = args => (
                 'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
             },
             vilkarStatus: {
-              kode: 'OPPFYLT',
+              kode: 'IKKE_VURDERT',
               kodeverk: 'VILKAR_UTFALL_TYPE',
             },
             periode: {

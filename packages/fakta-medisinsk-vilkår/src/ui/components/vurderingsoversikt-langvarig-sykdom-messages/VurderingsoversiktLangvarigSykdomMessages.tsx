@@ -5,32 +5,32 @@ import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';
 
 interface VurderingsoversiktLangvarigSykdomMessagesProps {
-  vurderingsoversikt: Vurderingsoversikt;
+  vurderingsoversikt: Vurderingsoversikt | null;
 }
 
 const VurderingsoversiktLangvarigSykdomMessages = ({
   vurderingsoversikt,
 }: VurderingsoversiktLangvarigSykdomMessagesProps): JSX.Element => {
-  if (vurderingsoversikt.harIngenPerioderÅVise()) {
+  if (!vurderingsoversikt || vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <IngenPerioderÅVurdereMelding />
-      </Box>
+      </Box.New>
     );
   }
 
   if (vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
     return (
-      <Box marginBlock="0 6">
+      <Box.New marginBlock="0 6">
         <Alert size="small" variant="warning">
           {`Vurder om pleietrengende har langvarig sykdom i søknadsperioden ${getHumanReadablePeriodString(
             vurderingsoversikt.resterendeVurderingsperioder,
           )}.`}
         </Alert>
-      </Box>
+      </Box.New>
     );
   }
-  return null;
+  return <></>;
 };
 
 export default VurderingsoversiktLangvarigSykdomMessages;

@@ -26,6 +26,7 @@ export class PeriodeController extends Component {
     callbackBackward: PropTypes.func.isRequired,
     periode: PropTypes.shape().isRequired,
     readOnly: PropTypes.bool.isRequired,
+    behandlingUuid: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -66,6 +67,7 @@ export class PeriodeController extends Component {
       beregnBelop: callBeregnBelop,
       behandlingId: selectedBehandlingId,
       oppdaterSplittedePerioder,
+      behandlingUuid,
     } = this.props;
 
     const forstePeriode = {
@@ -82,6 +84,7 @@ export class PeriodeController extends Component {
     };
 
     const params = {
+      behandlingUuid: behandlingUuid,
       behandlingId: selectedBehandlingId,
       perioder: [forstePeriode, andrePeriode],
     };
@@ -117,7 +120,7 @@ export class PeriodeController extends Component {
     const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
 
     return (
-      <HGrid gap="1" columns={{ xs: '3fr 7fr 2fr' }}>
+      <HGrid gap="space-4" columns={{ xs: '3fr 7fr 2fr' }}>
         <Label size="small" as="p">
           <FormattedMessage id="PeriodeController.Detaljer" />
           {isEdited && <EditedIcon />}

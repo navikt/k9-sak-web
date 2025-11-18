@@ -47,7 +47,7 @@ export const ErrorMessagePanel = (props: OwnProps) => {
   return (
     <div className={styles.container}>
       {errorMessagesWithId.map((message, index) => (
-        <HStack gap="3" key={message.id}>
+        <HStack gap="space-12" key={message.id}>
           <Detail className={styles.wordWrap}>{`${message.message} `}</Detail>
           {message.additionalInfo && (
             <Detail>
@@ -65,11 +65,10 @@ export const ErrorMessagePanel = (props: OwnProps) => {
       ))}
       <div className={styles.lukkContainer}>
         <Button
-          variant="secondary"
-          icon={<XMarkIcon title="Lukk" />}
+          variant="tertiary"
+          icon={<XMarkIcon title="Lukk" color="white" />}
           onClick={removeErrorMessage}
           size="small"
-          className={styles.closeButton}
         />
       </div>
       {isModalOpen && (

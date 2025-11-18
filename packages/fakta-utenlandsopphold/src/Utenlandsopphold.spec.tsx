@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../mocks/mockdata/utenlandsoppholdMock';
 
 import Utenlandsopphold from './Utenlandsopphold';
@@ -14,7 +15,13 @@ describe('Utenlandsopphold', () => {
   });
 
   test('kan kan toggle på hjelpetekst', async () => {
-    renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />);
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={utenlandsoppholdMock}
+        kodeverk={utenlandsoppholdÅrsakMock}
+        fagsakYtelseType={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+      />,
+    );
 
     expect(
       screen.getByRole('button', { name: 'Hvor lenge har søker rett på pleiepenger i utlandet?', expanded: false }),
@@ -22,6 +29,20 @@ describe('Utenlandsopphold', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Hvor lenge har søker rett på pleiepenger i utlandet?' }));
     expect(
       screen.getByRole('button', { name: 'Hvor lenge har søker rett på pleiepenger i utlandet?', expanded: true }),
+    ).toBeInTheDocument();
+  });
+
+  test('viser riktig ytelsestype i hjelpetekst for omsorgspenger', async () => {
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={utenlandsoppholdMock}
+        kodeverk={utenlandsoppholdÅrsakMock}
+        fagsakYtelseType={fagsakYtelsesType.OMSORGSPENGER}
+      />,
+    );
+
+    expect(
+      screen.getByRole('button', { name: 'Hvor lenge har søker rett på omsorgspenger i utlandet?', expanded: false }),
     ).toBeInTheDocument();
   });
 

@@ -1,4 +1,4 @@
-name: Deploy Docker image
+name: Build and deploy k9-sak-web
 on:
   push:
     paths-ignore:
@@ -22,7 +22,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
@@ -44,8 +44,6 @@ jobs:
         id: docker-push
         with:
           without_navikt_prefix: true
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
       - name: Sett image for nais deploy
         run: |
@@ -95,7 +93,7 @@ jobs:
     environment: dev-fss:k9saksbehandling
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
@@ -115,13 +113,13 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Ta med litt historie og tags for å finne latest_prod commit hash
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           TAG: prod_${{ needs.build-docker-image.outputs.tag }}
         with:
@@ -158,7 +156,7 @@ jobs:
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {

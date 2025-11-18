@@ -15,6 +15,9 @@ import {
   isValidDate,
   splitWeeksAndDays,
   timeFormat,
+  combineConsecutivePeriods,
+  checkForOverlap,
+  type DateOrPeriod,
 } from './dateUtils';
 
 describe('dateUtils', () => {
@@ -104,9 +107,9 @@ describe('dateUtils', () => {
 
   it('skal dele opp en periode i måneder', () => {
     expect(getRangeOfMonths('2023-01', '2023-03')).toEqual([
-      { month: 'January', year: '23' },
-      { month: 'February', year: '23' },
-      { month: 'March', year: '23' },
+      { month: 'januar', year: '23' },
+      { month: 'februar', year: '23' },
+      { month: 'mars', year: '23' },
     ]);
   });
 
@@ -203,9 +206,9 @@ describe('dateUtils', () => {
   describe('getRangeOfMonths', () => {
     it('should get range of months correctly', () => {
       expect(getRangeOfMonths('2022-01', '2022-03')).toEqual([
-        { month: 'January', year: '22' },
-        { month: 'February', year: '22' },
-        { month: 'March', year: '22' },
+        { month: 'januar', year: '22' },
+        { month: 'februar', year: '22' },
+        { month: 'mars', year: '22' },
       ]);
     });
   });
@@ -234,5 +237,208 @@ describe('dateUtils', () => {
     it('should return input if period is invalid', () => {
       expect(formatereLukketPeriode('invalid-period')).toBe('invalid-period');
     });
+  });
+});
+
+describe('combineConsecutivePeriods', () => {
+  it('should return empty array for empty input', () => {
+    expect(combineConsecutivePeriods([])).toEqual([]);
+  });
+
+  it('should handle single dates', () => {
+    const dates: DateOrPeriod[] = ['2023-01-01', '2023-01-03', '2023-01-02'];
+    const result = combineConsecutivePeriods(dates);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-03' }]);
+  });
+
+  it('should handle periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-03', tom: '2023-01-07' },
+      { fom: '2023-01-10', tom: '2023-01-12' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([
+      { fom: '2023-01-01', tom: '2023-01-07' },
+      { fom: '2023-01-10', tom: '2023-01-12' },
+    ]);
+  });
+
+  it('should handle mixed dates and periods', () => {
+    const mixed: DateOrPeriod[] = [
+      '2023-01-01',
+      { fom: '2023-01-02', tom: '2023-01-04' },
+      '2023-01-05',
+      { fom: '2023-01-08', tom: '2023-01-10' },
+    ];
+    const result = combineConsecutivePeriods(mixed);
+    expect(result).toEqual([
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-08', tom: '2023-01-10' },
+    ]);
+  });
+
+  it('should handle consecutive periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-06', tom: '2023-01-10' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-10' }]);
+  });
+
+  it('should handle overlapping periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-03', tom: '2023-01-07' },
+      { fom: '2023-01-06', tom: '2023-01-10' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-10' }]);
+  });
+
+  it('should handle non-overlapping periods', () => {
+    const periods: DateOrPeriod[] = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-10', tom: '2023-01-15' },
+      { fom: '2023-01-20', tom: '2023-01-25' },
+    ];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '2023-01-10', tom: '2023-01-15' },
+      { fom: '2023-01-20', tom: '2023-01-25' },
+    ]);
+  });
+
+  it('should handle single date', () => {
+    const dates: DateOrPeriod[] = ['2023-01-01'];
+    const result = combineConsecutivePeriods(dates);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-01' }]);
+  });
+
+  it('should handle single period', () => {
+    const periods: DateOrPeriod[] = [{ fom: '2023-01-01', tom: '2023-01-05' }];
+    const result = combineConsecutivePeriods(periods);
+    expect(result).toEqual([{ fom: '2023-01-01', tom: '2023-01-05' }]);
+  });
+});
+
+describe('checkForOverlap', () => {
+  const testPeriods = [
+    { fom: '2023-01-01', tom: '2023-01-05' },
+    { fom: '2023-01-10', tom: '2023-01-15' },
+    { fom: '2023-01-20', tom: '2023-01-25' },
+  ];
+
+  it('should return false when no overlap exists', () => {
+    const currentPeriod = { fom: '2023-01-06', tom: '2023-01-09' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(false);
+  });
+
+  it('should return true when periods overlap - current starts before other and ends within other', () => {
+    const currentPeriod = { fom: '2023-01-08', tom: '2023-01-12' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when periods overlap - current starts within other and ends after other', () => {
+    const currentPeriod = { fom: '2023-01-12', tom: '2023-01-18' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when periods overlap - current is completely within other', () => {
+    const currentPeriod = { fom: '2023-01-11', tom: '2023-01-14' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when periods overlap - current completely contains other', () => {
+    const currentPeriod = { fom: '2023-01-09', tom: '2023-01-16' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when periods are identical', () => {
+    const currentPeriod = { fom: '2023-01-10', tom: '2023-01-15' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when periods share the same start date', () => {
+    const currentPeriod = { fom: '2023-01-10', tom: '2023-01-12' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when periods share the same end date', () => {
+    const currentPeriod = { fom: '2023-01-12', tom: '2023-01-15' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return false when periods are edge-to-edge (adjacent but not overlapping)', () => {
+    const currentPeriod = { fom: '2023-01-06', tom: '2023-01-09' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(false);
+  });
+
+  it('should return false when comparing period with itself (same index)', () => {
+    const currentPeriod = { fom: '2023-01-01', tom: '2023-01-05' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(false);
+  });
+
+  it('should return false when current period has empty fom', () => {
+    const currentPeriod = { fom: '', tom: '2023-01-12' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(false);
+  });
+
+  it('should return false when current period has empty tom', () => {
+    const currentPeriod = { fom: '2023-01-11', tom: '' };
+    const result = checkForOverlap(0, currentPeriod, testPeriods);
+    expect(result).toBe(false);
+  });
+
+  it('should ignore periods with empty dates in the array', () => {
+    const periodsWithEmptyDates = [
+      { fom: '2023-01-01', tom: '2023-01-05' },
+      { fom: '', tom: '2023-01-10' },
+      { fom: '2023-01-15', tom: '' },
+      { fom: '2023-01-20', tom: '2023-01-25' },
+    ];
+    const currentPeriod = { fom: '2023-01-06', tom: '2023-01-19' };
+    const result = checkForOverlap(0, currentPeriod, periodsWithEmptyDates);
+    expect(result).toBe(false);
+  });
+
+  it('should detect overlap with multiple periods', () => {
+    const currentPeriod = { fom: '2023-01-03', tom: '2023-01-22' };
+    const result = checkForOverlap(3, currentPeriod, testPeriods); // Using index 3 to avoid self-comparison
+    expect(result).toBe(true);
+  });
+
+  it('should handle single-day periods', () => {
+    const singleDayPeriods = [
+      { fom: '2023-01-01', tom: '2023-01-01' },
+      { fom: '2023-01-03', tom: '2023-01-03' },
+      { fom: '2023-01-05', tom: '2023-01-05' },
+    ];
+    const currentPeriod = { fom: '2023-01-01', tom: '2023-01-01' };
+    const result = checkForOverlap(1, currentPeriod, singleDayPeriods);
+    expect(result).toBe(true);
+  });
+
+  it('should return false for adjacent single-day periods', () => {
+    const singleDayPeriods = [
+      { fom: '2023-01-01', tom: '2023-01-01' },
+      { fom: '2023-01-03', tom: '2023-01-03' },
+    ];
+    const currentPeriod = { fom: '2023-01-02', tom: '2023-01-02' };
+    const result = checkForOverlap(1, currentPeriod, singleDayPeriods);
+    expect(result).toBe(false);
   });
 });

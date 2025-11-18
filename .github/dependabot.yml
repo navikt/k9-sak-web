@@ -24,12 +24,6 @@ updates:
           - '@types/react'
           - '@navikt*'
           - 'eslint-plugin-vitest' # version 0.5.4 requires eslint version 9
-      storybook:
-        update-types:
-          - 'major'
-        patterns:
-          - 'storybook'
-          - '@storybook/*'
       react:
         patterns:
           - 'react'

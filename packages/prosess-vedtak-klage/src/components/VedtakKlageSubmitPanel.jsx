@@ -1,7 +1,6 @@
-import { Button, HGrid } from '@navikt/ds-react';
+import { Button, HGrid, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -28,7 +27,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVed
   const previewBrev = getPreviewCallback(formProps, previewVedtakCallback);
 
   return (
-    <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+    <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
       <div>
         {!readOnly && (
           <Button
@@ -42,7 +41,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVed
             {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenning' })}
           </Button>
         )}
-        <a
+        <Link
           href=""
           onClick={previewBrev}
           onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
@@ -50,7 +49,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVed
           data-testid="previewLink"
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
-        </a>
+        </Link>
       </div>
     </HGrid>
   );

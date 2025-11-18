@@ -120,9 +120,9 @@ const Periodpicker: FunctionComponent<PeriodpickerProps> = (props): JSX.Element 
   return (
     <>
       <Label size="small">{label}</Label>
-      <HStack gap="4">
+      <HStack gap="space-16">
         <DatePicker {...dpPropsFom}>
-          <VStack gap="2">
+          <VStack gap="space-8">
             <DatePicker.Input
               {...inputPropsFom}
               size="small"
@@ -134,7 +134,7 @@ const Periodpicker: FunctionComponent<PeriodpickerProps> = (props): JSX.Element 
           </VStack>
         </DatePicker>
         <DatePicker {...dpPropsTom}>
-          <VStack gap="2">
+          <VStack gap="space-8">
             <DatePicker.Input
               {...inputPropsTom}
               size="small"

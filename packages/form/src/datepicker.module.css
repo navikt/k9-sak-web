@@ -3,6 +3,6 @@
   flex-direction: column;
 }
 
-.datepicker :global(.navds-label) {
+.datepicker :global(.aksel-label) {
   margin-bottom: 0.5rem;
 }

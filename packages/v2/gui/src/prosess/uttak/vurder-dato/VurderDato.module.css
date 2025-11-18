@@ -1,0 +1,21 @@
+.vurderDatoContainer {
+  margin-top: 1rem;
+  max-width: 44rem;
+}
+
+.info {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.alertAccordion :global(.aksel-accordion__header) {
+  /* stylelint-disable-next-line */
+  --aksel-legacy__a-spacing-3: 0;
+
+  box-shadow: none !important;
+}
+
+.alertAccordion :global(.aksel-accordion__content) {
+  /* stylelint-disable-next-line */
+  --aksel-legacy__a-spacing-5: 0;
+}

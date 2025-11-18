@@ -1,11 +1,5 @@
 import { Period } from '@fpsak-frontend/utils';
-import {
-  ContentWithTooltip,
-  GreenCheckIconFilled,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
-  RedCrossIconFilled,
-} from '@navikt/ft-plattform-komponenter';
+import { CheckmarkCircleFillIcon, PersonFillIcon, PersonIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React, { type JSX } from 'react';
 import Kilde from '../../../types/Kilde';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
@@ -21,16 +15,20 @@ interface VurderingsperiodeElementProps {
 const renderStatusIcon = (resultat: Vurderingsresultat | null) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
-        <GreenCheckIconFilled />
-      </ContentWithTooltip>
+      <CheckmarkCircleFillIcon
+        title="Vilkåret er oppfylt"
+        fontSize="1.75rem"
+        style={{ color: 'var(--ax-bg-success-strong)' }}
+      />
     );
   }
   if (resultat === Vurderingsresultat.IKKE_OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
-        <RedCrossIconFilled />
-      </ContentWithTooltip>
+      <XMarkOctagonFillIcon
+        title="Vilkåret er ikke oppfylt"
+        fontSize="1.75rem"
+        style={{ color: 'var(--ax-bg-danger-strong)' }}
+      />
     );
   }
   return null;
@@ -38,18 +36,10 @@ const renderStatusIcon = (resultat: Vurderingsresultat | null) => {
 
 const renderKildeIcon = (kilde: Kilde) => {
   if (kilde === Kilde.ANDRE) {
-    return (
-      <ContentWithTooltip tooltipText="Annen part">
-        <OnePersonOutlineGray />
-      </ContentWithTooltip>
-    );
+    return <PersonIcon title="Annen part" fontSize="1.5rem" />;
   }
 
-  return (
-    <ContentWithTooltip tooltipText="Søker">
-      <OnePersonIconGray />
-    </ContentWithTooltip>
-  );
+  return <PersonFillIcon title="Søker" fontSize="1.5rem" />;
 };
 
 const VurderingsperiodeElement = ({
@@ -60,7 +50,7 @@ const VurderingsperiodeElement = ({
 }: VurderingsperiodeElementProps): JSX.Element => (
   <div className={styles.vurderingsperiodeElement}>
     <span className={styles.visuallyHidden}>Type</span>
-    {renderStatusIcon(resultat)}
+    <div className={styles.vurderingsperiodeElement__texts__statusIcon}>{renderStatusIcon(resultat)}</div>
     <div className={styles.vurderingsperiodeElement__texts}>
       <p className={styles.vurderingsperiodeElement__texts__period}>
         <span className={styles.visuallyHidden}>Periode</span>

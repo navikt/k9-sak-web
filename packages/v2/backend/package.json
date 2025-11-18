@@ -7,26 +7,21 @@
   "exports": {
     "./shared/*": "./src/shared/*",
     "./combined/*": "./src/combined/*",
-    "./k9sak/generated": "./src/k9sak/generated/index.js",
-    "./k9sak/generated/metadata": "./src/k9sak/generated/metadata.js",
-    "./k9sak/kodeverk/*": "./src/k9sak/kodeverk/*",
-    "./k9sak/errorhandling/*": "./src/k9sak/errorhandling/*",
-    "./k9sak/client": "./src/k9sak/client.js",
+    "./k9sak/*": "./src/k9sak/*",
     "./k9formidling/*": "./src/k9formidling/*",
-    "./k9klage/generated": "./src/k9klage/generated/index.js",
-    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*",
-    "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*",
-    "./ungsak/generated": "./src/ungsak/generated/index.js",
-    "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
-    "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*",
-    "./ungsak/kodeverk/*": "./src/ungsak/kodeverk/*"
+    "./k9klage/*": "./src/k9klage/*",
+    "./k9tilbake/*": "./src/k9tilbake/*",
+    "./ungsak/*": "./src/ungsak/*",
+    "./ungtilbake/*": "./src/ungtilbake/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "2.0.20250218125133",
-    "@navikt/k9-sak-typescript-client": "2.0.20250410111341",
-    "@navikt/ung-sak-typescript-client": "0.2.20250425134115"
+    "@navikt/k9-klage-typescript-client": "3.1.20250926082531",
+    "@navikt/k9-sak-typescript-client": "3.0.20251107083641",
+    "@navikt/k9-tilbake-typescript-client": "^1.1.20250922195504",
+    "@navikt/ung-sak-typescript-client": "2.0.20251113115640",
+    "@navikt/ung-tilbake-typescript-client": "3.0.20251008100459"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.73.3"
+    "@tanstack/eslint-plugin-query": "^5.91.2"
   }
 }

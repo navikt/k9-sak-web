@@ -1,4 +1,9 @@
-import type { EndreResponse, HentResponse, OpprettResponse, SkjulResponse } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  EndreResponse,
+  HentResponse,
+  OpprettResponse,
+  SkjulResponse,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FormState } from './FormState';
 
 export type NotatBackendApiType = {

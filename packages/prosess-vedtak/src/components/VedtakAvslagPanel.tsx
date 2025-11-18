@@ -1,7 +1,11 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { BehandlingsresultatDto, TilbakekrevingValgDto, VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
+import {
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';

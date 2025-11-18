@@ -10,6 +10,7 @@ interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
+  noBorder?: boolean;
 }
 
 export const VedtakFormContext = React.createContext(null);
@@ -19,15 +20,16 @@ const ProsessStegContainer = ({
   formaterteProsessStegPaneler,
   velgProsessStegPanelCallback,
   children,
+  noBorder,
 }: OwnProps & WrappedComponentProps) => {
   const steg = useMemo(
     () =>
       formaterteProsessStegPaneler.map(panel => ({
         ...panel,
         label: intl.formatMessage({ id: panel.labelId }),
-        usePartialStatus: panel.type !== 'default' && panel.usePartialStatus,
+        usePartialStatus: panel.type !== 'default' && panel.type !== 'danger' && panel.usePartialStatus,
       })),
-    [formaterteProsessStegPaneler],
+    [formaterteProsessStegPaneler, intl],
   );
 
   // Byttet ut redux-form med formik uten å tenke på at staten forsvinner når man bytter panel
@@ -36,7 +38,7 @@ const ProsessStegContainer = ({
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
   return (
-    <div className={styles.container}>
+    <div className={noBorder ? '' : styles.container}>
       <div className={styles.meny}>
         <ProcessMenu
           steps={steg}

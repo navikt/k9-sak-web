@@ -1,0 +1,8 @@
+.mainContainerWithSideMenu {
+  display: flex;
+  margin-left: -8px;
+}
+
+.warningIcon {
+  margin-left: 1rem;
+}

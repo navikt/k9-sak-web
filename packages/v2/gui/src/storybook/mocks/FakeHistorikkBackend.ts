@@ -1,9 +1,17 @@
-import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated';
-import type { HistorikkBackendApi } from '../../sak/historikk/HistorikkBackendApi.js';
-import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
+import type { HentAlleInnslagV2Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  fangFeilVedHenting,
+  type HentetHistorikk,
+  type HistorikkBackendApi,
+} from '../../sak/historikk/api/HistorikkBackendApi.js';
+import { type BeriketHistorikkInnslag } from '../../sak/historikk/api/HistorikkBackendApi.js';
+import { K9HistorikkInnslagBeriker } from '../../sak/historikk/api/K9HistorikkInnslagBeriker.js';
+import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
+import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 
-// Kopi av respons frå backend i dev
-const fakeResponse: HentAlleInnslagV2Response = [
+// Kopi av respons frå k9-sak backend i dev
+const fakeK9SakResponse: HentAlleInnslagV2Response = [
   {
     behandlingId: 1005501,
     aktør: {
@@ -217,11 +225,230 @@ const fakeResponse: HentAlleInnslagV2Response = [
     linjer: [],
     uuid: '92bfbbef-9c71-483c-885b-a5b393679b53',
   },
+  {
+    behandlingId: 1000301,
+    aktør: {
+      type: 'BESL',
+      ident: 'Z990422',
+    },
+    opprettetTidspunkt: '2024-12-02T07:46:22.373',
+    dokumenter: [],
+    tittel: 'Sak retur',
+    linjer: [
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'FAKTA_OM_MEDISINSK',
+        tekst: ': __Godkjent__',
+      },
+      {
+        type: 'TEKST',
+        tekst: '(Aksjonspunkt: Kontroller legeerklæring)',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Kommentar: test',
+      },
+      {
+        type: 'LINJESKIFT',
+      },
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'VEDTAK',
+        tekst: ': __Må vurderes på nytt__',
+      },
+      {
+        type: 'TEKST',
+        tekst: '(Aksjonspunkt: Fritekstbrev)',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Kommentar: Vedtaksbrev må vurderes igjen',
+      },
+    ],
+    uuid: '52ae8488-6376-4c50-949c-f03abc9676f8',
+  },
+];
+
+const fakeK9KlageResponse: KlageHistorikkinnslagDtoV2[] = [
+  {
+    behandlingId: 999952,
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-05-06T11:16:01.228',
+    dokumenter: [],
+    tittel: 'Behandling er henlagt',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: 'Henlagt, søknaden er feilopprettet',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'Henlegger fra verdikjedetest',
+      },
+    ],
+    uuid: '0e722618-9b62-4935-a261-c7895ead7d9f',
+  },
+  {
+    behandlingId: 999952,
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-05-06T11:16:00.607',
+    dokumenter: [],
+    tittel: 'Klagebehandling Vedtaksinstans',
+    linjer: [
+      {
+        type: 'SKJERMLENKE',
+        skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Vedtaket som er påklagd__ er satt til __Førstegangsbehandling 06.05.2025__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Er klager part i saken__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Er klagefristen overholdt__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Er klagen signert__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Klages det på konkrete elementer i vedtaket__ er satt til __Ja__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'autotest',
+      },
+    ],
+    uuid: 'd2d54535-8f0c-424e-8dfd-621a750bdb4c',
+  },
+  {
+    behandlingId: 999952,
+    aktør: {
+      type: 'SOKER',
+    },
+    opprettetTidspunkt: '2025-05-06T11:15:54.829',
+    dokumenter: [],
+    tittel: 'Behandling startet',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: '__Klage mottatt__',
+      },
+    ],
+    uuid: 'b62d9bb8-8f1b-446d-8861-67a593c0507c',
+  },
+];
+
+// Kopiert ut frå verdikjede (og redusert litt), frå sak oppretta av test
+// TrekkAvKravMedTilbakekrevingTest.psb_trekk_av_krav_etter_at_perioden_er_godkjent_utbetalt
+const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:48.434',
+    dokumenter: [
+      {
+        tag: 'Varselbrev Tilbakekreving',
+        journalpostId: '227173608',
+        dokumentId: '227173611',
+        utgått: false,
+      },
+    ],
+    tittel: 'Brev er sendt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:48.883',
+    dokumenter: [],
+    tittel: 'Behandlingen er gjenopptatt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-03-31T13:28:16.269',
+    dokumenter: [],
+    tittel: 'Behandlingen er satt på vent 22.04.2025',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: 'Venter på tilbakemelding fra bruker.',
+      },
+    ],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-08-29T10:41:30.155',
+    dokumenter: [],
+    tittel: 'Behandling er gjenopptatt',
+    linjer: [],
+  },
+  {
+    behandlingUuid: 'd4a81220-5e8d-41db-bbee-436ee5ef1174',
+    aktør: {
+      type: 'VL',
+    },
+    opprettetTidspunkt: '2025-02-27T17:40:42.779',
+    dokumenter: [],
+    tittel: 'Tilbakekreving opprettet',
+    linjer: [],
+    skjermlenke: 'TILBAKEKREVING',
+  },
 ];
 
 export class FakeHistorikkBackend implements HistorikkBackendApi {
-  async hentAlleInnslagK9sak(saksnummer: string): Promise<HentAlleInnslagV2Response> {
-    ignoreUnusedDeclared(saksnummer);
-    return Promise.resolve(fakeResponse);
+  #beriker: K9HistorikkInnslagBeriker;
+
+  readonly backend = 'k9';
+
+  constructor(kodeverkoppslag: K9Kodeverkoppslag) {
+    this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);
+  }
+
+  async #hentAlleInnslagK9sak(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+    return Promise.resolve(fakeK9SakResponse.map(innslag => this.#beriker.berikSakInnslag(innslag, saksnummer)));
+  }
+
+  async #hentAlleInnslagK9klage(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+    return Promise.resolve(fakeK9KlageResponse.map(innslag => this.#beriker.berikKlageInnslag(innslag, saksnummer)));
+  }
+
+  async #hentAlleInnslagK9tilbake(saksnummer: string): Promise<BeriketHistorikkInnslag[]> {
+    return Promise.resolve(
+      fakeK9TilbakeResponse.map(innslag => this.#beriker.berikTilbakeInnslag(innslag, saksnummer)),
+    );
+  }
+
+  async hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk> {
+    const k9Sak = await fangFeilVedHenting('k9-sak', this.#hentAlleInnslagK9sak(saksnummer));
+    const k9Klage = await fangFeilVedHenting('k9-klage', this.#hentAlleInnslagK9klage(saksnummer));
+    const k9Tilbake = await fangFeilVedHenting('k9-tilbake', this.#hentAlleInnslagK9tilbake(saksnummer));
+    return {
+      innslag: [...k9Sak.innslag, ...k9Klage.innslag, ...k9Tilbake.innslag],
+      feilet: [...k9Sak.feilet, ...k9Klage.feilet, ...k9Tilbake.feilet],
+    };
   }
 }

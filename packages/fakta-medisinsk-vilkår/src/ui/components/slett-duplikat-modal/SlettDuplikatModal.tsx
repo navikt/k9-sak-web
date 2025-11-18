@@ -58,9 +58,9 @@ const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: Sl
           Når du fjerner et dokument som duplikat vil det bli lagt som et eget dokument i listen.
         </BodyShort>
         {removeDuplikatFeilet && (
-          <Box marginBlock="4 0">
+          <Box.New marginBlock="4 0">
             <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere.</Alert>
-          </Box>
+          </Box.New>
         )}
         <div className={styles.buttonContainer}>
           <Button

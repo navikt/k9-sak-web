@@ -3,41 +3,31 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase';
-import Uttak from '../../components/Uttak';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak } from '@k9-sak-web/types';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({
-    behandling,
-    uttaksperioder,
-    utsattePerioder,
-    kvoteInfo,
-    arbeidsgiverOpplysningerPerId,
-    aksjonspunkter,
-    alleKodeverk,
-    erFagytelsetypeLivetsSluttfase,
-    submitCallback,
-    virkningsdatoUttakNyeRegler,
-    isReadOnly,
-  }) => (
-    <>
-      <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
-      <Uttak
-        uuid={behandling.uuid}
-        uttaksperioder={uttaksperioder}
-        utsattePerioder={utsattePerioder}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        aksjonspunkter={aksjonspunkter}
-        erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
-        submitCallback={submitCallback}
-        virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
-        readOnly={isReadOnly}
-      />
-    </>
-  );
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    const { kvoteInfo, hentBehandling, erOverstyrer, isReadOnly } = props;
+    const { uttak, behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
+    return (
+      <>
+        <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
+        <Uttak
+          uttak={uttak}
+          behandling={behandling}
+          aksjonspunkter={aksjonspunkter}
+          relevanteAksjonspunkter={relevanteAksjonspunkter}
+          hentBehandling={hentBehandling}
+          erOverstyrer={erOverstyrer}
+          readOnly={isReadOnly}
+        />
+      </>
+    );
+  };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
 
@@ -64,24 +54,10 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({
+  getData = ({ uttak }) => ({
     uttak,
-    arbeidsgiverOpplysningerPerId,
-    fagsak,
-    alleKodeverk,
-  }: {
-    uttak: any; // TODO: identifiser riktig type
-    fagsak: Fagsak;
-    arbeidsgiverOpplysningerPerId: any; // TODO: identifiser riktig type
-    alleKodeverk: any; // TODO: identifiser riktig type
-  }) => ({
-    uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
-    utsattePerioder: uttak?.utsattePerioder,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
-    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
-    arbeidsgiverOpplysningerPerId,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
-    alleKodeverk,
+    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
   });
 }
 

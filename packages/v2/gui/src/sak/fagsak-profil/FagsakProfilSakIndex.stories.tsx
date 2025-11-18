@@ -2,7 +2,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Button } from '@navikt/ds-react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import withKodeverkContext from '../../storybook/decorators/withKodeverkContext';
 import withMaxWidth from '../../storybook/decorators/withMaxWidth';
 import FagsakProfilSakIndex from './FagsakProfilSakIndex';

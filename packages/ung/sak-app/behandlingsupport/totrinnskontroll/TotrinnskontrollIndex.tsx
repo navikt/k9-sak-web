@@ -1,5 +1,5 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { FormState } from '@k9-sak-web/gui/sak/totrinnskontroll/components/FormState.js';
 import TotrinnskontrollSakIndexPropsTransformer from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -26,6 +26,7 @@ const getLagreFunksjon =
   (
     saksnummer: string,
     behandlingId: number,
+    behandlingUuid: string | undefined,
     behandlingVersjon: number,
     setAlleAksjonspunktTilGodkjent: (erGodkjent: boolean) => void,
     setVisBeslutterModal: (visModal: boolean) => void,
@@ -35,6 +36,7 @@ const getLagreFunksjon =
     const params = {
       saksnummer,
       behandlingId,
+      behandlingUuid,
       behandlingVersjon,
       bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
     };
@@ -74,7 +76,7 @@ const TotrinnskontrollIndex = ({
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
 
-  const alleKodeverk = useKodeverk();
+  const alleKodeverk = useKodeverk(behandling?.type);
 
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     UngSakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
@@ -111,6 +113,7 @@ const TotrinnskontrollIndex = ({
     getLagreFunksjon(
       fagsak.saksnummer,
       behandlingId,
+      behandling?.uuid,
       behandlingVersjon,
       setAlleAksjonspunktTilGodkjent,
       setVisBeslutterModal,
@@ -131,6 +134,7 @@ const TotrinnskontrollIndex = ({
     <>
       <TotrinnskontrollSakIndexPropsTransformer
         behandling={behandling}
+        behandlingType={behandling?.type?.kode}
         totrinnskontrollSkjermlenkeContext={totrinnArsaker || totrinnArsakerReadOnly}
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}

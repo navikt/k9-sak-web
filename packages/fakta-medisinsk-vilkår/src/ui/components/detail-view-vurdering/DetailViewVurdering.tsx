@@ -1,12 +1,12 @@
 import { Period } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DetailView, DetailViewProps } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Button } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import BehandlingType from '../../../constants/BehandlingType';
 import ContainerContext from '../../context/ContainerContext';
 import PeriodList from '../period-list/PeriodList';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './detailViewVurdering.module.css';
 
 type DetailViewVurderingProps = DetailViewProps & {
@@ -16,7 +16,7 @@ type DetailViewVurderingProps = DetailViewProps & {
 
 const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
   const { children, perioder, redigerVurdering, title } = props;
-  const { fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const { fagsakYtelseType, behandlingType, readOnly } = React.useContext(ContainerContext);
   const harPerioder = perioder.length > 0 && perioder[0].isValid();
 
   const skalViseRedigerVurderingKnapp =
@@ -32,7 +32,7 @@ const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
         redigerVurdering && (
           <WriteAccessBoundContent
             contentRenderer={() =>
-              skalViseRedigerVurderingKnapp && (
+              skalViseRedigerVurderingKnapp ? (
                 <Button
                   variant="tertiary"
                   size="xsmall"
@@ -41,8 +41,11 @@ const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
                 >
                   Rediger vurdering
                 </Button>
+              ) : (
+                <></>
               )
             }
+            readOnly={readOnly}
           />
         )
       }

@@ -6,6 +6,7 @@ import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
 import NattevåksperiodeoversiktController from '../nattevåksperiodeoversikt-controller/NattevåksperiodeoversiktController';
 import NattevåksperiodeoversiktMessages from '../nattevåksperiodeoversikt-messages/NattevåksperiodeoversiktMessages';
+import ContainerContext from '../../../context/ContainerContext';
 
 interface NattevåksperiodeoversiktProps {
   nattevåkData: NattevåkType;
@@ -15,6 +16,11 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
   const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode | null>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = nattevåkData;
+  const {
+    lagreNattevåkvurdering = () => {},
+    readOnly = false,
+    harAksjonspunktForNattevåk = false,
+  } = React.useContext(ContainerContext) || {};
 
   const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering();
   const vurderteNattevåksperioder = nattevåkData.finnVurdertePerioder();
@@ -32,7 +38,11 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
 
   return (
     <>
-      <NattevåksperiodeoversiktMessages nattevåkData={nattevåkData} />
+      <NattevåksperiodeoversiktMessages
+        nattevåkData={nattevåkData}
+        skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForNattevåk}
+        fortsettUtenEndring={() => lagreNattevåkvurdering(nattevåkData.vurderinger)}
+      />
       <NavigationWithDetailView
         navigationSection={() => (
           <Periodenavigasjon

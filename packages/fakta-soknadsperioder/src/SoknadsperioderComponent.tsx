@@ -8,8 +8,8 @@ import BehandlingPerioderårsakMedVilkår, {
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { BodyShort } from '@navikt/ds-react';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
@@ -310,7 +310,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     setTidslinjeSkala(zoomValue);
   };
 
-  const updateHorisontalNavigering = (nyFomDato: Dayjs) => {
+  const updateHorisontalNavigering = (nyFomDato: dayjs.Dayjs) => {
     if (nyFomDato.add(tidslinjeSkala, 'months').isSameOrAfter(getSenesteTom())) {
       const senesteTom = getSenesteTom();
       setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, tidslinjeSkala));

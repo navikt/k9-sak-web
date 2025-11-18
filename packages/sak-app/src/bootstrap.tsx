@@ -1,19 +1,33 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router';
+import {
+  BrowserRouter,
+  createRoutesFromChildren,
+  matchRoutes,
+  Route,
+  Routes,
+  useLocation,
+  useNavigationType,
+} from 'react-router';
 
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
-import AppIndex from './app/AppIndex';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
 import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
 import { AxiosError } from 'axios';
+import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
+import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
+import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
+import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
+import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
+import AppIndex from './app/AppIndex';
+import { RestApiProviderLayout } from './app/RestApiProviderLayout.js';
+import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
+import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
@@ -25,6 +39,7 @@ init({
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,
+  enableLogs: true,
   integrations: [
     Sentry.breadcrumbsIntegration({ console: false }),
     Sentry.reactRouterV6BrowserTracingIntegration({
@@ -47,7 +62,7 @@ init({
           String(exception.message),
           String(requestUrl.pathname),
         ];
-        event.extra.callId = exception.response.config.headers['Nav-Callid'];
+        event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
       } else if (exception instanceof ExtendedApiError) {
         event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
         event.extra.callId = exception.navCallid;
@@ -58,7 +73,9 @@ init({
       }
     } catch (e) {
       try {
-        event.exception.values.push(e);
+        if (event.exception?.values != null) {
+          event.exception.values.push(e);
+        }
         console.error('Sentry beforeSend failure. Will send the original event with extra error attached', e);
       } catch (e2) {
         console.error(
@@ -72,9 +89,23 @@ init({
   },
 });
 
+const basePath = '/k9/web';
+
+const [sakAuthFixer, klageAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+  // Vi må ha ein unik AuthFixer instans pr backend
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-sak'),
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-klage'),
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-tilbake'),
+);
+configureK9SakClient(sakAuthFixer);
+configureK9KlageClient(klageAuthFixer);
+configureK9TilbakeClient(tilbakeAuthFixer);
+
 const store = configureStore();
 
-const renderFunc = async Component => {
+const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+
+const renderFunc = () => {
   /**
    * Redirecte til riktig basename om man kommer hit uten
    * Vil kunne forekomme lokalt og i tester
@@ -96,19 +127,29 @@ const renderFunc = async Component => {
     }
   };
 
-  await prepare();
-  const root = createRoot(app);
-  root.render(
-    <Provider store={store}>
-      <BrowserRouter basename="/k9/web">
-        <RestApiProvider>
-          <RestApiErrorProvider>
-            <Component />
-          </RestApiErrorProvider>
-        </RestApiProvider>
-      </BrowserRouter>
-    </Provider>,
-  );
+  const run = () => {
+    const root = createRoot(app);
+    root.render(
+      <Provider store={store}>
+        <BrowserRouter basename={basePath}>
+          <SentryRoutes>
+            <Route element={<RootLayout />}>
+              <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
+              <Route element={<RestApiProviderLayout />}>
+                <Route path="*" element={<AppIndex />} />
+              </Route>
+            </Route>
+          </SentryRoutes>
+        </BrowserRouter>
+      </Provider>,
+    );
+  };
+  prepare()
+    .then(run)
+    .catch(err => {
+      console.error(`bootstrap prepare failed, will start running anyways`, err);
+      run();
+    });
 };
 
-void renderFunc(AppIndex);
+renderFunc();

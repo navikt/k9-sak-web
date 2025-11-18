@@ -4,6 +4,7 @@ interface InnleggelsesperiodeVurdering {
   id: string;
   periode: Period;
   erInnleggelsesperiode: true;
+  manglerLegeerklæring?: boolean;
 }
 
 export default InnleggelsesperiodeVurdering;

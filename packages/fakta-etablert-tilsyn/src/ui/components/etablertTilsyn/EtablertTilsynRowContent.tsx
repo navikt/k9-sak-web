@@ -1,5 +1,5 @@
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
-import dayjs from 'dayjs';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import Kilde from '../../../types/Kilde';
 import EtablertTilsynDag from './EtablertTilsynDag';
@@ -26,17 +26,17 @@ const EtablertTilsynRowContent = ({ etablertTilsyn, etablertTilsynSmurt, tilsynP
     v.periode.asListOfDays().map(date => ({ date, tidPerDag: v.tidPerDag })),
   );
 
-  const mandag = etablertTilsynDager.find(v => dayjs(v.date).day() === 1);
-  const tirsdag = etablertTilsynDager.find(v => dayjs(v.date).day() === 2);
-  const onsdag = etablertTilsynDager.find(v => dayjs(v.date).day() === 3);
-  const torsdag = etablertTilsynDager.find(v => dayjs(v.date).day() === 4);
-  const fredag = etablertTilsynDager.find(v => dayjs(v.date).day() === 5);
+  const mandag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 1);
+  const tirsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 2);
+  const onsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 3);
+  const torsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 4);
+  const fredag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 5);
 
-  const mandagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 1);
-  const tirsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 2);
-  const onsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 3);
-  const torsdagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 4);
-  const fredagSmurt = etablertTilsynSmurtDager.find(v => dayjs(v.date).day() === 5);
+  const mandagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 1);
+  const tirsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 2);
+  const onsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 3);
+  const torsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 4);
+  const fredagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 5);
 
   const timerSmurt = etablertTilsynSmurtDager.find(v => v.tidPerDag)?.tidPerDag;
 

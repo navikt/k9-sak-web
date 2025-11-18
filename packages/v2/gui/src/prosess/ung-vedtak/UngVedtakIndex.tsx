@@ -1,7 +1,6 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
-import { Heading } from '@navikt/ds-react';
-import { useContext } from 'react';
-import { UngSakClientContext } from '../../app/UngSakClientContext';
+import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { Box, Heading } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -22,21 +21,35 @@ export const UngVedtakIndex = ({
   vilkar,
   isReadOnly,
 }: UngVedtakIndexProps) => {
-  const ungSakClient = useContext(UngSakClientContext);
-  const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
+  const ungVedtakBackendClient = new UngVedtakBackendClient();
+  const {
+    data: vedtaksbrevValgResponse,
+    isLoading,
+    refetch: refetchVedtaksbrevValg,
+  } = useQuery({
+    queryKey: ['vedtaksbrevValg', behandling.id],
+    queryFn: async () => {
+      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id);
+      return response;
+    },
+  });
   return (
-    <>
-      <Heading size="small" level="2">
+    <Box.New paddingInline="4 8" paddingBlock="2">
+      <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
-      <UngVedtak
-        aksjonspunkter={aksjonspunkter}
-        api={ungVedtakBackendClient}
-        behandling={behandling}
-        submitCallback={submitCallback}
-        vilkår={vilkar}
-        readOnly={isReadOnly}
-      />
-    </>
+      {!isLoading && (
+        <UngVedtak
+          aksjonspunkter={aksjonspunkter}
+          api={ungVedtakBackendClient}
+          behandling={behandling}
+          submitCallback={submitCallback}
+          vilkår={vilkar}
+          readOnly={isReadOnly}
+          vedtaksbrevValgResponse={vedtaksbrevValgResponse}
+          refetchVedtaksbrevValg={refetchVedtaksbrevValg}
+        />
+      )}
+    </Box.New>
   );
 };

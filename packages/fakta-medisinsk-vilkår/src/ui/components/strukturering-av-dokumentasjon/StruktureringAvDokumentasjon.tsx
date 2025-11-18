@@ -26,12 +26,11 @@ import Innleggelsesperiodeoversikt from '../innleggelsesperiodeoversikt/Innlegge
 import SignertSeksjon from '../signert-seksjon/SignertSeksjon';
 import ActionType from './actionTypes';
 import dokumentReducer from './reducer';
-import styles from './struktureringAvDokumentasjon.module.css';
 
 interface StruktureringAvDokumentasjonProps {
   navigerTilNesteSteg: () => void;
   hentSykdomsstegStatus: () => Promise<[SykdomsstegStatusResponse, Dokument[]]>;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
+  sykdomsstegStatus: SykdomsstegStatusResponse | null;
 }
 
 const StruktureringAvDokumentasjon = ({
@@ -144,14 +143,15 @@ const StruktureringAvDokumentasjon = ({
       <DokumentoversiktMessages
         dokumentoversikt={dokumentoversikt}
         harRegistrertDiagnosekode={
-          !skalViseInnleggelsesperioderOgDiagnosekoder || !sykdomsstegStatus.manglerDiagnosekode
+          !skalViseInnleggelsesperioderOgDiagnosekoder || !sykdomsstegStatus?.manglerDiagnosekode
         }
-        kanNavigereVidere={nesteStegErVurderingFn(sykdomsstegStatus)}
+        kanNavigereVidere={sykdomsstegStatus ? nesteStegErVurderingFn(sykdomsstegStatus) : false}
         navigerTilNesteSteg={navigerTilNesteSteg}
       />
       {dokumentoversikt?.harDokumenter() === true && (
-        <div className={styles.dokumentoversikt}>
+        <div>
           <NavigationWithDetailView
+            noBorder
             navigationSection={() => (
               <>
                 <Dokumentnavigasjon
@@ -161,7 +161,7 @@ const StruktureringAvDokumentasjon = ({
                   valgtDokument={valgtDokument}
                   expandedByDefault
                 />
-                <Box marginBlock="6 0">
+                <Box.New marginBlock="6 0">
                   <Dokumentnavigasjon
                     tittel="Andre dokumenter"
                     dokumenter={dokumentoversikt.strukturerteDokumenter}
@@ -169,29 +169,33 @@ const StruktureringAvDokumentasjon = ({
                     valgtDokument={valgtDokument}
                     displayFilterOption
                   />
-                </Box>
+                </Box.New>
               </>
             )}
             showDetailSection={visDokumentDetails}
-            detailSection={() => (
-              <Dokumentdetaljer
-                dokument={valgtDokument}
-                onChange={sjekkStatus}
-                editMode={visRedigeringAvDokument}
-                onEditClick={() => dispatch({ type: ActionType.REDIGER_DOKUMENT })}
-                strukturerteDokumenter={dokumentoversikt?.strukturerteDokumenter}
-              />
-            )}
+            detailSection={() =>
+              valgtDokument ? (
+                <Dokumentdetaljer
+                  dokument={valgtDokument}
+                  onChange={sjekkStatus}
+                  editMode={visRedigeringAvDokument}
+                  onEditClick={() => dispatch({ type: ActionType.REDIGER_DOKUMENT })}
+                  strukturerteDokumenter={dokumentoversikt?.strukturerteDokumenter}
+                />
+              ) : (
+                <></>
+              )
+            }
           />
 
           {skalViseInnleggelsesperioderOgDiagnosekoder && (
-            <Box marginBlock="16 0">
+            <Box.New marginBlock="16 0">
               <DokumentasjonFooter
                 firstSectionRenderer={() => <Innleggelsesperiodeoversikt onInnleggelsesperioderUpdated={sjekkStatus} />}
                 secondSectionRenderer={() => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} />}
                 thirdSectionRenderer={() => <SignertSeksjon harGyldigSignatur={dokumentoversikt.harGyldigSignatur()} />}
               />
-            </Box>
+            </Box.New>
           )}
         </div>
       )}

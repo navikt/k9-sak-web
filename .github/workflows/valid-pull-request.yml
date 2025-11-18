@@ -1,4 +1,8 @@
 name: Valider pull request
+permissions:
+  contents: read
+  packages: read
+  pull-requests: write
 on: [pull_request]
 jobs:
   test:
@@ -14,3 +18,7 @@ jobs:
     secrets: inherit
     with:
       run-build: true
+
+  knip:
+    uses: ./.github/workflows/knip.yml
+    secrets: inherit

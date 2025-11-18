@@ -1,17 +1,21 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Heading } from '@navikt/ds-react';
-import type { AksjonspunktDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import TilkjentYtelse, { type PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import { FeriepengerPanel, type FeriepengerPrÅr } from './feriepenger/FeriepengerPanel.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 const perioderMedClassName: PeriodeMedId[] = [];
 
@@ -25,7 +29,7 @@ const formatPerioder = (perioder?: BeregningsresultatPeriodeDto[]): PeriodeMedId
   return perioderMedClassName;
 };
 
-const { MANUELL_TILKJENT_YTELSE } = AksjonspunktCodes;
+const { MANUELL_TILKJENT_YTELSE } = aksjonspunktCodes;
 
 const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter?: AksjonspunktDto[]): AksjonspunktDto | undefined =>
   alleAksjonspunkter
@@ -44,6 +48,8 @@ interface PureOwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
+  showAndelDetails?: boolean;
+  feriepengerPrÅr: FeriepengerPrÅr;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -55,6 +61,8 @@ const TilkjentYtelsePanelImpl = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   personopplysninger,
+  showAndelDetails,
+  feriepengerPrÅr,
 }: PureOwnProps) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -72,7 +80,17 @@ const TilkjentYtelsePanelImpl = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           kodeverkNavnFraKode={kodeverkNavnFraKode}
           personopplysninger={personopplysninger}
+          showAndelDetails={showAndelDetails}
         />
+      )}
+
+      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr.size > 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <FeriepengerPanel
+            feriepengerPrÅr={feriepengerPrÅr}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          />
+        </div>
       )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (

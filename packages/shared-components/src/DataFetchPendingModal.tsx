@@ -1,5 +1,5 @@
 import { HGrid, Label, Loader, Modal } from '@navikt/ds-react';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './dataFetchPendingModal.module.css';
 
@@ -55,7 +55,7 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
     return (
       <Modal className={styles.modal} open aria-label={pendingMessage} onClose={doNothing}>
         <Modal.Body>
-          <HGrid gap="1" columns={{ xs: '2fr 10fr' }}>
+          <HGrid gap="space-4" columns={{ xs: '2fr 10fr' }}>
             <div className="relative">
               <Loader className="loader" variant="neutral" size="xlarge" title="venter..." />
               <div className={styles.divider} />

@@ -1,9 +1,11 @@
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import { UngSakClientContext } from '@k9-sak-web/gui/app/UngSakClientContext.js';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
 import {
@@ -13,9 +15,8 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { BehandlingDtoType } from '@navikt/k9-klage-typescript-client';
 import { Location } from 'history';
-import { useCallback, useContext } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
@@ -64,8 +65,7 @@ export const FagsakProfileIndex = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const ungSakClient = useContext(UngSakClientContext);
-  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(ungSakClient);
+  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient('ungSak');
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype,
@@ -83,6 +83,22 @@ export const FagsakProfileIndex = ({
       }),
     [fagsak.saksnummer],
   );
+
+  const { behandlingerV2, fagsakV2 } = useMemo(() => {
+    const behandlingerCopy = JSON.parse(JSON.stringify(alleBehandlinger));
+    const fagsakCopy = JSON.parse(JSON.stringify(fagsak));
+
+    behandlingerCopy.forEach(behandling => {
+      const erTilbakekreving = erTilbakekrevingType(behandling.type.kode);
+      konverterKodeverkTilKode(behandling, erTilbakekreving);
+    });
+    konverterKodeverkTilKode(fagsakCopy, false);
+
+    return {
+      behandlingerV2: behandlingerCopy,
+      fagsakV2: fagsakCopy,
+    };
+  }, [alleBehandlinger, fagsak]);
 
   return (
     <div className={styles.panelPadding}>
@@ -111,17 +127,11 @@ export const FagsakProfileIndex = ({
                 behandlendeEnheter={behandlendeEnheter}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                showAsDisabled={isProd()}
               />
             );
           }}
           renderBehandlingVelger={() => {
-            const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
-            const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
-            const erTilbakekreving = alleBehandlinger.some(
-              behandling => behandling.type.kode === BehandlingDtoType.TILBAKEKREVING,
-            );
-            konverterKodeverkTilKode(behandlingerV2, erTilbakekreving);
-            konverterKodeverkTilKode(fagsakV2, erTilbakekreving);
             return (
               <BehandlingVelgerSakV2
                 behandlinger={behandlingerV2}

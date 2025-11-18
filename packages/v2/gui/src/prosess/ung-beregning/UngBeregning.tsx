@@ -1,30 +1,26 @@
 import {
-  AksjonspunktDtoStatus,
-  type AksjonspunktDto,
-  type KontrollerInntektDto,
-  type UngdomsytelseSatsPeriodeDto,
-} from '@k9-sak-web/backend/ungsak/generated';
+  ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
+  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { ArbeidOgInntekt } from './ArbeidOgInntekt';
 import { BarnPanel } from './BarnPanel';
-import { DagsatsOgUtbetaling } from './DagsatsOgUtbetaling';
-import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
+import { DagsatsOgUtbetaling } from './dagsats-og-utbetaling/DagsatsOgUtbetaling';
 import type { Barn } from './types/Barn';
+import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
 
 interface Props {
-  behandling: { uuid: string };
+  behandling: { uuid: string; versjon: number };
   api: UngBeregningBackendApiType;
   barn: Barn[];
   submitCallback: (data: unknown) => Promise<any>;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
 }
-
-const sortSatser = (data: UngdomsytelseSatsPeriodeDto[]) =>
-  data?.toSorted((a, b) => new Date(a.fom).getTime() - new Date(b.fom).getTime()).toReversed();
 
 const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   const { kontrollperioder } = data;
@@ -41,15 +37,9 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
 };
 
 const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
-  const {
-    data: satser,
-    isLoading: satserIsLoading,
-    isSuccess: satserSuccess,
-    isError: satserIsError,
-  } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
+  useQuery({
     queryKey: ['satser', behandling.uuid],
-    queryFn: () => api.getSatser(behandling.uuid),
-    select: sortSatser,
+    queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
   });
 
   const {
@@ -57,16 +47,22 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     isLoading: kontrollInntektIsLoading,
     isError: kontrollInntektIsError,
   } = useQuery({
-    queryKey: ['kontrollInntekt', behandling.uuid],
+    queryKey: ['kontrollInntekt', behandling.uuid, behandling.versjon],
     queryFn: () => api.getKontrollerInntekt(behandling.uuid),
     select: sortInntekt,
   });
 
-  if (satserIsLoading || kontrollInntektIsLoading) {
-    return <Loader size="large" />;
-  }
+  useQuery({
+    queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
+    queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
+  });
 
-  if (satserIsError || kontrollInntektIsError) {
+  const { data: arbeidsgivere } = useQuery({
+    queryKey: ['arbeidsgivere', behandling.uuid],
+    queryFn: () => api.getArbeidsgiverOpplysninger(behandling.uuid),
+  });
+
+  if (kontrollInntektIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
@@ -75,45 +71,52 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
   const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
   const harUløstAksjonspunkt = aksjonspunkt && aksjonspunkt.status === AksjonspunktDtoStatus.OPPRETTET;
   return (
-    <Box paddingInline="4 8" paddingBlock="2">
-      <Box minHeight="100svh">
+    <Box.New paddingInline="4 8" paddingBlock="2">
+      <Box.New minHeight="100svh">
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        <Tabs defaultValue={aksjonspunkt ? 'arbeid' : 'dagsats'}>
-          <Tabs.List>
-            {harInntekt && (
-              <Tabs.Tab
-                value="arbeid"
-                label="Arbeid og inntekt"
-                icon={
-                  harUløstAksjonspunkt && (
-                    <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--a-icon-warning)" />
-                  )
-                }
-              />
-            )}
-            {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
-            {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
-          </Tabs.List>
-          <Box maxWidth="860px">
-            <Tabs.Panel value="arbeid">
-              {inntekt?.kontrollperioder && (
-                <ArbeidOgInntekt
-                  submitCallback={submitCallback}
-                  inntektKontrollperioder={inntekt.kontrollperioder}
-                  isReadOnly={isReadOnly}
+        {kontrollInntektIsLoading ? (
+          <Loader size="large" />
+        ) : (
+          <Tabs defaultValue={aksjonspunkt ? 'inntekt' : 'dagsats'}>
+            <Tabs.List>
+              {harInntekt && (
+                <Tabs.Tab
+                  value="inntekt"
+                  label="Inntekt"
+                  icon={
+                    harUløstAksjonspunkt && (
+                      <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--ax-text-warning-decoration)" />
+                    )
+                  }
                 />
               )}
+              {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
+              {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
+            </Tabs.List>
+            <Box.New maxWidth="860px">
+              <Tabs.Panel value="inntekt">
+                {inntekt?.kontrollperioder && (
+                  <ArbeidOgInntekt
+                    submitCallback={submitCallback}
+                    inntektKontrollperioder={inntekt.kontrollperioder}
+                    isReadOnly={isReadOnly}
+                    arbeidsgivere={arbeidsgivere}
+                  />
+                )}
+              </Tabs.Panel>
+            </Box.New>
+            <Tabs.Panel value="barn">
+              <BarnPanel barn={barn} />
             </Tabs.Panel>
-          </Box>
-          <Tabs.Panel value="barn">
-            <BarnPanel barn={barn} />
-          </Tabs.Panel>
-          <Tabs.Panel value="dagsats">{satserSuccess && <DagsatsOgUtbetaling satser={satser} />}</Tabs.Panel>
-        </Tabs>
-      </Box>
-    </Box>
+            <Tabs.Panel value="dagsats">
+              <DagsatsOgUtbetaling api={api} behandling={behandling} />
+            </Tabs.Panel>
+          </Tabs>
+        )}
+      </Box.New>
+    </Box.New>
   );
 };
 

@@ -1,0 +1,38 @@
+.headerColumn {
+  font-size: 1rem;
+  border-bottom: 1px solid #bbb;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.alertRow {
+  margin: 1rem 0;
+}
+
+.alertRow :global(.aksel-alert__wrapper) {
+  max-width: 100% !important;
+}
+
+.alertRow:global(.aksel-alert) {
+  padding: 0.5rem 1rem !important;
+}
+
+.redigerDato {
+  margin-left: auto !important;
+  margin-bottom: 1rem !important;
+}
+
+.oppholdRow {
+  border-bottom: 1px solid rgb(187 187 187);
+  background: repeating-linear-gradient(-70deg, #bbb, #bbb 1px, #eceef0 1px, #eceef0 8px);
+  height: 18px;
+  margin: -1px 0 0;
+  opacity: 0.8;
+}
+
+@media screen and (width <= 1850px) {
+  .tableContainer {
+    max-width: none;
+    overflow-y: hidden;
+  }
+}

@@ -1,8 +1,8 @@
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
-import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, fn, userEvent } from 'storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
 import type { Behandling } from './types/Behandling';
 import type { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
@@ -148,7 +148,6 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeDisabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeEnabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
-    await waitFor(() => expect(args.onSubmit).toHaveBeenCalledTimes(1));
     await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
       fatterVedtakAksjonspunktDto: {
         '@type': '5016',
@@ -206,7 +205,6 @@ export const GodkjennerVedtak: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
-    await waitFor(() => expect(args.onSubmit).toHaveBeenCalledTimes(1));
     await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
       fatterVedtakAksjonspunktDto: {
         '@type': '5016',
@@ -265,5 +263,78 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
     await expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
+  },
+};
+
+export const Tilbakekreving: Story = {
+  args: {
+    behandling: {
+      type: 'BT-007',
+      status: 'FVED',
+      toTrinnsBehandling: true,
+      behandlingsresultat: {
+        type: 'IKKE_FASTSATT',
+      },
+    },
+    behandlingType: behandlingType.TILBAKEKREVING,
+    location,
+    onSubmit: fn(),
+    behandlingKlageVurdering: undefined,
+    createLocationForSkjermlenke: () => location,
+    readOnly: false,
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '7003',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'VEDTAK',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5004',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'TILBAKEKREVING',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5002',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+      {
+        skjermlenkeType: 'FORELDELSE',
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: '5003',
+            besluttersBegrunnelse: undefined,
+            totrinnskontrollGodkjent: undefined,
+            vurderPaNyttArsaker: [],
+            arbeidsforholdDtos: [],
+            beregningDtoer: [],
+          },
+        ],
+      },
+    ],
   },
 };

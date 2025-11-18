@@ -40,7 +40,7 @@ const vurderingControllerReducer = (state: State, action: Action): State => {
       return {
         ...state,
         lagringAvVurderingPågår: false,
-        perioderMedEndring: null,
+        perioderMedEndring: [],
         overlappendePeriodeModalOpen: false,
       };
     case ActionType.LAGRE_VURDERING_FEILET:
@@ -61,8 +61,8 @@ const vurderingControllerReducer = (state: State, action: Action): State => {
         ...state,
         overlappendePeriodeModalOpen: true,
         sjekkForEksisterendeVurderingerPågår: false,
-        perioderMedEndring: action.perioderMedEndring,
-        vurderingsversjonTilLagringFraModal: action.vurderingsversjonTilLagringFraModal,
+        perioderMedEndring: action.perioderMedEndring ?? [],
+        vurderingsversjonTilLagringFraModal: action.vurderingsversjonTilLagringFraModal ?? null,
       };
     case ActionType.HENT_DATA_TIL_VURDERING:
       return {
@@ -71,7 +71,7 @@ const vurderingControllerReducer = (state: State, action: Action): State => {
         hentDataTilVurderingHarFeilet: false,
       };
     case ActionType.HENTET_DATA_TIL_VURDERING: {
-      const dokumenter = action.dokumenter?.sort(dokumentSorter);
+      const dokumenter = (action.dokumenter ?? []).sort(dokumentSorter);
       return {
         ...state,
         dokumenter,

@@ -1,9 +1,9 @@
 import type {
-  AksjonspunktDto,
-  BehandlingDto,
-  VilkårMedPerioderDto,
-  VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { dateStringSorter, formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -11,6 +11,9 @@ import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
@@ -26,6 +29,19 @@ const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePer
     )
     .sort((a, b) => (a.periode.fom && b.periode.fom ? dateStringSorter(a.periode.fom, b.periode.fom) : 0))
     .reverse();
+};
+
+const getIconForVilkarStatus = (vilkarStatus: string, harAktivtAksjonspunkt: boolean) => {
+  if (vilkarStatus === vilkårStatus.OPPFYLT) {
+    return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
+  }
+  if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
+    return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
+  }
+  if (vilkarStatus === vilkårStatus.IKKE_VURDERT && harAktivtAksjonspunkt) {
+    return <AksjonspunktIkon size="small" />;
+  }
+  return null;
 };
 
 export interface VilkarresultatMedOverstyringProsessIndexProps {
@@ -49,6 +65,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   visPeriodisering: boolean;
   vilkar: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
+  skjulOverstyring?: boolean;
 }
 
 export const VilkarresultatMedOverstyringProsessIndex = ({
@@ -67,9 +84,13 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
   visPeriodisering,
   vilkar,
   visAllePerioder,
+  skjulOverstyring = false,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
+  const harAktivtAksjonspunkt = aksjonspunkter.some(
+    aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET,
+  );
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
@@ -103,12 +124,13 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           links={perioder.map((periode, index) => ({
             active: activeTab === index,
             label: `${periode.periode.fom && formatDate(periode.periode.fom)} - ${periode.periode.tom && formatDate(periode.periode.tom)}`,
+            icon: getIconForVilkarStatus(periode.vilkarStatus, harAktivtAksjonspunkt),
           }))}
           onClick={setActiveTab}
           heading="Perioder"
         />
       </div>
-      <div className={styles.contentContainer}>
+      <div>
         <VilkarresultatMedOverstyringHeader
           aksjonspunkter={aksjonspunkter}
           erOverstyrt={erOverstyrt}
@@ -119,6 +141,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           panelTittelKode={panelTittelKode}
           periode={activePeriode}
           toggleOverstyring={toggleOverstyring}
+          skjulOverstyring={skjulOverstyring}
         />
         <VilkarresultatMedOverstyringFormPeriodisert
           key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}

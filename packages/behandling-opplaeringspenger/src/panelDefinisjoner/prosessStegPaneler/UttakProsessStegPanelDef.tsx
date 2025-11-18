@@ -2,35 +2,32 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import Uttak from '../../components/Uttak';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({
-    behandling,
-    uttaksperioder,
-    utsattePerioder,
-    arbeidsgiverOpplysningerPerId,
-    aksjonspunkter,
-    alleKodeverk,
-    submitCallback,
-    virkningsdatoUttakNyeRegler,
-    isReadOnly,
-  }) => (
-    <Uttak
-      uuid={behandling.uuid}
-      uttaksperioder={uttaksperioder}
-      utsattePerioder={utsattePerioder}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      aksjonspunkter={aksjonspunkter}
-      alleKodeverk={alleKodeverk}
-      submitCallback={submitCallback}
-      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
-      readOnly={isReadOnly}
-    />
-  );
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return (
+      <Uttak
+        uttak={deepCopyProps.uttak}
+        behandling={deepCopyProps.behandling}
+        aksjonspunkter={deepCopyProps.aksjonspunkter}
+        relevanteAksjonspunkter={deepCopyProps.relevanteAksjonspunkter}
+        hentBehandling={props.hentBehandling}
+        erOverstyrer={props.erOverstyrer}
+        readOnly={props.isReadOnly}
+      />
+    );
+  };
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
+    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+    aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -55,13 +52,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
-    utsattePerioder: uttak?.utsattePerioder,
-    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
-    arbeidsgiverOpplysningerPerId,
-    alleKodeverk,
-  });
+  getData = ({ uttak }) => ({ uttak, relevanteAksjonspunkter: this.getAksjonspunktKoder() });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

@@ -1,8 +1,8 @@
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Button, ErrorMessage, HStack, Label, VStack } from '@navikt/ds-react';
-import { Datepicker } from '@navikt/ft-form-hooks';
+import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { guid } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
@@ -79,14 +79,20 @@ export const TilkjentYtelseNyPeriode = ({
 
   return (
     <div className={styles['periodeContainer']}>
-      <VStack gap="5">
-        <VStack gap="5">
+      <VStack gap="space-20">
+        <VStack gap="space-20">
           <Label size="small" as="p">
             Ny periode
           </Label>
-          <HStack gap="2">
-            <Datepicker name="nyPeriodeForm.fom" label="Fra" validate={[required, hasValidDate]} />
-            <Datepicker
+          <HStack gap="space-8">
+            <RhfDatepicker
+              control={formMethods.control}
+              name="nyPeriodeForm.fom"
+              label="Fra"
+              validate={[required, hasValidDate]}
+            />
+            <RhfDatepicker
+              control={formMethods.control}
               name="nyPeriodeForm.tom"
               label="Til"
               validate={[required, hasValidDate, dateAfterOrEqual(formState?.fom ?? '')]}

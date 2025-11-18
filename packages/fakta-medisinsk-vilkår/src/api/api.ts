@@ -22,7 +22,7 @@ export async function postNyVurdering(
   dryRun?: boolean,
 ): Promise<AnyType> {
   try {
-    const { perioder, resultat, tekst, dokumenter, type } = vurderingsversjonMedType;
+    const { perioder, resultat, tekst, dokumenter, type, manglerLegeerklæring } = vurderingsversjonMedType;
     return httpUtils.post(
       href,
       {
@@ -31,8 +31,9 @@ export async function postNyVurdering(
         perioder,
         resultat,
         tekst,
-        tilknyttedeDokumenter: dokumenter.map(dokument => dokument.id),
+        tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
         dryRun: dryRun || false,
+        manglerLegeerklæring: manglerLegeerklæring || false,
       },
       httpErrorHandler,
       { signal },
@@ -62,7 +63,7 @@ export async function postEndreVurdering(
   dryRun?: boolean,
 ): Promise<AnyType> {
   try {
-    const { perioder, resultat, tekst, dokumenter, versjon } = vurderingsversjon;
+    const { perioder, resultat, tekst, dokumenter, versjon, manglerLegeerklæring } = vurderingsversjon;
     return httpUtils.post(
       href,
       {
@@ -72,8 +73,9 @@ export async function postEndreVurdering(
         tekst,
         resultat,
         perioder,
-        tilknyttedeDokumenter: dokumenter.map(dokument => dokument.id),
+        tilknyttedeDokumenter: (dokumenter ?? []).map(dokument => dokument.id),
         dryRun: dryRun || false,
+        manglerLegeerklæring: manglerLegeerklæring || false,
       },
       httpErrorHandler,
       { signal },

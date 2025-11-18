@@ -1,9 +1,9 @@
-import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
 
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { CheckmarkIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
 
 interface RettVedDødVurderingsdetaljerProps {
@@ -22,7 +22,7 @@ const RettVedDødVurderingsdetaljer = ({ rettVedDød }: RettVedDødVurderingsdet
   return (
     <>
       <div className="mt-6 flex items-center">
-        <GreenCheckIcon size={19} />
+        <CheckmarkIcon />
         <p className="my-0 ml-1.5">{getRettVedDødUtfallTekst()}</p>
       </div>
       <div className="mt-6">

@@ -1,12 +1,19 @@
-import { BehandlingDtoBehandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
-import { FileSearchIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
-import { CheckboxField, Form } from '@navikt/ft-form-hooks';
-import { useQuery } from '@tanstack/react-query';
+import {
+  ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
+  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
+  type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { Alert, BodyShort, Box, Button, Label, VStack } from '@navikt/ds-react';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
+import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 import AvslagsårsakListe from './AvslagsårsakListe';
-import styles from './ungVedtak.module.css';
+import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
+import type { FormData } from './FormData';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
@@ -18,48 +25,96 @@ interface UngVedtakProps {
   submitCallback: (data: any) => Promise<any>;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
+  vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
+  refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValgResponse, Error>>;
 }
 
-const buildInitialValues = () => ({
-  redigerAutomatiskBrev: false,
-  hindreUtsendingAvBrev: false,
-});
+const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgResponse | undefined) =>
+  vedtaksbrevValg?.vedtaksbrevValg?.map(v => ({
+    dokumentMalType: v.dokumentMalType?.kilde,
+    hindreUtsendingAvBrev: !!v.hindret || false,
+    redigertHtml: v.redigertBrevHtml ?? '',
+    originalHtml: '',
+  })) ?? [];
 
-interface FormData {
-  redigerAutomatiskBrev: boolean;
-  hindreUtsendingAvBrev: boolean;
-}
-
-export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vilkår, readOnly }: UngVedtakProps) => {
+export const UngVedtak = ({
+  api,
+  behandling,
+  aksjonspunkter,
+  submitCallback,
+  vilkår,
+  readOnly,
+  vedtaksbrevValgResponse,
+  refetchVedtaksbrevValg,
+}: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
-    defaultValues: buildInitialValues(),
+    defaultValues: { vedtaksbrevValg: buildInitialValues(vedtaksbrevValgResponse) },
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
-  const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
-  const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
-  const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
+  const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
+  const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { refetch, isLoading: forhåndsvisningIsLoading } = useQuery({
-    queryKey: ['forhandsvisVedtaksbrev', behandling.id],
-    queryFn: async () => {
-      const response = await api.forhåndsvisVedtaksbrev(behandling.id);
+  const {
+    mutate: forhåndsvisVedtaksbrev,
+    isPending: forhåndsvisningIsLoading,
+    isError: forhåndsvisningHasError,
+    error: forhåndsvisningError,
+  } = useMutation({
+    mutationFn: async (dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType) => {
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);
       // Open the PDF in a new tab
       window.open(fileURL, '_blank');
       return response;
     },
-    enabled: false,
   });
 
-  const { data: vedtaksbrevValg, isLoading: vedtaksbrevValgIsLoading } = useQuery({
-    queryKey: ['vedtaksbrevValg', behandling.id],
-    queryFn: async () => {
-      const response = await api.vedtaksbrevValg(behandling.id);
+  const hentOriginalHtml = async (
+    dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType | undefined,
+  ) => {
+    if (dokumentMalType) {
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, true, false);
       return response;
+    }
+    return {};
+  };
+
+  const resetForm = async () => {
+    const resetValues = await refetchVedtaksbrevValg();
+    formMethods.reset({
+      vedtaksbrevValg: buildInitialValues(resetValues?.data),
+    });
+  };
+
+  const { mutate: lagreVedtaksbrev, isError: lagreVedtaksbrevError } = useMutation({
+    mutationFn: async ({
+      redigertHtml,
+      nullstill,
+      dokumentMalType,
+    }: {
+      redigertHtml: string;
+      nullstill?: boolean;
+      dokumentMalType: DokumentMalType;
+    }) => {
+      const requestData = {
+        behandlingId: behandling.id,
+        redigertHtml: redigertHtml || undefined,
+        redigert: nullstill ? false : true,
+        dokumentMalType,
+      };
+      await api.lagreVedtaksbrev(requestData);
+      if (nullstill) {
+        await resetForm();
+      }
     },
+  });
+
+  const { fields } = useFieldArray({
+    control: formMethods.control,
+    name: 'vedtaksbrevValg',
   });
 
   const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
@@ -70,70 +125,90 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     });
   };
 
+  const harFlereBrev = vedtaksbrevValgResponse?.vedtaksbrevValg && vedtaksbrevValgResponse?.vedtaksbrevValg?.length > 1;
+
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box marginBlock="4">
-        <HStack justify="space-between">
-          <VStack gap="4">
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
+      <Box.New marginBlock="4">
+        <VStack gap="space-16">
+          <div>
+            <Label size="small" as="p">
+              Resultat
+            </Label>
+            <BodyShort size="small">
+              {behandlingErInnvilget ? 'Ungdomsprogramytelse er innvilget' : 'Ungdomsprogramytelse er opphørt'}
+            </BodyShort>
+          </div>
+          {behandlingErAvslått && (
             <div>
               <Label size="small" as="p">
-                Resultat
+                Årsak til avslag
               </Label>
-              <BodyShort size="small">
-                {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er avslått'}
-              </BodyShort>
+              <AvslagsårsakListe vilkår={vilkår} />
             </div>
-            {behandlingErAvslått && (
-              <div>
-                <Label size="small" as="p">
-                  Årsak til avslag
-                </Label>
-                <AvslagsårsakListe vilkår={vilkår} />
-              </div>
+          )}
+
+          {harFlereBrev && (
+            <ContentMaxWidth>
+              <Alert variant="info" size="small">
+                Du har flere brev
+              </Alert>
+            </ContentMaxWidth>
+          )}
+          <VStack gap="space-16">
+            {fields.map((field, index) => {
+              const vedtaksbrevValg = vedtaksbrevValgResponse?.vedtaksbrevValg?.[index];
+
+              return (
+                <div key={field.id}>
+                  <Box.New
+                    borderWidth={index === 0 ? '0 0 1 0' : '0'}
+                    paddingBlock={readOnly ? '0' : '0 space-20'}
+                    width="450px"
+                  >
+                    {vedtaksbrevValgResponse?.harBrev && (
+                      <FritekstBrevpanel
+                        readOnly={readOnly}
+                        redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
+                        hentOriginalHtml={() => hentOriginalHtml(vedtaksbrevValg?.dokumentMalType)}
+                        lagreVedtaksbrev={lagreVedtaksbrev}
+                        handleForhåndsvis={() =>
+                          vedtaksbrevValg?.dokumentMalType && forhåndsvisVedtaksbrev(vedtaksbrevValg.dokumentMalType)
+                        }
+                        fieldIndex={index}
+                        vedtaksbrevValg={vedtaksbrevValg}
+                        forhåndsvisningIsLoading={forhåndsvisningIsLoading}
+                      />
+                    )}
+                  </Box.New>
+                </div>
+              );
+            })}
+            {lagreVedtaksbrevError && (
+              <ContentMaxWidth>
+                <Alert variant="error" size="small">
+                  Det har oppstått en feil under kommunikasjon med serveren, endringene vil ikke bli lagret. Kopier
+                  innholdet i brevet og prøv å last siden på nytt.
+                </Alert>
+              </ContentMaxWidth>
             )}
-            <div>
-              <Button
-                variant="tertiary"
-                onClick={() => refetch()}
-                size="small"
-                icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
-                loading={forhåndsvisningIsLoading}
-                type="button"
-                disabled={!vedtaksbrevValg?.harBrev || vedtaksbrevValgIsLoading}
-              >
-                Forhåndsvis brev
-              </Button>
-            </div>
-            {harAksjonspunkt && (
-              <div>
-                <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
-                  Fatt vedtak
-                </Button>
-              </div>
+            {forhåndsvisningHasError && (
+              <ContentMaxWidth>
+                <Alert variant="error" size="small">
+                  {forhåndsvisningError.message}
+                </Alert>
+              </ContentMaxWidth>
             )}
           </VStack>
-          <div className={styles.brevCheckboxContainer}>
-            <Fieldset legend="Valg for brev" size="small">
-              <div>
-                {vedtaksbrevValg?.kanOverstyreRediger && (
-                  <CheckboxField
-                    name="redigerAutomatiskBrev"
-                    label="Rediger automatisk brev"
-                    disabled={!vedtaksbrevValg.enableRediger || hindreUtsendingAvBrev || readOnly}
-                  />
-                )}
-                {vedtaksbrevValg?.kanOverstyreHindre && (
-                  <CheckboxField
-                    name="hindreUtsendingAvBrev"
-                    label="Hindre utsending av brev"
-                    disabled={!vedtaksbrevValg.enableHindre || redigerAutomatiskBrev || readOnly}
-                  />
-                )}
-              </div>
-            </Fieldset>
-          </div>
-        </HStack>
-      </Box>
-    </Form>
+        </VStack>
+        {harAksjonspunkt && !readOnly && (
+          <Box.New marginBlock="space-24 0">
+            <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
+              {harAksjonspunktMedTotrinnsbehandling ? 'Send til beslutter' : 'Fatt vedtak'}
+            </Button>
+          </Box.New>
+        )}
+      </Box.New>
+    </RhfForm>
   );
 };

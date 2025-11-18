@@ -1,9 +1,9 @@
-import { type AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated';
+import { type AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   GeneriskKodeverkoppslag,
+  type Kilde,
   type Kodeverkoppslag,
   type OrUndefined,
-  type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
 // Lag type av alle oppslagsobjekt som følger korrekt mønster med å vere ei liste av objekter med kilde property som er ein enum type.
@@ -12,15 +12,22 @@ import {
 // Får lage separate mekanismer for disse viss nødvendig.
 type EnumKodeverdierOppslag = Omit<
   AlleKodeverdierSomObjektResponse,
-  'avslagårsakerPrVilkårTypeKode' | 'landkoder' | 'språkkoder'
+  | 'avslagårsakerPrVilkårTypeKode'
+  | 'landkoder'
+  | 'språkkoder'
+  // Midlertidig utelatt inntil dei er fjerna frå serverdefinisjon:
+  | 'historikkAvklartSoeknadsperiodeTyper'
+  | 'historikkBegrunnelseTyper'
+  | 'historikkEndretFeltTyper'
+  | 'historikkEndretFeltVerdiTyper'
+  | 'historikkOpplysningTyper'
+  | 'historikkResultatTyper'
+  | 'historikkinnslagTyper'
 >;
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
 
-export class K9SakKodeverkoppslag
-  extends GeneriskKodeverkoppslag<EnumKodeverdierOppslag>
-  implements Kodeverkoppslag<EnumKodeverdierOppslag>
-{
+export class K9SakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
   constructor(alleKodeverdier: AlleKodeverdierSomObjektResponse) {
     super(alleKodeverdier);
   }
@@ -46,6 +53,13 @@ export class K9SakKodeverkoppslag
 
   avslagsårsaker<U extends OrUndefined = undefined>(kode: Kilde<EO, 'avslagsårsaker'>, undefinedIfNotFound?: U) {
     return this.finnObjektFraKilde('avslagsårsaker', kode, undefinedIfNotFound);
+  }
+
+  behandlingMerknadTyper<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'behandlingMerknadTyper'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('behandlingMerknadTyper', kode, undefinedIfNotFound);
   }
 
   behandlingResultatTyper<U extends OrUndefined = undefined>(
@@ -98,55 +112,6 @@ export class K9SakKodeverkoppslag
 
   historikkAktører<U extends OrUndefined = undefined>(kode: Kilde<EO, 'historikkAktører'>, undefinedIfNotFound?: U) {
     return this.finnObjektFraKilde('historikkAktører', kode, undefinedIfNotFound);
-  }
-
-  historikkAvklartSoeknadsperiodeTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkAvklartSoeknadsperiodeTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkAvklartSoeknadsperiodeTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkBegrunnelseTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkBegrunnelseTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkBegrunnelseTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkEndretFeltTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkEndretFeltTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkEndretFeltTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkEndretFeltVerdiTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkEndretFeltVerdiTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkEndretFeltVerdiTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkOpplysningTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkOpplysningTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkOpplysningTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkResultatTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkResultatTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkResultatTyper', kode, undefinedIfNotFound);
-  }
-
-  historikkinnslagTyper<U extends OrUndefined = undefined>(
-    kode: Kilde<EO, 'historikkinnslagTyper'>,
-    undefinedIfNotFound?: U,
-  ) {
-    return this.finnObjektFraKilde('historikkinnslagTyper', kode, undefinedIfNotFound);
   }
 
   inntektskategorier<U extends OrUndefined = undefined>(
@@ -278,5 +243,9 @@ export class K9SakKodeverkoppslag
 export class FailingK9SakKodeverkoppslag extends K9SakKodeverkoppslag {
   constructor() {
     super({} as AlleKodeverdierSomObjektResponse);
+  }
+
+  override finnObjektFraKilde(kodeverk: keyof EnumKodeverdierOppslag, kode: string): never {
+    throw new Error(`K9SakKodeverkoppslag er ikke initialisert. Kan ikke slå opp ${kodeverk} med kode ${kode}.`);
   }
 }

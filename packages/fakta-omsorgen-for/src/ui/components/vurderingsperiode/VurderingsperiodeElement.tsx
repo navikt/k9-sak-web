@@ -1,6 +1,6 @@
-import React, { type JSX } from 'react';
 import { Period } from '@fpsak-frontend/utils';
-import { ContentWithTooltip, GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/ft-plattform-komponenter';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import React, { type JSX } from 'react';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import styles from './vurderingsperiodeElement.module.css';
 
@@ -13,16 +13,20 @@ interface VurderingsperiodeElementProps {
 const renderIcon = (resultat: Vurderingsresultat) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
-        <GreenCheckIconFilled />
-      </ContentWithTooltip>
+      <CheckmarkCircleFillIcon
+        title="Vilkåret er oppfylt"
+        fontSize={24}
+        style={{ color: 'var(--ax-bg-success-strong)' }}
+      />
     );
   }
   if (resultat === Vurderingsresultat.IKKE_OPPFYLT) {
     return (
-      <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
-        <RedCrossIconFilled />
-      </ContentWithTooltip>
+      <XMarkOctagonFillIcon
+        title="Vilkåret er ikke oppfylt"
+        fontSize={24}
+        style={{ color: 'var(--ax-bg-danger-strong)' }}
+      />
     );
   }
   return null;

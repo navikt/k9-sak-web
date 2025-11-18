@@ -1,21 +1,12 @@
-.textArea {
-  margin-bottom: 2.25rem;
-}
-
 .buttonContainer {
   display: flex;
   gap: 0.625rem;
-  margin-top: 2.125rem;
 }
 
 .aksjonspunktHeading {
   margin-top: 2rem;
 }
 
-.textareaContainer {
-  margin-top: 2rem;
-}
-
-.errorMessage:global(.navds-error-message) {
+.errorMessage:global(.aksel-error-message) {
   margin-top: 1rem;
 }

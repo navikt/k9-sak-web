@@ -1,0 +1,32 @@
+.sats {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-8);
+}
+
+.dagsatsSection {
+  margin-top: var(--ax-space-20);
+}
+
+.firstHeaderCell {
+  padding-left: var(--ax-space-16);
+}
+
+.noBottomBorder > td,
+.noBottomBorder > th {
+  border-bottom: none;
+}
+
+.utbetalingText {
+  color: #156389;
+}
+
+.sum {
+  align-items: center;
+  background-color: #417da0;
+  border-radius: 4px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}

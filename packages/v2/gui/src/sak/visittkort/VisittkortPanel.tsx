@@ -1,9 +1,9 @@
 import {
-  PersonopplysningDtoNavBrukerKjonn as navBrukerKjonn,
-  PersonDtoPersonstatusType as personstatus,
-  type DirekteOvergangDto,
-  type RelatertSakDto,
-} from '@k9-sak-web/backend/k9sak/generated';
+  k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn,
+  k9_kodeverk_person_PersonstatusType as personstatus,
+  type k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
+  type k9_sak_kontrakt_fagsak_RelatertSakDto as RelatertSakDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
@@ -33,6 +33,12 @@ export interface VisittkortPanelProps {
   direkteOvergangFraInfotrygd?: DirekteOvergangDto;
   erPbSak?: boolean;
   erHastesak?: boolean;
+  hideVisittkortDetaljerPopup?: boolean;
+  ungdomsytelseDeltakerStatus?: {
+    deltakerErUtmeldt: boolean;
+    deltakerErIProgrammet: boolean;
+  };
+  erIkkeDigitalBruker?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -44,6 +50,9 @@ const VisittkortPanel = ({
   direkteOvergangFraInfotrygd,
   erPbSak,
   erHastesak,
+  hideVisittkortDetaljerPopup,
+  ungdomsytelseDeltakerStatus,
+  erIkkeDigitalBruker,
 }: VisittkortPanelProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -53,6 +62,7 @@ const VisittkortPanel = ({
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
           showPersonAge={isUngWeb()}
+          age={fagsakPerson.alder}
         />
       </div>
     );
@@ -65,6 +75,7 @@ const VisittkortPanel = ({
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
           showPersonAge={isUngWeb()}
+          age={fagsakPerson.alder}
           renderLabelContent={() => (
             <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
           )}
@@ -105,16 +116,28 @@ const VisittkortPanel = ({
 
   return (
     <div className={styles.container}>
-      <HStack gap="4">
-        <PersonCard
-          name={søker.navn}
-          fodselsnummer={søker.fnr}
-          gender={utledKjonn(søker.navBrukerKjonn)}
-          renderMenuContent={() => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />}
-          renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
-          showPersonAge={isUngWeb()}
-        />
-
+      <HStack gap="space-16">
+        <HStack>
+          <PersonCard
+            name={søker.navn}
+            fodselsnummer={søker.fnr}
+            gender={utledKjonn(søker.navBrukerKjonn)}
+            renderMenuContent={
+              hideVisittkortDetaljerPopup
+                ? undefined
+                : () => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />
+            }
+            renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
+            showPersonAge={isUngWeb()}
+            age={fagsakPerson.alder}
+          />
+          <div>
+            {ungdomsytelseDeltakerStatus?.deltakerErIProgrammet && (
+              <TagContainer tagVariant="success">I programmet</TagContainer>
+            )}
+            {ungdomsytelseDeltakerStatus?.deltakerErUtmeldt && <TagContainer tagVariant="error">Utmeldt</TagContainer>}
+          </div>
+        </HStack>
         {annenPart?.aktoerId && (
           <PersonCard
             name={annenPart.navn}
@@ -127,7 +150,7 @@ const VisittkortPanel = ({
 
         <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
         <div className={styles.pushRight}>
-          <HStack gap="2">
+          <HStack gap="space-8">
             {barnSoktFor?.map(barn => (
               <div className={styles.flexContainer} key={barn.aktoerId}>
                 <PersonCard
@@ -141,10 +164,15 @@ const VisittkortPanel = ({
               </div>
             ))}
           </HStack>
-          {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
-          {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
-          {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
-          {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
+          <div>
+            <HStack gap="space-8">
+              {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
+              {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
+              {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
+              {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
+              {erIkkeDigitalBruker && <TagContainer tagVariant="warning">Ikke-digital bruker</TagContainer>}
+            </HStack>
+          </div>
         </div>
       </HStack>
     </div>

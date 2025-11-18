@@ -1,6 +1,6 @@
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 
@@ -34,7 +34,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       />,
     );
 
-    expect(screen.getAllByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toHaveLength(2);
+    expect(screen.getAllByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toHaveLength(1);
     expect(screen.getByText('Du kommer nå til forsiden.')).toBeInTheDocument();
 
     expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();

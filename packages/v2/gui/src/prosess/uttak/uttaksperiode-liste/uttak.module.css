@@ -1,0 +1,108 @@
+.expanded {
+  padding: 1.125rem 0 0;
+  margin-top: -1px;
+}
+
+.uttakExpandButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  float: right;
+}
+
+.uttakExpandButtonExpanded {
+  transform: rotate(180deg);
+}
+
+.uttakIndikator {
+  height: 0.75rem;
+  border-radius: 0.3125rem 0.3125rem 0 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.uttakIndikatorAvslått {
+  background: #f1d8d4;
+  border: 1px solid #a13a28;
+}
+
+.uttakIndikatorInnvilget {
+  background: #cde7d8;
+  border: 1px solid #06893a;
+}
+
+.uttakIndikatorInnvilgetDelvis {
+  background: repeating-linear-gradient(-45deg, #9bd0b0, #9bd0b0 10px, #fff 10px, #fff 20px);
+}
+
+.uttakIndikatorInnvilgetDelvisInntekt {
+  background: repeating-linear-gradient(-90deg, #9bd0b0, #9bd0b0 5px, #fff 5px, #fff 10px);
+}
+
+.uttakUttaksgrad {
+  position: relative;
+  padding-top: 0.125rem;
+  width: 9rem;
+}
+
+.uttakUttaksgradTekst {
+  margin: 0;
+}
+
+.uttakIconContainer {
+  display: inline-flex;
+  vertical-align: bottom;
+  margin-right: 0.625rem;
+}
+
+.uttakIconWide svg {
+  width: 2.25rem;
+}
+
+.uttakExpandedRow {
+  background: #f1f1f1;
+}
+
+.uttakBehandlerIcon {
+  margin: 0 0.5rem 0 1.375rem;
+}
+
+.uttakLastColumn {
+  display: grid;
+  grid-template-columns: 6rem 30px;
+  grid-column-gap: 1.75rem;
+  align-items: center;
+}
+
+.borderLeft {
+  border-left: 1px solid #bbb;
+}
+
+.borderRight {
+  border-right: 1px solid #bbb;
+  width: 6.5rem;
+}
+
+:global .ReactCollapse--collapse {
+  transition: height 500ms;
+}
+
+.borderTop {
+  border-top: 1px solid rgb(187 187 187);
+}
+
+.collapseRow {
+  visibility: collapse;
+}
+
+.expandedRow {
+  border-bottom: 1px solid #bbb;
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
+}
+
+.uttakVilkarIconContainer svg {
+  vertical-align: middle;
+}

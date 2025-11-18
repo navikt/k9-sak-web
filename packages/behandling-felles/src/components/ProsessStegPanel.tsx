@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Fagsak, Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
-import MargMarkering from './MargMarkering';
-import InngangsvilkarPanel from './InngangsvilkarPanel';
-import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
-import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
+import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
+import InngangsvilkarPanel from './InngangsvilkarPanel';
+import MargMarkering from './MargMarkering';
+import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -30,6 +32,7 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
   lagreOverstyringUttak?: (params: any) => void;
   erOverstyrer?: boolean;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 const ProsessStegPanel = ({
@@ -44,7 +47,7 @@ const ProsessStegPanel = ({
   lagreOverstyrteAksjonspunkter,
   useMultipleRestApi,
   featureToggles,
-  lagreOverstyringUttak,
+  hentBehandling,
   erOverstyrer = false,
 }: OwnProps) => {
   const erHenlagtOgVedtakStegValgt =
@@ -110,6 +113,7 @@ const ProsessStegPanel = ({
           aksjonspunkter={valgtProsessSteg.getAksjonspunkter()}
           isReadOnly={valgtProsessSteg.getErReadOnly()}
           visAksjonspunktMarkering={delPaneler.length === 1}
+          noBorder={fagsak?.sakstype === FagsakYtelseType.UNGDOMSYTELSE}
         >
           {delPaneler.length === 1 && (
             <FadingPanel>
@@ -123,7 +127,7 @@ const ProsessStegPanel = ({
                     formData,
                     setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
-                    lagreOverstyringUttak,
+                    hentBehandling,
                     erOverstyrer,
                     ...delPaneler[0].getKomponentData(),
                     ...data,
@@ -141,6 +145,7 @@ const ProsessStegPanel = ({
               apentFaktaPanelInfo={apentFaktaPanelInfo}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               useMultipleRestApi={useMultipleRestApi}
+              featureToggles={featureToggles}
             />
           )}
         </MargMarkering>

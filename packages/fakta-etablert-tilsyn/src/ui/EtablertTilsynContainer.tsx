@@ -1,9 +1,9 @@
 import { get, Period } from '@fpsak-frontend/utils';
 import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { ChildEyesFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Tabs } from '@navikt/ds-react';
-import { ChildIcon, WarningIcon } from '@navikt/ft-plattform-komponenter';
-import { VurderingDtoResultat } from '@navikt/k9-sak-typescript-client';
+import { k9_kodeverk_sykdom_Resultat } from '@navikt/k9-sak-typescript-client/types';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import { useMemo } from 'react';
@@ -36,7 +36,9 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   return (
     <div className={cls}>
       {label}
-      {showWarningIcon && <WarningIcon />}
+      {showWarningIcon && (
+        <ExclamationmarkTriangleFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-text-warning-decoration)' }} />
+      )}
     </div>
   );
 };
@@ -71,7 +73,7 @@ const transformEtablertTilsynResponse = (response: TilsynResponse) => {
 const transformSykdomResponse = (response: SykdomResponse) => {
   const resterendeVurderingsperioder = response?.resterendeVurderingsperioder?.map(v => new Period(v.fom, v.tom));
   const sykdomsperioderSomIkkeErOppfylt = response.vurderingselementer
-    .filter(v => v.resultat !== VurderingDtoResultat.OPPFYLT)
+    .filter(v => v.resultat !== k9_kodeverk_sykdom_Resultat.OPPFYLT)
     .map(v => new Period(v.periode.fom, v.periode.tom));
   return [...sykdomsperioderSomIkkeErOppfylt, ...resterendeVurderingsperioder];
 };
@@ -130,10 +132,10 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     const nattevåkVurderinger = nattevåk?.vurderinger || [];
     return [
       ...bedredskapVurderinger
-        .filter(v => v.resultat === VurderingDtoResultat.OPPFYLT)
+        .filter(v => v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT)
         .map(v => new Period(v.periode.fom, v.periode.tom)),
       ...nattevåkVurderinger
-        .filter(v => v.resultat === VurderingDtoResultat.OPPFYLT)
+        .filter(v => v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT)
         .map(v => new Period(v.periode.fom, v.periode.tom)),
       ...innleggelsesperioder,
     ];
@@ -152,7 +154,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     <ContainerContext.Provider value={data}>
       <Infostripe
         content="Etablert tilsyn og vurdering av beredskap og nattevåk gjelder barnet og er felles for alle parter."
-        iconRenderer={() => <ChildIcon />}
+        iconRenderer={() => <ChildEyesFillIcon fontSize="1.5rem" />}
       />
       <div className={styles.mainComponent}>
         <Tabs defaultValue={getDefaultActiveTab(data)}>

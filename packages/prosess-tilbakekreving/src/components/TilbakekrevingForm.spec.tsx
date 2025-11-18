@@ -67,6 +67,11 @@ describe('<TilbakekrevingForm>', () => {
         tom: '2019-01-10',
         redusertBeloper: [],
         ytelser: [],
+        årsak: {
+          hendelseType: {
+            kode: '',
+          },
+        },
       },
     ] as DataForPeriode[];
 
