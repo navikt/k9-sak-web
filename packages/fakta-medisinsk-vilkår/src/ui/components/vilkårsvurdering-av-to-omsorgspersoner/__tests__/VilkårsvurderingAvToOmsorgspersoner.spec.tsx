@@ -1,5 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeAll, beforeEach, describe, it, vi } from 'vitest';
 import { dokumentSteg } from '../../../../types/Step';
 import Vurderingstype from '../../../../types/Vurderingstype';
 import ContainerContext from '../../../context/ContainerContext';
@@ -27,8 +28,6 @@ const vurderingsoversiktMock = {
     },
   ],
 } as any;
-
-window.scroll = () => null;
 
 const onFinishedMock = {
   fn: () => null,
@@ -238,8 +237,8 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
     });
 
     afterEach(() => {
-      httpGetSpy.mockClear();
-      httpPostSpy.mockClear();
+      httpGetSpy.mockReset();
+      httpPostSpy.mockReset();
       navigerTilNesteStegSpy.mockClear();
     });
 
@@ -257,7 +256,10 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      // Submit the form directly instead of clicking button (happy-dom compatibility)
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
@@ -281,7 +283,10 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      // Submit the form directly instead of clicking button (happy-dom compatibility)
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
@@ -314,7 +319,10 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      // Submit the form directly instead of clicking button (happy-dom compatibility)
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
