@@ -49,7 +49,7 @@ interface PureOwnProps {
   featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
   showAndelDetails?: boolean;
-  feriepengerPrÅr: FeriepengerPrÅr | null;
+  feriepengerPrÅr: FeriepengerPrÅr;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -84,7 +84,7 @@ const TilkjentYtelsePanelImpl = ({
         />
       )}
 
-      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr !== null && feriepengerPrÅr.size > 0 && (
+      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr.size > 0 && (
         <div style={{ marginTop: '1rem' }}>
           <FeriepengerPanel
             feriepengerPrÅr={feriepengerPrÅr}
