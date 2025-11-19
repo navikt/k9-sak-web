@@ -14,14 +14,122 @@ interface EtablertTilsynProps {
   perioderSomOverstyrerTilsyn: Period[];
 }
 
-interface EtablertTilsynMappet {
+export interface EtablertTilsynMappet {
   etablertTilsyn: EtablertTilsynType[];
   etablertTilsynSmurt: EtablertTilsynType[];
   uke: number;
   delAvUke?: number;
 }
 
-const erHelg = (dag: string) => [6, 0].includes(dayjs(dag).day());
+export interface TilsynPerUke {
+  etablertTilsyn: EtablertTilsynType[];
+  etablertTilsynSmurt: EtablertTilsynType[];
+  uke: number;
+}
+
+export const erHelg = (dag: string) => [6, 0].includes(dayjs(dag).day());
+
+// Bygger set med alle datoer som har overstyrende tilsyn
+export const byggDagerSomOverstyrerTilsyn = (perioder: Period[]): Set<string> => {
+  const s = new Set<string>();
+  perioder.forEach(periode => periode.asListOfDays().forEach(d => s.add(d)));
+  return s;
+};
+
+// Bygger set med datoer som skal ekskluderes (sykdom ikke oppfylt og ikke overstyrt)
+export const byggDagerSomSkalEkskluderes = (
+  sykdomsperioder: Period[],
+  dagerSomOverstyrerTilsyn: Set<string>,
+): Set<string> => {
+  const s = new Set<string>();
+  sykdomsperioder.forEach(p => {
+    p.asListOfDays().forEach(d => {
+      if (!dagerSomOverstyrerTilsyn.has(d)) {
+        s.add(d);
+      }
+    });
+  });
+  return s;
+};
+
+// Ekspanderer perioder til enkeltdager (uten helg) og pakker hver dag som egen periode
+export const ekspanderTilEnkeltdager = (
+  perioder: EtablertTilsynType[],
+  filtrer: (date: string) => boolean,
+): EtablertTilsynType[] =>
+  perioder.flatMap(v =>
+    v.periode
+      .asListOfDays()
+      .filter(filtrer)
+      .map(date => ({ ...v, periode: new Period(date, date) })),
+  );
+
+// Henter uke-nummer for alle enkeltdager (unike)
+export const finnUker = (enkeltdager: EtablertTilsynType[]): number[] => [
+  ...new Set(enkeltdager.map(d => dayjs(d.periode.fom).week())),
+];
+
+// Grupperer tilsyn per uke
+export const grupperTilsynPerUke = (
+  uker: number[],
+  etablerte: EtablertTilsynType[],
+  smurte: EtablertTilsynType[],
+): TilsynPerUke[] =>
+  uker.map(uke => ({
+    etablertTilsyn: etablerte.filter(v => dayjs(v.periode.fom).week() === uke),
+    etablertTilsynSmurt: smurte.filter(v => dayjs(v.periode.fom).week() === uke),
+    uke,
+  }));
+
+// Deler smurte perioder i sammenhengende blokker basert på tidPerDag og kronologi
+export const splittSmurtePerioder = (smurt: EtablertTilsynType[]): EtablertTilsynType[][] => {
+  const grupper: EtablertTilsynType[][] = [];
+  smurt.forEach(p => {
+    const sammenhengende = grupper.find(gruppe =>
+      gruppe.find(g => g.tidPerDag === p.tidPerDag && isDayAfter(dayjs(g.periode.tom), dayjs(p.periode.fom))),
+    );
+    if (sammenhengende) {
+      sammenhengende.push(p);
+    } else {
+      grupper.push([p]);
+    }
+  });
+  return grupper;
+};
+
+// Konverterer grupper av smurte perioder til EtablertTilsynMappet med eventuell delAvUke
+export const byggOppdeltSmoring = (perUke: TilsynPerUke[]): EtablertTilsynMappet[] => {
+  const result: EtablertTilsynMappet[] = [];
+  perUke.forEach(v => {
+    const grupper = splittSmurtePerioder(v.etablertTilsynSmurt);
+    grupper.forEach((gruppe, idx, arr) => {
+      result.push({
+        etablertTilsyn: v.etablertTilsyn,
+        etablertTilsynSmurt: gruppe,
+        uke: v.uke,
+        delAvUke: arr.length > 1 ? idx + 1 : undefined,
+      });
+    });
+  });
+  return result;
+};
+
+// Fletter oppdelt og ikke-oppdelt smøring og sorterer kronologisk på første smurt-dag
+export const flettOgSorterTilsyn = (
+  perUke: TilsynPerUke[],
+  oppdelt: EtablertTilsynMappet[],
+): EtablertTilsynMappet[] => {
+  const utenOppdelt: TilsynPerUke[] = perUke.filter(
+    v => !v.etablertTilsynSmurt.length || !splittSmurtePerioder(v.etablertTilsynSmurt).length,
+  );
+
+  const samlet: EtablertTilsynMappet[] = [...utenOppdelt.map(v => ({ ...v })), ...oppdelt];
+  return samlet.sort(
+    (a, b) =>
+      new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
+      new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
+  );
+};
 
 const ukeVisning = (uke: number, delAvUke?: number) => {
   if (delAvUke) {
@@ -51,79 +159,22 @@ const EtablertTilsyn = ({
 }: EtablertTilsynProps): JSX.Element => {
   const { harVurderinger, etablertTilsynMappet } = useMemo(() => {
     const harVurderingerInner = etablertTilsynData.length > 0;
-
-    const dagerSomOverstyrerTilsyn = new Set<string>();
-    perioderSomOverstyrerTilsyn.forEach(periode => {
-      periode.asListOfDays().forEach(date => dagerSomOverstyrerTilsyn.add(date));
-    });
-
-    const dagerSomSkalEkskluderes = new Set<string>();
-    sykdomsperioderSomIkkeErOppfylt.forEach(periode => {
-      periode.asListOfDays().forEach(date => {
-        if (!dagerSomOverstyrerTilsyn.has(date)) {
-          dagerSomSkalEkskluderes.add(date);
-        }
-      });
-    });
-
-    const etablertTilsynEnkeltdager = etablertTilsynData.flatMap(v =>
-      v.periode
-        .asListOfDays()
-        .filter(date => !erHelg(date))
-        .map(date => ({ ...v, periode: new Period(date, date) })),
-    );
-    const smurtEtablertTilsynEnkeltdager = smurtEtablertTilsynPerioder.flatMap(v =>
-      v.periode
-        .asListOfDays()
-        .filter(date => !erHelg(date) && !dagerSomSkalEkskluderes.has(date))
-        .map(date => ({ ...v, periode: new Period(date, date) })),
+    const dagerSomOverstyrerTilsyn = byggDagerSomOverstyrerTilsyn(perioderSomOverstyrerTilsyn);
+    const dagerSomSkalEkskluderes = byggDagerSomSkalEkskluderes(
+      sykdomsperioderSomIkkeErOppfylt,
+      dagerSomOverstyrerTilsyn,
     );
 
-    const uker = [...new Set(etablertTilsynEnkeltdager.map(data => dayjs(data.periode.fom).week()))];
-    const tilsynPerUke = uker.map(uke => ({
-      etablertTilsyn: etablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
-      etablertTilsynSmurt: smurtEtablertTilsynEnkeltdager.filter(v => dayjs(v.periode.fom).week() === uke),
-      uke,
-    }));
-    const tilsynPerUkeOppdeltSmoering: Array<EtablertTilsynMappet> = [];
-
-    const tilsynPerUkeUtenOppdeltSmoering = tilsynPerUke
-      .map(v => {
-        const smurtePerioder: EtablertTilsynType[][] = [];
-        v.etablertTilsynSmurt.forEach(smurtPeriode => {
-          const sammenhengendePeriode = smurtePerioder.find(periodeArray =>
-            periodeArray.find(
-              periode =>
-                periode.tidPerDag === smurtPeriode.tidPerDag &&
-                isDayAfter(dayjs(periode.periode.tom), dayjs(smurtPeriode.periode.fom)),
-            ),
-          );
-          if (sammenhengendePeriode) {
-            sammenhengendePeriode.push(smurtPeriode);
-          } else {
-            smurtePerioder.push([smurtPeriode]);
-          }
-        });
-
-        smurtePerioder.forEach((smurtPeriode, index, array) =>
-          tilsynPerUkeOppdeltSmoering.push({
-            etablertTilsyn: v.etablertTilsyn,
-            etablertTilsynSmurt: smurtPeriode,
-            uke: v.uke,
-            delAvUke: array.length > 1 ? index + 1 : undefined,
-          }),
-        );
-        return smurtePerioder.length ? null : v;
-      })
-      .filter(x => x !== null);
-    const etablertTilsynMappetInner: EtablertTilsynMappet[] = [
-      ...tilsynPerUkeUtenOppdeltSmoering,
-      ...tilsynPerUkeOppdeltSmoering,
-    ].sort(
-      (a: EtablertTilsynMappet, b: EtablertTilsynMappet) =>
-        new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
-        new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
+    const etablertTilsynEnkeltdager = ekspanderTilEnkeltdager(etablertTilsynData, d => !erHelg(d));
+    const smurtEtablertTilsynEnkeltdager = ekspanderTilEnkeltdager(
+      smurtEtablertTilsynPerioder,
+      d => !erHelg(d) && !dagerSomSkalEkskluderes.has(d),
     );
+
+    const uker = finnUker(etablertTilsynEnkeltdager);
+    const tilsynPerUke = grupperTilsynPerUke(uker, etablertTilsynEnkeltdager, smurtEtablertTilsynEnkeltdager);
+    const oppdeltSmoring = byggOppdeltSmoring(tilsynPerUke);
+    const etablertTilsynMappetInner = flettOgSorterTilsyn(tilsynPerUke, oppdeltSmoring);
 
     return { harVurderinger: harVurderingerInner, etablertTilsynMappet: etablertTilsynMappetInner };
   }, [etablertTilsynData, smurtEtablertTilsynPerioder, sykdomsperioderSomIkkeErOppfylt, perioderSomOverstyrerTilsyn]);
