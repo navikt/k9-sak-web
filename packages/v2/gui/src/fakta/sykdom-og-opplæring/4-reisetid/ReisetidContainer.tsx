@@ -52,7 +52,7 @@ const Wrapper = ({
   );
   return (
     <DetailView
-      title="Vurdering av reisetid"
+      title="Vurdering av reisedag"
       border
       contentAfterTitleRenderer={() => {
         if (
@@ -90,8 +90,8 @@ const Description = ({ vurdering }: { vurdering: ReisetidVurderingDto & { period
 
   const tekst =
     oppgittReisedagerPeriod.asListOfDays().length > 1
-      ? `Beskrivelse fra søker for reisetid i perioden ${oppgittReisedagerPeriod.prettifyPeriod()}`
-      : `Beskrivelse fra søker for reisetid ${oppgittReisedagerPeriod.prettifyPeriod().split(' - ')[0]}`;
+      ? `Beskrivelse fra søker for reisedager i perioden ${oppgittReisedagerPeriod.prettifyPeriod()}`
+      : `Beskrivelse fra søker for reisedag ${oppgittReisedagerPeriod.prettifyPeriod().split(' - ')[0]}`;
   return (
     <div className="flex gap-2 mt-1">
       <div className="mt-[3px]">
