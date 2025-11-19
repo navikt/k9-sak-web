@@ -178,7 +178,6 @@ const FagsakIndex = () => {
   if (fagsak.saksnummer !== selectedSaksnummer) {
     return <Navigate to={pathToMissingPage()} />;
   }
-
   return (
     <>
       <KodeverkProvider
