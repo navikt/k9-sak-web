@@ -2,7 +2,7 @@ const tabCodes = {
   INSTITUSJON: 'institusjon',
   SYKDOM: 'sykdom',
   OPPLÆRING: 'opplæring',
-  REISETID: 'reisetid',
+  REISEDAG: 'reisedag',
 };
 
 export default tabCodes;

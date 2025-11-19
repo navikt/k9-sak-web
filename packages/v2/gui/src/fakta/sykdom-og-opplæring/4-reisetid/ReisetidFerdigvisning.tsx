@@ -53,7 +53,7 @@ const ReisetidFerdigvisning = ({ vurdering }: { vurdering: ReisetidVurderingDto 
       />
       {!vurderingGjelderEnkeltdag && (
         <LabelledContent
-          label={`I hvilken periode ${innvilgesEllerAvslås} reisetid?`}
+          label={`I hvilken periode ${innvilgesEllerAvslås} reisedag?`}
           size="small"
           content={<BodyLong size="small">{vurdering.perioder[0]?.prettifyPeriod()}</BodyLong>}
         />
