@@ -13,7 +13,7 @@ interface NattevåksperiodeoversiktProps {
 }
 
 const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktProps) => {
-  const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode>(null);
+  const [valgtPeriode, setValgtPeriode] = React.useState<Vurderingsperiode | null>(null);
   const [editMode, setEditMode] = React.useState(false);
   const { beskrivelser } = nattevåkData;
   const {
@@ -25,7 +25,7 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
   const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering();
   const vurderteNattevåksperioder = nattevåkData.finnVurdertePerioder();
 
-  const velgPeriode = (periode: Vurderingsperiode) => {
+  const velgPeriode = (periode: Vurderingsperiode | null) => {
     setValgtPeriode(periode);
     setEditMode(false);
   };
@@ -53,15 +53,17 @@ const Nattevåksperiodeoversikt = ({ nattevåkData }: NattevåksperiodeoversiktP
           />
         )}
         showDetailSection={!!valgtPeriode}
-        detailSection={() => (
-          <NattevåksperiodeoversiktController
-            valgtPeriode={valgtPeriode}
-            editMode={editMode}
-            onEditClick={() => setEditMode(true)}
-            onCancelClick={() => velgPeriode(null)}
-            beskrivelser={beskrivelser}
-          />
-        )}
+        detailSection={() =>
+          valgtPeriode && (
+            <NattevåksperiodeoversiktController
+              valgtPeriode={valgtPeriode}
+              editMode={editMode}
+              onEditClick={() => setEditMode(true)}
+              onCancelClick={() => velgPeriode(null)}
+              beskrivelser={beskrivelser}
+            />
+          )
+        }
       />
     </>
   );

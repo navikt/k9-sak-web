@@ -3,17 +3,20 @@ import { Infostripe } from '@k9-sak-web/gui/shared/infostripe/Infostripe.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { ChildEyesFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Tabs } from '@navikt/ds-react';
+import { k9_kodeverk_sykdom_Resultat } from '@navikt/k9-sak-typescript-client/types';
+import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import BeredskapType from '../types/BeredskapType';
 import ContainerContract from '../types/ContainerContract';
+import EtablertTilsynType from '../types/EtablertTilsynType';
+import NattevåkType from '../types/NattevåkType';
 import { InnleggelsesperiodeResponse, SykdomResponse, TilsynResponse } from '../types/TilsynResponse';
 import Beredskapsperiodeoversikt from './components/beredskap/beredskapsperioderoversikt/Beredskapsperiodeoversikt';
 import EtablertTilsynMedSmoring from './components/etablertTilsyn/EtablertTilsynMedSmoring';
 import Nattevåksperiodeoversikt from './components/nattevåk/nattevåksperiodeoversikt/Nattevåksperiodeoversikt';
 import ContainerContext from './context/ContainerContext';
-import ActionType from './mainActionTypes';
 import styles from './mainComponent.module.css';
-import mainComponentReducer from './mainReducer';
 
 interface MainComponentProps {
   data: ContainerContract;
@@ -50,84 +53,109 @@ const getDefaultActiveTab = ({ harAksjonspunktForBeredskap, harAksjonspunktForNa
   return tabs[0];
 };
 
-const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
-  const [state, dispatch] = React.useReducer(mainComponentReducer, {
-    isLoading: true,
-    etablertTilsyn: null,
-    beredskap: null,
-    nattevåk: null,
-    sykdomsperioderSomIkkeErOppfylt: [],
-  });
-  const {
-    isLoading,
+const transformEtablertTilsynResponse = (response: TilsynResponse) => {
+  const etablertTilsyn = response.etablertTilsynPerioder.map(
+    etablertTilsynPeriode => new EtablertTilsynType(etablertTilsynPeriode),
+  );
+  const beredskap = new BeredskapType(response.beredskap);
+  const nattevåk = new NattevåkType(response.nattevåk);
+  const smurtEtablertTilsynPerioder = response.smortEtablertTilsynPerioder.map(
+    etablertTilsynPeriode => new EtablertTilsynType(etablertTilsynPeriode),
+  );
+  return {
     etablertTilsyn,
-    smurtEtablertTilsynPerioder,
     beredskap,
     nattevåk,
-    sykdomsperioderSomIkkeErOppfylt,
-    tilsynHarFeilet,
-    sykdomHarFeilet,
-  } = state;
+    smurtEtablertTilsynPerioder,
+  };
+};
+
+const transformSykdomResponse = (response: SykdomResponse) => {
+  const perioder: Period[] = [];
+
+  response.vurderingselementer.forEach(v => {
+    if (v.resultat !== k9_kodeverk_sykdom_Resultat.OPPFYLT) {
+      perioder.push(new Period(v.periode.fom, v.periode.tom));
+    }
+  });
+
+  response?.resterendeVurderingsperioder?.forEach(v => {
+    perioder.push(new Period(v.fom, v.tom));
+  });
+
+  return perioder;
+};
+
+const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   const { endpoints, httpErrorHandler, harAksjonspunktForBeredskap, harAksjonspunktForNattevåk } = data;
-  const [innleggelsesperioder, setInnleggelsesperioder] = React.useState<Period[]>([]);
-  const [innleggelserFeilet, setInnleggelserFeilet] = React.useState(false);
-  const controller = useMemo(() => new AbortController(), []);
-  const getTilsyn = () =>
+
+  const getTilsyn = (signal: AbortSignal) =>
     get<TilsynResponse>(endpoints.tilsyn, httpErrorHandler, {
-      signal: controller.signal,
+      signal: signal,
     });
-  const getSykdom = () =>
+  const getSykdom = (signal: AbortSignal) =>
     get<SykdomResponse>(endpoints.sykdom, httpErrorHandler, {
-      signal: controller.signal,
+      signal: signal,
     });
-  const getInnleggelser = () =>
+  const getInnleggelser = (signal: AbortSignal) =>
     get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, httpErrorHandler, {
-      signal: controller.signal,
+      signal: signal,
     });
 
-  React.useEffect(() => {
-    let isMounted = true;
-    getTilsyn()
-      .then(tilsynResponse => {
-        if (isMounted) {
-          dispatch({ type: ActionType.OK, tilsynResponse });
-        }
-      })
-      .catch(() => {
-        dispatch({ type: ActionType.FAILED });
-      });
-    getSykdom()
-      .then(sykdomResponse => {
-        if (isMounted) {
-          dispatch({ type: ActionType.SYKDOM_OK, sykdomResponse });
-        }
-      })
-      .catch(() => {
-        dispatch({ type: ActionType.SYKDOM_FAILED });
-      });
+  const {
+    data: innleggelsesperioder = [],
+    isError: innleggelserFeilet,
+    isLoading: innleggelserLoading,
+  } = useQuery({
+    queryKey: ['innleggelsesperioder', endpoints.sykdomInnleggelse],
+    queryFn: ({ signal }) =>
+      getInnleggelser(signal).then(response => response.perioder.map(v => new Period(v.fom, v.tom))),
+  });
 
-    getInnleggelser()
-      .then(innleggelserResponse => {
-        if (isMounted) {
-          setInnleggelsesperioder(innleggelserResponse.perioder.map(v => new Period(v.fom, v.tom)));
-        }
-      })
-      .catch(() => {
-        setInnleggelserFeilet(true);
-      });
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, []);
+  const {
+    data: tilsyn,
+    isError: tilsynHarFeilet,
+    isLoading: tilsynLoading,
+  } = useQuery({
+    queryKey: ['etablertTilsyn', endpoints.tilsyn],
+    queryFn: ({ signal }) => getTilsyn(signal),
+    select: transformEtablertTilsynResponse,
+  });
 
-  const bedredskapVurderinger = beredskap?.vurderinger || [];
-  const nattevåkVurderinger = nattevåk?.vurderinger || [];
-  const perioderSomOverstyrerTilsyn = [
-    ...bedredskapVurderinger.filter(v => v.resultat === 'OPPFYLT').map(v => new Period(v.periode.fom, v.periode.tom)),
-    ...nattevåkVurderinger.filter(v => v.resultat === 'OPPFYLT').map(v => new Period(v.periode.fom, v.periode.tom)),
-    ...innleggelsesperioder,
-  ];
+  const {
+    data: sykdomsperioderSomIkkeErOppfylt = [],
+    isError: sykdomHarFeilet,
+    isLoading: sykdomIsLoading,
+  } = useQuery({
+    queryKey: ['sykdomsperioderIkkeOppfylt', endpoints.sykdom],
+    queryFn: ({ signal }) => getSykdom(signal),
+    select: transformSykdomResponse,
+  });
+
+  const { etablertTilsyn = [], smurtEtablertTilsynPerioder = [], beredskap, nattevåk } = tilsyn || {};
+  const isLoading = tilsynLoading || innleggelserLoading || sykdomIsLoading;
+
+  const perioderSomOverstyrerTilsyn = useMemo(() => {
+    const perioder: Period[] = [];
+
+    beredskap?.vurderinger?.forEach(v => {
+      if (v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT) {
+        perioder.push(new Period(v.periode.fom, v.periode.tom));
+      }
+    });
+
+    nattevåk?.vurderinger?.forEach(v => {
+      if (v.resultat === k9_kodeverk_sykdom_Resultat.OPPFYLT) {
+        perioder.push(new Period(v.periode.fom, v.periode.tom));
+      }
+    });
+
+    innleggelsesperioder.forEach(periode => {
+      perioder.push(periode);
+    });
+
+    return perioder;
+  }, [beredskap?.vurderinger, innleggelsesperioder, nattevåk?.vurderinger]);
 
   if (tilsynHarFeilet || sykdomHarFeilet || innleggelserFeilet) {
     return (
@@ -173,10 +201,10 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
                 />
               </Tabs.Panel>
               <Tabs.Panel value={tabs[1]}>
-                <Beredskapsperiodeoversikt beredskapData={beredskap} />
+                {beredskap && <Beredskapsperiodeoversikt beredskapData={beredskap} />}
               </Tabs.Panel>
               <Tabs.Panel value={tabs[2]}>
-                <Nattevåksperiodeoversikt nattevåkData={nattevåk} />
+                {nattevåk && <Nattevåksperiodeoversikt nattevåkData={nattevåk} />}
               </Tabs.Panel>
             </div>
           </PageContainer>
