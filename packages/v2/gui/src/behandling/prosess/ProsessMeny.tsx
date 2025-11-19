@@ -131,20 +131,24 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
   }, [urlPanelId, paneler, valgtPanelId, setSearchParams]);
 
   // Konverter panelregistreringer til ProcessMenu steps-format
+  // Bruk registrationOrderRef for å opprettholde children-rekkefølge
   const steg = useMemo(() => {
-    const panelArray = Array.from(paneler.values());
-    return panelArray.map(panel => ({
-      label: intl.formatMessage({ id: panel.tekstKode }),
-      isActive: panel.id === valgtPanelId,
-      type: panel.type || ProcessMenuStepType.default,
-      usePartialStatus: panel.usePartialStatus,
-    }));
+    return registrationOrderRef.current
+      .map(id => paneler.get(id))
+      .filter((panel): panel is InternPanelRegistrering => panel !== undefined)
+      .map(panel => ({
+        label: intl.formatMessage({ id: panel.tekstKode }),
+        isActive: panel.id === valgtPanelId,
+        type: panel.type || ProcessMenuStepType.default,
+        usePartialStatus: panel.usePartialStatus,
+      }));
   }, [paneler, valgtPanelId, intl]);
 
   // Håndter klikk på menyelement
   const handleStegKlikk = (indeks: number) => {
-    const panelArray = Array.from(paneler.values());
-    const valgtPanel = panelArray[indeks];
+    // Bruk registrationOrderRef for å finne riktig panel basert på indeks
+    const panelId = registrationOrderRef.current[indeks];
+    const valgtPanel = panelId ? paneler.get(panelId) : undefined;
     if (valgtPanel) {
       setValgtPanelId(valgtPanel.id);
       setSearchParams((forrige: URLSearchParams) => {

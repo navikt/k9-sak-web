@@ -48,6 +48,7 @@ export function usePanelRegistrering(
   const { onRegister, onUnregister, onUpdateType } = props;
 
   // Initial registrering når komponenten mountes
+  // VIKTIG: Ikke inkluder panelType i dependencies for å sikre rask registrering
   useEffect(() => {
     // Hvis callbacks ikke er tilgjengelige, er vi ikke inne i en ProsessMeny
     // Dette er OK - panelet kan fungere standalone
@@ -82,7 +83,8 @@ export function usePanelRegistrering(
         console.error('Kunne ikke avregistrere panel:', panelId, error);
       }
     };
-  }, [panelId, panelTekst, onRegister, onUnregister, panelType, usePartialStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [panelId, panelTekst, onRegister, onUnregister]);
 
   // Oppdater type når den endres (separat effect for å unngå unødvendig re-registrering)
   useEffect(() => {
