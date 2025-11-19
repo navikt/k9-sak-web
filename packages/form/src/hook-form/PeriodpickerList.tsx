@@ -30,7 +30,7 @@ interface PeriodpickerListProps {
   defaultValues?: Period[];
   fromDatepickerProps: DatepickerProps;
   toDatepickerProps: DatepickerProps;
-  renderContentAfterElement?: (index: number, numberOfItems: number, fieldArrayMethods) => JSX.Element | null;
+  renderContentAfterElement?: (index: number, numberOfItems: number, fieldArrayMethods) => JSX.Element;
   renderBeforeFieldArray?: (fieldArrayMethods) => JSX.Element;
   renderAfterFieldArray?: (fieldArrayMethods) => JSX.Element;
   afterOnChange?: () => Promise<void>;

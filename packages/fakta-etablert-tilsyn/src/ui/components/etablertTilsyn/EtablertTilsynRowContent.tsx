@@ -1,78 +1,65 @@
-import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
+import { Period } from '@fpsak-frontend/utils';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
-import Kilde from '../../../types/Kilde';
-import EtablertTilsynDag from './EtablertTilsynDag';
 import PartIkon from './PartIkon';
 import styles from './etablertTilsynRowContent.module.css';
+import EtablertTilsynDag from './EtablertTilsynDag';
+import Kilde from '../../../types/Kilde';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
 interface TilsynMappet {
   date: string;
   tidPerDag: number;
 }
-
-interface DagMedKilde {
-  date: string;
-  tidPerDag: number;
-  kilde: Kilde;
-}
-
 interface OwnProps {
   etablertTilsyn: EtablertTilsynType[];
   etablertTilsynSmurt: EtablertTilsynType[];
+  dagerSomOverstyrerTilsyn: Period[];
   tilsynProsent: number;
   visIkon: boolean;
 }
 
-export const mapDagerPerUkedag = (etablertTilsyn: EtablertTilsynType[]): Map<number, DagMedKilde> => {
-  const dagerPerUkedag = new Map<number, DagMedKilde>();
+const EtablertTilsynRowContent = ({
+  etablertTilsyn,
+  etablertTilsynSmurt,
+  dagerSomOverstyrerTilsyn,
+  tilsynProsent,
+  visIkon,
+}: OwnProps) => {
+  const etablertTilsynDager = etablertTilsyn.flatMap(v =>
+    v.periode.asListOfDays().map(date => ({ date, tidPerDag: v.tidPerDag, kilde: v.kilde })),
+  );
 
-  etablertTilsyn.forEach(v => {
-    v.periode.asListOfDays().forEach(date => {
-      const weekday = initializeDate(date).day();
-      if (weekday >= 1 && weekday <= 5) {
-        dagerPerUkedag.set(weekday, { date, tidPerDag: v.tidPerDag, kilde: v.kilde });
-      }
-    });
-  });
+  const etablertTilsynSmurtDager = etablertTilsynSmurt.flatMap(v =>
+    v.periode.asListOfDays().map(date => ({ date, tidPerDag: v.tidPerDag })),
+  );
 
-  return dagerPerUkedag;
-};
+  const mandag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 1);
+  const tirsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 2);
+  const onsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 3);
+  const torsdag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 4);
+  const fredag = etablertTilsynDager.find(v => initializeDate(v.date).day() === 5);
 
-export const mapSmurtDagerPerUkedag = (etablertTilsynSmurt: EtablertTilsynType[]): Map<number, TilsynMappet> => {
-  const smurtDagerPerUkedag = new Map<number, TilsynMappet>();
+  const mandagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 1);
+  const tirsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 2);
+  const onsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 3);
+  const torsdagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 4);
+  const fredagSmurt = etablertTilsynSmurtDager.find(v => initializeDate(v.date).day() === 5);
 
-  etablertTilsynSmurt.forEach(v => {
-    v.periode.asListOfDays().forEach(date => {
-      const weekday = initializeDate(date).day();
-      if (weekday >= 1 && weekday <= 5) {
-        smurtDagerPerUkedag.set(weekday, { date, tidPerDag: v.tidPerDag });
-      }
-    });
-  });
+  const dagOverstyres = (tilsyn: TilsynMappet) => dagerSomOverstyrerTilsyn.some(dag => dag.fom === tilsyn?.date);
 
-  return smurtDagerPerUkedag;
-};
+  const timerSmurt = etablertTilsynSmurtDager.find(v => v.tidPerDag)?.tidPerDag;
 
-const EtablertTilsynRowContent = ({ etablertTilsyn, etablertTilsynSmurt, tilsynProsent, visIkon }: OwnProps) => {
-  const dagerPerUkedag = mapDagerPerUkedag(etablertTilsyn);
-  const smurtDagerPerUkedag = mapSmurtDagerPerUkedag(etablertTilsynSmurt);
+  const skalDisables = (tilsynSmurt: TilsynMappet) => {
+    if (tilsynSmurt) {
+      return false;
+    }
 
-  const mandag = dagerPerUkedag.get(1);
-  const tirsdag = dagerPerUkedag.get(2);
-  const onsdag = dagerPerUkedag.get(3);
-  const torsdag = dagerPerUkedag.get(4);
-  const fredag = dagerPerUkedag.get(5);
-
-  const mandagSmurt = smurtDagerPerUkedag.get(1);
-  const tirsdagSmurt = smurtDagerPerUkedag.get(2);
-  const onsdagSmurt = smurtDagerPerUkedag.get(3);
-  const torsdagSmurt = smurtDagerPerUkedag.get(4);
-  const fredagSmurt = smurtDagerPerUkedag.get(5);
-
-  const timerSmurt = Array.from(smurtDagerPerUkedag.values()).find(v => v.tidPerDag)?.tidPerDag;
-
-  const skalDisables = (tilsynSmurt?: TilsynMappet) => !tilsynSmurt;
+    if (dagOverstyres(tilsynSmurt)) {
+      return true;
+    }
+    return true;
+  };
   return (
     <>
       <div className={styles.etablertTilsyn__innrapportert_timer__container}>

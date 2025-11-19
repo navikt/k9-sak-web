@@ -28,7 +28,7 @@ const Periodenavigasjon = ({
     if (harValgtPeriode === false && previousHarValgtPeriode === true) {
       setActiveIndex(-1);
     }
-  }, [harValgtPeriode, previousHarValgtPeriode]);
+  }, [harValgtPeriode]);
 
   const vurdertePerioderElements = vurdertePerioder.map(({ periode, resultat, kilde }) => (
     <VurderingsperiodeElement periode={periode} resultat={resultat} kilde={kilde} />
