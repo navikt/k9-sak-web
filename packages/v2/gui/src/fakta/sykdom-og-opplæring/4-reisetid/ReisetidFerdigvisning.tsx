@@ -1,5 +1,5 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import OppgittReisetid from './OppgittReisetid';
+import ReisedagerIVurdering from './ReisedagerIVurdering';
 import type { Period } from '@navikt/ft-utils';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { BodyLong, Link } from '@navikt/ds-react';
@@ -11,8 +11,9 @@ const ReisetidFerdigvisning = ({ vurdering }: { vurdering: ReisetidVurderingDto 
   const innvilgesEllerAvslås = vurdering.reisetid.resultat === 'GODKJENT' ? 'innvilges' : 'avslås';
   return (
     <div className="flex flex-col gap-6">
-      <OppgittReisetid
+      <ReisedagerIVurdering
         reisedagerOppgittISøknad={vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad}
+        reisedagerIVurdering={vurdering.reisetid.periode}
         size="small"
       />
       <div>
