@@ -27,7 +27,7 @@ import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/
 import AppIndex from './app/AppIndex';
 import { RestApiProviderLayout } from './app/RestApiProviderLayout.js';
 import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
-import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/ThisOrOtherAuthFixer.js';
+import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
@@ -39,6 +39,7 @@ init({
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,
+  enableLogs: true,
   integrations: [
     Sentry.breadcrumbsIntegration({ console: false }),
     Sentry.reactRouterV6BrowserTracingIntegration({
@@ -92,9 +93,9 @@ const basePath = '/k9/web';
 
 const [sakAuthFixer, klageAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
   // Vi må ha ein unik AuthFixer instans pr backend
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`),
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-sak'),
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-klage'),
+  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-tilbake'),
 );
 configureK9SakClient(sakAuthFixer);
 configureK9KlageClient(klageAuthFixer);

@@ -1,14 +1,40 @@
 {
   "KlageAvvistÅrsak": [
     {
-      "kode": "KLAGET_FOR_SENT",
-      "navn": "Bruker har klaget for sent",
-      "kodeverk": "KLAGE_AVVIST_AARSAK"
+      "kode": "IKKE_SIGNERT",
+      "kodeverk": "KLAGE_AVVIST_AARSAK",
+      "navn": "Klagen er ikke signert",
+      "kilde": "IKKE_SIGNERT"
     },
     {
       "kode": "KLAGER_IKKE_PART",
+      "kodeverk": "KLAGE_AVVIST_AARSAK",
       "navn": "Klager er ikke part",
-      "kodeverk": "KLAGE_AVVIST_AARSAK"
+      "kilde": "KLAGER_IKKE_PART"
+    },
+    {
+      "kode": "IKKE_PAKLAGD_VEDTAK",
+      "kodeverk": "KLAGE_AVVIST_AARSAK",
+      "navn": "Ikke påklagd et vedtak",
+      "kilde": "IKKE_PAKLAGD_VEDTAK"
+    },
+    {
+      "kode": "IKKE_KONKRET",
+      "kodeverk": "KLAGE_AVVIST_AARSAK",
+      "navn": "Klagen er ikke konkret",
+      "kilde": "IKKE_KONKRET"
+    },
+    {
+      "kode": "KLAGET_FOR_SENT",
+      "kodeverk": "KLAGE_AVVIST_AARSAK",
+      "navn": "Bruker har klaget for sent",
+      "kilde": "KLAGET_FOR_SENT"
+    },
+    {
+      "kode": "KLAGE_UGYLDIG",
+      "kodeverk": "KLAGE_AVVIST_AARSAK",
+      "navn": "Klage er ugyldig",
+      "kilde": "KLAGE_UGYLDIG"
     }
   ]
 }

@@ -180,7 +180,7 @@ const OrganisasjonsnummerSøk = ({ medFritekst = true }: { medFritekst?: boolean
       <RhfRadioGroup
         control={control}
         name={InstitusjonFormFields.HAR_ORGANISASJONSNUMMER}
-        label="Har institusjonen/kompetansesenteret et organisasjonsnummer?"
+        legend="Har institusjonen/kompetansesenteret et organisasjonsnummer?"
         validate={[required]}
       >
         <Radio value="ja">Ja</Radio>

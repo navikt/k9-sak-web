@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { UseFormReturn } from 'react-hook-form';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { withFormProvider } from '../../storybook/decorators/withFormProvider.js';

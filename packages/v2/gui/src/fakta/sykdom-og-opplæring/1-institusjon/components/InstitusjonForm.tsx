@@ -56,7 +56,7 @@ const defaultValues = (vurdering: InstitusjonVurderingDtoMedPerioder) => {
     [InstitusjonFormFields.REDIGERT_INSTITUSJON_NAVN]: vurdering.redigertInstitusjonNavn,
     [InstitusjonFormFields.ANNEN_INSTITUSJON]: false,
     [InstitusjonFormFields.INSTITUSJON_FRA_ORGANISASJONSNUMMER]: '',
-    [InstitusjonFormFields.HAR_ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer ? 'ja' : 'nei',
+    [InstitusjonFormFields.HAR_ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer ? 'ja' : '',
     [InstitusjonFormFields.ORGANISASJONSNUMMER]: vurdering.organisasjonsnummer,
     [InstitusjonFormFields.HELSEINSTITUSJON_ELLER_KOMPETANSESENTER_FRITEKST]: '',
   };
@@ -128,14 +128,14 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           control={control}
           size="small"
           name={InstitusjonFormFields.GODKJENT_INSTITUSJON}
-          label={
+          legend={
             <BodyLong size="small">
               Er institusjonen en godkjent helseinstitusjon eller kompetansesenter, jf{' '}
               <Lovreferanse>§ 9-14</Lovreferanse>?
             </BodyLong>
           }
           validate={[required]}
-          isReadOnly={readOnly}
+          readOnly={readOnly}
           data-testid="godkjent-institusjon"
         >
           <Radio value="ja">Ja</Radio>

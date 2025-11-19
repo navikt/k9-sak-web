@@ -2,14 +2,19 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
+import { withFakeTilkjentYtelseBackend } from '../../storybook/decorators/withFakeTilkjentYtelseBackend.js';
+import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
+import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.js';
 
 const beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto = {
   opphoersdato: '2021-03-27',
@@ -59,29 +64,35 @@ const beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto = {
   skalHindreTilbaketrekk: false,
 };
 
-const arbeidsgiverOpplysningerPerId = {
-  12345678: {
-    navn: 'BEDRIFT1 AS',
-    erPrivatPerson: false,
-    identifikator: '12345678',
-  },
+const behandling = {
+  id: 1,
+  versjon: 1,
+  uuid: '1-1-1',
+  opprettet: '',
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+  status: BehandlingStatus.OPPRETTET,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
 };
 
 const meta = {
-  title: 'gui/prosess/prosess-tilkjent-ytelse-v2',
+  title: 'gui/prosess/tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
+  args: {
+    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
+  },
+  decorators: [withFakeTilkjentYtelseBackend(), withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TilkjentYtelseProsessIndex>;
 
 type Story = StoryObj<typeof meta>;
 
 export const VisUtenAksjonspunkt: Story = {
   args: {
+    behandling,
     isReadOnly: false,
     readOnlySubmitButton: true,
     beregningsresultat,
     aksjonspunkter: [],
     submitCallback: asyncAction('button-click'),
-    arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas }) => {
@@ -92,6 +103,7 @@ export const VisUtenAksjonspunkt: Story = {
 
 export const VisÅpentAksjonspunktTilbaketrekk: Story = {
   args: {
+    behandling,
     isReadOnly: false,
     readOnlySubmitButton: true,
     beregningsresultat,
@@ -102,7 +114,6 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
       },
     ],
     submitCallback: asyncAction('button-click'),
-    arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas, step }) => {
@@ -124,6 +135,7 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
 
 export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
   args: {
+    behandling,
     isReadOnly: false,
     readOnlySubmitButton: true,
     beregningsresultat,
@@ -134,7 +146,6 @@ export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
       },
     ],
     submitCallback: asyncAction('button-click'),
-    arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   play: async ({ canvas }) => {

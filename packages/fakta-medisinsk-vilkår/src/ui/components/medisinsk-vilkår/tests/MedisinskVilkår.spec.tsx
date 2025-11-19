@@ -2,7 +2,7 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeAll, describe, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, it, vi } from 'vitest';
 import ContainerContract from '../../../../types/ContainerContract';
 import ContainerContext from '../../../context/ContainerContext';
 import queryClient from '../../../context/queryClient';
@@ -41,10 +41,15 @@ const renderMedisinskVilkår = (contextValues?: Partial<ContainerContract>) =>
   contextWrapper(<MedisinskVilkår />, contextValues);
 
 describe('MedisinskVilkår', () => {
-  let httpGetSpy = null;
+  let httpGetSpy: ReturnType<typeof vi.spyOn>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     httpGetSpy = vi.spyOn(httpUtils, 'get');
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+    httpGetSpy.mockRestore();
   });
 
   const mockResolvedGetApiCall = data => {
@@ -104,10 +109,19 @@ describe('MedisinskVilkår', () => {
     expect(getByText('venter', { exact: false })).toBeInTheDocument();
     expect(queryByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen/i)).toBeNull();
     expect(queryByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeNull();
-    await waitFor(async () => {
-      await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+
+    // Wait for initial render to complete before interacting
+    await waitFor(() => {
+      expect(getAllByText(/Tilsyn og pleie/i)[0]).toBeInTheDocument();
+    });
+
+    await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+    await waitFor(() => {
       expect(getByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen/i)).toBeInTheDocument();
-      await userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
+    });
+
+    await userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
+    await waitFor(() => {
       expect(getByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen/i)).toBeInTheDocument();
     });
   });

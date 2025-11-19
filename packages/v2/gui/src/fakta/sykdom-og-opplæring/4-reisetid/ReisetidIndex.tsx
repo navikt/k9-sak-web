@@ -7,7 +7,7 @@ import { useContext, useState } from 'react';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import Vurderingsnavigasjon, {
   type Vurderingselement,
-} from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
+} from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon';
 import { CenteredLoader } from '../CenteredLoader';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';

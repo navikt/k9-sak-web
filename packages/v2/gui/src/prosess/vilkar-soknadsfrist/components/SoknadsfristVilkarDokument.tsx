@@ -1,3 +1,4 @@
+import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
@@ -12,7 +13,6 @@ import {
   minLength,
   required,
 } from '@navikt/ft-form-validators';
-import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Dayjs } from 'dayjs';
 import { useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -151,7 +151,7 @@ export const SoknadsfristVilkarDokument = ({
                     name={`avklarteKrav.${dokumentIndex}.fraDato`}
                     label="Oppgi dato søknadsfristvilkåret er oppfylt fra"
                     validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
-                    isReadOnly={readOnly}
+                    readOnly={readOnly}
                     disabledDays={[
                       {
                         before: initializeDate(minDate).toDate(),

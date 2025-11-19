@@ -6,7 +6,7 @@ import {
   ung_kodeverk_klage_KlageVurderingType,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import { KlagevurderingProsessIndex } from './KlagevurderingProsessIndex';
