@@ -15,25 +15,26 @@ const prosessStegUtvidetRettPanelDefinisjoner = (
   const visAlderProsessSteg = erFagytelseTypeAleneOmOmsorgen || erFagytelseTypeKroniskSyk;
   const harAldersvilkår = vilkar.some(v => v.vilkarType.kode === vilkarType.ALDERSVILKAR_BARN);
 
-  if (!(visAlderProsessSteg && harAldersvilkår)) return [
-    new InngangsvilkarProsessStegPanelDef(),
-    new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
-    new VedtakProsessStegPanelDef(),
-  ]
-
-  return featureToggles?.FLYTT_ALDERSVILKAR
-    ? [
-      new InngangsvilkarProsessStegPanelDef(),
-      new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
-      new AlderProsessStegPanelDef(),
-      new VedtakProsessStegPanelDef(),
-    ]
-    : [
-      new AlderProsessStegPanelDef(),
+  if (!(visAlderProsessSteg && harAldersvilkår))
+    return [
       new InngangsvilkarProsessStegPanelDef(),
       new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
       new VedtakProsessStegPanelDef(),
     ];
+
+  return featureToggles?.FLYTT_ALDERSVILKAR
+    ? [
+        new InngangsvilkarProsessStegPanelDef(),
+        new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+        new AlderProsessStegPanelDef(),
+        new VedtakProsessStegPanelDef(),
+      ]
+    : [
+        new AlderProsessStegPanelDef(),
+        new InngangsvilkarProsessStegPanelDef(),
+        new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+        new VedtakProsessStegPanelDef(),
+      ];
 };
 
 export default prosessStegUtvidetRettPanelDefinisjoner;

@@ -1,7 +1,7 @@
 import type { k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 import { k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Resultat } from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
+import { Resultat } from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon';
 
 export const utledResultat = (element: LangvarigSykdomVurderingDto) => {
   if (element.godkjent) {
