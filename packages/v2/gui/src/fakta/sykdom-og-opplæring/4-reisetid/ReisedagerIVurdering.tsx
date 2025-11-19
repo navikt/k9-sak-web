@@ -2,6 +2,10 @@ import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reis
 import { Label, BodyLong, Tag } from '@navikt/ds-react';
 import { Period } from '@navikt/ft-utils';
 
+const formaterReisedager = (period: Period) => {
+  return period.asListOfDays().length > 1 ? period.prettifyPeriod() : period.prettifyPeriod().split(' - ')[0];
+};
+
 const ReisedagerIVurdering = ({
   reisedagerOppgittISøknad,
   reisedagerIVurdering,
@@ -17,10 +21,7 @@ const ReisedagerIVurdering = ({
 
   if (!reisedagerPeriod) {
     const reisedagerIVurderingPeriod = new Period(reisedagerIVurdering.fom, reisedagerIVurdering.tom);
-    const reisedager =
-      reisedagerIVurderingPeriod.asListOfDays().length > 1
-        ? reisedagerIVurderingPeriod.prettifyPeriod()
-        : reisedagerIVurderingPeriod.prettifyPeriod().split(' - ')[0];
+    const reisedager = formaterReisedager(reisedagerIVurderingPeriod);
     return (
       <div>
         <Label size={size}>Reisedager:</Label>
@@ -34,10 +35,7 @@ const ReisedagerIVurdering = ({
     );
   }
 
-  const reisedager =
-    reisedagerPeriod.asListOfDays().length > 1
-      ? reisedagerPeriod.prettifyPeriod()
-      : reisedagerPeriod.prettifyPeriod().split(' - ')[0];
+  const reisedager = formaterReisedager(reisedagerPeriod);
   return (
     <div>
       <Label size={size}>Reisedager:</Label>{' '}
