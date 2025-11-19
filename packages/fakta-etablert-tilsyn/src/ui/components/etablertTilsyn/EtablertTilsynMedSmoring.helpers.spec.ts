@@ -72,7 +72,7 @@ describe('EtablertTilsynMedSmoring helpers', () => {
   it('splittSmurtePerioder deler i sammenhengende blokker og skiller på hull / tidPerDag', () => {
     const smurt = [
       lagTilsyn('2024-04-01', '2024-04-01', 3, Kilde.SØKER),
-      lagTilsyn('2024-04-02', '2024-04-02', 3, Kilde.SØKER), // sammenhengende -> samme gruppe
+      lagTilsyn('2024-04-02', '2024-04-02', 3, Kilde.SØKER), // sammenhengende -> same gruppe
       lagTilsyn('2024-04-04', '2024-04-04', 3, Kilde.SØKER), // hull -> ny gruppe
       lagTilsyn('2024-04-05', '2024-04-05', 4, Kilde.SØKER), // ny tidPerDag -> ny gruppe
       lagTilsyn('2024-04-06', '2024-04-06', 4, Kilde.SØKER), // helg, blir med i samme gruppe
