@@ -29,9 +29,8 @@ export const finnResterendePerioder = (perioderFraForm: Period[], periodeTilVurd
     return periode;
   });
   const resterendePerioder =
-    formatertePerioderFraForm.length > 0
-      ? getPeriodDifference(periodeTilVurdering, formatertePerioderFraForm as Period[])
-      : [];
+    formatertePerioderFraForm.length > 0 &&
+    getPeriodDifference(periodeTilVurdering, formatertePerioderFraForm as Period[]);
 
   return resterendePerioder;
 };

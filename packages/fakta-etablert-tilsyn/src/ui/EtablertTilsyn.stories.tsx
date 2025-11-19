@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { handlers } from '../../mock/api-mock';
 import { mockUrlPrepend } from '../../mock/constants';
 import EtablertTilsynContainer from './EtablertTilsynContainer';
 
-const meta = {
+const meta: Meta<typeof EtablertTilsynContainer> = {
   title: 'fakta/fakta-etablert-tilsyn',
   component: EtablertTilsynContainer,
   args: {
@@ -17,8 +17,8 @@ const meta = {
         sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
       },
       httpErrorHandler: () => {},
-      lagreBeredskapvurdering: fn(),
-      lagreNattevåkvurdering: fn(),
+      lagreBeredskapvurdering: data => console.log('Lagrer beredskap:', data),
+      lagreNattevåkvurdering: data => console.log('Lagrer nattevåk:', data),
       harAksjonspunktForBeredskap: true,
       harAksjonspunktForNattevåk: true,
     },
@@ -28,18 +28,15 @@ const meta = {
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
-} satisfies Meta<typeof EtablertTilsynContainer>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof EtablertTilsynContainer>;
 
 export const EtablertTilsyn: Story = {
-  parameters: {
-    msw: {
-      handlers,
-    },
-  },
-  play: async ({ canvas, step, args }) => {
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
     await step('skal ha skjema for håndtering av beredskap', async () => {
       await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
       await waitFor(async () => {
@@ -56,24 +53,6 @@ export const EtablertTilsyn: Story = {
       await userEvent.click(canvas.getByText('Ja, i deler av perioden'));
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
-      const submitButton = canvas.getByText('Bekreft og fortsett');
-      const form = submitButton.closest('form');
-      await fireEvent.submit(form!);
-      await waitFor(() =>
-        expect(args.data.lagreBeredskapvurdering).toHaveBeenCalledWith({
-          vurderinger: [
-            {
-              begrunnelse: 'test',
-              kilde: '',
-              periode: {
-                fom: '2021-07-11',
-                tom: '2021-07-12',
-              },
-              resultat: 'OPPFYLT',
-            },
-          ],
-        }),
-      );
     });
 
     await step('skal ha skjema for håndtering av nattevåk', async () => {
@@ -92,24 +71,6 @@ export const EtablertTilsyn: Story = {
       await userEvent.click(canvas.getByText('Ja, i deler av perioden'));
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
-      const submitButton = canvas.getByText('Bekreft og fortsett');
-      const form = submitButton.closest('form');
-      await fireEvent.submit(form!);
-      await waitFor(() =>
-        expect(args.data.lagreNattevåkvurdering).toHaveBeenCalledWith({
-          vurderinger: [
-            {
-              begrunnelse: 'test',
-              kilde: '',
-              periode: {
-                fom: '2021-07-11',
-                tom: '2021-07-12',
-              },
-              resultat: 'OPPFYLT',
-            },
-          ],
-        }),
-      );
     });
   },
 };

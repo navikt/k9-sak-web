@@ -3,12 +3,10 @@ import { Period } from '@fpsak-frontend/utils';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
-import { Periode } from '@k9-sak-web/types';
 import { Alert, Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
-import Kilde from '../../../../types/Kilde';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import { finnResterendePerioder } from '../../../../util/periodUtils';
@@ -29,13 +27,6 @@ enum RadioOptions {
   NEI = 'nei',
 }
 
-interface PeriodeUtenNattevåk {
-  periode: Periode;
-  resultat: Vurderingsresultat;
-  begrunnelse: string;
-  kilde: Kilde;
-}
-
 interface VurderingAvNattevåksperioderFormProps {
   nattevåksperiode: Vurderingsperiode;
   onCancelClick: () => void;
@@ -53,7 +44,7 @@ const VurderingAvNattevåksperioderForm = ({
   onCancelClick,
   beskrivelser,
 }: VurderingAvNattevåksperioderFormProps): JSX.Element => {
-  const { lagreNattevåkvurdering, readOnly } = React.useContext(ContainerContext) || {};
+  const { lagreNattevåkvurdering, readOnly } = React.useContext(ContainerContext);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForNattevåk = () => {
     if (nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT) {
@@ -83,12 +74,12 @@ const VurderingAvNattevåksperioderForm = ({
     const { kilde } = nattevåksperiode;
 
     let perioderMedEllerUtenNattevåk;
-    let perioderUtenNattevåk: PeriodeUtenNattevåk[] = [];
+    let perioderUtenNattevåk = [];
     if (harBehovForNattevåk === RadioOptions.JA_DELER) {
       perioderMedEllerUtenNattevåk = perioder
         .map((periode: any) => (periode.period ? periode.period : periode))
         .map(periode => ({
-          periode: { fom: periode.fom, tom: periode.tom },
+          periode,
           resultat: Vurderingsresultat.OPPFYLT,
           begrunnelse,
           kilde,
@@ -96,7 +87,7 @@ const VurderingAvNattevåksperioderForm = ({
 
       const resterendePerioder = finnResterendePerioder(perioder, nattevåksperiode.periode);
       perioderUtenNattevåk = resterendePerioder.map(periode => ({
-        periode: { fom: periode.fom, tom: periode.tom },
+        periode,
         resultat: Vurderingsresultat.IKKE_OPPFYLT,
         begrunnelse,
         kilde,
@@ -104,7 +95,7 @@ const VurderingAvNattevåksperioderForm = ({
     } else {
       perioderMedEllerUtenNattevåk = [
         {
-          periode: { fom: nattevåksperiode.periode.fom, tom: nattevåksperiode.periode.tom },
+          periode: nattevåksperiode.periode,
           resultat:
             harBehovForNattevåk === RadioOptions.JA ? Vurderingsresultat.OPPFYLT : Vurderingsresultat.IKKE_OPPFYLT,
           begrunnelse,
@@ -114,7 +105,7 @@ const VurderingAvNattevåksperioderForm = ({
     }
 
     const kombinertePerioder = perioderMedEllerUtenNattevåk.concat(perioderUtenNattevåk);
-    lagreNattevåkvurdering?.({ vurderinger: kombinertePerioder });
+    lagreNattevåkvurdering({ vurderinger: kombinertePerioder });
   };
 
   const valgtePerioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
@@ -164,13 +155,13 @@ const VurderingAvNattevåksperioderForm = ({
                 defaultValues={[new Period(nattevåksperiode.periode.fom, nattevåksperiode.periode.tom)]}
                 disabled={readOnly}
                 renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                  numberOfItems > 1 ? (
+                  numberOfItems > 1 && (
                     <DeleteButton
                       onClick={() => {
                         fieldArrayMethods.remove(index);
                       }}
                     />
-                  ) : null
+                  )
                 }
                 renderAfterFieldArray={fieldArrayMethods => (
                   <Box.New marginBlock="6 0">

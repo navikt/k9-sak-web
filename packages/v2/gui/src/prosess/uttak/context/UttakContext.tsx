@@ -149,13 +149,13 @@ export const useUttakContext = () => {
       return arbeidsgivere.arbeidsgivere ?? {};
     },
     refetchOnMount: false, // Med refetchOnMount til true gjentas kallet flere ganger
-    refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg
+    refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg 
   });
 
   const { data: inntektsgraderinger } = useSuspenseQuery({
     queryKey: ['uttak-inntektsgraderinger', behandling.uuid],
     queryFn: async () => uttakApi.hentInntektsgraderinger(behandling.uuid),
-    refetchOnMount: false, // Med refetchOnMount til true gjentas kallet flere ganger
+    refetchOnMount: false,  // Med refetchOnMount til true gjentas kallet flere ganger
     refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg
   });
 

@@ -7,12 +7,12 @@ import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
   periode: Period;
-  resultat: Vurderingsresultat | null;
+  resultat: Vurderingsresultat;
   kilde: Kilde;
   renderAfterElement?: () => React.ReactNode;
 }
 
-const renderStatusIcon = (resultat: Vurderingsresultat | null) => {
+const renderStatusIcon = (resultat: Vurderingsresultat) => {
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
       <CheckmarkCircleFillIcon

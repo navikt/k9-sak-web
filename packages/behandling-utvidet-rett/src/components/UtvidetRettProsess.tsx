@@ -173,7 +173,7 @@ const UtvidetRettProsess = ({
       fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER_AO,
       fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS,
       data.vilkar,
-      featureToggles,
+      featureToggles
     ),
     dataTilUtledingAvFpPaneler,
     fagsak,
