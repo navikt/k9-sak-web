@@ -72,16 +72,6 @@ export const UngVedtak = ({
     },
   });
 
-  const hentOriginalHtml = async (
-    dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType | undefined,
-  ) => {
-    if (dokumentMalType) {
-      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, true, false);
-      return response;
-    }
-    return {};
-  };
-
   const resetForm = async () => {
     const resetValues = await refetchVedtaksbrevValg();
     formMethods.reset({
@@ -169,8 +159,6 @@ export const UngVedtak = ({
                     {vedtaksbrevValgResponse?.harBrev && (
                       <FritekstBrevpanel
                         readOnly={readOnly}
-                        redigertBrevHtml={vedtaksbrevValg?.redigertBrevHtml}
-                        hentOriginalHtml={() => hentOriginalHtml(vedtaksbrevValg?.dokumentMalType)}
                         lagreVedtaksbrev={lagreVedtaksbrev}
                         handleForhåndsvis={() =>
                           vedtaksbrevValg?.dokumentMalType && forhåndsvisVedtaksbrev(vedtaksbrevValg.dokumentMalType)
@@ -178,6 +166,8 @@ export const UngVedtak = ({
                         fieldIndex={index}
                         vedtaksbrevValg={vedtaksbrevValg}
                         forhåndsvisningIsLoading={forhåndsvisningIsLoading}
+                        behandlingId={behandling.id}
+                        api={api}
                       />
                     )}
                   </Box.New>

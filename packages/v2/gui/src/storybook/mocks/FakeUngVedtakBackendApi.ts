@@ -1,6 +1,7 @@
 import type {
   ForhåndsvisVedtaksbrevResponse,
   LagreVedtaksbrevValgResponses,
+  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse,
   VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
@@ -19,5 +20,9 @@ export class FakeUngVedtakBackendApi {
 
   async lagreVedtaksbrev(): Promise<LagreVedtaksbrevValgResponses> {
     return { 200: {} };
+  }
+
+  async formidling_editor(): Promise<ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse> {
+    return {};
   }
 }
