@@ -7,7 +7,7 @@ import { useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import OppgittReisetid from './OppgittReisetid';
+import ReisedagerIVurdering from './ReisedagerIVurdering';
 import { resultatTilJaNei } from './utils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktErUtført } from '../../../utils/aksjonspunktUtils';
@@ -73,7 +73,11 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
     <>
       <RhfForm formMethods={formMethods}>
         <div className="flex flex-col gap-6">
-          <OppgittReisetid reisedagerOppgittISøknad={oppgittReisedager} size="small" />
+          <ReisedagerIVurdering
+            reisedagerOppgittISøknad={oppgittReisedager}
+            reisedagerIVurdering={vurdering.reisetid.periode}
+            size="small"
+          />
           <Textarea
             label="Vurder om det er nødvendig å reise en annen dag enn kursdagene"
             {...formMethods.register('begrunnelse', {
