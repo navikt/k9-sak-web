@@ -2,12 +2,17 @@ import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reis
 import { Label, BodyLong, Tag } from '@navikt/ds-react';
 import { Period } from '@navikt/ft-utils';
 
-// TODO ikke glem readonly når feltet kan redigeres
-const OppgittReisetid = ({
+const formaterReisedager = (period: Period) => {
+  return period.asListOfDays().length > 1 ? period.prettifyPeriod() : period.prettifyPeriod().split(' - ')[0];
+};
+
+const ReisedagerIVurdering = ({
   reisedagerOppgittISøknad,
+  reisedagerIVurdering,
   size = 'medium',
 }: {
   reisedagerOppgittISøknad: ReisetidInfoFraSøker['reisetidPeriodeOppgittISøknad'];
+  reisedagerIVurdering: { fom: string; tom: string };
   size?: 'medium' | 'small';
 }) => {
   const reisedagerPeriod = reisedagerOppgittISøknad
@@ -15,20 +20,22 @@ const OppgittReisetid = ({
     : null;
 
   if (!reisedagerPeriod) {
+    const reisedagerIVurderingPeriod = new Period(reisedagerIVurdering.fom, reisedagerIVurdering.tom);
+    const reisedager = formaterReisedager(reisedagerIVurderingPeriod);
     return (
       <div>
         <Label size={size}>Reisedager:</Label>
-        <div>
-          <BodyLong size={size}>Ingen reisedager oppgitt</BodyLong>
+        <div className="flex gap-2">
+          <BodyLong size={size}>{reisedager}</BodyLong>
+          <Tag size="small" variant="info">
+            Flyttet fra nødvendig opplæring
+          </Tag>
         </div>
       </div>
     );
   }
 
-  const reisedager =
-    reisedagerPeriod.asListOfDays().length > 1
-      ? reisedagerPeriod.prettifyPeriod()
-      : reisedagerPeriod.prettifyPeriod().split(' - ')[0];
+  const reisedager = formaterReisedager(reisedagerPeriod);
   return (
     <div>
       <Label size={size}>Reisedager:</Label>{' '}
@@ -42,4 +49,4 @@ const OppgittReisetid = ({
   );
 };
 
-export default OppgittReisetid;
+export default ReisedagerIVurdering;

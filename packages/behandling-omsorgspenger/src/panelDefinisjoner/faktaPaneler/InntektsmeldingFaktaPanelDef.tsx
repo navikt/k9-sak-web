@@ -26,6 +26,8 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
     arbeidsgiverOpplysningerPerId,
     dokumenter,
   });
+
+  getOverstyrVisningAvKomponent = () => true;
 }
 
 export default InntektsmeldingFaktaPanelDef;

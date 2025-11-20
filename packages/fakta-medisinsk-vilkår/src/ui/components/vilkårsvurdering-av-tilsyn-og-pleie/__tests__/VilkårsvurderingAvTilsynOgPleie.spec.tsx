@@ -29,8 +29,6 @@ const vurderingsoversiktMock = {
   ],
 } as any;
 
-window.scroll = () => null;
-
 const contextWrapper = ui =>
   render(
     <ContainerContext.Provider
@@ -229,8 +227,8 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
     });
 
     afterEach(() => {
-      httpGetSpy.mockClear();
-      httpPostSpy.mockClear();
+      httpGetSpy.mockReset();
+      httpPostSpy.mockReset();
       navigerTilNesteStegSpy.mockClear();
     });
 
@@ -247,7 +245,9 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
@@ -270,7 +270,9 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
@@ -302,7 +304,9 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false

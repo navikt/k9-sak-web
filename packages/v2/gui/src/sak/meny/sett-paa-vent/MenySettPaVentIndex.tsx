@@ -41,7 +41,7 @@ export const MenySettPaVentIndexV2 = ({
       await settBehandlingPaVent(values);
       navigerEtterSattPåVent();
     },
-    [behandlingId, behandlingVersjon],
+    [behandlingId, behandlingVersjon, behandlingUuid, settBehandlingPaVent, navigerEtterSattPåVent],
   );
 
   return (

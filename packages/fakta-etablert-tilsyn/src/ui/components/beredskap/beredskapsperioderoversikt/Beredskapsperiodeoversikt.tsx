@@ -1,13 +1,13 @@
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { VStack } from '@navikt/ds-react';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { VStack } from '@navikt/ds-react';
-import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import BeredskapType from '../../../../types/BeredskapType';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import ContainerContext from '../../../context/ContainerContext';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
 import BeredskapsperiodeoversiktController from '../beredskapsperiodeoversikt-controller/BeredskapsperiodeoversiktController';
 import BeredskapsperiodeoversiktMessages from '../beredskapsperiodeoversikt-messages/BeredskapsperiodeoversiktMessages';
-import ContainerContext from '../../../context/ContainerContext';
 
 interface BeredskapsperiodeoversiktProps {
   beredskapData: BeredskapType;
@@ -54,15 +54,17 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
           />
         )}
         showDetailSection={!!valgtPeriode}
-        detailSection={() => (
-          <BeredskapsperiodeoversiktController
-            valgtPeriode={valgtPeriode!}
-            editMode={editMode}
-            onEditClick={() => setEditMode(true)}
-            onCancelClick={() => velgPeriode(null)}
-            beskrivelser={beskrivelser}
-          />
-        )}
+        detailSection={() =>
+          valgtPeriode && (
+            <BeredskapsperiodeoversiktController
+              valgtPeriode={valgtPeriode}
+              editMode={editMode}
+              onEditClick={() => setEditMode(true)}
+              onCancelClick={() => velgPeriode(null)}
+              beskrivelser={beskrivelser}
+            />
+          )
+        }
       />
     </VStack>
   );

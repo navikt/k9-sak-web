@@ -1,11 +1,12 @@
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
+  k9_sak_kontrakt_opptjening_OverstyringOpptjeningsvilkåretDto,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
+import { type KodeverkMedUndertype, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Alert, BodyShort, Box, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
@@ -18,17 +19,10 @@ export type VilkarResultPickerFormState = {
   erVilkarOk: string;
   periodeVilkarStatus: boolean;
   avslagCode?: string;
-  innvilgelseMerknadCode?: string;
+  innvilgelseMerknadKode?: string;
   avslagDato?: string;
   valgtPeriodeFom: string;
   valgtPeriodeTom: string;
-};
-
-type TransformedValues = {
-  erVilkarOk: boolean;
-  periode: Periode | null | undefined;
-  avslagskode?: string;
-  avslagDato?: string;
 };
 
 interface OwnProps {
@@ -49,7 +43,11 @@ interface OwnProps {
 }
 
 interface StaticFunctions {
-  transformValues: (values: VilkarResultPickerFormState, periodeFom?: string, periodeTom?: string) => TransformedValues;
+  transformValues: (
+    values: VilkarResultPickerFormState,
+    periodeFom?: string,
+    periodeTom?: string,
+  ) => k9_sak_kontrakt_opptjening_OverstyringOpptjeningsvilkåretDto;
   buildInitialValues: (
     aksjonspunkter: AksjonspunktDto[],
     status: string,
@@ -195,12 +193,11 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
               </VStack>
             </Box.New>
           )}
-
           {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && harInnvilgetMerknaderForVilkår && (
             <Box.New marginBlock={'2 0'}>
               <RhfSelect
                 control={control}
-                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgetMerknadCode`}
+                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadKode`}
                 label="Hjemmel for innvilgelse"
                 selectValues={relevanteInnvilgetMerknader.map(innvilgetMerknad => (
                   <option key={innvilgetMerknad.merknad} value={innvilgetMerknad.merknad}>
@@ -266,7 +263,7 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
     erVilkarOk,
     periodeVilkarStatus: !isOpenAksjonspunkt && status === vilkårStatusPeriodisert.OPPFYLT,
     avslagCode: erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagKode ? avslagKode : undefined,
-    innvilgelseMerknadCode: innvilgelseMerknadKode,
+    innvilgelseMerknadKode: innvilgelseMerknadKode,
     valgtPeriodeFom: periode.periode.fom ?? '',
     valgtPeriodeTom: periode.periode.tom ?? '',
   };
@@ -276,13 +273,13 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
   values: VilkarResultPickerFormState,
   periodeFom?: string,
   periodeTom?: string,
-) => {
+): k9_sak_kontrakt_opptjening_OverstyringOpptjeningsvilkåretDto => {
   switch (values.erVilkarOk) {
     case vilkårStatusPeriodisert.OPPFYLT:
       return {
         erVilkarOk: true,
-        periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
-        innvilgelseMerknadCode: values.innvilgelseMerknadCode,
+        periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : { fom: '', tom: '' },
+        innvilgelseMerknadKode: values.innvilgelseMerknadKode,
       };
 
     case vilkårStatusPeriodisert.DELVIS_OPPFYLT:
@@ -292,15 +289,14 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
           fom: values.valgtPeriodeFom,
           tom: values.valgtPeriodeTom,
         },
-        innvilgelseMerknadCode: values.innvilgelseMerknadCode,
+        innvilgelseMerknadKode: values.innvilgelseMerknadKode,
       };
 
     case vilkårStatusPeriodisert.IKKE_OPPFYLT:
       return {
         erVilkarOk: false,
         avslagskode: values.avslagCode,
-        avslagsDato: values.avslagDato,
-        periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
+        periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : { fom: '', tom: '' },
       };
 
     case vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT:

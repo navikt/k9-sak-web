@@ -42,7 +42,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && tidligereAksjonspunkterErÅpne && !readOnly) {
     return (
       <Alert variant="warning" size="small" className="mb-4 p-4">
-        Reisetid er ferdig vurdert, men du må vurdere institusjon, langvarig sykdom og nødvendig opplæring før du kan gå
+        Reisedag er ferdig vurdert, men du må vurdere institusjon, langvarig sykdom og nødvendig opplæring før du kan gå
         videre i behandlingen.
       </Alert>
     );
@@ -51,7 +51,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && !readOnly && førsteVurderingIListen) {
     return (
       <Alert variant="info" size="small" className="mb-4 p-4">
-        Reisetid er ferdig vurdert og du kan gå videre i behandlingen.
+        Reisedag er ferdig vurdert og du kan gå videre i behandlingen.
         <div className="mt-2">
           <Button variant="secondary" size="small" onClick={løsAksjonspunktUtenEndringer}>
             Bekreft og fortsett
@@ -64,7 +64,7 @@ const ReisetidAlerts = ({ vurdertReisetid }: ReisetidAlertProps) => {
   if (aksjonspunktErÅpent && !readOnly) {
     return (
       <Alert variant="warning" size="small" className="mb-4">
-        Vurder reisetid på andre dager enn søker har opplæring.
+        Vurder reisedag på andre dager enn søker har opplæring.
       </Alert>
     );
   }

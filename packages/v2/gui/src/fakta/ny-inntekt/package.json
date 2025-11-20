@@ -6,9 +6,7 @@
   "author": "NAV IT",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev": "vite serve"
-  },
+  "scripts": {},
   "dependencies": {
     "@navikt/aksel-icons": "7.29.1",
     "@navikt/ds-css": "7.28.0",
