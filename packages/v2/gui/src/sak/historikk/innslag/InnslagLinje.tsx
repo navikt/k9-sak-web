@@ -9,12 +9,28 @@ export interface InnslagLinjeProps {
   readonly behandlingLocation: Location;
 }
 
+// Disse verdier er og definert i k9-sak HistorikkinnslagTekstLinje
+const BACKSLASH = '\\';
+const BOLD_MARKØR = '__';
+const ESCAPED_BACKSLASH = BACKSLASH + BACKSLASH;
+const ESCAPED_BOLD_MARKØR = BACKSLASH + BOLD_MARKØR;
+
 const parseBoldText = (input: string) =>
   input
-    .split(/(__.*?__)/g)
+    .split(/((?<!\\)__.*?(?<!\\)__)/g)
     .map((part, index) =>
-      part.startsWith('__') && part.endsWith('__') ? <b key={index}>{part.slice(2, -2)}</b> : part,
+      part.startsWith('__') && part.endsWith('__') ? (
+        <b key={index}>{unescapeMarkers(part.slice(2, -2))}</b>
+      ) : (
+        unescapeMarkers(part)
+      ),
     );
+
+/**
+ * Sidan server escaper evt __ i input tekst som \__ og evt \ i input tekst som \\ reverserer vi dette her etter at bold markering har blitt parsa.
+ */
+const unescapeMarkers = (input: string): string =>
+  input.replaceAll(ESCAPED_BOLD_MARKØR, BOLD_MARKØR).replaceAll(ESCAPED_BACKSLASH, BACKSLASH);
 
 export const InnslagLinje = ({ linje, behandlingLocation }: InnslagLinjeProps) => {
   switch (linje.type) {
