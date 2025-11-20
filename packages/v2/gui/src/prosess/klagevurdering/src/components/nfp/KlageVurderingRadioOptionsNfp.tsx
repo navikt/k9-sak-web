@@ -1,3 +1,4 @@
+import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
   ung_kodeverk_klage_KlageVurderingOmgjør,
@@ -24,7 +25,7 @@ const utledHjemler = (
   navn: string;
 }[] => {
   switch (fagsak.sakstype) {
-    case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
+    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -35,10 +36,10 @@ const utledHjemler = (
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -49,14 +50,14 @@ const utledHjemler = (
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
+    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
         { kode: '9-13', navn: '§ 9-13' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
-    case ung_kodeverk_behandling_FagsakYtelseType.OPPLÆRINGSPENGER:
+    case k9_kodeverk_behandling_FagsakYtelseType.OPPLÆRINGSPENGER:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
