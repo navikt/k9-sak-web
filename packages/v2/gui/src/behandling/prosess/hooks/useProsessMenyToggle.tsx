@@ -10,6 +10,8 @@ interface UseProsessMenyToggleResult {
 }
 
 /**
+ * MERK: Denne er bare for å bruke under utivkling og kan fjernes etterhvert
+ * 
  * Hook for å bytte mellom legacy og v2 prosessmeny under migrering.
  * Lagrer valg i localStorage for å bevare preferanse mellom sideinnlastinger.
  * 

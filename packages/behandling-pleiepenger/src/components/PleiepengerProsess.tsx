@@ -28,6 +28,7 @@ import {
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
+import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -297,6 +298,12 @@ const PleiepengerProsess = ({
               const formaterPanel = formaterteProsessStegPaneler.find(
                 (panel) => panel.labelId === panelDef.getTekstKode()
               );
+              
+              // Bruk migrerte InitPanel-komponenter der de finnes
+              if (urlKode === 'uttak') {
+                return <UttakProsessStegInitPanel key={urlKode} />;
+              }
+              
               return (
                 <LegacyPanelAdapter
                   key={urlKode}
