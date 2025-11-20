@@ -6477,10 +6477,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^14.0.1":
-  version: 14.0.1
-  resolution: "commander@npm:14.0.1"
-  checksum: 10/783115e9403caeca29c0fcbd4e0358f70c67760e4e4933f3453fcdd5ddba2ec44173c8da5213d7ce5e404f51c7e71203a42c548164dbe27b668b32a8981577f1
+"commander@npm:^14.0.2":
+  version: 14.0.2
+  resolution: "commander@npm:14.0.2"
+  checksum: 10/2d202db5e5f9bb770112a3c1579b893d17ac6f6d932183077308bdd96d0f87f0bbe6a68b5b9ed2cf3b2514be6bb7de637480703c0e2db9741ee1b383237deb26
   languageName: node
   linkType: hard
 
@@ -10085,8 +10085,8 @@ __metadata:
     history: "npm:5.3.0"
     husky: "npm:9.1.7"
     i18n-iso-countries: "npm:7.14.0"
-    knip: "npm:^5.70.0"
-    lint-staged: "npm:16.2.6"
+    knip: "npm:^5.70.1"
+    lint-staged: "npm:16.2.7"
     loose-ts-check: "npm:^2.0.0"
     msw: "npm:2.12.2"
     msw-storybook-addon: "npm:^2.0.6"
@@ -10105,7 +10105,7 @@ __metadata:
     typed-css-modules: "npm:^0.9.1"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.47.0"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.4"
     vite-plugin-html: "npm:^3.2.2"
     vite-plugin-svgr: "npm:4.5.0"
     vitest: "npm:4.0.10"
@@ -10145,9 +10145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.70.0":
-  version: 5.70.0
-  resolution: "knip@npm:5.70.0"
+"knip@npm:^5.70.1":
+  version: 5.70.1
+  resolution: "knip@npm:5.70.1"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -10167,7 +10167,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/d52e0c420850ea069d3d7b60e75d7c55f89b58c48f8fa5a69ee75c5d0d7c7d6d07e86b3ba54691fedfe92ed9f74b9e3ba5ff33f706a2c2c628cd708f35e5b734
+  checksum: 10/7e9edafe4c113519cad75197bf72589fc3383b6e2291ec915f75ecd08024423393914089af89fe2cb298bb48419e88a48ab3e84e8635ce9d5379d87cbab69342
   languageName: node
   linkType: hard
 
@@ -10225,11 +10225,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:16.2.6":
-  version: 16.2.6
-  resolution: "lint-staged@npm:16.2.6"
+"lint-staged@npm:16.2.7":
+  version: 16.2.7
+  resolution: "lint-staged@npm:16.2.7"
   dependencies:
-    commander: "npm:^14.0.1"
+    commander: "npm:^14.0.2"
     listr2: "npm:^9.0.5"
     micromatch: "npm:^4.0.8"
     nano-spawn: "npm:^2.0.0"
@@ -10238,7 +10238,7 @@ __metadata:
     yaml: "npm:^2.8.1"
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 10/c419f1347166ddd06746d4a3e4ce6441f3d0e82dcdcbc3d3615ddf7b82b36c603df2e43dbb1edad5ed00ae29857479e1f880bcca271f8bf4b0db7d0f77861d21
+  checksum: 10/c1fd7685300800ea6d3f073cb450f9e3d2a83966e7c6785ea9608a08e77e1e8e5f1958f77b98ccd7d423daa53bb36016d6fd96a98d22234d0f7f56d7b3f360f2
   languageName: node
   linkType: hard
 
@@ -14055,9 +14055,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "vite@npm:7.2.2"
+"vite@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "vite@npm:7.2.4"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -14106,7 +14106,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/aee08b420646d5bcd92d5f4130b13b90303cab1cf48ee4772030f5fa7b464cc602ba578e9b1800a71f9b1c9b8daf1336e8c069a4cf1bb90b7b05ae5b13f62b06
+  checksum: 10/25962e65159e62fa6b643ac5bc79457c61c9b2cec9a1a17763b067b1e5ecac6483ad84247d6d457d81e25c5d1f8c553372bedf71dee09d8c1bd41af6c7b016a5
   languageName: node
   linkType: hard
 
