@@ -17,8 +17,5 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
 
-      - name: Installer Playwright
-        uses: ./.github/actions/setup-playwright
-
       - name: Run Storybook tests
         run: yarn test-storybook
