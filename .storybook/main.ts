@@ -5,16 +5,13 @@ import type { StorybookConfig } from '@storybook/react-vite';
 const config: StorybookConfig = {
   stories: ['../packages/**/*.stories.@(j|t)s?(x)'],
 
-  addons: [
-    {
-      name: getAbsolutePath("@storybook/addon-docs"),
-      options: {
-        configureJSX: true,
-        csfPluginOptions: null,
-      },
+  addons: [{
+    name: getAbsolutePath("@storybook/addon-docs"),
+    options: {
+      configureJSX: true,
+      csfPluginOptions: null,
     },
-    getAbsolutePath("@storybook/addon-a11y"),
-  ],
+  }, getAbsolutePath("@storybook/addon-a11y"), getAbsolutePath("@storybook/addon-vitest")],
 
   staticDirs: ['../public'],
 
