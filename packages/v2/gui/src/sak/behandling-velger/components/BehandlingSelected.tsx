@@ -6,9 +6,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
-import { type Location } from 'history';
 import { NavLink, useLocation } from 'react-router';
-import skjermlenkeCodes from '../../../shared/constants/skjermlenkeCodes';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
@@ -18,6 +16,7 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 interface BehandlingSelectedProps {
   opprettetDato: string;
@@ -28,7 +27,6 @@ interface BehandlingSelectedProps {
   behandlingTypeNavn: string;
   søknadsperioder: K9UngPeriode[];
   behandlingTypeKode: string;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
   behandlingVisningsnavn?: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined;
 }
@@ -42,7 +40,6 @@ const BehandlingSelected = ({
   behandlingTypeNavn,
   opprettetDato,
   søknadsperioder,
-  createLocationForSkjermlenke,
   sakstypeKode,
   behandlingVisningsnavn,
 }: BehandlingSelectedProps) => {
@@ -142,7 +139,7 @@ const BehandlingSelected = ({
       {visLenkeTilFaktapanel && (
         <Link
           as={NavLink}
-          to={createLocationForSkjermlenke(location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
+          to={createPathForSkjermlenke(location, 'FAKTA_OM_SOKNADSPERIODER')}
           onClick={() => window.scroll(0, 0)}
           className={styles.faktapanelLenke}
         >

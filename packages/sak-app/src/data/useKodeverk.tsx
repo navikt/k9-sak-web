@@ -7,7 +7,7 @@ import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 /**
  * Hook som henter kodeverk knyttet til behandlingstype
  */
-export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk): { [key: string]: T[] } {
+export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk | undefined): { [key: string]: T[] } {
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK);
   const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(
     K9sakApiKeys.KODEVERK_TILBAKE,

@@ -131,7 +131,6 @@ interface OwnProps {
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
   hentSøknadsperioder: boolean;
   api: BehandlingVelgerBackendApiType;
@@ -147,7 +146,6 @@ const BehandlingPicker = ({
   behandlingId,
   behandlinger,
   getBehandlingLocation,
-  createLocationForSkjermlenke,
   sakstypeKode,
   hentSøknadsperioder,
   api,
@@ -368,7 +366,6 @@ const BehandlingPicker = ({
           }
           behandlingTypeKode={valgtBehandling.type}
           søknadsperioder={getSøknadsperioderForValgtBehandling(søknadsperioder, valgtBehandling)}
-          createLocationForSkjermlenke={createLocationForSkjermlenke}
           sakstypeKode={sakstypeKode}
           behandlingVisningsnavn={valgtBehandling.visningsnavn}
         />
