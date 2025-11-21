@@ -47,10 +47,6 @@ const queryClient = new QueryClient({
 const preview: Preview = {
   parameters: {
     margin: '40px',
-
-    a11y: {
-      test: 'todo',
-    },
   },
 
   decorators: [
