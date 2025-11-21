@@ -1,9 +1,9 @@
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
   ung_kodeverk_klage_KlageVurderingOmgjør,
   ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_fagsak_FagsakDto,
   type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
@@ -18,7 +18,7 @@ import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormV
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
 const utledHjemler = (
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto,
+  fagsak: FagsakDto,
   ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[],
 ): {
   kode: string;
@@ -75,7 +75,7 @@ const utledHjemler = (
 };
 
 interface KlageVurderingRadioOptionsNfpProps {
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
+  fagsak: FagsakDto;
   readOnly: boolean;
   medholdReasons: KodeverkV2[] | KodeverkMedUndertype;
   klageVurdering: string | null;

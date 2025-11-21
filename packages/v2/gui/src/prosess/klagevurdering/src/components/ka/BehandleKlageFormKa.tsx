@@ -1,7 +1,5 @@
-import {
-  ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_klage_KlagebehandlingDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
@@ -12,6 +10,7 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import type { PreviewData } from '../felles/PreviewData';
 import type { SaveKlageParams } from '../felles/SaveKlageParams';
 import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
@@ -20,11 +19,11 @@ import type { BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormVal
 import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 
 interface BehandleKlageFormKaProps {
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
+  klageVurdering: KlagebehandlingDto;
   saveKlage: (params: SaveKlageParams) => Promise<void>;
   submitCallback: (values: TransformedValues[]) => Promise<void>;
   isReadOnly: boolean;
-  previewCallback: () => Promise<void>;
+  previewCallback: (brevdata?: PreviewData | undefined) => Promise<void>;
   readOnlySubmitButton: boolean;
 }
 
@@ -117,7 +116,7 @@ export const BehandleKlageFormKa = ({
   );
 };
 
-export const buildInitialValues = (klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto) => ({
+export const buildInitialValues = (klageVurdering: KlagebehandlingDto) => ({
   klageMedholdArsak: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.klageMedholdArsak
     : null,

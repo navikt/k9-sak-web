@@ -1,11 +1,12 @@
 import { Button } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
-import type { SaveKlageParams } from './SaveKlageParams';
 import { formValuesToSaveValues } from './formValuesToSaveValues.js';
+import type { PreviewData } from './PreviewData.js';
+import type { SaveKlageParams } from './SaveKlageParams';
 
 const getBrevData = (tekst: string) => ({
-  dokumentdata: tekst && { fritekst: tekst },
+  dokumentdata: { fritekst: tekst },
   dokumentMal: 'UTLED',
 });
 
@@ -14,7 +15,7 @@ interface OwnProps {
   saveKlage: (params: SaveKlageParams) => Promise<void>;
   aksjonspunktCode: string;
   readOnly: boolean;
-  previewCallback: (brevData: any) => Promise<void>;
+  previewCallback: (brevData: PreviewData) => Promise<void>;
 }
 
 export const TempSaveAndPreviewKlageLink = ({

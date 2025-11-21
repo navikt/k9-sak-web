@@ -1,17 +1,15 @@
-import type {
-  ung_sak_kontrakt_klage_KlagebehandlingDto,
-  ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto,
-  ung_sak_kontrakt_klage_KlageHjemmelDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { MellomlagringDto } from '@k9-sak-web/backend/combined/kontrakt/mellomlagring/MellomlagringDto.js';
+import type { ung_sak_kontrakt_klage_KlageHjemmelDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 export interface KlageVurderingApi {
   /**
    * Brukast i queryKey i useQuery kall for å sikre at query blir oppfriska viss backend blir endra.
    */
-  readonly backend: 'ung' /* | 'k9' */; // k9 backend kan leggast til i framtida. typer brukt i interface må då vere union av ung og k9 sine typer
+  readonly backend: 'ung' | 'k9klage';
 
-  forhåndsvisKlageVedtaksbrev(behandlingId: number): Promise<Blob>;
-  getKlageVurdering(behandlingUuid: string): Promise<ung_sak_kontrakt_klage_KlagebehandlingDto>;
-  mellomlagreKlage(data: MellomlagringDataDto): Promise<void>;
-  hentValgbareKlagehjemler(): Promise<ung_sak_kontrakt_klage_KlageHjemmelDto[]>;
+  forhåndsvisKlageVedtaksbrev?(behandlingId: number): Promise<Blob>;
+  getKlageVurdering(behandlingUuid: string): Promise<KlagebehandlingDto>;
+  mellomlagreKlage(data: MellomlagringDto): Promise<void>;
+  hentValgbareKlagehjemlerForUng?(): Promise<ung_sak_kontrakt_klage_KlageHjemmelDto[]>;
 }
