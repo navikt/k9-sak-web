@@ -1,6 +1,7 @@
-import type { FeatureToggles } from '../FeatureToggles.js';
+import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const devFeatureToggles = {
+  isFor: 'dev',
   BRUK_V2_MELDINGER: false,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
@@ -28,4 +29,4 @@ export const devFeatureToggles = {
   VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,
   FLYTT_ALDERSVILKAR: true,
-} satisfies FeatureToggles;
+} satisfies UngFeatureToggles;

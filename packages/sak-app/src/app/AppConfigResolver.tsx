@@ -4,9 +4,6 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/prodFeatureToggles.js';
-import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
@@ -45,8 +42,6 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(K9sakApiKeys.NAV_ANSATT, NO_PARAMS, options);
 
-  const { featureToggles } = useFeatureToggles();
-
   const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(K9sakApiKeys.LANGUAGE_FILE, NO_PARAMS);
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
@@ -62,23 +57,20 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigInitLenker &&
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
-    sprakFilState === RestApiState.SUCCESS &&
-    !!featureToggles; // <- sjekker at feature toggles er lasta
+    sprakFilState === RestApiState.SUCCESS;
 
   const formidlingClient = useContext(FormidlingClientContext);
 
   return (
-    <FeatureTogglesContext.Provider value={featureToggles ?? prodFeatureToggles}>
-      <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
-        <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
-          <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
-            <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
-              {harFeilet || erFerdig ? children : <LoadingPanel />}
-            </VedtakKlageApiContext>
-          </TilkjentYtelseApiContext>
-        </InnloggetAnsattProvider>
-      </K9KodeverkoppslagContext>
-    </FeatureTogglesContext.Provider>
+    <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
+      <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
+        <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
+          <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
+            {harFeilet || erFerdig ? children : <LoadingPanel />}
+          </VedtakKlageApiContext>
+        </TilkjentYtelseApiContext>
+      </InnloggetAnsattProvider>
+    </K9KodeverkoppslagContext>
   );
 };
 

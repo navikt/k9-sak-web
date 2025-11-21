@@ -1,6 +1,6 @@
 # k9-sak-frontend
 
-Monorepo for Frontend kode for k9-sak.
+Monorepo for Frontend kode for k9-sak og ung-sak.
 
 [![](https://github.com/navikt/k9-sak-web/workflows/Deploy%20Docker%20image/badge.svg)](https://github.com/navikt/k9-sak-web/actions?query=workflow%3A%22Deploy+Docker+image%22)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
@@ -41,7 +41,7 @@ Storybook brukes også til utvikling, startes med `yarn storybook`. Se ellers _p
 
 ### Feature toggles
 
-Aktiveres ved å definere en eller flere features i `.env.development`fil i _envDir_ katalogen
+Settes i typescript filene i `packages/v2/gui/featuretoggles/`
 
 ## Pakkeoppdatering
 
