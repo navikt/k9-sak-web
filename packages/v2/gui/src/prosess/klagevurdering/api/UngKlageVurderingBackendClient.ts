@@ -4,8 +4,8 @@ import {
   noNavK9Klage_hentValgbareKlagehjemler,
   noNavK9Klage_mellomlagreKlage,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import type { KlageVurderingApi } from './KlageVurderingApi.js';
 import type { ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { KlageVurderingApi } from './KlageVurderingApi.js';
 
 export default class UngKlageVurderingBackendClient implements KlageVurderingApi {
   readonly backend = 'ung';
@@ -24,7 +24,7 @@ export default class UngKlageVurderingBackendClient implements KlageVurderingApi
     });
   }
 
-  async hentValgbareKlagehjemler() {
+  async hentValgbareKlagehjemlerForUng() {
     return (await noNavK9Klage_hentValgbareKlagehjemler()).data;
   }
 }
