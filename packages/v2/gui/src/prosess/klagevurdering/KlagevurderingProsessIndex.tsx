@@ -44,9 +44,7 @@ export const KlagevurderingProsessIndex = ({
   });
   const { mutateAsync: previewCallback } = useMutation({
     mutationFn: async (dokumentdata?: Dokumentdata) => {
-      const pdf = await api.forhåndsvisKlageVedtaksbrev(behandling, fagsak, {
-        fritekst: dokumentdata?.fritekst ?? '',
-      });
+      const pdf = await api.forhåndsvisKlageVedtaksbrev(behandling, fagsak, dokumentdata);
       const fileUrl = window.URL.createObjectURL(pdf);
       window.open(fileUrl, '_blank');
     },
