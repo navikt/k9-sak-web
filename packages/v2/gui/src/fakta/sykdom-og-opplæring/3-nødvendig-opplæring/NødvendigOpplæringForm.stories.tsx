@@ -378,7 +378,18 @@ export const ValideringAvReisedagIHelg: Story = {
     // Verifiser at payload er korrekt
     await expect(løsAksjonspunkt9302).toHaveBeenCalledWith({
       perioder: [
-        { fom: '2025-02-14', tom: '2025-02-17', resultat: OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID },
+        {
+          periode: { fom: '2025-02-14', tom: '2025-02-16' },
+          begrunnelse: 'Test av reisedag validering',
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+        {
+          periode: { fom: '2025-02-17', tom: '2025-02-17' },
+          begrunnelse: 'Test av reisedag validering',
+          resultat: OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID,
+          avslagsårsak: null,
+        },
       ],
     });
   },
