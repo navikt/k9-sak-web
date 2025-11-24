@@ -90,7 +90,7 @@ init({
   },
 });
 
-const featureToggles = resolveK9FeatureToggles({ isQ: isQ(), isDev: IS_DEV });
+const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() });
 
 const basePath = '/k9/web';
 

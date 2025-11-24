@@ -1,15 +1,11 @@
 import type { UngFeatureToggles } from './UngFeatureToggles.js';
-import { devFeatureToggles } from './devFeatureToggles.js';
 import { qFeatureToggles } from './qFeatureToggles.js';
 import { prodFeatureToggles } from './prodFeatureToggles.js';
 
-type ResolveUngFeatureTogglesParams = Readonly<{ isQ: boolean; isDev: boolean }>;
+type ResolveUngFeatureTogglesParams = Readonly<{ useQVersion: boolean }>;
 
-export const resolveUngFeatureToggles = ({ isQ, isDev }: ResolveUngFeatureTogglesParams): UngFeatureToggles => {
-  if (isDev) {
-    return devFeatureToggles;
-  }
-  if (isQ) {
+export const resolveUngFeatureToggles = ({ useQVersion }: ResolveUngFeatureTogglesParams): UngFeatureToggles => {
+  if (useQVersion) {
     return qFeatureToggles;
   }
   return prodFeatureToggles;

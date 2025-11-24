@@ -89,7 +89,7 @@ init({
   },
 });
 
-const featureToggles = resolveUngFeatureToggles({ isQ: isQ(), isDev: IS_DEV });
+const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 
 const basePath = '/ung/web';
 const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
