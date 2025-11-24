@@ -23,7 +23,7 @@ const getRedigerbartInnhold = (fritekstEditorData: VedtaksbrevEditorResponse | u
 const getOriginalHtml = (fritekstEditorData: VedtaksbrevEditorResponse | undefined) =>
   fritekstEditorData?.original?.find(r => r.type === 'REDIGERBAR')?.innhold;
 
-interface FriktekstBrevpanelProps {
+interface FritekstBrevpanelProps {
   readOnly: boolean;
   lagreVedtaksbrev: UseMutateFunction<
     unknown,
@@ -52,7 +52,7 @@ export const FritekstBrevpanel = ({
   forhåndsvisningIsLoading,
   behandlingId,
   api,
-}: FriktekstBrevpanelProps) => {
+}: FritekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
@@ -65,7 +65,7 @@ export const FritekstBrevpanel = ({
   });
 
   const { data: fritekstEditorData } = useQuery({
-    queryKey: ['fritekstEditorData', behandlingId, vedtaksbrevValg?.dokumentMalType, api],
+    queryKey: ['fritekstEditorData', behandlingId, vedtaksbrevValg?.dokumentMalType],
     queryFn: async () => {
       if (vedtaksbrevValg?.dokumentMalType) {
         const response = await api.formidling_editor(`${behandlingId}`, vedtaksbrevValg.dokumentMalType.kilde);
