@@ -109,12 +109,12 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               validate={[
                 (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
                 (value: string) => {
-                  if (!value || !v.tom) return undefined;
-                  return dayjs(value).isSameOrBefore(dayjs(v.tom)) ? undefined : 'Fra må være før til';
+                  if (!value || !perioder[index]?.tom) return undefined;
+                  return dayjs(value).isSameOrBefore(dayjs(perioder[index]?.tom)) ? undefined : 'Fra må være før til';
                 },
                 (value: string) => {
-                  if (!value || !v.tom) return undefined;
-                  const currentPeriod = { fom: value, tom: v.tom };
+                  if (!value || !perioder[index]?.tom) return undefined;
+                  const currentPeriod = { fom: value, tom: perioder[index]?.tom };
                   const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
                   return checkForOverlap(index, currentPeriod, allPeriods)
                     ? 'Perioden kan ikke overlappe med andre perioder'
@@ -133,12 +133,12 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               validate={[
                 (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
                 (value: string) => {
-                  if (!value || !v.fom) return undefined;
-                  return dayjs(v.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra';
+                  if (!value || !perioder[index]?.fom) return undefined;
+                  return dayjs(perioder[index]?.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra';
                 },
                 (value: string) => {
-                  if (!value || !v.fom) return undefined;
-                  const currentPeriod = { fom: v.fom, tom: value };
+                  if (!value || !perioder[index]?.fom) return undefined;
+                  const currentPeriod = { fom: perioder[index]?.fom, tom: value };
                   const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
                   return checkForOverlap(index, currentPeriod, allPeriods)
                     ? 'Perioden kan ikke overlappe med andre perioder'
