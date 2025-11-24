@@ -1,5 +1,6 @@
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   ung_kodeverk_klage_KlageVurderingType,
@@ -16,7 +17,6 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { PreviewData } from '../felles/PreviewData';
 import type { SaveKlageParams } from '../felles/SaveKlageParams';
 import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
@@ -30,7 +30,7 @@ interface BehandleKlageFormNfpProps {
   saveKlage: (params: SaveKlageParams) => Promise<void>;
   submitCallback: (values: TransformValues[]) => Promise<void>;
   isReadOnly: boolean;
-  previewCallback: (brevdata?: PreviewData | undefined) => Promise<void>;
+  previewCallback: (dokumentdata?: Dokumentdata) => Promise<void>;
   readOnlySubmitButton: boolean;
   ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
 }

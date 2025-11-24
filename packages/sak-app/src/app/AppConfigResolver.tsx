@@ -74,7 +74,7 @@ const AppConfigResolver = ({ children }: OwnProps) => {
       <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
         <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
           <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
-            <KlageVurderingApiContext value={new K9KlageVurderingBackendClient()}>
+            <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
               <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
                 {harFeilet || erFerdig ? children : <LoadingPanel />}
               </VedtakKlageApiContext>

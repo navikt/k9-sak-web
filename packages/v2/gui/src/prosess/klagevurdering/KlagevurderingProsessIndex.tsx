@@ -1,5 +1,6 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
@@ -9,7 +10,6 @@ import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
 import { isUngFagsak } from '../../utils/fagsakUtils.js';
 import { assertDefined } from '../../utils/validation/assertDefined.js';
 import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
-import type { PreviewData } from './src/components/felles/PreviewData.js';
 import type { SaveKlageParams } from './src/components/felles/SaveKlageParams';
 import { BehandleKlageFormKa } from './src/components/ka/BehandleKlageFormKa';
 import { BehandleKlageFormNfp } from './src/components/nfp/BehandleKlageFormNfp';
@@ -21,7 +21,6 @@ interface KlagevurderingProsessIndexProps {
   readOnlySubmitButton: boolean;
   aksjonspunkter: AksjonspunktDto[];
   behandling: K9KlageBehandlingDto | UngSakBehandlingDto;
-  previewCallbackK9Klage?: (brevdata?: PreviewData) => Promise<void>;
 }
 
 export const KlagevurderingProsessIndex = ({
@@ -31,7 +30,6 @@ export const KlagevurderingProsessIndex = ({
   readOnlySubmitButton,
   aksjonspunkter,
   behandling,
-  previewCallbackK9Klage,
 }: KlagevurderingProsessIndexProps) => {
   const api = assertDefined(useContext(KlageVurderingApiContext));
   const isUngdomsprogram = isUngFagsak(fagsak);
@@ -44,25 +42,15 @@ export const KlagevurderingProsessIndex = ({
     queryKey: ['klageVurdering', behandling, api.backend],
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
-  const { mutateAsync: previewCallbackUngSak } = useMutation({
-    mutationFn: async () => {
-      if (behandling.id && api.forhåndsvisKlageVedtaksbrev) {
-        const response = await api.forhåndsvisKlageVedtaksbrev(behandling.id);
-        const fileUrl = window.URL.createObjectURL(response);
-        window.open(fileUrl, '_blank');
-      }
+  const { mutateAsync: previewCallback } = useMutation({
+    mutationFn: async (dokumentdata?: Dokumentdata) => {
+      const pdf = await api.forhåndsvisKlageVedtaksbrev(behandling, fagsak, {
+        fritekst: dokumentdata?.fritekst ?? '',
+      });
+      const fileUrl = window.URL.createObjectURL(pdf);
+      window.open(fileUrl, '_blank');
     },
   });
-
-  const previewCallbackSelect = (brevdata?: PreviewData) => {
-    if (isUngdomsprogram) {
-      return previewCallbackUngSak();
-    }
-    if (previewCallbackK9Klage) {
-      return previewCallbackK9Klage(brevdata);
-    }
-    throw new Error('Fant ingen endepunkt for forhåndsvisning av klagevedtaksbrev.');
-  };
 
   const { mutateAsync: saveKlage } = useMutation({
     mutationFn: async (params: SaveKlageParams) => {
@@ -95,7 +83,7 @@ export const KlagevurderingProsessIndex = ({
             saveKlage={saveKlage}
             submitCallback={submitCallback}
             isReadOnly={isReadOnly}
-            previewCallback={previewCallbackSelect}
+            previewCallback={previewCallback}
             readOnlySubmitButton={readOnlySubmitButton}
           />
         )}
@@ -107,7 +95,7 @@ export const KlagevurderingProsessIndex = ({
             saveKlage={saveKlage}
             submitCallback={submitCallback}
             isReadOnly={isReadOnly}
-            previewCallback={previewCallbackSelect}
+            previewCallback={previewCallback}
             readOnlySubmitButton={readOnlySubmitButton}
             ungHjemler={ungHjemler}
           />

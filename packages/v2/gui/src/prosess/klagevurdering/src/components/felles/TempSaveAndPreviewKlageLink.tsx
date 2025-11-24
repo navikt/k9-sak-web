@@ -1,13 +1,12 @@
+import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import { Button } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues';
 import { formValuesToSaveValues } from './formValuesToSaveValues.js';
-import type { PreviewData } from './PreviewData.js';
 import type { SaveKlageParams } from './SaveKlageParams';
 
 const getBrevData = (tekst: string) => ({
-  dokumentdata: { fritekst: tekst },
-  dokumentMal: 'UTLED',
+  fritekst: tekst,
 });
 
 interface OwnProps {
@@ -15,7 +14,7 @@ interface OwnProps {
   saveKlage: (params: SaveKlageParams) => Promise<void>;
   aksjonspunktCode: string;
   readOnly: boolean;
-  previewCallback: (brevData: PreviewData) => Promise<void>;
+  previewCallback: (dokumentdata?: Dokumentdata) => Promise<void>;
 }
 
 export const TempSaveAndPreviewKlageLink = ({

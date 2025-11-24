@@ -8,7 +8,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <KlagevurderingProsessIndex {...props} {...deepCopyProps} previewCallbackK9Klage={props.previewCallback} />;
+    return <KlagevurderingProsessIndex {...props} {...deepCopyProps} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.BEHANDLE_KLAGE_NFP];
