@@ -12,7 +12,7 @@ import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-va
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
-import type { FeatureToggles } from '../../../../featuretoggles/FeatureToggles';
+import type { FeatureToggles } from '../../../../featuretoggles/FeatureToggles.js';
 import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';
 import styles from './markerBehandlingModal.module.css';
 
