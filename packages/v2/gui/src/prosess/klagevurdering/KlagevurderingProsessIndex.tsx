@@ -36,8 +36,8 @@ export const KlagevurderingProsessIndex = ({
   const api = assertDefined(useContext(KlageVurderingApiContext));
   const isUngdomsprogram = isUngFagsak(fagsak);
   const { data: ungHjemler = [] } = useQuery({
-    queryKey: ['klage-hjemler', api.backend, api.hentValgbareKlagehjemlerForUng],
-    queryFn: () => (api.hentValgbareKlagehjemlerForUng ? api.hentValgbareKlagehjemlerForUng() : []),
+    queryKey: ['klage-hjemler', api.backend],
+    queryFn: () => api.hentValgbareKlagehjemlerForUng?.() ?? Promise.resolve([]),
     enabled: isUngdomsprogram && api.hentValgbareKlagehjemlerForUng !== undefined,
   });
   const { data: klageVurdering, isLoading } = useQuery({
