@@ -61,7 +61,7 @@ export const KlagevurderingProsessIndex = ({
     if (previewCallbackK9Klage) {
       return previewCallbackK9Klage(brevdata);
     }
-    return Promise.resolve();
+    throw new Error('Fant ingen endepunkt for forhåndsvisning av klagevedtaksbrev.');
   };
 
   const { mutateAsync: saveKlage } = useMutation({
