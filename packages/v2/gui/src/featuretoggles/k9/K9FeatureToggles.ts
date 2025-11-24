@@ -28,4 +28,6 @@ export interface K9FeatureToggles extends FeatureTogglesFor {
   VIS_ALLE_ASYNC_ERRORS: boolean;
   VIS_FERIEPENGER_PANEL: boolean;
   FLYTT_ALDERSVILKAR: boolean;
+  BRUK_V2_TILKJENT_YTELSE: boolean,
+  UNG_KLAGE: boolean,
 }

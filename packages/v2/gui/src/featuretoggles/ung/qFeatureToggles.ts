@@ -29,4 +29,6 @@ export const qFeatureToggles = {
   VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,
   FLYTT_ALDERSVILKAR: true,
+  BRUK_V2_TILKJENT_YTELSE: true,
+  UNG_KLAGE: true,
 } satisfies UngFeatureToggles;

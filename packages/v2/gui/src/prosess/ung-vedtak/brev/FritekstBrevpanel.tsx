@@ -1,26 +1,30 @@
 import type {
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse as VedtaksbrevEditorResponse,
   ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Button, Heading, Modal, VStack } from '@navikt/ds-react';
-import type { UseMutateFunction } from '@tanstack/react-query';
+import { useQuery, type UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { type FormData } from '../FormData';
+import type { UngVedtakBackendApiType } from '../UngVedtakBackendApiType';
 import FritekstEditor from './FritekstEditor';
-import {
-  seksjonSomKanRedigeres,
-  utledPrefiksInnhold,
-  utledRedigerbartInnhold,
-  utledStiler,
-  utledSuffiksInnhold,
-} from './RedigeringUtils';
 
-interface FriktekstBrevpanelProps {
+const getSeksjonerData = (fritekstEditorData: VedtaksbrevEditorResponse | undefined) => {
+  const seksjoner = fritekstEditorData?.redigert ?? fritekstEditorData?.original ?? [];
+  return seksjoner;
+};
+
+const getRedigerbartInnhold = (fritekstEditorData: VedtaksbrevEditorResponse | undefined) =>
+  fritekstEditorData?.redigert?.find(r => r.type === 'REDIGERBAR')?.innhold;
+
+const getOriginalHtml = (fritekstEditorData: VedtaksbrevEditorResponse | undefined) =>
+  fritekstEditorData?.original?.find(r => r.type === 'REDIGERBAR')?.innhold;
+
+interface FritekstBrevpanelProps {
   readOnly: boolean;
-  redigertBrevHtml: string | undefined;
-  hentOriginalHtml: () => Promise<any>;
   lagreVedtaksbrev: UseMutateFunction<
     unknown,
     Error,
@@ -35,29 +39,41 @@ interface FriktekstBrevpanelProps {
   fieldIndex: number;
   vedtaksbrevValg?: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg | undefined;
   forhåndsvisningIsLoading: boolean;
+  behandlingId: number;
+  api: UngVedtakBackendApiType;
 }
 
 export const FritekstBrevpanel = ({
   readOnly,
-  hentOriginalHtml,
   lagreVedtaksbrev,
   handleForhåndsvis,
   fieldIndex,
   vedtaksbrevValg,
   forhåndsvisningIsLoading,
-}: FriktekstBrevpanelProps) => {
+  behandlingId,
+  api,
+}: FritekstBrevpanelProps) => {
   const [visRedigering, setVisRedigering] = useState(false);
   const firstRender = useRef<boolean>(true);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
-  const [brevStiler, setBrevStiler] = useState<string>('');
-  const [prefiksInnhold, setPrefiksInnhold] = useState<string>('');
-  const [suffiksInnhold, setSuffiksInnhold] = useState<string>('');
   const [redigerbartInnhold, setRedigerbartInnhold] = useState<string>('');
   const [originalHtml, setOriginalHtml] = useState<string>('');
   const formMethods = useFormContext<FormData>();
   const redigertBrevHtml = useWatch({
     control: formMethods.control,
     name: `vedtaksbrevValg.${fieldIndex}.redigertHtml`,
+  });
+
+  const { data: fritekstEditorData } = useQuery({
+    queryKey: ['fritekstEditorData', behandlingId, vedtaksbrevValg?.dokumentMalType],
+    queryFn: async () => {
+      if (vedtaksbrevValg?.dokumentMalType) {
+        const response = await api.formidling_editor(`${behandlingId}`, vedtaksbrevValg.dokumentMalType.kilde);
+        return response;
+      }
+      return {};
+    },
+    enabled: !!vedtaksbrevValg?.enableRediger,
   });
 
   const handleFritekstSubmit = useCallback(
@@ -73,28 +89,23 @@ export const FritekstBrevpanel = ({
   const lukkEditor = () => setVisRedigering(false);
 
   const hentFritekstbrevMal = useCallback(async () => {
-    const responseHtml = await hentOriginalHtml();
-
-    setBrevStiler(utledStiler(responseHtml));
-    const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
-    setPrefiksInnhold(utledPrefiksInnhold(seksjonerSomKanRedigeres));
-    setSuffiksInnhold(utledSuffiksInnhold(seksjonerSomKanRedigeres));
-
-    const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
+    const originalHtmlStreng = getOriginalHtml(fritekstEditorData);
     if (originalHtmlStreng) {
       setOriginalHtml(originalHtmlStreng);
       formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.originalHtml`, originalHtmlStreng);
     }
 
-    if (redigertBrevHtml) {
-      setRedigerbartInnhold(redigertBrevHtml);
+    const redigerbartInnholdFraData = getRedigerbartInnhold(fritekstEditorData);
+
+    if (redigerbartInnholdFraData) {
+      setRedigerbartInnhold(redigerbartInnholdFraData);
     } else {
       formMethods.setValue(`vedtaksbrevValg.${fieldIndex}.redigertHtml`, originalHtmlStreng ?? '');
       setRedigerbartInnhold(originalHtmlStreng ?? '');
     }
 
     setRedigerbartInnholdKlart(true);
-  }, [setRedigerbartInnholdKlart, formMethods, hentOriginalHtml, redigertBrevHtml, fieldIndex]);
+  }, [fritekstEditorData, formMethods, fieldIndex]);
 
   const handleLagre = useCallback(
     async (html: string, nullstill?: boolean) => {
@@ -105,13 +116,13 @@ export const FritekstBrevpanel = ({
 
   useEffect(() => {
     const asyncEffect = async () => {
-      if (firstRender.current || !redigerbartInnholdKlart) {
+      if ((firstRender.current || !redigerbartInnholdKlart) && fritekstEditorData) {
         await hentFritekstbrevMal();
         firstRender.current = false;
       }
     };
     void asyncEffect();
-  }, [firstRender, redigertBrevHtml, handleLagre, hentFritekstbrevMal, redigerbartInnholdKlart]);
+  }, [firstRender, redigertBrevHtml, handleLagre, hentFritekstbrevMal, redigerbartInnholdKlart, fritekstEditorData]);
 
   useEffect(() => {
     if (redigertBrevHtml) setRedigerbartInnhold(redigertBrevHtml);
@@ -156,9 +167,7 @@ export const FritekstBrevpanel = ({
               redigerbartInnholdKlart={redigerbartInnholdKlart}
               redigerbartInnhold={redigerbartInnhold ?? ''}
               originalHtml={originalHtml}
-              brevStiler={brevStiler}
-              prefiksInnhold={prefiksInnhold}
-              suffiksInnhold={suffiksInnhold}
+              htmlSeksjoner={getSeksjonerData(fritekstEditorData)}
             />
           )}
         </Modal>
