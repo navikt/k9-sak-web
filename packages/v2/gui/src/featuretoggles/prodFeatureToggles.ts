@@ -28,4 +28,6 @@ export const prodFeatureToggles = {
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
   FLYTT_ALDERSVILKAR: false,
+  BRUK_V2_TILKJENT_YTELSE: false,
+  UNG_KLAGE: false,
 } satisfies FeatureToggles;

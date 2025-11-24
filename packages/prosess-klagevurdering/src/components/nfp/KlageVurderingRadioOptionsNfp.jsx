@@ -48,6 +48,14 @@ const utledHjemler = fagsak => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
+    case fagsakYtelsesType.OPPLÆRINGSPENGER:
+      return [
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
+        { kode: '9-14', navn: '§ 9-14' },
+        { kode: '22-13', navn: '§ 22-13' },
+      ];
+
     default:
       return [];
   }
