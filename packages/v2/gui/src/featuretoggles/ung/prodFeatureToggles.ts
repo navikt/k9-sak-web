@@ -1,6 +1,7 @@
-import type { FeatureToggles } from '../FeatureToggles.js';
+import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const prodFeatureToggles = {
+  isFor: 'prod',
   BRUK_V2_MELDINGER: false,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
@@ -30,4 +31,4 @@ export const prodFeatureToggles = {
   FLYTT_ALDERSVILKAR: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   UNG_KLAGE: false,
-} satisfies FeatureToggles;
+} satisfies UngFeatureToggles;

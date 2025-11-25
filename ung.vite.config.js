@@ -6,8 +6,6 @@ import { loadEnv } from 'vite';
 import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
-import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
-import { featureTogglesFactory } from "./_mocks/featureToggles.js";
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -72,7 +70,6 @@ export default ({ mode }) => {
             });
           },
         },
-        '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8901', staticJsonResponse(featureTogglesFactory())),
         '/ung/tilbake': createProxy(process.env.APP_URL_UNG_TILBAKE || 'http://localhost:8903'),
       },
     },

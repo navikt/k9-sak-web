@@ -1,6 +1,7 @@
-import type { FeatureToggles } from '../FeatureToggles.js';
+import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const qFeatureToggles = {
+  isFor: 'Q',
   BRUK_V2_MELDINGER: false,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
@@ -28,6 +29,6 @@ export const qFeatureToggles = {
   VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,
   FLYTT_ALDERSVILKAR: true,
-  BRUK_V2_TILKJENT_YTELSE: false,
+  BRUK_V2_TILKJENT_YTELSE: true,
   UNG_KLAGE: true,
-} satisfies FeatureToggles;
+} satisfies UngFeatureToggles;

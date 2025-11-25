@@ -31,11 +31,9 @@ export const goToSearch = () => {
 
 export const isDev = () => IS_DEV;
 
-export const isDevOrQ = () => {
-  const { host } = window.location;
-  const isQ = host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no';
-  return IS_DEV || isQ;
-};
+export const isQ = (): boolean =>
+  window.location.hostname.toLowerCase().endsWith('.dev.intern.nav.no') ||
+  window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
 
 export const isProd = () => {
   const { host } = window.location;

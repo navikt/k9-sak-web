@@ -1,6 +1,0 @@
-[
-  {
-    "key": "FEATURE_TOGGLES_ENV",
-    "value": "${FEATURE_TOGGLES_ENV}"
-  }
-]
