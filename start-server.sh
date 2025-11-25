@@ -12,8 +12,6 @@ _shutdown_() {
   wait "$pid"
 }
 trap _shutdown_ SIGTERM
-[ -d /tmp/feature-toggle ] && echo "Feature toggle-directory finnes fra før, tilbakestiller" && rm -r /tmp/feature-toggle/* || mkdir -p  /tmp/feature-toggle
-envsubst < /etc/nginx/conf.d/feature-toggles.json > /tmp/feature-toggle/toggles.json
 
 export APP_HOSTNAME="${HOSTNAME:-localhost}"
 export APP_PORT="${APP_PORT:-443}"
@@ -24,9 +22,6 @@ envsubst '$APP_URL $APP_PORT $APP_HOSTNAME $APP_NAME $APP_VERSION $APP_PATH_PREF
 
 echo "### Nginx conf ###"
 cat /etc/nginx/conf.d/default.conf
-echo
-echo "### Feature toggles ###"
-cat /tmp/feature-toggle/toggles.json
 
 nginx -g "daemon off;" &
 pid=$!

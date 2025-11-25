@@ -1,6 +1,7 @@
-import type { FeatureToggles } from './FeatureToggles.js';
+import type { K9FeatureToggles } from './K9FeatureToggles.js';
 
 export const prodFeatureToggles = {
+  isFor: 'prod',
   KLAGE_KABAL: true,
   DOKUMENTDATA: false,
   UNNTAKSBEHANDLING: false,
@@ -30,4 +31,4 @@ export const prodFeatureToggles = {
   FLYTT_ALDERSVILKAR: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   UNG_KLAGE: false,
-} satisfies FeatureToggles;
+} satisfies K9FeatureToggles;
