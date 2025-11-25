@@ -7,7 +7,6 @@ import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
-import { isUngFagsak } from '../../utils/fagsakUtils.js';
 import { assertDefined } from '../../utils/validation/assertDefined.js';
 import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
 import type { SaveKlageParams } from './src/components/felles/SaveKlageParams';
@@ -32,11 +31,10 @@ export const KlagevurderingProsessIndex = ({
   behandling,
 }: KlagevurderingProsessIndexProps) => {
   const api = assertDefined(useContext(KlageVurderingApiContext));
-  const isUngdomsprogram = isUngFagsak(fagsak);
   const { data: ungHjemler = [] } = useQuery({
     queryKey: ['klage-hjemler', api.backend],
     queryFn: () => api.hentValgbareKlagehjemlerForUng?.() ?? Promise.resolve([]),
-    enabled: isUngdomsprogram && api.hentValgbareKlagehjemlerForUng !== undefined,
+    enabled: api.hentValgbareKlagehjemlerForUng !== undefined,
   });
   const { data: klageVurdering, isLoading } = useQuery({
     queryKey: ['klageVurdering', behandling, api.backend],
