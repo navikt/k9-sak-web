@@ -48,23 +48,37 @@ type NødvendigOpplæringFormFields = {
   }[];
 };
 
+const validateReisedag = (value: OpplæringVurderingDtoResultat | '', periode: { fom: string; tom: string }) => {
+  if (value === OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID) {
+    const days = getDaysInPeriod({
+      fom: periode.fom,
+      tom: periode.tom,
+    });
+    const hasWeekend = days.some(day => {
+      const dayOfWeek = dayjs(day).day();
+      return dayOfWeek === 0 || dayOfWeek === 6;
+    });
+    if (hasWeekend) {
+      return 'Reisedag kan ikke være en helgedag';
+    }
+  }
+  return undefined;
+};
+
 export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const opprinneligPeriode = vurdering.perioder[0]!;
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
   const submitCount = formMethods.formState.submitCount;
   const context = useContext(SykdomOgOpplæringContext);
   const readOnly = context.readOnly;
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: formMethods.control,
     name: 'perioder',
   });
 
-  const uncoveredDays = findUncoveredDays(
-    opprinneligPeriode,
-    fields.map(periode => ({ fom: periode.fom, tom: periode.tom })),
-  );
-  const uncoveredPeriods = combineConsecutivePeriods(uncoveredDays);
   const perioder = formMethods.watch('perioder');
+  const uncoveredDays = findUncoveredDays(opprinneligPeriode, perioder);
+  const uncoveredPeriods = combineConsecutivePeriods(uncoveredDays);
   const touchedFieldsIndexes = formMethods.formState.touchedFields?.perioder
     ?.map((v, index) => (v ? index : undefined))
     .filter(v => v !== undefined);
@@ -86,73 +100,53 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
         <Label size="small">I hvilken periode er det nødvendig opplæring?</Label>
         {fields.map((v, index) => (
           <div className="flex gap-4" key={v.id}>
-            <Controller
-              control={formMethods.control}
+            <RhfDatepicker
               name={`perioder.${index}.fom`}
-              render={({ field }) => (
-                <RhfDatepicker
-                  {...field}
-                  control={formMethods.control}
-                  label="Fra"
-                  size="small"
-                  disabled={readOnly}
-                  validate={[
-                    (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
-                    (value: string) => {
-                      if (!value || !v.tom) return undefined;
-                      return dayjs(value).isSameOrBefore(dayjs(v.tom)) ? undefined : 'Fra må være før til';
-                    },
-                    (value: string) => {
-                      if (!value || !v.tom) return undefined;
-                      const currentPeriod = { fom: value, tom: v.tom };
-                      const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
-                      return checkForOverlap(index, currentPeriod, allPeriods)
-                        ? 'Perioden kan ikke overlappe med andre perioder'
-                        : undefined;
-                    },
-                  ]}
-                  fromDate={new Date(opprinneligPeriode.fom)}
-                  toDate={new Date(opprinneligPeriode.tom)}
-                  onChange={value => {
-                    field.onChange(value);
-                    update(index, { ...v, fom: value });
-                  }}
-                />
-              )}
-            />
-            <Controller
               control={formMethods.control}
+              label="Fra"
+              size="small"
+              disabled={readOnly}
+              validate={[
+                (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
+                (value: string) => {
+                  if (!value || !perioder[index]?.tom) return undefined;
+                  return dayjs(value).isSameOrBefore(dayjs(perioder[index]?.tom)) ? undefined : 'Fra må være før til';
+                },
+                (value: string) => {
+                  if (!value || !perioder[index]?.tom) return undefined;
+                  const currentPeriod = { fom: value, tom: perioder[index]?.tom };
+                  const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
+                  return checkForOverlap(index, currentPeriod, allPeriods)
+                    ? 'Perioden kan ikke overlappe med andre perioder'
+                    : undefined;
+                },
+              ]}
+              fromDate={new Date(opprinneligPeriode.fom)}
+              toDate={new Date(opprinneligPeriode.tom)}
+            />
+            <RhfDatepicker
               name={`perioder.${index}.tom`}
-              render={({ field }) => (
-                <RhfDatepicker
-                  {...field}
-                  control={formMethods.control}
-                  label="Til"
-                  size="small"
-                  disabled={readOnly}
-                  validate={[
-                    (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
-                    (value: string) => {
-                      if (!value || !v.fom) return undefined;
-                      return dayjs(v.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra';
-                    },
-                    (value: string) => {
-                      if (!value || !v.fom) return undefined;
-                      const currentPeriod = { fom: v.fom, tom: value };
-                      const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
-                      return checkForOverlap(index, currentPeriod, allPeriods)
-                        ? 'Perioden kan ikke overlappe med andre perioder'
-                        : undefined;
-                    },
-                  ]}
-                  fromDate={new Date(vurdering.opplæring.fom)}
-                  toDate={new Date(vurdering.opplæring.tom)}
-                  onChange={value => {
-                    field.onChange(value);
-                    update(index, { ...v, tom: value });
-                  }}
-                />
-              )}
+              control={formMethods.control}
+              label="Til"
+              size="small"
+              disabled={readOnly}
+              validate={[
+                (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
+                (value: string) => {
+                  if (!value || !perioder[index]?.fom) return undefined;
+                  return dayjs(perioder[index]?.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra';
+                },
+                (value: string) => {
+                  if (!value || !perioder[index]?.fom) return undefined;
+                  const currentPeriod = { fom: perioder[index]?.fom, tom: value };
+                  const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
+                  return checkForOverlap(index, currentPeriod, allPeriods)
+                    ? 'Perioden kan ikke overlappe med andre perioder'
+                    : undefined;
+                },
+              ]}
+              fromDate={new Date(vurdering.opplæring.fom)}
+              toDate={new Date(vurdering.opplæring.tom)}
             />
             {index > 0 && (
               <Button variant="tertiary" size="small" type="button" onClick={() => remove(index)} icon={<TrashIcon />}>
@@ -271,6 +265,9 @@ export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom
               <Controller
                 control={formMethods.control}
                 name={`perioderUtenNødvendigOpplæring.${index}.resultat`}
+                rules={{
+                  validate: value => validateReisedag(value, periodeUtenNødvendigOpplæring),
+                }}
                 render={({ field }) => (
                   <RadioGroup
                     {...field}
@@ -292,8 +289,10 @@ export const PerioderUtenNødvendigOpplæring = ({ perioder }: { perioder: { fom
                       </div>
                     }
                     size="small"
+                    error={formMethods.formState.errors.perioderUtenNødvendigOpplæring?.[index]?.resultat?.message}
                   >
                     <Radio value={OpplæringVurderingDtoResultat.IKKE_GODKJENT}>Avslag</Radio>
+
                     <Radio value={OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID}>Vurder som reisedag</Radio>
                   </RadioGroup>
                 )}
