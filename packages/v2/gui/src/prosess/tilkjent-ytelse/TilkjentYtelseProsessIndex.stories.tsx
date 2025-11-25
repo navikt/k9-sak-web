@@ -10,11 +10,11 @@ import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
-import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
-import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 import { withFakeTilkjentYtelseBackend } from '../../storybook/decorators/withFakeTilkjentYtelseBackend.js';
-import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
 import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.js';
+import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
+import { TilkjentYtelseProsessIndex } from './TilkjentYtelseProsessIndex';
+import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
 const beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto = {
   opphoersdato: '2021-03-27',

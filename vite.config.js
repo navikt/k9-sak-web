@@ -5,8 +5,6 @@ import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
-import { createMockResponder, staticJsonResponse } from './_mocks/createMockResponder.js';
-import { featureTogglesFactory } from './_mocks/featureToggles.js';
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -81,10 +79,6 @@ export default ({ mode }) => {
           {
             '^/k9/endringslogg': '',
           },
-        ),
-        '/k9/feature-toggle/toggles.json': createMockResponder(
-          'http://localhost:8080',
-          staticJsonResponse(featureTogglesFactory()),
         ),
       },
     },

@@ -3,9 +3,6 @@ import { ReactElement, useEffect } from 'react';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/qFeatureToggles.js';
-import { useFeatureToggles } from '@k9-sak-web/gui/featuretoggles/useFeatureToggles.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
@@ -44,8 +41,6 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.NAV_ANSATT, NO_PARAMS, options);
 
-  const { featureToggles } = useFeatureToggles();
-
   const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.LANGUAGE_FILE, NO_PARAMS);
 
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
@@ -60,21 +55,18 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigInitLenker &&
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
-    sprakFilState === RestApiState.SUCCESS &&
-    !!featureToggles;
+    sprakFilState === RestApiState.SUCCESS;
 
   return (
-    <FeatureTogglesContext.Provider value={featureToggles ?? qFeatureToggles}>
-      <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-        <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
-            <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
-              {harFeilet || erFerdig ? children : <LoadingPanel />}
-            </InnloggetAnsattProvider>
-          </VedtakKlageApiContext>
-        </KlageVurderingApiContext>
-      </UngKodeverkoppslagContext>
-    </FeatureTogglesContext.Provider>
+    <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
+      <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+        <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+          <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+            {harFeilet || erFerdig ? children : <LoadingPanel />}
+          </InnloggetAnsattProvider>
+        </VedtakKlageApiContext>
+      </KlageVurderingApiContext>
+    </UngKodeverkoppslagContext>
   );
 };
 
