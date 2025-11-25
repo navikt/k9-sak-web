@@ -1,3 +1,4 @@
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import type {
   ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto,
   ung_sak_kontrakt_klage_KlagebehandlingDto,
@@ -15,8 +16,8 @@ export class FakeKlageVurderingBackend implements KlageVurderingApi {
     this.#klageVurdering = klageVurdering;
   }
 
-  async forhåndsvisKlageVedtaksbrev(behandlingId: number): Promise<Blob> {
-    action('forhåndsvisKlageVedtaksbrev')({ behandlingId });
+  async forhåndsvisKlageVedtaksbrev(behandling: BehandlingDto): Promise<Blob> {
+    action('forhåndsvisKlageVedtaksbrev')({ behandlingId: behandling.id });
     return fakePdf();
   }
 
