@@ -1,4 +1,5 @@
 import {
+  formidling_editor,
   formidling_forhåndsvisVedtaksbrev,
   formidling_lagreVedtaksbrevValg,
   formidling_vedtaksbrevValg,
@@ -27,5 +28,9 @@ export default class UngVedtakBackendClient {
 
   async vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse> {
     return (await formidling_vedtaksbrevValg({ query: { behandlingId: `${behandlingId}` } })).data;
+  }
+
+  async formidling_editor(behandlingId: string, dokumentMalType: ung_kodeverk_dokument_DokumentMalType) {
+    return (await formidling_editor({ query: { behandlingId, dokumentMalType } })).data;
   }
 }
