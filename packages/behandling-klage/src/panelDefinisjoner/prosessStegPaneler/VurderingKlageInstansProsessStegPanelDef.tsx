@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { KlagevurderingProsessIndex } from '@k9-sak-web/gui/prosess/klagevurdering/KlagevurderingProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
