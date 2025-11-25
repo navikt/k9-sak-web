@@ -1,8 +1,9 @@
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_fagsak_FagsakDto,
-  type ung_sak_kontrakt_klage_KlagebehandlingDto,
   type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -24,12 +25,12 @@ import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormV
 import { KlageVurderingRadioOptionsNfp, TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
 
 interface BehandleKlageFormNfpProps {
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
+  fagsak: FagsakDto;
+  klageVurdering: KlagebehandlingDto;
   saveKlage: (params: SaveKlageParams) => Promise<void>;
   submitCallback: (values: TransformValues[]) => Promise<void>;
   isReadOnly: boolean;
-  previewCallback: () => Promise<void>;
+  previewCallback: (dokumentdata?: Dokumentdata) => Promise<void>;
   readOnlySubmitButton: boolean;
   ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
 }
@@ -140,10 +141,7 @@ export const BehandleKlageFormNfp = ({
   );
 };
 
-export const buildInitialValues = (
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto,
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto,
-) => ({
+export const buildInitialValues = (klageVurdering: KlagebehandlingDto, fagsak: FagsakDto) => ({
   klageMedholdArsak: klageVurdering.klageVurderingResultatNFP
     ? klageVurdering.klageVurderingResultatNFP.klageMedholdArsak
     : null,
@@ -177,7 +175,7 @@ interface TransformValues {
 
 export const transformValues = (
   values: BehandleKlageFormNfpFormValues,
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto,
+  fagsak: FagsakDto,
   erPåklagdBehandlingTilbakekreving: boolean,
 ): TransformValues => {
   let klageHjemmel: string | null = null;
@@ -210,7 +208,7 @@ export const transformValues = (
   };
 };
 
-const getErPåklagdBehandlingTilbakekreving = (klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto) =>
+const getErPåklagdBehandlingTilbakekreving = (klageVurdering: KlagebehandlingDto) =>
   erTilbakekreving(
     klageVurdering.klageFormkravResultatNFP && klageVurdering.klageFormkravResultatNFP.påklagdBehandlingType,
   );

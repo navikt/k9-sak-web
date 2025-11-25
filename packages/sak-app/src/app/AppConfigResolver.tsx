@@ -6,6 +6,8 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
+import K9KlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/K9KlageVurderingBackendClient.js';
+import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
 import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
 import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
@@ -65,9 +67,11 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
       <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
         <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
-          <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
-            {harFeilet || erFerdig ? children : <LoadingPanel />}
-          </VedtakKlageApiContext>
+          <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
+            <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
+              {harFeilet || erFerdig ? children : <LoadingPanel />}
+            </VedtakKlageApiContext>
+          </KlageVurderingApiContext>
         </TilkjentYtelseApiContext>
       </InnloggetAnsattProvider>
     </K9KodeverkoppslagContext>

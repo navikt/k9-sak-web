@@ -1,11 +1,12 @@
-import type { KlageVurderingApi } from '../../prosess/klagevurdering/api/KlageVurderingApi.js';
-import { fakePdf } from './fakePdf.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import type {
+  ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto,
   ung_sak_kontrakt_klage_KlagebehandlingDto,
   ung_sak_kontrakt_klage_KlageHjemmelDto,
-  ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { action } from 'storybook/actions';
+import type { KlageVurderingApi } from '../../prosess/klagevurdering/api/KlageVurderingApi.js';
+import { fakePdf } from './fakePdf.js';
 
 export class FakeKlageVurderingBackend implements KlageVurderingApi {
   #klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
@@ -15,8 +16,8 @@ export class FakeKlageVurderingBackend implements KlageVurderingApi {
     this.#klageVurdering = klageVurdering;
   }
 
-  async forhåndsvisKlageVedtaksbrev(behandlingId: number): Promise<Blob> {
-    action('forhåndsvisKlageVedtaksbrev')({ behandlingId });
+  async forhåndsvisKlageVedtaksbrev(behandling: BehandlingDto): Promise<Blob> {
+    action('forhåndsvisKlageVedtaksbrev')({ behandlingId: behandling.id });
     return fakePdf();
   }
 
@@ -25,7 +26,7 @@ export class FakeKlageVurderingBackend implements KlageVurderingApi {
     return this.#klageVurdering;
   }
 
-  async hentValgbareKlagehjemler(): Promise<ung_sak_kontrakt_klage_KlageHjemmelDto[]> {
+  async hentValgbareKlagehjemlerForUng(): Promise<ung_sak_kontrakt_klage_KlageHjemmelDto[]> {
     return Promise.resolve([]);
   }
 
