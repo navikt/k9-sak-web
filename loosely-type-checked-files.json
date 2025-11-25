@@ -236,7 +236,6 @@
   "packages/prosess-felles/src/ProsessStegSubmitButton.tsx",
   "packages/prosess-felles/src/vilkar/VilkarResultPicker.spec.tsx",
   "packages/prosess-felles/src/vilkar/VilkarResultPicker.tsx",
-  "packages/prosess-klagevurdering/src/components/felles/TempSaveAndPreviewKlageLink.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/alene-om-omsorgen/AleneOmOmsorgen.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/korrigere-perioder/KorrigerePerioder.tsx",
   "packages/prosess-omsorgsdager/src/ui/components/omsorg/Omsorg.tsx",
