@@ -59,6 +59,10 @@ jobs:
   verdikjede-tester:
     name: Verdikjedetester
     secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
+      packages: read
     uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@6c11df30bdfceb5fd6f121ab8d997ac8b20f25bd
     needs: build-docker-image
     with:
