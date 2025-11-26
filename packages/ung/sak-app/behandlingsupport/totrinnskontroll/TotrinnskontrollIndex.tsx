@@ -13,6 +13,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/combined/kodeverk/behandli
 import { useQuery } from '@tanstack/react-query';
 import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -74,7 +75,9 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api, ur
   const totrinnsKlageVurderingQuery = useQuery({
     queryKey: ['totrinnskontroll', 'klagevurdering', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.hentTotrinnsKlageVurdering?.(behandling.uuid) ?? Promise.resolve(null),
-    enabled: api.hentTotrinnsKlageVurdering != undefined,
+    // Sjekk på behandling.type under kan fjernast når endepunkt getKlageVurdering i ung-sak er endra til å handtere å bli
+    // spurt om vanlege behandlinger og. (Men det vil føre til ein unødvendig request på vanlege behandlinger då)
+    enabled: totrinnskontrollBehandling.type == BehandlingType.KLAGE && api.hentTotrinnsKlageVurdering != undefined,
     throwOnError: true,
   });
 
