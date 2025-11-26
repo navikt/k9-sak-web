@@ -15,6 +15,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
     env:
       CLUSTER: dev-fss
     steps:
@@ -24,7 +25,7 @@ jobs:
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
         run: yarn build
