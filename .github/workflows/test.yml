@@ -20,7 +20,7 @@ jobs:
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
-          npmAuthToken: ${{ secrets.GTIHUB_TOKEN }}
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Kjør tester (shard ${{ matrix.shard }})
         env:
