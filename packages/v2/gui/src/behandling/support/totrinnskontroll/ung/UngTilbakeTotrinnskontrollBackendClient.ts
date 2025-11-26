@@ -65,6 +65,7 @@ export class UngTilbakeTotrinnskontrollData implements TotrinnskontrollData {
 }
 
 export class UngTilbakeTotrinnskontrollBackendClient implements TotrinnskontrollApi {
+  readonly backend = 'ungtilbake';
   #kodeverkoppslag: UngTilbakeKodeverkoppslag;
 
   constructor(kodeverkoppslag: UngTilbakeKodeverkoppslag) {

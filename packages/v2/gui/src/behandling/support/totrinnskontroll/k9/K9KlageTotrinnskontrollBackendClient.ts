@@ -64,6 +64,7 @@ export class K9KlageTotrinnskontrollData implements TotrinnskontrollData {
 }
 
 export class K9KlageTotrinnskontrollBackendClient implements TotrinnskontrollApi {
+  readonly backend = 'k9klage';
   #kodeverkoppslag: K9KlageKodeverkoppslag;
 
   constructor(kodeverkoppslag: K9KlageKodeverkoppslag) {

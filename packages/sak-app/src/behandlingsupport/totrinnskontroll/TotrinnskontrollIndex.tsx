@@ -58,14 +58,14 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api, ur
   const { brukernavn, kanVeilede = false } = use(InnloggetAnsattContext);
 
   const totrinnsÅrsakerQuery = useQuery({
-    queryKey: ['totrinnskontroll', 'årsaker', behandling.uuid, behandling.status.kode, api],
+    queryKey: ['totrinnskontroll', 'årsaker', behandling.uuid, behandling.status.kode, api.backend],
     queryFn: () => api.hentTotrinnskontrollSkjermlenkeContext(behandling.uuid),
     enabled: behandling.status.kode == BehandlingStatus.FATTER_VEDTAK,
     throwOnError: true,
   });
 
   const totrinnArsakerReadOnlyQuery = useQuery({
-    queryKey: ['totrinnskontroll', 'årsaker', 'readonly', behandling.uuid, behandling.status.kode, api],
+    queryKey: ['totrinnskontroll', 'årsaker', 'readonly', behandling.uuid, behandling.status.kode, api.backend],
     queryFn: () => api.hentTotrinnskontrollvurderingSkjermlenkeContext(behandling.uuid),
     enabled: behandling.status.kode == BehandlingStatus.UTREDES,
     throwOnError: true,

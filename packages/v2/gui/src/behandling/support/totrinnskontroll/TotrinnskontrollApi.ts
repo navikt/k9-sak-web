@@ -24,6 +24,7 @@ export interface TotrinnskontrollData {
 export type AksjonspunktGodkjenningDtos = Required<FatterVedtakAksjonspunktDto['aksjonspunktGodkjenningDtos']>;
 
 export interface TotrinnskontrollApi {
+  readonly backend: 'k9klage' | 'k9sak' | 'k9tilbake' | 'ungsak' | 'ungtilbake';
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnsKlageVurdering?(behandlingUuid: string): Promise<k9_klage_kontrakt_klage_KlagebehandlingDto>;

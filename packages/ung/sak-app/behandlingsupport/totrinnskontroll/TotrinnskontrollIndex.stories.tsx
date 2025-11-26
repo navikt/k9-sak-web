@@ -88,6 +88,7 @@ const dummyData: TotrinnskontrollData = {
   },
 };
 const api: TotrinnskontrollApi = {
+  backend: 'k9sak',
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
     ignoreUnusedDeclared(behandlingUuid);
     return Promise.resolve(dummyData);

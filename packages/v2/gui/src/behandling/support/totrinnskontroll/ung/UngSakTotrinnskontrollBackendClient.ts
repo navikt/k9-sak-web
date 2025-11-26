@@ -64,6 +64,7 @@ export class UngSakTotrinnskontrollData implements TotrinnskontrollData {
 }
 
 export class UngSakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
+  readonly backend = 'ungsak';
   #kodeverkoppslag: UngSakKodeverkoppslag;
 
   constructor(kodeverkoppslag: UngSakKodeverkoppslag) {
