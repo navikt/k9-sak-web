@@ -7,7 +7,7 @@ import {
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Label } from '@navikt/ds-react';
 
-import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import {
   folketrygdloven_kalkulus_kodeverk_ArbeidsforholdHandlingType as HandlingType,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,

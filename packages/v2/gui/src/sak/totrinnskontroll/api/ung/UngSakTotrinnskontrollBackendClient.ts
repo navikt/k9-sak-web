@@ -11,6 +11,7 @@ import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
   aksjonspunkt_bekreft,
+  noNavK9Klage_getKlageVurdering,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
@@ -88,6 +89,10 @@ export class UngSakTotrinnskontrollBackendClient implements TotrinnskontrollApi 
       data as UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
       this.#kodeverkoppslag,
     );
+  }
+
+  async hentTotrinnsKlageVurdering(behandlingUuid: string) {
+    return (await noNavK9Klage_getKlageVurdering({ query: { behandlingUuid } })).data;
   }
 
   async bekreft(

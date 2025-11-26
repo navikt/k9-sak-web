@@ -236,13 +236,8 @@ const BehandlingSupportIndex = ({
     const erTilbakekreving =
       behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
       behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
-    const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
     if (erTilbakekreving) {
       return new UngTilbakeTotrinnskontrollBackendClient(kodeverkoppslag.ungTilbake);
-    }
-    if (erKlage) {
-      // TODO Initialiser UngKlageTotrinnskontrollBackendClient (klientkonfigurasjon, kodeverkoppslag, etc må på plass først)
-      throw new Error(`totrinnskontroll api for ungdomsytelse klage ikke implementert enda.`);
     }
     return new UngSakTotrinnskontrollBackendClient(kodeverkoppslag.ungSak);
   }, [behandlingTypeKode, kodeverkoppslag]);
