@@ -13,6 +13,7 @@ jobs:
         permissions:
             contents: read
             pull-requests: write
+            packages: read
         steps:
             - name: Hente kode
               uses: actions/checkout@v5
@@ -20,7 +21,7 @@ jobs:
             - name: Setup + Install
               uses: ./.github/actions/setup-install
               with:
-                  npmAuthToken: ${{ secrets.READER_TOKEN }}
+                  npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Run knip
               run: |

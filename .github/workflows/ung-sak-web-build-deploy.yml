@@ -17,6 +17,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
     outputs:
       tag: ${{ steps.docker-push.outputs.tag }}
       image: ${{ steps.docker-push.outputs.image }}
@@ -27,7 +28,7 @@ jobs:
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
         run: yarn build:ung
