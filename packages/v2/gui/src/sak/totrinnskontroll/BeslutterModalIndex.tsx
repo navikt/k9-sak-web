@@ -3,7 +3,7 @@ import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/beh
 import { type FC, useCallback } from 'react';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal.js';
 
-export interface BeslutterModalIndex2Props {
+export interface BeslutterModalIndexProps {
   readonly behandling: TotrinnskontrollBehandling;
   readonly fagsakYtelseType: FagsakYtelseType;
   readonly erAlleAksjonspunktGodkjent: boolean;
@@ -11,7 +11,7 @@ export interface BeslutterModalIndex2Props {
   readonly urlEtterpå: string;
 }
 
-export const BeslutterModalIndex: FC<BeslutterModalIndex2Props> = ({
+export const BeslutterModalIndex: FC<BeslutterModalIndexProps> = ({
   behandling,
   fagsakYtelseType,
   erAlleAksjonspunktGodkjent,
