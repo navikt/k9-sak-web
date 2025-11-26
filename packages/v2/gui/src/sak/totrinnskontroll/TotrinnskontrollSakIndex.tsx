@@ -6,10 +6,7 @@ import {
 } from './components/TotrinnskontrollBeslutterForm.js';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel.js';
 import { type TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
-import type {
-  TotrinnskontrollApi,
-  TotrinnskontrollData,
-} from '../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollApi, TotrinnskontrollData } from './api/TotrinnskontrollApi.js';
 
 interface TotrinnskontrollSakIndexProps {
   behandling: TotrinnskontrollBehandling;

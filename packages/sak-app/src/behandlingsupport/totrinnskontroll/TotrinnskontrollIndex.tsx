@@ -5,7 +5,7 @@ import React, { use, useMemo, useState } from 'react';
 import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
 import { useQuery } from '@tanstack/react-query';
 import { BehandlingStatus } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingStatus.js';
-import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 import {
   BehandlingResultatType,

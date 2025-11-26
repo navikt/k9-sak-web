@@ -12,7 +12,7 @@ import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
-import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 

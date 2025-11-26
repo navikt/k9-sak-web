@@ -14,7 +14,7 @@ import type {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
   TotrinnskontrollData,
-} from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+} from '../api/TotrinnskontrollApi.js';
 import { useMutation } from '@tanstack/react-query';
 import type { ObjectSchema } from 'yup';
 import * as yup from 'yup';

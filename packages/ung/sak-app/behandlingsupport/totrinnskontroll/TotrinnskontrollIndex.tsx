@@ -3,7 +3,7 @@ import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/T
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import React, { use, useMemo, useState } from 'react';
 import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
-import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 import {
   BehandlingResultatType,

@@ -9,7 +9,7 @@ import {
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
-} from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+} from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi.js';

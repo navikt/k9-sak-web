@@ -8,8 +8,8 @@ import type {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
   TotrinnskontrollData,
-} from '../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
-import { K9KlageTotrinnskontrollData } from '../../behandling/support/totrinnskontroll/k9/K9KlageTotrinnskontrollBackendClient.js';
+} from './api/TotrinnskontrollApi.js';
+import { K9KlageTotrinnskontrollData } from './api/k9/K9KlageTotrinnskontrollBackendClient.js';
 import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.jsx';
 import { K9KlageKodeverkoppslag } from '../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
 import { oppslagKodeverkSomObjektK9Klage } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Klage.js';
@@ -21,7 +21,7 @@ import type {
 } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import { K9TilbakeKodeverkoppslag } from '../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
 import { oppslagKodeverkSomObjektK9Tilbake } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Tilbake.js';
-import { K9TilbakeTotrinnskontrollData } from '../../behandling/support/totrinnskontroll/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { K9TilbakeTotrinnskontrollData } from './api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
 import { action } from 'storybook/actions';
 
 const klageTotrinnskontrollData = (): TotrinnskontrollData => {

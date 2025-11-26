@@ -13,15 +13,15 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import type { UseFormReturn } from 'react-hook-form';
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
-import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
 import type {
   K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted,
   K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted,
 } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import { K9SakTotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/k9/K9SakTotrinnskontrollBackendClient.js';
+import { K9SakTotrinnskontrollData } from '../api/k9/K9SakTotrinnskontrollBackendClient.js';
 import { K9KlageKodeverkoppslag } from '../../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
 import { oppslagKodeverkSomObjektK9Klage } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Klage.js';
-import { K9KlageTotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/k9/K9KlageTotrinnskontrollBackendClient.js';
+import { K9KlageTotrinnskontrollData } from '../api/k9/K9KlageTotrinnskontrollBackendClient.js';
 
 const aksjonspunktKode1 = AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS;
 const aksjonspunktGodkjenningData1: AksjonspunktGodkjenningData = {

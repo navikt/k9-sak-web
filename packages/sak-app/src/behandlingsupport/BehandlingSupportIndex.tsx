@@ -38,11 +38,11 @@ import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
 import { K9HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/K9HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
-import { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
-import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9TilbakeTotrinnskontrollBackendClient.js';
-import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9KlageTotrinnskontrollBackendClient.js';
-import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/k9/K9SakTotrinnskontrollBackendClient.js';
+import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9KlageTotrinnskontrollBackendClient.js';
+import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9SakTotrinnskontrollBackendClient.js';
 import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>

@@ -7,7 +7,7 @@ import { NavLink, useLocation } from 'react-router';
 import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
-import type { TotrinnskontrollData } from '../../../behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 

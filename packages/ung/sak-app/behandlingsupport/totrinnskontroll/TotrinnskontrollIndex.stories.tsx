@@ -12,7 +12,7 @@ import {
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
-} from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+} from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
 import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';

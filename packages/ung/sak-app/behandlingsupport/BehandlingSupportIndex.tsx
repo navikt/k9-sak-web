@@ -41,10 +41,10 @@ import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
 import { UngHistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/UngHistorikkBackendClient.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
-import type { TotrinnskontrollApi } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/TotrinnskontrollApi.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
-import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngSakTotrinnskontrollBackendClient.js';
-import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/behandling/support/totrinnskontroll/ung/UngTilbakeTotrinnskontrollBackendClient.js';
+import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngSakTotrinnskontrollBackendClient.js';
+import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngTilbakeTotrinnskontrollBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
