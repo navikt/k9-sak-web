@@ -63,7 +63,7 @@ jobs:
       id-token: write
       contents: read
       packages: read
-    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@bb1dd6690e1e7514e8ba13b431c12074a26e6123
+    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@main
     needs: build-docker-image
     with:
       tag: ${{ needs.build-docker-image.outputs.tag }}
