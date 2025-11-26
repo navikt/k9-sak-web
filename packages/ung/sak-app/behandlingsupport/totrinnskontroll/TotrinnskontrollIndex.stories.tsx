@@ -38,9 +38,6 @@ const meta = {
     requestApi.clearMockData(UngSakApiKeys.NAV_ANSATT);
     requestApi.clearMockData(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT);
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
-    // requestApi.mock(UngSakApiKeys.TOTRINNS_KLAGE_VURDERING, {});
-    // requestApi.mock(UngSakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
-    // requestApi.mock(UngSakApiKeys.TILGJENGELIGE_VEDTAKSBREV, {});
     requestApi.mock(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {});
   },
   decorators: [withKodeverkContext(), withK9Kodeverkoppslag()],
