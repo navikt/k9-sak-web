@@ -15,7 +15,7 @@ jobs:
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Installer Playwright
         uses: ./.github/actions/setup-playwright
