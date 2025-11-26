@@ -72,7 +72,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api, ur
   });
 
   const totrinnsKlageVurderingQuery = useQuery({
-    queryKey: ['totrinnskontroll', 'klagevurdering', behandling.uuid, behandling.versjon],
+    queryKey: ['totrinnskontroll', 'klagevurdering', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.hentTotrinnsKlageVurdering?.(behandling.uuid) ?? Promise.resolve(null),
     enabled: api.hentTotrinnsKlageVurdering != undefined,
     throwOnError: true,
