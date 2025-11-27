@@ -168,6 +168,7 @@ interface TransformValues {
   klageVurderingOmgjoer: string | null;
   klageHjemmel: string | null;
   klageVurderingType: string;
+  klageVurdering: string;
   fritekstTilBrev: string;
   begrunnelse: string;
   kode: string;
@@ -201,6 +202,7 @@ export const transformValues = (
         ? values.klageVurderingOmgjoer
         : null,
     klageHjemmel,
+    klageVurdering: values.klageVurdering,
     klageVurderingType: values.klageVurdering,
     fritekstTilBrev: values.fritekstTilBrev,
     begrunnelse: values.begrunnelse,

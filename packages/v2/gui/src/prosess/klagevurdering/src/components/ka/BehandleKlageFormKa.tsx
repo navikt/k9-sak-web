@@ -134,6 +134,7 @@ interface TransformedValues {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
   klageVurdering: string;
+  klageVurderingType: string;
   fritekstTilBrev: string;
   begrunnelse: string;
   kode: string;
@@ -150,6 +151,7 @@ export const transformValues = (values: BehandleKlageFormKaFormValues): Transfor
       ? values.klageVurderingOmgjoer
       : null,
   klageVurdering: values.klageVurdering,
+  klageVurderingType: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
   kode: AksjonspunktCodes.BEHANDLE_KLAGE_NK,
