@@ -23,7 +23,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
@@ -63,7 +63,7 @@ jobs:
       id-token: write
       contents: read
       packages: read
-    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@token-generator
+    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@main
     needs: build-docker-image
     with:
       tag: ${{ needs.build-docker-image.outputs.tag }}
@@ -94,7 +94,7 @@ jobs:
     environment: dev-fss:k9saksbehandling
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
@@ -114,7 +114,7 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           # Ta med litt historie og tags for å finne latest_prod commit hash
           fetch-tags: true
