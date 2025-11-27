@@ -13,7 +13,6 @@ interface OwnProps {
   noExistingBehandlinger: boolean;
   behandlingId?: number;
   fagsak: Pick<FagsakDto, 'sakstype'>;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   api: BehandlingVelgerBackendApiType;
 }
 
@@ -23,7 +22,6 @@ const BehandlingVelgerSakV2 = ({
   noExistingBehandlinger,
   behandlingId,
   fagsak,
-  createLocationForSkjermlenke,
   api,
 }: OwnProps) => {
   const hentSøknadsperioder = ![
@@ -39,7 +37,6 @@ const BehandlingVelgerSakV2 = ({
       getBehandlingLocation={getBehandlingLocation}
       noExistingBehandlinger={noExistingBehandlinger}
       behandlingId={behandlingId}
-      createLocationForSkjermlenke={createLocationForSkjermlenke}
       sakstypeKode={fagsak.sakstype}
       hentSøknadsperioder={hentSøknadsperioder}
       api={api}
