@@ -1,130 +1,117 @@
-import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
-import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
-import type { Behandling } from './types/Behandling';
-import type { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
+import { TotrinnskontrollSakIndex } from './TotrinnskontrollSakIndex.js';
+import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import type {
+  AksjonspunktGodkjenningDtos,
+  TotrinnskontrollApi,
+  TotrinnskontrollData,
+} from './api/TotrinnskontrollApi.js';
+import { K9KlageTotrinnskontrollData } from './api/k9/K9KlageTotrinnskontrollBackendClient.js';
+import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.jsx';
+import { K9KlageKodeverkoppslag } from '../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
+import { oppslagKodeverkSomObjektK9Klage } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Klage.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type {
+  K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted,
+  K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted,
+} from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import { K9TilbakeKodeverkoppslag } from '../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
+import { oppslagKodeverkSomObjektK9Tilbake } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Tilbake.js';
+import { K9TilbakeTotrinnskontrollData } from './api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { action } from 'storybook/actions';
 
-const data = [
-  {
-    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
-    totrinnskontrollAksjonspunkter: [
-      {
-        aksjonspunktKode: '5082',
-        opptjeningAktiviteter: [],
-        beregningDtoer: [],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
-        vurderPaNyttArsaker: [],
-        uttakPerioder: [],
-        arbeidsforholdDtos: [],
-      } as TotrinnskontrollAksjonspunkt,
-    ],
-  },
-  {
-    skjermlenkeType: 'BEREGNING',
-    totrinnskontrollAksjonspunkter: [
-      {
-        aksjonspunktKode: '5038',
-        opptjeningAktiviteter: [],
-        beregningDtoer: [
-          {
-            fastsattVarigEndringNaering: false,
-            faktaOmBeregningTilfeller: null,
-            skjæringstidspunkt: '2020-01-01',
-          },
-        ],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
-        vurderPaNyttArsaker: [],
-        arbeidsforholdDtos: [],
-      },
-      {
-        aksjonspunktKode: '5039',
-        opptjeningAktiviteter: [],
-        beregningDtoer: [
-          {
-            fastsattVarigEndringNaering: true,
-            fastsattVarigEndring: true,
-            faktaOmBeregningTilfeller: undefined,
-            skjæringstidspunkt: '2020-01-01',
-          },
-          {
-            fastsattVarigEndringNaering: false,
-            fastsattVarigEndring: false,
-            faktaOmBeregningTilfeller: null,
-            skjæringstidspunkt: '2020-02-01',
-          },
-        ],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
-        vurderPaNyttArsaker: [],
-        arbeidsforholdDtos: [],
-      },
-    ] as TotrinnskontrollAksjonspunkt[],
-  },
+const klageTotrinnskontrollData = (): TotrinnskontrollData => {
+  const klageKodeverkoppslag = new K9KlageKodeverkoppslag(oppslagKodeverkSomObjektK9Klage);
+  const klageDtos: K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted[] = [
+    {
+      skjermlenkeType: SkjermlenkeType.FORMKRAV_KLAGE_NFP,
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+          arbeidsforholdDtos: [],
+        },
+      ],
+    },
+    {
+      skjermlenkeType: SkjermlenkeType.BEREGNING,
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+          arbeidsforholdDtos: [],
+        },
+        {
+          aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+          arbeidsforholdDtos: [],
+        },
+      ],
+    },
 
-  {
-    skjermlenkeType: 'FAKTA_OM_BEREGNING',
-    totrinnskontrollAksjonspunkter: [
-      {
-        aksjonspunktKode: '5058',
-        opptjeningAktiviteter: [],
-        beregningDtoer: [
-          {
-            fastsattVarigEndringNaering: undefined,
-            faktaOmBeregningTilfeller: ['VURDER_LØNNSENDRING', 'VURDER_MOTTAR_YTELSE'],
-            skjæringstidspunkt: '2020-01-01',
-          },
-        ],
-        besluttersBegrunnelse: undefined,
-        totrinnskontrollGodkjent: undefined,
-        vurderPaNyttArsaker: [],
-        arbeidsforholdDtos: [],
-      },
-    ] as TotrinnskontrollAksjonspunkt[],
-  },
-];
+    {
+      skjermlenkeType: SkjermlenkeType.FAKTA_OM_BEREGNING,
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+          arbeidsforholdDtos: [],
+        },
+      ],
+    },
+  ];
 
-const location = {
-  key: '1',
-  pathname: '',
-  search: '',
-  state: {},
-  hash: '',
+  return new K9KlageTotrinnskontrollData(klageDtos, klageKodeverkoppslag);
 };
 
-const behandling = {
+const behandling: TotrinnskontrollBehandling = {
+  id: 1,
+  uuid: '1-1',
+  versjon: 2,
   status: BehandlingDtoStatus.FATTER_VEDTAK,
-  type: behandlingType.FØRSTEGANGSSØKNAD,
+  type: BehandlingType.FØRSTEGANGSSØKNAD,
   toTrinnsBehandling: true,
-} as Behandling;
+  behandlingsresultatType: 'FASTSATT',
+};
 
 const meta = {
   title: 'gui/sak/totrinnskontroll',
   component: TotrinnskontrollSakIndex,
-  decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD })],
+  decorators: [withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TotrinnskontrollSakIndex>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const api: Pick<TotrinnskontrollApi, 'bekreft'> = {
+  bekreft: fn(),
+};
+
 export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
   args: {
     behandling,
-    totrinnskontrollSkjermlenkeContext: data,
-    location,
-    onSubmit: fn(),
+    totrinnskontrollData: klageTotrinnskontrollData(),
     behandlingKlageVurdering: {
       klageVurderingResultatNFP: {
         klageVurdering: 'STADFESTE_YTELSESVEDTAK',
       },
     },
-    createLocationForSkjermlenke: () => location,
     readOnly: false,
+    api,
+    onBekreftet: action('onBekreftet'),
   },
   play: async ({ args, canvas }) => {
     const godkjentTexts = canvas.getAllByLabelText('Godkjent');
@@ -148,39 +135,38 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeDisabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeEnabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
-    await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
-      fatterVedtakAksjonspunktDto: {
-        '@type': '5016',
-        begrunnelse: null,
-        aksjonspunktGodkjenningDtos: [
-          {
-            aksjonspunktKode: '5082',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: '5038',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: '5039',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: '5058',
-            godkjent: false,
-            begrunnelse: 'Dette er en begrunnelse',
-            arsaker: ['FEIL_FAKTA', 'FEIL_LOV', 'FEIL_REGEL'],
-          },
-        ],
+    const expectedAksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos = [
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
       },
-      erAlleAksjonspunktGodkjent: false,
-    });
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+        godkjent: false,
+        begrunnelse: 'Dette er en begrunnelse',
+        arsaker: ['FEIL_FAKTA', 'FEIL_LOV', 'FEIL_REGEL'],
+      },
+    ];
+    await expect(args.api.bekreft).toHaveBeenNthCalledWith(
+      1,
+      behandling.uuid,
+      behandling.versjon,
+      expectedAksjonspunktGodkjenningDtos,
+    );
   },
 };
 
@@ -205,39 +191,38 @@ export const GodkjennerVedtak: Story = {
     await expect(canvas.getByRole('button', { name: 'Godkjenn vedtaket' })).toBeEnabled();
     await expect(canvas.getByRole('button', { name: 'Send til saksbehandler' })).toBeDisabled();
     await userEvent.click(canvas.getByRole('button', { name: 'Godkjenn vedtaket' }));
-    await expect(args.onSubmit).toHaveBeenNthCalledWith(1, {
-      fatterVedtakAksjonspunktDto: {
-        '@type': '5016',
-        begrunnelse: null,
-        aksjonspunktGodkjenningDtos: [
-          {
-            aksjonspunktKode: '5082',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: '5038',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: '5039',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-          {
-            aksjonspunktKode: '5058',
-            godkjent: true,
-            begrunnelse: undefined,
-            arsaker: [],
-          },
-        ],
+    const expectedAksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos = [
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
       },
-      erAlleAksjonspunktGodkjent: true,
-    });
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.FATTER_VEDTAK,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+      {
+        aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+        godkjent: true,
+        begrunnelse: undefined,
+        arsaker: [],
+      },
+    ];
+    await expect(args.api.bekreft).toHaveBeenNthCalledWith(
+      1,
+      behandling.uuid,
+      behandling.versjon,
+      expectedAksjonspunktGodkjenningDtos,
+    );
   },
 };
 
@@ -245,7 +230,7 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
   args: {
     ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
-  play: async ({ canvas }) => {
+  play: async ({ canvas, step }) => {
     const godkjentTexts = canvas.getAllByLabelText('Godkjent');
     if (godkjentTexts[0]) {
       await userEvent.click(godkjentTexts[0]);
@@ -262,79 +247,86 @@ export const ViserFeilmeldingDersomCheckboxMangler: Story = {
     }
     await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
     await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
-    await expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
+    await expect(canvas.getByText('Minst en årsak må velges')).toBeInTheDocument();
+    await step('Fjern feilmelding når årsak velges', async () => {
+      const feilFaktaCheckBox = canvas.getByLabelText('Feil fakta');
+      await userEvent.click(feilFaktaCheckBox);
+      await expect(canvas.queryByText('Minst en årsak må velges')).not.toBeInTheDocument();
+    });
   },
+};
+
+const tilbakeTotrinnskontrollData = (): TotrinnskontrollData => {
+  const tilbakeKodeverkoppslag = new K9TilbakeKodeverkoppslag(oppslagKodeverkSomObjektK9Tilbake);
+  const dtos: K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[] = [
+    {
+      skjermlenkeType: SkjermlenkeType.FAKTA_OM_FEILUTBETALING,
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: '7003',
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+        },
+      ],
+    },
+    {
+      skjermlenkeType: 'VEDTAK',
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: '5004',
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+        },
+      ],
+    },
+    {
+      skjermlenkeType: 'TILBAKEKREVING',
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: '5002',
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+        },
+      ],
+    },
+    {
+      skjermlenkeType: 'FORELDELSE',
+      totrinnskontrollAksjonspunkter: [
+        {
+          aksjonspunktKode: '5003',
+          besluttersBegrunnelse: undefined,
+          totrinnskontrollGodkjent: undefined,
+          vurderPaNyttArsaker: [],
+        },
+      ],
+    },
+  ];
+
+  return new K9TilbakeTotrinnskontrollData(dtos, tilbakeKodeverkoppslag);
 };
 
 export const Tilbakekreving: Story = {
   args: {
     behandling: {
+      id: 2,
+      uuid: '2-2',
+      versjon: 3,
       type: 'BT-007',
       status: 'FVED',
       toTrinnsBehandling: true,
-      behandlingsresultat: {
-        type: 'IKKE_FASTSATT',
+      behandlingsresultatType: 'IKKE_FASTSATT',
+    },
+    onBekreftet: action('onBekreftet'),
+    behandlingKlageVurdering: {
+      klageVurderingResultatNK: {
+        klageVurdering: 'STADFESTE_YTELSESVEDTAK',
       },
     },
-    behandlingType: behandlingType.TILBAKEKREVING,
-    location,
-    onSubmit: fn(),
-    behandlingKlageVurdering: undefined,
-    createLocationForSkjermlenke: () => location,
     readOnly: false,
-    totrinnskontrollSkjermlenkeContext: [
-      {
-        skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
-        totrinnskontrollAksjonspunkter: [
-          {
-            aksjonspunktKode: '7003',
-            besluttersBegrunnelse: undefined,
-            totrinnskontrollGodkjent: undefined,
-            vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
-          },
-        ],
-      },
-      {
-        skjermlenkeType: 'VEDTAK',
-        totrinnskontrollAksjonspunkter: [
-          {
-            aksjonspunktKode: '5004',
-            besluttersBegrunnelse: undefined,
-            totrinnskontrollGodkjent: undefined,
-            vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
-          },
-        ],
-      },
-      {
-        skjermlenkeType: 'TILBAKEKREVING',
-        totrinnskontrollAksjonspunkter: [
-          {
-            aksjonspunktKode: '5002',
-            besluttersBegrunnelse: undefined,
-            totrinnskontrollGodkjent: undefined,
-            vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
-          },
-        ],
-      },
-      {
-        skjermlenkeType: 'FORELDELSE',
-        totrinnskontrollAksjonspunkter: [
-          {
-            aksjonspunktKode: '5003',
-            besluttersBegrunnelse: undefined,
-            totrinnskontrollGodkjent: undefined,
-            vurderPaNyttArsaker: [],
-            arbeidsforholdDtos: [],
-            beregningDtoer: [],
-          },
-        ],
-      },
-    ],
+    totrinnskontrollData: tilbakeTotrinnskontrollData(),
+    api,
   },
 };

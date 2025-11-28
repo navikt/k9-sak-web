@@ -3,6 +3,7 @@ import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
 import { client } from '@navikt/k9-tilbake-typescript-client/client';
 import type { AuthFixApi } from '../shared/auth/AuthFixApi.js';
 import { ClientConfigHelper } from '../shared/config/ClientConfigHelper.js';
+import { defaultQuerySerializer } from '../shared/config/querySerializer.js';
 
 const baseUrl = '/k9/tilbake';
 
@@ -14,7 +15,7 @@ export const configureK9TilbakeClient = (authFixer: AuthFixApi) => {
   const sharedConfigurator = new ClientConfigHelper(authFixer);
   client.setConfig({
     baseUrl,
-    querySerializer: sharedConfigurator.querySerializerConfig,
+    querySerializer: defaultQuerySerializer,
   });
 
   client.interceptors.request.use(sharedConfigurator.requestInterceptor);
