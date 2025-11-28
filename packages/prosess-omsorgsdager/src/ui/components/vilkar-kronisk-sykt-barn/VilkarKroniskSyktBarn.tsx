@@ -146,11 +146,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         data.avslagsårsakKode,
         tekstTilBoolean(harDokumentasjonOgFravaerRisiko) ? data.fraDato.replaceAll('.', '-') : '',
         data.erTidsbegrenset && data.tilDato ? data.tilDato : '',
+        data.erTidsbegrenset,
       );
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
   };
+
+  const kroniskTidsbegrensetToggle = 'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET;
 
   return (
     <div
@@ -198,8 +201,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <>
               <p className={styleLesemodus.label}>{tekst.sporsmalPeriodeVedtakGyldig}</p>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.fraDato)}</p>
-              <p className={styleLesemodus.label}>Til dato</p>
-              <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.tilDato)}</p>
+              {kroniskTidsbegrensetToggle && (
+                <>
+                  <p className={styleLesemodus.label}>Til dato</p>
+                  <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.tilDato)}</p>
+                </>
+              )}
             </>
           )}
 
@@ -283,46 +290,53 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
               {harDokumentasjonOgFravaerRisiko.length > 0 && tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && (
                 <div>
-                  <VStack gap="space-16">
-                    <Fieldset
-                      legend={tekst.sporsmalPeriodeVedtakGyldig}
-                      error={
-                        (errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato) ||
-                        (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
-                        (errors.fraDato &&
-                          errors.fraDato.type === 'erDatoIkkeIFremtid' &&
-                          tekst.feilmedlingerDatoIkkeIFremtid)
-                      }
-                    >
-                      <DatePicker
-                        titel="Fra"
-                        navn="fraDato"
-                        valideringsFunksjoner={{
-                          erDatoFyltUt,
-                          erDatoGyldig,
-                          erDatoIkkeIFremtid,
-                        }}
-                      />
-                    </Fieldset>
-                    <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
-                    {erTidsbegrenset && (
-                      <HStack marginBlock="0 4">
-                        <Select
-                          {...register('tilDato', {
-                            validate: { erDatoFyltUt },
-                            required: true,
-                          })}
-                          label="Til"
-                          size="small"
-                        >
-                          {/* <option value="null">Dato for opphør</option> */}
-                          <option value="2026-12-31">31.12.2026</option>
-                          <option value="2027-12-31">31.12.2027</option>
-                          <option value="2028-12-31">31.12.2028</option>
-                          <option value="2029-12-31">31.12.2029</option>
-                          <option value="2030-12-31">31.12.2030</option>
-                        </Select>
-                      </HStack>
+                  <VStack gap="space-8">
+                    <div>
+                      <Fieldset
+                        legend={tekst.sporsmalPeriodeVedtakGyldig}
+                        error={
+                          (errors.fraDato &&
+                            errors.fraDato.type === 'erDatoFyltUt' &&
+                            tekst.feilmedlingManglerFraDato) ||
+                          (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
+                          (errors.fraDato &&
+                            errors.fraDato.type === 'erDatoIkkeIFremtid' &&
+                            tekst.feilmedlingerDatoIkkeIFremtid)
+                        }
+                      >
+                        <DatePicker
+                          titel=""
+                          navn="fraDato"
+                          valideringsFunksjoner={{
+                            erDatoFyltUt,
+                            erDatoGyldig,
+                            erDatoIkkeIFremtid,
+                          }}
+                        />
+                      </Fieldset>
+                    </div>
+                    {kroniskTidsbegrensetToggle && (
+                      <>
+                        <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
+                        {erTidsbegrenset && (
+                          <HStack marginBlock="0 4">
+                            <Select
+                              {...register('tilDato', {
+                                validate: { erDatoFyltUt },
+                                required: true,
+                              })}
+                              label="Til"
+                              size="small"
+                            >
+                              <option value="2026-12-31">31.12.2026</option>
+                              <option value="2027-12-31">31.12.2027</option>
+                              <option value="2028-12-31">31.12.2028</option>
+                              <option value="2029-12-31">31.12.2029</option>
+                              <option value="2030-12-31">31.12.2030</option>
+                            </Select>
+                          </HStack>
+                        )}
+                      </>
                     )}
                   </VStack>
                 </div>

@@ -30,4 +30,5 @@ export interface K9FeatureToggles extends FeatureTogglesFor {
   FLYTT_ALDERSVILKAR: boolean;
   BRUK_V2_TILKJENT_YTELSE: boolean;
   UNG_KLAGE: boolean;
+  KRONISK_TIDSBEGRENSET: boolean;
 }

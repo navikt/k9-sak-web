@@ -16,6 +16,7 @@ export interface VilkarKroniskSyktBarnProps {
     avslagsårsakKode: string,
     fraDato: string,
     tilDato: string,
+    erTidsbegrenset: boolean,
   ) => void;
   formState: FormState;
 }

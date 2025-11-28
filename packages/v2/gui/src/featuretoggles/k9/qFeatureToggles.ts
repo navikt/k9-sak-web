@@ -31,4 +31,5 @@ export const qFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   BRUK_V2_TILKJENT_YTELSE: true,
   UNG_KLAGE: true,
+  KRONISK_TIDSBEGRENSET: true,
 } satisfies K9FeatureToggles;
