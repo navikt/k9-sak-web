@@ -314,7 +314,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                           })}
                           label="Til"
                           size="small"
-                          onChange={e => setValue('tilDato', e.target.value)}
                         >
                           {/* <option value="null">Dato for opphør</option> */}
                           <option value="2026-12-31">31.12.2026</option>
