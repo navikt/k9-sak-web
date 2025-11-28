@@ -1330,28 +1330,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/prosess-klagevurdering@npm:1.0.0, @fpsak-frontend/prosess-klagevurdering@workspace:packages/prosess-klagevurdering":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-klagevurdering@workspace:packages/prosess-klagevurdering"
-  dependencies:
-    "@fpsak-frontend/form": "npm:1.0.0"
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@k9-sak-web/prosess-felles": "npm:1.0.0"
-    classnames: "npm:2.5.1"
-    prop-types: "npm:15.8.1"
-    react: "npm:19.2.0"
-    react-intl: "npm:7.1.14"
-    react-redux: "npm:9.2.0"
-    redux: "npm:5.0.1"
-    redux-form: "npm:8.3.10"
-    reselect: "npm:5.1.1"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/prosess-tilbakekreving@npm:1.0.0, @fpsak-frontend/prosess-tilbakekreving@workspace:packages/prosess-tilbakekreving":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-tilbakekreving@workspace:packages/prosess-tilbakekreving"
@@ -2173,7 +2151,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prosess-klagevurdering": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak-klage": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
@@ -2193,7 +2170,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prosess-klagevurdering": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak-klage": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
