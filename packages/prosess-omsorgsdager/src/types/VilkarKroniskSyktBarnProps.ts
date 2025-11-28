@@ -15,6 +15,7 @@ export interface VilkarKroniskSyktBarnProps {
     begrunnelse: string,
     avslagsårsakKode: string,
     fraDato: string,
+    tilDato: string,
   ) => void;
   formState: FormState;
 }
@@ -24,4 +25,5 @@ export interface InformasjonTilLesemodusKroniskSyk {
   vilkarOppfylt: boolean;
   avslagsårsakKode: string;
   fraDato: string;
+  tilDato: string;
 }
