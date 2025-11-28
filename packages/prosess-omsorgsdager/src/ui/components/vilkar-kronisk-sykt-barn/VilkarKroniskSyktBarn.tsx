@@ -317,6 +317,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                         >
                           {/* <option value="null">Dato for opphør</option> */}
                           <option value="2026-12-31">31.12.2026</option>
+                          <option value="2027-12-31">31.12.2027</option>
+                          <option value="2028-12-31">31.12.2028</option>
+                          <option value="2029-12-31">31.12.2029</option>
+                          <option value="2030-12-31">31.12.2030</option>
                         </Select>
                       </HStack>
                     )}
