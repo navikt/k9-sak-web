@@ -1,5 +1,5 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
+import { Alert, Button, Checkbox, Fieldset, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -22,6 +22,8 @@ type FormData = {
   begrunnelse: string;
   åpenForRedigering: boolean;
   fraDato: string;
+  tilDato: string;
+  erTidsbegrenset: boolean;
 };
 
 export enum AvslagskoderKroniskSyk {
@@ -93,6 +95,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         : '',
       avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
+      tilDato: undefined,
+      erTidsbegrenset: false,
     },
   });
 
@@ -102,9 +106,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     formState: { errors },
     setValue,
     getValues,
+    register,
   } = methods;
   const harDokumentasjonOgFravaerRisiko = watch('harDokumentasjonOgFravaerRisiko');
   const åpenForRedigering = watch('åpenForRedigering');
+  const erTidsbegrenset = watch('erTidsbegrenset');
   const formStateKey = `${behandlingsID}-utvidetrett-ks`;
   const { erDatoFyltUt, erDatoGyldig, erDatoIkkeIFremtid } = valideringsFunksjoner(
     getValues,
@@ -126,18 +132,28 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     getValues,
   );
 
-  const bekreftAksjonspunkt = data => {
-    if (!errors.begrunnelse && !errors.avslagsårsakKode && !errors.fraDato && !errors.harDokumentasjonOgFravaerRisiko) {
+  const bekreftAksjonspunkt = (data: FormData) => {
+    if (
+      !errors.begrunnelse &&
+      !errors.avslagsårsakKode &&
+      !errors.fraDato &&
+      !errors.harDokumentasjonOgFravaerRisiko &&
+      !errors.tilDato
+    ) {
       losAksjonspunkt(
         tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko),
         data.begrunnelse,
         data.avslagsårsakKode,
         tekstTilBoolean(harDokumentasjonOgFravaerRisiko) ? data.fraDato.replaceAll('.', '-') : '',
+        data.erTidsbegrenset && data.tilDato ? data.tilDato : '',
+        data.erTidsbegrenset,
       );
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
   };
+
+  const kroniskTidsbegrensetToggle = 'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET;
 
   return (
     <div
@@ -185,6 +201,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <>
               <p className={styleLesemodus.label}>{tekst.sporsmalPeriodeVedtakGyldig}</p>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.fraDato)}</p>
+              {kroniskTidsbegrensetToggle && (
+                <>
+                  <p className={styleLesemodus.label}>Til dato</p>
+                  <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.tilDato)}</p>
+                </>
+              )}
             </>
           )}
 
@@ -268,27 +290,55 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
               {harDokumentasjonOgFravaerRisiko.length > 0 && tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && (
                 <div>
-                  <Fieldset
-                    className={styles.fraDato}
-                    legend={tekst.sporsmalPeriodeVedtakGyldig}
-                    error={
-                      (errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato) ||
-                      (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
-                      (errors.fraDato &&
-                        errors.fraDato.type === 'erDatoIkkeIFremtid' &&
-                        tekst.feilmedlingerDatoIkkeIFremtid)
-                    }
-                  >
-                    <DatePicker
-                      titel=""
-                      navn="fraDato"
-                      valideringsFunksjoner={{
-                        erDatoFyltUt,
-                        erDatoGyldig,
-                        erDatoIkkeIFremtid,
-                      }}
-                    />
-                  </Fieldset>
+                  <VStack gap="space-8">
+                    <div>
+                      <Fieldset
+                        legend={tekst.sporsmalPeriodeVedtakGyldig}
+                        error={
+                          (errors.fraDato &&
+                            errors.fraDato.type === 'erDatoFyltUt' &&
+                            tekst.feilmedlingManglerFraDato) ||
+                          (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
+                          (errors.fraDato &&
+                            errors.fraDato.type === 'erDatoIkkeIFremtid' &&
+                            tekst.feilmedlingerDatoIkkeIFremtid)
+                        }
+                      >
+                        <DatePicker
+                          titel=""
+                          navn="fraDato"
+                          valideringsFunksjoner={{
+                            erDatoFyltUt,
+                            erDatoGyldig,
+                            erDatoIkkeIFremtid,
+                          }}
+                        />
+                      </Fieldset>
+                    </div>
+                    {kroniskTidsbegrensetToggle && (
+                      <>
+                        <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
+                        {erTidsbegrenset && (
+                          <HStack marginBlock="0 4">
+                            <Select
+                              {...register('tilDato', {
+                                validate: { erDatoFyltUt },
+                                required: true,
+                              })}
+                              label="Til"
+                              size="small"
+                            >
+                              <option value="2026-12-31">31.12.2026</option>
+                              <option value="2027-12-31">31.12.2027</option>
+                              <option value="2028-12-31">31.12.2028</option>
+                              <option value="2029-12-31">31.12.2029</option>
+                              <option value="2030-12-31">31.12.2030</option>
+                            </Select>
+                          </HStack>
+                        )}
+                      </>
+                    )}
+                  </VStack>
                 </div>
               )}
 
