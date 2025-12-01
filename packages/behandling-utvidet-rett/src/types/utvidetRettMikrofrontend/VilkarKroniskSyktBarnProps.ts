@@ -24,4 +24,5 @@ export interface InformasjonTilLesemodusKroniskSyk {
   vilkarOppfylt: boolean;
   avslagsårsakKode: string;
   fraDato: string;
+  tilDato: string;
 }

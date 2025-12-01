@@ -1,10 +1,10 @@
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 
-export const erFagytelseTypeUtvidetRett = (fagytelseType: FagsakYtelsesType) => {
+export const erFagytelseTypeUtvidetRett = (fagytelseType: FagsakYtelseType) => {
   switch (fagytelseType) {
-    case fagsakYtelsesType.OMSORGSPENGER_AO:
-    case fagsakYtelsesType.OMSORGSPENGER_MA:
-    case fagsakYtelsesType.OMSORGSPENGER_KS:
+    case FagsakYtelseType.OMSORGSPENGER_AO:
+    case FagsakYtelseType.OMSORGSPENGER_MA:
+    case FagsakYtelseType.OMSORGSPENGER_KS:
       return true;
     default:
       return false;

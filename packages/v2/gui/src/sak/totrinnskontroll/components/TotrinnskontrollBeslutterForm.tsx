@@ -1,49 +1,49 @@
-import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import { k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
-import type { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import type { Location } from 'history';
-import { useEffect } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
-import type { Behandling } from '../types/Behandling';
-import type { TotrinnskontrollAksjonspunkt } from '../types/TotrinnskontrollAksjonspunkt';
-import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
-import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
+import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import type { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import { AksjonspunktGodkjenningFieldArray } from './AksjonspunktGodkjenningFieldArray.js';
+import type {
+  AksjonspunktGodkjenningDtos,
+  TotrinnskontrollApi,
+  TotrinnskontrollData,
+} from '../api/TotrinnskontrollApi.js';
+import { useMutation } from '@tanstack/react-query';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { alleAksjonspunktDefinisjonVerdier } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { VurderÅrsak } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 
 const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
   aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
 
 const erAlleGodkjentEllerAvvist = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
-  aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent !== null);
+  aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent != null);
 
-const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenkeContext[]): FormState => ({
-  aksjonspunktGodkjenning: totrinnskontrollContext
-    .map(context => context.totrinnskontrollAksjonspunkter)
-    .flat()
-    .map(ap => ({
-      aksjonspunktKode: ap.aksjonspunktKode,
-      totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
-      besluttersBegrunnelse: ap.besluttersBegrunnelse ? decodeHtmlEntity(ap.besluttersBegrunnelse) : undefined,
-      ...(ap.vurderPaNyttArsaker ? finnArsaker(ap.vurderPaNyttArsaker) : []),
-    })),
+const buildInitialValues = (totrinnskontrollData: TotrinnskontrollData): FormState => ({
+  aksjonspunktGodkjenning: totrinnskontrollData.alleAksjonspunkt.map(ap => ({
+    aksjonspunktKode: ap.aksjonspunktKode,
+    totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
+    besluttersBegrunnelse: ap.besluttersBegrunnelse ? decodeHtmlEntity(ap.besluttersBegrunnelse) : undefined,
+    ...(ap.vurderPaNyttArsaker ? finnArsaker(ap.vurderPaNyttArsaker) : []),
+  })),
 });
 
-interface PureOwnProps {
-  behandling: Behandling;
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
+export interface TotrinnskontrollBeslutterFormProps {
+  behandling: TotrinnskontrollBehandling;
+  totrinnskontrollData: TotrinnskontrollData;
   behandlingKlageVurdering?: KlagebehandlingDto;
   readOnly: boolean;
-  arbeidsforholdHandlingTyper: KodeverkV2[];
-  skjermlenkeTyper: KodeverkV2[];
-  lagLenke: (skjermlenkeCode: string) => Location;
-  handleSubmit: (formValues: FormState) => void;
-  toTrinnFormState?: FormState;
-  setToTrinnFormState?: React.Dispatch<FormState>;
+  api: Pick<TotrinnskontrollApi, 'bekreft'>;
+  onBekreftet: (alleGodkjent: boolean) => void;
 }
 
 /*
@@ -53,51 +53,109 @@ interface PureOwnProps {
  */
 export const TotrinnskontrollBeslutterForm = ({
   behandling,
-  handleSubmit,
   readOnly,
   behandlingKlageVurdering,
-  arbeidsforholdHandlingTyper,
-  skjermlenkeTyper,
-  totrinnskontrollSkjermlenkeContext,
-  lagLenke,
-  toTrinnFormState,
-  setToTrinnFormState,
-}: PureOwnProps) => {
-  const formMethods = useForm<FormState>({
-    defaultValues: toTrinnFormState || buildInitialValues(totrinnskontrollSkjermlenkeContext),
+  totrinnskontrollData,
+  api,
+  onBekreftet,
+}: TotrinnskontrollBeslutterFormProps) => {
+  // Spesialtilfelle frå AksjonspunktGodkjenningFieldArray: For nokre klage saker skal det krevast begrunnelse også for godkjenning.
+  const krevBegrunnelseForGodkjent: boolean = behandlingKlageVurdering?.klageVurderingResultatNK != null;
+  // Alle aksjonspunktGodkjenning element skal ha totrinnskontrollGodkjent true, eller ha totrinnskontrollGodkjent false,
+  // men ha eit av boolean "flagga" for feilårsak satt true
+  const formSchema: ObjectSchema<FormState> = yup.object({
+    aksjonspunktGodkjenning: yup
+      .array(
+        yup
+          .object({
+            aksjonspunktKode: yup.string().required().oneOf(alleAksjonspunktDefinisjonVerdier),
+            totrinnskontrollGodkjent: yup.boolean().required(),
+            besluttersBegrunnelse: yup
+              .string()
+              .min(3, 'Du må skrive minst tre bokstaver')
+              .max(2000, 'Du kan skrive maks ${max} bokstaver')
+              .optional()
+              .when('totrinnskontrollGodkjent', {
+                is: false, // begrunnelse må fylles ut viss aksjonspunkt ikke er godkjent (eller det er spesiell klage greie)
+                then: s => s.required('begrunnelse må fylles ut'),
+                otherwise: s => (krevBegrunnelseForGodkjent ? s.required('begrunnelse må fylles ut') : s),
+              }),
+            // Feil årsak:
+            annet: yup.boolean().optional(),
+            feilFakta: yup.boolean().optional(),
+            feilLov: yup.boolean().optional(),
+            feilRegel: yup.boolean().optional(),
+          })
+          .test('årsak-checkboxes', 'Minst en årsak må velges', apGodkjenning => {
+            const ikkeGodkjent = !apGodkjenning.totrinnskontrollGodkjent;
+            const minstEnÅrsakAvkrysset =
+              apGodkjenning.annet || apGodkjenning.feilFakta || apGodkjenning.feilLov || apGodkjenning.feilRegel;
+            if (ikkeGodkjent && !minstEnÅrsakAvkrysset) {
+              return false; // Valideringsfeil
+            } else {
+              return true; // Validering ok
+            }
+          }),
+      )
+      .required(),
+  });
+
+  const formHook = useForm<FormState>({
+    resolver: yupResolver(formSchema),
+    defaultValues: buildInitialValues(totrinnskontrollData),
   });
   const aksjonspunktGodkjenning = useWatch({
-    control: formMethods.control,
+    control: formHook.control,
     name: 'aksjonspunktGodkjenning',
   });
-  const { formState } = formMethods;
-  useEffect(
-    () => () => {
-      if (setToTrinnFormState) {
-        setToTrinnFormState({ aksjonspunktGodkjenning });
-      }
+  const { formState } = formHook;
+
+  const godkjennTotrinnsaksjonspunkterMutation = useMutation({
+    mutationFn: async (formState: FormState) => {
+      // Map frå frontend FormState til backend DTO
+      const aksjonspunktGodkjenningDtos: AksjonspunktGodkjenningDtos = formState.aksjonspunktGodkjenning.map(
+        apGodkjenning => {
+          const arsaker: VurderÅrsak[] = [];
+          if (!apGodkjenning.totrinnskontrollGodkjent) {
+            if (apGodkjenning.feilFakta) {
+              arsaker.push(VurderÅrsak.FEIL_FAKTA);
+            }
+            if (apGodkjenning.feilLov) {
+              arsaker.push(VurderÅrsak.FEIL_LOV);
+            }
+            if (apGodkjenning.feilRegel) {
+              arsaker.push(VurderÅrsak.FEIL_REGEL);
+            }
+            if (apGodkjenning.annet) {
+              arsaker.push(VurderÅrsak.ANNET);
+            }
+          }
+          return {
+            aksjonspunktKode: apGodkjenning.aksjonspunktKode,
+            godkjent: apGodkjenning.totrinnskontrollGodkjent,
+            begrunnelse: apGodkjenning.besluttersBegrunnelse,
+            arsaker,
+          };
+        },
+      );
+      await api.bekreft(behandling.uuid, behandling.versjon ?? 0, aksjonspunktGodkjenningDtos);
     },
-    [aksjonspunktGodkjenning, setToTrinnFormState],
-  );
+    onSuccess: (_, formState) => {
+      const alleGodkjent = formState.aksjonspunktGodkjenning.every(
+        apGodkjenning => apGodkjenning.totrinnskontrollGodkjent,
+      );
+      onBekreftet(alleGodkjent);
+    },
+  });
+
   if (!behandling.toTrinnsBehandling) {
     return null;
   }
 
-  const onSubmit = (formState: FormState) => {
-    if (
-      !erAlleGodkjent(formState.aksjonspunktGodkjenning) &&
-      formState.aksjonspunktGodkjenning.some(
-        ap => !ap.totrinnskontrollGodkjent && !ap.annet && !ap.feilFakta && !ap.feilLov && !ap.feilRegel,
-      )
-    ) {
-      return;
-    } else {
-      handleSubmit(formState);
-    }
-  };
+  const onSubmit: SubmitHandler<FormState> = data => godkjennTotrinnsaksjonspunkterMutation.mutate(data);
 
   return (
-    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
+    <RhfForm formMethods={formHook} onSubmit={onSubmit}>
       {!readOnly && (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen>
@@ -109,12 +167,8 @@ export const TotrinnskontrollBeslutterForm = ({
       <AksjonspunktGodkjenningFieldArray
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
-        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
         readOnly={readOnly}
-        klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
-        totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
-        lagLenke={lagLenke}
+        totrinnskontrollData={totrinnskontrollData}
       />
       <div className={styles.buttonRow}>
         <Button
@@ -146,21 +200,31 @@ export const TotrinnskontrollBeslutterForm = ({
   );
 };
 
-const finnArsaker = (vurderPaNyttArsaker?: TotrinnskontrollAksjonspunkt['vurderPaNyttArsaker']) =>
-  vurderPaNyttArsaker?.reduce((acc, arsak) => {
-    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_FAKTA) {
-      return { ...acc, feilFakta: true };
+const finnArsaker = (vurderPaNyttArsaker?: TotrinnskontrollAksjonspunkterDto['vurderPaNyttArsaker']) => {
+  let feilFakta = false;
+  let feilLov = false;
+  let feilRegel = false;
+  let annet = false;
+  for (const årsak of vurderPaNyttArsaker ?? []) {
+    switch (årsak) {
+      case TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_FAKTA:
+        feilFakta = true;
+        break;
+      case TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_LOV:
+        feilLov = true;
+        break;
+      case TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_REGEL:
+        feilRegel = true;
+        break;
+      case TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.ANNET:
+        annet = true;
+        break;
     }
-    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_LOV) {
-      return { ...acc, feilLov: true };
-    }
-    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_REGEL) {
-      return { ...acc, feilRegel: true };
-    }
-    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.ANNET) {
-      return { ...acc, annet: true };
-    }
-    return {};
-  }, {});
-
-export default TotrinnskontrollBeslutterForm;
+  }
+  return {
+    feilFakta,
+    feilLov,
+    feilRegel,
+    annet,
+  };
+};
