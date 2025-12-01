@@ -1,5 +1,5 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { Alert, Button, Checkbox, Fieldset, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
+import { Alert, Button, Checkbox, Fieldset, HelpText, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -317,7 +317,13 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                     </div>
                     {kroniskTidsbegrensetToggle && (
                       <>
-                        <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
+                        <HStack gap="space-8" align="center">
+                          <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
+                          <HelpText>
+                            Her "huker du av" dersom vedtaket skal være tidsbegrenset. Når det ikke "hukes av" her, så
+                            varer vedtaket ut det kalenderåret barnet fyller 18 år.
+                          </HelpText>
+                        </HStack>
                         {erTidsbegrenset && (
                           <HStack marginBlock="0 4">
                             <Select
