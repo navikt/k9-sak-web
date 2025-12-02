@@ -44,14 +44,6 @@ const NødvendigOpplæringAlerts = ({ vurderingsliste }: NødvendigOpplæringAle
     });
   };
 
-  if (aksjonspunktErÅpent && !readOnly) {
-    return (
-      <Alert className="mb-4" variant="warning" size="small">
-        Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
-      </Alert>
-    );
-  }
-
   if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && tidligereAksjonspunkterErÅpne && !readOnly) {
     return (
       <Alert className="mb-4 p-4" variant="warning" size="small">
@@ -76,6 +68,14 @@ const NødvendigOpplæringAlerts = ({ vurderingsliste }: NødvendigOpplæringAle
             </Button>
           </div>
         </div>
+      </Alert>
+    );
+  }
+
+  if (aksjonspunktErÅpent && !readOnly) {
+    return (
+      <Alert className="mb-4" variant="warning" size="small">
+        Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
       </Alert>
     );
   }
