@@ -7,6 +7,7 @@ import type { ProsessPanelProps } from '../types/panelTypes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useErValgtPanel } from '../context/ValgtPanelContext.js';
 /**
  * V2 Uttak prosesssteg panel
  * 
@@ -38,6 +39,9 @@ interface UttakProsessStegPanelProps extends ProsessPanelProps {
 
 export function UttakProsessStegPanel(props: UttakProsessStegPanelProps) {
   const { uttak } = props;
+  
+  // Bruk Context API for å sjekke om panelet er valgt
+  const erValgt = useErValgtPanel(PANEL_ID);
   
   // Hent standard props fra context
   const standardProps = useStandardProsessPanelProps();
@@ -86,8 +90,8 @@ export function UttakProsessStegPanel(props: UttakProsessStegPanelProps) {
   // Registrer panel med menyen
   usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  // Render kun hvis panelet er valgt (fra Context API)
+  if (!erValgt) {
     return null;
   }
 

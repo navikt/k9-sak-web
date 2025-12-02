@@ -317,27 +317,30 @@ const PleiepengerProsess = ({
 
           {/* Legacy panel-rendering for innhold (unngår Redux-form problemer) */}
           {/* VIKTIG: Dette må være UTENFOR ProsessMeny for å vises rett under menyen */}
-          <ProsessStegContainer
-            formaterteProsessStegPaneler={formaterteProsessStegPaneler}
-            velgProsessStegPanelCallback={velgProsessStegPanelCallback}
-            hideMenu={true}
-          >
-            <ProsessStegPanel
-              valgtProsessSteg={valgtPanel}
-              fagsak={fagsak}
-              behandling={behandling}
-              alleKodeverk={alleKodeverk}
-              apentFaktaPanelInfo={apentFaktaPanelInfo}
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              lagringSideeffekterCallback={lagringSideeffekterCallback}
-              lagreAksjonspunkter={lagreAksjonspunkter}
-              lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
-              useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
-              featureToggles={featureToggles}
-              hentBehandling={hentBehandling}
-              erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-            />
-          </ProsessStegContainer>
+          {/* Uttak er fullt migrert til v2 og rendres direkte i ProsessMeny */}
+          {valgtPanel?.getUrlKode() !== 'uttak' && (
+            <ProsessStegContainer
+              formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+              velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+              hideMenu={true}
+            >
+              <ProsessStegPanel
+                valgtProsessSteg={valgtPanel}
+                fagsak={fagsak}
+                behandling={behandling}
+                alleKodeverk={alleKodeverk}
+                apentFaktaPanelInfo={apentFaktaPanelInfo}
+                oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+                lagringSideeffekterCallback={lagringSideeffekterCallback}
+                lagreAksjonspunkter={lagreAksjonspunkter}
+                lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
+                useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
+                featureToggles={featureToggles}
+                hentBehandling={hentBehandling}
+                erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
+              />
+            </ProsessStegContainer>
+          )}
         </StandardProsessPanelPropsProvider>
       </>
     );

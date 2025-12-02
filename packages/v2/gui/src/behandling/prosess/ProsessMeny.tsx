@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import { Box } from '@navikt/ds-react';
 import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import type { ProsessPanelProps, PanelRegistrering } from './types/panelTypes.js';
+import { ValgtPanelProvider } from './context/ValgtPanelContext.js';
 import styles from './prosessMeny.module.css';
 
 /**
@@ -177,10 +178,12 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
   });
 
   return (
-    <Box.New paddingInline="6">
-      <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
-      {/* Render children med injiserte props */}
-      {childrenWithProps}
-    </Box.New>
+    <ValgtPanelProvider value={{ valgtPanelId }}>
+      <Box.New paddingInline="6">
+        <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
+        {/* Render children med injiserte props */}
+        {childrenWithProps}
+      </Box.New>
+    </ValgtPanelProvider>
   );
 }
