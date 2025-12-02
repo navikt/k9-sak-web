@@ -9,13 +9,14 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-import { Behandling, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Link, Tabs } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import styles from './inngangsvilkarPanel.module.css';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface OwnProps {
   behandling: Behandling;

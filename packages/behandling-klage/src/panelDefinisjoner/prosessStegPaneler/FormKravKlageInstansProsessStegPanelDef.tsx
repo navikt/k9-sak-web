@@ -4,7 +4,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import FormkravProsessIndex from '@k9-sak-web/gui/prosess/formkrav/FormkravProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <FormkravProsessIndex {...props} />;

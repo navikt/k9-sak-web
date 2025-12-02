@@ -3,18 +3,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import FrisinnPaneler from './components/FrisinnPaneler';
 import { FrisinnBehandlingApiKeys, requestFrisinnApi, restApiFrisinnHooks } from './data/frisinnBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 const frisinnData = [
   { key: FrisinnBehandlingApiKeys.AKSJONSPUNKTER },
