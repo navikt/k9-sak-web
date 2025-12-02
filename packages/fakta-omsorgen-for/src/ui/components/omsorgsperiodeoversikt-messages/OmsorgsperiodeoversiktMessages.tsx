@@ -5,7 +5,7 @@ import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
 import { getStringMedPerioder } from '../../../util/periodUtils';
 import styles from './omsorgsperiodeoversiktMessages.module.css';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
-import { AksjonspunktStatus } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 
 interface OmsorgsperiodeoversiktMessagesProps {
   omsorgsperiodeoversikt: Omsorgsperiodeoversikt;
@@ -18,7 +18,7 @@ const OmsorgsperiodeoversiktMessages = ({
   if (
     omsorgsperiodeoversikt.harPerioderTilVurdering() &&
     !readOnly &&
-    omsorgenForAksjonspunkt?.status?.kode === AksjonspunktStatus.OPPRETTET
+    isAksjonspunktOpen(omsorgenForAksjonspunkt?.status?.kode)
   ) {
     const perioderTilVurdering = omsorgsperiodeoversikt.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
