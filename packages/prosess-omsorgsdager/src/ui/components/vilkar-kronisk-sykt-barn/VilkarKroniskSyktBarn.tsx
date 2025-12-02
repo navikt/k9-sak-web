@@ -95,8 +95,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         : '',
       avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
-      tilDato: undefined,
-      erTidsbegrenset: false,
+      tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.tilDato : 'dd.mm.åååå',
+      erTidsbegrenset: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.erTidsbegrenset : false,
     },
   });
 
@@ -201,7 +201,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <>
               <p className={styleLesemodus.label}>{tekst.sporsmalPeriodeVedtakGyldig}</p>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.fraDato)}</p>
-              {kroniskTidsbegrensetToggle && (
+              {kroniskTidsbegrensetToggle && informasjonTilLesemodus?.erTidsbegrenset && (
                 <>
                   <p className={styleLesemodus.label}>Til dato</p>
                   <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.tilDato)}</p>
