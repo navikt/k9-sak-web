@@ -7,14 +7,13 @@ import type { ProsessPanelProps } from '../types/panelTypes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-
 /**
  * V2 Uttak prosesssteg panel
  * 
  * Fullt migrert v2-panel som:
  * - Registrerer seg selv med menyen via usePanelRegistrering
  * - Henter data via props (datahenting håndteres av parent)
- * - Beregner paneltype basert på uttaksdata
+ * - Beregner paneltype basert på uttaksdata og aksjonspunkter
  * - Rendrer Uttak-komponenten direkte
  */
 
@@ -23,7 +22,7 @@ const PANEL_ID = 'uttak';
 const PANEL_TEKST = 'Behandlingspunkt.Uttak';
 
 // Relevante aksjonspunkter for uttak
-const RELEVANTE_AKSJONSPUNKTER: AksjonspunktDefinisjon[] = [
+const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
   AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
   AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
@@ -43,8 +42,18 @@ export function UttakProsessStegPanel(props: UttakProsessStegPanelProps) {
   // Hent standard props fra context
   const standardProps = useStandardProsessPanelProps();
 
-  // Beregn paneltype basert på uttaksdata (for menystatusindikator)
+  // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
+    // Sjekk først om det finnes åpne aksjonspunkter for dette panelet
+    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
+      ap => RELEVANTE_AKSJONSPUNKTER.includes(ap.definisjon?.kode) && ap.status?.kode === 'OPPR'
+    );
+
+    // Hvis det er åpent aksjonspunkt, vis warning (gul)
+    if (harApenAksjonspunkt) {
+      return ProcessMenuStepType.warning;
+    }
+
     // Hvis data ikke er lastet ennå, bruk default
     if (!uttak) {
       return ProcessMenuStepType.default;
@@ -72,7 +81,7 @@ export function UttakProsessStegPanel(props: UttakProsessStegPanelProps) {
     }
 
     return ProcessMenuStepType.default;
-  }, [uttak]);
+  }, [uttak, standardProps.aksjonspunkter]);
 
   // Registrer panel med menyen
   usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
