@@ -357,6 +357,5 @@
   "packages/ung/sak-app/fagsakprofile/FagsakProfileIndex.spec.tsx",
   "packages/ung/sak-app/fagsakprofile/FagsakProfileIndex.tsx",
   "packages/utils-test/src/redux-form-test-helper.ts",
-  "packages/utils/src/beregning/VilkarMapper.tsx",
-  "packages/utils/src/beregning/mapAksjonspunktkoderBeregning.tsx"
+  "packages/utils/src/beregning/VilkarMapper.tsx"
 ]
