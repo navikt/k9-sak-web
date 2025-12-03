@@ -56,19 +56,23 @@ export function InngangsvilkarProsessStegInitPanel(props: ProsessPanelProps) {
       return ProcessMenuStepType.default;
     }
 
+    // Samle alle periode-statuser fra alle relevante vilkår
+    const vilkarStatusCodes: string[] = [];
+    vilkarForSteg.forEach(vilkar => {
+      vilkar.perioder
+        .filter(periode => periode.vurderesIBehandlingen)
+        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode));
+    });
+
     // Sjekk om noen vilkår ikke er oppfylt (danger)
-    const harIkkeOppfyltVilkar = vilkarForSteg.some(
-      vilkar => vilkar.vilkarStatus?.kode === 'IKKE_OPPFYLT'
-    );
+    const harIkkeOppfyltVilkar = vilkarStatusCodes.some(kode => kode === 'IKKE_OPPFYLT');
     if (harIkkeOppfyltVilkar) {
       return ProcessMenuStepType.danger;
     }
 
     // Sjekk om alle vilkår er oppfylt (success)
-    const alleVilkarOppfylt = vilkarForSteg.every(
-      vilkar => vilkar.vilkarStatus?.kode === 'OPPFYLT'
-    );
-    if (alleVilkarOppfylt && vilkarForSteg.length > 0) {
+    const alleVilkarOppfylt = vilkarStatusCodes.length > 0 && vilkarStatusCodes.every(kode => kode === 'OPPFYLT');
+    if (alleVilkarOppfylt) {
       return ProcessMenuStepType.success;
     }
 

@@ -29,6 +29,7 @@ import {
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarProsessStegInitPanel';
+import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
 import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
@@ -307,6 +308,9 @@ const PleiepengerProsess = ({
               }
               if (urlKode === 'medisinsk-vilkar') {
                 return <MedisinskVilkarProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'opptjening') {
+                return <InngangsvilkarFortsProsessStegInitPanel key={urlKode} />;
               }
               if (urlKode === 'uttak') {
                 return <UttakProsessStegInitPanel key={urlKode} />;

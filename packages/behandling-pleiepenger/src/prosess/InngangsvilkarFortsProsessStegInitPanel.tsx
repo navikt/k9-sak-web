@@ -1,38 +1,38 @@
 import { useMemo } from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 /**
- * InitPanel for medisinsk vilkår prosesssteg
+ * InitPanel for inngangsvilkår fortsettelse prosesssteg
  * 
- * Wrapper for medisinsk vilkår-panelet som håndterer:
+ * Wrapper for inngangsvilkår fortsettelse-panelet som håndterer:
  * - Registrering med menyen via usePanelRegistrering
  * - Synlighetslogikk basert på tilstedeværelse av vilkår
- * - Beregning av paneltype basert på vilkårstatus og aksjonspunkter
+ * - Beregning av paneltype basert på vilkårstatus
  * - Rendering av legacy panelkomponent via ProsessDefaultInitPanel
  * 
- * Medisinsk vilkår dekker:
- * - Medisinske vilkår for pleietrengende under 18 år
- * - Medisinske vilkår for pleietrengende over 18 år
+ * Inngangsvilkår fortsettelse består av flere sub-paneler:
+ * - Medlemskap (overstyring)
+ * - Opptjening
  */
-export function MedisinskVilkarProsessStegInitPanel(props: ProsessPanelProps) {
+export function InngangsvilkarFortsProsessStegInitPanel(props: ProsessPanelProps) {
   // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
-  const PANEL_TEKST = 'Behandlingspunkt.MedisinskVilkar';
+  const PANEL_ID = prosessStegCodes.OPPTJENING;
+  const PANEL_TEKST = 'Behandlingspunkt.InngangsvilkarForts';
 
-  // Hent standard props for å få tilgang til vilkår, aksjonspunkter og feature toggles
+  // Hent standard props for å få tilgang til vilkår
   const standardProps = useStandardProsessPanelProps();
 
-  // Relevante vilkår for medisinsk vilkår-panelet
+  // Relevante vilkår for inngangsvilkår fortsettelse-panelet
   const RELEVANTE_VILKAR_KODER = [
-    vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
-    vilkarType.MEDISINSKEVILKÅR_18_ÅR,
+    vilkarType.MEDLEMSKAPSVILKARET,
+    vilkarType.OPPTJENINGSVILKARET,
   ];
 
   // Filtrer vilkår som er relevante for dette panelet
@@ -45,23 +45,14 @@ export function MedisinskVilkarProsessStegInitPanel(props: ProsessPanelProps) {
     );
   }, [standardProps.vilkar]);
 
-  // Sjekk om panelet skal vises
-  // Panelet vises hvis det finnes relevante vilkår
+  // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
+  // Beregn paneltype basert på vilkårstatus (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Hvis panelet ikke skal vises, bruk default
     if (!skalVisePanel) {
       return ProcessMenuStepType.default;
-    }
-
-    // Sjekk om det finnes åpent aksjonspunkt for medisinsk vilkår (warning har prioritet)
-    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
-      ap => ap.definisjon?.kode === aksjonspunktCodes.MEDISINSK_VILKAAR && ap.status?.kode === 'OPPR'
-    );
-    if (harApenAksjonspunkt) {
-      return ProcessMenuStepType.warning;
     }
 
     // Samle alle periode-statuser fra alle relevante vilkår
@@ -84,6 +75,22 @@ export function MedisinskVilkarProsessStegInitPanel(props: ProsessPanelProps) {
       return ProcessMenuStepType.success;
     }
 
+    // Sjekk om det finnes åpne aksjonspunkter for inngangsvilkår fortsettelse (warning)
+    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
+      ap => {
+        const kode = ap.definisjon?.kode;
+        return (
+          (kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET || // 5089
+           kode === aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET || // 6011
+           kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR) && // 5021
+          ap.status?.kode === 'OPPR'
+        );
+      }
+    );
+    if (harApenAksjonspunkt) {
+      return ProcessMenuStepType.warning;
+    }
+
     // Default tilstand
     return ProcessMenuStepType.default;
   }, [skalVisePanel, vilkarForSteg, standardProps.aksjonspunkter]);
@@ -104,8 +111,8 @@ export function MedisinskVilkarProsessStegInitPanel(props: ProsessPanelProps) {
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel
-      urlKode={prosessStegCodes.MEDISINSK_VILKAR}
-      tekstKode="Behandlingspunkt.MedisinskVilkar"
+      urlKode={prosessStegCodes.OPPTJENING}
+      tekstKode="Behandlingspunkt.InngangsvilkarForts"
     >
       {() => {
         // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
