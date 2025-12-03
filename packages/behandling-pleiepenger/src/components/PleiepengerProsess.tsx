@@ -32,6 +32,7 @@ import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarPro
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
 import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
+import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -314,6 +315,9 @@ const PleiepengerProsess = ({
               }
               if (urlKode === 'uttak') {
                 return <UttakProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'fortsattmedlemskap') {
+                return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
               }
               
               return (
