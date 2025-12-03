@@ -30,7 +30,7 @@ import {
 import getAccessRights from '../app/util/access';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
-import { isValidUuid } from '@k9-sak-web/gui/utils/validation/uuid.js';
+import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -79,31 +79,6 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-const gyldigBehandlingId = (behandlingIdOrUuid: string | undefined): number | undefined => {
-  const num = Number.parseInt(behandlingIdOrUuid ?? '');
-  if (Number.isFinite(num) && num >= 0) {
-    return num;
-  }
-  return undefined;
-};
-
-const gyldigBehandlingUuid = (behandlingIdOrUuid: string | undefined): string | undefined => {
-  if (isValidUuid(behandlingIdOrUuid?.trim() ?? '')) {
-    return behandlingIdOrUuid?.trim();
-  }
-  return undefined;
-};
-
-const finnBehandling = (
-  alleBehandlinger: BehandlingAppKontekst[],
-  behandlingIdOrUuid: string | undefined,
-): BehandlingAppKontekst | undefined => {
-  const behandlingId = gyldigBehandlingId(behandlingIdOrUuid);
-  const behandlingUuid = gyldigBehandlingUuid(behandlingIdOrUuid);
-
-  return alleBehandlinger.find(b => b.id === behandlingId || b.uuid === behandlingUuid);
-};
-
 /**
  * BehandlingIndex
  *
@@ -119,7 +94,9 @@ const BehandlingIndex = ({
 }: OwnProps) => {
   const { behandlingIdOrUuid } = useParams();
 
-  const behandling: BehandlingAppKontekst | undefined = finnBehandling(alleBehandlinger, behandlingIdOrUuid);
+  const behandling: BehandlingAppKontekst | undefined = alleBehandlinger.find(
+    b => b.id === gyldigBehandlingId(behandlingIdOrUuid) || b.uuid === gyldigBehandlingUuid(behandlingIdOrUuid),
+  );
 
   useEffect(() => {
     if (behandling != null) {
