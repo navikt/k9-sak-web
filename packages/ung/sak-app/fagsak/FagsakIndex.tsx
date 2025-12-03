@@ -29,7 +29,7 @@ import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
-import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
+import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 

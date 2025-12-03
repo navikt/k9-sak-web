@@ -1,5 +1,4 @@
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
@@ -41,7 +40,7 @@ interface OwnProps {
   behandlingVersjon?: number;
   harHentetBehandlinger: boolean;
   oppfriskBehandlinger: () => void;
-  fagsakRettigheter: SakRettigheter;
+  fagsakRettigheter: SakRettigheter | undefined;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
@@ -105,7 +104,7 @@ export const FagsakProfileIndex = ({
         <FagsakProfilSakIndex
           saksnummer={fagsak.saksnummer}
           fagsakYtelseType={fagsak.sakstype}
-          fagsakStatus={fagsakStatusMedNavn.kode}
+          fagsakStatus={fagsakStatusMedNavn?.kode ?? fagsak.status.kode}
           renderBehandlingMeny={() => {
             if (!fagsakRettigheter || !behandlendeEnheter) {
               return <LoadingPanel />;
@@ -143,5 +142,3 @@ export const FagsakProfileIndex = ({
     </div>
   );
 };
-
-export default requireProps(['fagsak'], <LoadingPanel />)(FagsakProfileIndex);
