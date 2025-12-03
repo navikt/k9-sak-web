@@ -42,6 +42,7 @@ export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }
   return (
     <OmsorgenFor
       data={{
+        omsorgenForAksjonspunkt: omsorgenForAksjonspunkt,
         httpErrorHandler: httpErrorHandlerCaller,
         endpoints: findEndpointsFromRels(links, [
           {
