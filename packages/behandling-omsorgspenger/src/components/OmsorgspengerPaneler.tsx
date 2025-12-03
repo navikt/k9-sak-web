@@ -4,12 +4,12 @@ import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/beh
 import {
   KodeverkMedNavn,
   Behandling,
-  FeatureToggles,
   Fagsak,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
   Dokument,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import OmsorgspengerProsess from './OmsorgspengerProsess';
 import OmsorgspengerFakta from './OmsorgspengerFakta';

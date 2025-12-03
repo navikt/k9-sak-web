@@ -5,10 +5,10 @@ import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
-  FeatureToggles,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,

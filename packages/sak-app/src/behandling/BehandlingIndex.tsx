@@ -1,6 +1,6 @@
 import { Location } from 'history';
 import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router';
+import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -27,10 +27,10 @@ import {
   getPathToK9Los,
   getProsessStegLocation,
 } from '../app/paths';
-import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
+import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -72,7 +72,7 @@ const getOppdaterProsessStegOgFaktaPanelIUrl =
   };
 
 interface OwnProps {
-  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
+  setBehandlingIdOgVersjon: (behandlingId: number | undefined, behandlingVersjon: number | undefined) => void;
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -92,26 +92,24 @@ const BehandlingIndex = ({
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
 }: OwnProps) => {
-  const { selected: behandlingId } = useTrackRouteParam<number>({
-    paramName: 'behandlingId',
-    parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
-  });
+  const { behandlingIdOrUuid } = useParams();
 
-  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  const behandlingVersjon = behandling?.versjon;
+  const behandling: BehandlingAppKontekst | undefined = alleBehandlinger.find(
+    b => b.id === gyldigBehandlingId(behandlingIdOrUuid) || b.uuid === gyldigBehandlingUuid(behandlingIdOrUuid),
+  );
 
   useEffect(() => {
-    if (behandling) {
+    if (behandling != null) {
       requestApi.setLinks(behandling.links, LinkCategory.BEHANDLING);
-      setBehandlingIdOgVersjon(behandlingId, behandlingVersjon);
+      setBehandlingIdOgVersjon(behandling?.id, behandling?.versjon);
     }
   }, [behandling]);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const oppdaterBehandlingVersjon = useCallback(
-    versjon => setBehandlingIdOgVersjon(behandlingId, versjon),
-    [behandlingId],
+    versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
+    [behandling?.id],
   );
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
@@ -125,7 +123,7 @@ const BehandlingIndex = ({
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(
     () => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type),
-    [fagsak.status, behandlingId, behandling?.status, behandling?.type],
+    [fagsak.status, behandling?.id, behandling?.status, behandling?.type],
   );
 
   const location = useLocation();
@@ -143,7 +141,7 @@ const BehandlingIndex = ({
   const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
 
   const defaultProps = {
-    behandlingId,
+    behandlingId: behandling?.id,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
     kodeverk: behandlingTypeKode === BehandlingType.KLAGE ? klageKodeverk : kodeverk,
@@ -172,7 +170,7 @@ const BehandlingIndex = ({
     [alleBehandlinger],
   );
 
-  if (!behandlingId) {
+  if (behandling == null) {
     return <LoadingPanel />;
   }
 
@@ -183,7 +181,7 @@ const BehandlingIndex = ({
           <BehandlingKlageIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -198,7 +196,7 @@ const BehandlingIndex = ({
           <BehandlingAnkeIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -213,7 +211,7 @@ const BehandlingIndex = ({
           <BehandlingUnntakIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -231,7 +229,7 @@ const BehandlingIndex = ({
               b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
             )}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -246,7 +244,7 @@ const BehandlingIndex = ({
           <BehandlingOmsorgspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -261,7 +259,7 @@ const BehandlingIndex = ({
           <BehandlingPleiepengerSluttfaseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -276,7 +274,7 @@ const BehandlingIndex = ({
           <BehandlingUtvidetRettIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -291,7 +289,7 @@ const BehandlingIndex = ({
           <BehandlingFrisinnIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -306,7 +304,7 @@ const BehandlingIndex = ({
           <BehandlingOpplaeringspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -320,7 +318,7 @@ const BehandlingIndex = ({
         <BehandlingPleiepengerIndex
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           valgtFaktaSteg={query.fakta}
-          key={behandlingId}
+          key={behandling.id}
           {...defaultProps}
         />
       </ErrorBoundary>
