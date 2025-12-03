@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { gyldigBehandlingId } from './paths.ts';
+import { gyldigBehandlingId } from './paths.js';
 
 describe('gyldigBehandlingId', () => {
   it('should return number if input string is only number digits (or blanks) making a positive integer', () => {
@@ -14,9 +14,9 @@ describe('gyldigBehandlingId', () => {
   it('should return undefined when input string is NOT just number digits or space', () => {
     const notNumberStrings = ['', 'aa123', '123bb', '-33', 'a'];
     for (const notNumberString of notNumberStrings) {
-      // eslint-disable-next-line vitest/valid-expect
       expect(
         gyldigBehandlingId(notNumberString),
+        // eslint-disable-next-line vitest/valid-expect
         `got number instead of undefined for input "${notNumberString}"`,
       ).toBeUndefined();
     }

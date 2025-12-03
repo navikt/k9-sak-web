@@ -8,7 +8,7 @@ import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, Kode
 import UnntakPaneler from './components/UnntakPaneler';
 import { requestUnntakApi, restApiUnntakHooks, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
-import { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 const unntakData = [
   { key: UnntakBehandlingApiKeys.AKSJONSPUNKTER },
