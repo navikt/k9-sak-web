@@ -17,7 +17,6 @@ export const aktoerRoutePath = '/aktoer/:aktoerId';
 
 export const fagsakRoutePath = '/fagsak/:saksnummer//*';
 export const behandlingerRoutePath = `behandling//*`;
-export const behandlingRoutePath = `/:behandlingId/`;
 
 export const pathToFagsak = v2PathToFagsak;
 export const pathToBehandlinger = v2PathToBehandlinger;

@@ -1,7 +1,8 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, FeatureToggles, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { HelpText, Label } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';

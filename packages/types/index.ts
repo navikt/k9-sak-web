@@ -13,7 +13,6 @@ export type { default as Dokument } from './src/dokumentTsType';
 export type { default as FagsakPerson } from './src/fagsakPersonTsType';
 export type { default as Fagsak } from './src/fagsakTsType';
 export type { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
-export type { default as FeatureToggles } from './src/featureTogglesTsType';
 export type { default as Kodeverk } from './src/kodeverkTsType';
 export type { default as NavAnsatt } from './src/navAnsattTsType';
 export type { default as OmsorgenFor } from './src/omsorgenFor';

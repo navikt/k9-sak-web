@@ -2,7 +2,8 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { FeatureToggles, Opptjening, Vilkarperiode } from '@k9-sak-web/types';
+import { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { BodyShort } from '@navikt/ds-react';
 import { FormattedMessage, useIntl } from 'react-intl';
 

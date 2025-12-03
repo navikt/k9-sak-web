@@ -4,7 +4,7 @@ import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPan
 import UtvidetRettProsessStegPanelDef from './prosessStegPaneler/UtvidetRettProsessStegPanelDef';
 import AlderProsessStegPanelDef from './prosessStegPaneler/AlderProsessStegPanelDef';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { FeatureToggles } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 const prosessStegUtvidetRettPanelDefinisjoner = (
   erFagytelseTypeAleneOmOmsorgen: boolean,
