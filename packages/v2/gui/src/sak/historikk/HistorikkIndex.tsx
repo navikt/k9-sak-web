@@ -22,10 +22,10 @@ interface OwnProps {
 
 // Bør få inn behandlingUuid på historikkinnslagDto i alle backends slik at vi kan fjerne denne kode.
 const behandlingIdOrUuid = (historikkinnslag: BeriketHistorikkInnslag): string | number | undefined => {
-  if ('behandlingId' in historikkinnslag && typeof historikkinnslag.behandlingId == 'number') {
+  if ('behandlingId' in historikkinnslag && typeof historikkinnslag.behandlingId === 'number') {
     return historikkinnslag.behandlingId;
   }
-  if ('behandlingUuid' in historikkinnslag && typeof historikkinnslag.behandlingUuid == 'string') {
+  if ('behandlingUuid' in historikkinnslag && typeof historikkinnslag.behandlingUuid === 'string') {
     return historikkinnslag.behandlingUuid;
   }
   return undefined;
