@@ -360,6 +360,5 @@
   "packages/utils/src/beregning/VilkarMapper.tsx",
   "packages/utils/src/beregning/mapAksjonspunktkoderBeregning.tsx",
   "packages/utils/src/currencyUtils.spec.ts",
-  "packages/utils/src/formidlingUtils.tsx",
-  "packages/utils/src/http-utils/__tests__/httpUtils.spec.ts"
+  "packages/utils/src/formidlingUtils.tsx"
 ]

@@ -59,6 +59,10 @@ describe.skip('httpUtils', () => {
     });
   });
 
+  const httpErrorHandler = () => {
+    throw new Error('http error in test');
+  };
+
   describe('post', () => {
     afterEach(() => {
       vi.mocked(httpUtils.post).mockClear();
@@ -68,13 +72,13 @@ describe.skip('httpUtils', () => {
 
     it('should return the data-property from the response when the promise resolved', async () => {
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.resolve(goodResponseMock));
-      const data = await httpUtils.post('', null, null);
+      const data = await httpUtils.post('', null, httpErrorHandler);
       expect(data).toEqual(goodResponseMock.data);
     });
 
     it('should throw an error and console.error when the promise is rejected', async () => {
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
-      const error = httpUtils.post('', null, null);
+      const error = httpUtils.post('', null, httpErrorHandler);
       await expect(error).rejects.toEqual(badRequestResponseMock);
       expect(console.error).toHaveBeenCalledWith(badRequestResponseMock);
     });
