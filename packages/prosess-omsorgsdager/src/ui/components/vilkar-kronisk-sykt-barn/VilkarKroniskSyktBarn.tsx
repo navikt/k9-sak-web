@@ -203,7 +203,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.fraDato)}</p>
               {kroniskTidsbegrensetToggle && (
                 <>
-                  <p className={styleLesemodus.label}>Er vedtaket tidsbegrenset</p>
+                  <p className={styleLesemodus.label}>Er vedtaket tidsbegrenset?</p>
                   <p className={styleLesemodus.text}>{informasjonTilLesemodus?.erTidsbegrenset ? 'Ja' : 'Nei'}</p>
                 </>
               )}
