@@ -11,7 +11,7 @@ const useHentFagsakRettigheter = (
   saksnummer: string,
   behandlingId: number,
   behandlingVersjon: number,
-): [rettigheter: SakRettigheter, harHentet: boolean] => {
+): [rettigheter: SakRettigheter | undefined, harHentet: boolean] => {
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const skalHenteFraTilbake = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
