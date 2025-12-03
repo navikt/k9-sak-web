@@ -108,7 +108,7 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      expect(result.perioder[0].erForlengelse).toBeUndefined();
+      expect(result.perioder?.[0].erForlengelse).toBeUndefined();
     });
 
     it('handles empty beregning references array', () => {
@@ -133,7 +133,7 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      expect(result.perioder[0].erForlengelse).toBeUndefined();
+      expect(result.perioder?.[0].erForlengelse).toBeUndefined();
     });
 
     it('handles empty perioder array', () => {
@@ -194,8 +194,8 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      expect(result.perioder[0].erForlengelse).toBe(true);
-      expect(result.perioder[1].erForlengelse).toBe(true);
+      expect(result.perioder?.[0].erForlengelse).toBe(true);
+      expect(result.perioder?.[1].erForlengelse).toBe(true);
     });
 
     it('preserves all original period properties', () => {
@@ -224,18 +224,18 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      const periode = result.perioder[0];
-      expect(periode.avslagKode).toBe('CUSTOM_AVSLAG');
-      expect(periode.begrunnelse).toBe('Custom begrunnelse with special characters: æøå');
-      expect(periode.vurderesIBehandlingen).toBe(false);
-      expect(periode.merknad).toBe(Merknad.UDEFINERT);
-      expect(periode.merknadParametere).toEqual({
+      const periode = result.perioder?.[0];
+      expect(periode?.avslagKode).toBe('CUSTOM_AVSLAG');
+      expect(periode?.begrunnelse).toBe('Custom begrunnelse with special characters: æøå');
+      expect(periode?.vurderesIBehandlingen).toBe(false);
+      expect(periode?.merknad).toBe(Merknad.UDEFINERT);
+      expect(periode?.merknadParametere).toEqual({
         complexParam: 'test',
         arrayParam: '123',
         nullParam: 'null',
       });
-      expect(periode.periode).toEqual({ fom: '2025-12-01', tom: '2025-12-31' });
-      expect(periode.vilkarStatus).toBe('IKKE_VURDERT');
+      expect(periode?.periode).toEqual({ fom: '2025-12-01', tom: '2025-12-31' });
+      expect(periode?.vilkarStatus).toBe('IKKE_VURDERT');
     });
 
     it('handles null and undefined values correctly', () => {
@@ -267,14 +267,14 @@ describe('VilkarMapper', () => {
 
       expect(result.vilkarType).toEqual('-');
       expect(result.overstyrbar).toBeUndefined();
-      const periode = result.perioder[0];
-      expect(periode.avslagKode).toBeUndefined();
-      expect(periode.begrunnelse).toEqual('');
-      expect(periode.vurderesIBehandlingen).toBeUndefined();
-      expect(periode.merknad).toBeUndefined();
-      expect(periode.merknadParametere).toBeUndefined();
-      expect(periode.vilkarStatus).toEqual(VilkårUtfall.UDEFINERT);
-      expect(periode.erForlengelse).toBe(false);
+      const periode = result.perioder?.[0];
+      expect(periode?.avslagKode).toBeUndefined();
+      expect(periode?.begrunnelse).toEqual('');
+      expect(periode?.vurderesIBehandlingen).toBeUndefined();
+      expect(periode?.merknad).toBeUndefined();
+      expect(periode?.merknadParametere).toBeUndefined();
+      expect(periode?.vilkarStatus).toEqual(VilkårUtfall.UDEFINERT);
+      expect(periode?.erForlengelse).toBe(false);
     });
   });
 
@@ -319,7 +319,7 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      expect(result.perioder[0].erForlengelse).toBe(false);
+      expect(result.perioder?.[0].erForlengelse).toBe(false);
     });
 
     it('returns undefined when no matching skjæringstidspunkt found', () => {
@@ -350,7 +350,7 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      expect(result.perioder[0].erForlengelse).toBeUndefined();
+      expect(result.perioder?.[0].erForlengelse).toBeUndefined();
     });
 
     it('handles erForlengelse being explicitly false', () => {
@@ -381,7 +381,7 @@ describe('VilkarMapper', () => {
 
       const result = mapVilkar(vilkar, beregningreferanser);
 
-      expect(result.perioder[0].erForlengelse).toBe(false);
+      expect(result.perioder?.[0].erForlengelse).toBe(false);
     });
   });
 
@@ -422,8 +422,8 @@ describe('VilkarMapper', () => {
       const result = mapVilkar(vilkar, beregningreferanser);
 
       expect(result.perioder).toHaveLength(50);
-      expect(result.perioder[0].erForlengelse).toBe(true); // Even index (0)
-      expect(result.perioder[1].erForlengelse).toBe(false); // Odd index (1)
+      expect(result.perioder?.[0].erForlengelse).toBe(true); // Even index (0)
+      expect(result.perioder?.[1].erForlengelse).toBe(false); // Odd index (1)
     });
   });
 });
