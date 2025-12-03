@@ -30,5 +30,5 @@ export const prodFeatureToggles = {
   VIS_FERIEPENGER_PANEL: false,
   FLYTT_ALDERSVILKAR: false,
   BRUK_V2_TILKJENT_YTELSE: false,
-  UNG_KLAGE: false,
+  UNG_KLAGE: true,
 } satisfies UngFeatureToggles;
