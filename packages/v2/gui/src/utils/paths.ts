@@ -24,8 +24,9 @@ export const gyldigBehandlingId = (behandlingIdOrUuid: string | undefined): numb
 };
 
 export const gyldigBehandlingUuid = (behandlingIdOrUuid: string | undefined): string | undefined => {
-  if (isValidUuid(behandlingIdOrUuid?.trim() ?? '')) {
-    return behandlingIdOrUuid?.trim();
+  const trimmedBehandlingOrUuid = behandlingIdOrUuid?.trim() ?? '';
+  if (isValidUuid(trimmedBehandlingOrUuid)) {
+    return trimmedBehandlingOrUuid;
   }
   return undefined;
 };
