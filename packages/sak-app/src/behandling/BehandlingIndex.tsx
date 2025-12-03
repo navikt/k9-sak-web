@@ -109,7 +109,7 @@ const BehandlingIndex = ({
 
   const oppdaterBehandlingVersjon = useCallback(
     versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
-    [behandling],
+    [behandling?.id],
   );
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
