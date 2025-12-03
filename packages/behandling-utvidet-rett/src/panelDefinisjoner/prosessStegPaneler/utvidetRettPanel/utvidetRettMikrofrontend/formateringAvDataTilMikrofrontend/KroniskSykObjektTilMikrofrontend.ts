@@ -4,6 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { k9_kodeverk_vilkår_VilkårUtfallMerknad } from '@navikt/k9-sak-typescript-client/types';
 import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
@@ -64,6 +65,7 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
       avslagsårsakKode: vilkar.perioder[0].avslagKode,
       fraDato: vilkar.perioder[0].periode.fom,
       tilDato: vilkar.perioder[0].periode.tom,
+      erTidsbegrenset: vilkar.perioder[0].merknad?.kode === k9_kodeverk_vilkår_VilkårUtfallMerknad.VM_9013_T,
     } as InformasjonTilLesemodusKroniskSyk;
   }
   return {
@@ -71,6 +73,7 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
     vilkarOppfylt: false,
     avslagsårsakKode: '',
     fraDato: '',
+    erTidsbegrenset: false,
   } as InformasjonTilLesemodusKroniskSyk;
 };
 
