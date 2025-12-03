@@ -4,21 +4,23 @@ import { Alert, Box, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJSWrapper from './EditorJSWrapper';
 
+import {
+  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjonType as VedtaksbrevSeksjonType,
+  type ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import styles from './RedigerFritekstbrev.module.css';
-import { validerRedigertHtml } from './RedigeringUtils';
+import { utledStiler, validerRedigertHtml } from './RedigeringUtils';
 
-interface ownProps {
+interface OwnProps {
   handleSubmit: (value: string, nullstill?: boolean) => void;
   lukkEditor: () => void;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
   redigerbartInnhold: string;
   originalHtml: string;
-  prefiksInnhold: string;
-  suffiksInnhold: string;
-  brevStiler: string;
   handleForhåndsvis: () => void;
+  htmlSeksjoner: ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon[];
 }
 
 interface DebouncedFunction<T extends (...args: any[]) => any> {
@@ -45,10 +47,8 @@ const FritekstEditor = ({
   redigerbartInnholdKlart,
   redigerbartInnhold,
   originalHtml,
-  prefiksInnhold,
-  suffiksInnhold,
-  brevStiler,
-}: ownProps) => {
+  htmlSeksjoner,
+}: OwnProps) => {
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
   const editorRef = useRef<EditorJSWrapper | null>(null);
@@ -86,7 +86,7 @@ const FritekstEditor = ({
     if (!editorRef.current) editorRef.current = new EditorJSWrapper({ holder: 'rediger-brev', onChange });
   }, [onChange]);
 
-  // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blir endra utanfrå.
+  // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blitt endra utanfrå.
   useEffect(() => {
     const lastEditor = async (editor: EditorJSWrapper) => {
       if (initImportNotDone.current || lastSubmitHtml.current !== redigerbartInnhold) {
@@ -182,18 +182,30 @@ const FritekstEditor = ({
               {redigerbartInnholdKlart && (
                 <div className={styles.nullstillCss}>
                   <div className="brev-wrapper">
-                    <style>{` ${brevStiler} `}</style>
-                    <div
-                      className={styles.ikkeRedigerbartInnhold}
-                      dangerouslySetInnerHTML={{ __html: prefiksInnhold }}
-                    />
-                    <div id="content">
-                      <div id="rediger-brev" className={styles.redigerbartInnhold} style={{ width: '100%' }} />
-                    </div>
-                    <div
-                      className={styles.ikkeRedigerbartInnhold}
-                      dangerouslySetInnerHTML={{ __html: suffiksInnhold }}
-                    />
+                    {htmlSeksjoner.map((seksjon, index) => {
+                      if (seksjon.innhold) {
+                        if (seksjon.type === VedtaksbrevSeksjonType.STYLE) {
+                          return <style key={index}>{utledStiler(seksjon.innhold)}</style>;
+                        }
+                        if (seksjon.type === VedtaksbrevSeksjonType.STATISK) {
+                          return (
+                            <div
+                              key={index}
+                              className={styles.ikkeRedigerbartInnhold}
+                              dangerouslySetInnerHTML={{ __html: seksjon.innhold }}
+                            />
+                          );
+                        }
+                        if (seksjon.type === VedtaksbrevSeksjonType.REDIGERBAR) {
+                          return (
+                            <div id="content" key={index}>
+                              <div id="rediger-brev" className={styles.redigerbartInnhold} style={{ width: '100%' }} />
+                            </div>
+                          );
+                        }
+                      }
+                      return <React.Fragment key={index} />;
+                    })}
                   </div>
                 </div>
               )}

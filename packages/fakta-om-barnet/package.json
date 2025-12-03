@@ -8,7 +8,7 @@
   "private": true,
   "dependencies": {
     "@navikt/ds-react": "7.32.5",
-    "@navikt/ft-plattform-komponenter": "^10.1.15",
+    "@navikt/ft-plattform-komponenter": "10.1.15",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.19",
@@ -16,6 +16,6 @@
     "react-collapse": "5.1.1",
     "react-dom": "19.2.0",
     "react-hook-form": "7.66.0",
-    "tailwindcss": "^3.4.18"
+    "tailwindcss": "3.4.18"
   }
 }

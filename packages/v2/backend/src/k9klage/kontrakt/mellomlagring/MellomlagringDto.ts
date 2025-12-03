@@ -1,0 +1,1 @@
+export type { k9_klage_web_app_tjenester_behandling_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDto } from '@k9-sak-web/backend/k9klage/generated/types.js';

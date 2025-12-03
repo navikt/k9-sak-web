@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useContext, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import type { FeatureToggles } from '../../../featuretoggles/FeatureToggles';
+import type { FeatureToggles } from '../../../featuretoggles/FeatureToggles.js';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';

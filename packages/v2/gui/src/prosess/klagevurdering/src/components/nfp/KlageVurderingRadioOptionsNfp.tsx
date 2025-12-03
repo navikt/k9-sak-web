@@ -1,8 +1,9 @@
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
   ung_kodeverk_klage_KlageVurderingOmgjør,
   ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_fagsak_FagsakDto,
   type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
@@ -17,14 +18,14 @@ import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormV
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
 const utledHjemler = (
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto,
+  fagsak: FagsakDto,
   ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[],
 ): {
   kode: string;
   navn: string;
 }[] => {
   switch (fagsak.sakstype) {
-    case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
+    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -35,10 +36,10 @@ const utledHjemler = (
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -49,11 +50,18 @@ const utledHjemler = (
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
+    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
         { kode: '9-13', navn: '§ 9-13' },
+        { kode: '22-13', navn: '§ 22-13' },
+      ];
+    case k9_kodeverk_behandling_FagsakYtelseType.OPPLÆRINGSPENGER:
+      return [
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
+        { kode: '9-14', navn: '§ 9-14' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
     case ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE:
@@ -67,7 +75,7 @@ const utledHjemler = (
 };
 
 interface KlageVurderingRadioOptionsNfpProps {
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
+  fagsak: FagsakDto;
   readOnly: boolean;
   medholdReasons: KodeverkV2[] | KodeverkMedUndertype;
   klageVurdering: string | null;

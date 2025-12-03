@@ -2,14 +2,15 @@ import { k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as Kla
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
 import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   folketrygdloven_kalkulus_kodeverk_FaktaOmBeregningTilfelle as FaktaOmBeregningTilfeller,
   k9_kodeverk_arbeidsforhold_ArbeidsforholdHandlingType as ArbeidsforholdHandlingType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
-import { type TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { fakeK9Kodeverkoppslag } from '../../../../kodeverk/mocks/fakeK9Kodeverkoppslag.js';
 
 const medholdIKlage = {
   klageVurdering: Klagevurdering.MEDHOLD_I_KLAGE,
@@ -19,25 +20,12 @@ const oppheveYtelsesVedtak = { klageVurdering: Klagevurdering.OPPHEVE_YTELSESVED
 const avvistKlage = { klageVurdering: Klagevurdering.AVVIS_KLAGE };
 const behandlingStatusFVED = BehandlingStatus.FATTER_VEDTAK;
 const stadfesteKlage = { klageVurdering: Klagevurdering.STADFESTE_YTELSESVEDTAK };
+const kodeverkoppslag = fakeK9Kodeverkoppslag();
 
-const arbeidsforholdHandlingTyper = [
-  { kode: 'BRUK', navn: 'aaa', kodeverk: '' },
-  { kode: 'NYTT_ARBEIDSFORHOLD', navn: 'bbb', kodeverk: '' },
-  { kode: 'BRUK_UTEN_INNTEKTSMELDING', navn: 'ccc', kodeverk: '' },
-  { kode: 'IKKE_BRUK', navn: 'ddd', kodeverk: '' },
-  { kode: 'SLÅTT_SAMMEN_MED_ANNET', navn: 'eee', kodeverk: '' },
-  { kode: 'BASERT_PÅ_INNTEKTSMELDING', navn: 'fff', kodeverk: '' },
-];
-
-const fakeAksjonspunkt: (a: Partial<TotrinnskontrollAksjonspunkt>) => TotrinnskontrollAksjonspunkt = a => {
+const fakeAksjonspunkt = <A extends TotrinnskontrollAksjonspunkterDto>(inp: A) => {
   return {
-    aksjonspunktKode: '',
-    arbeidsforholdDtos: undefined,
-    beregningDtoer: undefined,
-    besluttersBegrunnelse: 'begrunnelse',
-    totrinnskontrollGodkjent: false,
-    vurderPaNyttArsaker: undefined,
-    ...a,
+    ...inp,
+    aksjonspunktKode: inp.aksjonspunktKode,
   };
 };
 
@@ -46,14 +34,16 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_MEDISINSKESVILKÅRET_UNDER_18,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Vilkåret sykdom er overstyrt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6003', () => {
-    const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const aksjonspunkt = fakeAksjonspunkt({
+      aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR,
+    });
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Vilkåret omsorgen for er overstyrt.')).toBeInTheDocument();
   });
@@ -62,7 +52,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
@@ -70,13 +60,13 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_SELVSTENDIG_NÆRINGSDRIVENDE,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 6007', () => {
     const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Beregningsvilkåret er overstyrt.')).toBeInTheDocument();
   });
@@ -84,7 +74,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
@@ -93,7 +83,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Søknadsfristvilkåret er overstyrt.')).toBeInTheDocument();
   });
@@ -102,25 +92,25 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker har gyldig medlemskap i perioden.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5019', () => {
     const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_LOVLIG_OPPHOLD });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker har lovlig opphold.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5020', () => {
     const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_OM_ER_BOSATT });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker er bosatt i Norge.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5023', () => {
     const aksjonspunkt = fakeAksjonspunkt({ aksjonspunktKode: AksjonspunktDefinisjon.AVKLAR_OPPHOLDSRETT });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er vurdert om søker har oppholdsrett.')).toBeInTheDocument();
   });
@@ -128,7 +118,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Medlemskapsvilkåret er overstyrt.')).toBeInTheDocument();
   });
@@ -139,7 +129,7 @@ describe('aksjonspunktTekstUtleder', () => {
         AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE,
       beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: '2022-01-01' }],
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Det er fastsatt varig endret/nyoppstartet næring fom 2022-01-01.')).toBeInTheDocument();
   });
@@ -149,7 +139,7 @@ describe('aksjonspunktTekstUtleder', () => {
         AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE,
       beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: '2022-01-01' }],
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(
       screen.getByText('Det er fastsatt at det ikke er varig endring i næring fom 2022-01-01.'),
@@ -161,7 +151,7 @@ describe('aksjonspunktTekstUtleder', () => {
       brukPermisjon: true,
       navn: '',
     };
-    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, kodeverkoppslag);
     expect(messages).toHaveLength(1);
     render(<div>{messages}</div>);
     expect(screen.getByText('Søker er i permisjon.')).toBeInTheDocument();
@@ -172,7 +162,7 @@ describe('aksjonspunktTekstUtleder', () => {
       brukPermisjon: false,
       navn: '',
     };
-    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, kodeverkoppslag);
     expect(messages).toHaveLength(1);
     render(<div>{messages}</div>);
     expect(screen.getByText('Søker er ikke i permisjon.')).toBeInTheDocument();
@@ -185,11 +175,15 @@ describe('aksjonspunktTekstUtleder', () => {
       navn: '',
       organisasjonsnummer: '',
     };
-    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+    const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, kodeverkoppslag);
     expect(messages).toHaveLength(2);
     render(<div>{messages}</div>);
     expect(screen.getByText('Søker er ikke i permisjon.')).toBeInTheDocument();
-    expect(screen.getByText('ccc.')).toBeInTheDocument();
+    expect(
+      screen.getByText(kodeverkoppslag.k9sak.arbeidsforholdHandlingTyper('BRUK_UTEN_INNTEKTSMELDING').navn, {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
   });
 
   // Klage
@@ -201,7 +195,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: medholdIKlage,
     };
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Omgjort til gunst')).toBeInTheDocument();
   });
@@ -212,7 +206,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: medholdIKlage,
     };
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Omgjort til gunst')).toBeInTheDocument();
   });
@@ -225,7 +219,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Opphev ytelsesvedtak')).toBeInTheDocument();
   });
@@ -236,7 +230,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Opphev ytelsesvedtak')).toBeInTheDocument();
   });
@@ -246,9 +240,9 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: avvistKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Klagen avvist fordi den ikke oppfyller formkravene')).toBeInTheDocument();
   });
@@ -259,7 +253,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Klagen avvist fordi den ikke oppfyller formkravene')).toBeInTheDocument();
   });
@@ -271,7 +265,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Stadfest ytelsesvedtak')).toBeInTheDocument();
   });
@@ -282,7 +276,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const aksjonspunkt = fakeAksjonspunkt({
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
-    const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
+    const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(screen.getByText('Stadfest ytelsesvedtak')).toBeInTheDocument();
   });
@@ -296,7 +290,7 @@ describe('aksjonspunktTekstUtleder', () => {
       aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
       beregningDtoer: [beregningDto],
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(
       screen.getByText('Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.'),
@@ -312,7 +306,7 @@ describe('aksjonspunktTekstUtleder', () => {
       aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_FOR_ATFL_SN,
       beregningDtoer: [beregningDto],
     });
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(
       screen.getByText('Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.'),
@@ -329,7 +323,7 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [beregningDto],
     });
 
-    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const message = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{message}</div>);
     expect(
       screen.getByText('Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.'),
@@ -360,7 +354,7 @@ describe('aksjonspunktTekstUtleder', () => {
       vurderPaNyttArsaker: [],
     });
 
-    const messages = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, [], aksjonspunkt);
+    const messages = getAksjonspunkttekst(BehandlingStatus.OPPRETTET, aksjonspunkt, undefined, kodeverkoppslag);
     render(<div>{messages}</div>);
     expect(screen.getByText('Arbeidsforhold hos COLOR LINE CREW AS(973135678)', { exact: false })).toBeInTheDocument();
   });
