@@ -33,6 +33,8 @@ import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/Inngangsvilk
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
 import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
 import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
+import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
+import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -292,6 +294,7 @@ const PleiepengerProsess = ({
             featureToggles,
             formData,
             setFormData,
+            arbeidsgiverOpplysningerPerId,
           }}
         >
           {/* v2 meny for navigasjon */}
@@ -316,8 +319,14 @@ const PleiepengerProsess = ({
               if (urlKode === 'uttak') {
                 return <UttakProsessStegInitPanel key={urlKode} />;
               }
+              if (urlKode === 'tilkjent_ytelse') {
+                return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;
+              }
               if (urlKode === 'fortsattmedlemskap') {
                 return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'vedtak') {
+                return <VedtakProsessStegInitPanel key={urlKode} />;
               }
               
               return (

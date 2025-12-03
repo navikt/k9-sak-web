@@ -40,6 +40,9 @@ export interface StandardProsessPanelPropsContextValue {
 
     /** Callback to update form data (legacy type) */
     setFormData?: (data: any) => void;
+
+    /** Arbeidsgiver opplysninger per ID (legacy type) */
+    arbeidsgiverOpplysningerPerId?: any;
 }
 
 /**
