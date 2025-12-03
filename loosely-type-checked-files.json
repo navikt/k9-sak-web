@@ -117,7 +117,6 @@
   "packages/fakta-barn-oms/src/components/BarnSeksjon.spec.tsx",
   "packages/fakta-barn-oms/src/components/BarnVisning.tsx",
   "packages/fakta-barn-oms/src/components/MidlertidigAlene.tsx",
-  "packages/fakta-barn-oms/src/components/UidentifiserteRammevedtak.tsx",
   "packages/fakta-barn-oms/src/utils/formaterDato.spec.ts",
   "packages/fakta-bosted-soker/src/components/BostedSokerView.spec.tsx",
   "packages/fakta-bosted-soker/src/components/BostedSokerView.tsx",
@@ -364,6 +363,5 @@
   "packages/utils/src/formidlingUtils.tsx",
   "packages/utils/src/http-utils/__tests__/httpUtils.spec.ts",
   "packages/utils/src/http-utils/responseHelpers.ts",
-  "packages/utils/src/objectUtils.ts",
-  "packages/utils/src/stringUtils.spec.tsx"
+  "packages/utils/src/objectUtils.ts"
 ]
