@@ -9,8 +9,8 @@ import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const useHentFagsakRettigheter = (
   saksnummer: string,
-  behandlingId: number,
-  behandlingVersjon: number,
+  behandlingId: number | undefined,
+  behandlingVersjon: number | undefined,
 ): [rettigheter: SakRettigheter | undefined, harHentet: boolean] => {
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
