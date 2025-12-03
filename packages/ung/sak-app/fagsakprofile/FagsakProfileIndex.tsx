@@ -18,12 +18,7 @@ import {
 import { Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
-import {
-  createLocationForSkjermlenke,
-  getLocationWithDefaultProsessStegAndFakta,
-  pathToBehandling,
-  pathToBehandlinger,
-} from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useUngSakKodeverkMedNavn } from '../data/useKodeverk';
@@ -139,7 +134,6 @@ export const FagsakProfileIndex = ({
                 noExistingBehandlinger={alleBehandlinger.length === 0}
                 behandlingId={behandlingId}
                 fagsak={fagsakV2}
-                createLocationForSkjermlenke={createLocationForSkjermlenke}
                 api={behandlingVelgerBackendClient}
               />
             );

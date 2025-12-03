@@ -354,6 +354,5 @@
   "packages/ung/sak-app/data/useVisForhandsvisningAvMelding.tsx",
   "packages/ung/sak-app/fagsak/FagsakIndex.tsx",
   "packages/ung/sak-app/fagsak/useHentFagsakRettigheter.tsx",
-  "packages/ung/sak-app/fagsakprofile/FagsakProfileIndex.spec.tsx",
-  "packages/ung/sak-app/fagsakprofile/FagsakProfileIndex.tsx"
+  "packages/ung/sak-app/fagsakprofile/FagsakProfileIndex.spec.tsx"
 ]
