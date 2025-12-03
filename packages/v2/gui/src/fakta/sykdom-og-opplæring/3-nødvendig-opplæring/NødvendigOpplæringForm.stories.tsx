@@ -298,3 +298,99 @@ export const AlleValidatorerUtenTilleggsperioder: Story = {
     });
   },
 };
+
+export const ValideringAvReisedagIHelg: Story = {
+  args: {
+    vurdering: {
+      begrunnelse: '',
+      opplæring: {
+        fom: '2025-02-14', // Fredag
+        tom: '2025-02-17', // Mandag
+      },
+      perioder: [new Period('2025-02-14', '2025-02-17')],
+      resultat: OpplæringVurderingDtoResultat.MÅ_VURDERES,
+      vurdertAv: 'testbruker',
+      vurdertTidspunkt: '2025-02-14T10:00:00Z',
+    },
+    setRedigerer: action('setRedigerer'),
+    redigerer: true,
+    andrePerioderTilVurdering: [],
+  },
+  play: async ({ canvas }) => {
+    // Legeerklæring: Ja
+    const legeGroup = await canvas.findByRole('group', { name: /Har vi fått legeerklæring/i });
+    await userEvent.click(within(legeGroup).getByLabelText('Ja'));
+
+    // Begrunnelse
+    const begrunnelseInput = canvas.getByLabelText(
+      'Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter § 9-14, første ledd',
+      { exact: false },
+    );
+    await userEvent.type(begrunnelseInput, 'Test av reisedag validering');
+
+    // Nødvendig opplæring: Deler av perioden
+    const nodvGroup = await canvas.findByRole('group', { name: /Har søker opplæring som er nødvendig/i });
+    await userEvent.click(within(nodvGroup).getByLabelText('Deler av perioden'));
+
+    // Legg til en periode med opplæring (Fredag 14.02)
+    const periodeInputs = canvas.getAllByRole('textbox', { name: /Fra|Til/i });
+    // Første par er "Fra" og "Til" for den første perioden i listen
+    if (periodeInputs[0]) {
+      await expect(periodeInputs[0]).toBeEnabled();
+      await userEvent.click(periodeInputs[0]);
+      await userEvent.clear(periodeInputs[0]);
+      await userEvent.type(periodeInputs[0], '14.02.2025');
+    }
+    if (periodeInputs[1]) {
+      await expect(periodeInputs[1]).toBeEnabled();
+      await userEvent.click(periodeInputs[1]);
+      await userEvent.clear(periodeInputs[1]);
+      await userEvent.type(periodeInputs[1], '15.02.2025');
+    }
+    await userEvent.tab(); // Trigger blur/validation
+
+    // Nå skal vi ha en "resterende periode" som dekker 15.02-17.02 (Lør-Man)
+    // Finn radio group for den resterende perioden
+    // Vi må vente litt på at den dukker opp/oppdateres
+    const reisedagRadio = await canvas.findByRole('radio', { name: /Vurder som reisedag/i });
+
+    // Velg "Vurder som reisedag"
+    await userEvent.click(reisedagRadio);
+    // send inn
+    canvas.getByRole('button', { name: /Bekreft og fortsett/i }).click();
+    // forvent feilmelding fordi perioden inneholder helg (15. februar)
+    await expect(await canvas.findByText('Reisedag kan ikke være en helgedag')).toBeInTheDocument();
+    await waitFor(() => expect(løsAksjonspunkt9302).not.toHaveBeenCalled());
+
+    // Endre perioden til å ikke inneholde helg (14.02-16.02)
+    if (periodeInputs[1]) {
+      await userEvent.click(periodeInputs[1]);
+      await userEvent.clear(periodeInputs[1]);
+      await userEvent.type(periodeInputs[1], '16.02.2025');
+    }
+    // Velg "Vurder som reisedag"
+    await userEvent.click(await canvas.findByRole('radio', { name: /Vurder som reisedag/i }));
+
+    // Send inn
+    await userEvent.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
+    // Verifiser at feilmelding er borte
+    await expect(canvas.queryByText('Reisedag kan ikke være en helgedag')).not.toBeInTheDocument();
+    // Verifiser at payload er korrekt
+    await expect(løsAksjonspunkt9302).toHaveBeenCalledWith({
+      perioder: [
+        {
+          periode: { fom: '2025-02-14', tom: '2025-02-16' },
+          begrunnelse: 'Test av reisedag validering',
+          resultat: OpplæringVurderingDtoResultat.GODKJENT,
+          avslagsårsak: null,
+        },
+        {
+          periode: { fom: '2025-02-17', tom: '2025-02-17' },
+          begrunnelse: 'Test av reisedag validering',
+          resultat: OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID,
+          avslagsårsak: null,
+        },
+      ],
+    });
+  },
+};

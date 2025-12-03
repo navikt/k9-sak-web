@@ -9,9 +9,10 @@ const x: boolean = incompatibleObjectMerge; // Deliberately set to wrong type to
 type IncompatibleMerge = Readonly<typeof incompatibleObjectMerge>;
 
 // Represents a constant object input
-type T = Readonly<Record<string, string | number | boolean>>;
+type V = string | number | boolean;
+type T = Readonly<Record<string, V>>;
 // If T1 and T2 has incompatible property values, they become TI so mark the incompatible property with IncompatibleMerge symbol type
-type TI = Readonly<Record<string, string | number | boolean | IncompatibleMerge>>;
+type TI = Readonly<Record<string, V | IncompatibleMerge>>;
 
 /**
  * Compares all property values of T1 and T2 records.
@@ -48,7 +49,7 @@ type AssertSamePropValuesForSameKeys<T1 extends TI, TArr extends readonly T[]> =
   infer T2 extends T,
   ...infer TRest extends readonly T[],
 ]
-  ? AssertSamePropValuesForSameKeys<AssertSameValues<T1, T2>, TRest> // Fortsett rekursivt med rest
+  ? AssertSamePropValuesForSameKeys<AssertSameValues<T1, T2>, TRest> // Continue recursively with rest
   : TArr extends readonly [infer T2 extends T]
     ? AssertSameValues<T1, T2>
     : T1;
@@ -82,11 +83,12 @@ type RequireConst<T> = T extends object
  * <p>
  *   This is a compile time check only. At runtime, it just merges together given objects without checking any actual values.
  */
-export function safeConstCombine<const T1 extends TI, const TArr extends readonly T[]>(
+export function safeConstCombine<const T1 extends TI, const T2 extends T, const TArr extends readonly T[]>(
   t1: RequireConst<T1>,
+  t2: RequireConst<T2>,
   ...objects: { [I in keyof TArr]: RequireConst<TArr[I]> } & TArr
-): HoisIncompatibleMerge<AssertSamePropValuesForSameKeys<T1, TArr>> {
-  return objects.reduce((acc, obj) => ({ ...acc, ...obj }), t1) as HoisIncompatibleMerge<
-    AssertSamePropValuesForSameKeys<T1, TArr>
+): HoisIncompatibleMerge<AssertSamePropValuesForSameKeys<AssertSameValues<T1, T2>, TArr>> {
+  return objects.reduce((acc, obj) => ({ ...acc, ...obj }), { ...t1, ...t2 }) as HoisIncompatibleMerge<
+    AssertSamePropValuesForSameKeys<AssertSameValues<T1, T2>, TArr>
   >;
 }

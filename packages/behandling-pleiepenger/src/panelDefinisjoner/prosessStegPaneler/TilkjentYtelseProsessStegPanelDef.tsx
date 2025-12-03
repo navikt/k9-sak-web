@@ -1,7 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import TilkjentYtelseProsessIndex from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
+import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
@@ -17,7 +18,11 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} />;
+    return props.featureToggles?.BRUK_V2_TILKJENT_YTELSE ? (
+      <TilkjentYtelseProsessIndexV2 {...props} {...deepCopyProps} />
+    ) : (
+      <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} />
+    );
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_TILBAKETREKK];

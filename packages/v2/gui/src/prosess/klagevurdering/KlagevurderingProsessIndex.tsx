@@ -1,28 +1,25 @@
-import {
-  ung_kodeverk_behandling_FagsakYtelseType,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type ung_sak_kontrakt_behandling_BehandlingDto,
-  type ung_sak_kontrakt_fagsak_FagsakDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
+import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useContext } from 'react';
 import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
+import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
 import type { SaveKlageParams } from './src/components/felles/SaveKlageParams';
 import { BehandleKlageFormKa } from './src/components/ka/BehandleKlageFormKa';
 import { BehandleKlageFormNfp } from './src/components/nfp/BehandleKlageFormNfp';
-import { useContext } from 'react';
-import { KlageVurderingApiContext } from './api/KlageVurderingApiContext.js';
-import { assertDefined } from '../../utils/validation/assertDefined.js';
-
-// type ValidatedSaveKlageParams = z.infer<typeof SaveKlageSchema>;
 
 interface KlagevurderingProsessIndexProps {
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
+  fagsak: FagsakDto;
   submitCallback: () => Promise<void>;
   isReadOnly: boolean;
   readOnlySubmitButton: boolean;
-  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  behandling: ung_sak_kontrakt_behandling_BehandlingDto;
+  aksjonspunkter: AksjonspunktDto[];
+  behandling: K9KlageBehandlingDto | UngSakBehandlingDto;
 }
 
 export const KlagevurderingProsessIndex = ({
@@ -36,22 +33,21 @@ export const KlagevurderingProsessIndex = ({
   const api = assertDefined(useContext(KlageVurderingApiContext));
   const { data: ungHjemler = [] } = useQuery({
     queryKey: ['klage-hjemler', api.backend],
-    queryFn: () => api.hentValgbareKlagehjemler(),
-    enabled: fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+    queryFn: () => api.hentValgbareKlagehjemlerForUng?.() ?? Promise.resolve([]),
+    enabled: api.hentValgbareKlagehjemlerForUng !== undefined,
   });
   const { data: klageVurdering, isLoading } = useQuery({
     queryKey: ['klageVurdering', behandling, api.backend],
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
   const { mutateAsync: previewCallback } = useMutation({
-    mutationFn: async () => {
-      if (behandling.id) {
-        const response = await api.forhåndsvisKlageVedtaksbrev(behandling.id);
-        const fileUrl = window.URL.createObjectURL(response);
-        window.open(fileUrl, '_blank');
-      }
+    mutationFn: async (dokumentdata?: Dokumentdata) => {
+      const pdf = await api.forhåndsvisKlageVedtaksbrev(behandling, fagsak, dokumentdata);
+      const fileUrl = window.URL.createObjectURL(pdf);
+      window.open(fileUrl, '_blank');
     },
   });
+
   const { mutateAsync: saveKlage } = useMutation({
     mutationFn: async (params: SaveKlageParams) => {
       if (behandling.id) {

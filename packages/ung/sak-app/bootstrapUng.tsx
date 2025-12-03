@@ -16,6 +16,7 @@ import {
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
+import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
@@ -28,13 +29,14 @@ import { RestApiProviderLayout } from '@k9-sak-web/sak-app/src/app/RestApiProvid
 import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
 import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
 import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
+import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
-const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
 
 init({
   environment,
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
+  dsn: IS_DEV ? 'http://dev@localhost:9000/1' : 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,
@@ -87,6 +89,8 @@ init({
   },
 });
 
+const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
+
 const basePath = '/ung/web';
 const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
   // Vi må ha ein unik AuthFixer instans pr backend
@@ -125,18 +129,20 @@ const renderFunc = () => {
   const run = () => {
     const root = createRoot(app);
     root.render(
-      <Provider store={store}>
-        <BrowserRouter basename={basePath}>
-          <SentryRoutes>
-            <Route element={<RootLayout />}>
-              <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
-              <Route element={<RestApiProviderLayout />}>
-                <Route path="*" element={<AppIndex />} />
+      <FeatureTogglesContext value={featureToggles}>
+        <Provider store={store}>
+          <BrowserRouter basename={basePath}>
+            <SentryRoutes>
+              <Route element={<RootLayout />}>
+                <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
+                <Route element={<RestApiProviderLayout />}>
+                  <Route path="*" element={<AppIndex />} />
+                </Route>
               </Route>
-            </Route>
-          </SentryRoutes>
-        </BrowserRouter>
-      </Provider>,
+            </SentryRoutes>
+          </BrowserRouter>
+        </Provider>
+      </FeatureTogglesContext>,
     );
   };
   prepare()

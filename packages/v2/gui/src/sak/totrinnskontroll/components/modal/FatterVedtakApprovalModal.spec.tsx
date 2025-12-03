@@ -2,17 +2,27 @@ import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
-import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
+import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = vi.fn();
+  const behandling: TotrinnskontrollBehandling = {
+    id: 1,
+    uuid: '1-1',
+    versjon: 2,
+    status: BehandlingDtoStatus.FATTER_VEDTAK,
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    behandlingsresultatType: BehandlingResultatType.IKKE_FASTSATT,
+    toTrinnsBehandling: false,
+  };
   it('skal rendre modal for fatter vedtak', () => {
     render(
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.KLAGE}
+        behandling={{ ...behandling, type: behandlingType.KLAGE }}
         fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
         erKlageWithKA
       />,
@@ -27,8 +37,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
+        behandling={behandling}
         fagsakYtelseType={fagsakYtelsesType.ENGANGSTØNAD}
         erKlageWithKA
       />,
@@ -45,8 +54,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       <FatterVedtakApprovalModal
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingStatusKode={BehandlingDtoStatus.FATTER_VEDTAK}
-        behandlingTypeKode={behandlingType.FØRSTEGANGSSØKNAD}
+        behandling={behandling}
         fagsakYtelseType={fagsakYtelsesType.OMSORGSPENGER_KS}
         erKlageWithKA
       />,

@@ -17,16 +17,17 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
     outputs:
       tag: ${{ steps.docker-push.outputs.tag }}
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set timestamp
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
@@ -93,7 +94,7 @@ jobs:
     environment: dev-fss:k9saksbehandling
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
@@ -113,7 +114,7 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           # Ta med litt historie og tags for å finne latest_prod commit hash
           fetch-tags: true

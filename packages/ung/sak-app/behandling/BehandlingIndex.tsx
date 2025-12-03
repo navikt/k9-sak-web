@@ -185,7 +185,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (behandlingTypeKode === BehandlingType.KLAGE) {
+  if (behandlingTypeKode === BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
