@@ -11,9 +11,14 @@ export const pathToBehandling = (saksnummer: string, behandlingIdOrUuid: number 
   buildPath(behandlingPath, { saksnummer, behandlingIdOrUuid });
 
 export const gyldigBehandlingId = (behandlingIdOrUuid: string | undefined): number | undefined => {
-  const num = Number.parseInt(behandlingIdOrUuid ?? '');
-  if (Number.isFinite(num) && num >= 0) {
-    return num;
+  if (behandlingIdOrUuid != null) {
+    const isOnlyDigits = /^[0-9]+$/.test(behandlingIdOrUuid.trim());
+    if (isOnlyDigits) {
+      const num = Number.parseInt(behandlingIdOrUuid, 10);
+      if (Number.isInteger(num) && num >= 0) {
+        return num;
+      }
+    }
   }
   return undefined;
 };
