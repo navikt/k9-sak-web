@@ -201,6 +201,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <>
               <p className={styleLesemodus.label}>{tekst.sporsmalPeriodeVedtakGyldig}</p>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.fraDato)}</p>
+              {kroniskTidsbegrensetToggle && (
+                <>
+                  <p className={styleLesemodus.label}>Er vedtaket tidsbegrenset</p>
+                  <p className={styleLesemodus.text}>{informasjonTilLesemodus?.erTidsbegrenset ? 'Ja' : 'Nei'}</p>
+                </>
+              )}
               {kroniskTidsbegrensetToggle && informasjonTilLesemodus?.erTidsbegrenset && (
                 <>
                   <p className={styleLesemodus.label}>Til dato</p>
