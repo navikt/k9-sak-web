@@ -366,6 +366,5 @@
   "packages/utils/src/http-utils/responseHelpers.ts",
   "packages/utils/src/objectUtils.ts",
   "packages/utils/src/stringUtils.spec.tsx",
-  "packages/utils/src/urlUtils.spec.ts",
-  "packages/utils/src/validation/validators.spec.ts"
+  "packages/utils/src/urlUtils.spec.ts"
 ]
