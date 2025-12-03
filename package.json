@@ -71,7 +71,7 @@
     "vite-plugin-svgr": "4.5.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.57.0",
     "@sentry/cli": "2.58.2",
     "@storybook/addon-a11y": "10.0.8",
     "@storybook/addon-docs": "10.0.8",
@@ -90,8 +90,8 @@
     "@types/react-collapse": "5.0.4",
     "@types/redux-form": "8.3.11",
     "@vitejs/plugin-react": "5.1.1",
-    "@vitest/browser-playwright": "4.0.12",
-    "@vitest/coverage-v8": "4.0.12",
+    "@vitest/browser-playwright": "4.0.14",
+    "@vitest/coverage-v8": "4.0.14",
     "autoprefixer": "10.4.22",
     "axios-mock-adapter": "2.1.0",
     "cross-env": "10.1.0",
@@ -110,7 +110,7 @@
     "loose-ts-check": "2.0.0",
     "msw": "2.12.2",
     "msw-storybook-addon": "2.0.6",
-    "playwright": "1.56.1",
+    "playwright": "1.57.0",
     "postcss": "8.5.6",
     "prettier": "3.6.2",
     "rollup-plugin-sourcemaps2": "0.5.4",
@@ -124,7 +124,7 @@
     "typescript-eslint": "8.47.0",
     "vite": "7.2.4",
     "vite-plugin-html": "3.2.2",
-    "vitest": "4.0.12",
+    "vitest": "4.0.14",
     "vitest-axe": "0.1.0"
   },
   "resolutions": {

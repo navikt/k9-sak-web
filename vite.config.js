@@ -175,6 +175,7 @@ export default ({ mode }) => {
           test: {
             name: 'storybook',
             include: ['packages/**/*.stories.{ts,tsx,js,jsx}'],
+            testTimeout: 30000,
             // Enable browser mode
             browser: {
               enabled: true,
