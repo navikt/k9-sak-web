@@ -15,7 +15,7 @@ export {
   getLanguageFromspråkkode,
   replaceNorwegianCharacters,
 } from './src/languageUtils';
-export { diff, isEqual, omit } from './src/objectUtils';
+export { isEqual, omit } from './src/objectUtils';
 export { buildPath, formatQueryString, parseQueryString } from './src/urlUtils';
 export {
   ariaCheck,

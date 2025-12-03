@@ -362,6 +362,5 @@
   "packages/utils/src/currencyUtils.spec.ts",
   "packages/utils/src/formidlingUtils.tsx",
   "packages/utils/src/http-utils/__tests__/httpUtils.spec.ts",
-  "packages/utils/src/http-utils/responseHelpers.ts",
-  "packages/utils/src/objectUtils.ts"
+  "packages/utils/src/http-utils/responseHelpers.ts"
 ]
