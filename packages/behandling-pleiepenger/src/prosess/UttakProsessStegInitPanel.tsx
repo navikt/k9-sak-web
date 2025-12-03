@@ -1,37 +1,51 @@
 import { useMemo } from 'react';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
-import { useErValgtPanel } from '@k9-sak-web/gui/behandling/prosess/context/ValgtPanelContext.js';
 import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { UttakProsessStegPanel } from '@k9-sak-web/gui/behandling/prosess/uttak/UttakProsessStegPanel.js';
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
+// Relevante aksjonspunkter for uttak
+const RELEVANTE_AKSJONSPUNKTER = [
+  aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
+  aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+  aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
+  aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
+];
+
 /**
- * InitPanel for Uttak - Fullt migrert til v2
+ * HYBRID-MODUS InitPanel for Uttak
  * 
- * Denne komponenten:
- * - Registrerer panelet med v2 ProsessMeny
- * - Henter uttaksdata via RequestApi
- * - Beregner paneltype basert på data og aksjonspunkter
- * - Rendrer v2 UttakProsessStegPanel direkte
- * - Bruker Context API for å sjekke om panelet er valgt
+ * Denne komponenten brukes KUN i hybrid-modus (v2 meny + legacy rendering).
+ * 
+ * HYBRID-MODUS (v2 meny + legacy rendering):
+ * - Denne komponenten registrerer panelet med v2 ProsessMeny
+ * - Henter data via RequestApi for å beregne paneltype
+ * - Rendrer INGENTING (returnerer alltid null)
+ * - Legacy ProsessStegPanel (utenfor ProsessMeny) håndterer rendering via UttakProsessStegPanelDef
+ * 
+ * LEGACY-MODUS (toggle av):
+ * - Denne komponenten brukes IKKE
+ * - Alt håndteres av UttakProsessStegPanelDef (klassedefinisjon)
+ * 
+ * FREMTID (full v2):
+ * - Fjern denne wrapperen
+ * - Bruk UttakProsessStegInitPanel fra v2-pakken direkte i ProsessMeny
+ * - Flytt datahenting til React Query i v2-komponenten
+ * - Fjern UttakProsessStegPanelDef
  */
 export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
   // Definer panel ID og tekst som konstanter
   const panelId = 'uttak';
   const panelTekst = 'Behandlingspunkt.Uttak';
-  
-  // Sjekk om dette panelet er valgt via Context API
-  const erValgt = useErValgtPanel(panelId);
 
   // Hent standard props for å få tilgang til aksjonspunkter
   const standardProps = useStandardProsessPanelProps();
 
-  // Hent uttaksdata
+  // Hent uttaksdata for å beregne paneltype
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     uttak: any;
     arbeidsforhold: any;
@@ -43,23 +57,16 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
     { keepData: true, suspendRequest: false, updateTriggers: [] },
   );
 
-  // Relevante aksjonspunkter for uttak
-  const RELEVANTE_AKSJONSPUNKTER = [
-    AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
-    AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-    AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
-    AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
-  ];
-
   // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Sjekk først om det finnes åpne aksjonspunkter for dette panelet
     const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
-      ap => RELEVANTE_AKSJONSPUNKTER.includes(ap.definisjon?.kode) && ap.status?.kode === 'OPPR'
+      ap => RELEVANTE_AKSJONSPUNKTER.includes(ap.definisjon?.kode) && ap.status?.kode === 'OPPR',
     );
 
     // Hvis det er åpent aksjonspunkt, vis warning (gul/oransje)
     if (harApenAksjonspunkt) {
+      console.debug('Uttak panel: Har åpent aksjonspunkt, viser warning');
       return ProcessMenuStepType.warning;
     }
 
@@ -67,6 +74,7 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
     
     // Hvis data ikke er lastet ennå, bruk default
     if (!data || !data.uttak) {
+      console.debug('Uttak panel: Data ikke lastet, viser default');
       return ProcessMenuStepType.default;
     }
 
@@ -78,44 +86,43 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
       !uttak.uttaksplan.perioder ||
       (uttak.uttaksplan.perioder && Object.keys(uttak.uttaksplan.perioder).length === 0)
     ) {
+      console.debug('Uttak panel: Ingen uttaksplan eller perioder, viser default');
       return ProcessMenuStepType.default;
     }
 
     const uttaksperiodeKeys = Object.keys(uttak.uttaksplan.perioder);
+    const perioder = uttak.uttaksplan.perioder;
+
+    console.debug('Uttak panel: Sjekker perioder', {
+      antallPerioder: uttaksperiodeKeys.length,
+      perioder: uttaksperiodeKeys.map(key => ({
+        key,
+        utfall: perioder?.[key]?.utfall,
+      })),
+    });
 
     // Hvis alle perioder er ikke oppfylt, vis danger
-    if (uttaksperiodeKeys.every(key => uttak.uttaksplan.perioder[key].utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
+    if (uttaksperiodeKeys.every(key => perioder?.[key]?.utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
+      console.debug('Uttak panel: Alle perioder ikke oppfylt, viser danger');
       return ProcessMenuStepType.danger;
     }
 
     // Hvis noen perioder er oppfylt, vis success
-    if (uttaksperiodeKeys.some(key => uttak.uttaksplan.perioder[key].utfall === vilkarUtfallType.OPPFYLT)) {
+    if (uttaksperiodeKeys.some(key => perioder?.[key]?.utfall === vilkarUtfallType.OPPFYLT)) {
+      console.debug('Uttak panel: Noen perioder oppfylt, viser success');
       return ProcessMenuStepType.success;
     }
 
+    console.debug('Uttak panel: Ingen match, viser default');
     return ProcessMenuStepType.default;
   }, [restApiData.data, standardProps.aksjonspunkter]);
 
   // Registrer panel med v2 menyen
+  // Registreres først med 'default', oppdateres automatisk når panelType endres
   usePanelRegistrering(props, panelId, panelTekst, panelType);
 
-  // Render kun hvis panelet er valgt (via Context API)
-  if (!erValgt) {
-    console.log('UttakProsessStegInitPanel: Ikke valgt, returnerer null');
-    return null;
-  }
-
-  console.log('UttakProsessStegInitPanel: RENDERING CONTENT!', {
-    hasUttak: !!restApiData.data?.uttak,
-    hasArbeidsforhold: !!restApiData.data?.arbeidsforhold,
-  });
-
-  // Render v2 UttakProsessStegPanel med data
-  return (
-    <UttakProsessStegPanel
-      {...props}
-      uttak={restApiData.data?.uttak}
-      arbeidsforhold={restApiData.data?.arbeidsforhold}
-    />
-  );
+  // HYBRID-MODUS: Render ALLTID null
+  // Legacy ProsessStegPanel håndterer innholdsrendering via UttakProsessStegPanelDef
+  // Dette unngår Redux-form integrasjonsproblemer og dobbel rendering
+  return null;
 }
