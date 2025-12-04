@@ -31,5 +31,5 @@ export const prodFeatureToggles = {
   FLYTT_ALDERSVILKAR: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   UNG_KLAGE: false,
-  KRONISK_TIDSBEGRENSET: false,
+  KRONISK_TIDSBEGRENSET: true,
 } satisfies K9FeatureToggles;
