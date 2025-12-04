@@ -9,8 +9,8 @@ import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const useHentAlleBehandlinger = (
   saksnummer: string,
-  behandlingId: number,
-  behandlingVersjon: number,
+  behandlingId: number | undefined,
+  behandlingVersjon: number | undefined,
   oppfriskIndikator: number,
 ): [alleBehandlinger: BehandlingAppKontekst[], harHentet: boolean] => {
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);

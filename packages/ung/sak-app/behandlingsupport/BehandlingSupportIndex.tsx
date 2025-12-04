@@ -137,12 +137,12 @@ const TABS = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId: number;
-  behandlingVersjon: number;
+  behandlingId: number | undefined;
+  behandlingVersjon: number | undefined;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   navAnsatt: NavAnsatt;
-  featureToggles?: FeatureToggles;
+  featureToggles: FeatureToggles;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
