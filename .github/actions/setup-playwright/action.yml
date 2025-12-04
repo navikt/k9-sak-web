@@ -8,14 +8,18 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Get Playwright version
+      shell: bash
+      run: |
+        PLAYWRIGHT_VERSION=$(node -p "require('./package.json').devDependencies['@playwright/test']")
+        echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
     - name: Cache Playwright Browsers
       id: cache-playwright-browsers
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-browsers-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          playwright-browsers-
+        key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
 
     - name: Installer Playwright med avhengigheter
       shell: bash
