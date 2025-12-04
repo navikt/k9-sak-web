@@ -27,19 +27,16 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 
-import InputField from '@fpsak-frontend/form/src/InputField';
 import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { Button, Link } from '@navikt/ds-react';
-import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
+import { requestMessagesApi } from '../data/messagesApi';
 import styles from './messages.module.css';
 
 const maxLength4000 = maxLength(4000);
-const maxLength100000 = maxLength(100000);
-const maxLength200 = maxLength(200);
 const minLength3 = minLength(3);
 
 export type FormValues = {
@@ -110,7 +107,6 @@ const transformTemplates = templates =>
 export const MessagesTilbakekrevingImpl = ({
   intl,
   templates,
-  causes = [],
   previewCallback,
   handleSubmit,
   språkkode,
@@ -153,23 +149,6 @@ export const MessagesTilbakekrevingImpl = ({
 
   const tmpls: Template[] = transformTemplates(templates);
 
-  const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
-    { tittel: string; fritekst: string }[]
-  >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
-
-  const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
-    const urlsTilHentingAvMedisinskeTyper = tmpls.find(
-      brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER,
-    )?.linker;
-
-    if (urlsTilHentingAvMedisinskeTyper) {
-      requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
-
-      return true;
-    }
-    return false;
-  };
-
   useEffect(() => {
     if (brevmalkode) {
       // Resetter fritekst hver gang bruker endrer brevmalskode
@@ -184,23 +163,6 @@ export const MessagesTilbakekrevingImpl = ({
           ? overstyrtMottaker
           : JSON.stringify(recipients[0]),
       );
-
-      if (brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER) {
-        const erAPIOppdatertMedLinker = oppdaterAPILinkerForHentingAvMedisinskeTyper();
-
-        if (!erAPIOppdatertMedLinker) return;
-
-        hentFritekstMaler()
-          .then(brevmalerForMedisinskeOpplysninger => {
-            const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find(alt => valgtMedisinType === alt.tittel);
-
-            if (fritekstBrevmal) {
-              formProps.change('fritekst', fritekstBrevmal.fritekst);
-            }
-            // Catch er tom fordi error message skal håndteres av requestMessagesApi.
-          })
-          .catch(() => {});
-      }
     }
   }, [brevmalkode, valgtMedisinType]);
 
@@ -221,25 +183,6 @@ export const MessagesTilbakekrevingImpl = ({
             ))}
             bredde="xxl"
           />
-          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER &&
-            fritekstMaler &&
-            fritekstMaler.length > 0 && (
-              <>
-                <VerticalSpacer eightPx />
-                <SelectField
-                  name="valgtMedisinType"
-                  label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
-                  validate={[]}
-                  placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                  selectValues={fritekstMaler.map(alternativ => (
-                    <option key={alternativ.tittel} value={alternativ.tittel}>
-                      {alternativ.tittel}
-                    </option>
-                  ))}
-                  bredde="xxl"
-                />
-              </>
-            )}
           {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
@@ -261,23 +204,6 @@ export const MessagesTilbakekrevingImpl = ({
               />
             </>
           )}
-          {brevmalkode === dokumentMalType.REVURDERING_DOK && (
-            <>
-              <VerticalSpacer eightPx />
-              <SelectField
-                name="arsakskode"
-                label={intl.formatMessage({ id: 'Messages.Årsak' })}
-                validate={[required]}
-                placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-                selectValues={(causes || []).map(cause => (
-                  <option key={cause.kode} value={cause.kode}>
-                    {cause.navn}
-                  </option>
-                ))}
-                bredde="xxl"
-              />
-            </>
-          )}
           {showFritekst(brevmalkode, arsakskode) && (
             <>
               <VerticalSpacer eightPx />
@@ -291,26 +217,6 @@ export const MessagesTilbakekrevingImpl = ({
                 />
               </div>
             </>
-          )}
-          {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
-            <div className="input--xxl">
-              <VerticalSpacer eightPx />
-              <InputField
-                name="fritekstbrev.overskrift"
-                label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
-                validate={[required, minLength3, maxLength200, hasValidText]}
-                maxLength={200}
-              />
-
-              <VerticalSpacer eightPx />
-              <TextAreaField
-                name="fritekstbrev.brødtekst"
-                label={intl.formatMessage({ id: 'Messages.Fritekst' })}
-                validate={[required, minLength3, maxLength100000, hasValidText]}
-                maxLength={100000}
-                badges={[{ type: 'warning', textId: languageCode, title: 'Messages.Beskrivelse' }]}
-              />
-            </div>
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
