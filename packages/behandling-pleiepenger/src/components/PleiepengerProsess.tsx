@@ -35,6 +35,8 @@ import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel'
 import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
+import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
+import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -250,6 +252,12 @@ const PleiepengerProsess = ({
     [behandling.versjon],
   );
 
+  // previewFptilbakeCallback til context (for simulering/avregning)
+  const previewFptilbakeCallback = useCallback(
+    getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+    [behandling.versjon],
+  );
+
   // Form data state for Redux forms (matcher legacy ProsessStegPanel oppførsel)
   const [formData, setFormData] = useState<any>({});
   useEffect(() => {
@@ -289,6 +297,7 @@ const PleiepengerProsess = ({
             alleKodeverk,
             submitCallback: lagreAksjonspunkter,
             previewCallback,
+            previewFptilbakeCallback,
             isReadOnly: !rettigheter.writeAccess.isEnabled,
             rettigheter,
             featureToggles,
@@ -322,8 +331,14 @@ const PleiepengerProsess = ({
               if (urlKode === 'tilkjent_ytelse') {
                 return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;
               }
+              if (urlKode === 'simulering') {
+                return <SimuleringProsessStegInitPanel key={urlKode} />;
+              }
               if (urlKode === 'fortsattmedlemskap') {
                 return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'beregningsgrunnlag') {
+                return <BeregningsgrunnlagProsessStegInitPanel key={urlKode} />;
               }
               if (urlKode === 'vedtak') {
                 return <VedtakProsessStegInitPanel key={urlKode} />;
@@ -339,30 +354,6 @@ const PleiepengerProsess = ({
               );
             })}
           </ProsessMeny>
-
-          {/* Legacy panel-rendering for innhold (unngår Redux-form problemer) */}
-          {/* VIKTIG: Dette må være UTENFOR ProsessMeny for å vises rett under menyen */}
-          <ProsessStegContainer
-            formaterteProsessStegPaneler={formaterteProsessStegPaneler}
-            velgProsessStegPanelCallback={velgProsessStegPanelCallback}
-            hideMenu={true}
-          >
-            <ProsessStegPanel
-              valgtProsessSteg={valgtPanel}
-              fagsak={fagsak}
-              behandling={behandling}
-              alleKodeverk={alleKodeverk}
-              apentFaktaPanelInfo={apentFaktaPanelInfo}
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              lagringSideeffekterCallback={lagringSideeffekterCallback}
-              lagreAksjonspunkter={lagreAksjonspunkter}
-              lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
-              useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
-              featureToggles={featureToggles}
-              hentBehandling={hentBehandling}
-              erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-            />
-          </ProsessStegContainer>
         </StandardProsessPanelPropsProvider>
       </>
     );

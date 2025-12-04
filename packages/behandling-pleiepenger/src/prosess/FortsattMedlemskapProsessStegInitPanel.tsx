@@ -4,6 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
+import { useErValgtPanel } from '@k9-sak-web/gui/behandling/prosess/context/ValgtPanelContext.js';
 import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -42,11 +43,6 @@ export function FortsattMedlemskapProsessStegInitPanel(props: ProsessPanelProps)
 
   // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis panelet ikke skal vises, bruk default
-    if (!skalVisePanel) {
-      return ProcessMenuStepType.default;
-    }
-
     // Sjekk om det finnes åpent aksjonspunkt for overstyring av løpende medlemskap (warning)
     const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
       ap => 
@@ -79,18 +75,22 @@ export function FortsattMedlemskapProsessStegInitPanel(props: ProsessPanelProps)
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [skalVisePanel, vilkarForSteg, standardProps.aksjonspunkter]);
-
-  // Registrer panel med menyen
-  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  }, [vilkarForSteg, standardProps.aksjonspunkter]);
 
   // Ikke vis panelet hvis det ikke finnes løpende medlemskapsvilkår
+  // VIKTIG: Returner tidlig FØR registrering for å unngå at panelet vises i menyen
   if (!skalVisePanel) {
     return null;
   }
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  // Registrer panel med menyen (kun hvis det skal vises)
+  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+
+  // Sjekk om dette panelet er valgt via context
+  const erValgt = useErValgtPanel(PANEL_ID);
+
+  // Render kun hvis panelet er valgt
+  if (!erValgt) {
     return null;
   }
 

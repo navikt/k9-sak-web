@@ -26,6 +26,9 @@ export interface StandardProsessPanelPropsContextValue {
     /** Callback for å forhåndsvise dokument */
     previewCallback?: (data: any) => Promise<any>;
 
+    /** Callback for å forhåndsvise tilbakekrevingsbrev */
+    previewFptilbakeCallback?: (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>;
+
     /** Om panelet er read-only */
     isReadOnly: boolean;
 

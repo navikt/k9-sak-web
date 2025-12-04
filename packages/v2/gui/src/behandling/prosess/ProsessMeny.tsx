@@ -59,7 +59,6 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
   // Holder styr på hvilken child-indeks som tilhører hvilket panel-ID.
   // Paneler registrerer seg i samme rekkefølge som de vises i children-arrayet,
   // så vi kan bruke registreringsrekkefølge for å mappe child-indekser til panel-IDer.
-  const [childIndexToId, setChildIndexToId] = useState<Map<number, string>>(new Map());
   const registrationOrderRef = React.useRef<string[]>([]);
 
   // Hent valgt panel fra URL
@@ -75,9 +74,7 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
 
     // Mapper child-indeks til panel-ID basert på registreringsrekkefølge
     if (!registrationOrderRef.current.includes(id)) {
-      const childIndex = registrationOrderRef.current.length;
       registrationOrderRef.current.push(id);
-      setChildIndexToId(prev => new Map(prev).set(childIndex, id));
     }
   }, []);
 
@@ -89,15 +86,10 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
       return neste;
     });
 
-    // Fjern fra registreringsrekkefølge og bygg mapping på nytt
+    // Fjern fra registreringsrekkefølge
     const index = registrationOrderRef.current.indexOf(id);
     if (index !== -1) {
       registrationOrderRef.current.splice(index, 1);
-      setChildIndexToId(() => {
-        const next = new Map<number, string>();
-        registrationOrderRef.current.forEach((panelId, idx) => next.set(idx, panelId));
-        return next;
-      });
     }
   }, []);
 
@@ -166,7 +158,8 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
       return child;
     }
 
-    const panelId = childIndexToId.get(index);
+    // Bruk registrationOrderRef direkte for å finne panel-ID basert på child-indeks
+    const panelId = registrationOrderRef.current[index];
     const isSelected = panelId !== undefined && panelId === valgtPanelId;
 
     return React.cloneElement(child, {

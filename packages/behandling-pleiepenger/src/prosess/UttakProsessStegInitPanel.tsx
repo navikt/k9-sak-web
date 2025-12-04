@@ -107,14 +107,10 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
       return ProcessMenuStepType.danger;
     }
 
-    // Hvis noen perioder er oppfylt, vis success
-    if (uttaksperiodeKeys.some(key => perioder?.[key]?.utfall === vilkarUtfallType.OPPFYLT)) {
-      console.debug('Uttak panel: Noen perioder oppfylt, viser success');
-      return ProcessMenuStepType.success;
-    }
-
-    console.debug('Uttak panel: Ingen match, viser default');
-    return ProcessMenuStepType.default;
+    // Ellers (hvis ikke alle er IKKE_OPPFYLT), vis success
+    // Dette matcher legacy-logikken: getOverstyrtStatus returnerer OPPFYLT hvis ikke alle er IKKE_OPPFYLT
+    console.debug('Uttak panel: Ikke alle perioder ikke oppfylt, viser success');
+    return ProcessMenuStepType.success;
   }, [restApiData.data, standardProps.aksjonspunkter]);
 
   // Registrer panel med v2 menyen

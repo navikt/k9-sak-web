@@ -26,6 +26,9 @@ export interface StandardProsessPanelProps {
   /** Callback for å forhåndsvise dokument */
   previewCallback?: (data: any) => Promise<any>;
 
+  /** Callback for å forhåndsvise tilbakekrevingsbrev */
+  previewFptilbakeCallback?: (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>;
+
   /** Om panelet er read-only */
   isReadOnly: boolean;
 
@@ -46,6 +49,9 @@ export interface StandardProsessPanelProps {
 
   /** Callback to update form data (legacy type) */
   setFormData?: (data: any) => void;
+
+  /** Arbeidsgiver opplysninger per ID (legacy type) */
+  arbeidsgiverOpplysningerPerId?: any;
 }
 
 /**
@@ -89,6 +95,7 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
       alleKodeverk: context.alleKodeverk,
       submitCallback: context.submitCallback,
       previewCallback: context.previewCallback,
+      previewFptilbakeCallback: context.previewFptilbakeCallback,
       isReadOnly: context.isReadOnly,
       isAksjonspunktOpen: false, // TODO: Beregn basert på aksjonspunkter
       status: 'default', // TODO: Beregn basert på vilkår/status
@@ -96,6 +103,7 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
       featureToggles: context.featureToggles,
       formData: context.formData,
       setFormData: context.setFormData,
+      arbeidsgiverOpplysningerPerId: context.arbeidsgiverOpplysningerPerId,
     };
   }
 
