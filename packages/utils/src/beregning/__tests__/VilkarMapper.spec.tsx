@@ -389,7 +389,10 @@ describe('VilkarMapper', () => {
     it('handles vilkar with undefined properties', () => {
       const beregningreferanser: BeregningReferanse[] = [];
 
-      const vilkar = {} as VilkårMedPerioderDto;
+      const vilkar: VilkårMedPerioderDto = {
+        relevanteInnvilgetMerknader: [],
+        vilkarType: 'K9_VK_1',
+      };
 
       expect(() => mapVilkar(vilkar, beregningreferanser)).toThrow();
     });
