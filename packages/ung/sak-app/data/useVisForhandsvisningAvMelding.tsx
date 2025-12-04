@@ -10,7 +10,7 @@ type ForhandsvisFunksjon = (erHenleggelse: boolean, data: any) => void;
 export const useVisForhandsvisningAvMelding = (behandling: BehandlingInfo, fagsak?: Fagsak): ForhandsvisFunksjon => {
   const erTilbakekreving = erTilbakekrevingType(behandling?.type);
 
-  if (!erTilbakekreving && !fagsak) {
+  if (!erTilbakekreving && fagsak == null) {
     throw new Error('Fagsak er påkrevd ved forhåndvisning mot formidling');
   }
 
@@ -30,10 +30,12 @@ export const useVisForhandsvisningAvMelding = (behandling: BehandlingInfo, fagsa
     } else if (erTilbakekreving) {
       const response = await forhandsvisTilbakekreving({ behandlingUuid: behandling.uuid, ...data });
       forhandsvis(response);
-    } else {
+    } else if (fagsak != null) {
       const req = { ...lagForhåndsvisRequest(behandling, fagsak, fagsak.person, data) };
       const response = await forhandsvisMelding(req);
       forhandsvis(response);
+    } else {
+      throw new Error('Fagsak er påkrevd ved forhåndvisning mot formidling');
     }
   };
 };

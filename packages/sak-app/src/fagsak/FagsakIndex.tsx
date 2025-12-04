@@ -15,8 +15,6 @@ import {
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -43,7 +41,7 @@ import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
-import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
+import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
@@ -199,7 +197,7 @@ const FagsakIndex = () => {
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
   const erHastesak = merknaderFraLos?.hastesak?.aktiv;
 
-  if (!fagsak) {
+  if (fagsak == null) {
     if (isRequestNotDone(fagsakState)) {
       return <LoadingPanel />;
     }

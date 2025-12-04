@@ -15,7 +15,7 @@ export const parseQueryString = (queryString: string = '') =>
 /**
  * @deprecated Bruk URLSearchParams istaden
  */
-export const formatQueryString = (queryParams: { [key: string]: string | boolean } = {}) =>
+export const formatQueryString = (queryParams: { [key: string]: string | boolean | undefined | null } = {}) =>
   `?${
     // Add leading question mark
     Object.entries(queryParams)
