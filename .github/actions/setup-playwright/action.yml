@@ -8,19 +8,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Finn Playwright versjon
-      shell: bash
-      run: |
-        PLAYWRIGHT_VERSION=$(YARN_ENABLE_COLORS=false yarn info @playwright/test | grep @playwright | sed 's/.*://')
-        echo "Playwright's Version: $PLAYWRIGHT_VERSION"
-        echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
-
-    - name: Cache Playwright Browsers for Playwright versjon
+    - name: Cache Playwright Browsers
       id: cache-playwright-browsers
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
+        key: playwright-browsers-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          playwright-browsers-
 
     - name: Installer Playwright med avhengigheter
       shell: bash
@@ -29,5 +24,5 @@ runs:
 
     - name: Installer Playwrights avhengigheter
       shell: bash
-      if: inputs.cacheOnly == 'false' && steps.cache-playwright-browsers.outputs.cache-hit == 'true'
+      if: inputs.cacheOnly == 'false'
       run: npx playwright install-deps
