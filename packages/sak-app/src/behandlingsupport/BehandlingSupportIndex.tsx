@@ -312,7 +312,6 @@ const BehandlingSupportIndex = ({
                 behandlingVersjon={behandlingVersjon}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                featureToggles={featureToggles}
                 backendApi={meldingerBackendClient}
               />
             )}

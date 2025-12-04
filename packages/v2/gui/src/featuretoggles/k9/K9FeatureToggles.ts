@@ -1,7 +1,6 @@
 import type { FeatureTogglesFor } from '../FeatureTogglesFor.js';
 
 export interface K9FeatureToggles extends FeatureTogglesFor {
-  BRUK_V2_MELDINGER: boolean;
   KLAGE_KABAL: boolean;
   DOKUMENTDATA: boolean; // Fjernast?
   UNNTAKSBEHANDLING: boolean;

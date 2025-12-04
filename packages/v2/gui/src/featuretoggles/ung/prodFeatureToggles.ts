@@ -2,7 +2,6 @@ import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const prodFeatureToggles = {
   isFor: 'prod',
-  BRUK_V2_MELDINGER: false,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,

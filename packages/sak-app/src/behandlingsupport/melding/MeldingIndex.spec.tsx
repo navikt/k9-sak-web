@@ -1,7 +1,6 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import type { BehandlingAppKontekst, Brevmaler, Fagsak } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -19,7 +18,6 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import MeldingIndex from './MeldingIndex';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/qFeatureToggles.js';
 
 const mockHistoryPush = vi.fn();
 
@@ -146,8 +144,6 @@ describe('<MeldingIndex>', () => {
     [kodeverkTyper.REVURDERING_VARSLING_ÅRSAK]: [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }],
   };
 
-  const featureToggles = { ...qFeatureToggles, BRUK_V2_MELDINGER: false } satisfies FeatureToggles;
-
   const assignMock = vi.fn();
   delete (window as Partial<ExtendedWindow>).location;
   // @ts-expect-error Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
@@ -166,7 +162,6 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
-            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -187,7 +182,6 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
-            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -214,7 +208,6 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
-            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -252,7 +245,6 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
-            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
