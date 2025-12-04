@@ -1,4 +1,4 @@
-name: 'Storybook Tests'
+name: "Storybook Tests"
 permissions:
   contents: read
   packages: read
@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/navikt/k9-verdikjede/sif-playwright-server:latest
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
@@ -16,10 +18,6 @@ jobs:
         uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Installer Playwright
-        uses: ./.github/actions/setup-playwright
-
       - name: Build Storybook
         run: yarn build-storybook-test --quiet
 
