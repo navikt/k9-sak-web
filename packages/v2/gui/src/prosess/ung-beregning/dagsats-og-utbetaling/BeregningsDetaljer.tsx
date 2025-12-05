@@ -7,6 +7,7 @@ interface BeregningsDetaljerProps {
   reduksjon?: number;
   utbetaling?: number;
   satsperioder?: Array<UngdomsytelseSatsPeriodeDto>;
+  reduksjonsgrunnlag?: number;
 }
 
 export const BeregningsDetaljer = ({
@@ -14,6 +15,7 @@ export const BeregningsDetaljer = ({
   reduksjon,
   utbetaling,
   satsperioder,
+  reduksjonsgrunnlag,
 }: BeregningsDetaljerProps) => (
   <Box.New
     padding="6"
@@ -30,6 +32,7 @@ export const BeregningsDetaljer = ({
           reduksjon={reduksjon}
           utbetaling={utbetaling}
           satsperioder={satsperioder}
+          reduksjonsgrunnlag={reduksjonsgrunnlag}
         />
       </VStack>
     </Box.New>
