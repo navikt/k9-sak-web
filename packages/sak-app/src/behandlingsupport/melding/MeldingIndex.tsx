@@ -8,9 +8,9 @@ import {
   BehandlingAppKontekst,
   Brevmaler,
   Fagsak,
-  FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Alert } from '@navikt/ds-react';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import { useFpSakKodeverk } from '../../data/useKodeverk';

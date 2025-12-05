@@ -40,14 +40,18 @@ import {
 } from './validatorsHelper';
 
 export type ValidationReturnType = ErrorMessage | null | undefined | string;
-export const required = (value: string): ValidationReturnType => (isEmpty(value) ? isRequiredMessage() : undefined);
+export const required = (value: string | undefined | null): ValidationReturnType =>
+  isEmpty(value) ? isRequiredMessage() : undefined;
 export const atLeastOneRequired = (value: string, otherValue: string): ValidationReturnType =>
   isEmpty(value) && isEmpty(otherValue) ? isRequiredMessage() : undefined;
-export const requiredIfNotPristine = (value: string, allValues, props: { pristine: boolean }): ValidationReturnType =>
-  props.pristine || !isEmpty(value) ? undefined : isRequiredMessage();
+export const requiredIfNotPristine = (
+  value: string | undefined | null,
+  allValues,
+  props: { pristine: boolean },
+): ValidationReturnType => (props.pristine || !isEmpty(value) ? undefined : isRequiredMessage());
 export const requiredIfCustomFunctionIsTrue =
   isRequiredFunction =>
-  (value: string, allValues, props): ValidationReturnType =>
+  (value: string | undefined | null, allValues, props): ValidationReturnType =>
     isEmpty(value) && isRequiredFunction(allValues, props) ? isRequiredMessage() : undefined;
 
 export const minLength =
@@ -91,8 +95,8 @@ export const hasValidDecimal = (text: string | number): ValidationReturnType =>
 export const hasValidSaksnummerOrFodselsnummerFormat = (text: string): ValidationReturnType =>
   isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text) ? null : invalidSaksnummerOrFodselsnummerFormatMessage();
 
-export const hasValidDate = (text: string): ValidationReturnType =>
-  isEmpty(text) || isoDateRegex.test(text) ? null : invalidDateMessage();
+export const hasValidDate = (text: string | undefined | null): ValidationReturnType =>
+  isEmpty(text) || isoDateRegex.test(text ?? '') ? null : invalidDateMessage();
 const getBeforeErrorMessage = (
   latest: string | Moment | Date,
   customErrorMessage: ((date: string) => string) | undefined,
@@ -102,7 +106,7 @@ const getBeforeErrorMessage = (
 };
 export const dateBeforeOrEqual =
   (latest: string | Moment | Date, customErrorMessageFunction?: (date: string) => string) =>
-  (text: string): ValidationReturnType =>
+  (text: string | undefined | null): ValidationReturnType =>
     isEmpty(text) || moment(text).isSameOrBefore(moment(latest).startOf('day'))
       ? null
       : getBeforeErrorMessage(latest, customErrorMessageFunction);
@@ -112,7 +116,7 @@ const getAfterErrorMessage = (earliest: string | Moment | Date, customErrorMessa
 };
 export const dateAfterOrEqual =
   (earliest: string | Moment | Date, customErrorMessageFunction?: (date: string) => string) =>
-  (text: string | Moment): ValidationReturnType =>
+  (text: string | Moment | undefined | null): ValidationReturnType =>
     isEmpty(text) || moment(text).isSameOrAfter(moment(earliest).startOf('day'))
       ? null
       : getAfterErrorMessage(earliest, customErrorMessageFunction);
@@ -120,11 +124,13 @@ export const dateAfterOrEqual =
 export const dateRangesNotOverlapping = (ranges: Array<string[]>): ValidationReturnType =>
   dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage();
 
-export const dateBeforeToday = (text: string): ValidationReturnType => dateBeforeOrEqual(yesterday())(text);
-export const dateBeforeOrEqualToToday = (text: string): ValidationReturnType =>
+export const dateBeforeToday = (text: string | undefined | null): ValidationReturnType =>
+  dateBeforeOrEqual(yesterday())(text);
+export const dateBeforeOrEqualToToday = (text: string | undefined | null): ValidationReturnType =>
   dateBeforeOrEqual(moment().startOf('day'))(text);
-export const dateAfterToday = (text: string): ValidationReturnType => dateAfterOrEqual(tomorrow())(text);
-export const dateAfterOrEqualToToday = (text: string): ValidationReturnType =>
+export const dateAfterToday = (text: string | undefined | null): ValidationReturnType =>
+  dateAfterOrEqual(tomorrow())(text);
+export const dateAfterOrEqualToToday = (text: string | undefined | null): ValidationReturnType =>
   dateAfterOrEqual(moment().startOf('day'))(text);
 
 export const hasValidFodselsnummerFormat = (text: string): ValidationReturnType =>
@@ -132,7 +138,7 @@ export const hasValidFodselsnummerFormat = (text: string): ValidationReturnType 
 export const hasValidFodselsnummer = (text: string): ValidationReturnType =>
   !isValidFodselsnummer(text) ? invalidFodselsnummerMessage() : null;
 
-export const hasValidText = (text: string): ValidationReturnType => {
+export const hasValidText = (text: string | undefined | null): ValidationReturnType => {
   if (text === undefined || text === null) {
     return null;
   }

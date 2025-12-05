@@ -103,11 +103,13 @@ export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVed
   );
 }
 
+type V = Record<string, unknown>;
+
 export const filterInformasjonsbehov = (
-  formikValues,
+  formikValues: V,
   aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'],
 ) => {
-  const aktiveVerdier = [];
+  const aktiveVerdier: V[] = [];
   const keys = Object.keys(formikValues);
 
   keys.forEach(key => {

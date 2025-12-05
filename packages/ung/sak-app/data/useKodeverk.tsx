@@ -35,7 +35,10 @@ export function useUngSakKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[
  * Hook som brukes når en har behov for å slå opp navn-attributtet til et bestemt kodeverk. For å kunne bruke denne
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
-export function useUngSakKodeverkMedNavn<T = KodeverkMedNavn>(kodeverkOjekt: Kodeverk, undertype?: string): T {
+export function useUngSakKodeverkMedNavn<T = KodeverkMedNavn>(
+  kodeverkOjekt: Kodeverk,
+  undertype?: string,
+): T | undefined {
   const kodeverkType = kodeverkTyper[kodeverkOjekt.kodeverk];
   let kodeverkForType = useUngSakKodeverk<T>(kodeverkType);
 

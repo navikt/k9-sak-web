@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettProsess from '../UtvidetRettProsess';
 import utvidetRettTestData from './utvidetRettTestData';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/qFeatureToggles.js';
 
 const { aksjonspunkter, arbeidsgiverOpplysningerPerId, behandling, fagsak, fagsakPerson, rettigheter, vilkar, soknad } =
   utvidetRettTestData;
@@ -34,7 +35,7 @@ describe('<UtvidetRettProsess>', () => {
         apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
       />,
     );
 
@@ -62,7 +63,7 @@ describe('<UtvidetRettProsess>', () => {
         apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
       />,
     );
 

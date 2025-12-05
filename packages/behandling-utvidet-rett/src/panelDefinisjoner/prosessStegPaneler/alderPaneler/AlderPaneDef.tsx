@@ -3,8 +3,9 @@ import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import AldersVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-alder';
-import { Aksjonspunkt, Behandling, FeatureToggles, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface AlderProsessStegProps {
   aksjonspunkter: Aksjonspunkt[];

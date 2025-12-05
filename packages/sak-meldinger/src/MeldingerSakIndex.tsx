@@ -1,12 +1,7 @@
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Brevmaler,
-  FeatureToggles,
-  KodeverkMedNavn,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Brevmaler, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType.js';
 import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';

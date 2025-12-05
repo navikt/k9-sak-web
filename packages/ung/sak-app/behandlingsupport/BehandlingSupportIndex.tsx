@@ -8,10 +8,10 @@ import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
-  FeatureToggles,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
@@ -137,12 +137,12 @@ const TABS = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId: number;
-  behandlingVersjon: number;
+  behandlingId: number | undefined;
+  behandlingVersjon: number | undefined;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   navAnsatt: NavAnsatt;
-  featureToggles?: FeatureToggles;
+  featureToggles: FeatureToggles;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 

@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
@@ -16,9 +18,6 @@ jobs:
         uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Installer Playwright
-        uses: ./.github/actions/setup-playwright
 
       - name: Run Storybook tests
         run: yarn test-storybook
