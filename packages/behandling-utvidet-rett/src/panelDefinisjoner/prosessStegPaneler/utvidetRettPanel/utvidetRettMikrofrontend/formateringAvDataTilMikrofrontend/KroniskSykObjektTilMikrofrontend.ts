@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Personopplysninger, Vilkar } from '@k9-sak-web/types';
 import { k9_kodeverk_vilkår_VilkårUtfallMerknad } from '@navikt/k9-sak-typescript-client/types';
 import {
   InformasjonTilLesemodusKroniskSyk,
@@ -21,6 +21,7 @@ interface OwnProps {
   skalVilkarsUtfallVises: boolean;
   submitCallback;
   soknad: UtvidetRettSoknad;
+  personopplysninger: Personopplysninger;
 }
 
 const formatereLosAksjonspunktObjektForKroniskSyk = (
@@ -86,6 +87,7 @@ const KroniskSykObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
+  personopplysninger,
 }: OwnProps): {
   visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN;
   props: VilkarKroniskSyktBarnProps;
@@ -136,6 +138,7 @@ const KroniskSykObjektTilMikrofrontend = ({
           ]);
         },
         formState: FormState,
+        personopplysninger,
       } as VilkarKroniskSyktBarnProps,
     };
   }
