@@ -8,6 +8,7 @@ interface BeregningsDetaljerUtregningProps {
   reduksjon?: number;
   utbetaling?: number;
   satsperioder?: Array<UngdomsytelseSatsPeriodeDto>;
+  reduksjonsgrunnlag?: number;
 }
 
 export const BeregningsDetaljerUtregning = ({
@@ -15,6 +16,7 @@ export const BeregningsDetaljerUtregning = ({
   reduksjon,
   utbetaling,
   satsperioder,
+  reduksjonsgrunnlag,
 }: BeregningsDetaljerUtregningProps) => (
   <>
     <VStack gap="space-16">
@@ -45,14 +47,19 @@ export const BeregningsDetaljerUtregning = ({
 
       {reduksjon && rapportertInntekt ? (
         <>
-          <HStack justify="space-between">
-            <BodyShort size="small">
-              Reduksjon på grunn av inntekt (66 % av {formatCurrencyWithKr(rapportertInntekt)})
-            </BodyShort>
-            <BodyShort size="small" weight="semibold">
-              - {formatCurrencyWithKr(reduksjon)}
-            </BodyShort>
-          </HStack>
+          <VStack gap="space-8">
+            <HStack justify="space-between">
+              <BodyShort size="small">
+                Reduksjon på grunn av inntekt (66 % av {formatCurrencyWithKr(reduksjonsgrunnlag || rapportertInntekt)})
+              </BodyShort>
+              <BodyShort size="small" weight="semibold">
+                - {formatCurrencyWithKr(reduksjon)}
+              </BodyShort>
+            </HStack>
+            {reduksjonsgrunnlag && (
+              <BodyShort size="small">Inntekten er periodisert siden det er siste måned</BodyShort>
+            )}
+          </VStack>
           <Box.New borderWidth="0 0 1 0" />
         </>
       ) : null}

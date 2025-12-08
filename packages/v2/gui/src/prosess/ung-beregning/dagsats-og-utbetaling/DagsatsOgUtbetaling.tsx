@@ -21,7 +21,7 @@ const satsTableHeaders = [
   'Antall barn',
   'Barnetillegg',
   'Dager',
-  'Rapportert inntekt',
+  'Benyttet inntekt',
   'Utbetaling',
   'Status',
 ];
@@ -152,7 +152,16 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                   <Table.Body>
                     {satser.map(
                       (
-                        { antallDager, måned, rapportertInntekt, satsperioder, status, utbetaling, reduksjon },
+                        {
+                          antallDager,
+                          måned,
+                          rapportertInntekt,
+                          satsperioder,
+                          status,
+                          utbetaling,
+                          reduksjon,
+                          reduksjonsgrunnlag,
+                        },
                         index,
                       ) => {
                         const harFlereSatsperioder = satsperioder.length > 1;
@@ -167,6 +176,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                     utbetaling={utbetaling}
                                     rapportertInntekt={rapportertInntekt}
                                     reduksjon={reduksjon}
+                                    reduksjonsgrunnlag={reduksjonsgrunnlag}
                                   />
                                 }
                                 togglePlacement="right"
