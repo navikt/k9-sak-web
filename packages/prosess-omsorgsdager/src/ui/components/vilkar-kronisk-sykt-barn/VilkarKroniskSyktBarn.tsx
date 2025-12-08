@@ -1,6 +1,7 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Alert, Button, Checkbox, Fieldset, HelpText, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
+import dayjs from 'dayjs';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
@@ -83,6 +84,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   formState,
   soknadsdato,
   begrunnelseFraBruker,
+  personopplysninger,
 }) => {
   const featureToggles = useContext(FeatureTogglesContext);
   const visBegrunnelseFraBruker = featureToggles.VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK === true;
@@ -154,6 +156,22 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   };
 
   const kroniskTidsbegrensetToggle = 'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET;
+
+  const getÅrstallList = () => {
+    const nesteÅr = dayjs().year() + 1;
+    const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
+
+    if (!fødselsdato) {
+      return Array.from({ length: 17 }, (_, index) => `${nesteÅr + index}-12-31`);
+    }
+
+    const født = dayjs(fødselsdato);
+
+    const åretBarnetFyller17 = født.year() + 17;
+    const antallÅr = Math.max(1, åretBarnetFyller17 - nesteÅr + 1);
+
+    return Array.from({ length: antallÅr }, (_, index) => `${nesteÅr + index}-12-31`);
+  };
 
   return (
     <div
@@ -340,11 +358,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                               label="Til"
                               size="small"
                             >
-                              <option value="2026-12-31">31.12.2026</option>
-                              <option value="2027-12-31">31.12.2027</option>
-                              <option value="2028-12-31">31.12.2028</option>
-                              <option value="2029-12-31">31.12.2029</option>
-                              <option value="2030-12-31">31.12.2030</option>
+                              {getÅrstallList().map(årstall => (
+                                <option key={årstall} value={årstall}>
+                                  {dayjs(årstall).format('DD.MM.YYYY')}
+                                </option>
+                              ))}
                             </Select>
                           </HStack>
                         )}
