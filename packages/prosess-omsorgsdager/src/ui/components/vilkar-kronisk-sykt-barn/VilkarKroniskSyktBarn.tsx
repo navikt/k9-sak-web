@@ -157,7 +157,19 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
   const kroniskTidsbegrensetToggle = 'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET;
 
-  const getÅrstallList = () => {
+  /**
+   * Genererer en liste med årssluttdatoer for tidsbegrensede perioder basert på barnets alder.
+   *
+   * Dersom barnets fødselsdato ikke er tilgjengelig, returneres en standard liste med 17 årssluttdatoer
+   * som starter fra neste år.
+   *
+   * Dersom barnets fødselsdato er tilgjengelig, beregnes datoer frem til året barnet fyller 17 år,
+   * med minimum 1 år.
+   *
+   * @returns En array med ISO-datostrenger i formatet "YYYY-12-31", som representerer
+   * 31. desember for hvert år i den tidsbegrensede perioden.
+   */
+  const hentTidsbegrensetÅrstallListe = (): string[] => {
     const nesteÅr = dayjs().year() + 1;
     const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
 
@@ -168,9 +180,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     const født = dayjs(fødselsdato);
 
     const åretBarnetFyller17 = født.year() + 17;
-    const antallÅr = Math.max(1, åretBarnetFyller17 - nesteÅr + 1);
+    const antallÅrTilBarnetFyller17 = Math.max(1, åretBarnetFyller17 - nesteÅr + 1);
 
-    return Array.from({ length: antallÅr }, (_, index) => `${nesteÅr + index}-12-31`);
+    return Array.from({ length: antallÅrTilBarnetFyller17 }, (_, index) => `${nesteÅr + index}-12-31`);
   };
 
   return (
@@ -358,7 +370,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                               label="Til"
                               size="small"
                             >
-                              {getÅrstallList().map(årstall => (
+                              {hentTidsbegrensetÅrstallListe().map(årstall => (
                                 <option key={årstall} value={årstall}>
                                   {dayjs(årstall).format('DD.MM.YYYY')}
                                 </option>
