@@ -155,7 +155,32 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
   };
 
-  const kroniskTidsbegrensetToggle = 'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET;
+  /**
+   * Sjekker om barnet fyller 18 år i inneværende år eller er eldre.
+   *
+   * Denne funksjonen brukes for å avgjøre om checkboxen for tidsbegrenset vedtak skal vises.
+   * Dersom barnet allerede fyller 18 år i inneværende år eller er eldre, skjules alternativet
+   * for tidsbegrenset vedtak, siden vedtaket uansett bare varer til barnet fyller 18 år.
+   *
+   * @returns `true` hvis barnet fyller 18 år i inneværende år eller allerede er eldre,
+   * `false` hvis fødselsdato mangler eller barnet er yngre enn 18 år i inneværende år.
+   */
+  const getErBarnetFyller18IÅr = (): boolean => {
+    const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
+
+    if (!fødselsdato) {
+      return false;
+    }
+
+    const født = dayjs(fødselsdato);
+    const inneværendeÅr = dayjs().year();
+    const åretBarnetFyller18 = født.year() + 18;
+
+    return åretBarnetFyller18 <= inneværendeÅr;
+  };
+
+  const kroniskTidsbegrensetToggle =
+    'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET && !getErBarnetFyller18IÅr();
 
   /**
    * Genererer en liste med årssluttdatoer for tidsbegrensede perioder basert på barnets alder.
@@ -163,8 +188,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
    * Dersom barnets fødselsdato ikke er tilgjengelig, returneres en standard liste med 17 årssluttdatoer
    * som starter fra neste år.
    *
-   * Dersom barnets fødselsdato er tilgjengelig, beregnes datoer frem til året barnet fyller 17 år,
-   * med minimum 1 år.
+   * Dersom barnet fyller 17 år i inneværende år, returneres kun 31.12 dette året.
+   * Ellers beregnes datoer frem til året før barnet fyller 18 år.
    *
    * @returns En array med ISO-datostrenger i formatet "YYYY-12-31", som representerer
    * 31. desember for hvert år i den tidsbegrensede perioden.
@@ -178,11 +203,18 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
 
     const født = dayjs(fødselsdato);
-
+    const inneværendeÅr = dayjs().year();
     const åretBarnetFyller17 = født.year() + 17;
-    const antallÅrTilBarnetFyller17 = Math.max(1, åretBarnetFyller17 - nesteÅr + 1);
+    const åretBarnetFyller18 = født.year() + 18;
 
-    return Array.from({ length: antallÅrTilBarnetFyller17 }, (_, index) => `${nesteÅr + index}-12-31`);
+    // Hvis barnet fyller 17 år i inneværende år, returner kun dette året
+    if (åretBarnetFyller17 === inneværendeÅr) {
+      return [`${inneværendeÅr}-12-31`];
+    }
+
+    // Ellers beregn fra neste år til året før barnet fyller 18
+    const antallÅr = Math.max(1, åretBarnetFyller18 - nesteÅr);
+    return Array.from({ length: antallÅr }, (_, index) => `${nesteÅr + index}-12-31`);
   };
 
   return (
