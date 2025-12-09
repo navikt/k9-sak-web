@@ -155,7 +155,33 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
   };
 
-  const kroniskTidsbegrensetToggle = 'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET;
+  /**
+   * Sjekker om den pleietrengende fyller 17 år i inneværende år eller er eldre.
+   *
+   * Denne funksjonen brukes for å avgjøre om checkboxen for tidsbegrenset vedtak skal vises.
+   * Dersom barnet allerede fyller 17 år i inneværende år eller er eldre, skjules alternativet
+   * for tidsbegrenset vedtak.
+   *
+   * @returns `true` hvis personen fyller 17 år i inneværende år eller allerede er eldre,
+   * `false` hvis fødselsdato mangler eller personen er yngre enn 17 år i inneværende år.
+   *
+   */
+  const getErPleietrengende17ÅrEllerEldre = (): boolean => {
+    const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
+    if (!fødselsdato) {
+      return false;
+    }
+    const født = dayjs(fødselsdato);
+    const inneværendeÅr = dayjs().year();
+    const åretPersonenFyller17 = født.year() + 17;
+
+    return åretPersonenFyller17 <= inneværendeÅr;
+  };
+
+  const kroniskTidsbegrensetToggle =
+    'KRONISK_TIDSBEGRENSET' in featureToggles &&
+    featureToggles.KRONISK_TIDSBEGRENSET &&
+    !getErPleietrengende17ÅrEllerEldre();
 
   /**
    * Genererer en liste med årssluttdatoer for tidsbegrensede perioder basert på barnets alder.
