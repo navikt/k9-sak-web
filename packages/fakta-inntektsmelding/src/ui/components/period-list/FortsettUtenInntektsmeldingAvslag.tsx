@@ -6,6 +6,7 @@ import ContainerContext from '../../../context/ContainerContext';
 import { Kode, Tilstand } from '../../../types/KompletthetData';
 import styles from './periodList.module.css';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 const FortsettUtenInntektsmeldingAvslag = ({
   tilstand,
@@ -16,6 +17,7 @@ const FortsettUtenInntektsmeldingAvslag = ({
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
 }): JSX.Element | null => {
+  const featureToggles = React.useContext(FeatureTogglesContext);
   const context = React.useContext(ContainerContext);
   const readOnly = context?.readOnly ?? false;
 
@@ -25,9 +27,12 @@ const FortsettUtenInntektsmeldingAvslag = ({
     return (
       <>
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
-          {kode === Kode.MANGLENDE_GRUNNLAG && <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>}
+          {kode === Kode.MANGLENDE_GRUNNLAG &&
+            ((featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP && (
+              <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
+            )) || <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>)}
           {kode === Kode.IKKE_INNTEKTSTAP && (
-            <span>Kan ikke gå videre på grunn av manglende inntektstap, søknad avslås.</span>
+            <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>
           )}
           {!readOnly && (
             <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
