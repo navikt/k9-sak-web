@@ -31,4 +31,5 @@ export const prodFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: false,
   UNG_KLAGE: false,
   KRONISK_TIDSBEGRENSET: true,
+  V2_MELDINGER_FOR_TILBAKE: false,
 } satisfies K9FeatureToggles;

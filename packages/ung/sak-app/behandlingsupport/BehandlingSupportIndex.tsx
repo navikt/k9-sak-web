@@ -1,16 +1,7 @@
-import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  BehandlingAppKontekst,
-  Fagsak,
-  NavAnsatt,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import {
   ArrowUndoIcon,
@@ -34,7 +25,6 @@ import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
-import MeldingTilbakeIndex from './melding/MeldingTilbakeIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
@@ -45,6 +35,11 @@ import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/a
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngSakTotrinnskontrollBackendClient.js';
 import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngTilbakeTotrinnskontrollBackendClient.js';
+import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
+import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
+import { UngTilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/UngTilbakeMeldingerBackendClient.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -140,10 +135,8 @@ interface OwnProps {
   behandlingId: number | undefined;
   behandlingVersjon: number | undefined;
   behandlingRettigheter?: BehandlingRettigheter;
-  personopplysninger?: Personopplysninger;
   navAnsatt: NavAnsatt;
   featureToggles: FeatureToggles;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
 }
 
 /**
@@ -158,16 +151,12 @@ const BehandlingSupportIndex = ({
   behandlingId,
   behandlingVersjon,
   behandlingRettigheter,
-  personopplysninger,
   navAnsatt,
   featureToggles,
-  arbeidsgiverOpplysninger,
 }: OwnProps) => {
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
   const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
-  const formidlingClient = useContext(FormidlingClientContext);
-  const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
   const historikkBackendClient = new UngHistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient('ungSak');
 
@@ -232,15 +221,17 @@ const BehandlingSupportIndex = ({
   );
 
   const behandlingTypeKode = behandling?.type.kode;
+  const erTilbakekreving =
+    behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
+    behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
   const totrinnskontrollApi: TotrinnskontrollApi = useMemo(() => {
-    const erTilbakekreving =
-      behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
-      behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
     if (erTilbakekreving) {
       return new UngTilbakeTotrinnskontrollBackendClient(kodeverkoppslag.ungTilbake);
     }
     return new UngSakTotrinnskontrollBackendClient(kodeverkoppslag.ungSak);
-  }, [behandlingTypeKode, kodeverkoppslag]);
+  }, [erTilbakekreving, kodeverkoppslag]);
+
+  const meldingerTilbakeBackendClient = useMemo(() => new UngTilbakeMeldingerBackendClient(), []);
 
   const isPanelDisabled = () =>
     valgtSupportPanel
@@ -309,22 +300,17 @@ const BehandlingSupportIndex = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
-            {behandlingId ? (
-              erTilbakekreving(behandling?.type.kode) ? (
-                <MeldingTilbakeIndex
-                  fagsak={fagsak}
-                  alleBehandlinger={alleBehandlinger}
-                  behandlingId={behandlingId}
-                  behandlingVersjon={behandlingVersjon}
-                  personopplysninger={personopplysninger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                  featureToggles={featureToggles}
-                  backendApi={meldingerBackendClient}
-                />
-              ) : (
-                <MeldingIndex alleBehandlinger={alleBehandlinger} behandlingId={behandlingId} />
-              )
-            ) : null}
+            <ErrorBoundary errorFallback={MessagesErrorAlert}>
+              <LoadingPanelSuspense>
+                {behandlingId != null ? (
+                  erTilbakekreving ? (
+                    <TilbakeMessagesIndex fagsak={fagsak} behandling={behandling} api={meldingerTilbakeBackendClient} />
+                  ) : (
+                    <MeldingIndex alleBehandlinger={alleBehandlinger} behandlingId={behandlingId} />
+                  )
+                ) : null}
+              </LoadingPanelSuspense>
+            </ErrorBoundary>
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.DOKUMENTER}>
             <DokumentIndex
