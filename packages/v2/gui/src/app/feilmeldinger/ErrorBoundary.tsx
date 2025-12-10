@@ -12,6 +12,7 @@ import { AuthAbortedPage } from '../auth/AuthAbortedPage.js';
 export interface ErrorFallbackProps {
   readonly error: Error;
   readonly sentryId: string | undefined;
+  readonly reset: () => void;
 }
 
 interface OwnProps {
@@ -27,6 +28,8 @@ interface State {
   sentryId: string | undefined;
 }
 
+const initialState: State = { error: null, sentryId: undefined };
+
 export class ErrorBoundary extends Component<OwnProps, State> {
   static defaultProps = {
     doNotShowErrorPage: false,
@@ -36,7 +39,7 @@ export class ErrorBoundary extends Component<OwnProps, State> {
 
   constructor(props: OwnProps) {
     super(props);
-    this.state = { error: null, sentryId: undefined };
+    this.state = initialState;
   }
 
   static ensureError(error: unknown): Error {
@@ -127,7 +130,10 @@ export class ErrorBoundary extends Component<OwnProps, State> {
 
     if (error != null && showErrorPage) {
       if (ErrorFallback != null) {
-        return <ErrorFallback error={error} sentryId={sentryId} />;
+        const reset = () => {
+          this.setState(initialState);
+        };
+        return <ErrorFallback error={error} sentryId={sentryId} reset={reset} />;
       } else {
         // Utled feilside som skal visast.
         const apiError = ExtendedApiError.findInError(error);
