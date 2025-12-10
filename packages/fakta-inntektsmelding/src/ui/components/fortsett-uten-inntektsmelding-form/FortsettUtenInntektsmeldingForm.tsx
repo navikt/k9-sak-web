@@ -12,6 +12,7 @@ import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -171,12 +172,12 @@ const FortsettUtenInntektsmeldingForm = ({
             {(featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP && (
               <>
                 <li>
-                  Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter §21-3, hvis vi ikke får
+                  Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får
                   tilstrekkelige opplysninger hverken i A-inntekt eller fra inntektsmelding.
                 </li>
                 <li>
                   Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å
-                  innhente denne, kan du avslå etter §9-3.
+                  innhente denne, kan du avslå etter <Lovreferanse>§ 9-3</Lovreferanse>.
                 </li>
               </>
             )) || (
