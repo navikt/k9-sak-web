@@ -255,6 +255,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                 utbetaling={utbetaling}
                                 rapportertInntekt={rapportertInntekt}
                                 reduksjon={reduksjon}
+                                reduksjonsgrunnlag={reduksjonsgrunnlag}
                               />
                             }
                             togglePlacement="right"
