@@ -1,19 +1,26 @@
-import { type k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type BestillBrevDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/BestillBrevDto.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts';
-import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import {
+  avsenderApplikasjon,
+  type AvsenderApplikasjon,
+} from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
+import type { EregOrganizationLookupResponse } from '../EregOrganizationLookupResponse.js';
 import { brev_bestillDokument, brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { isAbortedFetchError } from '@k9-sak-web/backend/shared/isAbortedFetchError.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import type { BackendApi } from '../Messages.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 
-export default class MeldingerBackendClient {
+export default class K9SakMeldingerBackendClient implements BackendApi {
+  readonly backend = 'k9sak';
+
   #formidling: FormidlingClient;
 
   constructor(formidlingClient: FormidlingClient) {
@@ -75,5 +82,14 @@ export default class MeldingerBackendClient {
       avsenderApplikasjon,
       maltype,
     );
+  }
+
+  async hentMaler(fagsakYtelsestype: FagsakYtelsesType, behandlingUuid: string): Promise<Template[]> {
+    const templateMap = await this.#formidling.maler.hentBrevmaler(
+      fagsakYtelsestype,
+      behandlingUuid,
+      avsenderApplikasjon.K9SAK,
+    );
+    return [...templateMap.values()];
   }
 }
