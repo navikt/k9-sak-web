@@ -348,6 +348,5 @@
   "packages/ung/sak-app/behandling/BehandlingIndex.tsx",
   "packages/ung/sak-app/behandlingmenu/BehandlingMenuIndex.tsx",
   "packages/ung/sak-app/behandlingmenu/MenyKodeverk.ts",
-  "packages/ung/sak-app/behandlingsupport/dokument/DokumentIndex.tsx",
-  "packages/ung/sak-app/behandlingsupport/melding/MeldingTilbakeIndex.tsx"
+  "packages/ung/sak-app/behandlingsupport/dokument/DokumentIndex.tsx"
 ]
