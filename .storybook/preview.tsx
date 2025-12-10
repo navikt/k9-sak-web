@@ -54,7 +54,7 @@ const preview: Preview = {
       const store = configureStore();
       return (
         <Provider store={store}>
-          <MemoryRouter>
+          <MemoryRouter initialEntries={['/fagsak/5YCCV/behandling/3000015/?punkt=default&fakta=default']}>
             <QueryClientProvider client={queryClient}>
               <Theme theme="light">
                 <Story />
