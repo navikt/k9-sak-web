@@ -115,7 +115,7 @@ const FortsettUtenInntektsmeldingForm = ({
     {
       value: Kode.MANGLENDE_GRUNNLAG,
       label: featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP
-        ? 'Nei, avslå på grunn av manglende opplysninger om inntekt.'
+        ? 'Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3'
         : 'Nei, avslå periode på grunn av manglende inntektsopplysninger',
       id: `${beslutningId}${Kode.MANGLENDE_GRUNNLAG}`,
     },
@@ -168,10 +168,23 @@ const FortsettUtenInntektsmeldingForm = ({
               A-inntekt benyttes <span className={styles.radiogroupAlert__emphasize}>kun</span> for de
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
-            <li>
-              Refusjon i inntektsmeldinger vil alltid utbetales til arbeidsgiver. Evt. mellomlegg utbetales direkte til
-              søker.
-            </li>
+            {(featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP && (
+              <>
+                <li>
+                  Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter §21-3, hvis vi ikke får
+                  tilstrekkelige opplysninger hverken i A-inntekt eller fra inntektsmelding.
+                </li>
+                <li>
+                  Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å
+                  innhente denne, kan du avslå etter §9-3.
+                </li>
+              </>
+            )) || (
+              <li>
+                Refusjon i inntektsmeldinger vil alltid utbetales til arbeidsgiver. Evt. mellomlegg utbetales direkte
+                til søker.
+              </li>
+            )}
           </ul>
         </Alert>
         <div className={styles.fortsettUtenInntektsmelding__radiogroup}>

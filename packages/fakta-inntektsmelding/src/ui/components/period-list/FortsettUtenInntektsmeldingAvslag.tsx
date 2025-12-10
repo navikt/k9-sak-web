@@ -25,9 +25,11 @@ const FortsettUtenInntektsmeldingAvslag = ({
     return (
       <>
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
-          {kode === Kode.MANGLENDE_GRUNNLAG && <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>}
+          {kode === Kode.MANGLENDE_GRUNNLAG && (
+            <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
+          )}
           {kode === Kode.IKKE_INNTEKTSTAP && (
-            <span>Kan ikke gå videre på grunn av manglende inntektstap, søknad avslås.</span>
+            <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>
           )}
           {!readOnly && (
             <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
