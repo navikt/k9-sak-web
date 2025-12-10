@@ -1,4 +1,4 @@
-import { Component, type ReactNode, type ErrorInfo } from 'react';
+import { Component, type ReactNode, type ErrorInfo, type FC } from 'react';
 import { captureException, withScope } from '@sentry/browser';
 import ErrorPage from './ErrorPage.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
@@ -9,11 +9,17 @@ import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/back
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
 import { AuthAbortedPage } from '../auth/AuthAbortedPage.js';
 
+export interface ErrorFallbackProps {
+  readonly error: Error;
+  readonly sentryId: string | undefined;
+}
+
 interface OwnProps {
   errorMessageCallback?: (error: string) => void;
   children: ReactNode;
   doNotShowErrorPage?: boolean;
   doNotShowErrorPageMaxCount?: number;
+  errorFallback?: FC<ErrorFallbackProps>;
 }
 
 interface State {
@@ -95,14 +101,20 @@ export class ErrorBoundary extends Component<OwnProps, State> {
   }
 
   override render(): ReactNode {
-    const { children, doNotShowErrorPage, errorMessageCallback, doNotShowErrorPageMaxCount = 16 } = this.props;
+    const {
+      errorFallback: ErrorFallback,
+      children,
+      doNotShowErrorPage,
+      errorMessageCallback,
+      doNotShowErrorPageMaxCount = 16,
+    } = this.props;
     const { error, sentryId } = this.state;
     // I utgangspunktet visast feilside viss doNotShowErrorPage ikkje er true. Ellers blir berre errorMessageCallback
     // kalla, og rendering fortsetter etter beste evne.
     let showErrorPage = !doNotShowErrorPage;
     if (!showErrorPage) {
       // Dette kan likevel bli overstyrt slik at feilside visast viss errorMessageCallback ikkje er definert, eller viss
-      // det har oppstått meir enn 6 feil sidan sist ErrorBoundary vart resatt, for å unngå evig loop viss ein feil gjenoppstår
+      // det har oppstått meir enn 16 feil sidan sist ErrorBoundary vart resatt, for å unngå evig loop viss ein feil gjenoppstår
       // for kvar rendering av children.
       if (errorMessageCallback == null) {
         console.info(`Ingen errorMessageCallback definert, vis separat feilside.`);
@@ -114,28 +126,32 @@ export class ErrorBoundary extends Component<OwnProps, State> {
     }
 
     if (error != null && showErrorPage) {
-      // Utled feilside som skal visast.
-      const apiError = ExtendedApiError.findInError(error);
-      if (apiError != null) {
-        if (apiError.isUnauthorized) {
-          const loginUrl = withRedirectToCurrentLocation(resolveLoginURL(apiError.location));
-          if (loginUrl != null) {
-            return <UnauthorizedPage loginUrl={loginUrl.toString()} />;
-          } else {
-            return <UnauthorizedPage loginUrl="/" />;
+      if (ErrorFallback != null) {
+        return <ErrorFallback error={error} sentryId={sentryId} />;
+      } else {
+        // Utled feilside som skal visast.
+        const apiError = ExtendedApiError.findInError(error);
+        if (apiError != null) {
+          if (apiError.isUnauthorized) {
+            const loginUrl = withRedirectToCurrentLocation(resolveLoginURL(apiError.location));
+            if (loginUrl != null) {
+              return <UnauthorizedPage loginUrl={loginUrl.toString()} />;
+            } else {
+              return <UnauthorizedPage loginUrl="/" />;
+            }
+          }
+          if (apiError.isForbidden) {
+            return <ForbiddenPage />;
+          }
+          if (apiError.isNotFound) {
+            return <NotFoundPage />;
           }
         }
-        if (apiError.isForbidden) {
-          return <ForbiddenPage />;
+        if (error instanceof AuthAbortedError) {
+          return <AuthAbortedPage retryURL={error.retryURL} />;
         }
-        if (apiError.isNotFound) {
-          return <NotFoundPage />;
-        }
+        return <ErrorPage sentryId={sentryId} />;
       }
-      if (error instanceof AuthAbortedError) {
-        return <AuthAbortedPage retryURL={error.retryURL} />;
-      }
-      return <ErrorPage sentryId={sentryId} />;
     }
 
     return children;
