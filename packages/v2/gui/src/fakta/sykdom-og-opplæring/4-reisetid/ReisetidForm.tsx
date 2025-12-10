@@ -22,8 +22,8 @@ const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] })
     begrunnelse: vurdering.reisetid.begrunnelse,
     godkjent: resultatTilJaNei(vurdering.reisetid.resultat),
     periode: {
-      fom: new Date(vurdering.perioder[0]?.fom as string),
-      tom: new Date(vurdering.perioder[0]?.tom as string),
+      fom: vurdering.perioder[0]?.fom as string,
+      tom: vurdering.perioder[0]?.tom as string,
     },
   };
 };
@@ -37,8 +37,8 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
     begrunnelse: string;
     godkjent: string;
     periode: {
-      fom: Date;
-      tom: Date;
+      fom: string;
+      tom: string;
     };
   }>({
     defaultValues: defaultValues(vurdering),
@@ -119,16 +119,13 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
           />
           {formMethods.watch('godkjent') === 'ja' && !vurderingGjelderEnkeltdag && (
             <PeriodePicker
-              minDate={new Date(vurdering.perioder[0]?.fom as string)}
-              maxDate={new Date(vurdering.perioder[0]?.tom as string)}
-              size="small"
+              minDate={vurdering.perioder[0]?.fom ? dayjs(vurdering.perioder[0]?.fom as string).toDate() : undefined}
+              maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0]?.tom as string).toDate() : undefined}
               fromField={{
                 name: 'periode.fom',
-                validate: value => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
               }}
               toField={{
                 name: 'periode.tom',
-                validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
               }}
               readOnly={lesemodus}
             />
