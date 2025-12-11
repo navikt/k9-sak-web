@@ -32,7 +32,7 @@ type Story = StoryObj<typeof InntektsmeldingContainer>;
 
 export const IkkePaakrevd: Story = {
   args: {
-    data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') } as any,
+    data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') },
     requestApi: createApi(ikkePaakrevd),
   },
 };
@@ -45,14 +45,14 @@ export const Mangler9069: Story = {
 
 export const Mangler9071: Story = {
   args: {
-    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') } as any,
+    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
     requestApi: createApi(manglerInntektsmelding),
   },
 };
 
 export const ManglerFlere9071: Story = {
   args: {
-    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') } as any,
+    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
     requestApi: createApi(manglerFlereInntektsmeldinger),
   },
 };
@@ -71,14 +71,14 @@ export const FerdigVisning9069: Story = {
 
 export const FerdigVisning9071: Story = {
   args: {
-    data: { ...aksjonspunkt9071FerdigProps, onFinished: action('button-click') } as any,
+    data: { ...aksjonspunkt9071FerdigProps, onFinished: action('button-click') },
     requestApi: createApi(ferdigvisning),
   },
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
   args: {
-    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') } as any,
+    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
     requestApi: createApi(alleErMottatt),
   },
 };
