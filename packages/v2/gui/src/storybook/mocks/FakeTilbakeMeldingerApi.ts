@@ -40,6 +40,7 @@ export class FakeTilbakeMeldingerApi implements TilbakeMeldingerApi {
     return fakePdf();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async hentMaler(_behandlingUuid: string): Promise<BrevmalDto[]> {
     // Not used in stories, as maler are passed in as props
     return [];

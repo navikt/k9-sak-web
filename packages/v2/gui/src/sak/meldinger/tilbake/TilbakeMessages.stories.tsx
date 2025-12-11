@@ -81,7 +81,7 @@ export const DefaultStory: Story = {
     behandling: {
       id: 101,
       uuid: 'XUYPS4',
-      type: { kode: behandlingType.TILBAKEKREVING, kodeverk: 'BEHANDLING_TYPE' },
+      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
       språkkode: {
         kode: 'NB',
         kodeverk: 'SPRAAK_KODE',
