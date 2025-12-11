@@ -29,8 +29,8 @@ const DatovelgerPlain = ({
   size = 'small',
   id,
 }: DatovelgerProps) => {
-  const fromDateDefault = new Date().setFullYear(new Date().getFullYear() - 5);
-  const toDateDefault = new Date().setFullYear(new Date().getFullYear() + 5);
+  const fromDateDefault = dayjs().subtract(5, 'year').toDate();
+  const toDateDefault = dayjs().add(5, 'year').toDate();
 
   const defaultSelected = selectedDay ? dayjs(selectedDay).toDate() : undefined;
 
@@ -57,15 +57,12 @@ const DatovelgerPlain = ({
   return (
     <div className={className}>
       <DatePicker
-        {...(datepickerProps as any)}
+        {...datepickerProps}
         showWeekNumber={true}
-        mode="single"
-        inputDisabled={disabled}
         onSelect={onBlur}
         dropdownCaption={true}
         fromDate={fromDate || fromDateDefault}
         toDate={toDate || toDateDefault}
-        size={size}
       >
         <DatePicker.Input
           {...inputProps}
