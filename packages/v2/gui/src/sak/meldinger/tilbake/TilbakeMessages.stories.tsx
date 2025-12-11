@@ -1,8 +1,8 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { foreldrepenger_tilbakekreving_behandlingslager_behandling_BehandlingType as BehandlingType } from '@k9-sak-web/backend/k9tilbake/generated/types.ts';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeTilbakeMeldingerApi } from '@k9-sak-web/gui/storybook/mocks/FakeTilbakeMeldingerApi.js';
@@ -18,11 +18,6 @@ const newStickyState = (): TilbakeMessagesProps['stickyState'] => ({
     tittel: new StickyStateReducer(),
   },
 });
-
-const withStickyState = (): Decorator => (Story, ctx) => {
-  ctx.args['stickyState'] = newStickyState();
-  return <Story />;
-};
 
 const testMaler: BrevmalDto[] = [
   {
@@ -46,12 +41,9 @@ const api = new FakeTilbakeMeldingerApi();
 const meta = {
   title: 'gui/sak/meldinger/tilbake/TilbakeMessages.tsx',
   component: TilbakeMessages,
-  decorators: [withMaxWidth(420), withStickyState()],
+  decorators: [withMaxWidth(420)],
   beforeEach: () => {
     api.reset();
-  },
-  args: {
-    stickyState: newStickyState(),
   },
 } satisfies Meta<typeof TilbakeMessages>;
 export default meta;
@@ -81,7 +73,7 @@ export const DefaultStory: Story = {
     behandling: {
       id: 101,
       uuid: 'XUYPS4',
-      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+      type: { kode: BehandlingType.TILBAKEKREVING, kodeverk: 'BEHANDLING_TYPE' },
       språkkode: {
         kode: 'NB',
         kodeverk: 'SPRAAK_KODE',
@@ -90,6 +82,7 @@ export const DefaultStory: Story = {
     maler: testMaler,
     api,
     onMessageSent: fn(() => action('onMessageSent')),
+    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     const { malEl, fritekstEl, sendBrevBtn, forhåndsvisBtn } = elemsfinder(canvasElement);
@@ -108,6 +101,7 @@ export const DefaultStory: Story = {
 export const MalValg: Story = {
   args: {
     ...DefaultStory.args,
+    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     const { malEl } = elemsfinder(canvasElement);
@@ -126,6 +120,7 @@ export const MalValg: Story = {
 export const SendBrev: Story = {
   args: {
     ...DefaultStory.args,
+    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     api.fakeDelayMillis = 0;
@@ -147,6 +142,7 @@ export const SendBrev: Story = {
 export const Forhåndsvisning: Story = {
   args: {
     ...DefaultStory.args,
+    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     api.fakeDelayMillis = 0;
@@ -165,6 +161,7 @@ export const Forhåndsvisning: Story = {
 export const Validering: Story = {
   args: {
     ...DefaultStory.args,
+    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     api.fakeDelayMillis = 0;
