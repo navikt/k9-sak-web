@@ -1,14 +1,13 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
+import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import BehandlingAvregningBackendClient from '../AvregningBackendClient';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 
 interface Props {
   behandling: BehandlingDto;
-  aksjonspunkt: AksjonspunktDto;
+  aksjonspunkt: K9SakAksjonspunktDto | UngSakAksjonspunktDto;
   readOnly: boolean;
 }
 
