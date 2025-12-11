@@ -17,7 +17,6 @@ export class UngTilbakeMeldingerBackendClient implements TilbakeMeldingerApi {
     return (await brev_forhåndsvisBrev({ body: data })).data;
   }
 
-  // første parameter (FagsakYtelseType) trengs ikkje her, så deklarerer den som unknown
   async hentMaler(behandlingUuid: string): Promise<BrevmalDto[]> {
     return (await brev_hentMaler({ query: { behandlingUuid } })).data;
   }
