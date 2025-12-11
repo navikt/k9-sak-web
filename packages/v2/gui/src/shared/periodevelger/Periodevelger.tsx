@@ -5,8 +5,8 @@ import { ErrorMessage, HStack, VStack } from '@navikt/ds-react';
 import { useEffect, useRef } from 'react';
 
 interface PeriodevelgerProps {
-  minDate: Date | undefined;
-  maxDate: Date | undefined;
+  minDate?: Date;
+  maxDate?: Date;
   fromField: { name: string; validators?: ((value: string) => string | undefined)[] };
   toField: { name: string; validators?: ((value: string) => string | undefined)[] };
   fromLabel?: string;
@@ -63,6 +63,17 @@ const Periodevelger = ({
     }
   }, [tilVerdi, toRef, formMethods, fromField.name]);
 
+  const maxDateValidator = (value?: string, maxDate?: Date) => {
+    if (!value || !maxDate) return undefined;
+    if (dayjs(value).isAfter(dayjs(maxDate), 'day')) return `Dato må være før ${dayjs(maxDate).format('DD.MM.YYYY')}`;
+    return undefined;
+  };
+  const minDateValidator = (value?: string, minDate?: Date) => {
+    if (!value || !minDate) return undefined;
+    if (dayjs(value).isBefore(dayjs(minDate), 'day'))
+      return `Dato må være etter ${dayjs(minDate).format('DD.MM.YYYY')}`;
+    return undefined;
+  };
   return (
     <VStack gap="space-16">
       <HStack gap="space-16">
@@ -76,20 +87,10 @@ const Periodevelger = ({
             (value: string) => (value && dayjs(value).isValid() ? undefined : 'Datoen er påkrevd og må være gyldig'),
             (value: string) => {
               if (!value || !tilVerdi) return undefined;
-              return dayjs(value).isAfter(dayjs(tilVerdi)) ? `Kan ikke være etter "${toLabel}"` : undefined;
+              return dayjs(value).isAfter(dayjs(tilVerdi), 'day') ? `Kan ikke være etter "${toLabel}"` : undefined;
             },
-            (value: string) => {
-              if (!value || !minDate) return undefined;
-              if (dayjs(value).isBefore(dayjs(minDate)))
-                return `Fra kan ikke være før ${dayjs(minDate).format('DD.MM.YYYY')}`;
-              return undefined;
-            },
-            (value: string) => {
-              if (!value || !maxDate) return undefined;
-              if (dayjs(value).isAfter(dayjs(maxDate)))
-                return `Fra kan ikke være etter ${dayjs(maxDate).format('DD.MM.YYYY')}`;
-              return undefined;
-            },
+            value => minDateValidator(value, minDate),
+            value => maxDateValidator(value, maxDate),
           ]}
           fromDate={minDate}
           toDate={maxDate}
@@ -105,20 +106,12 @@ const Periodevelger = ({
             (value: string) => (value && dayjs(value).isValid() ? undefined : 'Datoen er påkrevd og må være gyldig'),
             (value: string) => {
               if (!value || !fraVerdi) return undefined;
-              return dayjs(value).isBefore(dayjs(fraVerdi)) ? `Kan ikke være før "${fromLabel}"` : undefined;
+              return dayjs(value).isSameOrBefore(dayjs(fraVerdi), 'day')
+                ? `Kan ikke være før "${fromLabel}"`
+                : undefined;
             },
-            (value: string) => {
-              if (!value || !maxDate) return undefined;
-              if (dayjs(value).isAfter(dayjs(maxDate)))
-                return `Kan ikke være etter ${dayjs(maxDate).format('DD.MM.YYYY')}`;
-              return undefined;
-            },
-            (value: string) => {
-              if (!value || !minDate) return undefined;
-              if (dayjs(value).isBefore(dayjs(minDate)))
-                return `Kan ikke være før ${dayjs(minDate).format('DD.MM.YYYY')}`;
-              return undefined;
-            },
+            value => maxDateValidator(value, maxDate),
+            value => minDateValidator(value, minDate),
           ]}
           fromDate={minDate}
           toDate={maxDate}
