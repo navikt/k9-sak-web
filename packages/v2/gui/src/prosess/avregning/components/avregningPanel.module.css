@@ -11,8 +11,8 @@
 }
 
 .varsel {
-  min-width: 350px;
-  top: 70px;
+  min-width: 500px;
+  margin-top: 0.625rem;
 }
 
 .bold {

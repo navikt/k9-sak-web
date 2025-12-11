@@ -145,6 +145,7 @@ export const AvregningPanel = ({
       k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
   const [showDetails, setShowDetails] = useState<{ id: number; show: boolean }[]>([]);
   const varseltekst = formHook.watch('varseltekst');
+  const videreBehandling = formHook.watch('videreBehandling');
 
   const toggleDetails = (id: number) => {
     const tableIndex = showDetails.findIndex(table => table.id === id);
@@ -277,7 +278,7 @@ export const AvregningPanel = ({
         {harVurderFeilutbetalingAP && (
           <VStack gap="space-8">
             <RhfForm formMethods={formHook} onSubmit={handleSubmit}>
-              <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
+              <HGrid gap="space-24" columns={{ xs: '6fr 6fr' }}>
                 <RhfTextarea
                   control={formHook.control}
                   name="begrunnelse"
@@ -298,7 +299,7 @@ export const AvregningPanel = ({
                       {radioButtons.map(radio => (
                         <Radio key={radio.value} value={radio.value}>
                           {radio.label}
-                          {radio.element}
+                          {videreBehandling === radio.value && radio.element}
                         </Radio>
                       ))}
                     </RhfRadioGroup>

@@ -1,26 +1,17 @@
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
+  k9_kodeverk_behandling_BehandlingStatus,
+  k9_kodeverk_behandling_BehandlingType,
+  k9_kodeverk_behandling_FagsakYtelseType,
   k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling,
+  k9_oppdrag_kontrakt_kodeverk_FagOmrådeKode,
+  k9_oppdrag_kontrakt_kodeverk_MottakerType,
+  k9_oppdrag_kontrakt_simulering_v1_RadId,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { action } from 'storybook/actions';
-import AvregningProsessIndex from './AvregningProsessIndex';
-
-const fagsak = {
-  saksnummer: 123,
-  fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
-};
-
-const behandling = {
-  id: 1,
-  versjon: 1,
-  språkkode: {
-    kode: 'NO',
-  },
-  status: behandlingStatus.UTREDES,
-};
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { asyncAction } from '../../storybook/asyncAction';
+import { AvregningPanel } from './components/AvregningPanel';
 
 const simuleringResultat = {
   simuleringResultat: {
@@ -34,23 +25,15 @@ const simuleringResultat = {
     ingenPerioderMedAvvik: false,
     perioderPerMottaker: [
       {
-        mottakerType: {
-          kode: 'BRUKER',
-          navn: null,
-          kodeverk: 'MOTTAKER_TYPE',
-        },
-        mottakerNummer: null,
-        mottakerNavn: null,
+        mottakerType: k9_oppdrag_kontrakt_kodeverk_MottakerType.BRUKER,
+        mottakerNummer: undefined,
+        mottakerNavn: undefined,
         resultatPerFagområde: [
           {
-            fagOmrådeKode: {
-              kode: 'FP',
-              navn: 'Foreldrepenger',
-              kodeverk: 'FAG_OMRAADE_KODE',
-            },
+            fagOmrådeKode: k9_oppdrag_kontrakt_kodeverk_FagOmrådeKode.FORELDREPENGER,
             rader: [
               {
-                feltnavn: 'nyttBeløp',
+                feltnavn: k9_oppdrag_kontrakt_simulering_v1_RadId.NYTT_BELØP,
                 resultaterPerMåned: [
                   {
                     periode: {
@@ -69,7 +52,7 @@ const simuleringResultat = {
                 ],
               },
               {
-                feltnavn: 'tidligereUtbetalt',
+                feltnavn: k9_oppdrag_kontrakt_simulering_v1_RadId.TIDLIGERE_UTBETALT,
                 resultaterPerMåned: [
                   {
                     periode: {
@@ -88,7 +71,7 @@ const simuleringResultat = {
                 ],
               },
               {
-                feltnavn: 'differanse',
+                feltnavn: k9_oppdrag_kontrakt_simulering_v1_RadId.DIFFERANSE,
                 resultaterPerMåned: [
                   {
                     periode: {
@@ -111,7 +94,7 @@ const simuleringResultat = {
         ],
         resultatOgMotregningRader: [
           {
-            feltnavn: 'inntrekkNesteMåned',
+            feltnavn: k9_oppdrag_kontrakt_simulering_v1_RadId.INNTREKK_NESTE_MÅNED,
             resultaterPerMåned: [
               {
                 periode: {
@@ -130,7 +113,7 @@ const simuleringResultat = {
             ],
           },
           {
-            feltnavn: 'resultat',
+            feltnavn: k9_oppdrag_kontrakt_simulering_v1_RadId.RESULTAT,
             resultaterPerMåned: [
               {
                 periode: {
@@ -156,100 +139,82 @@ const simuleringResultat = {
       },
     ],
   },
-  simuleringResultatUtenInntrekk: null,
+  simuleringResultatUtenInntrekk: { periode: { fom: '2019-01-01', tom: '2019-03-31' } },
   slåttAvInntrekk: false,
 };
 
-const toggles = {
-  'k9sak.simuler-oppdrag-varseltekst': true,
-};
-
-export default {
-  title: 'prosess/prosess-avregning',
-  component: AvregningProsessIndex,
-};
-
-export const visAksjonspunktVurderFeilutbetaling = args => (
-  <AvregningProsessIndex
-    behandling={behandling}
-    submitCallback={action('button-click')}
-    previewFptilbakeCallback={action('button-click')}
-    featureToggles={toggles}
-    {...args}
-  />
-);
-
-visAksjonspunktVurderFeilutbetaling.args = {
-  fagsak,
-  aksjonspunkter: [
-    {
-      definisjon: {
-        kode: AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
-      },
-      begrunnelse: undefined,
+const meta = {
+  title: 'gui/prosess/avregning',
+  component: AvregningPanel,
+  args: {
+    fagsak: {
+      saksnummer: '123',
+      sakstype: k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     },
-    {
-      definisjon: {
-        kode: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
-      },
-      begrunnelse: undefined,
-      erAktivt: true,
-      status: aksjonspunktStatus.OPPRETTET,
+    behandling: {
+      opprettet: '2019-01-01',
+      sakstype: k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
+      status: k9_kodeverk_behandling_BehandlingStatus.UTREDES,
+      type: k9_kodeverk_behandling_BehandlingType.FØRSTEGANGSSØKNAD,
+      uuid: '123',
+      versjon: 1,
     },
-  ],
-  simuleringResultat,
-  isReadOnly: false,
-  isAksjonspunktOpen: true,
-  readOnlySubmitButton: false,
-};
-
-export const visAksjonspunktHøyEtterbetaling = args => (
-  <AvregningProsessIndex
-    behandling={behandling}
-    submitCallback={action('button-click')}
-    previewFptilbakeCallback={action('button-click')}
-    featureToggles={toggles}
-    {...args}
-  />
-);
-
-visAksjonspunktHøyEtterbetaling.args = {
-  fagsak,
-  aksjonspunkter: [
-    {
-      definisjon: {
-        kode: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+        begrunnelse: undefined,
+        erAktivt: true,
+        status: aksjonspunktStatus.OPPRETTET,
       },
-      begrunnelse: undefined,
-      erAktivt: true,
-      status: aksjonspunktStatus.OPPRETTET,
+      {
+        definisjon: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+        begrunnelse: undefined,
+        erAktivt: true,
+        status: aksjonspunktStatus.OPPRETTET,
+      },
+    ],
+    submitCallback: asyncAction('submitCallback'),
+    previewCallback: asyncAction('previewCallback'),
+    readOnly: false,
+    simuleringResultat,
+    tilbakekrevingvalg: {
+      erTilbakekrevingVilkårOppfylt: false,
     },
-  ],
-  simuleringResultat,
-  isReadOnly: false,
-  isAksjonspunktOpen: true,
-  readOnlySubmitButton: false,
-};
-export const visSimuleringspanelUtenAksjonspunkt = args => (
-  <AvregningProsessIndex
-    behandling={behandling}
-    aksjonspunkter={[]}
-    submitCallback={action('button-click')}
-    previewFptilbakeCallback={action('button-click')}
-    featureToggles={toggles}
-    {...args}
-  />
-);
-
-visSimuleringspanelUtenAksjonspunkt.args = {
-  fagsak,
-  simuleringResultat,
-  tilbakekrevingvalg: {
-    videreBehandling: k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-    varseltekst: 'varsel-eksempel',
   },
-  isReadOnly: false,
-  isAksjonspunktOpen: true,
-  readOnlySubmitButton: false,
-  apCodes: [],
+} satisfies Meta<typeof AvregningPanel>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const VisAksjonspunktVurderFeilutbetaling: Story = {
+  args: {
+    apCodes: [AksjonspunktDefinisjon.VURDER_FEILUTBETALING, AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING],
+  },
+};
+
+export const VisAksjonspunktHøyEtterbetaling: Story = {
+  args: {
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+        begrunnelse: undefined,
+        erAktivt: true,
+        status: aksjonspunktStatus.OPPRETTET,
+      },
+    ],
+    apCodes: [AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING],
+  },
+};
+
+export const VisSimuleringspanelUtenAksjonspunkt: Story = {
+  args: {
+    aksjonspunkter: [],
+    apCodes: [],
+    tilbakekrevingvalg: {
+      videreBehandling: k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
+      varseltekst: 'varsel-eksempel',
+      erTilbakekrevingVilkårOppfylt: false,
+    },
+  },
 };

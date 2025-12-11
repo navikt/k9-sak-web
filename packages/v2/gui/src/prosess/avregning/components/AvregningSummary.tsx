@@ -23,7 +23,7 @@ export const AvregningSummary = ({
   ingenPerioderMedAvvik,
   isUngFagsak,
 }: OwnProps) => (
-  <VStack gap="space-8">
+  <VStack gap="space-20">
     <BodyShort size="small" className={styles.summaryTitle}>
       Bruker
     </BodyShort>
