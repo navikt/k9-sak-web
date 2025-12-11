@@ -6,7 +6,7 @@ interface LoadingPanelSuspenseProps {
 }
 
 /**
- * A Suspense boundary that displays out default LoadingPanel spinner
+ * A Suspense boundary that displays our default LoadingPanel spinner
  */
 export const LoadingPanelSuspense = ({ children }: LoadingPanelSuspenseProps) => (
   <Suspense fallback={<LoadingPanel />} name="loading-panel-suspense">

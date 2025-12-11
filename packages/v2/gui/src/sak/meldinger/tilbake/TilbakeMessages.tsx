@@ -137,8 +137,6 @@ export const TilbakeMessages = ({
       };
       const pdfBlob = await api.lagForhåndsvisningPdf(bestillBrevDto);
       window.open(URL.createObjectURL(pdfBlob));
-    } else {
-      throw new Error(`Validation error in previewHandler`);
     }
     // else: validation failed, error message should be displayed in the input field(s)
   };
