@@ -5,7 +5,7 @@ import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import { useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
+import Periodevelger from '../../../shared/periodevelger/Periodevelger';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import ReisedagerIVurdering from './ReisedagerIVurdering';
 import { resultatTilJaNei } from './utils';
@@ -118,14 +118,16 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
             )}
           />
           {formMethods.watch('godkjent') === 'ja' && !vurderingGjelderEnkeltdag && (
-            <PeriodePicker
+            <Periodevelger
               minDate={vurdering.perioder[0]?.fom ? dayjs(vurdering.perioder[0]?.fom as string).toDate() : undefined}
               maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0]?.tom as string).toDate() : undefined}
               fromField={{
                 name: 'periode.fom',
+                validators: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd')],
               }}
               toField={{
                 name: 'periode.tom',
+                validators: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd')],
               }}
               readOnly={lesemodus}
             />

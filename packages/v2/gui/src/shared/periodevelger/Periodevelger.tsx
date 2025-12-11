@@ -2,24 +2,18 @@ import { useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 import Datovelger from '../datovelger/Datovelger';
 import { ErrorMessage, HStack, VStack } from '@navikt/ds-react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-interface PeriodePickerProps {
+interface PeriodevelgerProps {
   minDate: Date | undefined;
   maxDate: Date | undefined;
-  fromField: Field;
-  toField: Field;
+  fromField: { name: string; validators?: ((value: string) => string | undefined)[] };
+  toField: { name: string; validators?: ((value: string) => string | undefined)[] };
   fromLabel?: string;
   toLabel?: string;
   readOnly?: boolean;
   size?: 'medium' | 'small';
   shouldUnregister?: boolean;
-}
-
-interface Field {
-  name: string;
-  validate?: (value: string) => string | undefined;
-  label?: string;
 }
 
 /**
@@ -32,7 +26,7 @@ interface Field {
  * @param toLabel - Label for the end date input (default: 'Til')
  * @param readOnly - Whether the picker is read-only (default: false)
  */
-const PeriodePicker = ({
+const Periodevelger = ({
   minDate,
   maxDate,
   fromField,
@@ -41,7 +35,7 @@ const PeriodePicker = ({
   toLabel = 'Til',
   readOnly = false,
   size = 'small',
-}: PeriodePickerProps) => {
+}: PeriodevelgerProps) => {
   const formMethods = useFormContext();
 
   const fraVerdi = formMethods.watch(fromField.name);
@@ -50,15 +44,25 @@ const PeriodePicker = ({
   const fromErrorMessage = formMethods.getFieldState(fromField.name).error?.message as string | undefined;
   const toErrorMessage = formMethods.getFieldState(toField.name).error?.message as string | undefined;
 
-  // if one changes, trigger the other
+  const fromRef = useRef<string>(fraVerdi);
+  const toRef = useRef<string>(tilVerdi);
+
+  // Hvis fraVerdi endres, trigger vi tilField
   useEffect(() => {
-    if (fraVerdi) {
+    if (fraVerdi !== fromRef.current) {
+      fromRef.current = fraVerdi;
       void formMethods.trigger(toField.name);
     }
-    if (tilVerdi) {
+  }, [fraVerdi, fromRef, formMethods, toField.name]);
+
+  // Hvis tilVerdi endres, trigger vi fromField
+  useEffect(() => {
+    if (tilVerdi !== toRef.current) {
+      toRef.current = tilVerdi;
       void formMethods.trigger(fromField.name);
     }
-  }, [fraVerdi, tilVerdi]);
+  }, [tilVerdi, toRef, formMethods, fromField.name]);
+
   return (
     <VStack gap="space-16">
       <HStack gap="space-16">
@@ -68,10 +72,11 @@ const PeriodePicker = ({
           disabled={readOnly}
           size={size}
           validators={[
-            (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
+            ...(fromField.validators || []),
+            (value: string) => (value && dayjs(value).isValid() ? undefined : 'Datoen er påkrevd og må være gyldig'),
             (value: string) => {
               if (!value || !tilVerdi) return undefined;
-              return dayjs(value).isAfter(dayjs(tilVerdi)) ? 'Kan ikke være etter til' : undefined;
+              return dayjs(value).isAfter(dayjs(tilVerdi)) ? `Kan ikke være etter "${toLabel}"` : undefined;
             },
             (value: string) => {
               if (!value || !minDate) return undefined;
@@ -88,6 +93,7 @@ const PeriodePicker = ({
           ]}
           fromDate={minDate}
           toDate={maxDate}
+          showErrorMessage={false}
         />
         <Datovelger
           name={toField.name}
@@ -95,7 +101,12 @@ const PeriodePicker = ({
           disabled={readOnly}
           size={size}
           validators={[
-            (value: string) => (value && dayjs(value).isValid() ? undefined : 'Er påkrevd'),
+            ...(toField.validators || []),
+            (value: string) => (value && dayjs(value).isValid() ? undefined : 'Datoen er påkrevd og må være gyldig'),
+            (value: string) => {
+              if (!value || !fraVerdi) return undefined;
+              return dayjs(value).isBefore(dayjs(fraVerdi)) ? `Kan ikke være før "${fromLabel}"` : undefined;
+            },
             (value: string) => {
               if (!value || !maxDate) return undefined;
               if (dayjs(value).isAfter(dayjs(maxDate)))
@@ -111,17 +122,18 @@ const PeriodePicker = ({
           ]}
           fromDate={minDate}
           toDate={maxDate}
+          showErrorMessage={false}
         />
       </HStack>
       <VStack gap="space-8">
         {fromErrorMessage && (
           <ErrorMessage aria-describedby={fromField.name} showIcon size={size}>
-            Fra og med: {fromErrorMessage}
+            {fromLabel}: {fromErrorMessage}
           </ErrorMessage>
         )}
         {toErrorMessage && (
           <ErrorMessage aria-describedby={toField.name} showIcon size={size}>
-            Til og med: {toErrorMessage}
+            {toLabel}: {toErrorMessage}
           </ErrorMessage>
         )}
       </VStack>
@@ -129,4 +141,4 @@ const PeriodePicker = ({
   );
 };
 
-export default PeriodePicker;
+export default Periodevelger;

@@ -35,7 +35,7 @@ const Datovelger = ({
   const onChange = (newValue: string) => {
     field.onChange(newValue);
   };
-  const error = formMethods.formState.errors[name]?.message as string | undefined;
+  const error = formMethods.getFieldState(name).error?.message as string | undefined;
   return (
     <DatovelgerPlain
       label={label}
