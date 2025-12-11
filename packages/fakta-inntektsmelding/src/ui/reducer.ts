@@ -2,7 +2,7 @@ import ActionType from './actionTypes';
 import { Kompletthet } from '../types/KompletthetResponse';
 
 interface MainComponentState {
-  kompletthetsoversiktResponse: Kompletthet;
+  kompletthetsoversiktResponse: Kompletthet | null;
   kompletthetsoversiktHarFeilet: boolean;
   isLoading: boolean;
 }
@@ -16,7 +16,7 @@ const mainComponentReducer = (state: MainComponentState, action: Action): Partia
   switch (action.type) {
     case ActionType.OK:
       return {
-        kompletthetsoversiktResponse: action.kompletthetsoversiktResponse,
+        kompletthetsoversiktResponse: action.kompletthetsoversiktResponse ?? null,
         kompletthetsoversiktHarFeilet: false,
         isLoading: false,
       };

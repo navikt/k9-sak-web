@@ -27,11 +27,27 @@ function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetDat
   };
 }
 
-export interface MainComponentProps {
-  data: ContainerContract;
+export interface InntektsmeldingApi {
+  getKompletthetsoversikt: (
+    endpoint: string,
+    httpErrorHandler: any,
+    signal?: AbortSignal,
+  ) => Promise<KompletthetResponse>;
 }
 
-const InntektsmeldingContainer = ({ data }: MainComponentProps): ReactElement<any> => {
+const defaultApi: InntektsmeldingApi = {
+  getKompletthetsoversikt: (endpoint, httpErrorHandler, signal) =>
+    get<KompletthetResponse>(endpoint, httpErrorHandler, {
+      signal,
+    }),
+};
+
+export interface MainComponentProps {
+  data: ContainerContract;
+  requestApi?: InntektsmeldingApi;
+}
+
+const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainComponentProps): ReactElement<any> => {
   const [state, dispatch] = React.useReducer(mainComponentReducer, {
     isLoading: true,
     kompletthetsoversiktHarFeilet: false,
@@ -39,13 +55,10 @@ const InntektsmeldingContainer = ({ data }: MainComponentProps): ReactElement<an
   });
 
   const controller = React.useMemo(() => new AbortController(), []);
-  const { kompletthetsoversiktResponse, isLoading, kompletthetsoversiktHarFeilet } = state;
   const { endpoints, onFinished, httpErrorHandler } = data;
 
   const getKompletthetsoversikt = () =>
-    get<KompletthetResponse>(endpoints.kompletthetBeregning, httpErrorHandler, {
-      signal: controller.signal,
-    });
+    requestApi.getKompletthetsoversikt(endpoints.kompletthetBeregning, httpErrorHandler, controller.signal);
 
   const handleError = () => {
     dispatch({ type: ActionType.FAILED });
@@ -65,6 +78,9 @@ const InntektsmeldingContainer = ({ data }: MainComponentProps): ReactElement<an
       controller.abort();
     };
   }, []);
+
+  const { kompletthetsoversiktResponse, isLoading, kompletthetsoversiktHarFeilet } = state;
+
   return (
     <ContainerContext.Provider value={data}>
       <PageContainer isLoading={isLoading} hasError={kompletthetsoversiktHarFeilet}>
