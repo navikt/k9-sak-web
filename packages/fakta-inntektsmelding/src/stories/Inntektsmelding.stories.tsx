@@ -13,14 +13,14 @@ import ferdigvisning, {
 } from '../../mock/mockedKompletthetsdata';
 import InntektsmeldingContainer, { InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
 
-const createApi = (response: any): InntektsmeldingApi => ({
+const fakeApi = (response: any): InntektsmeldingApi => ({
   getKompletthetsoversikt: () => Promise.resolve(response),
 });
 
 const meta: Meta<typeof InntektsmeldingContainer> = {
   args: {
     data: { ...inntektsmeldingPropsMock, onFinished: action('clicked') } as any,
-    requestApi: createApi(ikkePaakrevd),
+    requestApi: fakeApi(ikkePaakrevd),
   },
   title: 'Fakta/fakta-inntektsmelding',
   component: InntektsmeldingContainer,
@@ -33,52 +33,52 @@ type Story = StoryObj<typeof InntektsmeldingContainer>;
 export const IkkePaakrevd: Story = {
   args: {
     data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') },
-    requestApi: createApi(ikkePaakrevd),
+    requestApi: fakeApi(ikkePaakrevd),
   },
 };
 
 export const Mangler9069: Story = {
   args: {
-    requestApi: createApi(manglerInntektsmelding),
+    requestApi: fakeApi(manglerInntektsmelding),
   },
 };
 
 export const Mangler9071: Story = {
   args: {
     data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
-    requestApi: createApi(manglerInntektsmelding),
+    requestApi: fakeApi(manglerInntektsmelding),
   },
 };
 
 export const ManglerFlere9071: Story = {
   args: {
     data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
-    requestApi: createApi(manglerFlereInntektsmeldinger),
+    requestApi: fakeApi(manglerFlereInntektsmeldinger),
   },
 };
 
 export const IkkePaakrevdOgMangler9071: Story = {
   args: {
-    requestApi: createApi(ikkePaakrevdOgManglerInntektsmelding),
+    requestApi: fakeApi(ikkePaakrevdOgManglerInntektsmelding),
   },
 };
 
 export const FerdigVisning9069: Story = {
   args: {
-    requestApi: createApi(ferdigvisning),
+    requestApi: fakeApi(ferdigvisning),
   },
 };
 
 export const FerdigVisning9071: Story = {
   args: {
     data: { ...aksjonspunkt9071FerdigProps, onFinished: action('button-click') },
-    requestApi: createApi(ferdigvisning),
+    requestApi: fakeApi(ferdigvisning),
   },
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
   args: {
     data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
-    requestApi: createApi(alleErMottatt),
+    requestApi: fakeApi(alleErMottatt),
   },
 };
