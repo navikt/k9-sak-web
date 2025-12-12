@@ -1,7 +1,6 @@
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { ArbeidsgiverOpplysningerPerId, Brevmaler, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType.js';
 import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
@@ -38,7 +37,6 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
   erTilbakekreving: boolean;
-  readonly featureToggles: FeatureToggles;
   readonly fagsak: Fagsak;
   readonly behandling: BehandlingInfo;
   readonly backendApi: BackendApi;
@@ -69,7 +67,6 @@ const MeldingerSakIndex = ({
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
   fagsak,
   behandling,
   backendApi,
@@ -78,7 +75,7 @@ const MeldingerSakIndex = ({
 }: OwnProps) => {
   const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
   // Vis ny komponent for meldingssending viss dette ikkje er tilbakekreving, og featureflag er satt
-  if (!erTilbakekreving && featureToggles.BRUK_V2_MELDINGER) {
+  if (!erTilbakekreving) {
     return (
       <V2Messages
         fagsak={fagsak}

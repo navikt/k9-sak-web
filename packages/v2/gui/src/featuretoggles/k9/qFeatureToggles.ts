@@ -10,7 +10,6 @@ export const qFeatureToggles = {
   LOS_MARKER_BEHANDLING_SUBMIT: true,
   SKJUL_AVSLUTTET_ARBEIDSGIVER: true,
   OVERSTYR_BEREGNING: true,
-  BRUK_V2_MELDINGER: true,
   NYE_NOKKELTALL: true,
   UTVIDET_VARSELFELT: true,
   SKILL_UT_PRIVATPERSON: true,
@@ -32,4 +31,5 @@ export const qFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: true,
   UNG_KLAGE: true,
   KRONISK_TIDSBEGRENSET: true,
+  V2_MELDINGER_FOR_TILBAKE: true,
 } satisfies K9FeatureToggles;

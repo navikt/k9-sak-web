@@ -10,7 +10,6 @@ export const prodFeatureToggles = {
   LOS_MARKER_BEHANDLING_SUBMIT: false,
   SKJUL_AVSLUTTET_ARBEIDSGIVER: false,
   OVERSTYR_BEREGNING: false,
-  BRUK_V2_MELDINGER: true,
   NYE_NOKKELTALL: false,
   UTVIDET_VARSELFELT: true,
   SKILL_UT_PRIVATPERSON: true,
@@ -32,4 +31,5 @@ export const prodFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: false,
   UNG_KLAGE: false,
   KRONISK_TIDSBEGRENSET: true,
+  V2_MELDINGER_FOR_TILBAKE: false,
 } satisfies K9FeatureToggles;

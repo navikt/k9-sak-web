@@ -225,11 +225,11 @@ const Messages = ({
   onMessageSent,
   stickyState,
 }: MessagesProps) => {
+  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
   const [
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
-  ] = stickyState.messages.useStickyStateReducer(messagesStateReducer, initMessagesState(maler));
-  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
+  ] = stickyState.messages.useStickyStateReducer(messagesStateReducer, initMessagesState(maler), nowStickyResetValue);
   const stickyResetValue = useRef(nowStickyResetValue);
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);

@@ -126,10 +126,12 @@ const FritekstInput = forwardRef(
     const [tittel, setTittel] = stickyState.tittel.useStickyStateReducer(
       tittelReducer,
       validateTittel(defaultValue?.tittel),
+      '',
     );
     const [tekst, setTekst] = stickyState.tekst.useStickyStateReducer(
       tekstReducer,
       validateTekst(defaultValue?.tekst, fritekstModus),
+      '',
     );
 
     // Så vi kan detektere når default value har blitt endra:
