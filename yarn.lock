@@ -1405,7 +1405,7 @@ __metadata:
     formik: "npm:2.4.9"
     moment: "npm:2.30.1"
     react: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
     react-intl: "npm:7.1.14"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
@@ -2712,7 +2712,7 @@ __metadata:
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
   languageName: unknown
   linkType: soft
 
@@ -2731,7 +2731,7 @@ __metadata:
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
   languageName: unknown
   linkType: soft
 
@@ -2753,7 +2753,7 @@ __metadata:
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
     react-outside-click-handler: "npm:1.3.0"
   languageName: unknown
   linkType: soft
@@ -2770,7 +2770,7 @@ __metadata:
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
     tailwindcss: "npm:3.4.18"
   languageName: unknown
   linkType: soft
@@ -2791,7 +2791,7 @@ __metadata:
     react: "npm:19.2.0"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
     react-intl: "npm:7.1.14"
   languageName: unknown
   linkType: soft
@@ -2844,7 +2844,7 @@ __metadata:
     editorjs-html: "npm:3.4.3"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
     react-router: "npm:7.9.6"
     yup: "npm:1.7.1"
   languageName: unknown
@@ -2937,7 +2937,7 @@ __metadata:
     lodash: "npm:4.17.21"
     react: "npm:19.2.0"
     react-dom: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
   languageName: unknown
   linkType: soft
 
@@ -2985,7 +2985,7 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:10.0.3"
     "@navikt/ft-form-validators": "npm:4.2.14"
     react: "npm:19.2.0"
-    react-hook-form: "npm:7.66.0"
+    react-hook-form: "npm:7.68.0"
     react-intl: "npm:7.1.14"
   languageName: unknown
   linkType: soft
@@ -12228,6 +12228,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 10/7342e7148419f0ab455ee1018c8f9ad39f1adda6be45122f885c2b26e237bde846a35724800a3be5cb96f264446474795c1b4c8f807ebf779640ccfcb9f4a1b4
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:7.68.0":
+  version: 7.68.0
+  resolution: "react-hook-form@npm:7.68.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10/c9624924cd324ee5560de51715361d754d24591734b1cf2b87c95477d35f5ca01b10e94d477bebe215afd37914c5cdbd4a717ead910d8de67f346f517f5a8d92
   languageName: node
   linkType: hard
 
