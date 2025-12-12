@@ -1,57 +1,38 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
+import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useContext, useMemo } from 'react';
 
-/**
- * InitPanel for fortsatt medlemskap prosesssteg
- *
- * Wrapper for fortsatt medlemskap-panelet som håndterer:
- * - Registrering med menyen via usePanelRegistrering
- * - Synlighetslogikk basert på tilstedeværelse av løpende medlemskapsvilkår
- * - Beregning av paneltype basert på vilkårstatus og aksjonspunkter
- * - Rendering av legacy panelkomponent via ProsessDefaultInitPanel
- *
- * Dette panelet viser overstyring av løpende medlemskapsvilkår.
- */
-export function FortsattMedlemskapProsessStegInitPanel() {
+export const AlderProsessStegInitPanel = () => {
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.FORTSATTMEDLEMSKAP;
-  const PANEL_TEKST = 'Fortsatt medlem';
-
-  // Hent standard props for å få tilgang til vilkår og aksjonspunkter
   const standardProps = useStandardProsessPanelProps();
 
-  // Filtrer vilkår som er relevante for dette panelet (løpende medlemskap)
+  const PANEL_ID = prosessStegCodes.ALDER;
+  const PANEL_TEKST = 'Alder';
+  const RELEVANTE_VILKAR_KODER = [vilkarType.ALDERSVILKARET];
+
   const vilkarForSteg = useMemo(() => {
     if (!standardProps.vilkar) {
       return [];
     }
-    return standardProps.vilkar.filter(vilkar => vilkar.vilkarType?.kode === vilkarType.MEDLEMSKAPSVILKARET);
+    return standardProps.vilkar.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode));
   }, [standardProps.vilkar]);
 
-  // Sjekk om panelet skal vises (kun hvis det finnes løpende medlemskapsvilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
-    // Sjekk om det finnes åpent aksjonspunkt for overstyring av løpende medlemskap (warning)
-    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
-      ap =>
-        ap.definisjon?.kode === aksjonspunktCodes.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR && // 5023
-        ap.status?.kode === 'OPPR',
-    );
-    if (harApenAksjonspunkt) {
-      return ProcessMenuStepType.warning;
+    // Hvis panelet ikke skal vises, bruk default
+    if (!skalVisePanel) {
+      return ProcessMenuStepType.default;
     }
 
-    // Samle alle periode-statuser fra løpende medlemskapsvilkår
+    // Samle alle periode-statuser fra alle relevante vilkår
     const vilkarStatusCodes: string[] = [];
     vilkarForSteg.forEach(vilkar => {
       vilkar.perioder
@@ -73,32 +54,35 @@ export function FortsattMedlemskapProsessStegInitPanel() {
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [vilkarForSteg, standardProps.aksjonspunkter]);
-
-  // Ikke vis panelet hvis det ikke finnes løpende medlemskapsvilkår
-  // VIKTIG: Returner tidlig FØR registrering for å unngå at panelet vises i menyen
-  if (!skalVisePanel) {
-    return null;
-  }
+  }, [skalVisePanel, vilkarForSteg]);
 
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
-  // Render kun hvis panelet er valgt
+  // Ikke vis panelet hvis det ikke finnes relevante vilkår
+  if (!skalVisePanel) {
+    return null;
+  }
+
+  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt) {
     return null;
   }
 
+  console.log('standardProps', standardProps);
+
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.FORTSATTMEDLEMSKAP} tekstKode="Fortsatt medlem">
+    <ProsessDefaultInitPanel urlKode={prosessStegCodes.ALDER} tekstKode="Alder">
       {() => {
         // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
         // Dette er hybrid-modus: v2 meny + legacy rendering
         // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
-        return null;
+        const deepCopyProps = JSON.parse(JSON.stringify({ ...standardProps, vilkar: vilkarForSteg }));
+        konverterKodeverkTilKode(deepCopyProps, false);
+        return <VilkarresultatMedOverstyringProsessIndex {...standardProps} {...deepCopyProps} />;
       }}
     </ProsessDefaultInitPanel>
   );
-}
+};

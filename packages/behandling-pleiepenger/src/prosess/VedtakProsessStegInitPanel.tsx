@@ -1,23 +1,23 @@
-import { useMemo } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
-import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useContext, useMemo } from 'react';
 
 /**
  * InitPanel for vedtak prosesssteg
- * 
+ *
  * Wrapper for vedtakspanelet som håndterer:
  * - Registrering med menyen via usePanelRegistrering
  * - Beregning av paneltype basert på vilkårstatus, aksjonspunkter og behandlingsresultat
  * - Rendering av legacy panelkomponent via ProsessDefaultInitPanel
- * 
+ *
  * Dette panelet håndterer vedtaksfatting og er alltid synlig.
  * Det har kompleks statuslogikk som tar hensyn til:
  * - Om alle vilkår er vurdert
@@ -25,7 +25,8 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
  * - Om behandlingsresultatet er avslag eller innvilgelse
  * - Spesielle aksjonspunkter som OVERSTYR_BEREGNING
  */
-export function VedtakProsessStegInitPanel(props: ProsessPanelProps) {
+export function VedtakProsessStegInitPanel() {
+  const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.VEDTAK;
   const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
@@ -48,9 +49,7 @@ export function VedtakProsessStegInitPanel(props: ProsessPanelProps) {
       aksjonspunktCodes.SJEKK_TILBAKEKREVING,
     ];
 
-    return standardProps.aksjonspunkter?.filter(ap =>
-      vedtakAksjonspunktKoder.includes(ap.definisjon?.kode)
-    ) || [];
+    return standardProps.aksjonspunkter?.filter(ap => vedtakAksjonspunktKoder.includes(ap.definisjon?.kode)) || [];
   }, [standardProps.aksjonspunkter]);
 
   // Beregn paneltype basert på vedtaksstatus (for menystatusindikator)
@@ -65,14 +64,12 @@ export function VedtakProsessStegInitPanel(props: ProsessPanelProps) {
 
     // Sjekk om noen vilkår ikke er vurdert
     const harIkkeVurdertVilkar = vilkar.some(v =>
-      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT)
+      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT),
     );
 
     // Sjekk om det finnes åpent OVERSTYR_BEREGNING aksjonspunkt
     const harApenOverstyringBeregning = aksjonspunkter?.some(
-      ap =>
-        ap.definisjon?.kode === aksjonspunktCodes.OVERSTYR_BEREGNING &&
-        isAksjonspunktOpen(ap.status?.kode)
+      ap => ap.definisjon?.kode === aksjonspunktCodes.OVERSTYR_BEREGNING && isAksjonspunktOpen(ap.status?.kode),
     );
 
     // Hvis vilkår ikke er vurdert eller det finnes åpen overstyring, vis default
@@ -84,7 +81,7 @@ export function VedtakProsessStegInitPanel(props: ProsessPanelProps) {
     const harApneAksjonspunkterUtenforVedtak = aksjonspunkter?.some(
       ap =>
         !vedtakAksjonspunkter.some(vap => vap.definisjon?.kode === ap.definisjon?.kode) &&
-        isAksjonspunktOpen(ap.status?.kode)
+        isAksjonspunktOpen(ap.status?.kode),
     );
 
     // Hvis det finnes åpne aksjonspunkter utenfor vedtak, vis default
@@ -107,19 +104,18 @@ export function VedtakProsessStegInitPanel(props: ProsessPanelProps) {
   }, [standardProps, vedtakAksjonspunkter]);
 
   // Registrer panel med menyen
-  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  const erValgt = context?.erValgt(PANEL_ID);
+  // Registrer panel med menyen
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  if (!erValgt) {
     return null;
   }
 
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel
-      urlKode={prosessStegCodes.VEDTAK}
-      tekstKode="Behandlingspunkt.Vedtak"
-    >
+    <ProsessDefaultInitPanel urlKode={prosessStegCodes.VEDTAK} tekstKode="Behandlingspunkt.Vedtak">
       {() => {
         // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
         // Dette er hybrid-modus: v2 meny + legacy rendering

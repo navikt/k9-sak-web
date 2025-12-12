@@ -20,14 +20,15 @@ import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/u
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { BoxNew, HGrid } from '@navikt/ds-react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
+import { AlderProsessStegInitPanel } from '../prosess/AlderProsessStegInitPanel';
 import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
-import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
-import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarProsessStegInitPanel';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
 import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
+import { SøknadsfristProsessStegInitPanel } from '../prosess/SøknadsfristProsessStegInitPanel';
 import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
 import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
@@ -299,53 +300,62 @@ const PleiepengerProsess = ({
           }}
         >
           {/* v2 meny for navigasjon */}
-          <ProsessMeny>
-            {prosessStegPanelDefinisjoner.map(panelDef => {
-              // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
-              const urlKode = panelDef.getUrlKode();
-              const formaterPanel = formaterteProsessStegPaneler.find(
-                panel => panel.labelId === panelDef.getTekstKode(),
-              );
+          <BoxNew borderColor="neutral-subtle" borderWidth="1" padding="space-16">
+            <ProsessMeny>
+              {prosessStegPanelDefinisjoner.map(panelDef => {
+                // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
+                const urlKode = panelDef.getUrlKode();
+                const formaterPanel = formaterteProsessStegPaneler.find(
+                  panel => panel.labelId === panelDef.getTekstKode(),
+                );
 
-              // Bruk migrerte InitPanel-komponenter der de finnes
-              if (urlKode === 'inngangsvilkar') {
-                return <InngangsvilkarProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'medisinsk-vilkar') {
-                return <MedisinskVilkarProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'opptjening') {
-                return <InngangsvilkarFortsProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'uttak') {
-                return <UttakProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'tilkjent_ytelse') {
-                return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'simulering') {
-                return <SimuleringProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'fortsattmedlemskap') {
-                return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'beregningsgrunnlag') {
-                return <BeregningsgrunnlagProsessStegInitPanel key={urlKode} />;
-              }
-              if (urlKode === 'vedtak') {
-                return <VedtakProsessStegInitPanel key={urlKode} />;
-              }
+                // Bruk migrerte InitPanel-komponenter der de finnes
+                if (urlKode === 'inngangsvilkar') {
+                  return (
+                    <HGrid columns={2} gap="space-24">
+                      <div>
+                        <SøknadsfristProsessStegInitPanel key={urlKode} />
+                        <AlderProsessStegInitPanel key={urlKode} />
+                      </div>
+                    </HGrid>
+                  );
+                }
+                if (urlKode === 'medisinsk-vilkar') {
+                  return <MedisinskVilkarProsessStegInitPanel key={urlKode} />;
+                }
+                if (urlKode === 'opptjening') {
+                  return <InngangsvilkarFortsProsessStegInitPanel key={urlKode} />;
+                }
+                if (urlKode === 'uttak') {
+                  return <UttakProsessStegInitPanel key={urlKode} />;
+                }
+                if (urlKode === 'tilkjent_ytelse') {
+                  return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;
+                }
+                if (urlKode === 'simulering') {
+                  return <SimuleringProsessStegInitPanel key={urlKode} />;
+                }
+                // if (urlKode === 'fortsattmedlemskap') {
+                //   return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
+                // }
+                if (urlKode === 'beregningsgrunnlag') {
+                  return <BeregningsgrunnlagProsessStegInitPanel key={urlKode} />;
+                }
+                if (urlKode === 'vedtak') {
+                  return <VedtakProsessStegInitPanel key={urlKode} />;
+                }
 
-              return (
-                <LegacyPanelAdapter
-                  key={urlKode}
-                  panelDef={panelDef}
-                  menyType={formaterPanel?.type}
-                  usePartialStatus={formaterPanel?.usePartialStatus}
-                />
-              );
-            })}
-          </ProsessMeny>
+                return (
+                  <LegacyPanelAdapter
+                    key={urlKode}
+                    panelDef={panelDef}
+                    menyType={formaterPanel?.type}
+                    usePartialStatus={formaterPanel?.usePartialStatus}
+                  />
+                );
+              })}
+            </ProsessMeny>
+          </BoxNew>
         </StandardProsessPanelPropsProvider>
       </>
     );

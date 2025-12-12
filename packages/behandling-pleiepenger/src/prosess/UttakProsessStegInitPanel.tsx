@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
-import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useContext, useMemo } from 'react';
 
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
 // Relevante aksjonspunkter for uttak
@@ -18,26 +18,27 @@ const RELEVANTE_AKSJONSPUNKTER = [
 
 /**
  * HYBRID-MODUS InitPanel for Uttak
- * 
+ *
  * Denne komponenten brukes KUN i hybrid-modus (v2 meny + legacy rendering).
- * 
+ *
  * HYBRID-MODUS (v2 meny + legacy rendering):
  * - Denne komponenten registrerer panelet med v2 ProsessMeny
  * - Henter data via RequestApi for å beregne paneltype
  * - Rendrer INGENTING (returnerer alltid null)
  * - Legacy ProsessStegPanel (utenfor ProsessMeny) håndterer rendering via UttakProsessStegPanelDef
- * 
+ *
  * LEGACY-MODUS (toggle av):
  * - Denne komponenten brukes IKKE
  * - Alt håndteres av UttakProsessStegPanelDef (klassedefinisjon)
- * 
+ *
  * FREMTID (full v2):
  * - Fjern denne wrapperen
  * - Bruk UttakProsessStegInitPanel fra v2-pakken direkte i ProsessMeny
  * - Flytt datahenting til React Query i v2-komponenten
  * - Fjern UttakProsessStegPanelDef
  */
-export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
+export function UttakProsessStegInitPanel() {
+  const context = useContext(ProsessPanelContext);
   // Definer panel ID og tekst som konstanter
   const panelId = 'uttak';
   const panelTekst = 'Behandlingspunkt.Uttak';
@@ -49,13 +50,11 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     uttak: any;
     arbeidsforhold: any;
-  }>(
-    [
-      { key: PleiepengerBehandlingApiKeys.UTTAK },
-      { key: PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD },
-    ],
-    { keepData: true, suspendRequest: false, updateTriggers: [] },
-  );
+  }>([{ key: PleiepengerBehandlingApiKeys.UTTAK }, { key: PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD }], {
+    keepData: true,
+    suspendRequest: false,
+    updateTriggers: [],
+  });
 
   // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
@@ -71,7 +70,7 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
     }
 
     const data = restApiData.data;
-    
+
     // Hvis data ikke er lastet ennå, bruk default
     if (!data || !data.uttak) {
       console.debug('Uttak panel: Data ikke lastet, viser default');
@@ -115,7 +114,9 @@ export function UttakProsessStegInitPanel(props: ProsessPanelProps) {
 
   // Registrer panel med v2 menyen
   // Registreres først med 'default', oppdateres automatisk når panelType endres
-  usePanelRegistrering(props, panelId, panelTekst, panelType);
+  const erValgt = context?.erValgt(panelId);
+  // Registrer panel med menyen
+  usePanelRegistrering({ ...context, erValgt }, panelId, panelTekst, panelType);
 
   // HYBRID-MODUS: Render ALLTID null
   // Legacy ProsessStegPanel håndterer innholdsrendering via UttakProsessStegPanelDef

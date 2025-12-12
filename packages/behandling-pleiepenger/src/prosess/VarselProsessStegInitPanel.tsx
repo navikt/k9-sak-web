@@ -1,22 +1,23 @@
-import { useMemo } from 'react';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useContext, useMemo } from 'react';
 
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
 /**
  * InitPanel for varsel om revurdering prosesssteg
- * 
+ *
  * Wrapper for VarselOmRevurderingProsessIndex som håndterer:
  * - Registrering med menyen via usePanelRegistrering
  * - Datahenting via RequestApi
  * - Rendering av legacy panelkomponent
  */
-export function VarselProsessStegInitPanel(props: ProsessPanelProps) {
+export function VarselProsessStegInitPanel() {
+  const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.VARSEL;
   const PANEL_TEKST = 'Behandlingspunkt.CheckVarselRevurdering';
@@ -40,11 +41,12 @@ export function VarselProsessStegInitPanel(props: ProsessPanelProps) {
     return ProcessMenuStepType.default;
   }, []);
 
+  const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  if (!erValgt) {
     return null;
   }
 

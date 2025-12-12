@@ -1,14 +1,13 @@
-import { useMemo } from 'react';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
-import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useContext, useMemo } from 'react';
 
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
 /**
@@ -27,13 +26,14 @@ const harKunAvslåtteUttak = (beregningsresultatUtbetaling: any): boolean => {
 
 /**
  * InitPanel for tilkjent ytelse prosesssteg
- * 
+ *
  * Wrapper for TilkjentYtelseProsessIndex som håndterer:
  * - Registrering med menyen via usePanelRegistrering
  * - Datahenting via RequestApi
  * - Rendering av legacy panelkomponent
  */
-export function TilkjentYtelseProsessStegInitPanel(props: ProsessPanelProps) {
+export function TilkjentYtelseProsessStegInitPanel() {
+  const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
   const PANEL_TEKST = 'Behandlingspunkt.TilkjentYtelse';
@@ -56,26 +56,27 @@ export function TilkjentYtelseProsessStegInitPanel(props: ProsessPanelProps) {
   // Beregn paneltype basert på beregningsresultat (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     const beregningsresultatUtbetaling = restApiData.data?.beregningsresultatUtbetaling;
-    
+
     // Hvis ingen data, vis default (ingen status)
     if (!beregningsresultatUtbetaling) {
       return ProcessMenuStepType.default;
     }
-    
+
     // Hvis kun avslåtte uttak, vis danger (rød)
     if (harKunAvslåtteUttak(beregningsresultatUtbetaling)) {
       return ProcessMenuStepType.danger;
     }
-    
+
     // Ellers vis success (grønn hake)
     return ProcessMenuStepType.success;
   }, [restApiData.data?.beregningsresultatUtbetaling]);
 
+  const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  if (!erValgt) {
     return null;
   }
 

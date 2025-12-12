@@ -1,24 +1,25 @@
-import { useMemo } from 'react';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
-import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useContext, useMemo } from 'react';
 
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
 /**
  * InitPanel for simulering/avregning prosesssteg
- * 
+ *
  * Wrapper for AvregningProsessIndex som håndterer:
  * - Registrering med menyen via usePanelRegistrering
  * - Datahenting via RequestApi
  * - Rendering av legacy panelkomponent
  */
-export function SimuleringProsessStegInitPanel(props: ProsessPanelProps) {
+export function SimuleringProsessStegInitPanel() {
+  const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.AVREGNING;
   const PANEL_TEKST = 'Behandlingspunkt.Avregning';
@@ -62,11 +63,12 @@ export function SimuleringProsessStegInitPanel(props: ProsessPanelProps) {
     return ProcessMenuStepType.default;
   }, [aksjonspunkter, restApiData.data?.simuleringResultat]);
 
+  const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  if (!erValgt) {
     return null;
   }
 
@@ -83,9 +85,7 @@ export function SimuleringProsessStegInitPanel(props: ProsessPanelProps) {
       {standardProps => {
         // Beregn readOnlySubmitButton basert på aksjonspunkter
         // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only
-        const harApentAksjonspunkt = standardProps.aksjonspunkter?.some(
-          ap => !ap.erAvbrutt && ap.status === 'OPPR',
-        );
+        const harApentAksjonspunkt = standardProps.aksjonspunkter?.some(ap => !ap.erAvbrutt && ap.status === 'OPPR');
         const readOnlySubmitButton = !harApentAksjonspunkt;
 
         return (

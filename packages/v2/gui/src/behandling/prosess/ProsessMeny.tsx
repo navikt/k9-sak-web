@@ -1,11 +1,12 @@
-import React, { useMemo, useEffect, useState, useCallback } from 'react';
-import { useIntl } from 'react-intl';
-import { useSearchParams } from 'react-router';
 import { Box } from '@navikt/ds-react';
 import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import type { ProsessPanelProps, PanelRegistrering } from './types/panelTypes.js';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSearchParams } from 'react-router';
 import { ValgtPanelProvider } from './context/ValgtPanelContext.js';
 import styles from './prosessMeny.module.css';
+import { ProsessPanelContext } from './ProsessPanelContext.js';
+import type { PanelRegistrering, ProsessPanelProps } from './types/panelTypes.js';
 
 /**
  * Intern type for å holde styr på registrerte paneler.
@@ -18,12 +19,12 @@ interface InternPanelRegistrering extends PanelRegistrering {
 
 /**
  * Props for ProsessMeny.
- * 
+ *
  * Aksepterer kun panelkomponenter som implementerer ProsessPanelProps.
  * TypeScript vil gi compile-time feil hvis children ikke har riktige props.
  */
 interface ProsessMenyProps {
-  /** 
+  /**
    * InitPanel-komponenter som children.
    * Må være React-elementer som aksepterer ProsessPanelProps.
    */
@@ -32,16 +33,16 @@ interface ProsessMenyProps {
 
 /**
  * Prosessmeny-komponent som viser en meny med prosesspaneler.
- * 
+ *
  * Denne komponenten:
  * - Aksepterer InitPanel-komponenter som children
  * - Injiserer automatisk callbacks (onRegister, onUnregister, onUpdateType, erValgt) til alle children
  * - Rendrer ProcessMenu-komponent fra @navikt/ft-plattform-komponenter
  * - Håndterer panelvalg og URL-synkronisering
  * - Gir compile-time typesikkerhet - TypeScript validerer at children har riktige props
- * 
+ *
  * Paneler definerer selv sin identitet via konstanter og bruker usePanelRegistrering hook.
- * 
+ *
  * @example
  * ```tsx
  * <ProsessMeny>
@@ -152,30 +153,21 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
     }
   };
 
-  // Injiser callbacks til alle children via React.cloneElement
-  const childrenWithProps = React.Children.map(children, (child, index) => {
-    if (!React.isValidElement<ProsessPanelProps>(child)) {
-      return child;
-    }
-
-    // Bruk registrationOrderRef direkte for å finne panel-ID basert på child-indeks
-    const panelId = registrationOrderRef.current[index];
-    const isSelected = panelId !== undefined && panelId === valgtPanelId;
-
-    return React.cloneElement(child, {
-      onRegister: handleRegister,
-      onUnregister: handleUnregister,
-      onUpdateType: handleUpdateType,
-      erValgt: isSelected,
-    });
-  });
-
   return (
     <ValgtPanelProvider value={{ valgtPanelId }}>
       <Box.New paddingInline="6">
         <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
         {/* Render children med injiserte props */}
-        {childrenWithProps}
+        <ProsessPanelContext.Provider
+          value={{
+            onRegister: handleRegister,
+            onUnregister: handleUnregister,
+            onUpdateType: handleUpdateType,
+            erValgt: id => id === valgtPanelId,
+          }}
+        >
+          {children}
+        </ProsessPanelContext.Provider>
       </Box.New>
     </ValgtPanelProvider>
   );

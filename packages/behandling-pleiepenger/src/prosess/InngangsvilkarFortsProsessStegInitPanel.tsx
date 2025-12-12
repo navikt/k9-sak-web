@@ -1,27 +1,28 @@
-import { useMemo } from 'react';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
-import type { ProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/types/panelTypes.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useContext, useMemo } from 'react';
 
 /**
  * InitPanel for inngangsvilkår fortsettelse prosesssteg
- * 
+ *
  * Wrapper for inngangsvilkår fortsettelse-panelet som håndterer:
  * - Registrering med menyen via usePanelRegistrering
  * - Synlighetslogikk basert på tilstedeværelse av vilkår
  * - Beregning av paneltype basert på vilkårstatus
  * - Rendering av legacy panelkomponent via ProsessDefaultInitPanel
- * 
+ *
  * Inngangsvilkår fortsettelse består av flere sub-paneler:
  * - Medlemskap (overstyring)
  * - Opptjening
  */
-export function InngangsvilkarFortsProsessStegInitPanel(props: ProsessPanelProps) {
+export function InngangsvilkarFortsProsessStegInitPanel() {
+  const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.OPPTJENING;
   const PANEL_TEKST = 'Behandlingspunkt.InngangsvilkarForts';
@@ -30,19 +31,14 @@ export function InngangsvilkarFortsProsessStegInitPanel(props: ProsessPanelProps
   const standardProps = useStandardProsessPanelProps();
 
   // Relevante vilkår for inngangsvilkår fortsettelse-panelet
-  const RELEVANTE_VILKAR_KODER = [
-    vilkarType.MEDLEMSKAPSVILKARET,
-    vilkarType.OPPTJENINGSVILKARET,
-  ];
+  const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
     if (!standardProps.vilkar) {
       return [];
     }
-    return standardProps.vilkar.filter(
-      vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode)
-    );
+    return standardProps.vilkar.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode));
   }, [standardProps.vilkar]);
 
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
@@ -76,17 +72,15 @@ export function InngangsvilkarFortsProsessStegInitPanel(props: ProsessPanelProps
     }
 
     // Sjekk om det finnes åpne aksjonspunkter for inngangsvilkår fortsettelse (warning)
-    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
-      ap => {
-        const kode = ap.definisjon?.kode;
-        return (
-          (kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET || // 5089
-           kode === aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET || // 6011
-           kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR) && // 5021
-          ap.status?.kode === 'OPPR'
-        );
-      }
-    );
+    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(ap => {
+      const kode = ap.definisjon?.kode;
+      return (
+        (kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET || // 5089
+          kode === aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET || // 6011
+          kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR) && // 5021
+        ap.status?.kode === 'OPPR'
+      );
+    });
     if (harApenAksjonspunkt) {
       return ProcessMenuStepType.warning;
     }
@@ -95,8 +89,9 @@ export function InngangsvilkarFortsProsessStegInitPanel(props: ProsessPanelProps
     return ProcessMenuStepType.default;
   }, [skalVisePanel, vilkarForSteg, standardProps.aksjonspunkter]);
 
+  const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {
@@ -104,16 +99,13 @@ export function InngangsvilkarFortsProsessStegInitPanel(props: ProsessPanelProps
   }
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!props.erValgt) {
+  if (!erValgt) {
     return null;
   }
 
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel
-      urlKode={prosessStegCodes.OPPTJENING}
-      tekstKode="Behandlingspunkt.InngangsvilkarForts"
-    >
+    <ProsessDefaultInitPanel urlKode={prosessStegCodes.OPPTJENING} tekstKode="Behandlingspunkt.InngangsvilkarForts">
       {() => {
         // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
         // Dette er hybrid-modus: v2 meny + legacy rendering
