@@ -2,10 +2,13 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
+import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useContext, useMemo } from 'react';
-
-import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
 // Relevante aksjonspunkter for uttak
@@ -118,8 +121,28 @@ export function UttakProsessStegInitPanel() {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, panelId, panelTekst, panelType);
 
-  // HYBRID-MODUS: Render ALLTID null
-  // Legacy ProsessStegPanel håndterer innholdsrendering via UttakProsessStegPanelDef
-  // Dette unngår Redux-form integrasjonsproblemer og dobbel rendering
-  return null;
+  if (!erValgt) {
+    return null;
+  }
+
+  return (
+    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
+    <ProsessDefaultInitPanel urlKode={prosessStegCodes.UTTAK} tekstKode="Behandlingspunkt.Uttak">
+      {standardProps => {
+        const deepCopyProps = JSON.parse(JSON.stringify({ ...standardProps, uttak: restApiData.data?.uttak }));
+        konverterKodeverkTilKode(deepCopyProps, false);
+        return (
+          <Uttak
+            uttak={deepCopyProps.uttak}
+            behandling={deepCopyProps.behandling}
+            aksjonspunkter={deepCopyProps.aksjonspunkter}
+            relevanteAksjonspunkter={RELEVANTE_AKSJONSPUNKTER}
+            hentBehandling={standardProps.hentBehandling}
+            erOverstyrer={standardProps.erOverstyrer}
+            readOnly={standardProps.isReadOnly}
+          />
+        );
+      }}
+    </ProsessDefaultInitPanel>
+  );
 }

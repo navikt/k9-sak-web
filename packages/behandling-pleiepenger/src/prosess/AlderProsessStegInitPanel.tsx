@@ -81,7 +81,9 @@ export const AlderProsessStegInitPanel = () => {
         // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
         const deepCopyProps = JSON.parse(JSON.stringify({ ...standardProps, vilkar: vilkarForSteg }));
         konverterKodeverkTilKode(deepCopyProps, false);
-        return <VilkarresultatMedOverstyringProsessIndex {...standardProps} {...deepCopyProps} />;
+        return (
+          <VilkarresultatMedOverstyringProsessIndex {...standardProps} {...deepCopyProps} panelTittelKode="Alder" />
+        );
       }}
     </ProsessDefaultInitPanel>
   );

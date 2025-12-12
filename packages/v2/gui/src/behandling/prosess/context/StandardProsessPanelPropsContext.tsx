@@ -1,3 +1,4 @@
+import type { k9_sak_kontrakt_behandling_BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { createContext, useContext, type ReactNode } from 'react';
 
 /**
@@ -5,47 +6,59 @@ import { createContext, useContext, type ReactNode } from 'react';
  * Bruker 'any' type for legacy-data for å unngå import av legacy-typer i v2-kode.
  */
 export interface StandardProsessPanelPropsContextValue {
-    /** Behandling-objekt (legacy type) */
-    behandling: any;
+  /** Behandling-objekt (legacy type) */
+  behandling: any;
 
-    /** Fagsak-objekt (legacy type) */
-    fagsak: any;
+  /** Fagsak-objekt (legacy type) */
+  fagsak: any;
 
-    /** Liste av aksjonspunkter (legacy type) */
-    aksjonspunkter: any[];
+  /** Liste av aksjonspunkter (legacy type) */
+  aksjonspunkter: any[];
 
-    /** Liste av vilkår (legacy type) */
-    vilkar?: any[];
+  /** Liste av vilkår (legacy type) */
+  vilkar?: any[];
 
-    /** Alle kodeverk med navn (legacy type) */
-    alleKodeverk: any;
+  /** Alle kodeverk med navn (legacy type) */
+  alleKodeverk: any;
 
-    /** Callback for å submitte aksjonspunkt */
-    submitCallback: (aksjonspunktModels: any[]) => Promise<any>;
+  /** Callback for å submitte aksjonspunkt */
+  submitCallback: (aksjonspunktModels: any[]) => Promise<any>;
 
-    /** Callback for å forhåndsvise dokument */
-    previewCallback?: (data: any) => Promise<any>;
+  /** Callback for å forhåndsvise dokument */
+  previewCallback?: (data: any) => Promise<any>;
 
-    /** Callback for å forhåndsvise tilbakekrevingsbrev */
-    previewFptilbakeCallback?: (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>;
+  /** Callback for å forhåndsvise tilbakekrevingsbrev */
+  previewFptilbakeCallback?: (
+    mottaker: string,
+    brevmalkode: string,
+    fritekst: string,
+    saksnummer: string,
+  ) => Promise<any>;
 
-    /** Om panelet er read-only */
-    isReadOnly: boolean;
+  /** Om panelet er read-only */
+  isReadOnly: boolean;
 
-    /** Rettigheter-objekt (legacy type) */
-    rettigheter?: any;
+  /** Rettigheter-objekt (legacy type) */
+  rettigheter?: any;
 
-    /** Feature toggles (legacy type) */
-    featureToggles?: any;
+  /** Feature toggles (legacy type) */
+  featureToggles?: any;
 
-    /** Form data for Redux forms (legacy type) */
-    formData?: any;
+  /** Form data for Redux forms (legacy type) */
+  formData?: any;
 
-    /** Callback to update form data (legacy type) */
-    setFormData?: (data: any) => void;
+  /** Callback to update form data (legacy type) */
+  setFormData?: (data: any) => void;
 
-    /** Arbeidsgiver opplysninger per ID (legacy type) */
-    arbeidsgiverOpplysningerPerId?: any;
+  /** Arbeidsgiver opplysninger per ID (legacy type) */
+  arbeidsgiverOpplysningerPerId?: any;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
+  erOverstyrer: boolean;
+  lagreDokumentdata: (
+    params?: any,
+    keepData?: boolean | undefined,
+  ) => Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
+  hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
 }
 
 /**
@@ -58,8 +71,8 @@ const StandardProsessPanelPropsContext = createContext<StandardProsessPanelProps
  * Props for StandardProsessPanelPropsProvider
  */
 interface StandardProsessPanelPropsProviderProps {
-    value: StandardProsessPanelPropsContextValue;
-    children: ReactNode;
+  value: StandardProsessPanelPropsContextValue;
+  children: ReactNode;
 }
 
 /**
@@ -91,9 +104,9 @@ interface StandardProsessPanelPropsProviderProps {
  * ```
  */
 export function StandardProsessPanelPropsProvider({ value, children }: StandardProsessPanelPropsProviderProps) {
-    return (
-        <StandardProsessPanelPropsContext.Provider value={value}>{children}</StandardProsessPanelPropsContext.Provider>
-    );
+  return (
+    <StandardProsessPanelPropsContext.Provider value={value}>{children}</StandardProsessPanelPropsContext.Provider>
+  );
 }
 
 /**
@@ -114,16 +127,16 @@ export function StandardProsessPanelPropsProvider({ value, children }: StandardP
  * ```
  */
 export function useStandardProsessPanelPropsContext(): StandardProsessPanelPropsContextValue {
-    const context = useContext(StandardProsessPanelPropsContext);
+  const context = useContext(StandardProsessPanelPropsContext);
 
-    if (context === undefined) {
-        throw new Error(
-            'useStandardProsessPanelPropsContext må brukes innenfor en StandardProsessPanelPropsProvider. ' +
-            'Sørg for at ProsessMeny er wrappet med StandardProsessPanelPropsProvider i behandlingskomponenten.',
-        );
-    }
+  if (context === undefined) {
+    throw new Error(
+      'useStandardProsessPanelPropsContext må brukes innenfor en StandardProsessPanelPropsProvider. ' +
+        'Sørg for at ProsessMeny er wrappet med StandardProsessPanelPropsProvider i behandlingskomponenten.',
+    );
+  }
 
-    return context;
+  return context;
 }
 
 /**
@@ -144,8 +157,6 @@ export function useStandardProsessPanelPropsContext(): StandardProsessPanelProps
  * }
  * ```
  */
-export function useStandardProsessPanelPropsContextOptional():
-    | StandardProsessPanelPropsContextValue
-    | undefined {
-    return useContext(StandardProsessPanelPropsContext);
+export function useStandardProsessPanelPropsContextOptional(): StandardProsessPanelPropsContextValue | undefined {
+  return useContext(StandardProsessPanelPropsContext);
 }

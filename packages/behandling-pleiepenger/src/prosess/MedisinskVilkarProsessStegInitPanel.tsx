@@ -5,6 +5,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useContext, useMemo } from 'react';
 
@@ -102,10 +103,22 @@ export function MedisinskVilkarProsessStegInitPanel() {
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.MEDISINSK_VILKAR} tekstKode="Behandlingspunkt.MedisinskVilkar">
       {() => {
-        // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
-        // Dette er hybrid-modus: v2 meny + legacy rendering
-        // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
-        return null;
+        const vilkårPleietrengendeUnder18år = standardProps.vilkar?.find(
+          v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+        );
+        const vilkårPleietrengendeOver18år = standardProps.vilkar?.find(
+          v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR,
+        );
+        const perioderUnder18 = vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
+          ...periode,
+          pleietrengendeErOver18år: false,
+        }));
+        const perioderOver18 = vilkårPleietrengendeOver18år?.perioder.map(periode => ({
+          ...periode,
+          pleietrengendeErOver18år: true,
+        }));
+        const allePerioder = perioderUnder18.concat(perioderOver18);
+        return <SykdomProsessIndex {...standardProps} panelTittelKode="Sykdom" perioder={allePerioder} />;
       }}
     </ProsessDefaultInitPanel>
   );

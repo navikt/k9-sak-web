@@ -129,7 +129,14 @@ export function BeregningsgrunnlagProsessStegInitPanel() {
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.BEREGNINGSGRUNNLAG} tekstKode="Behandlingspunkt.Beregning">
       {standardProps => {
         // Legacy komponent krever deep copy og kodeverkkonvertering
-        const deepCopyProps = JSON.parse(JSON.stringify(standardProps));
+        const deepCopyProps = JSON.parse(
+          JSON.stringify({
+            ...standardProps,
+            beregningreferanserTilVurdering: data.beregningreferanserTilVurdering,
+            arbeidsgiverOpplysningerPerId: arbeidsgiverOpplysningerPerId,
+            beregningsgrunnlag: data.beregningsgrunnlag,
+          }),
+        );
         konverterKodeverkTilKode(deepCopyProps);
 
         // Finn beregningsgrunnlagvilkåret
@@ -138,9 +145,9 @@ export function BeregningsgrunnlagProsessStegInitPanel() {
         return (
           <BeregningsgrunnlagProsessIndex
             {...standardProps}
-            beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, data.beregningreferanserTilVurdering)}
+            beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, deepCopyProps.beregningreferanserTilVurdering)}
             beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag || data.beregningsgrunnlag}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
             submitCallback={submitData => standardProps.submitCallback(transformBeregningValues(submitData, true))}
             formData={standardProps.formData}
             kodeverkSamling={deepCopyProps.alleKodeverk}

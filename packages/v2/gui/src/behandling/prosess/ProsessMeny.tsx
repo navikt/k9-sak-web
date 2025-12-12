@@ -131,7 +131,7 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
       .map(id => paneler.get(id))
       .filter((panel): panel is InternPanelRegistrering => panel !== undefined)
       .map(panel => ({
-        label: intl.formatMessage({ id: panel.tekstKode }),
+        label: intl.messages[panel.tekstKode] ? intl.formatMessage({ id: panel.tekstKode }) : panel.tekstKode,
         isActive: panel.id === valgtPanelId,
         type: panel.type || ProcessMenuStepType.default,
         usePartialStatus: panel.usePartialStatus,

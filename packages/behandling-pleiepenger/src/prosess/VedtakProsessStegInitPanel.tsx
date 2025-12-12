@@ -2,13 +2,16 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useContext, useMemo } from 'react';
+import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 
 /**
  * InitPanel for vedtak prosesssteg
@@ -33,6 +36,31 @@ export function VedtakProsessStegInitPanel() {
 
   // Hent standard props for å få tilgang til vilkår, aksjonspunkter og behandling
   const standardProps = useStandardProsessPanelProps();
+
+  const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
+    simuleringResultat: any;
+    beregningsgrunnlag: any;
+    tilbakekrevingvalg: any;
+    medlemskap: any;
+    tilgjengeligeVedtaksbrev: any;
+    informasjonsbehovVedtaksbrev: any;
+    dokumentdataHente: any;
+    fritekstdokumenter: any;
+    overlappendeYtelser: any;
+  }>(
+    [
+      { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
+      { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+      { key: PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG },
+      { key: PleiepengerBehandlingApiKeys.MEDLEMSKAP },
+      { key: PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV },
+      { key: PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV },
+      { key: PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE },
+      { key: PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER },
+      { key: PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
+    ],
+    { keepData: true, suspendRequest: false, updateTriggers: [] },
+  );
 
   // Aksjonspunkter som tilhører vedtakspanelet
   const vedtakAksjonspunkter = useMemo(() => {
@@ -113,14 +141,23 @@ export function VedtakProsessStegInitPanel() {
     return null;
   }
 
+  const data = restApiData.data;
+  if (!data) {
+    return null;
+  }
+
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.VEDTAK} tekstKode="Behandlingspunkt.Vedtak">
-      {() => {
-        // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
-        // Dette er hybrid-modus: v2 meny + legacy rendering
-        // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
-        return null;
+      {standardProps => {
+        const deepCopyProps = JSON.parse(
+          JSON.stringify({
+            ...standardProps,
+            ...data,
+          }),
+        );
+        konverterKodeverkTilKode(deepCopyProps, false);
+        return <VedtakProsessIndex {...standardProps} {...deepCopyProps} />;
       }}
     </ProsessDefaultInitPanel>
   );

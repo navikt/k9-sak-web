@@ -1,3 +1,4 @@
+import type { k9_sak_kontrakt_behandling_BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useStandardProsessPanelPropsContextOptional } from '../context/StandardProsessPanelPropsContext.js';
 
 /**
@@ -27,7 +28,12 @@ export interface StandardProsessPanelProps {
   previewCallback?: (data: any) => Promise<any>;
 
   /** Callback for å forhåndsvise tilbakekrevingsbrev */
-  previewFptilbakeCallback?: (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>;
+  previewFptilbakeCallback?: (
+    mottaker: string,
+    brevmalkode: string,
+    fritekst: string,
+    saksnummer: string,
+  ) => Promise<any>;
 
   /** Om panelet er read-only */
   isReadOnly: boolean;
@@ -52,6 +58,13 @@ export interface StandardProsessPanelProps {
 
   /** Arbeidsgiver opplysninger per ID (legacy type) */
   arbeidsgiverOpplysningerPerId?: any;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
+  erOverstyrer: boolean;
+  lagreDokumentdata?: (
+    params?: any,
+    keepData?: boolean | undefined,
+  ) => Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
+  hentFritekstbrevHtmlCallback?: (parameters: any) => Promise<any>;
 }
 
 /**
@@ -104,6 +117,10 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
       formData: context.formData,
       setFormData: context.setFormData,
       arbeidsgiverOpplysningerPerId: context.arbeidsgiverOpplysningerPerId,
+      hentBehandling: context.hentBehandling,
+      erOverstyrer: context.erOverstyrer,
+      lagreDokumentdata: context.lagreDokumentdata,
+      hentFritekstbrevHtmlCallback: context.hentFritekstbrevHtmlCallback,
     };
   }
 

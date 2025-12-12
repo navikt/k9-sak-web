@@ -96,7 +96,7 @@ export function SøknadsfristProsessStegInitPanel() {
   }, [skalVisePanel, vilkarForSteg, standardProps.aksjonspunkter]);
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt: true }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {
@@ -119,7 +119,7 @@ export function SøknadsfristProsessStegInitPanel() {
         // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
         const deepCopyProps = JSON.parse(JSON.stringify({ ...standardProps, vilkar: vilkarForSteg }));
         konverterKodeverkTilKode(deepCopyProps, false);
-        return <SoknadsfristVilkarProsessIndex {...standardProps} {...deepCopyProps} />;
+        return <SoknadsfristVilkarProsessIndex {...standardProps} {...deepCopyProps} panelTittelKode="Søknadsfrist" />;
       }}
     </ProsessDefaultInitPanel>
   );
