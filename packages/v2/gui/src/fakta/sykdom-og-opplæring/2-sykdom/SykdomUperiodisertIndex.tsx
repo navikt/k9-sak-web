@@ -1,6 +1,6 @@
 import Vurderingsnavigasjon, {
   type Vurderingselement,
-} from '../../../shared/vurderingsperiode-navigasjon/VurderingsperiodeNavigasjon';
+} from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon.js';
 import { Button } from '@navikt/ds-react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { PlusIcon } from '@navikt/aksel-icons';
@@ -26,8 +26,7 @@ export const SykdomUperiodisertContext = createContext<{
 });
 
 interface SykdomVurderingselement
-  extends Vurderingselement,
-    k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
+  extends Vurderingselement, k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
   id: string;
 }
 
@@ -92,6 +91,7 @@ const SykdomUperiodisertIndex = () => {
           navigationSection={() => (
             <Vurderingsnavigasjon<SykdomVurderingselement>
               title="Alle vurderinger"
+              nyesteFørst={false}
               valgtPeriode={valgtPeriode}
               perioder={vurderingsliste || []}
               onPeriodeClick={velgPeriode}

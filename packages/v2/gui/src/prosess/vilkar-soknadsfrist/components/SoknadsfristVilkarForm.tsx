@@ -10,13 +10,13 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
+import type dayjs from 'dayjs';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';
@@ -31,8 +31,8 @@ import styles from './SoknadsfristVilkarForm.module.css';
  *
  * Backend teller fra dagen etter..
  */
-const minusEnDag = (dato: string | Dayjs) => initializeDate(dato).subtract(1, 'days').format('YYYY-MM-DD');
-const plusEnDag = (dato: string | Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
+const minusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).subtract(1, 'days').format('YYYY-MM-DD');
+const plusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
 
 const buildInitialValues = (
   aksjonspunkter: SoknadsfristAksjonspunktType[],

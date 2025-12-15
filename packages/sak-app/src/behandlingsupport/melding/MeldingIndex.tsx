@@ -8,7 +8,6 @@ import {
   BehandlingAppKontekst,
   Brevmaler,
   Fagsak,
-  FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
@@ -23,7 +22,6 @@ interface OwnProps {
   behandlingVersjon?: number;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
-  readonly featureToggles?: FeatureToggles;
   readonly backendApi: MeldingerSakIndexBackendApi;
 }
 
@@ -39,7 +37,6 @@ const MeldingIndex = ({
   behandlingVersjon,
   personopplysninger,
   arbeidsgiverOpplysninger,
-  featureToggles,
   backendApi,
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
@@ -109,7 +106,6 @@ const MeldingIndex = ({
         behandling.type.kode === BehandlingType.TILBAKEKREVING ||
         behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
       }
-      featureToggles={featureToggles}
       fagsak={fagsak}
       behandling={behandling}
       backendApi={backendApi}

@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Behandling } from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,
@@ -20,7 +20,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   aksjonspunktInformasjon: AksjonspunktInformasjon,
   vilkarInformasjon: VilkarInformasjon,
 ) => {
-  const { soknad, fagsaksType } = saksInformasjon;
+  const { soknad, fagsaksType, personopplysninger } = saksInformasjon;
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
 
@@ -51,6 +51,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           skalVilkarsUtfallVises,
           submitCallback,
           soknad,
+          personopplysninger,
         });
 
       case fagsakYtelsesType.OMSORGSPENGER_MA:

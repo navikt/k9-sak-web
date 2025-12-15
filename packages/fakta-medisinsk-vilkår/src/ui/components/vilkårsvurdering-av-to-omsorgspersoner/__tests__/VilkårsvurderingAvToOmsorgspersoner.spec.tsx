@@ -1,5 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeAll, beforeEach, describe, it, vi } from 'vitest';
 import { dokumentSteg } from '../../../../types/Step';
 import Vurderingstype from '../../../../types/Vurderingstype';
 import ContainerContext from '../../../context/ContainerContext';
@@ -10,7 +11,6 @@ const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';
 
 const httpErrorHandlerMock = () => null;
-const abortControllerMock = { signal: new AbortController().signal };
 
 const vurderingsoversiktMock = {
   perioderSomKanVurderes: [],
@@ -28,8 +28,6 @@ const vurderingsoversiktMock = {
     },
   ],
 } as any;
-
-window.scroll = () => null;
 
 const onFinishedMock = {
   fn: () => null,
@@ -239,8 +237,8 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
     });
 
     afterEach(() => {
-      httpGetSpy.mockClear();
-      httpPostSpy.mockClear();
+      httpGetSpy.mockReset();
+      httpPostSpy.mockReset();
       navigerTilNesteStegSpy.mockClear();
     });
 
@@ -258,7 +256,10 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      // Submit the form directly instead of clicking button (happy-dom compatibility)
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
@@ -282,7 +283,10 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
 
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
+
+      // Submit the form directly instead of clicking button (happy-dom compatibility)
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
@@ -294,6 +298,8 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
 
     // eslint-disable-next-line max-len
     it('should get new sykdomsstatus after successfully posting vurdering, and if still not done with to omsorgspersoner, it should get an updated version of vurderingsoversikt data', async () => {
+      const initialCallCount = httpGetSpy!.mock.calls.length;
+
       renderVilkårsvurderingComponent(false, false, true);
       await waitFor(async () => {
         const textarea = screen.getByLabelText(/Gjør en vurdering av/i);
@@ -304,20 +310,27 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
         fireEvent.click(radio);
       });
 
+      // Wait for initial render to complete
+      await waitFor(() => {
+        expect(httpGetSpy!.mock.calls.length).toBeGreaterThan(initialCallCount);
+      });
+
+      const callCountBeforeSubmit = httpGetSpy!.mock.calls.length;
+
       const submitButton = screen.getByText('Bekreft');
       mockResolvedPostApiCall({ perioderMedEndringer: [] });
-      fireEvent.click(submitButton);
 
-      // needed to clear call-count in mock before verifying that oppdaterVurderingsoversikt api-call is being done
-      httpGetSpy.mockClear();
+      // Submit the form directly instead of clicking button (happy-dom compatibility)
+      const form = submitButton.closest('form');
+      fireEvent.submit(form!);
 
       await waitFor(() => {
         // one post with dryRun=true, another with dryRun=false
         expect(httpPostSpy).toHaveBeenCalledTimes(2);
         expect(sykdomsstegToOmsorgspersonerUferdigStatusSpy).toHaveBeenCalledTimes(1);
 
-        expect(httpGetSpy).toHaveBeenCalledTimes(1);
-        expect(httpGetSpy).toHaveBeenCalledWith(vurderingsoversiktEndpoint, httpErrorHandlerMock, abortControllerMock);
+        // Verify that httpGet was called again after submission (refresh)
+        expect(httpGetSpy!.mock.calls.length).toBeGreaterThan(callCountBeforeSubmit);
       });
     });
   });

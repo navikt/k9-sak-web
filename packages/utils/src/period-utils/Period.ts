@@ -79,7 +79,7 @@ class Period {
     const fomDayjs = initializeDate(this.fom);
     const tomDayjs = initializeDate(this.tom);
 
-    const list = [];
+    const list: string[] = [];
     for (let currentDate = fomDayjs; isSameOrBefore(currentDate, tomDayjs); currentDate = currentDate.add(1, 'day')) {
       list.push(currentDate.format('YYYY-MM-DD'));
     }
@@ -91,7 +91,7 @@ class Period {
     return isValid(this.fom) && isValid(this.tom);
   }
 
-  asInternationalPeriod() {
+  asInternationalPeriod(): { from: string; to: string } {
     return {
       from: this.fom,
       to: this.tom,

@@ -44,8 +44,7 @@ export default class EditorJSWrapper {
 
   public async importer(html: string) {
     await this.editor.isReady;
-    const sanitizedHtml = html.replace(/\s*(<[^>]+>)\s*/g, '$1'); // Fjerne mellomrom rundt html-tags
-    await this.editor.blocks.renderFromHTML(sanitizedHtml);
+    await this.editor.blocks.renderFromHTML(html);
     return true;
   }
 

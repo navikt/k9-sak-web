@@ -14,10 +14,10 @@ import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
 
 import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
 import type { ReactElement } from 'react';
+import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
 import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
-import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
 import styles from './tilkommetAktivitet.module.css';
 
 type Props = {
@@ -149,9 +149,9 @@ export const TilkommetInntektsforholdField = ({
     <>
       <RhfRadioGroup
         control={formMethods.control}
-        label={getRadioGroupLabel()}
+        legend={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
-        isReadOnly={readOnly}
+        readOnly={readOnly}
         validate={[required]}
       >
         <Radio value={true}>Ja</Radio>
@@ -166,8 +166,8 @@ export const TilkommetInntektsforholdField = ({
               <Alert size="small" variant="info">
                 Utgangspunktet er at alle nye inntektskilder som kommer etter skjæringstidspunktet skal kunne medføre
                 gradering mot inntekt. Du skal derfor vanligvis velge "ja", som betyr at K9 vurderer om{' '}
-                {ytelseTekst.ytelseNavnBestemt} skal graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9 bruke
-                denne aktiviteten for å vurdere søkers inntektstap.
+                {ytelseTekst.ytelseNavnBestemt} skal graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9
+                bruke denne aktiviteten for å vurdere søkers inntektstap.
               </Alert>
             </Box.New>
           );

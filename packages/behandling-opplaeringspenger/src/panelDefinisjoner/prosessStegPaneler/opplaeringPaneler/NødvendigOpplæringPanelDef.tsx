@@ -7,7 +7,7 @@ class NødvendigOpplæringPanelDef extends ProsessStegPanelDef {
 
   getId = () => 'NØDVENDIG_OPPLÆRING';
 
-  getTekstKode = () => 'Opplæring og reisetid';
+  getTekstKode = () => 'Nødvendig opplæring';
 
   getKomponent = props => {
     return this.overstyringDef.getKomponent({ ...props, skjulOverstyring: true });

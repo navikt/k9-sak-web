@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
 import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
@@ -22,20 +22,23 @@ import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
-import { filterPerioderForKontrollAvInntekt, sortBehandlinger } from './behandlingVelgerUtils';
+import {
+  filterPerioderForBarnetillegg,
+  filterPerioderForKontrollAvInntekt,
+  sortBehandlinger,
+} from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
   switch (behandlingType) {
     case BehandlingDtoType.FØRSTEGANGSSØKNAD:
-      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE);
-
     case k9KlageBehandlingType.KLAGE:
-      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
-
     case k9KlageBehandlingType.TILBAKEKREVING:
     case k9KlageBehandlingType.REVURDERING_TILBAKEKREVING:
-      return kodeverkNavnFraKode(behandlingType, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
-
+      return kodeverkNavnFraKode(
+        behandlingType,
+        KodeverkType.BEHANDLING_TYPE,
+        finnKodeverkTypeForBehandlingType(behandlingType),
+      );
     default:
       return 'Viderebehandling';
   }
@@ -55,6 +58,9 @@ const getSøknadsperioderForValgtBehandling = (
   const dataForValgtBehandling = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
   if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT) {
     return filterPerioderForKontrollAvInntekt(dataForValgtBehandling);
+  }
+  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG) {
+    return filterPerioderForBarnetillegg(dataForValgtBehandling);
   }
   return dataForValgtBehandling?.perioder ?? [];
 };
@@ -125,7 +131,6 @@ interface OwnProps {
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
   hentSøknadsperioder: boolean;
   api: BehandlingVelgerBackendApiType;
@@ -141,7 +146,6 @@ const BehandlingPicker = ({
   behandlingId,
   behandlinger,
   getBehandlingLocation,
-  createLocationForSkjermlenke,
   sakstypeKode,
   hentSøknadsperioder,
   api,
@@ -346,7 +350,7 @@ const BehandlingPicker = ({
               ? kodeverkNavnFraKode(
                   valgtBehandling.behandlingsresultat.type,
                   KodeverkType.BEHANDLING_RESULTAT_TYPE,
-                  erTilbakekreving(valgtBehandling.type) ? 'kodeverkTilbake' : 'kodeverk',
+                  finnKodeverkTypeForBehandlingType(valgtBehandling.type),
                 )
               : undefined
           }
@@ -362,8 +366,8 @@ const BehandlingPicker = ({
           }
           behandlingTypeKode={valgtBehandling.type}
           søknadsperioder={getSøknadsperioderForValgtBehandling(søknadsperioder, valgtBehandling)}
-          createLocationForSkjermlenke={createLocationForSkjermlenke}
           sakstypeKode={sakstypeKode}
+          behandlingVisningsnavn={valgtBehandling.visningsnavn}
         />
       )}
       {skalViseHentFlereBehandlingerKnapp && (

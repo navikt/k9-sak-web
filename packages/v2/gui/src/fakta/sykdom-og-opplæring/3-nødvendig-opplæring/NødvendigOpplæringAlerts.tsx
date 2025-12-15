@@ -14,11 +14,10 @@ interface OpplæringVurderingselement extends Omit<{ resultat: string }, 'result
 }
 
 interface NødvendigOpplæringAlertProps {
-  valgtVurdering: OpplæringVurderingselement | null;
   vurderingsliste: OpplæringVurderingselement[] | undefined;
 }
 
-const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: NødvendigOpplæringAlertProps) => {
+const NødvendigOpplæringAlerts = ({ vurderingsliste }: NødvendigOpplæringAlertProps) => {
   const { readOnly, løsAksjonspunkt9302, aksjonspunkter } = useContext(SykdomOgOpplæringContext);
   const aksjonspunktErÅpent = harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_OPPLÆRING);
   const alleVurderingerFerdigVurdert = vurderingsliste?.every(
@@ -45,14 +44,6 @@ const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: Nødven
     });
   };
 
-  if (valgtVurdering?.resultat === OpplæringVurderingDtoResultat.MÅ_VURDERES && !readOnly) {
-    return (
-      <Alert className="mb-4" variant="warning" size="small">
-        Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
-      </Alert>
-    );
-  }
-
   if (aksjonspunktErÅpent && alleVurderingerFerdigVurdert && tidligereAksjonspunkterErÅpne && !readOnly) {
     return (
       <Alert className="mb-4 p-4" variant="warning" size="small">
@@ -77,6 +68,14 @@ const NødvendigOpplæringAlerts = ({ valgtVurdering, vurderingsliste }: Nødven
             </Button>
           </div>
         </div>
+      </Alert>
+    );
+  }
+
+  if (aksjonspunktErÅpent && !readOnly) {
+    return (
+      <Alert className="mb-4" variant="warning" size="small">
+        Vurder om opplæringen er nødvendig for at søker skal kunne ta seg av og behandlet barnet.
       </Alert>
     );
   }

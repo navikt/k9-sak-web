@@ -9,6 +9,8 @@ updates:
     directory: '/'
     schedule:
       interval: daily
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 30
     registries:
       - npm-github
@@ -24,12 +26,6 @@ updates:
           - '@types/react'
           - '@navikt*'
           - 'eslint-plugin-vitest' # version 0.5.4 requires eslint version 9
-      storybook:
-        update-types:
-          - 'major'
-        patterns:
-          - 'storybook'
-          - '@storybook/*'
       react:
         patterns:
           - 'react'

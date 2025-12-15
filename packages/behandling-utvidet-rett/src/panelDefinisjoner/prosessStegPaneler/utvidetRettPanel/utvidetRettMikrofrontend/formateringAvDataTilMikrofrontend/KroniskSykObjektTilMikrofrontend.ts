@@ -1,15 +1,16 @@
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
+import { Aksjonspunkt, Personopplysninger, Vilkar } from '@k9-sak-web/types';
+import { k9_kodeverk_vilkår_VilkårUtfallMerknad } from '@navikt/k9-sak-typescript-client/types';
 import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface OwnProps {
   behandlingsID: string;
@@ -20,6 +21,7 @@ interface OwnProps {
   skalVilkarsUtfallVises: boolean;
   submitCallback;
   soknad: UtvidetRettSoknad;
+  personopplysninger: Personopplysninger;
 }
 
 const formatereLosAksjonspunktObjektForKroniskSyk = (
@@ -27,9 +29,11 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
   begrunnelse: string,
   erVilkarOk: boolean,
   fraDato: string,
+  tilDato: string | null,
   vilkar: Vilkar,
   avslagsårsakKode: string,
   soknad: UtvidetRettSoknad,
+  erTidsbegrenset: boolean,
 ) => {
   const angittBarn = soknad.angittePersoner.find(person => person.rolle === 'BARN');
   const barnetsFodselsdato = new Date(angittBarn.fødselsdato);
@@ -42,11 +46,13 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
     avslagsårsak: erVilkarOk ? null : avslagsårsakKode,
     periode: {
       fom: fraDato,
-      tom:
-        typeof vilkar.perioder[0]?.periode.tom && vilkar.perioder[0]?.periode.tom !== '9999-12-31'
+      tom: tilDato
+        ? tilDato
+        : typeof vilkar.perioder[0]?.periode.tom && vilkar.perioder[0]?.periode.tom !== '9999-12-31'
           ? vilkar.perioder[0]?.periode.tom
           : åretBarnetFyller18,
     },
+    erTidsbegrenset,
   };
 
   return losAksjonspunktObjekt;
@@ -59,6 +65,8 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
       avslagsårsakKode: vilkar.perioder[0].avslagKode,
       fraDato: vilkar.perioder[0].periode.fom,
+      tilDato: vilkar.perioder[0].periode.tom,
+      erTidsbegrenset: vilkar.perioder[0].merknad?.kode === k9_kodeverk_vilkår_VilkårUtfallMerknad.VM_9013_T,
     } as InformasjonTilLesemodusKroniskSyk;
   }
   return {
@@ -66,6 +74,7 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
     vilkarOppfylt: false,
     avslagsårsakKode: '',
     fraDato: '',
+    erTidsbegrenset: false,
   } as InformasjonTilLesemodusKroniskSyk;
 };
 
@@ -78,6 +87,7 @@ const KroniskSykObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
+  personopplysninger,
 }: OwnProps): {
   visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN;
   props: VilkarKroniskSyktBarnProps;
@@ -105,20 +115,30 @@ const KroniskSykObjektTilMikrofrontend = ({
           aksjonspunkt.begrunnelse,
           'Utvidet Rett',
         ),
-        losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
+        losAksjonspunkt: (
+          harDokumentasjonOgFravaerRisiko,
+          begrunnelse,
+          avslagsårsakKode,
+          fraDato,
+          tilDato,
+          erTidsbegrenset,
+        ) => {
           submitCallback([
             formatereLosAksjonspunktObjektForKroniskSyk(
               aksjonspunkt.definisjon.kode,
               begrunnelse,
               harDokumentasjonOgFravaerRisiko,
               fraDato || soknad.soknadsdato,
+              tilDato,
               vilkar,
               avslagsårsakKode,
               soknad,
+              erTidsbegrenset,
             ),
           ]);
         },
         formState: FormState,
+        personopplysninger,
       } as VilkarKroniskSyktBarnProps,
     };
   }

@@ -1,14 +1,21 @@
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { use } from 'react';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
+import { TilkjentYtelseApiContext } from './api/TilkjentYtelseApiContext.js';
+import type { FeriepengerPrÅr } from './components/feriepenger/FeriepengerPanel.tsx';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  behandling: BehandlingDto;
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
@@ -19,7 +26,12 @@ interface OwnProps {
   showAndelDetails?: boolean;
 }
 
-const TilkjentYtelseProsessIndex = ({
+const emptyResult: FeriepengerPrÅr = new Map();
+
+/**
+ * @experimental Denne komponenten er ikke klar for produksjon.
+ */
+export const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   aksjonspunkter,
   isReadOnly,
@@ -29,18 +41,32 @@ const TilkjentYtelseProsessIndex = ({
   featureToggles,
   personopplysninger,
   showAndelDetails,
-}: OwnProps) => (
-  <TilkjentYtelsePanel
-    beregningsresultat={beregningsresultat}
-    aksjonspunkter={aksjonspunkter}
-    readOnly={isReadOnly}
-    submitCallback={submitCallback}
-    readOnlySubmitButton={readOnlySubmitButton}
-    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    featureToggles={featureToggles}
-    personopplysninger={personopplysninger}
-    showAndelDetails={showAndelDetails}
-  />
-);
+  behandling,
+}: OwnProps) => {
+  const tilkjentYtelseBackendClient = assertDefined(use(TilkjentYtelseApiContext));
 
-export default TilkjentYtelseProsessIndex;
+  const { data: feriepengerPrÅr } = useSuspenseQuery({
+    queryKey: ['feriepengegrunnlag', behandling?.uuid],
+    queryFn: async () => {
+      return behandling?.uuid != null
+        ? await tilkjentYtelseBackendClient.hentFeriepengegrunnlagPrÅr(behandling.uuid)
+        : null;
+    },
+    select: data => (data != null ? data : emptyResult),
+  });
+
+  return (
+    <TilkjentYtelsePanel
+      beregningsresultat={beregningsresultat}
+      aksjonspunkter={aksjonspunkter}
+      readOnly={isReadOnly}
+      submitCallback={submitCallback}
+      readOnlySubmitButton={readOnlySubmitButton}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      featureToggles={featureToggles}
+      personopplysninger={personopplysninger}
+      showAndelDetails={showAndelDetails}
+      feriepengerPrÅr={feriepengerPrÅr}
+    />
+  );
+};

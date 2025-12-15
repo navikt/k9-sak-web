@@ -8,14 +8,13 @@ import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './uttakDetaljer.module.css';
-import { LoadingPanel } from '../../../shared/loading-panel/LoadingPanel';
 
 interface ownProps {
   inntektsgradering: InntektgraderingPeriodeDto;
 }
 
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
-  const { arbeidsgivere, lasterArbeidsgivere } = useUttakContext();
+  const { arbeidsgivere } = useUttakContext();
 
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
 
@@ -29,10 +28,6 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
   const beregningsgrunnlag = formatNOK(inntektsgradering.beregningsgrunnlag);
   const løpendeInntekt = formatNOK(inntektsgradering.løpendeInntekt);
   const bortfaltInntekt = formatNOK(inntektsgradering.bortfaltInntekt);
-
-  if (lasterArbeidsgivere) {
-    return <LoadingPanel />;
-  }
 
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>

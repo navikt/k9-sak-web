@@ -4,23 +4,33 @@ import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPan
 import UtvidetRettProsessStegPanelDef from './prosessStegPaneler/UtvidetRettProsessStegPanelDef';
 import AlderProsessStegPanelDef from './prosessStegPaneler/AlderProsessStegPanelDef';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 const prosessStegUtvidetRettPanelDefinisjoner = (
   erFagytelseTypeAleneOmOmsorgen: boolean,
   erFagytelseTypeKroniskSyk: boolean,
   vilkar: Vilkar[],
+  featureToggles: FeatureToggles,
 ) => {
   const visAlderProsessSteg = erFagytelseTypeAleneOmOmsorgen || erFagytelseTypeKroniskSyk;
   const harAldersvilkår = vilkar.some(v => v.vilkarType.kode === vilkarType.ALDERSVILKAR_BARN);
 
-  return visAlderProsessSteg && harAldersvilkår
+  if (!(visAlderProsessSteg && harAldersvilkår))
+    return [
+      new InngangsvilkarProsessStegPanelDef(),
+      new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+      new VedtakProsessStegPanelDef(),
+    ];
+
+  return featureToggles?.FLYTT_ALDERSVILKAR
     ? [
-        new AlderProsessStegPanelDef(),
         new InngangsvilkarProsessStegPanelDef(),
         new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+        new AlderProsessStegPanelDef(),
         new VedtakProsessStegPanelDef(),
       ]
     : [
+        new AlderProsessStegPanelDef(),
         new InngangsvilkarProsessStegPanelDef(),
         new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
         new VedtakProsessStegPanelDef(),

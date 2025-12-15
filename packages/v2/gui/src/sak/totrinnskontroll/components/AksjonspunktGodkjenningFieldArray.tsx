@@ -1,29 +1,23 @@
-import type { k9_klage_kontrakt_klage_KlagebehandlingDto as KlagebehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import { type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Detail, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
+import { BodyShort, Detail, ErrorMessage, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
-import * as Sentry from '@sentry/browser';
-import { type Location } from 'history';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import { NavLink } from 'react-router';
-import aksjonspunktCodesTilbakekreving from '../aksjonspunktCodesTilbakekreving';
-import { type Behandling } from '../types/Behandling';
-import type { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import { NavLink, useLocation } from 'react-router';
+import { type TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
-
-const minLength3 = minLength(3);
-const maxLength2000 = maxLength(2000);
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
+import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
 export type AksjonspunktGodkjenningData = {
-  aksjonspunktKode: string;
+  aksjonspunktKode: AksjonspunktDefinisjon;
   annet?: boolean;
   besluttersBegrunnelse?: string;
   feilFakta?: boolean;
@@ -33,105 +27,70 @@ export type AksjonspunktGodkjenningData = {
 };
 
 interface OwnProps {
-  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
+  totrinnskontrollData: TotrinnskontrollData;
   readOnly: boolean;
-  showBegrunnelse?: boolean;
-  klageKA?: boolean;
   klagebehandlingVurdering?: KlagebehandlingDto;
-  behandlingStatus: Behandling['status'];
-  arbeidsforholdHandlingTyper: KodeverkObject[];
-  skjermlenkeTyper: KodeverkObject[];
-  lagLenke: (skjermlenkeCode: string) => Location;
+  behandlingStatus: TotrinnskontrollBehandling['status'];
 }
 
 export const AksjonspunktGodkjenningFieldArray = ({
-  totrinnskontrollSkjermlenkeContext,
+  totrinnskontrollData,
   readOnly,
-  showBegrunnelse = false,
-  klageKA = false,
   klagebehandlingVurdering,
   behandlingStatus,
-  arbeidsforholdHandlingTyper,
-  skjermlenkeTyper,
-  lagLenke,
 }: OwnProps) => {
+  const location = useLocation();
   const featureToggles = useContext(FeatureTogglesContext);
-  const { control, formState } = useFormContext<FormState>();
+  const { control, getFieldState, trigger } = useFormContext<FormState>();
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
   const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
-
+  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   return (
     <>
       {fields.map((field, index) => {
-        const { aksjonspunktKode, totrinnskontrollGodkjent, annet, feilFakta, feilLov, feilRegel } =
-          aksjonspunktGodkjenning[index] || {};
-        const context = totrinnskontrollSkjermlenkeContext.find(c =>
-          c.totrinnskontrollAksjonspunkter.some(ta => ta.aksjonspunktKode === aksjonspunktKode),
-        );
-        const totrinnskontrollAksjonspunkt = context?.totrinnskontrollAksjonspunkter.find(
-          c => c.aksjonspunktKode === aksjonspunktKode,
-        );
+        const { aksjonspunktKode, totrinnskontrollGodkjent } = aksjonspunktGodkjenning[index] || {};
+        const data = aksjonspunktKode != null ? totrinnskontrollData.forAksjonspunkt(aksjonspunktKode) : undefined;
 
-        const erKlageKA = klageKA && totrinnskontrollGodkjent;
-        const erAnke =
-          aksjonspunktKode === aksjonspunktCodesTilbakekreving.MANUELL_VURDERING_AV_ANKE &&
-          totrinnskontrollGodkjent === true;
-        const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
-        const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
+        // klageVurderingResultatNK ser ut til å vere satt viss klage på gitt behandling har blitt vurdert av "NAV Klageenhet K9" (NK) eller "NAV Klageenhet Kabal" (NKK)
+        const erGodkjentKlageMedVurderingsresultatFraKlageenhet: boolean =
+          klagebehandlingVurdering?.klageVurderingResultatNK != null && totrinnskontrollGodkjent == true;
+
+        const visAvslagsårsakKryssbokser = totrinnskontrollGodkjent === false;
+        // I nokre tilfeller skal godkjenning av klage begrunnast med tekst
+        const visBegrunnelseTekstfelt =
+          totrinnskontrollGodkjent === false || erGodkjentKlageMedVurderingsresultatFraKlageenhet;
 
         const aksjonspunktText =
-          totrinnskontrollAksjonspunkt &&
-          getAksjonspunkttekst(
-            behandlingStatus,
-            arbeidsforholdHandlingTyper,
-            totrinnskontrollAksjonspunkt,
-            klagebehandlingVurdering,
-          );
-
-        const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
-          skjermlenkeType => skjermlenkeType.kode === context?.skjermlenkeType,
-        );
+          data != null
+            ? getAksjonspunkttekst(behandlingStatus, data.aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag)
+            : undefined;
 
         const isNyInntektEgetPanel =
           featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
-          skjermlenkeTypeKodeverk?.navn === 'Fordeling' &&
-          aksjonspunktKode === aksjonspunktCodes.VURDER_NYTT_INNTEKTSFORHOLD;
+          data?.skjermlenke?.kilde === SkjermlenkeType.FAKTA_OM_FORDELING &&
+          aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
 
-        const hentSkjermlenkeTypeKodeverkNavn = () => {
-          try {
-            if (skjermlenkeTypeKodeverk?.navn === 'Vedtak') {
-              return 'Brev';
-            }
+        const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
+        const checkboxValidationError = error?.message; // formState.errors.aksjonspunktGodkjenning?.[index]?.message
+        const reValidateAksjonspunktGodkjenning = () => trigger(`aksjonspunktGodkjenning.${index}`);
 
-            if (isNyInntektEgetPanel) {
-              return 'Ny inntekt';
-            }
-            return skjermlenkeTypeKodeverk?.navn;
-          } catch {
-            Sentry.captureEvent({
-              message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
-              extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context?.skjermlenkeType },
-            });
-            return '';
-          }
-        };
-
-        const checkboxRequiredError =
-          formState.isSubmitted && !totrinnskontrollGodkjent && !annet && !feilFakta && !feilLov && !feilRegel
-            ? 'Feltet må fylles ut'
+        const skjermlenkePath = isNyInntektEgetPanel
+          ? createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT')
+          : data != null
+            ? createPathForSkjermlenke(location, data.skjermlenke.kilde)
             : '';
 
-        const lenke = () => {
-          if (isNyInntektEgetPanel) {
-            return lagLenke(skjermlenkeCodes.FAKTA_OM_NY_INNTEKT.kode);
-          }
-          return context ? lagLenke(context.skjermlenkeType) : '';
-        };
+        const skjermlenkeTekst =
+          data?.skjermlenke?.kilde === SkjermlenkeType.VEDTAK
+            ? 'Brev'
+            : isNyInntektEgetPanel
+              ? 'Ny inntekt'
+              : data?.skjermlenke?.navn;
 
         return (
           <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
-            <Link as={NavLink} to={lenke()} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
-              {hentSkjermlenkeTypeKodeverkNavn()}
+            <Link as={NavLink} to={skjermlenkePath} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
+              {skjermlenkeTekst}
             </Link>
             <div className={styles.approvalItemContainer}>
               {aksjonspunktText
@@ -148,16 +107,18 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 <RhfRadioGroup
                   control={control}
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
-                  isReadOnly={readOnly}
+                  readOnly={readOnly}
+                  legend=""
+                  hideLegend
                 >
                   <HStack gap="space-16">
                     <Radio value={true}>Godkjent</Radio>
                     <Radio value={false}>Vurder på nytt</Radio>
                   </HStack>
                 </RhfRadioGroup>
-                {visArsaker && (
-                  <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
-                    {!visKunBegrunnelse && (
+                {visBegrunnelseTekstfelt && (
+                  <ArrowBox alignOffset={erGodkjentKlageMedVurderingsresultatFraKlageenhet ? 1 : 110}>
+                    {visAvslagsårsakKryssbokser && (
                       <VStack gap="space-8">
                         <Detail className="blokk-xs">Årsak</Detail>
                         <Fieldset legend="" hideLegend>
@@ -168,12 +129,14 @@ export const AksjonspunktGodkjenningFieldArray = ({
                                 name={`aksjonspunktGodkjenning.${index}.feilFakta`}
                                 label="Feil fakta"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                               <RhfCheckbox
                                 control={control}
                                 name={`aksjonspunktGodkjenning.${index}.feilRegel`}
                                 label="Feil regelforståelse"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                             </div>
                             <div>
@@ -182,20 +145,18 @@ export const AksjonspunktGodkjenningFieldArray = ({
                                 name={`aksjonspunktGodkjenning.${index}.feilLov`}
                                 label="Feil lovanvendelse"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                               <RhfCheckbox
                                 control={control}
                                 name={`aksjonspunktGodkjenning.${index}.annet`}
                                 label="Annet"
                                 readOnly={readOnly}
+                                onChange={reValidateAksjonspunktGodkjenning}
                               />
                             </div>
                           </HStack>
-                          {checkboxRequiredError && (
-                            <div className="navds-error-message navds-label navds-label--small">
-                              {checkboxRequiredError}
-                            </div>
-                          )}
+                          {checkboxValidationError && <ErrorMessage>{checkboxValidationError}</ErrorMessage>}
                         </Fieldset>
                       </VStack>
                     )}
@@ -204,9 +165,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                         control={control}
                         name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                         label="Begrunnelse"
-                        validate={[required, minLength3, maxLength2000, hasValidText]}
                         readOnly={readOnly}
-                        maxLength={2000}
                       />
                     </div>
                   </ArrowBox>
@@ -219,5 +178,3 @@ export const AksjonspunktGodkjenningFieldArray = ({
     </>
   );
 };
-
-export default AksjonspunktGodkjenningFieldArray;

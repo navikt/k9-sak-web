@@ -1,0 +1,34 @@
+import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import { type FC, useCallback } from 'react';
+import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal.js';
+
+export interface BeslutterModalIndexProps {
+  readonly behandling: TotrinnskontrollBehandling;
+  readonly fagsakYtelseType: FagsakYtelseType;
+  readonly erAlleAksjonspunktGodkjent: boolean;
+  readonly erKlageWithKA: boolean;
+  readonly urlEtterpå: string;
+}
+
+export const BeslutterModalIndex: FC<BeslutterModalIndexProps> = ({
+  behandling,
+  fagsakYtelseType,
+  erAlleAksjonspunktGodkjent,
+  erKlageWithKA,
+  urlEtterpå,
+}) => {
+  const gåTilUrlEtterpå = useCallback(() => {
+    window.location.assign(urlEtterpå);
+  }, [urlEtterpå]);
+
+  return (
+    <FatterVedtakApprovalModal
+      behandling={behandling}
+      closeEvent={gåTilUrlEtterpå}
+      allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
+      fagsakYtelseType={fagsakYtelseType}
+      erKlageWithKA={erKlageWithKA}
+    />
+  );
+};

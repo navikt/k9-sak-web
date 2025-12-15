@@ -3,6 +3,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { PeriodList } from '@k9-sak-web/gui/shared/periodList/PeriodList.js';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
+import { ytelseVisningsnavn } from '@k9-sak-web/gui/utils/ytelseVisningsnavn.js';
 import { Alert, Heading, ReadMore } from '@navikt/ds-react';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
@@ -69,6 +70,7 @@ const Utenlandsopphold = ({
   });
 
   const erPleiepenger = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+  const ytelseTekst = ytelseVisningsnavn(fagsakYtelseType);
 
   return (
     <div className={styles.utenlandsopphold}>
@@ -76,14 +78,14 @@ const Utenlandsopphold = ({
         Utenlandsopphold
       </Heading>
       <Alert variant="info" className={styles.alertstripe}>
-        <ReadMore header="Hvor lenge har søker rett på pleiepenger i utlandet?" size="small">
+        <ReadMore header={`Hvor lenge har søker rett på ${ytelseTekst.ytelseNavnUbestemt} i utlandet?`} size="small">
           <ul>
             <li>
               Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker
-              kan motta pleiepenger.
+              kan motta ${ytelseTekst.ytelseNavnUbestemt}.
             </li>
             <li>
-              For opphold utenfor EØS skal perioden med pleiepenger i utgangspunktet begrenses til 8 uker i løpet av en
+              For opphold utenfor EØS skal perioden med ytelse i utgangspunktet begrenses til 8 uker i løpet av en
               periode på 12 måneder.
             </li>
             {erPleiepenger && (
@@ -96,11 +98,11 @@ const Utenlandsopphold = ({
                 </ul>
               </li>
             )}
-            <li>Vilkårene for rett til pleiepenger må være oppfylt hele perioden.</li>
+            <li>Vilkårene for rett til ${ytelseTekst.ytelseNavnUbestemt} må være oppfylt hele perioden.</li>
             {erPleiepenger && (
               <li>
-                Det utbetales ikke pleiepenger når søker avvikler ferie. Utenlandsopphold i en periode med ferie telles
-                derfor ikke med, uavhengig av årsaken til utenlandsoppholdet.
+                Det utbetales ikke ${ytelseTekst.ytelseNavnUbestemt} når søker avvikler ferie. Utenlandsopphold i en
+                periode med ferie telles derfor ikke med, uavhengig av årsaken til utenlandsoppholdet.
               </li>
             )}
           </ul>

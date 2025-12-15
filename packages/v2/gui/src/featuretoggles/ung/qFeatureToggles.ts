@@ -1,7 +1,7 @@
-import type { FeatureToggles } from '../FeatureToggles.js';
+import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const qFeatureToggles = {
-  BRUK_V2_MELDINGER: false,
+  isFor: 'Q',
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
@@ -25,6 +25,12 @@ export const qFeatureToggles = {
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: true,
   MARKERING_UTENLANDSTILSNITT: false,
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: true,
+  VIS_ALLE_ASYNC_ERRORS: true,
+  VIS_FERIEPENGER_PANEL: true,
+  FLYTT_ALDERSVILKAR: true,
+  BRUK_V2_TILKJENT_YTELSE: true,
+  UNG_KLAGE: true,
+  V2_MELDINGER_FOR_TILBAKE: true,
   PROSESS_MENY_V2: false,
   PROSESS_MENY_V2_VELGER: false,
-} satisfies FeatureToggles;
+} satisfies UngFeatureToggles;

@@ -80,7 +80,7 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId?: number;
   behandlingVersjon?: number;
-  behandlingRettigheter: BehandlingRettigheter;
+  behandlingRettigheter: BehandlingRettigheter | undefined;
   sakRettigheter: SakRettigheter;
   oppfriskBehandlinger: () => void;
   behandlendeEnheter: BehandlendeEnheter;

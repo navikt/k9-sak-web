@@ -1,6 +1,6 @@
 import { Period, dateConstants } from '@fpsak-frontend/utils';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { finnHullIPerioder } from '../../../util/periodUtils';
 
 type InputValue = string | number;
@@ -13,7 +13,7 @@ export function required(v: InputValue): string | boolean {
 }
 
 export function dateIsNotInTheFuture(dateString: string): string | boolean {
-  const date: Dayjs = initializeDate(dateString);
+  const date: dayjs.Dayjs = initializeDate(dateString);
   if (date.isSame(dateConstants.tomorrow) || date.isAfter(dateConstants.tomorrow)) {
     return 'Datoen kan ikke settes senere enn dagens dato';
   }

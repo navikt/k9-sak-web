@@ -6,6 +6,7 @@ import React from 'react';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettFakta from '../UtvidetRettFakta';
 import utvidetRettTestData from './utvidetRettTestData';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/qFeatureToggles.js';
 
 const { aksjonspunkter, behandling, fagsak, fagsakPerson, rettigheter, vilkar, rammevedtak } = utvidetRettTestData;
 
@@ -31,7 +32,7 @@ describe('<UtvidetRettFakta>', () => {
         hasFetchError={false}
         setApentFaktaPanel={vi.fn()}
         setBehandling={vi.fn()}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );
@@ -61,7 +62,7 @@ describe('<UtvidetRettFakta>', () => {
         hasFetchError={false}
         setApentFaktaPanel={vi.fn()}
         setBehandling={vi.fn()}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );

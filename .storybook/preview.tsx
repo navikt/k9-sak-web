@@ -1,17 +1,17 @@
 import '@fpsak-frontend/assets/styles/global.css';
+import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
+import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
+import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import '@navikt/ds-css/darkside';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
-import { Preview } from '@storybook/react';
+import { Preview } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
-import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
-import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
@@ -51,7 +51,6 @@ const preview: Preview = {
       autodocs: true,
     },
   },
-  tags: ['autodocs'],
   decorators: [
     Story => {
       const store = configureStore();
@@ -80,12 +79,15 @@ const preview: Preview = {
       );
     },
   ],
+
   loaders: [
     async context => {
       await mswLoader(context);
       await waitForActivatedServiceWorker();
     },
   ],
+
+  tags: ['autodocs'],
 };
 
 const waitForActivatedServiceWorker = async () => {

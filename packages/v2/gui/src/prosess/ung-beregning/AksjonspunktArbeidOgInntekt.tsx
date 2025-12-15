@@ -93,9 +93,9 @@ export const AksjonspunktArbeidOgInntekt = ({
               <RhfRadioGroup
                 control={formMethods.control}
                 name={`perioder.${fieldIndex}.valg`}
-                label="Hvilken inntekt skal benyttes?"
+                legend="Hvilken inntekt skal benyttes?"
                 validate={[required]}
-                isReadOnly={isReadOnly}
+                readOnly={isReadOnly}
               >
                 {radios.map(radio => (
                   <Radio key={radio.value} value={radio.value}>

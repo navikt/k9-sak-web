@@ -4,7 +4,8 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { KlagevurderingProsessIndex } from '@k9-sak-web/gui/prosess/klagevurdering/KlagevurderingProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
@@ -18,12 +19,8 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
     featureToggles.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
 
-  getData = ({ fagsak, saveKlageText, klageVurdering, previewCallback, hentFritekstbrevHtmlCallback }) => ({
+  getData = ({ fagsak }) => ({
     fagsak,
-    saveKlage: saveKlageText,
-    klageVurdering,
-    previewCallback,
-    hentFritekstbrevHtmlCallback,
   });
 }
 

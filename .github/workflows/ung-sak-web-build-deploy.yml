@@ -17,17 +17,18 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
     outputs:
       tag: ${{ steps.docker-push.outputs.tag }}
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
-          npmAuthToken: ${{ secrets.READER_TOKEN }}
+          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
         run: yarn build:ung
@@ -52,8 +53,6 @@ jobs:
           labels: |
             org.opencontainers.image.title=ung-sak-web
             org.opencontainers.image.description=Frontend for ung-sak
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
       - name: Sett image for nais deploy
         run: |
@@ -76,7 +75,7 @@ jobs:
     environment: test
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
@@ -95,13 +94,13 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           # Ta med litt historie og tags for å finne latest_prod_ung commit hash
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           TAG: prod_${{ needs.build-docker-image.outputs.tag }}
         with:
@@ -138,7 +137,7 @@ jobs:
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {

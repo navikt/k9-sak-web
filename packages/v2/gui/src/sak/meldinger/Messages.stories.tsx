@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 
 import {
   type Mottaker,
@@ -8,6 +8,7 @@ import {
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
@@ -170,17 +171,31 @@ export const TilTredjepartsmottaker: Story = {
     ...DefaultStory.args,
   },
   play: async ({ canvasElement, step }) => {
-    const { sendTilTredjepartEl, orgnrInp, orgNavnInp } = elemsfinder(canvasElement);
+    const { sendTilTredjepartEl, orgnrInp, orgNavnInp, fritekstEl, sendBrevBtn } = elemsfinder(canvasElement);
     await userEvent.click(canvasElement); // Nødvendig for at tredjepartsmottakerCheckbox kall under skal fungere. Må ha fokus på sida.
+    const dummyText = 'tredjepartsmottaker text';
+    const tredjepartsMottaker: MottakerDto = {
+      id: '333444555',
+      type: 'ORGNR',
+    };
     await step('Sjekk initiell visining ved sending til tredjepart', async () => {
       await userEvent.click(sendTilTredjepartEl()); // Aktiver sending til tredjepartsmottaker
       await expect(orgnrInp()).toBeInTheDocument();
       await expect(orgNavnInp()).toBeInTheDocument();
     });
     await step('Inntasting av org nr skal fungere', async () => {
-      const orgnr = '333444555';
+      const orgnr = tredjepartsMottaker.id;
       await userEvent.type(orgnrInp(), orgnr);
       await expect(orgNavnInp()).toHaveValue(`Fake storybook org (${orgnr})`);
+    });
+    await step('Submit med tredjepartsmottaker skal fungere', async () => {
+      api.resetSisteFakeDokumentBestilling();
+      // Fyll inn tekst så den input er gyldig
+      await userEvent.type(fritekstEl(), dummyText);
+      await userEvent.click(sendBrevBtn());
+
+      await expect(api.sisteFakeDokumentBestilling?.fritekst).toEqual(dummyText);
+      await expect(api.sisteFakeDokumentBestilling?.overstyrtMottaker).toEqual(tredjepartsMottaker);
     });
   },
 };

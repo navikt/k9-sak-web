@@ -35,14 +35,8 @@ export enum K9sakApiKeys {
   NEW_BEHANDLING_UNNTAK = 'NEW_BEHANDLING_UNNTAK',
   NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
-  HISTORY_K9SAK = 'HISTORY_K9SAK',
-  HISTORY_TILBAKE_V2 = 'HISTORY_TILBAKE_V2',
-  HISTORY_KLAGE = 'HISTORY_KLAGE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT = 'RISIKO_AKSJONSPUNKT',
-  TOTRINNS_KLAGE_VURDERING = 'TOTRINNS_KLAGE_VURDERING',
-  TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
-  TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY = 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
   AKTOER_INFO = 'AKTOER_INFO',
   ALL_DOCUMENTS = 'ALL_DOCUMENTS',
   HAR_REVURDERING_SAMME_RESULTAT = 'HAR_REVURDERING_SAMME_RESULTAT',
@@ -91,9 +85,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER)
   .withRel('tilbake-sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER_TILBAKE)
   .withRel('klage-sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER_KLAGE)
-  .withRel('sak-historikk', K9sakApiKeys.HISTORY_K9SAK)
-  .withRel('tilbake-historikkinnslag', K9sakApiKeys.HISTORY_TILBAKE_V2)
-  .withRel('klage-historikk', K9sakApiKeys.HISTORY_KLAGE)
   .withRel('sak-dokumentliste', K9sakApiKeys.ALL_DOCUMENTS)
   .withRel('sak-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_K9SAK)
   .withRel('tilbake-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_TILBAKE)
@@ -104,9 +95,6 @@ const endpoints = new RestApiConfigBuilder()
   // Behandling
   .withRel('soeker-personopplysninger', K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('kontrollresultat', K9sakApiKeys.KONTROLLRESULTAT)
-  .withRel('klage-vurdering', K9sakApiKeys.TOTRINNS_KLAGE_VURDERING)
-  .withRel('totrinnskontroll-arsaker', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
-  .withRel('totrinnskontroll-arsaker-readOnly', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
   .withRel('har-samme-resultat', K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
   .withRel('bekreft-totrinnsaksjonspunkt', K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)

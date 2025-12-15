@@ -97,6 +97,7 @@ describe('<FagsakProfileIndex>', () => {
       kode: behandlingType.FØRSTEGANGSSØKNAD,
       kodeverk: 'BEHANDLING_TYPE',
     },
+    sakstype: 'PSB',
     status: {
       kode: behandlingStatus.AVSLUTTET,
       kodeverk: 'BEHANDLING_STATUS',
@@ -106,13 +107,13 @@ describe('<FagsakProfileIndex>', () => {
     behandlendeEnhetNavn: 'NAV Viken',
     opprettet: '2020-02-01T00:54:25.455',
     versjon: 1,
-    behandlingPaaVent: false,
+    behandlingPåVent: false,
     behandlingHenlagt: false,
     gjeldendeVedtak: true,
-    sprakkode: undefined,
-    behandlingKoet: undefined,
-    toTrinnsBehandling: undefined,
-    behandlingÅrsaker: undefined,
+    språkkode: { kode: 'no', kodeverk: 'SPRAAK_KODE' },
+    behandlingKoet: false,
+    toTrinnsBehandling: false,
+    behandlingÅrsaker: [],
   };
 
   const forstegang: BehandlingAppKontekst = {

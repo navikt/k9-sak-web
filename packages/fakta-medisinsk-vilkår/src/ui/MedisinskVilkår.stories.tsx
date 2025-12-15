@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import withStoryReload from '@k9-sak-web/gui/storybook/decorators/withStoryReload.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { mockUrlPrepend } from '../../mock/constants';
 import { handlers } from '../../mock/handlers';

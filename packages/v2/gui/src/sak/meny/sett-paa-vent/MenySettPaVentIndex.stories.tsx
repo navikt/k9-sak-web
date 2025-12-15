@@ -1,5 +1,5 @@
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { asyncAction } from '../../../storybook/asyncAction';
 import withKodeverkContext from '../../../storybook/decorators/withKodeverkContext.js';

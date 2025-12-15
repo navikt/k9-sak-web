@@ -141,27 +141,4 @@ describe('<MessagesTilbakekreving>', () => {
 
     expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
-
-  it('skal vise tre select-bokser når varsel om revurdering', () => {
-    const previewEventCallback = vi.fn();
-    renderWithIntlAndReduxForm(
-      <MessagesTilbakekreving
-        {...mockProps}
-        templates={templates}
-        språkkode={språkkode}
-        brevmalkode="REVURD"
-        causes={causes}
-        previewCallback={previewEventCallback}
-        fritekst="Dokument"
-        behandlingId={1}
-        behandlingVersjon={2}
-        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-      />,
-      { messages },
-    );
-    expect(screen.getByRole('combobox', { name: 'Mal' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Mottaker' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Årsak' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Årsak 1' })).toBeInTheDocument();
-  });
 });

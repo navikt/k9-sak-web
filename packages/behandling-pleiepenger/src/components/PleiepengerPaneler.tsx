@@ -14,9 +14,9 @@ import {
   Dokument,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import moment from 'moment';
 import { useState } from 'react';
 import { Arbeidstype } from '../types';
@@ -124,9 +124,9 @@ const PleiepengerPaneler = ({
                               return `${formattedFom} - ${formattedTom}`;
                             }),
                             arbeidstype: mangel.arbeidsgiver?.type,
-                            personIdentifikator:
-                              (arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
-                                ?.personIdentifikator || '') as string,
+                            personIdentifikator: (arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[
+                              mangel.arbeidsgiver?.aktørId
+                            ]?.personIdentifikator || '') as string,
                           })) || []
                       }
                     />

@@ -21,18 +21,14 @@ export class MalControllerClient {
 
   async hentBrevmaler(
     sakstype: FagsakYtelsesType,
-    behandlingUuid?: string,
-    eksternReferanse?: string,
+    behandlingUuid: string,
     avsenderApplikasjon?: AvsenderApplikasjon,
   ): Promise<Map<string, Template>> {
     const url = this.newUrl('brev/maler');
     url.searchParams.set('sakstype', sakstype);
-    if (behandlingUuid !== undefined) {
-      url.searchParams.set('behandlingUuid', behandlingUuid);
-    }
-    if (eksternReferanse !== undefined) {
-      url.searchParams.set('eksternReferanse', eksternReferanse);
-    }
+    // MalController.kt::hentBrevmaler forventer å få behandling uuid inn som string på parameter eksternReferanse
+    // (behandlingUuid parameter er deprecated)
+    url.searchParams.set('eksternReferanse', behandlingUuid);
     if (avsenderApplikasjon !== undefined) {
       url.searchParams.set('avsenderApplikasjon', avsenderApplikasjon);
     }
@@ -47,7 +43,7 @@ export class MalControllerClient {
         if (isTemplate(val)) {
           ret.set(key, val);
         } else {
-          throw new Error(`Invalid data format returned (not a Template): ${json}`);
+          throw new Error(`Invalid data format returned (not a Template): ${JSON.stringify(val)}`);
         }
       }
       return ret;

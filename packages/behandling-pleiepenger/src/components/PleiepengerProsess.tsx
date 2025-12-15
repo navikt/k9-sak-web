@@ -13,30 +13,24 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { LegacyPanelAdapter } from '@k9-sak-web/gui/behandling/prosess/LegacyPanelAdapter.js';
+import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { StandardProsessPanelPropsProvider } from '@k9-sak-web/gui/behandling/prosess/context/StandardProsessPanelPropsContext.js';
 import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
-import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarProsessStegInitPanel';
-import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
-import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
-import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
-import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
-import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
-import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
-import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
 import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
+import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
+import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
+import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarProsessStegInitPanel';
+import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
+import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
+import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
+import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
+import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -62,17 +56,17 @@ interface OwnProps {
 
 const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
-    (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
-      const data = {
-        behandlingUuid: behandling.uuid,
-        fagsakYtelseType: fagsak.sakstype,
-        varseltekst: fritekst || '',
-        mottaker,
-        brevmalkode,
-        saksnummer,
-      };
-      return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
+    const data = {
+      behandlingUuid: behandling.uuid,
+      fagsakYtelseType: fagsak.sakstype,
+      varseltekst: fritekst || '',
+      mottaker,
+      brevmalkode,
+      saksnummer,
     };
+    return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  };
 
 const getLagringSideeffekter =
   (
@@ -82,45 +76,45 @@ const getLagringSideeffekter =
     opneSokeside,
     lagreDokumentdata,
   ) =>
-    async aksjonspunktModels => {
-      const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-        apModel =>
-          (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-            apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-          apModel.sendVarsel,
-      );
+  async aksjonspunktModels => {
+    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
+      apModel =>
+        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
+          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
+        apModel.sendVarsel,
+    );
 
-      const visIverksetterVedtakModal = aksjonspunktModels.some(
-        aksjonspunkt =>
-          aksjonspunkt.isVedtakSubmission &&
-          [
-            aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-            aksjonspunktCodes.FATTER_VEDTAK,
-            aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-          ].includes(aksjonspunkt.kode),
-      );
+    const visIverksetterVedtakModal = aksjonspunktModels.some(
+      aksjonspunkt =>
+        aksjonspunkt.isVedtakSubmission &&
+        [
+          aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+          aksjonspunktCodes.FATTER_VEDTAK,
+          aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+        ].includes(aksjonspunkt.kode),
+    );
 
-      const visFatterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const visFatterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
 
-      if (aksjonspunktModels[0].isVedtakSubmission) {
-        const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-        if (dokumentdata) await lagreDokumentdata(dokumentdata);
+    if (aksjonspunktModels[0].isVedtakSubmission) {
+      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+      if (dokumentdata) await lagreDokumentdata(dokumentdata);
+    }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (visFatterVedtakModal) {
+        toggleFatterVedtakModal(true);
+      } else if (visIverksetterVedtakModal) {
+        toggleIverksetterVedtakModal(true);
+      } else if (erRevurderingsaksjonspunkt) {
+        opneSokeside();
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
-
-      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-      return () => {
-        if (visFatterVedtakModal) {
-          toggleFatterVedtakModal(true);
-        } else if (visIverksetterVedtakModal) {
-          toggleIverksetterVedtakModal(true);
-        } else if (erRevurderingsaksjonspunkt) {
-          opneSokeside();
-        } else {
-          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-        }
-      };
     };
+  };
 
 const getHentFritekstbrevHtmlCallback =
   (
@@ -129,15 +123,15 @@ const getHentFritekstbrevHtmlCallback =
     fagsak: Fagsak,
     fagsakPerson: FagsakPerson,
   ) =>
-    (parameters: any) =>
-      hentFriteksbrevHtml({
-        ...parameters,
-        eksternReferanse: behandling.uuid,
-        ytelseType: fagsak.sakstype,
-        saksnummer: fagsak.saksnummer,
-        aktørId: fagsakPerson.aktørId,
-        avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-      });
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const PleiepengerProsess = ({
   data,
@@ -245,12 +239,10 @@ const PleiepengerProsess = ({
   // Toggle for å bytte mellom gammel og ny meny (for sammenligning under migrering)
   const { useV2Menu, ToggleComponent } = useProsessMenyToggle();
 
-
   // previewCallback til context
-  const previewCallback = useCallback(
-    getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling),
-    [behandling.versjon],
-  );
+  const previewCallback = useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
+    behandling.versjon,
+  ]);
 
   // previewFptilbakeCallback til context (for simulering/avregning)
   const previewFptilbakeCallback = useCallback(
@@ -308,13 +300,13 @@ const PleiepengerProsess = ({
         >
           {/* v2 meny for navigasjon */}
           <ProsessMeny>
-            {prosessStegPanelDefinisjoner.map((panelDef) => {
+            {prosessStegPanelDefinisjoner.map(panelDef => {
               // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
               const urlKode = panelDef.getUrlKode();
               const formaterPanel = formaterteProsessStegPaneler.find(
-                (panel) => panel.labelId === panelDef.getTekstKode()
+                panel => panel.labelId === panelDef.getTekstKode(),
               );
-              
+
               // Bruk migrerte InitPanel-komponenter der de finnes
               if (urlKode === 'inngangsvilkar') {
                 return <InngangsvilkarProsessStegInitPanel key={urlKode} />;
@@ -343,7 +335,7 @@ const PleiepengerProsess = ({
               if (urlKode === 'vedtak') {
                 return <VedtakProsessStegInitPanel key={urlKode} />;
               }
-              
+
               return (
                 <LegacyPanelAdapter
                   key={urlKode}

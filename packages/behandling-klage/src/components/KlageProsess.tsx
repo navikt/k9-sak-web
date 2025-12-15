@@ -16,10 +16,10 @@ import {
   Behandling,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { KlageBehandlingApiKeys, restApiKlageHooks } from '../data/klageBehandlingApi';
@@ -175,13 +175,13 @@ const KlageProsess = ({
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
     arbeidsgiverOpplysningerPerId,
-    klageVurdering: data.klageVurdering,
+    klageVurdering: data?.klageVurdering,
     saveKlageText: useCallback(
-      saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data.aksjonspunkter),
+      saveKlageText(lagreKlageVurdering, lagreReapneKlageVurdering, behandling, data?.aksjonspunkter),
       [behandling.versjon],
     ),
     previewCallback: useCallback(
-      previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett),
+      previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data?.valgtPartMedKlagerett),
       [behandling.versjon],
     ),
     hentFritekstbrevHtmlCallback: useCallback(
@@ -197,7 +197,7 @@ const KlageProsess = ({
     fagsak,
     rettigheter,
     behandling,
-    data.aksjonspunkter,
+    data?.aksjonspunkter,
     [],
     false,
     valgtProsessSteg,
@@ -222,7 +222,7 @@ const KlageProsess = ({
   );
 
   const skalViseAtKlagenErFerdigbehandlet =
-    data.klageVurdering &&
+    data?.klageVurdering &&
     data.klageVurdering.klageVurderingResultatNK &&
     data.klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
 

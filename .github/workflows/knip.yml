@@ -1,0 +1,56 @@
+name: Knip
+permissions:
+    contents: read
+    packages: read
+on:
+    workflow_call:
+
+jobs:
+    knip-it:
+        name: Kjør knip
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        permissions:
+            contents: read
+            pull-requests: write
+            packages: read
+        steps:
+            - name: Hente kode
+              uses: actions/checkout@v6
+
+            - name: Setup + Install
+              uses: ./.github/actions/setup-install
+              with:
+                  npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Run knip
+              run: |
+                  yarn knip --include files --no-config-hints --no-exit-code --reporter=markdown > knip-report.md
+                  cat knip-report.md > $GITHUB_STEP_SUMMARY
+            - name: Delete previous knip comment (only last marked)
+              continue-on-error: true
+              run: |
+                  last_knip_comment_id=$(gh api /repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments --jq 'map(select(.body | startswith("<!-- knip-report -->"))) | .[-1].id')
+                  if [ -n "$last_knip_comment_id" ]; then
+                      echo "Fant tidligere knip-kommentar med ID: $last_knip_comment_id. Forsøker å slette..."
+                      if gh api -X DELETE /repos/${{ github.repository }}/issues/comments/$last_knip_comment_id; then
+                          echo "Slettet kommentar $last_knip_comment_id."
+                      else
+                          echo "Advarsel: klarte ikke å slette kommentar $last_knip_comment_id" >&2
+                      fi
+                  else
+                      echo "Ingen tidligere knip-kommentar å slette."
+                  fi
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Post knip report
+              run: |
+                  number_of_words=$(wc -w < knip-report.md)
+                  if [ $number_of_words -gt 3 ]; then
+                      echo "<!-- knip-report -->" > knip-comment.md
+                      cat knip-report.md >> knip-comment.md
+                      gh pr comment ${{ github.event.pull_request.number }} --body-file knip-comment.md
+                  fi
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

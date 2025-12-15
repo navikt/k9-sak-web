@@ -1,7 +1,7 @@
-import type { FeatureToggles } from '../FeatureToggles.js';
+import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const prodFeatureToggles = {
-  BRUK_V2_MELDINGER: false,
+  isFor: 'prod',
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
@@ -25,6 +25,12 @@ export const prodFeatureToggles = {
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: false,
   MARKERING_UTENLANDSTILSNITT: false,
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: false,
+  VIS_ALLE_ASYNC_ERRORS: false,
+  VIS_FERIEPENGER_PANEL: false,
+  FLYTT_ALDERSVILKAR: false,
+  BRUK_V2_TILKJENT_YTELSE: false,
+  UNG_KLAGE: true,
+  V2_MELDINGER_FOR_TILBAKE: true,
   PROSESS_MENY_V2: false,
   PROSESS_MENY_V2_VELGER: false,
-} satisfies FeatureToggles;
+} satisfies UngFeatureToggles;

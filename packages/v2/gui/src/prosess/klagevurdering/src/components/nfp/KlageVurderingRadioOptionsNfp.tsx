@@ -1,22 +1,31 @@
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   ung_kodeverk_behandling_FagsakYtelseType,
-  type ung_sak_kontrakt_fagsak_FagsakDto,
+  ung_kodeverk_klage_KlageVurderingOmgjør,
+  ung_kodeverk_klage_KlageVurderingType,
+  type ung_sak_kontrakt_klage_KlageHjemmelDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Box, Radio } from '@navikt/ds-react';
+import { Box, Radio, UNSAFE_Combobox } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useFormContext } from 'react-hook-form';
-import { klageVurderingOmgjoerType, klageVurderingType } from '../KlageVurderingType';
+import { Controller, useFormContext } from 'react-hook-form';
 import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
-const utledHjemler = (fagsak: ung_sak_kontrakt_fagsak_FagsakDto) => {
+const utledHjemler = (
+  fagsak: FagsakDto,
+  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[],
+): {
+  kode: string;
+  navn: string;
+}[] => {
   switch (fagsak.sakstype) {
-    case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
+    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -27,10 +36,10 @@ const utledHjemler = (fagsak: ung_sak_kontrakt_fagsak_FagsakDto) => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
-    case ung_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
+    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -41,13 +50,24 @@ const utledHjemler = (fagsak: ung_sak_kontrakt_fagsak_FagsakDto) => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
+    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
         { kode: '9-13', navn: '§ 9-13' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
+    case k9_kodeverk_behandling_FagsakYtelseType.OPPLÆRINGSPENGER:
+      return [
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
+        { kode: '9-14', navn: '§ 9-14' },
+        { kode: '22-13', navn: '§ 22-13' },
+      ];
+    case ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE:
+      return ungHjemler
+        .filter(hjemmel => hjemmel.kode !== undefined && hjemmel.navn !== undefined)
+        .map(hjemmel => ({ kode: hjemmel.kode!, navn: hjemmel.navn! }));
 
     default:
       return [];
@@ -55,11 +75,12 @@ const utledHjemler = (fagsak: ung_sak_kontrakt_fagsak_FagsakDto) => {
 };
 
 interface KlageVurderingRadioOptionsNfpProps {
-  fagsak: ung_sak_kontrakt_fagsak_FagsakDto;
+  fagsak: FagsakDto;
   readOnly: boolean;
   medholdReasons: KodeverkV2[] | KodeverkMedUndertype;
   klageVurdering: string | null;
   erPåklagdBehandlingTilbakekreving: boolean;
+  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
 }
 
 export const KlageVurderingRadioOptionsNfp = ({
@@ -68,13 +89,17 @@ export const KlageVurderingRadioOptionsNfp = ({
   medholdReasons,
   klageVurdering = null,
   erPåklagdBehandlingTilbakekreving,
+  ungHjemler,
 }: KlageVurderingRadioOptionsNfpProps) => {
-  const { control } = useFormContext<BehandleKlageFormNfpFormValues>();
-  const hjemler = utledHjemler(fagsak);
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<BehandleKlageFormNfpFormValues>();
+  const hjemler = utledHjemler(fagsak, ungHjemler);
 
   const skalViseHjemler =
     fagsak.sakstype !== ung_kodeverk_behandling_FagsakYtelseType.FRISINN &&
-    klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK &&
+    klageVurdering === ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK &&
     hjemler.length > 0;
 
   const medholdOptions = Array.isArray(medholdReasons)
@@ -87,15 +112,34 @@ export const KlageVurderingRadioOptionsNfp = ({
         ))
     : [];
 
+  const skalViseValgAvHjemmel = () => {
+    if (skalViseHjemler) {
+      if (
+        fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE ||
+        !erPåklagdBehandlingTilbakekreving
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
     <div>
       <ContentMaxWidth>
-        <RhfRadioGroup control={control} name="klageVurdering" validate={[required]} isReadOnly={readOnly}>
-          <Radio value={klageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
-          <Radio value={klageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
+        <RhfRadioGroup
+          control={control}
+          name="klageVurdering"
+          validate={[required]}
+          readOnly={readOnly}
+          legend=""
+          hideLegend
+        >
+          <Radio value={ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
+          <Radio value={ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
         </RhfRadioGroup>
       </ContentMaxWidth>
-      {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
+      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect
@@ -107,29 +151,49 @@ export const KlageVurderingRadioOptionsNfp = ({
               validate={[required]}
             />
             <Box.New marginBlock="space-16 0">
-              <RhfRadioGroup control={control} name="klageVurderingOmgjoer" validate={[required]} isReadOnly={readOnly}>
-                <Radio value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
-                <Radio value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
-                <Radio value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}>Delvis omgjør, til gunst</Radio>
+              <RhfRadioGroup
+                control={control}
+                name="klageVurderingOmgjoer"
+                validate={[required]}
+                readOnly={readOnly}
+                hideLegend
+                legend=""
+              >
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
+                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
+                  Delvis omgjør, til gunst
+                </Radio>
               </RhfRadioGroup>
             </Box.New>
           </ArrowBox>
         </ContentMaxWidth>
       )}
-      {skalViseHjemler && !erPåklagdBehandlingTilbakekreving && (
+      {skalViseValgAvHjemmel() && (
         <ContentMaxWidth>
           <ArrowBox>
-            <RhfSelect
-              control={control}
-              readOnly={readOnly}
+            <Controller
               name="klageHjemmel"
-              selectValues={hjemler.map(h => (
-                <option key={h.kode} value={h.kode}>
-                  {h.navn}
-                </option>
-              ))}
-              label="Hjemmel"
-              validate={[required]}
+              control={control}
+              rules={{ required: 'Feltet må fylles ut' }}
+              render={({ field }) => (
+                <UNSAFE_Combobox
+                  size="small"
+                  label="Hjemmel"
+                  options={hjemler.map(hjemmel => ({ value: hjemmel.kode, label: hjemmel.navn }))}
+                  readOnly={readOnly}
+                  error={errors.klageHjemmel?.message}
+                  ref={field.ref}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onToggleSelected={option => {
+                    field.onChange(option);
+                  }}
+                  value={
+                    readOnly && field.value ? hjemler.find(hjemmel => hjemmel.kode === field.value)?.navn : undefined
+                  }
+                />
+              )}
             />
           </ArrowBox>
         </ContentMaxWidth>

@@ -21,7 +21,7 @@ const NødvendigOpplæringFerdigvisning = ({
   if (vurdering.resultat === OpplæringVurderingDtoResultat.VURDERES_SOM_REISETID) {
     return (
       <Alert variant="info" size="small">
-        Dag eller periode er flyttet til vurdering av reisetid.
+        Dag eller periode er flyttet til vurdering av reisedag.
       </Alert>
     );
   }

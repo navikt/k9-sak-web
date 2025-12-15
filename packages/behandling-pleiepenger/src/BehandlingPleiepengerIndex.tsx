@@ -10,9 +10,9 @@ import {
   Dokument,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
@@ -169,7 +169,9 @@ const BehandlingPleiepengerIndex = ({
     <>
       <ReduxFormStateCleaner
         behandlingId={behandling.id}
-        behandlingVersjon={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling.versjon : behandling.versjon}
+        behandlingVersjon={
+          harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling.versjon : behandling.versjon
+        }
       />
       <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
         <PleiepengerPaneler

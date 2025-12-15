@@ -6,7 +6,9 @@ import mockedTilsynFerdigVurdert from './mocked-data/mockedTilsynFerdigVurdert';
 
 export const handlers = [
   http.get(`${mockUrlPrepend}/mock/tilsyn`, () => HttpResponse.json(mockedTilsyn, { status: 200 })),
-  http.get(`${mockUrlPrepend}/mock/tilsyn-ferdig-vurdert`, () => HttpResponse.json(mockedTilsynFerdigVurdert, { status: 200 })),
+  http.get(`${mockUrlPrepend}/mock/tilsyn-ferdig-vurdert`, () =>
+    HttpResponse.json(mockedTilsynFerdigVurdert, { status: 200 }),
+  ),
   http.get(`${mockUrlPrepend}/mock/sykdom`, () => HttpResponse.json(mockedSykdom, { status: 200 })),
 
   http.get(`${mockUrlPrepend}/mock/sykdomInnleggelse`, () => HttpResponse.json({ perioder: [] }, { status: 200 })),

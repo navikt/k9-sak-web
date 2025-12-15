@@ -4,8 +4,9 @@ import {
   authSuccessResult,
   authSuccessExceptPopupResult,
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
-import { resolveLoginURL, withRedirectTo } from './resolveLoginURL.js';
-import type { AuthFixConnectedApi } from './AuthFixConnectedApi.ts';
+import { resolveLoginURL, withRedirectTo } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
+import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
+import * as Sentry from '@sentry/react';
 
 const intentionalAbortReason = 'promise cleanup';
 
@@ -14,10 +15,10 @@ export class AuthFixer implements AuthFixConnectedApi {
   readonly #popupClosedCheckInterval: number;
   readonly #id: string;
 
-  constructor(authDoneRedirectPath: string, popupClosedCheckInterval: number = 1483) {
+  constructor(authDoneRedirectPath: string, id: string | null = null, popupClosedCheckInterval: number = 1483) {
     this.#authDoneRedirectPath = authDoneRedirectPath;
     this.#popupClosedCheckInterval = popupClosedCheckInterval;
-    this.#id = `${Math.floor(Math.random() * 10000)}`;
+    this.#id = id ?? `${Math.floor(Math.random() * 10000)}`;
   }
 
   get popupTarget() {
@@ -30,6 +31,24 @@ export class AuthFixer implements AuthFixConnectedApi {
 
   protected resolveLoginUrl(response: Response): URL | null {
     return withRedirectTo(resolveLoginURL(response.headers.get('Location')), this.#authDoneRedirectPath);
+  }
+
+  private log(level: 'info' | 'debug' | 'warn', txt: string) {
+    const prefix = `${this.toString()}: `;
+    const msg = `${prefix}${txt}`;
+    switch (level) {
+      case 'debug':
+        console.debug(msg);
+        break;
+      case 'info':
+        Sentry.logger.info(msg);
+        console.info(msg);
+        break;
+      case 'warn':
+        Sentry.logger.warn(msg);
+        console.warn(msg);
+        break;
+    }
   }
 
   protected startNewAuthenticationProcess(response: Response, abortSignal: AbortSignal): Promise<AuthResult> {
@@ -51,10 +70,11 @@ export class AuthFixer implements AuthFixConnectedApi {
                 if (event.data === 'auth done') {
                   const source = event.source;
                   if (source != null && 'close' in source) {
+                    this.log('debug', 'autentisering ferdig, lukker popup');
                     source.close();
                     resolve(authSuccessResult);
                   } else {
-                    console.info('Kunne ikke lukke popup vindu. Må gjøres manuelt av bruker.');
+                    this.log('info', 'Kunne ikke lukke popup vindu. Må gjøres manuelt av bruker.');
                     resolve(authSuccessExceptPopupResult);
                   }
                 }
@@ -78,18 +98,22 @@ export class AuthFixer implements AuthFixConnectedApi {
     } else {
       const loginURL = this.resolveLoginUrl(response);
       if (loginURL != null) {
+        this.log('debug', `åpner popup`);
         const windowProxy = window.open(loginURL, this.popupTarget, 'height=600,width=800');
         if (windowProxy != null) {
           // Poll to check if the window has been closed without auth being completed
           const intervalId = setInterval(() => {
             if (windowProxy.closed) {
-              console.info(`autentisering popup vindu ble lukket før autentisering var fullført.`);
+              this.log('info', `autentisering popup vindu ble lukket før autentisering var fullført.`);
               clearInterval(intervalId);
               internalCanceller.abort(intentionalAbortReason);
             }
           }, this.#popupClosedCheckInterval);
           // Avbryt sjekk på om popup har blitt lukka prematurt.
-          void authResultPromise.catch().finally(() => clearInterval(intervalId));
+          void authResultPromise.catch().finally(() => {
+            this.log('debug', 'stopp polling for popup vindu lukket');
+            clearInterval(intervalId);
+          });
           abortSignal.addEventListener(
             'abort',
             () => {
@@ -99,7 +123,10 @@ export class AuthFixer implements AuthFixConnectedApi {
             { signal: internalCanceller.signal },
           );
         } else {
-          console.warn(`autentisering popup window proxy null. Vil ikke kunne ha kontroll med det gjennom prosessen.`);
+          this.log(
+            'warn',
+            `autentisering popup window proxy null. Vil ikke kunne ha kontroll med det gjennom prosessen.`,
+          );
         }
       } else {
         internalCanceller.abort(new Error(`loginURL ble ikke utledet, kan ikke utføre autentisering med popup`));

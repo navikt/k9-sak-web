@@ -1,7 +1,7 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-export default function dateSorter(date1: Dayjs, date2: Dayjs) {
+export default function dateSorter(date1: dayjs.Dayjs, date2: dayjs.Dayjs) {
   if (date1.isBefore(date2)) {
     return -1;
   }

@@ -1,7 +1,6 @@
-import {
-  ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_klage_KlagebehandlingDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
+import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
@@ -12,18 +11,19 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
+import type { SaveKlageParams } from '../felles/SaveKlageParams';
+import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 import styles from './behandleKlageFormKa.module.css';
 import type { BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
 import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 
 interface BehandleKlageFormKaProps {
-  klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
-  saveKlage: () => Promise<void>;
+  klageVurdering: KlagebehandlingDto;
+  saveKlage: (params: SaveKlageParams) => Promise<void>;
   submitCallback: (values: TransformedValues[]) => Promise<void>;
   isReadOnly: boolean;
-  previewCallback: () => Promise<void>;
+  previewCallback: (dokumentdata?: Dokumentdata) => Promise<void>;
   readOnlySubmitButton: boolean;
 }
 
@@ -44,10 +44,10 @@ export const BehandleKlageFormKa = ({
   const formMethods = useForm<BehandleKlageFormKaFormValues>({
     defaultValues: buildInitialValues(klageVurdering),
   });
-  const handleSubmit = (values: BehandleKlageFormKaFormValues) => {
+  const handleSubmit = async (values: BehandleKlageFormKaFormValues) => {
     setIsSubmitting(true);
     try {
-      void submitCallback([transformValues(values)]);
+      await submitCallback([transformValues(values)]);
     } finally {
       setIsSubmitting(false);
     }
@@ -96,45 +96,47 @@ export const BehandleKlageFormKa = ({
                 previewCallback={previewCallback}
               />
             )}
-          <HStack gap="space-16">
-            <Button variant="primary" size="small" loading={isSubmitting} type="submit">
-              Bekreft og fortsett
-            </Button>
-            <TempsaveKlageButton
-              formValues={formValues}
-              saveKlage={saveKlage}
-              readOnly={isReadOnly}
-              aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NK}
-            />
-          </HStack>
+          {!isReadOnly && (
+            <HStack gap="space-16">
+              <Button variant="primary" size="small" loading={isSubmitting} type="submit">
+                Bekreft og fortsett
+              </Button>
+              <TempsaveKlageButton
+                formValues={formValues}
+                saveKlage={saveKlage}
+                readOnly={isReadOnly}
+                aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NK}
+                isSubmitting={isSubmitting}
+              />
+            </HStack>
+          )}
         </VStack>
       </div>
     </RhfForm>
   );
 };
 
-export const buildInitialValues = (klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto) => ({
+export const buildInitialValues = (klageVurdering: KlagebehandlingDto) => ({
   klageMedholdArsak: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.klageMedholdArsak
     : null,
   klageVurderingOmgjoer: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.klageVurderingOmgjoer
     : null,
-  klageVurdering: klageVurdering.klageVurderingResultatNK
-    ? klageVurdering.klageVurderingResultatNK.klageVurdering
-    : null,
-  begrunnelse: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.begrunnelse : null,
+  klageVurdering: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.klageVurdering : '',
+  begrunnelse: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.begrunnelse : '',
   fritekstTilBrev: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.fritekstTilBrev
-    : null,
+    : '',
 });
 
 interface TransformedValues {
   klageMedholdArsak: string | null;
   klageVurderingOmgjoer: string | null;
-  klageVurdering: string | null;
-  fritekstTilBrev: string | null;
-  begrunnelse: string | null;
+  klageVurdering: string;
+  klageVurderingType: string;
+  fritekstTilBrev: string;
+  begrunnelse: string;
   kode: string;
 }
 
@@ -149,6 +151,7 @@ export const transformValues = (values: BehandleKlageFormKaFormValues): Transfor
       ? values.klageVurderingOmgjoer
       : null,
   klageVurdering: values.klageVurdering,
+  klageVurderingType: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
   kode: AksjonspunktCodes.BEHANDLE_KLAGE_NK,

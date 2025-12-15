@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
 import { action } from 'storybook/actions';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
@@ -204,12 +204,7 @@ export const Overstyringer: Story = {
           },
         ]),
         standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
-        createOverstyrbareAktiviteterHandler(
-          [
-            { fom: '2024-01-01', tom: '2024-12-31' },
-          ],
-          defaultArbeidsgivere,
-        ),
+        createOverstyrbareAktiviteterHandler([{ fom: '2024-01-01', tom: '2024-12-31' }], defaultArbeidsgivere),
       ],
     },
   },
@@ -281,12 +276,7 @@ export const RedigerOverstyring: Story = {
           submitSpy(payload);
           action('overstyr-aksjonspunkt:submit')(payload);
         }),
-        createOverstyrbareAktiviteterHandler(
-          [
-            { fom: '2024-01-01', tom: '2024-12-31' },
-          ],
-          defaultArbeidsgivere,
-        ),
+        createOverstyrbareAktiviteterHandler([{ fom: '2024-01-01', tom: '2024-12-31' }], defaultArbeidsgivere),
       ],
     },
   },
@@ -399,12 +389,7 @@ export const FjernOverstyring: Story = {
           submitSpy(payload);
           action('overstyr-aksjonspunkt:submit')(payload);
         }),
-        createOverstyrbareAktiviteterHandler(
-          [
-            { fom: '2024-01-01', tom: '2024-12-31' },
-          ],
-          defaultArbeidsgivere,
-        ),
+        createOverstyrbareAktiviteterHandler([{ fom: '2024-01-01', tom: '2024-12-31' }], defaultArbeidsgivere),
       ],
     },
   },

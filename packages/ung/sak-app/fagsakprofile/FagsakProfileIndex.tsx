@@ -1,11 +1,9 @@
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfilSakIndex.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
 import {
@@ -18,12 +16,7 @@ import {
 import { Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
-import {
-  createLocationForSkjermlenke,
-  getLocationWithDefaultProsessStegAndFakta,
-  pathToBehandling,
-  pathToBehandlinger,
-} from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useUngSakKodeverkMedNavn } from '../data/useKodeverk';
@@ -46,7 +39,7 @@ interface OwnProps {
   behandlingVersjon?: number;
   harHentetBehandlinger: boolean;
   oppfriskBehandlinger: () => void;
-  fagsakRettigheter: SakRettigheter;
+  fagsakRettigheter: SakRettigheter | undefined;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
@@ -110,7 +103,7 @@ export const FagsakProfileIndex = ({
         <FagsakProfilSakIndex
           saksnummer={fagsak.saksnummer}
           fagsakYtelseType={fagsak.sakstype}
-          fagsakStatus={fagsakStatusMedNavn.kode}
+          fagsakStatus={fagsakStatusMedNavn?.kode ?? fagsak.status.kode}
           renderBehandlingMeny={() => {
             if (!fagsakRettigheter || !behandlendeEnheter) {
               return <LoadingPanel />;
@@ -127,7 +120,6 @@ export const FagsakProfileIndex = ({
                 behandlendeEnheter={behandlendeEnheter}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                showAsDisabled={isProd()}
               />
             );
           }}
@@ -139,7 +131,6 @@ export const FagsakProfileIndex = ({
                 noExistingBehandlinger={alleBehandlinger.length === 0}
                 behandlingId={behandlingId}
                 fagsak={fagsakV2}
-                createLocationForSkjermlenke={createLocationForSkjermlenke}
                 api={behandlingVelgerBackendClient}
               />
             );
@@ -149,5 +140,3 @@ export const FagsakProfileIndex = ({
     </div>
   );
 };
-
-export default requireProps(['fagsak'], <LoadingPanel />)(FagsakProfileIndex);

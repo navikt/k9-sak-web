@@ -15,11 +15,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ fagsak, saveKlageText, klageVurdering, previewCallback }) => ({
+  getData = ({ fagsak }) => ({
     fagsak,
-    saveKlage: saveKlageText,
-    klageVurdering,
-    previewCallback,
   });
 }
 

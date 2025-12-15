@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction';
 import { FakeUngBeregningBackendApi } from '../../storybook/mocks/FakeUngBeregningBackendApi';
 import UngBeregning from './UngBeregning';

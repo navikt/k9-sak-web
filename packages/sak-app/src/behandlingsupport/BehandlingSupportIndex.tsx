@@ -1,14 +1,14 @@
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
+import K9SakMeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/api/K9SakMeldingerBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
-  FeatureToggles,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
@@ -23,21 +23,32 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import HistorikkIndex from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkIndex.js';
+import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { HistorikkBackendClient } from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendClient.js';
+import { K9HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/K9HistorikkBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import HistorikkBackendApiContext from '@k9-sak-web/gui/behandling/support/historikk/k9/HistorikkBackendApiContext.js';
+import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9KlageTotrinnskontrollBackendClient.js';
+import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9SakTotrinnskontrollBackendClient.js';
+import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
+import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
+import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -130,8 +141,8 @@ const TABS = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId?: number;
-  behandlingVersjon?: number;
+  behandlingId: number;
+  behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -160,20 +171,8 @@ const BehandlingSupportIndex = ({
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
-  const meldingerBackendClient = new MeldingerBackendClient(formidlingClient);
-  const historikkBackendClient = new HistorikkBackendClient(kodeverkoppslag);
+  const historikkBackendClient = new K9HistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = new NotatBackendClient('k9Sak');
-  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
-
-  const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
-  const prevResetValue = useRef(currentResetValue);
-
-  useEffect(() => {
-    if (currentResetValue !== prevResetValue.current) {
-      setToTrinnskontrollFormState(undefined);
-    }
-    prevResetValue.current = currentResetValue;
-  }, [currentResetValue]);
 
   const notaterQueryKey = ['notater', fagsak?.saksnummer];
   const { data: notater } = useQuery({
@@ -235,6 +234,26 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
   );
 
+  const behandlingTypeKode = behandling?.type.kode;
+  const erTilbakekreving =
+    behandlingTypeKode == BehandlingType.TILBAKEKREVING ||
+    behandlingTypeKode == BehandlingType.REVURDERING_TILBAKEKREVING;
+  const erKlage = behandlingTypeKode == BehandlingType.KLAGE;
+  const totrinnskontrollApi: TotrinnskontrollApi = useMemo(() => {
+    if (erTilbakekreving) {
+      return new K9TilbakeTotrinnskontrollBackendClient(kodeverkoppslag.k9tilbake);
+    }
+    if (erKlage) {
+      return new K9KlageTotrinnskontrollBackendClient(kodeverkoppslag.k9klage);
+    }
+    return new K9SakTotrinnskontrollBackendClient(kodeverkoppslag.k9sak);
+  }, [erTilbakekreving, erKlage, kodeverkoppslag]);
+
+  const meldingerBackendClient = useMemo(() => {
+    return new K9SakMeldingerBackendClient(formidlingClient);
+  }, [formidlingClient]);
+  const meldingerTilbakeBackendClient = useMemo(() => new K9TilbakeMeldingerBackendClient(), []);
+
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
   return (
@@ -270,9 +289,8 @@ const BehandlingSupportIndex = ({
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              toTrinnFormState={toTrinnskontrollFormState}
-              setToTrinnFormState={setToTrinnskontrollFormState}
+              api={totrinnskontrollApi}
+              urlEtterpå={getPathToK9Los() ?? '/'}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
@@ -280,7 +298,8 @@ const BehandlingSupportIndex = ({
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
+              api={totrinnskontrollApi}
+              urlEtterpå={getPathToK9Los() ?? '/'}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
@@ -295,18 +314,24 @@ const BehandlingSupportIndex = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
-            {behandlingId && (
-              <MeldingIndex
-                fagsak={fagsak}
-                alleBehandlinger={alleBehandlinger}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                personopplysninger={personopplysninger}
-                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                featureToggles={featureToggles}
-                backendApi={meldingerBackendClient}
-              />
-            )}
+            <ErrorBoundary errorFallback={MessagesErrorAlert}>
+              <LoadingPanelSuspense>
+                {behandlingId != null &&
+                  (erTilbakekreving && featureToggles?.V2_MELDINGER_FOR_TILBAKE ? (
+                    <TilbakeMessagesIndex fagsak={fagsak} behandling={behandling} api={meldingerTilbakeBackendClient} />
+                  ) : (
+                    <MeldingIndex
+                      fagsak={fagsak}
+                      alleBehandlinger={alleBehandlinger}
+                      behandlingId={behandlingId}
+                      behandlingVersjon={behandlingVersjon}
+                      personopplysninger={personopplysninger}
+                      arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                      backendApi={meldingerBackendClient}
+                    />
+                  ))}
+              </LoadingPanelSuspense>
+            </ErrorBoundary>
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.DOKUMENTER}>
             <DokumentIndex

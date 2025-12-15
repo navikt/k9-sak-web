@@ -1,5 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { HttpResponse, http } from 'msw';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
@@ -12,85 +11,74 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
-import InntektsmeldingContainer, { MainComponentProps } from '../ui/InntektsmeldingContainer';
+import InntektsmeldingContainer, { InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
+
+const fakeApi = (response: any): InntektsmeldingApi => ({
+  getKompletthetsoversikt: () => Promise.resolve(response),
+});
 
 const meta: Meta<typeof InntektsmeldingContainer> = {
-  args: { data: { ...inntektsmeldingPropsMock, onFinished: action('clicked') } },
+  args: {
+    data: { ...inntektsmeldingPropsMock, onFinished: action('clicked') } as any,
+    requestApi: fakeApi(ikkePaakrevd),
+  },
   title: 'Fakta/fakta-inntektsmelding',
   component: InntektsmeldingContainer,
 };
 
 export default meta;
 
-const Template = (args: MainComponentProps) => <InntektsmeldingContainer {...args} />;
 type Story = StoryObj<typeof InntektsmeldingContainer>;
 
-export const IkkePaakrevd: Story = Template.bind({});
-export const Mangler9069: Story = Template.bind({});
-export const Mangler9071: Story = Template.bind({});
-export const ManglerFlere9071: Story = Template.bind({});
-export const IkkePaakrevdOgMangler9071: Story = Template.bind({});
-export const FerdigVisning9069: Story = Template.bind({});
-export const FerdigVisning9071: Story = Template.bind({});
-export const AlleInntektsmeldingerMottatt: Story = Template.bind({});
-
-IkkePaakrevd.args = {
-  data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') },
-};
-
-IkkePaakrevd.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(ikkePaakrevd))],
+export const IkkePaakrevd: Story = {
+  args: {
+    data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') },
+    requestApi: fakeApi(ikkePaakrevd),
   },
 };
 
-Mangler9069.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding))],
-  },
-};
-Mangler9071.args = {
-  data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
-};
-
-Mangler9071.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding))],
+export const Mangler9069: Story = {
+  args: {
+    requestApi: fakeApi(manglerInntektsmelding),
   },
 };
 
-ManglerFlere9071.args = {
-  data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
-};
-ManglerFlere9071.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(manglerFlereInntektsmeldinger))],
-  },
-};
-IkkePaakrevdOgMangler9071.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(ikkePaakrevdOgManglerInntektsmelding))],
-  },
-};
-FerdigVisning9069.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(ferdigvisning))],
-  },
-};
-FerdigVisning9071.args = {
-  data: { ...aksjonspunkt9071FerdigProps, onFinished: action('button-click') },
-};
-FerdigVisning9071.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(ferdigvisning))],
+export const Mangler9071: Story = {
+  args: {
+    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+    requestApi: fakeApi(manglerInntektsmelding),
   },
 };
 
-AlleInntektsmeldingerMottatt.args = {
-  data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+export const ManglerFlere9071: Story = {
+  args: {
+    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+    requestApi: fakeApi(manglerFlereInntektsmeldinger),
+  },
 };
-AlleInntektsmeldingerMottatt.parameters = {
-  msw: {
-    handlers: [http.get('/tilstand', () => HttpResponse.json(alleErMottatt))],
+
+export const IkkePaakrevdOgMangler9071: Story = {
+  args: {
+    requestApi: fakeApi(ikkePaakrevdOgManglerInntektsmelding),
+  },
+};
+
+export const FerdigVisning9069: Story = {
+  args: {
+    requestApi: fakeApi(ferdigvisning),
+  },
+};
+
+export const FerdigVisning9071: Story = {
+  args: {
+    data: { ...aksjonspunkt9071FerdigProps, onFinished: action('button-click') },
+    requestApi: fakeApi(ferdigvisning),
+  },
+};
+
+export const AlleInntektsmeldingerMottatt: Story = {
+  args: {
+    data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+    requestApi: fakeApi(alleErMottatt),
   },
 };

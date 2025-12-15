@@ -1,10 +1,8 @@
-import React from 'react';
-
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import FormkravProsessIndex from '@k9-sak-web/gui/prosess/formkrav/FormkravProsessIndex.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <FormkravProsessIndex {...props} />;

@@ -32,7 +32,9 @@ const UttakInnhold = (): JSX.Element => {
   const toggleOverstyring = () => setOverstyringAktiv(prev => !prev);
 
   const harOpprettetAksjonspunktVurderDato =
-    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET;
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET ||
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.UTFØRT;
+
   return (
     <VStack gap="4">
       <HStack justify="start">
