@@ -20,7 +20,7 @@ export const BeregningsDetaljerUtregning = ({
   reduksjonsgrunnlag,
   gjelderDelerAvMåned,
 }: BeregningsDetaljerUtregningProps) => {
-  const skalViseTekstOmSisteMåned = gjelderDelerAvMåned && reduksjonsgrunnlag !== undefined;
+  const skalViseTekstOmSisteMåned = gjelderDelerAvMåned && (reduksjonsgrunnlag ?? 0) > 0;
 
   return (
     <>
