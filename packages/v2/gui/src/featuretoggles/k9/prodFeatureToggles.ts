@@ -27,7 +27,7 @@ export const prodFeatureToggles = {
   AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: false,
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
-  FLYTT_ALDERSVILKAR: false,
+  FLYTT_ALDERSVILKAR: true,
   BRUK_V2_TILKJENT_YTELSE: false,
   UNG_KLAGE: false,
   KRONISK_TIDSBEGRENSET: true,
