@@ -1,16 +1,18 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_behandling_BehandlingType,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client/types';
 import { useMemo, type SetStateAction } from 'react';
 
 interface Props {
   behandling: Behandling;
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   submitCallback: (props: any[]) => void;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
@@ -21,10 +23,11 @@ interface Props {
   visPeriodisering: boolean;
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   visAllePerioder: boolean;
+  overstyrteAksjonspunktKoder: string[];
 }
 
-export const AlderProsessStegInitPanel = (props: Props) => {
-  const RELEVANTE_VILKAR_KODER = [vilkarType.ALDERSVILKARET];
+export const OmsorgenForProsessStegInitPanel = (props: Props) => {
+  const RELEVANTE_VILKAR_KODER = [vilkarType.OMSORGENFORVILKARET];
 
   const vilkarForSteg = useMemo(() => {
     if (!props.vilkår) {
@@ -34,29 +37,35 @@ export const AlderProsessStegInitPanel = (props: Props) => {
   }, [props.vilkår]);
   const skalVisePanel = vilkarForSteg.length > 0;
 
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
+    const kode = ap.definisjon;
+    return kode === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR;
+  });
+
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {
     return null;
   }
 
+  const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR);
+
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.ALDER} tekstKode="Alder">
+    <ProsessDefaultInitPanel tekstKode="Omsorg">
       {() => {
         const VilkarresultatMedOverstyringProsessIndexProps = {
           ...props,
-          aksjonspunkter: [],
+          aksjonspunkter: relevanteAksjonspunkter,
           behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
           vilkar: vilkarForSteg,
-          erOverstyrt: false,
-          overstyringApKode: '',
+          erOverstyrt,
+          overstyringApKode: aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
           erMedlemskapsPanel: false,
         };
-
         return (
           <VilkarresultatMedOverstyringProsessIndex
             {...VilkarresultatMedOverstyringProsessIndexProps}
-            panelTittelKode="Alder"
+            panelTittelKode="Omsorg"
           />
         );
       }}

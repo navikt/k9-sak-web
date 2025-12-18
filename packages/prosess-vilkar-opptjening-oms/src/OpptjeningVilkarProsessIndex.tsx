@@ -3,8 +3,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import { k9_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client/types';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
 import { useEffect, useState } from 'react';
@@ -26,11 +27,11 @@ const intl = createIntl(
 );
 
 interface OpptjeningVilkarProsessIndexProps {
-  fagsak: Fagsak;
-  behandling: OpptjeningBehandling;
+  fagsak: Pick<Fagsak, 'sakstype'>;
+  behandling: Pick<Behandling, 'id' | 'versjon' | 'behandlingsresultat'>;
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
+  vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
@@ -68,7 +69,7 @@ const OpptjeningVilkarProsessIndex = ({
   }
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
   const getIndexBlantAllePerioder = () =>
-    activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
+    activeVilkår.perioder?.findIndex(({ periode }) => isEqual(periode, activePeriode.periode)) ?? 0;
 
   return (
     <RawIntlProvider value={intl}>
@@ -79,7 +80,7 @@ const OpptjeningVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               iconSrc:
-                isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? (
+                isAksjonspunktOpen && vilkarStatus === vilkarUtfallType.IKKE_VURDERT ? (
                   <Image
                     src={advarselIcon}
                     className={styles.warningIcon}
@@ -95,7 +96,7 @@ const OpptjeningVilkarProsessIndex = ({
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             lovReferanse={lovReferanse}
             fagsakType={fagsak.sakstype}
             aksjonspunkter={aksjonspunkter}

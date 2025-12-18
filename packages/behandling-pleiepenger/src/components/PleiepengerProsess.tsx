@@ -21,15 +21,15 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { Bleed, BoxNew, HGrid } from '@navikt/ds-react';
+import { Bleed, BoxNew } from '@navikt/ds-react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
-import { AlderProsessStegInitPanel } from '../prosess/AlderProsessStegInitPanel';
 import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
+import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarProsessStegInitPanel';
+import { K9SakProsessBackendClient } from '../prosess/K9SakProsessBackendClient';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
 import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
-import { SøknadsfristProsessStegInitPanel } from '../prosess/SøknadsfristProsessStegInitPanel';
 import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
 import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
@@ -264,6 +264,9 @@ const PleiepengerProsess = ({
     () => ({ vedtakFormState, setVedtakFormState }),
     [vedtakFormState, setVedtakFormState],
   );
+  const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
+
+  const k9SakProsessApi = new K9SakProsessBackendClient();
 
   if (useV2Menu) {
     // - v2 ProsessMeny
@@ -320,23 +323,52 @@ const PleiepengerProsess = ({
                   const formaterPanel = formaterteProsessStegPaneler.find(
                     panel => panel.labelId === panelDef.getTekstKode(),
                   );
+                  const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
 
                   // Bruk migrerte InitPanel-komponenter der de finnes
                   if (urlKode === 'inngangsvilkar') {
                     return (
-                      <HGrid columns={2} gap="space-24">
-                        <div>
-                          <SøknadsfristProsessStegInitPanel key={urlKode} />
-                          <AlderProsessStegInitPanel key={urlKode} />
-                        </div>
-                      </HGrid>
+                      <InngangsvilkarProsessStegInitPanel
+                        key={urlKode}
+                        submitCallback={lagreAksjonspunkter}
+                        overrideReadOnly={!rettigheter.writeAccess.isEnabled}
+                        kanOverstyreAccess={rettigheter.kanOverstyreAccess}
+                        visAllePerioder={false}
+                        kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
+                        toggleOverstyring={toggleOverstyring}
+                        overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
+                        behandling={behandling}
+                        api={k9SakProsessApi}
+                      />
                     );
                   }
                   if (urlKode === 'medisinsk_vilkar') {
-                    return <MedisinskVilkarProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <MedisinskVilkarProsessStegInitPanel
+                        key={urlKode}
+                        vilkar={data.vilkar}
+                        aksjonspunkter={data.aksjonspunkter}
+                      />
+                    );
                   }
                   if (urlKode === 'opptjening') {
-                    return <InngangsvilkarFortsProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <InngangsvilkarFortsProsessStegInitPanel
+                        key={urlKode}
+                        urlKode={urlKode}
+                        submitCallback={lagreAksjonspunkter}
+                        overrideReadOnly={!rettigheter.writeAccess.isEnabled}
+                        kanOverstyreAccess={rettigheter.kanOverstyreAccess}
+                        visAllePerioder={false}
+                        kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
+                        toggleOverstyring={toggleOverstyring}
+                        overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
+                        behandling={behandling}
+                        api={k9SakProsessApi}
+                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        fagsak={fagsak}
+                      />
+                    );
                   }
                   if (urlKode === 'uttak') {
                     return <UttakProsessStegInitPanel key={urlKode} />;

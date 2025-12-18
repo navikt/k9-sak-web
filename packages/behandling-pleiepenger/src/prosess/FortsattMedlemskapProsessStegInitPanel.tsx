@@ -1,12 +1,28 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
-import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
+import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useContext, useMemo } from 'react';
+import { Behandling } from '@k9-sak-web/types';
+import {
+  k9_kodeverk_behandling_BehandlingType,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
+} from '@navikt/k9-sak-typescript-client/types';
+import { Dispatch, SetStateAction, useMemo } from 'react';
+
+interface Props {
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  submitCallback: (data: any) => Promise<any>;
+  overrideReadOnly: boolean;
+  kanOverstyreAccess: {
+    isEnabled: boolean;
+    employeeHasAccess: boolean;
+  };
+  toggleOverstyring: Dispatch<SetStateAction<string[]>>;
+  vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
+  behandling: Behandling;
+}
 
 /**
  * InitPanel for fortsatt medlemskap prosesssteg
@@ -19,61 +35,21 @@ import { useContext, useMemo } from 'react';
  *
  * Dette panelet viser overstyring av løpende medlemskapsvilkår.
  */
-export function FortsattMedlemskapProsessStegInitPanel() {
-  const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.FORTSATTMEDLEMSKAP;
-  const PANEL_TEKST = 'Fortsatt medlem';
-
+export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
   // Hent standard props for å få tilgang til vilkår og aksjonspunkter
-  const standardProps = useStandardProsessPanelProps();
 
   // Filtrer vilkår som er relevante for dette panelet (løpende medlemskap)
   const vilkarForSteg = useMemo(() => {
-    if (!standardProps.vilkar) {
+    if (!props.vilkår) {
       return [];
     }
-    return standardProps.vilkar.filter(vilkar => vilkar.vilkarType?.kode === vilkarType.MEDLEMSKAPSVILKARET);
-  }, [standardProps.vilkar]);
+    return props.vilkår.filter(vilkår => vilkår.vilkarType === vilkarType.MEDLEMSKAPSVILKARET);
+  }, [props.vilkår]);
 
   // Sjekk om panelet skal vises (kun hvis det finnes løpende medlemskapsvilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
 
   // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Sjekk om det finnes åpent aksjonspunkt for overstyring av løpende medlemskap (warning)
-    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
-      ap =>
-        ap.definisjon?.kode === aksjonspunktCodes.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR && // 5023
-        ap.status?.kode === 'OPPR',
-    );
-    if (harApenAksjonspunkt) {
-      return ProcessMenuStepType.warning;
-    }
-
-    // Samle alle periode-statuser fra løpende medlemskapsvilkår
-    const vilkarStatusCodes: string[] = [];
-    vilkarForSteg.forEach(vilkar => {
-      vilkar.perioder
-        .filter(periode => periode.vurderesIBehandlingen)
-        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode));
-    });
-
-    // Sjekk om noen vilkår ikke er oppfylt (danger)
-    const harIkkeOppfyltVilkar = vilkarStatusCodes.some(kode => kode === 'IKKE_OPPFYLT');
-    if (harIkkeOppfyltVilkar) {
-      return ProcessMenuStepType.danger;
-    }
-
-    // Sjekk om alle vilkår er oppfylt (success)
-    const alleVilkarOppfylt = vilkarStatusCodes.length > 0 && vilkarStatusCodes.every(kode => kode === 'OPPFYLT');
-    if (alleVilkarOppfylt) {
-      return ProcessMenuStepType.success;
-    }
-
-    // Default tilstand
-    return ProcessMenuStepType.default;
-  }, [vilkarForSteg, standardProps.aksjonspunkter]);
 
   // Ikke vis panelet hvis det ikke finnes løpende medlemskapsvilkår
   // VIKTIG: Returner tidlig FØR registrering for å unngå at panelet vises i menyen
@@ -81,23 +57,36 @@ export function FortsattMedlemskapProsessStegInitPanel() {
     return null;
   }
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
-
-  // Render kun hvis panelet er valgt
-  if (!erValgt) {
-    return null;
-  }
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
+    const kode = ap.definisjon;
+    return kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR;
+  });
 
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.FORTSATTMEDLEMSKAP} tekstKode="Fortsatt medlem">
       {() => {
-        // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
-        // Dette er hybrid-modus: v2 meny + legacy rendering
-        // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
-        return null;
+        const VilkarresultatMedOverstyringProsessIndexProps = {
+          // ...props,
+          submitCallback: props.submitCallback,
+          overrideReadOnly: props.overrideReadOnly,
+          kanOverstyreAccess: props.kanOverstyreAccess,
+          toggleOverstyring: props.toggleOverstyring,
+          aksjonspunkter: relevanteAksjonspunkter,
+          behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
+          vilkar: vilkarForSteg,
+          erOverstyrt: false,
+          overstyringApKode: '',
+          erMedlemskapsPanel: false,
+          visPeriodisering: false,
+          visAllePerioder: false,
+        };
+        return (
+          <VilkarresultatMedOverstyringProsessIndex
+            {...VilkarresultatMedOverstyringProsessIndexProps}
+            panelTittelKode="Medlemskap"
+          />
+        );
       }}
     </ProsessDefaultInitPanel>
   );

@@ -3,17 +3,18 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { HGrid, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo } from 'react';
-import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapProsessStegInitPanel';
+import { AlderProsessStegInitPanel } from './AlderProsessStegInitPanel';
 import { K9SakProsessApi } from './K9SakProsessApi';
-import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
+import { OmsorgenForProsessStegInitPanel } from './OmsorgenForProsessStegInitPanel';
+import { SøknadsfristProsessStegInitPanel } from './SøknadsfristProsessStegInitPanel';
 
-interface InngangsvilkarFortsProsessStegInitPanelProps {
-  urlKode: string;
+interface InngangsvilkarProsessStegInitPanelProps {
+  // aksjonspunkter: Aksjonspunkt[];
   behandling: Behandling;
   submitCallback: (data: any) => Promise<any>;
   overrideReadOnly: boolean;
@@ -27,38 +28,42 @@ interface InngangsvilkarFortsProsessStegInitPanelProps {
   kanEndrePåSøknadsopplysninger: boolean;
   overstyrteAksjonspunktKoder: string[];
   api: K9SakProsessApi;
-  isReadOnly: boolean;
-  fagsak: Fagsak;
 }
 
-export const InngangsvilkarFortsProsessStegInitPanel = ({
-  behandling,
-  api,
-  isReadOnly,
+export const InngangsvilkarProsessStegInitPanel = ({
+  // aksjonspunkter,
   submitCallback,
-  overstyrteAksjonspunktKoder,
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  fagsak,
-}: InngangsvilkarFortsProsessStegInitPanelProps) => {
+  // vilkar,
+  visAllePerioder,
+  kanEndrePåSøknadsopplysninger,
+  overstyrteAksjonspunktKoder,
+  behandling,
+  api,
+}: InngangsvilkarProsessStegInitPanelProps) => {
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandling.uuid],
     queryFn: () => api.getVilkår(behandling.uuid),
   });
-  const { data: aksjonspunkter = [] } = useQuery({
+  const { data: aksjonspunkter } = useQuery({
     queryKey: ['aksjonspunkter', behandling.uuid],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
   });
   const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.OPPTJENING;
-  const PANEL_TEKST = 'Behandlingspunkt.InngangsvilkarForts';
+  const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
+  const PANEL_TEKST = 'Behandlingspunkt.Inngangsvilkar';
 
   // Hent standard props for å få tilgang til vilkår
 
   // Relevante vilkår for inngangsvilkår-panelet
-  const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
+  const RELEVANTE_VILKAR_KODER = [
+    vilkarType.SOKNADSFRISTVILKARET,
+    vilkarType.ALDERSVILKARET,
+    vilkarType.OMSORGENFORVILKARET,
+  ];
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
@@ -102,8 +107,9 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     const harApenAksjonspunkt = aksjonspunkter?.some(ap => {
       const kode = ap.definisjon;
       return (
-        (kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR || // OVERSTYR_MEDLEMSKAPSVILKAR
-          kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET) && // VURDER_OPPTJENINGSVILKARET
+        (kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR ||
+          kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST ||
+          kode === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR) &&
         ap.status === 'OPPR'
       );
     });
@@ -118,43 +124,51 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt: true }, PANEL_ID, PANEL_TEKST, panelType);
 
+  const harLastetData = vilkår !== undefined && aksjonspunkter !== undefined;
+
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel) {
+  if (!skalVisePanel || !vilkår || !harLastetData) {
     return null;
   }
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
-    return null;
-  }
   return (
     <HGrid columns={2} gap="space-24" marginBlock="space-16">
       <VStack gap="space-48">
-        <OpptjeningProsessStegInitPanel
+        <SøknadsfristProsessStegInitPanel
           aksjonspunkter={aksjonspunkter}
-          api={api}
-          behandling={behandling}
-          isReadOnly={isReadOnly}
           submitCallback={submitCallback}
+          overrideReadOnly={overrideReadOnly}
+          kanOverstyreAccess={kanOverstyreAccess}
+          toggleOverstyring={toggleOverstyring}
           overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
-          overrideReadOnly={overrideReadOnly}
-          kanOverstyreAccess={kanOverstyreAccess}
-          toggleOverstyring={toggleOverstyring}
-          vilkår={vilkarForSteg}
-          visAllePerioder={true}
-          visPeriodisering={false}
-          saksnummer={fagsak.saksnummer}
+          vilkår={vilkår}
+          visAllePerioder={visAllePerioder}
+          kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
         />
-        <FortsattMedlemskapProsessStegInitPanel
-          aksjonspunkter={aksjonspunkter}
+        <AlderProsessStegInitPanel
+          behandling={behandling}
           submitCallback={submitCallback}
           overrideReadOnly={overrideReadOnly}
           kanOverstyreAccess={kanOverstyreAccess}
           toggleOverstyring={toggleOverstyring}
-          vilkår={vilkarForSteg}
-          behandling={behandling}
+          visPeriodisering={false}
+          vilkår={vilkår}
+          visAllePerioder={visAllePerioder}
         />
       </VStack>
+
+      <OmsorgenForProsessStegInitPanel
+        behandling={behandling}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        overrideReadOnly={overrideReadOnly}
+        kanOverstyreAccess={kanOverstyreAccess}
+        toggleOverstyring={toggleOverstyring}
+        visPeriodisering={false}
+        vilkår={vilkår}
+        visAllePerioder={visAllePerioder}
+        overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
+      />
     </HGrid>
   );
 };

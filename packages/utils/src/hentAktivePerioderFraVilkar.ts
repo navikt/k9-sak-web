@@ -1,7 +1,10 @@
 import { dateStringSorter } from '@fpsak-frontend/utils';
-import { Vilkar } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client/types';
 
-const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean) => {
+const hentAktivePerioderFraVilkar = (
+  vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
+  visAllePerioder: boolean,
+) => {
   const [activeVilkår] = vilkar;
 
   if (!activeVilkår?.perioder) {

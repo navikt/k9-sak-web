@@ -3,11 +3,16 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useContext, useMemo } from 'react';
+
+interface Props {
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
+}
 
 /**
  * InitPanel for medisinsk vilkår prosesssteg
@@ -22,26 +27,24 @@ import { useContext, useMemo } from 'react';
  * - Medisinske vilkår for pleietrengende under 18 år
  * - Medisinske vilkår for pleietrengende over 18 år
  */
-export function MedisinskVilkarProsessStegInitPanel() {
+export function MedisinskVilkarProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
   const PANEL_TEKST = 'Behandlingspunkt.MedisinskVilkar';
 
   // Hent standard props for å få tilgang til vilkår, aksjonspunkter og feature toggles
-  const standardProps = useStandardProsessPanelProps();
 
   // Relevante vilkår for medisinsk vilkår-panelet
   const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
-    if (!standardProps.vilkar) {
+    if (!props.vilkar) {
       return [];
     }
-    return standardProps.vilkar.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode));
-  }, [standardProps.vilkar]);
-
+    return props.vilkar.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode));
+  }, [props.vilkar]);
   // Sjekk om panelet skal vises
   // Panelet vises hvis det finnes relevante vilkår
   const skalVisePanel = vilkarForSteg.length > 0;
@@ -54,7 +57,7 @@ export function MedisinskVilkarProsessStegInitPanel() {
     }
 
     // Sjekk om det finnes åpent aksjonspunkt for medisinsk vilkår (warning har prioritet)
-    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
+    const harApenAksjonspunkt = props.aksjonspunkter?.some(
       ap => ap.definisjon?.kode === aksjonspunktCodes.MEDISINSK_VILKAAR && ap.status?.kode === 'OPPR',
     );
     if (harApenAksjonspunkt) {
@@ -83,7 +86,7 @@ export function MedisinskVilkarProsessStegInitPanel() {
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [skalVisePanel, vilkarForSteg, standardProps.aksjonspunkter]);
+  }, [skalVisePanel, vilkarForSteg, props.aksjonspunkter]);
 
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
@@ -103,22 +106,30 @@ export function MedisinskVilkarProsessStegInitPanel() {
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.MEDISINSK_VILKAR} tekstKode="Behandlingspunkt.MedisinskVilkar">
       {() => {
-        const vilkårPleietrengendeUnder18år = standardProps.vilkar?.find(
+        const vilkårPleietrengendeUnder18år = props.vilkar?.find(
           v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
         );
-        const vilkårPleietrengendeOver18år = standardProps.vilkar?.find(
+        const vilkårPleietrengendeOver18år = props.vilkar?.find(
           v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR,
         );
-        const perioderUnder18 = vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
-          ...periode,
-          pleietrengendeErOver18år: false,
-        }));
-        const perioderOver18 = vilkårPleietrengendeOver18år?.perioder.map(periode => ({
-          ...periode,
-          pleietrengendeErOver18år: true,
-        }));
+        const perioderUnder18 =
+          vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
+            ...periode,
+            pleietrengendeErOver18år: false,
+          })) ?? [];
+        const perioderOver18 =
+          vilkårPleietrengendeOver18år?.perioder.map(periode => ({
+            ...periode,
+            pleietrengendeErOver18år: true,
+          })) ?? [];
         const allePerioder = perioderUnder18.concat(perioderOver18);
-        return <SykdomProsessIndex {...standardProps} panelTittelKode="Sykdom" perioder={allePerioder} />;
+        return (
+          <SykdomProsessIndex
+            lovReferanse={vilkarForSteg[0].lovReferanse}
+            panelTittelKode="Sykdom"
+            perioder={allePerioder}
+          />
+        );
       }}
     </ProsessDefaultInitPanel>
   );
