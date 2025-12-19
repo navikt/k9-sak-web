@@ -12,7 +12,6 @@ import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sa
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
-import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
@@ -86,7 +85,7 @@ export const DefaultStory: Story = {
         kodeverk: 'SPRAAK_KODE',
       },
     },
-    maler: templates,
+    maler: api.dummyMaler,
     personopplysninger,
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,

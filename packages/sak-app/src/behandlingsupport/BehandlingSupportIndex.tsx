@@ -31,7 +31,6 @@ import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
-import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
@@ -49,6 +48,7 @@ import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorA
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
 import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
+import { MessagesIndex } from '@k9-sak-web/gui/sak/meldinger/MessagesIndex.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -144,8 +144,8 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
-  personopplysninger?: Personopplysninger;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
+  personopplysninger: Personopplysninger;
+  arbeidsgiverOpplysninger: ArbeidsgiverOpplysningerWrapper;
   navAnsatt: NavAnsatt;
   featureToggles?: FeatureToggles;
 }
@@ -317,17 +317,15 @@ const BehandlingSupportIndex = ({
             <ErrorBoundary errorFallback={MessagesErrorAlert}>
               <LoadingPanelSuspense>
                 {behandlingId != null &&
-                  (erTilbakekreving && featureToggles?.V2_MELDINGER_FOR_TILBAKE ? (
+                  (erTilbakekreving ? (
                     <TilbakeMessagesIndex fagsak={fagsak} behandling={behandling} api={meldingerTilbakeBackendClient} />
                   ) : (
-                    <MeldingIndex
+                    <MessagesIndex
                       fagsak={fagsak}
-                      alleBehandlinger={alleBehandlinger}
-                      behandlingId={behandlingId}
-                      behandlingVersjon={behandlingVersjon}
+                      behandling={behandling}
                       personopplysninger={personopplysninger}
-                      arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                      backendApi={meldingerBackendClient}
+                      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger.arbeidsgivere}
+                      api={meldingerBackendClient}
                     />
                   ))}
               </LoadingPanelSuspense>

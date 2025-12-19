@@ -1,4 +1,3 @@
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
@@ -8,7 +7,6 @@ import type {
   k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
   k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import { useEffect, useRef, useState } from 'react';
@@ -33,21 +31,10 @@ import MalSelect from './MalSelect.js';
 import MottakerSelect from './MottakerSelect.js';
 import { TredjepartsmottakerCheckbox } from './TredjepartsmottakerCheckbox.js';
 import TredjepartsmottakerInput, {
-  type BackendApi as TredjepartsmottakerBackendApi,
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
-
-export interface BackendApi extends TredjepartsmottakerBackendApi {
-  hentInnholdBrevmal(
-    fagsakYtelsestype: FagsakYtelsesType,
-    eksternReferanse: string,
-    avsenderApplikasjon: AvsenderApplikasjon,
-    maltype: string,
-  ): Promise<FritekstbrevDokumentdata[]>;
-  bestillDokument(bestilling: BestillBrevDto): Promise<void>;
-  lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob>;
-}
+import type { MessagesApi } from './api/MessagesApi.js';
 
 export type MessagesState = Readonly<{
   valgtMalkode: string | undefined;
@@ -62,9 +49,9 @@ export type MessagesProps = {
   readonly maler: Template[];
   readonly fagsak: Fagsak;
   readonly behandling: BehandlingInfo;
-  readonly personopplysninger?: Personopplysninger;
-  readonly arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
-  readonly api: BackendApi;
+  readonly personopplysninger: Personopplysninger;
+  readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  readonly api: MessagesApi;
   readonly onMessageSent: () => void;
   readonly stickyState: {
     readonly messages: StickyStateReducer<MessagesState>;
