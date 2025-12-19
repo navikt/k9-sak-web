@@ -16,5 +16,9 @@ export interface MessagesApi extends TredjepartsmottakerBackendApi {
   ): Promise<FritekstbrevDokumentdata[]>;
   bestillDokument(bestilling: BestillBrevDto): Promise<void>;
   lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob>;
-  hentMaler(fagsakYtelsestype: FagsakYtelsesType, behandlingUuid: string): Promise<Template[]>;
+  hentMaler(
+    fagsakYtelsestype: FagsakYtelsesType,
+    behandlingUuid: string,
+    avsenderApplikasjon: AvsenderApplikasjon,
+  ): Promise<Template[]>;
 }

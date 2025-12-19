@@ -3,10 +3,7 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts';
-import {
-  avsenderApplikasjon,
-  type AvsenderApplikasjon,
-} from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
@@ -84,11 +81,15 @@ export default class K9SakMeldingerBackendClient implements MessagesApi {
     );
   }
 
-  async hentMaler(fagsakYtelsestype: FagsakYtelsesType, behandlingUuid: string): Promise<Template[]> {
+  async hentMaler(
+    fagsakYtelsestype: FagsakYtelsesType,
+    behandlingUuid: string,
+    avsenderApplikasjon: AvsenderApplikasjon,
+  ): Promise<Template[]> {
     const templateMap = await this.#formidling.maler.hentBrevmaler(
       fagsakYtelsestype,
       behandlingUuid,
-      avsenderApplikasjon.K9SAK,
+      avsenderApplikasjon,
     );
     return [...templateMap.values()];
   }
