@@ -1,4 +1,7 @@
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import { useEffect, useState } from 'react';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
@@ -16,6 +19,7 @@ interface AldersVilkarAPProps {
   erVurdert: boolean;
   vilkarOppfylt: boolean;
   begrunnelseTekst: string;
+  fagsak: FagsakDto;
 }
 
 const AldersVilkarAP = ({
@@ -28,6 +32,7 @@ const AldersVilkarAP = ({
   erVurdert,
   vilkarOppfylt,
   begrunnelseTekst,
+  fagsak,
 }: AldersVilkarAPProps) => {
   const [redigering, setRedigering] = useState<boolean>(false);
   const lesemodus = isReadOnly || !isAksjonspunktOpen;
@@ -51,6 +56,7 @@ const AldersVilkarAP = ({
           erVilkaretOk={vilkarOppfylt}
           erVurdert={erVurdert}
           angitteBarn={angitteBarn}
+          fagsak={fagsak}
         />
       </AksjonspunktBox>
     );
