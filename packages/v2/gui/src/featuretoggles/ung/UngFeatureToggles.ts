@@ -30,4 +30,6 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   BRUK_V2_TILKJENT_YTELSE: boolean;
   UNG_KLAGE: boolean;
   V2_MELDINGER_FOR_TILBAKE: boolean;
+  PROSESS_MENY_V2: boolean; // Aktiverer v2 prosessmeny-system
+  PROSESS_MENY_V2_VELGER: boolean; // Viser toggle-knapp for å velge mellom legacy og v2 meny
 }

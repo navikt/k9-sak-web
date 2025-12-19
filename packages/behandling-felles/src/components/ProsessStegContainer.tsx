@@ -1,19 +1,26 @@
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
-import React, { ReactNode, useMemo, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
+import React, { ReactNode, useMemo, useState } from 'react';
 
 import styles from './prosessStegContainer.module.css';
+import { Box } from '@navikt/ds-react';
 
 interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
   noBorder?: boolean;
+  hideMenu?: boolean; // Skjul menyen når v2-menyen brukes
 }
 
-export const VedtakFormContext = React.createContext(null);
+interface VedtakFormContextType {
+  vedtakFormState: any;
+  setVedtakFormState: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export const VedtakFormContext = React.createContext<VedtakFormContextType | null>(null);
 
 const ProsessStegContainer = ({
   intl,
@@ -21,6 +28,7 @@ const ProsessStegContainer = ({
   velgProsessStegPanelCallback,
   children,
   noBorder,
+  hideMenu = false,
 }: OwnProps & WrappedComponentProps) => {
   const steg = useMemo(
     () =>
@@ -38,16 +46,19 @@ const ProsessStegContainer = ({
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
   return (
-    <div className={noBorder ? '' : styles.container}>
-      <div className={styles.meny}>
-        <ProcessMenu
-          steps={steg}
-          onClick={velgProsessStegPanelCallback}
-          stepArrowContainerStyle={styles.stepArrowContainer}
-        />
-      </div>
+    <Box>
+      {/* Skjul menyen når v2-menyen brukes */}
+      {!hideMenu && (
+          <div className={styles.meny}>
+            <ProcessMenu
+              steps={steg}
+              onClick={velgProsessStegPanelCallback}
+              stepArrowContainerStyle={styles.stepArrowContainer}
+            />
+          </div>
+      )}
       <VedtakFormContext.Provider value={value}>{children}</VedtakFormContext.Provider>
-    </div>
+    </Box>
   );
 };
 
