@@ -1,15 +1,19 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import {
+  k9_kodeverk_behandling_BehandlingStatus,
+  k9_sak_kontrakt_behandling_BehandlingDto,
+} from '@navikt/k9-sak-typescript-client/types';
+import { useQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
-import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+import { K9SakProsessApi } from './K9SakProsessApi';
 
 // Relevante aksjonspunkter for uttak
 const RELEVANTE_AKSJONSPUNKTER = [
@@ -18,6 +22,14 @@ const RELEVANTE_AKSJONSPUNKTER = [
   aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
   aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
 ];
+
+interface Props {
+  behandling: Behandling;
+  api: K9SakProsessApi;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
+  erOverstyrer: boolean;
+  isReadOnly: boolean;
+}
 
 /**
  * HYBRID-MODUS InitPanel for Uttak
@@ -40,30 +52,37 @@ const RELEVANTE_AKSJONSPUNKTER = [
  * - Flytt datahenting til React Query i v2-komponenten
  * - Fjern UttakProsessStegPanelDef
  */
-export function UttakProsessStegInitPanel() {
+export function UttakProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
   // Definer panel ID og tekst som konstanter
   const panelId = 'uttak';
   const panelTekst = 'Behandlingspunkt.Uttak';
 
-  // Hent standard props for å få tilgang til aksjonspunkter
-  const standardProps = useStandardProsessPanelProps();
+  const { data: aksjonspunkter = [] } = useQuery({
+    queryKey: ['aksjonspunkter', props.behandling.uuid],
+    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
+  });
+
+  const { data: uttak } = useQuery({
+    queryKey: ['uttak', props.behandling.uuid],
+    queryFn: () => props.api.getUttaksplan(props.behandling.uuid),
+  });
 
   // Hent uttaksdata for å beregne paneltype
-  const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-    uttak: any;
-    arbeidsforhold: any;
-  }>([{ key: PleiepengerBehandlingApiKeys.UTTAK }, { key: PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD }], {
-    keepData: true,
-    suspendRequest: false,
-    updateTriggers: [],
-  });
+  // const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
+  //   uttak: any;
+  //   arbeidsforhold: any;
+  // }>([{ key: PleiepengerBehandlingApiKeys.UTTAK }, { key: PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD }], {
+  //   keepData: true,
+  //   suspendRequest: false,
+  //   updateTriggers: [],
+  // });
 
   // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Sjekk først om det finnes åpne aksjonspunkter for dette panelet
-    const harApenAksjonspunkt = standardProps.aksjonspunkter?.some(
-      ap => RELEVANTE_AKSJONSPUNKTER.includes(ap.definisjon?.kode) && ap.status?.kode === 'OPPR',
+    const harApenAksjonspunkt = aksjonspunkter?.some(
+      ap => RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon) && ap.status === 'OPPR',
     );
 
     // Hvis det er åpent aksjonspunkt, vis warning (gul/oransje)
@@ -72,15 +91,11 @@ export function UttakProsessStegInitPanel() {
       return ProcessMenuStepType.warning;
     }
 
-    const data = restApiData.data;
-
     // Hvis data ikke er lastet ennå, bruk default
-    if (!data || !data.uttak) {
+    if (!uttak) {
       console.debug('Uttak panel: Data ikke lastet, viser default');
       return ProcessMenuStepType.default;
     }
-
-    const { uttak } = data;
 
     // Sjekk om uttaksplan eksisterer og har perioder
     if (
@@ -95,14 +110,6 @@ export function UttakProsessStegInitPanel() {
     const uttaksperiodeKeys = Object.keys(uttak.uttaksplan.perioder);
     const perioder = uttak.uttaksplan.perioder;
 
-    console.debug('Uttak panel: Sjekker perioder', {
-      antallPerioder: uttaksperiodeKeys.length,
-      perioder: uttaksperiodeKeys.map(key => ({
-        key,
-        utfall: perioder?.[key]?.utfall,
-      })),
-    });
-
     // Hvis alle perioder er ikke oppfylt, vis danger
     if (uttaksperiodeKeys.every(key => perioder?.[key]?.utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
       console.debug('Uttak panel: Alle perioder ikke oppfylt, viser danger');
@@ -113,7 +120,7 @@ export function UttakProsessStegInitPanel() {
     // Dette matcher legacy-logikken: getOverstyrtStatus returnerer OPPFYLT hvis ikke alle er IKKE_OPPFYLT
     console.debug('Uttak panel: Ikke alle perioder ikke oppfylt, viser success');
     return ProcessMenuStepType.success;
-  }, [restApiData.data, standardProps.aksjonspunkter]);
+  }, [uttak, aksjonspunkter]);
 
   // Registrer panel med v2 menyen
   // Registreres først med 'default', oppdateres automatisk når panelType endres
@@ -121,25 +128,34 @@ export function UttakProsessStegInitPanel() {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, panelId, panelTekst, panelType);
 
-  if (!erValgt) {
+  if (!erValgt || !uttak) {
     return null;
   }
+
+  const relevanteAksjonspunkter = aksjonspunkter?.filter(ap =>
+    RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon),
+  );
 
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.UTTAK} tekstKode="Behandlingspunkt.Uttak">
-      {standardProps => {
-        const deepCopyProps = JSON.parse(JSON.stringify({ ...standardProps, uttak: restApiData.data?.uttak }));
-        konverterKodeverkTilKode(deepCopyProps, false);
+      {() => {
+        const behandling = {
+          uuid: props.behandling.uuid,
+          id: props.behandling.id,
+          versjon: props.behandling.versjon,
+          status: props.behandling.status.kode as k9_kodeverk_behandling_BehandlingStatus,
+          sakstype: props.behandling.sakstype,
+        };
         return (
           <Uttak
-            uttak={deepCopyProps.uttak}
-            behandling={deepCopyProps.behandling}
-            aksjonspunkter={deepCopyProps.aksjonspunkter}
-            relevanteAksjonspunkter={RELEVANTE_AKSJONSPUNKTER}
-            hentBehandling={standardProps.hentBehandling}
-            erOverstyrer={standardProps.erOverstyrer}
-            readOnly={standardProps.isReadOnly}
+            uttak={uttak}
+            behandling={behandling}
+            aksjonspunkter={aksjonspunkter}
+            relevanteAksjonspunkter={relevanteAksjonspunkter}
+            hentBehandling={props.hentBehandling}
+            erOverstyrer={props.erOverstyrer}
+            readOnly={props.isReadOnly}
           />
         );
       }}

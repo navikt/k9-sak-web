@@ -371,7 +371,16 @@ const PleiepengerProsess = ({
                     );
                   }
                   if (urlKode === 'uttak') {
-                    return <UttakProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <UttakProsessStegInitPanel
+                        key={urlKode}
+                        behandling={behandling}
+                        api={k9SakProsessApi}
+                        hentBehandling={hentBehandling}
+                        erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
+                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                      />
+                    );
                   }
                   if (urlKode === 'tilkjent_ytelse') {
                     return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;

@@ -1,5 +1,6 @@
 import {
   aksjonspunkt_getAksjonspunkter1,
+  behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder,
   fagsak_hentFagsak,
   vilkår_getVilkårV3,
 } from '@navikt/k9-sak-typescript-client/sdk';
@@ -16,5 +17,9 @@ export class K9SakProsessBackendClient implements K9SakProsessApi {
 
   async getFagsak(saksnummer: string) {
     return (await fagsak_hentFagsak({ query: { saksnummer: { saksnummer } } })).data;
+  }
+
+  async getUttaksplan(behandlingUuid: string) {
+    return (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
   }
 }
