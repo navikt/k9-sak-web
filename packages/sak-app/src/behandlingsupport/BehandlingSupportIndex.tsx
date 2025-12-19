@@ -313,12 +313,12 @@ const BehandlingSupportIndex = ({
               </HistorikkBackendApiContext>
             )}
           </Tabs.Panel>
-          <Tabs.Panel value={SupportTabs.MELDINGER}>
+          <Tabs.Panel value={SupportTabs.MELDINGER} lazy={false}>
             <ErrorBoundary errorFallback={MessagesErrorAlert}>
               <LoadingPanelSuspense>
                 {behandlingId != null &&
                   (erTilbakekreving ? (
-                    <TilbakeMessagesIndex fagsak={fagsak} behandling={behandling} api={meldingerTilbakeBackendClient} />
+                    <TilbakeMessagesIndex behandling={behandling} api={meldingerTilbakeBackendClient} />
                   ) : (
                     <MessagesIndex
                       fagsak={fagsak}

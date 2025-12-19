@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import {
   type Mottaker,
@@ -16,32 +16,15 @@ import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysning
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
-import Messages, { type MessagesProps } from './Messages.js';
-
-const newStickyState = (): MessagesProps['stickyState'] => ({
-  messages: new StickyStateReducer(),
-  fritekst: {
-    tekst: new StickyStateReducer(),
-    tittel: new StickyStateReducer(),
-  },
-});
-
-const withStickyState = (): Decorator => (Story, ctx) => {
-  ctx.args['stickyState'] = newStickyState();
-  return <Story />;
-};
+import Messages from './Messages.js';
 
 const api = new FakeMessagesBackendApi();
 const meta = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
-  decorators: [withMaxWidth(420), withStickyState()],
+  decorators: [withMaxWidth(420)],
   beforeEach: () => {
     api.reset();
-  },
-  args: {
-    stickyState: newStickyState(),
   },
 } satisfies Meta<typeof Messages>;
 export default meta;

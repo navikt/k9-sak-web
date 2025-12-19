@@ -9,23 +9,20 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import {
   type ArbeidsgiverOpplysningerPerId,
   bestemAvsenderApp,
   type Personopplysninger,
 } from '../../utils/formidling.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
 import type { Fagsak } from '../Fagsak.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
-  type Error,
   type FritekstInputInvalid,
   type FritekstInputMethods,
   type FritekstInputValue,
   type FritekstModus,
-  type Valid,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.js';
 import MottakerSelect from './MottakerSelect.js';
@@ -53,13 +50,6 @@ export type MessagesProps = {
   readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readonly api: MessagesApi;
   readonly onMessageSent: () => void;
-  readonly stickyState: {
-    readonly messages: StickyStateReducer<MessagesState>;
-    readonly fritekst: {
-      readonly tittel: StickyStateReducer<Valid | Error>;
-      readonly tekst: StickyStateReducer<Valid | Error>;
-    };
-  };
 };
 
 const initMessagesState = (maler: Template[]): MessagesState => {
@@ -210,14 +200,11 @@ const Messages = ({
   arbeidsgiverOpplysningerPerId,
   api,
   onMessageSent,
-  stickyState,
 }: MessagesProps) => {
-  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
   const [
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
-  ] = stickyState.messages.useStickyStateReducer(messagesStateReducer, initMessagesState(maler), nowStickyResetValue);
-  const stickyResetValue = useRef(nowStickyResetValue);
+  ] = useReducer(messagesStateReducer, initMessagesState(maler));
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
@@ -241,12 +228,9 @@ const Messages = ({
 
   // Resett state når grunnleggande input props endra seg, så ein unngår at valg ein gjorde på ei anna sak blir gjeldande.
   useEffect(() => {
-    if (nowStickyResetValue !== stickyResetValue.current) {
-      dispatch({ type: 'Reset', maler });
-      fritekstInputRef.current?.reset();
-    }
-    stickyResetValue.current = nowStickyResetValue;
-  }, [nowStickyResetValue]);
+    dispatch({ type: 'Reset', maler });
+    fritekstInputRef.current?.reset();
+  }, [behandling.id, maler]);
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {
@@ -269,7 +253,7 @@ const Messages = ({
       }
     };
     void loadFritekstForslag();
-  }, [valgtMalkode, fagsak, behandling]);
+  }, [valgtMalkode, fagsak, behandling, api]);
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
@@ -434,7 +418,6 @@ const Messages = ({
         show={showFritekstInput}
         fritekstModus={fritekstModus}
         showValidation={showValidation}
-        stickyState={{ ...stickyState.fritekst }}
       />
       <HStack gap="space-12">
         <Button size="small" variant="primary" icon={<PaperplaneIcon />} loading={isBusy} onClick={submitHandler}>
