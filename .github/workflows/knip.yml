@@ -47,8 +47,8 @@ jobs:
             - name: Post knip report
               run: |
                   # Check if there's content beyond just the "# Knip report" header
-                  content_lines=$(tail -n +2 knip-report.md | grep -c .)
-                  if [ $content_lines -gt 0 ]; then
+                  content_lines=$(tail -n +2 knip-report.md | grep -c . || true)
+                  if [ "$content_lines" -gt 0 ]; then
                       echo "<!-- knip-report -->" > knip-comment.md
                       cat knip-report.md >> knip-comment.md
                       gh pr comment ${{ github.event.pull_request.number }} --body-file knip-comment.md
