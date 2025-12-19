@@ -46,8 +46,8 @@ jobs:
 
             - name: Post knip report
               run: |
-                  number_of_words=$(wc -w < knip-report.md)
-                  if [ $number_of_words -gt 3 ]; then
+                  number_of_lines=$(wc -l < knip-report.md)
+                  if [ $number_of_lines -gt 1 ]; then
                       echo "<!-- knip-report -->" > knip-comment.md
                       cat knip-report.md >> knip-comment.md
                       gh pr comment ${{ github.event.pull_request.number }} --body-file knip-comment.md
