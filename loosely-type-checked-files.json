@@ -331,7 +331,6 @@
   "packages/shared-components/src/tidslinje/Tidslinje.tsx",
   "packages/shared-components/src/tidslinje/TimelinePeriod.tsx",
   "packages/shared-components/src/tidslinje/useTidslinjerader.ts",
-  "packages/storybook/stories/mocks/personopplysninger.ts",
   "packages/tidslinje/src/Timeline.tsx",
   "packages/tidslinje/src/components/pleiepenger/Tidslinje.spec.tsx",
   "packages/tidslinje/src/components/pleiepenger/Tidslinje.tsx",
