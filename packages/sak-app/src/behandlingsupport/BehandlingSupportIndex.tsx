@@ -144,8 +144,8 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
-  personopplysninger: Personopplysninger;
-  arbeidsgiverOpplysninger: ArbeidsgiverOpplysningerWrapper;
+  personopplysninger: Personopplysninger | undefined;
+  arbeidsgiverOpplysninger: ArbeidsgiverOpplysningerWrapper | undefined;
   navAnsatt: NavAnsatt;
   featureToggles?: FeatureToggles;
 }
@@ -323,8 +323,8 @@ const BehandlingSupportIndex = ({
                     <MessagesIndex
                       fagsak={fagsak}
                       behandling={behandling}
-                      personopplysninger={personopplysninger}
-                      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger.arbeidsgivere}
+                      personopplysninger={personopplysninger ?? {}}
+                      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger?.arbeidsgivere ?? {}}
                       api={meldingerBackendClient}
                     />
                   ))}
