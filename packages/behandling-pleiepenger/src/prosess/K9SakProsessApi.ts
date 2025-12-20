@@ -1,4 +1,7 @@
 import {
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+  k9_sak_kontrakt_person_PersonopplysningDto,
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   type k9_sak_kontrakt_fagsak_FagsakDto,
@@ -12,4 +15,9 @@ export interface K9SakProsessApi {
   getUttaksplan(
     behandlingUuid: string,
   ): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder>;
+  getBeregningsresultatMedUtbetaling(
+    behandlingUuid: string,
+  ): Promise<k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto>;
+  getPersonopplysninger(behandlingUuid: string): Promise<k9_sak_kontrakt_person_PersonopplysningDto>;
+  getArbeidsgiverOpplysninger(behandlingUuid: string): Promise<k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto>;
 }

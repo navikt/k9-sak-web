@@ -383,7 +383,17 @@ const PleiepengerProsess = ({
                     );
                   }
                   if (urlKode === 'tilkjent_ytelse') {
-                    return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <TilkjentYtelseProsessStegInitPanel
+                        key={urlKode}
+                        api={k9SakProsessApi}
+                        behandling={behandling}
+                        fagsak={fagsak}
+                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        submitCallback={lagreAksjonspunkter}
+                        readOnlySubmitButton={false}
+                      />
+                    );
                   }
                   if (urlKode === 'simulering') {
                     return <SimuleringProsessStegInitPanel key={urlKode} />;

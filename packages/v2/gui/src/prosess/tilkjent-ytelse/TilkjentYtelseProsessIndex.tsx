@@ -14,8 +14,8 @@ import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysni
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
 interface OwnProps {
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandling: BehandlingDto;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
+  behandling: Pick<BehandlingDto, 'uuid'>;
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
@@ -54,6 +54,10 @@ export const TilkjentYtelseProsessIndex = ({
     },
     select: data => (data != null ? data : emptyResult),
   });
+
+  if (!arbeidsgiverOpplysningerPerId) {
+    return null;
+  }
 
   return (
     <TilkjentYtelsePanel
