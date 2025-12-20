@@ -1,13 +1,13 @@
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useContext, useMemo } from 'react';
-
-import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon } from '@navikt/k9-sak-typescript-client/types';
 import { useQuery } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './K9SakProsessApi';
 
 /**
@@ -30,7 +30,6 @@ interface Props {
   fagsak: Fagsak;
   isReadOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
-  readOnlySubmitButton: boolean;
 }
 
 /**
@@ -62,6 +61,10 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const { data: aksjonspunkter } = useQuery({
     queryKey: ['aksjonspunkter', props.behandling?.uuid],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
+    select: data =>
+      data.filter(
+        ap => ap.definisjon === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+      ),
   });
 
   const { data: arbeidsgiverOpplysningerPerId } = useQuery({
@@ -110,7 +113,8 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.TILKJENT_YTELSE} tekstKode="Behandlingspunkt.TilkjentYtelse">
       {() => {
         // Legacy komponent krever deep copy og kodeverkkonvertering
-
+        const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
+        const readOnlySubmitButton = !harApentAksjonspunkt;
         return (
           <TilkjentYtelseProsessIndexV2
             behandling={{ uuid: props.behandling.uuid }}
@@ -120,7 +124,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
             aksjonspunkter={aksjonspunkter}
             isReadOnly={props.isReadOnly}
             submitCallback={props.submitCallback}
-            readOnlySubmitButton={props.readOnlySubmitButton}
+            readOnlySubmitButton={readOnlySubmitButton}
           />
         );
       }}

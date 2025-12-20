@@ -1,14 +1,29 @@
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useContext, useMemo } from 'react';
+import { use, useContext, useMemo } from 'react';
 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+
+interface Props {
+  behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
+  fagsak: Fagsak;
+  previewFptilbakeCallback:
+    | ((mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>)
+    | undefined;
+  submitCallback: (data: any) => Promise<any>;
+  isReadOnly: boolean;
+}
 
 /**
  * InitPanel for simulering/avregning prosesssteg
@@ -18,14 +33,14 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
  * - Datahenting via RequestApi
  * - Rendering av legacy panelkomponent
  */
-export function SimuleringProsessStegInitPanel() {
+export function SimuleringProsessStegInitPanel(props: Props) {
+  const featureToggles = use(FeatureTogglesContext);
   const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.AVREGNING;
   const PANEL_TEKST = 'Behandlingspunkt.Avregning';
 
   // Hent standard props fra context
-  const { aksjonspunkter, fagsak, previewFptilbakeCallback, featureToggles } = useStandardProsessPanelProps();
 
   // Hent data ved bruk av eksisterende RequestApi-mønster
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
@@ -42,12 +57,11 @@ export function SimuleringProsessStegInitPanel() {
   // Beregn paneltype basert på aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Hvis det finnes åpne aksjonspunkter relatert til simulering, vis warning
-    const harApentAksjonspunkt = aksjonspunkter?.some(
+    const harApentAksjonspunkt = props.aksjonspunkter?.some(
       ap =>
-        !ap.erAvbrutt &&
-        ap.status === 'OPPR' &&
-        (ap.definisjon === AksjonspunktDefinisjon.VURDER_FEILUTBETALING ||
-          ap.definisjon === AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING),
+        ap.status.kode === 'OPPR' &&
+        (ap.definisjon.kode === AksjonspunktDefinisjon.VURDER_FEILUTBETALING ||
+          ap.definisjon.kode === AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING),
     );
 
     if (harApentAksjonspunkt) {
@@ -61,11 +75,17 @@ export function SimuleringProsessStegInitPanel() {
 
     // Ellers vis default (ingen status)
     return ProcessMenuStepType.default;
-  }, [aksjonspunkter, restApiData.data?.simuleringResultat]);
+  }, [props.aksjonspunkter, restApiData.data?.simuleringResultat]);
 
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
+
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
+    ap =>
+      ap.definisjon.kode === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_FEILUTBETALING ||
+      ap.definisjon.kode === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+  );
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt) {
@@ -82,21 +102,25 @@ export function SimuleringProsessStegInitPanel() {
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.AVREGNING} tekstKode="Behandlingspunkt.Avregning">
-      {standardProps => {
+      {() => {
         // Beregn readOnlySubmitButton basert på aksjonspunkter
         // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only
-        const harApentAksjonspunkt = standardProps.aksjonspunkter?.some(ap => !ap.erAvbrutt && ap.status === 'OPPR');
+        const harApentAksjonspunkt = relevanteAksjonspunkter?.some(ap => ap.status.kode === 'OPPR');
         const readOnlySubmitButton = !harApentAksjonspunkt;
 
         return (
           <AvregningProsessIndex
-            {...standardProps}
-            fagsak={fagsak}
+            behandling={props.behandling}
+            aksjonspunkter={relevanteAksjonspunkter}
+            fagsak={props.fagsak}
             simuleringResultat={data.simuleringResultat}
             tilbakekrevingvalg={data.tilbakekrevingvalg}
-            previewFptilbakeCallback={previewFptilbakeCallback}
+            previewFptilbakeCallback={props.previewFptilbakeCallback}
             featureToggles={featureToggles}
             readOnlySubmitButton={readOnlySubmitButton}
+            submitCallback={props.submitCallback}
+            isReadOnly={props.isReadOnly}
+            isAksjonspunktOpen={harApentAksjonspunkt}
           />
         );
       }}

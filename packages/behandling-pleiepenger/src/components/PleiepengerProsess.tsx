@@ -391,12 +391,21 @@ const PleiepengerProsess = ({
                         fagsak={fagsak}
                         isReadOnly={!rettigheter.writeAccess.isEnabled}
                         submitCallback={lagreAksjonspunkter}
-                        readOnlySubmitButton={false}
                       />
                     );
                   }
                   if (urlKode === 'simulering') {
-                    return <SimuleringProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <SimuleringProsessStegInitPanel
+                        key={urlKode}
+                        behandling={behandling}
+                        aksjonspunkter={data.aksjonspunkter}
+                        fagsak={fagsak}
+                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        submitCallback={lagreAksjonspunkter}
+                        previewFptilbakeCallback={previewFptilbakeCallback}
+                      />
+                    );
                   }
                   // if (urlKode === 'fortsattmedlemskap') {
                   //   return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
