@@ -21,6 +21,6 @@
     "@navikt/ft-fakta-beregning": "12.1.28",
     "@navikt/ft-prosess-beregningsgrunnlag": "11.2.4",
     "react": "19.2.0",
-    "react-intl": "7.1.14"
+    "react-intl": "8.0.4"
   }
 }
