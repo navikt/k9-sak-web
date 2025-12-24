@@ -1,0 +1,36 @@
+import { render, screen } from '@testing-library/react';
+import { AvregningSummary } from './AvregningSummary';
+
+describe('<AvregningSummary>', () => {
+  const mockProps = {
+    fom: '2018-01-01',
+    tom: '2018-07-07',
+    feilutbetaling: 15000,
+    etterbetaling: 0,
+    inntrekk: 20000,
+    isUngFagsak: false,
+  };
+
+  it('skal vise AvregningSummary', () => {
+    const props = {
+      ...mockProps,
+      ingenPerioderMedAvvik: false,
+    };
+    render(<AvregningSummary {...props} />);
+
+    expect(screen.getByText('01.01.2018 - 07.07.2018')).toBeInTheDocument();
+    expect(screen.getByText('Etterbetaling:')).toBeInTheDocument();
+    expect(screen.getByText('Feilutbetaling:')).toBeInTheDocument();
+    expect(screen.getByText('Inntrekk:')).toBeInTheDocument();
+  });
+
+  it('skal vise melding ingen perioder med avvik', () => {
+    const props = {
+      ...mockProps,
+      ingenPerioderMedAvvik: true,
+    };
+    render(<AvregningSummary {...props} />);
+    expect(screen.getByText('Bruker')).toBeInTheDocument();
+    expect(screen.getByText('Ingen periode med avvik')).toBeInTheDocument();
+  });
+});
