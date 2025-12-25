@@ -1,31 +1,16 @@
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Select, Spacer, VStack } from '@navikt/ds-react';
-import { useRef, useState } from 'react';
-import { StickyStateReducer } from '@k9-sak-web/gui/utils/StickyStateReducer.js';
+import { useReducer, useRef, useState } from 'react';
 import type { BehandlingInfo } from '../../BehandlingInfo.js';
-import type { Fagsak } from '../../Fagsak.js';
-import FritekstInput, {
-  type Error,
-  type FritekstInputMethods,
-  type FritekstModus,
-  type Valid,
-} from '../FritekstInput.js';
+import FritekstInput, { type FritekstInputMethods, type FritekstModus } from '../FritekstInput.js';
 import type { TilbakeMeldingerApi, TilbakeBestillBrevDto as BestillBrevDto } from './api/TilbakeMeldingerApi.ts';
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 
 export type TilbakeMessagesProps = {
   readonly maler: BrevmalDto[];
-  readonly fagsak: Fagsak;
   readonly behandling: BehandlingInfo;
   readonly api: TilbakeMeldingerApi;
   readonly onMessageSent: () => void;
-  readonly stickyState: {
-    readonly valgtMalkode: StickyStateReducer<string | undefined>;
-    readonly fritekst: {
-      readonly tittel: StickyStateReducer<Valid | Error>;
-      readonly tekst: StickyStateReducer<Valid | Error>;
-    };
-  };
 };
 
 type SetValgtMalkode = Readonly<{
@@ -56,19 +41,8 @@ const valgtMalkodeReducer = (_: string | undefined, dispatch: MessagesStateActio
   }
 };
 
-export const TilbakeMessages = ({
-  maler,
-  fagsak,
-  behandling,
-  api,
-  onMessageSent,
-  stickyState,
-}: TilbakeMessagesProps) => {
-  const [valgtMalkode, dispatch] = stickyState.valgtMalkode.useStickyStateReducer(
-    valgtMalkodeReducer,
-    initValgtMal(maler),
-    `sak-${fagsak.saksnummer}-b-${behandling.id}`,
-  );
+export const TilbakeMessages = ({ maler, behandling, api, onMessageSent }: TilbakeMessagesProps) => {
+  const [valgtMalkode, dispatch] = useReducer(valgtMalkodeReducer, initValgtMal(maler));
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
@@ -156,7 +130,6 @@ export const TilbakeMessages = ({
         show
         fritekstModus={fritekstModus}
         showValidation={showValidation}
-        stickyState={{ ...stickyState.fritekst }}
       />
       <HStack gap="space-12">
         <Button size="small" variant="primary" icon={<PaperplaneIcon />} loading={isBusy} onClick={submitHandler}>

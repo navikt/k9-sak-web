@@ -1,4 +1,4 @@
-import { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer, useRef } from 'react';
 import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import {
   $k9_sak_kontrakt_dokument_BestillBrevDto as $BestillBrevDto,
@@ -6,7 +6,6 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/schemas.js';
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 
 export type Valid = {
   readonly input: string;
@@ -40,10 +39,6 @@ export type FritekstInputProps = {
   readonly showValidation: boolean;
   readonly defaultValue?: FritekstInputValue;
   readonly onChange?: (value: FritekstInputValue | FritekstInputInvalid) => void;
-  readonly stickyState: {
-    readonly tittel: StickyStateReducer<Valid | Error>;
-    readonly tekst: StickyStateReducer<Valid | Error>;
-  };
 };
 
 export interface FritekstInputMethods {
@@ -120,19 +115,11 @@ const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
  */
 const FritekstInput = forwardRef(
   (
-    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange, stickyState }: FritekstInputProps,
+    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange }: FritekstInputProps,
     ref: ForwardedRef<FritekstInputMethods>,
   ) => {
-    const [tittel, setTittel] = stickyState.tittel.useStickyStateReducer(
-      tittelReducer,
-      validateTittel(defaultValue?.tittel),
-      '',
-    );
-    const [tekst, setTekst] = stickyState.tekst.useStickyStateReducer(
-      tekstReducer,
-      validateTekst(defaultValue?.tekst, fritekstModus),
-      '',
-    );
+    const [tittel, setTittel] = useReducer(tittelReducer, validateTittel(defaultValue?.tittel));
+    const [tekst, setTekst] = useReducer(tekstReducer, validateTekst(defaultValue?.tekst, fritekstModus));
 
     // Så vi kan detektere når default value har blitt endra:
     const prevDefault = useRef(defaultValue);

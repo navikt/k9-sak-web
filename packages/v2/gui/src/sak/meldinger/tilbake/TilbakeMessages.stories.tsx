@@ -1,23 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { foreldrepenger_tilbakekreving_behandlingslager_behandling_BehandlingType as BehandlingType } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeTilbakeMeldingerApi } from '@k9-sak-web/gui/storybook/mocks/FakeTilbakeMeldingerApi.js';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
-import { StickyStateReducer } from '../../../utils/StickyStateReducer.js';
-import { TilbakeMessages, type TilbakeMessagesProps } from './TilbakeMessages.js';
-
-const newStickyState = (): TilbakeMessagesProps['stickyState'] => ({
-  valgtMalkode: new StickyStateReducer(),
-  fritekst: {
-    tekst: new StickyStateReducer(),
-    tittel: new StickyStateReducer(),
-  },
-});
+import { TilbakeMessages } from './TilbakeMessages.js';
 
 const testMaler: BrevmalDto[] = [
   {
@@ -62,14 +51,6 @@ const elemsfinder = (canvasElement: HTMLElement) => {
 type Story = StoryObj<typeof meta>;
 export const DefaultStory: Story = {
   args: {
-    fagsak: {
-      saksnummer: '100',
-      sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
-      status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-      person: {
-        aktørId: 'person-aktørid-1',
-      },
-    },
     behandling: {
       id: 101,
       uuid: 'XUYPS4',
@@ -82,7 +63,6 @@ export const DefaultStory: Story = {
     maler: testMaler,
     api,
     onMessageSent: fn(() => action('onMessageSent')),
-    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     const { malEl, fritekstEl, sendBrevBtn, forhåndsvisBtn } = elemsfinder(canvasElement);
@@ -101,7 +81,6 @@ export const DefaultStory: Story = {
 export const MalValg: Story = {
   args: {
     ...DefaultStory.args,
-    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     const { malEl } = elemsfinder(canvasElement);
@@ -120,7 +99,6 @@ export const MalValg: Story = {
 export const SendBrev: Story = {
   args: {
     ...DefaultStory.args,
-    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     api.fakeDelayMillis = 0;
@@ -142,7 +120,6 @@ export const SendBrev: Story = {
 export const Forhåndsvisning: Story = {
   args: {
     ...DefaultStory.args,
-    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     api.fakeDelayMillis = 0;
@@ -161,7 +138,6 @@ export const Forhåndsvisning: Story = {
 export const Validering: Story = {
   args: {
     ...DefaultStory.args,
-    stickyState: newStickyState(),
   },
   play: async ({ canvasElement, step }) => {
     api.fakeDelayMillis = 0;

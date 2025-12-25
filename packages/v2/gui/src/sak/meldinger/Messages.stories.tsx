@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import {
   type Mottaker,
@@ -12,37 +12,19 @@ import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sa
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
-import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
-import Messages, { type MessagesProps } from './Messages.js';
-
-const newStickyState = (): MessagesProps['stickyState'] => ({
-  messages: new StickyStateReducer(),
-  fritekst: {
-    tekst: new StickyStateReducer(),
-    tittel: new StickyStateReducer(),
-  },
-});
-
-const withStickyState = (): Decorator => (Story, ctx) => {
-  ctx.args['stickyState'] = newStickyState();
-  return <Story />;
-};
+import Messages from './Messages.js';
 
 const api = new FakeMessagesBackendApi();
 const meta = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
-  decorators: [withMaxWidth(420), withStickyState()],
+  decorators: [withMaxWidth(420)],
   beforeEach: () => {
     api.reset();
-  },
-  args: {
-    stickyState: newStickyState(),
   },
 } satisfies Meta<typeof Messages>;
 export default meta;
@@ -86,7 +68,7 @@ export const DefaultStory: Story = {
         kodeverk: 'SPRAAK_KODE',
       },
     },
-    maler: templates,
+    maler: api.dummyMaler,
     personopplysninger,
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,

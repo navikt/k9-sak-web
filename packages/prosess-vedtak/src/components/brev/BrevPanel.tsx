@@ -12,8 +12,8 @@ import {
   kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
-  lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { lagVisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
@@ -60,7 +60,7 @@ export const manuellBrevPreview = ({
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   values: FormikValues;
   redigertHtml: any;
-  overstyrtMottaker: Brevmottaker;
+  overstyrtMottaker: Brevmottaker | undefined;
   brødtekst: string;
   overskrift: string;
   aapneINyttVindu: boolean;
@@ -297,7 +297,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
                 {lagVisningsnavnForMottaker(mottaker, personopplysninger, arbeidsgiverOpplysningerPerId)}
               </option>
             ))}
-            className={readOnly ? styles.selectReadOnly : null}
+            className={readOnly ? styles.selectReadOnly : undefined}
             label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
             validate={[required]}
             bredde="xl"
