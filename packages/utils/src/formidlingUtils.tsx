@@ -5,15 +5,12 @@ import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.
 import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
 import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Personopplysninger,
-  bestemAvsenderApp as v2BestemAvsenderApp,
-} from '@k9-sak-web/gui/utils/formidling.js';
+import { Personopplysninger, bestemAvsenderApp as v2BestemAvsenderApp } from '@k9-sak-web/gui/utils/formidling.js';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
+import { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto } from '@navikt/k9-sak-typescript-client/types';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -43,7 +40,7 @@ export function bestemAvsenderApp(type: string): string {
 export function lagVisningsnavnForMottaker(
   mottaker: Mottaker,
   personopplysninger?: Personopplysninger,
-  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
+  arbeidsgiverOpplysningerPerId?: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'],
 ): string {
   return v2LagvisningsnavnForMottaker(mottaker, personopplysninger, arbeidsgiverOpplysningerPerId);
 }

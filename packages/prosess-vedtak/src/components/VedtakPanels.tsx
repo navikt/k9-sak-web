@@ -7,12 +7,12 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
   k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
+  k9_sak_kontrakt_behandling_BehandlingDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
@@ -30,9 +30,9 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 
 interface VedtakPanelsProps {
   aksjonspunkter: AksjonspunktDto[];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingPåVent: boolean;
-  behandlingresultat: BehandlingsresultatDto;
+  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
+  behandlingPåVent: k9_sak_kontrakt_behandling_BehandlingDto['behandlingPåVent'];
+  behandlingresultat: k9_sak_kontrakt_behandling_BehandlingDto['behandlingsresultat'];
   behandlingStatus: string;
   behandlingTypeKode: string;
   behandlingÅrsaker?: BehandlingÅrsakDto[];
@@ -45,14 +45,14 @@ interface VedtakPanelsProps {
   medlemskapFom: string | undefined;
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: () => Promise<any>;
+  previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
-  språkkode: string;
+  språkkode: k9_sak_kontrakt_behandling_BehandlingDto['språkkode'];
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
-  vedtakVarsel: VedtakVarsel;
+  vedtakVarsel?: VedtakVarsel;
   vilkar: VilkårMedPerioderDto[];
   ytelseTypeKode: string;
 }

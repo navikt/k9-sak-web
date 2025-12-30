@@ -18,10 +18,10 @@ import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
@@ -143,7 +143,7 @@ const getHentHtmlMalCallback =
 
 interface BrevPanelProps {
   aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
   begrunnelse: string;
   behandlingResultat: BehandlingsresultatDto;
   brødtekst: string;

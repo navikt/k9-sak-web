@@ -1,3 +1,4 @@
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { Box } from '@navikt/ds-react';
 import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -154,21 +155,23 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
   };
 
   return (
-    <ValgtPanelProvider value={{ valgtPanelId }}>
-      <Box.New paddingInline="6">
-        <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
-        {/* Render children med injiserte props */}
-        <ProsessPanelContext.Provider
-          value={{
-            onRegister: handleRegister,
-            onUnregister: handleUnregister,
-            onUpdateType: handleUpdateType,
-            erValgt: id => id === valgtPanelId,
-          }}
-        >
-          {children}
-        </ProsessPanelContext.Provider>
-      </Box.New>
-    </ValgtPanelProvider>
+    <LoadingPanelSuspense>
+      <ValgtPanelProvider value={{ valgtPanelId }}>
+        <Box.New paddingInline="6">
+          <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
+          {/* Render children med injiserte props */}
+          <ProsessPanelContext.Provider
+            value={{
+              onRegister: handleRegister,
+              onUnregister: handleUnregister,
+              onUpdateType: handleUpdateType,
+              erValgt: id => id === valgtPanelId,
+            }}
+          >
+            {children}
+          </ProsessPanelContext.Provider>
+        </Box.New>
+      </ValgtPanelProvider>
+    </LoadingPanelSuspense>
   );
 }

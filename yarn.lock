@@ -2555,6 +2555,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:12.1.28"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:13.2.4"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.2.4"
+    "@navikt/ft-types": "npm:5.2.1"
     axios: "npm:1.13.2"
     react: "npm:19.2.0"
     react-intl: "npm:7.1.14"
@@ -3528,6 +3529,13 @@ __metadata:
     react-hook-form: 7.x
     react-intl: 6.x
   checksum: 10/f83a797ea5c85928ac29ba750b4eb01049881af5a4cd5ab4fd0a93301d50c90ef72311bab01acef82e158046bee9b2ea6a941f65059d04791e90887a8de6771d
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-types@npm:5.2.1":
+  version: 5.2.1
+  resolution: "@navikt/ft-types@npm:5.2.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F5.2.1%2F672fe1852811508b68c29357dc9c43627a3f62a1"
+  checksum: 10/c2746a060e94ef9f7473a7c9e6adb0d54c71a33fb3c6518acebc8f9da986bb23ed289ea8049b5252afcebb276f2792af5e51bbebaecd5d3ca47a46176d17312f
   languageName: node
   linkType: hard
 

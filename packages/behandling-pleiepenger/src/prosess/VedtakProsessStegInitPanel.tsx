@@ -6,12 +6,23 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+import { K9SakProsessApi } from './K9SakProsessApi';
+
+interface Props {
+  api: K9SakProsessApi;
+  behandlingUuid: string;
+  hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
+  isReadOnly: boolean;
+  lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
+  previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
+  submitCallback: (data: any) => Promise<any>;
+}
 
 /**
  * InitPanel for vedtak prosesssteg
@@ -28,36 +39,73 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
  * - Om behandlingsresultatet er avslag eller innvilgelse
  * - Spesielle aksjonspunkter som OVERSTYR_BEREGNING
  */
-export function VedtakProsessStegInitPanel() {
+export function VedtakProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.VEDTAK;
   const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
 
-  // Hent standard props for å få tilgang til vilkår, aksjonspunkter og behandling
-  const standardProps = useStandardProsessPanelProps();
+  const { data: behandlingV2 } = useSuspenseQuery({
+    queryKey: ['behandling', props.behandlingUuid],
+    queryFn: () => props.api.getBehandling(props.behandlingUuid),
+  });
+
+  const { data: aksjonspunkter = [] } = useSuspenseQuery({
+    queryKey: ['aksjonspunkter', props.behandlingUuid],
+    queryFn: () => props.api.getAksjonspunkter(props.behandlingUuid),
+  });
+
+  const { data: vilkår } = useSuspenseQuery({
+    queryKey: ['vilkar', props.behandlingUuid],
+    queryFn: () => props.api.getVilkår(props.behandlingUuid),
+  });
+
+  const { data: arbeidsgiverOpplysningerPerId } = useSuspenseQuery({
+    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandlingUuid],
+    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandlingUuid),
+  });
+
+  const { data: beregningsgrunnlag = [] } = useSuspenseQuery({
+    queryKey: ['beregningsgrunnlag', props.behandlingUuid],
+    queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandlingUuid),
+  });
+
+  const { data: simuleringResultat } = useSuspenseQuery({
+    queryKey: ['simuleringResultat', props.behandlingUuid],
+    queryFn: () => props.api.getSimuleringResultat(props.behandlingUuid),
+  });
+
+  const { data: tilbakekrevingvalg } = useSuspenseQuery({
+    queryKey: ['tilbakekrevingvalg', props.behandlingUuid],
+    queryFn: () => props.api.getTilbakekrevingValg(props.behandlingUuid),
+  });
+
+  const { data: overlappendeYtelser } = useSuspenseQuery({
+    queryKey: ['overlappendeYtelser', props.behandlingUuid],
+    queryFn: () => props.api.getHOverlappendeYtelser(props.behandlingUuid),
+  });
+
+  const { data: personopplysninger } = useSuspenseQuery({
+    queryKey: ['personopplysninger', props.behandlingUuid],
+    queryFn: () => props.api.getPersonopplysninger(props.behandlingUuid),
+  });
+
+  const { data: medlemskap } = useSuspenseQuery({
+    queryKey: ['medlemskap', props.behandlingUuid],
+    queryFn: () => props.api.getMedlemskap(props.behandlingUuid),
+  });
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-    simuleringResultat: any;
-    beregningsgrunnlag: any;
-    tilbakekrevingvalg: any;
-    medlemskap: any;
     tilgjengeligeVedtaksbrev: any;
     informasjonsbehovVedtaksbrev: any;
     dokumentdataHente: any;
     fritekstdokumenter: any;
-    overlappendeYtelser: any;
   }>(
     [
-      { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
-      { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
-      { key: PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG },
-      { key: PleiepengerBehandlingApiKeys.MEDLEMSKAP },
       { key: PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV },
       { key: PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV },
       { key: PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE },
       { key: PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER },
-      { key: PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
     ],
     { keepData: true, suspendRequest: false, updateTriggers: [] },
   );
@@ -77,27 +125,25 @@ export function VedtakProsessStegInitPanel() {
       aksjonspunktCodes.SJEKK_TILBAKEKREVING,
     ];
 
-    return standardProps.aksjonspunkter?.filter(ap => vedtakAksjonspunktKoder.includes(ap.definisjon?.kode)) || [];
-  }, [standardProps.aksjonspunkter]);
+    return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
+  }, [aksjonspunkter]);
 
   // Beregn paneltype basert på vedtaksstatus (for menystatusindikator)
   // Dette er kompleks logikk som matcher findStatusForVedtak fra legacy-koden
   const panelType = useMemo((): ProcessMenuStepType => {
-    const { vilkar, aksjonspunkter, behandling } = standardProps;
-
     // Hvis ingen vilkår, er panelet ikke vurdert (default)
-    if (!vilkar || vilkar.length === 0) {
+    if (!vilkår || vilkår.length === 0) {
       return ProcessMenuStepType.default;
     }
 
     // Sjekk om noen vilkår ikke er vurdert
-    const harIkkeVurdertVilkar = vilkar.some(v =>
-      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT),
+    const harIkkeVurdertVilkar = vilkår.some(v =>
+      v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT),
     );
 
     // Sjekk om det finnes åpent OVERSTYR_BEREGNING aksjonspunkt
     const harApenOverstyringBeregning = aksjonspunkter?.some(
-      ap => ap.definisjon?.kode === aksjonspunktCodes.OVERSTYR_BEREGNING && isAksjonspunktOpen(ap.status?.kode),
+      ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
     );
 
     // Hvis vilkår ikke er vurdert eller det finnes åpen overstyring, vis default
@@ -108,8 +154,9 @@ export function VedtakProsessStegInitPanel() {
     // Sjekk om det finnes åpne aksjonspunkter utenfor vedtakspanelet
     const harApneAksjonspunkterUtenforVedtak = aksjonspunkter?.some(
       ap =>
-        !vedtakAksjonspunkter.some(vap => vap.definisjon?.kode === ap.definisjon?.kode) &&
-        isAksjonspunktOpen(ap.status?.kode),
+        !vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon) &&
+        ap.status &&
+        isAksjonspunktOpen(ap.status),
     );
 
     // Hvis det finnes åpne aksjonspunkter utenfor vedtak, vis default
@@ -118,8 +165,8 @@ export function VedtakProsessStegInitPanel() {
     }
 
     // Sjekk behandlingsresultat
-    if (behandling?.behandlingsresultat?.type?.kode) {
-      if (isAvslag(behandling.behandlingsresultat.type.kode)) {
+    if (behandlingV2?.behandlingsresultat?.type) {
+      if (isAvslag(behandlingV2.behandlingsresultat.type)) {
         // Avslag vises som danger
         return ProcessMenuStepType.danger;
       }
@@ -129,7 +176,7 @@ export function VedtakProsessStegInitPanel() {
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [standardProps, vedtakAksjonspunkter]);
+  }, [aksjonspunkter, behandlingV2, vilkår, vedtakAksjonspunkter]);
 
   // Registrer panel med menyen
   const erValgt = context?.erValgt(PANEL_ID);
@@ -137,27 +184,38 @@ export function VedtakProsessStegInitPanel() {
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
-    return null;
-  }
-
-  const data = restApiData.data;
-  if (!data) {
+  if (!erValgt || !restApiData.data) {
     return null;
   }
 
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.VEDTAK} tekstKode="Behandlingspunkt.Vedtak">
-      {standardProps => {
-        const deepCopyProps = JSON.parse(
-          JSON.stringify({
-            ...standardProps,
-            ...data,
-          }),
+      {() => {
+        return (
+          <VedtakProsessIndex
+            isReadOnly={props.isReadOnly}
+            informasjonsbehovVedtaksbrev={restApiData.data?.informasjonsbehovVedtaksbrev}
+            hentFritekstbrevHtmlCallback={props.hentFritekstbrevHtmlCallback}
+            fritekstdokumenter={restApiData.data?.fritekstdokumenter}
+            dokumentdataHente={restApiData.data?.dokumentdataHente}
+            aksjonspunkter={vedtakAksjonspunkter}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
+            behandling={behandlingV2}
+            beregningsgrunnlag={beregningsgrunnlag}
+            vilkar={vilkår}
+            submitCallback={props.submitCallback}
+            simuleringResultat={simuleringResultat}
+            tilbakekrevingvalg={tilbakekrevingvalg}
+            ytelseTypeKode={behandlingV2?.sakstype}
+            lagreDokumentdata={props.lagreDokumentdata}
+            previewCallback={props.previewCallback}
+            overlappendeYtelser={overlappendeYtelser}
+            personopplysninger={personopplysninger}
+            tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
+            medlemskap={medlemskap}
+          />
         );
-        konverterKodeverkTilKode(deepCopyProps, false);
-        return <VedtakProsessIndex {...standardProps} {...deepCopyProps} />;
       }}
     </ProsessDefaultInitPanel>
   );

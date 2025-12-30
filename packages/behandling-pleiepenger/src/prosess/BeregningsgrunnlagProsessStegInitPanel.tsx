@@ -1,9 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
+import { mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { useStandardProsessPanelProps } from '@k9-sak-web/gui/behandling/prosess/hooks/useStandardProsessPanelProps.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
@@ -11,7 +10,28 @@ import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import { useContext, useMemo } from 'react';
 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useQuery } from '@tanstack/react-query';
+import { K9SakProsessApi } from './K9SakProsessApi';
+
+const BEREGNING_AKSJONSPUNKT_KODER = [
+  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+  aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
+  aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+];
+
+interface Props {
+  api: K9SakProsessApi;
+  behandling: Behandling;
+  submitCallback: (data: any) => Promise<any>;
+  formData: any;
+  setFormData: (data: any) => void;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  isReadOnly: boolean;
+}
 
 /**
  * InitPanel for beregningsgrunnlag prosesssteg
@@ -21,42 +41,43 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
  * - Datahenting via RequestApi
  * - Rendering av legacy panelkomponent
  */
-export function BeregningsgrunnlagProsessStegInitPanel() {
+export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
   const PANEL_TEKST = 'Behandlingspunkt.Beregning';
 
-  // Hent arbeidsgiverOpplysningerPerId fra context (kommer fra parent props)
-  const { arbeidsgiverOpplysningerPerId, aksjonspunkter, vilkar } = useStandardProsessPanelProps();
+  const { data: aksjonspunkter } = useQuery({
+    queryKey: ['aksjonspunkter', props.behandling?.uuid],
+    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
+    select: data => data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
+  });
 
-  // Hent data ved bruk av eksisterende RequestApi-mønster
-  const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-    beregningsgrunnlag: any;
-    beregningreferanserTilVurdering: any;
-  }>(
-    [
-      { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
-      { key: PleiepengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
-    ],
-    { keepData: true, suspendRequest: false, updateTriggers: [] },
-  );
+  const { data: vilkår } = useQuery({
+    queryKey: ['vilkar', props.behandling.uuid],
+    queryFn: () => props.api.getVilkår(props.behandling.uuid),
+  });
 
-  // Aksjonspunktkoder som er relevante for beregning
-  const BEREGNING_AKSJONSPUNKT_KODER = [
-    aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
-    aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-    aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-    aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  ];
+  const { data: beregningreferanserTilVurdering = [] } = useQuery({
+    queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid],
+    queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
+  });
+
+  const { data: beregningsgrunnlag = [] } = useQuery({
+    queryKey: ['beregningsgrunnlag', props.behandling.uuid],
+    queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
+  });
+
+  const { data: arbeidsgiverOpplysningerPerId = [] } = useQuery({
+    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid],
+    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
+  });
 
   // Beregn paneltype basert på aksjonspunkter og vilkår (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Sjekk om det finnes åpne aksjonspunkter for beregning
     const harApentAksjonspunkt = aksjonspunkter?.some(
-      ap => BEREGNING_AKSJONSPUNKT_KODER.includes(ap.definisjon?.kode) && ap.status?.kode === 'OPPR' && !ap.erAktivt,
+      ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon) && ap.status === 'OPPR' && !ap.erAktivt,
     );
 
     if (harApentAksjonspunkt) {
@@ -64,14 +85,12 @@ export function BeregningsgrunnlagProsessStegInitPanel() {
     }
 
     // Sjekk vilkårstatus for beregningsgrunnlag
-    const bgVilkar = vilkar?.find(v => v.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    const bgVilkar = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
 
     if (bgVilkar) {
       // Sjekk perioder for vilkårstatus (samme logikk som finnStatus)
       const vilkarStatusCodes =
-        bgVilkar.perioder
-          ?.filter(periode => periode.vurderesIBehandlingen)
-          .map(periode => periode.vilkarStatus?.kode) || [];
+        bgVilkar.perioder?.filter(periode => periode.vurderesIBehandlingen).map(periode => periode.vilkarStatus) || [];
 
       // Hvis alle perioder er IKKE_VURDERT, vis default
       if (vilkarStatusCodes.every(vsc => vsc === 'IKKE_VURDERT')) {
@@ -90,12 +109,12 @@ export function BeregningsgrunnlagProsessStegInitPanel() {
     // Hvis ingen vilkår, sjekk aksjonspunkter
     if (aksjonspunkter && aksjonspunkter.length > 0) {
       const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
-        BEREGNING_AKSJONSPUNKT_KODER.includes(ap.definisjon?.kode),
+        BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon),
       );
 
       if (relevanteAksjonspunkter.length > 0) {
         // Hvis det finnes åpne aksjonspunkter, vis default (ikke vurdert)
-        const harApneAksjonspunkter = relevanteAksjonspunkter.some(ap => ap.status?.kode === 'OPPR');
+        const harApneAksjonspunkter = relevanteAksjonspunkter.some(ap => ap.status === 'OPPR');
         if (harApneAksjonspunkter) {
           return ProcessMenuStepType.default;
         }
@@ -106,52 +125,36 @@ export function BeregningsgrunnlagProsessStegInitPanel() {
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [aksjonspunkter, vilkar]);
+  }, [aksjonspunkter, vilkår]);
 
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
-    return null;
-  }
-
-  // Ikke vis panelet hvis data ikke er lastet ennå
-  // TODO: Bruk Suspense for datahenting i fremtiden
-  const data = restApiData.data;
-  if (!data) {
+  if (!erValgt || !beregningsgrunnlag) {
     return null;
   }
 
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.BEREGNINGSGRUNNLAG} tekstKode="Behandlingspunkt.Beregning">
-      {standardProps => {
-        // Legacy komponent krever deep copy og kodeverkkonvertering
-        const deepCopyProps = JSON.parse(
-          JSON.stringify({
-            ...standardProps,
-            beregningreferanserTilVurdering: data.beregningreferanserTilVurdering,
-            arbeidsgiverOpplysningerPerId: arbeidsgiverOpplysningerPerId,
-            beregningsgrunnlag: data.beregningsgrunnlag,
-          }),
-        );
-        konverterKodeverkTilKode(deepCopyProps);
-
-        // Finn beregningsgrunnlagvilkåret
-        const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-
+      {() => {
+        const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+        if (!bgVilkaret) {
+          return null;
+        }
         return (
           <BeregningsgrunnlagProsessIndex
-            {...standardProps}
-            beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, deepCopyProps.beregningreferanserTilVurdering)}
-            beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag || data.beregningsgrunnlag}
-            arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-            submitCallback={submitData => standardProps.submitCallback(transformBeregningValues(submitData, true))}
-            formData={standardProps.formData}
-            kodeverkSamling={deepCopyProps.alleKodeverk}
-            setFormData={standardProps.setFormData}
+            beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
+            beregningsgrunnlagListe={beregningsgrunnlag}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            submitCallback={submitData => props.submitCallback(transformBeregningValues(submitData, true))}
+            formData={props.formData}
+            kodeverkSamling={props.alleKodeverk}
+            setFormData={props.setFormData}
+            readOnlySubmitButton={false}
+            isReadOnly={props.isReadOnly}
           />
         );
       }}

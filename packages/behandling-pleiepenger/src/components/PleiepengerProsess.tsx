@@ -256,7 +256,7 @@ const PleiepengerProsess = ({
   const [formData, setFormData] = useState<any>({});
   useEffect(() => {
     // Nullstill form data når behandlingsversjon endres
-    setFormData({});
+    setFormData(undefined);
   }, [behandling.versjon]);
 
   const [vedtakFormState, setVedtakFormState] = useState(null);
@@ -324,6 +324,7 @@ const PleiepengerProsess = ({
                     panel => panel.labelId === panelDef.getTekstKode(),
                   );
                   const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
+                  const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
                   // Bruk migrerte InitPanel-komponenter der de finnes
                   if (urlKode === 'inngangsvilkar') {
@@ -331,7 +332,7 @@ const PleiepengerProsess = ({
                       <InngangsvilkarProsessStegInitPanel
                         key={urlKode}
                         submitCallback={lagreAksjonspunkter}
-                        overrideReadOnly={!rettigheter.writeAccess.isEnabled}
+                        overrideReadOnly={isReadOnly}
                         kanOverstyreAccess={rettigheter.kanOverstyreAccess}
                         visAllePerioder={false}
                         kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
@@ -357,7 +358,7 @@ const PleiepengerProsess = ({
                         key={urlKode}
                         urlKode={urlKode}
                         submitCallback={lagreAksjonspunkter}
-                        overrideReadOnly={!rettigheter.writeAccess.isEnabled}
+                        overrideReadOnly={isReadOnly}
                         kanOverstyreAccess={rettigheter.kanOverstyreAccess}
                         visAllePerioder={false}
                         kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
@@ -365,7 +366,7 @@ const PleiepengerProsess = ({
                         overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
                         behandling={behandling}
                         api={k9SakProsessApi}
-                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        isReadOnly={isReadOnly}
                         fagsak={fagsak}
                       />
                     );
@@ -378,7 +379,7 @@ const PleiepengerProsess = ({
                         api={k9SakProsessApi}
                         hentBehandling={hentBehandling}
                         erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        isReadOnly={isReadOnly}
                       />
                     );
                   }
@@ -389,7 +390,7 @@ const PleiepengerProsess = ({
                         api={k9SakProsessApi}
                         behandling={behandling}
                         fagsak={fagsak}
-                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        isReadOnly={isReadOnly}
                         submitCallback={lagreAksjonspunkter}
                       />
                     );
@@ -401,20 +402,39 @@ const PleiepengerProsess = ({
                         behandling={behandling}
                         aksjonspunkter={data.aksjonspunkter}
                         fagsak={fagsak}
-                        isReadOnly={!rettigheter.writeAccess.isEnabled}
+                        isReadOnly={isReadOnly}
                         submitCallback={lagreAksjonspunkter}
                         previewFptilbakeCallback={previewFptilbakeCallback}
                       />
                     );
                   }
-                  // if (urlKode === 'fortsattmedlemskap') {
-                  //   return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
-                  // }
                   if (urlKode === 'beregningsgrunnlag') {
-                    return <BeregningsgrunnlagProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <BeregningsgrunnlagProsessStegInitPanel
+                        key={urlKode}
+                        api={k9SakProsessApi}
+                        behandling={behandling}
+                        submitCallback={lagreAksjonspunkter}
+                        formData={formData}
+                        setFormData={setFormData}
+                        alleKodeverk={alleKodeverk}
+                        isReadOnly={isReadOnly}
+                      />
+                    );
                   }
                   if (urlKode === 'vedtak') {
-                    return <VedtakProsessStegInitPanel key={urlKode} />;
+                    return (
+                      <VedtakProsessStegInitPanel
+                        key={urlKode}
+                        api={k9SakProsessApi}
+                        behandlingUuid={behandling.uuid}
+                        hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
+                        isReadOnly={isReadOnly}
+                        submitCallback={lagreAksjonspunkter}
+                        previewCallback={previewCallback}
+                        lagreDokumentdata={lagreDokumentdata}
+                      />
+                    );
                   }
 
                   return (
