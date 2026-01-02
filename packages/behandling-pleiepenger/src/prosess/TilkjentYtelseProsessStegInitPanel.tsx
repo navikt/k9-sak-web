@@ -1,13 +1,15 @@
+import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon } from '@navikt/k9-sak-typescript-client/types';
 import { useQuery } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
+import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './K9SakProsessApi';
 
 /**
@@ -41,6 +43,7 @@ interface Props {
  * - Rendering av legacy panelkomponent
  */
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
+  const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
   const context = useContext(ProsessPanelContext);
   // Definer panel-identitet som konstanter
   const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
@@ -115,11 +118,24 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
         // Legacy komponent krever deep copy og kodeverkkonvertering
         const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
         const readOnlySubmitButton = !harApentAksjonspunkt;
+        if (BRUK_V2_TILKJENT_YTELSE) {
+          return (
+            <TilkjentYtelseProsessIndexV2
+              behandling={{ uuid: props.behandling.uuid }}
+              beregningsresultat={beregningsresultatUtbetaling}
+              personopplysninger={personopplysninger}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
+              aksjonspunkter={aksjonspunkter}
+              isReadOnly={props.isReadOnly}
+              submitCallback={props.submitCallback}
+              readOnlySubmitButton={readOnlySubmitButton}
+            />
+          );
+        }
         return (
-          <TilkjentYtelseProsessIndexV2
-            behandling={{ uuid: props.behandling.uuid }}
+          <TilkjentYtelseProsessIndex
+            fagsak={props.fagsak}
             beregningsresultat={beregningsresultatUtbetaling}
-            personopplysninger={personopplysninger}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
             aksjonspunkter={aksjonspunkter}
             isReadOnly={props.isReadOnly}

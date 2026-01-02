@@ -101,19 +101,21 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         // const deepCopyProps = JSON.parse(JSON.stringify(props));
         // konverterKodeverkTilKode(deepCopyProps, false);
         if (erAlleVilkårVurdert) {
-          const VilkarresultatMedOverstyringProsessIndexProps = {
-            ...props,
-            aksjonspunkter: [],
-            behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
-            vilkar: vilkarForSteg,
-            erOverstyrt: false,
-            overstyringApKode: '',
-            erMedlemskapsPanel: false,
-          };
           return (
             <VilkarresultatMedOverstyringProsessIndex
-              {...VilkarresultatMedOverstyringProsessIndexProps}
+              aksjonspunkter={[]}
+              behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
               panelTittelKode="Opptjening"
+              vilkar={vilkarForSteg}
+              erOverstyrt={false}
+              overstyringApKode=""
+              erMedlemskapsPanel={false}
+              submitCallback={props.submitCallback}
+              overrideReadOnly={props.overrideReadOnly}
+              kanOverstyreAccess={props.kanOverstyreAccess}
+              toggleOverstyring={props.toggleOverstyring}
+              visPeriodisering={false}
+              visAllePerioder={false}
             />
           );
         }

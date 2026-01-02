@@ -127,7 +127,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
   const harLastetData = vilkår !== undefined && aksjonspunkter !== undefined;
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel || !vilkår || !harLastetData) {
+  if (!skalVisePanel || !vilkår || !harLastetData || !erValgt) {
     return null;
   }
 

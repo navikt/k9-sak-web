@@ -11,7 +11,7 @@ import { useContext, useMemo } from 'react';
 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { K9SakProsessApi } from './K9SakProsessApi';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
@@ -47,28 +47,28 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
   const PANEL_TEKST = 'Behandlingspunkt.Beregning';
 
-  const { data: aksjonspunkter } = useQuery({
+  const { data: aksjonspunkter } = useSuspenseQuery({
     queryKey: ['aksjonspunkter', props.behandling?.uuid],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
     select: data => data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
   });
 
-  const { data: vilkår } = useQuery({
+  const { data: vilkår } = useSuspenseQuery({
     queryKey: ['vilkar', props.behandling.uuid],
     queryFn: () => props.api.getVilkår(props.behandling.uuid),
   });
 
-  const { data: beregningreferanserTilVurdering = [] } = useQuery({
+  const { data: beregningreferanserTilVurdering = [] } = useSuspenseQuery({
     queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid],
     queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
   });
 
-  const { data: beregningsgrunnlag = [] } = useQuery({
+  const { data: beregningsgrunnlag } = useSuspenseQuery({
     queryKey: ['beregningsgrunnlag', props.behandling.uuid],
     queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
   });
 
-  const { data: arbeidsgiverOpplysningerPerId = [] } = useQuery({
+  const { data: arbeidsgiverOpplysningerPerId = [] } = useSuspenseQuery({
     queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid],
     queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
   });
