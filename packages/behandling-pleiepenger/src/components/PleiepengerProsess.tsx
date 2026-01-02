@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -13,11 +13,24 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { LegacyPanelAdapter } from '@k9-sak-web/gui/behandling/prosess/LegacyPanelAdapter.js';
+import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
+import { StandardProsessPanelPropsProvider } from '@k9-sak-web/gui/behandling/prosess/context/StandardProsessPanelPropsContext.js';
+import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
+import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
+import { FortsattMedlemskapProsessStegInitPanel } from '../prosess/FortsattMedlemskapProsessStegInitPanel';
+import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/InngangsvilkarFortsProsessStegInitPanel';
+import { InngangsvilkarProsessStegInitPanel } from '../prosess/InngangsvilkarProsessStegInitPanel';
+import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
+import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
+import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
+import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
+import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -198,9 +211,10 @@ const PleiepengerProsess = ({
   );
 
   useEffect(() => {
-    setBeregningErBehandlet(
-      prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning').getErStegBehandlet(),
-    );
+    const beregningPanel = prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning');
+    if (beregningPanel) {
+      setBeregningErBehandlet(beregningPanel.getErStegBehandlet());
+    }
   }, [setBeregningErBehandlet, prosessStegPaneler]);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
@@ -215,15 +229,132 @@ const PleiepengerProsess = ({
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
     prosessStegPaneler,
-    valgtFaktaSteg,
+    valgtFaktaSteg ?? '',
     behandling,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    valgtProsessSteg,
+    valgtProsessSteg ?? '',
     valgtPanel,
   );
 
+  // Toggle for å bytte mellom gammel og ny meny (for sammenligning under migrering)
+  const { useV2Menu, ToggleComponent } = useProsessMenyToggle();
+
+  // previewCallback til context
+  const previewCallback = useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
+    behandling.versjon,
+  ]);
+
+  // previewFptilbakeCallback til context (for simulering/avregning)
+  const previewFptilbakeCallback = useCallback(
+    getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+    [behandling.versjon],
+  );
+
+  // Form data state for Redux forms (matcher legacy ProsessStegPanel oppførsel)
+  const [formData, setFormData] = useState<any>({});
+  useEffect(() => {
+    // Nullstill form data når behandlingsversjon endres
+    setFormData({});
+  }, [behandling.versjon]);
+
+  if (useV2Menu) {
+    // - v2 ProsessMeny
+    // - Legacy ProsessStegPanel for innholdsrendering (unngår Redux-form problemer)
+    // - LegacyPanelAdapter registrerer paneler med v2 meny, men rendrer ikke innhold
+    return (
+      <>
+        {ToggleComponent}
+        <IverksetterVedtakStatusModal
+          visModal={visIverksetterVedtakModal}
+          lukkModal={useCallback(() => {
+            toggleIverksetterVedtakModal(false);
+            opneSokeside();
+          }, [])}
+          behandlingsresultat={behandling.behandlingsresultat}
+        />
+        <FatterVedtakStatusModal
+          visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+          lukkModal={useCallback(() => {
+            toggleFatterVedtakModal(false);
+            opneSokeside();
+          }, [])}
+          tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
+        />
+        <StandardProsessPanelPropsProvider
+          value={{
+            behandling,
+            fagsak,
+            aksjonspunkter: data.aksjonspunkter,
+            vilkar: data.vilkar,
+            alleKodeverk,
+            submitCallback: lagreAksjonspunkter,
+            previewCallback,
+            previewFptilbakeCallback,
+            isReadOnly: !rettigheter.writeAccess.isEnabled,
+            rettigheter,
+            featureToggles,
+            formData,
+            setFormData,
+            arbeidsgiverOpplysningerPerId,
+          }}
+        >
+          {/* v2 meny for navigasjon */}
+          <ProsessMeny>
+            {prosessStegPanelDefinisjoner.map(panelDef => {
+              // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
+              const urlKode = panelDef.getUrlKode();
+              const formaterPanel = formaterteProsessStegPaneler.find(
+                panel => panel.labelId === panelDef.getTekstKode(),
+              );
+
+              // Bruk migrerte InitPanel-komponenter der de finnes
+              if (urlKode === 'inngangsvilkar') {
+                return <InngangsvilkarProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'medisinsk-vilkar') {
+                return <MedisinskVilkarProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'opptjening') {
+                return <InngangsvilkarFortsProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'uttak') {
+                return <UttakProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'tilkjent_ytelse') {
+                return <TilkjentYtelseProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'simulering') {
+                return <SimuleringProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'fortsattmedlemskap') {
+                return <FortsattMedlemskapProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'beregningsgrunnlag') {
+                return <BeregningsgrunnlagProsessStegInitPanel key={urlKode} />;
+              }
+              if (urlKode === 'vedtak') {
+                return <VedtakProsessStegInitPanel key={urlKode} />;
+              }
+
+              return (
+                <LegacyPanelAdapter
+                  key={urlKode}
+                  panelDef={panelDef}
+                  menyType={formaterPanel?.type}
+                  usePartialStatus={formaterPanel?.usePartialStatus}
+                />
+              );
+            })}
+          </ProsessMeny>
+        </StandardProsessPanelPropsProvider>
+      </>
+    );
+  }
+
+  // Legacy rendering (standard oppførsel)
   return (
     <>
+      {ToggleComponent}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
         lukkModal={useCallback(() => {
@@ -240,6 +371,7 @@ const PleiepengerProsess = ({
         }, [])}
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
+
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}
         velgProsessStegPanelCallback={velgProsessStegPanelCallback}

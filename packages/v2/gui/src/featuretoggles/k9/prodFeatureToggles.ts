@@ -32,4 +32,6 @@ export const prodFeatureToggles = {
   UNG_KLAGE: false,
   KRONISK_TIDSBEGRENSET: true,
   V2_MELDINGER_FOR_TILBAKE: false,
+  PROSESS_MENY_V2: false,
+  PROSESS_MENY_V2_VELGER: false,
 } satisfies K9FeatureToggles;

@@ -32,4 +32,6 @@ export const qFeatureToggles = {
   UNG_KLAGE: true,
   KRONISK_TIDSBEGRENSET: true,
   V2_MELDINGER_FOR_TILBAKE: true,
+  PROSESS_MENY_V2: false,
+  PROSESS_MENY_V2_VELGER: false,
 } satisfies K9FeatureToggles;
