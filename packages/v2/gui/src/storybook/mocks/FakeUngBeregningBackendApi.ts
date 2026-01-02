@@ -37,6 +37,7 @@ export class FakeUngBeregningBackendApi {
         reduksjon: 0.0,
         utbetaling: 19147.86,
         status: 'UTBETALT',
+        gjelderDelerAvMåned: false,
       },
       {
         måned: '2025-02',
@@ -58,6 +59,7 @@ export class FakeUngBeregningBackendApi {
         reduksjon: 0.0,
         utbetaling: 19472.4,
         status: 'TIL_UTBETALING',
+        gjelderDelerAvMåned: false,
       },
       {
         måned: '2025-03',
@@ -79,6 +81,7 @@ export class FakeUngBeregningBackendApi {
         reduksjon: 0.0,
         utbetaling: 20446.02,
         status: 'TIL_UTBETALING',
+        gjelderDelerAvMåned: false,
       },
       {
         måned: '2025-04',
@@ -100,6 +103,7 @@ export class FakeUngBeregningBackendApi {
         reduksjon: 0.0,
         utbetaling: 21419.64,
         status: 'TIL_UTBETALING',
+        gjelderDelerAvMåned: false,
       },
     ];
   }

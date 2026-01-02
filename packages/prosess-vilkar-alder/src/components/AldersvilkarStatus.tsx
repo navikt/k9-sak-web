@@ -1,17 +1,16 @@
-import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import Feilikon from '../icons/Feilikon';
 import Suksessikon from '../icons/Suksessikon';
 
-import styles from './AldersvilkarStatus.module.css';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import styles from './AldersvilkarStatus.module.css';
 
 interface AldersVilkarAPProps {
   vilkarOppfylt: boolean;
   vilkarReferanse: string;
   periode: string;
-  begrunnelse: string;
+  begrunnelse: string | null;
 }
 
 const AldersVilkarStatus = ({
