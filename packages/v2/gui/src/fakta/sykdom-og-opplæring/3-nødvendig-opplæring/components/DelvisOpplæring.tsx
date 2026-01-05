@@ -68,6 +68,7 @@ const validateReisedag = (value: OpplæringVurderingDtoResultat | '', periode: {
 export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurderingDto & { perioder: Period[] } }) => {
   const opprinneligPeriode = vurdering.perioder[0]!;
   const formMethods = useFormContext<NødvendigOpplæringFormFields>();
+  const submitCount = formMethods.formState.submitCount;
   const context = useContext(SykdomOgOpplæringContext);
   const readOnly = context.readOnly;
   const { fields, append, remove } = useFieldArray({
@@ -78,6 +79,23 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
   const perioder = formMethods.watch('perioder');
   const uncoveredDays = findUncoveredDays(opprinneligPeriode, perioder);
   const uncoveredPeriods = combineConsecutivePeriods(uncoveredDays);
+  const touchedFieldsIndexes = formMethods.formState.touchedFields?.perioder
+    ?.map((v, index) => (v ? index : undefined))
+    .filter(v => v !== undefined);
+
+    // hvis periode A og B overlapper, og vi deretter endrer periode A så de ikke lenger overlapper
+    // så må vi gjøre dette for å få trigget validering av periode B for å fjern feilmeldingen
+    // gjelder også hvis man går fra å ikke overlappe til å overlappe
+  useEffect(() => {
+    if (submitCount && submitCount > 0) {
+      perioder.forEach((periode, index) => {
+        if (periode.fom && periode.tom) {
+          void formMethods.trigger(`perioder.${index}.fom`);
+          void formMethods.trigger(`perioder.${index}.tom`);
+        }
+      });
+    }
+  }, [JSON.stringify(perioder), JSON.stringify(touchedFieldsIndexes), submitCount]);
   return (
     <div id="delvis-opplæring">
       <div className="flex flex-col gap-4">
