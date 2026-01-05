@@ -84,6 +84,7 @@ describe('9069 - Mangler inntektsmelding', () => {
           periode: '2022-02-01/2022-02-16',
           fortsett: true,
           kode: '9069',
+          vurdering: 'FORTSETT',
         },
       ],
     });
@@ -116,6 +117,7 @@ describe('9069 - Mangler inntektsmelding', () => {
           periode: '2022-02-01/2022-02-16',
           fortsett: true,
           kode: '9069',
+          vurdering: 'FORTSETT',
         },
       ],
     });

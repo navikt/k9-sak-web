@@ -10,7 +10,6 @@ import {
   Fagsak,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Alert } from '@navikt/ds-react';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
@@ -23,7 +22,6 @@ interface OwnProps {
   behandlingVersjon?: number;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
-  readonly featureToggles?: FeatureToggles;
   readonly backendApi: MeldingerSakIndexBackendApi;
 }
 
@@ -39,7 +37,6 @@ const MeldingIndex = ({
   behandlingVersjon,
   personopplysninger,
   arbeidsgiverOpplysninger,
-  featureToggles,
   backendApi,
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
@@ -109,7 +106,6 @@ const MeldingIndex = ({
         behandling.type.kode === BehandlingType.TILBAKEKREVING ||
         behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
       }
-      featureToggles={featureToggles}
       fagsak={fagsak}
       behandling={behandling}
       backendApi={backendApi}

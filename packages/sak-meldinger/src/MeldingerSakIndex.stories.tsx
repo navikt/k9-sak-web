@@ -92,7 +92,6 @@ export const SendMeldingPanel: Story = {
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     revurderingVarslingArsak,
     erTilbakekreving: false,
-    featureToggles: { BRUK_V2_MELDINGER: false },
     fagsak: {
       saksnummer: '100',
       sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE

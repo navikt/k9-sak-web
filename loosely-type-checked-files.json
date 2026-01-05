@@ -128,12 +128,10 @@
   "packages/fakta-feilutbetaling/src/components/FeilutbetalingPerioderForm.tsx",
   "packages/fakta-feilutbetaling/src/components/FeilutbetalingPerioderTable.spec.tsx",
   "packages/fakta-inntektsmelding/src/stories/Inntektsmelding.stories.tsx",
-  "packages/fakta-inntektsmelding/src/ui/InntektsmeldingContainer.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/arbeidsgiver-tekst/ArbeidsgiverTekst.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/inntektsmelding-mottatt-item/InntektsmeldingMottattItem.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/kompletthetsoversikt/Kompletthetsoversikt.tsx",
   "packages/fakta-inntektsmelding/src/ui/components/period-list/FortsettUtenInntektsmeldingInfo.tsx",
-  "packages/fakta-inntektsmelding/src/ui/reducer.ts",
   "packages/fakta-inntektsmelding/src/util/utils.ts",
   "packages/fakta-inntektsmelding/test/Aksjonspunkt9069.spec.tsx",
   "packages/fakta-inntektsmelding/test/Aksjonspunkt9071.spec.tsx",
@@ -348,6 +346,5 @@
   "packages/ung/sak-app/behandling/BehandlingIndex.tsx",
   "packages/ung/sak-app/behandlingmenu/BehandlingMenuIndex.tsx",
   "packages/ung/sak-app/behandlingmenu/MenyKodeverk.ts",
-  "packages/ung/sak-app/behandlingsupport/dokument/DokumentIndex.tsx",
-  "packages/ung/sak-app/behandlingsupport/melding/MeldingTilbakeIndex.tsx"
+  "packages/ung/sak-app/behandlingsupport/dokument/DokumentIndex.tsx"
 ]

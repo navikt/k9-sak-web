@@ -2,7 +2,6 @@ import type { UngFeatureToggles } from './UngFeatureToggles.js';
 
 export const qFeatureToggles = {
   isFor: 'Q',
-  BRUK_V2_MELDINGER: false,
   KLAGE_KABAL: true,
   DOKUMENTDATA: true,
   UNNTAKSBEHANDLING: true,
@@ -31,4 +30,5 @@ export const qFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   BRUK_V2_TILKJENT_YTELSE: true,
   UNG_KLAGE: true,
+  V2_MELDINGER_FOR_TILBAKE: true,
 } satisfies UngFeatureToggles;

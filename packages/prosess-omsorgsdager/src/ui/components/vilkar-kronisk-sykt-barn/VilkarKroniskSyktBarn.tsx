@@ -249,6 +249,15 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             </>
           )}
 
+          {visBegrunnelseFraBruker &&
+            typeof begrunnelseFraBruker !== 'undefined' &&
+            begrunnelseFraBruker.length > 0 && (
+              <>
+                <p className={styleLesemodus.label}>{tekst.begrunnelseFraBruker}</p>
+                <p className={styleLesemodus.text}>{begrunnelseFraBruker}</p>
+              </>
+            )}
+
           <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
           <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
 

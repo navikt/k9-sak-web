@@ -233,9 +233,7 @@ const FagsakIndex = () => {
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
                   behandlingRettigheter={behandlingRettigheter}
-                  personopplysninger={behandlingPersonopplysninger}
                   navAnsatt={navAnsatt}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   featureToggles={featureToggles}
                 />
               );

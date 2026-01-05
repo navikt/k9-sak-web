@@ -161,6 +161,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                           utbetaling,
                           reduksjon,
                           reduksjonsgrunnlag,
+                          gjelderDelerAvMåned,
                         },
                         index,
                       ) => {
@@ -177,6 +178,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                     rapportertInntekt={rapportertInntekt}
                                     reduksjon={reduksjon}
                                     reduksjonsgrunnlag={reduksjonsgrunnlag}
+                                    gjelderDelerAvMåned={gjelderDelerAvMåned}
                                   />
                                 }
                                 togglePlacement="right"
@@ -256,6 +258,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                                 rapportertInntekt={rapportertInntekt}
                                 reduksjon={reduksjon}
                                 reduksjonsgrunnlag={reduksjonsgrunnlag}
+                                gjelderDelerAvMåned={gjelderDelerAvMåned}
                               />
                             }
                             togglePlacement="right"

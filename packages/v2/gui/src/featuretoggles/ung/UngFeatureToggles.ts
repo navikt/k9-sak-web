@@ -1,7 +1,6 @@
 import type { FeatureTogglesFor } from '../FeatureTogglesFor.js';
 
 export interface UngFeatureToggles extends FeatureTogglesFor {
-  BRUK_V2_MELDINGER: boolean;
   KLAGE_KABAL: boolean;
   DOKUMENTDATA: boolean; // Fjernast?
   UNNTAKSBEHANDLING: boolean;
@@ -30,4 +29,5 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   FLYTT_ALDERSVILKAR: boolean;
   BRUK_V2_TILKJENT_YTELSE: boolean;
   UNG_KLAGE: boolean;
+  V2_MELDINGER_FOR_TILBAKE: boolean;
 }
