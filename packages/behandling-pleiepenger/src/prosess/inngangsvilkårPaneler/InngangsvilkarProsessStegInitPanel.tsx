@@ -1,6 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
@@ -122,8 +123,14 @@ export const InngangsvilkarProsessStegInitPanel = ({
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
+  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+
   if (!skalVisePanel || !erValgt) {
     return null;
+  }
+
+  if (!erStegVurdert) {
+    return <ProsessStegIkkeVurdert />;
   }
 
   return (

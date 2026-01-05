@@ -58,8 +58,6 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  // Beregn paneltype basert på vilkårstatus (for menystatusindikator)
-
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {
     return null;

@@ -2,6 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -126,8 +127,13 @@ export function UttakProsessStegInitPanel(props: Props) {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, panelId, panelTekst, panelType);
 
+  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+
   if (!erValgt) {
     return null;
+  }
+  if (!erStegVurdert) {
+    return <ProsessStegIkkeVurdert />;
   }
 
   const relevanteAksjonspunkter = aksjonspunkter?.filter(ap =>

@@ -9,6 +9,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { use, useContext, useMemo } from 'react';
 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
@@ -86,6 +87,8 @@ export function SimuleringProsessStegInitPanel(props: Props) {
       ap.definisjon.kode === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
   );
 
+  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt) {
     return null;
@@ -96,6 +99,9 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   const data = restApiData.data;
   if (!data) {
     return null;
+  }
+  if (!erStegVurdert) {
+    return <ProsessStegIkkeVurdert />;
   }
 
   // Beregn readOnlySubmitButton basert på aksjonspunkter

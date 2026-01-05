@@ -9,6 +9,7 @@ import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import { useContext, useMemo } from 'react';
 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { K9SakProsessApi } from './K9SakProsessApi';
@@ -130,6 +131,8 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
+  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt) {
     return null;
@@ -138,6 +141,10 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
   if (!bgVilkaret) {
     return null;
+  }
+
+  if (!erStegVurdert) {
+    return <ProsessStegIkkeVurdert />;
   }
 
   return (

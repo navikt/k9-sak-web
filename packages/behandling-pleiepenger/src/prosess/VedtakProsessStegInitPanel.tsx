@@ -4,6 +4,7 @@ import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
@@ -182,9 +183,14 @@ export function VedtakProsessStegInitPanel(props: Props) {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
+  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !restApiData.data) {
     return null;
+  }
+  if (!erStegVurdert) {
+    return <ProsessStegIkkeVurdert />;
   }
 
   return (
