@@ -23,6 +23,11 @@ export const PeriodesplittDatoValg = ({ periode, forhåndsvisPeriodesplitt, setV
   const [nyePerioder, setNyePerioder] = useState<Periode[]>([]);
 
   const oppdaterSplittDatoValg = (dato: Date | undefined) => {
+    if (!dato) {
+      setValgtDato('');
+      setNyePerioder([]);
+      return;
+    }
     const splitt = dayjs(dato).format(ISO_DATE_FORMAT);
     setValgtDato(splitt);
     if (splitt) {
