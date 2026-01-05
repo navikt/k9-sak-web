@@ -17,7 +17,6 @@ const FortsettUtenInntektsmeldingAvslag = ({
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
 }): JSX.Element | null => {
-  const featureToggles = React.useContext(FeatureTogglesContext);
   const context = React.useContext(ContainerContext);
   const readOnly = context?.readOnly ?? false;
 
@@ -27,10 +26,9 @@ const FortsettUtenInntektsmeldingAvslag = ({
     return (
       <>
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
-          {kode === Kode.MANGLENDE_GRUNNLAG &&
-            ((featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP && (
+          {kode === Kode.MANGLENDE_GRUNNLAG && (
               <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
-            )) || <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>)}
+          )}
           {kode === Kode.IKKE_INNTEKTSTAP && (
             <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>
           )}
