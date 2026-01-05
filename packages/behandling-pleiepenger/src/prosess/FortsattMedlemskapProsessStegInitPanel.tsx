@@ -1,8 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_behandling_BehandlingType,
@@ -62,32 +60,25 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     return kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR;
   });
 
+  const VilkarresultatMedOverstyringProsessIndexProps = {
+    // ...props,
+    submitCallback: props.submitCallback,
+    overrideReadOnly: props.overrideReadOnly,
+    kanOverstyreAccess: props.kanOverstyreAccess,
+    toggleOverstyring: props.toggleOverstyring,
+    aksjonspunkter: relevanteAksjonspunkter,
+    behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
+    vilkar: vilkarForSteg,
+    erOverstyrt: false,
+    overstyringApKode: '',
+    erMedlemskapsPanel: false,
+    visPeriodisering: false,
+    visAllePerioder: false,
+  };
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.FORTSATTMEDLEMSKAP} tekstKode="Fortsatt medlem">
-      {() => {
-        const VilkarresultatMedOverstyringProsessIndexProps = {
-          // ...props,
-          submitCallback: props.submitCallback,
-          overrideReadOnly: props.overrideReadOnly,
-          kanOverstyreAccess: props.kanOverstyreAccess,
-          toggleOverstyring: props.toggleOverstyring,
-          aksjonspunkter: relevanteAksjonspunkter,
-          behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
-          vilkar: vilkarForSteg,
-          erOverstyrt: false,
-          overstyringApKode: '',
-          erMedlemskapsPanel: false,
-          visPeriodisering: false,
-          visAllePerioder: false,
-        };
-        return (
-          <VilkarresultatMedOverstyringProsessIndex
-            {...VilkarresultatMedOverstyringProsessIndexProps}
-            panelTittelKode="Medlemskap"
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <VilkarresultatMedOverstyringProsessIndex
+      {...VilkarresultatMedOverstyringProsessIndexProps}
+      panelTittelKode="Medlemskap"
+    />
   );
 }

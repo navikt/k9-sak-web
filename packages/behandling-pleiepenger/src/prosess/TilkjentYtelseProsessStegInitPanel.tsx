@@ -1,5 +1,4 @@
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -111,39 +110,32 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     return null;
   }
 
+  // Legacy komponent krever deep copy og kodeverkkonvertering
+  const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
+  const readOnlySubmitButton = !harApentAksjonspunkt;
+  if (BRUK_V2_TILKJENT_YTELSE) {
+    return (
+      <TilkjentYtelseProsessIndexV2
+        behandling={{ uuid: props.behandling.uuid }}
+        beregningsresultat={beregningsresultatUtbetaling}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
+        aksjonspunkter={aksjonspunkter}
+        isReadOnly={props.isReadOnly}
+        submitCallback={props.submitCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+      />
+    );
+  }
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.TILKJENT_YTELSE} tekstKode="Behandlingspunkt.TilkjentYtelse">
-      {() => {
-        // Legacy komponent krever deep copy og kodeverkkonvertering
-        const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
-        const readOnlySubmitButton = !harApentAksjonspunkt;
-        if (BRUK_V2_TILKJENT_YTELSE) {
-          return (
-            <TilkjentYtelseProsessIndexV2
-              behandling={{ uuid: props.behandling.uuid }}
-              beregningsresultat={beregningsresultatUtbetaling}
-              personopplysninger={personopplysninger}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
-              aksjonspunkter={aksjonspunkter}
-              isReadOnly={props.isReadOnly}
-              submitCallback={props.submitCallback}
-              readOnlySubmitButton={readOnlySubmitButton}
-            />
-          );
-        }
-        return (
-          <TilkjentYtelseProsessIndex
-            fagsak={props.fagsak}
-            beregningsresultat={beregningsresultatUtbetaling}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
-            aksjonspunkter={aksjonspunkter}
-            isReadOnly={props.isReadOnly}
-            submitCallback={props.submitCallback}
-            readOnlySubmitButton={readOnlySubmitButton}
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <TilkjentYtelseProsessIndex
+      fagsak={props.fagsak}
+      beregningsresultat={beregningsresultatUtbetaling}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
+      aksjonspunkter={aksjonspunkter}
+      isReadOnly={props.isReadOnly}
+      submitCallback={props.submitCallback}
+      readOnlySubmitButton={readOnlySubmitButton}
+    />
   );
 }

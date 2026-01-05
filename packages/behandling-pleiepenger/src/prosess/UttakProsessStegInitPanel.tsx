@@ -1,10 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import {
@@ -136,29 +134,22 @@ export function UttakProsessStegInitPanel(props: Props) {
     RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon),
   );
 
+  const behandling = {
+    uuid: props.behandling.uuid,
+    id: props.behandling.id,
+    versjon: props.behandling.versjon,
+    status: props.behandling.status.kode as k9_kodeverk_behandling_BehandlingStatus,
+    sakstype: props.behandling.sakstype,
+  };
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.UTTAK} tekstKode="Behandlingspunkt.Uttak">
-      {() => {
-        const behandling = {
-          uuid: props.behandling.uuid,
-          id: props.behandling.id,
-          versjon: props.behandling.versjon,
-          status: props.behandling.status.kode as k9_kodeverk_behandling_BehandlingStatus,
-          sakstype: props.behandling.sakstype,
-        };
-        return (
-          <Uttak
-            uttak={uttak}
-            behandling={behandling}
-            aksjonspunkter={aksjonspunkter}
-            relevanteAksjonspunkter={relevanteAksjonspunkter}
-            hentBehandling={props.hentBehandling}
-            erOverstyrer={props.erOverstyrer}
-            readOnly={props.isReadOnly}
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <Uttak
+      uttak={uttak}
+      behandling={behandling}
+      aksjonspunkter={aksjonspunkter}
+      relevanteAksjonspunkter={relevanteAksjonspunkter}
+      hentBehandling={props.hentBehandling}
+      erOverstyrer={props.erOverstyrer}
+      readOnly={props.isReadOnly}
+    />
   );
 }

@@ -1,11 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import OpptjeningVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndexV2.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_behandling_BehandlingType,
@@ -83,68 +81,48 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
 
   const isAksjonspunktOpen = relevanteAksjonspunkter.some(ap => ap.status === 'OPPR');
 
-  return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.OPPTJENING} tekstKode="Behandlingspunkt.InngangsvilkarForts">
-      {() => {
-        // Legacy panelkomponent rendres av ProsessStegPanel (utenfor ProsessMeny)
-        // Dette er hybrid-modus: v2 meny + legacy rendering
-        // Returnerer null fordi rendering håndteres av legacy ProsessStegPanel
-        // const props = {
-        //   ...standardProps,
-        //   opptjening: data.opptjening,
-        //   visAllePerioder: false,
-        //   readOnlySubmitButton: false,
-        //   vilkar: vilkarForSteg,
-        //   lovReferanse: vilkarForSteg[0].lovReferanse,
-        // };
-        // const deepCopyProps = JSON.parse(JSON.stringify(props));
-        // konverterKodeverkTilKode(deepCopyProps, false);
-        if (erAlleVilkårVurdert) {
-          return (
-            <VilkarresultatMedOverstyringProsessIndex
-              aksjonspunkter={[]}
-              behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
-              panelTittelKode="Opptjening"
-              vilkar={vilkarForSteg}
-              erOverstyrt={false}
-              overstyringApKode=""
-              erMedlemskapsPanel={false}
-              submitCallback={props.submitCallback}
-              overrideReadOnly={props.overrideReadOnly}
-              kanOverstyreAccess={props.kanOverstyreAccess}
-              toggleOverstyring={props.toggleOverstyring}
-              visPeriodisering={false}
-              visAllePerioder={false}
-            />
-          );
-        }
-        if (BRUK_V2_VILKAR_OPPTJENING) {
-          const OpptjeningVilkarProsessIndexV2Props = {
-            submitCallback: props.submitCallback,
-            isReadOnly: props.isReadOnly,
-            behandling: props.behandling,
-            aksjonspunkter: relevanteAksjonspunkter,
-            opptjening: data.opptjening,
-            visAllePerioder: false,
-            readOnlySubmitButton: false,
-            vilkar: vilkarForSteg,
-            lovReferanse: vilkarForSteg[0].lovReferanse,
-            isAksjonspunktOpen,
-            fagsak,
-          };
-          return <OpptjeningVilkarProsessIndexV2 {...OpptjeningVilkarProsessIndexV2Props} />;
-        }
-        const OpptjeningVilkarProsessIndexProps = {
-          ...props,
-          fagsak: { sakstype: fagsak.sakstype },
-          opptjening: data.opptjening,
-          vilkar: vilkarForSteg,
-          isAksjonspunktOpen,
-          readOnlySubmitButton: false,
-        };
-        return <OpptjeningVilkarProsessIndex {...OpptjeningVilkarProsessIndexProps} />;
-      }}
-    </ProsessDefaultInitPanel>
-  );
+  if (erAlleVilkårVurdert) {
+    return (
+      <VilkarresultatMedOverstyringProsessIndex
+        aksjonspunkter={[]}
+        behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+        panelTittelKode="Opptjening"
+        vilkar={vilkarForSteg}
+        erOverstyrt={false}
+        overstyringApKode=""
+        erMedlemskapsPanel={false}
+        submitCallback={props.submitCallback}
+        overrideReadOnly={props.overrideReadOnly}
+        kanOverstyreAccess={props.kanOverstyreAccess}
+        toggleOverstyring={props.toggleOverstyring}
+        visPeriodisering={false}
+        visAllePerioder={false}
+      />
+    );
+  }
+  if (BRUK_V2_VILKAR_OPPTJENING) {
+    const OpptjeningVilkarProsessIndexV2Props = {
+      submitCallback: props.submitCallback,
+      isReadOnly: props.isReadOnly,
+      behandling: props.behandling,
+      aksjonspunkter: relevanteAksjonspunkter,
+      opptjening: data.opptjening,
+      visAllePerioder: false,
+      readOnlySubmitButton: false,
+      vilkar: vilkarForSteg,
+      lovReferanse: vilkarForSteg[0].lovReferanse,
+      isAksjonspunktOpen,
+      fagsak,
+    };
+    return <OpptjeningVilkarProsessIndexV2 {...OpptjeningVilkarProsessIndexV2Props} />;
+  }
+  const OpptjeningVilkarProsessIndexProps = {
+    ...props,
+    fagsak: { sakstype: fagsak.sakstype },
+    opptjening: data.opptjening,
+    vilkar: vilkarForSteg,
+    isAksjonspunktOpen,
+    readOnlySubmitButton: false,
+  };
+  return <OpptjeningVilkarProsessIndex {...OpptjeningVilkarProsessIndexProps} />;
 }

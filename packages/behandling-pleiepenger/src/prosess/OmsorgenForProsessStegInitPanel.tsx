@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import {
@@ -49,26 +48,19 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
 
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR);
 
+  const VilkarresultatMedOverstyringProsessIndexProps = {
+    ...props,
+    aksjonspunkter: relevanteAksjonspunkter,
+    behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
+    vilkar: vilkarForSteg,
+    erOverstyrt,
+    overstyringApKode: aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
+    erMedlemskapsPanel: false,
+  };
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel tekstKode="Omsorg">
-      {() => {
-        const VilkarresultatMedOverstyringProsessIndexProps = {
-          ...props,
-          aksjonspunkter: relevanteAksjonspunkter,
-          behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
-          vilkar: vilkarForSteg,
-          erOverstyrt,
-          overstyringApKode: aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
-          erMedlemskapsPanel: false,
-        };
-        return (
-          <VilkarresultatMedOverstyringProsessIndex
-            {...VilkarresultatMedOverstyringProsessIndexProps}
-            panelTittelKode="Omsorg"
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <VilkarresultatMedOverstyringProsessIndex
+      {...VilkarresultatMedOverstyringProsessIndexProps}
+      panelTittelKode="Omsorg"
+    />
   );
 };

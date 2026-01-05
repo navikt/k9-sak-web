@@ -1,7 +1,5 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_behandling_BehandlingType,
@@ -40,25 +38,20 @@ export const AlderProsessStegInitPanel = (props: Props) => {
   }
 
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.ALDER} tekstKode="Alder">
-      {() => (
-        <VilkarresultatMedOverstyringProsessIndex
-          submitCallback={props.submitCallback}
-          overrideReadOnly={props.overrideReadOnly}
-          kanOverstyreAccess={props.kanOverstyreAccess}
-          toggleOverstyring={props.toggleOverstyring}
-          visPeriodisering={props.visPeriodisering}
-          visAllePerioder={props.visAllePerioder}
-          aksjonspunkter={[]}
-          behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
-          vilkar={vilkarForSteg}
-          erOverstyrt={false}
-          overstyringApKode=""
-          erMedlemskapsPanel={false}
-          panelTittelKode="Alder"
-        />
-      )}
-    </ProsessDefaultInitPanel>
+    <VilkarresultatMedOverstyringProsessIndex
+      submitCallback={props.submitCallback}
+      overrideReadOnly={props.overrideReadOnly}
+      kanOverstyreAccess={props.kanOverstyreAccess}
+      toggleOverstyring={props.toggleOverstyring}
+      visPeriodisering={props.visPeriodisering}
+      visAllePerioder={props.visAllePerioder}
+      aksjonspunkter={[]}
+      behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+      vilkar={vilkarForSteg}
+      erOverstyrt={false}
+      overstyringApKode=""
+      erMedlemskapsPanel={false}
+      panelTittelKode="Alder"
+    />
   );
 };

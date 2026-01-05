@@ -1,9 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 import { SøknadsfristTilstand } from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/types/SøknadsfristTilstand.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
@@ -63,23 +61,18 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
 
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.INNGANGSVILKAR} tekstKode="Behandlingspunkt.Inngangsvilkar">
-      {() => (
-        <SoknadsfristVilkarProsessIndex
-          submitCallback={props.submitCallback}
-          toggleOverstyring={props.toggleOverstyring}
-          overrideReadOnly={props.overrideReadOnly}
-          kanOverstyreAccess={props.kanOverstyreAccess}
-          kanEndrePåSøknadsopplysninger={props.kanEndrePåSøknadsopplysninger}
-          visAllePerioder={props.visAllePerioder}
-          aksjonspunkter={relevanteAksjonspunkter}
-          vilkar={vilkarForSteg}
-          erOverstyrt={erOverstyrt}
-          soknadsfristStatus={restApiData.data?.soknadsfristStatus || { dokumentStatus: [] }}
-          panelTittelKode="Søknadsfrist"
-        />
-      )}
-    </ProsessDefaultInitPanel>
+    <SoknadsfristVilkarProsessIndex
+      submitCallback={props.submitCallback}
+      toggleOverstyring={props.toggleOverstyring}
+      overrideReadOnly={props.overrideReadOnly}
+      kanOverstyreAccess={props.kanOverstyreAccess}
+      kanEndrePåSøknadsopplysninger={props.kanEndrePåSøknadsopplysninger}
+      visAllePerioder={props.visAllePerioder}
+      aksjonspunkter={relevanteAksjonspunkter}
+      vilkar={vilkarForSteg}
+      erOverstyrt={erOverstyrt}
+      soknadsfristStatus={restApiData.data?.soknadsfristStatus || { dokumentStatus: [] }}
+      panelTittelKode="Søknadsfrist"
+    />
   );
 }

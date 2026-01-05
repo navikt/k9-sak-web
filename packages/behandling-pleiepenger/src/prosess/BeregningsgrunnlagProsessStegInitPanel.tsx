@@ -1,7 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -136,28 +135,22 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     return null;
   }
 
+  const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+  if (!bgVilkaret) {
+    return null;
+  }
+
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.BEREGNINGSGRUNNLAG} tekstKode="Behandlingspunkt.Beregning">
-      {() => {
-        const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-        if (!bgVilkaret) {
-          return null;
-        }
-        return (
-          <BeregningsgrunnlagProsessIndex
-            beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
-            beregningsgrunnlagListe={beregningsgrunnlag}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            submitCallback={submitData => props.submitCallback(transformBeregningValues(submitData, true))}
-            formData={props.formData}
-            kodeverkSamling={props.alleKodeverk}
-            setFormData={props.setFormData}
-            readOnlySubmitButton={false}
-            isReadOnly={props.isReadOnly}
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <BeregningsgrunnlagProsessIndex
+      beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
+      beregningsgrunnlagListe={beregningsgrunnlag}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      submitCallback={submitData => props.submitCallback(transformBeregningValues(submitData, true))}
+      formData={props.formData}
+      kodeverkSamling={props.alleKodeverk}
+      setFormData={props.setFormData}
+      readOnlySubmitButton={false}
+      isReadOnly={props.isReadOnly}
+    />
   );
 }

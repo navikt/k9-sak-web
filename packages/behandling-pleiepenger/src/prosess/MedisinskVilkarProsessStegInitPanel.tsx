@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -102,35 +101,22 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
     return null;
   }
 
+  const vilkårPleietrengendeUnder18år = props.vilkar?.find(
+    v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+  );
+  const vilkårPleietrengendeOver18år = props.vilkar?.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
+  const perioderUnder18 =
+    vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
+      ...periode,
+      pleietrengendeErOver18år: false,
+    })) ?? [];
+  const perioderOver18 =
+    vilkårPleietrengendeOver18år?.perioder.map(periode => ({
+      ...periode,
+      pleietrengendeErOver18år: true,
+    })) ?? [];
+  const allePerioder = perioderUnder18.concat(perioderOver18);
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.MEDISINSK_VILKAR} tekstKode="Behandlingspunkt.MedisinskVilkar">
-      {() => {
-        const vilkårPleietrengendeUnder18år = props.vilkar?.find(
-          v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
-        );
-        const vilkårPleietrengendeOver18år = props.vilkar?.find(
-          v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR,
-        );
-        const perioderUnder18 =
-          vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
-            ...periode,
-            pleietrengendeErOver18år: false,
-          })) ?? [];
-        const perioderOver18 =
-          vilkårPleietrengendeOver18år?.perioder.map(periode => ({
-            ...periode,
-            pleietrengendeErOver18år: true,
-          })) ?? [];
-        const allePerioder = perioderUnder18.concat(perioderOver18);
-        return (
-          <SykdomProsessIndex
-            lovReferanse={vilkarForSteg[0].lovReferanse}
-            panelTittelKode="Sykdom"
-            perioder={allePerioder}
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <SykdomProsessIndex lovReferanse={vilkarForSteg[0].lovReferanse} panelTittelKode="Sykdom" perioder={allePerioder} />
   );
 }

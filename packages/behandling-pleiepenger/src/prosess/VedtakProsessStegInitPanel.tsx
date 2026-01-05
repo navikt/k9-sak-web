@@ -3,7 +3,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -189,34 +188,27 @@ export function VedtakProsessStegInitPanel(props: Props) {
   }
 
   return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.VEDTAK} tekstKode="Behandlingspunkt.Vedtak">
-      {() => {
-        return (
-          <VedtakProsessIndex
-            isReadOnly={props.isReadOnly}
-            informasjonsbehovVedtaksbrev={restApiData.data?.informasjonsbehovVedtaksbrev}
-            hentFritekstbrevHtmlCallback={props.hentFritekstbrevHtmlCallback}
-            fritekstdokumenter={restApiData.data?.fritekstdokumenter}
-            dokumentdataHente={restApiData.data?.dokumentdataHente}
-            aksjonspunkter={vedtakAksjonspunkter}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
-            behandling={behandlingV2}
-            beregningsgrunnlag={beregningsgrunnlag}
-            vilkar={vilkår}
-            submitCallback={props.submitCallback}
-            simuleringResultat={simuleringResultat}
-            tilbakekrevingvalg={tilbakekrevingvalg}
-            ytelseTypeKode={behandlingV2?.sakstype}
-            lagreDokumentdata={props.lagreDokumentdata}
-            previewCallback={props.previewCallback}
-            overlappendeYtelser={overlappendeYtelser}
-            personopplysninger={personopplysninger}
-            tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
-            medlemskap={medlemskap}
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+    <VedtakProsessIndex
+      isReadOnly={props.isReadOnly}
+      informasjonsbehovVedtaksbrev={restApiData.data?.informasjonsbehovVedtaksbrev}
+      hentFritekstbrevHtmlCallback={props.hentFritekstbrevHtmlCallback}
+      fritekstdokumenter={restApiData.data?.fritekstdokumenter}
+      dokumentdataHente={restApiData.data?.dokumentdataHente}
+      aksjonspunkter={vedtakAksjonspunkter}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
+      behandling={behandlingV2}
+      beregningsgrunnlag={beregningsgrunnlag}
+      vilkar={vilkår}
+      submitCallback={props.submitCallback}
+      simuleringResultat={simuleringResultat}
+      tilbakekrevingvalg={tilbakekrevingvalg}
+      ytelseTypeKode={behandlingV2?.sakstype}
+      lagreDokumentdata={props.lagreDokumentdata}
+      previewCallback={props.previewCallback}
+      overlappendeYtelser={overlappendeYtelser}
+      personopplysninger={personopplysninger}
+      tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
+      medlemskap={medlemskap}
+    />
   );
 }

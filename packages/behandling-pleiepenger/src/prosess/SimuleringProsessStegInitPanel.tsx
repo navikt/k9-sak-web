@@ -3,7 +3,6 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ProsessDefaultInitPanel } from '@k9-sak-web/gui/behandling/prosess/ProsessDefaultInitPanel.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -99,31 +98,24 @@ export function SimuleringProsessStegInitPanel(props: Props) {
     return null;
   }
 
-  return (
-    // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
-    <ProsessDefaultInitPanel urlKode={prosessStegCodes.AVREGNING} tekstKode="Behandlingspunkt.Avregning">
-      {() => {
-        // Beregn readOnlySubmitButton basert på aksjonspunkter
-        // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only
-        const harApentAksjonspunkt = relevanteAksjonspunkter?.some(ap => ap.status.kode === 'OPPR');
-        const readOnlySubmitButton = !harApentAksjonspunkt;
+  // Beregn readOnlySubmitButton basert på aksjonspunkter
+  // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only
+  const harApentAksjonspunkt = relevanteAksjonspunkter?.some(ap => ap.status.kode === 'OPPR');
+  const readOnlySubmitButton = !harApentAksjonspunkt;
 
-        return (
-          <AvregningProsessIndex
-            behandling={props.behandling}
-            aksjonspunkter={relevanteAksjonspunkter}
-            fagsak={props.fagsak}
-            simuleringResultat={data.simuleringResultat}
-            tilbakekrevingvalg={data.tilbakekrevingvalg}
-            previewFptilbakeCallback={props.previewFptilbakeCallback}
-            featureToggles={featureToggles}
-            readOnlySubmitButton={readOnlySubmitButton}
-            submitCallback={props.submitCallback}
-            isReadOnly={props.isReadOnly}
-            isAksjonspunktOpen={harApentAksjonspunkt}
-          />
-        );
-      }}
-    </ProsessDefaultInitPanel>
+  return (
+    <AvregningProsessIndex
+      behandling={props.behandling}
+      aksjonspunkter={relevanteAksjonspunkter}
+      fagsak={props.fagsak}
+      simuleringResultat={data.simuleringResultat}
+      tilbakekrevingvalg={data.tilbakekrevingvalg}
+      previewFptilbakeCallback={props.previewFptilbakeCallback}
+      featureToggles={featureToggles}
+      readOnlySubmitButton={readOnlySubmitButton}
+      submitCallback={props.submitCallback}
+      isReadOnly={props.isReadOnly}
+      isAksjonspunktOpen={harApentAksjonspunkt}
+    />
   );
 }
