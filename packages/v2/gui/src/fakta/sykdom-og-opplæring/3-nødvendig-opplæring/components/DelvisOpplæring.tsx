@@ -13,7 +13,6 @@ import {
 } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { PlusCircleIcon, ScissorsFillIcon, TrashIcon } from '@navikt/aksel-icons';
 import { Alert, Button, DatePicker, Label, Modal, Radio, RadioGroup } from '@navikt/ds-react';
-import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import React, { useContext, useEffect, useState } from 'react';
@@ -27,6 +26,7 @@ import {
 } from 'react-hook-form';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import { Avslagsårsak } from './Avslagsårsak';
+import Periodevelger from '../../../../shared/periodevelger/Periodevelger';
 
 type NødvendigOpplæringFormFields = {
   begrunnelse: string;
@@ -83,8 +83,11 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
     ?.map((v, index) => (v ? index : undefined))
     .filter(v => v !== undefined);
 
+    // hvis periode A og B overlapper, og vi deretter endrer periode A så de ikke lenger overlapper
+    // så må vi gjøre dette for å få trigget validering av periode B for å fjern feilmeldingen
+    // gjelder også hvis man går fra å ikke overlappe til å overlappe
   useEffect(() => {
-    if (submitCount > 0) {
+    if (submitCount && submitCount > 0) {
       perioder.forEach((periode, index) => {
         if (periode.fom && periode.tom) {
           void formMethods.trigger(`perioder.${index}.fom`);
@@ -93,60 +96,45 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
       });
     }
   }, [JSON.stringify(perioder), JSON.stringify(touchedFieldsIndexes), submitCount]);
-
   return (
     <div id="delvis-opplæring">
       <div className="flex flex-col gap-4">
         <Label size="small">I hvilken periode er det nødvendig opplæring?</Label>
         {fields.map((v, index) => (
           <div className="flex gap-4" key={v.id}>
-            <RhfDatepicker
-              name={`perioder.${index}.fom`}
-              control={formMethods.control}
-              label="Fra"
+            <Periodevelger
+              minDate={vurdering.perioder[0]?.fom ? dayjs(vurdering.perioder[0].fom).toDate() : undefined}
+              maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0].tom).toDate() : undefined}
+              fromField={{
+                name: `perioder.${index}.fom`,
+                validators: [
+                  (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
+                  (value: string) => {
+                    if (!value || !perioder[index]?.fom) return undefined;
+                    const currentPeriod = { fom: value, tom: perioder[index]?.tom };
+                    const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
+                    return checkForOverlap(index, currentPeriod, allPeriods)
+                      ? 'Perioden kan ikke overlappe med andre perioder'
+                      : undefined;
+                  },
+                ],
+              }}
+              toField={{
+                name: `perioder.${index}.tom`,
+                validators: [
+                  (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
+                  (value: string) => {
+                    if (!value || !perioder[index]?.tom) return undefined;
+                    const currentPeriod = { fom: value, tom: perioder[index]?.tom };
+                    const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
+                    return checkForOverlap(index, currentPeriod, allPeriods)
+                      ? 'Perioden kan ikke overlappe med andre perioder'
+                      : undefined;
+                  },
+                ],
+              }}
+              readOnly={readOnly}
               size="small"
-              disabled={readOnly}
-              validate={[
-                (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
-                (value: string) => {
-                  if (!value || !perioder[index]?.tom) return undefined;
-                  return dayjs(value).isSameOrBefore(dayjs(perioder[index]?.tom)) ? undefined : 'Fra må være før til';
-                },
-                (value: string) => {
-                  if (!value || !perioder[index]?.tom) return undefined;
-                  const currentPeriod = { fom: value, tom: perioder[index]?.tom };
-                  const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
-                  return checkForOverlap(index, currentPeriod, allPeriods)
-                    ? 'Perioden kan ikke overlappe med andre perioder'
-                    : undefined;
-                },
-              ]}
-              fromDate={new Date(opprinneligPeriode.fom)}
-              toDate={new Date(opprinneligPeriode.tom)}
-            />
-            <RhfDatepicker
-              name={`perioder.${index}.tom`}
-              control={formMethods.control}
-              label="Til"
-              size="small"
-              disabled={readOnly}
-              validate={[
-                (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
-                (value: string) => {
-                  if (!value || !perioder[index]?.fom) return undefined;
-                  return dayjs(perioder[index]?.fom).isSameOrBefore(dayjs(value)) ? undefined : 'Til må være etter fra';
-                },
-                (value: string) => {
-                  if (!value || !perioder[index]?.fom) return undefined;
-                  const currentPeriod = { fom: perioder[index]?.fom, tom: value };
-                  const allPeriods = fields.map(field => ({ fom: field.fom, tom: field.tom }));
-                  return checkForOverlap(index, currentPeriod, allPeriods)
-                    ? 'Perioden kan ikke overlappe med andre perioder'
-                    : undefined;
-                },
-              ]}
-              fromDate={new Date(vurdering.opplæring.fom)}
-              toDate={new Date(vurdering.opplæring.tom)}
             />
             {index > 0 && (
               <Button variant="tertiary" size="small" type="button" onClick={() => remove(index)} icon={<TrashIcon />}>
