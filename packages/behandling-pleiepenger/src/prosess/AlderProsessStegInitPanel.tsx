@@ -9,6 +9,8 @@ import {
 } from '@navikt/k9-sak-typescript-client/types';
 import { useMemo, type SetStateAction } from 'react';
 
+const RELEVANTE_VILKAR_KODER = [vilkarType.ALDERSVILKARET];
+
 interface Props {
   behandling: Behandling;
   submitCallback: (props: any[]) => void;
@@ -24,8 +26,6 @@ interface Props {
 }
 
 export const AlderProsessStegInitPanel = (props: Props) => {
-  const RELEVANTE_VILKAR_KODER = [vilkarType.ALDERSVILKARET];
-
   const vilkarForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
@@ -42,24 +42,23 @@ export const AlderProsessStegInitPanel = (props: Props) => {
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.ALDER} tekstKode="Alder">
-      {() => {
-        const VilkarresultatMedOverstyringProsessIndexProps = {
-          ...props,
-          aksjonspunkter: [],
-          behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
-          vilkar: vilkarForSteg,
-          erOverstyrt: false,
-          overstyringApKode: '',
-          erMedlemskapsPanel: false,
-        };
-
-        return (
-          <VilkarresultatMedOverstyringProsessIndex
-            {...VilkarresultatMedOverstyringProsessIndexProps}
-            panelTittelKode="Alder"
-          />
-        );
-      }}
+      {() => (
+        <VilkarresultatMedOverstyringProsessIndex
+          submitCallback={props.submitCallback}
+          overrideReadOnly={props.overrideReadOnly}
+          kanOverstyreAccess={props.kanOverstyreAccess}
+          toggleOverstyring={props.toggleOverstyring}
+          visPeriodisering={props.visPeriodisering}
+          visAllePerioder={props.visAllePerioder}
+          aksjonspunkter={[]}
+          behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+          vilkar={vilkarForSteg}
+          erOverstyrt={false}
+          overstyringApKode=""
+          erMedlemskapsPanel={false}
+          panelTittelKode="Alder"
+        />
+      )}
     </ProsessDefaultInitPanel>
   );
 };

@@ -10,6 +10,8 @@ import {
 } from '@navikt/k9-sak-typescript-client/types';
 import { useMemo, type SetStateAction } from 'react';
 
+const RELEVANTE_VILKAR_KODER = [vilkarType.OMSORGENFORVILKARET];
+
 interface Props {
   behandling: Behandling;
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
@@ -27,8 +29,6 @@ interface Props {
 }
 
 export const OmsorgenForProsessStegInitPanel = (props: Props) => {
-  const RELEVANTE_VILKAR_KODER = [vilkarType.OMSORGENFORVILKARET];
-
   const vilkarForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];

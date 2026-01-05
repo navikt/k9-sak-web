@@ -12,6 +12,9 @@ import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapPros
 import { K9SakProsessApi } from './K9SakProsessApi';
 import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
 
+// Relevante vilkår for inngangsvilkår-panelet
+const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
+
 interface InngangsvilkarFortsProsessStegInitPanelProps {
   urlKode: string;
   behandling: Behandling;
@@ -57,9 +60,6 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
 
   // Hent standard props for å få tilgang til vilkår
 
-  // Relevante vilkår for inngangsvilkår-panelet
-  const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
-
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
     if (!vilkår) {
@@ -102,8 +102,8 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     const harApenAksjonspunkt = aksjonspunkter?.some(ap => {
       const kode = ap.definisjon;
       return (
-        (kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR || // OVERSTYR_MEDLEMSKAPSVILKAR
-          kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET) && // VURDER_OPPTJENINGSVILKARET
+        (kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR ||
+          kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET) &&
         ap.status === 'OPPR'
       );
     });
@@ -116,7 +116,7 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   }, [skalVisePanel, vilkarForSteg, aksjonspunkter]);
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt: true }, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {

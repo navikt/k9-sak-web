@@ -65,19 +65,21 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
   return (
     // Bruker ProsessDefaultInitPanel for å hente standard props og rendre legacy panel
     <ProsessDefaultInitPanel urlKode={prosessStegCodes.INNGANGSVILKAR} tekstKode="Behandlingspunkt.Inngangsvilkar">
-      {() => {
-        const SoknadsfristVilkarProsessIndexProps = {
-          ...props,
-          aksjonspunkter: relevanteAksjonspunkter,
-          vilkar: vilkarForSteg,
-          erOverstyrt,
-          soknadsfristStatus: restApiData.data?.soknadsfristStatus || { dokumentStatus: [] },
-        };
-
-        return (
-          <SoknadsfristVilkarProsessIndex {...SoknadsfristVilkarProsessIndexProps} panelTittelKode="Søknadsfrist" />
-        );
-      }}
+      {() => (
+        <SoknadsfristVilkarProsessIndex
+          submitCallback={props.submitCallback}
+          toggleOverstyring={props.toggleOverstyring}
+          overrideReadOnly={props.overrideReadOnly}
+          kanOverstyreAccess={props.kanOverstyreAccess}
+          kanEndrePåSøknadsopplysninger={props.kanEndrePåSøknadsopplysninger}
+          visAllePerioder={props.visAllePerioder}
+          aksjonspunkter={relevanteAksjonspunkter}
+          vilkar={vilkarForSteg}
+          erOverstyrt={erOverstyrt}
+          soknadsfristStatus={restApiData.data?.soknadsfristStatus || { dokumentStatus: [] }}
+          panelTittelKode="Søknadsfrist"
+        />
+      )}
     </ProsessDefaultInitPanel>
   );
 }

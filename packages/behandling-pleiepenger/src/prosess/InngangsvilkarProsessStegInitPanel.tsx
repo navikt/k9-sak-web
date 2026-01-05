@@ -13,8 +13,20 @@ import { K9SakProsessApi } from './K9SakProsessApi';
 import { OmsorgenForProsessStegInitPanel } from './OmsorgenForProsessStegInitPanel';
 import { SøknadsfristProsessStegInitPanel } from './SøknadsfristProsessStegInitPanel';
 
+// Relevante vilkår for inngangsvilkår-panelet
+const relevanteVilkårkoder = [
+  vilkarType.SOKNADSFRISTVILKARET,
+  vilkarType.ALDERSVILKARET,
+  vilkarType.OMSORGENFORVILKARET,
+];
+
+const relevanteAksjonspunktkoder = [
+  aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+  aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
+];
+
 interface InngangsvilkarProsessStegInitPanelProps {
-  // aksjonspunkter: Aksjonspunkt[];
   behandling: Behandling;
   submitCallback: (data: any) => Promise<any>;
   overrideReadOnly: boolean;
@@ -23,7 +35,6 @@ interface InngangsvilkarProsessStegInitPanelProps {
     employeeHasAccess: boolean;
   };
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
-  // vilkar: Vilkar[];
   visAllePerioder: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   overstyrteAksjonspunktKoder: string[];
@@ -31,12 +42,10 @@ interface InngangsvilkarProsessStegInitPanelProps {
 }
 
 export const InngangsvilkarProsessStegInitPanel = ({
-  // aksjonspunkter,
   submitCallback,
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  // vilkar,
   visAllePerioder,
   kanEndrePåSøknadsopplysninger,
   overstyrteAksjonspunktKoder,
@@ -56,21 +65,12 @@ export const InngangsvilkarProsessStegInitPanel = ({
   const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
   const PANEL_TEKST = 'Behandlingspunkt.Inngangsvilkar';
 
-  // Hent standard props for å få tilgang til vilkår
-
-  // Relevante vilkår for inngangsvilkår-panelet
-  const RELEVANTE_VILKAR_KODER = [
-    vilkarType.SOKNADSFRISTVILKARET,
-    vilkarType.ALDERSVILKARET,
-    vilkarType.OMSORGENFORVILKARET,
-  ];
-
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
     if (!vilkår) {
       return [];
     }
-    return vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+    return vilkår.filter(vilkar => relevanteVilkårkoder.includes(vilkar.vilkarType));
   }, [vilkår]);
 
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
@@ -107,10 +107,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
     const harApenAksjonspunkt = aksjonspunkter?.some(ap => {
       const kode = ap.definisjon;
       return (
-        (kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR ||
-          kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST ||
-          kode === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR) &&
-        ap.status === 'OPPR'
+        relevanteAksjonspunktkoder.some(relevantAksjonspunkt => relevantAksjonspunkt === kode) && ap.status === 'OPPR'
       );
     });
     if (harApenAksjonspunkt) {
@@ -120,14 +117,14 @@ export const InngangsvilkarProsessStegInitPanel = ({
     // Default tilstand
     return ProcessMenuStepType.default;
   }, [skalVisePanel, vilkarForSteg, aksjonspunkter]);
+
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt: true }, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   const harLastetData = vilkår !== undefined && aksjonspunkter !== undefined;
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel || !vilkår || !harLastetData || !erValgt) {
+  if (!skalVisePanel || !harLastetData || !erValgt) {
     return null;
   }
 
