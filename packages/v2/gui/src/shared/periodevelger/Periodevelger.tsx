@@ -84,7 +84,6 @@ const Periodevelger = ({
           size={size}
           validators={[
             ...(fromField.validators || []),
-            (value: string) => (value && dayjs(value).isValid() ? undefined : 'Datoen er påkrevd og må være gyldig'),
             (value: string) => {
               if (!value || !tilVerdi) return undefined;
               return dayjs(value).isAfter(dayjs(tilVerdi), 'day') ? `Kan ikke være etter "${toLabel}"` : undefined;
@@ -103,7 +102,6 @@ const Periodevelger = ({
           size={size}
           validators={[
             ...(toField.validators || []),
-            (value: string) => (value && dayjs(value).isValid() ? undefined : 'Datoen er påkrevd og må være gyldig'),
             (value: string) => {
               if (!value || !fraVerdi) return undefined;
               return dayjs(value).isSameOrBefore(dayjs(fraVerdi), 'day')
