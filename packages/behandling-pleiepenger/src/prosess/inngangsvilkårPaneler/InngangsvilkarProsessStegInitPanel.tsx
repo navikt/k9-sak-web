@@ -6,7 +6,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { HGrid, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from '../K9SakProsessApi';
 import { AlderProsessStegInitPanel } from './AlderProsessStegInitPanel';
@@ -52,11 +52,11 @@ export const InngangsvilkarProsessStegInitPanel = ({
   behandling,
   api,
 }: InngangsvilkarProsessStegInitPanelProps) => {
-  const { data: vilkår } = useQuery({
+  const { data: vilkår } = useSuspenseQuery({
     queryKey: ['vilkar', behandling.uuid],
     queryFn: () => api.getVilkår(behandling.uuid),
   });
-  const { data: aksjonspunkter } = useQuery({
+  const { data: aksjonspunkter } = useSuspenseQuery({
     queryKey: ['aksjonspunkter', behandling.uuid],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
   });
@@ -122,9 +122,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
-  const harLastetData = vilkår !== undefined && aksjonspunkter !== undefined;
-
-  if (!skalVisePanel || !harLastetData || !erValgt) {
+  if (!skalVisePanel || !erValgt) {
     return null;
   }
 

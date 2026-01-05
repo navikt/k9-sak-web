@@ -9,7 +9,7 @@ import {
   k9_kodeverk_behandling_BehandlingStatus,
   k9_sak_kontrakt_behandling_BehandlingDto,
 } from '@navikt/k9-sak-typescript-client/types';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './K9SakProsessApi';
 
@@ -56,12 +56,12 @@ export function UttakProsessStegInitPanel(props: Props) {
   const panelId = 'uttak';
   const panelTekst = 'Behandlingspunkt.Uttak';
 
-  const { data: aksjonspunkter = [] } = useQuery({
+  const { data: aksjonspunkter = [] } = useSuspenseQuery({
     queryKey: ['aksjonspunkter', props.behandling.uuid],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
   });
 
-  const { data: uttak } = useQuery({
+  const { data: uttak } = useSuspenseQuery({
     queryKey: ['uttak', props.behandling.uuid],
     queryFn: () => props.api.getUttaksplan(props.behandling.uuid),
   });
@@ -126,7 +126,7 @@ export function UttakProsessStegInitPanel(props: Props) {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, panelId, panelTekst, panelType);
 
-  if (!erValgt || !uttak) {
+  if (!erValgt) {
     return null;
   }
 

@@ -7,7 +7,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon } from '@navikt/k9-sak-typescript-client/types';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './K9SakProsessApi';
 
@@ -50,17 +50,17 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
 
   // Hent data ved bruk av eksisterende RequestApi-mønster
 
-  const { data: beregningsresultatUtbetaling } = useQuery({
+  const { data: beregningsresultatUtbetaling } = useSuspenseQuery({
     queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid],
     queryFn: () => props.api.getBeregningsresultatMedUtbetaling(props.behandling.uuid),
   });
 
-  const { data: personopplysninger } = useQuery({
+  const { data: personopplysninger } = useSuspenseQuery({
     queryKey: ['personopplysninger', props.behandling?.uuid],
     queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
   });
 
-  const { data: aksjonspunkter } = useQuery({
+  const { data: aksjonspunkter } = useSuspenseQuery({
     queryKey: ['aksjonspunkter', props.behandling?.uuid],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
     select: data =>
@@ -69,15 +69,15 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       ),
   });
 
-  const { data: arbeidsgiverOpplysningerPerId } = useQuery({
+  const { data: arbeidsgiverOpplysningerPerId } = useSuspenseQuery({
     queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling?.uuid],
     queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
   });
 
   // Beregn paneltype basert på beregningsresultat (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis ingen data, vis default (ingen status)
-    if (!beregningsresultatUtbetaling) {
+    // Hvis ingen data eller tomt objekt, vis default (ingen status)
+    if (!beregningsresultatUtbetaling?.perioder) {
       return ProcessMenuStepType.default;
     }
 
@@ -99,18 +99,6 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     return null;
   }
 
-  // Ikke vis panelet hvis data ikke er lastet ennå
-  // TODO: Bruk Suspense for datahenting i fremtiden
-  if (
-    !beregningsresultatUtbetaling ||
-    !personopplysninger ||
-    !aksjonspunkter ||
-    !arbeidsgiverOpplysningerPerId?.arbeidsgivere
-  ) {
-    return null;
-  }
-
-  // Legacy komponent krever deep copy og kodeverkkonvertering
   const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
   const readOnlySubmitButton = !harApentAksjonspunkt;
   if (BRUK_V2_TILKJENT_YTELSE) {

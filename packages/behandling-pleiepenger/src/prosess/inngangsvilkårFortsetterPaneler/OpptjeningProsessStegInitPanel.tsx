@@ -10,7 +10,7 @@ import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client/types';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, use, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from '../K9SakProsessApi';
@@ -35,7 +35,7 @@ interface Props {
 }
 
 export function OpptjeningProsessStegInitPanel(props: Props) {
-  const { data: fagsak } = useQuery({
+  const { data: fagsak } = useSuspenseQuery({
     queryKey: ['fagsak', props.saksnummer],
     queryFn: () => props.api.getFagsak(props.saksnummer),
   });
@@ -66,7 +66,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   }
 
   const data = restApiData.data;
-  if (!data || !fagsak) {
+  if (!data) {
     return null;
   }
 

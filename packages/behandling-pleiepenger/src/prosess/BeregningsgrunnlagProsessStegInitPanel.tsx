@@ -131,7 +131,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt || !beregningsgrunnlag) {
+  if (!erValgt) {
     return null;
   }
 
