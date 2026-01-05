@@ -154,14 +154,14 @@ export function VedtakProsessStegInitPanel(props: Props) {
     // Sjekk om det finnes åpne aksjonspunkter utenfor vedtakspanelet
     const harApneAksjonspunkterUtenforVedtak = aksjonspunkter?.some(
       ap =>
-        !vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon) &&
+        vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon) &&
         ap.status &&
         isAksjonspunktOpen(ap.status),
     );
 
     // Hvis det finnes åpne aksjonspunkter utenfor vedtak, vis default
     if (harApneAksjonspunkterUtenforVedtak) {
-      return ProcessMenuStepType.default;
+      return ProcessMenuStepType.warning;
     }
 
     // Sjekk behandlingsresultat
