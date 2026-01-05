@@ -80,7 +80,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode, arbeidsgivere }: Det
 
   const getInntektLabel = (inntekt: InntektspostFraRegisterDto) => {
     if (inntekt.ytelseType) {
-      return kodeverkNavnFraKode(inntekt.ytelseType, KodeverkType.FAGSAK_YTELSE);
+      return kodeverkNavnFraKode(inntekt.ytelseType, KodeverkType.OVERORDNET_YTELSE_TYPE);
     }
 
     const arbeidsgiverId = inntekt.arbeidsgiverIdentifikator ?? '';
