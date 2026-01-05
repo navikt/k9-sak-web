@@ -8,8 +8,8 @@ import { HGrid, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo } from 'react';
+import { K9SakProsessApi } from '../K9SakProsessApi';
 import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapProsessStegInitPanel';
-import { K9SakProsessApi } from './K9SakProsessApi';
 import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
 
 // Relevante vilkår for inngangsvilkår-panelet

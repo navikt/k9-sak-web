@@ -7,7 +7,7 @@ import {
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client/types';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];

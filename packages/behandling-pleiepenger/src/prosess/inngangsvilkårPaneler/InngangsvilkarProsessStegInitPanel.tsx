@@ -8,8 +8,8 @@ import { HGrid, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo } from 'react';
+import { K9SakProsessApi } from '../K9SakProsessApi';
 import { AlderProsessStegInitPanel } from './AlderProsessStegInitPanel';
-import { K9SakProsessApi } from './K9SakProsessApi';
 import { OmsorgenForProsessStegInitPanel } from './OmsorgenForProsessStegInitPanel';
 import { SøknadsfristProsessStegInitPanel } from './SøknadsfristProsessStegInitPanel';
 

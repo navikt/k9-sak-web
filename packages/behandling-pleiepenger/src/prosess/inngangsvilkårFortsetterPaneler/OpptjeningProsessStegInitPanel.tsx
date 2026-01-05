@@ -12,8 +12,8 @@ import {
 } from '@navikt/k9-sak-typescript-client/types';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, use, useMemo } from 'react';
-import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
-import { K9SakProsessApi } from './K9SakProsessApi';
+import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
+import { K9SakProsessApi } from '../K9SakProsessApi';
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
