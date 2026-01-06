@@ -3,7 +3,6 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 
@@ -12,15 +11,8 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FordelBeregningsgrunnlag.Title';
 
-  getAksjonspunktKoder = (featureToggles?: FeatureToggles) => {
-    if (featureToggles?.NY_INNTEKT_EGET_PANEL) {
-      return [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG, aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN];
-    }
-    return [
-      aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-      aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
-      aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD,
-    ];
+  getAksjonspunktKoder = () => {
+    return [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG, aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN];
   };
 
   getKomponent = props => {
@@ -37,7 +29,6 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
         submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
         formData={props.formData}
         setFormData={props.setFormData}
-        skalHåndtereNyInntekt={!props.featureToggles?.NY_INNTEKT_EGET_PANEL}
       />
     );
   };

@@ -1,20 +1,19 @@
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import { BodyShort, Detail, ErrorMessage, Fieldset, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { NavLink, useLocation } from 'react-router';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
+import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
 import { type TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { type FormState } from './FormState';
-import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
-import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
-import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 
 export type AksjonspunktGodkjenningData = {
   aksjonspunktKode: AksjonspunktDefinisjon;
@@ -40,7 +39,6 @@ export const AksjonspunktGodkjenningFieldArray = ({
   behandlingStatus,
 }: OwnProps) => {
   const location = useLocation();
-  const featureToggles = useContext(FeatureTogglesContext);
   const { control, getFieldState, trigger } = useFormContext<FormState>();
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
   const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
@@ -66,7 +64,6 @@ export const AksjonspunktGodkjenningFieldArray = ({
             : undefined;
 
         const isNyInntektEgetPanel =
-          featureToggles?.['NY_INNTEKT_EGET_PANEL'] &&
           data?.skjermlenke?.kilde === SkjermlenkeType.FAKTA_OM_FORDELING &&
           aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
 
