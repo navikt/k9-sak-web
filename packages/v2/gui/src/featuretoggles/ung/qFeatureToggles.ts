@@ -31,4 +31,6 @@ export const qFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: true,
   UNG_KLAGE: true,
   V2_MELDINGER_FOR_TILBAKE: true,
+  PROSESS_MENY_V2: false,
+  PROSESS_MENY_V2_VELGER: false,
 } satisfies UngFeatureToggles;
