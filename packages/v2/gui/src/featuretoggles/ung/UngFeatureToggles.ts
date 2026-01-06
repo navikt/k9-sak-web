@@ -23,7 +23,6 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   BRUK_V2_VILKAR_OPPTJENING: boolean;
   BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE: boolean;
   MARKERING_UTENLANDSTILSNITT: boolean;
-  AKTIVER_AVSLAG_IKKE_INNTEKTSTAP: boolean;
   VIS_ALLE_ASYNC_ERRORS: boolean;
   VIS_FERIEPENGER_PANEL: boolean;
   FLYTT_ALDERSVILKAR: boolean;
