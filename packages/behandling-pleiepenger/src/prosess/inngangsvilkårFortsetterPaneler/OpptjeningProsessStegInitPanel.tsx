@@ -13,7 +13,7 @@ import {
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, use, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
-import { K9SakProsessApi } from '../K9SakProsessApi';
+import { K9SakProsessApi } from '../api/K9SakProsessApi';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKARET];
 

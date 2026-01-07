@@ -12,7 +12,7 @@ import {
 } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
-import { K9SakProsessApi } from './K9SakProsessApi';
+import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 // Relevante aksjonspunkter for uttak
 const RELEVANTE_AKSJONSPUNKTER = [

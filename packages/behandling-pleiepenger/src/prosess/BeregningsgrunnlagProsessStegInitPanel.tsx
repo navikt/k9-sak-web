@@ -12,7 +12,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { K9SakProsessApi } from './K9SakProsessApi';
+import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,

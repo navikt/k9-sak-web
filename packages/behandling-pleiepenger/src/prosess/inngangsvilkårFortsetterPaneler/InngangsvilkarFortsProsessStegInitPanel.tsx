@@ -10,7 +10,7 @@ import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
-import { K9SakProsessApi } from '../K9SakProsessApi';
+import { K9SakProsessApi } from '../api/K9SakProsessApi';
 import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapProsessStegInitPanel';
 import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
 

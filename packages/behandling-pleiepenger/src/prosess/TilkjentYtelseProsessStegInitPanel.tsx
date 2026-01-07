@@ -10,7 +10,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
-import { K9SakProsessApi } from './K9SakProsessApi';
+import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 /**
  * Sjekker om beregningsresultatet kun inneholder avslåtte uttak

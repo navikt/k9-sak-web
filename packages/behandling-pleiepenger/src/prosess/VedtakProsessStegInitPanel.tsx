@@ -12,7 +12,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
-import { K9SakProsessApi } from './K9SakProsessApi';
+import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 interface Props {
   api: K9SakProsessApi;

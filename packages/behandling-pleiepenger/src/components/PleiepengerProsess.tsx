@@ -24,10 +24,10 @@ import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/
 import { Bleed, BoxNew } from '@navikt/ds-react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
+import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
 import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/inngangsvilkårFortsetterPaneler/InngangsvilkarFortsProsessStegInitPanel';
 import { InngangsvilkarProsessStegInitPanel } from '../prosess/inngangsvilkårPaneler/InngangsvilkarProsessStegInitPanel';
-import { K9SakProsessBackendClient } from '../prosess/K9SakProsessBackendClient';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
 import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
 import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
@@ -434,7 +434,6 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-
                   return (
                     <LegacyPanelAdapter
                       key={urlKode}
