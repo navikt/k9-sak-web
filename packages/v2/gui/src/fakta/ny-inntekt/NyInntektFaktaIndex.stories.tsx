@@ -705,3 +705,51 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
     });
   },
 };
+
+export const KanKunDeleOppMedGyldigDato: Story = {
+  args: {
+    readOnly: false,
+    beregningsgrunnlagListe: bgTilkommetAktivitetTrePerioderHelgMellom,
+    submitCallback: fn(),
+    beregningsgrunnlagVilkår: lagVilkår([
+      {
+        fom: '2023-04-10',
+        tom: '2023-04-28',
+        vurderesIBehandlingen: true,
+        erForlengelse: false,
+      },
+    ]),
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal ikke kunne dele opp uten å velge dato', async () => {
+      await expect(canvas.getByText('Del opp periode')).toBeInTheDocument();
+      await userEvent.click(canvas.getByText('Del opp periode'));
+
+      // Select period to split
+      await userEvent.selectOptions(
+        canvas.getByLabelText('Hvilken periode ønsker du å dele opp?'),
+        '10.04.2023 - 21.04.2023',
+      );
+
+      const splitButton = canvas.getAllByText('Del opp periode')[2]?.closest('button');
+      await expect(splitButton).toBeDisabled();
+
+      // Type invalid date
+      const dateInput = canvas.getByLabelText('Opprett ny vurdering fra');
+      await userEvent.type(dateInput, '24.04.2023');
+      await userEvent.tab();
+      await expect(splitButton).toBeDisabled();
+
+      // Clear input
+      await userEvent.clear(dateInput);
+      await expect(splitButton).toBeDisabled();
+
+      // Select valid date using picker
+      await userEvent.click(canvas.getByLabelText('Åpne datovelger'));
+      await userEvent.click(canvas.getByText('18'));
+
+      // Check enabled
+      await expect(splitButton).toBeEnabled();
+    });
+  },
+};
