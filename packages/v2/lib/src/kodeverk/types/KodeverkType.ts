@@ -24,6 +24,7 @@ export enum KodeverkType {
   RELATERT_YTELSE_TILSTAND = 'RelatertYtelseTilstand',
   RELATERT_YTELSE_TYPE = 'RelatertYtelseType',
   FAGSAK_YTELSE = 'FagsakYtelseType',
+  OVERORDNET_INNTEKT_YTELSE_TYPE = 'OverordnetInntektYtelseType',
   FORELDRE_TYPE = 'ForeldreType',
   FAMILIE_HENDELSE_TYPE = 'FamilieHendelseType',
   INNSYN_RESULTAT_TYPE = 'InnsynResultatType',

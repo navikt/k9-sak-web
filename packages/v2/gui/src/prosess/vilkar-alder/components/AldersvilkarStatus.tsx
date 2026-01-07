@@ -8,7 +8,7 @@ interface AldersVilkarAPProps {
   vilkarOppfylt: boolean;
   vilkarReferanse?: string;
   periode?: string;
-  begrunnelse: string;
+  begrunnelse: string | null;
 }
 
 const AldersVilkarStatus = ({ vilkarOppfylt, vilkarReferanse, periode, begrunnelse }: AldersVilkarAPProps) => (
