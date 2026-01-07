@@ -9,6 +9,8 @@ import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useContext, useMemo } from 'react';
 
+const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
+
 interface Props {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
@@ -36,7 +38,6 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
   // Hent standard props for å få tilgang til vilkår, aksjonspunkter og feature toggles
 
   // Relevante vilkår for medisinsk vilkår-panelet
-  const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {

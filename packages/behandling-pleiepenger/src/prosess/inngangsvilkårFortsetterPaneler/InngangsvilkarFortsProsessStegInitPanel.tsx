@@ -3,12 +3,13 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
+import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { HGrid, VStack } from '@navikt/ds-react';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
+import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useContext, useMemo } from 'react';
+import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../K9SakProsessApi';
 import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapProsessStegInitPanel';
 import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
@@ -33,6 +34,7 @@ interface InngangsvilkarFortsProsessStegInitPanelProps {
   api: K9SakProsessApi;
   isReadOnly: boolean;
   fagsak: Fagsak;
+  aksjonspunkterMedKodeverk: Aksjonspunkt[];
 }
 
 export const InngangsvilkarFortsProsessStegInitPanel = ({
@@ -45,7 +47,9 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   kanOverstyreAccess,
   toggleOverstyring,
   fagsak,
+  aksjonspunkterMedKodeverk,
 }: InngangsvilkarFortsProsessStegInitPanelProps) => {
+  const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery({
     queryKey: ['vilkar', behandling.uuid],
     queryFn: () => api.getVilkår(behandling.uuid),
@@ -68,6 +72,16 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     }
     return vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
   }, [vilkår]);
+
+  // TODO: Finn ut om dette blir riktig utledet
+  const perioderFraTidligereBehandlinger = useMemo(() => {
+    return hentAktivePerioderFraVilkar(vilkarForSteg, true);
+  }, [vilkarForSteg]);
+
+  const tabs =
+    perioderFraTidligereBehandlinger.length > 0
+      ? ['Perioder i behandlingen', 'Tidligere perioder']
+      : ['Perioder i behandlingen'];
 
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
@@ -136,33 +150,46 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   }
 
   return (
-    <HGrid columns={2} gap="space-24" marginBlock="space-16">
-      <VStack gap="space-48">
-        <OpptjeningProsessStegInitPanel
-          aksjonspunkter={aksjonspunkter}
-          api={api}
-          behandling={behandling}
-          isReadOnly={isReadOnly}
-          submitCallback={submitCallback}
-          overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
-          overrideReadOnly={overrideReadOnly}
-          kanOverstyreAccess={kanOverstyreAccess}
-          toggleOverstyring={toggleOverstyring}
-          vilkår={vilkarForSteg}
-          visAllePerioder={true}
-          visPeriodisering={false}
-          saksnummer={fagsak.saksnummer}
-        />
-        <FortsattMedlemskapProsessStegInitPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          overrideReadOnly={overrideReadOnly}
-          kanOverstyreAccess={kanOverstyreAccess}
-          toggleOverstyring={toggleOverstyring}
-          vilkår={vilkarForSteg}
-          behandling={behandling}
-        />
-      </VStack>
-    </HGrid>
+    <div>
+      {tabs.length > 1 && (
+        <Tabs defaultValue="0">
+          <Tabs.List>
+            {tabs.map((tab, index) => (
+              <Tabs.Tab key={tab} value={`${index}`} label={tab} onClick={() => setVisAllePerioder(index === 1)} />
+            ))}
+          </Tabs.List>
+        </Tabs>
+      )}
+      <HGrid columns={2} gap="space-24" marginBlock={tabs.length > 1 ? 'space-32' : 'space-16'}>
+        <VStack gap="space-48">
+          <OpptjeningProsessStegInitPanel
+            aksjonspunkter={aksjonspunkter}
+            api={api}
+            behandling={behandling}
+            isReadOnly={isReadOnly}
+            submitCallback={submitCallback}
+            overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
+            overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
+            toggleOverstyring={toggleOverstyring}
+            vilkår={vilkarForSteg}
+            visAllePerioder={visAllePerioder}
+            visPeriodisering={false}
+            saksnummer={fagsak.saksnummer}
+            aksjonspunkterMedKodeverk={aksjonspunkterMedKodeverk}
+          />
+          <FortsattMedlemskapProsessStegInitPanel
+            aksjonspunkter={aksjonspunkter}
+            submitCallback={submitCallback}
+            overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
+            toggleOverstyring={toggleOverstyring}
+            vilkår={vilkarForSteg}
+            behandling={behandling}
+            visAllePerioder={visAllePerioder}
+          />
+        </VStack>
+      </HGrid>
+    </div>
   );
 };

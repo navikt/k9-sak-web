@@ -20,6 +20,7 @@ interface Props {
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
   vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
   behandling: Behandling;
+  visAllePerioder: boolean;
 }
 
 /**
@@ -60,24 +61,20 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     return kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR;
   });
 
-  const VilkarresultatMedOverstyringProsessIndexProps = {
-    // ...props,
-    submitCallback: props.submitCallback,
-    overrideReadOnly: props.overrideReadOnly,
-    kanOverstyreAccess: props.kanOverstyreAccess,
-    toggleOverstyring: props.toggleOverstyring,
-    aksjonspunkter: relevanteAksjonspunkter,
-    behandling: { type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType },
-    vilkar: vilkarForSteg,
-    erOverstyrt: false,
-    overstyringApKode: '',
-    erMedlemskapsPanel: false,
-    visPeriodisering: false,
-    visAllePerioder: false,
-  };
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      {...VilkarresultatMedOverstyringProsessIndexProps}
+      submitCallback={props.submitCallback}
+      overrideReadOnly={props.overrideReadOnly}
+      kanOverstyreAccess={props.kanOverstyreAccess}
+      toggleOverstyring={props.toggleOverstyring}
+      aksjonspunkter={relevanteAksjonspunkter}
+      behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+      vilkar={vilkarForSteg}
+      erOverstyrt={false}
+      overstyringApKode=""
+      erMedlemskapsPanel={false}
+      visPeriodisering={false}
+      visAllePerioder={props.visAllePerioder}
       panelTittelKode="Medlemskap"
     />
   );

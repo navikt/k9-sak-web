@@ -67,16 +67,6 @@ export function UttakProsessStegInitPanel(props: Props) {
     queryFn: () => props.api.getUttaksplan(props.behandling.uuid),
   });
 
-  // Hent uttaksdata for å beregne paneltype
-  // const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-  //   uttak: any;
-  //   arbeidsforhold: any;
-  // }>([{ key: PleiepengerBehandlingApiKeys.UTTAK }, { key: PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD }], {
-  //   keepData: true,
-  //   suspendRequest: false,
-  //   updateTriggers: [],
-  // });
-
   // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Sjekk først om det finnes åpne aksjonspunkter for dette panelet

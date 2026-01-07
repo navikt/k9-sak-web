@@ -4,7 +4,7 @@ import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjen
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import OpptjeningVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndexV2.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_behandling_BehandlingType,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
@@ -14,6 +14,8 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, use, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from '../K9SakProsessApi';
+
+const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKARET];
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
@@ -32,6 +34,7 @@ interface Props {
   isReadOnly: boolean;
   api: K9SakProsessApi;
   saksnummer: string;
+  aksjonspunkterMedKodeverk: Aksjonspunkt[];
 }
 
 export function OpptjeningProsessStegInitPanel(props: Props) {
@@ -41,8 +44,6 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   });
   const { BRUK_V2_VILKAR_OPPTJENING } = use(FeatureTogglesContext);
   // Hent standard props for å få tilgang til vilkår
-
-  const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKARET];
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     opptjening: any;
@@ -94,33 +95,40 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         kanOverstyreAccess={props.kanOverstyreAccess}
         toggleOverstyring={props.toggleOverstyring}
         visPeriodisering={false}
-        visAllePerioder={false}
+        visAllePerioder={props.visAllePerioder}
       />
     );
   }
   if (BRUK_V2_VILKAR_OPPTJENING) {
-    const OpptjeningVilkarProsessIndexV2Props = {
-      submitCallback: props.submitCallback,
-      isReadOnly: props.isReadOnly,
-      behandling: props.behandling,
-      aksjonspunkter: relevanteAksjonspunkter,
-      opptjening: data.opptjening,
-      visAllePerioder: false,
-      readOnlySubmitButton: false,
-      vilkar: vilkarForSteg,
-      lovReferanse: vilkarForSteg[0].lovReferanse,
-      isAksjonspunktOpen,
-      fagsak,
-    };
-    return <OpptjeningVilkarProsessIndexV2 {...OpptjeningVilkarProsessIndexV2Props} />;
+    return (
+      <OpptjeningVilkarProsessIndexV2
+        submitCallback={props.submitCallback}
+        isReadOnly={props.isReadOnly}
+        behandling={props.behandling}
+        aksjonspunkter={relevanteAksjonspunkter}
+        opptjening={data.opptjening}
+        visAllePerioder={props.visAllePerioder}
+        readOnlySubmitButton={false}
+        vilkar={vilkarForSteg}
+        lovReferanse={vilkarForSteg[0].lovReferanse}
+        isAksjonspunktOpen={isAksjonspunktOpen}
+        fagsak={fagsak}
+      />
+    );
   }
-  const OpptjeningVilkarProsessIndexProps = {
-    ...props,
-    fagsak: { sakstype: fagsak.sakstype },
-    opptjening: data.opptjening,
-    vilkar: vilkarForSteg,
-    isAksjonspunktOpen,
-    readOnlySubmitButton: false,
-  };
-  return <OpptjeningVilkarProsessIndex {...OpptjeningVilkarProsessIndexProps} />;
+
+  return (
+    <OpptjeningVilkarProsessIndex
+      behandling={props.behandling}
+      submitCallback={props.submitCallback}
+      isReadOnly={props.isReadOnly}
+      aksjonspunkter={props.aksjonspunkterMedKodeverk}
+      fagsak={{ sakstype: fagsak.sakstype }}
+      opptjening={data.opptjening}
+      vilkar={vilkarForSteg}
+      isAksjonspunktOpen={isAksjonspunktOpen}
+      readOnlySubmitButton={false}
+      visAllePerioder={props.visAllePerioder}
+    />
+  );
 }

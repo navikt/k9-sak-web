@@ -1,8 +1,5 @@
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -13,6 +10,11 @@ import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/Prose
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+
+const RELEVANTE_AKSJONSPUNKTER = [
+  AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+  AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+];
 
 interface Props {
   behandling: Behandling;
@@ -81,10 +83,8 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
-    ap =>
-      ap.definisjon.kode === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_FEILUTBETALING ||
-      ap.definisjon.kode === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap =>
+    RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon.kode),
   );
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;

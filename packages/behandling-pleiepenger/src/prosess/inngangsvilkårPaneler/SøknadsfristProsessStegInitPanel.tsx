@@ -9,6 +9,12 @@ import {
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
 
+const RELEVANTE_VILKAR_KODER = [vilkarType.SOKNADSFRISTVILKARET];
+const RELEVANTE_AKSJONSPUNKT_KODER = [
+  aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+];
+
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   submitCallback: (data: any) => Promise<any>;
@@ -33,9 +39,6 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
     updateTriggers: [],
   });
 
-  // Relevante vilkår for inngangsvilkår-panelet
-  const RELEVANTE_VILKAR_KODER = [vilkarType.SOKNADSFRISTVILKARET];
-
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
     if (!props.vilkår) {
@@ -48,10 +51,7 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
 
   const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
     const kode = ap.definisjon;
-    return (
-      kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR ||
-      kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST
-    );
+    return RELEVANTE_AKSJONSPUNKT_KODER.some(relevantKode => relevantKode === kode);
   });
 
   if (!skalVisePanel) {
