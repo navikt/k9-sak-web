@@ -14,7 +14,7 @@ const RELEVANTE_VILKAR_KODER = [vilkarType.OMSORGENFORVILKARET];
 interface Props {
   behandling: Behandling;
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (props: any[]) => void;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -46,6 +46,10 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
 
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR);
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, relevanteAksjonspunkter);
+  };
+
   return (
     <VilkarresultatMedOverstyringProsessIndex
       aksjonspunkter={relevanteAksjonspunkter}
@@ -55,7 +59,7 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
       overstyringApKode={aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR}
       erMedlemskapsPanel={false}
       panelTittelKode="Omsorg"
-      submitCallback={props.submitCallback}
+      submitCallback={handleSubmit}
       overrideReadOnly={props.overrideReadOnly}
       kanOverstyreAccess={props.kanOverstyreAccess}
       toggleOverstyring={props.toggleOverstyring}

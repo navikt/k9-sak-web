@@ -11,7 +11,7 @@ const RELEVANTE_VILKAR_KODER = [vilkarType.ALDERSVILKARET];
 
 interface Props {
   behandling: Behandling;
-  submitCallback: (props: any[]) => void;
+  submitCallback: (data: any) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;

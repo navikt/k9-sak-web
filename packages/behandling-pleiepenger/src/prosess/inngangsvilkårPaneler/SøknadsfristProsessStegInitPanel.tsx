@@ -18,7 +18,7 @@ const RELEVANTE_AKSJONSPUNKT_KODER = [
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -62,9 +62,13 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
 
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, relevanteAksjonspunkter);
+  };
+
   return (
     <SoknadsfristVilkarProsessIndex
-      submitCallback={props.submitCallback}
+      submitCallback={handleSubmit}
       toggleOverstyring={props.toggleOverstyring}
       overrideReadOnly={props.overrideReadOnly}
       kanOverstyreAccess={props.kanOverstyreAccess}

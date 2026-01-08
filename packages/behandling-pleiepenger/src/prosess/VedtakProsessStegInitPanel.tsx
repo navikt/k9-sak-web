@@ -9,6 +9,7 @@ import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/u
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
@@ -21,7 +22,7 @@ interface Props {
   isReadOnly: boolean;
   lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
 }
 
 /**
@@ -111,22 +112,22 @@ export function VedtakProsessStegInitPanel(props: Props) {
   );
 
   // Aksjonspunkter som tilhører vedtakspanelet
-  // const vedtakAksjonspunkter = useMemo(() => {
-  //   const vedtakAksjonspunktKoder = [
-  //     aksjonspunktCodes.FORESLA_VEDTAK,
-  //     aksjonspunktCodes.FATTER_VEDTAK,
-  //     aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-  //     aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-  //     aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-  //     aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-  //     aksjonspunktCodes.VURDERE_DOKUMENT,
-  //     aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-  //     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
-  //     aksjonspunktCodes.SJEKK_TILBAKEKREVING,
-  //   ];
+  const vedtakAksjonspunkter = useMemo(() => {
+    const vedtakAksjonspunktKoder = [
+      aksjonspunktCodes.FORESLA_VEDTAK,
+      aksjonspunktCodes.FATTER_VEDTAK,
+      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+      aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+      aksjonspunktCodes.VURDERE_DOKUMENT,
+      aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
+      aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
+      aksjonspunktCodes.SJEKK_TILBAKEKREVING,
+    ];
 
-  //   return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
-  // }, [aksjonspunkter]);
+    return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
+  }, [aksjonspunkter]);
 
   // Beregn paneltype basert på vedtaksstatus (for menystatusindikator)
   // Dette er kompleks logikk som matcher findStatusForVedtak fra legacy-koden
@@ -190,6 +191,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, vedtakAksjonspunkter);
+  };
+
   return (
     <VedtakProsessIndex
       isReadOnly={props.isReadOnly}
@@ -202,7 +207,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       behandling={behandlingV2}
       beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkår}
-      submitCallback={props.submitCallback}
+      submitCallback={handleSubmit}
       simuleringResultat={simuleringResultat}
       tilbakekrevingvalg={tilbakekrevingvalg}
       ytelseTypeKode={behandlingV2?.sakstype}

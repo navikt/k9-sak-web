@@ -7,7 +7,10 @@ import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon } from '@navikt/k9-sak-typescript-client/types';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+} from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
@@ -31,7 +34,7 @@ interface Props {
   behandling: Behandling;
   fagsak: Fagsak;
   isReadOnly: boolean;
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
 }
 
 /**
@@ -105,6 +108,10 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, aksjonspunkter);
+  };
+
   const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
   const readOnlySubmitButton = !harApentAksjonspunkt;
   if (BRUK_V2_TILKJENT_YTELSE) {
@@ -116,7 +123,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
         aksjonspunkter={aksjonspunkter}
         isReadOnly={props.isReadOnly}
-        submitCallback={props.submitCallback}
+        submitCallback={handleSubmit}
         readOnlySubmitButton={readOnlySubmitButton}
       />
     );
@@ -128,7 +135,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
       aksjonspunkter={aksjonspunkter}
       isReadOnly={props.isReadOnly}
-      submitCallback={props.submitCallback}
+      submitCallback={handleSubmit}
       readOnlySubmitButton={readOnlySubmitButton}
     />
   );

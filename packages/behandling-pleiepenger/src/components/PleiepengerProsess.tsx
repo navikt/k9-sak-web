@@ -23,6 +23,7 @@ import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Kodeve
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { Bleed, BoxNew } from '@navikt/ds-react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
+import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
 import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
@@ -268,6 +269,27 @@ const PleiepengerProsess = ({
 
   const k9SakProsessApi = new K9SakProsessBackendClient();
 
+  // Modernisert versjon uten nestede callbacks (kan brukes i v2 meny)
+  const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
+    fagsak,
+    behandling,
+    lagreAksjonspunkter,
+    lagreOverstyrteAksjonspunkter,
+    lagreDokumentdata,
+    onIverksetterVedtak: useCallback(() => {
+      toggleIverksetterVedtakModal(true);
+    }, []),
+    onFatterVedtak: useCallback(() => {
+      toggleFatterVedtakModal(true);
+    }, []),
+    onRevurdering: useCallback(() => {
+      opneSokeside();
+    }, [opneSokeside]),
+    onDefault: useCallback(() => {
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+    }, [oppdaterProsessStegOgFaktaPanelIUrl]),
+  });
+
   if (useV2Menu) {
     // - v2 ProsessMeny
     // - Legacy ProsessStegPanel for innholdsrendering (unngår Redux-form problemer)
@@ -298,7 +320,7 @@ const PleiepengerProsess = ({
             aksjonspunkter: data.aksjonspunkter,
             vilkar: data.vilkar,
             alleKodeverk,
-            submitCallback: lagreAksjonspunkter,
+            submitCallback: bekreftAksjonspunktCallback,
             previewCallback,
             previewFptilbakeCallback,
             isReadOnly: !rettigheter.writeAccess.isEnabled,
@@ -331,7 +353,7 @@ const PleiepengerProsess = ({
                     return (
                       <InngangsvilkarProsessStegInitPanel
                         key={urlKode}
-                        submitCallback={lagreAksjonspunkter}
+                        submitCallback={bekreftAksjonspunktCallback}
                         overrideReadOnly={isReadOnly}
                         kanOverstyreAccess={rettigheter.kanOverstyreAccess}
                         kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
@@ -356,7 +378,7 @@ const PleiepengerProsess = ({
                       <InngangsvilkarFortsProsessStegInitPanel
                         key={urlKode}
                         urlKode={urlKode}
-                        submitCallback={lagreAksjonspunkter}
+                        submitCallback={bekreftAksjonspunktCallback}
                         overrideReadOnly={isReadOnly}
                         kanOverstyreAccess={rettigheter.kanOverstyreAccess}
                         kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
@@ -366,6 +388,7 @@ const PleiepengerProsess = ({
                         api={k9SakProsessApi}
                         isReadOnly={isReadOnly}
                         fagsak={fagsak}
+                        aksjonspunkterMedKodeverk={data.aksjonspunkter}
                       />
                     );
                   }
@@ -389,19 +412,20 @@ const PleiepengerProsess = ({
                         behandling={behandling}
                         fagsak={fagsak}
                         isReadOnly={isReadOnly}
-                        submitCallback={lagreAksjonspunkter}
+                        submitCallback={bekreftAksjonspunktCallback}
                       />
                     );
                   }
                   if (urlKode === 'simulering') {
                     return (
                       <SimuleringProsessStegInitPanel
+                        api={k9SakProsessApi}
                         key={urlKode}
                         behandling={behandling}
-                        aksjonspunkter={data.aksjonspunkter}
+                        aksjonspunkterMedKodeverk={data.aksjonspunkter}
                         fagsak={fagsak}
                         isReadOnly={isReadOnly}
-                        submitCallback={lagreAksjonspunkter}
+                        submitCallback={bekreftAksjonspunktCallback}
                         previewFptilbakeCallback={previewFptilbakeCallback}
                       />
                     );
@@ -412,7 +436,7 @@ const PleiepengerProsess = ({
                         key={urlKode}
                         api={k9SakProsessApi}
                         behandling={behandling}
-                        submitCallback={lagreAksjonspunkter}
+                        submitCallback={bekreftAksjonspunktCallback}
                         formData={formData}
                         setFormData={setFormData}
                         alleKodeverk={alleKodeverk}
@@ -428,7 +452,7 @@ const PleiepengerProsess = ({
                         behandling={behandling}
                         hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
                         isReadOnly={isReadOnly}
-                        submitCallback={lagreAksjonspunkter}
+                        submitCallback={bekreftAksjonspunktCallback}
                         previewCallback={previewCallback}
                         lagreDokumentdata={lagreDokumentdata}
                       />

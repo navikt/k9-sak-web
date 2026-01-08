@@ -11,6 +11,7 @@ import { useContext, useMemo } from 'react';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 
@@ -26,7 +27,7 @@ const BEREGNING_AKSJONSPUNKT_KODER = [
 interface Props {
   api: K9SakProsessApi;
   behandling: Behandling;
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   formData: any;
   setFormData: (data: any) => void;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -76,9 +77,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   // Beregn paneltype basert på aksjonspunkter og vilkår (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Sjekk om det finnes åpne aksjonspunkter for beregning
-    const harApentAksjonspunkt = aksjonspunkter?.some(
-      ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon) && ap.status === 'OPPR' && !ap.erAktivt,
-    );
+    const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR' && !ap.erAktivt);
 
     if (harApentAksjonspunkt) {
       return ProcessMenuStepType.warning;
@@ -108,13 +107,9 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
 
     // Hvis ingen vilkår, sjekk aksjonspunkter
     if (aksjonspunkter && aksjonspunkter.length > 0) {
-      const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
-        BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon),
-      );
-
-      if (relevanteAksjonspunkter.length > 0) {
+      if (aksjonspunkter.length > 0) {
         // Hvis det finnes åpne aksjonspunkter, vis default (ikke vurdert)
-        const harApneAksjonspunkter = relevanteAksjonspunkter.some(ap => ap.status === 'OPPR');
+        const harApneAksjonspunkter = aksjonspunkter.some(ap => ap.status === 'OPPR');
         if (harApneAksjonspunkter) {
           return ProcessMenuStepType.default;
         }
@@ -147,12 +142,16 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, aksjonspunkter);
+  };
+
   return (
     <BeregningsgrunnlagProsessIndex
       beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
       beregningsgrunnlagListe={beregningsgrunnlag}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      submitCallback={submitData => props.submitCallback(transformBeregningValues(submitData, true))}
+      submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
       kodeverkSamling={props.alleKodeverk}
       setFormData={props.setFormData}

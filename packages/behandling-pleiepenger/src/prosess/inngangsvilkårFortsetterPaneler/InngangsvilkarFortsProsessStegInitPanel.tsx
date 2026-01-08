@@ -8,6 +8,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
@@ -20,7 +21,7 @@ const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJ
 interface InngangsvilkarFortsProsessStegInitPanelProps {
   urlKode: string;
   behandling: Behandling;
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -28,7 +29,6 @@ interface InngangsvilkarFortsProsessStegInitPanelProps {
   };
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
   // vilkar: Vilkar[];
-  visAllePerioder: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   overstyrteAksjonspunktKoder: string[];
   api: K9SakProsessApi;

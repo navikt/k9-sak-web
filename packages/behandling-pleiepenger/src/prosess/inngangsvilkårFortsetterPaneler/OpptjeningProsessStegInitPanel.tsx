@@ -19,7 +19,7 @@ const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKARET];
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -84,6 +84,10 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
 
   const isAksjonspunktOpen = relevanteAksjonspunkter.some(ap => ap.status === 'OPPR');
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, relevanteAksjonspunkter);
+  };
+
   if (erAlleVilkårVurdert) {
     return (
       <VilkarresultatMedOverstyringProsessIndex
@@ -94,7 +98,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         erOverstyrt={false}
         overstyringApKode=""
         erMedlemskapsPanel={false}
-        submitCallback={props.submitCallback}
+        submitCallback={handleSubmit}
         overrideReadOnly={props.overrideReadOnly}
         kanOverstyreAccess={props.kanOverstyreAccess}
         toggleOverstyring={props.toggleOverstyring}
@@ -106,7 +110,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   if (BRUK_V2_VILKAR_OPPTJENING) {
     return (
       <OpptjeningVilkarProsessIndexV2
-        submitCallback={props.submitCallback}
+        submitCallback={handleSubmit}
         isReadOnly={props.isReadOnly}
         behandling={props.behandling}
         aksjonspunkter={relevanteAksjonspunkter}
@@ -124,7 +128,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   return (
     <OpptjeningVilkarProsessIndex
       behandling={props.behandling}
-      submitCallback={props.submitCallback}
+      submitCallback={handleSubmit}
       isReadOnly={props.isReadOnly}
       aksjonspunkter={props.aksjonspunkterMedKodeverk}
       fagsak={{ sakstype: fagsak.sakstype }}

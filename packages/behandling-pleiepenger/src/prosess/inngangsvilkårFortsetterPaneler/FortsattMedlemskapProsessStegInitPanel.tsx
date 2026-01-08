@@ -11,7 +11,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react';
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -61,9 +61,13 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     return kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR;
   });
 
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, relevanteAksjonspunkter);
+  };
+
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      submitCallback={props.submitCallback}
+      submitCallback={handleSubmit}
       overrideReadOnly={props.overrideReadOnly}
       kanOverstyreAccess={props.kanOverstyreAccess}
       toggleOverstyring={props.toggleOverstyring}
