@@ -52,17 +52,17 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   // Hent data ved bruk av eksisterende RequestApi-mønster
 
   const { data: beregningsresultatUtbetaling } = useSuspenseQuery({
-    queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid],
+    queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid, props.behandling?.versjon],
     queryFn: () => props.api.getBeregningsresultatMedUtbetaling(props.behandling.uuid),
   });
 
   const { data: personopplysninger } = useSuspenseQuery({
-    queryKey: ['personopplysninger', props.behandling?.uuid],
+    queryKey: ['personopplysninger', props.behandling?.uuid, props.behandling?.versjon],
     queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
   });
 
   const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling?.uuid],
+    queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
     select: data =>
       data.filter(
@@ -71,7 +71,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   });
 
   const { data: arbeidsgiverOpplysningerPerId } = useSuspenseQuery({
-    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling?.uuid],
+    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling?.uuid, props.behandling?.versjon],
     queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
   });
 

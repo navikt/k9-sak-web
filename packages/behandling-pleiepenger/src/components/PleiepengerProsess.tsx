@@ -425,7 +425,7 @@ const PleiepengerProsess = ({
                       <VedtakProsessStegInitPanel
                         key={urlKode}
                         api={k9SakProsessApi}
-                        behandlingUuid={behandling.uuid}
+                        behandling={behandling}
                         hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
                         isReadOnly={isReadOnly}
                         submitCallback={lagreAksjonspunkter}

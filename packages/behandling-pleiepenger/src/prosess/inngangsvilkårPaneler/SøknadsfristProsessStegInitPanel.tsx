@@ -2,6 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 import { SøknadsfristTilstand } from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/types/SøknadsfristTilstand.js';
+import { Behandling } from '@k9-sak-web/types';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
@@ -28,6 +29,7 @@ interface Props {
   vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
   visAllePerioder: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
+  behandling: Behandling;
 }
 
 export function SøknadsfristProsessStegInitPanel(props: Props) {
@@ -36,7 +38,7 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
   }>([{ key: PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS }], {
     keepData: true,
     suspendRequest: false,
-    updateTriggers: [],
+    updateTriggers: [props.behandling.versjon],
   });
 
   // Filtrer vilkår som er relevante for dette panelet

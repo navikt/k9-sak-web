@@ -4,7 +4,6 @@ import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponent
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router';
-import { ValgtPanelProvider } from './context/ValgtPanelContext.js';
 import styles from './prosessMeny.module.css';
 import { ProsessPanelContext } from './ProsessPanelContext.js';
 import type { PanelRegistrering, ProsessPanelProps } from './types/panelTypes.js';
@@ -111,14 +110,21 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
     if (urlPanelId && paneler.has(urlPanelId)) {
       // URL har gyldig panel-ID, bruk den
       setValgtPanelId(urlPanelId);
-    } else if (paneler.size > 0 && !valgtPanelId) {
+    } else if (paneler.size > 0 && urlPanelId === 'default') {
       // Ingen valgt panel, velg første
-      const førstePanelet = Array.from(paneler.values())[0];
-      if (førstePanelet) {
-        setValgtPanelId(førstePanelet.id);
+      const panelMedAksjonspunkt = Array.from(paneler.values()).find(
+        panel => panel.type === ProcessMenuStepType.warning,
+      );
+      const allePanelerErFerdigbehandlet = Array.from(paneler.values()).every(
+        panel => panel.type === ProcessMenuStepType.danger || panel.type === ProcessMenuStepType.success,
+      );
+      const sistePanel = Array.from(paneler.values())[paneler.size - 1];
+      const valgtPanel = allePanelerErFerdigbehandlet ? sistePanel : panelMedAksjonspunkt;
+      if (valgtPanel) {
+        setValgtPanelId(valgtPanel.id);
         setSearchParams((forrige: URLSearchParams) => {
           const neste = new URLSearchParams(forrige);
-          neste.set('punkt', førstePanelet.id);
+          neste.set('punkt', valgtPanel.id);
           return neste;
         });
       }
@@ -156,22 +162,20 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
 
   return (
     <LoadingPanelSuspense>
-      <ValgtPanelProvider value={{ valgtPanelId }}>
-        <Box.New paddingInline="6">
-          <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
-          {/* Render children med injiserte props */}
-          <ProsessPanelContext.Provider
-            value={{
-              onRegister: handleRegister,
-              onUnregister: handleUnregister,
-              onUpdateType: handleUpdateType,
-              erValgt: id => id === valgtPanelId,
-            }}
-          >
-            {children}
-          </ProsessPanelContext.Provider>
-        </Box.New>
-      </ValgtPanelProvider>
+      <Box.New paddingInline="6">
+        <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
+        {/* Render children med injiserte props */}
+        <ProsessPanelContext.Provider
+          value={{
+            onRegister: handleRegister,
+            onUnregister: handleUnregister,
+            onUpdateType: handleUpdateType,
+            erValgt: id => id === valgtPanelId,
+          }}
+        >
+          {children}
+        </ProsessPanelContext.Provider>
+      </Box.New>
     </LoadingPanelSuspense>
   );
 }

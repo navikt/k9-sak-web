@@ -54,11 +54,11 @@ export const InngangsvilkarProsessStegInitPanel = ({
 }: InngangsvilkarProsessStegInitPanelProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', behandling.uuid],
+    queryKey: ['vilkar', behandling.uuid, behandling.versjon],
     queryFn: () => api.getVilkår(behandling.uuid),
   });
   const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', behandling.uuid],
+    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
   });
   const context = useContext(ProsessPanelContext);
@@ -157,6 +157,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
       <HGrid columns={2} marginBlock={tabs.length > 1 ? 'space-32' : 'space-16'}>
         <VStack gap="space-48">
           <SøknadsfristProsessStegInitPanel
+            behandling={behandling}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
@@ -186,7 +187,6 @@ export const InngangsvilkarProsessStegInitPanel = ({
           overrideReadOnly={overrideReadOnly}
           kanOverstyreAccess={kanOverstyreAccess}
           toggleOverstyring={toggleOverstyring}
-          visPeriodisering={false}
           vilkår={vilkår}
           visAllePerioder={visAllePerioder}
           overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}

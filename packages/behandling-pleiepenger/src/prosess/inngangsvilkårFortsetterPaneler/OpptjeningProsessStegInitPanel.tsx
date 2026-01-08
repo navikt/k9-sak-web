@@ -39,7 +39,7 @@ interface Props {
 
 export function OpptjeningProsessStegInitPanel(props: Props) {
   const { data: fagsak } = useSuspenseQuery({
-    queryKey: ['fagsak', props.saksnummer],
+    queryKey: ['fagsak', props.saksnummer, props.behandling.versjon],
     queryFn: () => props.api.getFagsak(props.saksnummer),
   });
   const { BRUK_V2_VILKAR_OPPTJENING } = use(FeatureTogglesContext);
@@ -47,7 +47,11 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     opptjening: any;
-  }>([{ key: PleiepengerBehandlingApiKeys.OPPTJENING }], { keepData: true, suspendRequest: false, updateTriggers: [] });
+  }>([{ key: PleiepengerBehandlingApiKeys.OPPTJENING }], {
+    keepData: true,
+    suspendRequest: false,
+    updateTriggers: [props.behandling.versjon],
+  });
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {

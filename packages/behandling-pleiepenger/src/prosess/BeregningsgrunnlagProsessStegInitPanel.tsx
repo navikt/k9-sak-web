@@ -48,28 +48,28 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   const PANEL_TEKST = 'Behandlingspunkt.Beregning';
 
   const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling?.uuid],
+    queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
     select: data => data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
   });
 
   const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', props.behandling.uuid],
+    queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
     queryFn: () => props.api.getVilkår(props.behandling.uuid),
   });
 
   const { data: beregningreferanserTilVurdering = [] } = useSuspenseQuery({
-    queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid],
+    queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid, props.behandling.versjon],
     queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
   });
 
   const { data: beregningsgrunnlag } = useSuspenseQuery({
-    queryKey: ['beregningsgrunnlag', props.behandling.uuid],
+    queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
     queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
   });
 
   const { data: arbeidsgiverOpplysningerPerId = [] } = useSuspenseQuery({
-    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid],
+    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
     queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
   });
 

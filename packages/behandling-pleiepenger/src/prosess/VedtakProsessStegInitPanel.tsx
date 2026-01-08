@@ -16,7 +16,7 @@ import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 interface Props {
   api: K9SakProsessApi;
-  behandlingUuid: string;
+  behandling: Behandling;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
   isReadOnly: boolean;
   lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
@@ -46,53 +46,53 @@ export function VedtakProsessStegInitPanel(props: Props) {
   const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
 
   const { data: behandlingV2 } = useSuspenseQuery({
-    queryKey: ['behandling', props.behandlingUuid],
-    queryFn: () => props.api.getBehandling(props.behandlingUuid),
+    queryKey: ['behandling', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getBehandling(props.behandling.uuid),
   });
 
   const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandlingUuid],
-    queryFn: () => props.api.getAksjonspunkter(props.behandlingUuid),
+    queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
   });
 
   const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', props.behandlingUuid],
-    queryFn: () => props.api.getVilkår(props.behandlingUuid),
+    queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getVilkår(props.behandling.uuid),
   });
 
   const { data: arbeidsgiverOpplysningerPerId } = useSuspenseQuery({
-    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandlingUuid],
-    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandlingUuid),
+    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
   });
 
   const { data: beregningsgrunnlag = [] } = useSuspenseQuery({
-    queryKey: ['beregningsgrunnlag', props.behandlingUuid],
-    queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandlingUuid),
+    queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
   });
 
   const { data: simuleringResultat } = useSuspenseQuery({
-    queryKey: ['simuleringResultat', props.behandlingUuid],
-    queryFn: () => props.api.getSimuleringResultat(props.behandlingUuid),
+    queryKey: ['simuleringResultat', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getSimuleringResultat(props.behandling.uuid),
   });
 
   const { data: tilbakekrevingvalg } = useSuspenseQuery({
-    queryKey: ['tilbakekrevingvalg', props.behandlingUuid],
-    queryFn: () => props.api.getTilbakekrevingValg(props.behandlingUuid),
+    queryKey: ['tilbakekrevingvalg', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getTilbakekrevingValg(props.behandling.uuid),
   });
 
   const { data: overlappendeYtelser } = useSuspenseQuery({
-    queryKey: ['overlappendeYtelser', props.behandlingUuid],
-    queryFn: () => props.api.getHOverlappendeYtelser(props.behandlingUuid),
+    queryKey: ['overlappendeYtelser', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getHOverlappendeYtelser(props.behandling.uuid),
   });
 
   const { data: personopplysninger } = useSuspenseQuery({
-    queryKey: ['personopplysninger', props.behandlingUuid],
-    queryFn: () => props.api.getPersonopplysninger(props.behandlingUuid),
+    queryKey: ['personopplysninger', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
   });
 
   const { data: medlemskap } = useSuspenseQuery({
-    queryKey: ['medlemskap', props.behandlingUuid],
-    queryFn: () => props.api.getMedlemskap(props.behandlingUuid),
+    queryKey: ['medlemskap', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getMedlemskap(props.behandling.uuid),
   });
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
@@ -107,26 +107,26 @@ export function VedtakProsessStegInitPanel(props: Props) {
       { key: PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE },
       { key: PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER },
     ],
-    { keepData: true, suspendRequest: false, updateTriggers: [] },
+    { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
   );
 
   // Aksjonspunkter som tilhører vedtakspanelet
-  const vedtakAksjonspunkter = useMemo(() => {
-    const vedtakAksjonspunktKoder = [
-      aksjonspunktCodes.FORESLA_VEDTAK,
-      aksjonspunktCodes.FATTER_VEDTAK,
-      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-      aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-      aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-      aksjonspunktCodes.VURDERE_DOKUMENT,
-      aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-      aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
-      aksjonspunktCodes.SJEKK_TILBAKEKREVING,
-    ];
+  // const vedtakAksjonspunkter = useMemo(() => {
+  //   const vedtakAksjonspunktKoder = [
+  //     aksjonspunktCodes.FORESLA_VEDTAK,
+  //     aksjonspunktCodes.FATTER_VEDTAK,
+  //     aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+  //     aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+  //     aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+  //     aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+  //     aksjonspunktCodes.VURDERE_DOKUMENT,
+  //     aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
+  //     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
+  //     aksjonspunktCodes.SJEKK_TILBAKEKREVING,
+  //   ];
 
-    return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
-  }, [aksjonspunkter]);
+  //   return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
+  // }, [aksjonspunkter]);
 
   // Beregn paneltype basert på vedtaksstatus (for menystatusindikator)
   // Dette er kompleks logikk som matcher findStatusForVedtak fra legacy-koden
@@ -153,10 +153,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
 
     // Sjekk om det finnes åpne aksjonspunkter utenfor vedtakspanelet
     const harApneAksjonspunkterUtenforVedtak = aksjonspunkter?.some(
-      ap =>
-        vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon) &&
-        ap.status &&
-        isAksjonspunktOpen(ap.status),
+      ap => aksjonspunkter.some(vap => vap.definisjon === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
     );
 
     // Hvis det finnes åpne aksjonspunkter utenfor vedtak, vis default
@@ -176,7 +173,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [aksjonspunkter, behandlingV2, vilkår, vedtakAksjonspunkter]);
+  }, [aksjonspunkter, behandlingV2, vilkår]);
 
   // Registrer panel med menyen
   const erValgt = context?.erValgt(PANEL_ID);
@@ -200,7 +197,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       hentFritekstbrevHtmlCallback={props.hentFritekstbrevHtmlCallback}
       fritekstdokumenter={restApiData.data?.fritekstdokumenter}
       dokumentdataHente={restApiData.data?.dokumentdataHente}
-      aksjonspunkter={vedtakAksjonspunkter}
+      aksjonspunkter={aksjonspunkter}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
       behandling={behandlingV2}
       beregningsgrunnlag={beregningsgrunnlag}

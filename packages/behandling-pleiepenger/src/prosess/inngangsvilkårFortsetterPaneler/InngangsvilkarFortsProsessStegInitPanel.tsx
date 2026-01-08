@@ -51,11 +51,11 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
 }: InngangsvilkarFortsProsessStegInitPanelProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', behandling.uuid],
+    queryKey: ['vilkar', behandling.uuid, behandling.versjon],
     queryFn: () => api.getVilkår(behandling.uuid),
   });
   const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', behandling.uuid],
+    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
   });
   const context = useContext(ProsessPanelContext);

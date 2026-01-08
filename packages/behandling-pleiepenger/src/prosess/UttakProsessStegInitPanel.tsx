@@ -58,12 +58,12 @@ export function UttakProsessStegInitPanel(props: Props) {
   const panelTekst = 'Behandlingspunkt.Uttak';
 
   const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling.uuid],
+    queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
     queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
   });
 
   const { data: uttak } = useSuspenseQuery({
-    queryKey: ['uttak', props.behandling.uuid],
+    queryKey: ['uttak', props.behandling.uuid, props.behandling.versjon],
     queryFn: () => props.api.getUttaksplan(props.behandling.uuid),
   });
 

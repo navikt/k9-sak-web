@@ -53,7 +53,7 @@ export function SimuleringProsessStegInitPanel(props: Props) {
       { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
       { key: PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG },
     ],
-    { keepData: true, suspendRequest: false, updateTriggers: [] },
+    { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
   );
 
   // Beregn paneltype basert på aksjonspunkter (for menystatusindikator)
