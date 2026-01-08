@@ -3,6 +3,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
@@ -111,6 +112,14 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
   );
 
+  const { data: tilgjengeligeVedtaksbrev } = restApiPleiepengerHooks.useRestApi<TilgjengeligeVedtaksbrev>(
+    PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    undefined,
+    {
+      updateTriggers: [props.behandling.versjon],
+    },
+  );
+
   // Aksjonspunkter som tilhører vedtakspanelet
   const vedtakAksjonspunkter = useMemo(() => {
     const vedtakAksjonspunktKoder = [
@@ -184,7 +193,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt || !restApiData.data) {
+  if (!erValgt || !restApiData.data || !tilgjengeligeVedtaksbrev) {
     return null;
   }
   if (!erStegVurdert) {
@@ -215,7 +224,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       previewCallback={props.previewCallback}
       overlappendeYtelser={overlappendeYtelser}
       personopplysninger={personopplysninger}
-      tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
+      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       medlemskap={medlemskap}
     />
   );

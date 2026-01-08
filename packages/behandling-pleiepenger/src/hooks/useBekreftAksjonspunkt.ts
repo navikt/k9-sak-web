@@ -43,7 +43,6 @@ export const useBekreftAksjonspunkt = ({
     async (aksjonspunktModels: any[], aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] = []) => {
       // === Logikk fra getLagringSideeffekter ===
 
-      // Valider input
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
         console.warn('Ingen aksjonspunktmodeller å bekrefte');
         return;
