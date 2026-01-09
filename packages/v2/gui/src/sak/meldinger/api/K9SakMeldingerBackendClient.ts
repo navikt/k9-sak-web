@@ -3,10 +3,7 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts';
-import {
-  avsenderApplikasjon,
-  type AvsenderApplikasjon,
-} from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
@@ -15,10 +12,10 @@ import type { EregOrganizationLookupResponse } from '../EregOrganizationLookupRe
 import { brev_bestillDokument, brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { isAbortedFetchError } from '@k9-sak-web/backend/shared/isAbortedFetchError.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import type { BackendApi } from '../Messages.js';
+import type { MessagesApi } from './MessagesApi.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 
-export default class K9SakMeldingerBackendClient implements BackendApi {
+export default class K9SakMeldingerBackendClient implements MessagesApi {
   readonly backend = 'k9sak';
 
   #formidling: FormidlingClient;
@@ -84,11 +81,15 @@ export default class K9SakMeldingerBackendClient implements BackendApi {
     );
   }
 
-  async hentMaler(fagsakYtelsestype: FagsakYtelsesType, behandlingUuid: string): Promise<Template[]> {
+  async hentMaler(
+    fagsakYtelsestype: FagsakYtelsesType,
+    behandlingUuid: string,
+    avsenderApplikasjon: AvsenderApplikasjon,
+  ): Promise<Template[]> {
     const templateMap = await this.#formidling.maler.hentBrevmaler(
       fagsakYtelsestype,
       behandlingUuid,
-      avsenderApplikasjon.K9SAK,
+      avsenderApplikasjon,
     );
     return [...templateMap.values()];
   }
