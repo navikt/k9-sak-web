@@ -10,8 +10,8 @@ import {
 type MottakerSelectProps = {
   readonly valgtMal: Template | undefined;
   readonly valgtMottakerId: string | undefined;
-  readonly personopplysninger: Personopplysninger | undefined;
-  readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
+  readonly personopplysninger: Personopplysninger;
+  readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readonly onChange?: (valgtMottaker: Mottaker | undefined) => void;
   readonly disabled?: boolean;
   readonly showValidation: boolean;
@@ -35,20 +35,16 @@ const unavailableCauseTxt = (cause: UtilgjengeligÅrsak | undefined): string | u
 
 export const lagVisningsnavnForMottaker = (
   mottaker: Mottaker,
-  personopplysninger?: Personopplysninger,
-  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
+  personopplysninger: Personopplysninger,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ): string => {
   const utilgjengeligÅrsakTxt =
     mottaker.utilgjengelig !== undefined ? ` - ${unavailableCauseTxt(mottaker.utilgjengelig)}` : '';
-  if (
-    arbeidsgiverOpplysningerPerId &&
-    arbeidsgiverOpplysningerPerId[mottaker.id] &&
-    arbeidsgiverOpplysningerPerId[mottaker.id]?.navn
-  ) {
+  if (arbeidsgiverOpplysningerPerId[mottaker.id] && arbeidsgiverOpplysningerPerId[mottaker.id]?.navn) {
     return `${arbeidsgiverOpplysningerPerId[mottaker.id]?.navn} (${mottaker.id})${utilgjengeligÅrsakTxt}`;
   }
 
-  if (personopplysninger && personopplysninger.aktoerId === mottaker.id && personopplysninger.navn) {
+  if (personopplysninger.aktoerId === mottaker.id && personopplysninger.navn) {
     return `${personopplysninger.navn} (${personopplysninger.fnr || personopplysninger.nummer || mottaker.id})${utilgjengeligÅrsakTxt}`;
   }
 

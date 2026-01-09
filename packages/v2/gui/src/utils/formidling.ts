@@ -26,5 +26,6 @@ interface ArbeidsgiverOpplysninger {
 
 export type ArbeidsgiverOpplysningerPerId = Record<string, ArbeidsgiverOpplysninger>;
 
+// TODO Vurder å erstatte bruken av denne med ulike backend klienter for k9-sak og k9-klage.
 export const bestemAvsenderApp = (type: BehandlingType): AvsenderApplikasjon =>
   type === behandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
