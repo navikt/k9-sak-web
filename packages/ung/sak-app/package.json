@@ -14,7 +14,6 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
-    "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ds-react": "7.32.5",
     "@navikt/ft-form-hooks": "10.0.3",
@@ -30,7 +29,7 @@
     "react-dom": "19.2.0",
     "react-intl": "7.1.14",
     "react-redux": "9.2.0",
-    "react-router": "7.9.6",
+    "react-router": "7.12.0",
     "redux": "5.0.1",
     "redux-form": "8.3.10"
   },

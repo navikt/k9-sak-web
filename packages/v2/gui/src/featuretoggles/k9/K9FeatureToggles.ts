@@ -28,5 +28,4 @@ export interface K9FeatureToggles extends FeatureTogglesFor {
   BRUK_V2_TILKJENT_YTELSE: boolean;
   UNG_KLAGE: boolean;
   KRONISK_TIDSBEGRENSET: boolean;
-  V2_MELDINGER_FOR_TILBAKE: boolean;
 }

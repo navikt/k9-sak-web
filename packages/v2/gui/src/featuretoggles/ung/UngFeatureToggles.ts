@@ -27,5 +27,4 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   FLYTT_ALDERSVILKAR: boolean;
   BRUK_V2_TILKJENT_YTELSE: boolean;
   UNG_KLAGE: boolean;
-  V2_MELDINGER_FOR_TILBAKE: boolean;
 }
