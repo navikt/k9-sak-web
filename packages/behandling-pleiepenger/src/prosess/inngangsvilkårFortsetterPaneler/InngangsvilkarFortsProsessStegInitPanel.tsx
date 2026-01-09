@@ -17,9 +17,10 @@ import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel
 
 // Relevante vilkår for inngangsvilkår-panelet
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
+const PANEL_ID = prosessStegCodes.OPPTJENING;
+const PANEL_TEKST = 'Behandlingspunkt.InngangsvilkarForts';
 
 interface InngangsvilkarFortsProsessStegInitPanelProps {
-  urlKode: string;
   behandling: Behandling;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
@@ -28,7 +29,6 @@ interface InngangsvilkarFortsProsessStegInitPanelProps {
     employeeHasAccess: boolean;
   };
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
-  // vilkar: Vilkar[];
   kanEndrePåSøknadsopplysninger: boolean;
   overstyrteAksjonspunktKoder: string[];
   api: K9SakProsessApi;
@@ -59,13 +59,7 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
   });
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.OPPTJENING;
-  const PANEL_TEKST = 'Behandlingspunkt.InngangsvilkarForts';
 
-  // Hent standard props for å få tilgang til vilkår
-
-  // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
     if (!vilkår) {
       return [];
@@ -83,10 +77,8 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
       ? ['Perioder i behandlingen', 'Tidligere perioder']
       : ['Perioder i behandlingen'];
 
-  // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  // Beregn paneltype basert på vilkårstatus (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
     // Hvis panelet ikke skal vises, bruk default
     if (!skalVisePanel) {
@@ -129,19 +121,14 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     // Default tilstand
     return ProcessMenuStepType.default;
   }, [skalVisePanel, vilkarForSteg, aksjonspunkter]);
+
   const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel) {
-    return null;
-  }
-
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
+  if (!skalVisePanel || !erValgt) {
     return null;
   }
 
@@ -174,7 +161,6 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
             toggleOverstyring={toggleOverstyring}
             vilkår={vilkarForSteg}
             visAllePerioder={visAllePerioder}
-            visPeriodisering={false}
             saksnummer={fagsak.saksnummer}
             aksjonspunkterMedKodeverk={aksjonspunkterMedKodeverk}
           />

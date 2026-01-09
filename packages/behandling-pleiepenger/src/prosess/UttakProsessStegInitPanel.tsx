@@ -22,6 +22,10 @@ const RELEVANTE_AKSJONSPUNKTER = [
   aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
 ];
 
+// Definer panel ID og tekst som konstanter
+const panelId = 'uttak';
+const panelTekst = 'Behandlingspunkt.Uttak';
+
 interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
@@ -53,9 +57,6 @@ interface Props {
  */
 export function UttakProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
-  // Definer panel ID og tekst som konstanter
-  const panelId = 'uttak';
-  const panelTekst = 'Behandlingspunkt.Uttak';
 
   const { data: aksjonspunkter = [] } = useSuspenseQuery({
     queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
@@ -107,7 +108,6 @@ export function UttakProsessStegInitPanel(props: Props) {
 
     // Ellers (hvis ikke alle er IKKE_OPPFYLT), vis success
     // Dette matcher legacy-logikken: getOverstyrtStatus returnerer OPPFYLT hvis ikke alle er IKKE_OPPFYLT
-    console.debug('Uttak panel: Ikke alle perioder ikke oppfylt, viser success');
     return ProcessMenuStepType.success;
   }, [uttak, aksjonspunkter]);
 

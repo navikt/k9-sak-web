@@ -10,21 +10,28 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 
+// Definer panel-identitet som konstanter
+const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
+const PANEL_TEKST = 'Behandlingspunkt.TilkjentYtelse';
+
 /**
  * Sjekker om beregningsresultatet kun inneholder avslåtte uttak
  */
-const harKunAvslåtteUttak = (beregningsresultatUtbetaling: any): boolean => {
+const harKunAvslåtteUttak = (
+  beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+): boolean => {
   if (!beregningsresultatUtbetaling?.perioder) {
     return false;
   }
   const { perioder } = beregningsresultatUtbetaling;
   const alleUtfall = perioder.flatMap(({ andeler }) => [
-    ...andeler.flatMap(({ uttak }) => [...uttak.flatMap(({ utfall }) => utfall)]),
+    ...andeler.flatMap(({ uttak }) => [...(uttak ?? []).flatMap(({ utfall }) => utfall)]),
   ]);
   return !alleUtfall.some(utfall => utfall === 'INNVILGET');
 };
@@ -48,9 +55,6 @@ interface Props {
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
-  const PANEL_TEKST = 'Behandlingspunkt.TilkjentYtelse';
 
   // Hent alle data parallelt med useSuspenseQueries
   const [

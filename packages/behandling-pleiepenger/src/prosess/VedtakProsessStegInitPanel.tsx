@@ -16,6 +16,23 @@ import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 
+const vedtakAksjonspunktKoder = [
+  aksjonspunktCodes.FORESLA_VEDTAK,
+  aksjonspunktCodes.FATTER_VEDTAK,
+  aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+  aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+  aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+  aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+  aksjonspunktCodes.VURDERE_DOKUMENT,
+  aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
+  aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
+  aksjonspunktCodes.SJEKK_TILBAKEKREVING,
+];
+
+// Definer panel-identitet som konstanter
+const PANEL_ID = prosessStegCodes.VEDTAK;
+const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
+
 interface Props {
   api: K9SakProsessApi;
   behandling: Behandling;
@@ -43,9 +60,6 @@ interface Props {
  */
 export function VedtakProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.VEDTAK;
-  const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
 
   // Hent alle data parallelt med useSuspenseQueries
   const [
@@ -129,19 +143,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
 
   // Aksjonspunkter som tilhører vedtakspanelet
   const vedtakAksjonspunkter = useMemo(() => {
-    const vedtakAksjonspunktKoder = [
-      aksjonspunktCodes.FORESLA_VEDTAK,
-      aksjonspunktCodes.FATTER_VEDTAK,
-      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-      aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-      aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-      aksjonspunktCodes.VURDERE_DOKUMENT,
-      aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-      aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
-      aksjonspunktCodes.SJEKK_TILBAKEKREVING,
-    ];
-
     return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
   }, [aksjonspunkter]);
 

@@ -24,6 +24,10 @@ const BEREGNING_AKSJONSPUNKT_KODER = [
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 ];
 
+// Definer panel-identitet som konstanter
+const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
+const PANEL_TEKST = 'Behandlingspunkt.Beregning';
+
 interface Props {
   api: K9SakProsessApi;
   behandling: Behandling;
@@ -44,9 +48,6 @@ interface Props {
  */
 export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
-  const PANEL_TEKST = 'Behandlingspunkt.Beregning';
 
   // Hent alle data parallelt med useSuspenseQueries
   const [
@@ -131,28 +132,25 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   }, [aksjonspunkter, vilkår]);
 
   const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
+
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
-    return null;
-  }
-
   const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-  if (!bgVilkaret) {
+
+  const handleSubmit = async (data: any) => {
+    return props.submitCallback(data, aksjonspunkter);
+  };
+
+  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
+  if (!erValgt || !bgVilkaret) {
     return null;
   }
 
   if (!erStegVurdert) {
     return <ProsessStegIkkeVurdert />;
   }
-
-  const handleSubmit = async (data: any) => {
-    return props.submitCallback(data, aksjonspunkter);
-  };
 
   return (
     <BeregningsgrunnlagProsessIndex

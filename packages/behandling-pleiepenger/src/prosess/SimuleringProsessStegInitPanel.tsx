@@ -21,6 +21,10 @@ const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
 ];
 
+// Definer panel-identitet som konstanter
+const PANEL_ID = prosessStegCodes.AVREGNING;
+const PANEL_TEKST = 'Behandlingspunkt.Avregning';
+
 interface Props {
   behandling: Behandling;
   aksjonspunkterMedKodeverk: Aksjonspunkt[];
@@ -48,11 +52,6 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   });
   const featureToggles = use(FeatureTogglesContext);
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.AVREGNING;
-  const PANEL_TEKST = 'Behandlingspunkt.Avregning';
-
-  // Hent standard props fra context
 
   // Hent data ved bruk av eksisterende RequestApi-mønster
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
@@ -99,17 +98,13 @@ export function SimuleringProsessStegInitPanel(props: Props) {
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 
+  const data = restApiData.data;
+
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
+  if (!erValgt || !data) {
     return null;
   }
 
-  // Ikke vis panelet hvis data ikke er lastet ennå
-  // TODO: Bruk Suspense for datahenting i fremtiden
-  const data = restApiData.data;
-  if (!data) {
-    return null;
-  }
   if (!erStegVurdert) {
     return <ProsessStegIkkeVurdert />;
   }

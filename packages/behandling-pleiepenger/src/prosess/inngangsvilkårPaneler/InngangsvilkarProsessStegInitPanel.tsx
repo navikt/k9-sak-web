@@ -29,6 +29,9 @@ const relevanteAksjonspunktkoder = [
   aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
 ];
 
+const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
+const PANEL_TEKST = 'Behandlingspunkt.Inngangsvilkar';
+
 interface InngangsvilkarProsessStegInitPanelProps {
   behandling: Behandling;
   submitCallback: (data: any, aksjonspunkt?: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
@@ -63,9 +66,6 @@ export const InngangsvilkarProsessStegInitPanel = ({
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
   });
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
-  const PANEL_TEKST = 'Behandlingspunkt.Inngangsvilkar';
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
@@ -131,7 +131,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
   }, [skalVisePanel, vilkarForSteg, aksjonspunkter]);
 
   const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
+
   usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;

@@ -39,16 +39,16 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
     return kode === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR;
   });
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel) {
-    return null;
-  }
-
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR);
 
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
   };
+
+  // Ikke vis panelet hvis det ikke finnes relevante vilkår
+  if (!skalVisePanel) {
+    return null;
+  }
 
   return (
     <VilkarresultatMedOverstyringProsessIndex

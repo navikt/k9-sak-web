@@ -30,7 +30,6 @@ interface Props {
   vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
   visAllePerioder: boolean;
   behandling: Behandling;
-  visPeriodisering: boolean;
   isReadOnly: boolean;
   api: K9SakProsessApi;
   saksnummer: string;
@@ -63,13 +62,10 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel) {
-    return null;
-  }
-
   const data = restApiData.data;
-  if (!data) {
+
+  // Ikke vis panelet hvis det ikke finnes relevante vilkår
+  if (!skalVisePanel || !data) {
     return null;
   }
 

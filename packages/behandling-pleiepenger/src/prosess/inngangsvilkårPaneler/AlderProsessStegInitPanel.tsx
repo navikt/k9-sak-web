@@ -17,7 +17,6 @@ interface Props {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  /** Skal være den faktiske teksten og ikke en id til react-intl */
   visPeriodisering: boolean;
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   visAllePerioder: boolean;
@@ -32,7 +31,6 @@ export const AlderProsessStegInitPanel = (props: Props) => {
   }, [props.vilkår]);
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {
     return null;
   }

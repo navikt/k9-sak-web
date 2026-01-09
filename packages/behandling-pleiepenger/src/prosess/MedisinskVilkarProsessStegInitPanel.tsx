@@ -11,6 +11,10 @@ import { useContext, useMemo } from 'react';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
 
+// Definer panel-identitet som konstanter
+const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
+const PANEL_TEKST = 'Behandlingspunkt.MedisinskVilkar';
+
 interface Props {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
@@ -31,13 +35,6 @@ interface Props {
  */
 export function MedisinskVilkarProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
-  // Definer panel-identitet som konstanter
-  const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
-  const PANEL_TEKST = 'Behandlingspunkt.MedisinskVilkar';
-
-  // Hent standard props for å få tilgang til vilkår, aksjonspunkter og feature toggles
-
-  // Relevante vilkår for medisinsk vilkår-panelet
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
@@ -46,6 +43,7 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
     }
     return props.vilkar.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode));
   }, [props.vilkar]);
+
   // Sjekk om panelet skal vises
   // Panelet vises hvis det finnes relevante vilkår
   const skalVisePanel = vilkarForSteg.length > 0;
@@ -95,13 +93,8 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel) {
-    return null;
-  }
-
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt) {
+  if (!erValgt || !skalVisePanel) {
     return null;
   }
 

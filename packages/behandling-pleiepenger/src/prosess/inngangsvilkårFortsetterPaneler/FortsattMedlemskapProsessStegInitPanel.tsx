@@ -35,9 +35,6 @@ interface Props {
  * Dette panelet viser overstyring av løpende medlemskapsvilkår.
  */
 export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
-  // Hent standard props for å få tilgang til vilkår og aksjonspunkter
-
-  // Filtrer vilkår som er relevante for dette panelet (løpende medlemskap)
   const vilkarForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
@@ -45,16 +42,7 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     return props.vilkår.filter(vilkår => vilkår.vilkarType === vilkarType.MEDLEMSKAPSVILKARET);
   }, [props.vilkår]);
 
-  // Sjekk om panelet skal vises (kun hvis det finnes løpende medlemskapsvilkår)
   const skalVisePanel = vilkarForSteg.length > 0;
-
-  // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
-
-  // Ikke vis panelet hvis det ikke finnes løpende medlemskapsvilkår
-  // VIKTIG: Returner tidlig FØR registrering for å unngå at panelet vises i menyen
-  if (!skalVisePanel) {
-    return null;
-  }
 
   const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
     const kode = ap.definisjon;
@@ -64,6 +52,10 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
   };
+
+  if (!skalVisePanel) {
+    return null;
+  }
 
   return (
     <VilkarresultatMedOverstyringProsessIndex
