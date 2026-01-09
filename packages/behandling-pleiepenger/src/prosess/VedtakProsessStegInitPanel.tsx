@@ -11,7 +11,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
@@ -47,54 +47,61 @@ export function VedtakProsessStegInitPanel(props: Props) {
   const PANEL_ID = prosessStegCodes.VEDTAK;
   const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
 
-  const { data: behandlingV2 } = useSuspenseQuery({
-    queryKey: ['behandling', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getBehandling(props.behandling.uuid),
-  });
-
-  const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-  });
-
-  const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getVilkår(props.behandling.uuid),
-  });
-
-  const { data: arbeidsgiverOpplysningerPerId } = useSuspenseQuery({
-    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
-  });
-
-  const { data: beregningsgrunnlag = [] } = useSuspenseQuery({
-    queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
-  });
-
-  const { data: simuleringResultat } = useSuspenseQuery({
-    queryKey: ['simuleringResultat', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getSimuleringResultat(props.behandling.uuid),
-  });
-
-  const { data: tilbakekrevingvalg } = useSuspenseQuery({
-    queryKey: ['tilbakekrevingvalg', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getTilbakekrevingValg(props.behandling.uuid),
-  });
-
-  const { data: overlappendeYtelser } = useSuspenseQuery({
-    queryKey: ['overlappendeYtelser', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getHOverlappendeYtelser(props.behandling.uuid),
-  });
-
-  const { data: personopplysninger } = useSuspenseQuery({
-    queryKey: ['personopplysninger', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
-  });
-
-  const { data: medlemskap } = useSuspenseQuery({
-    queryKey: ['medlemskap', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getMedlemskap(props.behandling.uuid),
+  // Hent alle data parallelt med useSuspenseQueries
+  const [
+    { data: behandlingV2 },
+    { data: aksjonspunkter = [] },
+    { data: vilkår },
+    { data: arbeidsgiverOpplysningerPerId },
+    { data: beregningsgrunnlag = [] },
+    { data: simuleringResultat },
+    { data: tilbakekrevingvalg },
+    { data: overlappendeYtelser },
+    { data: personopplysninger },
+    { data: medlemskap },
+  ] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ['behandling', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getBehandling(props.behandling.uuid),
+      },
+      {
+        queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
+      },
+      {
+        queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getVilkår(props.behandling.uuid),
+      },
+      {
+        queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
+      },
+      {
+        queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
+      },
+      {
+        queryKey: ['simuleringResultat', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getSimuleringResultat(props.behandling.uuid),
+      },
+      {
+        queryKey: ['tilbakekrevingvalg', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getTilbakekrevingValg(props.behandling.uuid),
+      },
+      {
+        queryKey: ['overlappendeYtelser', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getHOverlappendeYtelser(props.behandling.uuid),
+      },
+      {
+        queryKey: ['personopplysninger', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
+      },
+      {
+        queryKey: ['medlemskap', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getMedlemskap(props.behandling.uuid),
+      },
+    ],
   });
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{

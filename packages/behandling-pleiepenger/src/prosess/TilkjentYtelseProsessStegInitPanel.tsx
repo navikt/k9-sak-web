@@ -11,7 +11,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
 } from '@navikt/k9-sak-typescript-client/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 
@@ -52,30 +52,35 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
   const PANEL_TEKST = 'Behandlingspunkt.TilkjentYtelse';
 
-  // Hent data ved bruk av eksisterende RequestApi-mønster
-
-  const { data: beregningsresultatUtbetaling } = useSuspenseQuery({
-    queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid, props.behandling?.versjon],
-    queryFn: () => props.api.getBeregningsresultatMedUtbetaling(props.behandling.uuid),
-  });
-
-  const { data: personopplysninger } = useSuspenseQuery({
-    queryKey: ['personopplysninger', props.behandling?.uuid, props.behandling?.versjon],
-    queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
-  });
-
-  const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
-    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-    select: data =>
-      data.filter(
-        ap => ap.definisjon === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
-      ),
-  });
-
-  const { data: arbeidsgiverOpplysningerPerId } = useSuspenseQuery({
-    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling?.uuid, props.behandling?.versjon],
-    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
+  // Hent alle data parallelt med useSuspenseQueries
+  const [
+    { data: beregningsresultatUtbetaling },
+    { data: personopplysninger },
+    { data: aksjonspunkter },
+    { data: arbeidsgiverOpplysningerPerId },
+  ] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid, props.behandling?.versjon],
+        queryFn: () => props.api.getBeregningsresultatMedUtbetaling(props.behandling.uuid),
+      },
+      {
+        queryKey: ['personopplysninger', props.behandling?.uuid, props.behandling?.versjon],
+        queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
+      },
+      {
+        queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
+        queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
+        select: (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
+          data.filter(
+            ap => ap.definisjon === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+          ),
+      },
+      {
+        queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling?.uuid, props.behandling?.versjon],
+        queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
+      },
+    ],
   });
 
   // Beregn paneltype basert på beregningsresultat (for menystatusindikator)

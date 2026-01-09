@@ -12,7 +12,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
@@ -48,30 +48,38 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
   const PANEL_TEKST = 'Behandlingspunkt.Beregning';
 
-  const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
-    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-    select: data => data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
-  });
-
-  const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getVilkår(props.behandling.uuid),
-  });
-
-  const { data: beregningreferanserTilVurdering = [] } = useSuspenseQuery({
-    queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
-  });
-
-  const { data: beregningsgrunnlag } = useSuspenseQuery({
-    queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
-  });
-
-  const { data: arbeidsgiverOpplysningerPerId = [] } = useSuspenseQuery({
-    queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
+  // Hent alle data parallelt med useSuspenseQueries
+  const [
+    { data: aksjonspunkter },
+    { data: vilkår },
+    { data: beregningreferanserTilVurdering = [] },
+    { data: beregningsgrunnlag },
+    { data: arbeidsgiverOpplysningerPerId = [] },
+  ] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
+        queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
+        select: (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
+          data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
+      },
+      {
+        queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getVilkår(props.behandling.uuid),
+      },
+      {
+        queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
+      },
+      {
+        queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
+      },
+      {
+        queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
+        queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
+      },
+    ],
   });
 
   // Beregn paneltype basert på aksjonspunkter og vilkår (for menystatusindikator)
