@@ -10,7 +10,7 @@
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "moment": "2.30.1",
-    "react": "19.2.0",
+    "react": "19.2.3",
     "react-intl": "7.1.14"
   }
 }
