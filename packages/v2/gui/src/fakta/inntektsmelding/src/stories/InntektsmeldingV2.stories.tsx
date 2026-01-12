@@ -13,13 +13,13 @@ import ferdigvisning, {
 } from '../../mock/mockedKompletthetsdata';
 import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
 import InntektsmeldingContainer, { type InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
-import type ContainerContract from '../types/ContainerContract';
+import type { InntektsmeldingContextType } from '../types/InntektsmeldingContextType';
 
 const fakeApi = (response: KompletthetsVurdering): InntektsmeldingApi => ({
   getKompletthetsoversikt: () => Promise.resolve(response),
 });
 
-const createContainerData = (props: Partial<ContainerContract>): ContainerContract => ({
+const createContainerData = (props: Partial<InntektsmeldingContextType>): InntektsmeldingContextType => ({
   readOnly: false,
   arbeidsforhold: {},
   endpoints: { kompletthetBeregning: '' },

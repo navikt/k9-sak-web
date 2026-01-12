@@ -1,4 +1,4 @@
-import ContainerContract from '../src/types/ContainerContract';
+import type { InntektsmeldingContextType } from '../src/types/InntektsmeldingContextType';
 import type { Aksjonspunkt } from '@k9-sak-web/types';
 
 interface ArbeidsforholdReferanse {
@@ -14,9 +14,9 @@ interface ArbeidsgiverInfo {
   arbeidsforholdreferanser: ArbeidsforholdReferanse[];
 }
 
-interface MockProps extends Omit<ContainerContract, 'onFinished'> {
+interface MockProps extends Omit<InntektsmeldingContextType, 'onFinished'> {
   arbeidsforhold: Record<string, ArbeidsgiverInfo>;
-  onFinished?: ContainerContract['onFinished'];
+  onFinished?: InntektsmeldingContextType['onFinished'];
 }
 
 const createAksjonspunkt = (kode: string, statusKode: string): Aksjonspunkt => ({

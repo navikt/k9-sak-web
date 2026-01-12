@@ -2,8 +2,8 @@ import { Period, get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
 import { useEffect, useMemo, useReducer, type ReactElement } from 'react';
-import ContainerContext from '../context/ContainerContext';
-import type ContainerContract from '../types/ContainerContract';
+import InntektsmeldingContext from '../context/InntektsmeldingContext';
+import type { InntektsmeldingContextType } from '../types/InntektsmeldingContextType';
 import type { Kompletthet as KompletthetData } from '../types/KompletthetData';
 import ActionType from './actionTypes.js';
 import Kompletthetsoversikt from './components/kompletthetsoversikt/Kompletthetsoversikt';
@@ -30,7 +30,7 @@ function initKompletthetsdata({ tilstand }: KompletthetsVurdering): KompletthetD
 export interface InntektsmeldingApi {
   getKompletthetsoversikt: (
     endpoint: string,
-    httpErrorHandler: ContainerContract['httpErrorHandler'],
+    httpErrorHandler: InntektsmeldingContextType['httpErrorHandler'],
     signal?: AbortSignal,
   ) => Promise<KompletthetsVurdering>;
 }
@@ -45,7 +45,7 @@ const defaultApi: InntektsmeldingApi = {
 };
 
 export interface MainComponentProps {
-  data: ContainerContract;
+  data: InntektsmeldingContextType;
   requestApi?: InntektsmeldingApi;
 }
 
@@ -84,7 +84,7 @@ const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainCompone
   const { kompletthetsoversiktResponse, isLoading, kompletthetsoversiktHarFeilet } = state;
 
   return (
-    <ContainerContext.Provider value={data}>
+    <InntektsmeldingContext.Provider value={data}>
       <PageContainer isLoading={isLoading} hasError={kompletthetsoversiktHarFeilet}>
         {kompletthetsoversiktResponse && (
           <Kompletthetsoversikt
@@ -95,7 +95,7 @@ const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainCompone
           />
         )}
       </PageContainer>
-    </ContainerContext.Provider>
+    </InntektsmeldingContext.Provider>
   );
 };
 

@@ -3,7 +3,7 @@ import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
-import useContainerContext from '../../../context/useContainerContext';
+import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import { Kode } from '../../../types/KompletthetData';
 import type { Tilstand } from '../../../types/KompletthetData';
 
@@ -18,7 +18,7 @@ const FortsettUtenInntektsmeldingInfo = ({
   redigeringsmodus,
   setRedigeringsmodus,
 }: FortsettUtenInntektsmeldingInfoProps): JSX.Element | null => {
-  const { readOnly } = useContainerContext();
+  const { readOnly } = useInntektsmeldingContext();
 
   if (tilstand?.vurdering?.kode === Kode.FORTSETT && !redigeringsmodus && tilstand.tilVurdering) {
     return (

@@ -1,8 +1,8 @@
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import type { JSX } from 'react';
-import useContainerContext from '../../../context/useContainerContext';
-import type { DokumentOpplysninger } from '../../../types/ContainerContract';
+import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
+import type { DokumentOpplysninger } from '../../../types/InntektsmeldingContextType';
 import type { Status } from '../../../types/KompletthetData';
 import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
 import ListItem from '../list-item/ListItem';
@@ -31,7 +31,7 @@ const finnDokumentLink = (dokumenter: DokumentOpplysninger[], journalpostId: str
   dokumenter.find(dokument => dokument.journalpostId === journalpostId);
 
 const InntektsmeldingMottattItem = ({ status }: InntektsmeldingMottattItemProps): JSX.Element => {
-  const { dokumenter } = useContainerContext();
+  const { dokumenter } = useInntektsmeldingContext();
   const dokumentLink = finnDokumentLink(dokumenter ?? [], status.journalpostId)?.href;
   const firstColumnRenderer = () => <ArbeidsgiverTekst arbeidsgiver={status.arbeidsgiver} />;
   const secondColumnRenderer = () => <MottattContent dokumentLink={dokumentLink ?? '#'} />;

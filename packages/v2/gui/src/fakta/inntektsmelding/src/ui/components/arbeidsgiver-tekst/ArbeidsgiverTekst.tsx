@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import useContainerContext from '../../../context/useContainerContext';
+import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import { Arbeidsgiver } from '../../../types/KompletthetData';
 
 interface ArbeidsgiverTekstProps {
@@ -7,7 +7,7 @@ interface ArbeidsgiverTekstProps {
 }
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: ArbeidsgiverTekstProps): JSX.Element => {
-  const { arbeidsforhold } = useContainerContext();
+  const { arbeidsforhold } = useInntektsmeldingContext();
   const id = arbeidsgiver.arbeidsgiver;
   const arbeidsgiverInfo = arbeidsforhold[id];
   const tekst = arbeidsgiverInfo?.navn ?? arbeidsgiverInfo?.fødselsdato ?? id;

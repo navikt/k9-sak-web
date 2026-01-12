@@ -6,7 +6,7 @@ import { setupServer } from 'msw/node';
 import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';
 import { alleErMottatt, manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/InntektsmeldingV2.stories';
-import ContainerContract from '../src/types/ContainerContract';
+import type { InntektsmeldingContextType } from '../src/types/InntektsmeldingContextType';
 
 const server = setupServer();
 
@@ -70,7 +70,7 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: ContainerContract = {
+    const data: InntektsmeldingContextType = {
       ...aksjonspunkt9071Props,
       onFinished: onClickSpy,
     };
@@ -107,7 +107,7 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: ContainerContract = {
+    const data: InntektsmeldingContextType = {
       ...aksjonspunkt9071Props,
       onFinished: onClickSpy,
     };
@@ -144,7 +144,7 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(alleErMottatt)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: ContainerContract = {
+    const data: InntektsmeldingContextType = {
       ...aksjonspunkt9071Props,
       onFinished: onClickSpy,
     };

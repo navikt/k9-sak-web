@@ -3,7 +3,7 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import type { Aksjonspunkt as AksjonspunktType } from '@k9-sak-web/types';
 import type { BehandlingAppKontekst } from '@k9-sak-web/types';
 import InntektsmeldingContainer from './src/ui/InntektsmeldingContainer';
-import type { ArbeidsgiverOpplysninger, DokumentOpplysninger } from './src/types/ContainerContract';
+import type { ArbeidsgiverOpplysninger, DokumentOpplysninger } from './src/types/InntektsmeldingContextType';
 import type AksjonspunktRequestPayload from './src/types/AksjonspunktRequestPayload';
 
 interface InntektsmeldingProps {

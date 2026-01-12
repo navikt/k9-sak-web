@@ -11,7 +11,7 @@ export type DokumentOpplysninger = Readonly<{
   href: string;
 }>;
 
-interface ContainerContract {
+export interface InntektsmeldingContextType {
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
@@ -22,5 +22,3 @@ interface ContainerContract {
   onFinished: (data: AksjonspunktRequestPayload) => void;
   aksjonspunkter: Aksjonspunkt[];
 }
-
-export default ContainerContract;

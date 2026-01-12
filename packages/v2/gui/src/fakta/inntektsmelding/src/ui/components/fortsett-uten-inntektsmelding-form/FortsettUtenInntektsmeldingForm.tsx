@@ -7,7 +7,7 @@ import type { JSX } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
 import type { Aksjonspunkt } from '@k9-sak-web/types';
 import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
-import useContainerContext from '../../../context/useContainerContext';
+import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import type { KompletthetsPeriode } from '../../../types/AksjonspunktRequestPayload';
 import { Kode } from '../../../types/KompletthetData';
@@ -62,7 +62,7 @@ const FortsettUtenInntektsmeldingForm = ({
   formMethods,
   harFlereTilstanderTilVurdering,
 }: FortsettUtenInntektsmeldingFormProps): JSX.Element => {
-  const { arbeidsforhold, readOnly } = useContainerContext();
+  const { arbeidsforhold, readOnly } = useInntektsmeldingContext();
 
   const { watch, reset, control } = formMethods;
   const { beslutningFieldName = 'beslutning', begrunnelseFieldName = 'begrunnelse' } = tilstand;

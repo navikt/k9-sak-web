@@ -2,7 +2,7 @@ import { Period } from '@fpsak-frontend/utils';
 import { Box, Button } from '@navikt/ds-react';
 import { useMemo, useState, type JSX } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
-import useContainerContext from '../../../context/useContainerContext';
+import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import FieldName from '../../../types/FieldName';
 import { Kode as KodeEnum } from '../../../types/KompletthetData';
 import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
@@ -28,7 +28,7 @@ interface TilstandEditState {
 }
 
 const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: KompletthetsoversiktProps): JSX.Element => {
-  const { aksjonspunkter, readOnly } = useContainerContext();
+  const { aksjonspunkter, readOnly } = useInntektsmeldingContext();
   const { tilstand: tilstander } = kompletthetsoversikt;
 
   const periods = tilstander.map(({ periode }) => periode);

@@ -6,7 +6,7 @@ import { setupServer } from 'msw/node';
 import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/InntektsmeldingV2.stories';
-import ContainerContract from '../src/types/ContainerContract';
+import type { InntektsmeldingContextType } from '../src/types/InntektsmeldingContextType';
 
 const server = setupServer(http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
 
@@ -62,7 +62,7 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan sende purring med varsel om avslag', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: ContainerContract = {
+    const data: InntektsmeldingContextType = {
       ...inntektsmeldingPropsMock,
       onFinished: onClickSpy,
     };
@@ -97,7 +97,7 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: ContainerContract = {
+    const data: InntektsmeldingContextType = {
       ...inntektsmeldingPropsMock,
       onFinished: onClickSpy,
     };
