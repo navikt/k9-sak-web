@@ -4,7 +4,6 @@ import { Alert, BoxNew, Button, Heading, Modal, Select, VStack } from '@navikt/d
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface MenyEndreFristProps {
@@ -14,6 +13,7 @@ interface MenyEndreFristProps {
   endreFrister: (data: FormValues) => Promise<void>;
   isLoading: boolean;
   submitError?: string;
+  nyFrist?: string;
 }
 
 interface FormValues {
@@ -29,8 +29,8 @@ export const MenyEndreFrist = ({
   endreFrister,
   isLoading,
   submitError,
+  nyFrist,
 }: MenyEndreFristProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<FormValues>({
     defaultValues: {
       begrunnelse: '',
@@ -38,12 +38,9 @@ export const MenyEndreFrist = ({
       fristDato: '',
     },
   });
-  const valgtOppgave = formMethods.watch('oppgave');
-  const valgtFristDato = formMethods.watch('fristDato');
-  const etterlysning = etterlysninger.find(e => e.eksternReferanse === valgtOppgave);
 
   const validateDateInRange = (value: string) => {
-    if (!etterlysning?.periode?.tom || !value) {
+    if (!value) {
       return undefined;
     }
 
@@ -63,12 +60,7 @@ export const MenyEndreFrist = ({
   };
 
   const handleSubmit = async (formValues: FormValues) => {
-    setIsSubmitting(true);
-    try {
-      await endreFrister(formValues);
-    } finally {
-      setIsSubmitting(false);
-    }
+    return endreFrister(formValues);
   };
 
   const modalHeading = 'Utsett frist på oppgave til deltaker';
@@ -88,10 +80,9 @@ export const MenyEndreFrist = ({
       >
         {showSuccess && (
           <>
-            {' '}
             <Modal.Body>
               <Alert size="small" variant="success">
-                Oppgaven har fått ny frist {dayjs(valgtFristDato).format('DD.MM.YYYY')}.
+                Oppgaven har fått ny frist {dayjs(nyFrist).format('DD.MM.YYYY')}.
               </Alert>
             </Modal.Body>
             <Modal.Footer>
@@ -165,10 +156,10 @@ export const MenyEndreFrist = ({
           </BoxNew>
         </Modal.Body>
         <Modal.Footer>
-          <Button size="small" loading={isSubmitting} type="submit">
+          <Button size="small" type="submit">
             Utsett frist
           </Button>
-          <Button size="small" variant="secondary" loading={isSubmitting} type="button" onClick={lukkModal}>
+          <Button size="small" variant="secondary" type="button" onClick={lukkModal}>
             Avbryt
           </Button>
         </Modal.Footer>

@@ -21,6 +21,7 @@ export const MenyEndreFristIndex = ({
 }: MenyEndreFristIndexProps) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
+  const [nyFrist, setNyFrist] = useState<string | undefined>(undefined);
   const { data: etterlysninger = [], isLoading } = useQuery({
     queryKey: ['etterlysninger', behandlingUuid],
     queryFn: () => api.hentEtterlysninger(behandlingUuid),
@@ -30,14 +31,18 @@ export const MenyEndreFristIndex = ({
 
   const mutation = useMutation({
     mutationFn: async (formValues: { begrunnelse: string; oppgave: string; fristDato: string }) => {
-      const endreteFrister = [
+      const endretFrister = [
         {
           etterlysningEksternReferanse: formValues.oppgave,
           frist: formValues.fristDato,
           begrunnelse: formValues.begrunnelse,
         },
       ];
-      return api.endreFrist(behandlingId, behandlingVersjon, endreteFrister);
+      setNyFrist(formValues.fristDato);
+      return api.endreFrist(behandlingId, behandlingVersjon, endretFrister).catch(() => {
+        setNyFrist(undefined);
+        throw new Error('Noe gikk galt ved endring av frist');
+      });
     },
     onSuccess: () => {
       setShowSuccess(true);
@@ -63,6 +68,7 @@ export const MenyEndreFristIndex = ({
       showSuccess={showSuccess}
       isLoading={isLoading || mutation.isPending}
       submitError={submitError}
+      nyFrist={nyFrist}
     />
   );
 };

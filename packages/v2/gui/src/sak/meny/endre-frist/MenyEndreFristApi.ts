@@ -9,5 +9,5 @@ export interface MenyEndreFristApi {
     behandlingId: number,
     behandlingVersjon: number,
     endretFrister: Array<ung_sak_kontrakt_etterlysning_EndreFristDto>,
-  ): Promise<unknown>;
+  ): Promise<void>;
 }

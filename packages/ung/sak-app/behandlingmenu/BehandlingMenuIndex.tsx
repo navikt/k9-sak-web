@@ -1,6 +1,7 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
@@ -28,7 +29,6 @@ import {
 } from '@k9-sak-web/types';
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import { ung_kodeverk_varsel_EtterlysningStatus } from '@navikt/ung-sak-typescript-client/types';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -163,10 +163,11 @@ export const BehandlingMenuIndex = ({
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
-  const menyEndreFristClient = new MenyEndreFristBackendClient();
+  const menyEndreFristClient = useMemo(() => new MenyEndreFristBackendClient(), []);
   const { data: etterlysninger = [] } = useQuery({
     queryKey: ['etterlysninger', behandling?.uuid],
     queryFn: () => menyEndreFristClient.hentEtterlysninger(behandling?.uuid ?? ''),
+    enabled: !!behandling?.uuid,
     select: etterlysninger =>
       etterlysninger.filter(etterlysning => etterlysning.status === ung_kodeverk_varsel_EtterlysningStatus.VENTER),
   });
