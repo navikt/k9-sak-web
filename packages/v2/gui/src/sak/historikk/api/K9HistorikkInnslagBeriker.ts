@@ -52,6 +52,18 @@ export class K9HistorikkInnslagBeriker {
     };
   }
 
+  #klageSkjermlenke(innslag: K9KlageHistorikkinnslagDto): SkjermlenkeMedNavn | undefined {
+    if (innslag.skjermlenke != null) {
+      const navn =
+        this.kodeverkOppslag.k9klage.skjermlenkeTyper(innslag.skjermlenke).navn ?? 'FEIL: ukjent skjermlenkenavn';
+      return {
+        type: innslag.skjermlenke,
+        navn,
+      };
+    }
+    return undefined;
+  }
+
   berikKlageInnslag(innslag: K9KlageHistorikkinnslagDto, saksnummer: string): BeriketHistorikkInnslag {
     const linjer = innslag.linjer.map(linje => {
       const skjermlenke =
@@ -68,11 +80,13 @@ export class K9HistorikkInnslagBeriker {
     });
     const aktør = { ...innslag.aktør, navn: this.kodeverkOppslag.k9klage.historikkAktører(innslag.aktør.type).navn };
     const dokumenter = dokumentMedServerUrl(this.serverDokumentEndpoint, saksnummer, innslag);
+    const skjermlenke = this.#klageSkjermlenke(innslag);
     return {
       ...innslag,
       linjer,
       aktør,
       dokumenter,
+      skjermlenke,
     };
   }
 

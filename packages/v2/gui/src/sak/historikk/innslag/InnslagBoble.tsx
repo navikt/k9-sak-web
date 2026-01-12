@@ -56,8 +56,7 @@ export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps)
   // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const doCutOff = innslag.linjer.length > antallLinjerSomAlltidVises;
-  const innslagHarSkjermlenke =
-    'skjermlenke' in innslag && innslag.skjermlenke != null && innslag.skjermlenke.navn != null;
+  const innslagHarSkjermlenke = innslag.skjermlenke != null;
   const bådeTittelOgSkjermlenke = innslagHarSkjermlenke && innslag.tittel != null;
   return (
     <Chat
