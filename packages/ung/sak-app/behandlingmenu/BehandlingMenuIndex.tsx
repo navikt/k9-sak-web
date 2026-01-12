@@ -6,6 +6,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
+import { MenyEndreFristIndex } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/MenyNyBehandlingIndex.js';
@@ -264,6 +265,9 @@ export const BehandlingMenuIndex = ({
             behandlendeEnheter={behandlendeEnheter}
             lukkModal={lukkModal}
           />
+        )),
+        new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Utsett frist').medModal(lukkModal => (
+          <MenyEndreFristIndex lukkModal={lukkModal} />
         )),
         new MenyData(!sakRettigheter.sakSkalTilInfotrygd, 'Opprett ny behandling').medModal(lukkModal => (
           <MenyNyBehandlingIndexV2
