@@ -48,12 +48,17 @@ const aktørFarge = (aktør: HistorikkAktør): AkselColor => {
 
 const formatDate = (date: string) => `${dateFormat(date)} - ${timeFormat(date)}`;
 
+const antallLinjerSomAlltidVises = 2;
+
 export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
   const position = aktørIkonPlassering(innslag.aktør.type);
   // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-  const doCutOff = innslag.linjer.length > 2;
+  const doCutOff = innslag.linjer.length > antallLinjerSomAlltidVises;
+  const innslagHarSkjermlenke =
+    'skjermlenke' in innslag && innslag.skjermlenke != null && innslag.skjermlenke.navn != null;
+  const bådeTittelOgSkjermlenke = innslagHarSkjermlenke && innslag.tittel != null;
   return (
     <Chat
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
@@ -67,12 +72,15 @@ export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps)
       variant="neutral"
     >
       <Chat.Bubble>
-        {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
-        {'skjermlenke' in innslag && innslag.skjermlenke != null && innslag.skjermlenke.navn != null ? (
-          <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
-        ) : null}
+        <Tittel>
+          {innslagHarSkjermlenke ? (
+            <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
+          ) : null}
+          {bådeTittelOgSkjermlenke ? `: ` : null}
+          {innslag.tittel != null ? innslag.tittel : null}
+        </Tittel>
         {innslag.linjer.map((linje, idx) => (
-          <div key={idx} hidden={doCutOff && !expanded && idx > 0}>
+          <div key={idx} hidden={doCutOff && !expanded && idx > antallLinjerSomAlltidVises - 1}>
             <InnslagLinje linje={linje} behandlingLocation={behandlingLocation} />
           </div>
         ))}
