@@ -13,259 +13,210 @@ import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as Til
 // Kopi av respons frå k9-sak backend i dev
 const fakeK9SakResponse: HentAlleInnslagV2Response = [
   {
-    behandlingId: 1005501,
-    aktør: {
-      type: 'VL',
-    },
-    opprettetTidspunkt: '2025-01-20T07:07:59.106',
-    dokumenter: [],
-    tittel: 'Vedtak fattet: Innvilget',
-    linjer: [
-      {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'VEDTAK',
-      },
-    ],
-    uuid: 'ab6b49a9-84a3-40e6-a038-ac51f1a1304d',
-  },
-  {
-    behandlingId: 1005501,
+    behandlingId: 1045402,
+    behandlingUuid: '1adbd9e0-33c9-40c4-a870-0ad2f4526a54',
     aktør: {
       type: 'SBH',
       ident: 'Z990404',
     },
-    opprettetTidspunkt: '2025-01-20T07:07:51.914',
+    opprettetTidspunkt: '2025-11-28T10:11:35.262',
     dokumenter: [],
-    tittel: 'Metode for å håndtere tilbakekreving av feilutbetailng er valgt.',
-    linjer: [
-      {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'FAKTA_OM_SIMULERING',
-      },
-      {
-        type: 'TEKST',
-        tekst: '__Fastsett videre behandling__ er satt til __Opprett tilbakekreving__.',
-      },
-      {
-        type: 'TEKST',
-        tekst: 'test',
-      },
-    ],
-    uuid: '0b1fecdc-3270-469c-9507-493adc66f0f7',
-  },
-  {
-    aktør: {
-      type: 'SOKER',
-    },
-    opprettetTidspunkt: '2025-01-20T07:06:58.758',
-    dokumenter: [
-      {
-        tag: 'Søknad',
-        utgått: false,
-        journalpostId: '453925540',
-        dokumentId: '454327391',
-      },
-    ],
-    tittel: 'Vedlegg mottatt',
-    linjer: [],
-    uuid: '30461cb8-d6ac-40b5-ab21-1d685df90d84',
-  },
-  {
-    behandlingId: 1005501,
-    aktør: {
-      type: 'VL',
-    },
-    opprettetTidspunkt: '2025-01-20T07:06:56.979',
-    dokumenter: [],
-    tittel: 'Revurdering opprettet',
+    tittel: 'Fakta endret',
+    skjermlenke: 'BEREGNING',
     linjer: [
       {
         type: 'TEKST',
-        tekst: 'Endring fra bruker',
+        tekst: 'Gjeldende fra __22.09.2025__: Ingen endring av vurdering',
       },
-    ],
-    uuid: 'f4554e3a-1964-48f5-8b00-615ce840cf0c',
-  },
-  {
-    behandlingId: 1004852,
-    aktør: {
-      type: 'BESL',
-      ident: 'Z990422',
-    },
-    opprettetTidspunkt: '2025-01-16T07:07:34.406',
-    dokumenter: [],
-    tittel: 'Vedtak fattet: Innvilget',
-    linjer: [
       {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'VEDTAK',
+        type: 'TEKST',
+        tekst: 'tester',
       },
     ],
-    uuid: 'd577e8e5-6d55-4063-9793-d87e3bf065da',
+    uuid: '4c693516-751f-496f-9bdf-2166a3128d4c',
   },
   {
-    behandlingId: 1004852,
+    behandlingId: 1045402,
+    behandlingUuid: '1adbd9e0-33c9-40c4-a870-0ad2f4526a54',
     aktør: {
       type: 'SBH',
       ident: 'Z990404',
     },
-    opprettetTidspunkt: '2025-01-16T07:06:30.17',
-    dokumenter: [],
-    tittel: 'Vedtak foreslått og sendt til beslutter: Innvilget',
-    linjer: [
-      {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'VEDTAK',
-      },
-    ],
-    uuid: '8de187c9-ffc2-43fa-b792-243f2eaab577',
-  },
-  {
-    behandlingId: 1004852,
-    aktør: {
-      type: 'SBH',
-      ident: 'Z990404',
-    },
-    opprettetTidspunkt: '2025-01-16T07:05:25.69',
+    opprettetTidspunkt: '2025-11-28T10:00:38.993',
     dokumenter: [],
     tittel: 'Fakta endret',
     linjer: [
       {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'PUNKT_FOR_MEDISINSK',
+        type: 'TEKST',
+        tekst: 'Gjeldende fra __27.10.2025__:',
       },
+      {
+        type: 'TEKST',
+        tekst: '__Inntekt fra LEI TYKKHUDET TIGER AS (312383985)__ er satt til __480 000__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: '__Inntekt fra GENIERKLÆRT STRIDLYNT KATT SKYVEDØR (315227569)__ er satt til __300 000__.',
+      },
+    ],
+    uuid: '06c02e20-2cdf-4b7e-b38a-ead86d7840c2',
+  },
+
+  {
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
+    aktør: {
+      type: 'BESL',
+      ident: 'B123456',
+    },
+    skjermlenke: 'VEDTAK',
+    opprettetTidspunkt: '2026-01-12T11:40:35.504',
+    dokumenter: [],
+    tittel: 'Vedtak fattet: Innvilget',
+    linjer: [],
+    uuid: 'f917a32f-8025-4a27-b5a3-989643e5c6fb',
+  },
+  {
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    skjermlenke: 'VEDTAK',
+    opprettetTidspunkt: '2026-01-12T11:40:11.224',
+    dokumenter: [],
+    tittel: 'Vedtak foreslått og sendt til beslutter: Innvilget',
+    linjer: [],
+    uuid: '6eb16967-de37-401c-89b2-8b18373629fb',
+  },
+  {
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    skjermlenke: 'FAKTA_OM_MEDLEMSKAP',
+    opprettetTidspunkt: '2026-01-12T11:39:46.099',
+    dokumenter: [],
+    tittel: 'Fakta endret',
+    linjer: [
+      {
+        type: 'TEKST',
+        tekst: '__Vurder om søker har gyldig medlemskap i perioden__ er satt til __Periode med medlemskap__.',
+      },
+      {
+        type: 'TEKST',
+        tekst: 'asdasdad',
+      },
+    ],
+    uuid: 'b6d5dfa9-125a-45ab-a156-5b287924149a',
+  },
+  {
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
+    aktør: {
+      type: 'SBH',
+      ident: 'S123456',
+    },
+    skjermlenke: 'PUNKT_FOR_MEDISINSK',
+    opprettetTidspunkt: '2026-01-12T11:39:38.694',
+    dokumenter: [],
+    tittel: 'Fakta endret',
+    linjer: [
       {
         type: 'TEKST',
         tekst: 'Sykdom manuelt behandlet.',
       },
     ],
-    uuid: '462e4b96-f495-4c67-9054-ea787d703f65',
+    uuid: '9fcec839-191c-419c-a5fe-1cdaa93694b4',
   },
   {
-    behandlingId: 1004852,
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
     aktør: {
       type: 'VL',
     },
-    opprettetTidspunkt: '2025-01-16T06:59:31.487',
+    opprettetTidspunkt: '2026-01-12T11:38:55.428',
     dokumenter: [],
     tittel: 'Behandling gjenopptatt',
     linjer: [],
-    uuid: 'ec046eaf-1db4-4a92-9dfe-900cb6b4a06e',
+    uuid: '6854aa6a-d33d-45ac-9994-419f7aa06fef',
   },
   {
     aktør: {
       type: 'ARBEIDSGIVER',
     },
-    opprettetTidspunkt: '2025-01-16T06:59:30.613',
+    opprettetTidspunkt: '2026-01-12T11:38:55.208',
     dokumenter: [
       {
         tag: 'Inntektsmelding',
         utgått: false,
-        journalpostId: '453920793',
-        dokumentId: '454322584',
+        journalpostId: '112102504',
+        dokumentId: '112102506',
       },
     ],
     tittel: 'Vedlegg mottatt',
     linjer: [],
-    uuid: '745400e4-5977-49cf-aedd-b72ecec76412',
+    uuid: 'abfcbe90-f6f1-4565-8ae6-99be7590b005',
   },
   {
-    behandlingId: 1004852,
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
     aktør: {
       type: 'VL',
     },
-    opprettetTidspunkt: '2025-01-16T06:44:26.799',
+    opprettetTidspunkt: '2026-01-12T11:38:54.64',
     dokumenter: [],
     tittel: 'Inntektsmelding bestilt fra arbeidsgiver',
     linjer: [
       {
         type: 'TEKST',
-        tekst:
-          'Oppgave til INTERESSANT INTUITIV KATT DIAMETER om å sende inntektsmelding for skjæringstidspunkt 2024-10-01',
+        tekst: 'Oppgave til BEDRIFT AS om å sende inntektsmelding for skjæringstidspunkt 2025-12-15',
       },
     ],
-    uuid: 'ae560057-a553-43c7-bd99-7edf728bae94',
+    uuid: '2a12ba33-f0ae-41e2-8324-140dcef1db9f',
   },
   {
-    behandlingId: 1004852,
+    behandlingId: 3000001,
+    behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
     aktør: {
       type: 'VL',
     },
-    opprettetTidspunkt: '2025-01-16T06:44:25.917',
+    opprettetTidspunkt: '2026-01-12T11:38:54.529',
     dokumenter: [],
-    tittel: 'Behandling på vent: 23.01.2025',
+    tittel: 'Behandling på vent: 19.01.2026',
     linjer: [
       {
         type: 'TEKST',
         tekst: 'Venter på inntektsmeldinger etter etterlysning',
       },
     ],
-    uuid: '0db31cb1-a00f-470a-bda3-313e6613762f',
+    uuid: '0551bc81-54cb-4a20-9720-16048d785397',
   },
   {
     aktør: {
       type: 'SOKER',
     },
-    opprettetTidspunkt: '2025-01-16T06:44:06.316',
+    opprettetTidspunkt: '2026-01-12T11:38:52.472',
     dokumenter: [
       {
         tag: 'Søknad',
         utgått: false,
-        journalpostId: '453920792',
-        dokumentId: '454322582',
+        journalpostId: '112102503',
+        dokumentId: '112102504',
       },
       {
         tag: 'Vedlegg',
         utgått: false,
-        journalpostId: '453920792',
-        dokumentId: '454322583',
+        journalpostId: '112102503',
+        dokumentId: '112102505',
       },
     ],
     tittel: 'Vedlegg mottatt',
     linjer: [],
-    uuid: '92bfbbef-9c71-483c-885b-a5b393679b53',
-  },
-  {
-    behandlingId: 1000301,
-    aktør: {
-      type: 'BESL',
-      ident: 'Z990422',
-    },
-    opprettetTidspunkt: '2024-12-02T07:46:22.373',
-    dokumenter: [],
-    tittel: 'Sak retur',
-    linjer: [
-      {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'FAKTA_OM_MEDISINSK',
-        tekst: ': __Godkjent__',
-      },
-      {
-        type: 'TEKST',
-        tekst: '(Aksjonspunkt: Kontroller legeerklæring)',
-      },
-      {
-        type: 'TEKST',
-        tekst: 'Kommentar: test',
-      },
-      {
-        type: 'LINJESKIFT',
-      },
-      {
-        type: 'SKJERMLENKE',
-        skjermlenkeType: 'VEDTAK',
-        tekst: ': __Må vurderes på nytt__',
-      },
-      {
-        type: 'TEKST',
-        tekst: '(Aksjonspunkt: Fritekstbrev)',
-      },
-      {
-        type: 'TEKST',
-        tekst: 'Kommentar: Vedtaksbrev må vurderes igjen',
-      },
-    ],
-    uuid: '52ae8488-6376-4c50-949c-f03abc9676f8',
+    uuid: 'e0124d7c-06c2-4781-b923-e81145e37759',
   },
 ];
 
