@@ -48,7 +48,7 @@ export const MenyEndreFrist = ({
     }
 
     const selectedDate = dayjs(value, 'YYYY-MM-DD');
-    const fromDate = dayjs(etterlysning.periode.tom);
+    const fromDate = dayjs();
     const toDate = fromDate.add(2, 'week');
 
     if (selectedDate.isBefore(fromDate, 'day')) {
@@ -56,7 +56,7 @@ export const MenyEndreFrist = ({
     }
 
     if (selectedDate.isAfter(toDate, 'day')) {
-      return `Dato kan ikke være mer enn 2 uker etter opprinnelig frist (${toDate.format('DD.MM.YYYY')})`;
+      return `Dato kan ikke være mer enn 2 uker etter dagens dato. Maks dato er ${toDate.format('DD.MM.YYYY')}`;
     }
 
     return undefined;
@@ -147,8 +147,8 @@ export const MenyEndreFrist = ({
               name="fristDato"
               label="Ny fristdato"
               validate={[required, hasValidDate, validateDateInRange]}
-              fromDate={dayjs(etterlysning?.periode?.tom).toDate()}
-              toDate={dayjs(etterlysning?.periode?.tom).add(2, 'week').toDate()}
+              fromDate={dayjs().toDate()}
+              toDate={dayjs().add(2, 'week').toDate()}
             />
             <RhfTextarea
               control={formMethods.control}
