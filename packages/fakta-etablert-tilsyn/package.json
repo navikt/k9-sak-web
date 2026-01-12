@@ -17,7 +17,7 @@
     "lodash": "4.17.21",
     "react": "19.2.3",
     "react-collapse": "5.1.1",
-    "react-dom": "19.2.0",
+    "react-dom": "19.2.3",
     "react-hook-form": "7.69.0"
   }
 }
