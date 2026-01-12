@@ -6,6 +6,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
+import MenyEndreFristBackendClient from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristBackendClient.js';
 import { MenyEndreFristIndex } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
@@ -27,6 +28,8 @@ import {
 } from '@k9-sak-web/types';
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
+import { ung_kodeverk_varsel_EtterlysningStatus } from '@navikt/ung-sak-typescript-client/types';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
@@ -160,6 +163,14 @@ export const BehandlingMenuIndex = ({
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
+  const menyEndreFristClient = new MenyEndreFristBackendClient();
+  const { data: etterlysninger = [] } = useQuery({
+    queryKey: ['etterlysninger', behandling?.uuid],
+    queryFn: () => menyEndreFristClient.hentEtterlysninger(behandling?.uuid ?? ''),
+    select: etterlysninger =>
+      etterlysninger.filter(etterlysning => etterlysning.status === ung_kodeverk_varsel_EtterlysningStatus.VENTER),
+  });
+  const harEtterlysningerMedFrist = etterlysninger.length > 0;
 
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -266,9 +277,6 @@ export const BehandlingMenuIndex = ({
             lukkModal={lukkModal}
           />
         )),
-        new MenyData(behandlingRettigheter?.behandlingKanSettesPaVent, 'Utsett frist').medModal(lukkModal => (
-          <MenyEndreFristIndex lukkModal={lukkModal} />
-        )),
         new MenyData(!sakRettigheter.sakSkalTilInfotrygd, 'Opprett ny behandling').medModal(lukkModal => (
           <MenyNyBehandlingIndexV2
             saksnummer={fagsak.saksnummer}
@@ -311,6 +319,19 @@ export const BehandlingMenuIndex = ({
             gjeldendeVedtakBehandlendeEnhetId={alleBehandlinger.find(b => b.gjeldendeVedtak)?.behandlendeEnhetId}
           />
         )),
+        new MenyData(harEtterlysningerMedFrist, 'Utsett frist').medModal(lukkModal => {
+          if (behandling && behandling.id && behandling.uuid) {
+            return (
+              <MenyEndreFristIndex
+                lukkModal={lukkModal}
+                behandlingId={behandling.id}
+                behandlingUuid={behandling?.uuid}
+                behandlingVersjon={behandling.versjon}
+                api={menyEndreFristClient}
+              />
+            );
+          }
+        }),
       ]}
     />
   );

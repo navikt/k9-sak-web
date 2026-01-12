@@ -1,5 +1,5 @@
 import type { ung_sak_kontrakt_etterlysning_Etterlysning } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { goToSearch } from '@k9-sak-web/lib/paths/paths.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Alert, BoxNew, Button, Heading, Modal, Select, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
@@ -12,6 +12,8 @@ interface MenyEndreFristProps {
   lukkModal: () => void;
   showSuccess?: boolean;
   endreFrister: (data: FormValues) => Promise<void>;
+  isLoading: boolean;
+  submitError?: string;
 }
 
 interface FormValues {
@@ -20,7 +22,14 @@ interface FormValues {
   fristDato: string;
 }
 
-export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFrister }: MenyEndreFristProps) => {
+export const MenyEndreFrist = ({
+  etterlysninger,
+  lukkModal,
+  showSuccess,
+  endreFrister,
+  isLoading,
+  submitError,
+}: MenyEndreFristProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<FormValues>({
     defaultValues: {
@@ -30,10 +39,8 @@ export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFr
     },
   });
   const valgtOppgave = formMethods.watch('oppgave');
+  const valgtFristDato = formMethods.watch('fristDato');
   const etterlysning = etterlysninger.find(e => e.eksternReferanse === valgtOppgave);
-  //   const åpneBehandlinger = behandlinger.filter(
-  //     behandling => behandling.status !== ung_kodeverk_behandling_BehandlingStatus.AVSLUTTET,
-  //   );
 
   const validateDateInRange = (value: string) => {
     if (!etterlysning?.periode?.tom || !value) {
@@ -66,7 +73,7 @@ export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFr
 
   const modalHeading = 'Utsett frist på oppgave til deltaker';
 
-  if (showSuccess) {
+  if (showSuccess || isLoading) {
     return (
       <Modal
         open
@@ -79,16 +86,31 @@ export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFr
           closeButton: false,
         }}
       >
-        <Modal.Body>
-          <Alert size="small" variant="success">
-            Oppgaven har fått ny frist xx.xx.xxxx. Behandlingen settes på vent.
-          </Alert>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button size="small" onClick={goToSearch}>
-            Gå til forsiden
-          </Button>
-        </Modal.Footer>
+        {showSuccess && (
+          <>
+            {' '}
+            <Modal.Body>
+              <Alert size="small" variant="success">
+                Oppgaven har fått ny frist {dayjs(valgtFristDato).format('DD.MM.YYYY')}.
+              </Alert>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                size="small"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Lukk
+              </Button>
+            </Modal.Footer>
+          </>
+        )}
+        {isLoading && (
+          <Modal.Body>
+            <LoadingPanel />
+          </Modal.Body>
+        )}
       </Modal>
     );
   }
@@ -101,6 +123,11 @@ export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFr
         </Modal.Header>
         <Modal.Body>
           <VStack gap="space-24">
+            {submitError && (
+              <Alert size="small" variant="error">
+                {submitError}
+              </Alert>
+            )}
             <Select
               {...formMethods.register('oppgave', {
                 required: true,
@@ -129,7 +156,7 @@ export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFr
               label="Begrunnelse"
               validate={[required]}
               description="Begrunnelsen er kun synlig i historikken, og vil ikke sendes til deltaker."
-            />{' '}
+            />
           </VStack>
           <BoxNew marginBlock="space-16 0">
             <Alert size="small" variant="info">
@@ -138,10 +165,10 @@ export const MenyEndreFrist = ({ etterlysninger, lukkModal, showSuccess, endreFr
           </BoxNew>
         </Modal.Body>
         <Modal.Footer>
-          <Button size="small" loading={isSubmitting}>
+          <Button size="small" loading={isSubmitting} type="submit">
             Utsett frist
           </Button>
-          <Button size="small" variant="secondary" loading={isSubmitting}>
+          <Button size="small" variant="secondary" loading={isSubmitting} type="button" onClick={lukkModal}>
             Avbryt
           </Button>
         </Modal.Footer>

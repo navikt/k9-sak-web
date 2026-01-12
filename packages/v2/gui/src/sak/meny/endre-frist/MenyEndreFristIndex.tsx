@@ -1,15 +1,15 @@
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { MenyEndreFrist } from './MenyEndreFrist';
-import MenyEndreFristBackendClient from './MenyEndreFristBackendClient';
+import type { MenyEndreFristApi } from './MenyEndreFristApi';
 
 interface MenyEndreFristIndexProps {
   lukkModal: () => void;
   behandlingUuid: string;
   behandlingId: number;
   behandlingVersjon: number;
+  api: MenyEndreFristApi;
 }
 
 export const MenyEndreFristIndex = ({
@@ -17,15 +17,15 @@ export const MenyEndreFristIndex = ({
   behandlingUuid,
   behandlingId,
   behandlingVersjon,
+  api,
 }: MenyEndreFristIndexProps) => {
-  const menyEndreFristClient = new MenyEndreFristBackendClient();
   const [showSuccess, setShowSuccess] = useState(false);
-
+  const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   const { data: etterlysninger = [], isLoading } = useQuery({
     queryKey: ['etterlysninger', behandlingUuid],
-    queryFn: () => menyEndreFristClient.hentEtterlysninger(behandlingUuid),
+    queryFn: () => api.hentEtterlysninger(behandlingUuid),
     select: etterlysninger =>
-      etterlysninger.filter(etterlysning => etterlysning.status !== ung_kodeverk_varsel_EtterlysningStatus.UTLØPT), // TODO: Finne ut hvilke statuser vi skal vise.
+      etterlysninger.filter(etterlysning => etterlysning.status === ung_kodeverk_varsel_EtterlysningStatus.VENTER),
   });
 
   const mutation = useMutation({
@@ -37,10 +37,17 @@ export const MenyEndreFristIndex = ({
           begrunnelse: formValues.begrunnelse,
         },
       ];
-      return menyEndreFristClient.endreFrist(behandlingId, behandlingVersjon, endreteFrister);
+      return api.endreFrist(behandlingId, behandlingVersjon, endreteFrister);
     },
     onSuccess: () => {
       setShowSuccess(true);
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        setSubmitError(error.message);
+      } else {
+        setSubmitError('Noe gikk galt, vennligst prøv igjen senere.');
+      }
     },
   });
 
@@ -48,16 +55,14 @@ export const MenyEndreFristIndex = ({
     await mutation.mutateAsync(formValues);
   };
 
-  if (isLoading) {
-    return <LoadingPanel />;
-  }
-
   return (
     <MenyEndreFrist
       lukkModal={lukkModal}
       etterlysninger={etterlysninger}
       endreFrister={handleSubmit}
       showSuccess={showSuccess}
+      isLoading={isLoading || mutation.isPending}
+      submitError={submitError}
     />
   );
 };

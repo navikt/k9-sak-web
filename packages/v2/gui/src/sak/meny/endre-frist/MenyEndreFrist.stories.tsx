@@ -1,3 +1,7 @@
+import {
+  ung_kodeverk_varsel_EtterlysningStatus,
+  ung_kodeverk_varsel_EtterlysningType,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { MenyEndreFrist } from './MenyEndreFrist.js';
@@ -12,9 +16,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockEtterlysninger = [
-  { eksternReferanse: '1', periode: { fom: '2026-01-10', tom: '2026-01-15' } },
-  { eksternReferanse: '2', periode: { fom: '2026-01-15', tom: '2026-01-20' } },
-  { eksternReferanse: '3', periode: { fom: '2026-01-20', tom: '2026-01-25' } },
+  {
+    status: ung_kodeverk_varsel_EtterlysningStatus.VENTER,
+    type: ung_kodeverk_varsel_EtterlysningType.UTTALELSE_KONTROLL_INNTEKT,
+    periode: { fom: '2025-11-01', tom: '2025-11-30' },
+    eksternReferanse: 'bf210a62-d9a9-4d49-93dc-ecb10a1a91ab',
+  },
+  {
+    status: ung_kodeverk_varsel_EtterlysningStatus.VENTER,
+    type: ung_kodeverk_varsel_EtterlysningType.UTTALELSE_KONTROLL_INNTEKT,
+    periode: { fom: '2025-12-01', tom: '2025-12-31' },
+    eksternReferanse: 'ca884eaf-4610-46a8-859c-1c9c7fef8961',
+  },
 ];
 
 export const FlereOppgaver: Story = {
@@ -22,6 +35,7 @@ export const FlereOppgaver: Story = {
     etterlysninger: mockEtterlysninger,
     lukkModal: fn(),
     endreFrister: fn(),
+    isLoading: false,
   },
   play: async ({ canvas, step }) => {
     const body = within(canvas.getByRole('dialog'));
@@ -57,6 +71,7 @@ export const EnOppgave: Story = {
     etterlysninger: [mockEtterlysninger[0]!],
     lukkModal: fn(),
     endreFrister: fn(),
+    isLoading: false,
   },
   play: async ({ canvas, step }) => {
     const body = within(canvas.getByRole('dialog'));
@@ -69,35 +84,64 @@ export const EnOppgave: Story = {
   },
 };
 
-export const ValideringAvObligatoriskeFelter: Story = {
-  args: {
-    etterlysninger: mockEtterlysninger,
-    lukkModal: fn(),
-    endreFrister: fn(),
-  },
-};
-
-export const ValideringAvDato: Story = {
-  args: {
-    etterlysninger: mockEtterlysninger,
-    lukkModal: fn(),
-    endreFrister: fn(),
-  },
-};
-
-export const AvbrytModal: Story = {
-  args: {
-    etterlysninger: mockEtterlysninger,
-    lukkModal: fn(),
-    endreFrister: fn(),
-  },
-};
-
 export const ViserSuksessMelding: Story = {
   args: {
     etterlysninger: mockEtterlysninger,
     lukkModal: fn(),
     showSuccess: true,
     endreFrister: fn(),
+    isLoading: false,
+  },
+  play: async ({ canvas, step }) => {
+    const body = within(canvas.getByRole('dialog'));
+
+    await step('Suksessmelding vises', async () => {
+      await expect(body.getByText(/Oppgaven har fått ny frist/i)).toBeInTheDocument();
+    });
+
+    await step('Lukk-knapp er tilgjengelig', async () => {
+      const lukkButton = body.getByRole('button', { name: 'Lukk' });
+      await expect(lukkButton).toBeInTheDocument();
+    });
+  },
+};
+
+export const ViserLaster: Story = {
+  args: {
+    etterlysninger: mockEtterlysninger,
+    lukkModal: fn(),
+    showSuccess: false,
+    endreFrister: fn(),
+    isLoading: true,
+  },
+  play: async ({ canvas, step }) => {
+    await step('Viser loading spinner', async () => {
+      const dialog = canvas.getByRole('dialog');
+      await expect(dialog).toBeInTheDocument();
+      // LoadingPanel should be visible
+    });
+  },
+};
+
+export const ViserFeilmelding: Story = {
+  args: {
+    etterlysninger: mockEtterlysninger,
+    lukkModal: fn(),
+    endreFrister: fn(),
+    isLoading: false,
+    submitError: 'Kunne ikke endre frist. Prøv igjen senere.',
+  },
+  play: async ({ canvas, step }) => {
+    const body = within(canvas.getByRole('dialog'));
+
+    await step('Feilmelding vises', async () => {
+      await expect(body.getByText('Kunne ikke endre frist. Prøv igjen senere.')).toBeInTheDocument();
+    });
+
+    await step('Skjema er fortsatt tilgjengelig', async () => {
+      await expect(body.getByLabelText('Velg oppgave')).toBeInTheDocument();
+      await expect(body.getByLabelText('Ny fristdato')).toBeInTheDocument();
+      await expect(body.getByLabelText('Begrunnelse')).toBeInTheDocument();
+    });
   },
 };
