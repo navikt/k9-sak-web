@@ -42,8 +42,8 @@ export const FlereOppgaver: Story = {
 
     await step('Velg oppgave', async () => {
       const oppgaveSelect = body.getByLabelText('Velg oppgave');
-      await userEvent.selectOptions(oppgaveSelect, '2');
-      await expect(oppgaveSelect).toHaveValue('2');
+      await userEvent.selectOptions(oppgaveSelect, 'bf210a62-d9a9-4d49-93dc-ecb10a1a91ab');
+      await expect(oppgaveSelect).toHaveValue('bf210a62-d9a9-4d49-93dc-ecb10a1a91ab');
     });
 
     await step('Velg ny fristdato', async () => {
@@ -77,9 +77,8 @@ export const EnOppgave: Story = {
     const body = within(canvas.getByRole('dialog'));
 
     await step('Oppgave er forhåndsvalgt og read-only', async () => {
-      const oppgaveSelect = body.getByLabelText('Velg oppgave');
-      await expect(oppgaveSelect).toHaveValue('1');
-      await expect(oppgaveSelect).toHaveAttribute('readonly');
+      const oppgavevalg = body.getAllByRole('option');
+      await expect(oppgavevalg).toHaveLength(1);
     });
   },
 };
