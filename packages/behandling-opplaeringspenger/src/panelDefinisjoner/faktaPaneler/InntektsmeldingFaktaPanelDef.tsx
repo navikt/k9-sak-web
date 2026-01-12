@@ -6,7 +6,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 import Inntektsmelding from '../../components/Inntektsmelding';
-import InntektsmeldingV2 from '@k9-sak-web/gui/fakta/inntektsmelding/Inntektsmelding.js';
+import InntektsmeldingV2 from '@k9-sak-web/gui/fakta/inntektsmelding/src/ui/InntektsmeldingContainer.js';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;

@@ -1,26 +1,22 @@
 import { composeStories } from '@storybook/react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
 import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';
 import { alleErMottatt, manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
+import * as inntektsmeldingQueries from '../src/api/inntektsmeldingQueries';
 import * as stories from '../src/stories/InntektsmeldingV2.stories';
-import type { InntektsmeldingContextType } from '../src/types/InntektsmeldingContextType';
-
-const server = setupServer();
+import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingContainer';
 
 describe('9071 - Mangler inntektsmelding', () => {
-  beforeAll(() => {
-    server.listen();
-  });
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-
   const { Mangler9071, AlleInntektsmeldingerMottatt } = composeStories(stories);
 
+  beforeEach(() => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: manglerInntektsmelding,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
+  });
+
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
-    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -34,7 +30,6 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Viser riktig knapp når purring er valgt', async () => {
-    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -52,7 +47,6 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Må skrive begrunnelse når man har valgt A-inntekt', async () => {
-    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -67,14 +61,12 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Kan sende purring med varsel om avslag', async () => {
-    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: InntektsmeldingContextType = {
+    const props: Partial<InntektsmeldingContainerProps> = {
       ...aksjonspunkt9071Props,
-      onFinished: onClickSpy,
+      submitCallback: onClickSpy,
     };
-    const props = { data };
     render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -87,31 +79,31 @@ describe('9071 - Mangler inntektsmelding', () => {
     });
 
     // ASSERT
-    expect(onClickSpy).toHaveBeenCalledWith({
-      '@type': '9071',
-      kode: '9071',
-      begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-      perioder: [
-        {
-          begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-          periode: '2022-02-01/2022-02-16',
-          fortsett: true,
-          kode: '9071',
-          vurdering: 'FORTSETT',
-        },
-      ],
-    });
+    expect(onClickSpy).toHaveBeenCalledWith([
+      {
+        '@type': '9071',
+        kode: '9071',
+        begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+        perioder: [
+          {
+            begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+            periode: '2022-02-01/2022-02-16',
+            fortsett: true,
+            kode: '9071',
+            vurdering: 'FORTSETT',
+          },
+        ],
+      },
+    ]);
   });
 
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
-    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data: InntektsmeldingContextType = {
+    const props: Partial<InntektsmeldingContainerProps> = {
       ...aksjonspunkt9071Props,
-      onFinished: onClickSpy,
+      submitCallback: onClickSpy,
     };
-    const props = { data };
     render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -124,31 +116,35 @@ describe('9071 - Mangler inntektsmelding', () => {
     });
 
     // ASSERT
-    expect(onClickSpy).toHaveBeenCalledWith({
-      '@type': '9071',
-      kode: '9071',
-      begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-      perioder: [
-        {
-          begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-          periode: '2022-02-01/2022-02-16',
-          fortsett: true,
-          kode: '9071',
-          vurdering: 'FORTSETT',
-        },
-      ],
-    });
+    expect(onClickSpy).toHaveBeenCalledWith([
+      {
+        '@type': '9071',
+        kode: '9071',
+        begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+        perioder: [
+          {
+            begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+            periode: '2022-02-01/2022-02-16',
+            fortsett: true,
+            kode: '9071',
+            vurdering: 'FORTSETT',
+          },
+        ],
+      },
+    ]);
   });
 
   test('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
-    server.use(http.get('/tilstand', () => HttpResponse.json(alleErMottatt)));
     // ARRANGE
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: alleErMottatt,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
+
     const onClickSpy = vi.fn();
-    const data: InntektsmeldingContextType = {
+    const props: Partial<InntektsmeldingContainerProps> = {
       ...aksjonspunkt9071Props,
-      onFinished: onClickSpy,
+      submitCallback: onClickSpy,
     };
-    const props = { data };
     render(<AlleInntektsmeldingerMottatt {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -159,10 +155,12 @@ describe('9071 - Mangler inntektsmelding', () => {
     });
 
     // ASSERT
-    expect(onClickSpy).toHaveBeenCalledWith({
-      '@type': '9071',
-      kode: '9071',
-      perioder: [],
-    });
+    expect(onClickSpy).toHaveBeenCalledWith([
+      {
+        '@type': '9071',
+        kode: '9071',
+        perioder: [],
+      },
+    ]);
   });
 });

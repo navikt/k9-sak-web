@@ -11,30 +11,24 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
-import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
-import InntektsmeldingContainer, { type InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
-import type { InntektsmeldingContextType } from '../types/InntektsmeldingContextType';
+import * as inntektsmeldingQueries from '../api/inntektsmeldingQueries';
+import InntektsmeldingContainer, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingContainer';
 
-const fakeApi = (response: KompletthetsVurdering): InntektsmeldingApi => ({
-  getKompletthetsoversikt: () => Promise.resolve(response),
-});
-
-const createContainerData = (props: Partial<InntektsmeldingContextType>): InntektsmeldingContextType => ({
-  readOnly: false,
-  arbeidsforhold: {},
-  endpoints: { kompletthetBeregning: '' },
-  onFinished: action('onFinished'),
-  aksjonspunkter: [],
+const createProps = (props: Partial<InntektsmeldingContainerProps>): InntektsmeldingContainerProps => ({
+  ...inntektsmeldingPropsMock,
+  submitCallback: action('submitCallback'),
   ...props,
 });
 
 const meta: Meta<typeof InntektsmeldingContainer> = {
-  args: {
-    data: createContainerData(inntektsmeldingPropsMock),
-    requestApi: fakeApi(ikkePaakrevd),
-  },
+  args: createProps({}),
   title: 'Fakta/fakta-inntektsmelding',
   component: InntektsmeldingContainer,
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: ikkePaakrevd,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
+  },
 };
 
 export default meta;
@@ -42,57 +36,73 @@ export default meta;
 type Story = StoryObj<typeof InntektsmeldingContainer>;
 
 export const IkkePaakrevd_V2: Story = {
-  args: {
-    data: createContainerData(inntektsmeldingPropsMock),
-    requestApi: fakeApi(ikkePaakrevd),
+  args: createProps({}),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: ikkePaakrevd,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const Mangler9069: Story = {
-  args: {
-    data: createContainerData(inntektsmeldingPropsMock),
-    requestApi: fakeApi(manglerInntektsmelding),
+  args: createProps({}),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: manglerInntektsmelding,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const Mangler9071: Story = {
-  args: {
-    data: createContainerData(aksjonspunkt9071Props),
-    requestApi: fakeApi(manglerInntektsmelding),
+  args: createProps(aksjonspunkt9071Props),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: manglerInntektsmelding,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const ManglerFlere9071_V2: Story = {
-  args: {
-    data: createContainerData(aksjonspunkt9071Props),
-    requestApi: fakeApi(manglerFlereInntektsmeldinger),
+  args: createProps(aksjonspunkt9071Props),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: manglerFlereInntektsmeldinger,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const IkkePaakrevdOgMangler9071_V2: Story = {
-  args: {
-    data: createContainerData(inntektsmeldingPropsMock),
-    requestApi: fakeApi(ikkePaakrevdOgManglerInntektsmelding),
+  args: createProps({}),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: ikkePaakrevdOgManglerInntektsmelding,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const FerdigVisning9069_V2: Story = {
-  args: {
-    data: createContainerData(inntektsmeldingPropsMock),
-    requestApi: fakeApi(ferdigvisning),
+  args: createProps({}),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: ferdigvisning,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const FerdigVisning9071_V2: Story = {
-  args: {
-    data: createContainerData(aksjonspunkt9071FerdigProps),
-    requestApi: fakeApi(ferdigvisning),
+  args: createProps(aksjonspunkt9071FerdigProps),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: ferdigvisning,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
-  args: {
-    data: createContainerData(aksjonspunkt9071Props),
-    requestApi: fakeApi(alleErMottatt),
+  args: createProps(aksjonspunkt9071Props),
+  beforeEach: () => {
+    vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
+      data: alleErMottatt,
+    } as ReturnType<typeof inntektsmeldingQueries.useKompletthetsoversikt>);
   },
 };

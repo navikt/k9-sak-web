@@ -1,23 +1,9 @@
-import type { InntektsmeldingContextType } from '../src/types/InntektsmeldingContextType';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
+import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingContainer';
+import type { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
 
-interface ArbeidsforholdReferanse {
-  internArbeidsforholdId: string;
-  eksternArbeidsforholdId: string;
-}
-
-interface ArbeidsgiverInfo {
-  identifikator: string;
-  personIdentifikator: string | null;
-  navn: string;
-  fødselsdato: string | null;
-  arbeidsforholdreferanser: ArbeidsforholdReferanse[];
-}
-
-interface MockProps extends Omit<InntektsmeldingContextType, 'onFinished'> {
-  arbeidsforhold: Record<string, ArbeidsgiverInfo>;
-  onFinished?: InntektsmeldingContextType['onFinished'];
-}
+type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback'> & {
+  submitCallback?: InntektsmeldingContainerProps['submitCallback'];
+};
 
 const createAksjonspunkt = (kode: string, statusKode: string): Aksjonspunkt => ({
   aksjonspunktType: {
@@ -47,37 +33,15 @@ const createAksjonspunkt = (kode: string, statusKode: string): Aksjonspunkt => (
   ],
 });
 
-const arbeidsforhold: Record<string, ArbeidsgiverInfo> = {
-  896929119: {
-    identifikator: '896929119',
-    personIdentifikator: null,
-    navn: 'SAUEFABRIKK',
-    fødselsdato: null,
-    arbeidsforholdreferanser: [
-      {
-        internArbeidsforholdId: '99ab90b6-98fd-4ab8-8632-fc08d8cb898e',
-        eksternArbeidsforholdId: '2',
-      },
-    ],
-  },
-  972674818: {
-    identifikator: '972674818',
-    personIdentifikator: null,
-    navn: 'PENGELØS SPAREBANK',
-    fødselsdato: null,
-    arbeidsforholdreferanser: [
-      {
-        internArbeidsforholdId: 'b8c8b29f-42da-4aef-9714-6fbc9772079f',
-        eksternArbeidsforholdId: '1',
-      },
-    ],
-  },
-};
+const mockBehandling: BehandlingAppKontekst = {
+  uuid: 'mock-behandling-uuid',
+} as BehandlingAppKontekst;
 
 const inntektsmeldingPropsMock: MockProps = {
-  arbeidsforhold,
-  endpoints: {
-    kompletthetBeregning: 'tilstand',
+  behandling: mockBehandling,
+  arbeidsgiverOpplysningerPerId: {
+    896929119: { navn: 'SAUEFABRIKK' },
+    972674818: { navn: 'PENGELØS SPAREBANK' },
   },
   readOnly: false,
   aksjonspunkter: [createAksjonspunkt('9069', 'OPPR')],
@@ -86,18 +50,20 @@ const inntektsmeldingPropsMock: MockProps = {
 export default inntektsmeldingPropsMock;
 
 export const aksjonspunkt9071Props: MockProps = {
-  arbeidsforhold,
-  endpoints: {
-    kompletthetBeregning: 'tilstand',
+  behandling: mockBehandling,
+  arbeidsgiverOpplysningerPerId: {
+    896929119: { navn: 'SAUEFABRIKK' },
+    972674818: { navn: 'PENGELØS SPAREBANK' },
   },
   readOnly: false,
   aksjonspunkter: [createAksjonspunkt('9071', 'OPPR')],
 };
 
 export const aksjonspunkt9071FerdigProps: MockProps = {
-  arbeidsforhold,
-  endpoints: {
-    kompletthetBeregning: 'tilstand',
+  behandling: mockBehandling,
+  arbeidsgiverOpplysningerPerId: {
+    896929119: { navn: 'SAUEFABRIKK' },
+    972674818: { navn: 'PENGELØS SPAREBANK' },
   },
   readOnly: false,
   aksjonspunkter: [createAksjonspunkt('9071', 'UTFORT')],

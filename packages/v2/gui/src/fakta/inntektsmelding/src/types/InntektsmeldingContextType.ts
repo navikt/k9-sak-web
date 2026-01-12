@@ -12,13 +12,10 @@ export type DokumentOpplysninger = Readonly<{
 }>;
 
 export interface InntektsmeldingContextType {
+  behandlingUuid: string;
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
-  httpErrorHandler?: (statusCode: number, locationHeader?: string) => void;
-  endpoints: {
-    kompletthetBeregning: string;
-  };
   onFinished: (data: AksjonspunktRequestPayload) => void;
   aksjonspunkter: Aksjonspunkt[];
 }

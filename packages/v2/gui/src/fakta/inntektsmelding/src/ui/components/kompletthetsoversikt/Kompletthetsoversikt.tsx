@@ -1,11 +1,12 @@
 import { Period } from '@fpsak-frontend/utils';
+import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
 import { Box, Button } from '@navikt/ds-react';
 import { useMemo, useState, type JSX } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
+import { useKompletthetsoversikt } from '../../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import FieldName from '../../../types/FieldName';
 import { Kode as KodeEnum } from '../../../types/KompletthetData';
-import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import type { Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
@@ -18,17 +19,32 @@ import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe'
 import PeriodList from '../period-list/PeriodList';
 import InntektsmeldingManglerInfo from './InntektsmeldingManglerInfo';
 
-interface KompletthetsoversiktProps {
-  kompletthetsoversikt: Kompletthet;
-  onFormSubmit: (payload: AksjonspunktRequestPayload) => void;
+function initKompletthetsdata({ tilstand }: KompletthetsVurdering): Kompletthet {
+  return {
+    tilstand: tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
+      const [fom = '', tom = ''] = periode.split('/');
+      return {
+        periode: new Period(fom, tom),
+        status,
+        begrunnelse,
+        tilVurdering,
+        vurdering,
+        periodeOpprinneligFormat: periode,
+        vurdertAv,
+        vurdertTidspunkt,
+      };
+    }),
+  };
 }
 
 interface TilstandEditState {
   [periodeKey: string]: boolean;
 }
 
-const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: KompletthetsoversiktProps): JSX.Element => {
-  const { aksjonspunkter, readOnly } = useInntektsmeldingContext();
+const Kompletthetsoversikt = (): JSX.Element => {
+  const { aksjonspunkter, readOnly, onFinished } = useInntektsmeldingContext();
+  const { data: kompletthetResponse } = useKompletthetsoversikt();
+  const kompletthetsoversikt = initKompletthetsdata(kompletthetResponse);
   const { tilstand: tilstander } = kompletthetsoversikt;
 
   const periods = tilstander.map(({ periode }) => periode);
@@ -109,7 +125,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
         kode: aksjonspunktKode ?? '',
       };
     });
-    onFormSubmit({
+    onFinished({
       '@type': aksjonspunktKode ?? '',
       kode: aksjonspunktKode ?? '',
       perioder,
@@ -126,7 +142,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
           tilstander={tilstanderBeriket}
           listHeadingRenderer={listHeadingRenderer}
           listItemRenderer={listItemRenderer}
-          onFormSubmit={onFormSubmit}
+          onFormSubmit={onFinished}
           aksjonspunkt={aktivtAksjonspunkt ?? forrigeAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
