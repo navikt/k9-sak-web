@@ -3,7 +3,7 @@ import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, VStack } from '@navikt/ds-react';
 import type { JSX, ReactNode } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
-import type Aksjonspunkt from '../../../types/Aksjonspunkt';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
 import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import type { TilstandBeriket } from '../../../types/KompletthetData';
 import { sorterSkjæringstidspunkt } from '../../../util/utils';

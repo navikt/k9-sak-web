@@ -1,15 +1,15 @@
 import { Period, get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
 import { useEffect, useMemo, useReducer, type ReactElement } from 'react';
 import ContainerContext from '../context/ContainerContext';
 import type ContainerContract from '../types/ContainerContract';
 import type { Kompletthet as KompletthetData } from '../types/KompletthetData';
-import type { Kompletthet as KompletthetResponse } from '../types/KompletthetResponse';
 import ActionType from './actionTypes.js';
 import Kompletthetsoversikt from './components/kompletthetsoversikt/Kompletthetsoversikt';
 import mainComponentReducer from './reducer';
 
-function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetData {
+function initKompletthetsdata({ tilstand }: KompletthetsVurdering): KompletthetData {
   return {
     tilstand: tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
       const [fom = '', tom = ''] = periode.split('/');
@@ -32,13 +32,13 @@ export interface InntektsmeldingApi {
     endpoint: string,
     httpErrorHandler: ContainerContract['httpErrorHandler'],
     signal?: AbortSignal,
-  ) => Promise<KompletthetResponse>;
+  ) => Promise<KompletthetsVurdering>;
 }
 
 const defaultApi: InntektsmeldingApi = {
   getKompletthetsoversikt: (endpoint, httpErrorHandler, signal) => {
     const handler = httpErrorHandler ?? (() => {});
-    return get<KompletthetResponse>(endpoint, handler, {
+    return get<KompletthetsVurdering>(endpoint, handler, {
       signal,
     });
   },
@@ -69,7 +69,7 @@ const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainCompone
   useEffect(() => {
     let isMounted = true;
     getKompletthetsoversikt()
-      .then((response: KompletthetResponse) => {
+      .then((response: KompletthetsVurdering) => {
         if (isMounted) {
           dispatch({ type: ActionType.OK, kompletthetsoversiktResponse: response });
         }

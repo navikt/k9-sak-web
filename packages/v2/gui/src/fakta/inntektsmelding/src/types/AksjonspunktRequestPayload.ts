@@ -1,16 +1,10 @@
-import { Kode } from './KompletthetData';
+import type { k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode } from '@navikt/k9-sak-typescript-client/types';
 
-export interface Perioder {
-  periode: string;
-  fortsett: boolean;
-  begrunnelse?: string;
-  kode: string;
-  vurdering?: Kode;
-}
+export type KompletthetsPeriode = k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode;
 
-interface AksjonspunktRequestPayload {
+export interface AksjonspunktRequestPayload {
   begrunnelse?: string;
-  perioder: Perioder[];
+  perioder: KompletthetsPeriode[];
   kode: string;
   '@type': string;
 }

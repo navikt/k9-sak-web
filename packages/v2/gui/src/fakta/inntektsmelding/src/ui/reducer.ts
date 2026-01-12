@@ -1,15 +1,15 @@
+import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
 import ActionType from './actionTypes';
-import { Kompletthet } from '../types/KompletthetResponse';
 
 interface MainComponentState {
-  kompletthetsoversiktResponse: Kompletthet | null;
+  kompletthetsoversiktResponse: KompletthetsVurdering | null;
   kompletthetsoversiktHarFeilet: boolean;
   isLoading: boolean;
 }
 
 interface Action {
   type: ActionType;
-  kompletthetsoversiktResponse?: Kompletthet;
+  kompletthetsoversiktResponse?: KompletthetsVurdering;
 }
 
 const mainComponentReducer = (state: MainComponentState, action: Action): MainComponentState => {

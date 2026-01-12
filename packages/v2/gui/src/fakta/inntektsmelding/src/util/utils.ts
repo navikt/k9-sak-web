@@ -1,21 +1,21 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import Aksjonspunkt from '../types/Aksjonspunkt';
-import { Kode, TilstandBeriket } from '../types/KompletthetData';
-import Status from '../types/TilstandStatus';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
+import { Kode, type TilstandBeriket } from '../types/KompletthetData';
 
-export const finnAktivtAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]): Aksjonspunkt =>
+export const finnAktivtAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
   aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
 
 export const skalVurderes = (tilstand: TilstandBeriket): boolean =>
   tilstand?.tilVurdering &&
-  tilstand?.status.some(status => [Status.MANGLER].includes(status.status)) &&
-  tilstand?.vurdering?.kode === Kode.TOM;
+  tilstand?.status.some(status => [InntektsmeldingStatus.MANGLER].includes(status.status)) &&
+  tilstand?.vurdering === Kode.TOM;
 
 export const ikkePaakrevd = (tilstand: TilstandBeriket): boolean =>
-  tilstand?.status.some(status => [Status.IKKE_PÅKREVD].includes(status.status));
+  tilstand?.status.some(status => [InntektsmeldingStatus.IKKE_PÅKREVD].includes(status.status));
 
 export const ingenInntektsmeldingMangler = (tilstand: TilstandBeriket): boolean =>
-  !tilstand?.status.some(status => [Status.MANGLER].includes(status.status));
+  !tilstand?.status.some(status => [InntektsmeldingStatus.MANGLER].includes(status.status));
 
 export const ingenTilstanderHarMangler = (tilstander: TilstandBeriket[]) =>
   tilstander.every(ingenInntektsmeldingMangler);

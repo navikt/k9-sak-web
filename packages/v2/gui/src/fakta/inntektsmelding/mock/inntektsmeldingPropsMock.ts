@@ -1,5 +1,5 @@
 import ContainerContract from '../src/types/ContainerContract';
-import Aksjonspunkt from '../src/types/Aksjonspunkt';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
 
 interface ArbeidsforholdReferanse {
   internArbeidsforholdId: string;

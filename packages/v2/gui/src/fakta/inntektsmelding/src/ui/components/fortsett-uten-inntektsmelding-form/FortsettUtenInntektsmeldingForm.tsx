@@ -5,13 +5,13 @@ import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { JSX } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
 import useContainerContext from '../../../context/useContainerContext';
-import type Aksjonspunkt from '../../../types/Aksjonspunkt';
 import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
-import type { Perioder } from '../../../types/AksjonspunktRequestPayload';
+import type { KompletthetsPeriode } from '../../../types/AksjonspunktRequestPayload';
 import { Kode } from '../../../types/KompletthetData';
 import type { TilstandBeriket } from '../../../types/KompletthetData';
-import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 
 export interface FortsettUtenInntektsmeldingFormState {
@@ -73,7 +73,7 @@ const FortsettUtenInntektsmeldingForm = ({
   const aksjonspunktKode = aksjonspunkt?.definisjon?.kode as AksjonspunktKode | undefined;
   const vis = ((skalVurderes(tilstand) && !readOnly) || redigeringsmodus) && aksjonspunkt && tilstand.tilVurdering;
   const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && beslutning !== Kode.FORTSETT);
-  const arbeidsgivereMedManglendeInntektsmelding = tilstand.status.filter(s => s.status === TilstandStatus.MANGLER);
+  const arbeidsgivereMedManglendeInntektsmelding = tilstand.status.filter(s => s.status === InntektsmeldingStatus.MANGLER);
 
   const formatArbeidsgiver = (arbeidsgiver: { arbeidsgiver: string; arbeidsforhold: string | null }) =>
     `${arbeidsforhold[arbeidsgiver.arbeidsgiver]?.navn ?? arbeidsgiver.arbeidsgiver} (${arbeidsgiver.arbeidsforhold ?? 'ukjent'})`;
@@ -88,7 +88,7 @@ const FortsettUtenInntektsmeldingForm = ({
     .join('');
 
   const submit = (data: FieldValues) => {
-    const periode: Perioder = {
+    const periode: KompletthetsPeriode = {
       begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === Kode.FORTSETT,

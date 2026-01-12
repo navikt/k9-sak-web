@@ -11,11 +11,11 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
+import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
 import InntektsmeldingContainer, { type InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
-import { Kompletthet } from '../types/KompletthetResponse';
-import ContainerContract from '../types/ContainerContract';
+import type ContainerContract from '../types/ContainerContract';
 
-const fakeApi = (response: Kompletthet): InntektsmeldingApi => ({
+const fakeApi = (response: KompletthetsVurdering): InntektsmeldingApi => ({
   getKompletthetsoversikt: () => Promise.resolve(response),
 });
 

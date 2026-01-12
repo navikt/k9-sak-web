@@ -1,5 +1,8 @@
 import { Period } from '@fpsak-frontend/utils';
-import TilstandStatus from './TilstandStatus';
+import type {
+  k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdStatus,
+  k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering,
+} from '@navikt/k9-sak-typescript-client/types';
 
 export interface Kompletthet {
   tilstand: Tilstand[];
@@ -8,9 +11,9 @@ export interface Kompletthet {
 export interface Tilstand {
   periode: Period;
   status: Status[];
-  begrunnelse: string;
+  begrunnelse?: string;
   tilVurdering: boolean;
-  vurdering: Vurdering;
+  vurdering?: Vurdering;
   periodeOpprinneligFormat: string;
   vurdertAv?: string;
   vurdertTidspunkt?: string;
@@ -23,24 +26,18 @@ export interface TilstandBeriket extends Tilstand {
   beslutningFieldName: `beslutning${string}`;
 }
 
-export interface Status {
-  arbeidsgiver: Arbeidsgiver;
-  status: TilstandStatus;
-  journalpostId: string;
-}
+export type Status = k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdStatus;
 
 export interface Arbeidsgiver {
   arbeidsgiver: string;
-  arbeidsforhold: null;
-}
-export interface Vurdering {
-  beskrivelse: string;
-  kode: Kode;
+  arbeidsforhold: string | null;
 }
 
+export type Vurdering = k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering;
+
 export enum Kode {
-  FORTSETT = 'FORTSETT',
+  FORTSETT = 'KAN_FORTSETTE',
   MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
   IKKE_INNTEKTSTAP = 'IKKE_INNTEKTSTAP',
-  TOM = '-',
+  TOM = 'UDEFINERT',
 }
