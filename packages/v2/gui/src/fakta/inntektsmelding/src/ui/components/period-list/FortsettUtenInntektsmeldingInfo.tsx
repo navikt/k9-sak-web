@@ -1,22 +1,24 @@
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
-import ContainerContext from '../../../context/ContainerContext';
+import type { JSX } from 'react';
+import useContainerContext from '../../../context/useContainerContext';
 import { Kode, Tilstand } from '../../../types/KompletthetData';
 import styles from './periodList.module.css';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+
+interface FortsettUtenInntektsmeldingInfoProps {
+  tilstand: Tilstand;
+  redigeringsmodus: boolean;
+  setRedigeringsmodus: (state: boolean) => void;
+}
 
 const FortsettUtenInntektsmeldingInfo = ({
   tilstand,
   redigeringsmodus,
   setRedigeringsmodus,
-}: {
-  tilstand: Tilstand;
-  redigeringsmodus: boolean;
-  setRedigeringsmodus: (state: boolean) => void;
-}): JSX.Element | null => {
-  const { readOnly } = React.useContext(ContainerContext);
+}: FortsettUtenInntektsmeldingInfoProps): JSX.Element | null => {
+  const { readOnly } = useContainerContext();
 
   if (tilstand?.vurdering?.kode === Kode.FORTSETT && !redigeringsmodus && tilstand.tilVurdering) {
     return (

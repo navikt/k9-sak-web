@@ -1,18 +1,18 @@
 import { Period, get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
-import React, { ReactElement } from 'react';
+import { useEffect, useMemo, useReducer, type ReactElement } from 'react';
 import ContainerContext from '../context/ContainerContext';
-import ContainerContract from '../types/ContainerContract';
-import { Kompletthet as KompletthetData } from '../types/KompletthetData';
-import { Kompletthet as KompletthetResponse } from '../types/KompletthetResponse';
-import ActionType from './actionTypes';
+import type ContainerContract from '../types/ContainerContract';
+import type { Kompletthet as KompletthetData } from '../types/KompletthetData';
+import type { Kompletthet as KompletthetResponse } from '../types/KompletthetResponse';
+import ActionType from './actionTypes.js';
 import Kompletthetsoversikt from './components/kompletthetsoversikt/Kompletthetsoversikt';
 import mainComponentReducer from './reducer';
 
 function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetData {
   return {
     tilstand: tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
-      const [fom, tom] = periode.split('/');
+      const [fom = '', tom = ''] = periode.split('/');
       return {
         periode: new Period(fom, tom),
         status,
@@ -30,16 +30,18 @@ function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetDat
 export interface InntektsmeldingApi {
   getKompletthetsoversikt: (
     endpoint: string,
-    httpErrorHandler: any,
+    httpErrorHandler: ContainerContract['httpErrorHandler'],
     signal?: AbortSignal,
   ) => Promise<KompletthetResponse>;
 }
 
 const defaultApi: InntektsmeldingApi = {
-  getKompletthetsoversikt: (endpoint, httpErrorHandler, signal) =>
-    get<KompletthetResponse>(endpoint, httpErrorHandler, {
+  getKompletthetsoversikt: (endpoint, httpErrorHandler, signal) => {
+    const handler = httpErrorHandler ?? (() => {});
+    return get<KompletthetResponse>(endpoint, handler, {
       signal,
-    }),
+    });
+  },
 };
 
 export interface MainComponentProps {
@@ -47,14 +49,14 @@ export interface MainComponentProps {
   requestApi?: InntektsmeldingApi;
 }
 
-const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainComponentProps): ReactElement<any> => {
-  const [state, dispatch] = React.useReducer(mainComponentReducer, {
+const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainComponentProps): ReactElement => {
+  const [state, dispatch] = useReducer(mainComponentReducer, {
     isLoading: true,
     kompletthetsoversiktHarFeilet: false,
     kompletthetsoversiktResponse: null,
   });
 
-  const controller = React.useMemo(() => new AbortController(), []);
+  const controller = useMemo(() => new AbortController(), []);
   const { endpoints, onFinished, httpErrorHandler } = data;
 
   const getKompletthetsoversikt = () =>
@@ -64,7 +66,7 @@ const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainCompone
     dispatch({ type: ActionType.FAILED });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     let isMounted = true;
     getKompletthetsoversikt()
       .then((response: KompletthetResponse) => {

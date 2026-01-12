@@ -1,23 +1,24 @@
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
-import ContainerContext from '../../../context/ContainerContext';
+import type { JSX } from 'react';
+import useContainerContext from '../../../context/useContainerContext';
 import { Kode, Tilstand } from '../../../types/KompletthetData';
 import styles from './periodList.module.css';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+
+interface FortsettUtenInntektsmeldingAvslagProps {
+  tilstand: Tilstand;
+  redigeringsmodus: boolean;
+  setRedigeringsmodus: (state: boolean) => void;
+}
 
 const FortsettUtenInntektsmeldingAvslag = ({
   tilstand,
   redigeringsmodus,
   setRedigeringsmodus,
-}: {
-  tilstand: Tilstand;
-  redigeringsmodus: boolean;
-  setRedigeringsmodus: (state: boolean) => void;
-}): JSX.Element | null => {
-  const context = React.useContext(ContainerContext);
-  const readOnly = context?.readOnly ?? false;
+}: FortsettUtenInntektsmeldingAvslagProps): JSX.Element | null => {
+  const { readOnly } = useContainerContext();
 
   const kode = tilstand?.vurdering?.kode;
 
@@ -26,7 +27,7 @@ const FortsettUtenInntektsmeldingAvslag = ({
       <>
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
           {kode === Kode.MANGLENDE_GRUNNLAG && (
-              <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
+            <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
           )}
           {kode === Kode.IKKE_INNTEKTSTAP && (
             <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>

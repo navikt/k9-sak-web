@@ -6,6 +6,7 @@ import { setupServer } from 'msw/node';
 import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/InntektsmeldingV2.stories';
+import ContainerContract from '../src/types/ContainerContract';
 
 const server = setupServer(http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
 
@@ -61,8 +62,11 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan sende purring med varsel om avslag', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const props = { data: { ...inntektsmeldingPropsMock, onFinished: onClickSpy } };
-    // eslint-disable-next-line react/jsx-props-no-spreading
+    const data: ContainerContract = {
+      ...inntektsmeldingPropsMock,
+      onFinished: onClickSpy,
+    };
+    const props = { data };
     render(<Mangler9069 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -93,8 +97,11 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const props = { data: { ...inntektsmeldingPropsMock, onFinished: onClickSpy } };
-    // eslint-disable-next-line react/jsx-props-no-spreading
+    const data: ContainerContract = {
+      ...inntektsmeldingPropsMock,
+      onFinished: onClickSpy,
+    };
+    const props = { data };
 
     render(<Mangler9069 {...props} />);
 

@@ -1,13 +1,12 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { composeStories } from '@storybook/react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import React from 'react';
 import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';
 import { alleErMottatt, manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/InntektsmeldingV2.stories';
+import ContainerContract from '../src/types/ContainerContract';
 
 const server = setupServer();
 
@@ -19,6 +18,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   afterAll(() => server.close());
 
   const { Mangler9071, AlleInntektsmeldingerMottatt } = composeStories(stories);
+
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
@@ -26,7 +26,9 @@ describe('9071 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ASSERT
-    expect(screen.getByLabelText(/Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3/i),).toBeDefined();
+    expect(
+      screen.getByLabelText(/Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3/i),
+    ).toBeDefined();
     expect(screen.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).toBeNull();
     expect(screen.queryByRole('button', { name: /Send purring med varsel om avslag/i })).toBeNull();
   });
@@ -68,7 +70,11 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    const data: ContainerContract = {
+      ...aksjonspunkt9071Props,
+      onFinished: onClickSpy,
+    };
+    const props = { data };
     render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -101,7 +107,11 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    const data: ContainerContract = {
+      ...aksjonspunkt9071Props,
+      onFinished: onClickSpy,
+    };
+    const props = { data };
     render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -124,16 +134,21 @@ describe('9071 - Mangler inntektsmelding', () => {
           periode: '2022-02-01/2022-02-16',
           fortsett: true,
           kode: '9071',
-          vurdering: 'FORTSETT'
+          vurdering: 'FORTSETT',
         },
       ],
     });
   });
+
   test('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
     server.use(http.get('/tilstand', () => HttpResponse.json(alleErMottatt)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    const data: ContainerContract = {
+      ...aksjonspunkt9071Props,
+      onFinished: onClickSpy,
+    };
+    const props = { data };
     render(<AlleInntektsmeldingerMottatt {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));

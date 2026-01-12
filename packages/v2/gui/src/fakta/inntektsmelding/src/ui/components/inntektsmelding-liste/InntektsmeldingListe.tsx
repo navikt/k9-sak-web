@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { Status } from '../../../types/KompletthetData';
 import InntektsmeldingMottattItem from '../inntektsmelding-mottatt-item/InntektsmeldingMottattItem';
 import InntektsmeldingAdvarsel from '../inntektsmelding-mangler-item/InntektsmeldingAdvarselItem';
@@ -8,8 +8,12 @@ interface PeriodListItemProps {
   status: Status[];
 }
 
-const RenderListItem = ({ status }: { status: Status }) => {
-  const listItem = children => (
+interface RenderListItemProps {
+  status: Status;
+}
+
+const RenderListItem = ({ status }: RenderListItemProps): JSX.Element => {
+  const listItem = (children: ReactNode) => (
     <li className={styles.inntektsmeldingListe__item} key={status.journalpostId}>
       {children}
     </li>

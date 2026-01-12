@@ -1,6 +1,7 @@
 import TilstandStatus from '../src/types/TilstandStatus';
+import { Kompletthet } from '../src/types/KompletthetResponse';
 
-export default {
+const ferdigvisning: Kompletthet = {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -8,12 +9,12 @@ export default {
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '2' },
           status: 'FORTSETT_UTEN',
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '1' },
           status: 'FORTSETT_UTEN',
-          journalpostId: null,
+          journalpostId: '',
         },
       ],
       vurdering: { kode: 'FORTSETT', beskrivelse: 'Kan beregnes på bakgrunn av opplysninger fra a-ordningen' },
@@ -23,7 +24,9 @@ export default {
   ],
 };
 
-export const manglerInntektsmelding = {
+export default ferdigvisning;
+
+export const manglerInntektsmelding: Kompletthet = {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -31,12 +34,12 @@ export const manglerInntektsmelding = {
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '2' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '1' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
       ],
       vurdering: {
@@ -44,10 +47,12 @@ export const manglerInntektsmelding = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
+      begrunnelse: '',
     },
   ],
 };
-export const manglerFlereInntektsmeldinger = {
+
+export const manglerFlereInntektsmeldinger: Kompletthet = {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -55,12 +60,12 @@ export const manglerFlereInntektsmeldinger = {
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '2' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '1' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
       ],
       vurdering: {
@@ -68,6 +73,7 @@ export const manglerFlereInntektsmeldinger = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
+      begrunnelse: '',
     },
     {
       periode: '2022-03-01/2022-03-16',
@@ -75,12 +81,12 @@ export const manglerFlereInntektsmeldinger = {
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '2' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '1' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
       ],
       vurdering: {
@@ -88,11 +94,12 @@ export const manglerFlereInntektsmeldinger = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
+      begrunnelse: '',
     },
   ],
 };
 
-export const ikkePaakrevdOgManglerInntektsmelding = {
+export const ikkePaakrevdOgManglerInntektsmelding: Kompletthet = {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -100,12 +107,12 @@ export const ikkePaakrevdOgManglerInntektsmelding = {
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '2' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: { arbeidsgiver: '896929119', arbeidsforhold: '1' },
           status: TilstandStatus.MANGLER,
-          journalpostId: null,
+          journalpostId: '',
         },
       ],
       vurdering: {
@@ -113,6 +120,7 @@ export const ikkePaakrevdOgManglerInntektsmelding = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
+      begrunnelse: '',
     },
     {
       periode: '2022-08-01/2022-08-04',
@@ -123,7 +131,7 @@ export const ikkePaakrevdOgManglerInntektsmelding = {
             arbeidsforhold: '2',
           },
           status: 'IKKE_PÅKREVD',
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: {
@@ -139,12 +147,12 @@ export const ikkePaakrevdOgManglerInntektsmelding = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
-      begrunnelse: null,
+      begrunnelse: '',
     },
   ],
 };
 
-export const ikkePaakrevd = {
+export const ikkePaakrevd: Kompletthet = {
   tilstand: [
     {
       periode: '2022-08-01/2022-08-04',
@@ -155,7 +163,7 @@ export const ikkePaakrevd = {
             arbeidsforhold: '2',
           },
           status: 'IKKE_PÅKREVD',
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: {
@@ -171,11 +179,12 @@ export const ikkePaakrevd = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
-      begrunnelse: null,
+      begrunnelse: '',
     },
   ],
 };
-export const alleErMottatt = {
+
+export const alleErMottatt: Kompletthet = {
   tilstand: [
     {
       periode: '2022-08-01/2022-08-04',
@@ -186,7 +195,7 @@ export const alleErMottatt = {
             arbeidsforhold: '2',
           },
           status: 'MOTTATT',
-          journalpostId: null,
+          journalpostId: '',
         },
         {
           arbeidsgiver: {
@@ -202,7 +211,7 @@ export const alleErMottatt = {
         beskrivelse: 'Udefinert',
       },
       tilVurdering: true,
-      begrunnelse: null,
+      begrunnelse: '',
     },
   ],
 };

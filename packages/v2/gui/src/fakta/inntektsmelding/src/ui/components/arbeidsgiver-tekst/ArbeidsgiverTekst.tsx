@@ -1,15 +1,16 @@
-import React, { type JSX } from 'react';
+import type { JSX } from 'react';
+import useContainerContext from '../../../context/useContainerContext';
 import { Arbeidsgiver } from '../../../types/KompletthetData';
-import ContainerContext from '../../../context/ContainerContext';
 
 interface ArbeidsgiverTekstProps {
   arbeidsgiver: Arbeidsgiver;
 }
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: ArbeidsgiverTekstProps): JSX.Element => {
-  const { arbeidsforhold } = React.useContext(ContainerContext);
+  const { arbeidsforhold } = useContainerContext();
   const id = arbeidsgiver.arbeidsgiver;
-  const tekst = arbeidsforhold[id].navn || arbeidsforhold[id].fødselsdato;
+  const arbeidsgiverInfo = arbeidsforhold[id];
+  const tekst = arbeidsgiverInfo?.navn ?? arbeidsgiverInfo?.fødselsdato ?? id;
   return (
     <span>
       {tekst} (Arbeidsforhold {arbeidsgiver.arbeidsforhold})

@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import React, { type JSX } from 'react';
-import { UseFormReturn } from 'react-hook-form';
-import ContainerContext from '../../../context/ContainerContext';
+import type { JSX } from 'react';
+import { UseFormReturn, FieldValues } from 'react-hook-form';
+import useContainerContext from '../../../context/useContainerContext';
 import Aksjonspunkt from '../../../types/Aksjonspunkt';
 import AksjonspunktRequestPayload, { Perioder } from '../../../types/AksjonspunktRequestPayload';
 import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -24,9 +24,33 @@ interface FortsettUtenInntektsmeldingFormProps {
   redigeringsmodus: boolean;
   aksjonspunkt: Aksjonspunkt;
   setRedigeringsmodus: (state: boolean) => void;
-  formMethods: UseFormReturn;
+  formMethods: UseFormReturn<FieldValues>;
   harFlereTilstanderTilVurdering: boolean;
 }
+
+interface RadioOption {
+  value: Kode;
+  label: string;
+  id: string;
+}
+
+type AksjonspunktKode = '9069' | '9071';
+
+const fortsettKnappTekstFunc: Record<AksjonspunktKode, (kode: Kode) => string> = {
+  '9069': (kode: Kode) =>
+    kode === Kode.FORTSETT ? 'Fortsett uten inntektsmelding' : 'Send purring med varsel om avslag',
+  '9071': (kode: Kode) => {
+    switch (kode) {
+      case Kode.FORTSETT:
+        return 'Fortsett uten inntektsmelding';
+      case Kode.MANGLENDE_GRUNNLAG:
+        return 'Avslå periode';
+      case Kode.IKKE_INNTEKTSTAP:
+      default:
+        return 'Avslå søknad';
+    }
+  },
+};
 
 const FortsettUtenInntektsmeldingForm = ({
   onSubmit,
@@ -37,62 +61,44 @@ const FortsettUtenInntektsmeldingForm = ({
   formMethods,
   harFlereTilstanderTilVurdering,
 }: FortsettUtenInntektsmeldingFormProps): JSX.Element => {
-  const containerContext = React.useContext(ContainerContext);
-  const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
-  const readOnly = containerContext?.readOnly ?? false;
+  const { arbeidsforhold, readOnly } = useContainerContext();
 
   const { watch, reset, control } = formMethods;
   const { beslutningFieldName = 'beslutning', begrunnelseFieldName = 'begrunnelse' } = tilstand;
   const beslutningId = `beslutning-${tilstand.periodeOpprinneligFormat}`;
   const begrunnelseId = `begrunnelse-${tilstand.periodeOpprinneligFormat}`;
   const beslutningRaw = watch(beslutningFieldName);
-  const beslutning = Array.isArray(beslutningRaw) ? beslutningRaw[0] : beslutningRaw;
-  const aksjonspunktKode = aksjonspunkt?.definisjon?.kode;
+  const beslutning = (Array.isArray(beslutningRaw) ? beslutningRaw[0] : beslutningRaw) as Kode | null;
+  const aksjonspunktKode = aksjonspunkt?.definisjon?.kode as AksjonspunktKode | undefined;
   const vis = ((skalVurderes(tilstand) && !readOnly) || redigeringsmodus) && aksjonspunkt && tilstand.tilVurdering;
   const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && beslutning !== Kode.FORTSETT);
-  const fortsettKnappTekstFunc = {
-    '9069': (kode: Kode) =>
-      kode === Kode.FORTSETT ? 'Fortsett uten inntektsmelding' : 'Send purring med varsel om avslag',
-    '9071': (kode: Kode) => {
-      switch (kode) {
-        case Kode.FORTSETT:
-          return 'Fortsett uten inntektsmelding';
-        case Kode.MANGLENDE_GRUNNLAG:
-          return 'Avslå periode';
-        case Kode.IKKE_INNTEKTSTAP:
-        default:
-          return 'Avslå søknad';
-      }
-    },
-  };
   const arbeidsgivereMedManglendeInntektsmelding = tilstand.status.filter(s => s.status === TilstandStatus.MANGLER);
 
-  let arbeidsgivereString = '';
-  const formatArbeidsgiver = arbeidsgiver =>
-    `${arbeidsforhold[arbeidsgiver.arbeidsgiver]?.navn} (${arbeidsgiver.arbeidsforhold})`;
-  arbeidsgivereMedManglendeInntektsmelding.forEach(({ arbeidsgiver }, index) => {
-    if (index === 0) {
-      arbeidsgivereString = formatArbeidsgiver(arbeidsgiver);
-    } else if (index === arbeidsgivereMedManglendeInntektsmelding.length - 1) {
-      arbeidsgivereString = `${arbeidsgivereString} og ${formatArbeidsgiver(arbeidsgiver)}`;
-    } else {
-      arbeidsgivereString = `${arbeidsgivereString}, ${formatArbeidsgiver(arbeidsgiver)}`;
-    }
-  });
+  const formatArbeidsgiver = (arbeidsgiver: { arbeidsgiver: string; arbeidsforhold: string | null }) =>
+    `${arbeidsforhold[arbeidsgiver.arbeidsgiver]?.navn ?? arbeidsgiver.arbeidsgiver} (${arbeidsgiver.arbeidsforhold ?? 'ukjent'})`;
 
-  const submit = data => {
+  const arbeidsgivereString = arbeidsgivereMedManglendeInntektsmelding
+    .map(({ arbeidsgiver }, index) => {
+      const formatted = formatArbeidsgiver(arbeidsgiver);
+      if (index === 0) return formatted;
+      if (index === arbeidsgivereMedManglendeInntektsmelding.length - 1) return ` og ${formatted}`;
+      return `, ${formatted}`;
+    })
+    .join('');
+
+  const submit = (data: FieldValues) => {
     const periode: Perioder = {
-      begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : null,
+      begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === Kode.FORTSETT,
-      vurdering: data[beslutningFieldName],
-      kode: aksjonspunktKode,
+      vurdering: data[beslutningFieldName] as Kode,
+      kode: aksjonspunktKode ?? '',
     };
 
     return onSubmit({
-      '@type': aksjonspunktKode,
-      kode: aksjonspunktKode,
-      begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : null,
+      '@type': aksjonspunktKode ?? '',
+      kode: aksjonspunktKode ?? '',
+      begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
       perioder: [periode],
     });
   };
@@ -102,7 +108,7 @@ const FortsettUtenInntektsmeldingForm = ({
     setRedigeringsmodus(false);
   };
 
-  const radios = {
+  const radios: Record<AksjonspunktKode, RadioOption[]> = {
     '9069': [
       {
         value: Kode.FORTSETT,
@@ -138,15 +144,11 @@ const FortsettUtenInntektsmeldingForm = ({
     return <></>;
   }
 
-  const radiosForAksjonspunkt: {
-    value: Kode;
-    label: string;
-    id: string;
-  }[] = radios[aksjonspunktKode];
+  const radiosForAksjonspunkt: RadioOption[] = aksjonspunktKode ? radios[aksjonspunktKode] : [];
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={submit}>
-      <AksjonspunktBox erAksjonspunktApent={true}>
+      <AksjonspunktBox erAksjonspunktApent>
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
@@ -157,8 +159,9 @@ const FortsettUtenInntektsmeldingForm = ({
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
             <li>
-              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får
-              tilstrekkelige opplysninger hverken i A-inntekt eller fra inntektsmelding.
+              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
+              <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får tilstrekkelige opplysninger hverken i A-inntekt eller
+              fra inntektsmelding.
             </li>
             <li>
               Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å
@@ -185,7 +188,7 @@ const FortsettUtenInntektsmeldingForm = ({
           {skalViseBegrunnelse && (
             <RhfTextarea
               control={control}
-              name={begrunnelseFieldName ?? ''}
+              name={begrunnelseFieldName}
               label={
                 <>
                   <label htmlFor={begrunnelseId}>Begrunnelse</label>
@@ -214,7 +217,7 @@ const FortsettUtenInntektsmeldingForm = ({
           )}
           <Box.New marginBlock="6 0">
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
-              {!harFlereTilstanderTilVurdering && !!beslutning && (
+              {!harFlereTilstanderTilVurdering && beslutning && aksjonspunktKode && (
                 <Button variant="primary" size="small">
                   {fortsettKnappTekstFunc[aksjonspunktKode](beslutning)}
                 </Button>

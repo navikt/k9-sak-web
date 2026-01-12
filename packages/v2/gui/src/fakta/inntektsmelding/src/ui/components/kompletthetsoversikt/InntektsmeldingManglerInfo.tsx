@@ -1,10 +1,12 @@
-import { type JSX } from 'react';
-
+import type { JSX } from 'react';
 import { Accordion, Alert, BodyLong, Box, Heading } from '@navikt/ds-react';
-
 import styles from './kompletthetsoversikt.module.css';
 
-const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: { manglerInntektsmelding: boolean }): JSX.Element => (
+interface InntektsmeldingManglerInfoProps {
+  manglerInntektsmelding: boolean;
+}
+
+const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: InntektsmeldingManglerInfoProps): JSX.Element => (
   <>
     <Box.New marginBlock="0 6">
       {manglerInntektsmelding && (

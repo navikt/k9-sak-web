@@ -1,9 +1,9 @@
-import React, { type JSX } from 'react';
+import type { JSX, ReactNode } from 'react';
 import styles from './listItem.module.css';
 
 interface ListItemProps {
-  firstColumnRenderer: () => React.ReactNode;
-  secondColumnRenderer: () => React.ReactNode;
+  firstColumnRenderer: () => ReactNode;
+  secondColumnRenderer: () => ReactNode;
 }
 
 const ListItem = ({ firstColumnRenderer, secondColumnRenderer }: ListItemProps): JSX.Element => (
