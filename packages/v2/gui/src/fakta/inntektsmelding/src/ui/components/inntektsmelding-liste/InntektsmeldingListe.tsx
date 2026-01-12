@@ -1,8 +1,7 @@
 import type { JSX, ReactNode } from 'react';
-import { Status } from '../../../types/KompletthetData';
+import type { Status } from '../../../types/KompletthetData';
 import InntektsmeldingMottattItem from '../inntektsmelding-mottatt-item/InntektsmeldingMottattItem';
 import InntektsmeldingAdvarsel from '../inntektsmelding-mangler-item/InntektsmeldingAdvarselItem';
-import styles from './inntektsmeldingListe.module.css';
 
 interface PeriodListItemProps {
   status: Status[];
@@ -14,7 +13,7 @@ interface RenderListItemProps {
 
 const RenderListItem = ({ status }: RenderListItemProps): JSX.Element => {
   const listItem = (children: ReactNode) => (
-    <li className={styles.inntektsmeldingListe__item} key={status.journalpostId}>
+    <li className="mt-3" key={status.journalpostId}>
       {children}
     </li>
   );
@@ -26,7 +25,7 @@ const RenderListItem = ({ status }: RenderListItemProps): JSX.Element => {
 };
 
 const InntektsmeldingListe = ({ status }: PeriodListItemProps): JSX.Element => (
-  <ul className={styles.inntektsmeldingListe}>
+  <ul className="m-0 list-none p-0">
     {status.map((v, index) => (
       // eslint-disable-next-line react/no-array-index-key
       <RenderListItem key={index} status={v} />

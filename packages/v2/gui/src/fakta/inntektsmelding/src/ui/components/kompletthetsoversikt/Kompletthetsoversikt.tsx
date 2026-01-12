@@ -3,9 +3,10 @@ import { Box, Button } from '@navikt/ds-react';
 import { useMemo, useState, type JSX } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import useContainerContext from '../../../context/useContainerContext';
-import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import FieldName from '../../../types/FieldName';
-import { Kode, Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
+import { Kode as KodeEnum } from '../../../types/KompletthetData';
+import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import type { Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -16,7 +17,6 @@ import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/Inntek
 import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
 import PeriodList from '../period-list/PeriodList';
 import InntektsmeldingManglerInfo from './InntektsmeldingManglerInfo';
-import styles from './kompletthetsoversikt.module.css';
 
 interface KompletthetsoversiktProps {
   kompletthetsoversikt: Kompletthet;
@@ -92,17 +92,20 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
     return false;
   };
 
-  const listItemRenderer = (period: Period) => <InntektsmeldingListe status={statuses[periods.indexOf(period)]} />;
+  const listItemRenderer = (period: Period) => {
+    const statusForPeriod = statuses[periods.indexOf(period)];
+    return statusForPeriod ? <InntektsmeldingListe status={statusForPeriod} /> : null;
+  };
   const listHeadingRenderer = () => <InntektsmeldingListeHeading />;
 
   const onSubmit = (data: FieldValues) => {
     const perioder = tilstanderTilVurdering.map(tilstand => {
-      const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== Kode.FORTSETT);
+      const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== KodeEnum.FORTSETT);
       const begrunnelse = skalViseBegrunnelse ? (data[tilstand.begrunnelseFieldName] as string) : undefined;
       return {
         begrunnelse,
         periode: tilstand.periodeOpprinneligFormat,
-        fortsett: data[tilstand.beslutningFieldName] === Kode.FORTSETT,
+        fortsett: data[tilstand.beslutningFieldName] === KodeEnum.FORTSETT,
         kode: aksjonspunktKode ?? '',
       };
     });
@@ -114,9 +117,9 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
   };
 
   return (
-    <div className={styles.kompletthet}>
-      <h1 className={styles.kompletthet__mainHeading}>Inntektsmelding</h1>
-      <h2 className={styles.kompletthet__subHeading}>Opplysninger til beregning</h2>
+    <div>
+      <h1 className="text-[1.375rem]">Inntektsmelding</h1>
+      <h2 className="my-5 text-lg">Opplysninger til beregning</h2>
       <InntektsmeldingManglerInfo manglerInntektsmelding={!!aktivtAksjonspunktKode} />
       <Box.New marginBlock="6 0">
         <PeriodList

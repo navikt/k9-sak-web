@@ -4,14 +4,15 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { JSX } from 'react';
-import { UseFormReturn, FieldValues } from 'react-hook-form';
+import type { UseFormReturn, FieldValues } from 'react-hook-form';
 import useContainerContext from '../../../context/useContainerContext';
-import Aksjonspunkt from '../../../types/Aksjonspunkt';
-import AksjonspunktRequestPayload, { Perioder } from '../../../types/AksjonspunktRequestPayload';
-import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
+import type Aksjonspunkt from '../../../types/Aksjonspunkt';
+import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import type { Perioder } from '../../../types/AksjonspunktRequestPayload';
+import { Kode } from '../../../types/KompletthetData';
+import type { TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
-import styles from './fortsettUtenInntektsMeldingForm.module.css';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -152,10 +153,10 @@ const FortsettUtenInntektsmeldingForm = ({
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
-        <Alert className={styles.fortsettUtenInntektsmelding__radiogroupAlert} variant="info" size="medium">
-          <ul>
+        <Alert className="mt-4" variant="info" size="medium">
+          <ul className="m-0 list-disc pl-6">
             <li>
-              A-inntekt benyttes <span className={styles.radiogroupAlert__emphasize}>kun</span> for de
+              A-inntekt benyttes <span className="font-bold underline">kun</span> for de
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
             <li>
@@ -169,7 +170,7 @@ const FortsettUtenInntektsmeldingForm = ({
             </li>
           </ul>
         </Alert>
-        <div className={styles.fortsettUtenInntektsmelding__radiogroup}>
+        <div className="my-4 [&_legend]:sr-only">
           <RhfRadioGroup
             control={control}
             name={beslutningFieldName}
@@ -193,19 +194,19 @@ const FortsettUtenInntektsmeldingForm = ({
                 <>
                   <label htmlFor={begrunnelseId}>Begrunnelse</label>
                   {beslutning === Kode.FORTSETT && (
-                    <div className={styles['fortsettUtenInntektsmelding__begrunnelse-subtext']}>
+                    <div className="font-normal">
                       Vi benytter opplysninger fra A-inntekt for alle arbeidsgivere vi ikke har mottatt inntektsmelding
                       fra. Gjør en vurdering av hvorfor du benytter A-inntekt for å fastsette grunnlaget etter § 8-28.
                     </div>
                   )}
                   {beslutning === Kode.MANGLENDE_GRUNNLAG && (
-                    <div className={styles['fortsettUtenInntektsmelding__begrunnelse-subtext']}>
+                    <div className="font-normal">
                       Skriv begrunnelse for hvorfor du ikke kan benytte opplysninger fra A-inntekt for å fastsette
                       grunnlaget, og avslå saken etter folketrygdloven §§ 21-3 og 8-28.
                     </div>
                   )}
                   {beslutning === Kode.IKKE_INNTEKTSTAP && (
-                    <div className={styles['fortsettUtenInntektsmelding__begrunnelse-subtext']}>
+                    <div className="font-normal">
                       Skriv begrunnelse for hvorfor søker ikke har inntektstap, og avslå saken etter folketrygdloven
                       §9-3.
                     </div>
@@ -216,7 +217,7 @@ const FortsettUtenInntektsmeldingForm = ({
             />
           )}
           <Box.New marginBlock="6 0">
-            <div className={styles.fortsettUtenInntektsmelding__knapper}>
+            <div className="flex gap-4">
               {!harFlereTilstanderTilVurdering && beslutning && aksjonspunktKode && (
                 <Button variant="primary" size="small">
                   {fortsettKnappTekstFunc[aksjonspunktKode](beslutning)}

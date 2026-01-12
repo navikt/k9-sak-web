@@ -4,8 +4,8 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import useContainerContext from '../../../context/useContainerContext';
-import { Kode, Tilstand } from '../../../types/KompletthetData';
-import styles from './periodList.module.css';
+import { Kode } from '../../../types/KompletthetData';
+import type { Tilstand } from '../../../types/KompletthetData';
 
 interface FortsettUtenInntektsmeldingInfoProps {
   tilstand: Tilstand;
@@ -23,7 +23,11 @@ const FortsettUtenInntektsmeldingInfo = ({
   if (tilstand?.vurdering?.kode === Kode.FORTSETT && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
-        <Alert variant="info" size="medium" className={styles.periodList__alertstripe}>
+        <Alert
+          variant="info"
+          size="medium"
+          className="my-10"
+        >
           <span>Fortsett uten inntektsmelding.</span>
           {!readOnly && (
             <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>

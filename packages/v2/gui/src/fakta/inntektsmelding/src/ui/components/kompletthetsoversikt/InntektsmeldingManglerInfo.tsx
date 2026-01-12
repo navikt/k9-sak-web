@@ -1,6 +1,5 @@
 import type { JSX } from 'react';
 import { Accordion, Alert, BodyLong, Box, Heading } from '@navikt/ds-react';
-import styles from './kompletthetsoversikt.module.css';
 
 interface InntektsmeldingManglerInfoProps {
   manglerInntektsmelding: boolean;
@@ -10,7 +9,7 @@ const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: InntektsmeldingM
   <>
     <Box.New marginBlock="0 6">
       {manglerInntektsmelding && (
-        <Alert variant="warning" size="small" className={styles.alert}>
+        <Alert variant="warning" size="small">
           <Heading spacing size="xsmall" level="3">
             Vurder om du kan fortsette behandlingen uten inntektsmelding.
           </Heading>
@@ -23,16 +22,16 @@ const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: InntektsmeldingM
     </Box.New>
     <Box.New marginBlock="0 6">
       <Alert variant="info" size="small">
-        <Accordion className={styles.alertAccordion}>
+        <Accordion>
           <Accordion.Item>
             <Accordion.Header>
-              <Heading className={styles.alertAccordion__heading} spacing size="xsmall" level="3">
+              <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
                 Når kan du gå videre uten inntektsmelding?
               </Heading>
             </Accordion.Header>
             <Accordion.Content>
               Vurder om du kan gå videre uten alle inntektsmeldinger hvis:
-              <ul className={styles.kompletthet__list}>
+              <ul className="m-0 pl-6">
                 <li>Det er rapportert fast og regelmessig lønn de siste 3 månedene før skjæringstidspunktet.</li>
                 <li>
                   Det ikke er rapportert lønn hos arbeidsforholdet de siste 3 månedene før skjæringstidspunktet.
@@ -46,7 +45,7 @@ const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: InntektsmeldingM
               </ul>
               <Box.New marginBlock="6 0">
                 Du bør ikke gå videre uten inntektsmelding hvis:
-                <ul className={styles.kompletthet__list}>
+                <ul className="m-0 pl-6">
                   <li>
                     Det er arbeidsforhold og frilansoppdrag i samme organisasjon (sjekk i Aa-registeret). I disse
                     tilfellene trenger vi inntektsmelding for å skille hva som er arbeidsinntekt og frilansinntekt i

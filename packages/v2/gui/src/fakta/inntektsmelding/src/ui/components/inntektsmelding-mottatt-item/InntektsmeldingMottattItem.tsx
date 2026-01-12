@@ -2,22 +2,21 @@ import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import useContainerContext from '../../../context/useContainerContext';
-import { DokumentOpplysninger } from '../../../types/ContainerContract';
-import { Status } from '../../../types/KompletthetData';
+import type { DokumentOpplysninger } from '../../../types/ContainerContract';
+import type { Status } from '../../../types/KompletthetData';
 import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
 import ListItem from '../list-item/ListItem';
-import styles from './inntektsmeldingMottattItem.module.css';
 
 interface MottattContentProps {
   dokumentLink: string;
 }
 
 const MottattContent = ({ dokumentLink }: MottattContentProps) => (
-  <div className={styles.mottattLabel}>
+  <div className="flex items-start">
     <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
     <div>
-      <span className={styles.mottattLabel__text}>Mottatt</span>
-      <Link className={styles.mottattLabel__link} href={dokumentLink} target="_blank">
+      <span className="ml-2">Mottatt</span>
+      <Link className="ml-4" href={dokumentLink} target="_blank">
         Vis inntektsmelding
       </Link>
     </div>

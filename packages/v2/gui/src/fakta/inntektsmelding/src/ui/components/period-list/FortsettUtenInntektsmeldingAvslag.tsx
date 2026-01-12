@@ -4,8 +4,8 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import useContainerContext from '../../../context/useContainerContext';
-import { Kode, Tilstand } from '../../../types/KompletthetData';
-import styles from './periodList.module.css';
+import { Kode } from '../../../types/KompletthetData';
+import type { Tilstand } from '../../../types/KompletthetData';
 
 interface FortsettUtenInntektsmeldingAvslagProps {
   tilstand: Tilstand;
@@ -25,7 +25,11 @@ const FortsettUtenInntektsmeldingAvslag = ({
   if ([Kode.MANGLENDE_GRUNNLAG, Kode.IKKE_INNTEKTSTAP].includes(kode) && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
-        <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
+        <Alert
+          variant="error"
+          size="medium"
+          className="my-10"
+        >
           {kode === Kode.MANGLENDE_GRUNNLAG && (
             <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
           )}

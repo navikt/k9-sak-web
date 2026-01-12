@@ -1,8 +1,7 @@
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
-import { Status } from '../../../types/KompletthetData';
+import type { Status } from '../../../types/KompletthetData';
 import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
-import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.module.css';
 import ListItem from '../list-item/ListItem';
 
 interface InntektsmeldingAdvarselItemProps {
@@ -14,9 +13,9 @@ interface ManglerContentProps {
 }
 
 const ManglerContent = ({ tekst }: ManglerContentProps) => (
-  <div className={styles.mottattLabel}>
+  <div className="flex items-start">
     <ExclamationmarkTriangleFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-text-warning-decoration)' }} />
-    <span className={styles.mottattLabel__text}>{tekst}</span>
+    <span className="ml-2">{tekst}</span>
   </div>
 );
 

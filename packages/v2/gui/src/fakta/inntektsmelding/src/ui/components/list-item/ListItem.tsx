@@ -1,5 +1,4 @@
 import type { JSX, ReactNode } from 'react';
-import styles from './listItem.module.css';
 
 interface ListItemProps {
   firstColumnRenderer: () => ReactNode;
@@ -7,9 +6,9 @@ interface ListItemProps {
 }
 
 const ListItem = ({ firstColumnRenderer, secondColumnRenderer }: ListItemProps): JSX.Element => (
-  <div className={styles.listItem}>
-    <div className={styles.listItem__firstColumn}>{firstColumnRenderer()}</div>
-    <div className={styles.listItem__secondColumn}>{secondColumnRenderer()}</div>
+  <div className="flex">
+    <div className="basis-[35%]">{firstColumnRenderer()}</div>
+    <div>{secondColumnRenderer()}</div>
   </div>
 );
 
