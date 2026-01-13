@@ -12,7 +12,7 @@ import ferdigvisning, {
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
 import * as inntektsmeldingQueries from '../api/inntektsmeldingQueries';
-import InntektsmeldingContainer, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingContainer';
+import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex';
 
 const createProps = (props: Partial<InntektsmeldingContainerProps>): InntektsmeldingContainerProps => ({
   ...inntektsmeldingPropsMock,
@@ -20,10 +20,10 @@ const createProps = (props: Partial<InntektsmeldingContainerProps>): Inntektsmel
   ...props,
 });
 
-const meta: Meta<typeof InntektsmeldingContainer> = {
+const meta: Meta<typeof InntektsmeldingIndex> = {
   args: createProps({}),
   title: 'Fakta/fakta-inntektsmelding',
-  component: InntektsmeldingContainer,
+  component: InntektsmeldingIndex,
   beforeEach: () => {
     vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
       data: ikkePaakrevd,
@@ -33,7 +33,7 @@ const meta: Meta<typeof InntektsmeldingContainer> = {
 
 export default meta;
 
-type Story = StoryObj<typeof InntektsmeldingContainer>;
+type Story = StoryObj<typeof InntektsmeldingIndex>;
 
 export const IkkePaakrevd_V2: Story = {
   args: createProps({}),

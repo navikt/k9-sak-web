@@ -1,4 +1,4 @@
-import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingContainer';
+import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingIndex';
 import type { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
 
 type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback'> & {

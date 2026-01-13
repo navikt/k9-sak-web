@@ -9,7 +9,7 @@ import type {
   InntektsmeldingContextType,
   InntektsmeldingRequestPayload,
 } from '../types';
-import Kompletthetsoversikt from './components/Kompletthetsoversikt';
+import InntektsmeldingContainer from './components/InntektsmeldingContainer';
 
 export interface InntektsmeldingContainerProps {
   behandling: BehandlingAppKontekst;
@@ -20,7 +20,7 @@ export interface InntektsmeldingContainerProps {
   submitCallback: (aksjonspunkter: InntektsmeldingRequestPayload[]) => void;
 }
 
-const InntektsmeldingContainer = ({
+const InntektsmeldingIndex = ({
   behandling,
   readOnly,
   arbeidsgiverOpplysningerPerId,
@@ -43,10 +43,10 @@ const InntektsmeldingContainer = ({
   return (
     <InntektsmeldingContext.Provider value={contextValue}>
       <Suspense fallback={<LoadingPanel />}>
-        <Kompletthetsoversikt />
+        <InntektsmeldingContainer />
       </Suspense>
     </InntektsmeldingContext.Provider>
   );
 };
 
-export default InntektsmeldingContainer;
+export default InntektsmeldingIndex;

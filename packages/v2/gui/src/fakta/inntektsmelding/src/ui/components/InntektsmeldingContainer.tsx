@@ -82,7 +82,7 @@ const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
     ]),
   );
 
-const Kompletthetsoversikt = (): JSX.Element => {
+const InntektsmeldingContainer = (): JSX.Element => {
   const { aksjonspunkter, readOnly, onFinished } = useInntektsmeldingContext();
   const { data: kompletthetResponse } = useKompletthetsoversikt();
 
@@ -180,4 +180,4 @@ const Kompletthetsoversikt = (): JSX.Element => {
   );
 };
 
-export default Kompletthetsoversikt;
+export default InntektsmeldingContainer;

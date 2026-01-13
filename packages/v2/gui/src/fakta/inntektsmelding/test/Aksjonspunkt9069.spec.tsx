@@ -5,7 +5,7 @@ import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as inntektsmeldingQueries from '../src/api/inntektsmeldingQueries';
 import * as stories from '../src/stories/InntektsmeldingV2.stories';
-import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingContainer';
+import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingIndex';
 
 describe('9069 - Mangler inntektsmelding', () => {
   const { Mangler9069 } = composeStories(stories);
