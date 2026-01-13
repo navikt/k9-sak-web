@@ -3,10 +3,8 @@ import type {
   k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdStatus,
   k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering as VurderingKodeType,
 } from '@navikt/k9-sak-typescript-client/types';
-import {
-  k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering,
-  k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering as VurderingKode,
-} from '@navikt/k9-sak-typescript-client/types';
+import { k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering } from '@navikt/k9-sak-typescript-client/types';
+export type InntektsmeldingVurderingKodeType = VurderingKodeType;
 
 export interface Kompletthet {
   tilstand: Tilstand[];
@@ -17,7 +15,7 @@ export interface Tilstand {
   status: Status[];
   begrunnelse?: string;
   tilVurdering: boolean;
-  vurdering?: VurderingKode;
+  vurdering?: InntektsmeldingVurderingKodeType;
   periodeOpprinneligFormat: string;
   vurdertAv?: string;
   vurdertTidspunkt?: string;
@@ -38,7 +36,6 @@ export interface Arbeidsgiver {
 }
 
 export const InntektsmeldingVurderingKode = k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering;
-export type InntektsmeldingVurderingKodeType = VurderingKodeType;
 export enum InntektsmeldingKode {
   FORTSETT = 'FORTSETT',
   MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
