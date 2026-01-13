@@ -22,7 +22,7 @@ const createProps = (props: Partial<InntektsmeldingContainerProps>): Inntektsmel
 
 const meta: Meta<typeof InntektsmeldingIndex> = {
   args: createProps({}),
-  title: 'Fakta/fakta-inntektsmelding',
+  title: 'Fakta/fakta-inntektsmelding V2',
   component: InntektsmeldingIndex,
   beforeEach: () => {
     vi.spyOn(inntektsmeldingQueries, 'useKompletthetsoversikt').mockReturnValue({
