@@ -10,7 +10,7 @@ import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKode
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 import Inntektsmelding from '../../components/Inntektsmelding';
-import InntektsmeldingV2 from '@k9-sak-web/gui/fakta/inntektsmelding/src/ui/InntektsmeldingContainer.js';
+import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/src/ui/InntektsmeldingIndex.js';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;
@@ -28,7 +28,7 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
     if (props.featureToggles?.BRUK_V2_INNTEKTSMELDING) {
       const deepCopyProps = JSON.parse(JSON.stringify(props));
       konverterKodeverkTilKode(deepCopyProps, false);
-      return <InntektsmeldingV2 {...props} {...deepCopyProps} />;
+      return <InntektsmeldingIndex {...props} {...deepCopyProps} />;
     }
     return <Inntektsmelding {...props} />;
   };
