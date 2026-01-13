@@ -13,15 +13,13 @@ export default class MenyEndreFristBackendClient implements MenyEndreFristApi {
     behandlingId: number,
     behandlingVersjon: number,
     endretFrister: Array<ung_sak_kontrakt_etterlysning_EndreFristDto>,
-  ): Promise<unknown> {
-    return (
-      await etterlysning_endreFrist({
-        body: {
-          behandlingId,
-          behandlingVersjon,
-          endretFrister,
-        },
-      })
-    ).data;
+  ): Promise<void> {
+    await etterlysning_endreFrist({
+      body: {
+        behandlingId,
+        behandlingVersjon,
+        endretFrister,
+      },
+    });
   }
 }
