@@ -2,8 +2,7 @@ import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navik
 import { Link } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { DokumentOpplysninger } from '../../types/InntektsmeldingContextType';
-import type { Status } from '../../types/KompletthetData';
+import type { DokumentOpplysninger, Status } from '../../types';
 import ArbeidsgiverTekst from './ArbeidsgiverTekst';
 import ListItem from './ListItem';
 
@@ -91,12 +90,12 @@ interface InntektsmeldingListeProps {
 const InntektsmeldingListe = ({ status }: InntektsmeldingListeProps): JSX.Element => (
   <>
     <InntektsmeldingListeHeading />
-    <ul className="m-0 list-none p-0">
-      {status.map((v, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <RenderListItem key={index} status={v} />
-      ))}
-    </ul>
+  <ul className="m-0 list-none p-0">
+    {status.map((v, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <RenderListItem key={index} status={v} />
+    ))}
+  </ul>
   </>
 );
 

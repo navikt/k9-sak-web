@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type { InntektsmeldingContextType } from '../types/InntektsmeldingContextType';
+import type { InntektsmeldingContextType } from '../types';
 
 const InntektsmeldingContext = createContext<InntektsmeldingContextType | null>(null);
 

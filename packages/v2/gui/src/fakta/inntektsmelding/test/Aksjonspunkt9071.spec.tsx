@@ -81,18 +81,18 @@ describe('9071 - Mangler inntektsmelding', () => {
     // ASSERT
     expect(onClickSpy).toHaveBeenCalledWith([
       {
-        '@type': '9071',
-        kode: '9071',
-        begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-        perioder: [
-          {
-            begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-            periode: '2022-02-01/2022-02-16',
-            fortsett: true,
-            kode: '9071',
-            vurdering: 'FORTSETT',
-          },
-        ],
+      '@type': '9071',
+      kode: '9071',
+      begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+      perioder: [
+        {
+          begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+          periode: '2022-02-01/2022-02-16',
+          fortsett: true,
+          kode: '9071',
+          vurdering: 'FORTSETT',
+        },
+      ],
       },
     ]);
   });
@@ -118,18 +118,18 @@ describe('9071 - Mangler inntektsmelding', () => {
     // ASSERT
     expect(onClickSpy).toHaveBeenCalledWith([
       {
-        '@type': '9071',
-        kode: '9071',
-        begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-        perioder: [
-          {
-            begrunnelse: 'Inntektsmelding? LOL! Nei takk',
-            periode: '2022-02-01/2022-02-16',
-            fortsett: true,
-            kode: '9071',
+      '@type': '9071',
+      kode: '9071',
+      begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+      perioder: [
+        {
+          begrunnelse: 'Inntektsmelding? LOL! Nei takk',
+          periode: '2022-02-01/2022-02-16',
+          fortsett: true,
+          kode: '9071',
             vurdering: 'FORTSETT',
-          },
-        ],
+        },
+      ],
       },
     ]);
   });
@@ -157,9 +157,9 @@ describe('9071 - Mangler inntektsmelding', () => {
     // ASSERT
     expect(onClickSpy).toHaveBeenCalledWith([
       {
-        '@type': '9071',
-        kode: '9071',
-        perioder: [],
+      '@type': '9071',
+      kode: '9071',
+      perioder: [],
       },
     ]);
   });

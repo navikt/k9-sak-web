@@ -4,9 +4,8 @@ import { useMemo, useState, type JSX } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import FieldName from '../../types/FieldName';
-import { InntektsmeldingVurderingRequestKode } from '../../types/KompletthetData';
-import type { Tilstand, TilstandMedUiState } from '../../types/KompletthetData';
+import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
+import type { Tilstand, TilstandMedUiState } from '../../types';
 import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -90,8 +89,8 @@ const Kompletthetsoversikt = (): JSX.Element => {
   const tilstander = transformKompletthetsdata(kompletthetResponse);
   const aktivtAksjonspunkt = finnAktivtAksjonspunkt(aksjonspunkter);
   const sisteAksjonspunkt = finnSisteAksjonspunkt(aksjonspunkter);
-  const gjeldendeAksjonspunkt = aktivtAksjonspunkt ?? sisteAksjonspunkt;
-  const aksjonspunktKode = gjeldendeAksjonspunkt?.definisjon;
+  const gjeldeneAksjonspunkt = aktivtAksjonspunkt ?? sisteAksjonspunkt;
+  const aksjonspunktKode = gjeldeneAksjonspunkt?.definisjon;
 
   const [editStates, setEditStates] = useState<Record<string, boolean>>({});
 
@@ -162,7 +161,7 @@ const Kompletthetsoversikt = (): JSX.Element => {
         <PeriodList
           tilstander={tilstanderMedUiState}
           onFormSubmit={onFinished}
-          aksjonspunkt={gjeldendeAksjonspunkt}
+          aksjonspunkt={gjeldeneAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />

@@ -7,9 +7,8 @@ import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { JSX } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { InntektsmeldingRequestPayload, KompletthetsPeriode } from '../../types/InntektsmeldingAPRequest';
-import { InntektsmeldingVurderingRequestKode } from '../../types/KompletthetData';
-import type { TilstandMedUiState } from '../../types/KompletthetData';
+import type { InntektsmeldingRequestPayload, KompletthetsPeriode, TilstandMedUiState } from '../../types';
+import { InntektsmeldingVurderingRequestKode } from '../../types';
 import { skalVurderes } from '../../util/utils';
 
 type AksjonspunktKode = '9069' | '9071';
@@ -189,36 +188,36 @@ const FortsettUtenInntektsmeldingForm = ({
           </RhfRadioGroup>
         </div>
 
-        {skalViseBegrunnelse && (
-          <RhfTextarea
-            control={control}
-            name={begrunnelseFieldName}
-            label={
-              <>
+          {skalViseBegrunnelse && (
+            <RhfTextarea
+              control={control}
+              name={begrunnelseFieldName}
+              label={
+                <>
                 <span>Begrunnelse</span>
                 {beslutning && begrunnelseHjelpetekster[beslutning] && (
                   <div className="font-normal">{begrunnelseHjelpetekster[beslutning]}</div>
-                )}
-              </>
-            }
-            validate={[v => (!v ? 'Du må fylle inn en verdi' : null)]}
-          />
-        )}
+                  )}
+                </>
+              }
+              validate={[v => (!v ? 'Du må fylle inn en verdi' : null)]}
+            />
+          )}
 
-        <Box.New marginBlock="6 0">
-          <div className="flex gap-4">
+          <Box.New marginBlock="6 0">
+            <div className="flex gap-4">
             {visEnkeltperiodeKnapp && (
-              <Button variant="primary" size="small">
+                <Button variant="primary" size="small">
                 {knappetekster[aksjonspunktKode][beslutning] ?? 'Send inn'}
-              </Button>
-            )}
-            {redigeringsmodus && (
-              <Button variant="secondary" size="small" onClick={avbrytRedigering}>
-                Avbryt redigering
-              </Button>
-            )}
-          </div>
-        </Box.New>
+                </Button>
+              )}
+              {redigeringsmodus && (
+                <Button variant="secondary" size="small" onClick={avbrytRedigering}>
+                  Avbryt redigering
+                </Button>
+              )}
+            </div>
+          </Box.New>
       </AksjonspunktBox>
     </RhfForm>
   );

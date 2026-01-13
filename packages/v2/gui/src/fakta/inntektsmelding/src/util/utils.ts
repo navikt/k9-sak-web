@@ -5,7 +5,7 @@ import {
   k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus,
   type k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering,
 } from '@navikt/k9-sak-typescript-client/types';
-import { InntektsmeldingVurderingRequestKode, type Tilstand, type TilstandMedUiState } from '../types/KompletthetData';
+import { InntektsmeldingVurderingRequestKode, type Tilstand, type TilstandMedUiState } from '../types';
 
 /** Transforms backend response to domain model with Period objects */
 export const transformKompletthetsdata = (response: KompletthetsVurdering): Tilstand[] =>

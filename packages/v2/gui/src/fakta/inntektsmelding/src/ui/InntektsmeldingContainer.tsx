@@ -7,8 +7,8 @@ import type {
   ArbeidsgiverOpplysninger,
   DokumentOpplysninger,
   InntektsmeldingContextType,
-} from '../types/InntektsmeldingContextType';
-import type { InntektsmeldingRequestPayload } from '../types/InntektsmeldingAPRequest';
+  InntektsmeldingRequestPayload,
+} from '../types';
 import Kompletthetsoversikt from './components/Kompletthetsoversikt';
 
 export interface InntektsmeldingContainerProps {

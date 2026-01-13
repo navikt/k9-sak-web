@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { Arbeidsgiver } from '../../types/KompletthetData';
+import type { ArbeidsgiverArbeidsforholdId } from '../../types';
 
 interface ArbeidsgiverTekstProps {
-  arbeidsgiver: Arbeidsgiver;
+  arbeidsgiver: ArbeidsgiverArbeidsforholdId;
 }
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: ArbeidsgiverTekstProps): JSX.Element => {
