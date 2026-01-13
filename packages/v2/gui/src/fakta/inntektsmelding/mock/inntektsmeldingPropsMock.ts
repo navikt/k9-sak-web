@@ -2,7 +2,6 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingIndex';
 
 type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback' | 'behandling'> & {
-  behandling: { uuid: string };
   submitCallback?: InntektsmeldingContainerProps['submitCallback'];
 };
 
@@ -20,17 +19,12 @@ const createAksjonspunkt = (definisjon: '9069' | '9071', status: 'OPPR' | 'UTFO'
   vurderPaNyttArsaker: ['ANNET'],
 });
 
-const mockBehandling: { uuid: string } = {
-  uuid: 'mock-behandling-uuid',
-};
-
 const mockArbeidsgiverOpplysninger = {
   896929119: { navn: 'SAUEFABRIKK', arbeidsforholdreferanser: [] },
   972674818: { navn: 'PENGELØS SPAREBANK', arbeidsforholdreferanser: [] },
 };
 
 const inntektsmeldingPropsMock: MockProps = {
-  behandling: mockBehandling,
   arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
   readOnly: false,
   aksjonspunkter: [createAksjonspunkt('9069', 'OPPR')],
@@ -39,14 +33,12 @@ const inntektsmeldingPropsMock: MockProps = {
 export default inntektsmeldingPropsMock;
 
 export const aksjonspunkt9071Props: MockProps = {
-  behandling: mockBehandling,
   arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
   readOnly: false,
   aksjonspunkter: [createAksjonspunkt('9071', 'OPPR')],
 };
 
 export const aksjonspunkt9071FerdigProps: MockProps = {
-  behandling: mockBehandling,
   arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
   readOnly: false,
   aksjonspunkter: [createAksjonspunkt('9071', 'UTFO')],

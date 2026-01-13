@@ -15,14 +15,17 @@ import ferdigvisning, {
 import { withFakeInntektsmeldingApi } from '../../mock/withFakeInntektsmeldingApi.js';
 import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex.js';
 
-const createProps = (props: Partial<InntektsmeldingContainerProps>): InntektsmeldingContainerProps => ({
+const createProps = (
+  behandlingUuid: string,
+  props: Partial<InntektsmeldingContainerProps>,
+): InntektsmeldingContainerProps => ({
   ...inntektsmeldingPropsMock,
   submitCallback: action('submitCallback'),
   ...props,
+  behandling: { uuid: behandlingUuid },
 });
 
 const meta: Meta<typeof InntektsmeldingIndex> = {
-  args: createProps({}),
   title: 'gui/fakta/inntektsmelding',
   component: InntektsmeldingIndex,
 };
@@ -32,13 +35,13 @@ export default meta;
 type Story = StoryObj<typeof InntektsmeldingIndex>;
 
 export const IkkePaakrevd: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(ikkePaakrevd)],
+  args: createProps(ikkePaakrevd.behandlingUuid, {}),
+  decorators: [withFakeInntektsmeldingApi(ikkePaakrevd.behandlingUuid, ikkePaakrevd.vurdering)],
 };
 
 export const Mangler9069: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding)],
+  args: createProps(manglerInntektsmelding.behandlingUuid, {}),
+  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding.behandlingUuid, manglerInntektsmelding.vurdering)],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
@@ -93,8 +96,8 @@ export const Mangler9069: Story = {
 };
 
 export const Mangler9071: Story = {
-  args: createProps(aksjonspunkt9071Props),
-  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding)],
+  args: createProps(manglerInntektsmelding.behandlingUuid, aksjonspunkt9071Props),
+  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding.behandlingUuid, manglerInntektsmelding.vurdering)],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
@@ -153,28 +156,35 @@ export const Mangler9071: Story = {
 };
 
 export const ManglerFlere9071: Story = {
-  args: createProps(aksjonspunkt9071Props),
-  decorators: [withFakeInntektsmeldingApi(manglerFlereInntektsmeldinger)],
+  args: createProps(manglerFlereInntektsmeldinger.behandlingUuid, aksjonspunkt9071Props),
+  decorators: [
+    withFakeInntektsmeldingApi(manglerFlereInntektsmeldinger.behandlingUuid, manglerFlereInntektsmeldinger.vurdering),
+  ],
 };
 
 export const IkkePaakrevdOgMangler9071: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(ikkePaakrevdOgManglerInntektsmelding)],
+  args: createProps(ikkePaakrevdOgManglerInntektsmelding.behandlingUuid, {}),
+  decorators: [
+    withFakeInntektsmeldingApi(
+      ikkePaakrevdOgManglerInntektsmelding.behandlingUuid,
+      ikkePaakrevdOgManglerInntektsmelding.vurdering,
+    ),
+  ],
 };
 
 export const FerdigVisning9069: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(ferdigvisning)],
+  args: createProps(ferdigvisning.behandlingUuid, {}),
+  decorators: [withFakeInntektsmeldingApi(ferdigvisning.behandlingUuid, ferdigvisning.vurdering)],
 };
 
 export const FerdigVisning9071: Story = {
-  args: createProps(aksjonspunkt9071FerdigProps),
-  decorators: [withFakeInntektsmeldingApi(ferdigvisning)],
+  args: createProps(ferdigvisning.behandlingUuid, aksjonspunkt9071FerdigProps),
+  decorators: [withFakeInntektsmeldingApi(ferdigvisning.behandlingUuid, ferdigvisning.vurdering)],
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
-  args: createProps(aksjonspunkt9071Props),
-  decorators: [withFakeInntektsmeldingApi(alleErMottatt)],
+  args: createProps(alleErMottatt.behandlingUuid, aksjonspunkt9071Props),
+  decorators: [withFakeInntektsmeldingApi(alleErMottatt.behandlingUuid, alleErMottatt.vurdering)],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();

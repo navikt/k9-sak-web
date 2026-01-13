@@ -3,7 +3,14 @@ import {
   type k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
-const ferdigvisning: KompletthetsVurdering = {
+type BehandlingUuidOgVurdering = Readonly<{ behandlingUuid: string; vurdering: KompletthetsVurdering }>;
+
+const behandlingUuidOgVurdering = (
+  behandlingUuid: string,
+  vurdering: KompletthetsVurdering,
+): BehandlingUuidOgVurdering => ({ behandlingUuid, vurdering });
+
+const ferdigvisning = behandlingUuidOgVurdering('1-1-1', {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -24,11 +31,11 @@ const ferdigvisning: KompletthetsVurdering = {
       begrunnelse: 'wwdwdwwqwdwqwqw',
     },
   ],
-};
+});
 
 export default ferdigvisning;
 
-export const manglerInntektsmelding: KompletthetsVurdering = {
+export const manglerInntektsmelding = behandlingUuidOgVurdering('1-1-2', {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -49,9 +56,9 @@ export const manglerInntektsmelding: KompletthetsVurdering = {
       begrunnelse: '',
     },
   ],
-};
+});
 
-export const manglerFlereInntektsmeldinger: KompletthetsVurdering = {
+export const manglerFlereInntektsmeldinger = behandlingUuidOgVurdering('1-1-3', {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -90,9 +97,9 @@ export const manglerFlereInntektsmeldinger: KompletthetsVurdering = {
       begrunnelse: '',
     },
   ],
-};
+});
 
-export const ikkePaakrevdOgManglerInntektsmelding: KompletthetsVurdering = {
+export const ikkePaakrevdOgManglerInntektsmelding = behandlingUuidOgVurdering('1-1-4', {
   tilstand: [
     {
       periode: '2022-02-01/2022-02-16',
@@ -131,9 +138,9 @@ export const ikkePaakrevdOgManglerInntektsmelding: KompletthetsVurdering = {
       begrunnelse: '',
     },
   ],
-};
+});
 
-export const ikkePaakrevd: KompletthetsVurdering = {
+export const ikkePaakrevd = behandlingUuidOgVurdering('1-1-5', {
   tilstand: [
     {
       periode: '2022-08-01/2022-08-04',
@@ -154,9 +161,9 @@ export const ikkePaakrevd: KompletthetsVurdering = {
       begrunnelse: '',
     },
   ],
-};
+});
 
-export const alleErMottatt: KompletthetsVurdering = {
+export const alleErMottatt = behandlingUuidOgVurdering('1-1-6', {
   tilstand: [
     {
       periode: '2022-08-01/2022-08-04',
@@ -177,4 +184,4 @@ export const alleErMottatt: KompletthetsVurdering = {
       begrunnelse: '',
     },
   ],
-};
+});
