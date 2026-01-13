@@ -1,6 +1,5 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { Suspense, useMemo, type ReactElement } from 'react';
 import InntektsmeldingContext from '../context/InntektsmeldingContext';
 import type {
@@ -12,7 +11,7 @@ import type {
 import InntektsmeldingContainer from './components/InntektsmeldingContainer';
 
 export interface InntektsmeldingContainerProps {
-  behandling: BehandlingAppKontekst;
+  behandling: { uuid: string };
   readOnly: boolean;
   arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];

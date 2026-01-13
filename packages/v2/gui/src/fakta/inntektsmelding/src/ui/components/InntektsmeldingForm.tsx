@@ -4,7 +4,6 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import type { JSX } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, KompletthetsPeriode, TilstandMedUiState } from '../../types';
@@ -88,7 +87,7 @@ const InntektsmeldingForm = ({
   formMethods,
   onSubmit,
   harFlereTilstanderTilVurdering,
-}: InntektsmeldingFormProps): JSX.Element => {
+}: InntektsmeldingFormProps) => {
   const { arbeidsforhold, readOnly } = useInntektsmeldingContext();
   const { watch, reset, control } = formMethods;
 

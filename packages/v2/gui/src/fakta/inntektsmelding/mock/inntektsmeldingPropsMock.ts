@@ -1,5 +1,4 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingAppKontekst } from '@k9-sak-web/types';
 import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingIndex';
 
 type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback'> & {
@@ -20,9 +19,9 @@ const createAksjonspunkt = (definisjon: '9069' | '9071', status: 'OPPR' | 'UTFO'
   vurderPaNyttArsaker: ['ANNET'],
 });
 
-const mockBehandling: BehandlingAppKontekst = {
+const mockBehandling: { uuid: string } = {
   uuid: 'mock-behandling-uuid',
-} as BehandlingAppKontekst;
+};
 
 const mockArbeidsgiverOpplysninger = {
   896929119: { navn: 'SAUEFABRIKK', arbeidsforholdreferanser: [] },

@@ -2,7 +2,6 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { PencilIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button } from '@navikt/ds-react';
-import type { JSX } from 'react';
 import type { TilstandMedUiState } from '../../types';
 import { InntektsmeldingVurderingRequestKode, InntektsmeldingVurderingResponseKode } from '../../types';
 
@@ -31,7 +30,7 @@ const InntektsmeldingFerdigvisning = ({
   tilstand,
   onEdit,
   readOnly,
-}: InntektsmeldingFerdigvisningProps): JSX.Element | null => {
+}: InntektsmeldingFerdigvisningProps) => {
   const config = tilstand.vurdering ? vurderingConfig[tilstand.vurdering] : null;
   if (!config) return null;
 

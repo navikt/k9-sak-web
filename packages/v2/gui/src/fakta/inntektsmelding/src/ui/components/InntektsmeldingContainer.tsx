@@ -1,6 +1,6 @@
 import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Accordion, Alert, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
-import { useMemo, useState, type JSX } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
@@ -15,7 +15,7 @@ import {
 } from '../../util/utils';
 import InntektsmeldingListe from './InntektsmeldingListe';
 
-const InntektsmeldingManglerInfo = (): JSX.Element => (
+const InntektsmeldingManglerInfo = () => (
   <>
     <Box.New marginBlock="0 6">
       <Alert variant="warning" size="small">
@@ -82,7 +82,7 @@ const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
     ]),
   );
 
-const InntektsmeldingContainer = (): JSX.Element => {
+const InntektsmeldingContainer = () => {
   const { aksjonspunkter, readOnly, onFinished } = useInntektsmeldingContext();
   const { data: kompletthetResponse } = useKompletthetsoversikt();
 

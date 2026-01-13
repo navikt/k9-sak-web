@@ -1,7 +1,6 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, VStack } from '@navikt/ds-react';
-import type { JSX } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { sorterSkjæringstidspunkt } from '../../util/utils';
@@ -22,7 +21,7 @@ const InntektsmeldingListe = ({
   aksjonspunkt,
   formMethods,
   harFlereTilstanderTilVurdering,
-}: InntektsmeldingListeProps): JSX.Element => (
+}: InntektsmeldingListeProps) => (
   <ul className="m-0 list-none p-0">
     {tilstander.sort(sorterSkjæringstidspunkt).map((tilstand, index) => (
       <li

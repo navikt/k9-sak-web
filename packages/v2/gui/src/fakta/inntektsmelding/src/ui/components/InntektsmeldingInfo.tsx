@@ -1,6 +1,5 @@
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
-import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { ArbeidsgiverArbeidsforholdId, Status } from '../../types';
 
@@ -28,7 +27,7 @@ interface InntektsmeldingListeProps {
   status: Status[];
 }
 
-const InntektsmeldingInfo = ({ status }: InntektsmeldingListeProps): JSX.Element => {
+const InntektsmeldingInfo = ({ status }: InntektsmeldingListeProps) => {
   const { dokumenter } = useInntektsmeldingContext();
 
   const finnDokumentLink = (journalpostId: string) =>

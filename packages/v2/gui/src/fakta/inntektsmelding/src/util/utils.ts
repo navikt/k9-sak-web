@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@navikt/ft-utils';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {

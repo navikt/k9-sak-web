@@ -1,5 +1,4 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { JSX } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
@@ -21,7 +20,7 @@ const InntektsmeldingVurdering = ({
   aksjonspunkt,
   formMethods,
   harFlereTilstanderTilVurdering,
-}: InntektsmeldingVurderingProps): JSX.Element | null => {
+}: InntektsmeldingVurderingProps) => {
   const { readOnly } = useInntektsmeldingContext();
   const { redigeringsmodus, setRedigeringsmodus } = tilstand;
 
@@ -31,7 +30,9 @@ const InntektsmeldingVurdering = ({
   const skalViseFerdigvisning = harTidligereVurdering && !redigeringsmodus;
 
   if (skalViseFerdigvisning) {
-    return <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />;
+    return (
+      <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />
+    );
   }
 
   if (skalViseSkjema && aksjonspunkt) {

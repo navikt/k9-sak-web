@@ -1,4 +1,5 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { Period } from '@navikt/ft-utils';
 import type {
   k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdStatus,
   k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode,
@@ -9,7 +10,6 @@ import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOpplysningerDto,
 } from '@navikt/k9-sak-typescript-client/types';
 import { k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering } from '@navikt/k9-sak-typescript-client/types';
-import type { Period } from '@fpsak-frontend/utils';
 
 // Re-exports av backend-typer med lesbare navn
 export type ArbeidsgiverOpplysninger = k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOpplysningerDto;
