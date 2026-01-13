@@ -4,7 +4,7 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, BodyShort, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import { InntektsmeldingKode } from '../../../types/KompletthetData';
+import { InntektsmeldingVurderingRequestKode } from '../../../types/KompletthetData';
 import type { Tilstand } from '../../../types/KompletthetData';
 
 interface FortsettUtenInntektsmeldingAvslagProps {
@@ -22,17 +22,17 @@ const FortsettUtenInntektsmeldingAvslag = ({
 
   const kode = tilstand?.vurdering;
   const harAvslagskode =
-    kode === InntektsmeldingKode.MANGLENDE_GRUNNLAG || kode === InntektsmeldingKode.IKKE_INNTEKTSTAP;
+    kode === InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG || kode === InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP;
 
   if (harAvslagskode && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
         <Alert variant="error" size="medium" className="mt-2">
           <div className="flex flex-col gap-4">
-            {kode === InntektsmeldingKode.MANGLENDE_GRUNNLAG && (
+            {kode === InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG && (
               <BodyShort>Søknaden avslås på grunn av manglende opplysninger om inntekt</BodyShort>
             )}
-            {kode === InntektsmeldingKode.IKKE_INNTEKTSTAP && (
+            {kode === InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP && (
               <BodyShort>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</BodyShort>
             )}
             {!readOnly && (

@@ -35,10 +35,10 @@ export interface Arbeidsgiver {
   arbeidsforhold: string | null;
 }
 
-export const InntektsmeldingVurderingKode = k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering;
-export enum InntektsmeldingKode {
+export const InntektsmeldingVurderingResponseKode = k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering;
+export enum InntektsmeldingVurderingRequestKode {
   FORTSETT = 'FORTSETT',
   MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
   IKKE_INNTEKTSTAP = 'IKKE_INNTEKTSTAP',
-  TOM = 'UDEFINERT',
+  UDEFINERT = 'UDEFINERT',
 }

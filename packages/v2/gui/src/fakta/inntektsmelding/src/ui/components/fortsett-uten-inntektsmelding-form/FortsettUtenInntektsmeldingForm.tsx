@@ -10,7 +10,7 @@ import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@na
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload } from '../../../types/InntektsmeldingAPRequest';
 import type { KompletthetsPeriode } from '../../../types/InntektsmeldingAPRequest';
-import { InntektsmeldingKode } from '../../../types/KompletthetData';
+import { InntektsmeldingVurderingRequestKode } from '../../../types/KompletthetData';
 import type { TilstandBeriket } from '../../../types/KompletthetData';
 import { skalVurderes } from '../../../util/utils';
 
@@ -30,23 +30,25 @@ interface FortsettUtenInntektsmeldingFormProps {
 }
 
 interface RadioOption {
-  value: InntektsmeldingKode;
+  value: InntektsmeldingVurderingRequestKode;
   label: string;
   id: string;
 }
 
 type AksjonspunktKode = '9069' | '9071';
 
-const fortsettKnappTekstFunc: Record<AksjonspunktKode, (kode: InntektsmeldingKode) => string> = {
-  '9069': (kode: InntektsmeldingKode) =>
-    kode === InntektsmeldingKode.FORTSETT ? 'Fortsett uten inntektsmelding' : 'Send purring med varsel om avslag',
-  '9071': (kode: InntektsmeldingKode) => {
+const fortsettKnappTekstFunc: Record<AksjonspunktKode, (kode: InntektsmeldingVurderingRequestKode) => string> = {
+  '9069': (kode: InntektsmeldingVurderingRequestKode) =>
+    kode === InntektsmeldingVurderingRequestKode.FORTSETT
+      ? 'Fortsett uten inntektsmelding'
+      : 'Send purring med varsel om avslag',
+  '9071': (kode: InntektsmeldingVurderingRequestKode) => {
     switch (kode) {
-      case InntektsmeldingKode.FORTSETT:
+      case InntektsmeldingVurderingRequestKode.FORTSETT:
         return 'Fortsett uten inntektsmelding';
-      case InntektsmeldingKode.MANGLENDE_GRUNNLAG:
+      case InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG:
         return 'Avslå periode';
-      case InntektsmeldingKode.IKKE_INNTEKTSTAP:
+      case InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP:
       default:
         return 'Avslå søknad';
     }
@@ -69,10 +71,12 @@ const FortsettUtenInntektsmeldingForm = ({
   const beslutningId = `beslutning-${tilstand.periodeOpprinneligFormat}`;
   const begrunnelseId = `begrunnelse-${tilstand.periodeOpprinneligFormat}`;
   const beslutningRaw = watch(beslutningFieldName);
-  const beslutning = (Array.isArray(beslutningRaw) ? beslutningRaw[0] : beslutningRaw) as InntektsmeldingKode | null;
+  const beslutning = Array.isArray(beslutningRaw) ? beslutningRaw[0] : beslutningRaw;
   const aksjonspunktKode = aksjonspunkt?.definisjon;
   const vis = ((skalVurderes(tilstand) && !readOnly) || redigeringsmodus) && aksjonspunkt && tilstand.tilVurdering;
-  const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && beslutning !== InntektsmeldingKode.FORTSETT);
+  const skalViseBegrunnelse = !(
+    aksjonspunktKode === '9069' && beslutning !== InntektsmeldingVurderingRequestKode.FORTSETT
+  );
   const arbeidsgivereMedManglendeInntektsmelding = tilstand.status.filter(
     s => s.status === InntektsmeldingStatus.MANGLER,
   );
@@ -93,13 +97,16 @@ const FortsettUtenInntektsmeldingForm = ({
     const periode: KompletthetsPeriode = {
       begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
       periode: tilstand.periodeOpprinneligFormat,
-      fortsett: data[beslutningFieldName] === InntektsmeldingKode.FORTSETT,
+      fortsett: data[beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
       vurdering: data[beslutningFieldName],
     };
 
+    if (!aksjonspunktKode) {
+      throw new Error('AksjonspunktKode er ikke satt');
+    }
     return onSubmit({
-      '@type': aksjonspunktKode ?? '',
-      kode: aksjonspunktKode ?? '',
+      '@type': aksjonspunktKode,
+      kode: aksjonspunktKode,
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
       perioder: [periode],
     });
@@ -113,31 +120,31 @@ const FortsettUtenInntektsmeldingForm = ({
   const radios: Record<AksjonspunktKode, RadioOption[]> = {
     '9069': [
       {
-        value: InntektsmeldingKode.FORTSETT,
+        value: InntektsmeldingVurderingRequestKode.FORTSETT,
         label: `Ja, bruk A-inntekt for ${arbeidsgivereString}`,
-        id: `${beslutningId}${InntektsmeldingKode.FORTSETT}`,
+        id: `${beslutningId}${InntektsmeldingVurderingRequestKode.FORTSETT}`,
       },
       {
-        value: InntektsmeldingKode.MANGLENDE_GRUNNLAG,
+        value: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
         label: 'Nei, send purring med varsel om avslag',
-        id: `${beslutningId}${InntektsmeldingKode.MANGLENDE_GRUNNLAG}`,
+        id: `${beslutningId}${InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG}`,
       },
     ],
     '9071': [
       {
-        value: InntektsmeldingKode.FORTSETT,
+        value: InntektsmeldingVurderingRequestKode.FORTSETT,
         label: `Ja, bruk A-inntekt for ${arbeidsgivereString}`,
-        id: `${beslutningId}${InntektsmeldingKode.FORTSETT}`,
+        id: `${beslutningId}${InntektsmeldingVurderingRequestKode.FORTSETT}`,
       },
       {
-        value: InntektsmeldingKode.MANGLENDE_GRUNNLAG,
+        value: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
         label: 'Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3',
-        id: `${beslutningId}${InntektsmeldingKode.MANGLENDE_GRUNNLAG}`,
+        id: `${beslutningId}${InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG}`,
       },
       {
-        value: InntektsmeldingKode.IKKE_INNTEKTSTAP,
+        value: InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP,
         label: 'Nei, avslå søknaden på grunn av at ansatt ikke har tapt arbeidsinntekt §9-3',
-        id: `${beslutningId}${InntektsmeldingKode.IKKE_INNTEKTSTAP}`,
+        id: `${beslutningId}${InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP}`,
       },
     ],
   };
@@ -194,19 +201,19 @@ const FortsettUtenInntektsmeldingForm = ({
               label={
                 <>
                   <label htmlFor={begrunnelseId}>Begrunnelse</label>
-                  {beslutning === InntektsmeldingKode.FORTSETT && (
+                  {beslutning === InntektsmeldingVurderingRequestKode.FORTSETT && (
                     <div className="font-normal">
                       Vi benytter opplysninger fra A-inntekt for alle arbeidsgivere vi ikke har mottatt inntektsmelding
                       fra. Gjør en vurdering av hvorfor du benytter A-inntekt for å fastsette grunnlaget etter § 8-28.
                     </div>
                   )}
-                  {beslutning === InntektsmeldingKode.MANGLENDE_GRUNNLAG && (
+                  {beslutning === InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG && (
                     <div className="font-normal">
                       Skriv begrunnelse for hvorfor du ikke kan benytte opplysninger fra A-inntekt for å fastsette
                       grunnlaget, og avslå saken etter folketrygdloven §§ 21-3 og 8-28.
                     </div>
                   )}
-                  {beslutning === InntektsmeldingKode.IKKE_INNTEKTSTAP && (
+                  {beslutning === InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP && (
                     <div className="font-normal">
                       Skriv begrunnelse for hvorfor søker ikke har inntektstap, og avslå saken etter folketrygdloven
                       §9-3.

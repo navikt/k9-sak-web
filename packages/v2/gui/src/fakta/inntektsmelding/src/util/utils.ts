@@ -1,7 +1,7 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
-import { InntektsmeldingKode, type TilstandBeriket } from '../types/KompletthetData';
+import { InntektsmeldingVurderingRequestKode, type TilstandBeriket } from '../types/KompletthetData';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 export const finnAktivtAksjonspunkt = (aksjonspunkter: AksjonspunktDto[]): AksjonspunktDto | undefined =>
@@ -10,7 +10,7 @@ export const finnAktivtAksjonspunkt = (aksjonspunkter: AksjonspunktDto[]): Aksjo
 export const skalVurderes = (tilstand: TilstandBeriket): boolean =>
   tilstand?.tilVurdering &&
   tilstand?.status.some(status => status.status === InntektsmeldingStatus.MANGLER) &&
-  tilstand?.vurdering === InntektsmeldingKode.TOM;
+  tilstand?.vurdering === InntektsmeldingVurderingRequestKode.UDEFINERT;
 
 export const ikkePaakrevd = (tilstand: TilstandBeriket): boolean =>
   tilstand?.status.some(status => status.status === InntektsmeldingStatus.IKKE_PÅKREVD);

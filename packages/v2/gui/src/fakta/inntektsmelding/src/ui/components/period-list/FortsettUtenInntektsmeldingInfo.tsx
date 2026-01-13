@@ -4,7 +4,7 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, BodyShort, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import { InntektsmeldingVurderingKode } from '../../../types/KompletthetData';
+import { InntektsmeldingVurderingResponseKode } from '../../../types/KompletthetData';
 import type { Tilstand } from '../../../types/KompletthetData';
 
 interface FortsettUtenInntektsmeldingInfoProps {
@@ -21,7 +21,7 @@ const FortsettUtenInntektsmeldingInfo = ({
   const { readOnly } = useInntektsmeldingContext();
 
   if (
-    tilstand?.vurdering === InntektsmeldingVurderingKode.KAN_FORTSETTE &&
+    tilstand?.vurdering === InntektsmeldingVurderingResponseKode.KAN_FORTSETTE &&
     !redigeringsmodus &&
     tilstand.tilVurdering
   ) {

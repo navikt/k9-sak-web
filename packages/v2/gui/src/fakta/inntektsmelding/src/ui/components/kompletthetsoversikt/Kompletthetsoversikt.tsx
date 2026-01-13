@@ -6,7 +6,7 @@ import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import FieldName from '../../../types/FieldName';
-import { InntektsmeldingKode } from '../../../types/KompletthetData';
+import { InntektsmeldingVurderingRequestKode } from '../../../types/KompletthetData';
 import type { Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
@@ -114,13 +114,13 @@ const Kompletthetsoversikt = (): JSX.Element => {
   const onSubmit = (data: FieldValues) => {
     const perioder = tilstanderTilVurdering.map(tilstand => {
       const skalViseBegrunnelse = !(
-        aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== InntektsmeldingKode.FORTSETT
+        aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== InntektsmeldingVurderingRequestKode.FORTSETT
       );
       const begrunnelse = skalViseBegrunnelse ? data[tilstand.begrunnelseFieldName] : undefined;
       return {
         begrunnelse,
         periode: tilstand.periodeOpprinneligFormat,
-        fortsett: data[tilstand.beslutningFieldName] === InntektsmeldingKode.FORTSETT,
+        fortsett: data[tilstand.beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
         vurdering: data[tilstand.beslutningFieldName],
       };
     });
