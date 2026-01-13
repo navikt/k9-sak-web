@@ -1,7 +1,7 @@
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Edit } from '@navikt/ds-icons';
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, BodyShort, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import { InntektsmeldingKode } from '../../../types/KompletthetData';
@@ -27,18 +27,22 @@ const FortsettUtenInntektsmeldingAvslag = ({
   if (harAvslagskode && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
-        <Alert variant="error" size="medium" className="my-10">
-          {kode === InntektsmeldingKode.MANGLENDE_GRUNNLAG && (
-            <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
-          )}
-          {kode === InntektsmeldingKode.IKKE_INNTEKTSTAP && (
-            <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>
-          )}
-          {!readOnly && (
-            <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
-              <span>Rediger vurdering</span>
-            </Button>
-          )}
+        <Alert variant="error" size="medium" className="mt-2">
+          <div className="flex flex-col gap-4">
+            {kode === InntektsmeldingKode.MANGLENDE_GRUNNLAG && (
+              <BodyShort>Søknaden avslås på grunn av manglende opplysninger om inntekt</BodyShort>
+            )}
+            {kode === InntektsmeldingKode.IKKE_INNTEKTSTAP && (
+              <BodyShort>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</BodyShort>
+            )}
+            {!readOnly && (
+              <div>
+                <Button variant="tertiary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
+                  Rediger vurdering
+                </Button>
+              </div>
+            )}
+          </div>
         </Alert>
         <LabelledContent
           label="Begrunnelse"

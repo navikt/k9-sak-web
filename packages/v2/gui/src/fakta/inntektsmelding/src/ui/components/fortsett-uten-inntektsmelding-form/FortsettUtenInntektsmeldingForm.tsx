@@ -94,13 +94,13 @@ const FortsettUtenInntektsmeldingForm = ({
       begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === InntektsmeldingKode.FORTSETT,
-      vurdering: data[beslutningFieldName] as InntektsmeldingKode,
+      vurdering: data[beslutningFieldName],
     };
 
     return onSubmit({
       '@type': aksjonspunktKode ?? '',
       kode: aksjonspunktKode ?? '',
-      begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
+      begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
       perioder: [periode],
     });
   };
