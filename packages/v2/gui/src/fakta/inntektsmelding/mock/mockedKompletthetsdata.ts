@@ -1,7 +1,7 @@
 import {
   k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus,
   type k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering,
-} from '@navikt/k9-sak-typescript-client/types';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const ferdigvisning: KompletthetsVurdering = {
   tilstand: [
