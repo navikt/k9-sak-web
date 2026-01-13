@@ -25,7 +25,6 @@ const meta: Meta<typeof InntektsmeldingIndex> = {
   args: createProps({}),
   title: 'gui/fakta/inntektsmelding',
   component: InntektsmeldingIndex,
-  decorators: [withFakeInntektsmeldingApi(ikkePaakrevd)],
 };
 
 export default meta;
@@ -52,7 +51,9 @@ export const Mangler9069: Story = {
       const radioOption = await canvas.findByLabelText(/Nei, send purring med varsel om avslag/i);
       await expect(radioOption).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i })).not.toBeInTheDocument();
+      await expect(
+        canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i }),
+      ).not.toBeInTheDocument();
     });
 
     await step('Viser riktig knapp når purring er valgt', async () => {
@@ -108,7 +109,9 @@ export const Mangler9071: Story = {
       );
       await expect(radioOption).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i })).not.toBeInTheDocument();
+      await expect(
+        canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i }),
+      ).not.toBeInTheDocument();
     });
 
     await step('Viser riktig knapp når purring er valgt', async () => {
@@ -180,9 +183,12 @@ export const AlleInntektsmeldingerMottatt: Story = {
       await waitFor(() => expect(canvas.getByText(/Når kan du gå videre uten inntektsmelding?/i)).toBeInTheDocument());
     });
 
-    await step('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
-      const sendInnButton = await canvas.findByRole('button', { name: /Send inn/i });
-      await user.click(sendInnButton);
-    });
+    await step(
+      'Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet',
+      async () => {
+        const sendInnButton = await canvas.findByRole('button', { name: /Send inn/i });
+        await user.click(sendInnButton);
+      },
+    );
   },
 };
