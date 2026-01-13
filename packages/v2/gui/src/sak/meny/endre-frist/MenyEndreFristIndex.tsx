@@ -19,8 +19,6 @@ export const MenyEndreFristIndex = ({
   behandlingVersjon,
   api,
 }: MenyEndreFristIndexProps) => {
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   const [nyFrist, setNyFrist] = useState<string | undefined>(undefined);
   const { data: etterlysninger = [], isLoading } = useQuery({
     queryKey: ['etterlysninger', behandlingUuid],
@@ -41,18 +39,8 @@ export const MenyEndreFristIndex = ({
       setNyFrist(formValues.fristDato);
       return api.endreFrist(behandlingId, behandlingVersjon, endretFrister).catch(() => {
         setNyFrist(undefined);
-        throw new Error('Noe gikk galt ved endring av frist');
+        throw new Error('Noe gikk galt ved endring av frist. Vennligst prøv igjen senere.');
       });
-    },
-    onSuccess: () => {
-      setShowSuccess(true);
-    },
-    onError: (error: unknown) => {
-      if (error instanceof Error) {
-        setSubmitError(error.message);
-      } else {
-        setSubmitError('Noe gikk galt, vennligst prøv igjen senere.');
-      }
     },
   });
 
@@ -65,9 +53,9 @@ export const MenyEndreFristIndex = ({
       lukkModal={lukkModal}
       etterlysninger={etterlysninger}
       endreFrister={handleSubmit}
-      showSuccess={showSuccess}
+      showSuccess={mutation.isSuccess}
       isLoading={isLoading || mutation.isPending}
-      submitError={submitError}
+      submitError={mutation.isError ? (mutation.error as Error).message : undefined}
       nyFrist={nyFrist}
     />
   );
