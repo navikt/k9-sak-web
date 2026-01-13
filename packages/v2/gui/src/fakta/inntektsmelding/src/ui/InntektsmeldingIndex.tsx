@@ -1,6 +1,6 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { Suspense, useMemo, type ReactElement } from 'react';
+import { Suspense, useMemo } from 'react';
 import InntektsmeldingContext from '../context/InntektsmeldingContext';
 import type {
   ArbeidsgiverOpplysninger,
@@ -26,7 +26,7 @@ const InntektsmeldingIndex = ({
   dokumenter,
   aksjonspunkter,
   submitCallback,
-}: InntektsmeldingContainerProps): ReactElement => {
+}: InntektsmeldingContainerProps) => {
   const contextValue: InntektsmeldingContextType = useMemo(
     () => ({
       behandlingUuid: behandling.uuid,
