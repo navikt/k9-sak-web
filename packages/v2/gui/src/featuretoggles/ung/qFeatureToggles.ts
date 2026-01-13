@@ -28,4 +28,5 @@ export const qFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   BRUK_V2_TILKJENT_YTELSE: true,
   UNG_KLAGE: true,
+  ENDRE_FRIST: true,
 } satisfies UngFeatureToggles;
