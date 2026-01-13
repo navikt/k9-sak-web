@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload } from '../../types/InntektsmeldingAPRequest';
-import type { Tilstand, TilstandBeriket } from '../../types/KompletthetData';
+import type { Tilstand, TilstandMedUiState } from '../../types/KompletthetData';
 import { InntektsmeldingVurderingRequestKode, InntektsmeldingVurderingResponseKode } from '../../types/KompletthetData';
 import { sorterSkjæringstidspunkt } from '../../util/utils';
 import FortsettUtenInntektsmeldingForm from './FortsettUtenInntektsmeldingForm';
@@ -106,7 +106,7 @@ const FortsettUtenInntektsmeldingAvslag = ({
 
 // Main PeriodList component
 interface PeriodListProps {
-  tilstander: TilstandBeriket[];
+  tilstander: TilstandMedUiState[];
   onFormSubmit: (payload: InntektsmeldingRequestPayload) => void;
   aksjonspunkt?: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;

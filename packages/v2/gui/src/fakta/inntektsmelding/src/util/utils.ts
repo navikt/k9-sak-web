@@ -1,33 +1,54 @@
+import { Period } from '@fpsak-frontend/utils';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
-import { InntektsmeldingVurderingRequestKode, type TilstandBeriket } from '../types/KompletthetData';
-import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import {
+  k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus,
+  type k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering,
+} from '@navikt/k9-sak-typescript-client/types';
+import { InntektsmeldingVurderingRequestKode, type Tilstand, type TilstandMedUiState } from '../types/KompletthetData';
 
-export const finnAktivtAksjonspunkt = (aksjonspunkter: AksjonspunktDto[]): AksjonspunktDto | undefined =>
-  aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET);
+/** Transforms backend response to domain model with Period objects */
+export const transformKompletthetsdata = (response: KompletthetsVurdering): Tilstand[] =>
+  response.tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
+    const [fom = '', tom = ''] = periode.split('/');
+    return {
+      periode: new Period(fom, tom),
+      status,
+      begrunnelse,
+      tilVurdering,
+      vurdering,
+      periodeOpprinneligFormat: periode,
+      vurdertAv,
+      vurdertTidspunkt,
+    };
+  });
 
-export const skalVurderes = (tilstand: TilstandBeriket): boolean =>
+// Denne funksjonen eksisterer for å vite hvilket aksjonspunkt som skal vises når vi ikke har noe aksjonspunkt som må løses.
+// Vi er nødt til å vite hvilket aksjonspunkt som skal vises når en skal redigere en tidligere vurdering.
+export const finnSisteAksjonspunkt = (aksjonspunkter: AksjonspunktDto[]): AksjonspunktDto | undefined =>
+  [...aksjonspunkter].sort((a, b) => Number(b.definisjon) - Number(a.definisjon))[0];
+
+export const skalVurderes = (tilstand: TilstandMedUiState): boolean =>
   tilstand?.tilVurdering &&
   tilstand?.status.some(status => status.status === InntektsmeldingStatus.MANGLER) &&
   tilstand?.vurdering === InntektsmeldingVurderingRequestKode.UDEFINERT;
 
-export const ikkePaakrevd = (tilstand: TilstandBeriket): boolean =>
+export const ikkePaakrevd = (tilstand: TilstandMedUiState): boolean =>
   tilstand?.status.some(status => status.status === InntektsmeldingStatus.IKKE_PÅKREVD);
 
-export const ingenInntektsmeldingMangler = (tilstand: TilstandBeriket): boolean =>
+export const ingenInntektsmeldingMangler = (tilstand: TilstandMedUiState): boolean =>
   !tilstand?.status.some(status => status.status === InntektsmeldingStatus.MANGLER);
 
-export const ingenTilstanderHarMangler = (tilstander: TilstandBeriket[]) =>
+export const ingenTilstanderHarMangler = (tilstander: TilstandMedUiState[]) =>
   tilstander.every(ingenInntektsmeldingMangler);
 
-export const finnTilstanderSomVurderes = (tilstander: TilstandBeriket[]): TilstandBeriket[] =>
+export const finnTilstanderSomVurderes = (tilstander: TilstandMedUiState[]): TilstandMedUiState[] =>
   tilstander.filter(skalVurderes);
 
-export const finnTilstanderSomRedigeres = (tilstander: TilstandBeriket[]): TilstandBeriket[] =>
+export const finnTilstanderSomRedigeres = (tilstander: TilstandMedUiState[]): TilstandMedUiState[] =>
   tilstander.filter(tilstand => tilstand.redigeringsmodus);
 
-export const sorterSkjæringstidspunkt = (tilstand1: TilstandBeriket, tilstand2: TilstandBeriket): number => {
+export const sorterSkjæringstidspunkt = (tilstand1: TilstandMedUiState, tilstand2: TilstandMedUiState): number => {
   const date1 = initializeDate(tilstand1?.periode?.fom);
   const date2 = initializeDate(tilstand2?.periode?.fom);
   if (date1.isBefore(date2)) {

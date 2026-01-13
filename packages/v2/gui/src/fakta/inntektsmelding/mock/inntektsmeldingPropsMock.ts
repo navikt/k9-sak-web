@@ -6,31 +6,31 @@ type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback'> & {
 };
 
 const createAksjonspunkt = (kode: string, statusKode: string): Aksjonspunkt => ({
-  aksjonspunktType: {
-    kode: 'MANU',
-    kodeverk: 'AKSJONSPUNKT_TYPE',
-  },
+      aksjonspunktType: {
+        kode: 'MANU',
+        kodeverk: 'AKSJONSPUNKT_TYPE',
+      },
   begrunnelse: undefined,
-  besluttersBegrunnelse: 'evvv',
-  definisjon: {
+      besluttersBegrunnelse: 'evvv',
+      definisjon: {
     kode,
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
-  erAktivt: true,
-  kanLoses: true,
-  status: {
+        kodeverk: 'AKSJONSPUNKT_DEF',
+      },
+      erAktivt: true,
+      kanLoses: true,
+      status: {
     kode: statusKode,
-    kodeverk: 'AKSJONSPUNKT_STATUS',
-  },
-  toTrinnsBehandling: true,
-  toTrinnsBehandlingGodkjent: false,
+        kodeverk: 'AKSJONSPUNKT_STATUS',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
   vilkarType: undefined,
-  vurderPaNyttArsaker: [
-    {
-      kode: 'ANNET',
-      kodeverk: 'VURDER_AARSAK',
-    },
-  ],
+      vurderPaNyttArsaker: [
+        {
+          kode: 'ANNET',
+          kodeverk: 'VURDER_AARSAK',
+        },
+      ],
 });
 
 const mockBehandling: BehandlingAppKontekst = {

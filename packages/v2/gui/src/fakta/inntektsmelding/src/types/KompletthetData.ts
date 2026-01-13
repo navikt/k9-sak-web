@@ -21,7 +21,7 @@ export interface Tilstand {
   vurdertTidspunkt?: string;
 }
 
-export interface TilstandBeriket extends Tilstand {
+export interface TilstandMedUiState extends Tilstand {
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
   begrunnelseFieldName: `begrunnelse${string}`;

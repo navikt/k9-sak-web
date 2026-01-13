@@ -1,5 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
-import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
+import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Accordion, Alert, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
 import { useMemo, useState, type JSX } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
@@ -7,16 +6,16 @@ import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import FieldName from '../../types/FieldName';
 import { InntektsmeldingVurderingRequestKode } from '../../types/KompletthetData';
-import type { Kompletthet, Tilstand, TilstandBeriket } from '../../types/KompletthetData';
+import type { Tilstand, TilstandMedUiState } from '../../types/KompletthetData';
 import {
-  finnAktivtAksjonspunkt,
+  finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
+  transformKompletthetsdata,
 } from '../../util/utils';
 import PeriodList from './PeriodList';
 
-// Info panel shown when inntektsmelding is missing
 const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
     <Box.New marginBlock="0 6">
@@ -76,107 +75,75 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
   </>
 );
 
-function initKompletthetsdata({ tilstand }: KompletthetsVurdering): Kompletthet {
-  return {
-    tilstand: tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
-      const [fom = '', tom = ''] = periode.split('/');
-      return {
-        periode: new Period(fom, tom),
-        status,
-        begrunnelse,
-        tilVurdering,
-        vurdering,
-        periodeOpprinneligFormat: periode,
-        vurdertAv,
-        vurdertTidspunkt,
-      };
-    }),
-  };
-}
-
-interface TilstandEditState {
-  [periodeKey: string]: boolean;
-}
+const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
+  Object.fromEntries(
+    tilstander.flatMap(t => [
+      [`${FieldName.BEGRUNNELSE}${t.periodeOpprinneligFormat}`, t.begrunnelse || ''],
+      [`${FieldName.BESLUTNING}${t.periodeOpprinneligFormat}`, null],
+    ]),
+  );
 
 const Kompletthetsoversikt = (): JSX.Element => {
   const { aksjonspunkter, readOnly, onFinished } = useInntektsmeldingContext();
   const { data: kompletthetResponse } = useKompletthetsoversikt();
-  const kompletthetsoversikt = initKompletthetsdata(kompletthetResponse);
-  const { tilstand: tilstander } = kompletthetsoversikt;
 
+  const tilstander = transformKompletthetsdata(kompletthetResponse);
   const aktivtAksjonspunkt = finnAktivtAksjonspunkt(aksjonspunkter);
-  const forrigeAksjonspunkt = aksjonspunkter.sort((a, b) => Number(b.definisjon) - Number(a.definisjon))[0];
-  const aktivtAksjonspunktKode = aktivtAksjonspunkt?.definisjon;
-  const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon;
-  const aksjonspunktKode = aktivtAksjonspunktKode || forrigeAksjonspunktKode;
+  const sisteAksjonspunkt = finnSisteAksjonspunkt(aksjonspunkter);
+  const gjeldendeAksjonspunkt = aktivtAksjonspunkt ?? sisteAksjonspunkt;
+  const aksjonspunktKode = gjeldendeAksjonspunkt?.definisjon;
 
-  // Single state object to track edit modes for all periods
-  const [editStates, setEditStates] = useState<TilstandEditState>({});
+  const [editStates, setEditStates] = useState<Record<string, boolean>>({});
 
-  const tilstanderBeriket = useMemo<TilstandBeriket[]>(
+  const tilstanderMedUiState = useMemo<TilstandMedUiState[]>(
     () =>
       tilstander.map(tilstand => ({
         ...tilstand,
         redigeringsmodus: editStates[tilstand.periodeOpprinneligFormat] ?? false,
-        setRedigeringsmodus: (state: boolean) => {
-          setEditStates(prev => ({
-            ...prev,
-            [tilstand.periodeOpprinneligFormat]: state,
-          }));
-        },
+        setRedigeringsmodus: (state: boolean) =>
+          setEditStates(prev => ({ ...prev, [tilstand.periodeOpprinneligFormat]: state })),
         begrunnelseFieldName: `${FieldName.BEGRUNNELSE}${tilstand.periodeOpprinneligFormat}`,
         beslutningFieldName: `${FieldName.BESLUTNING}${tilstand.periodeOpprinneligFormat}`,
       })),
     [tilstander, editStates],
   );
 
-  const buildDefaultValues = (tilstandList: Tilstand[]): FieldValues =>
-    tilstandList.reduce((acc, tilstand) => ({
-      ...acc,
-      [`${FieldName.BEGRUNNELSE}${tilstand.periodeOpprinneligFormat}`]: tilstand.begrunnelse || '',
-      [`${FieldName.BESLUTNING}${tilstand.periodeOpprinneligFormat}`]: null,
-    }));
-
   const formMethods = useForm({
     mode: 'onTouched',
-    defaultValues: buildDefaultValues(tilstander),
+    defaultValues: buildFormDefaultValues(tilstander),
   });
-  const { isDirty } = formMethods.formState;
-  const { handleSubmit, watch } = formMethods;
+
+  const { handleSubmit, formState } = formMethods;
 
   const tilstanderTilVurdering = [
-    ...finnTilstanderSomVurderes(tilstanderBeriket),
-    ...finnTilstanderSomRedigeres(tilstanderBeriket),
+    ...finnTilstanderSomVurderes(tilstanderMedUiState),
+    ...finnTilstanderSomRedigeres(tilstanderMedUiState),
   ];
-
   const harFlereTilstanderTilVurdering = tilstanderTilVurdering.length > 1;
 
-  const kanSendeInn = (): boolean => {
-    if (harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderBeriket)) {
-      if (!readOnly) {
-        if (aktivtAksjonspunktKode ?? (forrigeAksjonspunktKode && isDirty)) return true;
-      }
-    }
-    return false;
-  };
+  const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
+  const harEndretTidligereVurdering = !aktivtAksjonspunkt && sisteAksjonspunkt && formState.isDirty;
+  const kanVurderes = harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderMedUiState);
+  const kanSendeInn = !readOnly && kanVurderes && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
 
   const onSubmit = (data: FieldValues) => {
-    const perioder = tilstanderTilVurdering.map(tilstand => {
-      const skalViseBegrunnelse = !(
-        aksjonspunktKode === '9069' &&
-        watch(tilstand.beslutningFieldName) !== InntektsmeldingVurderingRequestKode.FORTSETT
-      );
-      const begrunnelse = skalViseBegrunnelse ? data[tilstand.begrunnelseFieldName] : undefined;
-      return {
-        begrunnelse,
-        periode: tilstand.periodeOpprinneligFormat,
-        fortsett: data[tilstand.beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
-        vurdering: data[tilstand.beslutningFieldName],
-      };
-    });
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
+
+    const perioder = tilstanderTilVurdering.map(tilstand => {
+      const beslutning = data[tilstand.beslutningFieldName];
+      const skalInkludereBegrunnelse =
+        aksjonspunktKode !== '9069' || beslutning === InntektsmeldingVurderingRequestKode.FORTSETT;
+
+      return {
+        periode: tilstand.periodeOpprinneligFormat,
+        fortsett: beslutning === InntektsmeldingVurderingRequestKode.FORTSETT,
+        vurdering: beslutning,
+        begrunnelse: skalInkludereBegrunnelse ? data[tilstand.begrunnelseFieldName] : undefined,
+      };
+    });
+
     onFinished({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
@@ -188,17 +155,20 @@ const Kompletthetsoversikt = (): JSX.Element => {
     <div>
       <h1 className="text-[1.375rem]">Inntektsmelding</h1>
       <h2 className="my-5 text-lg">Opplysninger til beregning</h2>
-      {!!aktivtAksjonspunktKode && <InntektsmeldingManglerInfo />}
+
+      {harAktivtAksjonspunkt && <InntektsmeldingManglerInfo />}
+
       <Box.New marginBlock="6 0">
         <PeriodList
-          tilstander={tilstanderBeriket}
+          tilstander={tilstanderMedUiState}
           onFormSubmit={onFinished}
-          aksjonspunkt={aktivtAksjonspunkt || forrigeAksjonspunkt}
+          aksjonspunkt={gjeldendeAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />
       </Box.New>
-      {kanSendeInn() && (
+
+      {kanSendeInn && (
         <Box.New marginBlock="6 0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Button variant="primary" size="small">

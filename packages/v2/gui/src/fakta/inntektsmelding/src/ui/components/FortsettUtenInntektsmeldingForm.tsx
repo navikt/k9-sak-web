@@ -11,7 +11,7 @@ import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext'
 import type { InntektsmeldingRequestPayload } from '../../types/InntektsmeldingAPRequest';
 import type { KompletthetsPeriode } from '../../types/InntektsmeldingAPRequest';
 import { InntektsmeldingVurderingRequestKode } from '../../types/KompletthetData';
-import type { TilstandBeriket } from '../../types/KompletthetData';
+import type { TilstandMedUiState } from '../../types/KompletthetData';
 import { skalVurderes } from '../../util/utils';
 
 export interface FortsettUtenInntektsmeldingFormState {
@@ -20,7 +20,7 @@ export interface FortsettUtenInntektsmeldingFormState {
 }
 
 interface FortsettUtenInntektsmeldingFormProps {
-  tilstand: TilstandBeriket;
+  tilstand: TilstandMedUiState;
   onSubmit: (payload: InntektsmeldingRequestPayload) => void;
   redigeringsmodus: boolean;
   aksjonspunkt?: AksjonspunktDto;
