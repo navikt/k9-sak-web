@@ -35,7 +35,7 @@ export interface Arbeidsgiver {
 
 export type Vurdering = k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering;
 
-export enum Kode {
+export enum InntektsmeldingKode {
   FORTSETT = 'KAN_FORTSETTE',
   MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
   IKKE_INNTEKTSTAP = 'IKKE_INNTEKTSTAP',

@@ -4,7 +4,7 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import { Kode } from '../../../types/KompletthetData';
+import { InntektsmeldingKode } from '../../../types/KompletthetData';
 import type { Tilstand } from '../../../types/KompletthetData';
 
 interface FortsettUtenInntektsmeldingAvslagProps {
@@ -20,20 +20,18 @@ const FortsettUtenInntektsmeldingAvslag = ({
 }: FortsettUtenInntektsmeldingAvslagProps): JSX.Element | null => {
   const { readOnly } = useInntektsmeldingContext();
 
-  const kode = tilstand?.vurdering?.kode;
+  const kode = tilstand?.vurdering;
+  const harAvslagskode =
+    kode === InntektsmeldingKode.MANGLENDE_GRUNNLAG || kode === InntektsmeldingKode.IKKE_INNTEKTSTAP;
 
-  if ([Kode.MANGLENDE_GRUNNLAG, Kode.IKKE_INNTEKTSTAP].includes(kode) && !redigeringsmodus && tilstand.tilVurdering) {
+  if (harAvslagskode && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
-        <Alert
-          variant="error"
-          size="medium"
-          className="my-10"
-        >
-          {kode === Kode.MANGLENDE_GRUNNLAG && (
+        <Alert variant="error" size="medium" className="my-10">
+          {kode === InntektsmeldingKode.MANGLENDE_GRUNNLAG && (
             <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
           )}
-          {kode === Kode.IKKE_INNTEKTSTAP && (
+          {kode === InntektsmeldingKode.IKKE_INNTEKTSTAP && (
             <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>
           )}
           {!readOnly && (

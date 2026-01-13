@@ -4,7 +4,7 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import { Kode } from '../../../types/KompletthetData';
+import { InntektsmeldingKode } from '../../../types/KompletthetData';
 import type { Tilstand } from '../../../types/KompletthetData';
 
 interface FortsettUtenInntektsmeldingInfoProps {
@@ -20,14 +20,10 @@ const FortsettUtenInntektsmeldingInfo = ({
 }: FortsettUtenInntektsmeldingInfoProps): JSX.Element | null => {
   const { readOnly } = useInntektsmeldingContext();
 
-  if (tilstand?.vurdering?.kode === Kode.FORTSETT && !redigeringsmodus && tilstand.tilVurdering) {
+  if (tilstand?.vurdering === InntektsmeldingKode.FORTSETT && !redigeringsmodus && tilstand.tilVurdering) {
     return (
       <>
-        <Alert
-          variant="info"
-          size="medium"
-          className="my-10"
-        >
+        <Alert variant="info" size="medium" className="my-10">
           <span>Fortsett uten inntektsmelding.</span>
           {!readOnly && (
             <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>

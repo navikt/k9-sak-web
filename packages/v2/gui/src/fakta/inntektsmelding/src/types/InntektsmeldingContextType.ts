@@ -1,5 +1,5 @@
-import type { Aksjonspunkt } from '@k9-sak-web/types';
-import type AksjonspunktRequestPayload from './AksjonspunktRequestPayload';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { InntektsmeldingRequestPayload } from './InntektsmeldingAPRequest';
 
 export type ArbeidsgiverOpplysninger = Readonly<{
   navn: string;
@@ -16,6 +16,6 @@ export interface InntektsmeldingContextType {
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
-  onFinished: (data: AksjonspunktRequestPayload) => void;
-  aksjonspunkter: Aksjonspunkt[];
+  onFinished: (data: InntektsmeldingRequestPayload) => void;
+  aksjonspunkter: AksjonspunktDto[];
 }

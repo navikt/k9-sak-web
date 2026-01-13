@@ -3,20 +3,20 @@ import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, VStack } from '@navikt/ds-react';
 import type { JSX, ReactNode } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
-import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import type { InntektsmeldingRequestPayload } from '../../../types/InntektsmeldingAPRequest';
 import type { TilstandBeriket } from '../../../types/KompletthetData';
 import { sorterSkjæringstidspunkt } from '../../../util/utils';
 import FortsettUtenInntektsmeldingForm from '../fortsett-uten-inntektsmelding-form/FortsettUtenInntektsmeldingForm';
 import FortsettUtenInntektsmeldingAvslag from './FortsettUtenInntektsmeldingAvslag';
 import FortsettUtenInntektsmeldingInfo from './FortsettUtenInntektsmeldingInfo';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 interface PeriodListProps {
   tilstander: TilstandBeriket[];
   listHeadingRenderer: () => ReactNode;
   listItemRenderer: (period: Period) => ReactNode;
-  onFormSubmit: (payload: AksjonspunktRequestPayload) => void;
-  aksjonspunkt: Aksjonspunkt;
+  onFormSubmit: (payload: InntektsmeldingRequestPayload) => void;
+  aksjonspunkt?: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;
   harFlereTilstanderTilVurdering: boolean;
 }

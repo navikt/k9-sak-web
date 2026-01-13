@@ -2,11 +2,9 @@ import type { k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode } fro
 
 export type KompletthetsPeriode = k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode;
 
-export interface AksjonspunktRequestPayload {
+export interface InntektsmeldingRequestPayload {
   begrunnelse?: string;
   perioder: KompletthetsPeriode[];
   kode: string;
   '@type': string;
 }
-
-export default AksjonspunktRequestPayload;

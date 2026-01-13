@@ -27,12 +27,14 @@ interface InntektsmeldingMottattItemProps {
   status: Status;
 }
 
-const finnDokumentLink = (dokumenter: DokumentOpplysninger[], journalpostId: string): DokumentOpplysninger | undefined =>
-  dokumenter.find(dokument => dokument.journalpostId === journalpostId);
+const finnDokumentLink = (
+  dokumenter: DokumentOpplysninger[],
+  journalpostId: string,
+): DokumentOpplysninger | undefined => dokumenter.find(dokument => dokument.journalpostId === journalpostId);
 
 const InntektsmeldingMottattItem = ({ status }: InntektsmeldingMottattItemProps): JSX.Element => {
   const { dokumenter } = useInntektsmeldingContext();
-  const dokumentLink = finnDokumentLink(dokumenter ?? [], status.journalpostId)?.href;
+  const dokumentLink = finnDokumentLink(dokumenter ?? [], status.journalpostId ?? '')?.href;
   const firstColumnRenderer = () => <ArbeidsgiverTekst arbeidsgiver={status.arbeidsgiver} />;
   const secondColumnRenderer = () => <MottattContent dokumentLink={dokumentLink ?? '#'} />;
   return <ListItem firstColumnRenderer={firstColumnRenderer} secondColumnRenderer={secondColumnRenderer} />;

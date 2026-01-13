@@ -6,7 +6,7 @@ import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
 import FieldName from '../../../types/FieldName';
-import { Kode as KodeEnum } from '../../../types/KompletthetData';
+import { InntektsmeldingKode } from '../../../types/KompletthetData';
 import type { Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
@@ -50,10 +50,10 @@ const Kompletthetsoversikt = (): JSX.Element => {
   const periods = tilstander.map(({ periode }) => periode);
   const statuses = tilstander.map(({ status }) => status);
   const aktivtAksjonspunkt = finnAktivtAksjonspunkt(aksjonspunkter);
-  const forrigeAksjonspunkt = aksjonspunkter.sort((a, b) => Number(b.definisjon.kode) - Number(a.definisjon.kode))[0];
-  const aktivtAksjonspunktKode = aktivtAksjonspunkt?.definisjon?.kode;
-  const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon?.kode;
-  const aksjonspunktKode = aktivtAksjonspunktKode ?? forrigeAksjonspunktKode;
+  const forrigeAksjonspunkt = aksjonspunkter.sort((a, b) => Number(b.definisjon) - Number(a.definisjon))[0];
+  const aktivtAksjonspunktKode = aktivtAksjonspunkt?.definisjon;
+  const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon;
+  const aksjonspunktKode = aktivtAksjonspunktKode || forrigeAksjonspunktKode;
 
   // Single state object to track edit modes for all periods
   const [editStates, setEditStates] = useState<TilstandEditState>({});
@@ -79,10 +79,9 @@ const Kompletthetsoversikt = (): JSX.Element => {
     tilstandList.reduce(
       (acc, tilstand) => ({
         ...acc,
-        [`${FieldName.BEGRUNNELSE}${tilstand.periodeOpprinneligFormat}`]: tilstand?.begrunnelse ?? '',
+        [`${FieldName.BEGRUNNELSE}${tilstand.periodeOpprinneligFormat}`]: tilstand.begrunnelse || '',
         [`${FieldName.BESLUTNING}${tilstand.periodeOpprinneligFormat}`]: null,
       }),
-      {} as FieldValues,
     );
 
   const formMethods = useForm({
@@ -116,18 +115,23 @@ const Kompletthetsoversikt = (): JSX.Element => {
 
   const onSubmit = (data: FieldValues) => {
     const perioder = tilstanderTilVurdering.map(tilstand => {
-      const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== KodeEnum.FORTSETT);
-      const begrunnelse = skalViseBegrunnelse ? (data[tilstand.begrunnelseFieldName] as string) : undefined;
+      const skalViseBegrunnelse = !(
+        aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== InntektsmeldingKode.FORTSETT
+      );
+      const begrunnelse = skalViseBegrunnelse ? data[tilstand.begrunnelseFieldName] : undefined;
       return {
         begrunnelse,
         periode: tilstand.periodeOpprinneligFormat,
-        fortsett: data[tilstand.beslutningFieldName] === KodeEnum.FORTSETT,
-        kode: aksjonspunktKode ?? '',
+        fortsett: data[tilstand.beslutningFieldName] === InntektsmeldingKode.FORTSETT,
+        vurdering: data[tilstand.beslutningFieldName],
       };
     });
+    if (!aksjonspunktKode) {
+      throw new Error('AksjonspunktKode er ikke satt');
+    }
     onFinished({
-      '@type': aksjonspunktKode ?? '',
-      kode: aksjonspunktKode ?? '',
+      '@type': aksjonspunktKode,
+      kode: aksjonspunktKode,
       perioder,
     });
   };
@@ -143,7 +147,7 @@ const Kompletthetsoversikt = (): JSX.Element => {
           listHeadingRenderer={listHeadingRenderer}
           listItemRenderer={listItemRenderer}
           onFormSubmit={onFinished}
-          aksjonspunkt={aktivtAksjonspunkt ?? forrigeAksjonspunkt}
+          aksjonspunkt={aktivtAksjonspunkt || forrigeAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />

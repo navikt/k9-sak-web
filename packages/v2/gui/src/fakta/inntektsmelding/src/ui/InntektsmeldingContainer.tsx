@@ -1,5 +1,6 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import type { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { Suspense, useMemo, type ReactElement } from 'react';
 import InntektsmeldingContext from '../context/InntektsmeldingContext';
 import type {
@@ -7,7 +8,7 @@ import type {
   DokumentOpplysninger,
   InntektsmeldingContextType,
 } from '../types/InntektsmeldingContextType';
-import type AksjonspunktRequestPayload from '../types/AksjonspunktRequestPayload';
+import type { InntektsmeldingRequestPayload } from '../types/InntektsmeldingAPRequest';
 import Kompletthetsoversikt from './components/kompletthetsoversikt/Kompletthetsoversikt';
 
 export interface InntektsmeldingContainerProps {
@@ -15,8 +16,8 @@ export interface InntektsmeldingContainerProps {
   readOnly: boolean;
   arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
-  aksjonspunkter: Aksjonspunkt[];
-  submitCallback: (aksjonspunkter: AksjonspunktRequestPayload[]) => void;
+  aksjonspunkter: AksjonspunktDto[];
+  submitCallback: (aksjonspunkter: InntektsmeldingRequestPayload[]) => void;
 }
 
 const InntektsmeldingContainer = ({
@@ -34,7 +35,7 @@ const InntektsmeldingContainer = ({
       arbeidsforhold: arbeidsgiverOpplysningerPerId,
       dokumenter,
       aksjonspunkter,
-      onFinished: (payload: AksjonspunktRequestPayload) => submitCallback([payload]),
+      onFinished: (payload: InntektsmeldingRequestPayload) => submitCallback([payload]),
     }),
     [behandling.uuid, readOnly, arbeidsgiverOpplysningerPerId, dokumenter, aksjonspunkter, submitCallback],
   );
