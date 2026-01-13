@@ -13,95 +13,62 @@ import FortsettUtenInntektsmeldingForm from './FortsettUtenInntektsmeldingForm';
 import InntektsmeldingListe from './InntektsmeldingListe';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
-// Info component (fortsett uten inntektsmelding)
-interface FortsettInfoProps {
+// Viser tidligere vurdering med mulighet for å redigere
+interface TidligereVurderingProps {
   tilstand: Tilstand;
   redigeringsmodus: boolean;
   setRedigeringsmodus: (state: boolean) => void;
 }
 
-const FortsettUtenInntektsmeldingInfo = ({
-  tilstand,
-  redigeringsmodus,
-  setRedigeringsmodus,
-}: FortsettInfoProps): JSX.Element | null => {
-  const { readOnly } = useInntektsmeldingContext();
-
-  if (
-    tilstand?.vurdering === InntektsmeldingVurderingResponseKode.KAN_FORTSETTE &&
-    !redigeringsmodus &&
-    tilstand.tilVurdering
-  ) {
-    return (
-      <>
-        <Alert variant="info" size="medium" className="mt-2">
-          <div className="flex flex-col gap-4">
-            <BodyShort>Fortsett uten inntektsmelding.</BodyShort>
-            {!readOnly && (
-              <div>
-                <Button variant="tertiary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<PencilIcon />}>
-                  Rediger vurdering
-                </Button>
-              </div>
-            )}
-          </div>
-        </Alert>
-        <LabelledContent
-          label="Begrunnelse"
-          content={<span className="whitespace-pre-wrap">{tilstand.begrunnelse}</span>}
-          indentContent
-        />
-        <VurdertAv ident={tilstand.vurdertAv} date={tilstand.vurdertTidspunkt} />
-      </>
-    );
-  }
-
-  return null;
+const vurderingConfig: Record<string, { variant: 'info' | 'error'; melding: string }> = {
+  [InntektsmeldingVurderingResponseKode.KAN_FORTSETTE]: {
+    variant: 'info',
+    melding: 'Fortsett uten inntektsmelding.',
+  },
+  [InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG]: {
+    variant: 'error',
+    melding: 'Søknaden avslås på grunn av manglende opplysninger om inntekt',
+  },
+  [InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP]: {
+    variant: 'error',
+    melding: 'Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt',
+  },
 };
 
-// Avslag component
-const FortsettUtenInntektsmeldingAvslag = ({
+const TidligereVurdering = ({
   tilstand,
   redigeringsmodus,
   setRedigeringsmodus,
-}: FortsettInfoProps): JSX.Element | null => {
+}: TidligereVurderingProps): JSX.Element | null => {
   const { readOnly } = useInntektsmeldingContext();
 
-  const kode = tilstand?.vurdering;
-  const harAvslagskode =
-    kode === InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG ||
-    kode === InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP;
+  const config = tilstand?.vurdering ? vurderingConfig[tilstand.vurdering] : null;
+  const skalVises = config && !redigeringsmodus && tilstand.tilVurdering;
 
-  if (harAvslagskode && !redigeringsmodus && tilstand.tilVurdering) {
-    return (
-      <>
-        <Alert variant="error" size="medium" className="mt-2">
-          <div className="flex flex-col gap-4">
-            {kode === InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG && (
-              <BodyShort>Søknaden avslås på grunn av manglende opplysninger om inntekt</BodyShort>
-            )}
-            {kode === InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP && (
-              <BodyShort>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</BodyShort>
-            )}
-            {!readOnly && (
-              <div>
-                <Button variant="tertiary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<PencilIcon />}>
-                  Rediger vurdering
-                </Button>
-              </div>
-            )}
-          </div>
-        </Alert>
-        <LabelledContent
-          label="Begrunnelse"
-          content={<span className="whitespace-pre-wrap">{tilstand.begrunnelse}</span>}
-          indentContent
-        />
-        <VurdertAv ident={tilstand.vurdertAv} date={tilstand.vurdertTidspunkt} />
-      </>
-    );
-  }
-  return null;
+  if (!skalVises) return null;
+
+  return (
+    <>
+      <Alert variant={config.variant} size="medium" className="mt-2">
+        <div className="flex flex-col gap-4">
+          <BodyShort>{config.melding}</BodyShort>
+          {!readOnly && (
+            <div>
+              <Button variant="tertiary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<PencilIcon />}>
+                Rediger vurdering
+              </Button>
+            </div>
+          )}
+        </div>
+      </Alert>
+      <LabelledContent
+        label="Begrunnelse"
+        content={<span className="whitespace-pre-wrap">{tilstand.begrunnelse}</span>}
+        indentContent
+      />
+      <VurdertAv ident={tilstand.vurdertAv} date={tilstand.vurdertTidspunkt} />
+    </>
+  );
 };
 
 // Main PeriodList component
@@ -141,12 +108,7 @@ const PeriodList = ({
             setRedigeringsmodus={tilstand.setRedigeringsmodus}
             harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
           />
-          <FortsettUtenInntektsmeldingInfo
-            tilstand={tilstand}
-            redigeringsmodus={tilstand.redigeringsmodus}
-            setRedigeringsmodus={tilstand.setRedigeringsmodus}
-          />
-          <FortsettUtenInntektsmeldingAvslag
+          <TidligereVurdering
             tilstand={tilstand}
             redigeringsmodus={tilstand.redigeringsmodus}
             setRedigeringsmodus={tilstand.setRedigeringsmodus}
