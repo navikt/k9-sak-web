@@ -18,6 +18,7 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
       <Alert variant="info" size="small">
         <Accordion>
           <Accordion.Item>
+            {/* Her overrider vi aksel styling for å fjerne border over og under heading */}
             <Accordion.Header className="before:hidden after:hidden">
               <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
                 Når kan du gå videre uten inntektsmelding?
