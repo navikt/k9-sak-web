@@ -13,7 +13,7 @@ import {
   ingenTilstanderHarMangler,
   transformKompletthetsdata,
 } from '../../util/utils';
-import PeriodList from './PeriodList';
+import InntektsmeldingListe from './InntektsmeldingListe';
 
 const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
@@ -158,7 +158,7 @@ const Kompletthetsoversikt = (): JSX.Element => {
       {harAktivtAksjonspunkt && <InntektsmeldingManglerInfo />}
 
       <Box.New marginBlock="6 0">
-        <PeriodList
+        <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
           onFormSubmit={onFinished}
           aksjonspunkt={gjeldeneAksjonspunkt}
