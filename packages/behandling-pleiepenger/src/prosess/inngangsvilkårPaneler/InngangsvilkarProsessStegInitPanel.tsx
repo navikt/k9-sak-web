@@ -168,6 +168,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
             vilkår={vilkår}
             visAllePerioder={visAllePerioder}
             kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
+            api={api}
           />
           <AlderProsessStegInitPanel
             behandling={behandling}

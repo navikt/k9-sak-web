@@ -16,7 +16,7 @@ interface UttakProps {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   readOnly: boolean;
   relevanteAksjonspunkter: Aksjonspunkt[];
 }

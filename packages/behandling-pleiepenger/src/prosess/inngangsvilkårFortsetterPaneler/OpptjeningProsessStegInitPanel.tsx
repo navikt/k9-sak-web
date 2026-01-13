@@ -41,6 +41,10 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
     queryKey: ['fagsak', props.saksnummer, props.behandling.versjon],
     queryFn: () => props.api.getFagsak(props.saksnummer),
   });
+  const { data: opptjeningV2 } = useSuspenseQuery({
+    queryKey: ['opptjening', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getOpptjening(props.behandling.uuid),
+  });
   const { BRUK_V2_VILKAR_OPPTJENING } = use(FeatureTogglesContext);
   // Hent standard props for å få tilgang til vilkår
 
@@ -64,11 +68,6 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
 
   const data = restApiData.data;
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
-  if (!skalVisePanel || !data) {
-    return null;
-  }
-
   const erAlleVilkårVurdert = vilkarForSteg.every(vilkar =>
     vilkar.perioder?.every(periode => periode.vilkarStatus !== 'IKKE_VURDERT'),
   );
@@ -83,6 +82,10 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
   };
+  // Ikke vis panelet hvis det ikke finnes relevante vilkår
+  if (!skalVisePanel) {
+    return null;
+  }
 
   if (erAlleVilkårVurdert) {
     return (
@@ -91,8 +94,10 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
         panelTittelKode="Opptjening"
         vilkar={vilkarForSteg}
-        erOverstyrt={false}
-        overstyringApKode=""
+        erOverstyrt={props.overstyrteAksjonspunktKoder.some(
+          kode => kode === aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+        )}
+        overstyringApKode={aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET}
         erMedlemskapsPanel={false}
         submitCallback={handleSubmit}
         overrideReadOnly={props.overrideReadOnly}
@@ -103,14 +108,14 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
       />
     );
   }
-  if (BRUK_V2_VILKAR_OPPTJENING) {
+  if (BRUK_V2_VILKAR_OPPTJENING && opptjeningV2) {
     return (
       <OpptjeningVilkarProsessIndexV2
         submitCallback={handleSubmit}
         isReadOnly={props.isReadOnly}
         behandling={props.behandling}
         aksjonspunkter={relevanteAksjonspunkter}
-        opptjening={data.opptjening}
+        opptjening={opptjeningV2}
         visAllePerioder={props.visAllePerioder}
         readOnlySubmitButton={false}
         vilkar={vilkarForSteg}
@@ -120,19 +125,20 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
       />
     );
   }
-
-  return (
-    <OpptjeningVilkarProsessIndex
-      behandling={props.behandling}
-      submitCallback={handleSubmit}
-      isReadOnly={props.isReadOnly}
-      aksjonspunkter={props.aksjonspunkterMedKodeverk}
-      fagsak={{ sakstype: fagsak.sakstype }}
-      opptjening={data.opptjening}
-      vilkar={vilkarForSteg}
-      isAksjonspunktOpen={isAksjonspunktOpen}
-      readOnlySubmitButton={false}
-      visAllePerioder={props.visAllePerioder}
-    />
-  );
+  if (data) {
+    return (
+      <OpptjeningVilkarProsessIndex
+        behandling={props.behandling}
+        submitCallback={handleSubmit}
+        isReadOnly={props.isReadOnly}
+        aksjonspunkter={props.aksjonspunkterMedKodeverk}
+        fagsak={{ sakstype: fagsak.sakstype }}
+        opptjening={data.opptjening}
+        vilkar={vilkarForSteg}
+        isAksjonspunktOpen={isAksjonspunktOpen}
+        readOnlySubmitButton={false}
+        visAllePerioder={props.visAllePerioder}
+      />
+    );
+  }
 }

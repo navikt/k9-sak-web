@@ -368,8 +368,8 @@ const PleiepengerProsess = ({
                     return (
                       <MedisinskVilkarProsessStegInitPanel
                         key={urlKode}
-                        vilkar={data.vilkar}
-                        aksjonspunkter={data.aksjonspunkter}
+                        behandling={behandling}
+                        api={k9SakProsessApi}
                       />
                     );
                   }
@@ -377,7 +377,6 @@ const PleiepengerProsess = ({
                     return (
                       <InngangsvilkarFortsProsessStegInitPanel
                         key={urlKode}
-                        urlKode={urlKode}
                         submitCallback={bekreftAksjonspunktCallback}
                         overrideReadOnly={isReadOnly}
                         kanOverstyreAccess={rettigheter.kanOverstyreAccess}

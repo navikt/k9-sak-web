@@ -4,7 +4,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { Kodeverk } from '@k9-sak-web/types';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -14,6 +14,15 @@ import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.module.css';
+
+type Vilkarperiode = Readonly<{
+  avslagKode?: string;
+  begrunnelse?: string;
+  vurderesIBehandlingen?: boolean;
+  merknadParametere?: { [name: string]: string };
+  periode: { fom: string; tom: string };
+  vilkarStatus: Kodeverk;
+}>;
 
 const cx = classNames.bind(styles);
 

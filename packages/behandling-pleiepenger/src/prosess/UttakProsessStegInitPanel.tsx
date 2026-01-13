@@ -6,10 +6,6 @@ import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/Prose
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import {
-  k9_kodeverk_behandling_BehandlingStatus,
-  k9_sak_kontrakt_behandling_BehandlingDto,
-} from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
@@ -29,7 +25,7 @@ const panelTekst = 'Behandlingspunkt.Uttak';
 interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
   erOverstyrer: boolean;
   isReadOnly: boolean;
 }
@@ -57,6 +53,11 @@ interface Props {
  */
 export function UttakProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
+
+  const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery({
+    queryKey: ['behandling', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getBehandling(props.behandling.uuid),
+  });
 
   const { data: aksjonspunkter = [] } = useSuspenseQuery({
     queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
@@ -130,20 +131,20 @@ export function UttakProsessStegInitPanel(props: Props) {
     RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon),
   );
 
-  const behandling = {
-    uuid: props.behandling.uuid,
-    id: props.behandling.id,
-    versjon: props.behandling.versjon,
-    status: props.behandling.status.kode as k9_kodeverk_behandling_BehandlingStatus,
-    sakstype: props.behandling.sakstype,
+  const hentBehandling = async () => {
+    if (props.hentBehandling) {
+      await props.hentBehandling();
+    }
+    await refetchBehandlingV2();
   };
+
   return (
     <Uttak
       uttak={uttak}
-      behandling={behandling}
+      behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
-      hentBehandling={props.hentBehandling}
+      hentBehandling={hentBehandling}
       erOverstyrer={props.erOverstyrer}
       readOnly={props.isReadOnly}
     />

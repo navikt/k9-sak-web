@@ -5,9 +5,12 @@ import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/Prose
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus } from '@navikt/k9-sak-typescript-client/types';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
+import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
 
@@ -16,8 +19,8 @@ const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
 const PANEL_TEKST = 'Behandlingspunkt.MedisinskVilkar';
 
 interface Props {
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
+  api: K9SakProsessApi;
+  behandling: Behandling;
 }
 
 /**
@@ -33,20 +36,28 @@ interface Props {
  * - Medisinske vilkår for pleietrengende under 18 år
  * - Medisinske vilkår for pleietrengende over 18 år
  */
-export function MedisinskVilkarProsessStegInitPanel(props: Props) {
+export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) {
   const context = useContext(ProsessPanelContext);
+  const { data: vilkår } = useSuspenseQuery({
+    queryKey: ['vilkar', behandling.uuid, behandling.versjon],
+    queryFn: () => api.getVilkår(behandling.uuid),
+  });
+  const { data: aksjonspunkter } = useSuspenseQuery({
+    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
+    queryFn: () => api.getAksjonspunkter(behandling.uuid),
+  });
 
   // Filtrer vilkår som er relevante for dette panelet
-  const vilkarForSteg = useMemo(() => {
-    if (!props.vilkar) {
+  const vilkårForSteg = useMemo(() => {
+    if (!vilkår) {
       return [];
     }
-    return props.vilkar.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType?.kode));
-  }, [props.vilkar]);
+    return vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+  }, [vilkår]);
 
   // Sjekk om panelet skal vises
   // Panelet vises hvis det finnes relevante vilkår
-  const skalVisePanel = vilkarForSteg.length > 0;
+  const skalVisePanel = vilkårForSteg.length > 0;
 
   // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {
@@ -56,8 +67,10 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
     }
 
     // Sjekk om det finnes åpent aksjonspunkt for medisinsk vilkår (warning har prioritet)
-    const harApenAksjonspunkt = props.aksjonspunkter?.some(
-      ap => ap.definisjon?.kode === aksjonspunktCodes.MEDISINSK_VILKAAR && ap.status?.kode === 'OPPR',
+    const harApenAksjonspunkt = aksjonspunkter?.some(
+      ap =>
+        ap.definisjon === aksjonspunktCodes.MEDISINSK_VILKAAR &&
+        ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
     );
     if (harApenAksjonspunkt) {
       return ProcessMenuStepType.warning;
@@ -65,10 +78,10 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
 
     // Samle alle periode-statuser fra alle relevante vilkår
     const vilkarStatusCodes: string[] = [];
-    vilkarForSteg.forEach(vilkar => {
-      vilkar.perioder
-        .filter(periode => periode.vurderesIBehandlingen)
-        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode));
+    vilkårForSteg.forEach(v => {
+      v.perioder
+        ?.filter(periode => periode.vurderesIBehandlingen)
+        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus));
     });
 
     // Sjekk om noen vilkår ikke er oppfylt (danger)
@@ -85,7 +98,7 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
 
     // Default tilstand
     return ProcessMenuStepType.default;
-  }, [skalVisePanel, vilkarForSteg, props.aksjonspunkter]);
+  }, [skalVisePanel, vilkårForSteg, aksjonspunkter]);
 
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
@@ -102,22 +115,22 @@ export function MedisinskVilkarProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
-  const vilkårPleietrengendeUnder18år = props.vilkar?.find(
-    v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
-  );
-  const vilkårPleietrengendeOver18år = props.vilkar?.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
+  const vilkårPleietrengendeUnder18år = vilkår?.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR);
+  const vilkårPleietrengendeOver18år = vilkår?.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
   const perioderUnder18 =
-    vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
+    vilkårPleietrengendeUnder18år?.perioder?.map(periode => ({
       ...periode,
       pleietrengendeErOver18år: false,
+      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
     })) ?? [];
   const perioderOver18 =
-    vilkårPleietrengendeOver18år?.perioder.map(periode => ({
+    vilkårPleietrengendeOver18år?.perioder?.map(periode => ({
       ...periode,
       pleietrengendeErOver18år: true,
+      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
     })) ?? [];
   const allePerioder = perioderUnder18.concat(perioderOver18);
   return (
-    <SykdomProsessIndex lovReferanse={vilkarForSteg[0].lovReferanse} panelTittelKode="Sykdom" perioder={allePerioder} />
+    <SykdomProsessIndex lovReferanse={vilkårForSteg[0].lovReferanse} panelTittelKode="Sykdom" perioder={allePerioder} />
   );
 }

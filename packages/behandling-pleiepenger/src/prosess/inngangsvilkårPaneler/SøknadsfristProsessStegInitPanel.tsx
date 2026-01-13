@@ -1,14 +1,14 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
-import { SøknadsfristTilstand } from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/types/SøknadsfristTilstand.js';
 import { Behandling } from '@k9-sak-web/types';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client/types';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useMemo } from 'react';
-import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
+import { K9SakProsessApi } from '../api/K9SakProsessApi';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.SOKNADSFRISTVILKARET];
 const RELEVANTE_AKSJONSPUNKT_KODER = [
@@ -30,17 +30,14 @@ interface Props {
   visAllePerioder: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   behandling: Behandling;
+  api: K9SakProsessApi;
 }
 
 export function SøknadsfristProsessStegInitPanel(props: Props) {
-  const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-    soknadsfristStatus: SøknadsfristTilstand;
-  }>([{ key: PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS }], {
-    keepData: true,
-    suspendRequest: false,
-    updateTriggers: [props.behandling.versjon],
+  const { data: søknadsfristStatus } = useSuspenseQuery({
+    queryKey: ['soknadsfristStatus', props.behandling.uuid, props.behandling.versjon],
+    queryFn: () => props.api.getSøknadsfristStatus(props.behandling.uuid),
   });
-
   // Filtrer vilkår som er relevante for dette panelet
   const vilkarForSteg = useMemo(() => {
     if (!props.vilkår) {
@@ -77,7 +74,7 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
       aksjonspunkter={relevanteAksjonspunkter}
       vilkar={vilkarForSteg}
       erOverstyrt={erOverstyrt}
-      soknadsfristStatus={restApiData.data?.soknadsfristStatus || { dokumentStatus: [] }}
+      soknadsfristStatus={søknadsfristStatus || { dokumentStatus: [] }}
       panelTittelKode="Søknadsfrist"
     />
   );

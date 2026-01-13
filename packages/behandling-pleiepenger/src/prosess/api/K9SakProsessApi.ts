@@ -6,7 +6,9 @@ import {
   k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
   k9_sak_kontrakt_medlem_MedlemV2Dto,
+  k9_sak_kontrakt_opptjening_OpptjeningerDto,
   k9_sak_kontrakt_person_PersonopplysningDto,
+  k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto,
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
@@ -37,5 +39,7 @@ export interface K9SakProsessApi {
   getSimuleringResultat(behandlingUuid: string): Promise<k9_oppdrag_kontrakt_simulering_v1_SimuleringDto>;
   getTilbakekrevingValg(behandlingUuid: string): Promise<k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto>;
   getMedlemskap(behandlingUuid: string): Promise<k9_sak_kontrakt_medlem_MedlemV2Dto>;
-  getHOverlappendeYtelser(behandlingUuid: string): Promise<Array<k9_sak_kontrakt_ytelser_OverlappendeYtelseDto>>;
+  getOverlappendeYtelser(behandlingUuid: string): Promise<Array<k9_sak_kontrakt_ytelser_OverlappendeYtelseDto>>;
+  getOpptjening(behandlingUuid: string): Promise<k9_sak_kontrakt_opptjening_OpptjeningerDto>;
+  getSøknadsfristStatus(behandlingUuid: string): Promise<k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto>;
 }

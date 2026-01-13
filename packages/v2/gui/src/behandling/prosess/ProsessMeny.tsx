@@ -161,10 +161,10 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
   };
 
   return (
-    <LoadingPanelSuspense>
-      <Box.New paddingInline="6">
-        <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
-        {/* Render children med injiserte props */}
+    <Box.New paddingInline="6">
+      <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
+      {/* Render children med injiserte props */}
+      <LoadingPanelSuspense>
         <ProsessPanelContext.Provider
           value={{
             onRegister: handleRegister,
@@ -175,7 +175,7 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
         >
           {children}
         </ProsessPanelContext.Provider>
-      </Box.New>
-    </LoadingPanelSuspense>
+      </LoadingPanelSuspense>
+    </Box.New>
   );
 }

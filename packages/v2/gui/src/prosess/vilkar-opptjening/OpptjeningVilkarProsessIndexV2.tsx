@@ -1,8 +1,8 @@
 import {
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  type k9_sak_kontrakt_opptjening_OpptjeningerDto,
   type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-  type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
@@ -19,7 +19,7 @@ import type { SubmitCallback } from './types/SubmitCallback';
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  opptjening: { opptjeninger: OpptjeningDto[] };
+  opptjening: k9_sak_kontrakt_opptjening_OpptjeningerDto;
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   lovReferanse?: string;
@@ -102,7 +102,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår?.perioder ?? []}
             periodeIndex={getIndexBlantAllePerioder()}
-            opptjeninger={opptjening?.opptjeninger}
+            opptjeninger={opptjening?.opptjeninger ?? []}
             isApOpen={isAksjonspunktOpen}
           />
         </div>

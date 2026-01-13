@@ -9,7 +9,9 @@ import {
   beregningsgrunnlag_hentNøkkelknippe,
   beregningsresultat_hentBeregningsresultatMedUtbetaling,
   fagsak_hentFagsak,
+  opptjening_getOpptjeninger,
   simulering_hentSimuleringResultat,
+  søknadsfrist_utledStatus,
   tilbakekrevingsvalg_hentTilbakekrevingValg,
   vilkår_getVilkårV3,
   ytelser_hentOverlappendeYtelser,
@@ -69,7 +71,15 @@ export class K9SakProsessBackendClient implements K9SakProsessApi {
     return (await behandlingPerson_hentMedlemskap({ query: { behandlingUuid } })).data;
   }
 
-  async getHOverlappendeYtelser(behandlingUuid: string) {
+  async getOverlappendeYtelser(behandlingUuid: string) {
     return (await ytelser_hentOverlappendeYtelser({ query: { behandlingUuid } })).data;
+  }
+
+  async getOpptjening(behandlingUuid: string) {
+    return (await opptjening_getOpptjeninger({ query: { behandlingUuid } })).data;
+  }
+
+  async getSøknadsfristStatus(behandlingUuid: string) {
+    return (await søknadsfrist_utledStatus({ query: { behandlingUuid } })).data;
   }
 }

@@ -105,7 +105,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       },
       {
         queryKey: ['overlappendeYtelser', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getHOverlappendeYtelser(props.behandling.uuid),
+        queryFn: () => props.api.getOverlappendeYtelser(props.behandling.uuid),
       },
       {
         queryKey: ['personopplysninger', props.behandling.uuid, props.behandling.versjon],
