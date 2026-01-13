@@ -1,7 +1,8 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { InntektsmeldingContainerProps } from '../src/ui/InntektsmeldingIndex';
 
-type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback'> & {
+type MockProps = Omit<InntektsmeldingContainerProps, 'submitCallback' | 'behandling'> & {
+  behandling: { uuid: string };
   submitCallback?: InntektsmeldingContainerProps['submitCallback'];
 };
 
