@@ -1,23 +1,80 @@
 import { Period } from '@fpsak-frontend/utils';
 import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@navikt/k9-sak-typescript-client/types';
-import { Box, Button } from '@navikt/ds-react';
+import { Accordion, Alert, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
 import { useMemo, useState, type JSX } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
-import { useKompletthetsoversikt } from '../../../api/inntektsmeldingQueries';
-import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import FieldName from '../../../types/FieldName';
-import { InntektsmeldingVurderingRequestKode } from '../../../types/KompletthetData';
-import type { Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
+import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
+import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
+import FieldName from '../../types/FieldName';
+import { InntektsmeldingVurderingRequestKode } from '../../types/KompletthetData';
+import type { Kompletthet, Tilstand, TilstandBeriket } from '../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
-} from '../../../util/utils';
-import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
-import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
-import PeriodList from '../period-list/PeriodList';
-import InntektsmeldingManglerInfo from './InntektsmeldingManglerInfo';
+} from '../../util/utils';
+import PeriodList from './PeriodList';
+
+// Info panel shown when inntektsmelding is missing
+const InntektsmeldingManglerInfo = (): JSX.Element => (
+  <>
+    <Box.New marginBlock="0 6">
+      <Alert variant="warning" size="small">
+        <Heading spacing size="xsmall" level="3">
+          Vurder om du kan fortsette behandlingen uten inntektsmelding.
+        </Heading>
+        <BodyLong>
+          Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
+          arbeidsgiver.
+        </BodyLong>
+      </Alert>
+    </Box.New>
+    <Box.New marginBlock="0 6">
+      <Alert variant="info" size="small">
+        <Accordion>
+          <Accordion.Item>
+            <Accordion.Header className="before:hidden after:hidden">
+              <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
+                Når kan du gå videre uten inntektsmelding?
+              </Heading>
+            </Accordion.Header>
+            <Accordion.Content>
+              Vurder om du kan gå videre uten alle inntektsmeldinger hvis:
+              <ul className="m-0 pl-6">
+                <li>Det er rapportert fast og regelmessig lønn de siste 3 månedene før skjæringstidspunktet.</li>
+                <li>
+                  Det ikke er rapportert lønn hos arbeidsforholdet de siste 3 månedene før skjæringstidspunktet.
+                  Beregningsgrunnlaget for denne arbeidsgiveren vil settes til 0,-.
+                </li>
+                <li>
+                  Måneden for skjæringstidspunktet er innrapportert til A-ordningen. Hvis det er innrapportert lavere
+                  lønn enn foregående måneder kan det tyde på at arbeidsgiver ikke lenger utbetaler lønn. Det er dermed
+                  lavere risiko for at arbeidsgiver vil kreve refusjon.
+                </li>
+              </ul>
+              <Box.New marginBlock="6 0">
+                Du bør ikke gå videre uten inntektsmelding hvis:
+                <ul className="m-0 pl-6">
+                  <li>
+                    Det er arbeidsforhold og frilansoppdrag i samme organisasjon (sjekk i Aa-registeret). I disse
+                    tilfellene trenger vi inntektsmelding for å skille hva som er arbeidsinntekt og frilansinntekt i
+                    samme organisasjon.
+                  </li>
+                  <li>
+                    Måneden for skjæringstidspunktet er innrapportert til A-ordningen, og det er utbetalt full lønn.
+                    Dette tyder på at arbeidsgiver forskutterer lønn og vil kreve refusjon. I disse tilfellene bør vi
+                    ikke utbetale til bruker, men vente på inntektsmelding.
+                  </li>
+                </ul>
+              </Box.New>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion>
+      </Alert>
+    </Box.New>
+  </>
+);
 
 function initKompletthetsdata({ tilstand }: KompletthetsVurdering): Kompletthet {
   return {
@@ -47,8 +104,6 @@ const Kompletthetsoversikt = (): JSX.Element => {
   const kompletthetsoversikt = initKompletthetsdata(kompletthetResponse);
   const { tilstand: tilstander } = kompletthetsoversikt;
 
-  const periods = tilstander.map(({ periode }) => periode);
-  const statuses = tilstander.map(({ status }) => status);
   const aktivtAksjonspunkt = finnAktivtAksjonspunkt(aksjonspunkter);
   const forrigeAksjonspunkt = aksjonspunkter.sort((a, b) => Number(b.definisjon) - Number(a.definisjon))[0];
   const aktivtAksjonspunktKode = aktivtAksjonspunkt?.definisjon;
@@ -105,16 +160,11 @@ const Kompletthetsoversikt = (): JSX.Element => {
     return false;
   };
 
-  const listItemRenderer = (period: Period) => {
-    const statusForPeriod = statuses[periods.indexOf(period)];
-    return statusForPeriod ? <InntektsmeldingListe status={statusForPeriod} /> : null;
-  };
-  const listHeadingRenderer = () => <InntektsmeldingListeHeading />;
-
   const onSubmit = (data: FieldValues) => {
     const perioder = tilstanderTilVurdering.map(tilstand => {
       const skalViseBegrunnelse = !(
-        aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== InntektsmeldingVurderingRequestKode.FORTSETT
+        aksjonspunktKode === '9069' &&
+        watch(tilstand.beslutningFieldName) !== InntektsmeldingVurderingRequestKode.FORTSETT
       );
       const begrunnelse = skalViseBegrunnelse ? data[tilstand.begrunnelseFieldName] : undefined;
       return {
@@ -142,8 +192,6 @@ const Kompletthetsoversikt = (): JSX.Element => {
       <Box.New marginBlock="6 0">
         <PeriodList
           tilstander={tilstanderBeriket}
-          listHeadingRenderer={listHeadingRenderer}
-          listItemRenderer={listItemRenderer}
           onFormSubmit={onFinished}
           aksjonspunkt={aktivtAksjonspunkt || forrigeAksjonspunkt}
           formMethods={formMethods}

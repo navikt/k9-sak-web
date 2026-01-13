@@ -9,7 +9,7 @@ import type {
   InntektsmeldingContextType,
 } from '../types/InntektsmeldingContextType';
 import type { InntektsmeldingRequestPayload } from '../types/InntektsmeldingAPRequest';
-import Kompletthetsoversikt from './components/kompletthetsoversikt/Kompletthetsoversikt';
+import Kompletthetsoversikt from './components/Kompletthetsoversikt';
 
 export interface InntektsmeldingContainerProps {
   behandling: BehandlingAppKontekst;

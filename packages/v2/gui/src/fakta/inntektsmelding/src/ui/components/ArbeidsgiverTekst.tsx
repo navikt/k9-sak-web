@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import type { Arbeidsgiver } from '../../../types/KompletthetData';
+import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
+import type { Arbeidsgiver } from '../../types/KompletthetData';
 
 interface ArbeidsgiverTekstProps {
   arbeidsgiver: Arbeidsgiver;

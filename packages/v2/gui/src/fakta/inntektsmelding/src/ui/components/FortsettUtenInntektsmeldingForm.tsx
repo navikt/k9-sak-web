@@ -7,12 +7,12 @@ import type { JSX } from 'react';
 import type { UseFormReturn, FieldValues } from 'react-hook-form';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
-import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import type { InntektsmeldingRequestPayload } from '../../../types/InntektsmeldingAPRequest';
-import type { KompletthetsPeriode } from '../../../types/InntektsmeldingAPRequest';
-import { InntektsmeldingVurderingRequestKode } from '../../../types/KompletthetData';
-import type { TilstandBeriket } from '../../../types/KompletthetData';
-import { skalVurderes } from '../../../util/utils';
+import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
+import type { InntektsmeldingRequestPayload } from '../../types/InntektsmeldingAPRequest';
+import type { KompletthetsPeriode } from '../../types/InntektsmeldingAPRequest';
+import { InntektsmeldingVurderingRequestKode } from '../../types/KompletthetData';
+import type { TilstandBeriket } from '../../types/KompletthetData';
+import { skalVurderes } from '../../util/utils';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -95,7 +95,7 @@ const FortsettUtenInntektsmeldingForm = ({
 
   const submit = (data: FieldValues) => {
     const periode: KompletthetsPeriode = {
-      begrunnelse: skalViseBegrunnelse ? (data[begrunnelseFieldName] as string) : undefined,
+      begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
       vurdering: data[beslutningFieldName],
