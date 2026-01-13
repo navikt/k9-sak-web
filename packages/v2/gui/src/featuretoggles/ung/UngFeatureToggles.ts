@@ -17,7 +17,6 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   AUTOMATISK_VURDERT_MEDLEMSKAP: boolean;
   OPPTJENING_READ_ONLY_PERIODER: boolean;
   VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK: boolean;
-  NY_INNTEKT_EGET_PANEL: boolean;
   BRUK_V2_FAKTA_INSTITUSJON: boolean;
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: boolean;
   BRUK_V2_VILKAR_OPPTJENING: boolean;
@@ -28,4 +27,5 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   BRUK_V2_TILKJENT_YTELSE: boolean;
   BRUK_V2_INNTEKTSMELDING: boolean;
   UNG_KLAGE: boolean;
+  ENDRE_FRIST: boolean;
 }

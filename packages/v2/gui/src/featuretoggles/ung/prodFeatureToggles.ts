@@ -14,7 +14,6 @@ export const prodFeatureToggles = {
   AUTOMATISK_VURDERT_MEDLEMSKAP: true,
   OPPTJENING_READ_ONLY_PERIODER: true,
   VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK: true,
-  NY_INNTEKT_EGET_PANEL: true,
   BRUK_V2_FAKTA_INSTITUSJON: true,
   OPPLAERINGSPENGER: false,
   SKJUL_AVSLUTTET_ARBEIDSGIVER: false,
@@ -29,4 +28,5 @@ export const prodFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: true,
+  ENDRE_FRIST: false,
 } satisfies UngFeatureToggles;
