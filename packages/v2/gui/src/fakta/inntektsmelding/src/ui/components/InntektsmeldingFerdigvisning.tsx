@@ -31,6 +31,7 @@ const InntektsmeldingFerdigvisning = ({
   onEdit,
   readOnly,
 }: InntektsmeldingFerdigvisningProps) => {
+  console.log('tilstand', tilstand);
   const config = tilstand.vurdering ? vurderingConfig[tilstand.vurdering] : null;
   if (!config) return null;
 

@@ -29,12 +29,6 @@ const InntektsmeldingVurdering = ({
     tilstand.tilVurdering && aksjonspunkt && (redigeringsmodus || (skalVurderes(tilstand) && !readOnly));
   const skalViseFerdigvisning = harTidligereVurdering && !redigeringsmodus;
 
-  if (skalViseFerdigvisning) {
-    return (
-      <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />
-    );
-  }
-
   if (skalViseSkjema && aksjonspunkt) {
     return (
       <VurderingSkjema
@@ -44,6 +38,12 @@ const InntektsmeldingVurdering = ({
         onSubmit={onSubmit}
         harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
       />
+    );
+  }
+  
+  if (skalViseFerdigvisning) {
+    return (
+      <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />
     );
   }
 
