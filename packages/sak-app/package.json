@@ -27,7 +27,7 @@
     "@navikt/ft-fakta-beregning": "12.3.0",
     "@navikt/ft-form-hooks": "10.3.0",
     "@navikt/ft-plattform-komponenter": "10.3.0",
-    "@navikt/ft-prosess-beregningsgrunnlag": "11.4.0",
+    "@navikt/ft-prosess-beregningsgrunnlag": "11.4.1",
     "@navikt/ft-ui-komponenter": "6.5.0",
     "@sentry/browser": "10.32.1",
     "@sentry/react": "10.32.1",

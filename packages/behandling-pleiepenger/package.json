@@ -34,7 +34,7 @@
     "@navikt/diagnosekoder": "1.2025.0",
     "@navikt/ft-fakta-beregning": "12.3.0",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "14.1.0",
-    "@navikt/ft-prosess-beregningsgrunnlag": "11.4.0",
+    "@navikt/ft-prosess-beregningsgrunnlag": "11.4.1",
     "axios": "1.13.2",
     "react": "19.2.3",
     "react-intl": "8.0.9"
