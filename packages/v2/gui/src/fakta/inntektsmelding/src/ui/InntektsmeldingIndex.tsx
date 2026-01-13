@@ -9,10 +9,9 @@ import type {
   InntektsmeldingRequestPayload,
 } from '../types';
 import InntektsmeldingContainer from './components/InntektsmeldingContainer';
-import type { BehandlingInfo } from '../../../../sak/BehandlingInfo';
 
 export interface InntektsmeldingContainerProps {
-  behandling: BehandlingInfo;
+  behandling: { uuid: string };
   readOnly: boolean;
   arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
