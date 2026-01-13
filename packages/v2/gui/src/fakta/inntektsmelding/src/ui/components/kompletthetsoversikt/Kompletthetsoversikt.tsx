@@ -76,13 +76,11 @@ const Kompletthetsoversikt = (): JSX.Element => {
   );
 
   const buildDefaultValues = (tilstandList: Tilstand[]): FieldValues =>
-    tilstandList.reduce(
-      (acc, tilstand) => ({
-        ...acc,
-        [`${FieldName.BEGRUNNELSE}${tilstand.periodeOpprinneligFormat}`]: tilstand.begrunnelse || '',
-        [`${FieldName.BESLUTNING}${tilstand.periodeOpprinneligFormat}`]: null,
-      }),
-    );
+    tilstandList.reduce((acc, tilstand) => ({
+      ...acc,
+      [`${FieldName.BEGRUNNELSE}${tilstand.periodeOpprinneligFormat}`]: tilstand.begrunnelse || '',
+      [`${FieldName.BESLUTNING}${tilstand.periodeOpprinneligFormat}`]: null,
+    }));
 
   const formMethods = useForm({
     mode: 'onTouched',
@@ -140,7 +138,7 @@ const Kompletthetsoversikt = (): JSX.Element => {
     <div>
       <h1 className="text-[1.375rem]">Inntektsmelding</h1>
       <h2 className="my-5 text-lg">Opplysninger til beregning</h2>
-      <InntektsmeldingManglerInfo manglerInntektsmelding={!!aktivtAksjonspunktKode} />
+      {!!aktivtAksjonspunktKode && <InntektsmeldingManglerInfo />}
       <Box.New marginBlock="6 0">
         <PeriodList
           tilstander={tilstanderBeriket}

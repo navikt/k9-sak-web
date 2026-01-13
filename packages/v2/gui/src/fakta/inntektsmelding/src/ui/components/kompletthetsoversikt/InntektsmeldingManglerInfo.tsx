@@ -1,24 +1,18 @@
 import type { JSX } from 'react';
 import { Accordion, Alert, BodyLong, Box, Heading } from '@navikt/ds-react';
 
-interface InntektsmeldingManglerInfoProps {
-  manglerInntektsmelding: boolean;
-}
-
-const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: InntektsmeldingManglerInfoProps): JSX.Element => (
+const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
     <Box.New marginBlock="0 6">
-      {manglerInntektsmelding && (
-        <Alert variant="warning" size="small">
-          <Heading spacing size="xsmall" level="3">
-            Vurder om du kan fortsette behandlingen uten inntektsmelding.
-          </Heading>
-          <BodyLong>
-            Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
-            arbeidsgiver.
-          </BodyLong>
-        </Alert>
-      )}
+      <Alert variant="warning" size="small">
+        <Heading spacing size="xsmall" level="3">
+          Vurder om du kan fortsette behandlingen uten inntektsmelding.
+        </Heading>
+        <BodyLong>
+          Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
+          arbeidsgiver.
+        </BodyLong>
+      </Alert>
     </Box.New>
     <Box.New marginBlock="0 6">
       <Alert variant="info" size="small">
