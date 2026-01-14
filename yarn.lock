@@ -1370,12 +1370,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/ecma402-abstract@npm:3.0.8":
+  version: 3.0.8
+  resolution: "@formatjs/ecma402-abstract@npm:3.0.8"
+  dependencies:
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    "@formatjs/intl-localematcher": "npm:0.7.5"
+    decimal.js: "npm:^10.4.3"
+    tslib: "npm:^2.8.0"
+  checksum: 10/5b8e00790f79c011a6928644baee1409b86353576a91f7a8e9b4562a4a5d486997036ff04cd8451891ab8b7691e683c34cd40d76d4a1751e7df6052d46c54f06
+  languageName: node
+  linkType: hard
+
 "@formatjs/fast-memoize@npm:3.0.1":
   version: 3.0.1
   resolution: "@formatjs/fast-memoize@npm:3.0.1"
   dependencies:
     tslib: "npm:^2.8.0"
   checksum: 10/9c152fbb3725a0ba759f75658107504b33cd7d232380cdce5afeea320be3c71762de0af9b1dc3b8f03c652c6db9b7453ad57ab1e82762dd9a1713990988f84b8
+  languageName: node
+  linkType: hard
+
+"@formatjs/fast-memoize@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@formatjs/fast-memoize@npm:3.0.3"
+  dependencies:
+    tslib: "npm:^2.8.0"
+  checksum: 10/466aa1250eee77897455b6e0282bd178357e326790e18f59e33c77371ebb6099cbf8c520300193ef10ab4909174286ab1d922fa930f02b81dddf08d28eaef1a1
   languageName: node
   linkType: hard
 
@@ -1390,6 +1411,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/icu-messageformat-parser@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@formatjs/icu-messageformat-parser@npm:3.3.0"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/icu-skeleton-parser": "npm:2.0.8"
+    tslib: "npm:^2.8.0"
+  checksum: 10/a8f03e9799c9b4f682f6051ea09d3327abd93dbc1ce17b55e07ec45da7d6e3609c1c87a2ad1bfccbd7bdf54c903d98e8bbe06fa282c4dc44263c55b1927f154e
+  languageName: node
+  linkType: hard
+
 "@formatjs/icu-skeleton-parser@npm:2.0.6":
   version: 2.0.6
   resolution: "@formatjs/icu-skeleton-parser@npm:2.0.6"
@@ -1400,6 +1432,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/icu-skeleton-parser@npm:2.0.8":
+  version: 2.0.8
+  resolution: "@formatjs/icu-skeleton-parser@npm:2.0.8"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    tslib: "npm:^2.8.0"
+  checksum: 10/9917502129e663da5ec8008a9a27c9032e01477adcf4c71788eb475225f57f4602711f9b8f3a3b669c801b0232e9eb53e58c0fdb11aa81e2339e1416f636be3f
+  languageName: node
+  linkType: hard
+
 "@formatjs/intl-localematcher@npm:0.7.3":
   version: 0.7.3
   resolution: "@formatjs/intl-localematcher@npm:0.7.3"
@@ -1407,6 +1449,16 @@ __metadata:
     "@formatjs/fast-memoize": "npm:3.0.1"
     tslib: "npm:^2.8.0"
   checksum: 10/31386f8ca3a190a457a5969a3da76f2cb66b6c0b07ad98e9b6f42cc0ca2cd0242639a3efd2148c7e6d06f3b5e25267931c53a35ed2cb3c326cd2a34a5edda4e0
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-localematcher@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@formatjs/intl-localematcher@npm:0.7.5"
+  dependencies:
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    tslib: "npm:^2.8.0"
+  checksum: 10/9899304f23206c6fceb66e25d073278f64b2f02b66b81d5f982f3d5b644e83d81ba74520352289b3db3f8afd932c959a4631784386bbcb74105b8126101ea9ac
   languageName: node
   linkType: hard
 
@@ -1425,6 +1477,24 @@ __metadata:
     typescript:
       optional: true
   checksum: 10/9cecfcbe19e05cdb6c3660aac24fb2bada6647f47bd7704c4ae583d4f5b47b4b593a0a45f8bbe1da5886be265a480136a1dbd7dad033f9a1ee485bb575d98551
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl@npm:4.0.9":
+  version: 4.0.9
+  resolution: "@formatjs/intl@npm:4.0.9"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    "@formatjs/icu-messageformat-parser": "npm:3.3.0"
+    intl-messageformat: "npm:11.0.9"
+    tslib: "npm:^2.8.0"
+  peerDependencies:
+    typescript: ^5.6.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/074809ff13771fb5c620ba28e37612741c4c9a00a283a730c4eb3db1a1292a4a1ab6073b2abf526fe5f7aecbdc6425738258a7a63e371de6aa62ced3c7fc9754
   languageName: node
   linkType: hard
 
@@ -1447,7 +1517,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1476,7 +1546,7 @@ __metadata:
     dayjs: "npm:1.11.19"
     formik: "npm:2.4.9"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     yup: "npm:1.7.1"
   peerDependencies:
     dayjs: 1.10.7
@@ -1497,7 +1567,7 @@ __metadata:
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1513,7 +1583,7 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -1529,7 +1599,7 @@ __metadata:
     classnames: "npm:2.5.1"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1551,7 +1621,7 @@ __metadata:
     object-hash: "npm:3.0.0"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1571,7 +1641,7 @@ __metadata:
     date-fns: "npm:4.1.0"
     formik: "npm:2.4.9"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     yup: "npm:1.7.1"
   languageName: unknown
   linkType: soft
@@ -1588,7 +1658,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     reselect: "npm:5.1.1"
@@ -1608,7 +1678,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
     react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1646,7 +1716,7 @@ __metadata:
     classnames: "npm:2.5.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1666,7 +1736,7 @@ __metadata:
     classnames: "npm:2.5.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1688,7 +1758,7 @@ __metadata:
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1711,7 +1781,7 @@ __metadata:
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1736,7 +1806,7 @@ __metadata:
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1759,7 +1829,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1783,7 +1853,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1806,7 +1876,7 @@ __metadata:
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1827,7 +1897,7 @@ __metadata:
     classnames: "npm:2.5.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux-form: "npm:8.3.10"
     reselect: "npm:5.1.1"
@@ -1848,7 +1918,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     classnames: "npm:2.5.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux-form: "npm:8.3.10"
     reselect: "npm:5.1.1"
@@ -1880,7 +1950,7 @@ __metadata:
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     reselect: "npm:5.1.1"
@@ -1905,7 +1975,7 @@ __metadata:
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -1934,7 +2004,7 @@ __metadata:
     date-fns-tz: "npm:3.2.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -1950,7 +2020,7 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     vis-data: "npm:8.0.3"
     vis-timeline: "npm:8.5.0"
   languageName: unknown
@@ -1962,7 +2032,7 @@ __metadata:
   dependencies:
     "@tanstack/react-query": "npm:5.90.14"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -1975,7 +2045,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2523,7 +2593,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2543,7 +2613,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:10.3.0"
     classnames: "npm:2.5.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -2569,7 +2639,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:12.3.0"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2588,7 +2658,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2607,7 +2677,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2642,7 +2712,7 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.0"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2680,7 +2750,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2715,7 +2785,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2755,7 +2825,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2776,7 +2846,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:8.4.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2797,7 +2867,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:8.4.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2817,7 +2887,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -2847,7 +2917,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -2889,7 +2959,7 @@ __metadata:
     just-is-empty: "npm:3.4.1"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux-form: "npm:8.3.10"
   languageName: unknown
@@ -2909,7 +2979,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     uuid: "npm:13.0.0"
   languageName: unknown
   linkType: soft
@@ -3009,7 +3079,7 @@ __metadata:
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.3"
     react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -3021,7 +3091,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -3094,7 +3164,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -3118,7 +3188,7 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     react-router: "npm:7.12.0"
     redux-form: "npm:8.3.10"
@@ -3137,7 +3207,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
   languageName: unknown
@@ -3172,7 +3242,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     redux: "npm:5.0.1"
     redux-form: "npm:8.3.10"
@@ -3187,7 +3257,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -3203,7 +3273,7 @@ __metadata:
     "@navikt/ft-form-validators": "npm:4.4.0"
     react: "npm:19.2.3"
     react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -3219,7 +3289,7 @@ __metadata:
     classnames: "npm:2.5.1"
     lodash: "npm:4.17.21"
     react: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   languageName: unknown
   linkType: soft
 
@@ -3280,7 +3350,7 @@ __metadata:
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     react-router: "npm:7.12.0"
     redux: "npm:5.0.1"
@@ -3322,7 +3392,7 @@ __metadata:
     history: "npm:5.3.0"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
     react-redux: "npm:9.2.0"
     react-router: "npm:7.12.0"
     redux: "npm:5.0.1"
@@ -9511,6 +9581,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"intl-messageformat@npm:11.0.9":
+  version: 11.0.9
+  resolution: "intl-messageformat@npm:11.0.9"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    "@formatjs/icu-messageformat-parser": "npm:3.3.0"
+    tslib: "npm:^2.8.0"
+  checksum: 10/36481eabd854d623ae9941476cad1dce720efa9c40dbb8cb036b11b1ffda6804689b0cf9da5d2421268cb1138a49f7a0b553fcf8fed03b5a37af283baf326bb4
+  languageName: node
+  linkType: hard
+
 "invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
@@ -12652,6 +12734,28 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 10/12a8b90d337c557cb53cfb6c9fd7ed3972a20960834b060bb239101a2765cd762ef6651b3231feb0932d3582d51801fda57bc660bfac88688b538b6609e4a1ec
+  languageName: node
+  linkType: hard
+
+"react-intl@npm:8.0.11":
+  version: 8.0.11
+  resolution: "react-intl@npm:8.0.11"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/icu-messageformat-parser": "npm:3.3.0"
+    "@formatjs/intl": "npm:4.0.9"
+    "@types/hoist-non-react-statics": "npm:^3.3.1"
+    hoist-non-react-statics: "npm:^3.3.2"
+    intl-messageformat: "npm:11.0.9"
+    tslib: "npm:^2.8.0"
+  peerDependencies:
+    "@types/react": 19
+    react: 16 || 17 || 18 || 19
+    typescript: ^5.6.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/b95d60c59464fffbf3f6d6852540870e2170b265031503202c7134a2c72304da7f1f3b41f705602ba41d8b8ea80e8025a7086f872ccd1821916cb9d21503050e
   languageName: node
   linkType: hard
 
