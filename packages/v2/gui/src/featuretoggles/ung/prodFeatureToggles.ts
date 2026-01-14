@@ -29,5 +29,5 @@ export const prodFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: true,
   ENDRE_FRIST: false,
-  INNTEKTSMELDING_FORESPOERSEL: false,
+  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
 } satisfies UngFeatureToggles;

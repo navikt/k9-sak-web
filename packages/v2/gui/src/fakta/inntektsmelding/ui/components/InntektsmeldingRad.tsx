@@ -48,7 +48,7 @@ const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
   const finnDokumentLink = (journalpostId: string) =>
     dokumenter?.find(d => d.journalpostId === journalpostId)?.href ?? '#';
 
-  const visSendNyOppgave = featureToggles.INNTEKTSMELDING_FORESPOERSEL;
+  const visSendNyOppgave = featureToggles.SAKSBEHANDLERINITIERT_INNTEKTSMELDING;
 
   return (
     <div>

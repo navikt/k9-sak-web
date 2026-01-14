@@ -28,5 +28,5 @@ export interface UngFeatureToggles extends FeatureTogglesFor {
   BRUK_V2_INNTEKTSMELDING: boolean;
   UNG_KLAGE: boolean;
   ENDRE_FRIST: boolean;
-  INNTEKTSMELDING_FORESPOERSEL: boolean;
+  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: boolean;
 }
