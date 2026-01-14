@@ -40,11 +40,11 @@ const InntektsmeldingIndex = ({
   );
 
   return (
-    <InntektsmeldingContext.Provider value={contextValue}>
+    <InntektsmeldingContext value={contextValue}>
       <Suspense fallback={<LoadingPanel />}>
         <InntektsmeldingContainer />
       </Suspense>
-    </InntektsmeldingContext.Provider>
+    </InntektsmeldingContext>
   );
 };
 

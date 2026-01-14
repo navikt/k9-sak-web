@@ -15,17 +15,19 @@ import ferdigvisning, {
 import { withFakeInntektsmeldingApi } from '../../mock/withFakeInntektsmeldingApi.js';
 import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex.js';
 
-const createProps = (props: Partial<InntektsmeldingContainerProps>): InntektsmeldingContainerProps => ({
+const createProps = (
+  behandlingUuid: string,
+  props: Partial<InntektsmeldingContainerProps>,
+): InntektsmeldingContainerProps => ({
   ...inntektsmeldingPropsMock,
   submitCallback: action('submitCallback'),
   ...props,
+  behandling: { uuid: behandlingUuid },
 });
 
 const meta: Meta<typeof InntektsmeldingIndex> = {
-  args: createProps({}),
   title: 'gui/fakta/inntektsmelding',
   component: InntektsmeldingIndex,
-  decorators: [withFakeInntektsmeldingApi(ikkePaakrevd)],
 };
 
 export default meta;
@@ -33,13 +35,13 @@ export default meta;
 type Story = StoryObj<typeof InntektsmeldingIndex>;
 
 export const IkkePaakrevd: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(ikkePaakrevd)],
+  args: createProps(ikkePaakrevd.behandlingUuid, {}),
+  decorators: [withFakeInntektsmeldingApi(ikkePaakrevd.behandlingUuid, ikkePaakrevd.vurdering)],
 };
 
 export const Mangler9069: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding)],
+  args: createProps(manglerInntektsmelding.behandlingUuid, {}),
+  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding.behandlingUuid, manglerInntektsmelding.vurdering)],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
@@ -52,7 +54,9 @@ export const Mangler9069: Story = {
       const radioOption = await canvas.findByLabelText(/Nei, send purring med varsel om avslag/i);
       await expect(radioOption).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i })).not.toBeInTheDocument();
+      await expect(
+        canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i }),
+      ).not.toBeInTheDocument();
     });
 
     await step('Viser riktig knapp når purring er valgt', async () => {
@@ -92,8 +96,8 @@ export const Mangler9069: Story = {
 };
 
 export const Mangler9071: Story = {
-  args: createProps(aksjonspunkt9071Props),
-  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding)],
+  args: createProps(manglerInntektsmelding.behandlingUuid, aksjonspunkt9071Props),
+  decorators: [withFakeInntektsmeldingApi(manglerInntektsmelding.behandlingUuid, manglerInntektsmelding.vurdering)],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
@@ -108,7 +112,9 @@ export const Mangler9071: Story = {
       );
       await expect(radioOption).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i })).not.toBeInTheDocument();
+      await expect(
+        canvas.queryByRole('button', { name: /Send purring med varsel om avslag/i }),
+      ).not.toBeInTheDocument();
     });
 
     await step('Viser riktig knapp når purring er valgt', async () => {
@@ -150,28 +156,35 @@ export const Mangler9071: Story = {
 };
 
 export const ManglerFlere9071: Story = {
-  args: createProps(aksjonspunkt9071Props),
-  decorators: [withFakeInntektsmeldingApi(manglerFlereInntektsmeldinger)],
+  args: createProps(manglerFlereInntektsmeldinger.behandlingUuid, aksjonspunkt9071Props),
+  decorators: [
+    withFakeInntektsmeldingApi(manglerFlereInntektsmeldinger.behandlingUuid, manglerFlereInntektsmeldinger.vurdering),
+  ],
 };
 
 export const IkkePaakrevdOgMangler9071: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(ikkePaakrevdOgManglerInntektsmelding)],
+  args: createProps(ikkePaakrevdOgManglerInntektsmelding.behandlingUuid, {}),
+  decorators: [
+    withFakeInntektsmeldingApi(
+      ikkePaakrevdOgManglerInntektsmelding.behandlingUuid,
+      ikkePaakrevdOgManglerInntektsmelding.vurdering,
+    ),
+  ],
 };
 
 export const FerdigVisning9069: Story = {
-  args: createProps({}),
-  decorators: [withFakeInntektsmeldingApi(ferdigvisning)],
+  args: createProps(ferdigvisning.behandlingUuid, {}),
+  decorators: [withFakeInntektsmeldingApi(ferdigvisning.behandlingUuid, ferdigvisning.vurdering)],
 };
 
 export const FerdigVisning9071: Story = {
-  args: createProps(aksjonspunkt9071FerdigProps),
-  decorators: [withFakeInntektsmeldingApi(ferdigvisning)],
+  args: createProps(ferdigvisning.behandlingUuid, aksjonspunkt9071FerdigProps),
+  decorators: [withFakeInntektsmeldingApi(ferdigvisning.behandlingUuid, ferdigvisning.vurdering)],
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
-  args: createProps(aksjonspunkt9071Props),
-  decorators: [withFakeInntektsmeldingApi(alleErMottatt)],
+  args: createProps(alleErMottatt.behandlingUuid, aksjonspunkt9071Props),
+  decorators: [withFakeInntektsmeldingApi(alleErMottatt.behandlingUuid, alleErMottatt.vurdering)],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
@@ -180,9 +193,12 @@ export const AlleInntektsmeldingerMottatt: Story = {
       await waitFor(() => expect(canvas.getByText(/Når kan du gå videre uten inntektsmelding?/i)).toBeInTheDocument());
     });
 
-    await step('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
-      const sendInnButton = await canvas.findByRole('button', { name: /Send inn/i });
-      await user.click(sendInnButton);
-    });
+    await step(
+      'Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet',
+      async () => {
+        const sendInnButton = await canvas.findByRole('button', { name: /Send inn/i });
+        await user.click(sendInnButton);
+      },
+    );
   },
 };
