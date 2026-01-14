@@ -26,12 +26,7 @@ interface InntektsmeldingFerdigvisningProps {
   readOnly: boolean;
 }
 
-const InntektsmeldingFerdigvisning = ({
-  tilstand,
-  onEdit,
-  readOnly,
-}: InntektsmeldingFerdigvisningProps) => {
-  console.log('tilstand', tilstand);
+const InntektsmeldingFerdigvisning = ({ tilstand, onEdit, readOnly }: InntektsmeldingFerdigvisningProps) => {
   const config = tilstand.vurdering ? vurderingConfig[tilstand.vurdering] : null;
   if (!config) return null;
 
