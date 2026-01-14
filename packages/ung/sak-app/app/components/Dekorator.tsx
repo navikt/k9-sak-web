@@ -7,7 +7,6 @@ import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorForm
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
-import { getPathToK9Los } from '../paths';
 
 type QueryStrings = {
   errorcode?: string;
@@ -87,7 +86,6 @@ const Dekorator = ({
       removeErrorMessage={removeErrorMessages}
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
-      getPathToLos={getPathToK9Los}
       aaregPath={getAaregPath()}
       ytelse="Ungdomsprogramytelse"
       headerTitleHref="/ung/web"
