@@ -2,13 +2,15 @@ import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navik
 import { Link } from '@navikt/ds-react';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
-import type { ArbeidsgiverArbeidsforholdStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdStatus.js';
+import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 
-const statusTekster: Record<string, string> = {
-  IKKE_PÅKREVD: 'Ikke påkrevd',
-  MANGLER: 'Mangler',
-  MOTTATT_IKKE_ANSATT: 'Mottatt, men ikke ansatt',
-  MOTTATT_UKJENT_ARBEIDSFORHOLDSID: 'Mottatt, men inneholder ukjent arbeidsforhold-ID',
+const statusTekster: Record<Status, string> = {
+  [Status.IKKE_PÅKREVD]: 'Ikke påkrevd',
+  [Status.MANGLER]: 'Mangler',
+  [Status.MOTTATT_IKKE_ANSATT]: 'Mottatt, men ikke ansatt',
+  [Status.MOTTATT_UKJENT_ARBEIDSFORHOLDSID]: 'Mottatt, men inneholder ukjent arbeidsforhold-ID',
+  [Status.FORTSETT_UTEN]: 'Fortsett uten',
+  [Status.MOTTATT]: 'Mottatt',
 };
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeidsforholdId }) => {
@@ -25,7 +27,11 @@ const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeids
 };
 
 interface InntektsmeldingListeProps {
-  status: Array<{ status: ArbeidsgiverArbeidsforholdStatus; arbeidsgiver: ArbeidsgiverArbeidsforholdId; journalpostId?: string }>;
+  status: Array<{
+    status: Status;
+    arbeidsgiver: ArbeidsgiverArbeidsforholdId;
+    journalpostId?: string;
+  }>;
 }
 
 const InntektsmeldingInfo = ({ status }: InntektsmeldingListeProps) => {
@@ -49,7 +55,7 @@ const InntektsmeldingInfo = ({ status }: InntektsmeldingListeProps) => {
       {/* Liste over arbeidsgivere */}
       <ul className="m-0 list-none p-0">
         {status.map((s, index) => {
-          const erMottatt = s.status === 'MOTTATT';
+          const erMottatt = s.status === Status.MOTTATT;
 
           return (
             // eslint-disable-next-line react/no-array-index-key
