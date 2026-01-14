@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { lagDokumentdata } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useCallback } from 'react';
 
 interface UseBekreftAksjonspunktParams {

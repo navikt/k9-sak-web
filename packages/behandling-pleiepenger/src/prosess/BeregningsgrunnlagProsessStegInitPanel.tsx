@@ -8,10 +8,10 @@ import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgru
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import { useContext, useMemo } from 'react';
 
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 

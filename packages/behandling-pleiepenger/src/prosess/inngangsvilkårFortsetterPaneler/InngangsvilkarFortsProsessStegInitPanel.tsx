@@ -1,5 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
@@ -8,7 +9,6 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';

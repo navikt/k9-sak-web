@@ -1,4 +1,9 @@
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
@@ -7,11 +12,6 @@ import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
-} from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';

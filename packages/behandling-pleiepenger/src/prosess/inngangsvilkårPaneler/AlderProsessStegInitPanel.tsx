@@ -1,10 +1,10 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_behandling_BehandlingType,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@navikt/k9-sak-typescript-client/types';
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
+import { Behandling } from '@k9-sak-web/types';
 import { useMemo, type SetStateAction } from 'react';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.ALDERSVILKARET];
