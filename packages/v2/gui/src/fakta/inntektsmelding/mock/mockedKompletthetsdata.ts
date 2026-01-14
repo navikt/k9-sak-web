@@ -1,7 +1,5 @@
-import {
-  k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus,
-  type k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
+import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
 
 type BehandlingUuidOgVurdering = Readonly<{ behandlingUuid: string; vurdering: KompletthetsVurdering }>;
 

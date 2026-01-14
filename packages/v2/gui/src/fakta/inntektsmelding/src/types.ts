@@ -1,41 +1,24 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { Period } from '@navikt/ft-utils';
-import type {
-  k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdStatus,
-  k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode,
-  k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering as VurderingKodeType,
-  k9_sak_kontrakt_kompletthet_KompletthetsTilstandPåPeriodeDto,
-  k9_sak_kontrakt_dokument_DokumentDto,
-  k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdId,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOpplysningerDto,
-} from '@navikt/k9-sak-typescript-client/types';
-import { k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering } from '@navikt/k9-sak-typescript-client/types';
+import type { KompletthetsTilstandPåPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsTilstandPåPeriodeDto.js';
+import type { KompletthetsPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsPeriode.js';
+import type { ArbeidsgiverOpplysningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOpplysningerDto.js';
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 
-// Re-exports av backend-typer med lesbare navn
-export type ArbeidsgiverOpplysninger = k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOpplysningerDto;
-export type ArbeidsgiverArbeidsforholdId = k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdId;
-export type DokumentOpplysninger = k9_sak_kontrakt_dokument_DokumentDto;
-export type Status = k9_sak_kontrakt_kompletthet_ArbeidsgiverArbeidsforholdStatus;
-export type KompletthetsPeriode = k9_sak_kontrakt_kompletthet_aksjonspunkt_KompletthetsPeriode;
-export type InntektsmeldingVurderingKodeType = VurderingKodeType;
-export type KompletthetsTilstandPåPeriode = k9_sak_kontrakt_kompletthet_KompletthetsTilstandPåPeriodeDto;
-// Vurderingskoder
-export const InntektsmeldingVurderingResponseKode = k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering;
-
-export enum InntektsmeldingVurderingRequestKode {
-  FORTSETT = 'FORTSETT',
-  MANGLENDE_GRUNNLAG = 'MANGLENDE_GRUNNLAG',
-  IKKE_INNTEKTSTAP = 'IKKE_INNTEKTSTAP',
-  UDEFINERT = 'UDEFINERT',
-}
+export const InntektsmeldingVurderingRequestKode = {
+  FORTSETT: 'FORTSETT',
+  MANGLENDE_GRUNNLAG: 'MANGLENDE_GRUNNLAG',
+  IKKE_INNTEKTSTAP: 'IKKE_INNTEKTSTAP',
+  UDEFINERT: 'UDEFINERT',
+} as const;
 
 // Feltnavn for skjema
-export enum FieldName {
-  BESLUTNING = 'beslutning',
-  BEGRUNNELSE = 'begrunnelse',
-}
+export const FieldName = {
+  BESLUTNING: 'beslutning',
+  BEGRUNNELSE: 'begrunnelse',
+} as const;
 
-export interface Tilstand extends Omit<KompletthetsTilstandPåPeriode, 'periode'> {
+export interface Tilstand extends Omit<KompletthetsTilstandPåPeriodeDto, 'periode'> {
   periode: Period;
   periodeOpprinneligFormat: string;
 }
@@ -59,8 +42,8 @@ export interface InntektsmeldingRequestPayload {
 export interface InntektsmeldingContextType {
   behandlingUuid: string;
   readOnly: boolean;
-  arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
-  dokumenter?: DokumentOpplysninger[];
+  arbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
+  dokumenter?: DokumentDto[];
   onFinished: (data: InntektsmeldingRequestPayload) => void;
   aksjonspunkter: AksjonspunktDto[];
 }

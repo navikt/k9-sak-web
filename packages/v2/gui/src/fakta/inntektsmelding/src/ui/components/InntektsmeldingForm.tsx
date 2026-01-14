@@ -1,12 +1,13 @@
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { InntektsmeldingRequestPayload, KompletthetsPeriode, TilstandMedUiState } from '../../types';
+import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
+import type { KompletthetsPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsPeriode.js';
 import { InntektsmeldingVurderingRequestKode } from '../../types';
 
 type AksjonspunktKode = '9069' | '9071';

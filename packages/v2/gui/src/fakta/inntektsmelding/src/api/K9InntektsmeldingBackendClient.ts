@@ -1,5 +1,5 @@
 import { kompletthet_utledStatusForKompletthet } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
 import type { InntektsmeldingApi } from './InntektsmeldingApi.ts';
 
 export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {

@@ -1,20 +1,17 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { ArbeidsgiverOpplysningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOpplysningerDto.js';
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { Suspense, useMemo } from 'react';
 import InntektsmeldingContext from '../context/InntektsmeldingContext';
-import type {
-  ArbeidsgiverOpplysninger,
-  DokumentOpplysninger,
-  InntektsmeldingContextType,
-  InntektsmeldingRequestPayload,
-} from '../types';
+import type { InntektsmeldingContextType, InntektsmeldingRequestPayload } from '../types';
 import InntektsmeldingContainer from './components/InntektsmeldingContainer';
 
 export interface InntektsmeldingContainerProps {
   behandling: { uuid: string };
   readOnly: boolean;
-  arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysninger>;
-  dokumenter?: DokumentOpplysninger[];
+  arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysningerDto>;
+  dokumenter?: DokumentDto[];
   aksjonspunkter: AksjonspunktDto[];
   submitCallback: (aksjonspunkter: InntektsmeldingRequestPayload[]) => void;
 }

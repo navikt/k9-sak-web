@@ -1,7 +1,8 @@
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { ArbeidsgiverArbeidsforholdId, Status } from '../../types';
+import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
+import type { ArbeidsgiverArbeidsforholdStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdStatus.js';
 
 const statusTekster: Record<string, string> = {
   IKKE_PÅKREVD: 'Ikke påkrevd',
@@ -24,7 +25,7 @@ const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeids
 };
 
 interface InntektsmeldingListeProps {
-  status: Status[];
+  status: Array<{ status: ArbeidsgiverArbeidsforholdStatus; arbeidsgiver: ArbeidsgiverArbeidsforholdId; journalpostId?: string }>;
 }
 
 const InntektsmeldingInfo = ({ status }: InntektsmeldingListeProps) => {
