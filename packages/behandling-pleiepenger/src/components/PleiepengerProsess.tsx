@@ -36,6 +36,17 @@ import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel'
 import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 
+const PROSESS_STEG_KODER = {
+  INNGANGSVILKAR: 'inngangsvilkar',
+  MEDISINSK_VILKAR: 'medisinsk_vilkar',
+  OPPTJENING: 'opptjening',
+  UTTAK: 'uttak',
+  TILKJENT_YTELSE: 'tilkjent_ytelse',
+  SIMULERING: 'simulering',
+  BEREGNINGSGRUNNLAG: 'beregningsgrunnlag',
+  VEDTAK: 'vedtak',
+} as const;
+
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -213,15 +224,24 @@ const PleiepengerProsess = ({
     apentFaktaPanelInfo,
   );
 
-  useEffect(() => {
+  const beregningErBehandlet = useMemo(() => {
     const beregningPanel = prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning');
-    if (beregningPanel) {
-      setBeregningErBehandlet(beregningPanel.getErStegBehandlet());
-    }
-  }, [setBeregningErBehandlet, prosessStegPaneler]);
+    return beregningPanel?.getErStegBehandlet() ?? false;
+  }, [prosessStegPaneler]);
+
+  useEffect(() => {
+    setBeregningErBehandlet(beregningErBehandlet);
+  }, [beregningErBehandlet, setBeregningErBehandlet]);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
+
+  const lukkModalOgGåTilSøk = useCallback(() => {
+    toggleIverksetterVedtakModal(false);
+    toggleFatterVedtakModal(false);
+    opneSokeside();
+  }, [opneSokeside]);
+
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
@@ -260,14 +280,14 @@ const PleiepengerProsess = ({
     setFormData(undefined);
   }, [behandling.versjon]);
 
-  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const [vedtakFormState, setVedtakFormState] = useState<any>(null);
   const vedtakFormValue = useMemo(
     () => ({ vedtakFormState, setVedtakFormState }),
     [vedtakFormState, setVedtakFormState],
   );
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
 
-  const k9SakProsessApi = new K9SakProsessBackendClient();
+  const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
 
   // Modernisert versjon uten nestede callbacks (kan brukes i v2 meny)
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
@@ -299,18 +319,12 @@ const PleiepengerProsess = ({
         {ToggleComponent}
         <IverksetterVedtakStatusModal
           visModal={visIverksetterVedtakModal}
-          lukkModal={useCallback(() => {
-            toggleIverksetterVedtakModal(false);
-            opneSokeside();
-          }, [])}
+          lukkModal={lukkModalOgGåTilSøk}
           behandlingsresultat={behandling.behandlingsresultat}
         />
         <FatterVedtakStatusModal
           visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
-          lukkModal={useCallback(() => {
-            toggleFatterVedtakModal(false);
-            opneSokeside();
-          }, [])}
+          lukkModal={lukkModalOgGåTilSøk}
           tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
         />
         <StandardProsessPanelPropsProvider
@@ -349,7 +363,7 @@ const PleiepengerProsess = ({
                   const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
                   // Bruk migrerte InitPanel-komponenter der de finnes
-                  if (urlKode === 'inngangsvilkar') {
+                  if (urlKode === PROSESS_STEG_KODER.INNGANGSVILKAR) {
                     return (
                       <InngangsvilkarProsessStegInitPanel
                         key={urlKode}
@@ -364,7 +378,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'medisinsk_vilkar') {
+                  if (urlKode === PROSESS_STEG_KODER.MEDISINSK_VILKAR) {
                     return (
                       <MedisinskVilkarProsessStegInitPanel
                         key={urlKode}
@@ -373,7 +387,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'opptjening') {
+                  if (urlKode === PROSESS_STEG_KODER.OPPTJENING) {
                     return (
                       <InngangsvilkarFortsProsessStegInitPanel
                         key={urlKode}
@@ -391,7 +405,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'uttak') {
+                  if (urlKode === PROSESS_STEG_KODER.UTTAK) {
                     return (
                       <UttakProsessStegInitPanel
                         key={urlKode}
@@ -403,7 +417,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'tilkjent_ytelse') {
+                  if (urlKode === PROSESS_STEG_KODER.TILKJENT_YTELSE) {
                     return (
                       <TilkjentYtelseProsessStegInitPanel
                         key={urlKode}
@@ -415,7 +429,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'simulering') {
+                  if (urlKode === PROSESS_STEG_KODER.SIMULERING) {
                     return (
                       <SimuleringProsessStegInitPanel
                         api={k9SakProsessApi}
@@ -429,7 +443,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'beregningsgrunnlag') {
+                  if (urlKode === PROSESS_STEG_KODER.BEREGNINGSGRUNNLAG) {
                     return (
                       <BeregningsgrunnlagProsessStegInitPanel
                         key={urlKode}
@@ -443,7 +457,7 @@ const PleiepengerProsess = ({
                       />
                     );
                   }
-                  if (urlKode === 'vedtak') {
+                  if (urlKode === PROSESS_STEG_KODER.VEDTAK) {
                     return (
                       <VedtakProsessStegInitPanel
                         key={urlKode}
@@ -480,18 +494,12 @@ const PleiepengerProsess = ({
       {ToggleComponent}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
-        lukkModal={useCallback(() => {
-          toggleIverksetterVedtakModal(false);
-          opneSokeside();
-        }, [])}
+        lukkModal={lukkModalOgGåTilSøk}
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
-        lukkModal={useCallback(() => {
-          toggleFatterVedtakModal(false);
-          opneSokeside();
-        }, [])}
+        lukkModal={lukkModalOgGåTilSøk}
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
 
