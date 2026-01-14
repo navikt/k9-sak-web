@@ -25,6 +25,7 @@ export interface K9FeatureToggles extends FeatureTogglesFor {
   VIS_FERIEPENGER_PANEL: boolean;
   FLYTT_ALDERSVILKAR: boolean;
   BRUK_V2_TILKJENT_YTELSE: boolean;
+  BRUK_V2_INNTEKTSMELDING: boolean;
   UNG_KLAGE: boolean;
   KRONISK_TIDSBEGRENSET: boolean;
 }
