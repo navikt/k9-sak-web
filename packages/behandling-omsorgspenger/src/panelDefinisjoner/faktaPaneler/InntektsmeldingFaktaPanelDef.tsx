@@ -8,7 +8,7 @@ import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKode
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 import Inntektsmelding from '../../components/Inntektsmelding';
-import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/src/ui/InntektsmeldingIndex.js';
+import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/ui/InntektsmeldingIndex.js';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;
