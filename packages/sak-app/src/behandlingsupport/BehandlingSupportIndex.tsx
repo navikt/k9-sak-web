@@ -49,6 +49,7 @@ import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/Loadi
 import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
 import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
 import { MessagesIndex } from '@k9-sak-web/gui/sak/meldinger/MessagesIndex.js';
+import { K9KlageMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/api/K9KlageMeldingerBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -250,8 +251,11 @@ const BehandlingSupportIndex = ({
   }, [erTilbakekreving, erKlage, kodeverkoppslag]);
 
   const meldingerBackendClient = useMemo(() => {
+    if (erKlage) {
+      return new K9KlageMeldingerBackendClient(formidlingClient);
+    }
     return new K9SakMeldingerBackendClient(formidlingClient);
-  }, [formidlingClient]);
+  }, [erKlage, formidlingClient]);
   const meldingerTilbakeBackendClient = useMemo(() => new K9TilbakeMeldingerBackendClient(), []);
 
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);

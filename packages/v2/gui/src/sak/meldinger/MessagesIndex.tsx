@@ -1,6 +1,5 @@
 import Messages, { type MessagesProps } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { bestemAvsenderApp } from '../../utils/formidling.js';
 
 export type MessagesIndexProps = Pick<
   MessagesProps,
@@ -34,7 +33,7 @@ export const MessagesIndex = ({
       behandling.uuid,
       behandling.type.kode,
     ],
-    queryFn: () => api.hentMaler(fagsak.sakstype, behandling.uuid, bestemAvsenderApp(behandling.type.kode)),
+    queryFn: () => api.hentMaler(fagsak.sakstype, behandling.uuid),
     staleTime: 20_000,
   });
   return (
