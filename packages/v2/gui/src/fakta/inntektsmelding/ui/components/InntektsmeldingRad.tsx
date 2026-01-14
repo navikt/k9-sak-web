@@ -11,7 +11,7 @@ import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext'
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 
-const statusTekster: Record<Status, string> = {
+const statusTekster = {
   [Status.IKKE_PÅKREVD]: 'Ikke påkrevd',
   [Status.MANGLER]: 'Mangler',
   [Status.MOTTATT_IKKE_ANSATT]: 'Mottatt, men ikke ansatt',
@@ -69,6 +69,7 @@ const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
       <div className="space-y-3">
         {status.map((s, index) => {
           const erMottatt = s.status === Status.MOTTATT;
+          const erMangler = s.status === Status.MANGLER;
 
           return (
             <HGrid key={index} gap="space-4" columns={{ xs: '2fr 2fr 3fr' }} align="center">
@@ -76,18 +77,18 @@ const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
                 <ArbeidsgiverTekst arbeidsgiver={s.arbeidsgiver} />
               </BodyShort>
               <div className="flex items-center">
-                {erMottatt ? (
-                  <>
-                    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
-                    <span className="ml-2">Mottatt</span>
-                  </>
-                ) : (
+                {erMangler ? (
                   <>
                     <ExclamationmarkTriangleFillIcon
                       fontSize="1.5rem"
                       style={{ color: 'var(--ax-text-warning-decoration)' }}
                     />
                     <span className="ml-2">{statusTekster[s.status] ?? s.status}</span>
+                  </>
+                ) : (
+                  <>
+                    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
+                    <span className="ml-2">{erMottatt ? 'Mottatt' : (statusTekster[s.status] ?? s.status)}</span>
                   </>
                 )}
               </div>
