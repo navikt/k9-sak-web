@@ -1,8 +1,8 @@
 import type { LagForhåndsvisningRequest, MessagesApi } from './MessagesApi.js';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.js';
-import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/BestillBrevDto.js';
+import type { BestillBrevDto } from '@k9-sak-web/backend/combined/kontrakt/dokument/BestillBrevDto.js';
 import { brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
@@ -75,7 +75,7 @@ export abstract class BaseMeldingerBackendClient implements MessagesApi {
   }
 
   async hentInnholdBrevmal(
-    fagsakYtelsestype: FagsakYtelsesType,
+    fagsakYtelsestype: FagsakYtelseType,
     eksternReferanse: string,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]> {
@@ -87,7 +87,7 @@ export abstract class BaseMeldingerBackendClient implements MessagesApi {
     );
   }
 
-  async hentMaler(fagsakYtelsestype: FagsakYtelsesType, behandlingUuid: string): Promise<Template[]> {
+  async hentMaler(fagsakYtelsestype: FagsakYtelseType, behandlingUuid: string): Promise<Template[]> {
     const templateMap = await this.#formidling.maler.hentBrevmaler(
       fagsakYtelsestype,
       behandlingUuid,
