@@ -11,8 +11,9 @@ import {
   maxLength,
   required,
 } from '@fpsak-frontend/utils';
+import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
@@ -185,6 +186,9 @@ export const SettPaVentModal = ({
     } else if (showAvbryt) {
       ariaCheck();
     } else {
+      if (isUngWeb()) {
+        goToSearch();
+      }
       goToLos();
     }
   };
