@@ -19,8 +19,8 @@ import ApplicationContextPath from './ApplicationContextPath';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
-import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/src/api/InntektsmeldingApiContext.js';
-import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/src/api/K9InntektsmeldingBackendClient.js';
+import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
+import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
