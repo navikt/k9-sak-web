@@ -52,7 +52,7 @@ interface ProsessMenyProps {
  * </ProsessMeny>
  * ```
  */
-export function ProsessMeny({ children }: ProsessMenyProps) {
+export const ProsessMeny = ({ children }: ProsessMenyProps) => {
   const intl = useIntl();
   const [searchParams, setSearchParams] = useSearchParams();
   const [paneler, setPaneler] = useState<Map<string, InternPanelRegistrering>>(new Map());
@@ -178,4 +178,4 @@ export function ProsessMeny({ children }: ProsessMenyProps) {
       </LoadingPanelSuspense>
     </Box.New>
   );
-}
+};
