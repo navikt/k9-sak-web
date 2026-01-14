@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useInntektsmeldingContext } from '../context/InntektsmeldingContext';
-import { assertDefined } from '../../../../utils/validation/assertDefined.js';
+import { assertDefined } from '../../../utils/validation/assertDefined.js';
 import { useContext } from 'react';
 import { InntektsmeldingApiContext } from './InntektsmeldingApiContext.js';
 

@@ -4,15 +4,15 @@ import { expect, userEvent, waitFor, within } from 'storybook/test';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
   aksjonspunkt9071Props,
-} from '../../mock/inntektsmeldingPropsMock.js';
+} from '../mock/inntektsmeldingPropsMock.js';
 import ferdigvisning, {
   alleErMottatt,
   ikkePaakrevd,
   ikkePaakrevdOgManglerInntektsmelding,
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
-} from '../../mock/mockedKompletthetsdata.js';
-import { withFakeInntektsmeldingApi } from '../../mock/withFakeInntektsmeldingApi.js';
+} from '../mock/mockedKompletthetsdata.js';
+import { withFakeInntektsmeldingApi } from '../mock/withFakeInntektsmeldingApi.js';
 import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex.js';
 
 const createProps = (
