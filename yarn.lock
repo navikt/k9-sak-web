@@ -1926,7 +1926,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/aksel-icons": "npm:7.37.0"
     "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/fnrvalidator": "npm:2.1.5"
+    "@navikt/fnrvalidator": "npm:2.2.1"
     "@navikt/ft-plattform-komponenter": "npm:10.3.0"
     axios: "npm:1.13.2"
     classnames: "npm:2.5.1"
@@ -2749,7 +2749,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/diagnosekoder": "npm:1.2025.0"
+    "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ft-fakta-beregning": "npm:12.3.0"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.0"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
@@ -2957,7 +2957,7 @@ __metadata:
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
-    "@navikt/diagnosekoder": "npm:1.2025.0"
+    "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ds-css": "npm:7.37.0"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.37.0"
@@ -2999,7 +2999,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.37.0"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/fnrvalidator": "npm:2.1.5"
+    "@navikt/fnrvalidator": "npm:2.2.1"
     "@navikt/ft-plattform-komponenter": "npm:10.3.0"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
@@ -3048,7 +3048,7 @@ __metadata:
     "@hookform/resolvers": "npm:5.2.2"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "npm:1.0.0"
-    "@navikt/diagnosekoder": "npm:1.2025.0"
+    "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ft-form-hooks": "npm:10.3.0"
     "@navikt/ft-form-validators": "npm:4.4.0"
     "@navikt/ft-utils": "npm:3.10.0"
@@ -3411,10 +3411,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/diagnosekoder@npm:1.2025.0":
-  version: 1.2025.0
-  resolution: "@navikt/diagnosekoder@npm:1.2025.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2025.0%2F2675cb1178884832541008211afed1a73de742b7"
-  checksum: 10/bb9b43a5355c16bcf757795a9bd3569ee18d1668112c2da5bc2346544e1fbf175c797309da5f45fbf8db710b4497c015b407d9aee63aa25d09b29c951bd4b196
+"@navikt/diagnosekoder@npm:1.2026.0":
+  version: 1.2026.0
+  resolution: "@navikt/diagnosekoder@npm:1.2026.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2026.0%2Fff31ee0f51e170c68b0f907bf507bcc65c56590c"
+  checksum: 10/cdac80359bb36c83543d7526fb43146d7fbc9f7bfde3d49519f012bccfef2c842b21f58d503a9839cf0e3c6557d1b3a1fe6146f96283ea433cc217d298310331
   languageName: node
   linkType: hard
 
@@ -3468,25 +3468,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/familie-endringslogg@npm:14.0.4":
-  version: 14.0.4
-  resolution: "@navikt/familie-endringslogg@npm:14.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F14.0.4%2F49927037064e688be0f84a50b2192044da4a49a1"
+"@navikt/familie-endringslogg@npm:14.0.5":
+  version: 14.0.5
+  resolution: "@navikt/familie-endringslogg@npm:14.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F14.0.5%2Fdf2b325da238afc302f13081649e8cfdc9638295"
   dependencies:
-    "@portabletext/react": "npm:^5.0.0"
+    "@portabletext/react": "npm:^6.0.0"
     classnames: "npm:^2.5.1"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-react": 7.x
     "@types/react": 18.x || 19.x
     react: 18.x || 19.x
-  checksum: 10/7b0805bdc4f4e92d5cb2a7210a985dade3f198f0bcb05715fd06c82ae614e9d0294be1e113ce32264a2385761541fd2dc4ab0af0b29d73453e9b464c375ca29d
+  checksum: 10/9fd95dbfa838d130e82786b2dd8dce5b0895a9f6ac4d067bdbf227531464cb325f6625ebdc07296f15973e225dccac49637b24be1786cd8bbf625c5f5e6b8a8f
   languageName: node
   linkType: hard
 
-"@navikt/fnrvalidator@npm:2.1.5":
-  version: 2.1.5
-  resolution: "@navikt/fnrvalidator@npm:2.1.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.1.5%2Fe33cbc5693b14419bbcf4d5daee2ac9eeec532e5"
-  checksum: 10/6004890b3046d957f117b8566d6b12bc254cb5417a6fa9dd800a807bbb78d6775165d8c2aba5f1c1561b499341d4e97d662589a9d708651ae59aee06411ce66d
+"@navikt/fnrvalidator@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@navikt/fnrvalidator@npm:2.2.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.2.1%2F37ed0feb23a7525139ad5512684ff6b0977112c6"
+  checksum: 10/dd0a9d156db752b21d868342a04b7a0f25590043559de91b05bd84532a1791269fcf02eb0ff4bc73436fe566bca41eff58b1358b39f35fff676b00c57dfb9b68
   languageName: node
   linkType: hard
 
@@ -4028,31 +4028,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@portabletext/react@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@portabletext/react@npm:5.0.0"
+"@portabletext/react@npm:^6.0.0":
+  version: 6.0.2
+  resolution: "@portabletext/react@npm:6.0.2"
   dependencies:
-    "@portabletext/toolkit": "npm:^4.0.0"
-    "@portabletext/types": "npm:^3.0.0"
+    "@portabletext/toolkit": "npm:^5.0.1"
+    "@portabletext/types": "npm:^4.0.1"
   peerDependencies:
     react: ^18.2 || ^19
-  checksum: 10/59f12364f2df4adcbdee6e1fcd63153630ffac683de9686e0827ccd365d4ac57964935951048660c414b94624b1c78fedc683aaa988fe1a83ed0186fea81d381
+  checksum: 10/55698ae378d0a6893f0991e4c7b480d85e11bb2a8e15b0148c206ded0860bfcf25ae07b22cd0391611aa699e61c7b89f4995604d635c70811d5ffd352e20a605
   languageName: node
   linkType: hard
 
-"@portabletext/toolkit@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@portabletext/toolkit@npm:4.0.0"
+"@portabletext/toolkit@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@portabletext/toolkit@npm:5.0.1"
   dependencies:
-    "@portabletext/types": "npm:^3.0.0"
-  checksum: 10/09c794c040402dff5ceec041fd5abbb08d8293ac11159275057280657887535bb23458e47117ec404f96eee3bc0fdbd54fc4f8a2eb1ebdd047cbd0ed1dad02d9
+    "@portabletext/types": "npm:^4.0.1"
+  checksum: 10/996d7c3ecfcc0db983bb7a1203ca353309340a89dc25272e930ef1ac290ae9ff3ef1facffe1ad509c33a916aefacfc9595d75f0f9bcc7198788f55d0bcd37f2e
   languageName: node
   linkType: hard
 
-"@portabletext/types@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@portabletext/types@npm:3.0.0"
-  checksum: 10/2f34ff34da3c11b4d64f8c277bc3010b5b3703c98390cf9044140b8dcf7eff495a739a93fc99e592edb7a6c1c261bb032a34e5c984ea04f8c393f642accbfd60
+"@portabletext/types@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@portabletext/types@npm:4.0.1"
+  checksum: 10/93429e1eb9388bcd52881a491c0e369413e1b99b63ffca6f43e1a2b72a19d307a26a292183ff52f2fdca31bf625f03eacb0188a1ae3a6804e1c753b395a6e9b3
   languageName: node
   linkType: hard
 
@@ -10735,7 +10735,7 @@ __metadata:
     "@navikt/ds-css": "npm:7.37.0"
     "@navikt/ds-react": "npm:7.37.0"
     "@navikt/ds-tailwind": "npm:7.37.0"
-    "@navikt/familie-endringslogg": "npm:14.0.4"
+    "@navikt/familie-endringslogg": "npm:14.0.5"
     "@navikt/ft-plattform-komponenter": "npm:10.3.0"
     "@playwright/test": "npm:1.57.0"
     "@popperjs/core": "npm:2.11.8"
