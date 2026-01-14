@@ -28,4 +28,5 @@ export interface K9FeatureToggles extends FeatureTogglesFor {
   BRUK_V2_INNTEKTSMELDING: boolean;
   UNG_KLAGE: boolean;
   KRONISK_TIDSBEGRENSET: boolean;
+  INNTEKTSMELDING_FORESPOERSEL: boolean;
 }

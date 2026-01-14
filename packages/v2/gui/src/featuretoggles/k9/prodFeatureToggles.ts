@@ -29,4 +29,5 @@ export const prodFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: false,
   KRONISK_TIDSBEGRENSET: true,
+  INNTEKTSMELDING_FORESPOERSEL: false,
 } satisfies K9FeatureToggles;
