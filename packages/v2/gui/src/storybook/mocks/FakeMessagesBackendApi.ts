@@ -1,5 +1,3 @@
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
-import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -11,7 +9,7 @@ import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/melding
 import { action } from 'storybook/actions';
 import { delay } from '../../utils/delay.js';
 import { fakePdf } from './fakePdf.js';
-import type { MessagesApi } from '../../sak/meldinger/api/MessagesApi.js';
+import type { LagForhåndsvisningRequest, MessagesApi } from '../../sak/meldinger/api/MessagesApi.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
@@ -110,10 +108,9 @@ export class FakeMessagesBackendApi implements MessagesApi {
   async hentInnholdBrevmal(
     sakstype: FagsakYtelsesType,
     eksternReferanse: string,
-    avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]> {
-    const x = eksternReferanse + sakstype + avsenderApplikasjon; // For å unngå unused variable feil
+    const x = eksternReferanse + sakstype; // For å unngå unused variable feil
     if (x !== null && maltype === 'INNHENT_MEDISINSKE_OPPLYSNINGER') {
       return FakeMessagesBackendApi.dummyMalinnhold;
     }
@@ -160,7 +157,7 @@ export class FakeMessagesBackendApi implements MessagesApi {
     action('bestillDokument')(bestilling);
   }
 
-  async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
+  async lagForhåndsvisningPdf(data: LagForhåndsvisningRequest): Promise<Blob> {
     action('lag pdf data')(data);
     await this.doDelay();
     return fakePdf();

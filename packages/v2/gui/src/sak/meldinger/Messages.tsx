@@ -1,4 +1,3 @@
-import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
@@ -10,11 +9,7 @@ import type {
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import {
-  type ArbeidsgiverOpplysningerPerId,
-  bestemAvsenderApp,
-  type Personopplysninger,
-} from '../../utils/formidling.js';
+import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
 import type { Fagsak } from '../Fagsak.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
@@ -31,7 +26,7 @@ import TredjepartsmottakerInput, {
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
-import type { MessagesApi } from './api/MessagesApi.js';
+import type { LagForhåndsvisningRequest, MessagesApi } from './api/MessagesApi.js';
 
 export type MessagesState = Readonly<{
   valgtMalkode: string | undefined;
@@ -243,12 +238,7 @@ const Messages = ({
   useEffect(() => {
     const loadFritekstForslag = async () => {
       if (valgtMalkode !== undefined) {
-        const innhold = await api.hentInnholdBrevmal(
-          fagsak.sakstype,
-          behandling.uuid,
-          bestemAvsenderApp(behandling.type.kode),
-          valgtMalkode,
-        );
+        const innhold = await api.hentInnholdBrevmal(fagsak.sakstype, behandling.uuid, valgtMalkode);
         setFritekstForslag(innhold);
       }
     };
@@ -363,7 +353,7 @@ const Messages = ({
     if (values !== undefined) {
       if (fagsak.person.aktørId !== undefined) {
         // Koden her har store likheter med lagForhåndsvisRequest i formidlingUtils.tsx
-        const forhåndsvisDto: ForhåndsvisDto = {
+        const forhåndsvisDto: LagForhåndsvisningRequest = {
           eksternReferanse: behandling.uuid,
           ytelseType: fagsak.sakstype,
           saksnummer: fagsak.saksnummer,
@@ -374,7 +364,6 @@ const Messages = ({
             fritekstbrev: values.fritekstbrev,
           },
           aktørId: fagsak.person.aktørId,
-          avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
         };
         const pdfBlob = await api.lagForhåndsvisningPdf(forhåndsvisDto);
         window.open(URL.createObjectURL(pdfBlob));

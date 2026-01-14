@@ -1,7 +1,7 @@
 import { type AvsenderApplikasjon } from '../models/AvsenderApplikasjon.js';
 import { isTemplate, type Template } from '../models/Template.js';
 import { type FritekstbrevDokumentdata, isFritekstbrevDokumentdataArray } from '../models/FritekstbrevDokumentdata.js';
-import type { FagsakYtelsesType } from '../../k9sak/kodeverk/FagsakYtelsesType.ts';
+import type { FagsakYtelseType } from '../../combined/kodeverk/behandling/FagsakYtelseType.js';
 
 export class MalControllerClient {
   constructor(private baseUrl: URL) {
@@ -20,7 +20,7 @@ export class MalControllerClient {
   }
 
   async hentBrevmaler(
-    sakstype: FagsakYtelsesType,
+    sakstype: FagsakYtelseType,
     behandlingUuid: string,
     avsenderApplikasjon?: AvsenderApplikasjon,
   ): Promise<Map<string, Template>> {
@@ -52,7 +52,7 @@ export class MalControllerClient {
   }
 
   async hentInnholdBrevmalType(
-    sakstype: FagsakYtelsesType,
+    sakstype: FagsakYtelseType,
     eksternReferanse: string,
     avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,
