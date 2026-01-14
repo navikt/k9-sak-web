@@ -14,9 +14,9 @@ const isInDevelopmentModeOrTestEnvironment = () =>
   isRunningOnLocalhost() ||
   window.location.hostname === 'k9.dev.intern.nav.no' ||
   window.location.hostname === 'ung.intern.dev.nav.no';
-const getHeaderTitleHref = (getPathToLos: () => string | null, headerTitleHref: string) => {
+const getHeaderTitleHref = (getPathToLos: (() => string | null) | undefined, headerTitleHref: string) => {
   if (!isRunningOnLocalhost()) {
-    return getPathToLos() || headerTitleHref;
+    return getPathToLos?.() || headerTitleHref;
   }
   return headerTitleHref;
 };
@@ -27,7 +27,7 @@ interface OwnProps {
   removeErrorMessage: () => void;
   errorMessages?: Feilmelding[];
   setSiteHeight: (height: number) => void;
-  getPathToLos: () => string | null;
+  getPathToLos?: () => string | null;
   getPathToK9Punsj?: () => string | null;
   ainntektPath?: string;
   aaregPath: string;
