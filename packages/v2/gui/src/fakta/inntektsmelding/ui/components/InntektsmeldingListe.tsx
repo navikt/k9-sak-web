@@ -4,7 +4,7 @@ import { BodyShort, HStack, VStack } from '@navikt/ds-react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { sorterSkjæringstidspunkt } from '../../util/utils';
-import InntektsmeldingInfo from './InntektsmeldingInfo';
+import InntektsmeldingRad from './InntektsmeldingRad';
 import InntektsmeldingVurdering from './InntektsmeldingVurdering';
 
 interface InntektsmeldingListeProps {
@@ -23,17 +23,15 @@ const InntektsmeldingListe = ({
   harFlereTilstanderTilVurdering,
 }: InntektsmeldingListeProps) => (
   <ul className="m-0 list-none p-0">
-    {tilstander.sort(sorterSkjæringstidspunkt).map((tilstand, index) => (
-      <li
-        className={`border-b border-[#b0b0b0] py-6 pb-9 ${index === 0 ? 'border-t' : ''}`}
-        key={tilstand.periode.prettifyPeriod()}
-      >
-        <HStack marginBlock="0 4" align="center" gap="space-4">
+    {tilstander.sort(sorterSkjæringstidspunkt).map(tilstand => (
+      <li key={tilstand.periode.prettifyPeriod()} className="mt-[0.625rem]">
+        <hr className="border-ax-border-neutral-subtleA m-0 p-0 h-[1px]" />
+        <HStack align="center" marginBlock={'5 0'}>
           <CalendarIcon fontSize="1.5rem" />
           <BodyShort size="small">{tilstand.periode.prettifyPeriod()}</BodyShort>
         </HStack>
         <VStack gap="space-16">
-          <InntektsmeldingInfo status={tilstand.status} />
+          <InntektsmeldingRad status={tilstand.status} />
           <InntektsmeldingVurdering
             tilstand={tilstand}
             onSubmit={onFormSubmit}
