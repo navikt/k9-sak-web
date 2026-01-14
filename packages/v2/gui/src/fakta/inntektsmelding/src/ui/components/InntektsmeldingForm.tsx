@@ -1,7 +1,7 @@
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@navikt/k9-sak-typescript-client/types';
+import { k9_sak_kontrakt_kompletthet_Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
