@@ -30,7 +30,7 @@ const relevanteAksjonspunktkoder = [
 ];
 
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
-const PANEL_TEKST = 'Behandlingspunkt.Inngangsvilkar';
+const PANEL_TEKST = 'Inngangsvilkår';
 
 interface InngangsvilkarProsessStegInitPanelProps {
   behandling: Behandling;

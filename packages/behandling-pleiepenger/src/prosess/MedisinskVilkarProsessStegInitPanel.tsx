@@ -16,7 +16,7 @@ const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilka
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
-const PANEL_TEKST = 'Behandlingspunkt.MedisinskVilkar';
+const PANEL_TEKST = 'Sykdom';
 
 interface Props {
   api: K9SakProsessApi;

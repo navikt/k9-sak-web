@@ -18,7 +18,7 @@ import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
-const PANEL_TEKST = 'Behandlingspunkt.TilkjentYtelse';
+const PANEL_TEKST = 'Tilkjent ytelse';
 
 /**
  * Sjekker om beregningsresultatet kun inneholder avslåtte uttak

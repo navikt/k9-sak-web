@@ -2,7 +2,6 @@ import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/Loadi
 import { Box } from '@navikt/ds-react';
 import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router';
 import styles from './prosessMeny.module.css';
 import { ProsessPanelContext } from './ProsessPanelContext.js';
@@ -53,7 +52,6 @@ interface ProsessMenyProps {
  * ```
  */
 export const ProsessMeny = ({ children }: ProsessMenyProps) => {
-  const intl = useIntl();
   const [searchParams, setSearchParams] = useSearchParams();
   const [paneler, setPaneler] = useState<Map<string, InternPanelRegistrering>>(new Map());
   const [valgtPanelId, setValgtPanelId] = useState<string | null>(null);
@@ -138,12 +136,12 @@ export const ProsessMeny = ({ children }: ProsessMenyProps) => {
       .map(id => paneler.get(id))
       .filter((panel): panel is InternPanelRegistrering => panel !== undefined)
       .map(panel => ({
-        label: intl.messages[panel.tekstKode] ? intl.formatMessage({ id: panel.tekstKode }) : panel.tekstKode,
+        label: panel.tekstKode,
         isActive: panel.id === valgtPanelId,
         type: panel.type || ProcessMenuStepType.default,
         usePartialStatus: panel.usePartialStatus,
       }));
-  }, [paneler, valgtPanelId, intl]);
+  }, [paneler, valgtPanelId]);
 
   // Håndter klikk på menyelement
   const handleStegKlikk = (indeks: number) => {

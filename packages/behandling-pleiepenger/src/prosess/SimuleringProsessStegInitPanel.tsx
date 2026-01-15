@@ -23,7 +23,7 @@ const RELEVANTE_AKSJONSPUNKTER = [
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.AVREGNING;
-const PANEL_TEKST = 'Behandlingspunkt.Avregning';
+const PANEL_TEKST = 'Simulering';
 
 interface Props {
   behandling: Behandling;

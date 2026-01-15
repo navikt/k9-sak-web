@@ -18,7 +18,7 @@ import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel
 // Relevante vilkår for inngangsvilkår-panelet
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
 const PANEL_ID = prosessStegCodes.OPPTJENING;
-const PANEL_TEKST = 'Behandlingspunkt.InngangsvilkarForts';
+const PANEL_TEKST = 'Inngangsvilkår Fortsettelse';
 
 interface InngangsvilkarFortsProsessStegInitPanelProps {
   behandling: Behandling;

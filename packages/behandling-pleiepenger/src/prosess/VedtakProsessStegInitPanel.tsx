@@ -31,7 +31,7 @@ const vedtakAksjonspunktKoder = [
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.VEDTAK;
-const PANEL_TEKST = 'Behandlingspunkt.Vedtak';
+const PANEL_TEKST = 'Vedtak';
 
 interface Props {
   api: K9SakProsessApi;

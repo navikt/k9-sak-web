@@ -20,7 +20,7 @@ const RELEVANTE_AKSJONSPUNKTER = [
 
 // Definer panel ID og tekst som konstanter
 const panelId = 'uttak';
-const panelTekst = 'Behandlingspunkt.Uttak';
+const panelTekst = 'Uttak';
 
 interface Props {
   behandling: Behandling;

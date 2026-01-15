@@ -26,7 +26,7 @@ const BEREGNING_AKSJONSPUNKT_KODER = [
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
-const PANEL_TEKST = 'Behandlingspunkt.Beregning';
+const PANEL_TEKST = 'Beregning';
 
 interface Props {
   api: K9SakProsessApi;
