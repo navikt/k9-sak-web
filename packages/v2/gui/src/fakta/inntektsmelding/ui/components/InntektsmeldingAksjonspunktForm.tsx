@@ -82,7 +82,7 @@ interface InntektsmeldingFormProps {
   harFlereTilstanderTilVurdering: boolean;
 }
 
-const InntektsmeldingForm = ({
+const InntektsmeldingAksjonspunktForm = ({
   tilstand,
   aksjonspunkt,
   formMethods,
@@ -197,4 +197,4 @@ const InntektsmeldingForm = ({
   );
 };
 
-export default InntektsmeldingForm;
+export default InntektsmeldingAksjonspunktForm;

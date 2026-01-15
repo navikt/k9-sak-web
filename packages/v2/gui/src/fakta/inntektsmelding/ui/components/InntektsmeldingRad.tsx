@@ -1,4 +1,4 @@
-import { EyeWithPupilIcon, PaperplaneIcon } from '@navikt/aksel-icons';
+import { EyeWithPupilIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import { useContext } from 'react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -6,6 +6,7 @@ import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext'
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import InntektsmeldingStatus from './InntektsmeldingStatus';
+import { NyInntektsmeldingDialog } from './NyInntektsmeldingDialog/NyInntektsmeldingDialog';
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeidsforholdId }) => {
   const { arbeidsforhold } = useInntektsmeldingContext();
@@ -26,9 +27,10 @@ interface InntektsmeldingRadProps {
     arbeidsgiver: ArbeidsgiverArbeidsforholdId;
     journalpostId?: string;
   }>;
+  førsteFraværsdag: string;
 }
 
-const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
+const InntektsmeldingRad = ({ status, førsteFraværsdag }: InntektsmeldingRadProps) => {
   const { dokumenter } = useInntektsmeldingContext();
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -78,9 +80,12 @@ const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
                   Åpne
                 </Button>
                 {visSendNyOppgave && (
-                  <Button size="small" variant="secondary" icon={<PaperplaneIcon aria-hidden />} disabled>
-                    Send ny oppgave
-                  </Button>
+                  <NyInntektsmeldingDialog
+                    førsteFraværsdag={førsteFraværsdag}
+                    arbeidsgiver={s.arbeidsgiver}
+                    harEksisterendeOppgave={false} // TODO: Sjekk faktisk status fra backend når dette er implementert
+                    tidligereOppgaveSendtDato={undefined} // TODO: Hent fra backend når dette er implementert
+                  />
                 )}
               </div>
             </HGrid>
