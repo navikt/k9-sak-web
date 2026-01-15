@@ -29,4 +29,5 @@ export const qFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: true,
   ENDRE_FRIST: true,
+  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
 } satisfies UngFeatureToggles;

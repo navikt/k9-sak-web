@@ -152,12 +152,16 @@ const InntektsmeldingContainer = () => {
 
   return (
     <div>
-      <h1 className="text-[1.375rem]">Inntektsmelding</h1>
-      <h2 className="my-5 text-lg">Opplysninger til beregning</h2>
+      <Heading size="small" level="1">
+        Inntektsmelding
+      </Heading>
+      <Heading size="xsmall" level="2" className="my-[0.625rem] mt-5">
+        Opplysninger til beregning
+      </Heading>
 
       {harAktivtAksjonspunkt && <InntektsmeldingManglerInfo />}
 
-      <Box.New marginBlock="6 0">
+      <Box.New>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
           onFormSubmit={onFinished}

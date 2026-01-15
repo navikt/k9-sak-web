@@ -29,4 +29,5 @@ export const qFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: true,
   UNG_KLAGE: true,
   KRONISK_TIDSBEGRENSET: true,
+  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
 } satisfies K9FeatureToggles;
