@@ -9,6 +9,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './api/k9SakQueryOptions';
 
 // Relevante aksjonspunkter for uttak
 const RELEVANTE_AKSJONSPUNKTER = [
@@ -54,15 +55,11 @@ interface Props {
 export function UttakProsessStegInitPanel(props: Props) {
   const context = useContext(ProsessPanelContext);
 
-  const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery({
-    queryKey: ['behandling', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getBehandling(props.behandling.uuid),
-  });
+  const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery(
+    behandlingQueryOptions(props.api, props.behandling),
+  );
 
-  const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-  });
+  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
 
   const { data: uttak } = useSuspenseQuery({
     queryKey: ['uttak', props.behandling.uuid, props.behandling.versjon],

@@ -14,6 +14,12 @@ import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/Prose
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
+import {
+  aksjonspunkterQueryOptions,
+  arbeidsgiverOpplysningerQueryOptions,
+  beregningsgrunnlagQueryOptions,
+  vilkårQueryOptions,
+} from './api/k9SakQueryOptions';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -58,28 +64,16 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     { data: arbeidsgiverOpplysningerPerId = [] },
   ] = useSuspenseQueries({
     queries: [
-      {
-        queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
-        queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-        select: (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
-          data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
-      },
-      {
-        queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getVilkår(props.behandling.uuid),
-      },
+      aksjonspunkterQueryOptions(props.api, props.behandling, (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
+        data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
+      ),
+      vilkårQueryOptions(props.api, props.behandling),
       {
         queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid, props.behandling.versjon],
         queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
       },
-      {
-        queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
-      },
-      {
-        queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
-      },
+      beregningsgrunnlagQueryOptions(props.api, props.behandling),
+      arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
     ],
   });
 

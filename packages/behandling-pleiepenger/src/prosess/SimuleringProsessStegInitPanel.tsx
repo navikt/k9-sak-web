@@ -15,6 +15,7 @@ import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { aksjonspunkterQueryOptions } from './api/k9SakQueryOptions';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
@@ -46,10 +47,7 @@ interface Props {
  * - Rendering av legacy panelkomponent
  */
 export function SimuleringProsessStegInitPanel(props: Props) {
-  const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-  });
+  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
   const featureToggles = use(FeatureTogglesContext);
   const context = useContext(ProsessPanelContext);
 

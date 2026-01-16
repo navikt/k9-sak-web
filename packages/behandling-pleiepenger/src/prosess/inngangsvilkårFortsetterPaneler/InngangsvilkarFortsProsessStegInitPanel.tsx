@@ -13,6 +13,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
+import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../api/k9SakQueryOptions';
 import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapProsessStegInitPanel';
 import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
 
@@ -51,14 +52,8 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   aksjonspunkterMedKodeverk,
 }: InngangsvilkarFortsProsessStegInitPanelProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
-  const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', behandling.uuid, behandling.versjon],
-    queryFn: () => api.getVilkår(behandling.uuid),
-  });
-  const { data: aksjonspunkter = [] } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
-    queryFn: () => api.getAksjonspunkter(behandling.uuid),
-  });
+  const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
+  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
   const context = useContext(ProsessPanelContext);
 
   const vilkarForSteg = useMemo(() => {

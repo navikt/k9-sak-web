@@ -15,6 +15,14 @@ import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
+import {
+  aksjonspunkterQueryOptions,
+  arbeidsgiverOpplysningerQueryOptions,
+  behandlingQueryOptions,
+  beregningsgrunnlagQueryOptions,
+  personopplysningerQueryOptions,
+  vilkårQueryOptions,
+} from './api/k9SakQueryOptions';
 
 const vedtakAksjonspunktKoder = [
   aksjonspunktCodes.FORESLA_VEDTAK,
@@ -75,26 +83,11 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { data: medlemskap },
   ] = useSuspenseQueries({
     queries: [
-      {
-        queryKey: ['behandling', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getBehandling(props.behandling.uuid),
-      },
-      {
-        queryKey: ['aksjonspunkter', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-      },
-      {
-        queryKey: ['vilkar', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getVilkår(props.behandling.uuid),
-      },
-      {
-        queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
-      },
-      {
-        queryKey: ['beregningsgrunnlag', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getAlleBeregningsgrunnlag(props.behandling.uuid),
-      },
+      behandlingQueryOptions(props.api, props.behandling),
+      aksjonspunkterQueryOptions(props.api, props.behandling),
+      vilkårQueryOptions(props.api, props.behandling),
+      arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling),
       {
         queryKey: ['simuleringResultat', props.behandling.uuid, props.behandling.versjon],
         queryFn: () => props.api.getSimuleringResultat(props.behandling.uuid),
@@ -107,10 +100,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
         queryKey: ['overlappendeYtelser', props.behandling.uuid, props.behandling.versjon],
         queryFn: () => props.api.getOverlappendeYtelser(props.behandling.uuid),
       },
-      {
-        queryKey: ['personopplysninger', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
-      },
+      personopplysningerQueryOptions(props.api, props.behandling),
       {
         queryKey: ['medlemskap', props.behandling.uuid, props.behandling.versjon],
         queryFn: () => props.api.getMedlemskap(props.behandling.uuid),

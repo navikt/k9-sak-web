@@ -15,6 +15,11 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
+import {
+  aksjonspunkterQueryOptions,
+  arbeidsgiverOpplysningerQueryOptions,
+  personopplysningerQueryOptions,
+} from './api/k9SakQueryOptions';
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
@@ -68,22 +73,13 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
         queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid, props.behandling?.versjon],
         queryFn: () => props.api.getBeregningsresultatMedUtbetaling(props.behandling.uuid),
       },
-      {
-        queryKey: ['personopplysninger', props.behandling?.uuid, props.behandling?.versjon],
-        queryFn: () => props.api.getPersonopplysninger(props.behandling.uuid),
-      },
-      {
-        queryKey: ['aksjonspunkter', props.behandling?.uuid, props.behandling?.versjon],
-        queryFn: () => props.api.getAksjonspunkter(props.behandling.uuid),
-        select: (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
-          data.filter(
-            ap => ap.definisjon === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
-          ),
-      },
-      {
-        queryKey: ['arbeidsgiverOpplysningerPerId', props.behandling?.uuid, props.behandling?.versjon],
-        queryFn: () => props.api.getArbeidsgiverOpplysninger(props.behandling.uuid),
-      },
+      personopplysningerQueryOptions(props.api, props.behandling),
+      aksjonspunkterQueryOptions(props.api, props.behandling, (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
+        data.filter(
+          ap => ap.definisjon === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+        ),
+      ),
+      arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
     ],
   });
 

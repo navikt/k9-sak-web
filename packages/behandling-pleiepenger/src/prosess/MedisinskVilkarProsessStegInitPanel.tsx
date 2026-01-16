@@ -11,6 +11,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { aksjonspunkterQueryOptions, vilkårQueryOptions } from './api/k9SakQueryOptions';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
 const RELEVANTE_AKSJONSPUNKTKODER = [aksjonspunktCodes.MEDISINSK_VILKAAR];
@@ -39,14 +40,8 @@ interface Props {
  */
 export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) {
   const context = useContext(ProsessPanelContext);
-  const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkar', behandling.uuid, behandling.versjon],
-    queryFn: () => api.getVilkår(behandling.uuid),
-  });
-  const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
-    queryFn: () => api.getAksjonspunkter(behandling.uuid),
-  });
+  const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
+  const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkårForSteg = useMemo(() => {
