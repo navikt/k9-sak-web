@@ -4,6 +4,7 @@ import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backen
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
+import { sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
@@ -122,8 +123,10 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     return ProcessMenuStepType.default;
   }, [skalVisePanel, vilkarForSteg, aksjonspunkter]);
 
+  const visDelvisStatus = useMemo(() => sjekkDelvisVilkårStatus(vilkarForSteg), [vilkarForSteg]);
+
   const erValgt = context?.erValgt(PANEL_ID);
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType, visDelvisStatus);
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 

@@ -193,10 +193,17 @@ export function VedtakProsessStegInitPanel(props: Props) {
     return ProcessMenuStepType.default;
   }, [aksjonspunkter, behandlingV2, vilkår]);
 
+  const visDelvisStatus = useMemo(() => {
+    return (
+      vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT)) &&
+      vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.OPPFYLT))
+    );
+  }, [vilkår]);
+
   // Registrer panel med menyen
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType, visDelvisStatus);
 
   const erStegVurdert = panelType !== ProcessMenuStepType.default;
 

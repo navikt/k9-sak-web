@@ -13,9 +13,7 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { StandardProsessPanelPropsProvider } from '@k9-sak-web/gui/behandling/prosess/context/StandardProsessPanelPropsContext.js';
 import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
-import { LegacyPanelAdapter } from '@k9-sak-web/gui/behandling/prosess/LegacyPanelAdapter.js';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -327,163 +325,127 @@ const PleiepengerProsess = ({
           lukkModal={lukkModalOgGåTilSøk}
           tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
         />
-        <StandardProsessPanelPropsProvider
-          value={{
-            behandling,
-            fagsak,
-            aksjonspunkter: data.aksjonspunkter,
-            vilkar: data.vilkar,
-            alleKodeverk,
-            submitCallback: bekreftAksjonspunktCallback,
-            previewCallback,
-            previewFptilbakeCallback,
-            isReadOnly: !rettigheter.writeAccess.isEnabled,
-            rettigheter,
-            featureToggles,
-            formData,
-            setFormData,
-            arbeidsgiverOpplysningerPerId,
-            hentBehandling,
-            erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
-            lagreDokumentdata,
-            hentFritekstbrevHtmlCallback: dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback,
-          }}
-        >
-          {/* v2 meny for navigasjon */}
-          <ProsessMeny>
-            <Bleed marginInline="space-24">
-              <BoxNew borderColor="neutral-subtle" borderWidth="1" padding="space-16">
-                {prosessStegPanelDefinisjoner.map(panelDef => {
-                  // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
-                  const urlKode = panelDef.getUrlKode();
-                  const formaterPanel = formaterteProsessStegPaneler.find(
-                    panel => panel.labelId === panelDef.getTekstKode(),
-                  );
-                  const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
-                  const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
-                  // Bruk migrerte InitPanel-komponenter der de finnes
-                  if (urlKode === PROSESS_STEG_KODER.INNGANGSVILKAR) {
-                    return (
-                      <InngangsvilkarProsessStegInitPanel
-                        key={urlKode}
-                        submitCallback={bekreftAksjonspunktCallback}
-                        overrideReadOnly={isReadOnly}
-                        kanOverstyreAccess={rettigheter.kanOverstyreAccess}
-                        kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
-                        toggleOverstyring={toggleOverstyring}
-                        overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
-                        behandling={behandling}
-                        api={k9SakProsessApi}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.MEDISINSK_VILKAR) {
-                    return (
-                      <MedisinskVilkarProsessStegInitPanel
-                        key={urlKode}
-                        behandling={behandling}
-                        api={k9SakProsessApi}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.OPPTJENING) {
-                    return (
-                      <InngangsvilkarFortsProsessStegInitPanel
-                        key={urlKode}
-                        submitCallback={bekreftAksjonspunktCallback}
-                        overrideReadOnly={isReadOnly}
-                        kanOverstyreAccess={rettigheter.kanOverstyreAccess}
-                        kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
-                        toggleOverstyring={toggleOverstyring}
-                        overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
-                        behandling={behandling}
-                        api={k9SakProsessApi}
-                        isReadOnly={isReadOnly}
-                        fagsak={fagsak}
-                        aksjonspunkterMedKodeverk={data.aksjonspunkter}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.UTTAK) {
-                    return (
-                      <UttakProsessStegInitPanel
-                        key={urlKode}
-                        behandling={behandling}
-                        api={k9SakProsessApi}
-                        hentBehandling={hentBehandling}
-                        erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-                        isReadOnly={isReadOnly}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.TILKJENT_YTELSE) {
-                    return (
-                      <TilkjentYtelseProsessStegInitPanel
-                        key={urlKode}
-                        api={k9SakProsessApi}
-                        behandling={behandling}
-                        fagsak={fagsak}
-                        isReadOnly={isReadOnly}
-                        submitCallback={bekreftAksjonspunktCallback}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.SIMULERING) {
-                    return (
-                      <SimuleringProsessStegInitPanel
-                        api={k9SakProsessApi}
-                        key={urlKode}
-                        behandling={behandling}
-                        aksjonspunkterMedKodeverk={data.aksjonspunkter}
-                        fagsak={fagsak}
-                        isReadOnly={isReadOnly}
-                        submitCallback={bekreftAksjonspunktCallback}
-                        previewFptilbakeCallback={previewFptilbakeCallback}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.BEREGNINGSGRUNNLAG) {
-                    return (
-                      <BeregningsgrunnlagProsessStegInitPanel
-                        key={urlKode}
-                        api={k9SakProsessApi}
-                        behandling={behandling}
-                        submitCallback={bekreftAksjonspunktCallback}
-                        formData={formData}
-                        setFormData={setFormData}
-                        alleKodeverk={alleKodeverk}
-                        isReadOnly={isReadOnly}
-                      />
-                    );
-                  }
-                  if (urlKode === PROSESS_STEG_KODER.VEDTAK) {
-                    return (
-                      <VedtakProsessStegInitPanel
-                        key={urlKode}
-                        api={k9SakProsessApi}
-                        behandling={behandling}
-                        hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
-                        isReadOnly={isReadOnly}
-                        submitCallback={bekreftAksjonspunktCallback}
-                        previewCallback={previewCallback}
-                        lagreDokumentdata={lagreDokumentdata}
-                      />
-                    );
-                  }
+        {/* v2 meny for navigasjon */}
+        <ProsessMeny>
+          <Bleed marginInline="space-24">
+            <BoxNew borderColor="neutral-subtle" borderWidth="1" padding="space-16">
+              {prosessStegPanelDefinisjoner.map(panelDef => {
+                // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
+                const urlKode = panelDef.getUrlKode();
+                const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
+                const isReadOnly = !rettigheter.writeAccess.isEnabled;
+
+                // Bruk migrerte InitPanel-komponenter der de finnes
+                if (urlKode === PROSESS_STEG_KODER.INNGANGSVILKAR) {
                   return (
-                    <LegacyPanelAdapter
+                    <InngangsvilkarProsessStegInitPanel
                       key={urlKode}
-                      panelDef={panelDef}
-                      menyType={formaterPanel?.type}
-                      usePartialStatus={formaterPanel?.usePartialStatus}
+                      submitCallback={bekreftAksjonspunktCallback}
+                      overrideReadOnly={isReadOnly}
+                      kanOverstyreAccess={rettigheter.kanOverstyreAccess}
+                      kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
+                      toggleOverstyring={toggleOverstyring}
+                      overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
+                      behandling={behandling}
+                      api={k9SakProsessApi}
                     />
                   );
-                })}
-              </BoxNew>
-            </Bleed>
-          </ProsessMeny>
-        </StandardProsessPanelPropsProvider>
+                }
+                if (urlKode === PROSESS_STEG_KODER.MEDISINSK_VILKAR) {
+                  return (
+                    <MedisinskVilkarProsessStegInitPanel key={urlKode} behandling={behandling} api={k9SakProsessApi} />
+                  );
+                }
+                if (urlKode === PROSESS_STEG_KODER.OPPTJENING) {
+                  return (
+                    <InngangsvilkarFortsProsessStegInitPanel
+                      key={urlKode}
+                      submitCallback={bekreftAksjonspunktCallback}
+                      overrideReadOnly={isReadOnly}
+                      kanOverstyreAccess={rettigheter.kanOverstyreAccess}
+                      kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
+                      toggleOverstyring={toggleOverstyring}
+                      overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
+                      behandling={behandling}
+                      api={k9SakProsessApi}
+                      isReadOnly={isReadOnly}
+                      fagsak={fagsak}
+                      aksjonspunkterMedKodeverk={data.aksjonspunkter}
+                    />
+                  );
+                }
+                if (urlKode === PROSESS_STEG_KODER.UTTAK) {
+                  return (
+                    <UttakProsessStegInitPanel
+                      key={urlKode}
+                      behandling={behandling}
+                      api={k9SakProsessApi}
+                      hentBehandling={hentBehandling}
+                      erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
+                      isReadOnly={isReadOnly}
+                    />
+                  );
+                }
+                if (urlKode === PROSESS_STEG_KODER.TILKJENT_YTELSE) {
+                  return (
+                    <TilkjentYtelseProsessStegInitPanel
+                      key={urlKode}
+                      api={k9SakProsessApi}
+                      behandling={behandling}
+                      fagsak={fagsak}
+                      isReadOnly={isReadOnly}
+                      submitCallback={bekreftAksjonspunktCallback}
+                    />
+                  );
+                }
+                if (urlKode === PROSESS_STEG_KODER.SIMULERING) {
+                  return (
+                    <SimuleringProsessStegInitPanel
+                      api={k9SakProsessApi}
+                      key={urlKode}
+                      behandling={behandling}
+                      aksjonspunkterMedKodeverk={data.aksjonspunkter}
+                      fagsak={fagsak}
+                      isReadOnly={isReadOnly}
+                      submitCallback={bekreftAksjonspunktCallback}
+                      previewFptilbakeCallback={previewFptilbakeCallback}
+                    />
+                  );
+                }
+                if (urlKode === PROSESS_STEG_KODER.BEREGNINGSGRUNNLAG) {
+                  return (
+                    <BeregningsgrunnlagProsessStegInitPanel
+                      key={urlKode}
+                      api={k9SakProsessApi}
+                      behandling={behandling}
+                      submitCallback={bekreftAksjonspunktCallback}
+                      formData={formData}
+                      setFormData={setFormData}
+                      alleKodeverk={alleKodeverk}
+                      isReadOnly={isReadOnly}
+                    />
+                  );
+                }
+                if (urlKode === PROSESS_STEG_KODER.VEDTAK) {
+                  return (
+                    <VedtakProsessStegInitPanel
+                      key={urlKode}
+                      api={k9SakProsessApi}
+                      behandling={behandling}
+                      hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
+                      isReadOnly={isReadOnly}
+                      submitCallback={bekreftAksjonspunktCallback}
+                      previewCallback={previewCallback}
+                      lagreDokumentdata={lagreDokumentdata}
+                    />
+                  );
+                }
+                return null;
+              })}
+            </BoxNew>
+          </Bleed>
+        </ProsessMeny>
       </VedtakFormContext.Provider>
     );
   }

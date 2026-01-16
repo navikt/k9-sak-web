@@ -1,9 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
+import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
 import { Behandling } from '@k9-sak-web/types';
@@ -13,6 +13,7 @@ import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
+const RELEVANTE_AKSJONSPUNKTKODER = [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
@@ -59,52 +60,18 @@ export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) 
   // Panelet vises hvis det finnes relevante vilkår
   const skalVisePanel = vilkårForSteg.length > 0;
 
-  // Beregn paneltype basert på vilkårstatus og aksjonspunkter (for menystatusindikator)
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis panelet ikke skal vises, bruk default
-    if (!skalVisePanel) {
-      return ProcessMenuStepType.default;
-    }
+  const panelStatus = useMemo(
+    () => finnPanelStatus(skalVisePanel, vilkårForSteg, aksjonspunkter, RELEVANTE_AKSJONSPUNKTKODER),
+    [skalVisePanel, vilkårForSteg, aksjonspunkter],
+  );
 
-    // Sjekk om det finnes åpent aksjonspunkt for medisinsk vilkår (warning har prioritet)
-    const harApenAksjonspunkt = aksjonspunkter?.some(
-      ap =>
-        ap.definisjon === aksjonspunktCodes.MEDISINSK_VILKAAR &&
-        ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
-    );
-    if (harApenAksjonspunkt) {
-      return ProcessMenuStepType.warning;
-    }
-
-    // Samle alle periode-statuser fra alle relevante vilkår
-    const vilkarStatusCodes: string[] = [];
-    vilkårForSteg.forEach(v => {
-      v.perioder
-        ?.filter(periode => periode.vurderesIBehandlingen)
-        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus));
-    });
-
-    // Sjekk om noen vilkår ikke er oppfylt (danger)
-    const harIkkeOppfyltVilkar = vilkarStatusCodes.some(kode => kode === 'IKKE_OPPFYLT');
-    if (harIkkeOppfyltVilkar) {
-      return ProcessMenuStepType.danger;
-    }
-
-    // Sjekk om alle vilkår er oppfylt (success)
-    const alleVilkarOppfylt = vilkarStatusCodes.length > 0 && vilkarStatusCodes.every(kode => kode === 'OPPFYLT');
-    if (alleVilkarOppfylt) {
-      return ProcessMenuStepType.success;
-    }
-
-    // Default tilstand
-    return ProcessMenuStepType.default;
-  }, [skalVisePanel, vilkårForSteg, aksjonspunkter]);
+  const visDelvisStatus = useMemo(() => sjekkDelvisVilkårStatus(vilkårForSteg), [vilkårForSteg]);
 
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
+  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelStatus, visDelvisStatus);
 
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erStegVurdert = panelStatus !== ProcessMenuStepType.default;
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !skalVisePanel) {

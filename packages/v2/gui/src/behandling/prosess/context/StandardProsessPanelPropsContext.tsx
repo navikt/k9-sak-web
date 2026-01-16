@@ -126,18 +126,6 @@ export function StandardProsessPanelPropsProvider({ value, children }: StandardP
  * }
  * ```
  */
-export function useStandardProsessPanelPropsContext(): StandardProsessPanelPropsContextValue {
-  const context = useContext(StandardProsessPanelPropsContext);
-
-  if (context === undefined) {
-    throw new Error(
-      'useStandardProsessPanelPropsContext må brukes innenfor en StandardProsessPanelPropsProvider. ' +
-        'Sørg for at ProsessMeny er wrappet med StandardProsessPanelPropsProvider i behandlingskomponenten.',
-    );
-  }
-
-  return context;
-}
 
 /**
  * Optional variant av useStandardProsessPanelPropsContext som returnerer undefined

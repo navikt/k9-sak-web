@@ -111,7 +111,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
                 </>
               )}
               <Heading size="small" level="2">
-                <FormattedMessage id={panelTittelKode} />
+                {intl.messages[panelTittelKode] ? <FormattedMessage id={panelTittelKode} /> : panelTittelKode}
               </Heading>
               <Detail className={styles.vilkar}>
                 <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
