@@ -9,7 +9,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './api/k9SakQueryOptions';
+import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
 
 // Relevante aksjonspunkter for uttak
 const RELEVANTE_AKSJONSPUNKTER = [
@@ -61,10 +61,7 @@ export function UttakProsessStegInitPanel(props: Props) {
 
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
 
-  const { data: uttak } = useSuspenseQuery({
-    queryKey: ['uttak', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getUttaksplan(props.behandling.uuid),
-  });
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(props.api, props.behandling));
 
   // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
   const panelType = useMemo((): ProcessMenuStepType => {

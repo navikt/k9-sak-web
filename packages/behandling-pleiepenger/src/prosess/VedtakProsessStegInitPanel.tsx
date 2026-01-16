@@ -21,6 +21,7 @@ import {
   behandlingQueryOptions,
   beregningsgrunnlagQueryOptions,
   personopplysningerQueryOptions,
+  simuleringResultatQueryOptions,
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
 
@@ -88,10 +89,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       vilkårQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
       beregningsgrunnlagQueryOptions(props.api, props.behandling),
-      {
-        queryKey: ['simuleringResultat', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getSimuleringResultat(props.behandling.uuid),
-      },
+      simuleringResultatQueryOptions(props.api, props.behandling),
       {
         queryKey: ['tilbakekrevingvalg', props.behandling.uuid, props.behandling.versjon],
         queryFn: () => props.api.getTilbakekrevingValg(props.behandling.uuid),

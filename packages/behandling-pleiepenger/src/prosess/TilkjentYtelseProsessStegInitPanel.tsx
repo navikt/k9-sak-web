@@ -18,6 +18,7 @@ import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
   aksjonspunkterQueryOptions,
   arbeidsgiverOpplysningerQueryOptions,
+  beregningsresultatUtbetalingQueryOptions,
   personopplysningerQueryOptions,
 } from './api/k9SakQueryOptions';
 
@@ -28,7 +29,7 @@ const PANEL_TEKST = 'Tilkjent ytelse';
 /**
  * Sjekker om beregningsresultatet kun inneholder avslåtte uttak
  */
-const harKunAvslåtteUttak = (
+export const harKunAvslåtteUttak = (
   beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
 ): boolean => {
   if (!beregningsresultatUtbetaling?.perioder) {
@@ -69,10 +70,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     { data: arbeidsgiverOpplysningerPerId },
   ] = useSuspenseQueries({
     queries: [
-      {
-        queryKey: ['beregningsresultatUtbetaling', props.behandling?.uuid, props.behandling?.versjon],
-        queryFn: () => props.api.getBeregningsresultatMedUtbetaling(props.behandling.uuid),
-      },
+      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
       aksjonspunkterQueryOptions(props.api, props.behandling, (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
         data.filter(

@@ -47,3 +47,21 @@ export const personopplysningerQueryOptions = (api: K9SakProsessApi, behandling:
     queryKey: ['personopplysninger', behandling.uuid, behandling.versjon],
     queryFn: () => api.getPersonopplysninger(behandling.uuid),
   });
+
+export const uttakQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['uttak', behandling.uuid, behandling.versjon],
+    queryFn: () => api.getUttaksplan(behandling.uuid),
+  });
+
+export const beregningsresultatUtbetalingQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['beregningsresultatUtbetaling', behandling.uuid, behandling.versjon],
+    queryFn: () => api.getBeregningsresultatMedUtbetaling(behandling.uuid),
+  });
+
+export const simuleringResultatQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['simuleringResultat', behandling.uuid, behandling.versjon],
+    queryFn: () => api.getSimuleringResultat(behandling.uuid),
+  });
