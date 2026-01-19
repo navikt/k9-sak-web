@@ -7,8 +7,8 @@ import { useEffect, useRef } from 'react';
 interface PeriodevelgerProps {
   minDate?: Date;
   maxDate?: Date;
-  fromField: { name: string; validators?: ((value: string) => string | undefined)[] };
-  toField: { name: string; validators?: ((value: string) => string | undefined)[] };
+  fromField: { name: string; validate?: ((value: string) => string | undefined)[] };
+  toField: { name: string; validate?: ((value: string) => string | undefined)[] };
   fromLabel?: string;
   toLabel?: string;
   readOnly?: boolean;
@@ -82,8 +82,8 @@ const Periodevelger = ({
           label={fromLabel}
           disabled={readOnly}
           size={size}
-          validators={[
-            ...(fromField.validators || []),
+          validate={[
+            ...(fromField.validate || []),
             (value: string) => {
               if (!value || !tilVerdi) return undefined;
               return dayjs(value).isAfter(dayjs(tilVerdi), 'day') ? `Kan ikke være etter "${toLabel}"` : undefined;
@@ -100,8 +100,8 @@ const Periodevelger = ({
           label={toLabel}
           disabled={readOnly}
           size={size}
-          validators={[
-            ...(toField.validators || []),
+          validate={[
+            ...(toField.validate || []),
             (value: string) => {
               if (!value || !fraVerdi) return undefined;
               return dayjs(value).isSameOrBefore(dayjs(fraVerdi), 'day')
