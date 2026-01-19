@@ -32,7 +32,6 @@ interface UngVedtakProps {
 const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgResponse | undefined) =>
   vedtaksbrevValg?.vedtaksbrevValg?.map(v => ({
     dokumentMalType: v.dokumentMalType?.kilde,
-    hindreUtsendingAvBrev: !!v.hindret || false,
     redigertHtml: '',
     originalHtml: '',
   })) ?? [];
