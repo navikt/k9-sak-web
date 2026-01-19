@@ -14,6 +14,12 @@ export const withFakeInntektsmeldingApi =
           return Promise.resolve({ tilstand: [] });
         }
       },
+      etterspørInntektsmelding(): Promise<void> {
+        return Promise.resolve();
+      },
+      settPåVent(): Promise<void> {
+        return Promise.resolve();
+      },
     };
 
     return (

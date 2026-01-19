@@ -83,9 +83,9 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
     ?.map((v, index) => (v ? index : undefined))
     .filter(v => v !== undefined);
 
-    // hvis periode A og B overlapper, og vi deretter endrer periode A så de ikke lenger overlapper
-    // så må vi gjøre dette for å få trigget validering av periode B for å fjern feilmeldingen
-    // gjelder også hvis man går fra å ikke overlappe til å overlappe
+  // hvis periode A og B overlapper, og vi deretter endrer periode A så de ikke lenger overlapper
+  // så må vi gjøre dette for å få trigget validering av periode B for å fjern feilmeldingen
+  // gjelder også hvis man går fra å ikke overlappe til å overlappe
   useEffect(() => {
     if (submitCount && submitCount > 0) {
       perioder.forEach((periode, index) => {
@@ -107,7 +107,7 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0].tom).toDate() : undefined}
               fromField={{
                 name: `perioder.${index}.fom`,
-                validators: [
+                validate: [
                   (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
                   (value: string) => {
                     if (!value || !perioder[index]?.fom) return undefined;
@@ -121,7 +121,7 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               }}
               toField={{
                 name: `perioder.${index}.tom`,
-                validators: [
+                validate: [
                   (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
                   (value: string) => {
                     if (!value || !perioder[index]?.tom) return undefined;
