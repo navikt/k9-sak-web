@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@editorjs/editorjs": "2.31.0",
+    "@editorjs/editorjs": "2.31.1",
     "@editorjs/header": "2.8.8",
     "@editorjs/list": "2.0.9",
     "@editorjs/paragraph": "2.11.7",
