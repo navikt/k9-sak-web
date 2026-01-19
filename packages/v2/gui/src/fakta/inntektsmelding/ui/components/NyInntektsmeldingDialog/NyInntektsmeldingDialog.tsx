@@ -1,7 +1,6 @@
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, Dialog } from '@navikt/ds-react';
-import { useState } from 'react';
 import { SendForespørselContent } from './SendForespørsel';
 import { KanIkkeOppretteNyOppgaveContent } from './KanIkkeOppretteOppgave';
 
@@ -18,8 +17,6 @@ export const NyInntektsmeldingDialog = ({
   harEksisterendeOppgave,
   tidligereOppgaveSendtDato,
 }: NyInntektsmeldingDialogProps) => {
-  const [begrunnelse, setBegrunnelse] = useState('');
-
   const renderContent = () => {
     if (harEksisterendeOppgave && tidligereOppgaveSendtDato) {
       return (
@@ -31,14 +28,7 @@ export const NyInntektsmeldingDialog = ({
       );
     }
 
-    return (
-      <SendForespørselContent
-        førsteFraværsdag={førsteFraværsdag}
-        arbeidsgiver={arbeidsgiver}
-        begrunnelse={begrunnelse}
-        onBegrunnelseChange={setBegrunnelse}
-      />
-    );
+    return <SendForespørselContent førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
   };
 
   return (

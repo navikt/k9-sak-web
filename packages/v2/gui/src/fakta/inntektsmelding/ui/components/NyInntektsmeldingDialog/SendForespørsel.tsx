@@ -1,49 +1,50 @@
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
-import { BodyShort, Button, Dialog, Label, Textarea, VStack } from '@navikt/ds-react';
+import { BodyShort, Button, Dialog, HStack, Label, VStack } from '@navikt/ds-react';
+import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
+import { minLength, required } from '@navikt/ft-form-validators';
+import { useForm } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import { useSendInntektsmeldingOppgave } from '../../../api/inntektsmeldingQueries';
+import { useEtterspørInntektsmelding } from '../../../api/inntektsmeldingQueries';
 import { visnDato } from '../../../../../utils/formatters';
-import { ForespørselSendtContent } from './ForespørselSendt';
+import { ForespørselSendtSettPåVent } from './ForespørselSendtSettPåVent';
 
 interface SendForespørselContentProps {
   førsteFraværsdag: string;
   arbeidsgiver: ArbeidsgiverArbeidsforholdId;
-  begrunnelse: string;
-  onBegrunnelseChange: (value: string) => void;
 }
 
-export const SendForespørselContent = ({
-  førsteFraværsdag,
-  arbeidsgiver,
-  begrunnelse,
-  onBegrunnelseChange,
-}: SendForespørselContentProps) => {
+interface FormData {
+  begrunnelse: string;
+}
+
+export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: SendForespørselContentProps) => {
   const { arbeidsforhold, behandlingUuid } = useInntektsmeldingContext();
+  const etterspørInntektsmeldingMutation = useEtterspørInntektsmelding();
   const arbeidsgiverInfo = arbeidsforhold[arbeidsgiver.arbeidsgiver];
   const arbeidsgiverNavn = arbeidsgiverInfo?.navn ?? arbeidsgiverInfo?.fødselsdato ?? arbeidsgiver.arbeidsgiver;
   const formatertDato = visnDato(førsteFraværsdag);
-  const sendOppgaveMutation = useSendInntektsmeldingOppgave();
+  const formMethods = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: '',
+    },
+    mode: 'onBlur',
+  });
 
-  const handleSend = () => {
-    sendOppgaveMutation.mutate({
+  const handleSubmit = (data: FormData) => {
+    etterspørInntektsmeldingMutation.mutate({
       behandlingUuid,
-      førsteFraværsdag,
-      arbeidsgiver,
-      begrunnelse: begrunnelse || undefined,
+      skjæringstidspunkt: førsteFraværsdag,
+      orgnr: arbeidsgiver.arbeidsgiver,
+      // TODO: Add begrunnelse
     });
   };
 
-  const handleGåTilbake = () => {
-    onBegrunnelseChange('');
-    sendOppgaveMutation.reset();
-  };
-
-  if (sendOppgaveMutation.isSuccess) {
-    return <ForespørselSendtContent onGåTilbake={handleGåTilbake} />;
+  if (etterspørInntektsmeldingMutation.isSuccess) {
+    return <ForespørselSendtSettPåVent />;
   }
 
   return (
-    <>
+    <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
       <Dialog.Body>
         <VStack gap="space-24">
           <div>
@@ -59,34 +60,29 @@ export const SendForespørselContent = ({
             </Label>
             <BodyShort size="small">{arbeidsgiverNavn}</BodyShort>
           </div>
-
-          <Textarea
+          <RhfTextarea
+            control={formMethods.control}
+            name="begrunnelse"
             label="Begrunnelse"
             description="Begrunnelsen er kun synlig i historikken, og vil ikke sendes til arbeidsgiver."
-            value={begrunnelse}
-            onChange={e => onBegrunnelseChange(e.target.value)}
             size="small"
             minRows={4}
+            validate={[required, minLength(1)]}
           />
         </VStack>
       </Dialog.Body>
       <Dialog.Footer>
-        <div className="flex gap-2 justify-end">
+        <HStack gap="space-16" justify="end">
           <Dialog.CloseTrigger>
-            <Button variant="secondary">Avbryt</Button>
-          </Dialog.CloseTrigger>
-          <Dialog.CloseTrigger>
-            <Button
-              variant="primary"
-              onClick={handleSend}
-              loading={sendOppgaveMutation.isPending}
-              disabled={sendOppgaveMutation.isPending}
-            >
-              Send forespørsel
+            <Button variant="secondary" size="small">
+              Avbryt
             </Button>
           </Dialog.CloseTrigger>
-        </div>
+          <Button variant="primary" size="small" type="submit" loading={etterspørInntektsmeldingMutation.isPending}>
+            Send forespørsel
+          </Button>
+        </HStack>
       </Dialog.Footer>
-    </>
+    </RhfForm>
   );
 };

@@ -3,10 +3,7 @@ import { useInntektsmeldingContext } from '../context/InntektsmeldingContext';
 import { assertDefined } from '../../../utils/validation/assertDefined.js';
 import { useContext } from 'react';
 import { InntektsmeldingApiContext } from './InntektsmeldingApiContext.js';
-import type {
-  SendInntektsmeldingOppgaveRequest,
-  SendInntektsmeldingOppgaveResponse,
-} from './InntektsmeldingApi.js';
+import type { EtterspørInntektsmeldingRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/inntektsmelding/EtterspørInntektsmeldingRequest.js';
 
 export const useKompletthetsoversikt = () => {
   const api = assertDefined(useContext(InntektsmeldingApiContext));
@@ -15,15 +12,17 @@ export const useKompletthetsoversikt = () => {
   return useSuspenseQuery({
     queryKey: ['kompletthet-beregning', behandlingUuid],
     queryFn: () => api.hentKompletthetsoversikt(behandlingUuid),
+    
   });
 };
 
-export const useSendInntektsmeldingOppgave = () => {
+export const useEtterspørInntektsmelding = () => {
   const api = assertDefined(useContext(InntektsmeldingApiContext));
   const { behandlingUuid } = useInntektsmeldingContext();
 
-  return useMutation<SendInntektsmeldingOppgaveResponse, Error, SendInntektsmeldingOppgaveRequest>({
-    mutationFn: request => api.sendInntektsmeldingOppgave(request),
-    mutationKey: ['send-inntektsmelding-oppgave', behandlingUuid],
+  return useMutation<void, Error, EtterspørInntektsmeldingRequest>({
+    mutationFn: requestBody => api.etterspørInntektsmelding(requestBody),
+    mutationKey: ['etterspør-inntektsmelding', behandlingUuid],
+    throwOnError: true,
   });
 };
