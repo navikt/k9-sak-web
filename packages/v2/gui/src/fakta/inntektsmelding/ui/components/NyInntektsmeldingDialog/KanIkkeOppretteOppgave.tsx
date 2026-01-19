@@ -9,7 +9,7 @@ interface KanIkkeOppretteNyOppgaveContentProps {
   tidligereOppgaveSendtDato: string;
 }
 
-export const KanIkkeOppretteNyOppgaveContent = ({
+export const KanIkkeOppretteNyOppgave = ({
   førsteFraværsdag,
   arbeidsgiver,
   tidligereOppgaveSendtDato,
