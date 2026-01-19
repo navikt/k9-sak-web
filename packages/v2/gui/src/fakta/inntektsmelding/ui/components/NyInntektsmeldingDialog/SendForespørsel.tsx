@@ -18,7 +18,7 @@ interface FormData {
 }
 
 export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: SendForespørselContentProps) => {
-  const { arbeidsforhold, behandlingUuid } = useInntektsmeldingContext();
+  const { arbeidsforhold, behandling } = useInntektsmeldingContext();
   const etterspørInntektsmeldingMutation = useEtterspørInntektsmelding();
   const arbeidsgiverInfo = arbeidsforhold[arbeidsgiver.arbeidsgiver];
   const arbeidsgiverNavn = arbeidsgiverInfo?.navn ?? arbeidsgiverInfo?.fødselsdato ?? arbeidsgiver.arbeidsgiver;
@@ -30,9 +30,10 @@ export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: Se
     mode: 'onBlur',
   });
 
-  const handleSubmit = (data: FormData) => {
+  // TODO: Add begrunnelse
+  const handleSubmit = () => {
     etterspørInntektsmeldingMutation.mutate({
-      behandlingUuid,
+      behandlingUuid: behandling.uuid,
       skjæringstidspunkt: førsteFraværsdag,
       orgnr: arbeidsgiver.arbeidsgiver,
       // TODO: Add begrunnelse

@@ -6,9 +6,10 @@ import { Suspense, useMemo } from 'react';
 import InntektsmeldingContext from '../context/InntektsmeldingContext';
 import type { InntektsmeldingContextType, InntektsmeldingRequestPayload } from '../types';
 import InntektsmeldingContainer from './components/InntektsmeldingContainer';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 
 export interface InntektsmeldingContainerProps {
-  behandling: { uuid: string };
+  behandling: BehandlingDto;
   readOnly: boolean;
   arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysningerDto>;
   dokumenter?: DokumentDto[];
@@ -26,16 +27,15 @@ const InntektsmeldingIndex = ({
 }: InntektsmeldingContainerProps) => {
   const contextValue: InntektsmeldingContextType = useMemo(
     () => ({
-      behandlingUuid: behandling.uuid,
+      behandling,
       readOnly,
       arbeidsforhold: arbeidsgiverOpplysningerPerId,
       dokumenter,
       aksjonspunkter,
       onFinished: (payload: InntektsmeldingRequestPayload) => submitCallback([payload]),
     }),
-    [behandling.uuid, readOnly, arbeidsgiverOpplysningerPerId, dokumenter, aksjonspunkter, submitCallback],
+    [behandling, readOnly, arbeidsgiverOpplysningerPerId, dokumenter, aksjonspunkter, submitCallback],
   );
-
   return (
     <InntektsmeldingContext value={contextValue}>
       <Suspense fallback={<LoadingPanel />}>

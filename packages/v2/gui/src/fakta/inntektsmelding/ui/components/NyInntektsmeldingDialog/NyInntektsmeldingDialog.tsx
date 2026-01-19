@@ -2,7 +2,6 @@ import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kon
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, Dialog } from '@navikt/ds-react';
 import { SendForespørselContent } from './SendForespørsel';
-import { KanIkkeOppretteNyOppgaveContent } from './KanIkkeOppretteOppgave';
 
 interface NyInntektsmeldingDialogProps {
   førsteFraværsdag: string;
@@ -11,23 +10,8 @@ interface NyInntektsmeldingDialogProps {
   tidligereOppgaveSendtDato?: string;
 }
 
-export const NyInntektsmeldingDialog = ({
-  førsteFraværsdag,
-  arbeidsgiver,
-  harEksisterendeOppgave,
-  tidligereOppgaveSendtDato,
-}: NyInntektsmeldingDialogProps) => {
+export const NyInntektsmeldingDialog = ({ førsteFraværsdag, arbeidsgiver }: NyInntektsmeldingDialogProps) => {
   const renderContent = () => {
-    if (harEksisterendeOppgave && tidligereOppgaveSendtDato) {
-      return (
-        <KanIkkeOppretteNyOppgaveContent
-          førsteFraværsdag={førsteFraværsdag}
-          arbeidsgiver={arbeidsgiver}
-          tidligereOppgaveSendtDato={tidligereOppgaveSendtDato}
-        />
-      );
-    }
-
     return <SendForespørselContent førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
   };
 

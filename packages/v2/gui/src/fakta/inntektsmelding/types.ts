@@ -4,6 +4,7 @@ import type { KompletthetsTilstandPåPeriodeDto } from '@k9-sak-web/backend/k9sa
 import type { KompletthetsPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsPeriode.js';
 import type { ArbeidsgiverOpplysningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOpplysningerDto.js';
 import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 
 export const InntektsmeldingVurderingRequestKode = {
   FORTSETT: 'FORTSETT',
@@ -40,7 +41,7 @@ export interface InntektsmeldingRequestPayload {
 
 // Context type
 export interface InntektsmeldingContextType {
-  behandlingUuid: string;
+  behandling: BehandlingDto;
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
   dokumenter?: DokumentDto[];

@@ -1,0 +1,1 @@
+export { k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak } from '../../../generated/types.js';

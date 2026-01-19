@@ -13,6 +13,7 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
     const response = await kompletthet_utledStatusForKompletthet({
       query: { behandlingUuid },
     });
+
     return response.data;
   }
 
@@ -31,9 +32,14 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
     });
   }
 
-  async settPåVent(request: SettBehandlingPaVentDto): Promise<void> {
+  async settPåVent({ behandlingId, behandlingVersjon, frist, ventearsak }: SettBehandlingPaVentDto): Promise<void> {
     await behandlinger_settBehandlingPaVent({
-      body: request,
+      body: {
+        behandlingId,
+        behandlingVersjon,
+        frist,
+        ventearsak,
+      },
     });
   }
 }
