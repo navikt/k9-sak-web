@@ -2597,8 +2597,8 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20260114124700"
-    "@navikt/k9-sak-typescript-client": "npm:3.0.20260119101927"
-    "@navikt/k9-tilbake-typescript-client": "npm:1.1.20251205161955"
+    "@navikt/k9-sak-typescript-client": "npm:3.0.20260120090551"
+    "@navikt/k9-tilbake-typescript-client": "npm:1.1.20260118164048"
     "@navikt/ung-sak-typescript-client": "npm:2.0.20260119095558"
     "@navikt/ung-tilbake-typescript-client": "npm:3.0.20251209154059"
     "@tanstack/eslint-plugin-query": "npm:5.91.2"
@@ -3845,17 +3845,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:3.0.20260119101927":
-  version: 3.0.20260119101927
-  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20260119101927::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20260119101927%2F39ec979140d41e6aa3a3c2a6c827a015822b8d67"
-  checksum: 10/7cc853302e8ceef1f8fb24f976b8c254d93bb7848f4ce592cdce0b55422d6b51dfaaaeb992279e0969a3d6d6fb6e02c1788abfa53031faffaa9fc81661b79d06
+"@navikt/k9-sak-typescript-client@npm:3.0.20260120090551":
+  version: 3.0.20260120090551
+  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20260120090551::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20260120090551%2F1637c05a081b3ccd104a5016e1e98151a588ceb2"
+  checksum: 10/83a3ad986084331f9f024f5d5e4497ad73b1f98d26aa8a78e05f757618f9833a4445890a637e3fd051cbfc1016370ed2791bbe5f6def6fdf69eb95ae69c91117
   languageName: node
   linkType: hard
 
-"@navikt/k9-tilbake-typescript-client@npm:1.1.20251205161955":
-  version: 1.1.20251205161955
-  resolution: "@navikt/k9-tilbake-typescript-client@npm:1.1.20251205161955::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-tilbake-typescript-client%2F1.1.20251205161955%2Ffd0bf9f0a1f4139a22694ee36d9c097e657fc5e1"
-  checksum: 10/93e9de64e51417f8d001b1cfcb4afbe621f197d66ac3bfec6838cf46523daabf9d21987db61b22318576a17e9d8eb3ca00ec14807f79a7e938660919df461002
+"@navikt/k9-tilbake-typescript-client@npm:1.1.20260118164048":
+  version: 1.1.20260118164048
+  resolution: "@navikt/k9-tilbake-typescript-client@npm:1.1.20260118164048::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-tilbake-typescript-client%2F1.1.20260118164048%2Fe95cab081b6855abad2b98f5fe5fdbd746a8db71"
+  checksum: 10/ebbf6911a72854a9cc407c2a9790468fbc833e74660c8adaac495bf2e106e82e517a44ef242485c4f74ea8a8744f71647db3f391ea0de9483c7c7328563ef086
   languageName: node
   linkType: hard
 

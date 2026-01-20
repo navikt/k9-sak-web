@@ -14,11 +14,7 @@ const statusTekster = {
   [Status.MOTTATT]: 'Mottatt',
 };
 
-interface InntektsmeldingStatusProps {
-  status: Status;
-}
-
-const InntektsmeldingStatus = ({ status }: InntektsmeldingStatusProps) => {
+const InntektsmeldingStatus = ({ status }: { status: Status }) => {
   const erMottatt = status === Status.MOTTATT;
   const erMangler = status === Status.MANGLER;
   const erIkkePåkrevd = status === Status.IKKE_PÅKREVD;
@@ -26,10 +22,7 @@ const InntektsmeldingStatus = ({ status }: InntektsmeldingStatusProps) => {
   if (erMangler) {
     return (
       <>
-        <ExclamationmarkTriangleFillIcon
-          fontSize="1.5rem"
-          style={{ color: 'var(--ax-text-warning-decoration)' }}
-        />
+        <ExclamationmarkTriangleFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-text-warning-decoration)' }} />
         <span className="ml-2">{statusTekster[status] ?? status}</span>
       </>
     );
@@ -47,7 +40,7 @@ const InntektsmeldingStatus = ({ status }: InntektsmeldingStatusProps) => {
   return (
     <>
       <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
-      <span className="ml-2">{erMottatt ? 'Mottatt' : statusTekster[status] ?? status}</span>
+      <span className="ml-2">{erMottatt ? 'Mottatt' : (statusTekster[status] ?? status)}</span>
     </>
   );
 };
