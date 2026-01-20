@@ -1,5 +1,3 @@
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
-import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
@@ -8,46 +6,27 @@ import type {
   k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
   k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
-import { useEffect, useRef, useState } from 'react';
-import {
-  type ArbeidsgiverOpplysningerPerId,
-  bestemAvsenderApp,
-  type Personopplysninger,
-} from '../../utils/formidling.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
+import { useEffect, useReducer, useRef, useState } from 'react';
+import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
 import type { Fagsak } from '../Fagsak.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
-  type Error,
   type FritekstInputInvalid,
   type FritekstInputMethods,
   type FritekstInputValue,
   type FritekstModus,
-  type Valid,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.js';
 import MottakerSelect from './MottakerSelect.js';
 import { TredjepartsmottakerCheckbox } from './TredjepartsmottakerCheckbox.js';
 import TredjepartsmottakerInput, {
-  type BackendApi as TredjepartsmottakerBackendApi,
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
-
-export interface BackendApi extends TredjepartsmottakerBackendApi {
-  hentInnholdBrevmal(
-    fagsakYtelsestype: FagsakYtelsesType,
-    eksternReferanse: string,
-    avsenderApplikasjon: AvsenderApplikasjon,
-    maltype: string,
-  ): Promise<FritekstbrevDokumentdata[]>;
-  bestillDokument(bestilling: BestillBrevDto): Promise<void>;
-  lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob>;
-}
+import type { LagForhåndsvisningRequest, MessagesApi } from './api/MessagesApi.js';
 
 export type MessagesState = Readonly<{
   valgtMalkode: string | undefined;
@@ -62,17 +41,10 @@ export type MessagesProps = {
   readonly maler: Template[];
   readonly fagsak: Fagsak;
   readonly behandling: BehandlingInfo;
-  readonly personopplysninger?: Personopplysninger;
-  readonly arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
-  readonly api: BackendApi;
+  readonly personopplysninger: Personopplysninger;
+  readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  readonly api: MessagesApi;
   readonly onMessageSent: () => void;
-  readonly stickyState: {
-    readonly messages: StickyStateReducer<MessagesState>;
-    readonly fritekst: {
-      readonly tittel: StickyStateReducer<Valid | Error>;
-      readonly tekst: StickyStateReducer<Valid | Error>;
-    };
-  };
 };
 
 const initMessagesState = (maler: Template[]): MessagesState => {
@@ -223,14 +195,11 @@ const Messages = ({
   arbeidsgiverOpplysningerPerId,
   api,
   onMessageSent,
-  stickyState,
 }: MessagesProps) => {
-  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
   const [
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
-  ] = stickyState.messages.useStickyStateReducer(messagesStateReducer, initMessagesState(maler), nowStickyResetValue);
-  const stickyResetValue = useRef(nowStickyResetValue);
+  ] = useReducer(messagesStateReducer, initMessagesState(maler));
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
@@ -254,12 +223,9 @@ const Messages = ({
 
   // Resett state når grunnleggande input props endra seg, så ein unngår at valg ein gjorde på ei anna sak blir gjeldande.
   useEffect(() => {
-    if (nowStickyResetValue !== stickyResetValue.current) {
-      dispatch({ type: 'Reset', maler });
-      fritekstInputRef.current?.reset();
-    }
-    stickyResetValue.current = nowStickyResetValue;
-  }, [nowStickyResetValue]);
+    dispatch({ type: 'Reset', maler });
+    fritekstInputRef.current?.reset();
+  }, [behandling.id, maler]);
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {
@@ -272,17 +238,12 @@ const Messages = ({
   useEffect(() => {
     const loadFritekstForslag = async () => {
       if (valgtMalkode !== undefined) {
-        const innhold = await api.hentInnholdBrevmal(
-          fagsak.sakstype,
-          behandling.uuid,
-          bestemAvsenderApp(behandling.type.kode),
-          valgtMalkode,
-        );
+        const innhold = await api.hentInnholdBrevmal(fagsak.sakstype, behandling.uuid, valgtMalkode);
         setFritekstForslag(innhold);
       }
     };
     void loadFritekstForslag();
-  }, [valgtMalkode, fagsak, behandling]);
+  }, [valgtMalkode, fagsak, behandling, api]);
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
@@ -392,7 +353,7 @@ const Messages = ({
     if (values !== undefined) {
       if (fagsak.person.aktørId !== undefined) {
         // Koden her har store likheter med lagForhåndsvisRequest i formidlingUtils.tsx
-        const forhåndsvisDto: ForhåndsvisDto = {
+        const forhåndsvisDto: LagForhåndsvisningRequest = {
           eksternReferanse: behandling.uuid,
           ytelseType: fagsak.sakstype,
           saksnummer: fagsak.saksnummer,
@@ -403,7 +364,6 @@ const Messages = ({
             fritekstbrev: values.fritekstbrev,
           },
           aktørId: fagsak.person.aktørId,
-          avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
         };
         const pdfBlob = await api.lagForhåndsvisningPdf(forhåndsvisDto);
         window.open(URL.createObjectURL(pdfBlob));
@@ -447,7 +407,6 @@ const Messages = ({
         show={showFritekstInput}
         fritekstModus={fritekstModus}
         showValidation={showValidation}
-        stickyState={{ ...stickyState.fritekst }}
       />
       <HStack gap="space-12">
         <Button size="small" variant="primary" icon={<PaperplaneIcon />} loading={isBusy} onClick={submitHandler}>

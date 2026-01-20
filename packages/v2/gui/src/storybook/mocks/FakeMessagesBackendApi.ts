@@ -1,5 +1,3 @@
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
-import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -8,15 +6,92 @@ import {
   type RequestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
-import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from 'storybook/actions';
 import { delay } from '../../utils/delay.js';
 import { fakePdf } from './fakePdf.js';
+import type { LagForhåndsvisningRequest, MessagesApi } from '../../sak/meldinger/api/MessagesApi.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
-export class FakeMessagesBackendApi implements BackendApi {
+export class FakeMessagesBackendApi implements MessagesApi {
   public static readonly dummyMalinnhold = [
     { tittel: 'Varsel nr 1', fritekst: 'Hei, du må sende inn ditt og datt før frist.' },
     { tittel: 'Varsel nr 2', fritekst: 'Brev tekst forslag nr 2.' },
+  ];
+
+  public readonly dummyMaler: Template[] = [
+    {
+      navn: 'Innhent dokumentasjon',
+      mottakere: [
+        {
+          id: '2821629142423',
+          type: 'AKTØRID',
+        },
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+        {
+          id: '987654321',
+          type: 'ORGNR',
+        },
+      ],
+      støtterTredjepartsmottaker: true,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      kode: 'INNHEN',
+    },
+    {
+      navn: 'Fritekst generelt brev',
+      mottakere: [
+        {
+          id: '2821629142423',
+          type: 'AKTØRID',
+        },
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+        {
+          id: '987654321',
+          type: 'ORGNR',
+        },
+      ],
+      støtterTredjepartsmottaker: true,
+      linker: [],
+      støtterFritekst: false,
+      støtterTittelOgFritekst: true,
+      kode: 'GENERELT_FRITEKSTBREV',
+    },
+    {
+      navn: 'Innhent medisinske opplysninger fritekstbrev',
+      mottakere: [
+        {
+          id: '2821629142423',
+          type: 'AKTØRID',
+        },
+      ],
+      støtterTredjepartsmottaker: true,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      kode: 'INNHENT_MEDISINSKE_OPPLYSNINGER',
+    },
+    {
+      navn: 'Varselsbrev fritekst',
+      mottakere: [
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+      ],
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      kode: 'VARSEL_FRITEKST',
+      støtterTredjepartsmottaker: false,
+    },
   ];
 
   // Some state for storybook testing
@@ -28,13 +103,14 @@ export class FakeMessagesBackendApi implements BackendApi {
     this.resetSisteFakeDokumentBestilling();
   }
 
+  readonly backend = 'k9sak';
+
   async hentInnholdBrevmal(
     sakstype: FagsakYtelsesType,
     eksternReferanse: string,
-    avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]> {
-    const x = eksternReferanse + sakstype + avsenderApplikasjon; // For å unngå unused variable feil
+    const x = eksternReferanse + sakstype; // For å unngå unused variable feil
     if (x !== null && maltype === 'INNHENT_MEDISINSKE_OPPLYSNINGER') {
       return FakeMessagesBackendApi.dummyMalinnhold;
     }
@@ -81,9 +157,15 @@ export class FakeMessagesBackendApi implements BackendApi {
     action('bestillDokument')(bestilling);
   }
 
-  async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
+  async lagForhåndsvisningPdf(data: LagForhåndsvisningRequest): Promise<Blob> {
     action('lag pdf data')(data);
     await this.doDelay();
     return fakePdf();
+  }
+
+  async hentMaler(fagsakYtelsestype: FagsakYtelsesType, behandlingUuid: string): Promise<Template[]> {
+    ignoreUnusedDeclared(fagsakYtelsestype);
+    ignoreUnusedDeclared(behandlingUuid);
+    return this.dummyMaler;
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { type JSX } from 'react';
@@ -12,7 +12,6 @@ import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -38,7 +37,6 @@ const FortsettUtenInntektsmeldingForm = ({
   formMethods,
   harFlereTilstanderTilVurdering,
 }: FortsettUtenInntektsmeldingFormProps): JSX.Element => {
-  const featureToggles = React.useContext(FeatureTogglesContext);
   const containerContext = React.useContext(ContainerContext);
   const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
   const readOnly = containerContext?.readOnly ?? false;
@@ -87,12 +85,9 @@ const FortsettUtenInntektsmeldingForm = ({
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : null,
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === Kode.FORTSETT,
+      vurdering: data[beslutningFieldName],
       kode: aksjonspunktKode,
     };
-
-    if (featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP) {
-      periode.vurdering = data[beslutningFieldName];
-    }
 
     return onSubmit({
       '@type': aksjonspunktKode,
@@ -107,21 +102,6 @@ const FortsettUtenInntektsmeldingForm = ({
     setRedigeringsmodus(false);
   };
 
-  const radios9071 = [
-    {
-      value: Kode.FORTSETT,
-      label: `Ja, bruk A-inntekt for ${arbeidsgivereString}`,
-      id: `${beslutningId}${Kode.FORTSETT}`,
-    },
-    {
-      value: Kode.MANGLENDE_GRUNNLAG,
-      label: featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP
-        ? 'Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3'
-        : 'Nei, avslå periode på grunn av manglende inntektsopplysninger',
-      id: `${beslutningId}${Kode.MANGLENDE_GRUNNLAG}`,
-    },
-  ];
-
   const radios = {
     '9069': [
       {
@@ -135,16 +115,23 @@ const FortsettUtenInntektsmeldingForm = ({
         id: `${beslutningId}${Kode.MANGLENDE_GRUNNLAG}`,
       },
     ],
-    '9071': featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP
-      ? [
-          ...radios9071,
-          {
-            value: Kode.IKKE_INNTEKTSTAP,
-            label: 'Nei, avslå søknaden på grunn av at ansatt ikke har tapt arbeidsinntekt §9-3',
-            id: `${beslutningId}${Kode.IKKE_INNTEKTSTAP}`,
-          },
-        ]
-      : radios9071,
+    '9071': [
+      {
+        value: Kode.FORTSETT,
+        label: `Ja, bruk A-inntekt for ${arbeidsgivereString}`,
+        id: `${beslutningId}${Kode.FORTSETT}`,
+      },
+      {
+        value: Kode.MANGLENDE_GRUNNLAG,
+        label: 'Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3',
+        id: `${beslutningId}${Kode.MANGLENDE_GRUNNLAG}`,
+      },
+      {
+        value: Kode.IKKE_INNTEKTSTAP,
+        label: 'Nei, avslå søknaden på grunn av at ansatt ikke har tapt arbeidsinntekt §9-3',
+        id: `${beslutningId}${Kode.IKKE_INNTEKTSTAP}`,
+      },
+    ],
   };
 
   if (!vis) {
@@ -169,24 +156,15 @@ const FortsettUtenInntektsmeldingForm = ({
               A-inntekt benyttes <span className={styles.radiogroupAlert__emphasize}>kun</span> for de
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
-            {(featureToggles.AKTIVER_AVSLAG_IKKE_INNTEKTSTAP && (
-              <>
-                <li>
-                  Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
-                  <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får tilstrekkelige opplysninger hverken i A-inntekt
-                  eller fra inntektsmelding.
-                </li>
-                <li>
-                  Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å
-                  innhente denne, kan du avslå etter <Lovreferanse>§ 9-3</Lovreferanse>.
-                </li>
-              </>
-            )) || (
-              <li>
-                Refusjon i inntektsmeldinger vil alltid utbetales til arbeidsgiver. Evt. mellomlegg utbetales direkte
-                til søker.
-              </li>
-            )}
+            <li>
+              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
+              <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får tilstrekkelige opplysninger hverken i A-inntekt
+              eller fra inntektsmelding.
+            </li>
+            <li>
+              Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å
+              innhente denne, kan du avslå etter <Lovreferanse>§ 9-3</Lovreferanse>.
+            </li>
           </ul>
         </Alert>
         <div className={styles.fortsettUtenInntektsmelding__radiogroup}>
