@@ -1,15 +1,11 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
@@ -25,14 +21,7 @@ const relevanteVilkårkoder = [
   vilkarType.OMSORGENFORVILKARET,
 ];
 
-const relevanteAksjonspunktkoder = [
-  aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
-  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-  aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
-];
-
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
-const PANEL_TEKST = 'Inngangsvilkår';
 
 interface InngangsvilkarProsessStegInitPanelProps {
   behandling: Behandling;
@@ -84,19 +73,8 @@ export const InngangsvilkarProsessStegInitPanel = ({
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkårForSteg.length > 0;
 
-  // Beregn paneltype basert på vilkårstatus (for menystatusindikator)
-  const panelStatus = useMemo(
-    () => finnPanelStatus(skalVisePanel, vilkårForSteg, aksjonspunkter, relevanteAksjonspunktkoder),
-    [skalVisePanel, vilkårForSteg, aksjonspunkter],
-  );
-
-  const visDelvisStatus = useMemo(() => sjekkDelvisVilkårStatus(vilkårForSteg), [vilkårForSteg]);
-
   const erValgt = context?.erValgt(PANEL_ID);
-
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelStatus, visDelvisStatus);
-
-  const erStegVurdert = panelStatus !== ProcessMenuStepType.default;
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   if (!skalVisePanel || !erValgt) {
     return null;

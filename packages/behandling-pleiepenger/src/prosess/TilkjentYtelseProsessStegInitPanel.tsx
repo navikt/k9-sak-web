@@ -6,14 +6,12 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQueries } from '@tanstack/react-query';
-import { use, useContext, useMemo } from 'react';
+import { use, useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
   aksjonspunkterQueryOptions,
@@ -24,7 +22,6 @@ import {
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
-const PANEL_TEKST = 'Tilkjent ytelse';
 
 /**
  * Sjekker om beregningsresultatet kun inneholder avslåtte uttak
@@ -81,27 +78,8 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     ],
   });
 
-  // Beregn paneltype basert på beregningsresultat (for menystatusindikator)
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis ingen data eller tomt objekt, vis default (ingen status)
-    if (!beregningsresultatUtbetaling?.perioder) {
-      return ProcessMenuStepType.default;
-    }
-
-    // Hvis kun avslåtte uttak, vis danger (rød)
-    if (harKunAvslåtteUttak(beregningsresultatUtbetaling)) {
-      return ProcessMenuStepType.danger;
-    }
-
-    // Ellers vis success (grønn hake)
-    return ProcessMenuStepType.success;
-  }, [beregningsresultatUtbetaling]);
-
   const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
-
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt) {

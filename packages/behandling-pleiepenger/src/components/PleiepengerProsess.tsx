@@ -24,6 +24,7 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
+import { useProsessmotor } from '../prosess/api/Prosessmotor';
 import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/inngangsvilkårFortsetterPaneler/InngangsvilkarFortsProsessStegInitPanel';
 import { InngangsvilkarProsessStegInitPanel } from '../prosess/inngangsvilkårPaneler/InngangsvilkarProsessStegInitPanel';
@@ -287,6 +288,9 @@ const PleiepengerProsess = ({
 
   const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
 
+  // Generer prosessteg fra prosessmotor
+  const prosessteg = useProsessmotor({ api: k9SakProsessApi, behandling });
+
   // Modernisert versjon uten nestede callbacks (kan brukes i v2 meny)
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
@@ -327,7 +331,7 @@ const PleiepengerProsess = ({
         />
 
         {/* v2 meny for navigasjon */}
-        <ProsessMeny>
+        <ProsessMeny steg={prosessteg}>
           <Bleed marginInline="space-24">
             <BoxNew borderColor="neutral-subtle" borderWidth="1" padding="space-16">
               {prosessStegPanelDefinisjoner.map(panelDef => {

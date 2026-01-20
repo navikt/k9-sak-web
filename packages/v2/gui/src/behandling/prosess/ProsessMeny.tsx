@@ -1,19 +1,25 @@
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { Box } from '@navikt/ds-react';
 import { ProcessMenu, ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import styles from './prosessMeny.module.css';
 import { ProsessPanelContext } from './ProsessPanelContext.js';
-import type { PanelRegistrering, ProsessPanelProps } from './types/panelTypes.js';
+import type { ProsessPanelProps } from './types/panelTypes.js';
 
 /**
- * Intern type for å holde styr på registrerte paneler.
- * Utvider PanelRegistrering med id og tekstKode som paneler sender inn.
+ * Steg-definisjon fra prosessmotor.
+ * Definerer hvilke paneler som skal vises, i hvilken rekkefølge, og deres status.
  */
-interface InternPanelRegistrering extends PanelRegistrering {
+export interface ProsessSteg {
+  /** Unik ID for panelet (må matche PANEL_ID i InitPanel) */
   id: string;
-  tekstKode: string;
+  /** Label/tittel for panelet i menyen */
+  label: string;
+  /** Status/type for panelet (warning, success, danger, default) */
+  type: ProcessMenuStepType;
+  /** Valgfritt: Vis delvis fullføringsindikator */
+  usePartialStatus?: boolean;
 }
 
 /**
@@ -28,6 +34,13 @@ interface ProsessMenyProps {
    * Må være React-elementer som aksepterer ProsessPanelProps.
    */
   children: React.ReactElement<ProsessPanelProps> | Array<React.ReactElement<ProsessPanelProps>>;
+
+  /**
+   * Valgfri steg-definisjon fra prosessmotor.
+   * Når denne er satt, brukes den til å definere hvilke paneler som vises og deres rekkefølge.
+   * Paneler som ikke er definert i steg vil ikke vises.
+   */
+  steg: ProsessSteg[];
 }
 
 /**
@@ -51,112 +64,84 @@ interface ProsessMenyProps {
  * </ProsessMeny>
  * ```
  */
-export const ProsessMeny = ({ children }: ProsessMenyProps) => {
+export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [paneler, setPaneler] = useState<Map<string, InternPanelRegistrering>>(new Map());
   const [valgtPanelId, setValgtPanelId] = useState<string | null>(null);
-  // Holder styr på hvilken child-indeks som tilhører hvilket panel-ID.
-  // Paneler registrerer seg i samme rekkefølge som de vises i children-arrayet,
-  // så vi kan bruke registreringsrekkefølge for å mappe child-indekser til panel-IDer.
-  const registrationOrderRef = React.useRef<string[]>([]);
+  const [sisteAktivtValgtePanelId, setSisteAktivtValgtePanelId] = useState<string | null>(null);
 
   // Hent valgt panel fra URL
   const urlPanelId = searchParams.get('punkt');
 
   // Callback for å registrere et panel
-  const handleRegister = useCallback((id: string, tekstKode: string, info: PanelRegistrering) => {
-    setPaneler(forrige => {
-      const neste = new Map(forrige);
-      neste.set(id, { ...info, id, tekstKode });
-      return neste;
-    });
-
-    // Mapper child-indeks til panel-ID basert på registreringsrekkefølge
-    if (!registrationOrderRef.current.includes(id)) {
-      registrationOrderRef.current.push(id);
-    }
-  }, []);
-
-  // Callback for å avregistrere et panel
-  const handleUnregister = useCallback((id: string) => {
-    setPaneler(forrige => {
-      const neste = new Map(forrige);
-      neste.delete(id);
-      return neste;
-    });
-
-    // Fjern fra registreringsrekkefølge
-    const index = registrationOrderRef.current.indexOf(id);
-    if (index !== -1) {
-      registrationOrderRef.current.splice(index, 1);
-    }
-  }, []);
-
-  // Callback for å oppdatere paneltype
-  const handleUpdateType = useCallback((id: string, type: ProcessMenuStepType) => {
-    setPaneler(forrige => {
-      const panel = forrige.get(id);
-      if (!panel) return forrige;
-      const neste = new Map(forrige);
-      neste.set(id, { ...panel, type });
-      return neste;
-    });
-  }, []);
 
   // Synkroniser URL med intern tilstand
   useEffect(() => {
-    if (urlPanelId && paneler.has(urlPanelId)) {
-      // URL har gyldig panel-ID, bruk den
+    const gyldigePanelIds = prosessmotorSteg.map(s => s.id);
+    const panelMedAksjonspunkt = prosessmotorSteg.find(steg => steg.type === ProcessMenuStepType.warning);
+
+    // Automatisk naviger til panel med aksjonspunkt hvis bruker ikke har valgt noe
+    if (panelMedAksjonspunkt && !sisteAktivtValgtePanelId) {
+      setValgtPanelId(panelMedAksjonspunkt.id);
+      setSearchParams(forrige => {
+        const neste = new URLSearchParams(forrige);
+        neste.set('punkt', panelMedAksjonspunkt.id);
+        return neste;
+      });
+      return;
+    }
+
+    // Respekter gyldig URL-valg
+    if (urlPanelId && gyldigePanelIds.includes(urlPanelId)) {
       setValgtPanelId(urlPanelId);
-    } else if (paneler.size > 0 && urlPanelId === 'default') {
-      // Ingen valgt panel, velg første
-      const panelMedAksjonspunkt = Array.from(paneler.values()).find(
-        panel => panel.type === ProcessMenuStepType.warning,
+      return;
+    }
+
+    // Velg default panel når ingen er valgt
+    if (urlPanelId === 'default') {
+      setSisteAktivtValgtePanelId(null);
+      const allePanelerErFerdigbehandlet = prosessmotorSteg.every(
+        steg => steg.type === ProcessMenuStepType.danger || steg.type === ProcessMenuStepType.success,
       );
-      const allePanelerErFerdigbehandlet = Array.from(paneler.values()).every(
-        panel => panel.type === ProcessMenuStepType.danger || panel.type === ProcessMenuStepType.success,
-      );
-      const sistePanel = Array.from(paneler.values())[paneler.size - 1];
-      const valgtPanel = allePanelerErFerdigbehandlet ? sistePanel : panelMedAksjonspunkt;
-      if (valgtPanel) {
-        setValgtPanelId(valgtPanel.id);
-        setSearchParams((forrige: URLSearchParams) => {
+      const sistePanel = prosessmotorSteg[prosessmotorSteg.length - 1];
+      const defaultPanel = allePanelerErFerdigbehandlet ? sistePanel : panelMedAksjonspunkt;
+
+      if (defaultPanel) {
+        setValgtPanelId(defaultPanel.id);
+        setSearchParams(forrige => {
           const neste = new URLSearchParams(forrige);
-          neste.set('punkt', valgtPanel.id);
+          neste.set('punkt', defaultPanel.id);
           return neste;
         });
       }
     }
-  }, [urlPanelId, paneler, valgtPanelId, setSearchParams]);
+  }, [urlPanelId, prosessmotorSteg, setSearchParams, sisteAktivtValgtePanelId]);
 
   // Konverter panelregistreringer til ProcessMenu steps-format
-  // Bruk registrationOrderRef for å opprettholde children-rekkefølge
+  // Hvis prosessmotorSteg er satt, bruk den. Ellers bruk registrerte paneler.
   const steg = useMemo(() => {
-    return registrationOrderRef.current
-      .map(id => paneler.get(id))
-      .filter((panel): panel is InternPanelRegistrering => panel !== undefined)
-      .map(panel => ({
-        label: panel.tekstKode,
-        isActive: panel.id === valgtPanelId,
-        type: panel.type || ProcessMenuStepType.default,
-        usePartialStatus: panel.usePartialStatus,
-      }));
-  }, [paneler, valgtPanelId]);
+    return prosessmotorSteg.map(prosessSteg => ({
+      label: prosessSteg.label,
+      isActive: prosessSteg.id === valgtPanelId,
+      type: prosessSteg.type,
+      usePartialStatus: prosessSteg.usePartialStatus,
+    }));
+  }, [prosessmotorSteg, valgtPanelId]);
 
   // Håndter klikk på menyelement
   const handleStegKlikk = (indeks: number) => {
-    // Bruk registrationOrderRef for å finne riktig panel basert på indeks
-    const panelId = registrationOrderRef.current[indeks];
-    const valgtPanel = panelId ? paneler.get(panelId) : undefined;
-    if (valgtPanel) {
-      setValgtPanelId(valgtPanel.id);
-      setSearchParams((forrige: URLSearchParams) => {
+    const prosessSteg = prosessmotorSteg[indeks];
+    if (prosessSteg) {
+      setValgtPanelId(prosessSteg.id);
+      setSisteAktivtValgtePanelId(prosessSteg.id);
+      setSearchParams(forrige => {
         const neste = new URLSearchParams(forrige);
-        neste.set('punkt', valgtPanel.id);
+        neste.set('punkt', prosessSteg.id);
         return neste;
       });
     }
   };
+
+  const stegMedVurdering = prosessmotorSteg.filter(s => s.type !== ProcessMenuStepType.default);
 
   return (
     <Box.New paddingInline="6">
@@ -165,10 +150,8 @@ export const ProsessMeny = ({ children }: ProsessMenyProps) => {
       <LoadingPanelSuspense>
         <ProsessPanelContext.Provider
           value={{
-            onRegister: handleRegister,
-            onUnregister: handleUnregister,
-            onUpdateType: handleUpdateType,
             erValgt: id => id === valgtPanelId,
+            erVurdert: id => stegMedVurdering.some(s => s.id === id),
           }}
         >
           {children}

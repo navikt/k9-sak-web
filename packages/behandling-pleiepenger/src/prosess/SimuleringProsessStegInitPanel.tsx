@@ -3,10 +3,8 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { use, useContext, useMemo } from 'react';
+import { use, useContext } from 'react';
 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
@@ -24,7 +22,6 @@ const RELEVANTE_AKSJONSPUNKTER = [
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.AVREGNING;
-const PANEL_TEKST = 'Simulering';
 
 interface Props {
   behandling: Behandling;
@@ -63,38 +60,13 @@ export function SimuleringProsessStegInitPanel(props: Props) {
     { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
   );
 
-  // Beregn paneltype basert på aksjonspunkter (for menystatusindikator)
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis det finnes åpne aksjonspunkter relatert til simulering, vis warning
-    const harApentAksjonspunkt = props.aksjonspunkterMedKodeverk?.some(
-      ap =>
-        ap.status.kode === 'OPPR' &&
-        (ap.definisjon.kode === AksjonspunktDefinisjon.VURDER_FEILUTBETALING ||
-          ap.definisjon.kode === AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING),
-    );
-
-    if (harApentAksjonspunkt) {
-      return ProcessMenuStepType.warning;
-    }
-
-    // Hvis simulering er utført, vis success
-    if (restApiData.data?.simuleringResultat) {
-      return ProcessMenuStepType.success;
-    }
-
-    // Ellers vis default (ingen status)
-    return ProcessMenuStepType.default;
-  }, [props.aksjonspunkterMedKodeverk, restApiData.data?.simuleringResultat]);
-
   const erValgt = context?.erValgt(PANEL_ID);
   // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
 
   const relevanteAksjonspunkter = props.aksjonspunkterMedKodeverk?.filter(ap =>
     RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon.kode),
   );
-
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   const data = restApiData.data;
 

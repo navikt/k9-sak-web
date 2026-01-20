@@ -1,16 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
@@ -40,7 +35,6 @@ const vedtakAksjonspunktKoder = [
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.VEDTAK;
-const PANEL_TEKST = 'Vedtak';
 
 interface Props {
   api: K9SakProsessApi;
@@ -134,66 +128,9 @@ export function VedtakProsessStegInitPanel(props: Props) {
     return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
   }, [aksjonspunkter]);
 
-  // Beregn paneltype basert på vedtaksstatus (for menystatusindikator)
-  // Dette er kompleks logikk som matcher findStatusForVedtak fra legacy-koden
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis ingen vilkår, er panelet ikke vurdert (default)
-    if (!vilkår || vilkår.length === 0) {
-      return ProcessMenuStepType.default;
-    }
-
-    // Sjekk om noen vilkår ikke er vurdert
-    const harIkkeVurdertVilkar = vilkår.some(v =>
-      v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT),
-    );
-
-    // Sjekk om det finnes åpent OVERSTYR_BEREGNING aksjonspunkt
-    const harApenOverstyringBeregning = aksjonspunkter?.some(
-      ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
-    );
-
-    // Hvis vilkår ikke er vurdert eller det finnes åpen overstyring, vis default
-    if (harIkkeVurdertVilkar || harApenOverstyringBeregning) {
-      return ProcessMenuStepType.default;
-    }
-
-    // Sjekk om det finnes åpne aksjonspunkter utenfor vedtakspanelet
-    const harApneAksjonspunkterUtenforVedtak = aksjonspunkter?.some(
-      ap => aksjonspunkter.some(vap => vap.definisjon === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
-    );
-
-    // Hvis det finnes åpne aksjonspunkter utenfor vedtak, vis default
-    if (harApneAksjonspunkterUtenforVedtak) {
-      return ProcessMenuStepType.warning;
-    }
-
-    // Sjekk behandlingsresultat
-    if (behandlingV2?.behandlingsresultat?.type) {
-      if (isAvslag(behandlingV2.behandlingsresultat.type)) {
-        // Avslag vises som danger
-        return ProcessMenuStepType.danger;
-      }
-      // Innvilgelse vises som success
-      return ProcessMenuStepType.success;
-    }
-
-    // Default tilstand
-    return ProcessMenuStepType.default;
-  }, [aksjonspunkter, behandlingV2, vilkår]);
-
-  const visDelvisStatus = useMemo(() => {
-    return (
-      vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT)) &&
-      vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.OPPFYLT))
-    );
-  }, [vilkår]);
-
   // Registrer panel med menyen
   const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType, visDelvisStatus);
-
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !restApiData.data || !tilgjengeligeVedtaksbrev) {

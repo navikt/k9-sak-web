@@ -1,13 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
 
@@ -20,8 +17,7 @@ const RELEVANTE_AKSJONSPUNKTER = [
 ];
 
 // Definer panel ID og tekst som konstanter
-const panelId = 'uttak';
-const panelTekst = 'Uttak';
+const PANEL_ID = 'uttak';
 
 interface Props {
   behandling: Behandling;
@@ -63,56 +59,8 @@ export function UttakProsessStegInitPanel(props: Props) {
 
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(props.api, props.behandling));
 
-  // Beregn paneltype basert på uttaksdata og aksjonspunkter (for menystatusindikator)
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Sjekk først om det finnes åpne aksjonspunkter for dette panelet
-    const harApenAksjonspunkt = aksjonspunkter?.some(
-      ap => RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon) && ap.status === 'OPPR',
-    );
-
-    // Hvis det er åpent aksjonspunkt, vis warning (gul/oransje)
-    if (harApenAksjonspunkt) {
-      console.debug('Uttak panel: Har åpent aksjonspunkt, viser warning');
-      return ProcessMenuStepType.warning;
-    }
-
-    // Hvis data ikke er lastet ennå, bruk default
-    if (!uttak) {
-      console.debug('Uttak panel: Data ikke lastet, viser default');
-      return ProcessMenuStepType.default;
-    }
-
-    // Sjekk om uttaksplan eksisterer og har perioder
-    if (
-      !uttak.uttaksplan ||
-      !uttak.uttaksplan.perioder ||
-      (uttak.uttaksplan.perioder && Object.keys(uttak.uttaksplan.perioder).length === 0)
-    ) {
-      console.debug('Uttak panel: Ingen uttaksplan eller perioder, viser default');
-      return ProcessMenuStepType.default;
-    }
-
-    const uttaksperiodeKeys = Object.keys(uttak.uttaksplan.perioder);
-    const perioder = uttak.uttaksplan.perioder;
-
-    // Hvis alle perioder er ikke oppfylt, vis danger
-    if (uttaksperiodeKeys.every(key => perioder?.[key]?.utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
-      console.debug('Uttak panel: Alle perioder ikke oppfylt, viser danger');
-      return ProcessMenuStepType.danger;
-    }
-
-    // Ellers (hvis ikke alle er IKKE_OPPFYLT), vis success
-    // Dette matcher legacy-logikken: getOverstyrtStatus returnerer OPPFYLT hvis ikke alle er IKKE_OPPFYLT
-    return ProcessMenuStepType.success;
-  }, [uttak, aksjonspunkter]);
-
-  // Registrer panel med v2 menyen
-  // Registreres først med 'default', oppdateres automatisk når panelType endres
-  const erValgt = context?.erValgt(panelId);
-  // Registrer panel med menyen
-  usePanelRegistrering({ ...context, erValgt }, panelId, panelTekst, panelType);
-
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erValgt = context?.erValgt(PANEL_ID);
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   if (!erValgt) {
     return null;

@@ -1,15 +1,11 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
-import { sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
@@ -20,7 +16,6 @@ import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel
 // Relevante vilkår for inngangsvilkår-panelet
 const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
 const PANEL_ID = prosessStegCodes.OPPTJENING;
-const PANEL_TEKST = 'Inngangsvilkår Fortsettelse';
 
 interface InngangsvilkarFortsProsessStegInitPanelProps {
   behandling: Behandling;
@@ -75,55 +70,8 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
 
   const skalVisePanel = vilkarForSteg.length > 0;
 
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Hvis panelet ikke skal vises, bruk default
-    if (!skalVisePanel) {
-      return ProcessMenuStepType.default;
-    }
-
-    // Samle alle periode-statuser fra alle relevante vilkår
-    const vilkarStatusCodes: string[] = [];
-    vilkarForSteg.forEach(vilkar => {
-      vilkar.perioder
-        ?.filter(periode => periode.vurderesIBehandlingen)
-        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus));
-    });
-
-    // Sjekk om noen vilkår ikke er oppfylt (danger)
-    const harIkkeOppfyltVilkar = vilkarStatusCodes.some(kode => kode === 'IKKE_OPPFYLT');
-    if (harIkkeOppfyltVilkar) {
-      return ProcessMenuStepType.danger;
-    }
-
-    // Sjekk om alle vilkår er oppfylt (success)
-    const alleVilkarOppfylt = vilkarStatusCodes.length > 0 && vilkarStatusCodes.every(kode => kode === 'OPPFYLT');
-    if (alleVilkarOppfylt) {
-      return ProcessMenuStepType.success;
-    }
-
-    // Sjekk om det finnes åpne aksjonspunkter for inngangsvilkår (warning)
-    const harApenAksjonspunkt = aksjonspunkter?.some(ap => {
-      const kode = ap.definisjon;
-      return (
-        (kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR ||
-          kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET) &&
-        ap.status === 'OPPR'
-      );
-    });
-    if (harApenAksjonspunkt) {
-      return ProcessMenuStepType.warning;
-    }
-
-    // Default tilstand
-    return ProcessMenuStepType.default;
-  }, [skalVisePanel, vilkarForSteg, aksjonspunkter]);
-
-  const visDelvisStatus = useMemo(() => sjekkDelvisVilkårStatus(vilkarForSteg), [vilkarForSteg]);
-
   const erValgt = context?.erValgt(PANEL_ID);
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType, visDelvisStatus);
-
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel || !erValgt) {

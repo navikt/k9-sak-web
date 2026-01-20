@@ -1,12 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
-import { usePanelRegistrering } from '@k9-sak-web/gui/behandling/prosess/hooks/usePanelRegistrering.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
@@ -32,7 +30,6 @@ const BEREGNING_AKSJONSPUNKT_KODER = [
 
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
-const PANEL_TEKST = 'Beregning';
 
 interface Props {
   api: K9SakProsessApi;
@@ -77,59 +74,8 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     ],
   });
 
-  // Beregn paneltype basert på aksjonspunkter og vilkår (for menystatusindikator)
-  const panelType = useMemo((): ProcessMenuStepType => {
-    // Sjekk om det finnes åpne aksjonspunkter for beregning
-    const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR' && !ap.erAktivt);
-
-    if (harApentAksjonspunkt) {
-      return ProcessMenuStepType.warning;
-    }
-
-    // Sjekk vilkårstatus for beregningsgrunnlag
-    const bgVilkar = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-
-    if (bgVilkar) {
-      // Sjekk perioder for vilkårstatus (samme logikk som finnStatus)
-      const vilkarStatusCodes =
-        bgVilkar.perioder?.filter(periode => periode.vurderesIBehandlingen).map(periode => periode.vilkarStatus) || [];
-
-      // Hvis alle perioder er IKKE_VURDERT, vis default
-      if (vilkarStatusCodes.every(vsc => vsc === 'IKKE_VURDERT')) {
-        return ProcessMenuStepType.default;
-      }
-
-      // Hvis noen perioder er OPPFYLT, vis success
-      if (vilkarStatusCodes.some(vsc => vsc === 'OPPFYLT')) {
-        return ProcessMenuStepType.success;
-      }
-
-      // Ellers (alle IKKE_OPPFYLT), vis danger
-      return ProcessMenuStepType.danger;
-    }
-
-    // Hvis ingen vilkår, sjekk aksjonspunkter
-    if (aksjonspunkter && aksjonspunkter.length > 0) {
-      if (aksjonspunkter.length > 0) {
-        // Hvis det finnes åpne aksjonspunkter, vis default (ikke vurdert)
-        const harApneAksjonspunkter = aksjonspunkter.some(ap => ap.status === 'OPPR');
-        if (harApneAksjonspunkter) {
-          return ProcessMenuStepType.default;
-        }
-        // Hvis aksjonspunkter er lukket, vis success
-        return ProcessMenuStepType.success;
-      }
-    }
-
-    // Default tilstand
-    return ProcessMenuStepType.default;
-  }, [aksjonspunkter, vilkår]);
-
   const erValgt = context?.erValgt(PANEL_ID);
-
-  usePanelRegistrering({ ...context, erValgt }, PANEL_ID, PANEL_TEKST, panelType);
-
-  const erStegVurdert = panelType !== ProcessMenuStepType.default;
+  const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
 
