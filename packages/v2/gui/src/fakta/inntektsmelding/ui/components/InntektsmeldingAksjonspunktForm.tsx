@@ -7,7 +7,6 @@ import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
-import type { KompletthetsPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsPeriode.js';
 import { InntektsmeldingVurderingRequestKode } from '../../types';
 
 type AksjonspunktKode = '9069' | '9071';
@@ -82,7 +81,7 @@ interface InntektsmeldingFormProps {
   harFlereTilstanderTilVurdering: boolean;
 }
 
-const InntektsmeldingForm = ({
+const InntektsmeldingAksjonspunktForm = ({
   tilstand,
   aksjonspunkt,
   formMethods,
@@ -117,7 +116,7 @@ const InntektsmeldingForm = ({
   }));
 
   const handleSubmit = (data: FieldValues) => {
-    const periode: KompletthetsPeriode = {
+    const periode = {
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
       vurdering: data[beslutningFieldName],
@@ -197,4 +196,4 @@ const InntektsmeldingForm = ({
   );
 };
 
-export default InntektsmeldingForm;
+export default InntektsmeldingAksjonspunktForm;

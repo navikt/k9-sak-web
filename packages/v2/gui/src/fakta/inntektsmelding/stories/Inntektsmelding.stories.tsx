@@ -14,6 +14,7 @@ import ferdigvisning, {
 } from '../mock/mockedKompletthetsdata.js';
 import { withFakeInntektsmeldingApi } from '../mock/withFakeInntektsmeldingApi.js';
 import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 
 const createProps = (
   behandlingUuid: string,
@@ -22,7 +23,14 @@ const createProps = (
   ...inntektsmeldingPropsMock,
   submitCallback: action('submitCallback'),
   ...props,
-  behandling: { uuid: behandlingUuid },
+  behandling: {
+    uuid: behandlingUuid,
+    opprettet: new Date(),
+    sakstype: 'SAK',
+    status: 'FERDIG',
+    type: 'BEHANDLING',
+    versjon: 1,
+  } as unknown as BehandlingDto,
 });
 
 const meta: Meta<typeof InntektsmeldingIndex> = {

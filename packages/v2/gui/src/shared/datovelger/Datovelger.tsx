@@ -6,20 +6,22 @@ import DatovelgerPlain from './DatovelgerPlain';
 const Datovelger = ({
   name,
   label,
+  hideLabel,
   disabled,
   fromDate,
   toDate,
   size,
-  validators,
+  validate,
   showErrorMessage = true,
 }: {
   name: string;
   label: string;
+  hideLabel?: boolean;
   disabled?: boolean;
   fromDate?: Date;
   toDate?: Date;
   size?: 'small' | 'medium';
-  validators?: ((value: string) => string | undefined)[];
+  validate?: ((value: string) => string | null | undefined)[];
   showErrorMessage?: boolean;
 }) => {
   const formMethods = useFormContext();
@@ -27,18 +29,20 @@ const Datovelger = ({
     control: formMethods.control,
     name: name,
     rules: {
-      validate: validators?.reduce((acc, validator, index) => ({ ...acc, [index]: validator }), {}),
+      validate: validate?.reduce((acc, validator, index) => ({ ...acc, [index]: validator }), {}),
     },
   });
-  const { field } = controller;
+  const { field, fieldState } = controller;
   const { value } = field;
   const onChange = (newValue: string) => {
     field.onChange(newValue);
+    void formMethods.trigger(name);
   };
-  const error = formMethods.getFieldState(name).error?.message as string | undefined;
+  const error = fieldState.error?.message as string | undefined;
   return (
     <DatovelgerPlain
       label={label}
+      hideLabel={hideLabel}
       value={value}
       onChange={onChange}
       disabled={disabled}
