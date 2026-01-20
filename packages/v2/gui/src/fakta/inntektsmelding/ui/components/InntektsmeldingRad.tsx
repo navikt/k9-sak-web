@@ -7,6 +7,7 @@ import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kon
 import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import InntektsmeldingStatus from './InntektsmeldingStatus';
 import { NyInntektsmeldingDialog } from './NyInntektsmeldingDialog/NyInntektsmeldingDialog';
+import type { TilstandMedUiState } from '../../types';
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeidsforholdId }) => {
   const { arbeidsforhold } = useInntektsmeldingContext();
@@ -22,15 +23,10 @@ const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeids
 };
 
 interface InntektsmeldingRadProps {
-  status: Array<{
-    status: Status;
-    arbeidsgiver: ArbeidsgiverArbeidsforholdId;
-    journalpostId?: string;
-  }>;
-  førsteFraværsdag: string;
+  tilstand: TilstandMedUiState;
 }
 
-const InntektsmeldingRad = ({ status, førsteFraværsdag }: InntektsmeldingRadProps) => {
+const InntektsmeldingRad = ({ tilstand }: InntektsmeldingRadProps) => {
   const { dokumenter } = useInntektsmeldingContext();
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -56,7 +52,7 @@ const InntektsmeldingRad = ({ status, førsteFraværsdag }: InntektsmeldingRadPr
 
       {/* Rader */}
       <div className="space-y-3">
-        {status.map((s, index) => {
+        {tilstand.status.map((s, index) => {
           const erMottatt = s.status === Status.MOTTATT;
 
           return (
@@ -81,10 +77,9 @@ const InntektsmeldingRad = ({ status, førsteFraværsdag }: InntektsmeldingRadPr
                 </Button>
                 {visSendNyOppgave && (
                   <NyInntektsmeldingDialog
-                    førsteFraværsdag={førsteFraværsdag}
+                    førsteFraværsdag={tilstand.periode.fom}
                     arbeidsgiver={s.arbeidsgiver}
-                    harEksisterendeOppgave={false} // TODO: Sjekk faktisk status fra backend når dette er implementert
-                    tidligereOppgaveSendtDato={undefined} // TODO: Hent fra backend når dette er implementert
+                    forespørselStatus={s.forespørselStatus}
                   />
                 )}
               </div>

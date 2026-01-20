@@ -2,16 +2,25 @@ import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kon
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, Dialog } from '@navikt/ds-react';
 import { SendForespørselContent } from './SendForespørsel';
+import { KanIkkeOppretteNyOppgave } from './KanIkkeOppretteOppgave';
+import { ForespørselStatus } from '@k9-sak-web/backend/k9sak/kodeverk/inntektsmelding/ForespørselStatus.js';
 
 interface NyInntektsmeldingDialogProps {
   førsteFraværsdag: string;
   arbeidsgiver: ArbeidsgiverArbeidsforholdId;
-  harEksisterendeOppgave?: boolean;
-  tidligereOppgaveSendtDato?: string;
+  forespørselStatus?: ForespørselStatus;
 }
 
-export const NyInntektsmeldingDialog = ({ førsteFraværsdag, arbeidsgiver }: NyInntektsmeldingDialogProps) => {
+export const NyInntektsmeldingDialog = ({
+  førsteFraværsdag,
+  arbeidsgiver,
+  forespørselStatus,
+}: NyInntektsmeldingDialogProps) => {
   const renderContent = () => {
+    if (forespørselStatus === ForespørselStatus.UNDER_BEHANDLING || forespørselStatus === ForespørselStatus.FERDIG) {
+      return <KanIkkeOppretteNyOppgave førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
+    }
+
     return <SendForespørselContent førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
   };
 
