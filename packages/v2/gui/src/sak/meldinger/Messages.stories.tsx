@@ -244,6 +244,23 @@ export const UtilgjengeligeMottakere: Story = {
   },
 };
 
+// Denne mal har ingen tekst input felt
+export const InnhentOpplysningerIkkeAktivtArbeidsforhold: Story = {
+  args: {
+    ...DefaultStory.args,
+  },
+  play: async ({ canvasElement }) => {
+    const malkode = 'INNHENT_OPPLYSNINGER_IKKE_AKTIVT_ARBEIDSFORHOLD';
+    const { malEl, sendBrevBtn } = elemsfinder(canvasElement);
+    await userEvent.click(canvasElement);
+    await userEvent.selectOptions(malEl(), malkode);
+    await userEvent.click(sendBrevBtn());
+    await expect(api.sisteFakeDokumentBestilling).toBeDefined();
+    await expect(api.sisteFakeDokumentBestilling?.brevmalkode).toEqual(malkode);
+    await expect(api.sisteFakeDokumentBestilling?.fritekst).toBeUndefined();
+  },
+};
+
 class FakeFailingApi extends FakeMessagesBackendApi {
   public override async bestillDokument() {
     throw makeFakeExtendedApiError({ status: 400 });
