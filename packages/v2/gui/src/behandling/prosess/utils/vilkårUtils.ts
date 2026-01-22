@@ -82,7 +82,7 @@ export const finnPanelStatus = (
   skalVisePanel: boolean,
   vilkårForSteg: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  relevanteAksjonspunktkoder: string[],
+  relevanteAksjonspunktkoder: readonly string[],
 ) => {
   // Hvis panelet ikke skal vises, bruk default
   if (!skalVisePanel) {
