@@ -146,7 +146,6 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
   return (
     <Box.New paddingInline="6">
       <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
-      {/* Render children med injiserte props */}
       <LoadingPanelSuspense>
         <ProsessPanelContext.Provider
           value={{

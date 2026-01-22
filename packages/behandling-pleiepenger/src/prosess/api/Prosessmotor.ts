@@ -103,40 +103,54 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       label: 'Inngangsvilkår',
       id: PROSESS_STEG_KODER.INNGANGSVILKAR,
       usePartialStatus: sjekkDelvisVilkårStatus(vilkårForInngangssteg),
+      vurdert: erPanelVurdert(
+        finnPanelStatus(true, vilkårForInngangssteg, aksjonspunkter, [...PANEL_KONFIG.inngangsvilkår.aksjonspunkter]),
+      ),
     };
-    const inngangsvilkårPanelVurdert = erPanelVurdert(inngangsvilkårPanel.type);
 
     const vilkårForSykdomsteg = vilkår.filter(v => PANEL_KONFIG.sykdom.vilkår.includes(v.vilkarType));
     const sykdomPanel = {
-      type: finnPanelStatus(inngangsvilkårPanelVurdert, vilkårForSykdomsteg, aksjonspunkter, [
+      type: finnPanelStatus(inngangsvilkårPanel.vurdert, vilkårForSykdomsteg, aksjonspunkter, [
         ...PANEL_KONFIG.sykdom.aksjonspunkter,
       ]),
       label: 'Sykdom',
       id: PROSESS_STEG_KODER.MEDISINSK_VILKAR,
       usePartialStatus: sjekkDelvisVilkårStatus(vilkårForSykdomsteg),
+      vurdert: erPanelVurdert(
+        finnPanelStatus(inngangsvilkårPanel.vurdert, vilkårForSykdomsteg, aksjonspunkter, [
+          ...PANEL_KONFIG.sykdom.aksjonspunkter,
+        ]),
+      ),
     };
-    const sykdomPanelVurdert = erPanelVurdert(sykdomPanel.type);
 
     const vilkårForOpptjeningsteg = vilkår.filter(v => PANEL_KONFIG.opptjening.vilkår.includes(v.vilkarType));
     const inngangsvilkårFortsetterPanel = {
-      type: finnPanelStatus(sykdomPanelVurdert, vilkårForOpptjeningsteg, aksjonspunkter, [
+      type: finnPanelStatus(sykdomPanel.vurdert, vilkårForOpptjeningsteg, aksjonspunkter, [
         ...PANEL_KONFIG.opptjening.aksjonspunkter,
       ]),
       label: 'Inngangsvilkår Fortsettelse',
       id: PROSESS_STEG_KODER.OPPTJENING,
       usePartialStatus: sjekkDelvisVilkårStatus(vilkårForOpptjeningsteg),
+      vurdert: erPanelVurdert(
+        finnPanelStatus(sykdomPanel.vurdert, vilkårForOpptjeningsteg, aksjonspunkter, [
+          ...PANEL_KONFIG.opptjening.aksjonspunkter,
+        ]),
+      ),
     };
-    const inngangsvilkårFortsetterPanelVurdert = erPanelVurdert(inngangsvilkårFortsetterPanel.type);
 
     const vilkårForBeregningsteg = vilkår.filter(v => PANEL_KONFIG.beregning.vilkår.includes(v.vilkarType));
     const beregningPanel = {
-      type: finnPanelStatus(inngangsvilkårFortsetterPanelVurdert, vilkårForBeregningsteg, aksjonspunkter, [
+      type: finnPanelStatus(inngangsvilkårFortsetterPanel.vurdert, vilkårForBeregningsteg, aksjonspunkter, [
         ...PANEL_KONFIG.beregning.aksjonspunkter,
       ]),
       label: 'Beregning',
       id: PROSESS_STEG_KODER.BEREGNINGSGRUNNLAG,
+      vurdert: erPanelVurdert(
+        finnPanelStatus(inngangsvilkårFortsetterPanel.vurdert, vilkårForBeregningsteg, aksjonspunkter, [
+          ...PANEL_KONFIG.beregning.aksjonspunkter,
+        ]),
+      ),
     };
-    const beregningPanelVurdert = erPanelVurdert(beregningPanel.type);
 
     // ============================================================================
     // Uttak (spesiell logikk basert på uttaksplan og perioder)
@@ -163,11 +177,11 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     }
 
     const uttakPanel = {
-      type: beregningPanelVurdert ? uttakType : ProcessMenuStepType.default,
+      type: beregningPanel.vurdert ? uttakType : ProcessMenuStepType.default,
       label: 'Uttak',
       id: PROSESS_STEG_KODER.UTTAK,
+      vurdert: erPanelVurdert(beregningPanel.vurdert ? uttakType : ProcessMenuStepType.default),
     };
-    const uttakPanelVurdert = erPanelVurdert(uttakPanel.type);
 
     // ============================================================================
     // Tilkjent ytelse (basert på beregningsresultat)
@@ -183,11 +197,11 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     }
 
     const tilkjentYtelsePanel = {
-      type: uttakPanelVurdert ? tilkjentYtelseType : ProcessMenuStepType.default,
+      type: uttakPanel.vurdert ? tilkjentYtelseType : ProcessMenuStepType.default,
       label: 'Tilkjent ytelse',
       id: PROSESS_STEG_KODER.TILKJENT_YTELSE,
+      vurdert: erPanelVurdert(uttakPanel.vurdert ? tilkjentYtelseType : ProcessMenuStepType.default),
     };
-    const tilkjentYtelsePanelVurdert = erPanelVurdert(tilkjentYtelsePanel.type);
 
     // ============================================================================
     // Simulering (basert på simuleringdata og aksjonspunkter)
@@ -210,18 +224,18 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     }
 
     const simuleringPanel = {
-      type: tilkjentYtelsePanelVurdert ? simuleringType : ProcessMenuStepType.default,
+      type: tilkjentYtelsePanel.vurdert ? simuleringType : ProcessMenuStepType.default,
       label: 'Simulering',
       id: PROSESS_STEG_KODER.SIMULERING,
+      vurdert: erPanelVurdert(tilkjentYtelsePanel.vurdert ? simuleringType : ProcessMenuStepType.default),
     };
-    const simuleringPanelVurdert = erPanelVurdert(simuleringPanel.type);
 
     // ============================================================================
     // Vedtak (aggregert status basert på alle vilkår og aksjonspunkter)
     // ============================================================================
 
     let vedtakType: ProcessMenuStepType;
-    if (!vilkår || vilkår.length === 0 || !simuleringPanelVurdert) {
+    if (!vilkår || vilkår.length === 0 || !simuleringPanel.vurdert) {
       vedtakType = ProcessMenuStepType.default;
     } else {
       const harIkkeVurdertVilkar = vilkår.some(v =>
