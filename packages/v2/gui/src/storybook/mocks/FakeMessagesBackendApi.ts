@@ -92,6 +92,20 @@ export class FakeMessagesBackendApi implements MessagesApi {
       kode: 'VARSEL_FRITEKST',
       støtterTredjepartsmottaker: false,
     },
+    {
+      navn: 'Innhent opplysninger ikke aktivt arbeidsforhold',
+      mottakere: [
+        {
+          id: '123456789',
+          type: 'ORGNR',
+        },
+      ],
+      linker: [],
+      støtterFritekst: false,
+      støtterTittelOgFritekst: false,
+      kode: 'INNHENT_OPPLYSNINGER_IKKE_AKTIVT_ARBEIDSFORHOLD',
+      støtterTredjepartsmottaker: false,
+    },
   ];
 
   // Some state for storybook testing

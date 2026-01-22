@@ -300,7 +300,7 @@ const Messages = ({
     }
     // Hent verdi eller valideringsfeil frå fritekstInput
     const fritekstInputValue = fritekstInputRef.current?.getValue();
-    if (fritekstInputValue?.invalid) {
+    if (showFritekstInput && fritekstInputValue?.invalid) {
       return undefined;
     }
     const fritekstbrev = resolveFritekstbrevinnholdDto(fritekstInputValue);
