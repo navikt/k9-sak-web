@@ -8,7 +8,8 @@
     "./kodeverk/*": "./src/kodeverk/*",
     "./dateUtils/*": "./src/dateUtils/*",
     "./validationUtils/*": "./src/validationUtils/*",
-    "./paths/*": "./src/paths/*"
+    "./paths/*": "./src/paths/*",
+    "./query-keys/*": "./src/query-keys/*"
   },
   "dependencies": {
     "dayjs": "1.11.19"

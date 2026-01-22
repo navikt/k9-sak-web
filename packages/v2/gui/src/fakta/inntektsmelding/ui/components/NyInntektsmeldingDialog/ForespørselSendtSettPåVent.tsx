@@ -8,6 +8,8 @@ import { useInntektsmeldingContext } from '../../../context/InntektsmeldingConte
 import { useSettPåVent } from '../../../api/inntektsmeldingQueries';
 import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@k9-sak-web/lib/query-keys/QueryKeys.js';
 
 interface FormData {
   frist: string;
@@ -43,6 +45,11 @@ export const ForespørselSendtSettPåVent = () => {
     );
   };
 
+  const queryClient = useQueryClient();
+  const invalidateQueries = () => {
+    void queryClient.invalidateQueries({ queryKey: QueryKeys.KOMPLETTHET_BEREGNING });
+    void queryClient.invalidateQueries({ queryKey: QueryKeys.HISTORIKK });
+  };
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSettPåVent}>
       <Dialog.Body>
@@ -71,7 +78,7 @@ export const ForespørselSendtSettPåVent = () => {
       <Dialog.Footer>
         <HStack gap="space-16" justify="end">
           <Dialog.CloseTrigger>
-            <Button variant="secondary" size="small">
+            <Button variant="secondary" size="small" onClick={invalidateQueries}>
               Gå tilbake til saken
             </Button>
           </Dialog.CloseTrigger>

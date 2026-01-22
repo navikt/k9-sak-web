@@ -27,7 +27,7 @@
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "5.2.2",
     "@k9-sak-web/backend": "workspace:^",
-    "@k9-sak-web/lib": "1.0.0",
+    "@k9-sak-web/lib": "workspace:^",
     "@navikt/diagnosekoder": "1.2026.0",
     "@navikt/ft-form-hooks": "10.3.12",
     "@navikt/ft-form-validators": "4.4.10",
