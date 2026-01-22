@@ -11,7 +11,7 @@
     "@navikt/ds-react": "7.40.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.19",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "7.69.0"
