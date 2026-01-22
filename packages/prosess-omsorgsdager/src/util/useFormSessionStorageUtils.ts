@@ -1,6 +1,6 @@
 import { debounce } from '@k9-sak-web/gui/utils/debounce.js';
 import { useCallback, useEffect, useRef } from 'react';
-import { UseFormGetValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import { Path, UseFormGetValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 // Brukes for midlertidig mellomlagring av input fra saksbehandlare som ett global objekt i k9-sak-web.
 export const BrukFormSesjonslagring = <TFormData extends Record<string, unknown>>(
@@ -23,10 +23,10 @@ export const BrukFormSesjonslagring = <TFormData extends Record<string, unknown>
     const data = formState.getState(formStateKey);
     if (data) {
       if (!data) return;
-      setValue('åpenForRedigering', data.åpenForRedigering);
+      setValue('åpenForRedigering' as Path<TFormData>, data.åpenForRedigering);
       if ((lesemodus && getValues().åpenForRedigering) || !lesemodus) {
         Object.keys(data).forEach(key => {
-          setValue(key, data[key]);
+          setValue(key as Path<TFormData>, data[key]);
         });
       }
     }
