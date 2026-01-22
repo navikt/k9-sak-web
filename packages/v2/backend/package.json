@@ -15,9 +15,9 @@
     "./ungtilbake/*": "./src/ungtilbake/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "3.1.20260114124700",
-    "@navikt/k9-sak-typescript-client": "3.0.20260119101927",
-    "@navikt/k9-tilbake-typescript-client": "1.1.20251205161955",
+    "@navikt/k9-klage-typescript-client": "3.1.20260121173419",
+    "@navikt/k9-sak-typescript-client": "3.0.20260122082223",
+    "@navikt/k9-tilbake-typescript-client": "1.1.20260118164048",
     "@navikt/ung-sak-typescript-client": "2.0.20260119095558",
     "@navikt/ung-tilbake-typescript-client": "3.0.20251209154059"
   },

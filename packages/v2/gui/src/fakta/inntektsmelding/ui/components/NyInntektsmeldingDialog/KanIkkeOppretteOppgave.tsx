@@ -6,19 +6,13 @@ import { visnDato } from '../../../../../utils/formatters';
 interface KanIkkeOppretteNyOppgaveContentProps {
   førsteFraværsdag: string;
   arbeidsgiver: ArbeidsgiverArbeidsforholdId;
-  tidligereOppgaveSendtDato: string;
 }
 
-export const KanIkkeOppretteNyOppgave = ({
-  førsteFraværsdag,
-  arbeidsgiver,
-  tidligereOppgaveSendtDato,
-}: KanIkkeOppretteNyOppgaveContentProps) => {
+export const KanIkkeOppretteNyOppgave = ({ førsteFraværsdag, arbeidsgiver }: KanIkkeOppretteNyOppgaveContentProps) => {
   const { arbeidsforhold } = useInntektsmeldingContext();
   const arbeidsgiverInfo = arbeidsforhold[arbeidsgiver.arbeidsgiver];
   const arbeidsgiverNavn = arbeidsgiverInfo?.navn ?? arbeidsgiverInfo?.fødselsdato ?? arbeidsgiver.arbeidsgiver;
   const formatertDato = visnDato(førsteFraværsdag);
-  const formatertTidligereDato = visnDato(tidligereOppgaveSendtDato);
 
   return (
     <>
@@ -40,14 +34,16 @@ export const KanIkkeOppretteNyOppgave = ({
 
           <Alert variant="warning" size="small">
             Det finnes allerede en oppgave for dette skjæringstidspunktet. Hvis arbeidsgiver vil gjøre endringer, må de
-            gå til tidligere oppgave sendt {formatertTidligereDato}.
+            gå til oppgaven som er sendt.
           </Alert>
         </VStack>
       </Dialog.Body>
       <Dialog.Footer>
         <div className="flex gap-2 justify-end">
           <Dialog.CloseTrigger>
-            <Button variant="secondary">Avbryt</Button>
+            <Button variant="secondary" size="small">
+              Avbryt
+            </Button>
           </Dialog.CloseTrigger>
         </div>
       </Dialog.Footer>
