@@ -2,6 +2,7 @@ import {
   CheckmarkCircleFillIcon,
   ExclamationmarkTriangleFillIcon,
   InformationSquareFillIcon,
+  ArrowsCirclepathIcon,
 } from '@navikt/aksel-icons';
 import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 
@@ -12,13 +13,23 @@ const statusTekster = {
   [Status.MOTTATT_UKJENT_ARBEIDSFORHOLDSID]: 'Mottatt, men inneholder ukjent arbeidsforhold-ID',
   [Status.FORTSETT_UTEN]: 'Fortsett uten',
   [Status.MOTTATT]: 'Mottatt',
+  [Status.GJENBRUKT]: 'Videreført fra tidligere periode',
 };
 
 const InntektsmeldingStatus = ({ status }: { status: Status }) => {
   const erMottatt = status === Status.MOTTATT;
   const erMangler = status === Status.MANGLER;
   const erIkkePåkrevd = status === Status.IKKE_PÅKREVD;
+  const erGjenbrukt = status === Status.GJENBRUKT;
 
+  if (erGjenbrukt) {
+    return (
+      <>
+        <ArrowsCirclepathIcon fontSize="1.5rem" style={{ color: 'var(--ax-bg-success-strong)' }} />
+        <span className="ml-2">{statusTekster[status] ?? status}</span>
+      </>
+    );
+  }
   if (erMangler) {
     return (
       <>
