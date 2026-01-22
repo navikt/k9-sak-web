@@ -3,13 +3,13 @@ import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components/ind
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { isEqual } from '@k9-sak-web/gui/utils/isEqual.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
-import isEqual from 'lodash/isEqual';
 import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
