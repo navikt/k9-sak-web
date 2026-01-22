@@ -47,8 +47,8 @@ export const ForespørselSendtSettPåVent = () => {
 
   const queryClient = useQueryClient();
   const invalidateQueries = () => {
-    void queryClient.invalidateQueries({ queryKey: QueryKeys.KOMPLETTHET_BEREGNING });
-    void queryClient.invalidateQueries({ queryKey: QueryKeys.HISTORIKK });
+    void queryClient.invalidateQueries({ queryKey: QueryKeys.KOMPLETTHET_BEREGNING() });
+    void queryClient.invalidateQueries({ queryKey: QueryKeys.HISTORIKK() });
   };
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSettPåVent}>

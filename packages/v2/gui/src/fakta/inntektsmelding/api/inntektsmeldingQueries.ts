@@ -12,7 +12,7 @@ export const useKompletthetsoversikt = () => {
   const { behandling } = useInntektsmeldingContext();
 
   return useSuspenseQuery({
-    queryKey: [...QueryKeys.KOMPLETTHET_BEREGNING, behandling.uuid],
+    queryKey: [...QueryKeys.KOMPLETTHET_BEREGNING(), behandling.uuid],
     queryFn: () => api.hentKompletthetsoversikt(behandling.uuid),
   });
 };
