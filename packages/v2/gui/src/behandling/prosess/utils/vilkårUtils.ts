@@ -88,27 +88,6 @@ export const finnPanelStatus = (
   if (!skalVisePanel) {
     return ProcessMenuStepType.default;
   }
-  if (vilkårForSteg.length > 0) {
-    // Samle alle periode-statuser fra alle relevante vilkår
-    const vilkarStatusCodes: string[] = [];
-    vilkårForSteg.forEach(vilkar => {
-      vilkar.perioder
-        ?.filter(periode => periode.vurderesIBehandlingen)
-        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus));
-    });
-
-    if (
-      vilkarStatusCodes.length > 0 &&
-      vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)
-    ) {
-      return ProcessMenuStepType.warning;
-    }
-
-    return vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT)
-      ? ProcessMenuStepType.success
-      : ProcessMenuStepType.danger;
-  }
-
   const harApenAksjonspunkt = aksjonspunkter?.some(ap => {
     const kode = ap.definisjon;
     return (
@@ -118,6 +97,26 @@ export const finnPanelStatus = (
   });
   if (harApenAksjonspunkt) {
     return ProcessMenuStepType.warning;
+  }
+  if (vilkårForSteg.length > 0) {
+    // Samle alle periode-statuser fra alle relevante vilkår
+    const vilkårStatusCodes: string[] = [];
+    vilkårForSteg.forEach(vilkar => {
+      vilkar.perioder
+        ?.filter(periode => periode.vurderesIBehandlingen)
+        .forEach(periode => vilkårStatusCodes.push(periode.vilkarStatus));
+    });
+
+    if (
+      vilkårStatusCodes.length > 0 &&
+      vilkårStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)
+    ) {
+      return ProcessMenuStepType.default;
+    }
+
+    return vilkårStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT)
+      ? ProcessMenuStepType.success
+      : ProcessMenuStepType.danger;
   }
 
   // Default tilstand

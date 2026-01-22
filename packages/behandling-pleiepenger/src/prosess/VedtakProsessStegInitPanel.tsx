@@ -101,13 +101,11 @@ export function VedtakProsessStegInitPanel(props: Props) {
   });
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-    tilgjengeligeVedtaksbrev: any;
     informasjonsbehovVedtaksbrev: any;
     dokumentdataHente: any;
     fritekstdokumenter: any;
   }>(
     [
-      { key: PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV },
       { key: PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV },
       { key: PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE },
       { key: PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER },
@@ -133,7 +131,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
   const erStegVurdert = context?.erVurdert(PANEL_ID);
 
   // Render kun hvis panelet er valgt (injisert av ProsessMeny)
-  if (!erValgt || !restApiData.data || !tilgjengeligeVedtaksbrev) {
+  if (!erValgt || !restApiData.data?.informasjonsbehovVedtaksbrev || !tilgjengeligeVedtaksbrev) {
     return null;
   }
   if (!erStegVurdert) {
