@@ -5245,12 +5245,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:24.10.1":
-  version: 24.10.1
-  resolution: "@types/node@npm:24.10.1"
+"@types/node@npm:25.0.9":
+  version: 25.0.9
+  resolution: "@types/node@npm:25.0.9"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10/ddac8c97be5f7401e31ea0e9316c6e864993c6cd06689b7f9874ecfb576ef8349f2d14298248a08b94a6dd029570a46a285cddc4d50e524817f1a3730b29a86e
+  checksum: 10/2c16f137ed3a952903b7641df5ce16663ad00911dc6a9010156602251420da127bf7dbd32d22aac9eda0cc430381164d55a36240039b7d06ab693b9aad5c3f23
   languageName: node
   linkType: hard
 
@@ -10860,7 +10860,7 @@ __metadata:
     "@testing-library/react": "npm:16.3.1"
     "@testing-library/user-event": "npm:14.6.1"
     "@types/lodash": "npm:4.17.23"
-    "@types/node": "npm:24.10.1"
+    "@types/node": "npm:25.0.9"
     "@types/object-hash": "npm:3.0.6"
     "@types/prop-types": "npm:15.7.15"
     "@types/react": "npm:19.2.7"
