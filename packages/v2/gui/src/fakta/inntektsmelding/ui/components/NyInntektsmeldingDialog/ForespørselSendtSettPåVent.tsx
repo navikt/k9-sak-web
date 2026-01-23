@@ -9,7 +9,7 @@ import { useSettPåVent } from '../../../api/inntektsmeldingQueries';
 import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '@k9-sak-web/lib/query-keys/QueryKeys.js';
+import { queryKeys } from '../../../../../shared/query-keys/queryKeys.js';
 
 interface FormData {
   frist: string;
@@ -47,8 +47,8 @@ export const ForespørselSendtSettPåVent = () => {
 
   const queryClient = useQueryClient();
   const invalidateQueries = () => {
-    void queryClient.invalidateQueries({ queryKey: QueryKeys.KOMPLETTHET_BEREGNING() });
-    void queryClient.invalidateQueries({ queryKey: QueryKeys.HISTORIKK() });
+    void queryClient.invalidateQueries({ queryKey: queryKeys.KOMPLETTHET_BEREGNING });
+    void queryClient.invalidateQueries({ queryKey: queryKeys.HISTORIKK });
   };
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSettPåVent}>
