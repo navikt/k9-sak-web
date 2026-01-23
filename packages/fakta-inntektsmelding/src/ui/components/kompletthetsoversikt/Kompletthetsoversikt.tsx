@@ -105,6 +105,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
                   begrunnelse,
                   periode: tilstand.periodeOpprinneligFormat,
                   fortsett: data[tilstand.beslutningFieldName] === Kode.FORTSETT,
+                  vurdering: data[tilstand.beslutningFieldName],
                   kode: aksjonspunktKode,
                 };
               });
