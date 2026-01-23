@@ -18,6 +18,6 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-prosess-tilbakekreving-foreldelse": "8.4.12",
     "react": "19.2.3",
-    "react-intl": "8.0.9"
+    "react-intl": "8.1.0"
   }
 }

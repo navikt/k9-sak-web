@@ -13,7 +13,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "react": "19.2.3",
-    "react-intl": "8.0.9",
+    "react-intl": "8.1.0",
     "react-redux": "9.2.0",
     "redux": "5.0.1"
   },
