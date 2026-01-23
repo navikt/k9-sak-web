@@ -4,6 +4,7 @@ import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/Prose
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
 import { Behandling } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
@@ -14,29 +15,37 @@ const RELEVANTE_VILKAR_KODER = [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilka
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.MEDISINSK_VILKAR;
 
+// Transformerer vilkår til perioder med aldersmarkering
+const transformerTilPerioder = (vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[]) => {
+  const vilkårUnder18 = vilkår.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR);
+  const vilkårOver18 = vilkår.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
+
+  const perioderUnder18 =
+    vilkårUnder18?.perioder?.map(periode => ({
+      ...periode,
+      pleietrengendeErOver18år: false,
+      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
+    })) ?? [];
+
+  const perioderOver18 =
+    vilkårOver18?.perioder?.map(periode => ({
+      ...periode,
+      pleietrengendeErOver18år: true,
+      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
+    })) ?? [];
+
+  return perioderUnder18.concat(perioderOver18);
+};
+
 interface Props {
   api: K9SakProsessApi;
   behandling: Behandling;
 }
 
-/**
- * InitPanel for medisinsk vilkår prosesssteg
- *
- * Wrapper for medisinsk vilkår-panelet som håndterer:
- * - Registrering med menyen via usePanelRegistrering
- * - Synlighetslogikk basert på tilstedeværelse av vilkår
- * - Beregning av paneltype basert på vilkårstatus og aksjonspunkter
- * - Rendering av legacy panelkomponent via ProsessDefaultInitPanel
- *
- * Medisinsk vilkår dekker:
- * - Medisinske vilkår for pleietrengende under 18 år
- * - Medisinske vilkår for pleietrengende over 18 år
- */
 export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) {
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
 
-  // Filtrer vilkår som er relevante for dette panelet
   const vilkårForSteg = useMemo(() => {
     if (!vilkår) {
       return [];
@@ -44,14 +53,11 @@ export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) 
     return vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
   }, [vilkår]);
 
-  // Sjekk om panelet skal vises
-  // Panelet vises hvis det finnes relevante vilkår
   const skalVisePanel = vilkårForSteg.length > 0;
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !skalVisePanel) {
     return null;
   }
@@ -60,21 +66,8 @@ export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) 
     return <ProsessStegIkkeVurdert />;
   }
 
-  const vilkårPleietrengendeUnder18år = vilkår?.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR);
-  const vilkårPleietrengendeOver18år = vilkår?.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
-  const perioderUnder18 =
-    vilkårPleietrengendeUnder18år?.perioder?.map(periode => ({
-      ...periode,
-      pleietrengendeErOver18år: false,
-      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
-    })) ?? [];
-  const perioderOver18 =
-    vilkårPleietrengendeOver18år?.perioder?.map(periode => ({
-      ...periode,
-      pleietrengendeErOver18år: true,
-      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
-    })) ?? [];
-  const allePerioder = perioderUnder18.concat(perioderOver18);
+  const allePerioder = transformerTilPerioder(vilkår);
+
   return (
     <SykdomProsessIndex lovReferanse={vilkårForSteg[0].lovReferanse} panelTittelKode="Sykdom" perioder={allePerioder} />
   );

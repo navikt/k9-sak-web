@@ -9,6 +9,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
+import { søknadsfristStatusQueryOptions } from '../api/k9SakQueryOptions';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.SOKNADSFRISTVILKARET];
 const RELEVANTE_AKSJONSPUNKT_KODER = [
@@ -34,24 +35,20 @@ interface Props {
 }
 
 export function SøknadsfristProsessStegInitPanel(props: Props) {
-  const { data: søknadsfristStatus } = useSuspenseQuery({
-    queryKey: ['soknadsfristStatus', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getSøknadsfristStatus(props.behandling.uuid),
-  });
+  const { data: søknadsfristStatus } = useSuspenseQuery(søknadsfristStatusQueryOptions(props.api, props.behandling));
   // Filtrer vilkår som er relevante for dette panelet
-  const vilkarForSteg = useMemo(() => {
+  const vilkårForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
     }
     return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
   }, [props.vilkår]);
 
-  const skalVisePanel = vilkarForSteg.length > 0;
+  const skalVisePanel = vilkårForSteg.length > 0;
 
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
-    const kode = ap.definisjon;
-    return RELEVANTE_AKSJONSPUNKT_KODER.some(relevantKode => relevantKode === kode);
-  });
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap =>
+    RELEVANTE_AKSJONSPUNKT_KODER.some(relevantKode => relevantKode === ap.definisjon),
+  );
 
   if (!skalVisePanel) {
     return null;
@@ -72,7 +69,7 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
       kanEndrePåSøknadsopplysninger={props.kanEndrePåSøknadsopplysninger}
       visAllePerioder={props.visAllePerioder}
       aksjonspunkter={relevanteAksjonspunkter}
-      vilkar={vilkarForSteg}
+      vilkar={vilkårForSteg}
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={søknadsfristStatus || { dokumentStatus: [] }}
       panelTittelKode="Søknadsfrist"

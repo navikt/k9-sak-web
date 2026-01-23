@@ -8,7 +8,6 @@ import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
 
-// Relevante aksjonspunkter for uttak
 const RELEVANTE_AKSJONSPUNKTER = [
   aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
   aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
@@ -16,7 +15,6 @@ const RELEVANTE_AKSJONSPUNKTER = [
   aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
 ];
 
-// Definer panel ID og tekst som konstanter
 const PANEL_ID = 'uttak';
 
 interface Props {
@@ -27,40 +25,17 @@ interface Props {
   isReadOnly: boolean;
 }
 
-/**
- * HYBRID-MODUS InitPanel for Uttak
- *
- * Denne komponenten brukes KUN i hybrid-modus (v2 meny + legacy rendering).
- *
- * HYBRID-MODUS (v2 meny + legacy rendering):
- * - Denne komponenten registrerer panelet med v2 ProsessMeny
- * - Henter data via RequestApi for å beregne paneltype
- * - Rendrer INGENTING (returnerer alltid null)
- * - Legacy ProsessStegPanel (utenfor ProsessMeny) håndterer rendering via UttakProsessStegPanelDef
- *
- * LEGACY-MODUS (toggle av):
- * - Denne komponenten brukes IKKE
- * - Alt håndteres av UttakProsessStegPanelDef (klassedefinisjon)
- *
- * FREMTID (full v2):
- * - Fjern denne wrapperen
- * - Bruk UttakProsessStegInitPanel fra v2-pakken direkte i ProsessMeny
- * - Flytt datahenting til React Query i v2-komponenten
- * - Fjern UttakProsessStegPanelDef
- */
 export function UttakProsessStegInitPanel(props: Props) {
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
   const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery(
     behandlingQueryOptions(props.api, props.behandling),
   );
-
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
-
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(props.api, props.behandling));
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   if (!erValgt) {
     return null;

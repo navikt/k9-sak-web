@@ -23,13 +23,13 @@ interface Props {
 }
 
 export const AlderProsessStegInitPanel = (props: Props) => {
-  const vilkarForSteg = useMemo(() => {
+  const vilkårForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
     }
-    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+    return props.vilkår.filter(vilkår => RELEVANTE_VILKAR_KODER.includes(vilkår.vilkarType));
   }, [props.vilkår]);
-  const skalVisePanel = vilkarForSteg.length > 0;
+  const skalVisePanel = vilkårForSteg.length > 0;
 
   if (!skalVisePanel) {
     return null;
@@ -45,7 +45,7 @@ export const AlderProsessStegInitPanel = (props: Props) => {
       visAllePerioder={props.visAllePerioder}
       aksjonspunkter={[]}
       behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
-      vilkar={vilkarForSteg}
+      vilkar={vilkårForSteg}
       erOverstyrt={false}
       overstyringApKode=""
       erMedlemskapsPanel={false}

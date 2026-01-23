@@ -15,6 +15,7 @@ import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
   aksjonspunkterQueryOptions,
   arbeidsgiverOpplysningerQueryOptions,
+  beregningreferanserTilVurderingQueryOptions,
   beregningsgrunnlagQueryOptions,
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
@@ -50,9 +51,8 @@ interface Props {
  * - Rendering av legacy panelkomponent
  */
 export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
-  // Hent alle data parallelt med useSuspenseQueries
   const [
     { data: aksjonspunkter },
     { data: vilkår },
@@ -61,21 +61,16 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     { data: arbeidsgiverOpplysningerPerId = [] },
   ] = useSuspenseQueries({
     queries: [
-      aksjonspunkterQueryOptions(props.api, props.behandling, (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
-        data.filter(ap => BEREGNING_AKSJONSPUNKT_KODER.some(kode => kode === ap.definisjon)),
-      ),
+      aksjonspunkterQueryOptions(props.api, props.behandling, BEREGNING_AKSJONSPUNKT_KODER),
       vilkårQueryOptions(props.api, props.behandling),
-      {
-        queryKey: ['beregningreferanserTilVurdering', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getBeregningreferanserTilVurdering(props.behandling.uuid),
-      },
+      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling),
       beregningsgrunnlagQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
     ],
   });
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   const bgVilkaret = vilkår?.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
 
@@ -83,7 +78,6 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     return props.submitCallback(data, aksjonspunkter);
   };
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !bgVilkaret) {
     return null;
   }

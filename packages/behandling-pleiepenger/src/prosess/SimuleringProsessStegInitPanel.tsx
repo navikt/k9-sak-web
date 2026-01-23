@@ -1,6 +1,7 @@
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -20,7 +21,6 @@ const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
 ];
 
-// Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.AVREGNING;
 
 interface Props {
@@ -35,20 +35,11 @@ interface Props {
   api: K9SakProsessApi;
 }
 
-/**
- * InitPanel for simulering/avregning prosesssteg
- *
- * Wrapper for AvregningProsessIndex som håndterer:
- * - Registrering med menyen via usePanelRegistrering
- * - Datahenting via RequestApi
- * - Rendering av legacy panelkomponent
- */
 export function SimuleringProsessStegInitPanel(props: Props) {
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
   const featureToggles = use(FeatureTogglesContext);
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
-  // Hent data ved bruk av eksisterende RequestApi-mønster
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     simuleringResultat: any;
     tilbakekrevingvalg: any;
@@ -60,17 +51,15 @@ export function SimuleringProsessStegInitPanel(props: Props) {
     { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
   );
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  // Registrer panel med menyen
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
   const relevanteAksjonspunkter = props.aksjonspunkterMedKodeverk?.filter(ap =>
     RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon.kode),
   );
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   const data = restApiData.data;
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !data) {
     return null;
   }
@@ -81,7 +70,9 @@ export function SimuleringProsessStegInitPanel(props: Props) {
 
   // Beregn readOnlySubmitButton basert på aksjonspunkter
   // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only
-  const harApentAksjonspunkt = relevanteAksjonspunkter?.some(ap => ap.status.kode === 'OPPR');
+  const harApentAksjonspunkt = relevanteAksjonspunkter?.some(
+    ap => ap.status.kode === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+  );
   const readOnlySubmitButton = !harApentAksjonspunkt;
 
   const handleSubmit = async (data: any) => {

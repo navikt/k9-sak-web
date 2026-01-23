@@ -15,8 +15,11 @@ import {
   arbeidsgiverOpplysningerQueryOptions,
   behandlingQueryOptions,
   beregningsgrunnlagQueryOptions,
+  medlemskapQueryOptions,
+  overlappendeYtelserQueryOptions,
   personopplysningerQueryOptions,
   simuleringResultatQueryOptions,
+  tilbakekrevingvalgQueryOptions,
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
 
@@ -33,7 +36,6 @@ const vedtakAksjonspunktKoder = [
   aksjonspunktCodes.SJEKK_TILBAKEKREVING,
 ];
 
-// Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.VEDTAK;
 
 interface Props {
@@ -46,25 +48,9 @@ interface Props {
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
 }
 
-/**
- * InitPanel for vedtak prosesssteg
- *
- * Wrapper for vedtakspanelet som håndterer:
- * - Registrering med menyen via usePanelRegistrering
- * - Beregning av paneltype basert på vilkårstatus, aksjonspunkter og behandlingsresultat
- * - Rendering av legacy panelkomponent via ProsessDefaultInitPanel
- *
- * Dette panelet håndterer vedtaksfatting og er alltid synlig.
- * Det har kompleks statuslogikk som tar hensyn til:
- * - Om alle vilkår er vurdert
- * - Om det finnes åpne aksjonspunkter utenfor vedtakspanelet
- * - Om behandlingsresultatet er avslag eller innvilgelse
- * - Spesielle aksjonspunkter som OVERSTYR_BEREGNING
- */
 export function VedtakProsessStegInitPanel(props: Props) {
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
-  // Hent alle data parallelt med useSuspenseQueries
   const [
     { data: behandlingV2 },
     { data: aksjonspunkter = [] },
@@ -84,19 +70,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
       beregningsgrunnlagQueryOptions(props.api, props.behandling),
       simuleringResultatQueryOptions(props.api, props.behandling),
-      {
-        queryKey: ['tilbakekrevingvalg', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getTilbakekrevingValg(props.behandling.uuid),
-      },
-      {
-        queryKey: ['overlappendeYtelser', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getOverlappendeYtelser(props.behandling.uuid),
-      },
+      tilbakekrevingvalgQueryOptions(props.api, props.behandling),
+      overlappendeYtelserQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
-      {
-        queryKey: ['medlemskap', props.behandling.uuid, props.behandling.versjon],
-        queryFn: () => props.api.getMedlemskap(props.behandling.uuid),
-      },
+      medlemskapQueryOptions(props.api, props.behandling),
     ],
   });
 
@@ -121,16 +98,13 @@ export function VedtakProsessStegInitPanel(props: Props) {
     },
   );
 
-  // Aksjonspunkter som tilhører vedtakspanelet
   const vedtakAksjonspunkter = useMemo(() => {
     return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
   }, [aksjonspunkter]);
 
-  // Registrer panel med menyen
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt || !restApiData.data?.informasjonsbehovVedtaksbrev || !tilgjengeligeVedtaksbrev) {
     return null;
   }

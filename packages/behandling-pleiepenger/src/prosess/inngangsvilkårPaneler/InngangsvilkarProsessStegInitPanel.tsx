@@ -50,7 +50,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
   // Filtrer vilkår som er relevante for dette panelet
   const vilkårForSteg = useMemo(() => {
@@ -73,8 +73,8 @@ export const InngangsvilkarProsessStegInitPanel = ({
   // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
   const skalVisePanel = vilkårForSteg.length > 0;
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   if (!skalVisePanel || !erValgt) {
     return null;

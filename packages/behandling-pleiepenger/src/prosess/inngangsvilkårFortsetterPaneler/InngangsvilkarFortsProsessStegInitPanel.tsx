@@ -49,9 +49,9 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
-  const vilkarForSteg = useMemo(() => {
+  const vilkårForSteg = useMemo(() => {
     if (!vilkår) {
       return [];
     }
@@ -60,18 +60,18 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
 
   // TODO: Finn ut om dette blir riktig utledet
   const perioderFraTidligereBehandlinger = useMemo(() => {
-    return hentAktivePerioderFraVilkar(vilkarForSteg, true);
-  }, [vilkarForSteg]);
+    return hentAktivePerioderFraVilkar(vilkårForSteg, true);
+  }, [vilkårForSteg]);
 
   const tabs =
     perioderFraTidligereBehandlinger.length > 0
       ? ['Perioder i behandlingen', 'Tidligere perioder']
       : ['Perioder i behandlingen'];
 
-  const skalVisePanel = vilkarForSteg.length > 0;
+  const skalVisePanel = vilkårForSteg.length > 0;
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel || !erValgt) {
@@ -105,7 +105,7 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
             overrideReadOnly={overrideReadOnly}
             kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
-            vilkår={vilkarForSteg}
+            vilkår={vilkårForSteg}
             visAllePerioder={visAllePerioder}
             saksnummer={fagsak.saksnummer}
             aksjonspunkterMedKodeverk={aksjonspunkterMedKodeverk}
@@ -116,7 +116,7 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
             overrideReadOnly={overrideReadOnly}
             kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
-            vilkår={vilkarForSteg}
+            vilkår={vilkårForSteg}
             behandling={behandling}
             visAllePerioder={visAllePerioder}
           />

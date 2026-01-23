@@ -1,6 +1,7 @@
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -20,7 +21,6 @@ import {
   personopplysningerQueryOptions,
 } from './api/k9SakQueryOptions';
 
-// Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
 
 /**
@@ -47,19 +47,10 @@ interface Props {
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
 }
 
-/**
- * InitPanel for tilkjent ytelse prosesssteg
- *
- * Wrapper for TilkjentYtelseProsessIndex som håndterer:
- * - Registrering med menyen via usePanelRegistrering
- * - Datahenting via RequestApi
- * - Rendering av legacy panelkomponent
- */
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
-  const context = useContext(ProsessPanelContext);
+  const prosessPanelContext = useContext(ProsessPanelContext);
 
-  // Hent alle data parallelt med useSuspenseQueries
   const [
     { data: beregningsresultatUtbetaling },
     { data: personopplysninger },
@@ -69,19 +60,16 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     queries: [
       beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
-      aksjonspunkterQueryOptions(props.api, props.behandling, (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
-        data.filter(
-          ap => ap.definisjon === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
-        ),
-      ),
+      aksjonspunkterQueryOptions(props.api, props.behandling, [
+        k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+      ]),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
     ],
   });
 
-  const erValgt = context?.erValgt(PANEL_ID);
-  const erStegVurdert = context?.erVurdert(PANEL_ID);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
-  // Render kun hvis panelet er valgt (injisert av ProsessMeny)
   if (!erValgt) {
     return null;
   }
@@ -93,7 +81,9 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     return props.submitCallback(data, aksjonspunkter);
   };
 
-  const harApentAksjonspunkt = aksjonspunkter?.some(ap => ap.status === 'OPPR');
+  const harApentAksjonspunkt = aksjonspunkter?.some(
+    ap => ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+  );
   const readOnlySubmitButton = !harApentAksjonspunkt;
   if (BRUK_V2_TILKJENT_YTELSE) {
     return (

@@ -26,18 +26,17 @@ interface Props {
 }
 
 export const OmsorgenForProsessStegInitPanel = (props: Props) => {
-  const vilkarForSteg = useMemo(() => {
+  const vilkårForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
     }
     return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
   }, [props.vilkår]);
-  const skalVisePanel = vilkarForSteg.length > 0;
+  const skalVisePanel = vilkårForSteg.length > 0;
 
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
-    const kode = ap.definisjon;
-    return kode === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR;
-  });
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
+    ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
+  );
 
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR);
 
@@ -54,7 +53,7 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
     <VilkarresultatMedOverstyringProsessIndex
       aksjonspunkter={relevanteAksjonspunkter}
       behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
-      vilkar={vilkarForSteg}
+      vilkar={vilkårForSteg}
       erOverstyrt={erOverstyrt}
       overstyringApKode={aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR}
       erMedlemskapsPanel={false}

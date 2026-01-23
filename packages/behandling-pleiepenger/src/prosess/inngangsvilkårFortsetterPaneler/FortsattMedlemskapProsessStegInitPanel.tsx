@@ -35,19 +35,18 @@ interface Props {
  * Dette panelet viser overstyring av løpende medlemskapsvilkår.
  */
 export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
-  const vilkarForSteg = useMemo(() => {
+  const vilkårForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
     }
     return props.vilkår.filter(vilkår => vilkår.vilkarType === vilkarType.MEDLEMSKAPSVILKARET);
   }, [props.vilkår]);
 
-  const skalVisePanel = vilkarForSteg.length > 0;
+  const skalVisePanel = vilkårForSteg.length > 0;
 
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
-    const kode = ap.definisjon;
-    return kode === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR;
-  });
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
+    ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR,
+  );
 
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
@@ -65,7 +64,7 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
       toggleOverstyring={props.toggleOverstyring}
       aksjonspunkter={relevanteAksjonspunkter}
       behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
-      vilkar={vilkarForSteg}
+      vilkar={vilkårForSteg}
       erOverstyrt={false}
       overstyringApKode=""
       erMedlemskapsPanel={false}

@@ -2,6 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_kodeverk_behandling_BehandlingType,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
@@ -14,6 +15,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, use, useMemo } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
+import { fagsakQueryOptions, opptjeningQueryOptions } from '../api/k9SakQueryOptions';
 
 const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKARET];
 
@@ -37,16 +39,9 @@ interface Props {
 }
 
 export function OpptjeningProsessStegInitPanel(props: Props) {
-  const { data: fagsak } = useSuspenseQuery({
-    queryKey: ['fagsak', props.saksnummer, props.behandling.versjon],
-    queryFn: () => props.api.getFagsak(props.saksnummer),
-  });
-  const { data: opptjeningV2 } = useSuspenseQuery({
-    queryKey: ['opptjening', props.behandling.uuid, props.behandling.versjon],
-    queryFn: () => props.api.getOpptjening(props.behandling.uuid),
-  });
+  const { data: fagsak } = useSuspenseQuery(fagsakQueryOptions(props.api, props.saksnummer, props.behandling));
+  const { data: opptjeningV2 } = useSuspenseQuery(opptjeningQueryOptions(props.api, props.behandling));
   const { BRUK_V2_VILKAR_OPPTJENING } = use(FeatureTogglesContext);
-  // Hent standard props for å få tilgang til vilkår
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     opptjening: any;
@@ -56,28 +51,28 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
     updateTriggers: [props.behandling.versjon],
   });
 
-  // Filtrer vilkår som er relevante for dette panelet
-  const vilkarForSteg = useMemo(() => {
+  const vilkårForSteg = useMemo(() => {
     if (!props.vilkår) {
       return [];
     }
     return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
   }, [props.vilkår]);
-  // Sjekk om panelet skal vises (kun hvis det finnes relevante vilkår)
-  const skalVisePanel = vilkarForSteg.length > 0;
+
+  const skalVisePanel = vilkårForSteg.length > 0;
 
   const data = restApiData.data;
 
-  const erAlleVilkårVurdert = vilkarForSteg.every(vilkar =>
+  const erAlleVilkårVurdert = vilkårForSteg.every(vilkar =>
     vilkar.perioder?.every(periode => periode.vilkarStatus !== 'IKKE_VURDERT'),
   );
 
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(ap => {
-    const kode = ap.definisjon;
-    return kode === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET;
-  });
+  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
+    ap => ap.definisjon === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
+  );
 
-  const isAksjonspunktOpen = relevanteAksjonspunkter.some(ap => ap.status === 'OPPR');
+  const isAksjonspunktOpen = relevanteAksjonspunkter.some(
+    ap => ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+  );
 
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
@@ -93,7 +88,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         aksjonspunkter={[]}
         behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
         panelTittelKode="Opptjening"
-        vilkar={vilkarForSteg}
+        vilkar={vilkårForSteg}
         erOverstyrt={props.overstyrteAksjonspunktKoder.some(
           kode => kode === aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET,
         )}
@@ -118,8 +113,8 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         opptjening={opptjeningV2}
         visAllePerioder={props.visAllePerioder}
         readOnlySubmitButton={false}
-        vilkar={vilkarForSteg}
-        lovReferanse={vilkarForSteg[0].lovReferanse}
+        vilkar={vilkårForSteg}
+        lovReferanse={vilkårForSteg[0].lovReferanse}
         isAksjonspunktOpen={isAksjonspunktOpen}
         fagsak={fagsak}
       />
@@ -134,7 +129,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         aksjonspunkter={props.aksjonspunkterMedKodeverk}
         fagsak={{ sakstype: fagsak.sakstype }}
         opptjening={data.opptjening}
-        vilkar={vilkarForSteg}
+        vilkar={vilkårForSteg}
         isAksjonspunktOpen={isAksjonspunktOpen}
         readOnlySubmitButton={false}
         visAllePerioder={props.visAllePerioder}
