@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
 import { pathToBehandling } from '../../utils/paths.js';
-import { QueryKeys } from '@k9-sak-web/lib/query-keys/QueryKeys.js';
+import { queryKeys } from '../../shared/query-keys/queryKeys.js';
 
 interface OwnProps {
   saksnummer: string;
@@ -31,7 +31,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
   }
 
   const { data: historikk, isLoading } = useQuery({
-    queryKey: [...QueryKeys.HISTORIKK(), saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
+    queryKey: [...queryKeys.HISTORIKK, saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
     queryFn: () => historikkBackendApi.hentAlleInnslag(saksnummer),
     enabled: saksnummer != null && saksnummer.length > 0,
     select: ({ innslag, feilet }) => {
