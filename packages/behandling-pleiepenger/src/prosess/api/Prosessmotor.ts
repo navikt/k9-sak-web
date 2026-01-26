@@ -66,6 +66,9 @@ const PANEL_KONFIG = {
       aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
     ],
   },
+  tilkjentYtelse: {
+    aksjonspunkter: [aksjonspunktCodes.VURDER_TILBAKETREKK],
+  },
   uttak: {
     aksjonspunkter: [
       aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
@@ -84,7 +87,7 @@ const erPanelVurdert = (panelType: ProcessMenuStepType): boolean => {
 };
 
 // Hjelpefunksjon for å bygge vilkårbaserte paneler
-const byggVilkårPanel = (
+export const byggVilkårPanel = (
   forrigeVurdert: boolean,
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   panelKonfig: { vilkår: readonly string[]; aksjonspunkter: readonly string[] },
@@ -105,7 +108,7 @@ const byggVilkårPanel = (
 };
 
 // Hjelpefunksjon for å beregne uttak-status
-const beregnUttakType = (
+export const beregnUttakType = (
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
   uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
   uttakAksjonspunkter: readonly string[],
@@ -117,7 +120,9 @@ const beregnUttakType = (
       ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
   );
 
-  if (harApenAksjonspunkt) return ProcessMenuStepType.warning;
+  if (harApenAksjonspunkt) {
+    return ProcessMenuStepType.warning;
+  }
 
   const uttaksperiodeKeys = uttak?.uttaksplan?.perioder ? Object.keys(uttak.uttaksplan.perioder) : [];
   if (!uttak || !uttak.uttaksplan || !uttak.uttaksplan.perioder || uttaksperiodeKeys.length === 0) {
@@ -131,15 +136,23 @@ const beregnUttakType = (
 };
 
 // Hjelpefunksjon for å beregne tilkjent ytelse-status
-const beregnTilkjentYtelseType = (
+export const beregnTilkjentYtelseType = (
   beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+  panelKonfig: { aksjonspunkter: readonly string[] },
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
 ): ProcessMenuStepType => {
-  if (!beregningsresultatUtbetaling?.perioder) return ProcessMenuStepType.default;
+  if (!beregningsresultatUtbetaling.perioder || beregningsresultatUtbetaling.perioder.length === 0) {
+    return ProcessMenuStepType.default;
+  }
+  const type = finnPanelStatus(true, [], aksjonspunkter, panelKonfig.aksjonspunkter);
+  if (type === ProcessMenuStepType.warning) {
+    return ProcessMenuStepType.warning;
+  }
   return harKunAvslåtteUttak(beregningsresultatUtbetaling) ? ProcessMenuStepType.danger : ProcessMenuStepType.success;
 };
 
 // Hjelpefunksjon for å beregne simulering-status
-const beregnSimuleringType = (
+export const beregnSimuleringType = (
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
   simuleringResultat: k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
   simuleringAksjonspunkter: readonly string[],
@@ -151,7 +164,9 @@ const beregnSimuleringType = (
       simuleringAksjonspunkter.includes(ap.definisjon),
   );
 
-  if (harApentAksjonspunkt) return ProcessMenuStepType.warning;
+  if (harApentAksjonspunkt) {
+    return ProcessMenuStepType.warning;
+  }
   return simuleringResultat ? ProcessMenuStepType.success : ProcessMenuStepType.default;
 };
 
@@ -164,13 +179,12 @@ const byggPanel = (forrigeVurdert: boolean, type: ProcessMenuStepType, label: st
 });
 
 // Hjelpefunksjon for å beregne vedtak-status
-const beregnVedtakType = (
+export const beregnVedtakType = (
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
   behandling: Behandling,
-  simuleringVurdert: boolean,
 ): ProcessMenuStepType => {
-  if (!vilkår || vilkår.length === 0 || !simuleringVurdert) {
+  if (!vilkår || vilkår.length === 0) {
     return ProcessMenuStepType.default;
   }
 
@@ -250,15 +264,15 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
 
     // Ikke-vilkårbaserte paneler
     const uttakPanel = byggPanel(
-      beregningPanel.erVurdert,
+      true,
       beregnUttakType(aksjonspunkter, uttak, PANEL_KONFIG.uttak.aksjonspunkter),
       'Uttak',
       PROSESS_STEG_KODER.UTTAK,
     );
 
     const tilkjentYtelsePanel = byggPanel(
-      uttakPanel.erVurdert,
-      beregnTilkjentYtelseType(beregningsresultatUtbetaling),
+      true,
+      beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       'Tilkjent ytelse',
       PROSESS_STEG_KODER.TILKJENT_YTELSE,
     );
@@ -272,12 +286,11 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
 
     // Vedtak
     const vedtakPanel = {
-      type: beregnVedtakType(vilkår, aksjonspunkter, behandling, simuleringPanel.erVurdert),
+      type: beregnVedtakType(vilkår, aksjonspunkter, behandling),
       label: 'Vedtak',
       id: PROSESS_STEG_KODER.VEDTAK,
       usePartialStatus:
-        beregnVedtakType(vilkår, aksjonspunkter, behandling, simuleringPanel.erVurdert) !==
-          ProcessMenuStepType.default &&
+        beregnVedtakType(vilkår, aksjonspunkter, behandling) !== ProcessMenuStepType.default &&
         vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT)) &&
         vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.OPPFYLT)),
     };

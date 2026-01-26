@@ -107,10 +107,7 @@ export const finnPanelStatus = (
         .forEach(periode => vilkårStatusCodes.push(periode.vilkarStatus));
     });
 
-    if (
-      vilkårStatusCodes.length > 0 &&
-      vilkårStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)
-    ) {
+    if (vilkårStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)) {
       return ProcessMenuStepType.default;
     }
 
