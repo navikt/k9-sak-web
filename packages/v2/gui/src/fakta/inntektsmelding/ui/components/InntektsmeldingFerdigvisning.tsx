@@ -38,7 +38,7 @@ const InntektsmeldingFerdigvisning = ({ tilstand, onEdit, readOnly }: Inntektsme
           <BodyShort>{config.melding}</BodyShort>
           {!readOnly && (
             <div>
-              <Button variant="tertiary" size="small" onClick={onEdit} icon={<PencilIcon />}>
+              <Button variant="secondary" size="small" onClick={onEdit} icon={<PencilIcon />}>
                 Rediger vurdering
               </Button>
             </div>

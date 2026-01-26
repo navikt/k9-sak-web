@@ -107,7 +107,7 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0].tom).toDate() : undefined}
               fromField={{
                 name: `perioder.${index}.fom`,
-                validators: [
+                validate: [
                   (value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
                   (value: string) => {
                     if (!value || !perioder[index]?.fom) return undefined;
@@ -121,7 +121,7 @@ export const DelvisOpplæring = ({ vurdering }: { vurdering: OpplæringVurdering
               }}
               toField={{
                 name: `perioder.${index}.tom`,
-                validators: [
+                validate: [
                   (value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
                   (value: string) => {
                     if (!value || !perioder[index]?.tom) return undefined;

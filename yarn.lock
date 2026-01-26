@@ -1399,12 +1399,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/ecma402-abstract@npm:3.0.8":
+  version: 3.0.8
+  resolution: "@formatjs/ecma402-abstract@npm:3.0.8"
+  dependencies:
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    "@formatjs/intl-localematcher": "npm:0.7.5"
+    decimal.js: "npm:^10.4.3"
+    tslib: "npm:^2.8.0"
+  checksum: 10/5b8e00790f79c011a6928644baee1409b86353576a91f7a8e9b4562a4a5d486997036ff04cd8451891ab8b7691e683c34cd40d76d4a1751e7df6052d46c54f06
+  languageName: node
+  linkType: hard
+
 "@formatjs/fast-memoize@npm:3.0.1":
   version: 3.0.1
   resolution: "@formatjs/fast-memoize@npm:3.0.1"
   dependencies:
     tslib: "npm:^2.8.0"
   checksum: 10/9c152fbb3725a0ba759f75658107504b33cd7d232380cdce5afeea320be3c71762de0af9b1dc3b8f03c652c6db9b7453ad57ab1e82762dd9a1713990988f84b8
+  languageName: node
+  linkType: hard
+
+"@formatjs/fast-memoize@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@formatjs/fast-memoize@npm:3.0.3"
+  dependencies:
+    tslib: "npm:^2.8.0"
+  checksum: 10/466aa1250eee77897455b6e0282bd178357e326790e18f59e33c77371ebb6099cbf8c520300193ef10ab4909174286ab1d922fa930f02b81dddf08d28eaef1a1
   languageName: node
   linkType: hard
 
@@ -1419,6 +1440,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/icu-messageformat-parser@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@formatjs/icu-messageformat-parser@npm:3.3.0"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/icu-skeleton-parser": "npm:2.0.8"
+    tslib: "npm:^2.8.0"
+  checksum: 10/a8f03e9799c9b4f682f6051ea09d3327abd93dbc1ce17b55e07ec45da7d6e3609c1c87a2ad1bfccbd7bdf54c903d98e8bbe06fa282c4dc44263c55b1927f154e
+  languageName: node
+  linkType: hard
+
 "@formatjs/icu-skeleton-parser@npm:2.0.6":
   version: 2.0.6
   resolution: "@formatjs/icu-skeleton-parser@npm:2.0.6"
@@ -1429,6 +1461,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/icu-skeleton-parser@npm:2.0.8":
+  version: 2.0.8
+  resolution: "@formatjs/icu-skeleton-parser@npm:2.0.8"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    tslib: "npm:^2.8.0"
+  checksum: 10/9917502129e663da5ec8008a9a27c9032e01477adcf4c71788eb475225f57f4602711f9b8f3a3b669c801b0232e9eb53e58c0fdb11aa81e2339e1416f636be3f
+  languageName: node
+  linkType: hard
+
 "@formatjs/intl-localematcher@npm:0.7.3":
   version: 0.7.3
   resolution: "@formatjs/intl-localematcher@npm:0.7.3"
@@ -1436,6 +1478,16 @@ __metadata:
     "@formatjs/fast-memoize": "npm:3.0.1"
     tslib: "npm:^2.8.0"
   checksum: 10/31386f8ca3a190a457a5969a3da76f2cb66b6c0b07ad98e9b6f42cc0ca2cd0242639a3efd2148c7e6d06f3b5e25267931c53a35ed2cb3c326cd2a34a5edda4e0
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-localematcher@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@formatjs/intl-localematcher@npm:0.7.5"
+  dependencies:
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    tslib: "npm:^2.8.0"
+  checksum: 10/9899304f23206c6fceb66e25d073278f64b2f02b66b81d5f982f3d5b644e83d81ba74520352289b3db3f8afd932c959a4631784386bbcb74105b8126101ea9ac
   languageName: node
   linkType: hard
 
@@ -1454,6 +1506,24 @@ __metadata:
     typescript:
       optional: true
   checksum: 10/9cecfcbe19e05cdb6c3660aac24fb2bada6647f47bd7704c4ae583d4f5b47b4b593a0a45f8bbe1da5886be265a480136a1dbd7dad033f9a1ee485bb575d98551
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl@npm:4.0.9":
+  version: 4.0.9
+  resolution: "@formatjs/intl@npm:4.0.9"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    "@formatjs/icu-messageformat-parser": "npm:3.3.0"
+    intl-messageformat: "npm:11.0.9"
+    tslib: "npm:^2.8.0"
+  peerDependencies:
+    typescript: ^5.6.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/074809ff13771fb5c620ba28e37612741c4c9a00a283a730c4eb3db1a1292a4a1ab6073b2abf526fe5f7aecbdc6425738258a7a63e371de6aa62ced3c7fc9754
   languageName: node
   linkType: hard
 
@@ -1596,7 +1666,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "workspace:^"
     "@k9-sak-web/types": "workspace:^"
-    "@navikt/ds-react": "npm:7.37.0"
+    "@navikt/ds-react": "npm:7.40.0"
     date-fns: "npm:4.1.0"
     formik: "npm:2.4.9"
     react: "npm:19.2.3"
@@ -1631,7 +1701,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     classnames: "npm:2.5.1"
     formik: "npm:2.4.9"
     moment: "npm:2.30.1"
@@ -1927,10 +1997,10 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    lodash: "npm:4.17.21"
+    lodash: "npm:4.17.23"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
@@ -1953,10 +2023,10 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
     "@navikt/fnrvalidator": "npm:2.2.1"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     axios: "npm:1.13.2"
     classnames: "npm:2.5.1"
     date-fns: "npm:4.1.0"
@@ -1989,7 +2059,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": "npm:5.90.16"
+    "@tanstack/react-query": "npm:5.90.17"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -2526,9 +2596,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
-    "@navikt/k9-klage-typescript-client": "npm:3.1.20260114124700"
-    "@navikt/k9-sak-typescript-client": "npm:3.0.20260105094539"
-    "@navikt/k9-tilbake-typescript-client": "npm:1.1.20251205161955"
+    "@navikt/k9-klage-typescript-client": "npm:3.1.20260121173419"
+    "@navikt/k9-sak-typescript-client": "npm:3.0.20260122082223"
+    "@navikt/k9-tilbake-typescript-client": "npm:1.1.20260118164048"
     "@navikt/ung-sak-typescript-client": "npm:2.0.20260119095558"
     "@navikt/ung-tilbake-typescript-client": "npm:3.0.20251209154059"
     "@tanstack/eslint-plugin-query": "npm:5.91.2"
@@ -2569,7 +2639,7 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     classnames: "npm:2.5.1"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
@@ -2595,8 +2665,8 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-fakta-beregning": "npm:12.3.0"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
+    "@navikt/ft-fakta-beregning": "npm:12.3.13"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.14"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -2667,9 +2737,9 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-fakta-beregning": "npm:12.3.0"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.0"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
+    "@navikt/ft-fakta-beregning": "npm:12.3.13"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.13"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.14"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -2704,9 +2774,9 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-fakta-beregning": "npm:12.3.0"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.0"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
+    "@navikt/ft-fakta-beregning": "npm:12.3.13"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.13"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.14"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
@@ -2739,9 +2809,9 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-fakta-beregning": "npm:12.3.0"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.0"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
+    "@navikt/ft-fakta-beregning": "npm:12.3.13"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.13"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.14"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
@@ -2779,10 +2849,9 @@ __metadata:
     "@k9-sak-web/sak-app": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/diagnosekoder": "npm:1.2026.0"
-    "@navikt/ft-fakta-beregning": "npm:12.3.0"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.0"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
-    "@navikt/ft-types": "npm:5.2.1"
+    "@navikt/ft-fakta-beregning": "npm:12.3.13"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.1.13"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.14"
     axios: "npm:1.13.2"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
@@ -2804,7 +2873,7 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:8.4.0"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:8.4.12"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -2825,7 +2894,7 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:8.4.0"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:8.4.12"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -2940,7 +3009,6 @@ __metadata:
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
-    uuid: "npm:13.0.0"
   languageName: unknown
   linkType: soft
 
@@ -2948,14 +3016,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn"
   dependencies:
-    "@navikt/ds-css": "npm:7.37.0"
+    "@navikt/ds-css": "npm:7.40.0"
     "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    lodash: "npm:4.17.21"
+    lodash: "npm:4.17.23"
     react: "npm:19.2.3"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.3"
@@ -2967,11 +3035,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding"
   dependencies:
-    "@navikt/ds-css": "npm:7.37.0"
+    "@navikt/ds-css": "npm:7.40.0"
     "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-form-hooks": "npm:10.3.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-form-hooks": "npm:10.3.12"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
@@ -2988,12 +3056,12 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
     "@navikt/diagnosekoder": "npm:1.2026.0"
-    "@navikt/ds-css": "npm:7.37.0"
+    "@navikt/ds-css": "npm:7.40.0"
     "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     "@popperjs/core": "npm:2.11.8"
-    "@tanstack/react-query": "npm:5.90.16"
+    "@tanstack/react-query": "npm:5.90.17"
     axios: "npm:1.13.2"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
@@ -3009,8 +3077,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet"
   dependencies:
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
@@ -3026,11 +3094,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-omsorgen-for@workspace:packages/fakta-omsorgen-for"
   dependencies:
-    "@navikt/ds-css": "npm:7.37.0"
+    "@navikt/ds-css": "npm:7.40.0"
     "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:7.37.0"
+    "@navikt/ds-react": "npm:7.40.0"
     "@navikt/fnrvalidator": "npm:2.2.1"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
@@ -3077,12 +3145,12 @@ __metadata:
     "@hookform/error-message": "npm:2.0.1"
     "@hookform/resolvers": "npm:5.2.2"
     "@k9-sak-web/backend": "workspace:^"
-    "@k9-sak-web/lib": "npm:1.0.0"
+    "@k9-sak-web/lib": "workspace:^"
     "@navikt/diagnosekoder": "npm:1.2026.0"
-    "@navikt/ft-form-hooks": "npm:10.3.0"
-    "@navikt/ft-form-validators": "npm:4.4.0"
-    "@navikt/ft-utils": "npm:3.10.0"
-    "@tanstack/react-query": "npm:5.90.16"
+    "@navikt/ft-form-hooks": "npm:10.3.12"
+    "@navikt/ft-form-validators": "npm:4.4.10"
+    "@navikt/ft-utils": "npm:3.10.10"
+    "@tanstack/react-query": "npm:5.90.17"
     "@types/css-tree": "npm:2.3.11"
     "@types/object-hash": "npm:3.0.6"
     axios: "npm:1.13.2"
@@ -3103,7 +3171,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/lib@npm:1.0.0, @k9-sak-web/lib@workspace:packages/v2/lib":
+"@k9-sak-web/lib@npm:1.0.0, @k9-sak-web/lib@workspace:^, @k9-sak-web/lib@workspace:packages/v2/lib":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/lib@workspace:packages/v2/lib"
   dependencies:
@@ -3177,11 +3245,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-omsorgsdager@workspace:packages/prosess-omsorgsdager"
   dependencies:
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    lodash: "npm:4.17.21"
+    lodash: "npm:4.17.23"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
     react-hook-form: "npm:7.69.0"
@@ -3229,8 +3297,8 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ft-form-hooks": "npm:10.3.0"
-    "@navikt/ft-form-validators": "npm:4.4.0"
+    "@navikt/ft-form-hooks": "npm:10.3.12"
+    "@navikt/ft-form-validators": "npm:4.4.10"
     react: "npm:19.2.3"
     react-hook-form: "npm:7.69.0"
     react-intl: "npm:8.0.9"
@@ -3245,9 +3313,9 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     classnames: "npm:2.5.1"
-    lodash: "npm:4.17.21"
+    lodash: "npm:4.17.23"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -3294,15 +3362,15 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-fakta-beregning": "npm:12.3.0"
-    "@navikt/ft-form-hooks": "npm:10.3.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.1"
-    "@navikt/ft-ui-komponenter": "npm:6.5.0"
-    "@sentry/browser": "npm:10.33.0"
-    "@sentry/react": "npm:10.33.0"
-    "@tanstack/react-query": "npm:5.90.16"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-fakta-beregning": "npm:12.3.13"
+    "@navikt/ft-form-hooks": "npm:10.3.12"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.4.14"
+    "@navikt/ft-ui-komponenter": "npm:6.5.12"
+    "@sentry/browser": "npm:10.34.0"
+    "@sentry/react": "npm:10.34.0"
+    "@tanstack/react-query": "npm:5.90.17"
     axios: "npm:1.13.2"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -3340,13 +3408,13 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-form-hooks": "npm:10.3.0"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
-    "@navikt/ft-ui-komponenter": "npm:6.5.0"
-    "@sentry/browser": "npm:10.33.0"
-    "@sentry/react": "npm:10.33.0"
-    "@tanstack/react-query": "npm:5.90.16"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-form-hooks": "npm:10.3.12"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
+    "@navikt/ft-ui-komponenter": "npm:6.5.12"
+    "@sentry/browser": "npm:10.34.0"
+    "@sentry/react": "npm:10.34.0"
+    "@tanstack/react-query": "npm:5.90.17"
     axios: "npm:1.13.2"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
@@ -3427,17 +3495,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:7.37.0":
-  version: 7.37.0
-  resolution: "@navikt/aksel-icons@npm:7.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F7.37.0%2F69470b7e21c152f7705df217fd5e3566237c8bc4"
-  checksum: 10/13058b79f3cdf8e92f691acad728830e9d2a4f94c804e8711b31f9c2db79494015a61a10b31f20abdb635f0f99ede368c684ce56ceeefa1ee4e855ac998bac62
-  languageName: node
-  linkType: hard
-
-"@navikt/aksel-icons@npm:^7.37.0":
-  version: 7.38.0
-  resolution: "@navikt/aksel-icons@npm:7.38.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F7.38.0%2Ff21368acbac4d1e28604e774d0b95f50404da561"
-  checksum: 10/917aa335e229baa363311a19fee595a89af08b5a19c2b1da12bf75963519dd8d207586ffbb6267c428b493c125f7729ba99fa1eaec6d8519eab43478d1475a5b
+"@navikt/aksel-icons@npm:7.40.0, @navikt/aksel-icons@npm:^7.40.0":
+  version: 7.40.0
+  resolution: "@navikt/aksel-icons@npm:7.40.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F7.40.0%2F16d67c0742bcf2a2c38ad37be6c287765640fd7f"
+  checksum: 10/3aa95caee5484355b8e1bbe06fa3f4c1dd2f5db48c3c27e445f8ce53438e3571949f957178b2dbc81163c148f5c5c000222e67afe60556955419ad06ce505fab
   languageName: node
   linkType: hard
 
@@ -3448,10 +3509,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:7.37.0":
-  version: 7.37.0
-  resolution: "@navikt/ds-css@npm:7.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F7.37.0%2Fb0752aaf6a6ea970fedd2f6cdc0da93aa7b0c9fa"
-  checksum: 10/48b4546232a00e5ea6ab1f3d242342c59287643d01458526f939bc4a8e4beea440facd39430c4153b8b50ae0d6d68d8f09bb861fcdac11ca7bb4cca8e2a798ca
+"@navikt/ds-css@npm:7.40.0":
+  version: 7.40.0
+  resolution: "@navikt/ds-css@npm:7.40.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F7.40.0%2F267682132732537194904a0498ce8971bf8b4922"
+  checksum: 10/49f3fefd685a31da9dd231a1994c2a3d591bbb58f1013ddff395c5f53f9c758121a092730196e4ee1390097f2f69f806577f921e02053aa40a06f2ce80332e15
   languageName: node
   linkType: hard
 
@@ -3465,14 +3526,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-react@npm:7.37.0":
-  version: 7.37.0
-  resolution: "@navikt/ds-react@npm:7.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F7.37.0%2Fda57447763c409e4a99673de00cf52d33e3aa693"
+"@navikt/ds-react@npm:7.40.0":
+  version: 7.40.0
+  resolution: "@navikt/ds-react@npm:7.40.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F7.40.0%2F4752ce4b946ab9f05135124d5fec50f2d0eaa937"
   dependencies:
     "@floating-ui/react": "npm:0.27.8"
     "@floating-ui/react-dom": "npm:^2.1.6"
-    "@navikt/aksel-icons": "npm:^7.37.0"
-    "@navikt/ds-tokens": "npm:^7.37.0"
+    "@navikt/aksel-icons": "npm:^7.40.0"
+    "@navikt/ds-tokens": "npm:^7.40.0"
     clsx: "npm:^2.1.0"
     date-fns: "npm:^4.0.0"
     react-day-picker: "npm:9.7.0"
@@ -3480,21 +3541,21 @@ __metadata:
     "@types/react": ^17.0.30 || ^18 || ^19
     react: ^17 || ^18 || ^19
     react-dom: ^17 || ^18 || ^19
-  checksum: 10/ab6b0fb54dfbb0420d06dea093d63b8c38e3b270714201ff68f15443b3f9a4d667072733fc194c426df752a52bf0454a5481a58d070af08cef8603f80fc353a9
+  checksum: 10/4b59fc34c5484c8fb0d15682d5e3717f5840dce5aeab14e52acaef28e9ad2fb669148af9a824a12b0c38614ef3b0797a26fb12db2d018ec0761da4061ad08636
   languageName: node
   linkType: hard
 
-"@navikt/ds-tailwind@npm:7.37.0":
-  version: 7.37.0
-  resolution: "@navikt/ds-tailwind@npm:7.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F7.37.0%2Fa30e689fa0f28e1c1176621317bae2a069793d1e"
-  checksum: 10/5b9e6b7f8335fd675e9a4f4491dd3b2d1e8fe33fbaa542375bb793c40e7dbd05677ea31a7faa3f40a67fa52c7a6885e22bffb10526ffbae60c3d91b709ad0dd5
+"@navikt/ds-tailwind@npm:7.40.0":
+  version: 7.40.0
+  resolution: "@navikt/ds-tailwind@npm:7.40.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F7.40.0%2Fe72af39cee64cb145a6459129cfd8bf4f6bba99a"
+  checksum: 10/0f29063f26fe6fdf1541ba5e687f06f437881f7c2f1e679f6dca6fa8ead3bb3152a3c3d189806fecb56bc8a39cc458d6dda55482ae9b8eaff9dd8f7e40a84aa8
   languageName: node
   linkType: hard
 
-"@navikt/ds-tokens@npm:^7.37.0":
-  version: 7.38.0
-  resolution: "@navikt/ds-tokens@npm:7.38.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F7.38.0%2Fd98840acd074278426e3cbe2f767e3841d8b6bd6"
-  checksum: 10/a9273d4542e3c0e32204ad77e9f710da69336c28624915ef0b05351607f528106deb0020b09d9f4826618e05b666cd3e626a76dd120a54a45965fec24330c4b1
+"@navikt/ds-tokens@npm:^7.40.0":
+  version: 7.40.0
+  resolution: "@navikt/ds-tokens@npm:7.40.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F7.40.0%2F36f981e12d4d90f18155615b7666b737039a3ff0"
+  checksum: 10/c295248df5bab85ddfc5a3a78df57ff8ad2dce0a71913d72510621f4e164085f2b54d7b50be0c8d37138beda1bfd8e6caff186af81b04bd6922e828df8e24205
   languageName: node
   linkType: hard
 
@@ -3520,23 +3581,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning@npm:12.3.0":
-  version: 12.3.0
-  resolution: "@navikt/ft-fakta-beregning@npm:12.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F12.3.0%2Fcdb800f6b6c5e4cb48c385dc0563a3491f7dec26"
+"@navikt/ft-fakta-beregning@npm:12.3.13":
+  version: 12.3.13
+  resolution: "@navikt/ft-fakta-beregning@npm:12.3.13::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F12.3.13%2F4fc50c5a639c28f7597f921f96b0c83a4f627aeb"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-form-hooks": "npm:^10.3.0"
-    "@navikt/ft-form-validators": "npm:^4.4.0"
-    "@navikt/ft-ui-komponenter": "npm:^6.5.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-form-hooks": "npm:^10.3.12"
+    "@navikt/ft-form-validators": "npm:^4.4.10"
+    "@navikt/ft-ui-komponenter": "npm:^6.5.12"
+    "@navikt/ft-utils": "npm:^3.10.10"
     core-js: "npm:3.47.0"
     dayjs: "npm:1.11.19"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-hook-form: "npm:7.71.1"
+    react-intl: "npm:8.0.11"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-css": 7.x
@@ -3555,26 +3616,26 @@ __metadata:
     react-dom: 19.1.0
     react-hook-form: 7.x
     react-intl: 6.x
-  checksum: 10/09eac8b1fb64982646054a88a1b56f73a23aa5338f34cbdd2470a3a2be4d465ca29f10fdea56ee0a9cbe10dabdaf28229a83134cd14b0260eb3341e9963797a0
+  checksum: 10/bac4697932368811b3c295661cc37ac3e08cb42e93bc7999436b0b25f39d7be9e5ae18288641c2ac76a80a78005b1e7da92784eb939343d8fb49acf83f1d645a
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:14.1.0":
-  version: 14.1.0
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:14.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F14.1.0%2F8f69cdbe6128f32c8f2de00b4757dbfce76849fc"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:14.1.13":
+  version: 14.1.13
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:14.1.13::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F14.1.13%2F283308ed3f72e4bbd66dac734c331123907e5642"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-form-hooks": "npm:^10.3.0"
-    "@navikt/ft-form-validators": "npm:^4.4.0"
-    "@navikt/ft-ui-komponenter": "npm:^6.5.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-form-hooks": "npm:^10.3.12"
+    "@navikt/ft-form-validators": "npm:^4.4.10"
+    "@navikt/ft-ui-komponenter": "npm:^6.5.12"
+    "@navikt/ft-utils": "npm:^3.10.10"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
     react: "npm:19.2.3"
-    react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-hook-form: "npm:7.71.1"
+    react-intl: "npm:8.0.11"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-css": 7.x
@@ -3593,24 +3654,24 @@ __metadata:
     react-hook-form: 7.x
     react-intl: 6.x
     uuid: 9.0.1
-  checksum: 10/74bc3be33a4b17b57dac0d285a53861a5c7530990249e77fd42f254a21b6036fe5834a6cd28460ddc985903f9929279489bdf3cea8d394b936f0192f81e5cd43
+  checksum: 10/997a775d24b369aecd8d0931106ae016f3e17696bea559ab3c8bab59d1eae2a3c74b8f8ead484e4db480b7891035165aa52b2e921f5c14b8b79c6a01afdec2e1
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-hooks@npm:10.3.0, @navikt/ft-form-hooks@npm:^10.3.0":
-  version: 10.3.0
-  resolution: "@navikt/ft-form-hooks@npm:10.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F10.3.0%2F73d54dfedf295b0448a42eccafeea0a1659dbd9b"
+"@navikt/ft-form-hooks@npm:10.3.12, @navikt/ft-form-hooks@npm:^10.3.12":
+  version: 10.3.12
+  resolution: "@navikt/ft-form-hooks@npm:10.3.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F10.3.12%2F4a33bbd99e21b7ed91171a6c7ea1ba253f8922c8"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-ui-komponenter": "npm:^6.5.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-ui-komponenter": "npm:^6.5.12"
+    "@navikt/ft-utils": "npm:^3.10.10"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-hook-form: "npm:7.69.0"
+    react-hook-form: "npm:7.71.1"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-css": 7.x
@@ -3625,30 +3686,30 @@ __metadata:
     react: 19.1.0
     react-dom: 19.1.0
     react-hook-form: 7.x
-  checksum: 10/65ec3e9e49f87e68a76cade32045e67dd2e69897ddd6842d3dd19ada2a9ee1eb7b73bb14ded048f5798682edf44d4a3615fb930a1dcfce8a0557a631e7743eae
+  checksum: 10/6ab067aef3f87a1f869a8594bc270469731a118da12d91185e9551b8e00287220bff163627b4d0aa106554bf87032df0f1a107e1a551d6ec2fcfbe1db21598e6
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-validators@npm:4.4.0, @navikt/ft-form-validators@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "@navikt/ft-form-validators@npm:4.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F4.4.0%2Ff6ed25efaded79bb067990d27b4b4aca55621eb9"
+"@navikt/ft-form-validators@npm:4.4.10, @navikt/ft-form-validators@npm:^4.4.10":
+  version: 4.4.10
+  resolution: "@navikt/ft-form-validators@npm:4.4.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F4.4.10%2F5e4d3cf1a81f8f53f59623d16c28612c1b2b44eb"
   dependencies:
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/ft-utils": "npm:^3.10.10"
     dayjs: "npm:1.11.19"
   peerDependencies:
     "@navikt/ft-utils": 2.x
     dayjs: 1.11.x
-  checksum: 10/bc81f14db26bc748fe591eccbb02e0263ffc1b6eecf79a5fe8f31fb285499abe4736f4a9f3b4ecd19e8899a2f356405c0b65a51221c5b05036b2dd93ac2a622a
+  checksum: 10/720794a6cc5f793e72f5eeb162ee710920e9593621d15bc4f09e4f6a034bb1e40c25674220e5b875aee315902ab19087e5f0e50536132e1060d51fde3e48242d
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:10.3.0":
-  version: 10.3.0
-  resolution: "@navikt/ft-plattform-komponenter@npm:10.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F10.3.0%2Fb069fb8a1d02f17d0821db4884dbbb7d98162835"
+"@navikt/ft-plattform-komponenter@npm:10.3.10":
+  version: 10.3.10
+  resolution: "@navikt/ft-plattform-komponenter@npm:10.3.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F10.3.10%2F53a1b60160c29897ff5ef8d25c037b5238ac4db5"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-utils": "npm:^3.10.10"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
   peerDependencies:
@@ -3662,27 +3723,27 @@ __metadata:
     prop-types: 15.8.1
     react: 19.1.0
     react-dom: 19.1.0
-  checksum: 10/042eb136e175c4b519d561308474352ac7ab5373c52a8a1228ad4849b2f235889200ecbd70995d5b180b2b7ed4e1a91b27cf12e181cea9555126bbeeb52a0e3f
+  checksum: 10/da0110ded55e5d6ac3eb489f7a8d54695933f48ebeb340aeaa5ccd6603a63accf4b1e7d780f018ca2dcb336e97acd4e8ee09c0d69325076b87e92cf322ffdb75
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.1":
-  version: 11.4.1
-  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F11.4.1%2F61576ca205d0353aebb6ab1f1146da297355fad7"
+"@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.14":
+  version: 11.4.14
+  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.14::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F11.4.14%2F60e9c5933769607614c4fdcb27855f3182f33e7b"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-form-hooks": "npm:^10.3.0"
-    "@navikt/ft-form-validators": "npm:^4.4.0"
-    "@navikt/ft-ui-komponenter": "npm:^6.5.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-form-hooks": "npm:^10.3.12"
+    "@navikt/ft-form-validators": "npm:^4.4.10"
+    "@navikt/ft-ui-komponenter": "npm:^6.5.12"
+    "@navikt/ft-utils": "npm:^3.10.10"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
     echarts: "npm:6.0.0"
     react: "npm:19.2.3"
-    react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-hook-form: "npm:7.71.1"
+    react-intl: "npm:8.0.11"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-css": 7.x
@@ -3700,25 +3761,25 @@ __metadata:
     react: 19.1.0
     react-hook-form: 7.x
     react-intl: 6.x
-  checksum: 10/9d64a51f969a5cedea1f23e05e3df6d9d1275d3b1086444482044a617fa9aa95820da03a7557950ef75a91ba4ef99a8603db8cb4d18b92de828e9f58b3ccd56f
+  checksum: 10/2dcce96f6dcfae3e53e62bee580cc9e1f6ef99b7576f57865c8c736dae7aeba156c6f0671fd525918b5ff30c8fc302263c5758e80b57c6128adf77c826ce9c5c
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:8.4.0":
-  version: 8.4.0
-  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:8.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F8.4.0%2F35702c0e6f136a2efb6d5c990072efab33381da3"
+"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:8.4.12":
+  version: 8.4.12
+  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:8.4.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F8.4.12%2Fb750ef463054ab88ac8b7d019901e439ae618027"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-form-hooks": "npm:^10.3.0"
-    "@navikt/ft-form-validators": "npm:^4.4.0"
-    "@navikt/ft-ui-komponenter": "npm:^6.5.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-form-hooks": "npm:^10.3.12"
+    "@navikt/ft-form-validators": "npm:^4.4.10"
+    "@navikt/ft-ui-komponenter": "npm:^6.5.12"
+    "@navikt/ft-utils": "npm:^3.10.10"
     dayjs: "npm:1.11.19"
     react: "npm:19.2.3"
-    react-hook-form: "npm:7.69.0"
-    react-intl: "npm:8.0.9"
+    react-hook-form: "npm:7.71.1"
+    react-intl: "npm:8.0.11"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-css": 7.x
@@ -3733,28 +3794,21 @@ __metadata:
     react: 19.1.0
     react-hook-form: 7.x
     react-intl: 6.x
-  checksum: 10/b842e33b2ea04da0b1be6eee5bb02bf2b584c22448871966824b10bfd0181d1288d6ffa9f1fee5a0fba417fcd651d283c1a90874661a1f0ea0f55526cf2e58d2
+  checksum: 10/7e33dc1ed7b65572818c552dad2e1116769098fd8b54f7c2cf9a69bbbb5d1a4238f41e3bb279bfbd04464a0531c02ecf8518d6406e9d4c823029238ebfcde345
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:5.2.1":
-  version: 5.2.1
-  resolution: "@navikt/ft-types@npm:5.2.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F5.2.1%2F672fe1852811508b68c29357dc9c43627a3f62a1"
-  checksum: 10/c2746a060e94ef9f7473a7c9e6adb0d54c71a33fb3c6518acebc8f9da986bb23ed289ea8049b5252afcebb276f2792af5e51bbebaecd5d3ca47a46176d17312f
-  languageName: node
-  linkType: hard
-
-"@navikt/ft-ui-komponenter@npm:6.5.0, @navikt/ft-ui-komponenter@npm:^6.5.0":
-  version: 6.5.0
-  resolution: "@navikt/ft-ui-komponenter@npm:6.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F6.5.0%2Fb78155ed56190928094125feb1d560e2782d40db"
+"@navikt/ft-ui-komponenter@npm:6.5.12, @navikt/ft-ui-komponenter@npm:^6.5.12":
+  version: 6.5.12
+  resolution: "@navikt/ft-ui-komponenter@npm:6.5.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F6.5.12%2Ff1ec71cf30bfa91478df815e1c9d137bcf011ba6"
   dependencies:
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ft-utils": "npm:^3.10.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ft-utils": "npm:^3.10.10"
     classnames: "npm:2.5.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   peerDependencies:
     "@navikt/aksel-icons": 7.x
     "@navikt/ds-css": 7.x
@@ -3765,42 +3819,42 @@ __metadata:
     react-dom: 19.1.0
     react-intl: 6.x
     react-modal: 3.16.1
-  checksum: 10/64be2f52072762d4566a5e07d5a54bf189da214cdf6e74b0d5373362435d213ce4e52cb9887d2017bf57be7ab3b00123a83ef8c39e43a002d7c23df4f25f2443
+  checksum: 10/c7104f0a460f3924241b3cd6e7beafbe0e2325b8284b8fb4f75267b0fd954193a9674002b3209784473400a2d667d8da308b550556e213d308122c0f7cd8d793
   languageName: node
   linkType: hard
 
-"@navikt/ft-utils@npm:3.10.0, @navikt/ft-utils@npm:^3.10.0":
-  version: 3.10.0
-  resolution: "@navikt/ft-utils@npm:3.10.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F3.10.0%2F6bd56a90399de035d508b76f12ba42e3fd1004f7"
+"@navikt/ft-utils@npm:3.10.10, @navikt/ft-utils@npm:^3.10.10":
+  version: 3.10.10
+  resolution: "@navikt/ft-utils@npm:3.10.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F3.10.10%2F587f810714397b0ef90f1bc9f635fca02ccda8a4"
   dependencies:
     dayjs: "npm:1.11.19"
-    react-intl: "npm:8.0.9"
+    react-intl: "npm:8.0.11"
   peerDependencies:
     dayjs: 1.11.x
     react: "*"
     react-intl: 6.x
-  checksum: 10/1eef50587fe77109ea80d2414cf5629ca5f29a7ff02b4a33ee49258e7ecc6b3728dc4c85bc0982c555db677979494bb7634ab89a96374d07d6447343804f891e
+  checksum: 10/2ce38625194bfd4d8d68f40cc6891176d13781734e343c5878b8d237d57859ee4143549f85c446f3dacaffb91a012d59bb5751ac15185f286d96cb33d7b8cc9a
   languageName: node
   linkType: hard
 
-"@navikt/k9-klage-typescript-client@npm:3.1.20260114124700":
-  version: 3.1.20260114124700
-  resolution: "@navikt/k9-klage-typescript-client@npm:3.1.20260114124700::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.1.20260114124700%2F30472b7f52fe8900079c56033ca06f620ed684a1"
-  checksum: 10/8182750c589a7a4d2dbdf2ae8ec852168ceb38eeba565c64c6188a0bf5b48a7424c0fd9d9f548e516ae4a0b84c0434b5aa11d6bdcaa4431811c2b8dbe2f42251
+"@navikt/k9-klage-typescript-client@npm:3.1.20260121173419":
+  version: 3.1.20260121173419
+  resolution: "@navikt/k9-klage-typescript-client@npm:3.1.20260121173419::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-klage-typescript-client%2F3.1.20260121173419%2F8713f6305cb65310eaef1ff420be52ab79470ac0"
+  checksum: 10/ef07443a85ede435ea73ffd108df79bbe702a2f16b33a2707cc9248cb6e8afa9ccdfda51cbc8490a807cf90355414e48da488128d55f13b5b44803e0e8dad620
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:3.0.20260105094539":
-  version: 3.0.20260105094539
-  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20260105094539::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20260105094539%2F5721f77e4e8cff39c957af894d145ad165e34692"
-  checksum: 10/2c582db4ac7f2e2ca52f7671b0ab36ca997100174fe965a9b47da63e2811a9806b739595e4c3d2da2e30d695e3133611daca5b5d972633aac7e7ffc593618808
+"@navikt/k9-sak-typescript-client@npm:3.0.20260122082223":
+  version: 3.0.20260122082223
+  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20260122082223::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20260122082223%2F1328d9417565487125dacda825a1e8572604a8e3"
+  checksum: 10/76f863e0952f4de2b9f8fdedc61faca56583b173f2c4aa60d7ee65b26da8b8366be1344875074de084dcc86c97129ef0cefafaf31d6a16fdccf910e8ebeb13cd
   languageName: node
   linkType: hard
 
-"@navikt/k9-tilbake-typescript-client@npm:1.1.20251205161955":
-  version: 1.1.20251205161955
-  resolution: "@navikt/k9-tilbake-typescript-client@npm:1.1.20251205161955::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-tilbake-typescript-client%2F1.1.20251205161955%2Ffd0bf9f0a1f4139a22694ee36d9c097e657fc5e1"
-  checksum: 10/93e9de64e51417f8d001b1cfcb4afbe621f197d66ac3bfec6838cf46523daabf9d21987db61b22318576a17e9d8eb3ca00ec14807f79a7e938660919df461002
+"@navikt/k9-tilbake-typescript-client@npm:1.1.20260118164048":
+  version: 1.1.20260118164048
+  resolution: "@navikt/k9-tilbake-typescript-client@npm:1.1.20260118164048::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-tilbake-typescript-client%2F1.1.20260118164048%2Fe95cab081b6855abad2b98f5fe5fdbd746a8db71"
+  checksum: 10/ebbf6911a72854a9cc407c2a9790468fbc833e74660c8adaac495bf2e106e82e517a44ef242485c4f74ea8a8744f71647db3f391ea0de9483c7c7328563ef086
   languageName: node
   linkType: hard
 
@@ -4266,129 +4320,128 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry-internal/browser-utils@npm:10.33.0"
+"@sentry-internal/browser-utils@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry-internal/browser-utils@npm:10.34.0"
   dependencies:
-    "@sentry/core": "npm:10.33.0"
-  checksum: 10/fa431b1a25fc58ea2edbf6e379c1c2785d620660d4de0c48f1350ec955afd863b86183180c82a35750a02849491fe8b03c22f65726420dcb8a97a630469cb64b
+    "@sentry/core": "npm:10.34.0"
+  checksum: 10/03377c3bd191444e9769f3881d31e6b3405600fc7d4c37f699b2f692cc266ff468e9014dc44346db630282b9433cbb516ee6cf0b68abf1ea0382002daaca8fa8
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry-internal/feedback@npm:10.33.0"
+"@sentry-internal/feedback@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry-internal/feedback@npm:10.34.0"
   dependencies:
-    "@sentry/core": "npm:10.33.0"
-  checksum: 10/3b45ef3995f9d6f53ab850e3f3c6f6ec6f04a65c1c28c563271ba9b1e5efcade877963e9f33f62d57a775cdf1d26ec38cee30bbfb26aeedf82a55d26b1cb34b4
+    "@sentry/core": "npm:10.34.0"
+  checksum: 10/dd8af91f5bb57e9996616e2e9eaed21239c2272d34ce3dae48da8ebc5919141f4f035e96f65fb1e994aa3740353e7be537eff439a025aa4f7e739fa37e6a8f05
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay-canvas@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry-internal/replay-canvas@npm:10.33.0"
+"@sentry-internal/replay-canvas@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry-internal/replay-canvas@npm:10.34.0"
   dependencies:
-    "@sentry-internal/replay": "npm:10.33.0"
-    "@sentry/core": "npm:10.33.0"
-  checksum: 10/429b3cc95e45f3f08a3c795ff535ada411325513fbaf07abd8d0bc7c78216e073efb727aa8262ca1cb7151fc78d6b0fa2594dfa40cf8a6ec2e7b7f396e51d6c9
+    "@sentry-internal/replay": "npm:10.34.0"
+    "@sentry/core": "npm:10.34.0"
+  checksum: 10/7e7731229ed283d6bba16fec1f20ee7d389d2ee1bfeb2e8a1da50566c29a557871fa7275756557423bf75902392ca6e47489100c4eaa8a8c4d9c47311fb3bcc7
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry-internal/replay@npm:10.33.0"
+"@sentry-internal/replay@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry-internal/replay@npm:10.34.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.33.0"
-    "@sentry/core": "npm:10.33.0"
-  checksum: 10/a931819a39bfa5410e10bc792521f680b5d8ed47823085ffdc31906c4d891d87123d9f36bd9a0996dba43e7205b0c6e44026d1df56b6e80490bd1be4abdb8688
+    "@sentry-internal/browser-utils": "npm:10.34.0"
+    "@sentry/core": "npm:10.34.0"
+  checksum: 10/99b27fe6f89ba3f2e0504832c2d7aa1c415d8f8d6eaf564546ebe6ef07f661cbf545ad84fbe4d6df1c44d1f4214423667c300add251c1793fe428ebf559a2d2b
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry/browser@npm:10.33.0"
+"@sentry/browser@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry/browser@npm:10.34.0"
   dependencies:
-    "@sentry-internal/browser-utils": "npm:10.33.0"
-    "@sentry-internal/feedback": "npm:10.33.0"
-    "@sentry-internal/replay": "npm:10.33.0"
-    "@sentry-internal/replay-canvas": "npm:10.33.0"
-    "@sentry/core": "npm:10.33.0"
-  checksum: 10/e452bf07dc120bbba93943d93502ee633941f49602ee5444183b5bfcb172c469fe7bb0bc0c2c9813ef42b60ca64579e940aba770cdb22f2b43d9c07c5db6a52e
+    "@sentry-internal/browser-utils": "npm:10.34.0"
+    "@sentry-internal/feedback": "npm:10.34.0"
+    "@sentry-internal/replay": "npm:10.34.0"
+    "@sentry-internal/replay-canvas": "npm:10.34.0"
+    "@sentry/core": "npm:10.34.0"
+  checksum: 10/d9931d3aca0450d9f95da8e39e9dae82718bb7199b0da652f3ce900a5720102074faa0e363161831518ed0fd844d374a88aacc69cd270db57019b1f5458f11d4
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-darwin@npm:2.58.3"
+"@sentry/cli-darwin@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-darwin@npm:3.1.0"
   conditions: os=darwin
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm64@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-linux-arm64@npm:2.58.3"
+"@sentry/cli-linux-arm64@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-linux-arm64@npm:3.1.0"
   conditions: (os=linux | os=freebsd | os=android) & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-linux-arm@npm:2.58.3"
+"@sentry/cli-linux-arm@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-linux-arm@npm:3.1.0"
   conditions: (os=linux | os=freebsd | os=android) & cpu=arm
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-i686@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-linux-i686@npm:2.58.3"
+"@sentry/cli-linux-i686@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-linux-i686@npm:3.1.0"
   conditions: (os=linux | os=freebsd | os=android) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-linux-x64@npm:2.58.3"
+"@sentry/cli-linux-x64@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-linux-x64@npm:3.1.0"
   conditions: (os=linux | os=freebsd | os=android) & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-arm64@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-win32-arm64@npm:2.58.3"
+"@sentry/cli-win32-arm64@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-win32-arm64@npm:3.1.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-win32-i686@npm:2.58.3"
+"@sentry/cli-win32-i686@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-win32-i686@npm:3.1.0"
   conditions: os=win32 & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-x64@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli-win32-x64@npm:2.58.3"
+"@sentry/cli-win32-x64@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli-win32-x64@npm:3.1.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.58.3":
-  version: 2.58.3
-  resolution: "@sentry/cli@npm:2.58.3"
+"@sentry/cli@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@sentry/cli@npm:3.1.0"
   dependencies:
-    "@sentry/cli-darwin": "npm:2.58.3"
-    "@sentry/cli-linux-arm": "npm:2.58.3"
-    "@sentry/cli-linux-arm64": "npm:2.58.3"
-    "@sentry/cli-linux-i686": "npm:2.58.3"
-    "@sentry/cli-linux-x64": "npm:2.58.3"
-    "@sentry/cli-win32-arm64": "npm:2.58.3"
-    "@sentry/cli-win32-i686": "npm:2.58.3"
-    "@sentry/cli-win32-x64": "npm:2.58.3"
-    https-proxy-agent: "npm:^5.0.0"
-    node-fetch: "npm:^2.6.7"
+    "@sentry/cli-darwin": "npm:3.1.0"
+    "@sentry/cli-linux-arm": "npm:3.1.0"
+    "@sentry/cli-linux-arm64": "npm:3.1.0"
+    "@sentry/cli-linux-i686": "npm:3.1.0"
+    "@sentry/cli-linux-x64": "npm:3.1.0"
+    "@sentry/cli-win32-arm64": "npm:3.1.0"
+    "@sentry/cli-win32-i686": "npm:3.1.0"
+    "@sentry/cli-win32-x64": "npm:3.1.0"
     progress: "npm:^2.0.3"
     proxy-from-env: "npm:^1.1.0"
+    undici: "npm:^6.22.0"
     which: "npm:^2.0.2"
   dependenciesMeta:
     "@sentry/cli-darwin":
@@ -4409,26 +4462,26 @@ __metadata:
       optional: true
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: 10/2abdf1f395755eae82b2db984bfd8bf587e91820a35f4688cbe600b0837a156bd599618bbebe92959d2f5c88ecf6f90ab896deb6d362045364d80ead2ff88c8d
+  checksum: 10/d795e957fb75cef218f67a74e9d174343b570f9756fa6a8b0e3ac8049fc79571b95fc6c62ac5cb800e41f26b8802aaf28f32194ebefc40898c85f708e4f71bbf
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry/core@npm:10.33.0"
-  checksum: 10/e552bbac80602db8f98c52ea3e5f5f18ad51f1d64ee50d098d653ee3a3913619fa66bc3f4910b0a0e33ff8591e8d984180232dbe9fb79c257a2811f14db1f86b
+"@sentry/core@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry/core@npm:10.34.0"
+  checksum: 10/5992c94ab9645e8f3a647f1bcc2c011200bc7c7280c0fd9898d32a8ff39775cde697c7e794fb70487f78f0c428471df67f032823728267b68e3582fbbeba15bb
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:10.33.0":
-  version: 10.33.0
-  resolution: "@sentry/react@npm:10.33.0"
+"@sentry/react@npm:10.34.0":
+  version: 10.34.0
+  resolution: "@sentry/react@npm:10.34.0"
   dependencies:
-    "@sentry/browser": "npm:10.33.0"
-    "@sentry/core": "npm:10.33.0"
+    "@sentry/browser": "npm:10.34.0"
+    "@sentry/core": "npm:10.34.0"
   peerDependencies:
     react: ^16.14.0 || 17.x || 18.x || 19.x
-  checksum: 10/695aea712a4c5c1b65d562b100afd54d8035fa0c1dda15835e987901c3b70d5942dbe652ec84d8714ceb489dcda4a759e2a2ed1c07390716ff368451919777b5
+  checksum: 10/7f4e8ce5aadf7943bb4ef1a307de8c33e762adea5e9245626f49a15583fb39618a802feafc0c2cea4bd50cd1cf66bc6f233f54b7622bc07ac738887cc0102fb7
   languageName: node
   linkType: hard
 
@@ -4946,21 +4999,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.90.16":
-  version: 5.90.16
-  resolution: "@tanstack/query-core@npm:5.90.16"
-  checksum: 10/25720ff6aa5888550351d92620ca62b6882e80da0fd0428be01c2c6cf4772e6678d7850b88f81916b3ab3fb49dad3b697a3ac84e9e6a90da482ef980c30b7566
+"@tanstack/query-core@npm:5.90.17":
+  version: 5.90.17
+  resolution: "@tanstack/query-core@npm:5.90.17"
+  checksum: 10/720bc98c18480a393de47ba482fea5783799a74a184c7394ebf0688258e4c75a79da864114d7811af87124decda6e0cc16a18e8b347505a4899ec08207e2173e
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:5.90.16":
-  version: 5.90.16
-  resolution: "@tanstack/react-query@npm:5.90.16"
+"@tanstack/react-query@npm:5.90.17":
+  version: 5.90.17
+  resolution: "@tanstack/react-query@npm:5.90.17"
   dependencies:
-    "@tanstack/query-core": "npm:5.90.16"
+    "@tanstack/query-core": "npm:5.90.17"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/7cd8fa3da43f99ecb52f1ef16fb3fe177957e3bc71d0f367f2e55b9f7bce19984f2d9ff367c909ec10a49ed4d66fc26bb1f3a0088340dfab746be63a51b5bb94
+  checksum: 10/5a5c27d0479cb74b0345f60b8d7c8f7b4841ad6e0b920441b43b2a7f971184c33ae6fb06a38263456536e726e949e5c876caf46f4af17e1d81d4958d6b840b1b
   languageName: node
   linkType: hard
 
@@ -5320,39 +5373,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:8.52.0"
+"@typescript-eslint/eslint-plugin@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/eslint-plugin@npm:8.53.0"
   dependencies:
     "@eslint-community/regexpp": "npm:^4.12.2"
-    "@typescript-eslint/scope-manager": "npm:8.52.0"
-    "@typescript-eslint/type-utils": "npm:8.52.0"
-    "@typescript-eslint/utils": "npm:8.52.0"
-    "@typescript-eslint/visitor-keys": "npm:8.52.0"
+    "@typescript-eslint/scope-manager": "npm:8.53.0"
+    "@typescript-eslint/type-utils": "npm:8.53.0"
+    "@typescript-eslint/utils": "npm:8.53.0"
+    "@typescript-eslint/visitor-keys": "npm:8.53.0"
     ignore: "npm:^7.0.5"
     natural-compare: "npm:^1.4.0"
     ts-api-utils: "npm:^2.4.0"
   peerDependencies:
-    "@typescript-eslint/parser": ^8.52.0
+    "@typescript-eslint/parser": ^8.53.0
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/4f2a2ada2597cfa22c913d436a4ce3f0d20fa17445dda0c6b3eb6088c4b0d1d8ba0ebc0a72c6a1577a3e58c96f7a2f260c201646cb1fb0308a0e248cc9d81cca
+  checksum: 10/2cbfa92d21018d53b33db102500f121cedd67405939a11c20d04a0fdc535412f1e554479a9994a244127a151609fe16ae8bce810749261f243eac13360df1ab1
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/parser@npm:8.52.0"
+"@typescript-eslint/parser@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/parser@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.52.0"
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/typescript-estree": "npm:8.52.0"
-    "@typescript-eslint/visitor-keys": "npm:8.52.0"
+    "@typescript-eslint/scope-manager": "npm:8.53.0"
+    "@typescript-eslint/types": "npm:8.53.0"
+    "@typescript-eslint/typescript-estree": "npm:8.53.0"
+    "@typescript-eslint/visitor-keys": "npm:8.53.0"
     debug: "npm:^4.4.3"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/f221411fb3cc6c5a9e9fa6bec45cd16d5e5d7c1eeba331c97dae97756103bd4b5f67956e2288d478ad96cce7bc4c3c91b510b06d54283c7c0c86acaf4cdb4abf
+  checksum: 10/5337f472aeb3d04041a3c9c9e9d9884e685ba7e4f722ab2963f1054087a62a42946dd0d39993e60506efef0d2a4cc1b0619b34e49261913d6f4d8cdbf3490d56
   languageName: node
   linkType: hard
 
@@ -5369,16 +5422,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/project-service@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/project-service@npm:8.52.0"
+"@typescript-eslint/project-service@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/project-service@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/tsconfig-utils": "npm:^8.52.0"
-    "@typescript-eslint/types": "npm:^8.52.0"
+    "@typescript-eslint/tsconfig-utils": "npm:^8.53.0"
+    "@typescript-eslint/types": "npm:^8.53.0"
     debug: "npm:^4.4.3"
   peerDependencies:
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/bfa786007ed4a603fb8f31c6e354f0ba0cca576b03e402584ae3cf0d674f07adfbde9e976a5bf165fa44c484d4b4f310bd18b34d1b0e75b4210253edbdaabb87
+  checksum: 10/2f232f241f57c0f42194a8bcb8c207e4ed4345d7cc097434d394c2904338e64f386903931395ef97cd2cf3ae33d98645f0d6164660d794e33259e2c3978052ff
   languageName: node
   linkType: hard
 
@@ -5402,13 +5455,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/scope-manager@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/scope-manager@npm:8.52.0"
+"@typescript-eslint/scope-manager@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/scope-manager@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/visitor-keys": "npm:8.52.0"
-  checksum: 10/89d9c04cd2567e6aa9adcbe85e2eab24fbc64bde5a33c688764e7c896e9a02c06aad2ec88e8bdc4d5bfabadbc510906a0cb4f3e0b73a5b80d10218f7a6a4ea27
+    "@typescript-eslint/types": "npm:8.53.0"
+    "@typescript-eslint/visitor-keys": "npm:8.53.0"
+  checksum: 10/40a651cfc16f9464f92b5a58492207c1f89a1ff98cfedd2d33d1dbe8234ce50c3a543267f1b489f903b001e0abcaf1568e7c9b70c009871c34af6ef3602ac0bf
   languageName: node
   linkType: hard
 
@@ -5421,16 +5474,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/tsconfig-utils@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/tsconfig-utils@npm:8.52.0"
-  peerDependencies:
-    typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/5b26227ab549e20a6b15725a4f8373acb70ae1c83570c8d670e242bfcd22ac0c9111d4d28ea16ee3939572caacce50e113388ce943f238fc2ca17f6c5a040cd2
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/tsconfig-utils@npm:^8.52.0":
+"@typescript-eslint/tsconfig-utils@npm:8.53.0":
   version: 8.53.0
   resolution: "@typescript-eslint/tsconfig-utils@npm:8.53.0"
   peerDependencies:
@@ -5439,19 +5483,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/type-utils@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/type-utils@npm:8.52.0"
+"@typescript-eslint/tsconfig-utils@npm:^8.53.0":
+  version: 8.53.1
+  resolution: "@typescript-eslint/tsconfig-utils@npm:8.53.1"
+  peerDependencies:
+    typescript: ">=4.8.4 <6.0.0"
+  checksum: 10/0e2743e3f16d60d6784edab67964725686c3efb9fddf9f90e88a9f8b3e5cf40af23be80d55142397704d765a02771626b23b43151c4e3089a394a7c487d035f9
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/type-utils@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/type-utils@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/typescript-estree": "npm:8.52.0"
-    "@typescript-eslint/utils": "npm:8.52.0"
+    "@typescript-eslint/types": "npm:8.53.0"
+    "@typescript-eslint/typescript-estree": "npm:8.53.0"
+    "@typescript-eslint/utils": "npm:8.53.0"
     debug: "npm:^4.4.3"
     ts-api-utils: "npm:^2.4.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/e46d77192e2678561e2cdefe2c2b1ba8965458a88e6dd0d1967656ff5dcb00b75217ec6b084323710028215f64a65ba6ec288e5b021a0c9a325450b4bcfc4f43
+  checksum: 10/5be4036b475bbc4bb9a834beefe8114286bbe2dee54c96c65c02d6ceabac3422605802dcbefdbf20ae9ede3c85bf2f650eda2acc7ed1a3bf75f02ed478e7cdd1
   languageName: node
   linkType: hard
 
@@ -5469,17 +5522,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/types@npm:8.52.0"
-  checksum: 10/05a630c5d25cce74d1bfa51027f1232f2e8a97a8f483ce0274e928373b4633cdf713be53eca39926f0372d52a3335f13786c7910d2edfd546a0cf1d66b3bcf51
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/types@npm:^8.52.0":
+"@typescript-eslint/types@npm:8.53.0":
   version: 8.53.0
   resolution: "@typescript-eslint/types@npm:8.53.0"
   checksum: 10/36ee696a92ed575385b5c1ccc46e3fec9c5d9aa6f3640f8ad0234ed5a763c9ab78c7d3419fd3d462a966f6b95472390b8040055e4e73c75c52671478e90749ff
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/types@npm:^8.53.0":
+  version: 8.53.1
+  resolution: "@typescript-eslint/types@npm:8.53.1"
+  checksum: 10/9a01aa343329af529c645204070dd20be54556c6fd92bfda3a42b6213c0408f5f2f57084064d88d5de1337a7731e57290f0ec11a0fb181bbb3c3b293ef0dcf4a
   languageName: node
   linkType: hard
 
@@ -5522,14 +5575,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/typescript-estree@npm:8.52.0"
+"@typescript-eslint/typescript-estree@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/typescript-estree@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/project-service": "npm:8.52.0"
-    "@typescript-eslint/tsconfig-utils": "npm:8.52.0"
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/visitor-keys": "npm:8.52.0"
+    "@typescript-eslint/project-service": "npm:8.53.0"
+    "@typescript-eslint/tsconfig-utils": "npm:8.53.0"
+    "@typescript-eslint/types": "npm:8.53.0"
+    "@typescript-eslint/visitor-keys": "npm:8.53.0"
     debug: "npm:^4.4.3"
     minimatch: "npm:^9.0.5"
     semver: "npm:^7.7.3"
@@ -5537,22 +5590,22 @@ __metadata:
     ts-api-utils: "npm:^2.4.0"
   peerDependencies:
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/4e699f44a05e9c487531557a1eaf6412a97f370ec946a03596c8d445f584c3d17e9aa34cde5ce8998ae9d6908c1daffb2c9b523cb07e5988cf249eae6dea50fd
+  checksum: 10/bdacb2f3ffde535c3955bbfbd062d2010943f7693034cde4019ccde699e826e7ef91d7e1d2f3652c30584c013924410dae5056417909e8169f1e3d7272636bd9
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/utils@npm:8.52.0"
+"@typescript-eslint/utils@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/utils@npm:8.53.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.9.1"
-    "@typescript-eslint/scope-manager": "npm:8.52.0"
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/typescript-estree": "npm:8.52.0"
+    "@typescript-eslint/scope-manager": "npm:8.53.0"
+    "@typescript-eslint/types": "npm:8.53.0"
+    "@typescript-eslint/typescript-estree": "npm:8.53.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/11a02ab0fd26bb1284dfa8c02d40c54cabd3aa795e82ab26b060ea3839998c28a41822b075f9d23fb51e291e465147213166c8ddaf3c8d5807e70b0a4345d967
+  checksum: 10/ef123c8531de793d8d4f5fa51076402bfe809481feaee605086986c370c94361c525ec550b2c4c6703cf60e026e87862428c044c763ead3ea9bf9bce8ad79310
   languageName: node
   linkType: hard
 
@@ -5605,13 +5658,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/visitor-keys@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/visitor-keys@npm:8.52.0"
+"@typescript-eslint/visitor-keys@npm:8.53.0":
+  version: 8.53.0
+  resolution: "@typescript-eslint/visitor-keys@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/types": "npm:8.52.0"
+    "@typescript-eslint/types": "npm:8.53.0"
     eslint-visitor-keys: "npm:^4.2.1"
-  checksum: 10/4d841402cc65e876382ede464b68cf167c7d24905b15225c472516bb759140abbef02f250c6335ca35327f7328975ff3b28c3249a5183319cfd01f1d5541e3c1
+  checksum: 10/879e1dfbd002059c0eb59f9660c26eb71a1643622906e4af444dbe5297e95ad210d763b53308b6372b55d85159a161982a8848352706a7d361fd3e17d6ba96d0
   languageName: node
   linkType: hard
 
@@ -5936,15 +5989,6 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 10/77f2de5051a631cf1729c090e5759148459cdb76b5f5c70f890503d629cf5052357b0ce783c0f976dd8a93c5150f59f6d18df1def3f502396a20f81282482fa4
-  languageName: node
-  linkType: hard
-
-"agent-base@npm:6":
-  version: 6.0.2
-  resolution: "agent-base@npm:6.0.2"
-  dependencies:
-    debug: "npm:4"
-  checksum: 10/21fb903e0917e5cb16591b4d0ef6a028a54b83ac30cd1fca58dece3d4e0990512a8723f9f83130d88a41e2af8b1f7be1386fda3ea2d181bb1a62155e75e95e23
   languageName: node
   linkType: hard
 
@@ -9183,16 +9227,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:20.1.0":
-  version: 20.1.0
-  resolution: "happy-dom@npm:20.1.0"
+"happy-dom@npm:20.3.0":
+  version: 20.3.0
+  resolution: "happy-dom@npm:20.3.0"
   dependencies:
     "@types/node": "npm:^20.0.0"
     "@types/whatwg-mimetype": "npm:^3.0.2"
     "@types/ws": "npm:^8.18.1"
     whatwg-mimetype: "npm:^3.0.0"
     ws: "npm:^8.18.3"
-  checksum: 10/6f24d9d39b6dd387fe567adc621fba5e5a7fef83d5baa8cbc49cf75ecd09a91e460a242c6ac8d4ea3d2c01b134ec7f552d8c66d13ac109350ad2650450fe61de
+  checksum: 10/aade5560110eeaad502679a314f4d3b8658fe4697c1914d0de09ec6a176611ad0c8953f0aa559c56d1afabe0ab8465cde7b4811006df6eb3b54c5e5ea4169b29
   languageName: node
   linkType: hard
 
@@ -9407,16 +9451,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"https-proxy-agent@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "https-proxy-agent@npm:5.0.1"
-  dependencies:
-    agent-base: "npm:6"
-    debug: "npm:4"
-  checksum: 10/f0dce7bdcac5e8eaa0be3c7368bb8836ed010fb5b6349ffb412b172a203efe8f807d9a6681319105ea1b6901e1972c7b5ea899672a7b9aad58309f766dcbe0df
-  languageName: node
-  linkType: hard
-
 "https-proxy-agent@npm:^7.0.1":
   version: 7.0.6
   resolution: "https-proxy-agent@npm:7.0.6"
@@ -9571,6 +9605,18 @@ __metadata:
     "@formatjs/icu-messageformat-parser": "npm:3.2.0"
     tslib: "npm:^2.8.0"
   checksum: 10/e0f7c93db02a24aaa66c56cea8838abbbc20aa0dc08a0db784d9f575c6440a7b05bf40294678d4216b0d6dad1264b037096308d1a06f11e2052b4455d6cb8ea5
+  languageName: node
+  linkType: hard
+
+"intl-messageformat@npm:11.0.9":
+  version: 11.0.9
+  resolution: "intl-messageformat@npm:11.0.9"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/fast-memoize": "npm:3.0.3"
+    "@formatjs/icu-messageformat-parser": "npm:3.3.0"
+    tslib: "npm:^2.8.0"
+  checksum: 10/36481eabd854d623ae9941476cad1dce720efa9c40dbb8cb036b11b1ffda6804689b0cf9da5d2421268cb1138a49f7a0b553fcf8fed03b5a37af283baf326bb4
   languageName: node
   linkType: hard
 
@@ -10794,16 +10840,16 @@ __metadata:
   resolution: "k9-sak-web@workspace:."
   dependencies:
     "@hookform/error-message": "npm:2.0.1"
-    "@navikt/aksel-icons": "npm:7.37.0"
-    "@navikt/ds-css": "npm:7.37.0"
-    "@navikt/ds-react": "npm:7.37.0"
-    "@navikt/ds-tailwind": "npm:7.37.0"
+    "@navikt/aksel-icons": "npm:7.40.0"
+    "@navikt/ds-css": "npm:7.40.0"
+    "@navikt/ds-react": "npm:7.40.0"
+    "@navikt/ds-tailwind": "npm:7.40.0"
     "@navikt/familie-endringslogg": "npm:14.0.5"
-    "@navikt/ft-plattform-komponenter": "npm:10.3.0"
+    "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     "@playwright/test": "npm:1.57.0"
     "@popperjs/core": "npm:2.11.8"
-    "@sentry/browser": "npm:10.33.0"
-    "@sentry/cli": "npm:2.58.3"
+    "@sentry/browser": "npm:10.34.0"
+    "@sentry/cli": "npm:3.1.0"
     "@storybook/addon-a11y": "npm:10.1.11"
     "@storybook/addon-docs": "npm:10.1.11"
     "@storybook/react-vite": "npm:10.1.11"
@@ -10833,18 +10879,18 @@ __metadata:
     eslint-plugin-storybook: "npm:10.1.11"
     eslint-plugin-vitest: "npm:~0.5.4"
     globals: "npm:16.5.0"
-    happy-dom: "npm:20.1.0"
+    happy-dom: "npm:20.3.0"
     history: "npm:5.3.0"
     husky: "npm:9.1.7"
     i18n-iso-countries: "npm:7.14.0"
-    knip: "npm:5.80.2"
+    knip: "npm:5.81.0"
     lint-staged: "npm:16.2.7"
     loose-ts-check: "npm:2.0.0"
     msw: "npm:2.12.7"
     msw-storybook-addon: "npm:2.0.6"
     postcss: "npm:8.5.6"
     postcss-import: "npm:16.1.1"
-    prettier: "npm:3.7.4"
+    prettier: "npm:3.8.0"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
     react-router: "npm:7.12.0"
@@ -10856,7 +10902,7 @@ __metadata:
     tailwindcss: "npm:3.4.18"
     typed-css-modules: "npm:0.9.1"
     typescript: "npm:5.9.3"
-    typescript-eslint: "npm:8.52.0"
+    typescript-eslint: "npm:8.53.0"
     vite: "npm:7.3.1"
     vite-plugin-html: "npm:3.2.2"
     vite-plugin-svgr: "npm:4.5.0"
@@ -10897,9 +10943,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.80.2":
-  version: 5.80.2
-  resolution: "knip@npm:5.80.2"
+"knip@npm:5.81.0":
+  version: 5.81.0
+  resolution: "knip@npm:5.81.0"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -10919,7 +10965,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/5cc2c6dbd32ae102776e7fbc4e9be0ab082e392e2f8a72efa12f1dbf3235d72cf2140cfe4c7475255e416c63e68ae60ff8b62efccb96d34bf412f4740b8fc796
+  checksum: 10/5ea6095987ba8f792e615e41fdd3a3a03d1a0b3c66388c5ebc1e587ad6f7e5c09177639f842d921966ad98c900f6210dfa4ebf1730b20f920f7d03e091ec0bbd
   languageName: node
   linkType: hard
 
@@ -11054,7 +11100,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:^4.17.15, lodash@npm:^4.17.21":
+"lodash@npm:4.17.23":
+  version: 4.17.23
+  resolution: "lodash@npm:4.17.23"
+  checksum: 10/82504c88250f58da7a5a4289f57a4f759c44946c005dd232821c7688b5fcfbf4a6268f6a6cdde4b792c91edd2f3b5398c1d2a0998274432cff76def48735e233
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.15, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10/c08619c038846ea6ac754abd6dd29d2568aa705feb69339e836dfa8d8b09abbb2f859371e86863eda41848221f9af43714491467b5b0299122431e202bb0c532
@@ -11577,20 +11630,6 @@ __metadata:
     lower-case: "npm:^2.0.2"
     tslib: "npm:^2.0.3"
   checksum: 10/0b2ebc113dfcf737d48dde49cfebf3ad2d82a8c3188e7100c6f375e30eafbef9e9124aadc3becef237b042fd5eb0aad2fd78669c20972d045bbe7fea8ba0be5c
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:^2.6.7":
-  version: 2.7.0
-  resolution: "node-fetch@npm:2.7.0"
-  dependencies:
-    whatwg-url: "npm:^5.0.0"
-  peerDependencies:
-    encoding: ^0.1.0
-  peerDependenciesMeta:
-    encoding:
-      optional: true
-  checksum: 10/b24f8a3dc937f388192e59bcf9d0857d7b6940a2496f328381641cb616efccc9866e89ec43f2ec956bbd6c3d3ee05524ce77fe7b29ccd34692b3a16f237d6676
   languageName: node
   linkType: hard
 
@@ -12473,12 +12512,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.7.4":
-  version: 3.7.4
-  resolution: "prettier@npm:3.7.4"
+"prettier@npm:3.8.0":
+  version: 3.8.0
+  resolution: "prettier@npm:3.8.0"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/b4d00ea13baed813cb777c444506632fb10faaef52dea526cacd03085f01f6db11fc969ccebedf05bf7d93c3960900994c6adf1b150e28a31afd5cfe7089b313
+  checksum: 10/a643c62f095c2987a34cea4fceddce8dea12cc3ee024494aff690cfac22ef20be835e212b39b718c833014fd22890ae156be67b75a26e2bc9b7acde9a34d31fa
   languageName: node
   linkType: hard
 
@@ -12724,6 +12763,37 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 10/12a8b90d337c557cb53cfb6c9fd7ed3972a20960834b060bb239101a2765cd762ef6651b3231feb0932d3582d51801fda57bc660bfac88688b538b6609e4a1ec
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:7.71.1":
+  version: 7.71.1
+  resolution: "react-hook-form@npm:7.71.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10/54b56aa52a6ac17fb5aa68ce072b08f50b75c2705bf878069f817c346e464c1ebfbf67be372d94cf8e620fa07ca8e64ffca71bb69071dd0290a1ef8f43eefb9d
+  languageName: node
+  linkType: hard
+
+"react-intl@npm:8.0.11":
+  version: 8.0.11
+  resolution: "react-intl@npm:8.0.11"
+  dependencies:
+    "@formatjs/ecma402-abstract": "npm:3.0.8"
+    "@formatjs/icu-messageformat-parser": "npm:3.3.0"
+    "@formatjs/intl": "npm:4.0.9"
+    "@types/hoist-non-react-statics": "npm:^3.3.1"
+    hoist-non-react-statics: "npm:^3.3.2"
+    intl-messageformat: "npm:11.0.9"
+    tslib: "npm:^2.8.0"
+  peerDependencies:
+    "@types/react": 19
+    react: 16 || 17 || 18 || 19
+    typescript: ^5.6.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/b95d60c59464fffbf3f6d6852540870e2170b265031503202c7134a2c72304da7f1f3b41f705602ba41d8b8ea80e8025a7086f872ccd1821916cb9d21503050e
   languageName: node
   linkType: hard
 
@@ -14360,13 +14430,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tr46@npm:~0.0.3":
-  version: 0.0.3
-  resolution: "tr46@npm:0.0.3"
-  checksum: 10/8f1f5aa6cb232f9e1bdc86f485f916b7aa38caee8a778b378ffec0b70d9307873f253f5cbadbe2955ece2ac5c83d0dc14a77513166ccd0a0c7fe197e21396695
-  languageName: node
-  linkType: hard
-
 "tree-kill@npm:^1.2.2":
   version: 1.2.2
   resolution: "tree-kill@npm:1.2.2"
@@ -14582,18 +14645,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:8.52.0":
-  version: 8.52.0
-  resolution: "typescript-eslint@npm:8.52.0"
+"typescript-eslint@npm:8.53.0":
+  version: 8.53.0
+  resolution: "typescript-eslint@npm:8.53.0"
   dependencies:
-    "@typescript-eslint/eslint-plugin": "npm:8.52.0"
-    "@typescript-eslint/parser": "npm:8.52.0"
-    "@typescript-eslint/typescript-estree": "npm:8.52.0"
-    "@typescript-eslint/utils": "npm:8.52.0"
+    "@typescript-eslint/eslint-plugin": "npm:8.53.0"
+    "@typescript-eslint/parser": "npm:8.53.0"
+    "@typescript-eslint/typescript-estree": "npm:8.53.0"
+    "@typescript-eslint/utils": "npm:8.53.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10/c12d55948c903549b779bc5a46aab85825be63679118c6fefeb8dcab21173e17665b054ab23cf6e57ac0549fb2f6edcaace03cde165d61a9f0dccadb03e2ab59
+  checksum: 10/b4731161a4fec6ce9110e54407a50733e15b0eb48cb9636906a54068af10f8102a7018b9e5db6264604050955a03d3649a79c4869d43bcce215358a8a8a03f96
   languageName: node
   linkType: hard
 
@@ -14640,6 +14703,13 @@ __metadata:
   version: 7.16.0
   resolution: "undici-types@npm:7.16.0"
   checksum: 10/db43439f69c2d94cc29f75cbfe9de86df87061d6b0c577ebe9bb3255f49b22c50162a7d7eb413b0458b6510b8ca299ac7cff38c3a29fbd31af9f504bcf7fbc0d
+  languageName: node
+  linkType: hard
+
+"undici@npm:^6.22.0":
+  version: 6.23.0
+  resolution: "undici@npm:6.23.0"
+  checksum: 10/56950995e7b628e62c996430445d17995ca9b70f6f2afe760a63da54205660d968bd08f0741b6f4fb008f40aa35c69cce979cd96ced399585d8c897a76a4f1d1
   languageName: node
   linkType: hard
 
@@ -14813,15 +14883,6 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 10/474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
-  languageName: node
-  linkType: hard
-
-"uuid@npm:13.0.0":
-  version: 13.0.0
-  resolution: "uuid@npm:13.0.0"
-  bin:
-    uuid: dist-node/bin/uuid
-  checksum: 10/2742b24d1e00257e60612572e4d28679423469998cafbaf1fe9f1482e3edf9c40754b31bfdb3d08d71b29239f227a304588f75210b3b48f2609f0673f1feccef
   languageName: node
   linkType: hard
 
@@ -15136,13 +15197,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webidl-conversions@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "webidl-conversions@npm:3.0.1"
-  checksum: 10/b65b9f8d6854572a84a5c69615152b63371395f0c5dcd6729c45789052296df54314db2bc3e977df41705eacb8bc79c247cee139a63fa695192f95816ed528ad
-  languageName: node
-  linkType: hard
-
 "webpack-virtual-modules@npm:^0.6.2":
   version: 0.6.2
   resolution: "webpack-virtual-modules@npm:0.6.2"
@@ -15154,16 +15208,6 @@ __metadata:
   version: 3.0.0
   resolution: "whatwg-mimetype@npm:3.0.0"
   checksum: 10/96f9f628c663c2ae05412c185ca81b3df54bcb921ab52fe9ebc0081c1720f25d770665401eb2338ab7f48c71568133845638e18a81ed52ab5d4dcef7d22b40ef
-  languageName: node
-  linkType: hard
-
-"whatwg-url@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "whatwg-url@npm:5.0.0"
-  dependencies:
-    tr46: "npm:~0.0.3"
-    webidl-conversions: "npm:^3.0.0"
-  checksum: 10/f95adbc1e80820828b45cc671d97da7cd5e4ef9deb426c31bcd5ab00dc7103042291613b3ef3caec0a2335ed09e0d5ed026c940755dbb6d404e2b27f940fdf07
   languageName: node
   linkType: hard
 

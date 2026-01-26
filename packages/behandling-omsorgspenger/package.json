@@ -28,9 +28,9 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "12.3.0",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "14.1.0",
-    "@navikt/ft-prosess-beregningsgrunnlag": "11.4.1",
+    "@navikt/ft-fakta-beregning": "12.3.13",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "14.1.13",
+    "@navikt/ft-prosess-beregningsgrunnlag": "11.4.14",
     "react": "19.2.3",
     "react-intl": "8.0.9"
   }

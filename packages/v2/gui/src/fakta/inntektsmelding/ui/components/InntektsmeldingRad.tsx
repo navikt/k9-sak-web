@@ -1,4 +1,4 @@
-import { EyeWithPupilIcon, PaperplaneIcon } from '@navikt/aksel-icons';
+import { EyeWithPupilIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import { useContext } from 'react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -6,6 +6,8 @@ import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext'
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import InntektsmeldingStatus from './InntektsmeldingStatus';
+import { NyInntektsmeldingDialog } from './NyInntektsmeldingDialog/NyInntektsmeldingDialog';
+import type { TilstandMedUiState } from '../../types';
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeidsforholdId }) => {
   const { arbeidsforhold } = useInntektsmeldingContext();
@@ -21,14 +23,10 @@ const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeids
 };
 
 interface InntektsmeldingRadProps {
-  status: Array<{
-    status: Status;
-    arbeidsgiver: ArbeidsgiverArbeidsforholdId;
-    journalpostId?: string;
-  }>;
+  tilstand: TilstandMedUiState;
 }
 
-const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
+const InntektsmeldingRad = ({ tilstand }: InntektsmeldingRadProps) => {
   const { dokumenter } = useInntektsmeldingContext();
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -54,7 +52,7 @@ const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
 
       {/* Rader */}
       <div className="space-y-3">
-        {status.map((s, index) => {
+        {tilstand.status.map((s, index) => {
           const erMottatt = s.status === Status.MOTTATT;
 
           return (
@@ -78,9 +76,11 @@ const InntektsmeldingRad = ({ status }: InntektsmeldingRadProps) => {
                   Åpne
                 </Button>
                 {visSendNyOppgave && (
-                  <Button size="small" variant="secondary" icon={<PaperplaneIcon aria-hidden />} disabled>
-                    Send ny oppgave
-                  </Button>
+                  <NyInntektsmeldingDialog
+                    førsteFraværsdag={tilstand.periode.fom}
+                    arbeidsgiver={s.arbeidsgiver}
+                    forespørselStatus={s.forespørselStatus}
+                  />
                 )}
               </div>
             </HGrid>

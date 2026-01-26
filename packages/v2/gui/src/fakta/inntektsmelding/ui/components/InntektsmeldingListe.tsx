@@ -31,7 +31,7 @@ const InntektsmeldingListe = ({
           <BodyShort size="small">{tilstand.periode.prettifyPeriod()}</BodyShort>
         </HStack>
         <VStack gap="space-16">
-          <InntektsmeldingRad status={tilstand.status} />
+          <InntektsmeldingRad tilstand={tilstand} />
           <InntektsmeldingVurdering
             tilstand={tilstand}
             onSubmit={onFormSubmit}

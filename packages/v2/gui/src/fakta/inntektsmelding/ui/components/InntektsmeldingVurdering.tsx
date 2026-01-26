@@ -4,7 +4,7 @@ import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext'
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { skalVurderes } from '../../util/utils';
 import InntektsmeldingFerdigvisning from './InntektsmeldingFerdigvisning';
-import VurderingSkjema from './InntektsmeldingForm';
+import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
 
 interface InntektsmeldingVurderingProps {
   tilstand: TilstandMedUiState;

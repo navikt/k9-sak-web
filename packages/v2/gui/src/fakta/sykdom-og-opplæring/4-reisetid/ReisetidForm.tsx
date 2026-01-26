@@ -123,11 +123,11 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
               maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0]?.tom as string).toDate() : undefined}
               fromField={{
                 name: 'periode.fom',
-                validators: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd')],
+                validate: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd')],
               }}
               toField={{
                 name: 'periode.tom',
-                validators: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd')],
+                validate: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd')],
               }}
               readOnly={lesemodus}
             />
