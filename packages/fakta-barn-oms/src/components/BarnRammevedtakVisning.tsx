@@ -9,7 +9,12 @@ interface BarnInputProps {
 }
 
 const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
-  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn, deltBosted } = barnet.rammevedtak || {};
+  const rammevedtak = barnet.rammevedtak;
+  const aleneomsorg = rammevedtak?.aleneomsorg;
+  const kroniskSykdom = rammevedtak?.kroniskSykdom;
+  const fosterbarn = rammevedtak?.fosterbarn;
+  const utenlandskBarn = rammevedtak?.utenlandskBarn;
+  const deltBosted = rammevedtak?.deltBosted;
   return (
     <div className={styles.rammevedtak}>
       <div>

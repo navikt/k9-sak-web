@@ -22,7 +22,7 @@ const spatialPeriod = (
     timelineEndInclusive,
   );
   return {
-    id: period.id || crypto.randomUUID(),
+    id: period.id || `${period.fom.toISOString()}-${period.tom.toISOString()}`,
     start,
     endInclusive,
     horizontalPosition,
@@ -91,7 +91,7 @@ export const useTidslinjerader = (
         return {
           radClassname,
           radLabel,
-          id: crypto.randomUUID(),
+          id: radLabel,
           periods: direction === 'left' ? tidslinjeperioder : [...tidslinjeperioder].reverse(),
           onClick,
           emptyRowClassname,
