@@ -113,7 +113,6 @@
   "packages/fakta-barn-og-overfoeringsdager/src/components/Seksjon.spec.tsx",
   "packages/fakta-barn-oms/src/components/BarnInformasjonVisning.spec.tsx",
   "packages/fakta-barn-oms/src/components/BarnInformasjonVisning.tsx",
-  "packages/fakta-barn-oms/src/components/BarnRammevedtakVisning.tsx",
   "packages/fakta-barn-oms/src/components/BarnSeksjon.spec.tsx",
   "packages/fakta-barn-oms/src/components/BarnVisning.tsx",
   "packages/fakta-barn-oms/src/components/MidlertidigAlene.tsx",

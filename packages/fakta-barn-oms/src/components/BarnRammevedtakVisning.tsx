@@ -1,8 +1,6 @@
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { BodyShort, Label } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { v4 as uuidv4 } from 'uuid';
 import formaterDato from '../utils/formaterDato';
 import styles from './barnVisning.module.css';
 
@@ -11,7 +9,12 @@ interface BarnInputProps {
 }
 
 const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
-  const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn, deltBosted } = barnet.rammevedtak;
+  const rammevedtak = barnet.rammevedtak;
+  const aleneomsorg = rammevedtak?.aleneomsorg;
+  const kroniskSykdom = rammevedtak?.kroniskSykdom;
+  const fosterbarn = rammevedtak?.fosterbarn;
+  const utenlandskBarn = rammevedtak?.utenlandskBarn;
+  const deltBosted = rammevedtak?.deltBosted;
   return (
     <div className={styles.rammevedtak}>
       <div>
@@ -19,8 +22,8 @@ const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
           <FormattedMessage id="FaktaRammevedtak.Barn.Rammevedtak" />
         </Label>
         {kroniskSykdom &&
-          kroniskSykdom.map(() => (
-            <div key={uuidv4()}>
+          kroniskSykdom.map(ks => (
+            <div key={`${ks.fom}-${ks.tom}`}>
               <BodyShort size="small">
                 <FormattedMessage id="FaktaRammevedtak.Barn.UtvidetRett" />
               </BodyShort>
@@ -53,7 +56,7 @@ const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
         </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(ks => (
-            <div key={uuidv4()}>
+            <div key={`${ks.fom}-${ks.tom}`}>
               <BodyShort size="small">{formaterDato(ks.fom)}</BodyShort>
             </div>
           ))}
@@ -68,7 +71,7 @@ const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
         </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(ks => (
-            <div key={uuidv4()}>
+            <div key={`${ks.fom}-${ks.tom}`}>
               <BodyShort size="small">{formaterDato(ks.tom)}</BodyShort>
             </div>
           ))}
