@@ -20,7 +20,7 @@ const BarnSeksjon = ({ barn, startIndex, tekstId }: BarnSeksjonProps) => {
         <FormattedMessage id={tekstId} />
       </Label>
       {barn.map((barnet, index) => (
-        <BarnVisning barnet={barnet} index={index + startIndex} key={barnet.personIdent ?? crypto.randomUUID()} />
+        <BarnVisning barnet={barnet} index={index + startIndex} key={barnet.personIdent} />
       ))}
     </div>
   );
