@@ -332,160 +332,176 @@ describe('Prosessmotor', () => {
 
   describe('beregnTilkjentYtelseType', () => {
     test('returnerer success når det finnes innvilgede uttak', () => {
-      const result = beregnTilkjentYtelseType({
-        perioder: [
-          {
-            andeler: [
-              {
-                uttak: [
-                  {
-                    utfall: 'INNVILGET',
-                    periode: {
-                      fom: '',
-                      tom: '',
+      const result = beregnTilkjentYtelseType(
+        {
+          perioder: [
+            {
+              andeler: [
+                {
+                  uttak: [
+                    {
+                      utfall: 'INNVILGET',
+                      periode: {
+                        fom: '',
+                        tom: '',
+                      },
+                      utbetalingsgrad: 0,
                     },
-                    utbetalingsgrad: 0,
-                  },
-                ],
-                inntektskategori: '-',
-              },
-            ],
-            dagsats: 0,
-            fom: '',
-            tom: '',
-          },
-        ],
-      });
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 0,
+              fom: '',
+              tom: '',
+            },
+          ],
+        },
+        { aksjonspunkter: [] },
+        [],
+      );
 
       expect(result).toBe(ProcessMenuStepType.success);
     });
 
     test('returnerer danger når alle uttak er avslått', () => {
-      const result = beregnTilkjentYtelseType({
-        perioder: [
-          {
-            andeler: [
-              {
-                uttak: [
-                  {
-                    utfall: 'AVSLÅTT',
-                    periode: { fom: '', tom: '' },
-                    utbetalingsgrad: 100,
-                  },
-                ],
-                inntektskategori: '-',
-              },
-            ],
-            dagsats: 0,
-            fom: '',
-            tom: '',
-          },
-        ],
-      });
+      const result = beregnTilkjentYtelseType(
+        {
+          perioder: [
+            {
+              andeler: [
+                {
+                  uttak: [
+                    {
+                      utfall: 'AVSLÅTT',
+                      periode: { fom: '', tom: '' },
+                      utbetalingsgrad: 100,
+                    },
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 0,
+              fom: '',
+              tom: '',
+            },
+          ],
+        },
+        { aksjonspunkter: [] },
+        [],
+      );
 
       expect(result).toBe(ProcessMenuStepType.danger);
     });
 
     test('returnerer success når minst ett uttak er innvilget blant flere avslag', () => {
-      const result = beregnTilkjentYtelseType({
-        perioder: [
-          {
-            andeler: [
-              {
-                uttak: [
-                  {
-                    utfall: 'INNVILGET',
-                    periode: {
-                      fom: '',
-                      tom: '',
+      const result = beregnTilkjentYtelseType(
+        {
+          perioder: [
+            {
+              andeler: [
+                {
+                  uttak: [
+                    {
+                      utfall: 'INNVILGET',
+                      periode: {
+                        fom: '',
+                        tom: '',
+                      },
+                      utbetalingsgrad: 0,
                     },
-                    utbetalingsgrad: 0,
-                  },
-                ],
-                inntektskategori: '-',
-              },
-            ],
-            dagsats: 0,
-            fom: '',
-            tom: '',
-          },
-          {
-            andeler: [
-              {
-                uttak: [
-                  {
-                    utfall: 'AVSLÅTT',
-                    periode: { fom: '', tom: '' },
-                    utbetalingsgrad: 100,
-                  },
-                ],
-                inntektskategori: '-',
-              },
-            ],
-            dagsats: 0,
-            fom: '',
-            tom: '',
-          },
-        ],
-      });
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 0,
+              fom: '',
+              tom: '',
+            },
+            {
+              andeler: [
+                {
+                  uttak: [
+                    {
+                      utfall: 'AVSLÅTT',
+                      periode: { fom: '', tom: '' },
+                      utbetalingsgrad: 100,
+                    },
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 0,
+              fom: '',
+              tom: '',
+            },
+          ],
+        },
+        { aksjonspunkter: [] },
+        [],
+      );
 
       expect(result).toBe(ProcessMenuStepType.success);
     });
 
     test('returnerer default når perioder er undefined', () => {
-      const result = beregnTilkjentYtelseType({} as any);
+      const result = beregnTilkjentYtelseType({} as any, { aksjonspunkter: [] }, []);
 
       expect(result).toBe(ProcessMenuStepType.default);
     });
 
     test('returnerer default når perioder er null', () => {
-      const result = beregnTilkjentYtelseType({ perioder: null } as any);
+      const result = beregnTilkjentYtelseType({ perioder: null } as any, { aksjonspunkter: [] }, []);
 
       expect(result).toBe(ProcessMenuStepType.default);
     });
 
     test('returnerer success når det finnes flere perioder med innvilget uttak', () => {
-      const result = beregnTilkjentYtelseType({
-        perioder: [
-          {
-            andeler: [
-              {
-                uttak: [
-                  {
-                    utfall: 'INNVILGET',
-                    periode: {
-                      fom: '',
-                      tom: '',
+      const result = beregnTilkjentYtelseType(
+        {
+          perioder: [
+            {
+              andeler: [
+                {
+                  uttak: [
+                    {
+                      utfall: 'INNVILGET',
+                      periode: {
+                        fom: '',
+                        tom: '',
+                      },
+                      utbetalingsgrad: 0,
                     },
-                    utbetalingsgrad: 0,
-                  },
-                ],
-                inntektskategori: '-',
-              },
-            ],
-            dagsats: 0,
-            fom: '',
-            tom: '',
-          },
-          {
-            andeler: [
-              {
-                uttak: [
-                  {
-                    utfall: 'AVSLÅTT',
-                    periode: { fom: '', tom: '' },
-                    utbetalingsgrad: 100,
-                  },
-                ],
-                inntektskategori: '-',
-              },
-            ],
-            dagsats: 0,
-            fom: '',
-            tom: '',
-          },
-        ],
-      });
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 0,
+              fom: '',
+              tom: '',
+            },
+            {
+              andeler: [
+                {
+                  uttak: [
+                    {
+                      utfall: 'AVSLÅTT',
+                      periode: { fom: '', tom: '' },
+                      utbetalingsgrad: 100,
+                    },
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 0,
+              fom: '',
+              tom: '',
+            },
+          ],
+        },
+        { aksjonspunkter: [] },
+        [],
+      );
 
       expect(result).toBe(ProcessMenuStepType.success);
     });
@@ -507,7 +523,7 @@ describe('Prosessmotor', () => {
       ];
       const behandling = createMockBehandling({ behandlingsresultat: { type: 'INNVILGET' } });
 
-      const result = beregnVedtakType(vilkår, [], behandling, true);
+      const result = beregnVedtakType(vilkår, [], behandling, []);
 
       expect(result).toBe(ProcessMenuStepType.success);
     });
@@ -522,12 +538,12 @@ describe('Prosessmotor', () => {
       ];
       const behandling = createMockBehandling({ behandlingsresultat: { type: 'AVSLÅTT' } });
 
-      const result = beregnVedtakType(vilkår, [], behandling, true);
+      const result = beregnVedtakType(vilkår, [], behandling, []);
 
       expect(result).toBe(ProcessMenuStepType.danger);
     });
 
-    test('beregnVedtakType returnerer default når simulering ikke er vurdert', () => {
+    test('beregnVedtakType returnerer default når behandlingsresultat mangler type', () => {
       const vilkår = [
         {
           vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
@@ -535,9 +551,9 @@ describe('Prosessmotor', () => {
           relevanteInnvilgetMerknader: [],
         },
       ];
-      const behandling = createMockBehandling();
+      const behandling = createMockBehandling({ behandlingsresultat: undefined });
 
-      const result = beregnVedtakType(vilkår, [], behandling, false);
+      const result = beregnVedtakType(vilkår, [], behandling, []);
 
       expect(result).toBe(ProcessMenuStepType.default);
     });

@@ -17,7 +17,7 @@ const createBehandling = behandlingResultatType => ({
   fagsakId: 1,
   aksjonspunkter: [],
   behandlingPåVent: false,
-  språkkode: 'NO',
+  språkkode: { kode: 'NO' },
   behandlingsresultat: {
     id: 1,
     type: behandlingResultatType,
