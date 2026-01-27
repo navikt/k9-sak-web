@@ -5,7 +5,6 @@ import {
   k9_kodeverk_vilkår_VilkårType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FakeK9SakProsessApi } from '@k9-sak-web/gui/storybook/mocks/FakeK9SakProsessApi.js';
-import type { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
@@ -24,7 +23,7 @@ const createWrapper = (queryClient: QueryClient) => {
   );
 };
 
-const createMockBehandling = (overrides = {}): Behandling => ({
+const createMockBehandling = (overrides = {}) => ({
   id: 1,
   versjon: 1,
   uuid: '12345',

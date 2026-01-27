@@ -59,8 +59,8 @@ export class FakeK9SakProsessApi {
     return this.options.beregningsresultatUtbetaling ?? { perioder: [] };
   }
 
-  async getSimuleringResultat(): Promise<k9_oppdrag_kontrakt_simulering_v1_SimuleringDto | null> {
-    return this.options.simuleringResultat ?? null;
+  async getSimuleringResultat(): Promise<k9_oppdrag_kontrakt_simulering_v1_SimuleringDto> {
+    return this.options.simuleringResultat ?? ({} as k9_oppdrag_kontrakt_simulering_v1_SimuleringDto);
   }
 
   async getFagsak(): Promise<k9_sak_kontrakt_fagsak_FagsakDto> {

@@ -38,7 +38,7 @@ interface VedtakProsessIndexProps {
   beregningsgrunnlag: Beregningsgrunnlag[];
   dokumentdataHente: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
-  hentFritekstbrevHtmlCallback: () => Promise<any>;
+  hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   isReadOnly: boolean;
   lagreDokumentdata: LagreDokumentdataType;

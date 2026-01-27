@@ -79,7 +79,7 @@ interface Props {
   dokumentdata: DokumentDataType;
   erRevurdering: boolean;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
-  hentFritekstbrevHtmlCallback: () => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   intl: IntlShape;
   lagreDokumentdata: LagreDokumentdataType;

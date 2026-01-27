@@ -1,11 +1,11 @@
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_kodeverk_behandling_BehandlingStatus,
+  k9_kodeverk_behandling_BehandlingType,
   k9_kodeverk_behandling_FagsakYtelseType,
   k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -16,8 +16,8 @@ import VedtakProsessIndex from './VedtakProsessIndex';
 const behandling = {
   id: 1,
   versjon: 1,
-  type: behandlingType.SOKNAD,
-  status: behandlingStatus.BEHANDLING_UTREDES,
+  type: k9_kodeverk_behandling_BehandlingType.FØRSTEGANGSSØKNAD,
+  status: k9_kodeverk_behandling_BehandlingStatus.UTREDES,
   språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',

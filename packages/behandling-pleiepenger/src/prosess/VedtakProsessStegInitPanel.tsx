@@ -113,6 +113,11 @@ export function VedtakProsessStegInitPanel(props: Props) {
     return props.submitCallback(data, vedtakAksjonspunkter);
   };
 
+  const tilpassetBehandling = {
+    ...behandlingV2,
+    språkkode: behandlingV2.sprakkode?.kode ?? 'NB',
+  };
+
   return (
     <VedtakProsessIndex
       isReadOnly={props.isReadOnly}
@@ -122,13 +127,13 @@ export function VedtakProsessStegInitPanel(props: Props) {
       dokumentdataHente={restApiData.data?.dokumentdataHente}
       aksjonspunkter={aksjonspunkter}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
-      behandling={behandlingV2}
+      behandling={tilpassetBehandling}
       beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkår}
       submitCallback={handleSubmit}
       simuleringResultat={simuleringResultat}
       tilbakekrevingvalg={tilbakekrevingvalg}
-      ytelseTypeKode={behandlingV2?.sakstype}
+      ytelseTypeKode={tilpassetBehandling?.sakstype}
       lagreDokumentdata={props.lagreDokumentdata}
       previewCallback={props.previewCallback}
       overlappendeYtelser={overlappendeYtelser}

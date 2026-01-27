@@ -44,9 +44,10 @@ export function UttakProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
-  const relevanteAksjonspunkter = aksjonspunkter?.filter(ap =>
-    RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon),
-  );
+  const relevanteAksjonspunkter = aksjonspunkter
+    ?.filter(ap => RELEVANTE_AKSJONSPUNKTER.some(kode => kode === ap.definisjon))
+    .map(ap => ap.definisjon)
+    .filter(definisjon => definisjon !== undefined);
 
   const hentBehandling = async () => {
     if (props.hentBehandling) {

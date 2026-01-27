@@ -219,7 +219,7 @@ const byggPanel = (
 export const beregnVedtakType = (
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  behandling: Behandling,
+  behandling: Pick<Behandling, 'uuid' | 'versjon' | 'behandlingsresultat'>,
   vedtakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   if (!vilkår || vilkår.length === 0) {
@@ -263,7 +263,7 @@ const skalViseDelvisVedtakStatus = (
 
 interface ProsessmotorProps {
   api: K9SakProsessApi;
-  behandling: Behandling;
+  behandling: Pick<Behandling, 'uuid' | 'versjon'>;
 }
 
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {

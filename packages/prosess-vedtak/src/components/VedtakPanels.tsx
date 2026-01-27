@@ -39,7 +39,7 @@ interface VedtakPanelsProps {
   beregningsgrunnlag: Beregningsgrunnlag[];
   dokumentdata: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
-  hentFritekstbrevHtmlCallback: () => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   lagreDokumentdata: LagreDokumentdataType;
   medlemskapFom: string | undefined;

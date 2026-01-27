@@ -13,8 +13,8 @@ import {
   kanKunVelge,
   kanOverstyreMottakere,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { lagVisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { lagVisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
