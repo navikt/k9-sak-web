@@ -18,7 +18,7 @@ interface UttakProps {
   aksjonspunkter: Aksjonspunkt[];
   hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   readOnly: boolean;
-  relevanteAksjonspunkter: Aksjonspunkt[];
+  relevanteAksjonspunkter: AksjonspunktDefinisjon[];
 }
 
 const Uttak = ({
@@ -41,7 +41,7 @@ const Uttak = ({
           ap.status === aksjonspunktStatus.OPPRETTET &&
           ap.definisjon !== undefined &&
           ap.definisjon !== AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK &&
-          relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt.definisjon === ap.definisjon),
+          relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon),
       ),
     [aksjonspunkter, relevanteAksjonspunkter],
   );
