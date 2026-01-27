@@ -1,11 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import AldersVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-alder';
-import { Aksjonspunkt, Behandling, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import AldersVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-alder/AldersVilkarProsessIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { Aksjonspunkt, Behandling, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 
 interface AlderProsessStegProps {
   aksjonspunkter: Aksjonspunkt[];
@@ -27,20 +27,9 @@ interface AlderProsessStegProps {
 
 class AlderPanelDef extends ProsessStegPanelDef {
   getKomponent = (props: AlderProsessStegProps) => {
-    const { behandling, aksjonspunkter, submitCallback, isAksjonspunktOpen, isReadOnly, angitteBarn, vilkar, status } =
-      props;
-    return (
-      <AldersVilkarProsessIndex
-        behandling={behandling}
-        submitCallback={submitCallback}
-        aksjonspunkter={aksjonspunkter}
-        isAksjonspunktOpen={isAksjonspunktOpen}
-        isReadOnly={isReadOnly}
-        angitteBarn={angitteBarn}
-        vilkar={vilkar}
-        status={status}
-      />
-    );
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <AldersVilkarProsessIndex {...props} {...deepCopyProps} />;
   };
 
   getTekstKode = () => 'Inngangsvilkar.Alder';
@@ -51,8 +40,9 @@ class AlderPanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ soknad }) => ({
+  getData = ({ fagsak, soknad }) => ({
     angitteBarn: soknad.angittePersoner.filter(person => person.rolle === 'BARN'),
+    fagsak,
   });
 }
 

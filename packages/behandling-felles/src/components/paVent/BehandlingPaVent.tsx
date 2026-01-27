@@ -1,8 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
+import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
@@ -35,8 +36,13 @@ const BehandlingPaVent = ({
         ...formData,
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
-      }).then(() => goToLos()),
-    [behandling.versjon],
+      }).then(() => {
+        if (isUngWeb()) {
+          goToSearch();
+        }
+        goToLos();
+      }),
+    [behandling.versjon, settPaVent, behandling.id],
   );
 
   const erManueltSattPaVent = useMemo(

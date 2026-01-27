@@ -19,6 +19,8 @@ import ApplicationContextPath from './ApplicationContextPath';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
+import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -69,7 +71,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
         <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
           <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
             <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
-              {harFeilet || erFerdig ? children : <LoadingPanel />}
+              <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
+                {harFeilet || erFerdig ? children : <LoadingPanel />}
+              </InntektsmeldingApiContext>
             </VedtakKlageApiContext>
           </KlageVurderingApiContext>
         </TilkjentYtelseApiContext>

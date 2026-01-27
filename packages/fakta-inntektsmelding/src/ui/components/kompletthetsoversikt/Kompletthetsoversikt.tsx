@@ -80,7 +80,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
     <div className={styles.kompletthet}>
       <h1 className={styles.kompletthet__mainHeading}>Inntektsmelding</h1>
       <h2 className={styles.kompletthet__subHeading}>Opplysninger til beregning</h2>
-      <InntektsmeldingManglerInfo manglerInntektsmelding={!!aktivtAksjonspunktKode} />
+      {!!aktivtAksjonspunktKode && <InntektsmeldingManglerInfo />}
       <Box.New marginBlock="6 0">
         <PeriodList
           tilstander={tilstanderBeriket}
@@ -105,6 +105,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
                   begrunnelse,
                   periode: tilstand.periodeOpprinneligFormat,
                   fortsett: data[tilstand.beslutningFieldName] === Kode.FORTSETT,
+                  vurdering: data[tilstand.beslutningFieldName],
                   kode: aksjonspunktKode,
                 };
               });

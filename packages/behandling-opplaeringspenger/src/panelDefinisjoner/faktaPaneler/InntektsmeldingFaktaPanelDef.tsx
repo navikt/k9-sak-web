@@ -4,8 +4,10 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 import Inntektsmelding from '../../components/Inntektsmelding';
+import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/ui/InntektsmeldingIndex.js';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;
@@ -19,7 +21,14 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getKomponent = props => <Inntektsmelding {...props} />;
+  getKomponent = props => {
+    if (props.featureToggles?.BRUK_V2_INNTEKTSMELDING) {
+      const deepCopyProps = JSON.parse(JSON.stringify(props));
+      konverterKodeverkTilKode(deepCopyProps, false);
+      return <InntektsmeldingIndex {...props} {...deepCopyProps} />;
+    }
+    return <Inntektsmelding {...props} />;
+  };
 
   getData = ({ arbeidsgiverOpplysningerPerId, dokumenter }) => ({
     arbeidsgiverOpplysningerPerId,

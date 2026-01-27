@@ -10,6 +10,7 @@ import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/s
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
@@ -20,15 +21,9 @@ import {
   KodeverkMedNavn,
   NavAnsatt,
 } from '@k9-sak-web/types';
-import {
-  getFaktaLocation,
-  getLocationWithDefaultProsessStegAndFakta,
-  getPathToK9Los,
-  getProsessStegLocation,
-} from '../app/paths';
+import { getFaktaLocation, getLocationWithDefaultProsessStegAndFakta, getProsessStegLocation } from '../app/paths';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
-import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 
 const BehandlingTilbakekrevingUngdomsytelseIndex = lazy(
   () => import('@k9-sak-web/behandling-tilbakekreving-ungdomsytelse'),
@@ -117,7 +112,7 @@ const BehandlingIndex = ({
   const location = useLocation();
   const navigate = useNavigate();
   const opneSokeside = useCallback(() => {
-    window.location.assign(getPathToK9Los() || '/');
+    window.location.assign('/');
   }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [
     location,

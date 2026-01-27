@@ -100,7 +100,7 @@ const VurderingAvTilsynsbehovForm = ({
   harPerioderDerPleietrengendeErOver18år,
   barnetsAttenårsdag,
 }: VurderingAvTilsynsbehovFormProps): JSX.Element => {
-  const { readOnly, featureToggles } = React.useContext(ContainerContext);
+  const { readOnly } = React.useContext(ContainerContext);
   const formMethods = useForm({
     defaultValues,
     mode: 'onChange',
@@ -290,26 +290,24 @@ const VurderingAvTilsynsbehovForm = ({
               )}
             </Box.New>
           )}
-          {featureToggles?.BRUK_MANGLER_LEGEERKLÆRING_I_TILSYN_OG_PLEIE && (
-            <Box.New marginBlock="8 0">
-              <Controller
-                name={FieldName.MANGLER_LEGEERKLÆRING}
-                render={({ field }) => (
-                  <CheckboxGroup legend="Mangler det legeerklæring for perioden?" size="small">
-                    <Checkbox
-                      onChange={e => {
-                        field.onChange(e.target.checked ? true : false);
-                      }}
-                      checked={field.value === true}
-                    >
-                      Mangler riktig legeerklæring for perioden, jmf. §9-16
-                    </Checkbox>
-                  </CheckboxGroup>
-                )}
-              />
-            </Box.New>
-          )}
 
+          <Box.New marginBlock="8 0">
+            <Controller
+              name={FieldName.MANGLER_LEGEERKLÆRING}
+              render={({ field }) => (
+                <CheckboxGroup legend="Mangler det legeerklæring for perioden?" size="small">
+                  <Checkbox
+                    onChange={e => {
+                      field.onChange(e.target.checked ? true : false);
+                    }}
+                    checked={field.value === true}
+                  >
+                    Mangler riktig legeerklæring for perioden, jmf. §9-16
+                  </Checkbox>
+                </CheckboxGroup>
+              )}
+            />
+          </Box.New>
           <Box.New marginBlock="8 0">
             <TextAreaRHF
               id="begrunnelsesfelt"

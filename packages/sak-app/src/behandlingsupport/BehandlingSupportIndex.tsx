@@ -31,7 +31,6 @@ import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
-import MeldingIndex from './melding/MeldingIndex';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
@@ -49,6 +48,8 @@ import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorA
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
 import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
+import { MessagesIndex } from '@k9-sak-web/gui/sak/meldinger/MessagesIndex.js';
+import { K9KlageMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/api/K9KlageMeldingerBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -144,8 +145,8 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   behandlingRettigheter?: BehandlingRettigheter;
-  personopplysninger?: Personopplysninger;
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
+  personopplysninger: Personopplysninger | undefined;
+  arbeidsgiverOpplysninger: ArbeidsgiverOpplysningerWrapper | undefined;
   navAnsatt: NavAnsatt;
   featureToggles?: FeatureToggles;
 }
@@ -250,8 +251,11 @@ const BehandlingSupportIndex = ({
   }, [erTilbakekreving, erKlage, kodeverkoppslag]);
 
   const meldingerBackendClient = useMemo(() => {
+    if (erKlage) {
+      return new K9KlageMeldingerBackendClient(formidlingClient);
+    }
     return new K9SakMeldingerBackendClient(formidlingClient);
-  }, [formidlingClient]);
+  }, [erKlage, formidlingClient]);
   const meldingerTilbakeBackendClient = useMemo(() => new K9TilbakeMeldingerBackendClient(), []);
 
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
@@ -313,21 +317,19 @@ const BehandlingSupportIndex = ({
               </HistorikkBackendApiContext>
             )}
           </Tabs.Panel>
-          <Tabs.Panel value={SupportTabs.MELDINGER}>
+          <Tabs.Panel value={SupportTabs.MELDINGER} lazy={false}>
             <ErrorBoundary errorFallback={MessagesErrorAlert}>
               <LoadingPanelSuspense>
                 {behandlingId != null &&
-                  (erTilbakekreving && featureToggles?.V2_MELDINGER_FOR_TILBAKE ? (
-                    <TilbakeMessagesIndex fagsak={fagsak} behandling={behandling} api={meldingerTilbakeBackendClient} />
+                  (erTilbakekreving ? (
+                    <TilbakeMessagesIndex behandling={behandling} api={meldingerTilbakeBackendClient} />
                   ) : (
-                    <MeldingIndex
+                    <MessagesIndex
                       fagsak={fagsak}
-                      alleBehandlinger={alleBehandlinger}
-                      behandlingId={behandlingId}
-                      behandlingVersjon={behandlingVersjon}
-                      personopplysninger={personopplysninger}
-                      arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                      backendApi={meldingerBackendClient}
+                      behandling={behandling}
+                      personopplysninger={personopplysninger ?? {}}
+                      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger?.arbeidsgivere ?? {}}
+                      api={meldingerBackendClient}
                     />
                   ))}
               </LoadingPanelSuspense>

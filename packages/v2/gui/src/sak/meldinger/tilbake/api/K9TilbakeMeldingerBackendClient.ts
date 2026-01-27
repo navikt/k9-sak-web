@@ -9,8 +9,9 @@ export class K9TilbakeMeldingerBackendClient implements TilbakeMeldingerApi {
   #adaptBestillBrevDto(bestilling: TilbakeBestillBrevDto): BestillBrevDto {
     return {
       ...bestilling,
-      behandlingId: { behandlingId: '', behandlingUuid: bestilling.behandlingUuid },
-      behandlingUuid: { behandlingId: '', behandlingUuid: bestilling.behandlingUuid },
+      // BestillBrevDto i fptilbake er rart definert. Dette fungerer.
+      behandlingId: { behandlingId: bestilling.behandlingUuid, behandlingUuid: bestilling.behandlingUuid },
+      behandlingUuid: { behandlingId: bestilling.behandlingUuid, behandlingUuid: bestilling.behandlingUuid },
     };
   }
 
