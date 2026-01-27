@@ -9,6 +9,6 @@
     "@fpsak-frontend/utils": "1.0.0",
     "moment": "2.30.1",
     "react": "19.2.3",
-    "react-intl": "8.0.9"
+    "react-intl": "8.1.1"
   }
 }
