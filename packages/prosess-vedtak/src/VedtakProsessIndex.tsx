@@ -31,7 +31,10 @@ const intl = createIntl(
 interface VedtakProsessIndexProps {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
-  behandling: k9_sak_kontrakt_behandling_BehandlingDto;
+  behandling: Pick<
+    k9_sak_kontrakt_behandling_BehandlingDto,
+    'type' | 'status' | 'behandlingsresultat' | 'behandlingPåVent' | 'behandlingÅrsaker'
+  > & { språkkode: string };
   beregningsgrunnlag: Beregningsgrunnlag[];
   dokumentdataHente: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
@@ -39,7 +42,7 @@ interface VedtakProsessIndexProps {
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   isReadOnly: boolean;
   lagreDokumentdata: LagreDokumentdataType;
-  medlemskap: {
+  medlemskap?: {
     fom: string;
   };
   overlappendeYtelser: Array<OverlappendeYtelseDto>;

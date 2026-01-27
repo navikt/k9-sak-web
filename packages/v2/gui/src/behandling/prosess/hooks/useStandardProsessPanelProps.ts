@@ -151,5 +151,6 @@ export function useStandardProsessPanelProps(): StandardProsessPanelProps {
     setFormData: () => {
       console.log('setFormData called (mock implementation)');
     },
+    erOverstyrer: false,
   };
 }

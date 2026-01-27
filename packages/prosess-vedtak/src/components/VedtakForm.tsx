@@ -89,7 +89,7 @@ interface Props {
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat;
-  språkkode: k9_sak_kontrakt_behandling_BehandlingDto['språkkode'];
+  språkkode: string;
   submitCallback: (object: any) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;

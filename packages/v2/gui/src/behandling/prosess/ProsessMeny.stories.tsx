@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { IntlProvider } from 'react-intl';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useMemo } from 'react';
+import { IntlProvider } from 'react-intl';
+import { usePanelRegistrering } from './hooks/usePanelRegistrering.js';
 import { ProsessMeny } from './ProsessMeny.js';
 import type { ProsessPanelProps } from './types/panelTypes.js';
-import { usePanelRegistrering } from './hooks/usePanelRegistrering.js';
 
 // Mock messages for Storybook
 const messages = {
@@ -35,7 +35,7 @@ function MockProsessPanel({ title, content }: { title: string; content: string }
 
 /**
  * Mock InitPanel-wrapper som demonstrerer props-basert tilnærming.
- * 
+ *
  * Dette er mønsteret som brukes i ekte paneler:
  * 1. Panelet definerer PANEL_ID og PANEL_TEKST som konstanter
  * 2. Panelet beregner sin egen panelType basert på data
@@ -150,7 +150,7 @@ type Story = StoryObj<typeof meta>;
 
 /**
  * Standard visning med flere paneler med forskjellige statustyper.
- * 
+ *
  * Demonstrerer situasjoner hvor paneler:
  * - Definerer sin egen identitet (panelId, panelTekst)
  * - Beregner sin egen type (warning, success, danger, default)
@@ -160,9 +160,10 @@ type Story = StoryObj<typeof meta>;
 export const MedFlerePaneler: Story = {
   args: {
     children: <></>,
+    steg: [],
   },
   render: () => (
-    <ProsessMeny>
+    <ProsessMeny steg={[]}>
       <MockInitPanel
         key="varsel"
         panelId="varsel"
@@ -200,7 +201,8 @@ export const MedFlerePaneler: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Viser meny med fire paneler med forskjellige statustyper: default, warning, success og danger. Paneler bruker props-basert registrering med konstanter for identitet.',
+        story:
+          'Viser meny med fire paneler med forskjellige statustyper: default, warning, success og danger. Paneler bruker props-basert registrering med konstanter for identitet.',
       },
     },
   },
@@ -208,15 +210,16 @@ export const MedFlerePaneler: Story = {
 
 /**
  * Visning med delvis fullførte paneler.
- * 
+ *
  * Demonstrerer usePartialStatus-flagget som viser delvis fullføringsindikator.
  */
 export const MedPartialStatus: Story = {
   args: {
     children: <></>,
+    steg: [],
   },
   render: () => (
-    <ProsessMeny>
+    <ProsessMeny steg={[]}>
       <MockInitPanel
         key="inngangsvilkar"
         panelId="inngangsvilkar"
@@ -248,7 +251,8 @@ export const MedPartialStatus: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Viser paneler med delvis fullføringsstatus (usePartialStatus=true). Props-basert tilnærming lar paneler definere sin egen partial status.',
+        story:
+          'Viser paneler med delvis fullføringsstatus (usePartialStatus=true). Props-basert tilnærming lar paneler definere sin egen partial status.',
       },
     },
   },
@@ -260,9 +264,10 @@ export const MedPartialStatus: Story = {
 export const MedEttPanel: Story = {
   args: {
     children: <></>,
+    steg: [],
   },
   render: () => (
-    <ProsessMeny>
+    <ProsessMeny steg={[]}>
       <MockInitPanel
         key="varsel"
         panelId="varsel"
@@ -284,16 +289,17 @@ export const MedEttPanel: Story = {
 
 /**
  * Visning med betinget synlige paneler.
- * 
+ *
  * Demonstrerer hvordan paneler kan kontrollere sin egen synlighet.
  * Panelet returnerer null hvis det ikke skal vises.
  */
 export const MedBetingetSynlighet: Story = {
   args: {
     children: <></>,
+    steg: [],
   },
   render: () => (
-    <ProsessMeny>
+    <ProsessMeny steg={[]}>
       <MockInitPanel
         key="varsel"
         panelId="varsel"
@@ -333,7 +339,8 @@ export const MedBetingetSynlighet: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Viser hvordan paneler kan skjules basert på betingelser. Det tredje panelet returnerer null og vises ikke i menyen. Props-basert tilnærming gir paneler full kontroll over sin synlighet.',
+        story:
+          'Viser hvordan paneler kan skjules basert på betingelser. Det tredje panelet returnerer null og vises ikke i menyen. Props-basert tilnærming gir paneler full kontroll over sin synlighet.',
       },
     },
   },
@@ -341,16 +348,17 @@ export const MedBetingetSynlighet: Story = {
 
 /**
  * Visning med alle statustyper.
- * 
+ *
  * Demonstrerer hvordan paneler beregner og kommuniserer sin status til menyen.
  * Hver panel beregner sin egen type basert på data.
  */
 export const AlleStatustyper: Story = {
   args: {
     children: <></>,
+    steg: [],
   },
   render: () => (
-    <ProsessMeny>
+    <ProsessMeny steg={[]}>
       <MockInitPanel
         key="default"
         panelId="default"
@@ -388,7 +396,8 @@ export const AlleStatustyper: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrerer alle fire statustyper: default, warning, success og danger. Props-basert tilnærming lar paneler beregne sin egen status reaktivt basert på data.',
+        story:
+          'Demonstrerer alle fire statustyper: default, warning, success og danger. Props-basert tilnærming lar paneler beregne sin egen status reaktivt basert på data.',
       },
     },
   },

@@ -15,7 +15,6 @@ import {
   arbeidsgiverOpplysningerQueryOptions,
   behandlingQueryOptions,
   beregningsgrunnlagQueryOptions,
-  medlemskapQueryOptions,
   overlappendeYtelserQueryOptions,
   personopplysningerQueryOptions,
   simuleringResultatQueryOptions,
@@ -61,7 +60,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { data: tilbakekrevingvalg },
     { data: overlappendeYtelser },
     { data: personopplysninger },
-    { data: medlemskap },
   ] = useSuspenseQueries({
     queries: [
       behandlingQueryOptions(props.api, props.behandling),
@@ -73,7 +71,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
       tilbakekrevingvalgQueryOptions(props.api, props.behandling),
       overlappendeYtelserQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
-      medlemskapQueryOptions(props.api, props.behandling),
     ],
   });
 
@@ -137,7 +134,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
       overlappendeYtelser={overlappendeYtelser}
       personopplysninger={personopplysninger}
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-      medlemskap={medlemskap}
     />
   );
 }
