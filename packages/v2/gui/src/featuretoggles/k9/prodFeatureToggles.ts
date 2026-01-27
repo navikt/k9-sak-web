@@ -24,7 +24,7 @@ export const prodFeatureToggles = {
   MARKERING_UTENLANDSTILSNITT: false,
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
-  FLYTT_ALDERSVILKAR: false,
+  FLYTT_ALDERSVILKAR: true,
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: false,
