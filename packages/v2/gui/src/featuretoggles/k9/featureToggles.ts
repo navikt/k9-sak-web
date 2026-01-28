@@ -33,5 +33,4 @@ export const prodFeatureToggles = {
   ...k9FeatureToggleOverrides,
   UNNTAKSBEHANDLING: false,
   LOS_MARKER_BEHANDLING_SUBMIT: false,
-  FJERN_BEGRUNNELSE_PROSESS_BEREGNING: false,
 } as const satisfies FeatureToggles & FeatureTogglesForProd;

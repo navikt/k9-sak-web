@@ -8,7 +8,6 @@ export const rootFeatureToggles = {
   NYE_NOKKELTALL: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
   BRUK_V2_FAKTA_INSTITUSJON: false,
-  FJERN_BEGRUNNELSE_PROSESS_BEREGNING: true,
   BRUK_V2_VILKAR_OPPTJENING: false,
   MARKERING_UTENLANDSTILSNITT: false,
   VIS_ALLE_ASYNC_ERRORS: false,
