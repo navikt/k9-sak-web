@@ -215,15 +215,17 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
             </div>
           </HelpText>
         </div>
-        {vilkarField && (
+        {vilkarFields.map((vilkarField, index) => (
           <VilkarField
+            key={index}
+            hidden={index !== periodeIndex}
             erOmsorgspenger={erOmsorgspenger}
             field={vilkarField}
             readOnly={readOnly || !skalKunneEndreOpptjening}
-            fieldPrefix={`vilkarFields[${periodeIndex}]`}
+            fieldPrefix={`vilkarFields[${index}]`}
             skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
           />
-        )}
+        ))}
         {visRedigeringsknapp && (
           <div>
             <div className="mt-2" />
