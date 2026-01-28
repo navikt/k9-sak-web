@@ -25,7 +25,7 @@ export const qFeatureToggles = {
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
-  UNG_KLAGE: true, // TODO Skal denne kanskje vere false?
+  UNG_KLAGE: true, // XXX Skal denne kanskje vere false?
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
 // Dette blir feature toggles for K9 i prod miljø
