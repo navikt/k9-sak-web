@@ -14,6 +14,7 @@ const k9FeatureToggleOverrides = {
   FLYTT_ALDERSVILKAR: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
+// Dette blir feature toggles for K9 i dev/Q miljø
 export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
@@ -28,6 +29,7 @@ export const qFeatureToggles = {
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
+// Dette blir feature toggles for K9 i prod miljø
 export const prodFeatureToggles = {
   ...rootFeatureToggles,
   ...baseProdFeatureToggles,

@@ -17,6 +17,7 @@ const ungFeatureToggleOverrides = {
   NYE_NOKKELTALL: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
+// Dette blir feature toggles for UNG i dev/Q miljø
 export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
@@ -25,6 +26,7 @@ export const qFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
+// Dette blir feature toggles for UNG i prod miljø
 export const prodFeatureToggles = {
   ...rootFeatureToggles,
   ...baseProdFeatureToggles,
