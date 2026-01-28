@@ -2,7 +2,6 @@ import type { FeatureTogglesFor } from './FeatureTogglesFor.js';
 
 export const rootFeatureToggles = {
   UNNTAKSBEHANDLING: true,
-  LOS_MARKER_BEHANDLING: true,
   LOS_MARKER_BEHANDLING_SUBMIT: true,
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
   OPPLAERINGSPENGER: false, // Fjernast?

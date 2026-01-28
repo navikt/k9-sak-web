@@ -190,7 +190,7 @@ const FagsakIndex = () => {
     {},
     {
       updateTriggers: [behandlingId],
-      suspendRequest: !behandling || !featureToggles?.LOS_MARKER_BEHANDLING,
+      suspendRequest: !behandling,
     },
   );
 
