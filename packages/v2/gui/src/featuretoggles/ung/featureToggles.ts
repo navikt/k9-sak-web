@@ -21,12 +21,12 @@ export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
   ...ungFeatureToggleOverrides,
+
+  FLYTT_ALDERSVILKAR: true,
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
 export const prodFeatureToggles = {
   ...rootFeatureToggles,
   ...baseProdFeatureToggles,
   ...ungFeatureToggleOverrides,
-
-  FLYTT_ALDERSVILKAR: false,
 } as const satisfies FeatureToggles & FeatureTogglesForProd;

@@ -11,6 +11,7 @@ import type { FeatureTogglesForProd, FeatureTogglesForQ } from '../FeatureToggle
 // definert å vere ulike for q/prod i baseQFeatureToggles eller baseProdFeatureToggles.
 const k9FeatureToggleOverrides = {
   UTVIDET_VARSELFELT: true,
+  FLYTT_ALDERSVILKAR: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
 export const qFeatureToggles = {
