@@ -1,8 +1,7 @@
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Alert, Button, Checkbox, Fieldset, HelpText, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React, { useContext } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
@@ -86,8 +85,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   begrunnelseFraBruker,
   personopplysninger,
 }) => {
-  const featureToggles = useContext(FeatureTogglesContext);
-  const visBegrunnelseFraBruker = featureToggles.VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK === true;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
@@ -248,14 +245,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             </>
           )}
 
-          {visBegrunnelseFraBruker &&
-            typeof begrunnelseFraBruker !== 'undefined' &&
-            begrunnelseFraBruker.length > 0 && (
-              <>
-                <p className={styleLesemodus.label}>{tekst.begrunnelseFraBruker}</p>
-                <p className={styleLesemodus.text}>{begrunnelseFraBruker}</p>
-              </>
-            )}
+          {typeof begrunnelseFraBruker !== 'undefined' && begrunnelseFraBruker.length > 0 && (
+            <>
+              <p className={styleLesemodus.label}>{tekst.begrunnelseFraBruker}</p>
+              <p className={styleLesemodus.text}>{begrunnelseFraBruker}</p>
+            </>
+          )}
 
           <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
           <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
@@ -302,14 +297,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(soknadsdato)}</p>
             </>
 
-            {visBegrunnelseFraBruker &&
-              typeof begrunnelseFraBruker !== 'undefined' &&
-              begrunnelseFraBruker.length > 0 && (
-                <>
-                  <p className={styleLesemodus.label}>{tekst.begrunnelseFraBruker}</p>
-                  <p className={styleLesemodus.text}>{begrunnelseFraBruker}</p>
-                </>
-              )}
+            {typeof begrunnelseFraBruker !== 'undefined' && begrunnelseFraBruker.length > 0 && (
+              <>
+                <p className={styleLesemodus.label}>{tekst.begrunnelseFraBruker}</p>
+                <p className={styleLesemodus.text}>{begrunnelseFraBruker}</p>
+              </>
+            )}
 
             <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
