@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 import { UngdomsytelseBehandlingApiKeys, requestUngdomsytelseApi } from '../data/ungdomsytelseBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
-import { ungQFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 
 describe('<UngdomsytelseProsess>', () => {
   const fagsak = {
@@ -123,7 +123,7 @@ describe('<UngdomsytelseProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={ungQFeatureTogglesOverride({})}
+        featureToggles={qFeatureToggles}
       />,
     );
 
@@ -152,7 +152,7 @@ describe('<UngdomsytelseProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={ungQFeatureTogglesOverride({})}
+        featureToggles={qFeatureToggles}
       />,
     );
 

@@ -14,7 +14,7 @@ import userEvent from '@testing-library/user-event';
 import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import UnntakProsess from './UnntakProsess';
-import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<UnntakProsess>', () => {
   const fagsak = {
@@ -142,7 +142,7 @@ describe('<UnntakProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={k9QFeatureTogglesOverride({})}
+        featureToggles={qFeatureToggles}
       />,
     );
 
@@ -171,7 +171,7 @@ describe('<UnntakProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={k9QFeatureTogglesOverride({})}
+        featureToggles={qFeatureToggles}
       />,
     );
 

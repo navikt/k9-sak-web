@@ -20,7 +20,7 @@ import {
 } from '../data/pleiepengerSluttfaseBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
-import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
@@ -165,7 +165,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
-          featureToggles={k9QFeatureTogglesOverride({})}
+          featureToggles={qFeatureToggles}
         />
       </RestApiErrorProvider>,
       { messages },
@@ -204,7 +204,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
-          featureToggles={k9QFeatureTogglesOverride({})}
+          featureToggles={qFeatureToggles}
         />
       </RestApiErrorProvider>,
       { messages },

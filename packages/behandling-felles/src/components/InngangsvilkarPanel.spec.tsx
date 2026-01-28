@@ -11,9 +11,9 @@ import userEvent from '@testing-library/user-event';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
-import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
-const featureToggles = k9QFeatureTogglesOverride({ BRUK_V2_VILKAR_OPPTJENING: true });
+const featureToggles = { ...qFeatureToggles, BRUK_V2_VILKAR_OPPTJENING: true };
 
 describe('<InngangsvilkarPanel>', () => {
   const behandling = {

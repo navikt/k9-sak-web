@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import PleiepengerProsess from './PleiepengerProsess';
-import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<PleiepengerProsess>', () => {
   const fagsak = {
@@ -190,7 +190,7 @@ describe('<PleiepengerProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={k9QFeatureTogglesOverride({})}
+        featureToggles={qFeatureToggles}
         setBeregningErBehandlet={() => {}}
         lagreOverstyringUttak={vi.fn()}
       />,
@@ -226,7 +226,7 @@ describe('<PleiepengerProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={k9QFeatureTogglesOverride({})}
+        featureToggles={qFeatureToggles}
         setBeregningErBehandlet={() => {}}
         lagreOverstyringUttak={vi.fn()}
       />,
