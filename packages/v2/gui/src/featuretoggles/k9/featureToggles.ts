@@ -3,7 +3,6 @@ import {
   type FeatureToggles,
   type DeploymentSpecificFeatureTogglesOverride,
   baseQFeatureToggles,
-  baseProdFeatureToggles,
 } from '../FeatureToggles.js';
 import type { FeatureTogglesForProd, FeatureTogglesForQ } from '../FeatureTogglesFor.ts';
 
@@ -31,7 +30,7 @@ export const qFeatureToggles = {
 
 // Dette blir feature toggles for K9 i prod miljø
 export const prodFeatureToggles = {
+  isFor: 'prod',
   ...rootFeatureToggles,
-  ...baseProdFeatureToggles,
   ...k9FeatureToggleOverrides,
 } as const satisfies FeatureToggles & FeatureTogglesForProd;

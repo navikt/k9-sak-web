@@ -43,14 +43,9 @@ export const baseQFeatureToggles = {
   VIS_FERIEPENGER_PANEL: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 
-// Her kan PROD feature toggles for både for ung og k9 settast.
-export const baseProdFeatureToggles = {
-  isFor: 'prod',
-} satisfies FeatureTogglesOverride & FeatureTogglesFor;
-
 // Denne typen blir brukt til å unngå at definering av felles feature toggle for Q og prod på ung eller k9 nivå
 // kan overskrive feature toggle verdi definert i baseQFeatureToggles eller baseProdFeatureToggles, sidan dette
 // sannsynlegvis kan vere utilsikta/forvirrande viss det skjer.
 export type DeploymentSpecificFeatureTogglesOverride = {
-  [K in keyof typeof baseQFeatureToggles | keyof typeof baseProdFeatureToggles]?: never;
+  [K in keyof typeof baseQFeatureToggles]?: never;
 } & FeatureTogglesOverride;

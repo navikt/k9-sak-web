@@ -1,5 +1,4 @@
 import {
-  baseProdFeatureToggles,
   baseQFeatureToggles,
   rootFeatureToggles,
   type FeatureToggles,
@@ -28,8 +27,8 @@ export const qFeatureToggles = {
 
 // Dette blir feature toggles for UNG i prod miljø
 export const prodFeatureToggles = {
+  isFor: 'prod',
   ...rootFeatureToggles,
-  ...baseProdFeatureToggles,
   ...ungFeatureToggleOverrides,
 
   LOS_MARKER_BEHANDLING_SUBMIT: true, // Er denne relevant for ung?
