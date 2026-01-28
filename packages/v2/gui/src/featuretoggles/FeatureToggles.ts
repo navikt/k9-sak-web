@@ -4,8 +4,6 @@ export const rootFeatureToggles = {
   UNNTAKSBEHANDLING: true,
   LOS_MARKER_BEHANDLING_SUBMIT: true,
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
-  OPPLAERINGSPENGER: false, // Fjernast?
-  SKJUL_AVSLUTTET_ARBEIDSGIVER: false, // Fjernast?
   OVERSTYR_BEREGNING: false,
   NYE_NOKKELTALL: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
