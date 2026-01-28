@@ -27,7 +27,6 @@ export const rootFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: false,
-  KRONISK_TIDSBEGRENSET: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
 };
 
