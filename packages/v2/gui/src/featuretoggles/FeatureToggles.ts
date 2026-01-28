@@ -1,22 +1,22 @@
 import type { FeatureTogglesFor } from './FeatureTogglesFor.js';
 
 export const rootFeatureToggles = {
-  UNNTAKSBEHANDLING: false,
-  LOS_MARKER_BEHANDLING_SUBMIT: false,
-  FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
-  OVERSTYR_BEREGNING: false,
-  NYE_NOKKELTALL: false,
-  UTVIDET_VARSELFELT: false, // Brukt i jsx
   BRUK_V2_FAKTA_INSTITUSJON: false,
+  BRUK_V2_INNTEKTSMELDING: false,
+  BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
+  FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
+  FLYTT_ALDERSVILKAR: false,
+  LOS_MARKER_BEHANDLING_SUBMIT: false,
   MARKERING_UTENLANDSTILSNITT: false,
+  NYE_NOKKELTALL: false,
+  OVERSTYR_BEREGNING: false,
+  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
+  UNG_KLAGE: false,
+  UNNTAKSBEHANDLING: false,
+  UTVIDET_VARSELFELT: false, // Brukt i jsx
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
-  FLYTT_ALDERSVILKAR: false,
-  BRUK_V2_TILKJENT_YTELSE: false,
-  BRUK_V2_INNTEKTSMELDING: false,
-  UNG_KLAGE: false,
-  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
 } satisfies Readonly<{ [K: `${Uppercase<string>}`]: false }>; // Alle toggles skal vere false i utgangspunktet
 
 // Endrer typen på rootFeatureToggles til boolean
@@ -36,10 +36,10 @@ export type FeatureToggles = Readonly<RootFeatureToggles & FeatureTogglesFor>;
 // Her kan Q feature toggles for både for ung og k9 settast.
 export const baseQFeatureToggles = {
   isFor: 'Q',
-  UNNTAKSBEHANDLING: true,
-  LOS_MARKER_BEHANDLING_SUBMIT: true,
-  VIS_ALLE_ASYNC_ERRORS: true,
   BRUK_V2_TILKJENT_YTELSE: true,
+  LOS_MARKER_BEHANDLING_SUBMIT: true,
+  UNNTAKSBEHANDLING: true,
+  VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 

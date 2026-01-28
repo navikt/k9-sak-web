@@ -11,9 +11,9 @@ import type { FeatureTogglesForProd, FeatureTogglesForQ } from '../FeatureToggle
 const ungFeatureToggleOverrides = {
   BRUK_V2_FAKTA_INSTITUSJON: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
-  UNG_KLAGE: true,
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: true,
   NYE_NOKKELTALL: true,
+  UNG_KLAGE: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
 // Dette blir feature toggles for UNG i dev/Q miljø

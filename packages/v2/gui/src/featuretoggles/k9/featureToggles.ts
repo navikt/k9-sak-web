@@ -9,8 +9,8 @@ import type { FeatureTogglesForProd, FeatureTogglesForQ } from '../FeatureToggle
 // Her kan man overskrive feature toggles spesifikt for ung deployment, men kun feature toggles som ikkje spesifikt er
 // definert å vere ulike for q/prod i baseQFeatureToggles eller baseProdFeatureToggles.
 const k9FeatureToggleOverrides = {
-  UTVIDET_VARSELFELT: true,
   FLYTT_ALDERSVILKAR: true,
+  UTVIDET_VARSELFELT: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
 // Dette blir feature toggles for K9 i dev/Q miljø
@@ -19,13 +19,13 @@ export const qFeatureToggles = {
   ...baseQFeatureToggles,
   ...k9FeatureToggleOverrides,
 
-  OVERSTYR_BEREGNING: true,
-  NYE_NOKKELTALL: true,
   BRUK_V2_FAKTA_INSTITUSJON: true,
-  MARKERING_UTENLANDSTILSNITT: true,
   BRUK_V2_INNTEKTSMELDING: true,
-  UNG_KLAGE: true, // TODO Skal denne kanskje vere false?
+  MARKERING_UTENLANDSTILSNITT: true,
+  NYE_NOKKELTALL: true,
+  OVERSTYR_BEREGNING: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
+  UNG_KLAGE: true, // TODO Skal denne kanskje vere false?
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
 // Dette blir feature toggles for K9 i prod miljø
