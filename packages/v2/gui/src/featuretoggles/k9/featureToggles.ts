@@ -35,7 +35,6 @@ export const prodFeatureToggles = {
   ...rootFeatureToggles,
   ...baseProdFeatureToggles,
   ...k9FeatureToggleOverrides,
-  DOKUMENTDATA: false,
   UNNTAKSBEHANDLING: false,
   LOS_MARKER_BEHANDLING_SUBMIT: false,
   FJERN_BEGRUNNELSE_PROSESS_BEREGNING: false,

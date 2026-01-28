@@ -1,7 +1,6 @@
 import type { FeatureTogglesFor } from './FeatureTogglesFor.js';
 
 export const rootFeatureToggles = {
-  DOKUMENTDATA: true, // Fjernast?
   UNNTAKSBEHANDLING: true,
   TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true, // Fjernast?
   LOS_MARKER_BEHANDLING: true,
