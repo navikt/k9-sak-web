@@ -16,7 +16,11 @@ const ungFeatureToggleOverrides = {
   UNG_KLAGE: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
-// Dette blir feature toggles for UNG i dev/Q miljø
+/**
+ * Dette blir feature toggles for UNG i dev/Q miljø.
+ *
+ * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
+ */
 export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
@@ -25,7 +29,11 @@ export const qFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
-// Dette blir feature toggles for UNG i prod miljø
+/**
+ * Dette blir feature toggles for UNG i prod miljø.
+ *
+ * NB: Skal vanlegvis ikkje trenge å sette noko her.
+ */
 export const prodFeatureToggles = {
   isFor: 'prod',
   ...rootFeatureToggles,

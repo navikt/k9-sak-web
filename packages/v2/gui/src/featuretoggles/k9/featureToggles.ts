@@ -13,7 +13,11 @@ const k9FeatureToggleOverrides = {
   UTVIDET_VARSELFELT: true,
 } satisfies DeploymentSpecificFeatureTogglesOverride;
 
-// Dette blir feature toggles for K9 i dev/Q miljø
+/**
+ * Dette blir feature toggles for K9 i dev/Q miljø.
+ *
+ * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
+ */
 export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
@@ -28,7 +32,11 @@ export const qFeatureToggles = {
   UNG_KLAGE: true, // XXX Skal denne kanskje vere false?
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
-// Dette blir feature toggles for K9 i prod miljø
+/**
+ * Dette blir feature toggles for K9 i prod miljø.
+ *
+ * NB: Skal vanlegvis ikkje trenge å sette noko her.
+ */
 export const prodFeatureToggles = {
   isFor: 'prod',
   ...rootFeatureToggles,
