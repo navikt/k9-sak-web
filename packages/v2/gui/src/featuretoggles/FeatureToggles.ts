@@ -17,11 +17,21 @@ export const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   UNG_KLAGE: false,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
-};
+} satisfies Readonly<{ [K: `${Uppercase<string>}`]: false }>; // Alle toggles skal vere false i utgangspunktet
 
-export type RootFeatureTogglesOverride = Readonly<Partial<typeof rootFeatureToggles>>;
+// Endrer typen på rootFeatureToggles til boolean
+type RootFeatureToggles = Readonly<{
+  [K in keyof typeof rootFeatureToggles]: boolean;
+}>;
 
-export type FeatureToggles = Readonly<typeof rootFeatureToggles & FeatureTogglesFor>;
+// Ønsker at alle andre spesifikasjoner skal ha true som verdi.
+export type FeatureTogglesOverride = Readonly<
+  Partial<{
+    [K in keyof RootFeatureToggles]: true;
+  }>
+>;
+
+export type FeatureToggles = Readonly<RootFeatureToggles & FeatureTogglesFor>;
 
 // Her kan Q feature toggles for både for ung og k9 settast.
 export const baseQFeatureToggles = {
@@ -31,16 +41,16 @@ export const baseQFeatureToggles = {
   VIS_ALLE_ASYNC_ERRORS: true,
   BRUK_V2_TILKJENT_YTELSE: true,
   VIS_FERIEPENGER_PANEL: true,
-} satisfies RootFeatureTogglesOverride & FeatureTogglesFor;
+} satisfies FeatureTogglesOverride & FeatureTogglesFor;
 
 // Her kan PROD feature toggles for både for ung og k9 settast.
 export const baseProdFeatureToggles = {
   isFor: 'prod',
-} satisfies RootFeatureTogglesOverride & FeatureTogglesFor;
+} satisfies FeatureTogglesOverride & FeatureTogglesFor;
 
 // Denne typen blir brukt til å unngå at definering av felles feature toggle for Q og prod på ung eller k9 nivå
 // kan overskrive feature toggle verdi definert i baseQFeatureToggles eller baseProdFeatureToggles, sidan dette
 // sannsynlegvis kan vere utilsikta/forvirrande viss det skjer.
-export type DeploymentSpecificFeatureTogglesOverride = RootFeatureTogglesOverride & {
+export type DeploymentSpecificFeatureTogglesOverride = {
   [K in keyof typeof baseQFeatureToggles | keyof typeof baseProdFeatureToggles]?: never;
-};
+} & FeatureTogglesOverride;
