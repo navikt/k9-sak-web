@@ -179,8 +179,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     return åretBarnetFyller18 <= inneværendeÅr;
   };
 
-  const kroniskTidsbegrensetToggle =
-    'KRONISK_TIDSBEGRENSET' in featureToggles && featureToggles.KRONISK_TIDSBEGRENSET && !getErBarnetFyller18IÅr();
+  const kroniskTidsbegrensetToggle = !getErBarnetFyller18IÅr();
 
   /**
    * Genererer en liste med årssluttdatoer for tidsbegrensede perioder basert på barnets alder.
