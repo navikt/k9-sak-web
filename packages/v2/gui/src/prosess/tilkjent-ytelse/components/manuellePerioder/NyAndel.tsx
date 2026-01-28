@@ -1,5 +1,4 @@
 import { inntektskategorier, type Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { PlusCircleIcon, XMarkIcon } from '@navikt/aksel-icons';
@@ -18,15 +17,6 @@ const maxValue3999 = maxValue(3999);
 const isEmpty = (text?: string | null) => text === null || text === undefined || text.toString().trim().length === 0;
 const atLeastOneRequired = (value: string, otherValue?: string | null) =>
   isEmpty(value) && isEmpty(otherValue) ? 'Feltet må fylles ut' : undefined;
-
-const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
-  arbeidsgivere
-    ? Object.values(arbeidsgivere).map(({ navn, identifikator }) => (
-        <option value={identifikator} key={identifikator}>
-          {navn} ({identifikator})
-        </option>
-      ))
-    : [];
 
 const mapArbeidsgivereOrg = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
   arbeidsgivere
@@ -81,10 +71,9 @@ interface OwnProps {
   readOnly: boolean;
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
-  featureToggles?: FeatureToggles;
 }
 
-export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, featureToggles }: OwnProps) => {
+export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: OwnProps) => {
   const [isOpen, setOpen] = useState(false);
   const { control } = useFormContext<TilkjentYtelseFormState>();
   const { hentKodeverkForKode } = useKodeverkContext();
@@ -94,7 +83,6 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
     name: 'nyPeriodeForm.andeler',
     keyName: 'fieldId',
   });
-  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   useEffect(() => {
     if (fields.length === 0) {
@@ -125,14 +113,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                         control={control}
                         label="Arbeidsgiver"
                         name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
-                        validate={
-                          skillUtPrivatperson
-                            ? [value => atLeastOneRequired(value, field.arbeidsgiverPersonIdent)]
-                            : [required]
-                        }
-                        selectValues={
-                          skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
-                        }
+                        validate={[value => atLeastOneRequired(value, field.arbeidsgiverPersonIdent)]}
+                        selectValues={mapArbeidsgivereOrg(arbeidsgivere)}
                       />
                       <Button
                         variant="secondary"
@@ -148,17 +130,15 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
                         type="button"
                       />
                     </div>
-                    {skillUtPrivatperson && (
-                      <div className="flex items-end">
-                        <RhfSelect
-                          control={control}
-                          label="Arbeidsgiver (privatperson)"
-                          name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
-                          validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
-                          selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
-                        />
-                      </div>
-                    )}
+                    <div className="flex items-end">
+                      <RhfSelect
+                        control={control}
+                        label="Arbeidsgiver (privatperson)"
+                        name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
+                        validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
+                        selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
+                      />
+                    </div>
                   </div>
                 )}
 

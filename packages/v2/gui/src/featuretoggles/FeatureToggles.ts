@@ -7,7 +7,6 @@ export const rootFeatureToggles = {
   OVERSTYR_BEREGNING: false,
   NYE_NOKKELTALL: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
-  SKILL_UT_PRIVATPERSON: true, // Fjernast?
   AUTOMATISK_VURDERT_MEDLEMSKAP: true, // Fjernast?
   OPPTJENING_READ_ONLY_PERIODER: true, // Fjernast?
   VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK: true, // Fjernast?
