@@ -31,4 +31,5 @@ export const prodFeatureToggles = {
   ...ungFeatureToggleOverrides,
 
   LOS_MARKER_BEHANDLING_SUBMIT: true, // Er denne relevant for ung?
+  UNNTAKSBEHANDLING: true,
 } as const satisfies FeatureToggles & FeatureTogglesForProd;

@@ -32,6 +32,4 @@ export const prodFeatureToggles = {
   ...rootFeatureToggles,
   ...baseProdFeatureToggles,
   ...k9FeatureToggleOverrides,
-
-  UNNTAKSBEHANDLING: false,
 } as const satisfies FeatureToggles & FeatureTogglesForProd;

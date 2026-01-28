@@ -1,7 +1,7 @@
 import type { FeatureTogglesFor } from './FeatureTogglesFor.js';
 
 export const rootFeatureToggles = {
-  UNNTAKSBEHANDLING: true,
+  UNNTAKSBEHANDLING: false,
   LOS_MARKER_BEHANDLING_SUBMIT: false,
   FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
   OVERSTYR_BEREGNING: false,
@@ -26,6 +26,7 @@ export type FeatureToggles = Readonly<typeof rootFeatureToggles & FeatureToggles
 // Her kan Q feature toggles for både for ung og k9 settast.
 export const baseQFeatureToggles = {
   isFor: 'Q',
+  UNNTAKSBEHANDLING: true,
   LOS_MARKER_BEHANDLING_SUBMIT: true,
   VIS_ALLE_ASYNC_ERRORS: true,
   BRUK_V2_TILKJENT_YTELSE: true,
