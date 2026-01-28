@@ -14,6 +14,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FetchedData from '../types/fetchedDataTsType';
 import OmsorgspengerProsess from './OmsorgspengerProsess';
+import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
 
 describe('<OmsorgspengerProsess>', () => {
   const fagsak = {
@@ -119,7 +120,7 @@ describe('<OmsorgspengerProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={k9QFeatureTogglesOverride({})}
       />,
     );
 
@@ -148,7 +149,7 @@ describe('<OmsorgspengerProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={k9QFeatureTogglesOverride({})}
       />,
     );
 

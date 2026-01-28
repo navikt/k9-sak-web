@@ -11,6 +11,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import KlageProsess from './KlageProsess';
+import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
 
 describe('<KlageProsess>', () => {
   const fagsak = {
@@ -91,7 +92,7 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
-        featureToggles={{}}
+        featureToggles={k9QFeatureTogglesOverride({})}
       />,
     );
 
@@ -116,7 +117,7 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
-        featureToggles={{}}
+        featureToggles={k9QFeatureTogglesOverride({})}
       />,
     );
 
@@ -144,7 +145,7 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
-        featureToggles={{}}
+        featureToggles={k9QFeatureTogglesOverride({})}
       />,
     );
 
@@ -175,7 +176,7 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
-        featureToggles={{}}
+        featureToggles={k9QFeatureTogglesOverride({})}
       />,
     );
 

@@ -9,7 +9,7 @@ import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/te
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
-import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/prodFeatureToggles.js';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {

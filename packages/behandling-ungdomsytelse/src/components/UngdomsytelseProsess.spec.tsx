@@ -10,13 +10,13 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ung_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UngdomsytelseBehandlingApiKeys, requestUngdomsytelseApi } from '../data/ungdomsytelseBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
+import { ungQFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
 
 describe('<UngdomsytelseProsess>', () => {
   const fagsak = {
@@ -105,7 +105,6 @@ describe('<UngdomsytelseProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestUngdomsytelseApi.mock(UngdomsytelseBehandlingApiKeys.SOKNADSFRIST_STATUS);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntlAndReduxForm(
       <UngdomsytelseProsess
         data={fetchedData as FetchedData}
@@ -124,7 +123,7 @@ describe('<UngdomsytelseProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={ungQFeatureTogglesOverride({})}
       />,
     );
 
@@ -134,7 +133,6 @@ describe('<UngdomsytelseProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
       <UngdomsytelseProsess
@@ -154,7 +152,7 @@ describe('<UngdomsytelseProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={ungQFeatureTogglesOverride({})}
       />,
     );
 

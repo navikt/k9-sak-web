@@ -16,6 +16,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import ForeldrepengerFakta from './PleiepengerFakta';
+import { k9QFeatureTogglesOverride } from '@k9-sak-web/gui/featuretoggles/featureTogglesOverride.spec.js';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
@@ -159,7 +160,7 @@ describe('<PleiepengerFakta>', () => {
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
-          featureToggles={{}}
+          featureToggles={k9QFeatureTogglesOverride({})}
         />
       </RestApiErrorProvider>,
     );
@@ -201,7 +202,7 @@ describe('<PleiepengerFakta>', () => {
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
-          featureToggles={{}}
+          featureToggles={k9QFeatureTogglesOverride({})}
         />
       </RestApiErrorProvider>,
     );
