@@ -31,7 +31,7 @@ interface OpptjeningVilkarProsessIndexProps {
 }
 
 const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus, isAksjonspunktOpen: boolean) => {
-  if (isAksjonspunktOpen && vilkarStatus === VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT) {
+  if (isAksjonspunktOpen) {
     return <AksjonspunktIkon size="small" />;
   }
   if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
