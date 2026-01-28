@@ -21,14 +21,12 @@ export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
   ...ungFeatureToggleOverrides,
-  //VIS_ALLE_ASYNC_ERRORS: true,
-  VIS_FERIEPENGER_PANEL: true,
-  BRUK_V2_TILKJENT_YTELSE: true,
 } as const satisfies FeatureToggles & FeatureTogglesForQ;
 
 export const prodFeatureToggles = {
   ...rootFeatureToggles,
   ...baseProdFeatureToggles,
   ...ungFeatureToggleOverrides,
+
   FLYTT_ALDERSVILKAR: false,
 } as const satisfies FeatureToggles & FeatureTogglesForProd;

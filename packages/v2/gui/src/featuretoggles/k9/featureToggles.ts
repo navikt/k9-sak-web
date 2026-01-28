@@ -17,9 +17,6 @@ export const qFeatureToggles = {
   ...rootFeatureToggles,
   ...baseQFeatureToggles,
   ...k9FeatureToggleOverrides,
-  VIS_ALLE_ASYNC_ERRORS: true,
-  VIS_FERIEPENGER_PANEL: true,
-  BRUK_V2_TILKJENT_YTELSE: true,
 
   OVERSTYR_BEREGNING: true,
   NYE_NOKKELTALL: true,
