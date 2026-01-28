@@ -130,7 +130,7 @@ const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 const meta = {
   title: 'gui/prosess/vilkar-opptjening',
   component: OpptjeningVilkarProsessIndexV2,
-  decorators: [withFeatureToggles({ OPPTJENING_READ_ONLY_PERIODER: false })],
+  decorators: [withFeatureToggles({})],
 } satisfies Meta<typeof OpptjeningVilkarProsessIndexV2>;
 
 export default meta;
