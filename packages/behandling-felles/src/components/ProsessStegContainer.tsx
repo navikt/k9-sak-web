@@ -1,17 +1,16 @@
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 import React, { ReactNode, useMemo, useState } from 'react';
+import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
-import styles from './prosessStegContainer.module.css';
 import { Box } from '@navikt/ds-react';
+import styles from './prosessStegContainer.module.css';
 
 interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
-  noBorder?: boolean;
   hideMenu?: boolean; // Skjul menyen når v2-menyen brukes
 }
 
@@ -27,7 +26,6 @@ const ProsessStegContainer = ({
   formaterteProsessStegPaneler,
   velgProsessStegPanelCallback,
   children,
-  noBorder,
   hideMenu = false,
 }: OwnProps & WrappedComponentProps) => {
   const steg = useMemo(
@@ -49,13 +47,13 @@ const ProsessStegContainer = ({
     <Box>
       {/* Skjul menyen når v2-menyen brukes */}
       {!hideMenu && (
-          <div className={styles.meny}>
-            <ProcessMenu
-              steps={steg}
-              onClick={velgProsessStegPanelCallback}
-              stepArrowContainerStyle={styles.stepArrowContainer}
-            />
-          </div>
+        <div className={styles.meny}>
+          <ProcessMenu
+            steps={steg}
+            onClick={velgProsessStegPanelCallback}
+            stepArrowContainerStyle={styles.stepArrowContainer}
+          />
+        </div>
       )}
       <VedtakFormContext.Provider value={value}>{children}</VedtakFormContext.Provider>
     </Box>
