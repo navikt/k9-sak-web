@@ -222,7 +222,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
         </div>
         {vilkarFields.map((vilkarField, index) => (
           <VilkarField
-            key={index}
+            key={vilkarField.periode.fom}
             hidden={index !== indexOfActivePeriode}
             erOmsorgspenger={erOmsorgspenger}
             field={vilkarField}
