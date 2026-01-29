@@ -17,9 +17,10 @@ export const opptjeningMidlertidigInaktivKoder = {
 
 interface VilkarFieldsProps {
   erOmsorgspenger?: boolean;
+  field: VilkårFieldType;
+  hidden: boolean;
   fieldPrefix: string;
   readOnly: boolean;
-  field: VilkårFieldType;
   skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
@@ -43,9 +44,10 @@ export const hent847Text = (kode: string) => {
   return kodeTekster[kode] || '';
 };
 export const VilkarField = ({
+  hidden,
   erOmsorgspenger,
-  fieldPrefix,
   field,
+  fieldPrefix,
   readOnly,
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<VilkårFieldFormValues>) => {
@@ -106,7 +108,7 @@ export const VilkarField = ({
   });
 
   return (
-    <div className="mt-4">
+    <div className={`mt-4 ${hidden ? 'hidden' : ''}`}>
       <RhfTextarea
         control={control}
         name={`${fieldPrefix}.begrunnelse`}
