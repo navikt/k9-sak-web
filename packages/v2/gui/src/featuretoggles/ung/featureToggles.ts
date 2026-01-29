@@ -21,7 +21,7 @@ const ungSpecificFeatureToggles = {
  * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
  */
 export const qFeatureToggles = initQFeatureToggles(ungSpecificFeatureToggles)({
-  FLYTT_ALDERSVILKAR: true,
+  // Legg til featuretoggles for ung Q her
 });
 
 /**

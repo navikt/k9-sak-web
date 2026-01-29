@@ -24,7 +24,6 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
-  UNG_KLAGE: true, // XXX Skal denne kanskje vere false?
   BRUK_V2_VILKAR_OPPTJENING: true,
 });
 
