@@ -8,7 +8,7 @@ import OmsorgsdagerContainer from './OmsorgsdagerContainer';
 const meta = {
   title: 'prosess/prosess-omsorgsdager/OmsorgsdagerContainer',
   component: OmsorgsdagerContainer,
-  decorators: [withFeatureToggles({ KRONISK_TIDSBEGRENSET: true })],
+  decorators: [withFeatureToggles({})],
 } satisfies Meta<typeof OmsorgsdagerContainer>;
 export default meta;
 

@@ -101,7 +101,6 @@ const TilkjentYtelsePanelImpl = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          featureToggles={featureToggles}
         />
       )}
 

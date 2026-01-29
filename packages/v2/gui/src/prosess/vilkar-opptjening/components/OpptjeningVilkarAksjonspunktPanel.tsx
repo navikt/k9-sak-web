@@ -11,10 +11,8 @@ import { Button, HelpText, Label } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import type { FeatureToggles } from '../../../featuretoggles/FeatureToggles.js';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';
 import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
@@ -27,7 +25,6 @@ dayjs.extend(isBetween);
 export const buildInitialValues = (
   vilkårPerioder: VilkårPeriodeDto[],
   opptjening: OpptjeningDto[],
-  featureToggles: FeatureToggles,
 ): VilkårFieldFormValues => {
   const utledKode = (periode: VilkårPeriodeDto) => {
     if (
@@ -51,9 +48,7 @@ export const buildInitialValues = (
             periode: periode.periode,
             begrunnelse: periode.begrunnelse ?? '',
             vurderesIBehandlingen: !!periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']
-              ? !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt
-              : true,
+            vurderesIAksjonspunkt: !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt,
             kode: utledKode(periode),
           };
         })
@@ -95,11 +90,9 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
   opptjeninger,
   submitCallback,
 }: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const featureToggles = useContext(FeatureTogglesContext);
-
   const [redigererOpptjening, setRedigererOpptjening] = useState(false);
   const formMethods = useForm({
-    defaultValues: buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
+    defaultValues: buildInitialValues(vilkårPerioder, opptjeninger),
   });
 
   const vilkarFields = useWatch({ control: formMethods.control, name: 'vilkarFields' });
