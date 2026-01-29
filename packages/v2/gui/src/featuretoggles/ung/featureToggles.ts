@@ -1,7 +1,10 @@
 import { initQFeatureToggles, initProdFeatureToggles } from '../FeatureToggles.js';
 
-// Her kan man overskrive feature toggles spesifikt for ung deployment, men kun feature toggles som ikkje spesifikt er
-// definert å vere ulike for q/prod i baseQFeatureToggles eller baseProdFeatureToggles.
+/**
+ * Toggles satt her bli gjeldande kun for ung, men både i Q og prod.
+ *
+ * NB: Toggles satt her skal ikkje vere satt i baseQFeatureToggles i ../FeatureToggles.ts. Det blir då kompileringsfeil.
+ */
 const ungSpecificFeatureToggles = {
   BRUK_V2_FAKTA_INSTITUSJON: true,
   BRUK_V2_VILKAR_OPPTJENING: true,

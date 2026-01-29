@@ -1,7 +1,10 @@
 import { initQFeatureToggles, initProdFeatureToggles } from '../FeatureToggles.js';
 
-// Her kan man overskrive feature toggles spesifikt for ung deployment, men kun feature toggles som ikkje spesifikt er
-// definert å vere ulike for q/prod i baseQFeatureToggles eller baseProdFeatureToggles.
+/**
+ * Toggles satt her bli gjeldande kun for k9, men både i Q og prod.
+ *
+ * NB: Toggles satt her skal ikkje vere satt i baseQFeatureToggles i ../FeatureToggles.ts. Det blir då kompileringsfeil.
+ */
 const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
@@ -9,6 +12,8 @@ const k9SpecificFeatureToggles = {
 
 /**
  * Dette blir feature toggles for K9 i dev/Q miljø.
+ *
+ * Det er produktet av feature toggles definert i ../FeatureToggles.ts og denne fila.
  *
  * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
  */
@@ -24,6 +29,8 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
 
 /**
  * Dette blir feature toggles for K9 i prod miljø.
+ *
+ * Det er produktet av feature toggles definert i ../FeatureToggles.ts og denne fila.
  *
  * NB: Skal vanlegvis ikkje trenge å sette noko her.
  */
