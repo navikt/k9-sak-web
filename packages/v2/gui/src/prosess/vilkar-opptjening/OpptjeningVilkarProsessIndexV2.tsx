@@ -71,10 +71,6 @@ const OpptjeningVilkarProsessIndexV2 = ({
   if (!activePeriode) {
     return null;
   }
-  const getIndexBlantAllePerioder = () =>
-    activeVilkår?.perioder?.findIndex(
-      ({ periode }) => periode.fom === activePeriode?.periode.fom && periode.tom === activePeriode?.periode.tom,
-    ) ?? 0;
 
   return (
     <>
@@ -101,7 +97,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
             readOnly={isReadOnly}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår?.perioder ?? []}
-            periodeIndex={getIndexBlantAllePerioder()}
+            activePeriode={activePeriode}
             opptjeninger={opptjening?.opptjeninger}
             isApOpen={isAksjonspunktOpen}
           />
