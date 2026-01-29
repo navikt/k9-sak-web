@@ -203,7 +203,7 @@ export const beregnSimuleringType = (
 };
 
 // Hjelpefunksjon for å bygge ikke-vilkårbaserte paneler
-const byggPanel = (
+const byggPanelUtenVilkår = (
   forrigeVurdert: boolean | undefined,
   type: ProcessMenuStepType,
   label: string,
@@ -314,21 +314,21 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     );
 
     // Ikke-vilkårbaserte paneler
-    const uttakPanel = byggPanel(
+    const uttakPanel = byggPanelUtenVilkår(
       true,
       beregnUttakType(aksjonspunkter, uttak, PANEL_KONFIG.uttak.aksjonspunkter),
       'Uttak',
       PROSESS_STEG_KODER.UTTAK,
     );
 
-    const tilkjentYtelsePanel = byggPanel(
+    const tilkjentYtelsePanel = byggPanelUtenVilkår(
       uttakPanel.erVurdert,
       beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       'Tilkjent ytelse',
       PROSESS_STEG_KODER.TILKJENT_YTELSE,
     );
 
-    const simuleringPanel = byggPanel(
+    const simuleringPanel = byggPanelUtenVilkår(
       tilkjentYtelsePanel.erVurdert,
       beregnSimuleringType(aksjonspunkter, simuleringResultat, PANEL_KONFIG.simulering.aksjonspunkter),
       'Simulering',
