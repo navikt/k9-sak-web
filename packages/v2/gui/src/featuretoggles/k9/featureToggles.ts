@@ -1,4 +1,4 @@
-import { initQFeatureToggles, initProdFeatureToggles } from '../FeatureToggles.js';
+import { initProdFeatureToggles, initQFeatureToggles } from '../FeatureToggles.js';
 
 /**
  * Toggles satt her bli gjeldande kun for k9, men både i Q og prod.
@@ -25,6 +25,8 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   OVERSTYR_BEREGNING: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
+  PROSESS_MENY_V2: true,
+  PROSESS_MENY_V2_VELGER: true,
 });
 
 /**
