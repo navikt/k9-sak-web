@@ -4,14 +4,13 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { use, useContext } from 'react';
-
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { use, useContext } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions } from './api/k9SakQueryOptions';

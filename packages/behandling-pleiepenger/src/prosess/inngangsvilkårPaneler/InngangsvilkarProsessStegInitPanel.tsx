@@ -1,5 +1,7 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_vilkår_VilkårType,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
@@ -16,9 +18,9 @@ import { SøknadsfristProsessStegInitPanel } from './SøknadsfristProsessStegIni
 
 // Relevante vilkår for inngangsvilkår-panelet
 const relevanteVilkårkoder = [
-  vilkarType.SOKNADSFRISTVILKARET,
-  vilkarType.ALDERSVILKARET,
-  vilkarType.OMSORGENFORVILKARET,
+  k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+  k9_kodeverk_vilkår_VilkårType.ALDERSVILKÅR,
+  k9_kodeverk_vilkår_VilkårType.OMSORGEN_FOR,
 ];
 
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
@@ -57,7 +59,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
     if (!vilkår) {
       return [];
     }
-    return vilkår.filter(vilkar => relevanteVilkårkoder.includes(vilkar.vilkarType));
+    return vilkår.filter(vilkar => relevanteVilkårkoder.some(kode => kode === vilkar.vilkarType));
   }, [vilkår]);
 
   // TODO: Finn ut om dette blir riktig utledet

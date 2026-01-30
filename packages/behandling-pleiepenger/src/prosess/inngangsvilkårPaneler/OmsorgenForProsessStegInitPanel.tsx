@@ -1,7 +1,7 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import {
   k9_kodeverk_behandling_BehandlingType,
+  k9_kodeverk_vilkår_VilkårType,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -9,7 +9,7 @@ import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vi
 import { Behandling } from '@k9-sak-web/types';
 import { useMemo, type SetStateAction } from 'react';
 
-const RELEVANTE_VILKAR_KODER = [vilkarType.OMSORGENFORVILKARET];
+const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.OMSORGEN_FOR];
 
 interface Props {
   behandling: Behandling;
@@ -30,15 +30,15 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
     if (!props.vilkår) {
       return [];
     }
-    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.some(kode => kode === vilkar.vilkarType));
   }, [props.vilkår]);
   const skalVisePanel = vilkårForSteg.length > 0;
 
   const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
-    ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR,
   );
 
-  const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR);
+  const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR);
 
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
@@ -55,7 +55,7 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
       behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
       vilkar={vilkårForSteg}
       erOverstyrt={erOverstyrt}
-      overstyringApKode={aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR}
+      overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR}
       erMedlemskapsPanel={false}
       panelTittelKode="Omsorg"
       submitCallback={handleSubmit}

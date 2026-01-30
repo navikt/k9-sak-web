@@ -1,5 +1,7 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_vilkår_VilkårType,
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
@@ -14,7 +16,10 @@ import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapPros
 import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
 
 // Relevante vilkår for inngangsvilkår-panelet
-const RELEVANTE_VILKAR_KODER = [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET];
+const RELEVANTE_VILKAR_KODER = [
+  k9_kodeverk_vilkår_VilkårType.MEDLEMSKAPSVILKÅRET,
+  k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET,
+];
 const PANEL_ID = prosessStegCodes.OPPTJENING;
 
 interface InngangsvilkarFortsProsessStegInitPanelProps {

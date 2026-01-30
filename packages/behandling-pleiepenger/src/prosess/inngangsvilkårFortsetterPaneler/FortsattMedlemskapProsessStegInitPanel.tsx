@@ -1,7 +1,7 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import {
   k9_kodeverk_behandling_BehandlingType,
+  k9_kodeverk_vilkår_VilkårType,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -39,13 +39,13 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     if (!props.vilkår) {
       return [];
     }
-    return props.vilkår.filter(vilkår => vilkår.vilkarType === vilkarType.MEDLEMSKAPSVILKARET);
+    return props.vilkår.filter(vilkår => vilkår.vilkarType === k9_kodeverk_vilkår_VilkårType.MEDLEMSKAPSVILKÅRET);
   }, [props.vilkår]);
 
   const skalVisePanel = vilkårForSteg.length > 0;
 
   const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
-    ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
   );
 
   const handleSubmit = async (data: any) => {

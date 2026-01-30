@@ -56,6 +56,7 @@ const PANEL_KONFIG = {
     aksjonspunkter: [
       AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
       AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+      AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET,
     ],
   },
   beregning: {

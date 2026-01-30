@@ -1,6 +1,6 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
@@ -23,16 +23,16 @@ import {
 } from './api/k9SakQueryOptions';
 
 const vedtakAksjonspunktKoder = [
-  aksjonspunktCodes.FORESLA_VEDTAK,
-  aksjonspunktCodes.FATTER_VEDTAK,
-  aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-  aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-  aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-  aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-  aksjonspunktCodes.VURDERE_DOKUMENT,
-  aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-  aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
-  aksjonspunktCodes.SJEKK_TILBAKEKREVING,
+  AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+  AksjonspunktDefinisjon.FATTER_VEDTAK,
+  AksjonspunktDefinisjon.FORESLÅ_VEDTAK_MANUELT,
+  AksjonspunktDefinisjon.VEDTAK_UTEN_TOTRINNSKONTROLL,
+  AksjonspunktDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
+  AksjonspunktDefinisjon.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+  AksjonspunktDefinisjon.VURDERE_DOKUMENT_FØR_VEDTAK,
+  AksjonspunktDefinisjon.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
+  AksjonspunktDefinisjon.KONTROLL_AV_MANUELT_OPPRETTET_REVURDERINGSBEHANDLING,
+  AksjonspunktDefinisjon.SJEKK_TILBAKEKREVING,
 ];
 
 const PANEL_ID = prosessStegCodes.VEDTAK;
@@ -96,7 +96,9 @@ export function VedtakProsessStegInitPanel(props: Props) {
   );
 
   const vedtakAksjonspunkter = useMemo(() => {
-    return aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.includes(ap.definisjon)) || [];
+    return (
+      aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.some(kode => kode === ap.definisjon)) || []
+    );
   }, [aksjonspunkter]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);

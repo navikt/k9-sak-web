@@ -1,4 +1,4 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
@@ -9,10 +9,10 @@ import { K9SakProsessApi } from './api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
 
 const RELEVANTE_AKSJONSPUNKTER = [
-  aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
-  aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
-  aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
-  aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
+  AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
+  AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+  AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
+  AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
 ];
 
 const PANEL_ID = 'uttak';

@@ -1,9 +1,9 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_kodeverk_behandling_BehandlingType,
+  k9_kodeverk_vilkår_VilkårType,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -17,7 +17,7 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../../dat
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
 import { fagsakQueryOptions, opptjeningQueryOptions } from '../api/k9SakQueryOptions';
 
-const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKARET];
+const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET];
 
 interface Props {
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
@@ -55,7 +55,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
     if (!props.vilkår) {
       return [];
     }
-    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.some(kode => kode === vilkar.vilkarType));
   }, [props.vilkår]);
 
   const skalVisePanel = vilkårForSteg.length > 0;
@@ -67,7 +67,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   );
 
   const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
-    ap => ap.definisjon === aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
   );
 
   const isAksjonspunktOpen = relevanteAksjonspunkter.some(
@@ -90,9 +90,9 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         panelTittelKode="Opptjening"
         vilkar={vilkårForSteg}
         erOverstyrt={props.overstyrteAksjonspunktKoder.some(
-          kode => kode === aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+          kode => kode === AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET,
         )}
-        overstyringApKode={aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET}
+        overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET}
         erMedlemskapsPanel={false}
         submitCallback={handleSubmit}
         overrideReadOnly={props.overrideReadOnly}

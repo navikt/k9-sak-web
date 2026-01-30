@@ -1,6 +1,6 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import {
+  k9_kodeverk_vilkår_VilkårType,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -11,10 +11,10 @@ import { Dispatch, SetStateAction, useMemo } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
 import { søknadsfristStatusQueryOptions } from '../api/k9SakQueryOptions';
 
-const RELEVANTE_VILKAR_KODER = [vilkarType.SOKNADSFRISTVILKARET];
+const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST];
 const RELEVANTE_AKSJONSPUNKT_KODER = [
-  aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
-  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+  AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
+  AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
 ];
 
 interface Props {
@@ -41,7 +41,7 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
     if (!props.vilkår) {
       return [];
     }
-    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+    return props.vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.some(kode => kode === vilkar.vilkarType));
   }, [props.vilkår]);
 
   const skalVisePanel = vilkårForSteg.length > 0;
@@ -54,7 +54,9 @@ export function SøknadsfristProsessStegInitPanel(props: Props) {
     return null;
   }
 
-  const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
+  const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(
+    AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
+  );
 
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
