@@ -19,7 +19,7 @@ const intl = createIntl(
   cache,
 );
 
-const AvregningProsessIndex = ({
+export const AvregningProsessIndex = ({
   fagsak,
   behandling,
   aksjonspunkter,
@@ -66,5 +66,3 @@ AvregningProsessIndex.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   featureToggles: PropTypes.shape(),
 };
-
-export default AvregningProsessIndex;
