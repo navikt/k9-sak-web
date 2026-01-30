@@ -2,10 +2,9 @@ import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
+import type { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import { JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
@@ -105,7 +104,7 @@ const tableTitle = (mottaker: SimuleringMottaker) =>
   mottaker.mottakerType.kode === mottakerTyper.ARBG ? (
     <BodyShort
       size="small"
-      className={styles.tableTitle}
+      className={styles['tableTitle']}
     >{`${mottaker.mottakerNavn} (${mottaker.mottakerNummer})`}</BodyShort>
   ) : null;
 
@@ -169,9 +168,9 @@ const AvregningTable = ({
       const nesteMåned: string = mottaker.nesteUtbPeriode.tom ?? '';
       const visDetaljer = showDetails.find(d => d.id === mottakerIndex);
       return (
-        <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
+        <div className={styles['tableWrapper']} key={`tableIndex${mottakerIndex + 1}`}>
           {tableTitle(mottaker)}
-          <Table key={`tableIndex${mottakerIndex + 1}`} className={styles.simuleringTable}>
+          <Table key={`tableIndex${mottakerIndex + 1}`} className={styles['simuleringTable']}>
             <Table.Header>
               <Table.Row>
                 {getHeaderCodes(
@@ -187,7 +186,7 @@ const AvregningTable = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {([] as JSX.Element[])
+              {([] as React.ReactNode[])
                 .concat(
                   ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) =>
                     fagOmråde.rader
@@ -199,14 +198,14 @@ const AvregningTable = ({
                       .map((rad, rowIndex) => {
                         const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
                         const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-                        const rowClassnames = `${isRowToggable ? styles.rowBorderDashed : styles.rowBorderSolid}`;
+                        const rowClassnames = `${isRowToggable ? styles['rowBorderDashed'] : styles['rowBorderSolid']}`;
                         const boldText = isFeilUtbetalt || ingenPerioderMedAvvik;
                         const fagområdeKode =
                           typeof fagOmråde.fagOmrådeKode === 'string'
                             ? fagOmråde.fagOmrådeKode
                             : fagOmråde.fagOmrådeKode.kode;
                         return (
-                          <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
+                          <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={styles[rowClassnames]}>
                             <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
                               <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
                             </Table.DataCell>
@@ -235,7 +234,7 @@ const AvregningTable = ({
                     .map((resultat, resultatIndex) => {
                       const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
                       return (
-                        <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
+                        <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles['rowBorderSolid']}>
                           <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
                             <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
                           </Table.DataCell>

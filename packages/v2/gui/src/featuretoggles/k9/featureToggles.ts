@@ -25,6 +25,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   OVERSTYR_BEREGNING: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
+  BRUK_V2_AVREGNING: true,
 });
 
 /**
