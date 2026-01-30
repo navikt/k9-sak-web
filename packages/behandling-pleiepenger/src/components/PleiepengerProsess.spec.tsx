@@ -10,6 +10,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, screen } from '@testing-library/react';
@@ -199,9 +200,9 @@ describe('<PleiepengerProsess>', () => {
           opneSokeside={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
           setBeregningErBehandlet={() => {}}
-          lagreOverstyringUttak={vi.fn()}
+          hentBehandling={vi.fn()}
         />
       </QueryClientProvider>,
     );
@@ -237,9 +238,9 @@ describe('<PleiepengerProsess>', () => {
           opneSokeside={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
           setBeregningErBehandlet={() => {}}
-          lagreOverstyringUttak={vi.fn()}
+          hentBehandling={vi.fn()}
         />
       </QueryClientProvider>,
     );

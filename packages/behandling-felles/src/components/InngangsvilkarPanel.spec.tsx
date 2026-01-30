@@ -11,6 +11,9 @@ import userEvent from '@testing-library/user-event';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
+
+const featureToggles = { ...qFeatureToggles, BRUK_V2_VILKAR_OPPTJENING: true };
 
 describe('<InngangsvilkarPanel>', () => {
   const behandling = {
@@ -88,8 +91,6 @@ describe('<InngangsvilkarPanel>', () => {
       [],
     );
 
-    const featureToggles = { BRUK_V2_VILKAR_OPPTJENING: true };
-
     const prosessStegData = [utledetMedlemskapDelPanel];
 
     renderWithIntl(
@@ -126,7 +127,6 @@ describe('<InngangsvilkarPanel>', () => {
     );
 
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
-    const featureToggles = { BRUK_V2_VILKAR_OPPTJENING: true };
 
     renderWithIntl(
       <InngangsvilkarPanel

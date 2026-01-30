@@ -1,4 +1,3 @@
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Button, HStack, VStack } from '@navikt/ds-react';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -9,10 +8,9 @@ import SlettPeriodeModal from './SlettPeriodeModal';
 
 interface OwnProps {
   readOnly: boolean;
-  featureToggles?: FeatureToggles;
 }
 
-export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
+export const PeriodeTabell = ({ readOnly }: OwnProps) => {
   const {
     watch,
     setValue,
@@ -119,7 +117,6 @@ export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
             newPeriodeResetCallback={newPeriodeResetCallback}
             arbeidsgivere={arbeidsgivere}
             readOnly={readOnly}
-            featureToggles={featureToggles}
           />
         )}
 

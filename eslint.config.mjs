@@ -58,12 +58,26 @@ const config = tseslint.config(
       'jsx-a11y/anchor-is-valid': OFF,
       'react-hooks/rules-of-hooks': 'warn',
       'react-hooks/exhaustive-deps': 'warn',
+      // Block importing test files into production logic
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/*.spec', '**/*.spec.ts', '**/*.spec.js', '**/*.spec.tsx', '**/*.spec.jsx', '**/*.test', '**/*.test.ts', '**/*.test.js', '**/*.test.tsx', '**/*.test.jsx'],
+              message: 'Do not import test files into production code. Test code should remain isolated.'
+            }
+          ]
+        }
+      ]
     },
   },
   {
-    files: ["**/*.stories.tsx"],
+    files: ["**/*.stories.tsx", "**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx", "**/test-helpers/**"],
     rules: {
       'react-hooks/rules-of-hooks': 'off',
+      // Allow tests and stories to import other test files/helpers
+      'no-restricted-imports': 'off',
     }
   },
   {
