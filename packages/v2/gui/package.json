@@ -32,7 +32,7 @@
     "@navikt/ft-form-hooks": "10.3.12",
     "@navikt/ft-form-validators": "4.4.10",
     "@navikt/ft-utils": "3.10.10",
-    "@tanstack/react-query": "5.90.17",
+    "@tanstack/react-query": "5.90.19",
     "@types/css-tree": "2.3.11",
     "@types/object-hash": "3.0.6",
     "axios": "1.13.2",
