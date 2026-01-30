@@ -2,7 +2,7 @@ import {
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState } from 'react';

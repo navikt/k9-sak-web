@@ -1,11 +1,6 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
-
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import styles from './avregningSummary.module.css';
+import { formatPeriod } from '../../../utils/formatters';
+import { formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
 
 interface AvregningSummaryProps {
   fom: string;
@@ -31,48 +26,39 @@ const AvregningSummary = ({
   isUngFagsak,
 }: AvregningSummaryProps) => (
   <>
-    <BodyShort size="small" className={styles['summaryTitle']}>
-      <FormattedMessage id="Avregning.bruker" />
+    <BodyShort size="small" className="font-bold">
+      Bruker
     </BodyShort>
-    <VerticalSpacer eightPx />
-    <div className={styles['infoSummary']}>
-      {ingenPerioderMedAvvik && (
-        <div className={styles['ingenPerioder']}>
-          <FormattedMessage id="Avregning.ingenPerioder" />
-        </div>
-      )}
+    <div className="h-auto max-w-[500px] bg-[#f1f1f1] py-2.5 px-5 top-0">
+      {ingenPerioderMedAvvik && <div className="font-bold">Ingen periode med avvik</div>}
       {!ingenPerioderMedAvvik && (
         <>
           <Label size="small" as="p">
-            {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
+            {formatPeriod(fom, tom)}
           </Label>
-          <div className={styles['resultSum']}>
+          <div className="mt-4">
             <HGrid gap="space-4" columns={{ xs: '3fr 2fr 7fr' }}>
-              <BodyShort size="small" className={styles['resultName']}>
-                <FormattedMessage id="Avregning.etterbetaling" />:
+              <BodyShort size="small" className="w-[150px]">
+                Etterbetaling:
               </BodyShort>
               <BodyShort size="small">
-                <span className={styles['number']}>{formatCurrencyNoKr(etterbetaling)}</span>
+                <span className="float-left font-bold">{formatCurrencyWithKr(etterbetaling)}</span>
               </BodyShort>
             </HGrid>
-            <HGrid
-              gap="space-4"
-              columns={{ xs: inntrekk !== null ? '3fr 2fr 4fr 3fr' : '3fr 2fr 7fr' }}
-              className={styles['redNumbers']}
-            >
+            <HGrid gap="space-4" columns={{ xs: inntrekk !== null ? '3fr 2fr 4fr 3fr' : '3fr 2fr 7fr' }}>
               <div>
-                <BodyShort size="small" className={styles['resultName']}>
-                  <FormattedMessage id="Avregning.tilbakekreving" />:
+                <BodyShort size="small" className="w-[150px]">
+                  Feilutbetaling:
                 </BodyShort>
               </div>
-              <BodyShort size="small" className={feilutbetaling ? styles['redNumber'] : styles['positivNumber']}>
-                {formatCurrencyNoKr(feilutbetaling)}
+              <BodyShort size="small" className={feilutbetaling ? 'font-bold text-[var(--ax-text-logo)]' : 'font-bold'}>
+                {formatCurrencyWithKr(feilutbetaling)}
               </BodyShort>
               {inntrekk !== null && !isUngFagsak && (
                 <BodyShort size="small">
-                  <FormattedMessage id="Avregning.inntrekk" />:
-                  <span className={inntrekk ? styles['lastNumberRed'] : styles['lastNumberPositiv']}>
-                    {formatCurrencyNoKr(inntrekk)}
+                  Inntrekk:
+                  <span className={inntrekk ? 'font-bold pl-4 text-[var(--ax-text-logo)]' : 'font-bold pl-4'}>
+                    {formatCurrencyWithKr(inntrekk)}
                   </span>
                 </BodyShort>
               )}

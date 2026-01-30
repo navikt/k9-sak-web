@@ -5,7 +5,8 @@ import type {
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { dateStringSorter, formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { dateStringSorter } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';

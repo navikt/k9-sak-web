@@ -2,7 +2,7 @@ import {
   ung_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
   type ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Detail, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';

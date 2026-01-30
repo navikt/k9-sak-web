@@ -1,3 +1,5 @@
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
@@ -47,3 +49,15 @@ export const formatFødselsdato = (fnrOrDate?: string): string => {
   }
   return '';
 };
+// Eksempel på lukket periode fra Årskvantum: 2022-02-07/2022-02-08
+
+export const formatereLukketPeriode = (periode: string): string => {
+  const [fom, tom] = periode.split('/');
+  if (!fom || !tom) {
+    return periode;
+  }
+  return `${formatDate(fom)} - ${formatDate(tom)}`;
+};
+export const formatPeriod = (fomDate: string, tomDate: string): string =>
+  `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
+export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
