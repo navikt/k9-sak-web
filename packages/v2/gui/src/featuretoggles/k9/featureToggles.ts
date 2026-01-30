@@ -18,7 +18,6 @@ const k9SpecificFeatureToggles = {
  * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
  */
 export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
-  BRUK_V2_AVREGNING: true,
   BRUK_V2_FAKTA_INSTITUSJON: true,
   BRUK_V2_INNTEKTSMELDING: true,
   MARKERING_UTENLANDSTILSNITT: true,

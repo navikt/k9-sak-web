@@ -5,7 +5,6 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
  * varianter ein ønsker å ha true på.
  */
 const rootFeatureToggles = {
-  BRUK_V2_AVREGNING: false,
   BRUK_V2_FAKTA_INSTITUSJON: false,
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
