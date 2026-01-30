@@ -22,7 +22,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
@@ -295,7 +294,7 @@ export class AvregningPanelImpl extends Component {
 AvregningPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
-  simuleringResultat: avregningSimuleringResultatPropType,
+  simuleringResultat: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
   ...formPropTypes,

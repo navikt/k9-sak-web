@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from './i18n/nb_NO.json';
 import AvregningPanel from './components/AvregningPanel';
-import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
-import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
-import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
-import avregningSimuleringResultatPropType from './propTypes/avregningSimuleringResultatPropType';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { DetaljertSimuleringResultatDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/DetaljertSimuleringResultatDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 
 const cache = createIntlCache();
 
@@ -17,6 +17,19 @@ const intl = createIntl(
   },
   cache,
 );
+
+interface AvregningProsessIndexProps {
+  fagsak: FagsakDto;
+  behandling: BehandlingDto;
+  aksjonspunkter: AksjonspunktDto[];
+  simuleringResultat: DetaljertSimuleringResultatDto;
+  tilbakekrevingvalg: TilbakekrevingValgDto;
+  submitCallback: () => void;
+  isReadOnly: boolean;
+  readOnlySubmitButton: boolean;
+  isAksjonspunktOpen: boolean;
+  previewFptilbakeCallback: () => void;
+}
 
 export const AvregningProsessIndex = ({
   fagsak,
@@ -29,8 +42,7 @@ export const AvregningProsessIndex = ({
   readOnlySubmitButton,
   isAksjonspunktOpen,
   previewFptilbakeCallback,
-  featureToggles,
-}) => (
+}: AvregningProsessIndexProps) => (
   <RawIntlProvider value={intl}>
     <AvregningPanel
       fagsak={fagsak}
@@ -44,24 +56,9 @@ export const AvregningProsessIndex = ({
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
+      apCodes={aksjonspunkter.map(a => a.definisjon)}
       isApOpen={isAksjonspunktOpen}
       previewCallback={previewFptilbakeCallback}
-      featureToggles={featureToggles}
     />
   </RawIntlProvider>
 );
-
-AvregningProsessIndex.propTypes = {
-  fagsak: avregningFagsakPropType.isRequired,
-  behandling: avregningBehandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(avregningAksjonspunkterPropType).isRequired,
-  simuleringResultat: avregningSimuleringResultatPropType,
-  tilbakekrevingvalg: PropTypes.shape(),
-  submitCallback: PropTypes.func.isRequired,
-  previewFptilbakeCallback: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  featureToggles: PropTypes.shape(),
-};

@@ -7,7 +7,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import AvregningProsessIndex from './AvregningProsessIndex';
+import { AvregningProsessIndex } from './AvregningProsessIndex';
 
 const fagsak = {
   saksnummer: 123,

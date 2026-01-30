@@ -8,6 +8,7 @@
     "./shared/*": "./src/shared/*",
     "./combined/*": "./src/combined/*",
     "./k9sak/*": "./src/k9sak/*",
+    "./k9oppdrag/*": "./src/k9oppdrag/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/*": "./src/k9klage/*",
     "./k9tilbake/*": "./src/k9tilbake/*",

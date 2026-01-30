@@ -1,6 +1,6 @@
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import { formatPeriod } from '../../../utils/formatters';
-import { formatCurrencyWithKr } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
 
 interface AvregningSummaryProps {
   fom: string;
@@ -42,7 +42,7 @@ const AvregningSummary = ({
                 Etterbetaling:
               </BodyShort>
               <BodyShort size="small">
-                <span className="float-left font-bold">{formatCurrencyWithKr(etterbetaling)}</span>
+                <span className="float-left font-bold">{formatCurrencyWithoutKr(etterbetaling)}</span>
               </BodyShort>
             </HGrid>
             <HGrid gap="space-4" columns={{ xs: inntrekk !== null ? '3fr 2fr 4fr 3fr' : '3fr 2fr 7fr' }}>
@@ -52,13 +52,13 @@ const AvregningSummary = ({
                 </BodyShort>
               </div>
               <BodyShort size="small" className={feilutbetaling ? 'font-bold text-[var(--ax-text-logo)]' : 'font-bold'}>
-                {formatCurrencyWithKr(feilutbetaling)}
+                {formatCurrencyWithoutKr(feilutbetaling)}
               </BodyShort>
               {inntrekk !== null && !isUngFagsak && (
                 <BodyShort size="small">
                   Inntrekk:
                   <span className={inntrekk ? 'font-bold pl-4 text-[var(--ax-text-logo)]' : 'font-bold pl-4'}>
-                    {formatCurrencyWithKr(inntrekk)}
+                    {formatCurrencyWithoutKr(inntrekk)}
                   </span>
                 </BodyShort>
               )}

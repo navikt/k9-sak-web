@@ -1,7 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 import Periode from './periodeTsType';
 
-// DENNE FILEN SLETTES NÅR V2 AVREGNING ER TOGGLET PÅ I PROD
+// DENNE FILEN KAN SLETTES NÅR V2 AVREGNING ER TOGGLET PÅ I PROD
 export type SimuleringResultatRad = Readonly<{
   feltnavn: string;
   resultaterPerMåned: {

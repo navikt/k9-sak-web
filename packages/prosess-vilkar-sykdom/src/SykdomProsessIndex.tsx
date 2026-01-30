@@ -3,7 +3,7 @@ import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components/ind
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Detail, Heading, HStack, Label } from '@navikt/ds-react';

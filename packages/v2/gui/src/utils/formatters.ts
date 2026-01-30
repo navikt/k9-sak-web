@@ -22,7 +22,7 @@ export const formatCurrencyWithKr = (value: string | number) => {
   return `${formattedValue} kr`;
 };
 
-export const formatCurrencyWithoutKr = (value: number) => {
+export const formatCurrencyWithoutKr = (value: number | null | undefined) => {
   if (value === null || value === undefined) {
     return undefined;
   }

@@ -1,13 +1,13 @@
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import type { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
-import { BodyShort, Table } from '@navikt/ds-react';
+import { BodyShort, Button, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { FormattedMessage } from 'react-intl';
-import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
 
 const classNames = classnames.bind(styles);
 
@@ -35,7 +35,17 @@ const getHeaderCodes = (
   nextPeriod: string,
 ) => {
   const firstElement = showCollapseButton ? (
-    <CollapseButton {...collapseProps} key={`collapseButton-${rangeOfMonths.length}`} />
+    <Button
+      size="small"
+      type="button"
+      className="-ml-3 -mt-1"
+      onClick={() => collapseProps.toggleDetails(collapseProps.mottakerIndex)}
+      icon={collapseProps.showDetails ? <ChevronUpIcon title="Ekspandert" /> : <ChevronDownIcon title="Lukket" />}
+      iconPosition="right"
+      variant="tertiary"
+    >
+      {collapseProps.showDetails ? 'Vis færre detaljer' : 'Vis flere detaljer'}
+    </Button>
   ) : (
     <div />
   );
@@ -73,6 +83,7 @@ const createColumns = (
 ) => {
   const nextPeriodFormatted = `${initializeDate(nextPeriod).format('MMMMYY')}`;
 
+  // denne ser rar ut
   const perioderData = rangeOfMonths.map(month => {
     const periodeExists = perioder.find(
       periode =>
@@ -95,7 +106,7 @@ const createColumns = (
         'font-bold': boldText,
       })}
     >
-      {formatCurrencyNoKr(måned.beløp ?? 0)}
+      {formatCurrencyWithoutKr(måned.beløp ?? 0)}
     </Table.DataCell>
   ));
 };
@@ -198,14 +209,16 @@ const AvregningTable = ({
                       .map((rad, rowIndex) => {
                         const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
                         const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-                        const rowClassnames = `${isRowToggable ? styles['rowBorderDashed'] : styles['rowBorderSolid']}`;
                         const boldText = isFeilUtbetalt || ingenPerioderMedAvvik;
                         const fagområdeKode =
                           typeof fagOmråde.fagOmrådeKode === 'string'
                             ? fagOmråde.fagOmrådeKode
                             : fagOmråde.fagOmrådeKode.kode;
                         return (
-                          <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={styles[rowClassnames]}>
+                          <Table.Row
+                            key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
+                            className={isRowToggable ? styles['rowBorderDashed'] : styles['rowBorderSolid']}
+                          >
                             <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
                               <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
                             </Table.DataCell>
