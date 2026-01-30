@@ -1,7 +1,5 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
@@ -9,6 +7,8 @@ import {
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
+  k9_kodeverk_vilkår_Utfall as Utfall,
+  k9_kodeverk_vilkår_VilkårType as VilkårType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
@@ -40,58 +40,61 @@ const PROSESS_STEG_KODER = {
 // Vilkår- og aksjonspunktkonfigurasjon per panel
 const PANEL_KONFIG = {
   inngangsvilkår: {
-    vilkår: [vilkarType.SOKNADSFRISTVILKARET, vilkarType.ALDERSVILKARET, vilkarType.OMSORGENFORVILKARET],
+    vilkår: [VilkårType.SØKNADSFRIST, VilkårType.ALDERSVILKÅR, VilkårType.OMSORGEN_FOR],
     aksjonspunkter: [
-      aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
-      aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-      aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
+      AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
+      AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+      AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR,
     ],
   },
   sykdom: {
-    vilkår: [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR],
-    aksjonspunkter: [aksjonspunktCodes.MEDISINSK_VILKAAR],
+    vilkår: [VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR, VilkårType.MEDISINSKEVILKÅR_18_ÅR],
+    aksjonspunkter: [AksjonspunktDefinisjon.KONTROLLER_LEGEERKLÆRING],
   },
   opptjening: {
-    vilkår: [vilkarType.MEDLEMSKAPSVILKARET, vilkarType.OPPTJENINGSVILKARET],
-    aksjonspunkter: [aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR, aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET],
+    vilkår: [VilkårType.MEDLEMSKAPSVILKÅRET, VilkårType.OPPTJENINGSVILKÅRET],
+    aksjonspunkter: [
+      AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
+      AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+    ],
   },
   beregning: {
-    vilkår: [vilkarType.BEREGNINGSGRUNNLAGVILKARET],
+    vilkår: [VilkårType.BEREGNINGSGRUNNLAGVILKÅR],
     aksjonspunkter: [
-      aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-      aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-      aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
-      aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-      aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-      aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+      AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+      AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NÆRING_SELVSTENDIG_NÆRINGSDRIVENDE,
+      AksjonspunktDefinisjon.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
+      AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_SELVSTENDIG_NÆRINGSDRIVENDE,
+      AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+      AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_FOR_SN_NY_I_ARBEIDSLIVET,
     ],
   },
   tilkjentYtelse: {
-    aksjonspunkter: [aksjonspunktCodes.VURDER_TILBAKETREKK],
+    aksjonspunkter: [AksjonspunktDefinisjon.VURDER_TILBAKETREKK],
   },
   uttak: {
     aksjonspunkter: [
-      aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
-      aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
-      aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
-      aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
+      AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
+      AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+      AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
+      AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
     ],
   },
   simulering: {
-    aksjonspunkter: [aksjonspunktCodes.VURDER_FEILUTBETALING, aksjonspunktCodes.SJEKK_HØY_ETTERBETALING],
+    aksjonspunkter: [AksjonspunktDefinisjon.VURDER_FEILUTBETALING, AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING],
   },
   vedtak: {
     aksjonspunkter: [
-      aksjonspunktCodes.FORESLA_VEDTAK,
-      aksjonspunktCodes.FATTER_VEDTAK,
-      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-      aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-      aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-      aksjonspunktCodes.VURDERE_DOKUMENT,
-      aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-      aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
-      aksjonspunktCodes.SJEKK_TILBAKEKREVING,
+      AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+      AksjonspunktDefinisjon.FATTER_VEDTAK,
+      AksjonspunktDefinisjon.FORESLÅ_VEDTAK_MANUELT,
+      AksjonspunktDefinisjon.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      AksjonspunktDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
+      AksjonspunktDefinisjon.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+      AksjonspunktDefinisjon.VURDERE_DOKUMENT_FØR_VEDTAK,
+      AksjonspunktDefinisjon.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
+      AksjonspunktDefinisjon.KONTROLL_AV_MANUELT_OPPRETTET_REVURDERINGSBEHANDLING,
+      AksjonspunktDefinisjon.SJEKK_TILBAKEKREVING,
     ],
   },
 } as const;
@@ -162,7 +165,7 @@ export const beregnUttakType = (
   }
 
   const perioder = uttak.uttaksplan.perioder;
-  const alleAvslått = uttaksperiodeKeys.every(key => perioder?.[key]?.utfall === vilkarUtfallType.IKKE_OPPFYLT);
+  const alleAvslått = uttaksperiodeKeys.every(key => perioder?.[key]?.utfall === Utfall.IKKE_OPPFYLT);
 
   return alleAvslått ? ProcessMenuStepType.danger : ProcessMenuStepType.success;
 };
@@ -227,10 +230,11 @@ export const beregnVedtakType = (
   }
 
   const harIkkeVurdertVilkar = vilkår.some(v =>
-    v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT),
+    v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT),
   );
   const harApenOverstyringBeregning = aksjonspunkter?.some(
-    ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
+    ap =>
+      ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
   );
   const harÅpneAksjonspunkter = aksjonspunkter?.some(
     ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
@@ -256,8 +260,8 @@ const skalViseDelvisVedtakStatus = (
     return false;
   }
   return (
-    vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT)) &&
-    vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === vilkarUtfallType.OPPFYLT))
+    vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_OPPFYLT)) &&
+    vilkår.some(v => v.perioder?.some(periode => periode.vilkarStatus === Utfall.OPPFYLT))
   );
 };
 

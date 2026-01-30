@@ -90,12 +90,6 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
       return;
     }
 
-    // Respekter gyldig URL-valg
-    if (urlPanelId && gyldigePanelIds.includes(urlPanelId)) {
-      setValgtPanelId(urlPanelId);
-      return;
-    }
-
     // Velg default panel når ingen er valgt
     if (urlPanelId === 'default') {
       setSisteAktivtValgtePanelId(null);
@@ -113,6 +107,16 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
           return neste;
         });
       }
+    }
+
+    if (sisteAktivtValgtePanelId) {
+      return;
+    }
+
+    // Respekter gyldig URL-valg
+    if (urlPanelId && gyldigePanelIds.includes(urlPanelId)) {
+      setValgtPanelId(urlPanelId);
+      return;
     }
   }, [urlPanelId, prosessmotorSteg, setSearchParams, sisteAktivtValgtePanelId]);
 
