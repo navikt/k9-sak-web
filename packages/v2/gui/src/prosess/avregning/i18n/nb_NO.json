@@ -1,5 +1,4 @@
 {
-  "Avregning.Title": "Simulering",
   "Avregning.resultatEtterMotregning": "Resultat etter motregning mellom ytelser",
   "Avregning.inntrekk": "Inntrekk",
   "Avregning.inntrekkNesteMåned": "Inntrekk i neste måned",
@@ -19,17 +18,8 @@
   "Avregning.headerText.oktober": "Okt",
   "Avregning.headerText.november": "Nov",
   "Avregning.headerText.desember": "Des",
-  "Avregning.ingenData": "Ingen informasjon om simulering mottatt fra økonomiløsningen.",
-  "Avregning.AksjonspunktHelpText.5084": "Vurder videre behandling av tilbakekreving",
-  "Avregning.vurdering": "Forklar hva feilutbetalingen skyldes og valget av videre behandling",
-  "Avregning.videreBehandling": "Fastsett videre behandling",
-  "Avregning.gjennomfør": "Opprett tilbakekreving, send varsel",
-  "Avregning.OpprettMenIkkeSendVarsel": "Opprett tilbakekreving, ikke send varsel",
-  "Avregning.avvent": "Avvent samordning, ingen tilbakekreving",
   "Avregning.formAlternativ.ja": "Ja",
   "Avregning.formAlternativ.nei": "Nei",
-  "Avregning.varseltekst": "Send varsel om tilbakekreving",
-  "Avregning.fritekst": "Fritekst i varselet",
 
   "Avregning.REFUTG.nyttBeløp": "Engangstønad nytt beløp",
   "Avregning.REFUTG.tidligereUtbetalt": "Engangstønad tidligere utbetalt",
@@ -87,15 +77,6 @@
   "Avregning.FRISINN.differanse": "FRISINN nærstående avvik",
   "Avregning.UNG.nyttBeløp": "Ungdomsprogramytelse nytt beløp",
 
-  "Avregning.HjelpetekstPleiepenger": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta pleiepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt pleiepenger for perioden du har jobbet.",
-  "Avregning.ApenTilbakekrevingsbehandling": "Det foreligger en åpen tilbakekrevingsbehandling, endringer i vedtaket vil automatisk oppdatere eksisterende feilutbetalte perioder og beløp.",
-
-  "Malform.Beskrivelse": "Foretrukket språk",
-  "Malform.Bokmal": "Bokmål",
-  "Malform.Nynorsk": "Nynorsk",
-  "Malform.Engelsk": "Engelsk",
-  "Messages.PreviewText": "Forhåndsvis varselbrev",
-  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
 

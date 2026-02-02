@@ -10,13 +10,12 @@ import {
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
-import { FormattedMessage, injectIntl, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields } from 'redux-form';
@@ -58,11 +57,9 @@ interface AvregningPanelImplProps {
 export function AvregningPanelImpl(props: AvregningPanelImplProps) {
   const [showDetails, setShowDetails] = useState<Array<{ id: number; show: boolean }>>([]);
   const [feilutbetaling, setFeilutbetaling] = useState<boolean | undefined>(undefined);
-  const intl = useIntl();
   const {
     simuleringResultat,
     readOnly,
-    språkkode,
     featureUtvidetVarselfelt,
     previewCallback,
     hasOpenTilbakekrevingsbehandling,
@@ -80,39 +77,29 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
   };
   const toggleDetails = (id: number) => {
     const tableIndex = showDetails.findIndex(table => table.id === id);
-    let newShowDetailsArray = [];
 
     if (tableIndex !== -1) {
       const updatedTable = {
         id,
-        show: !showDetails[tableIndex].show,
+        show: !showDetails?.[tableIndex]?.show,
       };
-
-      newShowDetailsArray = [
-        ...showDetails.slice(0, tableIndex),
-        updatedTable,
-        ...showDetails.slice(tableIndex + 1, showDetails.length - 1),
-      ];
+      setShowDetails(showDetails.map((table, index) => (index === tableIndex ? updatedTable : table)));
     } else {
-      newShowDetailsArray = showDetails.concat({
-        id,
-        show: true,
-      });
+      setShowDetails([...showDetails, { id, show: true }]);
     }
-    setShowDetails(newShowDetailsArray);
   };
 
   return (
     <>
       <VStack gap="space-32">
         <Heading size="small" level="2">
-          <FormattedMessage id="Avregning.Title" />
+          Simulering
         </Heading>
         {harSjekkHøyEtterbetalingAP && <KontrollerEtterbetalingAlert />}
         {simuleringResultatOption && (
           <VStack gap="space-8">
             <AksjonspunktHelpText isAksjonspunktOpen={harVurderFeilutbetalingAP}>
-              {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
+              {['Vurder videre behandling av tilbakekreving']}
             </AksjonspunktHelpText>
 
             <AvregningSummary
@@ -132,19 +119,20 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
             />
             {hasOpenTilbakekrevingsbehandling && (
               <Label size="small" as="p">
-                <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
+                Det foreligger en åpen tilbakekrevingsbehandling, endringer i vedtaket vil automatisk oppdatere
+                eksisterende feilutbetalte perioder og beløp.
               </Label>
             )}
           </VStack>
         )}
-        {!simuleringResultat && <FormattedMessage id="Avregning.ingenData" />}
+        {!simuleringResultat && <>Ingen informasjon om simulering mottatt fra økonomiløsningen.</>}
         {harVurderFeilutbetalingAP && (
           <VStack gap="space-8">
             <form onSubmit={formProps.handleSubmit}>
               <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
                 <TextAreaField
                   name="begrunnelse"
-                  label={{ id: 'Avregning.vurdering' }}
+                  label="Forklar hva feilutbetalingen skyldes og valget av videre behandling"
                   validate={[required, minLength3, maxLength1500, hasValidText]}
                   maxLength={1500}
                   readOnly={readOnly}
@@ -152,9 +140,7 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                 />
                 {harVurderFeilutbetalingAP && (
                   <div>
-                    <Detail>
-                      <FormattedMessage id="Avregning.videreBehandling" />
-                    </Detail>
+                    <Detail>Fastsett videre behandling</Detail>
                     <VerticalSpacer eightPx />
                     <RadioGroupField
                       name="videreBehandling"
@@ -164,28 +150,28 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                       radios={[
                         {
                           value: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
-                          label: <FormattedMessage id="Avregning.gjennomfør" />,
+                          label: 'Opprett tilbakekreving, send varsel',
                           element: (
                             <div className={styles.varsel}>
                               <ArrowBox alignOffset={20}>
                                 <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
                                   <BodyShort size="small" className={styles.bold}>
-                                    <FormattedMessage id="Avregning.varseltekst" />
+                                    Send varsel om tilbakekreving
                                   </BodyShort>
                                   <div>
                                     <Image
                                       tabIndex="0"
                                       src={questionNormalUrl}
                                       srcHover={questionHoverUrl}
-                                      alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
-                                      tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
+                                      alt="Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta pleiepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt pleiepenger for perioden du har jobbet."
+                                      tooltip="Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta pleiepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt pleiepenger for perioden du har jobbet."
                                     />
                                   </div>
                                 </HGrid>
                                 <VerticalSpacer eightPx />
                                 <TextAreaField
                                   name="varseltekst"
-                                  label={{ id: 'Avregning.fritekst' }}
+                                  label="Fritekst i varselet"
                                   validate={[
                                     required,
                                     minLength3,
@@ -194,18 +180,17 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                                   ]}
                                   maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
                                   readOnly={readOnly}
-                                  id="avregningFritekst"
                                   badges={[
                                     {
                                       type: 'warning',
-                                      textId: getLanguageCodeFromspråkkode(språkkode),
-                                      title: 'Malform.Beskrivelse',
+                                      textId: 'Malform.Bokmal',
+                                      title: 'Foretrukket språk',
                                     },
                                   ]}
                                 />
                                 <VerticalSpacer fourPx />
-                                <Link href="" onClick={previewMessage} className={styles.previewLink}>
-                                  <FormattedMessage id="Messages.PreviewText" />
+                                <Link href="" onClick={previewMessage}>
+                                  Forhåndsvis varselbrev
                                 </Link>
                               </ArrowBox>
                             </div>
@@ -213,13 +198,13 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                         },
                         {
                           value: `${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`,
-                          label: <FormattedMessage id={'Avregning.OpprettMenIkkeSendVarsel'} />,
+                          label: 'Opprett tilbakekreving, ikke send varsel',
                         },
                         ...(!isUngWeb()
                           ? [
                               {
                                 value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
-                                label: <FormattedMessage id="Avregning.avvent" />,
+                                label: 'Avvent samordning, ingen tilbakekreving',
                               },
                             ]
                           : []),
@@ -238,7 +223,7 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                     disabled={formProps.invalid || formProps.pristine || formProps.submitting}
                     loading={formProps.submitting}
                   >
-                    <FormattedMessage id="SubmitButton.ConfirmInformation" />
+                    Bekreft og fortsett
                   </Button>
                 </div>
               </HGrid>
@@ -342,5 +327,5 @@ export default connect(
   behandlingForm({
     form: formName,
     enableReinitialize: true,
-  })(injectIntl(AvregningPanelImpl)),
+  })(AvregningPanelImpl),
 );
