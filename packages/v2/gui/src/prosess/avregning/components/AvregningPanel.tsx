@@ -25,6 +25,7 @@ import AvregningTable from './AvregningTable';
 
 import styles from './avregningPanel.module.css';
 import { isUngWeb } from '../../../utils/urlUtils';
+import type { SimuleringDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringDto.js';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 
@@ -38,17 +39,8 @@ const simuleringAksjonspunkter = [
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
 
-const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
-  if (!simuleringResultat) {
-    return simuleringResultat;
-  }
-  return feilutbetaling === undefined || feilutbetaling
-    ? simuleringResultat.simuleringResultat
-    : simuleringResultat.simuleringResultatUtenInntrekk;
-};
-
 interface AvregningPanelImplProps {
-  simuleringResultat: Record<string, unknown>;
+  simuleringResultat: SimuleringDto;
   readOnly: boolean;
   språkkode: string;
   featureUtvidetVarselfelt: boolean;
@@ -70,7 +62,7 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
     fagsak,
     ...formProps
   } = props;
-  const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
+  console.log(simuleringResultat);
   const previewMessage = (e: React.MouseEvent<HTMLAnchorElement>) => {
     previewCallback('', dokumentMalType.TBKVAR, formProps.values.varseltekst || ' ', formProps.values.saksnummer);
     e.preventDefault();
@@ -89,6 +81,16 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
     }
   };
 
+  const getSimuleringResult = () => {
+    if (!simuleringResultat) {
+      return simuleringResultat;
+    }
+    return feilutbetaling === undefined || feilutbetaling
+      ? simuleringResultat.simuleringResultat
+      : simuleringResultat.simuleringResultatUtenInntrekk;
+  };
+
+  const simuleringResultatOption = getSimuleringResult();
   return (
     <>
       <VStack gap="space-32">
