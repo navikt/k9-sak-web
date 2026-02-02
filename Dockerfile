@@ -1,4 +1,4 @@
-FROM nginxinc/nginx-unprivileged:stable-alpine-slim
+FROM cgr.dev/chainguard/nginx
 # These must be set when building for ung-sak-web. Defaults are for k9-sak-web
 ARG proxyConfig=proxy.nginx
 ARG appVariant=k9
