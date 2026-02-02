@@ -244,7 +244,7 @@ export const BehandlingMenuIndex = ({
             />
           ),
         ),
-        new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, 'Marker behandling').medModal(lukkModal => (
+        new MenyData(true, 'Marker behandling').medModal(lukkModal => (
           <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, 'Henlegg behandlingen og avslutt').medModal(

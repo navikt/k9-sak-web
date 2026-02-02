@@ -13,6 +13,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnProsess from './FrisinnProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<FrisinnProsess>', () => {
   const fagsak = {
@@ -107,7 +108,7 @@ describe('<FrisinnProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
       />,
     );
 
@@ -135,7 +136,7 @@ describe('<FrisinnProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
       />,
     );
 

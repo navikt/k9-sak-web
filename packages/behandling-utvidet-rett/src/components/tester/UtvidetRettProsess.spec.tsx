@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettProsess from '../UtvidetRettProsess';
 import utvidetRettTestData from './utvidetRettTestData';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/qFeatureToggles.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 const { aksjonspunkter, arbeidsgiverOpplysningerPerId, behandling, fagsak, fagsakPerson, rettigheter, vilkar, soknad } =
   utvidetRettTestData;

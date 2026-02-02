@@ -1,4 +1,3 @@
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Button, ErrorMessage, HStack, Label, VStack } from '@navikt/ds-react';
@@ -51,7 +50,6 @@ interface OwnProps {
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   newPeriodeCallback: (nyPeriode: BeriketBeregningsresultatPeriode) => void;
-  featureToggles?: FeatureToggles;
 }
 
 export const TilkjentYtelseNyPeriode = ({
@@ -60,7 +58,6 @@ export const TilkjentYtelseNyPeriode = ({
   newPeriodeCallback,
   readOnly,
   arbeidsgivere,
-  featureToggles,
 }: OwnProps) => {
   const formMethods = useFormContext<TilkjentYtelseFormState>();
   const formState = formMethods.watch('nyPeriodeForm');
@@ -105,7 +102,6 @@ export const TilkjentYtelseNyPeriode = ({
             readOnly={readOnly}
             arbeidsgivere={arbeidsgivere}
             newArbeidsgiverCallback={newArbeidsgiverCallback}
-            featureToggles={featureToggles}
           />
         </VStack>
         <div>
