@@ -271,7 +271,7 @@ export class AvregningPanelImpl extends Component {
           {harSjekkHøyEtterbetalingAP && (
             <KontrollerEtterbetalingIndex
               aksjonspunkt={aksjonspunkter.find(
-                ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+                ap => ap.definisjon === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
               )}
               behandling={behandling}
               readOnly={readOnly}
@@ -314,7 +314,7 @@ export const transformValues = (values, ap) => {
 const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.tilbakekrevingvalg, (state, ownProps) => ownProps.aksjonspunkter],
   (tilbakekrevingvalg, aksjonspunkter) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
+    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon));
     if (!aksjonspunkt || !tilbakekrevingvalg) {
       return undefined;
     }
