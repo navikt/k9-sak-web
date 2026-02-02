@@ -25,8 +25,8 @@ import { createSelector } from 'reselect';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
+import { isUngWeb } from '../../../utils/urlUtils';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 
@@ -50,10 +50,6 @@ const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
 };
 
 export class AvregningPanelImpl extends Component {
-  static defaultProps = {
-    simuleringResultat: null,
-  };
-
   constructor() {
     super();
     this.toggleDetails = this.toggleDetails.bind(this);
@@ -123,8 +119,6 @@ export class AvregningPanelImpl extends Component {
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
-    const fagsakSakstype = typeof fagsak?.sakstype === 'string' ? fagsak?.sakstype : fagsak?.sakstype?.kode;
-    const isUngFagsak = fagsakSakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
     return (
       <>
         <VStack gap="space-32">
@@ -145,7 +139,6 @@ export class AvregningPanelImpl extends Component {
                 etterbetaling={simuleringResultatOption.sumEtterbetaling}
                 inntrekk={simuleringResultatOption.sumInntrekk}
                 ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
-                isUngFagsak={isUngFagsak}
               />
 
               <AvregningTable
@@ -153,7 +146,6 @@ export class AvregningPanelImpl extends Component {
                 toggleDetails={this.toggleDetails}
                 simuleringResultat={simuleringResultatOption}
                 ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
-                isUngFagsak={isUngFagsak}
               />
               {hasOpenTilbakekrevingsbehandling && (
                 <Label size="small" as="p">
@@ -246,7 +238,7 @@ export class AvregningPanelImpl extends Component {
                             value: `${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`,
                             label: <FormattedMessage id={'Avregning.OpprettMenIkkeSendVarsel'} />,
                           },
-                          ...(!isUngFagsak
+                          ...(!isUngWeb()
                             ? [
                                 {
                                   value: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER,
