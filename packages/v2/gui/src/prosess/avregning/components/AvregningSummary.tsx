@@ -2,14 +2,15 @@ import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import { formatPeriod } from '../../../utils/formatters';
 import { formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { isUngWeb } from '../../../utils/urlUtils';
+import type { DetaljertSimuleringResultatDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/DetaljertSimuleringResultatDto.js';
 
 interface AvregningSummaryProps {
-  fom: string;
-  tom: string;
-  feilutbetaling: number;
-  etterbetaling: number;
-  inntrekk: number | null;
-  ingenPerioderMedAvvik: boolean;
+  fom: DetaljertSimuleringResultatDto['periode']['fom'];
+  tom: DetaljertSimuleringResultatDto['periode']['tom'];
+  feilutbetaling: DetaljertSimuleringResultatDto['sumFeilutbetaling'];
+  etterbetaling: DetaljertSimuleringResultatDto['sumEtterbetaling'];
+  inntrekk: DetaljertSimuleringResultatDto['sumInntrekk'];
+  ingenPerioderMedAvvik: DetaljertSimuleringResultatDto['ingenPerioderMedAvvik'];
 }
 /**
  * Avregning oppsummering
@@ -22,7 +23,7 @@ const AvregningSummary = ({
   tom,
   feilutbetaling,
   etterbetaling,
-  inntrekk = null,
+  inntrekk = undefined,
   ingenPerioderMedAvvik,
 }: AvregningSummaryProps) => {
   const isUngFagsak = isUngWeb();

@@ -15,7 +15,7 @@ import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as Aksjonspu
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields } from 'redux-form';
@@ -26,6 +26,9 @@ import AvregningTable from './AvregningTable';
 import styles from './avregningPanel.module.css';
 import { isUngWeb } from '../../../utils/urlUtils';
 import type { SimuleringDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringDto.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 
@@ -45,10 +48,15 @@ interface AvregningPanelImplProps {
   språkkode: string;
   featureUtvidetVarselfelt: boolean;
   previewCallback: (a: string, b: string, c: string, d: string) => void;
+  hasOpenTilbakekrevingsbehandling: boolean;
+  aksjonspunkter: AksjonspunktDto[];
+  harVurderFeilutbetalingAP: boolean;
+  harSjekkHøyEtterbetalingAP: boolean;
+  behandling: BehandlingDto;
+  fagsak: FagsakDto;
 }
 export function AvregningPanelImpl(props: AvregningPanelImplProps) {
   const [showDetails, setShowDetails] = useState<Array<{ id: number; show: boolean }>>([]);
-  const [feilutbetaling, setFeilutbetaling] = useState<boolean | undefined>(undefined);
   const {
     simuleringResultat,
     readOnly,
@@ -59,10 +67,15 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
     harVurderFeilutbetalingAP,
     harSjekkHøyEtterbetalingAP,
     behandling,
-    fagsak,
     ...formProps
   } = props;
-  console.log(simuleringResultat);
+
+  useEffect(() => {
+    return () => {
+      console.log('formProps', formProps);
+      setFormState(formState + 1);
+    };
+  }, []);
   const previewMessage = (e: React.MouseEvent<HTMLAnchorElement>) => {
     previewCallback('', dokumentMalType.TBKVAR, formProps.values.varseltekst || ' ', formProps.values.saksnummer);
     e.preventDefault();
@@ -85,9 +98,7 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
     if (!simuleringResultat) {
       return simuleringResultat;
     }
-    return feilutbetaling === undefined || feilutbetaling
-      ? simuleringResultat.simuleringResultat
-      : simuleringResultat.simuleringResultatUtenInntrekk;
+    return simuleringResultat.simuleringResultatUtenInntrekk || simuleringResultat.simuleringResultat;
   };
 
   const simuleringResultatOption = getSimuleringResult();
@@ -117,7 +128,6 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
               showDetails={showDetails}
               toggleDetails={toggleDetails}
               simuleringResultat={simuleringResultatOption}
-              ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
             />
             {hasOpenTilbakekrevingsbehandling && (
               <Label size="small" as="p">
@@ -138,7 +148,6 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                   validate={[required, minLength3, maxLength1500, hasValidText]}
                   maxLength={1500}
                   readOnly={readOnly}
-                  id="avregningVurdering"
                 />
                 {harVurderFeilutbetalingAP && (
                   <div>
@@ -162,7 +171,6 @@ export function AvregningPanelImpl(props: AvregningPanelImplProps) {
                                   </BodyShort>
                                   <div>
                                     <Image
-                                      tabIndex="0"
                                       src={questionNormalUrl}
                                       srcHover={questionHoverUrl}
                                       alt="Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta pleiepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt pleiepenger for perioden du har jobbet."

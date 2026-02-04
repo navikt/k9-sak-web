@@ -31,6 +31,7 @@ import getAccessRights from '../app/util/access';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
+import { useResetStores } from '@k9-sak-web/gui/stores/useResetStores.js';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -98,6 +99,7 @@ const BehandlingIndex = ({
     b => b.id === gyldigBehandlingId(behandlingIdOrUuid) || b.uuid === gyldigBehandlingUuid(behandlingIdOrUuid),
   );
 
+  useResetStores(behandling?.id);
   useEffect(() => {
     if (behandling != null) {
       requestApi.setLinks(behandling.links, LinkCategory.BEHANDLING);
