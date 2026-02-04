@@ -1,8 +1,6 @@
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useMemo } from 'react';
 import { IntlProvider } from 'react-intl';
-import { usePanelRegistrering } from './hooks/usePanelRegistrering.js';
 import { ProsessMeny } from './ProsessMeny.js';
 import type { ProsessPanelProps } from './types/panelTypes.js';
 
@@ -43,12 +41,8 @@ function MockProsessPanel({ title, content }: { title: string; content: string }
  * 4. Panelet sjekker props.erValgt før rendering
  */
 function MockInitPanel({
-  panelId,
-  panelTekst,
   title,
   content,
-  type = ProcessMenuStepType.default,
-  usePartialStatus = false,
   skalVisePanel = () => true,
   ...props
 }: ProsessPanelProps & {
@@ -60,11 +54,7 @@ function MockInitPanel({
   usePartialStatus?: boolean;
   skalVisePanel?: () => boolean;
 }) {
-  // Beregn paneltype (i ekte paneler ville dette være basert på data)
-  const panelType = useMemo(() => type, [type]);
-
   // Registrer med menyen
-  usePanelRegistrering(props, panelId, panelTekst, panelType, usePartialStatus);
 
   // Sjekk synlighet
   if (!skalVisePanel()) {
