@@ -25,21 +25,3 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean) =
     }
   });
 };
-
-/**
- * Immutable versjon som returnerer det konverterte objektet.
- * Kloner objektet med JSON.parse(JSON.stringify()) før konvertering.
- *
- * @template TInput - Type for input data
- * @template TOutput - Type for output data (default samme som input)
- */
-export const konverterKodeverkTilKodeImmutable = <TInput, TOutput = TInput>(
-  data: TInput,
-  erTilbakekreving: boolean,
-): TOutput => {
-  if (data === undefined || data === null) return data as unknown as TOutput;
-
-  const clonedData = JSON.parse(JSON.stringify(data));
-  konverterKodeverkTilKode(clonedData, erTilbakekreving);
-  return clonedData as TOutput;
-};
