@@ -34,12 +34,6 @@ interface ProsessMenyProps {
    * Må være React-elementer som aksepterer ProsessPanelProps.
    */
   children: React.ReactElement<ProsessPanelProps> | Array<React.ReactElement<ProsessPanelProps>>;
-
-  /**
-   * Valgfri steg-definisjon fra prosessmotor.
-   * Når denne er satt, brukes den til å definere hvilke paneler som vises og deres rekkefølge.
-   * Paneler som ikke er definert i steg vil ikke vises.
-   */
   steg: ProsessSteg[];
 }
 
@@ -109,6 +103,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
       }
     }
 
+    // Respekter siste aktive valg
     if (sisteAktivtValgtePanelId) {
       return;
     }
@@ -121,7 +116,6 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
   }, [urlPanelId, prosessmotorSteg, setSearchParams, sisteAktivtValgtePanelId]);
 
   // Konverter panelregistreringer til ProcessMenu steps-format
-  // Hvis prosessmotorSteg er satt, bruk den. Ellers bruk registrerte paneler.
   const steg = useMemo(() => {
     return prosessmotorSteg.map(prosessSteg => ({
       label: prosessSteg.label,
@@ -145,7 +139,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
     }
   };
 
-  const stegMedVurdering = prosessmotorSteg.filter(s => s.type !== ProcessMenuStepType.default);
+  const alleStegMedVurdering = prosessmotorSteg.filter(s => s.type !== ProcessMenuStepType.default);
 
   return (
     <Box.New paddingInline="6">
@@ -154,7 +148,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
         <ProsessPanelContext.Provider
           value={{
             erValgt: id => id === valgtPanelId,
-            erVurdert: id => stegMedVurdering.some(s => s.id === id),
+            erVurdert: id => alleStegMedVurdering.some(s => s.id === id),
           }}
         >
           {children}

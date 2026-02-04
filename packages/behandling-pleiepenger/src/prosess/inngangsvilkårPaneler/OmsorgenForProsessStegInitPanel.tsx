@@ -44,7 +44,6 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
   };
 
-  // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel) {
     return null;
   }

@@ -316,6 +316,8 @@ const PleiepengerProsess = ({
     // - v2 ProsessMeny
     // - Legacy ProsessStegPanel for innholdsrendering (unngår Redux-form problemer)
     // - LegacyPanelAdapter registrerer paneler med v2 meny, men rendrer ikke innhold
+    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
+    const isReadOnly = !rettigheter.writeAccess.isEnabled;
     return (
       <VedtakFormContext.Provider value={vedtakFormValue}>
         {ToggleComponent}
@@ -337,8 +339,6 @@ const PleiepengerProsess = ({
               {prosessStegPanelDefinisjoner.map(panelDef => {
                 // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
                 const urlKode = panelDef.getUrlKode();
-                const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
-                const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
                 // Bruk migrerte InitPanel-komponenter der de finnes
                 if (urlKode === PROSESS_STEG_KODER.INNGANGSVILKAR) {
@@ -375,7 +375,6 @@ const PleiepengerProsess = ({
                       api={k9SakProsessApi}
                       isReadOnly={isReadOnly}
                       fagsak={fagsak}
-                      aksjonspunkterMedKodeverk={data.aksjonspunkter}
                     />
                   );
                 }

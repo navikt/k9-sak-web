@@ -52,9 +52,6 @@ export function SimuleringProsessStegInitPanel(props: Props) {
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
-  const relevanteAksjonspunkter = props.aksjonspunkterMedKodeverk?.filter(ap =>
-    RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon.kode),
-  );
   const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   const data = restApiData.data;
@@ -66,6 +63,10 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   if (!erStegVurdert) {
     return <ProsessStegIkkeVurdert />;
   }
+
+  const relevanteAksjonspunkter = props.aksjonspunkterMedKodeverk?.filter(ap =>
+    RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon.kode),
+  );
 
   // Beregn readOnlySubmitButton basert på aksjonspunkter
   // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only

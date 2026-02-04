@@ -6,7 +6,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { hentAktivePerioderFraVilkar } from '@k9-sak-web/gui/utils/hentAktivePerioderFraVilkar.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
@@ -36,7 +36,6 @@ interface InngangsvilkarFortsProsessStegInitPanelProps {
   api: K9SakProsessApi;
   isReadOnly: boolean;
   fagsak: Fagsak;
-  aksjonspunkterMedKodeverk: Aksjonspunkt[];
 }
 
 export const InngangsvilkarFortsProsessStegInitPanel = ({
@@ -49,7 +48,6 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   kanOverstyreAccess,
   toggleOverstyring,
   fagsak,
-  aksjonspunkterMedKodeverk,
 }: InngangsvilkarFortsProsessStegInitPanelProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
@@ -60,7 +58,7 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
     if (!vilkår) {
       return [];
     }
-    return vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.includes(vilkar.vilkarType));
+    return vilkår.filter(vilkar => RELEVANTE_VILKAR_KODER.some(kode => kode === vilkar.vilkarType));
   }, [vilkår]);
 
   // TODO: Finn ut om dette blir riktig utledet
@@ -113,7 +111,6 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
             vilkår={vilkårForSteg}
             visAllePerioder={visAllePerioder}
             saksnummer={fagsak.saksnummer}
-            aksjonspunkterMedKodeverk={aksjonspunkterMedKodeverk}
           />
           <FortsattMedlemskapProsessStegInitPanel
             aksjonspunkter={aksjonspunkter}
