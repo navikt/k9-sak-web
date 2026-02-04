@@ -20,7 +20,7 @@ import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
-  const språkkode = { kode: 'NO' };
+  const språkkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
     begrunnelse: 'begrunnelse',
