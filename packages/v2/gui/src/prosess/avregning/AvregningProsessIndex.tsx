@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+import BehandlingAvregningBackendClient from './AvregningBackendClient.js';
+import { AvregningBackendClientProvider } from './AvregningBackendClientContext.js';
 import { AvregningPanel } from './components/AvregningPanel.js';
 import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -13,7 +16,6 @@ interface AvregningProsessIndexProps {
   simuleringResultat: SimuleringDto;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   isReadOnly: boolean;
-  previewFptilbakeCallback: () => void;
 }
 
 export const AvregningProsessIndex = ({
@@ -23,15 +25,19 @@ export const AvregningProsessIndex = ({
   simuleringResultat,
   tilbakekrevingvalg,
   isReadOnly,
-  previewFptilbakeCallback,
-}: AvregningProsessIndexProps) => (
-  <AvregningPanel
-    fagsak={fagsak}
-    behandling={behandling}
-    aksjonspunkter={aksjonspunkter}
-    simuleringResultat={simuleringResultat}
-    tilbakekrevingvalg={tilbakekrevingvalg}
-    readOnly={isReadOnly}
-    previewCallback={previewFptilbakeCallback}
-  />
-);
+}: AvregningProsessIndexProps) => {
+  const backendClient = useMemo(() => new BehandlingAvregningBackendClient(), []);
+
+  return (
+    <AvregningBackendClientProvider client={backendClient}>
+      <AvregningPanel
+        fagsak={fagsak}
+        behandling={behandling}
+        aksjonspunkter={aksjonspunkter}
+        simuleringResultat={simuleringResultat}
+        tilbakekrevingvalg={tilbakekrevingvalg}
+        readOnly={isReadOnly}
+      />
+    </AvregningBackendClientProvider>
+  );
+};

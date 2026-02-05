@@ -12,16 +12,18 @@ import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backen
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import dokumentMalType from '@k9-sak-web/gui/sak/meny/henlegg-behandling/components/dokumentMalType.js';
-
+import { useAvregningBackendClient } from '../AvregningBackendClientContext.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 const IKKE_SEND = 'IKKE_SEND';
 
 interface VurderFeilutbetalingProps {
   readOnly: boolean;
-  previewCallback: (emptyString: string, dokumentMal: string, varseltekst: string, saksnummer: string) => void;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
   tilbakekrevingvalg: TilbakekrevingValgDto;
-  saksnummer: string;
+  behandling: BehandlingDto;
+  fagsakYtelseType: FagsakYtelseType;
 }
 
 const buildInitialValues = (
@@ -71,23 +73,47 @@ export const transformValues = (values: any, ap: any) => {
 
 export const VurderFeilutbetaling = ({
   readOnly,
-  previewCallback,
+  behandling,
+  fagsakYtelseType,
   aksjonspunkter,
   tilbakekrevingvalg,
-  saksnummer,
 }: VurderFeilutbetalingProps) => {
   const formMethods = useForm({ defaultValues: buildInitialValues(aksjonspunkter, tilbakekrevingvalg) });
   const featureToggles = useContext(FeatureTogglesContext);
+  const avregningBackendClient = useAvregningBackendClient();
   const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELFELT;
   const maxLengthVarseltekst = utvidetVarseltekst ? 12000 : 1500;
-  const varseltekst = formMethods.watch('varseltekst');
-  const previewMessage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    previewCallback('', dokumentMalType.TBKVAR, varseltekst || ' ', saksnummer);
-    e.preventDefault();
+
+  const forhåndsvisVarselbrev = async () => {
+    if (!behandling.uuid) {
+      return;
+    }
+    const blob = await avregningBackendClient.hentForhåndsvisningVarselbrev(
+      behandling.uuid,
+      fagsakYtelseType as foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType,
+      formMethods.watch('varseltekst'),
+    );
+    window.open(URL.createObjectURL(blob), '_blank');
   };
-  const submit = () => {
-    void formMethods.handleSubmit(() => {
-      console.log('submit');
+
+  const submit = async () => {
+    void formMethods.handleSubmit(async () => {
+      if (!behandling.id || !behandling.versjon) {
+        throw new Error('Behandling ID og versjon are required');
+      }
+      try {
+        await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
+          behandling.id,
+          behandling.versjon,
+          formMethods.watch('begrunnelse') ?? '',
+          formMethods.watch('videreBehandling') as TilbakekrevingVidereBehandling,
+          formMethods.watch('varseltekst'),
+        );
+        /// trenger polling
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
     })();
   };
   return (
@@ -148,7 +174,7 @@ export const VurderFeilutbetaling = ({
                           readOnly={readOnly}
                         />
                         <div>
-                          <Button variant="secondary" size="small" type="button" onClick={previewMessage}>
+                          <Button variant="secondary" size="small" type="button" onClick={forhåndsvisVarselbrev}>
                             Forhåndsvis varselbrev
                           </Button>
                         </div>
@@ -176,7 +202,7 @@ export const VurderFeilutbetaling = ({
               variant="primary"
               size="small"
               type="button"
-              onClick={submit}
+              onClick={() => void submit()}
               disabled={formMethods.formState.isSubmitting}
               loading={formMethods.formState.isSubmitting}
             >

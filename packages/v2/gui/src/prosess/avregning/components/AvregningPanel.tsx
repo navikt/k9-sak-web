@@ -18,7 +18,6 @@ import { VurderFeilutbetaling } from '../vurder-feilutbetaling/VurderFeilutbetal
 interface AvregningPanelProps {
   simuleringResultat: SimuleringDto;
   readOnly: boolean;
-  previewCallback: (a: string, b: string, c: string, d: string) => void;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
   behandling: BehandlingDto;
   fagsak: FagsakDto;
@@ -26,8 +25,7 @@ interface AvregningPanelProps {
 }
 export function AvregningPanel(props: AvregningPanelProps) {
   const [showDetails, setShowDetails] = useState<Array<{ id: number; show: boolean }>>([]);
-  const { simuleringResultat, readOnly, previewCallback, aksjonspunkter, behandling, fagsak, tilbakekrevingvalg } =
-    props;
+  const { simuleringResultat, readOnly, aksjonspunkter, behandling, fagsak, tilbakekrevingvalg } = props;
   const hasOpenTilbakekrevingsbehandling =
     tilbakekrevingvalg !== undefined &&
     tilbakekrevingvalg.videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
@@ -102,10 +100,10 @@ export function AvregningPanel(props: AvregningPanelProps) {
         {harVurderFeilutbetalingAP && (
           <VurderFeilutbetaling
             readOnly={readOnly}
-            previewCallback={previewCallback}
             aksjonspunkter={aksjonspunkter}
             tilbakekrevingvalg={tilbakekrevingvalg}
-            saksnummer={fagsak.saksnummer}
+            behandling={behandling}
+            fagsakYtelseType={fagsak.sakstype}
           />
         )}
         {harSjekkHøyEtterbetalingAP && (
