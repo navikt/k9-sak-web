@@ -20,6 +20,7 @@ export class CrossMountStore<TFieldValues extends FieldValues, T = TFieldValues>
    * The type cast is always safe since one of the valid DefaultValues types is DeepPartial<TFieldValues>
    */
   getAsDefaultValues(): DefaultValues<T> | undefined {
+    console.debug('getAsDefaultValues', this.#stored);
     return this.#stored as DefaultValues<T> | undefined;
   }
 
