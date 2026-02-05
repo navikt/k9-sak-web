@@ -10,6 +10,7 @@ import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
 import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
+import { Parent } from '@k9-sak-web/gui/poc/Parent.js';
 
 interface OwnProps {
   headerHeight: number;
@@ -36,6 +37,7 @@ const Home = ({ headerHeight }: OwnProps) => (
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
       {/* OBS: AktoerRoutePath brukes av NKS fra Salesforce til K9-sak-web. Kanskje andre også */}
       <Route path={aktoerRoutePath} element={<AktoerIndex />} />
+      <Route path="/poc" element={<Parent />} />
       <Route path="/close" element={<CloseWindow />} />
       <Route path="*" element={<NotFoundPage />} />
     </SentryRoutes>

@@ -5,6 +5,7 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
+    "./poc/*": "./src/poc/*",
     "./app/*": "./src/app/*",
     "./behandling/*": "./src/behandling/*",
     "./featuretoggles/*": "./src/featuretoggles/*",
