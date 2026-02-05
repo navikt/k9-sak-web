@@ -86,7 +86,7 @@ export const VurderFeilutbetaling = ({
 
   const forhåndsvisVarselbrev = async () => {
     if (!behandling.uuid) {
-      return;
+      throw new Error('Utviklerfeil: Behandling UUID er påkrevd for forhåndsvisning varselbrev. Meld fra i porten.');
     }
     const blob = await avregningBackendClient.hentForhåndsvisningVarselbrev(
       behandling.uuid,
@@ -99,7 +99,7 @@ export const VurderFeilutbetaling = ({
   const submit = async () => {
     void formMethods.handleSubmit(async () => {
       if (!behandling.id || !behandling.versjon) {
-        throw new Error('Behandling ID og versjon are required');
+        throw new Error('Utviklerfeil: Behandling ID og versjon er påkrevd for å løse aksjonspunkt. Meld fra i porten.');
       }
       await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
         behandling.id,
