@@ -3,7 +3,6 @@ import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { BodyShort, Button, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import { FormattedMessage } from 'react-intl';
 import styles from './avregningTable.module.css';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
@@ -14,6 +13,74 @@ import type { SimuleringResultatPerFagområdeDto } from '@k9-sak-web/backend/k9o
 import type { SimuleringResultatRadDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringResultatRadDto.js';
 import type { SimuleringResultatPerMånedDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringResultatPerMånedDto.js';
 const classNames = classnames.bind(styles);
+
+// fjern
+const MONTH_LABELS: Record<string, string> = {
+  januar: 'Jan',
+  februar: 'Feb',
+  mars: 'Mar',
+  april: 'Apr',
+  mai: 'Mai',
+  juni: 'Jun',
+  juli: 'Jul',
+  august: 'Aug',
+  september: 'Sep',
+  oktober: 'Okt',
+  november: 'Nov',
+  desember: 'Des',
+};
+
+/** Fagområdenavn brukt i etiketter for simulering */
+const FAGOMRÅDE_NAVN: Record<string, string> = {
+  REFUTG: 'Engangstønad',
+  FP: 'Foreldrepenger',
+  FPREF: 'Foreldrepenger',
+  SVP: 'Svangerskapspenger',
+  SVPREF: 'Svangerskapspenger',
+  SP: 'Sykepenger',
+  SPREF: 'Sykepenger',
+  PB: 'Pleiepenger sykt barn',
+  PBREF: 'Pleiepenger sykt barn',
+  PN: 'Pleiepenger nærstående',
+  PNREF: 'Pleiepenger nærstående',
+  OM: 'Omsorgspenger',
+  OMREF: 'Omsorgspenger',
+  OPP: 'Opplæringspenger',
+  OPPREF: 'Opplæringspenger',
+  OOP: 'Omsorg, opplæring, og pleiepenger',
+  OOPREF: 'Omsorg, opplæring, og pleiepenger',
+  FRISINN: 'FRISINN',
+  UNG: 'Ungdomsprogramytelse',
+};
+
+/** Suffiks per feltnavn (differanse har unntak for OOPREF og FRISINN) */
+const FELT_SUFFIX: Record<string, string> = {
+  nyttBeløp: 'nytt beløp',
+  tidligereUtbetalt: 'tidligere utbetalt',
+  differanse: 'avvik',
+};
+
+const FAGOMRÅDE_DIFFERANSE_NÆRSTÅENDE = new Set(['OOPREF', 'FRISINN']);
+
+const getFagområdeFeltLabel = (fagKode: string, feltnavn: string): string => {
+  const fagNavn = FAGOMRÅDE_NAVN[fagKode];
+  if (!fagNavn) return feltnavn;
+  const suffix =
+    feltnavn === 'differanse' && FAGOMRÅDE_DIFFERANSE_NÆRSTÅENDE.has(fagKode)
+      ? 'nærstående avvik'
+      : FELT_SUFFIX[feltnavn];
+  if (!suffix) return feltnavn;
+  return `${fagNavn} ${suffix}`;
+};
+
+/** Etiketter for resultatrad (feltnavn på resultatOgMotregningRader) */
+const RESULTAT_FELT_LABELS: Record<string, string> = {
+  inntrekk: 'Inntrekk',
+  inntrekkNesteMåned: 'Inntrekk i neste måned',
+  resultatEtterMotregning: 'Resultat etter motregning mellom ytelser',
+  resultat: 'Resultat',
+  avregnetBeløp: 'Avregnet beløp',
+};
 
 interface RangeOfMonths {
   month: string;
@@ -63,7 +130,7 @@ const getHeaderCodes = (
         })}
         key={`${month.month}-${month.year}`}
       >
-        <FormattedMessage id={`Avregning.headerText.${month.month}`} /> {month.year}
+        {MONTH_LABELS[month.month] ?? month.month} {month.year}
       </span>
     )),
   ];
@@ -182,8 +249,8 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }: Avre
                     { toggleDetails, showDetails: visDetaljer ? visDetaljer.show : false, mottakerIndex },
                     rangeOfMonths,
                     nesteMåned,
-                  ).map(heading => (
-                    <Table.HeaderCell key={heading.key} scope="col" textSize="small">
+                  ).map((heading, headerIndex) => (
+                    <Table.HeaderCell key={`header-${headerIndex}`} scope="col" textSize="small">
                       {heading}
                     </Table.HeaderCell>
                   ))}
@@ -203,17 +270,13 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }: Avre
                           const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
                           const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
                           const boldText = isFeilUtbetalt || simuleringResultat.ingenPerioderMedAvvik;
-                          const fagområdeKode =
-                            typeof fagOmråde.fagOmrådeKode === 'string'
-                              ? fagOmråde.fagOmrådeKode
-                              : fagOmråde.fagOmrådeKode;
                           return (
                             <Table.Row
                               key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
                               className={isRowToggable ? styles['rowBorderDashed'] : styles['rowBorderSolid']}
                             >
                               <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
-                                <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
+                                {getFagområdeFeltLabel(fagOmråde?.fagOmrådeKode, rad.feltnavn) || rad.feltnavn}
                               </Table.DataCell>
                               {createColumns(rad.resultaterPerMåned ?? [], rangeOfMonths, nesteMåned, boldText)}
                             </Table.Row>
@@ -242,7 +305,7 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails }: Avre
                         return (
                           <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles['rowBorderSolid']}>
                             <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
-                              <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                              {RESULTAT_FELT_LABELS[resultat.feltnavn] ?? resultat.feltnavn}
                             </Table.DataCell>
                             {createColumns(resultat.resultaterPerMåned ?? [], rangeOfMonths, nesteMåned, boldText)}
                           </Table.Row>

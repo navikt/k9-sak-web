@@ -24,7 +24,6 @@ import {
 import { getFaktaLocation, getLocationWithDefaultProsessStegAndFakta, getProsessStegLocation } from '../app/paths';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
-import { useResetStores } from '@k9-sak-web/gui/stores/useResetStores.js';
 
 const BehandlingTilbakekrevingUngdomsytelseIndex = lazy(
   () => import('@k9-sak-web/behandling-tilbakekreving-ungdomsytelse'),
@@ -85,7 +84,6 @@ const BehandlingIndex = ({
     b => b.id === gyldigBehandlingId(behandlingIdOrUuid) || b.uuid === gyldigBehandlingUuid(behandlingIdOrUuid),
   );
 
-  useResetStores(behandling?.id);
   useEffect(() => {
     if (behandling != null) {
       requestApi.setLinks(behandling.links, LinkCategory.BEHANDLING);

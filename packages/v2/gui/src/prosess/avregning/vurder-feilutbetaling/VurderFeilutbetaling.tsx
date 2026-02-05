@@ -177,7 +177,7 @@ export const VurderFeilutbetaling = ({
               size="small"
               type="button"
               onClick={submit}
-              disabled={formMethods.formState.isSubmitting || formMethods.formState.isDirty}
+              disabled={formMethods.formState.isSubmitting}
               loading={formMethods.formState.isSubmitting}
             >
               Bekreft og fortsett
