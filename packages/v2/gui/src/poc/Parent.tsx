@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { type FormState, Sub } from './Sub.tsx';
-import { CrossMountStore } from './useFormCrossMount.tsx';
+import { type FormState, Sub } from './Sub.js';
+import { CrossMountStore } from './useFormCrossMount.js';
 import { HStack } from '@navikt/ds-react';
 
 export const Parent = () => {
