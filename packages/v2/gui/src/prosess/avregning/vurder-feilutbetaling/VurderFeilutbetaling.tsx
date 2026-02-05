@@ -101,19 +101,15 @@ export const VurderFeilutbetaling = ({
       if (!behandling.id || !behandling.versjon) {
         throw new Error('Behandling ID og versjon are required');
       }
-      try {
-        await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
-          behandling.id,
-          behandling.versjon,
-          formMethods.watch('begrunnelse') ?? '',
-          formMethods.watch('videreBehandling') as TilbakekrevingVidereBehandling,
-          formMethods.watch('varseltekst'),
-        );
-        /// trenger polling
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-      }
+      await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
+        behandling.id,
+        behandling.versjon,
+        formMethods.watch('begrunnelse') ?? '',
+        formMethods.watch('videreBehandling') as TilbakekrevingVidereBehandling,
+        formMethods.watch('varseltekst'),
+      );
+      /// trenger polling
+      window.location.reload();
     })();
   };
   return (
