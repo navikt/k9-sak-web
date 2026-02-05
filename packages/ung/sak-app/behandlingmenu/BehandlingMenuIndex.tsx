@@ -320,10 +320,7 @@ export const BehandlingMenuIndex = ({
             gjeldendeVedtakBehandlendeEnhetId={alleBehandlinger.find(b => b.gjeldendeVedtak)?.behandlendeEnhetId}
           />
         )),
-        new MenyData(
-          'ENDRE_FRIST' in featureToggles && featureToggles.ENDRE_FRIST && harEtterlysningerMedFrist,
-          'Utsett frist',
-        ).medModal(lukkModal => {
+        new MenyData(featureToggles.ENDRE_FRIST && harEtterlysningerMedFrist, 'Utsett frist').medModal(lukkModal => {
           if (behandling && behandling.id && behandling.uuid) {
             return (
               <MenyEndreFristIndex
