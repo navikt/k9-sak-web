@@ -99,7 +99,7 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-storybook": "10.2.0",
     "eslint-plugin-vitest": "~0.5.4",
-    "globals": "16.5.0",
+    "globals": "17.2.0",
     "happy-dom": "20.3.9",
     "husky": "9.1.7",
     "knip": "5.82.1",
