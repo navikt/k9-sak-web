@@ -1,6 +1,5 @@
 import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 
@@ -8,6 +7,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto } from '@navikt/k9-sak-typescript-client/types';
 import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
@@ -19,7 +19,7 @@ interface OwnProps {
   selectedItemData?: PeriodeMedId;
   callbackForward: (...args: any[]) => any;
   callbackBackward: (...args: any[]) => any;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
   isUngdomsytelseFagsak: boolean;
 }
 

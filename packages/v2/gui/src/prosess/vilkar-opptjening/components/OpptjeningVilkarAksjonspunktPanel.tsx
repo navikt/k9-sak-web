@@ -2,6 +2,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
   type k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -13,7 +14,6 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';
 import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import OpptjeningPanel from './OpptjeningPanel';
@@ -57,7 +57,7 @@ export const buildInitialValues = (
 };
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   behandlingId: number;
   behandlingVersjon: number;
   isApOpen: boolean;

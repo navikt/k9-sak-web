@@ -1,4 +1,5 @@
 import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_typer_Periode as Periode,
   k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -18,7 +19,6 @@ import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKna
 import { RhfForm } from '@navikt/ft-form-hooks';
 import type dayjs from 'dayjs';
 import type { KravDokument } from '../types/KravDokumentStatus';
-import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import type { FormState } from './FormState';
@@ -35,7 +35,7 @@ const minusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).subtract
 const plusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
 
 const buildInitialValues = (
-  aksjonspunkter: SoknadsfristAksjonspunktType[],
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
   alleDokumenter: KravDokument[],
   status: string,
 ): FormState => {
@@ -119,7 +119,7 @@ const transformValues = (
 });
 
 interface SoknadsfristVilkarFormProps {
-  aksjonspunkter: SoknadsfristAksjonspunktType[];
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   submitCallback: (props: SubmitData[]) => void;
   periode: VilkårPeriodeDto;
   erOverstyrt?: boolean;
