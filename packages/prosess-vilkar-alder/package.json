@@ -13,6 +13,6 @@
     "@navikt/ft-form-validators": "4.4.10",
     "react": "19.2.3",
     "react-hook-form": "7.69.0",
-    "react-intl": "8.0.9"
+    "react-intl": "8.1.2"
   }
 }
