@@ -3,7 +3,7 @@ import SettPåVentModal from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVen
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 interface SettPaVentParams {
   formData: {
     ventearsak: string;
@@ -22,10 +22,6 @@ interface BehandlingPaVentProps {
 export const BehandlingPåVent = ({ behandling, aksjonspunkter, settPaVent }: BehandlingPaVentProps) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPåVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
-
-  useEffect(() => {
-    setVisModal(behandling.behandlingPåVent);
-  }, [behandling.behandlingPåVent]);
 
   const oppdaterPaVentData = useCallback(
     formData =>
