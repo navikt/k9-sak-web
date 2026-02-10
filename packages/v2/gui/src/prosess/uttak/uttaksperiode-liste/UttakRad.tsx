@@ -23,7 +23,7 @@ import { useUttakContext } from '../context/UttakContext';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
 import styles from './uttak.module.css';
-import { finnGraderingForUttak, getUttakGradIndikatorCls } from './uttakGradIndikator';
+import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';
 
 interface UttakProps {
   uttak: UttaksperiodeBeriket;
@@ -49,7 +49,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   const visPleiebehovProsent = !erSakstype(FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE);
 
   const { erGradertMotInntekt, erGradertMotTilsyn } = finnGraderingForUttak(uttak, inntektsgraderinger);
-  const uttakGradIndikatorCls = getUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
+  const uttakGradIndikatorCls = finnUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT);
   return (

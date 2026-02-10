@@ -29,7 +29,7 @@ export const finnGraderingForUttak = (
   };
 };
 
-export const getUttakGradIndikatorCls = (
+export const finnUttakGradIndikatorCls = (
   uttaksgrad: number | null | undefined,
   erGradertMotInntekt: boolean,
   erGradertMotTilsyn: boolean,

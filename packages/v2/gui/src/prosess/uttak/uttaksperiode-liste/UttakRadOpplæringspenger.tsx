@@ -17,7 +17,7 @@ import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './uttak.module.css';
-import { finnGraderingForUttak, getUttakGradIndikatorCls } from './uttakGradIndikator';
+import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';
 
 const opplæringspengerVilkår = [
   vilkarType.LANGVARIG_SYKDOM,
@@ -49,7 +49,7 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
   );
 
   const { erGradertMotInntekt, erGradertMotTilsyn } = finnGraderingForUttak(uttak, inntektsgraderinger);
-  const uttakGradIndikatorCls = getUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
+  const uttakGradIndikatorCls = finnUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
 
   const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === VilkårUtfall.OPPFYLT);
 
