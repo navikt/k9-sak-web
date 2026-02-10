@@ -74,7 +74,6 @@
   "packages/behandling-tilbakekreving/src/components/TilbakekrevingPaneler.tsx",
   "packages/behandling-tilbakekreving/src/components/TilbakekrevingProsess.tsx",
   "packages/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex.tsx",
-  "packages/behandling-ungdomsytelse/src/components/UngdomsytelsePaneler.tsx",
   "packages/behandling-ungdomsytelse/src/components/UngdomsytelseProsess.spec.tsx",
   "packages/behandling-ungdomsytelse/src/components/UngdomsytelseProsess.tsx",
   "packages/behandling-unntak/src/BehandlingUnntakIndex.tsx",
