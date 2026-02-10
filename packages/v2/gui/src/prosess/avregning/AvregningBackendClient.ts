@@ -1,5 +1,8 @@
 import type { k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import {
+  aksjonspunkt_bekreft,
+  behandlinger_hentBehandlingMidlertidigStatus1,
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
@@ -26,6 +29,7 @@ export default class BehandlingAvregningBackendClient {
 
   async bekreftAksjonspunktVurderFeilutbetaling(
     behandlingId: number,
+    behandlingUuid: string,
     behandlingVersjon: number,
     begrunnelse: string,
     videreBehandling: TilbakekrevingVidereBehandling,
@@ -44,6 +48,7 @@ export default class BehandlingAvregningBackendClient {
       ],
     };
     await aksjonspunkt_bekreft({ body });
+    return behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid } });
   }
 
   async hentForhåndsvisningVarselbrev(
