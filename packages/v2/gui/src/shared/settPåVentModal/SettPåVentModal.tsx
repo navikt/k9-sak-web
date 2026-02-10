@@ -165,7 +165,7 @@ export const SettPåVentModal = ({
   const erVenterPaKravgrunnlag = ventearsak === VenteÅrsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
-  const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
+  const showKommentarInput = venterårsakerMedKommentarmulighet.some(va => va === ventearsak);
 
   const venteArsakerSomKanVelges = [...ventearsaker.filter(va => va.kanVelges === 'true').map(va => va.kode)];
 
@@ -195,7 +195,7 @@ export const SettPåVentModal = ({
     submitCallback(data);
   };
 
-  const disableEndreFrist = venteårsakerSomIkkeKanEndreFrist.some(va => va === originalVentearsak);
+  const disableEndreFrist = venteårsakerSomIkkeKanEndreFrist.some(va => va === ventearsak);
 
   return (
     <Modal
