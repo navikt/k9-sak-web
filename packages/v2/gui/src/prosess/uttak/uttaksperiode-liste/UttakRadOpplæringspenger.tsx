@@ -1,6 +1,5 @@
 import type { JSX } from 'react';
 import { Collapse } from 'react-collapse';
-import classNames from 'classnames/bind';
 import {
   CheckmarkCircleFillIcon,
   ChevronDownIcon,
@@ -10,18 +9,15 @@ import {
 } from '@navikt/aksel-icons';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { BodyShort, Button, HelpText, Table } from '@navikt/ds-react';
-import {
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
-  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import { useUttakContext } from '../context/UttakContext';
 import styles from './uttak.module.css';
-
-const cx = classNames.bind(styles);
+import { finnGraderingForUttak, getUttakGradIndikatorCls } from './uttakGradIndikator';
 
 const opplæringspengerVilkår = [
   vilkarType.LANGVARIG_SYKDOM,
@@ -41,7 +37,8 @@ interface UttakProps {
 // Lager en egen komponent for å vise opplæringspenger så det ikke blir så forvirrende hvissom atte dersom atte i koden
 
 const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { periode, uttaksgrad, inngangsvilkår: vilkår, årsaker, endringsstatus, manueltOverstyrt } = uttak;
+  const { inntektsgraderinger } = useUttakContext();
+  const { periode, uttaksgrad, inngangsvilkår: vilkår, endringsstatus, manueltOverstyrt } = uttak;
 
   const sykdomOgOpplæringVilkår = Object.fromEntries(
     Object.entries(vilkår ?? {}).filter(([key]) => opplæringspengerVilkår.includes(key)),
@@ -51,14 +48,8 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
     Object.entries(vilkår ?? {}).filter(([key]) => !opplæringspengerVilkår.includes(key)),
   );
 
-  const erGradertMotInntekt = (årsaker ?? []).includes(Årsak.AVKORTET_MOT_INNTEKT);
-
-  const uttakGradIndikatorCls = cx('uttakIndikator', {
-    uttakIndikatorAvslått: uttaksgrad === 0,
-    uttakIndikatorInnvilget: (uttaksgrad ?? 0) > 0,
-    uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt,
-    uttakIndikatorInnvilgetDelvis: !erGradertMotInntekt && årsaker?.some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN),
-  });
+  const { erGradertMotInntekt, erGradertMotTilsyn } = finnGraderingForUttak(uttak, inntektsgraderinger);
+  const uttakGradIndikatorCls = getUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
 
   const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === VilkårUtfall.OPPFYLT);
 
