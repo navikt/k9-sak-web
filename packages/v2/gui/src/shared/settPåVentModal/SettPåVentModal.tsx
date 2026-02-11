@@ -34,6 +34,7 @@ const venterårsakerMedKommentarmulighet = [
 
 const venteårsakerSomIkkeKanEndreFrist = [
   ung_kodeverk_behandling_aksjonspunkt_Venteårsak.VENT_INNTEKT_RAPPORTERINGSFRIST,
+  ung_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_PÅ_ETTERLYST_INNTEKT_UTTALELSE,
 ];
 
 const venterEtterlysInntektsmeldingKode =
