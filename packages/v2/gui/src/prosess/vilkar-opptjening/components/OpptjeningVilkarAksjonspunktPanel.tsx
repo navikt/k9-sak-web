@@ -2,7 +2,6 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
   type k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -57,7 +56,7 @@ export const buildInitialValues = (
 };
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  aksjonspunkter: AksjonspunktDto[];
   behandlingId: number;
   behandlingVersjon: number;
   isApOpen: boolean;

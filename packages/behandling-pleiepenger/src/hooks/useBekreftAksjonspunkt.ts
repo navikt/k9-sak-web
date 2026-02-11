@@ -102,34 +102,23 @@ export const useBekreftAksjonspunkt = ({
       // (Tidligere i getBekreftAksjonspunktCallback)
       let lagrePromise: Promise<any>;
 
-      if (lagreOverstyrteAksjonspunkter) {
-        const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
-          aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon),
-        );
+      const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
+        aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon),
+      );
 
-        const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring.some(
-          ap =>
-            ap.aksjonspunktType === aksjonspunktType.OVERSTYRING ||
-            ap.aksjonspunktType === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+      const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring.some(
+        ap =>
+          ap.aksjonspunktType === aksjonspunktType.OVERSTYRING ||
+          ap.aksjonspunktType === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+      );
+      if (lagreOverstyrteAksjonspunkter && (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter)) {
+        lagrePromise = lagreOverstyrteAksjonspunkter(
+          {
+            ...params,
+            overstyrteAksjonspunktDtoer: models,
+          },
+          true,
         );
-
-        if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {
-          lagrePromise = lagreOverstyrteAksjonspunkter(
-            {
-              ...params,
-              overstyrteAksjonspunktDtoer: models,
-            },
-            true,
-          );
-        } else {
-          lagrePromise = lagreAksjonspunkter(
-            {
-              ...params,
-              bekreftedeAksjonspunktDtoer: models,
-            },
-            true,
-          );
-        }
       } else {
         lagrePromise = lagreAksjonspunkter(
           {

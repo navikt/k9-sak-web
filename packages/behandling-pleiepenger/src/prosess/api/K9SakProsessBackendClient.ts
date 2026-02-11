@@ -15,7 +15,7 @@ import {
   tilbakekrevingsvalg_hentTilbakekrevingValg,
   vilkår_getVilkårV3,
   ytelser_hentOverlappendeYtelser,
-} from '@navikt/k9-sak-typescript-client/sdk';
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { K9SakProsessApi } from './K9SakProsessApi';
 
 export class K9SakProsessBackendClient implements K9SakProsessApi {

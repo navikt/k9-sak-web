@@ -9,7 +9,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../api/k9SakQueryOptions';
 import { AlderProsessStegInitPanel } from './AlderProsessStegInitPanel';
@@ -33,9 +33,7 @@ interface InngangsvilkarProsessStegInitPanelProps {
     isEnabled: boolean;
     employeeHasAccess: boolean;
   };
-  toggleOverstyring: Dispatch<SetStateAction<string[]>>;
   kanEndrePåSøknadsopplysninger: boolean;
-  overstyrteAksjonspunktKoder: string[];
   api: K9SakProsessApi;
 }
 
@@ -43,12 +41,11 @@ export const InngangsvilkarProsessStegInitPanel = ({
   submitCallback,
   overrideReadOnly,
   kanOverstyreAccess,
-  toggleOverstyring,
   kanEndrePåSøknadsopplysninger,
-  overstyrteAksjonspunktKoder,
   behandling,
   api,
 }: InngangsvilkarProsessStegInitPanelProps) => {
+  const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));

@@ -4,6 +4,7 @@ import { WrappedComponentProps, injectIntl } from 'react-intl';
 import React, { ReactNode, useMemo, useState } from 'react';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
+import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Box } from '@navikt/ds-react';
 import styles from './prosessStegContainer.module.css';
 
@@ -15,7 +16,11 @@ interface OwnProps {
 }
 
 interface VedtakFormContextType {
-  vedtakFormState: any;
+  vedtakFormState: {
+    brødtekst: string;
+    overskrift: string;
+    maler: VedtaksbrevMal[];
+  } | null;
   setVedtakFormState: React.Dispatch<React.SetStateAction<any>>;
 }
 

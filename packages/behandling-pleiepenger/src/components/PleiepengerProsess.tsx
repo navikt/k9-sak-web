@@ -284,7 +284,6 @@ const PleiepengerProsess = ({
     () => ({ vedtakFormState, setVedtakFormState }),
     [vedtakFormState, setVedtakFormState],
   );
-  const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
 
   const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
 
@@ -349,8 +348,6 @@ const PleiepengerProsess = ({
                       overrideReadOnly={isReadOnly}
                       kanOverstyreAccess={rettigheter.kanOverstyreAccess}
                       kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
-                      toggleOverstyring={toggleOverstyring}
-                      overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
                       behandling={behandling}
                       api={k9SakProsessApi}
                     />
@@ -369,8 +366,6 @@ const PleiepengerProsess = ({
                       overrideReadOnly={isReadOnly}
                       kanOverstyreAccess={rettigheter.kanOverstyreAccess}
                       kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
-                      toggleOverstyring={toggleOverstyring}
-                      overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
                       behandling={behandling}
                       api={k9SakProsessApi}
                       isReadOnly={isReadOnly}
