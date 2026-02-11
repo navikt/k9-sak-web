@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import BehandlingAvregningBackendClient from './AvregningBackendClient.js';
 import { AvregningBackendClientProvider } from './AvregningBackendClientContext.js';
 import { AvregningPanel } from './components/AvregningPanel.js';
@@ -9,13 +8,14 @@ import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9oppdrag/kontra
 import type { SimuleringDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 
-interface AvregningProsessIndexProps {
+export interface AvregningProsessIndexProps {
   fagsak: FagsakDto;
   behandling: BehandlingDto;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
   simuleringResultat: SimuleringDto;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   isReadOnly: boolean;
+  client: BehandlingAvregningBackendClient;
 }
 
 export const AvregningProsessIndex = ({
@@ -25,11 +25,10 @@ export const AvregningProsessIndex = ({
   simuleringResultat,
   tilbakekrevingvalg,
   isReadOnly,
+  client = new BehandlingAvregningBackendClient(),
 }: AvregningProsessIndexProps) => {
-  const backendClient = useMemo(() => new BehandlingAvregningBackendClient(), []);
-
   return (
-    <AvregningBackendClientProvider client={backendClient}>
+    <AvregningBackendClientProvider client={client}>
       <AvregningPanel
         fagsak={fagsak}
         behandling={behandling}

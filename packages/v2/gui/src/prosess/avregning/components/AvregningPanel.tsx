@@ -96,7 +96,7 @@ export function AvregningPanel(props: AvregningPanelProps) {
             </VStack>
           </>
         )}
-        {!simuleringResultat && <>Ingen informasjon om simulering mottatt fra økonomiløsningen.</>}
+        {!simuleringResultat && 'Ingen informasjon om simulering mottatt fra økonomiløsningen.'}
         {harVurderFeilutbetalingAP && (
           <VurderFeilutbetaling
             readOnly={readOnly}

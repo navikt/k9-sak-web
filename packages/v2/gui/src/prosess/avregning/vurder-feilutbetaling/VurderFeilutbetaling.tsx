@@ -37,7 +37,10 @@ interface VurderFeilutbetalingProps {
 const buildInitialValues = (
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[],
   tilbakekrevingvalg: TilbakekrevingValgDto,
-): VurderFeilutbetalingFormValues => {
+) => {
+  if (!tilbakekrevingvalg || !aksjonspunkter) {
+    return undefined;
+  }
   const aksjonspunkt = aksjonspunkter.find(
     ap =>
       ap.definisjon === AksjonspunktDefinisjon.VURDER_FEILUTBETALING ||
@@ -92,9 +95,9 @@ export const VurderFeilutbetaling = ({
 
   const submit = async () => {
     void formMethods.handleSubmit(async () => {
-      if (!behandling.id || !behandling.versjon) {
+      if (!behandling.id || !behandling.versjon || !behandling.uuid) {
         throw new Error(
-          'Utviklerfeil: Behandling ID og versjon er påkrevd for å løse aksjonspunkt. Meld fra i porten.',
+          'Utviklerfeil: Behandling ID, versjon og UUID er påkrevd for å løse aksjonspunkt. Meld fra i porten.',
         );
       }
 

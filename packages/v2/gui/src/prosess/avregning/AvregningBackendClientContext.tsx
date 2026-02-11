@@ -18,7 +18,5 @@ interface AvregningBackendClientProviderProps {
 
 export function AvregningBackendClientProvider({ children, client }: AvregningBackendClientProviderProps) {
   const value = useMemo(() => client, [client]);
-  return (
-    <AvregningBackendClientContext.Provider value={value}>{children}</AvregningBackendClientContext.Provider>
-  );
+  return <AvregningBackendClientContext.Provider value={value}>{children}</AvregningBackendClientContext.Provider>;
 }

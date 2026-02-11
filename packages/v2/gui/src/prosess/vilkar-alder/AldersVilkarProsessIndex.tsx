@@ -6,16 +6,11 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
 import AldersVilkarAP from './components/AldersvilkarAP';
 import AldersVilkarStatus from './components/AldersvilkarStatus';
 import type { AldersVilkårBehandlingType } from './types/AldersVilkårBehandlingType';
 import type { AlderVilkårType } from './types/AlderVilkårType';
-
-const formatereLukketPeriode = (periode: string): string => {
-  const [fom, tom] = periode.split('/');
-  return fom && tom ? `${formatDate(fom)} - ${formatDate(tom)}` : periode;
-};
 
 interface AldersVilkarProsessIndexProps {
   behandling: AldersVilkårBehandlingType;
