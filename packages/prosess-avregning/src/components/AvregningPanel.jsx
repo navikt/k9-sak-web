@@ -17,7 +17,7 @@ import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kont
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import { Component, useMemo } from 'react';
+import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -29,7 +29,6 @@ import AvregningTable from './AvregningTable';
 
 import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
-import { AvregningBackendClientProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
 import KontrollerEtterbetalingV1Wrapper from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingV1Wrapper.js';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
@@ -131,7 +130,6 @@ export class AvregningPanelImpl extends Component {
     const fagsakSakstype = typeof fagsak?.sakstype === 'string' ? fagsak?.sakstype : fagsak?.sakstype?.kode;
     const isUngFagsak = fagsakSakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
 
-    const backendClient = useMemo(() => new BehandlingAvregningBackendClient(), []);
     return (
       <>
         <VStack gap="space-32">
