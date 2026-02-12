@@ -7,6 +7,7 @@ import {
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
+
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -16,7 +17,7 @@ import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kont
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { Component, useMemo } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
