@@ -1,55 +1,10 @@
-import { fn, userEvent } from 'storybook/test';
+import { userEvent } from 'storybook/test';
 import { AvregningProsessIndex } from './AvregningProsessIndex';
 import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './AvregningMocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType';
-import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
-import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
-import { fakePdf } from '../../storybook/mocks/fakePdf';
-import { ignoreUnusedDeclared } from '../../storybook/mocks/ignoreUnusedDeclared';
+import { FakeBehandlingAvregningBackendApi } from '../../storybook/mocks/FakeBehandlingAvregningBackendApi';
 
-class FakeAvregningBackendClient implements BehandlingAvregningBackendApiType {
-  async bekreftAksjonspunktSjekkHøyEtterbetaling(
-    behandlingId: number,
-    behandlingVersjon: number,
-    begrunnelse: string,
-  ): Promise<void> {
-    ignoreUnusedDeclared(behandlingId);
-    ignoreUnusedDeclared(behandlingVersjon);
-    ignoreUnusedDeclared(begrunnelse);
-    return Promise.resolve();
-  }
-
-  bekreftAksjonspunktVurderFeilutbetaling = fn(
-    async (
-      behandlingId: number,
-      behandlingVersjon: number,
-      begrunnelse: string,
-      videreBehandling: TilbakekrevingVidereBehandling,
-      varseltekst?: string,
-    ): Promise<void> => {
-      ignoreUnusedDeclared(behandlingId);
-      ignoreUnusedDeclared(behandlingVersjon);
-      ignoreUnusedDeclared(begrunnelse);
-      ignoreUnusedDeclared(videreBehandling);
-      ignoreUnusedDeclared(varseltekst);
-      return Promise.resolve();
-    },
-  );
-
-  async hentForhåndsvisningVarselbrev(
-    behandlingUuid: string,
-    fagsakYtelseType: FagsakYtelseTypeK9Tilbake,
-    varseltekst?: string,
-  ): Promise<Blob> {
-    ignoreUnusedDeclared(behandlingUuid);
-    ignoreUnusedDeclared(fagsakYtelseType);
-    ignoreUnusedDeclared(varseltekst);
-    return Promise.resolve(fakePdf());
-  }
-}
-
-const fakeAvregningBackendClient = new FakeAvregningBackendClient();
+const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
 const meta = {
   title: 'prosess/prosess-avregning-v2',
