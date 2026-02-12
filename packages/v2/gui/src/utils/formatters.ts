@@ -1,4 +1,4 @@
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -61,3 +61,5 @@ export const formatereLukketPeriode = (periode: string): string => {
 export const formatPeriod = (fomDate: string, tomDate: string): string =>
   `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
 export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
+
+export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);

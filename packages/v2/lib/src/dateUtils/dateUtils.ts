@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
+import { ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
 export const TIDENES_ENDE = '9999-12-31';
@@ -258,8 +258,6 @@ export const splitWeeksAndDays = (weeks: number, days: number) => {
   const secondPeriodWeeksAndDays = { weeks: Math.trunc(secondPeriodDays / 5), days: secondPeriodDays % 5 };
   return [secondPeriodWeeksAndDays, firstPeriodWeeksAndDays];
 };
-
-export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);
 
 // Skal ikke legge til dag når dato er tidenes ende
 export const addDaysToDate = (dateString: string, nrOfDays: number) =>

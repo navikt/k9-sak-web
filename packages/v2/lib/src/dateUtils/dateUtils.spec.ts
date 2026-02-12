@@ -12,13 +12,11 @@ import {
   getRangeOfMonths,
   isValidDate,
   splitWeeksAndDays,
-  timeFormat,
   combineConsecutivePeriods,
   checkForOverlap,
   type DateOrPeriod,
 } from './dateUtils';
-import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatDate, timeFormat, formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
 
 describe('dateUtils', () => {
   it('Skal kalkulere antall dager mellom to datoer inkludert helger og skrive det ut som uker og dager', () => {
