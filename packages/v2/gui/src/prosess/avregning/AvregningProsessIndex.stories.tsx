@@ -3,11 +3,20 @@ import { AvregningProsessIndex } from './AvregningProsessIndex';
 import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './AvregningMocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FakeBehandlingAvregningBackendApi } from '../../storybook/mocks/FakeBehandlingAvregningBackendApi';
+import { AvregningFormProvider } from '../../context/AvregningContext';
 
 const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
 const meta = {
   title: 'prosess/prosess-avregning-v2',
+  decorators: [
+    Story => (
+      <AvregningFormProvider behandlingId={1}>
+        {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
+        <Story />
+      </AvregningFormProvider>
+    ),
+  ],
   component: AvregningProsessIndex,
 } satisfies Meta<typeof AvregningProsessIndex>;
 
