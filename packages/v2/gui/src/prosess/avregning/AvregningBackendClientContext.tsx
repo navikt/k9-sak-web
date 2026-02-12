@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import BehandlingAvregningBackendClient from './AvregningBackendClient.js';
 
-export const AvregningBackendClientContext = createContext<BehandlingAvregningBackendClient | null>(null);
+const AvregningBackendClientContext = createContext<BehandlingAvregningBackendClient | null>(null);
 
 export function useAvregningBackendClient(): BehandlingAvregningBackendClient {
   const client = useContext(AvregningBackendClientContext);
