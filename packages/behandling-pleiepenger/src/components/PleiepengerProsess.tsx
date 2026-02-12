@@ -20,6 +20,7 @@ import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Kodeve
 
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { Bleed, BoxNew } from '@navikt/ds-react';
+import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
@@ -82,21 +83,8 @@ const getForhandsvisFptilbakeCallback =
   };
 
 const getLagringSideeffekter =
-  (
-    toggleIverksetterVedtakModal,
-    toggleFatterVedtakModal,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
-    lagreDokumentdata,
-  ) =>
+  (toggleIverksetterVedtakModal, toggleFatterVedtakModal, oppdaterProsessStegOgFaktaPanelIUrl, lagreDokumentdata) =>
   async aksjonspunktModels => {
-    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-      apModel =>
-        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-        apModel.sendVarsel,
-    );
-
     const visIverksetterVedtakModal = aksjonspunktModels.some(
       aksjonspunkt =>
         aksjonspunkt.isVedtakSubmission &&
@@ -121,8 +109,6 @@ const getLagringSideeffekter =
         toggleFatterVedtakModal(true);
       } else if (visIverksetterVedtakModal) {
         toggleIverksetterVedtakModal(true);
-      } else if (erRevurderingsaksjonspunkt) {
-        opneSokeside();
       } else {
         oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
@@ -245,7 +231,6 @@ const PleiepengerProsess = ({
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
     lagreDokumentdata,
   );
 
@@ -296,20 +281,41 @@ const PleiepengerProsess = ({
     behandling,
     lagreAksjonspunkter,
     lagreOverstyrteAksjonspunkter,
-    lagreDokumentdata,
-    onIverksetterVedtak: useCallback(() => {
-      toggleIverksetterVedtakModal(true);
-    }, []),
-    onFatterVedtak: useCallback(() => {
-      toggleFatterVedtakModal(true);
-    }, []),
-    onRevurdering: useCallback(() => {
-      opneSokeside();
-    }, [opneSokeside]),
-    onDefault: useCallback(() => {
-      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-    }, [oppdaterProsessStegOgFaktaPanelIUrl]),
+    oppdaterProsessStegOgFaktaPanelIUrl,
   });
+
+  const handleVedtakSubmit = async (
+    aksjonspunktModels: { isVedtakSubmission: boolean; kode: string }[],
+    aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  ) => {
+    const fatterVedtakAksjonspunktkoder = [
+      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      aksjonspunktCodes.FATTER_VEDTAK,
+      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+    ];
+    const visIverksetterVedtakModal = aksjonspunktModels.some(
+      ap => ap.isVedtakSubmission && fatterVedtakAksjonspunktkoder.includes(ap.kode),
+    );
+    const visFatterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    if (aksjonspunktModels[0].isVedtakSubmission) {
+      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+      if (dokumentdata) {
+        await lagreDokumentdata(dokumentdata);
+      }
+    }
+    await bekreftAksjonspunktCallback(
+      aksjonspunktModels,
+      aksjonspunkt,
+      visIverksetterVedtakModal || visFatterVedtakModal,
+    );
+
+    if (visFatterVedtakModal) {
+      toggleFatterVedtakModal(true);
+    } else if (visIverksetterVedtakModal) {
+      toggleIverksetterVedtakModal(true);
+    }
+  };
 
   if (useV2Menu) {
     // - v2 ProsessMeny
@@ -433,7 +439,7 @@ const PleiepengerProsess = ({
                       behandling={behandling}
                       hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
                       isReadOnly={isReadOnly}
-                      submitCallback={bekreftAksjonspunktCallback}
+                      submitCallback={handleVedtakSubmit}
                       previewCallback={previewCallback}
                       lagreDokumentdata={lagreDokumentdata}
                     />

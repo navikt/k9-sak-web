@@ -1,20 +1,14 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { lagDokumentdata } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useCallback } from 'react';
 
 interface UseBekreftAksjonspunktParams {
   fagsak: Fagsak;
-  behandling: Behandling;
+  behandling: Pick<Behandling, 'id' | 'versjon' | 'uuid'>;
   lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>;
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>;
-  lagreDokumentdata: (data: any) => Promise<any>;
-  onIverksetterVedtak: () => void;
-  onFatterVedtak: () => void;
-  onRevurdering: () => void;
-  onDefault: () => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
 /**
@@ -33,59 +27,19 @@ export const useBekreftAksjonspunkt = ({
   behandling,
   lagreAksjonspunkter,
   lagreOverstyrteAksjonspunkter,
-  lagreDokumentdata,
-  onIverksetterVedtak, // Tidligere: toggleIverksetterVedtakModal(true) i getLagringSideeffekter
-  onFatterVedtak, // Tidligere: toggleFatterVedtakModal(true) i getLagringSideeffekter
-  onRevurdering, // Tidligere: opneSokeside() i getLagringSideeffekter
-  onDefault, // Tidligere: oppdaterProsessStegOgFaktaPanelIUrl('default', 'default') i getLagringSideeffekter
+  oppdaterProsessStegOgFaktaPanelIUrl,
 }: UseBekreftAksjonspunktParams) => {
   return useCallback(
-    async (aksjonspunktModels: any[], aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] = []) => {
-      // === Logikk fra getLagringSideeffekter ===
-
+    async (
+      aksjonspunktModels: any[],
+      aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] = [],
+      skaForhindreOppdaterUrl?: boolean,
+    ) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
         console.warn('Ingen aksjonspunktmodeller å bekrefte');
         return;
       }
 
-      // Sjekk om dette er et revurderingsaksjonspunkt
-      // (Tidligere i getLagringSideeffekter)
-      const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-        apModel =>
-          (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-            apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-          apModel.sendVarsel,
-      );
-
-      // Sjekk om vi skal vise iverksetter vedtak modal
-      // (Tidligere i getLagringSideeffekter)
-      const visIverksetterVedtakModal = aksjonspunktModels.some(
-        aksjonspunkt =>
-          aksjonspunkt.isVedtakSubmission &&
-          [
-            aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-            aksjonspunktCodes.FATTER_VEDTAK,
-            aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-          ].includes(aksjonspunkt.kode),
-      );
-
-      // Sjekk om vi skal vise fatter vedtak modal
-      // (Tidligere i getLagringSideeffekter)
-      const visFatterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-
-      // Lagre dokumentdata hvis dette er et vedtak
-      // (Tidligere i getLagringSideeffekter)
-      if (aksjonspunktModels[0].isVedtakSubmission) {
-        const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-        if (dokumentdata) {
-          await lagreDokumentdata(dokumentdata);
-        }
-      }
-
-      // === Logikk fra getBekreftAksjonspunktCallback ===
-
-      // Forbered data for API-kall
       const models = aksjonspunktModels.map(ap => ({
         '@type': ap.kode,
         ...ap,
@@ -98,10 +52,6 @@ export const useBekreftAksjonspunkt = ({
         behandlingUuid: behandling.uuid,
       };
 
-      // Bestem om vi skal bruke overstyrt eller standard lagring
-      // (Tidligere i getBekreftAksjonspunktCallback)
-      let lagrePromise: Promise<any>;
-
       const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
         aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon),
       );
@@ -111,8 +61,9 @@ export const useBekreftAksjonspunkt = ({
           ap.aksjonspunktType === aksjonspunktType.OVERSTYRING ||
           ap.aksjonspunktType === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
       );
+
       if (lagreOverstyrteAksjonspunkter && (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter)) {
-        lagrePromise = lagreOverstyrteAksjonspunkter(
+        await lagreOverstyrteAksjonspunkter(
           {
             ...params,
             overstyrteAksjonspunktDtoer: models,
@@ -120,7 +71,7 @@ export const useBekreftAksjonspunkt = ({
           true,
         );
       } else {
-        lagrePromise = lagreAksjonspunkter(
+        await lagreAksjonspunkter(
           {
             ...params,
             bekreftedeAksjonspunktDtoer: models,
@@ -128,21 +79,8 @@ export const useBekreftAksjonspunkt = ({
           true,
         );
       }
-
-      // Vent på at lagringen fullføres
-      await lagrePromise;
-
-      // === Side-effekter (tidligere returnert callback fra getLagringSideeffekter) ===
-
-      // Utfør riktig side-effekt basert på hva som ble lagret
-      if (visFatterVedtakModal) {
-        onFatterVedtak();
-      } else if (visIverksetterVedtakModal) {
-        onIverksetterVedtak();
-      } else if (erRevurderingsaksjonspunkt) {
-        onRevurdering();
-      } else {
-        onDefault();
+      if (!skaForhindreOppdaterUrl) {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
     },
     [
@@ -152,11 +90,7 @@ export const useBekreftAksjonspunkt = ({
       behandling.uuid,
       lagreAksjonspunkter,
       lagreOverstyrteAksjonspunkter,
-      lagreDokumentdata,
-      onIverksetterVedtak,
-      onFatterVedtak,
-      onRevurdering,
-      onDefault,
+      oppdaterProsessStegOgFaktaPanelIUrl,
     ],
   );
 };

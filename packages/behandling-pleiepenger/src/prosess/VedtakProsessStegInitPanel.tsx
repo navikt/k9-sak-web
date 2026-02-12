@@ -8,6 +8,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
+import RestApiState from '../../../rest-api-hooks/src/RestApiState';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
@@ -104,7 +105,12 @@ export function VedtakProsessStegInitPanel(props: Props) {
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
-  if (!erValgt || !restApiData.data?.informasjonsbehovVedtaksbrev || !tilgjengeligeVedtaksbrev) {
+  if (
+    !erValgt ||
+    restApiData.state === RestApiState.NOT_STARTED ||
+    restApiData.state === RestApiState.LOADING ||
+    !tilgjengeligeVedtaksbrev
+  ) {
     return null;
   }
   if (!erStegVurdert) {
