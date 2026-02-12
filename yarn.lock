@@ -2147,7 +2147,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    lodash: "npm:4.17.23"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
@@ -3170,7 +3169,6 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    lodash: "npm:4.17.23"
     react: "npm:19.2.3"
     react-collapse: "npm:5.1.1"
     react-dom: "npm:19.2.3"
@@ -3396,7 +3394,6 @@ __metadata:
     "@navikt/ds-react": "npm:7.40.0"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.19"
-    lodash: "npm:4.17.23"
     react: "npm:19.2.3"
     react-dom: "npm:19.2.3"
     react-hook-form: "npm:7.69.0"
@@ -3462,7 +3459,6 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@navikt/ft-plattform-komponenter": "npm:10.3.10"
     classnames: "npm:2.5.1"
-    lodash: "npm:4.17.23"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
   languageName: unknown
@@ -5368,13 +5364,6 @@ __metadata:
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10/1a3c3e06236e4c4aab89499c428d585527ce50c24fe8259e8b3926d3df4cfbbbcf306cfc73ddfb66cbafc973116efd15967020b0f738f63e09e64c7d260519e7
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:4.17.23":
-  version: 4.17.23
-  resolution: "@types/lodash@npm:4.17.23"
-  checksum: 10/05935534a44aadef67c2158b2fb4a042a226970088106a40ddc67e4f063783149fe5cf02279d7dd4a1e72c98d9189b9430face659645dbf77270f8c4c3e387f5
   languageName: node
   linkType: hard
 
@@ -10897,7 +10886,6 @@ __metadata:
     "@testing-library/jest-dom": "npm:6.9.1"
     "@testing-library/react": "npm:16.3.2"
     "@testing-library/user-event": "npm:14.6.1"
-    "@types/lodash": "npm:4.17.23"
     "@types/node": "npm:24.10.1"
     "@types/object-hash": "npm:3.0.6"
     "@types/prop-types": "npm:15.7.15"
@@ -11136,13 +11124,6 @@ __metadata:
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
   checksum: 10/7a495616121449e5d2288c606b1025d42ab9979e8c93ba885e5c5802ffd4f1ebad4428c793ccc12f73e73237e85a9f5b67dd6415757546fbd5a4653ba83e25ac
-  languageName: node
-  linkType: hard
-
-"lodash@npm:4.17.23":
-  version: 4.17.23
-  resolution: "lodash@npm:4.17.23"
-  checksum: 10/82504c88250f58da7a5a4289f57a4f759c44946c005dd232821c7688b5fcfbf4a6268f6a6cdde4b792c91edd2f3b5398c1d2a0998274432cff76def48735e233
   languageName: node
   linkType: hard
 
