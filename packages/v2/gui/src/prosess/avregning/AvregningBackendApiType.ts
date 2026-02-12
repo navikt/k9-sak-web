@@ -1,5 +1,5 @@
 import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
-import type { foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
 
 export type BehandlingAvregningBackendApiType = {
   bekreftAksjonspunktSjekkHøyEtterbetaling(
@@ -16,7 +16,7 @@ export type BehandlingAvregningBackendApiType = {
   ): Promise<void>;
   hentForhåndsvisningVarselbrev(
     behandlingUuid: string,
-    fagsakYtelseType: foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType,
+    fagsakYtelseType: FagsakYtelseTypeK9Tilbake,
     varseltekst?: string,
   ): Promise<Blob>;
 };

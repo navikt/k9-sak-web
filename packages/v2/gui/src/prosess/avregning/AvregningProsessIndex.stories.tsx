@@ -3,7 +3,7 @@ import { AvregningProsessIndex } from './AvregningProsessIndex';
 import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './AvregningMocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType';
-import type { foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
 import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import { fakePdf } from '../../storybook/mocks/fakePdf';
 import { ignoreUnusedDeclared } from '../../storybook/mocks/ignoreUnusedDeclared';
@@ -39,7 +39,7 @@ class FakeAvregningBackendClient implements BehandlingAvregningBackendApiType {
 
   async hentForhåndsvisningVarselbrev(
     behandlingUuid: string,
-    fagsakYtelseType: foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType,
+    fagsakYtelseType: FagsakYtelseTypeK9Tilbake,
     varseltekst?: string,
   ): Promise<Blob> {
     ignoreUnusedDeclared(behandlingUuid);
