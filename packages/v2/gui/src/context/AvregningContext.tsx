@@ -1,37 +1,81 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+
+import type { KontrollerEtterbetalingFormData } from '../prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetaling.js';
+import type { VurderFeilutbetalingFormValues } from '../prosess/avregning/vurder-feilutbetaling/VurderFeilutbetaling.js';
+
+interface AvregningFormStore {
+  høyEtterbetaling?: KontrollerEtterbetalingFormData;
+  feilutbetaling?: VurderFeilutbetalingFormValues;
+}
 
 interface AvregningFormState {
-  formState: any;
-  setFormState: (state: any) => void;
-  reset: () => void;
+  setHøyEtterbetaling: (values: KontrollerEtterbetalingFormData) => void;
+  setFeilutbetaling: (values: VurderFeilutbetalingFormValues) => void;
+  clearHøyEtterbetaling: () => void;
+  clearFeilutbetaling: () => void;
+  getHøyEtterbetalingState: () => KontrollerEtterbetalingFormData | undefined;
+  getFeilutbetalingState: () => VurderFeilutbetalingFormValues | undefined;
 }
 
 const AvregningFormContext = createContext<AvregningFormState | undefined>(undefined);
 
 interface AvregningFormProviderProps {
+  behandlingId: number | undefined;
   children: ReactNode;
 }
 
-export const AvregningFormProvider = ({ children }: AvregningFormProviderProps) => {
-  const [formState, setFormStateInternal] = useState<any>(0);
+// denne kan holde på state for aksjonspunktene i avregning
+// behovet oppstår fordi RHF unmountes og state forsvinner hvis man klikker seg
+// inn i et annet prosesspanel.
+// når behandlingId endres, nullstilles state
+export const AvregningFormProvider = ({ behandlingId, children }: AvregningFormProviderProps) => {
+  const [formStore, setFormStore] = useState<AvregningFormStore>({});
 
-  const setFormState = useCallback((state: any) => {
-    setFormStateInternal(state);
+  const prevBehandlingIdRef = useRef(behandlingId);
+
+  useEffect(() => {
+    if (prevBehandlingIdRef.current !== behandlingId) {
+      setFormStore({});
+      prevBehandlingIdRef.current = behandlingId;
+    }
+  }, [behandlingId]);
+
+  const setHøyEtterbetaling = useCallback((values: KontrollerEtterbetalingFormData) => {
+    setFormStore(prev => ({ ...prev, høyEtterbetaling: values }));
   }, []);
 
-  const reset = useCallback(() => {
-    setFormStateInternal(0);
+  const setFeilutbetaling = useCallback((values: VurderFeilutbetalingFormValues) => {
+    setFormStore(prev => ({ ...prev, feilutbetaling: values }));
   }, []);
 
+  const clearHøyEtterbetaling = useCallback(() => {
+    setFormStore(prev => ({ ...prev, høyEtterbetaling: undefined }));
+  }, []);
+
+  const clearFeilutbetaling = useCallback(() => {
+    setFormStore(prev => ({ ...prev, feilutbetaling: undefined }));
+  }, []);
+
+  const getHøyEtterbetalingState = useCallback(() => formStore.høyEtterbetaling, [formStore]);
+  const getFeilutbetalingState = useCallback(() => formStore.feilutbetaling, [formStore]);
   const value = useMemo<AvregningFormState>(
     () => ({
-      formState,
-      setFormState,
-      reset,
+      setHøyEtterbetaling,
+      setFeilutbetaling,
+      clearHøyEtterbetaling,
+      clearFeilutbetaling,
+      getHøyEtterbetalingState,
+      getFeilutbetalingState,
     }),
-    [formState, setFormState, reset],
+    [
+      setHøyEtterbetaling,
+      setFeilutbetaling,
+      clearHøyEtterbetaling,
+      clearFeilutbetaling,
+      getHøyEtterbetalingState,
+      getFeilutbetalingState,
+    ],
   );
-
   return <AvregningFormContext.Provider value={value}>{children}</AvregningFormContext.Provider>;
 };
 

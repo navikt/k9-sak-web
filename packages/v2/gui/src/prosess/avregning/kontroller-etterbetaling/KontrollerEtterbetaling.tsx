@@ -9,27 +9,28 @@ import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/g
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
 import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';
+import { useAvregningFormState } from '../../../context/AvregningContext';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
   behandling: BehandlingDto;
   readOnly?: boolean;
   api: BehandlingAvregningBackendApiType;
-  oppdaterBehandling: () => void;
 }
 
-interface KontrollerEtterbetalingFormData {
+export interface KontrollerEtterbetalingFormData {
   begrunnelse: string;
 }
 
 export type BekreftKontrollerEtterbetalingAksjonspunktRequest = BekreftedeAksjonspunkterDto;
 
-const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
+const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api }) => {
+  const { getHøyEtterbetalingState, setHøyEtterbetaling } = useAvregningFormState();
   const [loading, setLoading] = useState(false);
   const [rediger, setRediger] = useState(skalAksjonspunktUtredes(aksjonspunkt, behandling.status));
   const kanRedigeres = !readOnly && kanAksjonspunktRedigeres(aksjonspunkt, behandling.status);
@@ -50,8 +51,15 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
 
   const formMethods = useForm<KontrollerEtterbetalingFormData>({
     resolver: yupResolver(kontrollerEtterbetalingFormSchema),
-    defaultValues: initialValues,
+    defaultValues: getHøyEtterbetalingState() || initialValues,
   });
+
+  useEffect(() => {
+    return () => {
+      setHøyEtterbetaling(formMethods.getValues());
+      formMethods.reset();
+    };
+  }, []);
 
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
     try {
@@ -65,7 +73,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
         throw new Error(`behandling.id null. Kan ikke bekrefte aksjonspunkt`);
       }
       await api.bekreftAksjonspunktSjekkHøyEtterbetaling(behandling.id, behandling.versjon, data.begrunnelse);
-      oppdaterBehandling();
+      window.location.reload();
     } finally {
       setLoading(false);
     }

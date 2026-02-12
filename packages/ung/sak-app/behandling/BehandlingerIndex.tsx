@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router';
 
 import IngenBehandlingValgtPanel from '@k9-sak-web/gui/app/feilmeldinger/IngenBehandlingValgtPanel.js';
-import { AvregningFormProvider } from '@k9-sak-web/gui/context/AvregningContext.js';
 import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import BehandlingIndex from './BehandlingIndex';
@@ -25,15 +24,13 @@ export const BehandlingerIndex = ({
     <Route
       path="/:behandlingIdOrUuid/"
       element={
-        <AvregningFormProvider>
-          <BehandlingIndex
-            fagsak={fagsak}
-            alleBehandlinger={alleBehandlinger}
-            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-            setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
-            setRequestPendingMessage={setRequestPendingMessage}
-          />
-        </AvregningFormProvider>
+        <BehandlingIndex
+          fagsak={fagsak}
+          alleBehandlinger={alleBehandlinger}
+          arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+          setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+          setRequestPendingMessage={setRequestPendingMessage}
+        />
       }
     />
     <Route path="/" element={<IngenBehandlingValgtPanel numBehandlinger={alleBehandlinger.length} />} />

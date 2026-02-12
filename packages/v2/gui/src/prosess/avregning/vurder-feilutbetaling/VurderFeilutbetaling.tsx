@@ -6,7 +6,7 @@ import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-va
 import { useForm } from 'react-hook-form';
 
 import { isUngWeb } from '../../../utils/urlUtils';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import ArrowBox from '../../../shared/arrowBox/ArrowBox';
 import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -18,10 +18,12 @@ import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/beh
 import { foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
+import { useAvregningFormState } from '../../../context/AvregningContext.js';
 
-const IKKE_SEND_SUFFIX = `${TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING}IKKE_SEND` as const;
-interface VurderFeilutbetalingFormValues {
-  videreBehandling: TilbakekrevingVidereBehandlingType | typeof IKKE_SEND_SUFFIX;
+const OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
+  `${TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING}IKKE_SEND` as const;
+export interface VurderFeilutbetalingFormValues {
+  videreBehandling: TilbakekrevingVidereBehandlingType | typeof OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL;
   varseltekst: string;
   begrunnelse: string;
 }
@@ -51,13 +53,14 @@ const buildInitialValues = (
     !tilbakekrevingvalg.varseltekst &&
     tilbakekrevingvalg.videreBehandling === TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING;
 
-  const videreBehandling: TilbakekrevingVidereBehandlingType | typeof IKKE_SEND_SUFFIX = harTypeIkkeSendt
-    ? IKKE_SEND_SUFFIX
-    : (tilbakekrevingvalg.videreBehandling ?? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING);
+  const videreBehandling: TilbakekrevingVidereBehandlingType | typeof OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
+    harTypeIkkeSendt
+      ? OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL
+      : (tilbakekrevingvalg.videreBehandling ?? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING);
 
   return {
     videreBehandling,
-    varseltekst: tilbakekrevingvalg.varseltekst ?? '',
+    varseltekst: tilbakekrevingvalg.varseltekst ?? undefined,
     begrunnelse: aksjonspunkt?.begrunnelse ?? '',
   };
 };
@@ -69,13 +72,21 @@ export const VurderFeilutbetaling = ({
   aksjonspunkter,
   tilbakekrevingvalg,
 }: VurderFeilutbetalingProps) => {
+  const { getFeilutbetalingState, setFeilutbetaling } = useAvregningFormState();
   const formMethods = useForm<VurderFeilutbetalingFormValues>({
-    defaultValues: buildInitialValues(aksjonspunkter, tilbakekrevingvalg),
+    defaultValues: getFeilutbetalingState() || buildInitialValues(aksjonspunkter, tilbakekrevingvalg),
   });
   const featureToggles = useContext(FeatureTogglesContext);
   const avregningBackendClient = useAvregningBackendClient();
   const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELFELT;
   const maxLengthVarseltekst = utvidetVarseltekst ? 12000 : 1500;
+
+  useEffect(() => {
+    return () => {
+      setFeilutbetaling(formMethods.getValues());
+      formMethods.reset();
+    };
+  }, []);
 
   const forhåndsvisVarselbrev = async () => {
     if (!behandling.uuid) {
@@ -93,34 +104,33 @@ export const VurderFeilutbetaling = ({
     window.open(URL.createObjectURL(blob), '_blank');
   };
 
-  const submit = async () => {
-    void formMethods.handleSubmit(async () => {
-      if (!behandling.id || !behandling.versjon || !behandling.uuid) {
-        throw new Error(
-          'Utviklerfeil: Behandling ID, versjon og UUID er påkrevd for å løse aksjonspunkt. Meld fra i porten.',
-        );
-      }
-
-      const videreBehandling =
-        formMethods.watch('videreBehandling') === IKKE_SEND_SUFFIX
-          ? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING
-          : formMethods.watch('videreBehandling');
-
-      if (videreBehandling === IKKE_SEND_SUFFIX) {
-        throw new Error(`Utviklerfeil: Videre behandling er ikke gyldig ${videreBehandling}`);
-      }
-
-      await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
-        behandling.id,
-        behandling.versjon,
-        formMethods.watch('begrunnelse') ?? '',
-        videreBehandling,
-        formMethods.watch('varseltekst'),
+  const submit = formMethods.handleSubmit(async () => {
+    if (!behandling.id || !behandling.versjon || !behandling.uuid) {
+      throw new Error(
+        'Utviklerfeil: Behandling ID, versjon og UUID er påkrevd for å løse aksjonspunkt. Meld fra i porten.',
       );
-      /// trenger polling
-      window.location.reload();
-    })();
-  };
+    }
+
+    const videreBehandling =
+      formMethods.watch('videreBehandling') === OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL
+        ? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING
+        : formMethods.watch('videreBehandling');
+
+    if (videreBehandling === OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL) {
+      throw new Error(`Utviklerfeil: Videre behandling er ikke gyldig ${videreBehandling}`);
+    }
+
+    await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
+      behandling.id,
+      behandling.versjon,
+      formMethods.watch('begrunnelse') ?? null,
+      videreBehandling,
+      formMethods.watch('varseltekst') ?? null,
+    );
+    /// trenger polling
+    window.location.reload();
+  });
+
   return (
     <RhfForm formMethods={formMethods}>
       <VStack gap="space-8">
@@ -188,7 +198,7 @@ export const VurderFeilutbetaling = ({
                   </div>
                 )}
               </>
-              <Radio value={IKKE_SEND_SUFFIX}>Opprett tilbakekreving, ikke send varsel</Radio>
+              <Radio value={OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL}>Opprett tilbakekreving, ikke send varsel</Radio>
               <>
                 {!isUngWeb() && (
                   <Radio value={TilbakekrevingVidereBehandling.IGNORER_TILBAKEKREVING}>
@@ -204,8 +214,7 @@ export const VurderFeilutbetaling = ({
             <Button
               variant="primary"
               size="small"
-              type="button"
-              onClick={() => void submit()}
+              onClick={submit}
               disabled={formMethods.formState.isSubmitting}
               loading={formMethods.formState.isSubmitting}
             >

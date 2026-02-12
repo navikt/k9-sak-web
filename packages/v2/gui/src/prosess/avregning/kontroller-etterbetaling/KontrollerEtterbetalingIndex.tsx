@@ -31,10 +31,6 @@ const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Pr
    * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
    * tilpasses til å kunne trigge oppdatering av behandling "on-demand"
    */
-  const oppdaterBehandling = () => {
-    // FIXME temp fiks for å håndtere oppdatering av behandling
-    window.location.reload();
-  };
 
   return (
     <KontrollerEtterbetaling
@@ -42,7 +38,6 @@ const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Pr
       aksjonspunkt={deepCopyProps.aksjonspunkt}
       readOnly={readOnly}
       api={behandlingAvregningBackendClient}
-      oppdaterBehandling={oppdaterBehandling}
     />
   );
 };
