@@ -12,7 +12,6 @@ const meta = {
   decorators: [
     Story => (
       <AvregningFormProvider behandlingId={1}>
-        {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
         <Story />
       </AvregningFormProvider>
     ),
