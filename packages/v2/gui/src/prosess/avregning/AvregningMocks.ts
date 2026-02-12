@@ -1,0 +1,1608 @@
+import type { AvregningProsessIndexProps } from './AvregningProsessIndex';
+
+export const vurderFeilutbetalingMock: Omit<AvregningProsessIndexProps, 'client'> = {
+  fagsak: {
+    saksnummer: '5YC5Y',
+    sakstype: 'PPN',
+    gyldigPeriode: {
+      fom: '2026-01-01',
+      tom: '2026-01-15',
+    },
+    status: 'UBEH',
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    opprettet: '2026-02-12T12:28:29.547',
+    endret: '2026-02-12T12:28:33.086',
+    person: {
+      erDod: false,
+      alder: 50,
+      diskresjonskode: undefined,
+      dodsdato: undefined,
+      erKvinne: true,
+      navn: 'TROST LENE',
+      personnummer: '10438732409',
+      personstatusType: 'BOSA',
+      aktørId: '9910438732409',
+    },
+    pleietrengendeAktørId: '9915412570100',
+    erPbSak: false,
+  },
+  behandling: {
+    ansvarligSaksbehandler: 'S123456',
+    behandlendeEnhetId: '4409',
+    behandlendeEnhetNavn: 'NAV Arbeid og ytelser Arendal',
+    behandlingÅrsaker: [
+      {
+        erAutomatiskRevurdering: false,
+        behandlingArsakType: 'RE-END-FRA-BRUKER' as any,
+        manueltOpprettet: false,
+      },
+      {
+        erAutomatiskRevurdering: false,
+        behandlingArsakType: 'RE_ANNEN_SAK' as any,
+        manueltOpprettet: false,
+      },
+    ],
+    behandlingKøet: false,
+    behandlingKoet: false,
+    behandlingPaaVent: false,
+    behandlingPåVent: false,
+    behandlingsfristTid: '2026-03-26',
+    behandlingsresultat: {
+      erRevurderingMedUendretUtfall: false,
+      type: 'INNVILGET',
+      vilkårResultat: {
+        OPPTJENINGSVILKÅRET: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        BEREGNINGSGRUNNLAGVILKÅR: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        I_LIVETS_SLUTTFASE: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        OPPTJENINGSPERIODEVILKÅR: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        MEDLEMSKAPSVILKÅRET: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        ALDERSVILKÅR: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        SØKNADSFRIST: [
+          {
+            periode: {
+              fom: '2026-01-01',
+              tom: '2026-01-15',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+      },
+    },
+    behandlingResultatType: 'INNVILGET',
+    endret: '2026-02-12T12:28:48.621',
+    endretAvBrukernavn: 'VL',
+    erPåVent: false,
+    erPaaVent: false,
+    fagsakId: 1999954,
+    sakstype: 'PPN',
+    førsteÅrsak: {
+      erAutomatiskRevurdering: false,
+      behandlingArsakType: 'RE-END-FRA-BRUKER',
+      manueltOpprettet: false,
+    },
+    fristBehandlingPaaVent: undefined,
+    gjeldendeVedtak: false,
+    id: 2999957,
+    links: [
+      {
+        href: '/k9/sak/api/behandlinger/rettigheter?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'behandling-rettigheter',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/revurdering-original?behandlingUuid=f6100ead-5ed3-4ec0-81db-432adea2b113',
+        rel: 'original-behandling',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/person/medlemskap-v2?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'soeker-medlemskap-v2',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/aksjonspunkt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-aksjonspunkt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering/oversikt/I_LIVETS_SLUTT?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-vurdering-oversikt-slu',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-vurdering-direkte',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering',
+        rel: 'sykdom-vurdering-opprettelse',
+        requestPayload: {
+          behandlingUuid: 'b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+          type: undefined,
+          tekst: undefined,
+          resultat: undefined,
+          perioder: [],
+          manglerLegeerklæring: false,
+          tilknyttedeDokumenter: undefined,
+          dryRun: false,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering',
+        rel: 'sykdom-vurdering-endring',
+        requestPayload: {
+          behandlingUuid: 'b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+          id: undefined,
+          versjon: undefined,
+          tekst: undefined,
+          resultat: undefined,
+          perioder: [],
+          manglerLegeerklæring: false,
+          tilknyttedeDokumenter: undefined,
+          dryRun: false,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/oversikt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-dokument-oversikt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/liste?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-dokument-liste',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/eksisterendevurderinger?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-dokument-eksisterendevurderinger',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/innleggelse?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'sykdom-innleggelse',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'pleiepenger-sykt-barn-uttaksplan',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak-med-utsatt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'pleiepenger-uttaksplan-med-utsatt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/arbeidstid-mangler?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'psb-manglende-arbeidstid',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak/overstyrt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'pleiepenger-overstyrt-uttak',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/inntektsgradering?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'pleiepenger-inntektsgradering',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter',
+        rel: 'pleiepenger-overstyrtbare-aktiviteter',
+        requestPayload: {
+          behandlingIdDto: 'b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+          fom: '2026-01-01',
+          tom: '2026-01-15',
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/uttak/utenlandsopphold?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'utenlandsopphold',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/koblinger?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregning-koblinger',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/koblingerTilVurdering?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregning-koblinger-til-vurdering',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/ytelser?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'overlappende-ytelser',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/tilsyn?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'pleiepenger-sykt-barn-tilsyn',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleietrengende?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'om-pleietrengende',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/vedtak/fritekstdokumenter?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'pleiepenger-fritekstdokumenter',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/saksbehandler?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'saksbehandler-info',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/uttak/fastsatt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'uttak-fastsatt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/uttak/oppgitt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'uttak-oppgitt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/fagsak?saksnummer=5YC5Y',
+        rel: 'fagsak',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/fagsak/relatertesaker?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'fagsak-relaterte-saker',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/fagsak/relatertesaker/soker?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'fagsak-relaterte-saker-soker',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/historikk?saksnummer=5YC5Y',
+        rel: 'historikk',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/aksjonspunkt-v2?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'aksjonspunkter',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/vilkar-v3?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'vilkar-v3',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/soknad?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'soknad',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/søknadsfrist/status?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'soknadsfrist-status',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/person/personopplysninger?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'soeker-personopplysninger',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/iay/arbeidsforhold-v2?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'arbeidsforhold-v1',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/iay/arbeidsforhold-v2?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'arbeidsforhold',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/arbeidsgiver?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'arbeidsgivere',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/opptjening-v2?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'opptjening-v2',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/opptjening/inntekt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'inntekt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsresultat?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregningsresultat',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/kompletthet/beregning?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'kompletthet-beregning',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/kompletthet/beregning-v2?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'kompletthet-beregning-v2',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsresultat/utbetalt?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregningsresultat-utbetalt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregningsgrunnlag',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/alle?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregningsgrunnlag-alle',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/koblingerTilVurdering?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'beregningreferanser-til-vurdering',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/overstyrInput?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'overstyr-input-beregning',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/proxy/oppdrag/simulering/detaljert-resultat?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'simuleringResultat',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/brev/vedtak?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'vedtak-varsel',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/api/brev/maler?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4&eksternReferanse=b39c9fbe-e772-47bd-b43d-c25564ce04c4&sakstype=PPN&avsenderApplikasjon=K9SAK',
+        rel: 'brev-maler',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/api/brev/tilgjengeligevedtaksbrev?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4&eksternReferanse=b39c9fbe-e772-47bd-b43d-c25564ce04c4&sakstype=PPN&avsenderApplikasjon=K9SAK',
+        rel: 'tilgjengelige-vedtaksbrev',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/api/brev/informasjonsbehov?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4&eksternReferanse=b39c9fbe-e772-47bd-b43d-c25564ce04c4&sakstype=PPN&avsenderApplikasjon=K9SAK',
+        rel: 'informasjonsbehov-vedtaksbrev',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/dokumentdata/api?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'dokumentdata-hente',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/dokumentdata/api/b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'dokumentdata-lagre',
+        requestPayload: undefined,
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/los/merknad?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'los-hente-merknad',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/los/merknad',
+        rel: 'los-lagre-merknad',
+        requestPayload: 'b39c9fbe-e772-47bd-b43d-c25564ce04c4' as any,
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsresultat/har-samme-resultat?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'har-samme-resultat',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/perioder?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'behandling-perioder-årsak',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/perioder-med-vilkar?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'behandling-perioder-årsak-med-vilkår',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/bytt-enhet',
+        rel: 'bytt-behandlende-enhet',
+        requestPayload: {
+          begrunnelse: undefined,
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+          enhetId: undefined,
+          enhetNavn: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/opne-for-endringer',
+        rel: 'opne-for-endringer',
+        requestPayload: {
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/henlegg',
+        rel: 'henlegg-behandling',
+        requestPayload: {
+          årsakKode: undefined,
+          begrunnelse: undefined,
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/gjenoppta',
+        rel: 'gjenoppta-behandling',
+        requestPayload: {
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/sett-pa-vent',
+        rel: 'sett-behandling-pa-vent',
+        requestPayload: {
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+          frist: undefined,
+          ventearsak: undefined,
+          ventearsakVariant: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/aksjonspunkt/kontroller-revurdering?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'har-apent-kontroller-revurdering-aksjonspunkt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/totrinnskontroll/arsaker?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'totrinnskontroll-arsaker',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/totrinnskontroll/arsaker_read_only?behandlingUuid=b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+        rel: 'totrinnskontroll-arsaker-readOnly',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/brev/bestill',
+        rel: 'brev-bestill',
+        requestPayload: {
+          arsakskode: undefined,
+          fritekst: undefined,
+          behandlingId: undefined,
+          brevmalkode: undefined,
+          overstyrtMottaker: undefined,
+          fritekstbrev: undefined,
+          forventetSaksbehandlingstid: undefined,
+          dokumentbestillingsId: undefined,
+        },
+        type: 'POST',
+      },
+    ],
+    opprettet: '2026-02-12T12:28:33',
+    sprakkode: 'NB',
+    språkkode: 'NB',
+    status: 'UTRED',
+    stegTilstand: {
+      stegType: 'SIMOPP',
+      stegStatus: 'UTGANG',
+      tidsstempel: '2026-02-12T12:28:35.64+01:00',
+    },
+    toTrinnsBehandling: false,
+    type: 'BT-004',
+    uuid: 'b39c9fbe-e772-47bd-b43d-c25564ce04c4',
+    venteArsakKode: undefined,
+    behandlingHenlagt: false,
+    versjon: 48,
+  },
+  aksjonspunkter: [
+    {
+      aksjonspunktType: 'MANU',
+      begrunnelse: undefined,
+      besluttersBegrunnelse: undefined,
+      definisjon: '5084',
+      erAktivt: true,
+      fristTid: undefined,
+      kanLoses: true,
+      status: 'OPPR',
+      toTrinnsBehandling: false,
+      toTrinnsBehandlingGodkjent: undefined,
+      vilkarType: undefined,
+      vurderPaNyttArsaker: undefined,
+      venteårsak: {
+        kode: '-',
+        kanVelgesIGui: false,
+        ventekategori: undefined,
+        kodeverk: 'VENT_AARSAK',
+      } as any,
+      venteårsakVariant: undefined,
+      opprettetAv: 'vtp',
+    },
+  ],
+  simuleringResultat: {
+    simuleringResultat: {
+      periode: {
+        fom: '2026-01-13',
+        tom: '2026-01-15',
+      },
+      sumEtterbetaling: 0,
+      sumFeilutbetaling: -555,
+      sumInntrekk: 0,
+      ingenPerioderMedAvvik: false,
+      perioderPerMottaker: [
+        {
+          mottakerType: 'BRUKER',
+          resultatPerFagområde: [
+            {
+              fagOmrådeKode: 'PN',
+              rader: [
+                {
+                  feltnavn: 'nyttBeløp',
+                  resultaterPerMåned: [
+                    {
+                      periode: {
+                        fom: '2026-01-13',
+                        tom: '2026-01-15',
+                      },
+                      beløp: -555,
+                    },
+                  ],
+                },
+                {
+                  feltnavn: 'tidligereUtbetalt',
+                  resultaterPerMåned: [
+                    {
+                      periode: {
+                        fom: '2026-01-13',
+                        tom: '2026-01-15',
+                      },
+                      beløp: 1386,
+                    },
+                  ],
+                },
+                {
+                  feltnavn: 'differanse',
+                  resultaterPerMåned: [
+                    {
+                      periode: {
+                        fom: '2026-01-13',
+                        tom: '2026-01-15',
+                      },
+                      beløp: -1941,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          resultatOgMotregningRader: [
+            {
+              feltnavn: 'inntrekkNesteMåned',
+              resultaterPerMåned: [
+                {
+                  periode: {
+                    fom: '2026-01-13',
+                    tom: '2026-01-15',
+                  },
+                  beløp: 0,
+                },
+              ],
+            },
+            {
+              feltnavn: 'resultat',
+              resultaterPerMåned: [
+                {
+                  periode: {
+                    fom: '2026-01-13',
+                    tom: '2026-01-15',
+                  },
+                  beløp: -555,
+                },
+              ],
+            },
+          ],
+          nesteUtbPeriode: {
+            fom: '2026-03-01',
+            tom: '2026-03-31',
+          },
+        },
+      ],
+    },
+    simuleringResultatUtenInntrekk: null as any,
+    slåttAvInntrekk: false,
+  },
+  isReadOnly: false,
+};
+
+export const sjekkHøyEtterbetalingMock: Omit<AvregningProsessIndexProps, 'client'> = {
+  fagsak: {
+    saksnummer: '5YC4K',
+    sakstype: 'PSB',
+    gyldigPeriode: {
+      fom: '2023-01-01',
+      tom: '2023-04-30',
+    },
+    status: 'UBEH',
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    opprettet: '2026-02-12T12:21:26.393',
+    endret: '2026-02-12T12:21:30.5',
+    person: {
+      erDod: false,
+      alder: 18,
+      diskresjonskode: undefined,
+      dodsdato: undefined,
+      erKvinne: true,
+      navn: 'KROKODILLE LINDA',
+      personnummer: '10499224007',
+      personstatusType: 'BOSA',
+      aktørId: '9910499224007',
+    },
+    pleietrengendeAktørId: '9916472374684',
+    erPbSak: false,
+  },
+  behandling: {
+    ansvarligSaksbehandler: 'S123456',
+    behandlendeEnhetId: '4409',
+    behandlendeEnhetNavn: 'NAV Arbeid og ytelser Arendal',
+    behandlingÅrsaker: [
+      {
+        erAutomatiskRevurdering: false,
+        behandlingArsakType: 'RE-END-FRA-BRUKER' as any,
+        manueltOpprettet: false,
+      },
+      {
+        erAutomatiskRevurdering: false,
+        behandlingArsakType: 'RE_ANNEN_SAK' as any,
+        manueltOpprettet: false,
+      },
+    ],
+    behandlingKøet: false,
+    behandlingKoet: false,
+    behandlingPaaVent: false,
+    behandlingPåVent: false,
+    behandlingsfristTid: '2026-03-26',
+    behandlingsresultat: {
+      erRevurderingMedUendretUtfall: false,
+      type: 'INNVILGET',
+      vilkårResultat: {
+        OPPTJENINGSVILKÅRET: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        OMSORGEN_FOR: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        BEREGNINGSGRUNNLAGVILKÅR: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        MEDISINSKEVILKÅR_UNDER_18_ÅR: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        OPPTJENINGSPERIODEVILKÅR: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        MEDLEMSKAPSVILKÅRET: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        ALDERSVILKÅR: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+        SØKNADSFRIST: [
+          {
+            periode: {
+              fom: '2023-01-01',
+              tom: '2023-04-30',
+            },
+            avslagsårsak: '-',
+            utfall: 'OPPFYLT',
+          },
+        ],
+      },
+    },
+    behandlingResultatType: 'INNVILGET',
+    endret: '2026-02-12T12:21:42.554',
+    endretAvBrukernavn: 'VL',
+    erPåVent: false,
+    erPaaVent: false,
+    fagsakId: 1999953,
+    sakstype: 'PSB',
+    førsteÅrsak: {
+      erAutomatiskRevurdering: false,
+      behandlingArsakType: 'RE-END-FRA-BRUKER',
+      manueltOpprettet: false,
+    },
+    fristBehandlingPaaVent: undefined,
+    gjeldendeVedtak: false,
+    id: 2999955,
+    links: [
+      {
+        href: '/k9/sak/api/behandlinger/rettigheter?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'behandling-rettigheter',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/revurdering-original?behandlingUuid=7e206eba-e8ed-4716-a78b-5873a95340e1',
+        rel: 'original-behandling',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/person/medlemskap-v2?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'soeker-medlemskap-v2',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/aksjonspunkt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-aksjonspunkt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering/oversikt/KONTINUERLIG_TILSYN_OG_PLEIE?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-vurdering-oversikt-ktp',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering/oversikt/TO_OMSORGSPERSONER?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-vurdering-oversikt-too',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-vurdering-direkte',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering',
+        rel: 'sykdom-vurdering-opprettelse',
+        requestPayload: {
+          behandlingUuid: 'c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+          type: undefined,
+          tekst: undefined,
+          resultat: undefined,
+          perioder: [],
+          manglerLegeerklæring: false,
+          tilknyttedeDokumenter: undefined,
+          dryRun: false,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/vurdering',
+        rel: 'sykdom-vurdering-endring',
+        requestPayload: {
+          behandlingUuid: 'c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+          id: undefined,
+          versjon: undefined,
+          tekst: undefined,
+          resultat: undefined,
+          perioder: [],
+          manglerLegeerklæring: false,
+          tilknyttedeDokumenter: undefined,
+          dryRun: false,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/oversikt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-dokument-oversikt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/liste?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-dokument-liste',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/eksisterendevurderinger?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-dokument-eksisterendevurderinger',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/innleggelse?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-innleggelse',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/sykdom/dokument/diagnosekoder?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'sykdom-diagnosekoder',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-sykt-barn-uttaksplan',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/simuler?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-sykt-barn-simulert-uttaksplan',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak-med-utsatt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-uttaksplan-med-utsatt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/arbeidstid-mangler?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'psb-manglende-arbeidstid',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak/overstyrt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-overstyrt-uttak',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/inntektsgradering?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-inntektsgradering',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak/overstyrbare-aktiviteter',
+        rel: 'pleiepenger-overstyrtbare-aktiviteter',
+        requestPayload: {
+          behandlingIdDto: 'c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+          fom: '2023-01-01',
+          tom: '2023-04-30',
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleiepenger/uttak/egne-overlappende-saker',
+        rel: 'egne-overlappende-saker',
+        requestPayload: {
+          behandlingUuid: 'c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/uttak/utenlandsopphold?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'utenlandsopphold',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/omsorg-for?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'omsorgen-for',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/koblinger?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregning-koblinger',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/koblingerTilVurdering?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregning-koblinger-til-vurdering',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/ytelser?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'overlappende-ytelser',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/tilsyn?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-sykt-barn-tilsyn',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleietrengende/dod?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'rett-ved-dod',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/pleietrengende?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'om-pleietrengende',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/vedtak/fritekstdokumenter?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'pleiepenger-fritekstdokumenter',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/saksbehandler?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'saksbehandler-info',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/direkte-overgang?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'direkte-overgang',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/uttak/fastsatt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'uttak-fastsatt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/uttak/oppgitt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'uttak-oppgitt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/fagsak?saksnummer=5YC4K',
+        rel: 'fagsak',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/fagsak/relatertesaker?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'fagsak-relaterte-saker',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/fagsak/relatertesaker/soker?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'fagsak-relaterte-saker-soker',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/historikk?saksnummer=5YC4K',
+        rel: 'historikk',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/aksjonspunkt-v2?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'aksjonspunkter',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/vilkar-v3?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'vilkar-v3',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/soknad?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'soknad',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/søknadsfrist/status?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'soknadsfrist-status',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/person/personopplysninger?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'soeker-personopplysninger',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/iay/arbeidsforhold-v2?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'arbeidsforhold-v1',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/iay/arbeidsforhold-v2?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'arbeidsforhold',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/arbeidsgiver?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'arbeidsgivere',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/opptjening-v2?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'opptjening-v2',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/opptjening/inntekt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'inntekt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsresultat?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregningsresultat',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/kompletthet/beregning?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'kompletthet-beregning',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/kompletthet/beregning-v2?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'kompletthet-beregning-v2',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsresultat/utbetalt?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregningsresultat-utbetalt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregningsgrunnlag',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/alle?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregningsgrunnlag-alle',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/koblingerTilVurdering?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'beregningreferanser-til-vurdering',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsgrunnlag/overstyrInput?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'overstyr-input-beregning',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/proxy/oppdrag/simulering/detaljert-resultat?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'simuleringResultat',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/brev/vedtak?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'vedtak-varsel',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/api/brev/maler?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7&eksternReferanse=c29d3e37-190b-44cf-a5f3-8972807ec9b7&sakstype=PSB&avsenderApplikasjon=K9SAK',
+        rel: 'brev-maler',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/api/brev/tilgjengeligevedtaksbrev?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7&eksternReferanse=c29d3e37-190b-44cf-a5f3-8972807ec9b7&sakstype=PSB&avsenderApplikasjon=K9SAK',
+        rel: 'tilgjengelige-vedtaksbrev',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/api/brev/informasjonsbehov?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7&eksternReferanse=c29d3e37-190b-44cf-a5f3-8972807ec9b7&sakstype=PSB&avsenderApplikasjon=K9SAK',
+        rel: 'informasjonsbehov-vedtaksbrev',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/dokumentdata/api?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'dokumentdata-hente',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/formidling/dokumentdata/api/c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'dokumentdata-lagre',
+        requestPayload: undefined,
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/los/merknad?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'los-hente-merknad',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/los/merknad',
+        rel: 'los-lagre-merknad',
+        requestPayload: 'c29d3e37-190b-44cf-a5f3-8972807ec9b7' as any,
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/beregningsresultat/har-samme-resultat?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'har-samme-resultat',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/perioder?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'behandling-perioder-årsak',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/perioder-med-vilkar?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'behandling-perioder-årsak-med-vilkår',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/bytt-enhet',
+        rel: 'bytt-behandlende-enhet',
+        requestPayload: {
+          begrunnelse: undefined,
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+          enhetId: undefined,
+          enhetNavn: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/opne-for-endringer',
+        rel: 'opne-for-endringer',
+        requestPayload: {
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/henlegg',
+        rel: 'henlegg-behandling',
+        requestPayload: {
+          årsakKode: undefined,
+          begrunnelse: undefined,
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/gjenoppta',
+        rel: 'gjenoppta-behandling',
+        requestPayload: {
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandlinger/sett-pa-vent',
+        rel: 'sett-behandling-pa-vent',
+        requestPayload: {
+          behandlingId: undefined,
+          behandlingVersjon: undefined,
+          frist: undefined,
+          ventearsak: undefined,
+          ventearsakVariant: undefined,
+        },
+        type: 'POST',
+      },
+      {
+        href: '/k9/sak/api/behandling/aksjonspunkt/kontroller-revurdering?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'har-apent-kontroller-revurdering-aksjonspunkt',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/totrinnskontroll/arsaker?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'totrinnskontroll-arsaker',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/behandling/totrinnskontroll/arsaker_read_only?behandlingUuid=c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+        rel: 'totrinnskontroll-arsaker-readOnly',
+        requestPayload: undefined,
+        type: 'GET',
+      },
+      {
+        href: '/k9/sak/api/brev/bestill',
+        rel: 'brev-bestill',
+        requestPayload: {
+          arsakskode: undefined,
+          fritekst: undefined,
+          behandlingId: undefined,
+          brevmalkode: undefined,
+          overstyrtMottaker: undefined,
+          fritekstbrev: undefined,
+          forventetSaksbehandlingstid: undefined,
+          dokumentbestillingsId: undefined,
+        },
+        type: 'POST',
+      },
+    ],
+    opprettet: '2026-02-12T12:21:30',
+    sprakkode: 'NB',
+    språkkode: 'NB',
+    status: 'UTRED',
+    stegTilstand: {
+      stegType: 'SIMOPP',
+      stegStatus: 'UTGANG',
+      tidsstempel: '2026-02-12T12:21:33.437+01:00',
+    },
+    toTrinnsBehandling: false,
+    type: 'BT-004',
+    uuid: 'c29d3e37-190b-44cf-a5f3-8972807ec9b7',
+    venteArsakKode: undefined,
+    behandlingHenlagt: false,
+    versjon: 54,
+  },
+  aksjonspunkter: [
+    {
+      aksjonspunktType: 'MANU',
+      begrunnelse: undefined,
+      besluttersBegrunnelse: undefined,
+      definisjon: '5086',
+      erAktivt: true,
+      fristTid: undefined,
+      kanLoses: true,
+      status: 'OPPR',
+      toTrinnsBehandling: false,
+      toTrinnsBehandlingGodkjent: undefined,
+      vilkarType: undefined,
+      vurderPaNyttArsaker: undefined,
+      venteårsak: {
+        kode: '-',
+        kanVelgesIGui: false,
+        ventekategori: undefined,
+        kodeverk: 'VENT_AARSAK',
+      } as any,
+      venteårsakVariant: undefined,
+      opprettetAv: 'vtp',
+    },
+  ],
+  simuleringResultat: {
+    simuleringResultat: {
+      periode: {
+        fom: '2023-02-01',
+        tom: '2024-05-31',
+      },
+      sumEtterbetaling: 198078,
+      sumFeilutbetaling: 0,
+      sumInntrekk: 0,
+      ingenPerioderMedAvvik: false,
+      perioderPerMottaker: [
+        {
+          mottakerType: 'BRUKER',
+          resultatPerFagområde: [
+            {
+              fagOmrådeKode: 'PB',
+              rader: [
+                {
+                  feltnavn: 'nyttBeløp',
+                  resultaterPerMåned: [
+                    {
+                      periode: {
+                        fom: '2023-02-01',
+                        tom: '2023-02-28',
+                      },
+                      beløp: 8580,
+                    },
+                    {
+                      periode: {
+                        fom: '2023-03-01',
+                        tom: '2023-03-31',
+                      },
+                      beløp: 9867,
+                    },
+                    {
+                      periode: {
+                        fom: '2023-04-01',
+                        tom: '2023-04-28',
+                      },
+                      beløp: 8580,
+                    },
+                    {
+                      periode: {
+                        fom: '2024-05-01',
+                        tom: '2024-05-31',
+                      },
+                      beløp: 171051,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          resultatOgMotregningRader: [
+            {
+              feltnavn: 'inntrekkNesteMåned',
+              resultaterPerMåned: [
+                {
+                  periode: {
+                    fom: '2023-02-01',
+                    tom: '2023-02-28',
+                  },
+                  beløp: 0,
+                },
+                {
+                  periode: {
+                    fom: '2023-03-01',
+                    tom: '2023-03-31',
+                  },
+                  beløp: 0,
+                },
+                {
+                  periode: {
+                    fom: '2023-04-01',
+                    tom: '2023-04-28',
+                  },
+                  beløp: 0,
+                },
+                {
+                  periode: {
+                    fom: '2024-05-01',
+                    tom: '2024-05-31',
+                  },
+                  beløp: 0,
+                },
+              ],
+            },
+            {
+              feltnavn: 'resultat',
+              resultaterPerMåned: [
+                {
+                  periode: {
+                    fom: '2023-02-01',
+                    tom: '2023-02-28',
+                  },
+                  beløp: 8580,
+                },
+                {
+                  periode: {
+                    fom: '2023-03-01',
+                    tom: '2023-03-31',
+                  },
+                  beløp: 9867,
+                },
+                {
+                  periode: {
+                    fom: '2023-04-01',
+                    tom: '2023-04-28',
+                  },
+                  beløp: 8580,
+                },
+                {
+                  periode: {
+                    fom: '2024-05-01',
+                    tom: '2024-05-31',
+                  },
+                  beløp: 171051,
+                },
+              ],
+            },
+          ],
+          nesteUtbPeriode: {
+            fom: '2026-03-01',
+            tom: '2026-03-31',
+          },
+        },
+      ],
+    },
+    simuleringResultatUtenInntrekk: undefined as any,
+    slåttAvInntrekk: false,
+  },
+  isReadOnly: false,
+};

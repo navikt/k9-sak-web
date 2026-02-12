@@ -29,14 +29,14 @@ interface VurderFeilutbetalingFormValues {
 interface VurderFeilutbetalingProps {
   readOnly: boolean;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
-  tilbakekrevingvalg: TilbakekrevingValgDto;
+  tilbakekrevingvalg: TilbakekrevingValgDto | undefined;
   behandling: BehandlingDto;
   fagsakYtelseType: FagsakYtelseType;
 }
 
 const buildInitialValues = (
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[],
-  tilbakekrevingvalg: TilbakekrevingValgDto,
+  tilbakekrevingvalg: TilbakekrevingValgDto | undefined,
 ) => {
   if (!tilbakekrevingvalg || !aksjonspunkter) {
     return undefined;

@@ -13,7 +13,7 @@ export interface AvregningProsessIndexProps {
   behandling: BehandlingDto;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
   simuleringResultat: SimuleringDto;
-  tilbakekrevingvalg: TilbakekrevingValgDto;
+  tilbakekrevingvalg?: TilbakekrevingValgDto;
   isReadOnly: boolean;
   client: BehandlingAvregningBackendClient;
 }

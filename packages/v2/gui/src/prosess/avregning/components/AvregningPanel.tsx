@@ -21,7 +21,7 @@ interface AvregningPanelProps {
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
   behandling: BehandlingDto;
   fagsak: FagsakDto;
-  tilbakekrevingvalg: TilbakekrevingValgDto;
+  tilbakekrevingvalg?: TilbakekrevingValgDto;
 }
 export function AvregningPanel(props: AvregningPanelProps) {
   const [showDetails, setShowDetails] = useState<Array<{ id: number; show: boolean }>>([]);
