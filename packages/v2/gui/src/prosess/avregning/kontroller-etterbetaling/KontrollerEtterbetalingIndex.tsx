@@ -1,5 +1,4 @@
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { useAvregningBackendClient } from '../AvregningBackendClientContext.js';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
