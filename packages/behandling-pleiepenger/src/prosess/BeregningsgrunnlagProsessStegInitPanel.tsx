@@ -20,6 +20,7 @@ import {
   beregningsgrunnlagQueryOptions,
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
+import type { ArbeidsgiverOpplysningerPerId } from '@navikt/ft-types';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -37,8 +38,8 @@ interface Props {
   api: K9SakProsessApi;
   behandling: Behandling;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
-  formData: any;
-  setFormData: (data: any) => void;
+  formData: unknown;
+  setFormData: (data: unknown) => void;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isReadOnly: boolean;
 }
@@ -59,7 +60,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     { data: vilkår },
     { data: beregningreferanserTilVurdering = [] },
     { data: beregningsgrunnlag },
-    { data: arbeidsgiverOpplysningerPerId = [] },
+    { data: arbeidsgiverOpplysningerPerId },
   ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(props.api, props.behandling, BEREGNING_AKSJONSPUNKT_KODER),
@@ -87,11 +88,13 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
+  const arbGivPrId: ArbeidsgiverOpplysningerPerId = arbeidsgiverOpplysningerPerId.arbeidsgivere ?? {};
+
   return (
     <BeregningsgrunnlagProsessIndex
       beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
       beregningsgrunnlagListe={beregningsgrunnlag}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      arbeidsgiverOpplysningerPerId={arbGivPrId}
       submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
       kodeverkSamling={props.alleKodeverk}

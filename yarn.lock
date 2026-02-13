@@ -3798,6 +3798,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-types@npm:^5.3.21":
+  version: 5.3.21
+  resolution: "@navikt/ft-types@npm:5.3.21::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F5.3.21%2Fea0ef5432e5f6835e472f056c045162f6a85a896"
+  checksum: 10/d8ff9a1275c5a61c040f952f1277e430a387504b776479e0134abdb7b7929cbf009e8c9d6368bc6eb408eceb2c7a0bb86c6da73ad179fff3c38a6b6429fa68e7
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-ui-komponenter@npm:6.5.12, @navikt/ft-ui-komponenter@npm:^6.5.12":
   version: 6.5.12
   resolution: "@navikt/ft-ui-komponenter@npm:6.5.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F6.5.12%2Ff1ec71cf30bfa91478df815e1c9d137bcf011ba6"
@@ -10846,6 +10853,7 @@ __metadata:
     "@navikt/ds-tailwind": "npm:7.40.0"
     "@navikt/familie-endringslogg": "npm:14.0.5"
     "@navikt/ft-plattform-komponenter": "npm:10.3.10"
+    "@navikt/ft-types": "npm:^5.3.21"
     "@playwright/test": "npm:1.57.0"
     "@popperjs/core": "npm:2.11.8"
     "@sentry/browser": "npm:10.34.0"
