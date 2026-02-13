@@ -130,7 +130,7 @@ const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 const meta = {
   title: 'gui/prosess/vilkar-opptjening',
   component: OpptjeningVilkarProsessIndexV2,
-  decorators: [withFeatureToggles({ OPPTJENING_READ_ONLY_PERIODER: false })],
+  decorators: [withFeatureToggles({})],
 } satisfies Meta<typeof OpptjeningVilkarProsessIndexV2>;
 
 export default meta;
@@ -160,8 +160,8 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
             },
             vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT,
             periode: {
-              fom: '2020-04-27',
-              tom: '2020-04-27',
+              fom: '2018-10-02',
+              tom: '2018-10-02',
             },
             begrunnelse: undefined,
             vurderesIBehandlingen: true,
@@ -209,8 +209,8 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
             innvilgelseMerknadKode: '7847B',
             kode: '7847B',
             periode: {
-              fom: '2020-04-27',
-              tom: '2020-04-27',
+              fom: '2018-10-02',
+              tom: '2018-10-02',
             },
             vurderesIAksjonspunkt: true,
             vurderesIBehandlingen: true,

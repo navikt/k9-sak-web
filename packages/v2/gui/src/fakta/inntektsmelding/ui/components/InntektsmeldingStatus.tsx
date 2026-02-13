@@ -19,6 +19,8 @@ const statusTekster = {
 const InntektsmeldingStatus = ({ status }: { status: Status }) => {
   const erMottatt = status === Status.MOTTATT;
   const erMangler = status === Status.MANGLER;
+  const erMottattUkjentArbeidsforholdId = status === Status.MOTTATT_UKJENT_ARBEIDSFORHOLDSID;
+  const erMottattMenIkkeAnsatt = status === Status.MOTTATT_IKKE_ANSATT;
   const erIkkePåkrevd = status === Status.IKKE_PÅKREVD;
   const erGjenbrukt = status === Status.GJENBRUKT;
 
@@ -30,7 +32,7 @@ const InntektsmeldingStatus = ({ status }: { status: Status }) => {
       </>
     );
   }
-  if (erMangler) {
+  if (erMangler || erMottattUkjentArbeidsforholdId || erMottattMenIkkeAnsatt) {
     return (
       <>
         <ExclamationmarkTriangleFillIcon fontSize="1.5rem" style={{ color: 'var(--ax-text-warning-decoration)' }} />

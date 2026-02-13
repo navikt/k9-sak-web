@@ -6,7 +6,7 @@ import React from 'react';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettFakta from '../UtvidetRettFakta';
 import utvidetRettTestData from './utvidetRettTestData';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/qFeatureToggles.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 const { aksjonspunkter, behandling, fagsak, fagsakPerson, rettigheter, vilkar, rammevedtak } = utvidetRettTestData;
 

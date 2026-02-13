@@ -3,13 +3,12 @@ import type {
   k9_sak_kontrakt_person_PersonDto as PersonDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Box, Button } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from '../../types/FormState';
@@ -164,7 +163,6 @@ export const OppholdInntektOgPerioderForm = ({
   medlemskap,
   submitCallback,
 }: OppholdInntektOgPerioderFormProps) => {
-  const featureToggles = useContext(FeatureTogglesContext);
   const initialPerioder = useMemo(
     () =>
       (medlemskap.perioder || []).map(periode => ({
@@ -285,7 +283,7 @@ export const OppholdInntektOgPerioderForm = ({
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
       )}
-      {featureToggles?.['AUTOMATISK_VURDERT_MEDLEMSKAP'] && erAutomatiskVurdert && (
+      {erAutomatiskVurdert && (
         <GrunnlagForAutomatiskVurdering personopplysninger={medlemskap.personopplysninger} soknad={soknad} />
       )}
 

@@ -244,7 +244,7 @@ export const BehandlingMenuIndex = ({
             />
           ),
         ),
-        new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, 'Marker behandling').medModal(lukkModal => (
+        new MenyData(true, 'Marker behandling').medModal(lukkModal => (
           <MenyMarkerBehandlingV2 behandlingUuid={behandling?.uuid ?? ''} lukkModal={lukkModal} />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, 'Henlegg behandlingen og avslutt').medModal(
@@ -320,10 +320,7 @@ export const BehandlingMenuIndex = ({
             gjeldendeVedtakBehandlendeEnhetId={alleBehandlinger.find(b => b.gjeldendeVedtak)?.behandlendeEnhetId}
           />
         )),
-        new MenyData(
-          'ENDRE_FRIST' in featureToggles && featureToggles.ENDRE_FRIST && harEtterlysningerMedFrist,
-          'Utsett frist',
-        ).medModal(lukkModal => {
+        new MenyData(featureToggles.ENDRE_FRIST && harEtterlysningerMedFrist, 'Utsett frist').medModal(lukkModal => {
           if (behandling && behandling.id && behandling.uuid) {
             return (
               <MenyEndreFristIndex
