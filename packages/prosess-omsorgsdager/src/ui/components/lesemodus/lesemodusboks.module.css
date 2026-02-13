@@ -20,7 +20,7 @@
   margin-top: 0.5rem;
   max-width: 40rem;
   padding: 5px;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .aksjonspunktOgRedigerVurderingContainer {
