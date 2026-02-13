@@ -13,14 +13,13 @@ import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
-import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';
 import { useAvregningFormState } from '../../../context/AvregningContext';
+import { useAvregningBackendClient } from '../AvregningBackendClientContext';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
   behandling: BehandlingDto;
   readOnly?: boolean;
-  api: BehandlingAvregningBackendApiType;
 }
 
 export interface KontrollerEtterbetalingFormData {
@@ -29,7 +28,8 @@ export interface KontrollerEtterbetalingFormData {
 
 export type BekreftKontrollerEtterbetalingAksjonspunktRequest = BekreftedeAksjonspunkterDto;
 
-const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api }) => {
+const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly }) => {
+  const api = useAvregningBackendClient();
   const { getHøyEtterbetalingState, setHøyEtterbetaling } = useAvregningFormState();
   const [loading, setLoading] = useState(false);
   const [rediger, setRediger] = useState(skalAksjonspunktUtredes(aksjonspunkt, behandling.status));

@@ -11,8 +11,6 @@ interface Props {
 }
 
 const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Props) => {
-  const behandlingAvregningBackendClient = useAvregningBackendClient();
-
   /*
    * Kopierer props for å unngå at konverteringen av kodeverk endrer verdiene i props.
    * Dette er en midlertidig løsning inntil vi har fått oppdatert alle komponenter til å
@@ -37,7 +35,6 @@ const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Pr
       behandling={deepCopyProps.behandling}
       aksjonspunkt={deepCopyProps.aksjonspunkt}
       readOnly={readOnly}
-      api={behandlingAvregningBackendClient}
     />
   );
 };
