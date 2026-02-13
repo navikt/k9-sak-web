@@ -84,7 +84,6 @@ export const VurderFeilutbetaling = ({
   useEffect(() => {
     return () => {
       setFeilutbetaling(formMethods.getValues());
-      formMethods.reset();
     };
   }, []);
 

@@ -57,7 +57,6 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   useEffect(() => {
     return () => {
       setHøyEtterbetaling(formMethods.getValues());
-      formMethods.reset();
     };
   }, []);
 
