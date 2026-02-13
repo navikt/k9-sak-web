@@ -19,12 +19,12 @@ export const BeregningsDetaljer = ({
   reduksjonsgrunnlag,
   gjelderDelerAvMåned,
 }: BeregningsDetaljerProps) => (
-  <Box.New
-    padding="6"
+  <Box
+    padding="space-24"
     borderRadius="0 medium medium 0"
     style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
   >
-    <Box.New maxWidth="500px">
+    <Box maxWidth="500px">
       <VStack gap="space-20">
         <Heading level="2" size="xsmall">
           Detaljer om utbetaling
@@ -38,6 +38,6 @@ export const BeregningsDetaljer = ({
           gjelderDelerAvMåned={gjelderDelerAvMåned}
         />
       </VStack>
-    </Box.New>
-  </Box.New>
+    </Box>
+  </Box>
 );

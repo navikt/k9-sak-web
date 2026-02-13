@@ -177,7 +177,7 @@ const InntektsmeldingAksjonspunktForm = ({
           />
         )}
 
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <div className="flex gap-4">
             {!harFlereTilstanderTilVurdering && beslutning && (
               <Button variant="primary" size="small">
@@ -190,7 +190,7 @@ const InntektsmeldingAksjonspunktForm = ({
               </Button>
             )}
           </div>
-        </Box.New>
+        </Box>
       </AksjonspunktBox>
     </RhfForm>
   );

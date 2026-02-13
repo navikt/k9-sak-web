@@ -102,43 +102,43 @@ const StrukturertDokumentDetaljer = ({
       )}
     >
       {harDuplikater && (
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <Alert size="small" variant="info">
             Det finnes ett eller flere duplikater av dette dokumentet.
           </Alert>
-        </Box.New>
+        </Box>
       )}
       {duplikatAvId && (
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <Alert size="small" variant="info">
             Dokumentet er et duplikat.
           </Alert>
-        </Box.New>
+        </Box>
       )}
-      <Box.New marginBlock="8 0">
+      <Box marginBlock="space-32 space-0">
         <DokumentKnapp href={dokumentinnholdLink.href} />
-      </Box.New>
-      <Box.New marginBlock="8 0">
+      </Box>
+      <Box marginBlock="space-32 space-0">
         <LabelledContent
           label={renderDokumenttypeLabel(fagsakYtelseType)}
           content={renderDokumenttypeContent(type, fagsakYtelseType)}
         />
-      </Box.New>
-      <Box.New marginBlock="8 0">
+      </Box>
+      <Box marginBlock="space-32 space-0">
         <LabelledContent label="Når er dokumentet datert?" content={prettifyDateString(datert)} />
-      </Box.New>
+      </Box>
       {harDuplikater && (
-        <Box.New marginBlock="8 0">
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Duplikater av dette dokumentet:"
             content={<Duplikatliste dokumenter={getDokumentDuplikater()} onRemoveDuplikat={onRemoveDuplikat} />}
           />
-        </Box.New>
+        </Box>
       )}
       {duplikatAvId && (
-        <Box.New marginBlock="8 0">
+        <Box marginBlock="space-32 space-0">
           <LabelledContent label="Dokumentet er et duplikat av følgende dokument:" content={getOriginaltDokument()} />
-        </Box.New>
+        </Box>
       )}
     </DetailView>
   );

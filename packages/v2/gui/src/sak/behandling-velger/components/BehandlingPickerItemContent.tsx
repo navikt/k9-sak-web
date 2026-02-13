@@ -59,8 +59,8 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const visKunStartdato =
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   return (
-    <Box.New
-      padding="4"
+    <Box
+      padding="space-16"
       className={erAutomatiskRevurdering && !erUngdomsytelse(behandling.sakstype) ? styles.indent : ''}
       borderWidth="1"
       borderRadius="medium"
@@ -114,7 +114,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
           />
         </div>
       </div>
-    </Box.New>
+    </Box>
   );
 };
 

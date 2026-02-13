@@ -14,15 +14,15 @@ const Wrapper = ({ withoutBorder, error, children, className }: OwnPropsWrapper)
     {withoutBorder ? (
       children
     ) : (
-      <Box.New
-        marginBlock="4 0"
-        padding="4"
+      <Box
+        marginBlock="space-16 space-0"
+        padding="space-16"
         borderWidth="1"
         borderRadius="medium"
         className={`${className} ${error ? 'border-[#ba3a26] border-2 border-solid' : ''}`}
       >
         {children}
-      </Box.New>
+      </Box>
     )}
   </>
 );

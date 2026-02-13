@@ -136,7 +136,7 @@ const VurderingAvToOmsorgspersonerForm = ({
           smallButtons
         >
           {dokumenter?.length > 0 && (
-            <Box.New marginBlock="6 0">
+            <Box marginBlock="space-24 space-0">
               <CheckboxGroupRHF
                 question="Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?"
                 name={FieldName.DOKUMENTER}
@@ -156,9 +156,9 @@ const VurderingAvToOmsorgspersonerForm = ({
                 }}
                 disabled={readOnly}
               />
-            </Box.New>
+            </Box>
           )}
-          <Box.New marginBlock="8 0">
+          <Box marginBlock="space-32 space-0">
             <TextAreaRHF
               textareaClass={styles.begrunnelsesfelt}
               name={FieldName.VURDERING_AV_TO_OMSORGSPERSONER}
@@ -189,16 +189,16 @@ const VurderingAvToOmsorgspersonerForm = ({
               disabled={readOnly}
               id="begrunnelsesfelt"
             />
-          </Box.New>
-          <Box.New marginBlock="8 0">
+          </Box>
+          <Box marginBlock="space-32 space-0">
             <YesOrNoQuestionRHF
               question="Er det behov for to omsorgspersoner samtidig?"
               name={FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER}
               validators={{ required }}
               disabled={readOnly}
             />
-          </Box.New>
-          <Box.New marginBlock="8 0">
+          </Box>
+          <Box marginBlock="space-32 space-0">
             <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
@@ -249,23 +249,23 @@ const VurderingAvToOmsorgspersonerForm = ({
                 )
               }
               renderAfterFieldArray={fieldArrayMethods => (
-                <Box.New marginBlock="6 0">
+                <Box marginBlock="space-24 space-0">
                   <AddButton
                     label="Legg til periode"
                     onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                     id="leggTilPeriodeKnapp"
                   />
-                </Box.New>
+                </Box>
               )}
             />
-          </Box.New>
+          </Box>
           {!harVurdertAlleDagerSomSkalVurderes && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <Alert size="small" variant="info">
                 Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har
                 lagret denne.
               </Alert>
-            </Box.New>
+            </Box>
           )}
         </FormWithButtons>
       </FormProvider>

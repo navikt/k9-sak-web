@@ -188,8 +188,9 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
         <HGrid gap="space-4" columns={{ xs: '1fr 11fr' }}>
           {!readOnly && (
             <Button
+              data-color="neutral"
               size="xsmall"
-              variant="secondary-neutral"
+              variant="secondary"
               type="button"
               onClick={() => append(defaultAndel)}
               icon={<PlusCircleIcon fontSize="1.5rem" className="text-[var(--ax-accent-600)]" />}

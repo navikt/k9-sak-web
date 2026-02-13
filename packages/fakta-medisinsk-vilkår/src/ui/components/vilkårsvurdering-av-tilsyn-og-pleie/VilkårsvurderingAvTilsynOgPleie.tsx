@@ -148,7 +148,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     <PageContainer isLoading={isLoading} hasError={vurderingsoversiktFeilet} key={StepId.TilsynOgPleie}>
       <VurderingsoversiktMessages vurderingsoversikt={vurderingsoversikt} harGyldigSignatur={harGyldigSignatur} />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box.New marginBlock={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon
@@ -173,7 +173,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
               />
             )}
           />
-        </Box.New>
+        </Box>
       )}
     </PageContainer>
   );

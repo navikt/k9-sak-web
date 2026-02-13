@@ -108,7 +108,7 @@ export const ArbeidOgInntekt = ({
 
   return (
     <RhfForm<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
-      <Box.New marginBlock="7 0" borderRadius="large" borderWidth="1">
+      <Box marginBlock="space-28 space-0" borderRadius="large" borderWidth="1">
         <Table>
           <Table.Header>
             <Table.Row>
@@ -153,13 +153,13 @@ export const ArbeidOgInntekt = ({
                         arbeidsgivere={arbeidsgivere}
                       />
                     ) : (
-                      <Bleed marginBlock="4 0">
-                        <Box.New marginInline="2 0" padding="6">
+                      <Bleed marginBlock="space-16 space-0">
+                        <Box marginInline="space-8 space-0" padding="space-24">
                           <DetaljerOmInntekt
                             inntektKontrollPeriode={inntektKontrollPeriode}
                             arbeidsgivere={arbeidsgivere}
                           />
-                        </Box.New>
+                        </Box>
                       </Bleed>
                     )
                   }
@@ -205,7 +205,7 @@ export const ArbeidOgInntekt = ({
             })}
           </Table.Body>
         </Table>
-      </Box.New>
+      </Box>
     </RhfForm>
   );
 };

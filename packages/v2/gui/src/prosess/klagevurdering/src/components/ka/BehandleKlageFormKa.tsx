@@ -60,18 +60,18 @@ export const BehandleKlageFormKa = ({
       <Heading size="small" level="2">
         Behandle klage
       </Heading>
-      <Box.New marginBlock="space-4 0">
+      <Box marginBlock="space-4 space-0">
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
           Vurder om klagen skal tas til følge
         </AksjonspunktHelpText>
-      </Box.New>
-      <Box.New marginBlock="space-16 0">
+      </Box>
+      <Box marginBlock="space-16 space-0">
         <KlageVurderingRadioOptionsKa
           readOnly={isReadOnly}
           klageVurdering={formValues.klageVurdering}
           medholdReasons={medholdReasons}
         />
-      </Box.New>
+      </Box>
       <div className={styles.confirmVilkarForm}>
         <VStack gap="space-16">
           <ContentMaxWidth>

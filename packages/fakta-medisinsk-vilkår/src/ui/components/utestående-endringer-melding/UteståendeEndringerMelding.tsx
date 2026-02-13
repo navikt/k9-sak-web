@@ -9,13 +9,13 @@ const UteståendeEndringerMelding = (): JSX.Element => {
 
   return (
     <ContentMaxWidth>
-      <Box.New marginBlock="0 4">
+      <Box marginBlock="space-0 space-16">
         <Alert size="small" variant="warning">
           <BodyShort size="small">
             OBS! Det er gjort endringer i sykdomssteget. For at endringene som er gjort skal bli tatt med i
             behandlingen, trykk på Fortsett.
           </BodyShort>
-          <Box.New marginBlock="1 0">
+          <Box marginBlock="space-4 space-0">
             <Button
               data-color="info"
               size="small"
@@ -29,9 +29,9 @@ const UteståendeEndringerMelding = (): JSX.Element => {
             >
               Fortsett
             </Button>
-          </Box.New>
+          </Box>
         </Alert>
-      </Box.New>
+      </Box>
     </ContentMaxWidth>
   );
 };

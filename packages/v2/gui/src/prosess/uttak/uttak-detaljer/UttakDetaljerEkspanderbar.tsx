@@ -18,8 +18,8 @@ const UttakDetaljerEkspanderbar: FC<UttakEkspanderbarProps> = ({ title, children
   };
 
   return (
-    <Box.New className={styles.uttakDetaljerExpandableDetailItem}>
-      <Box.New className={styles.uttakDetaljerExpandableDetailItemHeader}>
+    <Box className={styles.uttakDetaljerExpandableDetailItem}>
+      <Box className={styles.uttakDetaljerExpandableDetailItemHeader}>
         <Link href="#" onClick={toggleExpand}>
           <div>
             <BodyShort className="my-auto" size="small">
@@ -28,7 +28,7 @@ const UttakDetaljerEkspanderbar: FC<UttakEkspanderbarProps> = ({ title, children
             {!utvid ? <ChevronDownIcon /> : <ChevronUpIcon />}
           </div>
         </Link>
-      </Box.New>
+      </Box>
       <div
         className={`uttakDetaljerExpandableDetailItemContent ${
           utvid ? '' : styles.uttakDetaljerExpandableDetailItemContentCollapsed
@@ -36,7 +36,7 @@ const UttakDetaljerEkspanderbar: FC<UttakEkspanderbarProps> = ({ title, children
       >
         {children}
       </div>
-    </Box.New>
+    </Box>
   );
 };
 

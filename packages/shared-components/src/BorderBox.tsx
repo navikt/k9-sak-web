@@ -17,9 +17,14 @@ interface OwnProps {
  * Valideringskomponent. Visar en box kring noe som skall fikses.
  */
 const BorderBox = ({ error = false, className, children }: OwnProps) => (
-  <Box.New padding="4" borderWidth="1" borderRadius="medium" className={classNames('borderbox', { error }, className)}>
+  <Box
+    padding="space-16"
+    borderWidth="1"
+    borderRadius="medium"
+    className={classNames('borderbox', { error }, className)}
+  >
     {children}
-  </Box.New>
+  </Box>
 );
 
 export default BorderBox;

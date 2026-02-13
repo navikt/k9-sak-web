@@ -229,7 +229,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
           erVilkaretForOmsorgenFor={false}
         />
       )}
-
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && (
         <>
           <AksjonspunktLesemodus
@@ -285,7 +284,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
           <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
         </>
       )}
-
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
         <>
           <Alert size="small" variant="warning" className="max-w-fit">
@@ -394,7 +392,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                           </HelpText>
                         </HStack>
                         {erTidsbegrenset && (
-                          <HStack marginBlock="0 4">
+                          <HStack marginBlock="space-0 space-16">
                             <Select
                               {...register('tilDato', {
                                 validate: { erDatoFyltUt },

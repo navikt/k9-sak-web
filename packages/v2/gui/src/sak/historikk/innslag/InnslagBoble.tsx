@@ -94,10 +94,11 @@ export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps)
 
         {doCutOff ? (
           <Button
+            data-color="neutral"
             type="button"
             onClick={() => setExpanded(!expanded)}
             icon={expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            variant="tertiary-neutral"
+            variant="tertiary"
             size="xsmall"
           >
             {expanded ? 'Vis mindre' : 'Vis alt'}

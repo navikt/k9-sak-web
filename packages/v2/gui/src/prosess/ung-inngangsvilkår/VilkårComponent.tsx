@@ -5,7 +5,7 @@ interface VilkårComponentProps {
 }
 
 export const VilkårComponent = ({ children }: VilkårComponentProps) => (
-  <Box.New padding="4" borderRadius="xlarge" style={{ backgroundColor: '#EEF6FC' }} maxWidth="730px">
+  <Box padding="space-16" borderRadius="xlarge" style={{ backgroundColor: '#EEF6FC' }} maxWidth="730px">
     {children}
-  </Box.New>
+  </Box>
 );

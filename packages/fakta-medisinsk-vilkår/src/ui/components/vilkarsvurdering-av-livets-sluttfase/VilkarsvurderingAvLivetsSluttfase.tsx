@@ -162,7 +162,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
         harGyldigSignatur={harGyldigSignatur}
       />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box.New marginBlock={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon
@@ -187,7 +187,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
               />
             )}
           />
-        </Box.New>
+        </Box>
       )}
     </PageContainer>
   );

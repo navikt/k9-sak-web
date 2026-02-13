@@ -150,7 +150,7 @@ export const KlageVurderingRadioOptionsNfp = ({
               label="Årsak"
               validate={[required]}
             />
-            <Box.New marginBlock="space-16 0">
+            <Box marginBlock="space-16 space-0">
               <RhfRadioGroup
                 control={control}
                 name="klageVurderingOmgjoer"
@@ -165,7 +165,7 @@ export const KlageVurderingRadioOptionsNfp = ({
                   Delvis omgjør, til gunst
                 </Radio>
               </RhfRadioGroup>
-            </Box.New>
+            </Box>
           </ArrowBox>
         </ContentMaxWidth>
       )}

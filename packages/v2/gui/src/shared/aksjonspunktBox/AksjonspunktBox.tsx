@@ -12,7 +12,7 @@ interface OwnProps {
 }
 
 const AksjonspunktBox = ({ erAksjonspunktApent, className, children, maxWidth = false }: OwnProps) => (
-  <Box.New
+  <Box
     className={`${styles.aksjonspunkt} ${className} ${erAksjonspunktApent ? styles.erAksjonspunktApent : ''}`}
     borderWidth={erAksjonspunktApent ? '3' : undefined}
     borderRadius={erAksjonspunktApent ? 'large' : undefined}
@@ -20,7 +20,7 @@ const AksjonspunktBox = ({ erAksjonspunktApent, className, children, maxWidth = 
     maxWidth={maxWidth ? K9MaxTextWidth : undefined}
   >
     {children}
-  </Box.New>
+  </Box>
 );
 
 export default AksjonspunktBox;

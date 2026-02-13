@@ -14,7 +14,7 @@ interface BarnInputProps {
 const beregnAntallÅr = fodselsdato => moment().diff(fodselsdato, 'years').toString();
 
 const BarnVisning = ({ barnet, index }: BarnInputProps) => (
-  <Box.New padding="4" borderWidth="1" borderRadius="medium" className={styles.barnInput}>
+  <Box padding="space-16" borderWidth="1" borderRadius="medium" className={styles.barnInput}>
     <div className={styles.header}>
       <h4>
         <FormattedMessage id="FaktaRammevedtak.BarnVisningNummer" values={{ nummer: index + 1 }} />
@@ -26,7 +26,7 @@ const BarnVisning = ({ barnet, index }: BarnInputProps) => (
 
     {barnet.barnRelevantIBehandling && <BarnInformasjonVisning barnet={barnet} />}
     {barnet.rammevedtak && <BarnRammevedtakVisning barnet={barnet} />}
-  </Box.New>
+  </Box>
 );
 
 export default BarnVisning;
