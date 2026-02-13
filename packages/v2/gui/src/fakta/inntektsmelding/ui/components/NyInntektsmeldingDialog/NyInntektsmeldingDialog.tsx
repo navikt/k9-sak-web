@@ -33,7 +33,7 @@ export const NyInntektsmeldingDialog = ({
       </Dialog.Trigger>
       <Dialog.Popup>
         <Dialog.Header>
-          <Dialog.Title>Send ny oppgave om inntektsmelding</Dialog.Title>
+          <Dialog.Title>Send ny oppgave om inntektsmelding ved varig lønnsendring</Dialog.Title>
         </Dialog.Header>
         {renderContent()}
       </Dialog.Popup>

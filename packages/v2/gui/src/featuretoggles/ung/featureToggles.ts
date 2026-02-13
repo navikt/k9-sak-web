@@ -1,4 +1,4 @@
-import { initQFeatureToggles, initProdFeatureToggles } from '../FeatureToggles.js';
+import { initProdFeatureToggles, initQFeatureToggles } from '../FeatureToggles.js';
 
 /**
  * Toggles satt her bli gjeldande kun for ung, men både i Q og prod.
@@ -18,9 +18,10 @@ const ungSpecificFeatureToggles = {
  *
  * Det er produktet av feature toggles definert i ../FeatureToggles.ts og denne fila.
  *
- * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
+ * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for UNG.
  */
 export const qFeatureToggles = initQFeatureToggles(ungSpecificFeatureToggles)({
+  ENDRE_FRIST: true,
   // Legg til featuretoggles for ung Q her
 });
 
