@@ -21,7 +21,7 @@ export const BeregningsDetaljer = ({
 }: BeregningsDetaljerProps) => (
   <Box
     padding="space-24"
-    borderRadius="0 medium medium 0"
+    borderRadius="0 4 4 0"
     style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
   >
     <Box maxWidth="500px">

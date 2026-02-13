@@ -155,7 +155,7 @@ const AktivitetTabell = ({
   }
 
   return (
-    <Box padding="space-16" borderWidth="1" borderRadius="medium" className={styles.aktivitetTabell}>
+    <Box padding="space-16" borderWidth="1" borderRadius="4" className={styles.aktivitetTabell}>
       <div className={styles.header}>
         <Label size="small" as="p">
           {beskrivelse}

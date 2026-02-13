@@ -24,7 +24,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
   const intl = useIntl();
   if (!inntekter || inntekter.length === 0) {
     return (
-      <Box padding="space-16" borderWidth="1" borderRadius="medium">
+      <Box padding="space-16" borderWidth="1" borderRadius="4">
         <BodyShort size="small">
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
         </BodyShort>
@@ -33,7 +33,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
   }
 
   return (
-    <Box padding="space-16" borderWidth="1" borderRadius="medium">
+    <Box padding="space-16" borderWidth="1" borderRadius="4">
       <Table>
         <Table.Header>
           <Table.Row>

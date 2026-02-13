@@ -75,7 +75,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
     periode => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null,
   );
   return (
-    <Box marginBlock="space-16 space-0" padding="space-16" borderWidth="1" borderRadius="medium">
+    <Box marginBlock="space-16 space-0" padding="space-16" borderWidth="1" borderRadius="4">
       <VStack gap="space-20">
         <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
 

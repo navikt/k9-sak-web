@@ -31,7 +31,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
 
   return (
     <Box marginBlock="space-0 space-24">
-      <Box padding="space-16" borderWidth="1" borderRadius="medium">
+      <Box padding="space-16" borderWidth="1" borderRadius="4">
         <Box marginBlock="space-0 space-16">
           <Heading level="2" size="medium">
             Fosterbarn

@@ -18,7 +18,7 @@ const Wrapper = ({ withoutBorder, error, children, className }: OwnPropsWrapper)
         marginBlock="space-16 space-0"
         padding="space-16"
         borderWidth="1"
-        borderRadius="medium"
+        borderRadius="4"
         className={`${className} ${error ? 'border-[#ba3a26] border-2 border-solid' : ''}`}
       >
         {children}

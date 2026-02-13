@@ -55,13 +55,13 @@ export const AksjonspunktArbeidOgInntekt = ({
         marginInline="space-8 space-0"
         padding="space-24"
         borderWidth={isReadOnly ? undefined : '0 0 0 4'}
-        borderRadius="0 medium medium 0"
+        borderRadius="0 4 4 0"
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="space-32">
           <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} arbeidsgivere={arbeidsgivere} />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
-          <Box borderRadius="medium" padding="space-16" style={{ background: '#D7E6F0' }}>
+          <Box borderRadius="4" padding="space-16" style={{ background: '#D7E6F0' }}>
             <HStack gap="space-8" wrap={false}>
               <PersonFillIcon title="Deltaker" fontSize="1.5rem" className={styles.personIcon} />
 

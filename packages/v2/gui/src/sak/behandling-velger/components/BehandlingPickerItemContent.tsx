@@ -63,7 +63,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
       padding="space-16"
       className={erAutomatiskRevurdering && !erUngdomsytelse(behandling.sakstype) ? styles.indent : ''}
       borderWidth="1"
-      borderRadius="medium"
+      borderRadius="4"
     >
       <div className={styles.behandlingPicker}>
         <div>

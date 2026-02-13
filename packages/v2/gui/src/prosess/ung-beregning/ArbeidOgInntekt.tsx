@@ -108,7 +108,7 @@ export const ArbeidOgInntekt = ({
 
   return (
     <RhfForm<Formvalues> formMethods={formMethods} onSubmit={onSubmit}>
-      <Box marginBlock="space-28 space-0" borderRadius="large" borderWidth="1">
+      <Box marginBlock="space-28 space-0" borderRadius="8" borderWidth="1">
         <Table>
           <Table.Header>
             <Table.Row>

@@ -90,7 +90,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               <Heading size="xsmall" level="2">
                 Grunnrett
               </Heading>
-              <Box marginBlock="space-16 space-0" borderRadius="large" borderWidth="1" maxWidth="43.5rem">
+              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1" maxWidth="43.5rem">
                 <Table>
                   <Table.Header>
                     <Table.Row>
@@ -139,7 +139,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               </Box>
             )}
             {satser.length > 0 && (
-              <Box marginBlock="space-16 space-0" borderRadius="large" borderWidth="1">
+              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1">
                 <Table>
                   <Table.Header>
                     <Table.Row>
