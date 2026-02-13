@@ -15,13 +15,15 @@ interface OwnProps {
   hideMenu?: boolean; // Skjul menyen når v2-menyen brukes
 }
 
+interface VedtakFormState {
+  brødtekst: string;
+  overskrift: string;
+  maler: VedtaksbrevMal[];
+}
+
 interface VedtakFormContextType {
-  vedtakFormState: {
-    brødtekst: string;
-    overskrift: string;
-    maler: VedtaksbrevMal[];
-  } | null;
-  setVedtakFormState: React.Dispatch<React.SetStateAction<any>>;
+  vedtakFormState: VedtakFormState | null;
+  setVedtakFormState: React.Dispatch<React.SetStateAction<VedtakFormState | null>>;
 }
 
 export const VedtakFormContext = React.createContext<VedtakFormContextType | null>(null);
