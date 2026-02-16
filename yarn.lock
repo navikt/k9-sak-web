@@ -2072,6 +2072,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:=11.4.14"
     moment: "npm:2.30.1"
     react: "npm:19.2.3"
     react-intl: "npm:8.0.9"
@@ -3728,7 +3729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.14":
+"@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.14, @navikt/ft-prosess-beregningsgrunnlag@npm:=11.4.14":
   version: 11.4.14
   resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:11.4.14::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F11.4.14%2F60e9c5933769607614c4fdcb27855f3182f33e7b"
   dependencies:
