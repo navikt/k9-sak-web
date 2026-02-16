@@ -24,16 +24,16 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
   const intl = useIntl();
   if (!inntekter || inntekter.length === 0) {
     return (
-      <Box.New padding="4" borderWidth="1" borderRadius="medium">
+      <Box padding="space-16" borderWidth="1" borderRadius="4">
         <BodyShort size="small">
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
         </BodyShort>
-      </Box.New>
+      </Box>
     );
   }
 
   return (
-    <Box.New padding="4" borderWidth="1" borderRadius="medium">
+    <Box padding="space-16" borderWidth="1" borderRadius="4">
       <Table>
         <Table.Header>
           <Table.Row>
@@ -59,7 +59,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
           })}
         </Table.Body>
       </Table>
-    </Box.New>
+    </Box>
   );
 };
 

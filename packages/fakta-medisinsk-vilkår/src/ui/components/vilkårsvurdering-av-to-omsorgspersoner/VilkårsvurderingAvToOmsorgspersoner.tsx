@@ -126,7 +126,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
 
   const setMargin = () => {
     if ((vurderingsoversikt?.harPerioderSomSkalVurderes?.() ?? false) || !harGyldigSignatur) {
-      return '4 0';
+      return 'space-16 space-0';
     }
     return undefined;
   };
@@ -143,7 +143,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
     <PageContainer hasError={vurderingsoversiktFeilet} isLoading={isLoading} key={StepId.ToOmsorgspersoner}>
       <VurderingsoversiktMessages vurderingsoversikt={vurderingsoversikt} harGyldigSignatur={harGyldigSignatur} />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box.New marginBlock={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => {
               if (vurderingsoversikt.harPerioderÅVise()) {
@@ -175,7 +175,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
               />
             )}
           />
-        </Box.New>
+        </Box>
       )}
     </PageContainer>
   );

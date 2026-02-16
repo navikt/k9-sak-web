@@ -45,11 +45,10 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           <Radio value={false}>Utenlandsk borger utenfor EØS</Radio>
         </HStack>
       </RhfRadioGroup>
-
       {erEosBorger && (
         <ArrowBox>
           <Detail>Oppholdsrett</Detail>
-          <Box.New marginBlock="1 0">
+          <Box marginBlock="space-4 space-0">
             <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
@@ -64,13 +63,13 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
                 Søker har <b>ikke</b> oppholdsrett
               </Radio>
             </RhfRadioGroup>
-          </Box.New>
+          </Box>
         </ArrowBox>
       )}
       {erEosBorger === false && (
         <ArrowBox alignOffset={117}>
           <Detail>Lovlig opphold</Detail>
-          <Box.New marginBlock="1 0">
+          <Box marginBlock="space-4 space-0">
             <RhfRadioGroup
               control={control}
               name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
@@ -85,7 +84,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
                 Søker har <b>ikke</b> lovlig opphold
               </Radio>
             </RhfRadioGroup>
-          </Box.New>
+          </Box>
         </ArrowBox>
       )}
     </FaktaGruppe>

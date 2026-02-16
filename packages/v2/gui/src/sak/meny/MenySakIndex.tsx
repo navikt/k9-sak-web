@@ -15,7 +15,13 @@ export const MenySakIndex = ({ data }: OwnProps) => {
     <>
       <ActionMenu>
         <ActionMenu.Trigger>
-          <Button size="small" variant="secondary-neutral" icon={<ChevronDownIcon aria-hidden />} iconPosition="right">
+          <Button
+            data-color="neutral"
+            size="small"
+            variant="secondary"
+            icon={<ChevronDownIcon aria-hidden />}
+            iconPosition="right"
+          >
             Behandlingsmeny
           </Button>
         </ActionMenu.Trigger>

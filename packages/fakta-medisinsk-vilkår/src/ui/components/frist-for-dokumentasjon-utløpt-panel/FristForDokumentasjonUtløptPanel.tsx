@@ -9,12 +9,12 @@ interface FristForDokumentasjonUtløptPanelProps {
 const FristForDokumentasjonUtløptPanel = ({ onProceedClick }: FristForDokumentasjonUtløptPanelProps): JSX.Element => {
   const [fristenErUtløpt, setFristenErUtløpt] = React.useState(false);
   return (
-    <Box.New padding="4" borderWidth="2">
+    <Box padding="space-16" borderWidth="2">
       <BodyShort size="small">
         Dersom du ikke får dokumentasjon innen fristen, kan du avslå vilkåret og gå videre til vedtaksbrev.
       </BodyShort>
       <div className={styles.fristForDokumentasjonUtløptPanel__formContainer}>
-        <Box.New marginBlock="2 0">
+        <Box marginBlock="space-8 space-0">
           <Checkbox
             name="fristenErUtløpt"
             checked={fristenErUtløpt === true}
@@ -22,7 +22,7 @@ const FristForDokumentasjonUtløptPanel = ({ onProceedClick }: FristForDokumenta
           >
             Legeerklæring fra sykehus/spesialisthelsetjenesten etter §9-16 første ledd er ikke mottatt innen fristen
           </Checkbox>
-        </Box.New>
+        </Box>
         {fristenErUtløpt === true && (
           <Button
             onClick={onProceedClick}
@@ -33,7 +33,7 @@ const FristForDokumentasjonUtløptPanel = ({ onProceedClick }: FristForDokumenta
           </Button>
         )}
       </div>
-    </Box.New>
+    </Box>
   );
 };
 

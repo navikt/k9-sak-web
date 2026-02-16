@@ -1,12 +1,12 @@
-import { type FC } from 'react';
-import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
-import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
 import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { utledAktivitetNavn } from '../utils/overstyringUtils';
+import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
+import { type FC } from 'react';
+import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
+import { utledAktivitetNavn } from '../utils/overstyringUtils';
 import styles from './overstyrAktivitetListe.module.css';
 
 type ownProps = {
@@ -36,10 +36,10 @@ const OverstyrAktivitetListe: FC<ownProps> = ({ fields, loading, arbeidsgivere }
                 {utledAktivitetNavn(field.arbeidsforhold, arbeidsgivere)}
                 {arbeidstype && <span>, {arbeidstype}</span>}
               </div>
-              <div className={harFeil ? 'navds-error-message navds-label' : ''}>
+              <div className={harFeil ? 'aksel-error-message aksel-label' : ''}>
                 <TextField
                   {...register(`utbetalingsgrader.${index}.utbetalingsgrad`)}
-                  className={harFeil ? 'navds-text-field--error' : ''}
+                  className={harFeil ? 'aksel-text-field--error' : ''}
                   label="Ny utbetalingsgrad (%)"
                   hideLabel
                   size="small"

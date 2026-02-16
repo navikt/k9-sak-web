@@ -27,7 +27,7 @@ const Diagnosekodeliste = ({ diagnosekoder, onDeleteClick }: DiagnosekodelistePr
                 <div className={styles.lenkeContainer}>
                   <button
                     type="button"
-                    className={`${styles.lenkeContainer__slettLenke} navds-link`}
+                    className={`${styles.lenkeContainer__slettLenke} aksel-link`}
                     onClick={e => {
                       e.preventDefault();
                       e.stopPropagation();

@@ -45,7 +45,7 @@ const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: Di
             setSelectedDiagnosekoder([]);
           }}
         >
-          <Box.New marginBlock="6 0">
+          <Box marginBlock="space-24 space-0">
             {renderDiagnosekodeSelektor && (
               <DiagnosekodeSelector
                 initialDiagnosekodeValue=""
@@ -59,8 +59,8 @@ const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: Di
                 searcher={searcher}
               />
             )}
-          </Box.New>
-          <Box.New marginBlock="8 0">
+          </Box>
+          <Box marginBlock="space-32 space-0">
             <div style={{ display: 'flex' }}>
               <Button
                 size="small"
@@ -82,7 +82,7 @@ const DiagnosekodeModal = ({ isOpen, onRequestClose, onSaveClick, searcher }: Di
                 Avbryt
               </Button>
             </div>
-          </Box.New>
+          </Box>
         </form>
       </Modal.Body>
     </Modal>

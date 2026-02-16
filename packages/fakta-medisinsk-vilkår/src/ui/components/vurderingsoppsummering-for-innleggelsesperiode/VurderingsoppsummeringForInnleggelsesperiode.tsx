@@ -17,11 +17,11 @@ const VurderingsoppsummeringForInnleggelsesperiode = ({
     vurderingstype === Vurderingstype.TO_OMSORGSPERSONER ? 'to omsorgspersoner' : 'tilsyn og pleie';
   return (
     <DetailViewVurdering title={`Vurdering av ${vurderingstekst}`} perioder={[vurdering.periode]}>
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         <Alert size="small" variant="info">
           Innvilget som følge av innleggelse
         </Alert>
-      </Box.New>
+      </Box>
     </DetailViewVurdering>
   );
 };

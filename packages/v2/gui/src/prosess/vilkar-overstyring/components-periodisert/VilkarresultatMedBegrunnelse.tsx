@@ -65,10 +65,10 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   return (
     <>
       {skalViseBegrunnelse && (
-        <Box.New marginBlock={'0 2'}>
+        <Box marginBlock={'space-0 space-8'}>
           <VilkarBegrunnelse isReadOnly={readOnly} />
           <VurdertAv ident={opprettetAv} />
-        </Box.New>
+        </Box>
       )}
       <VilkarResultPickerPeriodisertRHF
         customVilkarOppfyltText={customVilkarOppfyltText ?? 'Vilkåret er oppfylt'}

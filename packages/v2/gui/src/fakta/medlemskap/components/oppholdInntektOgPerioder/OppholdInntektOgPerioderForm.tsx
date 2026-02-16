@@ -271,7 +271,6 @@ export const OppholdInntektOgPerioderForm = ({
           velgPeriodeCallback={velgPeriodeCallback}
         />
       )}
-
       {valgtPeriode && (
         <OppholdInntektOgPeriodeForm
           key={valgtPeriode.id}
@@ -286,8 +285,7 @@ export const OppholdInntektOgPerioderForm = ({
       {erAutomatiskVurdert && (
         <GrunnlagForAutomatiskVurdering personopplysninger={medlemskap.personopplysninger} soknad={soknad} />
       )}
-
-      <Box.New marginBlock="5 0">
+      <Box marginBlock="space-20 space-0">
         {!erAutomatiskVurdert && (
           <Button
             variant="primary"
@@ -298,7 +296,7 @@ export const OppholdInntektOgPerioderForm = ({
             Bekreft og fortsett
           </Button>
         )}
-      </Box.New>
+      </Box>
     </RhfForm>
   );
 };

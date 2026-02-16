@@ -118,7 +118,7 @@ export const UngVedtak = ({
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box.New marginBlock="4">
+      <Box marginBlock="space-16">
         <VStack gap="space-16">
           <div>
             <Label size="small" as="p">
@@ -150,9 +150,9 @@ export const UngVedtak = ({
 
               return (
                 <div key={field.id}>
-                  <Box.New
+                  <Box
                     borderWidth={index === 0 ? '0 0 1 0' : '0'}
-                    paddingBlock={readOnly ? '0' : '0 space-20'}
+                    paddingBlock={readOnly ? 'space-0' : 'space-0 space-20'}
                     width="450px"
                   >
                     {vedtaksbrevValgResponse?.harBrev && (
@@ -169,7 +169,7 @@ export const UngVedtak = ({
                         api={api}
                       />
                     )}
-                  </Box.New>
+                  </Box>
                 </div>
               );
             })}
@@ -191,13 +191,13 @@ export const UngVedtak = ({
           </VStack>
         </VStack>
         {harAksjonspunkt && !readOnly && (
-          <Box.New marginBlock="space-24 0">
+          <Box marginBlock="space-24 space-0">
             <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
               {harAksjonspunktMedTotrinnsbehandling ? 'Send til beslutter' : 'Fatt vedtak'}
             </Button>
-          </Box.New>
+          </Box>
         )}
-      </Box.New>
+      </Box>
     </RhfForm>
   );
 };

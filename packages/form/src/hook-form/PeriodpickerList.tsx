@@ -68,7 +68,7 @@ const PeriodpickerList = ({
               ? new Period(defaultValues[index].fom, defaultValues[index].tom)
               : new Period('', '');
           return (
-            <Box.New key={item.id} marginBlock="4 0">
+            <Box key={item.id} marginBlock="space-16 space-0">
               <div className={styles.periodpickerList__flexContainer}>
                 <Controller
                   name={`${name}[${index}].period`}
@@ -112,10 +112,10 @@ const PeriodpickerList = ({
                 {renderContentAfterElement && renderContentAfterElement(index, fields.length, fieldArrayMethods)}
               </div>
               {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-            </Box.New>
+            </Box>
           );
         })}
-        <Box.New>{renderAfterFieldArray && renderAfterFieldArray(fieldArrayMethods)}</Box.New>
+        <Box>{renderAfterFieldArray && renderAfterFieldArray(fieldArrayMethods)}</Box>
       </Fieldset>
     </div>
   );

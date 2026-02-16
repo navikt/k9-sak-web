@@ -12,21 +12,21 @@ interface OverlappendePeriodeModalProps {
 }
 
 const renderInfoMsg = ({ periode }: PeriodeMedEndring) => (
-  <Box.New key={periode.fom} marginBlock="0 4">
+  <Box key={periode.fom} marginBlock="space-0 space-16">
     <Alert size="small" variant="info">
       {`${periode.prettifyPeriod()} overlapper med en tidligere vurdert periode lagt til i denne behandlingen. Den nye
         vurderingen vil erstatte den gamle.`}
     </Alert>
-  </Box.New>
+  </Box>
 );
 
 const renderWarningMsg = ({ periode }: PeriodeMedEndring) => (
-  <Box.New key={periode.fom} marginBlock="0 4">
+  <Box key={periode.fom} marginBlock="space-0 space-16">
     <Alert size="small" variant="warning">
       {`${periode.prettifyPeriod()} overlapper med en tidligere vurdert periode. Dersom ny vurdering medfører endring i
         resultat vil det bli sendt melding om nytt vedtak til bruker. Dette vil også gjelde eventuelle andre parter.`}
     </Alert>
-  </Box.New>
+  </Box>
 );
 
 const OverlappendePeriodeModal = ({
@@ -48,17 +48,17 @@ const OverlappendePeriodeModal = ({
       <Heading level="1" size="medium">
         Overlappende periode
       </Heading>
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         {overlappendePerioderISammeBehandling.map(renderInfoMsg)}
         {overlappendePerioderIAndreBehandlinger.map(renderWarningMsg)}
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <BodyShort size="small">
             {`Er du sikker på at du vil erstatte ${
               harFlerePerioderMedOverlapp ? 'de tidligere vurderte periodene' : 'den tidligere vurderte perioden'
             }?`}
           </BodyShort>
-        </Box.New>
-      </Box.New>
+        </Box>
+      </Box>
     </ConfirmationModal>
   );
 };

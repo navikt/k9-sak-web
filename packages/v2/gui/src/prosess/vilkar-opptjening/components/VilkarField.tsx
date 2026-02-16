@@ -118,8 +118,7 @@ export const VilkarField = ({
         readOnly={readOnly}
         maxLength={1500}
       />
-
-      <Box.New marginBlock="4">
+      <Box marginBlock="space-16">
         {readOnly && (
           <div className="flex gap-4">
             {erVilkarOk(field?.kode) ? (
@@ -146,7 +145,7 @@ export const VilkarField = ({
             ))}
           </RhfRadioGroup>
         )}
-      </Box.New>
+      </Box>
     </div>
   );
 };

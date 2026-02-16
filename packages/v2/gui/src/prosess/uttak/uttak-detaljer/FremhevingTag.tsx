@@ -7,7 +7,7 @@ interface FremhevingTag {
 }
 
 export const FremhevingTag = ({ text }: FremhevingTag) => (
-  <Box.New
+  <Box
     paddingBlock="space-2"
     paddingInline="space-4 space-8"
     width="fit-content"
@@ -18,5 +18,5 @@ export const FremhevingTag = ({ text }: FremhevingTag) => (
       <CheckmarkIcon />
       {text}
     </HStack>
-  </Box.New>
+  </Box>
 );

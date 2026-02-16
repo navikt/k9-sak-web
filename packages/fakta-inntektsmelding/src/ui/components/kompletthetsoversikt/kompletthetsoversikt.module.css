@@ -23,7 +23,7 @@
 }
 
 h3.alertAccordion__heading:global(.aksel-heading--xsmall) {
-  font-weight: var(--navds-font-weight-regular);
+  font-weight: var(--ax-font-weight-regular);
   margin-bottom: 0;
 }
 
