@@ -21,6 +21,7 @@ import {
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
 import { mapArbeidsgiverOpplysningerPerIdTilFP } from '@k9-sak-web/gui/ft-adapt/mapArbeidsgiverOpplysninger.js';
+import { mapBeregningsgrunnlagTilFP } from '@k9-sak-web/gui/ft-adapt/mapBeregningsgrunnlag.js';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -91,7 +92,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
   return (
     <BeregningsgrunnlagProsessIndex
       beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
-      beregningsgrunnlagListe={beregningsgrunnlag}
+      beregningsgrunnlagListe={beregningsgrunnlag.map(mapBeregningsgrunnlagTilFP)}
       arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId.arbeidsgivere)}
       submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
